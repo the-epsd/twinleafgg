@@ -142,6 +142,30 @@
   flex-direction: column;
   flex: 1;
   min-width: 0;
+  gap: 20px;
+  padding-top: 28px;
+}
+
+.alternativeGroup + .alternativeGroup {
+  padding-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.alternativeGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.groupTitle {
+  margin: 0;
+  padding: 0 4px;
+  font-family: 'Urbanist', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #b8bcc6;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
 }
 
 .cardsRow {
@@ -158,7 +182,6 @@
   align-items: center;
   cursor: pointer;
   width: 120px;
-  margin-top: 28px;
 }
 
 .cardItem:hover .swapCardSmall {

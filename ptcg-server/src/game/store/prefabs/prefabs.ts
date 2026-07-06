@@ -64,6 +64,8 @@ import {
   HealTargetEffect,
   PutCountersEffect,
   PutDamageEffect,
+  GustOpponentBenchEffect,
+  SwitchOutOpponentsActiveEffect,
 } from '../effects/attack-effects';
 import {
   AddSpecialConditionsPowerEffect,
@@ -84,12 +86,11 @@ import {
   MoveCardsEffect,
   MoveDamageCountersEffect,
   PowerEffect,
-  RetreatEffect,
   SpecialEnergyEffect,
 } from '../effects/game-effects';
-import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects';
+import { AfterAttackEffect, BeforeDoingDamageEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
-import { preventRetreatEffect, preventDamageEffect } from '../effects/effect-of-attack-effects';
+import { preventRetreatEffect, preventDamageEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect } from '../effects/effect-of-attack-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
 
 /**
@@ -132,6 +133,14 @@ export const AFTER_ATTACK = (
   user: PokemonCard,
 ): effect is AfterAttackEffect => {
   return effect instanceof AfterAttackEffect && effect.attack === user.attacks[index];
+};
+
+export const BEFORE_DAMAGE = (
+  effect: Effect,
+  index: number,
+  user: PokemonCard,
+): effect is BeforeDoingDamageEffect => {
+  return effect instanceof BeforeDoingDamageEffect && effect.attack === user.attacks[index];
 };
 
 /**
@@ -707,6 +716,46 @@ export function TOOL_SET_HP_IF(
   }
 
   effect.hp = options.hp;
+}
+
+/**
+ * Spirit Link: skip the Mega Evolution end-turn rule when evolving into the named Mega Pokemon.
+ * Call from the Spirit Link tool's reduceEffect with the target Mega's name.
+ */
+export function SPIRIT_LINK_SKIP_MEGA_EVOLUTION_END_TURN(
+  store: StoreLike,
+  state: State,
+  effect: Effect,
+  tool: TrainerCard,
+  megaPokemonName: string,
+): void {
+  if (!(effect instanceof PlayPokemonEffect)
+    || !effect.target.tools.includes(tool)
+    || effect.pokemonCard.name !== megaPokemonName) {
+    return;
+  }
+
+  if (IS_TOOL_BLOCKED(store, state, effect.player, tool)) {
+    return;
+  }
+
+  effect.skipMegaEvolutionEndTurn = true;
+}
+
+/**
+ * Mega Evolution Rule: end the turn when this Pokemon is played to evolve,
+ * unless a Spirit Link set skipMegaEvolutionEndTurn on the PlayPokemonEffect.
+ */
+export function MEGA_EVOLUTION_END_TURN(
+  store: StoreLike,
+  state: State,
+  effect: Effect,
+  card: PokemonCard,
+): void {
+  if (effect instanceof PlayPokemonEffect && effect.pokemonCard === card
+    && !effect.skipMegaEvolutionEndTurn) {
+    store.reduceEffect(state, new EndTurnEffect(effect.player));
+  }
 }
 
 export function GET_TOTAL_ENERGY_ATTACHED_TO_PLAYERS_POKEMON(
@@ -1672,8 +1721,12 @@ export function SHUFFLE_PRIZES_INTO_DECK(store: StoreLike, state: State, player:
 /**
  * Draws `count` cards, putting them into your hand.
  */
-export function DRAW_CARDS(player: Player, count: number) {
-  player.deck.moveTo(player.hand, Math.min(count, player.deck.cards.length));
+export function DRAW_CARDS(store: StoreLike, state: State, player: Player, count: number): State {
+  const drawCount = Math.min(count, player.deck.cards.length);
+  if (drawCount <= 0) {
+    return state;
+  }
+  return MOVE_CARDS(store, state, player.deck, player.hand, { count: drawCount });
 }
 
 /**
@@ -1698,7 +1751,7 @@ export function DRAW_UP_TO_X_CARDS(store: StoreLike, state: State, player: Playe
       ),
       (choice) => {
         const numCardsToDraw = options[choice].value;
-        DRAW_CARDS(player, numCardsToDraw);
+        DRAW_CARDS(store, state, player, numCardsToDraw);
       },
     );
   }
@@ -2041,6 +2094,19 @@ export function IS_TOOL_BLOCKED(
 }
 
 /**
+ * True when an attack effect originated from the target owner's opponent's Pokémon.
+ * Used for text like "Prevent effects of attacks from your opponent's Pokémon done to …"
+ */
+export function IS_ATTACK_EFFECT_FROM_OPPONENTS_POKEMON(
+  state: State,
+  effect: AbstractAttackEffect,
+): boolean {
+  const targetOwner = StateUtils.findOwner(state, effect.target);
+  const sourceOwner = StateUtils.findOwner(state, effect.source);
+  return sourceOwner === StateUtils.getOpponent(state, targetOwner);
+}
+
+/**
  * Checks if a special energy's effect is being blocked for the given player and Pokemon it is attached to. Do not use in CheckProvidedEnergyEffect.
  * @returns `true` if the special energy's effect is blocked, `false` if the special energy's effect is able to activate.
  */
@@ -2110,6 +2176,7 @@ export interface SwitchInOpponentBenchedPokemonOptions {
   allowCancel?: boolean;
   blocked?: CardTarget[];
   onSwitched?: (target: PokemonCardList) => void;
+  sourceEffect?: AttackEffect | AfterAttackEffect;
 }
 
 /**
@@ -2122,7 +2189,7 @@ export function SWITCH_IN_OPPONENT_BENCHED_POKEMON(
   player: Player,
   options: SwitchInOpponentBenchedPokemonOptions = {},
 ): State {
-  const { allowCancel = false, blocked = [], onSwitched } = options;
+  const { allowCancel = false, blocked = [], onSwitched, sourceEffect } = options;
   const opponent = StateUtils.getOpponent(state, player);
   const hasBenchedPokemon = opponent.bench.some((bench) => bench.cards.length > 0);
   if (!hasBenchedPokemon) {
@@ -2142,9 +2209,17 @@ export function SWITCH_IN_OPPONENT_BENCHED_POKEMON(
       if (!selected || selected.length === 0) {
         return;
       }
-      opponent.switchPokemon(selected[0], store, state);
-      if (onSwitched !== undefined) {
-        onSwitched(selected[0]);
+      if (sourceEffect) {
+        const gustEffect = new GustOpponentBenchEffect(sourceEffect, selected[0]);
+        store.reduceEffect(state, gustEffect);
+        if (!gustEffect.preventDefault && onSwitched !== undefined) {
+          onSwitched(selected[0]);
+        }
+      } else {
+        opponent.switchPokemon(selected[0], store, state);
+        if (onSwitched !== undefined) {
+          onSwitched(selected[0]);
+        }
       }
     },
   );
@@ -2154,6 +2229,7 @@ export interface SwitchOutOpponentActivePokemonOptions {
   allowCancel?: boolean;
   blocked?: CardTarget[];
   onSwitched?: (target: PokemonCardList) => void;
+  sourceEffect?: AttackEffect | AfterAttackEffect;
 }
 
 /**
@@ -2169,11 +2245,19 @@ export function SWITCH_OUT_OPPONENT_ACTIVE_POKEMON(
   player: Player,
   options: SwitchOutOpponentActivePokemonOptions = {},
 ): State {
-  const { allowCancel = false, blocked = [], onSwitched } = options;
+  const { allowCancel = false, blocked = [], onSwitched, sourceEffect } = options;
   const opponent = StateUtils.getOpponent(state, player);
   const hasBenchedPokemon = opponent.bench.some((bench) => bench.cards.length > 0);
   if (!hasBenchedPokemon) {
     return state;
+  }
+
+  if (sourceEffect) {
+    const switchOutEffect = new SwitchOutOpponentsActiveEffect(sourceEffect);
+    store.reduceEffect(state, switchOutEffect);
+    if (switchOutEffect.preventDefault) {
+      return state;
+    }
   }
 
   return store.prompt(
@@ -2189,9 +2273,18 @@ export function SWITCH_OUT_OPPONENT_ACTIVE_POKEMON(
       if (!selected || selected.length === 0) {
         return;
       }
-      opponent.switchPokemon(selected[0], store, state);
-      if (onSwitched !== undefined) {
-        onSwitched(selected[0]);
+      if (sourceEffect) {
+        const switchOutEffect = new SwitchOutOpponentsActiveEffect(sourceEffect);
+        switchOutEffect.benchTarget = selected[0];
+        store.reduceEffect(state, switchOutEffect);
+        if (!switchOutEffect.preventDefault && onSwitched !== undefined) {
+          onSwitched(selected[0]);
+        }
+      } else {
+        opponent.switchPokemon(selected[0], store, state);
+        if (onSwitched !== undefined) {
+          onSwitched(selected[0]);
+        }
       }
     },
   );
@@ -3148,11 +3241,6 @@ export function CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(
   }
 }
 
-export function BLOCK_RETREAT_IF_MARKER(effect: Effect, marker: string, source: Card) {
-  if (effect instanceof RetreatEffect && effect.player.active.marker.hasMarker(marker, source))
-    throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-}
-
 //#endregion
 
 export function MOVE_CARDS(
@@ -3702,6 +3790,59 @@ export function BLOCK_RETREAT(
 ): State {
   const retreatEffect = preventRetreatEffect(effect, source);
   return store.reduceEffect(state, retreatEffect);
+}
+
+/**
+ * Causes the defending Pokemon to take extra damage from attacks during the
+ * attacking player's next turn (after applying Weakness and Resistance).
+ */
+export function DEFENDING_POKEMON_TAKES_MORE_DAMAGE_DURING_YOUR_NEXT_TURN(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+  damageBonus: number,
+): State {
+  const bonusEffect = defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect(effect, source, damageBonus);
+  return store.reduceEffect(state, bonusEffect);
+}
+
+/**
+ * Prompts the player to choose one of the opponent's Active Pokemon's attacks to disable
+ * during the opponent's next turn.
+ */
+export function OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+): State {
+  const player = effect.player;
+  const opponent = effect.opponent;
+  const pokemonCard = opponent.active.getPokemonCard();
+
+  if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
+    return state;
+  }
+
+  return store.prompt(state, new ChooseAttackPrompt(
+    player.id,
+    GameMessage.CHOOSE_ATTACK_TO_DISABLE,
+    [pokemonCard],
+    { allowCancel: false }
+  ), result => {
+    if (!result) {
+      return state;
+    }
+
+    store.log(state, GameLog.LOG_PLAYER_DISABLES_ATTACK, {
+      name: player.name,
+      attack: result.name
+    });
+
+    const disableEffect = opponentPokemonCannotUseAttackEffect(effect, source, result);
+    return store.reduceEffect(state, disableEffect);
+  });
 }
 
 /**

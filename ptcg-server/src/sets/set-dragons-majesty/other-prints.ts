@@ -1,8 +1,8 @@
 import { FieryFlint as FieryFlintDRM60 } from '../set-dragons-majesty/fiery-flint';
 import { SwitchRaft as SwitchRaftDRM62 } from '../set-dragons-majesty/switch-raft';
-import { UltraNecrozmaGX } from '../set-forbidden-light/ultra-necrozma-gx';
+import { UltraNecrozmaGX } from '../08-sun-and-moon/set-forbidden-light/ultra-necrozma-gx';
 import { Totodile } from '../set-neo-genesis/totodile';
-import { Dratini } from '../set-dragon-vault/dratini';
+import { Dratini } from '../06-black-and-white/set-dragon-vault/dratini';
 import { ReshiramGx } from './reshiram-gx';
 import { KingdraGx } from './kingdra-gx';
 import { DragoniteGx } from './dragonite-gx';

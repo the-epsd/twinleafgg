@@ -41,7 +41,7 @@ export class Shaymin extends PokemonCard {
       //MOVE_CARDS(store, state, player.hand, player.deck, { cards: player.hand.cards });
       player.hand.moveTo(player.deck);
       SHUFFLE_DECK(store, state, player);
-      DRAW_CARDS(player, 6);
+      DRAW_CARDS(store, state, player, 6);
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

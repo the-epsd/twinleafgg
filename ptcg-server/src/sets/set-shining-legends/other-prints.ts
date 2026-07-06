@@ -1,18 +1,18 @@
 import { EnergyRetrieval } from '../set-base-set/energy-retrieval';
-import { GreatBall } from '../set-ex-firered-leafgreen/great-ball';
-import { Hau } from '../set-celestial-storm/hau';
-import { Lillie } from '../set-ultra-prism/lillie';
+import { GreatBall } from '../03-ex-ruby-and-sapphire/set-ex-firered-leafgreen/great-ball';
+import { Hau } from '../08-sun-and-moon/set-celestial-storm/hau';
+import { Lillie } from '../08-sun-and-moon/set-ultra-prism/lillie';
 import { PokemonBreeder } from '../set-base-set/pokemon-breeder';
-import { PokemonCatcher } from '../set-scarlet-and-violet/pokemon-catcher';
-import { Sophocles } from '../set-burning-shadows/sophocles';
-import { SuperScoopUp } from '../set-diamond-and-pearl/super-scoop-up';
+import { PokemonCatcher } from '../10-scarlet-and-violet/set-scarlet-and-violet/pokemon-catcher';
+import { Sophocles } from '../08-sun-and-moon/set-burning-shadows/sophocles';
+import { SuperScoopUp } from '../04-diamond-pearl-platinum/set-diamond-and-pearl/super-scoop-up';
 import { Switch } from '../set-base-set/switch';
-import { UltraBall } from '../set-scarlet-and-violet/ultra-ball';
+import { UltraBall } from '../10-scarlet-and-violet/set-scarlet-and-violet/ultra-ball';
 import { DoubleColorlessEnergy } from '../set-base-set/double-colorless-energy';
 import { MewtwoGX as MewtwoGXSLG39 } from '../set-shining-legends/mewtwo-gx';
 import { PokemonBreeder as PokemonBreederBS76 } from '../set-base-set/pokemon-breeder';
 import { ZoroarkGX as ZoroarkGXSLG53 } from '../set-shining-legends/zoroark-gx';
-import { UltraBall as UltraBallSVI196 } from '../set-scarlet-and-violet/ultra-ball';
+import { UltraBall as UltraBallSVI196 } from '../10-scarlet-and-violet/set-scarlet-and-violet/ultra-ball';
 import { EnteiGx } from './entei-gx';
 import { RaichuGx } from './raichu-gx';
 export class EnergyRetrievalSLG extends EnergyRetrieval {

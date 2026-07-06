@@ -46,6 +46,8 @@ export class AttachEnergyEffect implements Effect {
 export class PlayPokemonEffect implements Effect {
   readonly type: string = PlayCardEffects.PLAY_POKEMON_EFFECT;
   public preventDefault = false;
+  /** Set by Spirit Link tools when mega evolution should not end the turn. */
+  public skipMegaEvolutionEndTurn = false;
   public player: Player;
   public pokemonCard: PokemonCard;
   public target: PokemonCardList;

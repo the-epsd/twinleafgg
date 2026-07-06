@@ -30,6 +30,7 @@ import { ShellButton } from '../../components/ui/ShellButton';
 import { CardFace } from '../../components/cards/CardFace';
 import { CardInfoPopup } from '../../card-info/CardInfoPopup';
 import { CheckboxField } from '../../components/ui/CheckboxField';
+import { useDeckName } from '../../hooks/useDeckName';
 import styles from './TablePromptLayer.module.css';
 import { AttachEnergyPromptPanel } from './AttachEnergyPromptPanel';
 import { ChooseAttackPromptPanel } from './ChooseAttackPromptPanel';
@@ -44,6 +45,9 @@ import {
   autoTakeChoosePrizeIndices,
   shouldAutoTakeChoosePrize,
 } from './choosePrizeAutoTake';
+import {
+  shouldUseBoardHandForChooseCards,
+} from './chooseCardsHandSelection';
 
 const CHOOSE_CARDS_CARD_BACK = '/assets/cardback.png';
 
@@ -87,6 +91,23 @@ export type TablePromptLayerProps = {
 function gameMessageText(t: TFunction, message: string | number): string {
   const key = `GAME_MESSAGES.${message}`;
   return t(key, { defaultValue: String(message) });
+}
+
+function setupStartingSnackbarMessage(
+  boardInteraction: BoardInteractionService,
+  t: TFunction,
+  fallback: string,
+): string {
+  if (!boardInteraction.isChooseStartingPokemonsSelectionActive()) {
+    return fallback;
+  }
+  if (!boardInteraction.isSetupActivePhaseSkipped() && !boardInteraction.isSetupActiveLocked()) {
+    return t('REACT_SETUP_CHOOSE_ACTIVE', { defaultValue: 'Choose your Active Pokémon' });
+  }
+  if (boardInteraction.hasMoreSetupBenchBasicsAvailable()) {
+    return t('REACT_SETUP_CHOOSE_BENCH', { defaultValue: 'Play any Benched Pokémon' });
+  }
+  return fallback;
 }
 
 /** Matches legacy server WaitPrompt message used before attack damage (see game-effect useAttack). */
@@ -259,6 +280,49 @@ function useChoosePokemonBoardEffect(
   }, [choosePokemonPromptId, clientId, boardInteraction, onResolvePrompt, replay]);
 }
 
+function useChooseHandCardsBoardEffect(
+  localGameRef: React.MutableRefObject<LocalGameState>,
+  clientId: number,
+  boardInteraction: BoardInteractionService,
+  onResolvePrompt: (promptId: number, result: unknown) => void,
+  chooseHandCardsPromptId: number | null,
+  replay: boolean | undefined,
+) {
+  useEffect(() => {
+    if (chooseHandCardsPromptId == null) {
+      return;
+    }
+
+    if (replay) {
+      boardInteraction.setReplayMode(true);
+      return () => {
+        boardInteraction.setReplayMode(false);
+      };
+    }
+
+    boardInteraction.setReplayMode(false);
+    const game = localGameRef.current;
+    const prompt = activeGamePrompt(game, clientId);
+    if (!prompt || prompt.id !== chooseHandCardsPromptId || prompt.type !== 'Choose cards') {
+      return;
+    }
+
+    const ccp = prompt as ChooseCardsPrompt;
+    if (!shouldUseBoardHandForChooseCards(ccp, clientId)) {
+      return;
+    }
+
+    const pid = ccp.id;
+    boardInteraction.startChooseHandCardsSelection(ccp, (indices) => {
+      void onResolvePrompt(pid, indices);
+    });
+
+    return () => {
+      boardInteraction.endBoardSelection();
+    };
+  }, [chooseHandCardsPromptId, clientId, boardInteraction, onResolvePrompt, replay]);
+}
+
 function useRemoveDamageBoardEffect(
   localGameRef: React.MutableRefObject<LocalGameState>,
   clientId: number,
@@ -412,6 +476,64 @@ function ChoosePokemonActionBar(props: {
   );
 }
 
+/** Board hand Choose cards: full-width instruction bar at top with inline OK. */
+function ChooseHandCardsBoardOverlay(props: {
+  boardInteraction: BoardInteractionService;
+  defaultMessage: string;
+  allowCancel: boolean;
+}) {
+  const { t } = useTranslation();
+  const { boardInteraction, defaultMessage, allowCancel } = props;
+  const [, setTick] = useState(0);
+
+  useEffect(() => {
+    const sub = merge(
+      boardInteraction.selectionMode$,
+      boardInteraction.selectedTargets$,
+      boardInteraction.maxSelections$,
+      boardInteraction.minSelections$,
+    ).subscribe(() => setTick((x) => x + 1));
+    return () => sub.unsubscribe();
+  }, [boardInteraction]);
+
+  const valid = boardInteraction.isSelectionValid();
+  const active = boardInteraction.isSelectionActive();
+  const message = setupStartingSnackbarMessage(boardInteraction, t, defaultMessage);
+
+  if (!active) {
+    return null;
+  }
+
+  return (
+    <div className={styles.chooseStartingTopBar} role="status">
+      <div className={styles.chooseStartingTopBarContent}>
+        <div className={styles.chooseStartingTopBarMessage}>{message}</div>
+        <div className={styles.chooseStartingTopBarActions}>
+          {allowCancel ? (
+            <ShellButton
+              type="button"
+              variant="plain"
+              className={styles.chooseStartingTopBarCancelBtn}
+              onClick={() => boardInteraction.cancelSelection()}
+            >
+              {t('BUTTON_CANCEL')}
+            </ShellButton>
+          ) : null}
+          <ShellButton
+            type="button"
+            variant="plain"
+            className={styles.chooseStartingTopBarOkBtn}
+            disabled={!valid}
+            onClick={() => boardInteraction.confirmSelection()}
+          >
+            {t('BUTTON_OK')}
+          </ShellButton>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function TablePromptLayer({
   localGame,
   clientId,
@@ -439,6 +561,13 @@ export function TablePromptLayer({
       ? activePrompt.id
       : null;
 
+  const chooseHandCardsId =
+    activePrompt?.type === 'Choose cards' &&
+    !localGame.replay &&
+    shouldUseBoardHandForChooseCards(activePrompt as ChooseCardsPrompt, clientId)
+      ? activePrompt.id
+      : null;
+
   const removeDamageId =
     activePrompt?.type === 'Remove damage' && !localGame.replay && !suppressTrainerEffectPrompts
       ? activePrompt.id
@@ -460,6 +589,15 @@ export function TablePromptLayer({
     boardInteraction,
     onResolvePrompt,
     choosePokemonId,
+    !!localGame.replay,
+  );
+
+  useChooseHandCardsBoardEffect(
+    localGameRef,
+    clientId,
+    boardInteraction,
+    onResolvePrompt,
+    chooseHandCardsId,
     !!localGame.replay,
   );
 
@@ -536,6 +674,23 @@ export function TablePromptLayer({
     suppressChoosePrizePrompt,
   ]);
 
+  const selfPlayGoFirstDeckId = useMemo(() => {
+    if (localGame.state.gameSettings?.selfPlay !== true) {
+      return undefined;
+    }
+    const p = activePrompt;
+    if (!p || p.type !== 'Confirm') {
+      return undefined;
+    }
+    const cp = p as ConfirmPrompt;
+    if (String(cp.message) !== 'GO_FIRST') {
+      return undefined;
+    }
+    return localGame.state.players.find((pl) => pl.id === cp.playerId)?.deckId;
+  }, [activePrompt, localGame.state.gameSettings?.selfPlay, localGame.state.players]);
+
+  const selfPlayGoFirstDeckName = useDeckName(selfPlayGoFirstDeckId);
+
   if (localGame.replay) {
     return null;
   }
@@ -545,6 +700,20 @@ export function TablePromptLayer({
   }
 
   if (suppressTrainerEffectPrompts) {
+    if (
+      activePrompt.type === 'Choose cards' &&
+      shouldUseBoardHandForChooseCards(activePrompt as ChooseCardsPrompt, clientId)
+    ) {
+      const ccp = activePrompt as ChooseCardsPrompt;
+      const msg = gameMessageText(t, ccp.message);
+      return (
+        <ChooseHandCardsBoardOverlay
+          boardInteraction={boardInteraction}
+          defaultMessage={msg}
+          allowCancel={ccp.options.allowCancel}
+        />
+      );
+    }
     return null;
   }
 
@@ -576,10 +745,17 @@ export function TablePromptLayer({
 
   if (p.type === 'Confirm') {
     const cp = p as ConfirmPrompt;
+    const isSelfPlayGoFirst =
+      localGame.state.gameSettings?.selfPlay === true && String(cp.message) === 'GO_FIRST';
+    const confirmTitleBase = t('PROMPT_CONFIRM_TITLE', { defaultValue: 'Confirm' });
+    const confirmTitle =
+      isSelfPlayGoFirst && selfPlayGoFirstDeckName != null && selfPlayGoFirstDeckName !== ''
+        ? `${confirmTitleBase} [${selfPlayGoFirstDeckName}]`
+        : confirmTitleBase;
     return (
       <div className={styles.backdrop} role="presentation">
         <div className={styles.panel} role="dialog" aria-modal="true">
-          <h2 className={styles.title}>{t('PROMPT_CONFIRM_TITLE', { defaultValue: 'Confirm' })}</h2>
+          <h2 className={styles.title}>{confirmTitle}</h2>
           <p className={styles.message}>{gameMessageText(t, cp.message)}</p>
           <div className={styles.actions}>
             <ShellButton variant="secondary" type="button" onClick={() => resolve(cp.id, false)}>
@@ -699,6 +875,16 @@ export function TablePromptLayer({
 
   if (p.type === 'Choose cards') {
     const ccp = p as ChooseCardsPrompt;
+    if (shouldUseBoardHandForChooseCards(ccp, clientId) && !localGame.replay) {
+      const msg = gameMessageText(t, ccp.message);
+      return (
+        <ChooseHandCardsBoardOverlay
+          boardInteraction={boardInteraction}
+          defaultMessage={msg}
+          allowCancel={ccp.options.allowCancel}
+        />
+      );
+    }
     return (
       <ChooseCardsPanel
         key={ccp.id}

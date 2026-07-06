@@ -8,6 +8,7 @@ import { TablePlayerActions } from './TablePlayerActions';
 import { TableReplayControls } from './TableReplayControls';
 import { TableGameLogToasts } from './TableGameLogToasts';
 import { TableGameLogsPrompt } from './TableGameLogsPrompt';
+import { AdminSpectatorControls, type AdminSpectatorReveal } from './AdminSpectatorControls';
 import styles from './TableBoardOverlay.module.css';
 
 export type TableBoardOverlayProps = {
@@ -17,6 +18,9 @@ export type TableBoardOverlayProps = {
   bottomPlayer: Player;
   isPlaying: boolean;
   isObserver: boolean;
+  showAdminSpectatorControls?: boolean;
+  adminSpectatorReveal?: AdminSpectatorReveal;
+  onAdminSpectatorRevealChange?: (next: AdminSpectatorReveal) => void;
   onPassTurn: () => void;
   onLeave: () => void;
   onSwitchSides: () => void;
@@ -42,6 +46,9 @@ export function TableBoardOverlay(props: TableBoardOverlayProps) {
     onSendChat,
     onReplayStep,
     boardFps,
+    showAdminSpectatorControls,
+    adminSpectatorReveal,
+    onAdminSpectatorRevealChange,
   } = props;
 
   const state = localGame.state;
@@ -145,6 +152,15 @@ export function TableBoardOverlay(props: TableBoardOverlayProps) {
           onSwitchSides={onSwitchSides}
         />
       </div>
+
+      {showAdminSpectatorControls && adminSpectatorReveal && onAdminSpectatorRevealChange ? (
+        <div className={styles.adminSpectatorControls}>
+          <AdminSpectatorControls
+            reveal={adminSpectatorReveal}
+            onRevealChange={onAdminSpectatorRevealChange}
+          />
+        </div>
+      ) : null}
     </div>
   );
 }

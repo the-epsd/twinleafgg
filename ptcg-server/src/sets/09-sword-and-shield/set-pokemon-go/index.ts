@@ -1,0 +1,64 @@
+import { RareCandyPGO, ConkeldurrV2PGO, ConkeldurrV3PGO, SlakingV2PGO, ProfessorsResearchPGO, ProfessorsResearch2PGO, LureModule2PGO } from './other-prints';
+import { Card } from '../../../game/store/card/card';
+import { AlolanRaticate } from './alolan-raticate';
+import { Articuno } from './articuno';
+import { Blastoise } from './blastoise';
+import { Camerupt } from './camerupt';
+import { Charizard } from './charizard';
+import { Charmander } from './charmander';
+import { ConkeldurrV } from './conkeldurr-v';
+import { Ditto } from './ditto';
+import { Gyarados } from './gyarados';
+import { Ivysaur } from './ivysaur';
+import { Lunatone } from './lunatone';
+import { LureModule } from './lure-module';
+import { Magikarp } from './magikarp';
+import { Moltres } from './moltres';
+import { Pokestop } from './pokestop';
+import { RadiantVenusaur } from './radiant-venusaur';
+import { SlakingV } from './slaking-v';
+import { Slowbro } from './slowbro';
+import { Slowpoke } from './slowpoke';
+import { Snorlax } from './snorlax';
+import { Solrock } from './solrock';
+import { Wartortle } from './wartortle';
+import { Zapdos } from './zapdos';
+
+// Other Prints
+import { RadiantCharizardPGO } from './other-prints';
+
+export const setPokemonGO: Card[] = [
+  new AlolanRaticate(),
+  new Blastoise(),
+  new Camerupt(),
+  new Charmander(),
+  new Charizard(),
+  new Ditto(),
+  new Ivysaur(),
+  new Lunatone(),
+  new Pokestop(),
+  new SlakingV(),
+  new Snorlax(),
+  new Solrock(),
+  new ConkeldurrV(),
+  new Zapdos(),
+  new RadiantVenusaur(),
+  new Articuno(),
+  new Moltres(),
+  new Slowbro(),
+  new Slowpoke(),
+  new LureModule(),
+  new Wartortle(),
+  new Magikarp(),
+  new Gyarados(),
+
+  // Other Prints
+  new RadiantCharizardPGO(),
+  new RareCandyPGO(),
+  new ConkeldurrV2PGO(),
+  new ConkeldurrV3PGO(),
+  new SlakingV2PGO(),
+  new ProfessorsResearchPGO(),
+  new ProfessorsResearch2PGO(),
+  new LureModule2PGO(),
+];

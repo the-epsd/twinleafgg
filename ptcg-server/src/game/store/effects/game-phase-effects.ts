@@ -2,6 +2,7 @@ import { Effect } from './effect';
 import { Player } from '../state/player';
 import { Card } from '../card/card';
 import { Attack } from '../card/pokemon-types';
+import { AttackEffect } from './game-effects';
 
 export enum GamePhaseEffects {
   BEGIN_TURN_EFFECT = 'BEGIN_TURN_EFFECT',
@@ -12,7 +13,8 @@ export enum GamePhaseEffects {
   CHOOSE_STARTING_POKEMON_EFFECT = 'CHOOSE_STARTING_POKEMON_EFFECT',
   DREW_TOPDECK_EFFECT = 'DREW_TOPDECK_EFFECT',
   CHOOSE_PRIZE_EFFECT = 'CHOOSE_PRIZE_EFFECT',
-  AFTER_ATTACK_EFFECT = 'AFTER_ATTACK_EFFECT'
+  AFTER_ATTACK_EFFECT = 'AFTER_ATTACK_EFFECT',
+  BEFORE_DOING_DAMAGE_EFFECT = 'BEFORE_DOING_DAMAGE_EFFECT',
 }
 
 export class BeginTurnEffect implements Effect {
@@ -54,6 +56,22 @@ export class ChooseStartingPokemonEffect implements Effect {
 
   constructor(player: Player) {
     this.player = player;
+  }
+}
+
+export class BeforeDoingDamageEffect implements Effect {
+  readonly type: string = GamePhaseEffects.BEFORE_DOING_DAMAGE_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+  public opponent: Player;
+  public attack: Attack;
+  public attackEffect: AttackEffect;
+
+  constructor(attackEffect: AttackEffect) {
+    this.attackEffect = attackEffect;
+    this.player = attackEffect.player;
+    this.opponent = attackEffect.opponent;
+    this.attack = attackEffect.attack;
   }
 }
 

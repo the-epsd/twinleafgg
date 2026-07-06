@@ -30,10 +30,16 @@ export class PokemonCardList extends CardList {
   public showBasicAnimation: boolean = false;
   public triggerAttackAnimation: boolean = false;
   public damageReductionNextTurn: number = 0;
+  public defendingPokemonExtraDamageNextTurn: number = 0;
+  public defendingPokemonExtraDamageAttackerId: number | undefined = undefined;
+  public defendingPokemonExtraDamagePending: boolean = false;
   public cannotAttackNextTurn: boolean = false;
   public cannotAttackNextTurnPending: boolean = false;
   public cannotUseAttacksNextTurn: string[] = [];
   public cannotUseAttacksNextTurnPending: string[] = [];
+  public cannotRetreatNextTurn: boolean = false;
+  public cannotRetreatNextTurnPending: boolean = false;
+  public blockedAttackNameNextTurn: string | undefined = undefined;
   public _preservedConditionsDuringEvolution?: SpecialCondition[];
 
 
@@ -159,7 +165,13 @@ export class PokemonCardList extends CardList {
     this.cannotAttackNextTurnPending = false;
     this.cannotUseAttacksNextTurn = [];
     this.cannotUseAttacksNextTurnPending = [];
+    this.cannotRetreatNextTurn = false;
+    this.cannotRetreatNextTurnPending = false;
+    this.blockedAttackNameNextTurn = undefined;
     this.damageReductionNextTurn = 0;
+    this.defendingPokemonExtraDamageNextTurn = 0;
+    this.defendingPokemonExtraDamageAttackerId = undefined;
+    this.defendingPokemonExtraDamagePending = false;
   }
 
   clearEffects(): void {
@@ -190,10 +202,16 @@ export class PokemonCardList extends CardList {
     this.burnDamage = 20;
     this.confusionDamage = 30;
     this.damageReductionNextTurn = 0;
+    this.defendingPokemonExtraDamageNextTurn = 0;
+    this.defendingPokemonExtraDamageAttackerId = undefined;
+    this.defendingPokemonExtraDamagePending = false;
     this.cannotAttackNextTurn = false;
     this.cannotAttackNextTurnPending = false;
     this.cannotUseAttacksNextTurn = [];
     this.cannotUseAttacksNextTurnPending = [];
+    this.cannotRetreatNextTurn = false;
+    this.cannotRetreatNextTurnPending = false;
+    this.blockedAttackNameNextTurn = undefined;
     // if (this.cards.length === 0) {
     //   this.damage = 0;
     // }

@@ -1,11 +1,10 @@
-import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { PlayerType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AfterAttackEffect } from '../../game/store/effects/game-phase-effects';
 import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../game/store/prefabs/attack-effects';
-import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, COIN_FLIP_PROMPT, SWITCH_OUT_OPPONENT_ACTIVE_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Yanma extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -37,8 +36,6 @@ export class Yanma extends PokemonCard {
   public name: string = 'Yanma';
   public fullName: string = 'Yanma N2';
 
-  private usedShockwave: boolean = false;
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
@@ -50,13 +47,12 @@ export class Yanma extends PokemonCard {
             const damageEffect = new PutDamageEffect(effect, 10);
             damageEffect.target = cardList;
             store.reduceEffect(state, damageEffect);
-            this.usedShockwave = true;
           });
         }
       });
     }
 
-    if (effect instanceof AfterAttackEffect && this.usedShockwave) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const opponentHasBenched = opponent.bench.some(b => b.cards.length > 0);
@@ -65,19 +61,8 @@ export class Yanma extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        opponent.id,
-        GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { allowCancel: false },
-      ), selected => {
-        if (!selected || selected.length === 0) {
-          return state;
-        }
-        const target = selected[0];
-        opponent.switchPokemon(target);
-        this.usedShockwave = false;
+      return SWITCH_OUT_OPPONENT_ACTIVE_POKEMON(store, state, effect.player, {
+        sourceEffect: effect,
       });
     }
 

@@ -1,4 +1,4 @@
-import { Sceptile } from "../set-ex-ruby-and-sapphire/sceptile";
+import { Sceptile } from "../03-ex-ruby-and-sapphire/set-ex-ruby-and-sapphire/sceptile";
 
 export class SceptileP4 extends Sceptile {
   public set: string = 'P4';

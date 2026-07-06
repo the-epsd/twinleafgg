@@ -1,6 +1,6 @@
 import { MetalEnergySpecial } from '../set-aquapolis/metal-energy-special';
-import { RecycleEnergy } from '../set-unified-minds/recycle-energy';
-import { SuperiorEnergyRetrieval } from '../set-plasma-freeze/superior-energy-retrieval';
+import { RecycleEnergy } from '../08-sun-and-moon/set-unified-minds/recycle-energy';
+import { SuperiorEnergyRetrieval } from '../06-black-and-white/set-plasma-freeze/superior-energy-retrieval';
 
 export class MetalEnergyN1 extends MetalEnergySpecial {
   public fullName = 'Metal Energy N1';

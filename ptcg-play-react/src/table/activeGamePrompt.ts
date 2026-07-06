@@ -10,3 +10,9 @@ export function activeGamePrompt(
   }
   return game.state.prompts.find((p) => p.playerId === clientId && p.result === undefined);
 }
+
+export function hasUnresolvedGamePrompts(
+  game: LocalGameState | null | undefined,
+): boolean {
+  return !!game?.state?.prompts?.some((p) => p.result === undefined);
+}

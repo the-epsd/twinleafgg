@@ -1,0 +1,64 @@
+import { MeganiumMEP, InteleonMEP, AlakazamMEP, LunatoneMEP, Alakazam2MEP, RioluMEP, MegaLatiasexMEP, MegaLucarioexMEP, MegaVenusaurExMEP, CeruledgeMEP, ZacianMEP, ToxtricityMEP, CharcadetMEP, MegaCharizardXexMEP, OricorioexMEP, MegaKangaskhanexMEP, HaunterMEP, DoubladeMEP, TyrantrumMEP, BarbaracleMEP, SerperiorMEP, MegaCharizardXex2MEP, MegaCharizardYexMEP, NsZekromMEP, MegaGardevoirexMEP, MegaLucarioex2MEP, MegaMeganiumexMEP, MegaEmboarexMEP, MegaFeraligatrexMEP, MakuhitaMEP, ChikoritaMEP, DelphoxMEP, CrobatMEP, GoodraMEP, ToxelMEP, CharmeleonMEP, FennekinMEP } from './other-prints';
+import { Card } from '../../../game/store/card/card';
+import { Psyduck } from './psyduck';
+import { Sneasel } from './sneasel';
+import { Weavile } from './weavile';
+import { Golduck } from './golduck';
+import { Slowpoke } from './slowpoke';
+import { MegaSlowbroex } from './mega-slowbro-ex';
+import { MegaDelphoxex } from './mega-delphox-ex';
+import { Pikachuex } from './pikachu-ex';
+import { Pikachuex2 } from './pikachu-ex-2';
+import { Grisham } from './grisham';
+import { Jett } from './jett';
+
+export const setMegaEvolutionPromos: Card[] = [
+  new Psyduck(),
+  new Sneasel(),
+  new Weavile(),
+  new MeganiumMEP(),
+  new InteleonMEP(),
+  new AlakazamMEP(),
+  new LunatoneMEP(),
+  new Alakazam2MEP(),
+  new RioluMEP(),
+  new MegaLatiasexMEP(),
+  new MegaLucarioexMEP(),
+  new MegaVenusaurExMEP(),
+  new CeruledgeMEP(),
+  new ZacianMEP(),
+  new ToxtricityMEP(),
+  new CharcadetMEP(),
+  new MegaCharizardXexMEP(),
+  new OricorioexMEP(),
+  new MegaKangaskhanexMEP(),
+  new HaunterMEP(),
+  new Golduck(),
+  new Slowpoke(),
+  new MegaSlowbroex(),
+  new MegaDelphoxex(),
+  new Pikachuex(),
+  new Pikachuex2(),
+  new Grisham(),
+  new Jett(),
+  new SerperiorMEP(),
+  new BarbaracleMEP(),
+  new TyrantrumMEP(),
+  new DoubladeMEP(),
+  new MegaCharizardXex2MEP(),
+  new MegaCharizardYexMEP(),
+  new NsZekromMEP(),
+  new MegaGardevoirexMEP(),
+  new MegaLucarioex2MEP(),
+  new MegaMeganiumexMEP(),
+  new MegaEmboarexMEP(),
+  new MegaFeraligatrexMEP(),
+  new MakuhitaMEP(),
+  new ChikoritaMEP(),
+  new DelphoxMEP(),
+  new CrobatMEP(),
+  new GoodraMEP(),
+  new ToxelMEP(),
+  new CharmeleonMEP(),
+  new FennekinMEP(),
+];

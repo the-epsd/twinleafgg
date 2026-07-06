@@ -4,6 +4,7 @@ import type { Card } from 'ptcg-server';
 import { SuperType } from 'ptcg-server';
 import { CardFace } from '../components/cards';
 import { isFavoriteCard, toggleFavoriteCard } from './favoriteCardsStorage';
+import type { GroupedAlternativePrintings } from './cardInfoUtils';
 import styles from './CardSwapDialog.module.css';
 
 function IconSwapHoriz({ size = 24 }: { size?: number }) {
@@ -34,22 +35,124 @@ export type CardSwapDialogProps = {
   open: boolean;
   onClose: () => void;
   currentCard: Card;
-  alternativeCards: Card[];
+  groupedAlternatives: GroupedAlternativePrintings;
   getScanUrl: (card: Card) => string;
   onSelect: (card: Card) => void;
 };
+
+type AlternativeCardTileProps = {
+  card: Card;
+  getScanUrl: (card: Card) => string;
+  onSelect: (card: Card) => void;
+  onToggleFavorite: (card: Card, e: React.MouseEvent) => void;
+  swapLabel: string;
+  favoriteAddLabel: string;
+  favoriteRemoveLabel: string;
+};
+
+function AlternativeCardTile({
+  card,
+  getScanUrl,
+  onSelect,
+  onToggleFavorite,
+  swapLabel,
+  favoriteAddLabel,
+  favoriteRemoveLabel,
+}: AlternativeCardTileProps) {
+  return (
+    <div key={card.fullName} className={styles.cardItem} onClick={() => onSelect(card)}>
+      <div className={styles.cardWrapper}>
+        <div className={styles.swapCardSmall}>
+          <CardFace card={card} src={getScanUrl(card)} name={card.name} loading="lazy" style={{ width: '100%' }} />
+        </div>
+        <button
+          type="button"
+          className={styles.swapIconButton}
+          title={swapLabel}
+          onClick={(e) => {
+            e.stopPropagation();
+            onSelect(card);
+          }}
+        >
+          <IconSwapHoriz size={24} />
+        </button>
+        {!isPokemonCard(card) && (
+          <button
+            type="button"
+            className={`${styles.favoriteIconButton} ${styles.favoriteIconButtonSmall}`}
+            title={isFavoriteCard(card) ? favoriteRemoveLabel : favoriteAddLabel}
+            onClick={(e) => onToggleFavorite(card, e)}
+          >
+            <IconHeart filled={isFavoriteCard(card)} size={16} />
+          </button>
+        )}
+      </div>
+      <div className={styles.cardInfo}>
+        <span className={styles.setInfo}>
+          {card.set} {card.setNumber}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+type AlternativeSectionProps = {
+  title: string;
+  cards: Card[];
+  getScanUrl: (card: Card) => string;
+  onSelect: (card: Card) => void;
+  onToggleFavorite: (card: Card, e: React.MouseEvent) => void;
+  swapLabel: string;
+  favoriteAddLabel: string;
+  favoriteRemoveLabel: string;
+};
+
+function AlternativeSection({
+  title,
+  cards,
+  getScanUrl,
+  onSelect,
+  onToggleFavorite,
+  swapLabel,
+  favoriteAddLabel,
+  favoriteRemoveLabel,
+}: AlternativeSectionProps) {
+  if (cards.length === 0) {
+    return null;
+  }
+
+  return (
+    <section className={styles.alternativeGroup}>
+      <h3 className={styles.groupTitle}>{title}</h3>
+      <div className={styles.cardsRow}>
+        {cards.map((card) => (
+          <AlternativeCardTile
+            key={card.fullName}
+            card={card}
+            getScanUrl={getScanUrl}
+            onSelect={onSelect}
+            onToggleFavorite={onToggleFavorite}
+            swapLabel={swapLabel}
+            favoriteAddLabel={favoriteAddLabel}
+            favoriteRemoveLabel={favoriteRemoveLabel}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
 
 export function CardSwapDialog({
   open,
   onClose,
   currentCard,
-  alternativeCards,
+  groupedAlternatives,
   getScanUrl,
   onSelect,
 }: CardSwapDialogProps) {
   const { t } = useTranslation();
   const [, setFavTick] = useState(0);
-  const bumpFav = useCallback(() => setFavTick((t) => t + 1), []);
+  const bumpFav = useCallback(() => setFavTick((tick) => tick + 1), []);
 
   useEffect(() => {
     if (!open) {
@@ -73,6 +176,12 @@ export function CardSwapDialog({
     toggleFavoriteCard(card);
     bumpFav();
   };
+
+  const { otherPrints, sameNameOnly } = groupedAlternatives;
+  const hasAlternatives = otherPrints.length + sameNameOnly.length > 0;
+  const swapLabel = t('SWAP_PRINTING');
+  const favoriteAddLabel = t('FAVORITE_ADD');
+  const favoriteRemoveLabel = t('FAVORITE_REMOVE');
 
   return (
     <div className={styles.backdrop} role="presentation" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
@@ -104,7 +213,7 @@ export function CardSwapDialog({
                   <button
                     type="button"
                     className={styles.favoriteIconButton}
-                    title={isFavoriteCard(currentCard) ? t('FAVORITE_REMOVE') : t('FAVORITE_ADD')}
+                    title={isFavoriteCard(currentCard) ? favoriteRemoveLabel : favoriteAddLabel}
                     onClick={(e) => toggleFav(currentCard, e)}
                   >
                     <IconHeart filled={isFavoriteCard(currentCard)} />
@@ -118,45 +227,28 @@ export function CardSwapDialog({
               </div>
             </div>
 
-            {alternativeCards.length > 0 ? (
+            {hasAlternatives ? (
               <div className={styles.alternativesSection}>
-                <div className={styles.cardsRow}>
-                  {alternativeCards.map((card) => (
-                    <div key={card.fullName} className={styles.cardItem} onClick={() => onSelect(card)}>
-                      <div className={styles.cardWrapper}>
-                        <div className={styles.swapCardSmall}>
-                          <CardFace card={card} src={getScanUrl(card)} name={card.name} loading="lazy" style={{ width: '100%' }} />
-                        </div>
-                        <button
-                          type="button"
-                          className={styles.swapIconButton}
-                          title={t('SWAP_PRINTING')}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            onSelect(card);
-                          }}
-                        >
-                          <IconSwapHoriz size={24} />
-                        </button>
-                        {!isPokemonCard(card) && (
-                          <button
-                            type="button"
-                            className={`${styles.favoriteIconButton} ${styles.favoriteIconButtonSmall}`}
-                            title={isFavoriteCard(card) ? t('FAVORITE_REMOVE') : t('FAVORITE_ADD')}
-                            onClick={(e) => toggleFav(card, e)}
-                          >
-                            <IconHeart filled={isFavoriteCard(card)} size={16} />
-                          </button>
-                        )}
-                      </div>
-                      <div className={styles.cardInfo}>
-                        <span className={styles.setInfo}>
-                          {card.set} {card.setNumber}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <AlternativeSection
+                  title={t('SWAP_SECTION_OTHER_PRINTS')}
+                  cards={otherPrints}
+                  getScanUrl={getScanUrl}
+                  onSelect={onSelect}
+                  onToggleFavorite={toggleFav}
+                  swapLabel={swapLabel}
+                  favoriteAddLabel={favoriteAddLabel}
+                  favoriteRemoveLabel={favoriteRemoveLabel}
+                />
+                <AlternativeSection
+                  title={t('SWAP_SECTION_SAME_NAME')}
+                  cards={sameNameOnly}
+                  getScanUrl={getScanUrl}
+                  onSelect={onSelect}
+                  onToggleFavorite={toggleFav}
+                  swapLabel={swapLabel}
+                  favoriteAddLabel={favoriteAddLabel}
+                  favoriteRemoveLabel={favoriteRemoveLabel}
+                />
               </div>
             ) : (
               <div className={styles.noAlternatives}>

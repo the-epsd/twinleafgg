@@ -52,11 +52,11 @@ export function getMultiDrawBatchStageLayout(
 }
 
 /** Deck→stage: travel + flip (faster motion; dwell unchanged via {@link DRAW_DECK_TO_STAGE_PHASE_DURATION}). */
-const DRAW_DECK_TO_STAGE_TRAVEL_DURATION = 0.18;
+const DRAW_DECK_TO_STAGE_TRAVEL_DURATION = 0.13;
 /** Stage “pop” scale — same duration so visible time on the board stays consistent. */
-const DRAW_DECK_TO_STAGE_SCALE_DURATION = 0.36;
+const DRAW_DECK_TO_STAGE_SCALE_DURATION = 0.3;
 /** Total deck→stage phase before stage→hand (padding keeps dwell when travel is shorter than scale). */
-const DRAW_DECK_TO_STAGE_PHASE_DURATION = 0.72;
+const DRAW_DECK_TO_STAGE_PHASE_DURATION = 0.70;
 
 const DRAW_STAGE_TO_HAND_TRAVEL_DURATION = 0.16;
 const DRAW_STAGE_TO_HAND_SCALE_DURATION = 0.14;
@@ -66,7 +66,13 @@ const DRAW_STAGE_TO_HAND_BURST_TRAVEL_DURATION = 0.1;
 const DRAW_STAGE_TO_HAND_BURST_SCALE_DURATION = 0.08;
 
 /** After every multi-draw card has reached the stage, hold before the shared hand flight. */
-export const MULTI_DRAW_SHARED_STAGED_HOLD_SEC = 0.52;
+export const MULTI_DRAW_SHARED_STAGED_HOLD_SEC = 0.55;
+
+/** Pause after hand→discard flights before a follow-up draw animation (e.g. Prism Tower). */
+export const HAND_DISCARD_TO_DRAW_HOLD_SEC = 0.35;
+
+/** Pause after hand→discard flights before supporter→discard flight (trainer resolves last). */
+export const HAND_DISCARD_TO_TRAINER_HOLD_SEC = 0.35;
 
 /** Delay between starting each card’s stage→hand flight in a multi-draw burst (subtle cascade). */
 export const MULTI_DRAW_STAGE_TO_HAND_STAGGER_SEC = 0.04;

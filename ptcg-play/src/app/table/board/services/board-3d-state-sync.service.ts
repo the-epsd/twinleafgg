@@ -11,6 +11,7 @@ import { Board3dCardOverlayService } from './board-3d-card-overlay.service';
 import { Board3dStackService, UpdateCardCallback, GetCardByIdCallback } from './board-3d-stack.service';
 import { Board3dPrizeService, RemoveCardCallback } from './board-3d-prize.service';
 import { ZONE_POSITIONS, getBenchPositions } from '../board-3d/board-3d-zone-positions';
+import { getBreakDisplayCards } from '../../../shared/cards/break-card-display.utils';
 
 @Injectable()
 export class Board3dStateSyncService {
@@ -276,10 +277,7 @@ export class Board3dStateSyncService {
       const isFaceDown = cardList.isSecret || (!cardList.isPublic && !isOwner);
       if (isFaceDown) return;
       if (cardList instanceof PokemonCardList) {
-        const main = cardList.getPokemonCard();
-        const mainCard = main?.tags?.includes(CardTag.BREAK)
-          ? cardList.cards.find(c => c.superType === SuperType.POKEMON && !c.tags?.includes(CardTag.BREAK)) || main
-          : main || cardList.cards[0];
+        const { mainCard } = getBreakDisplayCards(cardList);
         if (mainCard) {
           const url = this.cardsBaseService.getScanUrlFor3D(mainCard, cardList);
           if (url && url.trim()) urls.push(url);
@@ -340,18 +338,10 @@ export class Board3dStateSyncService {
     let mainCard: Card;
     let breakCard: Card | undefined;
 
-    // Handle PokemonCardList for evolution display
     if (cardList instanceof PokemonCardList) {
-      const pokemonCard = cardList.getPokemonCard();
-      if (pokemonCard?.tags?.includes(CardTag.BREAK)) {
-        // BREAK card: show pre-evolution as main, BREAK as overlay
-        mainCard = cardList.cards.find(c =>
-          c.superType === SuperType.POKEMON && !c.tags?.includes(CardTag.BREAK)
-        ) || pokemonCard;
-        breakCard = pokemonCard;
-      } else {
-        mainCard = pokemonCard || cardList.cards[0];
-      }
+      const breakDisplay = getBreakDisplayCards(cardList);
+      mainCard = breakDisplay.mainCard;
+      breakCard = breakDisplay.breakCard;
     } else {
       mainCard = cardList.cards[0];
     }

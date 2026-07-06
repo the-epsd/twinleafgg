@@ -58,7 +58,8 @@ export class Board3dHandService {
     hand: CardList,
     isOwner: boolean,
     attachRoot: Object3D,
-    playableCardIds?: number[]
+    playableCardIds?: number[],
+    omitServerIndices?: ReadonlySet<number>,
   ): Promise<void> {
     // Prevent concurrent updates
     if (this.isUpdating) {
@@ -86,10 +87,28 @@ export class Board3dHandService {
       // Clear old cards (kills animations and properly disposes)
       this.clearHand(attachRoot);
 
-      // Create new cards in parallel
-      const cardPromises = cards.map((card, i) => {
+      const visibleEntries: { card: Card; serverIndex: number; visualIndex: number }[] = [];
+      for (let i = 0; i < cards.length; i++) {
+        if (omitServerIndices?.has(i)) {
+          continue;
+        }
+        visibleEntries.push({ card: cards[i], serverIndex: i, visualIndex: visibleEntries.length });
+      }
+      const totalVisible = visibleEntries.length;
+
+      const cardPromises = visibleEntries.map(({ card, serverIndex, visualIndex }) => {
         const isPlayable = isOwner && playableCardIds?.includes(card.id);
-        return this.createHandCard(card, i, cards.length, isOwner, isPlayable, hand, false);
+        return this.createHandCard(
+          card,
+          serverIndex,
+          totalVisible,
+          isOwner,
+          isPlayable,
+          hand,
+          false,
+          true,
+          visualIndex,
+        );
       });
       await Promise.all(cardPromises);
     } finally {
@@ -247,10 +266,11 @@ export class Board3dHandService {
     isPlayable?: boolean,
     hand?: CardList,
     deferProgressiveFrontLoad = false,
-    addToHandGroup = true
+    addToHandGroup = true,
+    layoutVisualIndex?: number,
   ): Promise<void> {
-    // Calculate position in straight line
-    const position = this.calculateCardPosition(index, totalCards);
+    const positionIndex = layoutVisualIndex ?? index;
+    const position = this.calculateCardPosition(positionIndex, totalCards);
     const rotation = 0; // No rotation - cards face forward
 
     // Load texture (checks artworksMap for overrides first, like 2D components do)
@@ -385,7 +405,8 @@ export class Board3dHandService {
     playableCardIds: number[] | undefined,
     stablePrefixLen: number,
     stepIndex: number,
-    isFirstStep: boolean
+    isFirstStep: boolean,
+    flyCardId?: number
   ): Promise<PrepareDrawFlightResult | null> {
     if (this.batchDrawPrepareDepth === 0) {
       return null;
@@ -394,7 +415,13 @@ export class Board3dHandService {
     if (cards.length === 0) {
       return null;
     }
-    const flyIdx = stablePrefixLen + stepIndex;
+    let flyIdx = stablePrefixLen + stepIndex;
+    if (flyCardId !== undefined) {
+      const idIdx = cards.findIndex(c => c.id === flyCardId);
+      if (idIdx >= 0) {
+        flyIdx = idIdx;
+      }
+    }
     if (flyIdx < 0 || flyIdx >= cards.length) {
       return null;
     }
@@ -413,7 +440,7 @@ export class Board3dHandService {
 
       this.clearHand(handSlot);
 
-      for (let j = 0; j < stablePrefixLen; j++) {
+      for (let j = 0; j < flyIdx; j++) {
         const isPlayable = isOwner && playableCardIds?.includes(cards[j].id);
         await this.createHandCard(cards[j], j, cards.length, isOwner, isPlayable, hand, false);
       }
@@ -560,6 +587,39 @@ export class Board3dHandService {
    * Detach a hand card to the scene for a play animation without disposing it.
    * Caller must dispose the Board3dCard after the animation (or on play failure, call syncHand).
    */
+  /**
+   * Detach a hand card by id for a discard-pile flight (sequential hand → discard animations).
+   */
+  detachHandCardForDiscardFlight(cardId: number, attachRoot: Object3D): Board3dCard | null {
+    let foundIndex = -1;
+    let board3d: Board3dCard | undefined;
+    for (const [idx, card] of this.handCards.entries()) {
+      const data = card.getGroup().userData.cardData as Card | undefined;
+      if (data?.id === cardId) {
+        foundIndex = idx;
+        board3d = card;
+        break;
+      }
+    }
+    if (foundIndex < 0 || !board3d) {
+      return null;
+    }
+
+    const cardGroup = board3d.getGroup();
+    gsap.killTweensOf(cardGroup.position);
+    gsap.killTweensOf(cardGroup.rotation);
+    gsap.killTweensOf(cardGroup.scale);
+
+    attachRoot.attach(cardGroup);
+    cardGroup.userData.isHandCard = false;
+    cardGroup.userData.discardingFromHand = true;
+    delete cardGroup.userData.handIndex;
+
+    this.handCards.delete(foundIndex);
+    this.repositionRemainingCards();
+    return board3d;
+  }
+
   detachCardForBoardPlay(index: number, attachRoot: Object3D): Board3dCard | null {
     const board3d = this.handCards.get(index);
     if (!board3d) {
@@ -579,6 +639,61 @@ export class Board3dHandService {
     this.handCards.delete(index);
     this.repositionRemainingCards();
     return board3d;
+  }
+
+  /**
+   * Lift a hand card for setup placement animation without reindexing remaining cards
+   * (server hand indices stay stable until the prompt is confirmed).
+   */
+  liftHandCardForSetupAnimation(index: number, attachRoot: Object3D): Board3dCard | null {
+    const board3d = this.handCards.get(index);
+    if (!board3d) {
+      return null;
+    }
+    const cardGroup = board3d.getGroup();
+
+    gsap.killTweensOf(cardGroup.position);
+    gsap.killTweensOf(cardGroup.rotation);
+    gsap.killTweensOf(cardGroup.scale);
+
+    attachRoot.attach(cardGroup);
+    cardGroup.userData.isHandCard = false;
+    cardGroup.userData.setupPlacementInFlight = true;
+
+    this.handCards.delete(index);
+    return board3d;
+  }
+
+  /**
+   * Compact remaining hand cards visually while preserving server handIndex in userData.
+   */
+  repositionSetupHandVisuals(): void {
+    const remaining = Array.from(this.handCards.entries()).sort((a, b) => a[0] - b[0]);
+    const totalVisible = remaining.length;
+    if (totalVisible === 0) {
+      return;
+    }
+
+    remaining.forEach(([, card], visualIndex) => {
+      const cardGroup = card.getGroup();
+      if (cardGroup.parent !== this.handGroup) {
+        return;
+      }
+
+      gsap.killTweensOf(cardGroup.position);
+      const newPosition = this.calculateCardPosition(visualIndex, totalVisible);
+      gsap.to(cardGroup.position, {
+        x: newPosition.x,
+        y: newPosition.y,
+        z: newPosition.z,
+        duration: 0.25,
+        ease: 'power2.out',
+      });
+    });
+  }
+
+  getHandCardEntries(): ReadonlyArray<readonly [number, Board3dCard]> {
+    return Array.from(this.handCards.entries()).sort((a, b) => a[0] - b[0]);
   }
 
   /**

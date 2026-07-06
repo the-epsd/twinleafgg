@@ -29,7 +29,7 @@ export class VictoryMedal extends TrainerCard {
           SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this, {}, { min: 1, max: 1, allowCancel: false });
           return state;
         } else if (coinResults.some(r => r === true)) {
-          DRAW_CARDS(player, 1);
+          DRAW_CARDS(store, state, player, 1);
           return state;
         }
         return state;

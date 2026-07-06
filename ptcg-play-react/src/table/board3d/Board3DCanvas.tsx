@@ -6,7 +6,7 @@ import { useCardImageMaps, useDeckCardScanUrl } from '../../context/CardImagesCo
 import { useAuth } from '../../context/AuthContext';
 import type { LocalGameState } from '../types/localGameState';
 import { BoardInteractionService } from '../BoardInteractionService';
-import type { Board3dController } from './board3dController';
+import type { AdminSpectatorReveal, Board3dController } from './board3dController';
 import { createBoard3dRuntime } from './createBoard3dRuntime';
 import { createBoard3dCardsAdapter } from './createBoard3dCardsAdapter';
 import type { Board3dCardsAdapter } from './board3dCardsAdapter';
@@ -40,6 +40,7 @@ export type Board3DCanvasProps = {
   topPlayerHand: CardList;
   clientId: number;
   catalog: Card[];
+  adminSpectatorReveal?: AdminSpectatorReveal;
   boardInteraction: BoardInteractionService;
   gameActions: Board3dGameActions;
   onKoSequenceActiveChange?: (active: boolean) => void;
@@ -137,6 +138,7 @@ export function Board3DCanvas(props: Board3DCanvasProps) {
       bottomPlayerHand: props.bottomPlayerHand,
       topPlayerHand: props.topPlayerHand,
       clientId: props.clientId,
+      adminSpectatorReveal: props.adminSpectatorReveal,
       onKoSequenceActiveChange: props.onKoSequenceActiveChange,
     }),
     [
@@ -146,6 +148,7 @@ export function Board3DCanvas(props: Board3DCanvasProps) {
       props.bottomPlayerHand,
       props.topPlayerHand,
       props.clientId,
+      props.adminSpectatorReveal,
       props.onKoSequenceActiveChange,
     ],
   );

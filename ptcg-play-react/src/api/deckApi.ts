@@ -1,11 +1,18 @@
 import { apiGet, apiPost } from './client';
 import type { Archetype, Format } from 'ptcg-server';
-import type { DeckListResponse, DeckResponse, DeckStatsResponse, OkResponse } from '../types/responses';
+import type { DeckListEntry, DeckListResponse, DeckResponse, DeckStatsResponse, OkResponse } from '../types/responses';
 
 export interface DeckListParams {
   summary?: boolean;
   limit?: number;
   offset?: number;
+}
+
+const DECK_LIST_PAGE_LIMIT = 500;
+
+function mergeDeckLists(accumulated: DeckListEntry[], newDecks: DeckListEntry[]): DeckListEntry[] {
+  const existingIds = new Set(accumulated.map((d) => d.id));
+  return [...accumulated, ...newDecks.filter((d) => !existingIds.has(d.id))];
 }
 
 export function getDeckList(params?: DeckListParams): Promise<DeckListResponse> {
@@ -21,6 +28,22 @@ export function getDeckList(params?: DeckListParams): Promise<DeckListResponse> 
   }
   const q = search.toString();
   return apiGet<DeckListResponse>(`/v1/decks/list${q ? `?${q}` : ''}`);
+}
+
+export async function fetchAllDecks(options?: { summary?: boolean }): Promise<DeckListEntry[]> {
+  const summary = options?.summary ?? true;
+  let accumulated: DeckListEntry[] = [];
+  let offset = 0;
+
+  while (true) {
+    const response = await getDeckList({ summary, limit: DECK_LIST_PAGE_LIMIT, offset });
+    accumulated = mergeDeckLists(accumulated, response.decks);
+    const total = response.total ?? accumulated.length;
+    offset += DECK_LIST_PAGE_LIMIT;
+    if (offset >= total || response.decks.length < DECK_LIST_PAGE_LIMIT) {
+      return accumulated;
+    }
+  }
 }
 
 export function getDeck(deckId: number): Promise<DeckResponse> {

@@ -4,20 +4,20 @@ import { StoreLike } from '../store-like';
 import { State } from '../state/state';
 import { Effect } from '../effects/effect';
 
-import { GreatBall as GreatBallRG } from '../../../sets/set-ex-firered-leafgreen/great-ball';
-import { GreatBall as GreatBallPAL } from '../../../sets/set-paldea-evolved/great-ball';
-import { MasterBall as MasterBallDX } from '../../../sets/set-ex-deoxys/master-ball';
-import { MasterBall as MasterBallTEF } from '../../../sets/set-temporal-forces/master-ball';
+import { GreatBall as GreatBallRG } from '../../../sets/03-ex-ruby-and-sapphire/set-ex-firered-leafgreen/great-ball';
+import { GreatBall as GreatBallPAL } from '../../../sets/10-scarlet-and-violet/set-paldea-evolved/great-ball';
+import { MasterBall as MasterBallDX } from '../../../sets/03-ex-ruby-and-sapphire/set-ex-deoxys/master-ball';
+import { MasterBall as MasterBallTEF } from '../../../sets/10-scarlet-and-violet/set-temporal-forces/master-ball';
 import { PokemonFanClub as PokemonFanClubP4 } from '../../../sets/set-pop-series-4/pokemon-fan-club';
-import { PokemonFanClub as PokemonFanClubUPR } from '../../../sets/set-ultra-prism/pokemon-fan-club';
+import { PokemonFanClub as PokemonFanClubUPR } from '../../../sets/08-sun-and-moon/set-ultra-prism/pokemon-fan-club';
 // import { QuickBall as QuickBallMD } from '../../../sets/set-majestic-dawn/quick-ball';
 // import { QuickBall as QuickBallSSH } from '../../../sets/set-sword-and-shield/quick-ball';
-import { RareCandy as RareCandyHP } from '../../../sets/set-ex-holon-phantoms/rare-candy';
-import { RareCandy as RareCandySVI } from '../../../sets/set-scarlet-and-violet/rare-candy';
+import { RareCandy as RareCandyHP } from '../../../sets/03-ex-ruby-and-sapphire/set-ex-holon-phantoms/rare-candy';
+import { RareCandy as RareCandySVI } from '../../../sets/10-scarlet-and-violet/set-scarlet-and-violet/rare-candy';
 // import { SuperRod as SuperRodNVI } from '../../../sets/set-noble-victories/super-rod';
 // import { SuperRod as SuperRodPAL } from '../../../sets/set-paldea-evolved/super-rod';
-import { PokemonCatcher as PokemonCatcherEPO } from '../../../sets/set-emerging-powers/pokemon-catcher';
-import { PokemonCatcher as PokemonCatcherSVI } from '../../../sets/set-scarlet-and-violet/pokemon-catcher';
+import { PokemonCatcher as PokemonCatcherEPO } from '../../../sets/06-black-and-white/set-emerging-powers/pokemon-catcher';
+import { PokemonCatcher as PokemonCatcherSVI } from '../../../sets/10-scarlet-and-violet/set-scarlet-and-violet/pokemon-catcher';
 
 const effectOverrides: {
   [cardKey: string]: {

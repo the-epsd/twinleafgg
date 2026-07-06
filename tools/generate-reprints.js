@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const ts = require('typescript');
 const jsdom = require('jsdom');
 
@@ -7,10 +8,10 @@ const reprintSetName = processArgs[0];
 const reprintFolder = processArgs[1];
 const reprintsFileName = processArgs[2];
 const setsFolderPath = '../ptcg-server/src/sets';
-const cardReplacementsFilePath = '../ptcg-play/src/app/deck/deck-edit/card-replacements.ts';
 validateProcessArgs();
-const folders = fs.readdirSync(setsFolderPath).filter(r => !r.includes('.'));
+const reprintSetPath = `${setsFolderPath}/${reprintFolder}`;
 const implemented = readImplementedCards();
+const existingSetClassNames = readExistingSetClassNames();
 
 (async function () {
   const newClassNames = await writeReprints();
@@ -18,32 +19,40 @@ const implemented = readImplementedCards();
 })();
 
 function readImplementedCards() {
-  /** @type {Record<string, { folder: string, file: string, className: string, setName: string, setNumber: string, cardName: string | undefined }} */
+  /** @type {Record<string, { importPath: string, className: string, setName: string, setNumber: string, cardName: string | undefined }>} */
   const result = {};
 
-  for (const folder of folders) {
-    for (const file of fs.readdirSync(`${setsFolderPath}/${folder}`)) {
-      const filePath = `${setsFolderPath}/${folder}/${file}`;
+  /** @param {string} dir */
+  function scanDirectory(dir) {
+    for (const entry of fs.readdirSync(dir)) {
+      const filePath = path.join(dir, entry);
       const stats = fs.statSync(filePath);
 
-      // Skip if it's not a file or not a TypeScript file
-      if (!stats.isFile() || !file.endsWith('.ts')) {
+      if (stats.isDirectory()) {
+        if (entry === 'node_modules' || entry === 'tests')
+          continue;
+
+        scanDirectory(filePath);
         continue;
       }
 
+      if (!entry.endsWith('.ts') || entry === 'index.ts')
+        continue;
+
       const content = fs.readFileSync(filePath, 'utf-8');
       const sourceFile = ts.createSourceFile('file.ts', content, ts.ScriptTarget.ESNext, true);
+      const importPath = toImportPath(filePath);
 
       /** @type {ts.Visitor} */
       const visitor = (node) => {
         if (ts.isClassDeclaration(node)) {
           const className = node.name?.text;
-          const setNumber = node.members.find(m => m.name?.text === 'setNumber')?.initializer?.text;
-          const setName = node.members.find(m => m.name?.text === 'set')?.initializer?.text;
-          const cardName = node.members.find(m => m.name?.text === 'name')?.initializer?.text;
+          const setNumber = getStringLiteralValue(node.members.find(m => m.name?.text === 'setNumber')?.initializer);
+          const setName = getStringLiteralValue(node.members.find(m => m.name?.text === 'set')?.initializer);
+          const cardName = getStringLiteralValue(node.members.find(m => m.name?.text === 'name')?.initializer);
 
           if (className && setName && setNumber)
-            result[`${setName}/${setNumber}`] = { folder, file, className, cardName, setName, setNumber };
+            result[`${setName}/${setNumber}`] = { importPath, className, cardName, setName, setNumber };
         }
 
         ts.forEachChild(node, visitor);
@@ -53,16 +62,37 @@ function readImplementedCards() {
     }
   }
 
+  scanDirectory(setsFolderPath);
   return result;
+}
+
+/** @param {ts.Expression | undefined} node */
+function getStringLiteralValue(node) {
+  if (!node)
+    return undefined;
+
+  if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node))
+    return node.text;
+
+  return undefined;
+}
+
+/** @param {string} filePath */
+function toImportPath(filePath) {
+  const relativePath = path.relative(reprintSetPath, filePath).replace(/\\/g, '/');
+  return relativePath.replace(/\.ts$/, '');
 }
 
 async function writeReprints() {
   const newImports = [];
   const newCards = [];
   const newClassNames = [];
-  const importReplacements = [];
-  const exportReplacements = [];
   const reprints = await getReprintsFromLimitless();
+  const outputFileName = `${setsFolderPath}/${reprintFolder}/${reprintsFileName}`;
+  const existingOutput = fs.existsSync(outputFileName)
+    ? fs.readFileSync(outputFileName, 'utf-8')
+    : '';
+  const existingClassNames = getExistingClassNames(existingOutput);
 
   for (const [reprintNumber, cardInfo] of Object.entries(reprints)) {
     if (implemented[`${reprintSetName}/${reprintNumber}`])
@@ -78,10 +108,21 @@ async function writeReprints() {
 
     suffix = suffix || '';
     const baseClassName = implementation.className + (suffix ? implementation.setName + implementation.setNumber : '');
-    const newClassName = implementation.className + suffix + reprintSetName;
-    const cardName = implementation.cardName || escapeQuotes(name);
-    const fullName = `${cardName}${suffix} ${reprintSetName}`;
-    newImports.push(`import { ${implementation.className}${suffix ? ' as ' + baseClassName : ''} } from "../${implementation.folder}/${removeTsExtension(implementation.file)}";`);
+    let classSuffix = suffix;
+    let newClassName = implementation.className + classSuffix + reprintSetName;
+
+    while (existingSetClassNames.has(newClassName) || existingClassNames.has(newClassName)) {
+      const nextSuffix = classSuffix ? Number(classSuffix) + 1 : 2;
+      classSuffix = String(nextSuffix);
+      newClassName = implementation.className + classSuffix + reprintSetName;
+    }
+
+    if (existingClassNames.has(newClassName))
+      continue;
+
+    const rawCardName = implementation.cardName || name;
+    const fullName = escapeQuotes(`${rawCardName}${classSuffix} ${reprintSetName}`);
+    newImports.push(`import { ${implementation.className}${suffix ? ' as ' + baseClassName : ''} } from '${implementation.importPath.startsWith('.') ? implementation.importPath : './' + implementation.importPath}';`);
     newCards.push(...[
       `export class ${newClassName} extends ${baseClassName} {`,
       `  public setNumber = '${reprintNumber}';`,
@@ -91,19 +132,12 @@ async function writeReprints() {
       '',
     ]);
     newClassNames.push(newClassName);
-
-    if (suffix) {
-      const realName = `${cardName} ${reprintSetName}`;
-      importReplacements.push(`  { from: '${realName} ${reprintNumber}', to: '${fullName} ${reprintNumber}' },`);
-      exportReplacements.push(`  { from: '${fullName} ${reprintNumber}', to: '${realName} ${reprintNumber}' },`);
-    }
+    existingSetClassNames.add(newClassName);
+    existingClassNames.add(newClassName);
   }
 
   if (newCards.length) {
-    const outputFileName = `${setsFolderPath}/${reprintFolder}/${reprintsFileName}`;
-    const lines = fs.existsSync(outputFileName)
-      ? fs.readFileSync(outputFileName, 'utf-8').split('\n')
-      : [];
+    const lines = existingOutput ? existingOutput.split('\n') : [];
 
     fs.writeFileSync(outputFileName, [
       ...distinct(newImports),
@@ -112,38 +146,89 @@ async function writeReprints() {
     ].join('\n'));
   }
 
-  if (importReplacements.length) {
-    const outputFileName = cardReplacementsFilePath;
-    const lines = fs.readFileSync(outputFileName, 'utf-8').split('\n');
-    let trimmedLines = lines.map(line => line.trim());
-    const importReplacementsIndex = trimmedLines.indexOf('];');
-    if (importReplacementsIndex > -1)
-      lines.splice(importReplacementsIndex, 0, ...importReplacements);
-
-    trimmedLines = lines.map(line => line.trim());
-    const exportReplacementsIndex = trimmedLines.lastIndexOf('];');
-    if (exportReplacementsIndex > -1)
-      lines.splice(exportReplacementsIndex, 0, ...exportReplacements);
-
-    fs.writeFileSync(outputFileName, lines.join('\n'));
-  }
+  console.log(`Added ${newClassNames.length} reprint(s) to ${reprintsFileName}`);
+  if (newClassNames.length)
+    console.log(newClassNames.join(', '));
 
   return newClassNames;
 }
 
 /** @param {string[]} newClassNames */
 function writeIndex(newClassNames) {
+  if (!newClassNames.length)
+    return;
+
   const indexFileName = `${setsFolderPath}/${reprintFolder}/index.ts`;
-  const indexLines = fs.readFileSync(indexFileName, 'utf-8').split('\n');
-  const newIndexImportLine = `import { ${newClassNames.join(', ')} } from './${removeTsExtension(reprintsFileName)}';`;
-  const newIndexCards = newClassNames.map(c => `  new ${c}(),`);
+  const indexContent = fs.readFileSync(indexFileName, 'utf-8');
+  const indexLines = indexContent.split('\n');
+  const reprintsModule = removeTsExtension(reprintsFileName);
+  const classesToAdd = newClassNames.filter(className =>
+    !indexContent.includes(`new ${className}(`) && !indexContent.includes(`${className},`)
+  );
+
+  if (!classesToAdd.length)
+    return;
+
+  const existingImportLine = indexLines.find(line =>
+    line.startsWith(`import {`) && line.includes(`from './${reprintsModule}'`)
+  );
+
+  if (existingImportLine) {
+    const importIndex = indexLines.indexOf(existingImportLine);
+    const importedClasses = existingImportLine
+      .replace(`import {`, '')
+      .replace(`} from './${reprintsModule}';`, '')
+      .split(',')
+      .map(x => x.trim())
+      .filter(Boolean);
+    indexLines[importIndex] = `import { ${distinct([...importedClasses, ...classesToAdd]).join(', ')} } from './${reprintsModule}';`;
+  } else {
+    indexLines.unshift(`import { ${classesToAdd.join(', ')} } from './${reprintsModule}';`);
+  }
+
+  const newIndexCards = classesToAdd.map(c => `  new ${c}(),`);
   const lastIndexLine = indexLines.indexOf('];');
   if (lastIndexLine > -1)
     indexLines.splice(lastIndexLine, 0, ...newIndexCards);
-  fs.writeFileSync(indexFileName, [
-    newIndexImportLine,
-    ...indexLines
-  ].join('\n'));
+
+  fs.writeFileSync(indexFileName, indexLines.join('\n'));
+}
+
+function readExistingSetClassNames() {
+  const classNames = new Set();
+
+  /** @param {string} dir */
+  function scanDirectory(dir) {
+    for (const entry of fs.readdirSync(dir)) {
+      const filePath = path.join(dir, entry);
+      const stats = fs.statSync(filePath);
+
+      if (stats.isDirectory()) {
+        scanDirectory(filePath);
+        continue;
+      }
+
+      if (!entry.endsWith('.ts'))
+        continue;
+
+      for (const className of getExistingClassNames(fs.readFileSync(filePath, 'utf-8')))
+        classNames.add(className);
+    }
+  }
+
+  scanDirectory(reprintSetPath);
+  return classNames;
+}
+
+/** @param {string} content */
+function getExistingClassNames(content) {
+  const classNames = new Set();
+  const matches = content.matchAll(/^export class (\w+)/gm);
+
+  for (const match of matches)
+    classNames.add(match[1]);
+
+  return classNames;
 }
 
 function distinct(array) {
@@ -209,5 +294,5 @@ function validateProcessArgs() {
 
 function printUsage() {
   console.log(`Usage: node ${__filename} limitlessSetCode setFolderName outputFileName`);
-  console.log(`Example: node ${__filename} SVP set-scarlet-and-violet-promos alt-arts.ts`);
+  console.log(`Example: node ${__filename} SVP 10-scarlet-and-violet/set-scarlet-and-violet-promos other-prints.ts`);
 }

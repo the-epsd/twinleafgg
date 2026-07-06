@@ -1,6 +1,8 @@
 export * from './cards/card-manager';
 export * from './cards/deck-analyser';
 
+export * from './format/printing-release-date';
+
 export * from './core/game-settings';
 export * from './core/self-play-focus';
 export * from './core/player-stats';

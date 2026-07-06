@@ -13,7 +13,6 @@ import { Format } from 'ptcg-server';
 import { formatOptionLabel } from '../deck-editor/formatLabelI18n';
 import { useCoreSession } from '../context/CoreSessionContext';
 import { useSettings } from '../context/SettingsContext';
-import { useAuth } from '../context/AuthContext';
 import { getDeck, getDeckList } from '../api/deckApi';
 import type { DeckListEntry } from '../types/responses';
 import { ApiError } from '../api/apiError';
@@ -48,8 +47,7 @@ export interface MatchmakingLobbyProps {
 export function MatchmakingLobby({ onError }: MatchmakingLobbyProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { hiddenFormats, defaultSandboxMode } = useSettings();
-  const { user } = useAuth();
+  const { hiddenFormats } = useSettings();
   const { connected, joinMatchmaking, leaveMatchmaking } = useCoreSession();
   const visibleMatchFormats = useMemo(
     () => MATCH_FORMAT_VALUES.filter((f) => !hiddenFormats.includes(f)),
@@ -234,8 +232,7 @@ export function MatchmakingLobby({ onError }: MatchmakingLobbyProps) {
     try {
       const cards =
         deck.cards && deck.cards.length > 0 ? deck.cards : (await getDeck(deck.id)).deck.cards;
-      const sandboxMode = user?.roleId === 4 && defaultSandboxMode ? true : undefined;
-      await joinMatchmaking(selectedFormat, cards, deck.artworks, deck.id, deck.sleeveImagePath, sandboxMode);
+      await joinMatchmaking(selectedFormat, cards, deck.artworks, deck.id, deck.sleeveImagePath);
       setInQueue(true);
     } catch (e) {
       onErrorRef.current(e instanceof ApiError ? e.message : t('REACT_ERROR_JOIN_QUEUE'));

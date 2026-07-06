@@ -45,6 +45,7 @@ function LibraryCardThumb({
   canAddMore,
   onAdd,
   onRemoveOne,
+  onEditQuantity,
   onOpenInfo,
 }: {
   card: Card;
@@ -56,6 +57,7 @@ function LibraryCardThumb({
   canAddMore: boolean;
   onAdd: () => void;
   onRemoveOne: () => void;
+  onEditQuantity: () => void;
   onOpenInfo: () => void;
 }) {
   const { t } = useTranslation();
@@ -83,9 +85,11 @@ function LibraryCardThumb({
             <button
               type="button"
               className={styles.countCircle}
+              disabled={disabled}
               onPointerDown={(e) => e.stopPropagation()}
               onClick={(e) => {
                 e.stopPropagation();
+                onEditQuantity();
               }}
               aria-label={t('LIBRARY_IN_DECK_ARIA', { count: inDeckCount })}
             >
@@ -142,6 +146,7 @@ export type DeckLibraryPaneProps = {
   disabled: boolean;
   onAddCard: (card: Card) => void;
   onRemoveOneFromDeck: (fullName: string) => void;
+  onEditQuantity: (card: Card) => void;
   /** Copies in deck for this printing (`fullName` → count). */
   inDeckCounts: ReadonlyMap<string, number>;
   canAddCard: (card: Card) => boolean;
@@ -158,6 +163,7 @@ export function DeckLibraryPane({
   disabled,
   onAddCard,
   onRemoveOneFromDeck,
+  onEditQuantity,
   inDeckCounts,
   canAddCard,
   onOpenCardInfo,
@@ -274,6 +280,7 @@ export function DeckLibraryPane({
                       canAddMore={canAddCard(card)}
                       onAdd={() => onAddCard(card)}
                       onRemoveOne={() => onRemoveOneFromDeck(card.fullName)}
+                      onEditQuantity={() => onEditQuantity(card)}
                       onOpenInfo={() => onOpenCardInfo(card)}
                     />
                   ))}

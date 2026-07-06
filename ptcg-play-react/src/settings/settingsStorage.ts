@@ -12,8 +12,6 @@ export const SETTINGS_KEYS = {
   sfxEnabled: 'sfxEnabled',
   sfxVolume: 'sfxVolume',
   board2dPerspectiveEnabled: 'board2dPerspectiveEnabled',
-  /** React-only: admin preference for matchmade games (both admins must opt in on server). */
-  defaultSandboxMode: 'defaultSandboxMode',
   /** React-only: show active game markers in the card info pane (debug). */
   debugMarkersEnabled: 'debugMarkersEnabled',
 } as const;
@@ -29,8 +27,6 @@ export interface ClientSettingsSnapshot {
   cardTextKerning: number;
   sfxEnabled: boolean;
   sfxVolume: number;
-  /** Admin-only client flag; honored when joining matchmaking (see server). */
-  defaultSandboxMode: boolean;
   debugMarkersEnabled: boolean;
 }
 
@@ -95,11 +91,6 @@ function loadBoard2dPerspectiveSetting(): boolean {
   return saved ? JSON.parse(saved) : true;
 }
 
-function loadDefaultSandboxMode(): boolean {
-  const saved = localStorage.getItem(SETTINGS_KEYS.defaultSandboxMode);
-  return saved ? JSON.parse(saved) : false;
-}
-
 function loadDebugMarkersEnabled(): boolean {
   const saved = localStorage.getItem(SETTINGS_KEYS.debugMarkersEnabled);
   return saved ? JSON.parse(saved) : false;
@@ -117,7 +108,6 @@ export function readClientSettingsSnapshot(): ClientSettingsSnapshot {
     cardTextKerning: loadCardTextKerning(),
     sfxEnabled: loadSfxSetting(),
     sfxVolume: loadSfxVolume(),
-    defaultSandboxMode: loadDefaultSandboxMode(),
     debugMarkersEnabled: loadDebugMarkersEnabled(),
   };
 }
@@ -161,14 +151,6 @@ export function writeSfxEnabled(enabled: boolean): void {
 export function writeSfxVolume(volume: number): void {
   const clamped = Math.max(0, Math.min(1, volume));
   localStorage.setItem(SETTINGS_KEYS.sfxVolume, clamped.toString());
-}
-
-export function writeDefaultSandboxMode(enabled: boolean, isAdmin: boolean): void {
-  if (!isAdmin) {
-    localStorage.removeItem(SETTINGS_KEYS.defaultSandboxMode);
-    return;
-  }
-  localStorage.setItem(SETTINGS_KEYS.defaultSandboxMode, JSON.stringify(enabled));
 }
 
 export function writeDebugMarkersEnabled(enabled: boolean): void {

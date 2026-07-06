@@ -7,35 +7,23 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Pikachu extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.LIGHTNING;
-
+  public cardType: CardType = L;
   public hp: number = 50;
+  public weakness = [{ type: F }];
+  public retreat = [C];
 
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public retreat = [CardType.COLORLESS];
-
-  public attacks =
-    [
-      {
-        name: 'Spark',
-        cost: [CardType.LIGHTNING, CardType.LIGHTNING],
-        damage: 20,
-        text: 'If your opponent has any Benched Pokémon, choose 1 of them and this attack does 10 damage to it. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-      }
-    ];
+  public attacks = [{
+    name: 'Spark',
+    cost: [L, L],
+    damage: 20,
+    text: 'If your opponent has any Benched Pokémon, choose 1 of them and this attack does 10 damage to it. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }];
 
   public set: string = 'JU';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '60';
-
   public name: string = 'Pikachu';
-
   public fullName: string = 'Pikachu JU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

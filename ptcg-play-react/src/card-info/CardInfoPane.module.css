@@ -93,10 +93,27 @@
   white-space: nowrap;
 }
 
+.cardNamePrefix {
+  font-size: 10px;
+    margin: 8px 0;
+    padding: 8px;
+}
+
 .subtitleSetCode {
   font-size: 10px;
   margin: 8px 0;
   padding: 8px;
+}
+
+.regulationMark {
+  font-size: 10px;
+  margin: 8px 0;
+  padding: 0 3px;
+  background-color: #fafafa;
+  border: 2px solid #040816;
+  color: #040816;
+  border-radius: 4px;
+  line-height: 20px;
 }
 
 .subtitleHp {
@@ -357,4 +374,15 @@
 
 .statsHighlight {
   flex: 1 1 auto;
+}
+
+.reminder {
+  font-style: italic;
+  font-size: 85%;
+  color: #d4d5d6;
+}
+
+.bossMon {
+  font-weight: bold;
+  font-style: italic;
 }

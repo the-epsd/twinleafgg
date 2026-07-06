@@ -5,20 +5,28 @@ import { State } from '../state/state';
 import { StoreLike } from '../store-like';
 import {
   PutDamageEffect, DealDamageEffect, DiscardCardsEffect,
+  DiscardCardsFromOpponentsActivePokemonEffect,
   AddMarkerEffect, HealTargetEffect, AddSpecialConditionsEffect,
   RemoveSpecialConditionsEffect, ApplyWeaknessEffect, AfterDamageEffect,
   PutCountersEffect, CardsToHandEffect,
+  MoveOpponentEnergyEffect,
   KnockOutOpponentEffect,
+  KnockOutPlayerEffect,
+  DiscardDefendingPokemonEffect,
   KOEffect,
   LostZoneCardsEffect,
-  AfterWeaknessAndResistanceEffect
+  AfterWeaknessAndResistanceEffect,
+  GustOpponentBenchEffect,
+  SwitchOutOpponentsActiveEffect,
 } from '../effects/attack-effects';
-import { HealEffect } from '../effects/game-effects';
+import { HealEffect, KnockOutEffect } from '../effects/game-effects';
 import { StateUtils } from '../state-utils';
+import { PokemonCard } from '../card/pokemon-card';
 import { getCardTarget } from '../../../simple-bot/simple-tactics/simple-tactics';
 import { EffectOfAttackEffect } from '../effects/effect-of-attack-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
 import { CheckHpEffect } from '../effects/check-effects';
+import { MOVE_CARDS, TAKE_X_PRIZES } from '../prefabs/prefabs';
 
 export function attackReducer(store: StoreLike, state: State, effect: Effect): State {
 
@@ -50,6 +58,13 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
     // Apply damage reduction for "during opponent's next turn" effects
     if (target.damageReductionNextTurn > 0) {
       effect.damage = Math.max(0, effect.damage - target.damageReductionNextTurn);
+    }
+
+    // Apply extra damage for "during your next turn, the Defending Pokemon takes more damage" effects
+    if (target.defendingPokemonExtraDamageNextTurn > 0
+      && !target.defendingPokemonExtraDamagePending
+      && target.defendingPokemonExtraDamageAttackerId === effect.player.id) {
+      effect.damage += target.defendingPokemonExtraDamageNextTurn;
     }
 
     const damage = Math.max(0, effect.damage);
@@ -179,13 +194,41 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
       throw new GameError(GameMessage.ILLEGAL_ACTION);
     }
 
-    const damage = Math.max(0, effect.damage);
-    target.damage += damage;
+    const targetOwner = StateUtils.findOwner(state, target);
+    const knockOutEffect = new KnockOutEffect(targetOwner, target);
+    state = store.reduceEffect(state, knockOutEffect);
 
-    // Track damage dealt by the attacking Pokemon
-    if (damage > 0 && effect.attackEffect && effect.source) {
-      GameStatsTracker.trackDamageDealt(effect.player, effect.source, damage);
+    if (!knockOutEffect.preventDefault) {
+      effect.knockedOut = true;
+      effect.prizeCount = knockOutEffect.prizeCount;
+      return TAKE_X_PRIZES(store, state, effect.player, knockOutEffect.prizeCount);
     }
+
+    return state;
+  }
+
+  if (effect instanceof KnockOutPlayerEffect) {
+    if (effect.preventDefault) {
+      return state;
+    }
+
+    const target = effect.target;
+    const pokemonCard = target.getPokemonCard();
+    if (pokemonCard === undefined) {
+      throw new GameError(GameMessage.ILLEGAL_ACTION);
+    }
+
+    const targetOwner = StateUtils.findOwner(state, target);
+    const knockOutEffect = new KnockOutEffect(targetOwner, target);
+    state = store.reduceEffect(state, knockOutEffect);
+
+    if (!knockOutEffect.preventDefault) {
+      effect.knockedOut = true;
+      effect.prizeCount = knockOutEffect.prizeCount;
+      return TAKE_X_PRIZES(store, state, effect.opponent, knockOutEffect.prizeCount);
+    }
+
+    return state;
   }
 
   if (effect instanceof PutCountersEffect) {
@@ -227,6 +270,49 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
     return state;
   }
 
+  if (effect instanceof DiscardCardsFromOpponentsActivePokemonEffect) {
+    if (!effect.preventDefault) {
+      const target = effect.target;
+      const cards = effect.cards;
+      const owner = StateUtils.findOwner(state, target);
+      return MOVE_CARDS(store, state, target, owner.discard, { cards, sourceEffect: effect });
+    }
+    return state;
+  }
+
+  if (effect instanceof DiscardDefendingPokemonEffect) {
+    if (effect.preventDefault) {
+      return state;
+    }
+
+    const target = effect.target;
+    const pokemonCard = target.getPokemonCard();
+    if (pokemonCard === undefined) {
+      throw new GameError(GameMessage.ILLEGAL_ACTION);
+    }
+
+    const owner = StateUtils.findOwner(state, target);
+    const pokemons = target.getPokemons();
+    const tools = [...target.tools];
+    const otherCards = target.cards.filter(card =>
+      !pokemons.includes(card as PokemonCard) &&
+      !tools.includes(card)
+    );
+
+    if (pokemons.length > 0) {
+      state = MOVE_CARDS(store, state, target, owner.discard, { cards: pokemons, sourceEffect: effect });
+    }
+    if (otherCards.length > 0) {
+      state = MOVE_CARDS(store, state, target, owner.discard, { cards: otherCards, sourceEffect: effect });
+    }
+    for (const tool of tools) {
+      target.moveCardTo(tool, owner.discard);
+    }
+    target.clearEffects();
+    effect.discarded = true;
+    return state;
+  }
+
   if (effect instanceof LostZoneCardsEffect) {
     const target = effect.target;
     const cards = effect.cards;
@@ -240,6 +326,27 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
     const cards = effect.cards;
     const owner = StateUtils.findOwner(state, target);
     target.moveCardsTo(cards, owner.hand);
+    return state;
+  }
+
+  if (effect instanceof MoveOpponentEnergyEffect) {
+    if (!effect.preventDefault) {
+      effect.target.moveCardTo(effect.card, effect.destination);
+    }
+    return state;
+  }
+
+  if (effect instanceof GustOpponentBenchEffect) {
+    if (!effect.preventDefault) {
+      effect.opponent.switchPokemon(effect.target, store, state);
+    }
+    return state;
+  }
+
+  if (effect instanceof SwitchOutOpponentsActiveEffect) {
+    if (!effect.preventDefault && effect.benchTarget) {
+      effect.opponent.switchPokemon(effect.benchTarget, store, state);
+    }
     return state;
   }
 

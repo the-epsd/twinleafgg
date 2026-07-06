@@ -24,7 +24,8 @@ export type UpdateCardCallback = (
   rotation: number,
   cardTarget?: any,
   scale?: number,
-  sleeveImagePath?: string
+  sleeveImagePath?: string,
+  revealPrize?: boolean,
 ) => Promise<void>;
 
 // Callback type for getting cards by ID

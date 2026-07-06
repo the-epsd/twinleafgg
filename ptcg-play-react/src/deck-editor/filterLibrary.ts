@@ -1,5 +1,7 @@
 import type { Card, EnergyCard, PokemonCard, TrainerCard } from 'ptcg-server';
 import { CardType, Format, SuperType } from 'ptcg-server';
+import { FormatValidator } from './formatValidator';
+import type { DeckEditToolbarFilter } from './types';
 
 /** Same ordering as Angular `CardsBaseService.compareCards` (deck library catalog). */
 export function compareLibraryCards(c1: Card, c2: Card): number {
@@ -45,54 +47,176 @@ export function compareLibraryCards(c1: Card, c2: Card): number {
 export function sortLibraryCatalog(cards: Card[]): Card[] {
   return cards.length <= 1 ? cards.slice() : cards.slice().sort(compareLibraryCards);
 }
-import { FormatValidator } from './formatValidator';
-import type { DeckEditToolbarFilter } from './types';
+
+const SearchMatchTier = {
+  EXACT_NAME: 0,
+  NAME_CONTAINS: 1,
+  IDENTIFIER: 2,
+  TEXT: 3,
+  NO_MATCH: 4,
+} as const;
+
+type SearchMatchTier = (typeof SearchMatchTier)[keyof typeof SearchMatchTier];
 
 function searchCleanse(value: string): string {
-  return value.toLocaleLowerCase().replace('é', 'e');
+  return value.toLocaleLowerCase().replace(/é/g, 'e').replace(/'/g, '');
 }
 
-function matchCardText(card: Card, searchValue: string): boolean {
-  const search = searchCleanse(searchValue);
+function getIdentifierSearchFields(card: Card): string[] {
   const cardName = searchCleanse(card.name);
-  const setNumber = searchCleanse(card.setNumber);
   const set = searchCleanse(card.set);
+  return [
+    cardName,
+    searchCleanse(card.fullName),
+    set,
+    searchCleanse(card.setNumber),
+    `${cardName} ${set}`,
+  ];
+}
 
-  if (cardName.includes(search) || setNumber.includes(search) || set.includes(search)) {
-    return true;
-  }
+function getTextSearchFields(card: Card): string[] {
+  const fields: string[] = [];
 
   const trainerCard = card as TrainerCard;
   if (trainerCard.text !== undefined) {
-    const trainerText = searchCleanse(trainerCard.text);
-    if (trainerText.includes(search)) {
-      return true;
-    }
+    fields.push(searchCleanse(trainerCard.text));
   }
 
   const energyCard = card as EnergyCard;
   if (energyCard.text !== undefined) {
-    const energyText = searchCleanse(energyCard.text);
-    if (energyText.includes(search)) {
-      return true;
+    fields.push(searchCleanse(energyCard.text));
+  }
+
+  for (const attack of card.attacks) {
+    fields.push(searchCleanse(attack.name));
+    fields.push(searchCleanse(attack.text));
+  }
+
+  for (const power of card.powers) {
+    fields.push(searchCleanse(power.name));
+    fields.push(searchCleanse(power.text));
+  }
+
+  return fields;
+}
+
+function getAllSearchFields(card: Card): string[] {
+  return [...getIdentifierSearchFields(card), ...getTextSearchFields(card)];
+}
+
+function tokensMatchFields(fields: string[], tokens: string[]): boolean {
+  return tokens.every((token) => fields.some((field) => field.includes(token)));
+}
+
+function cardTextFieldsMatch(card: Card, search: string): boolean {
+  return getTextSearchFields(card).some((field) => field.includes(search));
+}
+
+function countNameTokenMatches(card: Card, tokens: string[]): number {
+  const cardName = searchCleanse(card.name);
+  return tokens.filter((token) => cardName.includes(token)).length;
+}
+
+function getSearchMatchTier(card: Card, searchValue: string): SearchMatchTier {
+  const search = searchCleanse(searchValue.trim());
+  if (!search) {
+    return SearchMatchTier.NO_MATCH;
+  }
+
+  const cardName = searchCleanse(card.name);
+  const fullName = searchCleanse(card.fullName);
+  const setNumber = searchCleanse(card.setNumber);
+  const set = searchCleanse(card.set);
+  const nameAndSet = `${cardName} ${set}`;
+
+  if (cardName === search) {
+    return SearchMatchTier.EXACT_NAME;
+  }
+
+  if (cardName.includes(search)) {
+    return SearchMatchTier.NAME_CONTAINS;
+  }
+
+  const tokens = search.split(/\s+/).filter(Boolean);
+  const identifierFields = getIdentifierSearchFields(card);
+  const allFields = getAllSearchFields(card);
+
+  if (
+    fullName.includes(search) ||
+    setNumber.includes(search) ||
+    set.includes(search) ||
+    nameAndSet.includes(search) ||
+    (tokens.length > 1 && tokensMatchFields(identifierFields, tokens))
+  ) {
+    return SearchMatchTier.IDENTIFIER;
+  }
+
+  if (tokens.length > 1 && tokensMatchFields(allFields, tokens)) {
+    if (countNameTokenMatches(card, tokens) > 0) {
+      return SearchMatchTier.NAME_CONTAINS;
+    }
+    return SearchMatchTier.TEXT;
+  }
+
+  if (cardTextFieldsMatch(card, search)) {
+    return SearchMatchTier.TEXT;
+  }
+
+  return SearchMatchTier.NO_MATCH;
+}
+
+function matchCardText(card: Card, searchValue: string): boolean {
+  return getSearchMatchTier(card, searchValue) !== SearchMatchTier.NO_MATCH;
+}
+
+/** Lower = better match. Secondary sort is applied by `sortFilteredLibrary`. */
+export function compareSearchRelevance(a: Card, b: Card, searchValue: string): number {
+  const tierA = getSearchMatchTier(a, searchValue);
+  const tierB = getSearchMatchTier(b, searchValue);
+  if (tierA !== tierB) {
+    return tierA - tierB;
+  }
+
+  if (tierA === SearchMatchTier.NAME_CONTAINS) {
+    const search = searchCleanse(searchValue.trim());
+    const tokens = search.split(/\s+/).filter(Boolean);
+    if (tokens.length > 1) {
+      const nameMatchesB = countNameTokenMatches(b, tokens) - countNameTokenMatches(a, tokens);
+      if (nameMatchesB !== 0) {
+        return nameMatchesB;
+      }
+    }
+
+    const lenDiff = searchCleanse(a.name).length - searchCleanse(b.name).length;
+    if (lenDiff !== 0) {
+      return lenDiff;
     }
   }
 
-  if (card.attacks.length > 0) {
-    const attackNames = card.attacks.map((attack) => searchCleanse(attack.name));
-    const attackTexts = card.attacks.map((attack) => searchCleanse(attack.text));
-    if (attackNames.some((n) => n.includes(search)) || attackTexts.some((n) => n.includes(search))) {
-      return true;
-    }
+  return 0;
+}
+
+export function sortFilteredLibrary(cards: Card[], filter: DeckEditToolbarFilter): Card[] {
+  const search = filter.searchValue?.trim();
+
+  if (!search && !filter.selectedSet) {
+    return sortLibraryCatalog(cards);
   }
-  if (card.powers.length > 0) {
-    const powerNames = card.powers.map((power) => searchCleanse(power.name));
-    const powerTexts = card.powers.map((power) => searchCleanse(power.text));
-    if (powerNames.some((n) => n.includes(search)) || powerTexts.some((n) => n.includes(search))) {
-      return true;
+
+  return cards.slice().sort((a, b) => {
+    if (search) {
+      const relevance = compareSearchRelevance(a, b, search);
+      if (relevance !== 0) {
+        return relevance;
+      }
     }
-  }
-  return false;
+
+    if (filter.selectedSet) {
+      return sortLibraryBySetNumber(a, b);
+    }
+
+    return compareLibraryCards(a, b);
+  });
 }
 
 function matchRetreatCosts(retreatCosts: number[], card: Card): boolean {
@@ -221,10 +345,5 @@ export function filterLibraryCards(cards: Card[], filter: DeckEditToolbarFilter)
   }
 
   const filtered = cards.filter((card) => matchesDeckLibraryFilter(card, filter));
-
-  if (!filter.selectedSet) {
-    return sortLibraryCatalog(filtered);
-  }
-
-  return filtered.slice().sort(sortLibraryBySetNumber);
+  return sortFilteredLibrary(filtered, filter);
 }

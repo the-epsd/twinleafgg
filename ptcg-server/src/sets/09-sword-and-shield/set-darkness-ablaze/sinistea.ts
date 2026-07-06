@@ -1,0 +1,44 @@
+import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../../game/store/card/card-types';
+import { StoreLike } from '../../../game/store/store-like';
+import { State } from '../../../game/store/state/state';
+import { Effect } from '../../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PUT_X_DAMAGE_COUNTERS_ON_YOUR_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
+
+export class Sinistea extends PokemonCard {
+  public stage: Stage = Stage.BASIC;
+  public cardType: CardType = P;
+  public hp: number = 30;
+  public weakness = [{ type: D }];
+  public resistance = [{ type: F, value: -30 }];
+
+  public attacks = [
+    {
+      name: 'Furtive Drop',
+      cost: [C],
+      damage: 0,
+      text: "Put 2 damage counters on your opponent's Active Pokémon.",
+    },
+  ];
+
+  public regulationMark = 'D';
+  public set: string = 'DAA';
+  public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '82';
+  public name: string = 'Sinistea';
+  public fullName: string = 'Sinistea DAA';
+
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      PUT_X_DAMAGE_COUNTERS_ON_YOUR_OPPONENTS_ACTIVE_POKEMON(
+        2,
+        store,
+        state,
+        effect,
+      );
+    }
+
+    return state;
+  }
+}

@@ -92,8 +92,8 @@
     </div>
 
     <div class="deck-grid-container">
-      <div class="deck-grid" *ngIf="filteredDecks.length > 0">
-        <div class="deck-tile" *ngFor="let deck of filteredDecks">
+      <div class="deck-grid" *ngIf="paginatedDecks.length > 0">
+        <div class="deck-tile" *ngFor="let deck of paginatedDecks">
           <div class="deck-card" [routerLink]="['/deck', deck.id]">
             <!-- Status indicators -->
             <div class="deck-status">
@@ -158,6 +158,12 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="pagination-container" *ngIf="filteredDecks.length > pageSize">
+        <mat-paginator hidePageSize="true" [disabled]="loading" [length]="filteredDecks.length"
+          [pageIndex]="pageIndex" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+          (page)="onPageChange($event)">
+        </mat-paginator>
       </div>
       <div class="no-decks-message" *ngIf="filteredDecks.length === 0">
         <mat-icon>info</mat-icon>

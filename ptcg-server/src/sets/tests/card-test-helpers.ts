@@ -3,7 +3,7 @@ import { State } from '../../game/store/state/state';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
 import { SpecialCondition } from '../../game/store/card/card-types';
-import { AttackAction, PassTurnAction, UseAbilityAction } from '../../game/store/actions/game-actions';
+import { AttackAction, PassTurnAction, RetreatStartAction, UseAbilityAction } from '../../game/store/actions/game-actions';
 import { PlayCardAction, PlayerType, SlotType, CardTarget } from '../../game/store/actions/play-card-action';
 import { Card } from '../../game/store/card/card';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -48,6 +48,11 @@ export function useAbility(store: Store, state: State, playerIndex: number, abil
 export function endTurn(store: Store, state: State): void {
   const player = state.players[state.activePlayer];
   store.dispatch(new PassTurnAction(player.id));
+}
+
+export function retreatStart(store: Store, state: State, playerIndex: number): void {
+  const player = state.players[playerIndex];
+  store.dispatch(new RetreatStartAction(player.id));
 }
 
 export function playTrainerCard(store: Store, state: State, playerIndex: number, cardFullName: string): void {

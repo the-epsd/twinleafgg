@@ -16,6 +16,7 @@ export class Board3dPrizeService {
     prizes: CardList[],
     basePosition: Vector3,
     isOwner: boolean,
+    revealPrizes: boolean,
     rotation: number,
     attachRoot: Object3D,
     player: Player,
@@ -62,7 +63,8 @@ export class Board3dPrizeService {
           rotation,
           undefined, // No cardTarget for prizes
           1.0, // Normal scale
-          sleeveImagePath
+          sleeveImagePath,
+          revealPrizes,
         ).then(() => {
           // Mark prize card for click detection
           const prizeCardMesh = getCardByIdCallback(prizeId);

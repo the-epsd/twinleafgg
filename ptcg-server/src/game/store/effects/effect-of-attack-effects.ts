@@ -1,6 +1,7 @@
 import { Effect } from './effect';
 import { AbstractAttackEffect } from './attack-effects';
 import { AttackEffect } from './game-effects';
+import { Attack } from '../card/pokemon-types';
 import { Card } from '../card/card';
 import { MarkerConstants } from '../markers/marker-constants';
 
@@ -25,7 +26,7 @@ export abstract class EffectOfAttackEffect extends AbstractAttackEffect implemen
 }
 
 /**
- * Effect that adds a retreat prevention marker
+ * Effect that prevents the defending Pokemon from retreating during the opponent's next turn.
  */
 export class PreventRetreatEffect extends EffectOfAttackEffect {
   readonly type: string = 'PREVENT_RETREAT_EFFECT';
@@ -35,7 +36,7 @@ export class PreventRetreatEffect extends EffectOfAttackEffect {
   }
 
   applyEffect(): void {
-    this.opponent.active.marker.addMarker(MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this.markerSource, 'attack', 'pokemon');
+    this.opponent.active.cannotRetreatNextTurn = true;
   }
 }
 
@@ -68,6 +69,21 @@ export class PreventAttackEffect extends EffectOfAttackEffect {
 
   applyEffect(): void {
     this.opponent.active.marker.addMarker(MarkerConstants.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this.markerSource, 'attack', 'pokemon');
+  }
+}
+
+/**
+ * Effect that prevents the defending Pokemon from using a specific attack during the opponent's next turn.
+ */
+export class OpponentPokemonCannotUseAttackEffect extends EffectOfAttackEffect {
+  readonly type: string = 'OPPONENT_POKEMON_CANNOT_USE_ATTACK_EFFECT';
+
+  constructor(base: AttackEffect, public blockedAttack: Attack) {
+    super(base);
+  }
+
+  applyEffect(): void {
+    this.opponent.active.blockedAttackNameNextTurn = this.blockedAttack.name;
   }
 }
 
@@ -107,8 +123,46 @@ export function preventAttackEffect(attackEffect: AttackEffect, source: Card): P
   return effect;
 }
 
+export function opponentPokemonCannotUseAttackEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  blockedAttack: Attack,
+): OpponentPokemonCannotUseAttackEffect {
+  const effect = new OpponentPokemonCannotUseAttackEffect(attackEffect, blockedAttack);
+  effect.markerSource = source;
+  return effect;
+}
+
 export function reduceDamageEffect(attackEffect: AttackEffect, source: Card): ReduceDamageEffect {
   const effect = new ReduceDamageEffect(attackEffect);
+  effect.markerSource = source;
+  return effect;
+}
+
+/**
+ * Effect that causes the defending Pokemon to take more damage from attacks
+ * during the attacking player's next turn (after applying Weakness and Resistance).
+ */
+export class DefendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect extends EffectOfAttackEffect {
+  readonly type: string = 'DEFENDING_POKEMON_TAKES_MORE_DAMAGE_DURING_ATTACKER_NEXT_TURN_EFFECT';
+
+  constructor(base: AttackEffect, public damageBonus: number) {
+    super(base);
+  }
+
+  applyEffect(): void {
+    this.opponent.active.defendingPokemonExtraDamageNextTurn = this.damageBonus;
+    this.opponent.active.defendingPokemonExtraDamageAttackerId = this.player.id;
+    this.opponent.active.defendingPokemonExtraDamagePending = true;
+  }
+}
+
+export function defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  damageBonus: number,
+): DefendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect {
+  const effect = new DefendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect(attackEffect, damageBonus);
   effect.markerSource = source;
   return effect;
 }

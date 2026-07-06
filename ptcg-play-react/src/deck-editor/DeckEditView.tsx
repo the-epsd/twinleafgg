@@ -19,15 +19,18 @@ import { DeckBuildPane } from './DeckBuildPane';
 import { DeckEditInfoValidity } from './DeckEditInfoValidity';
 import { DeckEditToolbar } from './DeckEditToolbar';
 import { DeckLibraryPane } from './DeckLibraryPane';
+import { DeckQuantityDialog } from './DeckQuantityDialog';
 import { CardInfoPopup } from '../card-info/CardInfoPopup';
 import { readFavoriteCards } from '../card-info/favoriteCardsStorage';
 import {
   addCardToDeck,
   canAddOne,
   flatNamesFromSlots,
+  maxCountForPrinting,
   removeOneCopy,
   reorderSlots,
   replaceSlotCard,
+  setSlotCount,
   slotsFromFlatNames,
 } from './deckRules';
 import { clipboardImportFromText, formatPtcgoImportFailures } from './clipboardDeckImport';
@@ -115,6 +118,7 @@ export function DeckEditView({ deckId }: DeckEditViewProps) {
   const [error, setError] = useState<string | null>(null);
   const [ruleMessage, setRuleMessage] = useState<string | null>(null);
   const [cardInfoCard, setCardInfoCard] = useState<Card | null>(null);
+  const [quantityEditCard, setQuantityEditCard] = useState<Card | null>(null);
   const [deckCardSlotW, setDeckCardSlotW] = useState(DECK_DEFAULT_SLOT_W);
 
   const isThemeDeck = deckId < 0;
@@ -307,6 +311,38 @@ export function DeckEditView({ deckId }: DeckEditViewProps) {
     [byFullName, tryAdd],
   );
 
+  const openQuantityEdit = useCallback(
+    (card: Card) => {
+      if (disabled) {
+        return;
+      }
+      setQuantityEditCard(card);
+    },
+    [disabled],
+  );
+
+  const onQuantityConfirm = useCallback(
+    (count: number) => {
+      if (!quantityEditCard) {
+        return;
+      }
+      const res = setSlotCount(slots, quantityEditCard, count);
+      if (!res.ok) {
+        setRuleMessage(res.reason);
+        window.setTimeout(() => setRuleMessage(null), 3200);
+        return;
+      }
+      setRuleMessage(null);
+      setSlots(res.slots);
+    },
+    [quantityEditCard, slots],
+  );
+
+  const quantityEditValue = quantityEditCard
+    ? (inDeckCounts.get(quantityEditCard.fullName) ?? 0)
+    : 0;
+  const quantityEditMax = quantityEditCard ? maxCountForPrinting(slots, quantityEditCard) : 0;
+
   const onSave = useCallback(async () => {
     setSaving(true);
     setError(null);
@@ -414,6 +450,7 @@ export function DeckEditView({ deckId }: DeckEditViewProps) {
       disabled={disabled}
       onAddCard={tryAdd}
       onRemoveOneFromDeck={(fullName) => setSlots((prev) => removeOneCopy(prev, fullName))}
+      onEditQuantity={openQuantityEdit}
       inDeckCounts={inDeckCounts}
       canAddCard={canAddCard}
       onOpenCardInfo={(c) => setCardInfoCard(c)}
@@ -432,6 +469,7 @@ export function DeckEditView({ deckId }: DeckEditViewProps) {
       onToggleLibrary={() => setLibraryHidden((v) => !v)}
       onAddCopy={tryAddByFullName}
       onRemoveCopy={(fullName) => setSlots((prev) => removeOneCopy(prev, fullName))}
+      onEditQuantity={openQuantityEdit}
       onOpenCardInfo={(c) => setCardInfoCard(c)}
       onSlotWidthChange={setDeckCardSlotW}
     />
@@ -520,6 +558,13 @@ export function DeckEditView({ deckId }: DeckEditViewProps) {
             }}
           />
         )}
+        <DeckQuantityDialog
+          open={quantityEditCard !== null}
+          value={quantityEditValue}
+          maxValue={quantityEditMax}
+          onClose={() => setQuantityEditCard(null)}
+          onConfirm={onQuantityConfirm}
+        />
       </DndContext>
     </div>
   );
