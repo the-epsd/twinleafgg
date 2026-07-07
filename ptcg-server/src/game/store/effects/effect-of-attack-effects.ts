@@ -4,6 +4,7 @@ import { AttackEffect } from './game-effects';
 import { Attack } from '../card/pokemon-types';
 import { Card } from '../card/card';
 import { MarkerConstants } from '../markers/marker-constants';
+import { PokemonCardList, PreventDamageFilter } from '../state/pokemon-card-list';
 
 /**
  * Base class for effects that are caused by attacks
@@ -41,19 +42,60 @@ export class PreventRetreatEffect extends EffectOfAttackEffect {
 }
 
 /**
- * Effect that adds a damage prevention marker
+ * Optional filters for {@link PreventDamageEffect}.
+ * An empty object prevents all attack damage during the opponent's next turn.
+ */
+export type PreventDamageOptions = PreventDamageFilter;
+
+export function shouldPreventAttackDamage(
+  target: PokemonCardList,
+  source: PokemonCardList,
+): boolean {
+  const filter = target.preventDamageNextTurn;
+  if (!filter) {
+    return false;
+  }
+
+  const sourceCard = source.getPokemonCard();
+  if (!sourceCard) {
+    return false;
+  }
+
+  if (filter.sourceStage !== undefined && sourceCard.stage !== filter.sourceStage) {
+    return false;
+  }
+
+  if (filter.sourceTags !== undefined
+    && !filter.sourceTags.some(tag => sourceCard.tags.includes(tag))) {
+    return false;
+  }
+
+  return true;
+}
+
+/**
+ * During the opponent's next turn, prevents attack damage to this Pokémon.
+ * Use {@link PreventDamageOptions} to restrict which attackers are blocked.
  */
 export class PreventDamageEffect extends EffectOfAttackEffect {
   readonly type: string = 'PREVENT_DAMAGE_EFFECT';
 
-  constructor(base: AttackEffect) {
+  constructor(base: AttackEffect, public readonly options: PreventDamageOptions = {}) {
     super(base);
+    // Self-protection applies to the attacking Pokémon, not the defender.
+    // Using the defender as target causes tools like Mist Energy to incorrectly block it.
+    this.target = base.source;
   }
 
   applyEffect(): void {
-    this.player.active.marker.addMarker(MarkerConstants.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this.markerSource, 'attack', 'pokemon');
-    // CLEAR marker goes on player.marker — it's a turn-cycle bookkeeping signal, not tied to a specific Pokemon
-    this.opponent.marker.addMarker(MarkerConstants.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this.markerSource, 'attack', 'player');
+    const filter: PreventDamageFilter = {};
+    if (this.options.sourceStage !== undefined) {
+      filter.sourceStage = this.options.sourceStage;
+    }
+    if (this.options.sourceTags !== undefined) {
+      filter.sourceTags = this.options.sourceTags;
+    }
+    this.player.active.preventDamageNextTurnPending = filter;
   }
 }
 
@@ -111,8 +153,12 @@ export function preventRetreatEffect(attackEffect: AttackEffect, source: Card): 
   return effect;
 }
 
-export function preventDamageEffect(attackEffect: AttackEffect, source: Card): PreventDamageEffect {
-  const effect = new PreventDamageEffect(attackEffect);
+export function preventDamageEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  options: PreventDamageOptions = {},
+): PreventDamageEffect {
+  const effect = new PreventDamageEffect(attackEffect, options);
   effect.markerSource = source;
   return effect;
 }

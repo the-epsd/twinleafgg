@@ -7,6 +7,12 @@ import { Marker } from './card-marker';
 import { State } from './state';
 import { StateUtils } from '../state-utils';
 
+/** Filters for {@link PokemonCardList.preventDamageNextTurn} attack damage prevention. */
+export interface PreventDamageFilter {
+  sourceStage?: Stage;
+  sourceTags?: CardTag[];
+}
+
 export class PokemonCardList extends CardList {
 
   public damage: number = 0;
@@ -30,6 +36,8 @@ export class PokemonCardList extends CardList {
   public showBasicAnimation: boolean = false;
   public triggerAttackAnimation: boolean = false;
   public damageReductionNextTurn: number = 0;
+  public preventDamageNextTurn: PreventDamageFilter | null = null;
+  public preventDamageNextTurnPending: PreventDamageFilter | null = null;
   public defendingPokemonExtraDamageNextTurn: number = 0;
   public defendingPokemonExtraDamageAttackerId: number | undefined = undefined;
   public defendingPokemonExtraDamagePending: boolean = false;
@@ -169,6 +177,8 @@ export class PokemonCardList extends CardList {
     this.cannotRetreatNextTurnPending = false;
     this.blockedAttackNameNextTurn = undefined;
     this.damageReductionNextTurn = 0;
+    this.preventDamageNextTurn = null;
+    this.preventDamageNextTurnPending = null;
     this.defendingPokemonExtraDamageNextTurn = 0;
     this.defendingPokemonExtraDamageAttackerId = undefined;
     this.defendingPokemonExtraDamagePending = false;
@@ -202,6 +212,8 @@ export class PokemonCardList extends CardList {
     this.burnDamage = 20;
     this.confusionDamage = 30;
     this.damageReductionNextTurn = 0;
+    this.preventDamageNextTurn = null;
+    this.preventDamageNextTurnPending = null;
     this.defendingPokemonExtraDamageNextTurn = 0;
     this.defendingPokemonExtraDamageAttackerId = undefined;
     this.defendingPokemonExtraDamagePending = false;

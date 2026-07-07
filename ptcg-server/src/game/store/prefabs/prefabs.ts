@@ -90,7 +90,7 @@ import {
 } from '../effects/game-effects';
 import { AfterAttackEffect, BeforeDoingDamageEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
-import { preventRetreatEffect, preventDamageEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect } from '../effects/effect-of-attack-effects';
+import { preventRetreatEffect, preventDamageEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, PreventDamageOptions } from '../effects/effect-of-attack-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
 
 /**
@@ -3859,8 +3859,9 @@ export function PREVENT_DAMAGE(
   state: State,
   effect: AttackEffect,
   source: Card,
+  options?: PreventDamageOptions,
 ): State {
-  const damageEffect = preventDamageEffect(effect, source);
+  const damageEffect = preventDamageEffect(effect, source, options);
   return store.reduceEffect(state, damageEffect);
 }
 
