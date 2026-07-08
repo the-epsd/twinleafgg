@@ -13,6 +13,7 @@ import { Clavell } from './clavell';
 import { Crocalor } from './crocalor';
 import { Cufant } from './cufant';
 import { Deino } from './deino';
+import { Dedenneex } from './dedenne-ex';
 import { DeliveryDrone } from './delivery-drone';
 import { Dudunsparce } from './dudunsparce';
 import { FightingAuLait } from './fighting-au-lait';
@@ -105,6 +106,7 @@ export const setPaldeaEvolved: Card[] = [
   new Clavell(),
   new Cufant(),
   new Deino(),
+  new Dedenneex(),
   new DeliveryDrone(),
   new Dudunsparce(),
   new Dunsparce(),

@@ -66,6 +66,7 @@ import { Combusken } from './combusken';
 import { Dolliv } from './dolliv';
 import { Gorebyss } from './gorebyss';
 import { GraniteCave } from './granite-cave';
+import { Hippowdon } from './hippowdon';
 import { Huntail } from './huntail';
 import { Mankey } from './mankey';
 import { MarniesGrimmsnarlex } from './marnies-grimmsnarl-ex';
@@ -219,6 +220,7 @@ export const setDestinedRivals: Card[] = [
   new Arbolivaex(),
   new Clamperl(),
   new Huntail(),
+  new Hippowdon(),
   new Gorebyss(),
 
   new MarniesImpidimp(),

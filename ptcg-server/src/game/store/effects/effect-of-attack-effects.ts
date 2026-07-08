@@ -100,7 +100,7 @@ export class PreventDamageEffect extends EffectOfAttackEffect {
 }
 
 /**
- * Effect that adds an attack prevention marker
+ * During the opponent's next turn, the Defending Pokémon can't use attacks.
  */
 export class PreventAttackEffect extends EffectOfAttackEffect {
   readonly type: string = 'PREVENT_ATTACK_EFFECT';
@@ -110,7 +110,7 @@ export class PreventAttackEffect extends EffectOfAttackEffect {
   }
 
   applyEffect(): void {
-    this.opponent.active.marker.addMarker(MarkerConstants.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this.markerSource, 'attack', 'pokemon');
+    this.opponent.active.cannotAttackNextTurn = true;
   }
 }
 
