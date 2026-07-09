@@ -1,6 +1,13 @@
 import { Effect } from './effect';
-import { AbstractAttackEffect } from './attack-effects';
+import {
+  AbstractAttackEffect,
+  ApplyWeaknessEffect,
+  DealDamageEffect,
+  PutDamageEffect,
+} from './attack-effects';
 import { AttackEffect } from './game-effects';
+import { State } from '../state/state';
+import { StateUtils } from '../state-utils';
 import { Attack } from '../card/pokemon-types';
 import { Card } from '../card/card';
 import { MarkerConstants } from '../markers/marker-constants';
@@ -74,6 +81,41 @@ export function shouldPreventAttackDamage(
 }
 
 /**
+ * Returns true when an attack effect (not damage) should be blocked on the target
+ * because it has {@link PokemonCardList.preventEffectsOfAttacksNextTurn} active.
+ * Mirrors Mist Energy: damage is not an effect.
+ */
+export function shouldPreventAttackEffects(state: State, effect: Effect): boolean {
+  if (!(effect instanceof AbstractAttackEffect)) {
+    return false;
+  }
+
+  if (!effect.target.preventEffectsOfAttacksNextTurn) {
+    return false;
+  }
+
+  const targetOwner = StateUtils.findOwner(state, effect.target);
+  const sourceOwner = StateUtils.findOwner(state, effect.source);
+  if (sourceOwner !== StateUtils.getOpponent(state, targetOwner)) {
+    return false;
+  }
+
+  if (!effect.source.getPokemonCard()) {
+    return false;
+  }
+
+  if (
+    effect instanceof ApplyWeaknessEffect ||
+    effect instanceof PutDamageEffect ||
+    effect instanceof DealDamageEffect
+  ) {
+    return false;
+  }
+
+  return true;
+}
+
+/**
  * During the opponent's next turn, prevents attack damage to this Pokémon.
  * Use {@link PreventDamageOptions} to restrict which attackers are blocked.
  */
@@ -96,6 +138,23 @@ export class PreventDamageEffect extends EffectOfAttackEffect {
       filter.sourceTags = this.options.sourceTags;
     }
     this.player.active.preventDamageNextTurnPending = filter;
+  }
+}
+
+/**
+ * During the opponent's next turn, prevents effects of attacks done to this Pokémon.
+ * Damage is not an effect and is handled separately (e.g. {@link PreventDamageEffect}).
+ */
+export class PreventEffectsOfAttacksEffect extends EffectOfAttackEffect {
+  readonly type: string = 'PREVENT_EFFECTS_OF_ATTACKS_EFFECT';
+
+  constructor(base: AttackEffect) {
+    super(base);
+    this.target = base.source;
+  }
+
+  applyEffect(): void {
+    this.player.active.preventEffectsOfAttacksNextTurnPending = true;
   }
 }
 
@@ -159,6 +218,15 @@ export function preventDamageEffect(
   options: PreventDamageOptions = {},
 ): PreventDamageEffect {
   const effect = new PreventDamageEffect(attackEffect, options);
+  effect.markerSource = source;
+  return effect;
+}
+
+export function preventEffectsOfAttacksEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+): PreventEffectsOfAttacksEffect {
+  const effect = new PreventEffectsOfAttacksEffect(attackEffect);
   effect.markerSource = source;
   return effect;
 }

@@ -5,6 +5,12 @@ import { Litwick } from './litwick';
 import { TropicalBeach } from './tropical-beach';
 import { Pikachu } from './pikachu';
 import { Minccino } from './minccino';
+import { Snivy } from './snivy';
+import { Snivy2 } from './snivy2';
+import { Tepig } from './tepig';
+import { Tepig2 } from './tepig2';
+import { Oshawott } from './oshawott';
+import { Oshawott2 } from './oshawott2';
 
 // Other Prints
 import {
@@ -13,6 +19,12 @@ import {
 } from './other-prints';
 
 export const setBlackAndWhitePromos: Card[] = [
+  new Snivy(),
+  new Tepig(),
+  new Oshawott(),
+  new Snivy2(),
+  new Tepig2(),
+  new Oshawott2(),
   new Kyurem(),
   new Litwick(),
   new TropicalBeach(),

@@ -126,6 +126,7 @@ import {
   StoutlandAR,
 } from './other-prints';
 import { Palpitoad } from './palpitoad';
+import { Pidove } from './pidove';
 import { Pignite } from './pignite';
 import { Purrloin } from './purrloin';
 import { Reshiramex } from './reshiram-ex';
@@ -142,8 +143,10 @@ import { Swadloon } from './swadloon';
 import { Tepig } from './tepig';
 import { Terrakion } from './terrakion';
 import { Tirtouga } from './tirtouga';
+import { Tranquill } from './tranquill';
 import { Tympole } from './tympole';
 import { Tynamo } from './tynamo';
+import { Unfezant } from './unfezant';
 import { Victini } from './victini';
 import { Virizion } from './virizion';
 import { Volcarona } from './volcarona';
@@ -209,6 +212,9 @@ export const setSV11: Card[] = [
   new Larvesta(),
   new Meloettaex(),
   new Palpitoad(),
+  new Pidove(),
+  new Tranquill(),
+  new Unfezant(),
   new Seismitoad(),
   new Tympole(),
   new Volcarona(),

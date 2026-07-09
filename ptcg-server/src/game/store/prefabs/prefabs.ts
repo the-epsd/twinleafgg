@@ -91,7 +91,7 @@ import {
 } from '../effects/game-effects';
 import { AfterAttackEffect, BeforeDoingDamageEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
-import { preventRetreatEffect, preventDamageEffect, preventAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, PreventDamageOptions } from '../effects/effect-of-attack-effects';
+import { preventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, PreventDamageOptions, shouldPreventAttackEffects } from '../effects/effect-of-attack-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
 
 /**
@@ -3947,6 +3947,30 @@ export function PREVENT_DAMAGE(
 ): State {
   const damageEffect = preventDamageEffect(effect, source, options);
   return store.reduceEffect(state, damageEffect);
+}
+
+/**
+ * During the opponent's next turn, prevents effects of attacks done to this Pokémon.
+ * Damage is not an effect — pair with {@link PREVENT_DAMAGE} when card text blocks both.
+ * Enforcement uses the same rules as Mist Energy and is handled by the attack reducer.
+ */
+export function PREVENT_EFFECTS_OF_ATTACKS(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+): State {
+  const effectsEffect = preventEffectsOfAttacksEffect(effect, source);
+  return store.reduceEffect(state, effectsEffect);
+}
+
+/**
+ * Blocks non-damage attack effects on a Pokémon that has
+ * {@link PokemonCardList.preventEffectsOfAttacksNextTurn} active.
+ * Ref: set-temporal-forces/mist-energy.ts
+ */
+export function BLOCK_EFFECTS_OF_ATTACKS_IF_PREVENTED(state: State, effect: Effect): boolean {
+  return shouldPreventAttackEffects(state, effect);
 }
 
 /**

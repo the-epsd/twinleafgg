@@ -73,6 +73,8 @@ import { LarrysBraviary } from './larrys-braviary';
 import { LarrysKomala } from './larrys-komala';
 import { Waitress } from './waitress';
 import { BossOrdersASC } from './other-prints';
+import { NsVanillite } from './ns-vanillite';
+import { NsVanillish } from './ns-vanillish';
 
 export const setAscendedHeroes: Card[] = [
   //Start Deck 100 Reprints
@@ -109,6 +111,8 @@ export const setAscendedHeroes: Card[] = [
   new NightMine(),
   new Numel(),
   new NsZekrom(),
+  new NsVanillite(),
+  new NsVanillish(),
   new NsVanilluxe(),
   new PokePad(),
   new Rayquaza(),

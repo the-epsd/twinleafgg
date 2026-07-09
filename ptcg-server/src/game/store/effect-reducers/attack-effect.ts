@@ -23,13 +23,21 @@ import { HealEffect, KnockOutEffect } from '../effects/game-effects';
 import { StateUtils } from '../state-utils';
 import { PokemonCard } from '../card/pokemon-card';
 import { getCardTarget } from '../../../simple-bot/simple-tactics/simple-tactics';
-import { EffectOfAttackEffect, shouldPreventAttackDamage } from '../effects/effect-of-attack-effects';
+import {
+  EffectOfAttackEffect,
+  shouldPreventAttackDamage,
+  shouldPreventAttackEffects,
+} from '../effects/effect-of-attack-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
 import { CheckHpEffect } from '../effects/check-effects';
 import { MOVE_CARDS, TAKE_X_PRIZES } from '../prefabs/prefabs';
 import { GamePhase } from '../state/state';
 
 export function attackReducer(store: StoreLike, state: State, effect: Effect): State {
+
+  if (shouldPreventAttackEffects(state, effect)) {
+    return state;
+  }
 
   if (effect instanceof PutDamageEffect) {
     const target = effect.target;

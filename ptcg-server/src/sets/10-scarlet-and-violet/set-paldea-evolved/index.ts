@@ -55,6 +55,7 @@ import { Squawkabillyex } from './squawkabilly-ex';
 import { SuperRod } from './super-rod';
 import { SuperiorEnergyRetrieval } from './superior-energy-retrieval';
 import { Tadbulb } from './tadbulb';
+import { Tandemaus } from './tandemaus';
 import { Tarountula } from './tarountula';
 import { TherapeuticEnergy } from './theraputic-energy';
 import { TingLuex } from './ting-lu-ex';
@@ -147,6 +148,7 @@ export const setPaldeaEvolved: Card[] = [
   new SuperRod(),
   new SuperiorEnergyRetrieval(),
   new Tadbulb(),
+  new Tandemaus(),
   new Tarountula(),
   new TherapeuticEnergy(),
   new TingLuex(),

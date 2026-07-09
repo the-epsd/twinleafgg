@@ -38,6 +38,8 @@ export class PokemonCardList extends CardList {
   public damageReductionNextTurn: number = 0;
   public preventDamageNextTurn: PreventDamageFilter | null = null;
   public preventDamageNextTurnPending: PreventDamageFilter | null = null;
+  public preventEffectsOfAttacksNextTurn: boolean = false;
+  public preventEffectsOfAttacksNextTurnPending: boolean = false;
   public defendingPokemonExtraDamageNextTurn: number = 0;
   public defendingPokemonExtraDamageAttackerId: number | undefined = undefined;
   public defendingPokemonExtraDamagePending: boolean = false;
@@ -179,6 +181,8 @@ export class PokemonCardList extends CardList {
     this.damageReductionNextTurn = 0;
     this.preventDamageNextTurn = null;
     this.preventDamageNextTurnPending = null;
+    this.preventEffectsOfAttacksNextTurn = false;
+    this.preventEffectsOfAttacksNextTurnPending = false;
     this.defendingPokemonExtraDamageNextTurn = 0;
     this.defendingPokemonExtraDamageAttackerId = undefined;
     this.defendingPokemonExtraDamagePending = false;
@@ -214,6 +218,8 @@ export class PokemonCardList extends CardList {
     this.damageReductionNextTurn = 0;
     this.preventDamageNextTurn = null;
     this.preventDamageNextTurnPending = null;
+    this.preventEffectsOfAttacksNextTurn = false;
+    this.preventEffectsOfAttacksNextTurnPending = false;
     this.defendingPokemonExtraDamageNextTurn = 0;
     this.defendingPokemonExtraDamageAttackerId = undefined;
     this.defendingPokemonExtraDamagePending = false;
