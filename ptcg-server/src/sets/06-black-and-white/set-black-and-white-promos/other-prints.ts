@@ -1,6 +1,6 @@
 import { Reshiram } from '../set-black-and-white/reshiram';
 import { Zekrom } from '../set-black-and-white/zekrom';
-import { Zoroark } from '../set-black-and-white/zoroark';
+import { Zoroark } from '../set-emerging-powers/zoroark';
 import { Emboar } from '../set-black-and-white/emboar';
 import { Reshiram as ReshiramBLW26 } from '../set-black-and-white/reshiram';
 import { Zekrom as ZekromBLW47 } from '../set-black-and-white/zekrom';
@@ -24,6 +24,7 @@ import { Eevee as EeveePLF89 } from '../set-plasma-freeze/eevee';
 import { N } from '../../07-x-and-y/set-fates-collide/n';
 import { KeldeoEx } from '../set-boundaries-crossed/keldeo-ex';
 import { TropicalBeach } from './tropical-beach';
+import { Excadrill } from '../set-emerging-powers/excadrill';
 
 export class KeldeoExBWP extends KeldeoEx {
   public set: string = 'BWP';
@@ -179,4 +180,18 @@ export class NBWP extends N {
   public setNumber = '100';
   public fullName: string = 'N BWP';
   public set = 'BWP';
+}
+
+// BW Trainer Kit
+
+export class ExcadrillTK extends Excadrill {
+  public setNumber = '17';
+  public fullName: string = 'Excadrill TK5E';
+  public set = 'TK5E';
+}
+
+export class ZoroarkTK extends Zoroark {
+  public setNumber = '17';
+  public fullName: string = 'Zoroark TK5Z';
+  public set = 'TK5Z';
 }
