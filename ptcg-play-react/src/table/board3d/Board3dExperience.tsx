@@ -18,7 +18,6 @@ import { Board3dCameraRig } from './Board3dCameraRig';
 import { Board3dStaticScene } from './Board3dStaticScene';
 import { Board3dBoardCardsLayer } from './Board3dBoardCardsLayer';
 import { Board3dFrameEffects } from './Board3dFrameEffects';
-import { Board3dStatsR3f } from './Board3dStats';
 import { Board3dControllerRefContext } from './Board3dControllerContext';
 import { Board3dFpsBridge } from './Board3dFpsBridge';
 import { Board3dShufflePreviewKey } from './Board3dShufflePreviewKey';
@@ -130,7 +129,6 @@ export function Board3dExperience({
         boardInteraction={boardInteraction}
         bloom={lightingSettings.bloom}
       />
-      <Board3dStatsR3f />
     </Board3dControllerRefContext.Provider>
   );
 

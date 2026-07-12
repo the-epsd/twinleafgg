@@ -13,6 +13,7 @@ import {
   type PokemonCard,
 } from 'ptcg-server';
 import { DropZoneType } from './board-3d-drop-zone';
+import { SHARED_STADIUM_MESH_ID } from './dual-stadium.utils';
 import { ZONE_POSITIONS } from './board-3d-zone-positions';
 
 export function trainerTypeIsSupporter(tt: TrainerType | undefined | null): boolean {
@@ -154,7 +155,7 @@ export function board3dMeshIdForPlayTarget(
   }
   if (zone.slot === SlotType.BOARD) {
     if (dropZoneType === DropZoneType.STADIUM) {
-      return 'shared_stadium';
+      return SHARED_STADIUM_MESH_ID;
     }
     if (dropZoneType === DropZoneType.SUPPORTER) {
       return `${playerPrefix}_supporter`;
