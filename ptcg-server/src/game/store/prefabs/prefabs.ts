@@ -919,11 +919,28 @@ export function TAKE_X_PRIZES(
   callback?: (chosenPrizes: CardList[]) => void,
 ): State {
   const { promptOptions = {}, ...takeOptions } = options;
+  const prizeLeft = player.getPrizeLeft();
+  const takeCount = Math.min(count, prizeLeft);
+
+  if (takeCount <= 0) {
+    return state;
+  }
+
+  // Taking all remaining prizes — auto-resolve so clients never get an unsolvable prompt
+  // (e.g. KO awards 2 prizes with only 1 left). checkState/checkWinner will end the game.
+  if (count >= prizeLeft) {
+    const prizes = player.prizes.filter(p => p.cards.length > 0).slice(0, takeCount);
+    TAKE_SPECIFIC_PRIZES(store, state, player, prizes, takeOptions);
+    if (callback) {
+      callback(prizes);
+    }
+    return state;
+  }
 
   state = store.prompt(
     state,
     new ChoosePrizePrompt(player.id, GameMessage.CHOOSE_PRIZE_CARD, {
-      count,
+      count: takeCount,
       allowCancel: false,
       ...promptOptions,
     }),

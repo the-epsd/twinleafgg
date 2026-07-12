@@ -122,8 +122,9 @@ export class GameService {
     const index = games.findIndex(g => g.gameId === gameId && g.deleted === false);
     if (index !== -1) {
       const gameStates = this.sessionService.session.gameStates.slice();
+      // Keep listening so the FINISHED stateChange can still arrive and show game-over UI.
+      // Listeners are removed in removeLocalGameState / removeGameState when the user leaves.
       gameStates[index] = { ...gameStates[index], deleted: true };
-      this.stopListening(gameId);
       this.sessionService.set({ gameStates });
     }
   }
@@ -152,7 +153,9 @@ export class GameService {
     const games = this.sessionService.session.gameStates;
     const index = games.findIndex(g => g.localId === localGameId);
     if (index !== -1) {
+      const gameId = games[index].gameId;
       const gameStates = games.filter(table => table.localId !== localGameId);
+      this.stopListening(gameId);
       this.sessionService.set({ gameStates });
     }
   }
@@ -338,7 +341,12 @@ export class GameService {
   private onStateChange(gameId: number, stateData: string, playerStats: PlayerStats[]) {
     const state = this.decodeStateData(stateData);
     const games = this.sessionService.session.gameStates;
-    const index = games.findIndex(g => g.gameId === gameId && g.deleted === false);
+    // Prefer the active table, but still accept updates after core:deleteGame marked it deleted
+    // (FINISHED often arrives in the same tick as deleteGame).
+    let index = games.findIndex(g => g.gameId === gameId && g.deleted === false);
+    if (index === -1) {
+      index = games.findIndex(g => g.gameId === gameId);
+    }
     if (index !== -1) {
       const gameStates = this.sessionService.session.gameStates.slice();
       const logs = [...gameStates[index].logs, ...state.logs];

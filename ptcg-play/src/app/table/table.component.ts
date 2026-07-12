@@ -265,11 +265,15 @@ export class TableComponent implements OnInit, OnDestroy {
       const isPlaying = state.players.some(p => p.id === this.clientId);
       const isReplay = !!this.gameState.replay;
       const isObserver = isReplay || !isPlaying;
+      const gameFinished = state.phase === GamePhase.FINISHED || gameState.deleted;
       const waitingForOthers = prompts.some(p => p.playerId !== clientId);
       const waitingForMe = prompts.some(p => p.playerId === clientId);
       const notMyTurn = state.players[state.activePlayer].id !== clientId
         && state.phase === GamePhase.PLAYER_TURN;
-      this.waiting = (notMyTurn || waitingForOthers) && !waitingForMe && !isObserver;
+      this.waiting = !gameFinished
+        && (notMyTurn || waitingForOthers)
+        && !waitingForMe
+        && !isObserver;
     }
 
     // Update player stats and active states for floating overlays
@@ -288,9 +292,13 @@ export class TableComponent implements OnInit, OnDestroy {
         this.showMatchResultsSplash = false;
         this.showGameOver = true;
       }
-    } else {
-      this.showGameOver = false;
-      this.showMatchResultsSplash = false;
+    } else if (!gameState.deleted || state.phase !== GamePhase.FINISHED) {
+      // Don't clear end-game UI just because the lobby deleted the game entry;
+      // FINISHED may arrive in the same tick after core:deleteGame.
+      if (state.phase !== GamePhase.FINISHED) {
+        this.showGameOver = false;
+        this.showMatchResultsSplash = false;
+      }
     }
   }
 
@@ -389,10 +397,12 @@ export class TableComponent implements OnInit, OnDestroy {
         this.showMatchResultsSplash = false;
         this.showGameOver = true;
       }
-    } else {
-      this.showGameOver = false;
-      this.showMatchResultsSplash = false;
-      this.gameOverPrompt = undefined;
+    } else if (!state?.deleted || state?.state?.phase !== GamePhase.FINISHED) {
+      if (state?.state?.phase !== GamePhase.FINISHED) {
+        this.showGameOver = false;
+        this.showMatchResultsSplash = false;
+        this.gameOverPrompt = undefined;
+      }
     }
     // Update player information
     this.updatePlayers(state, this.clientId);

@@ -48,6 +48,13 @@ export class PromptComponent implements OnChanges {
       }
     }
 
+    // Don't keep gameplay prompts open once the match has ended
+    if (this.gameState.state.phase === GamePhase.FINISHED) {
+      this.prompt = undefined;
+      this.toggle(false);
+      return;
+    }
+
     let prompt = this.gameState.state.prompts.find(p => {
       return p.playerId === this.clientId && p.result === undefined;
     });
