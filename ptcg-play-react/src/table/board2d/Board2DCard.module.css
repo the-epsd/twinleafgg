@@ -1,0 +1,302 @@
+.card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  /* Slot box dictates size — never reflow via max-width / aspect-ratio. */
+  transition: opacity 0.3s ease-in-out;
+  transform-style: preserve-3d;
+}
+
+.card:not(.selectable):not(.selected) {
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.card.empty::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 3.5%;
+  box-sizing: border-box;
+}
+
+.card.faceDown > *:not(.cardCounts) {
+  display: none;
+}
+
+.card.faceDown::after {
+  background-image: var(--cardback-url, url('/assets/cardback.png'));
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 3.5%;
+}
+
+.card.selectable {
+  cursor: pointer;
+  transform: scale(1.05);
+  z-index: 50;
+}
+
+.card.selectable::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 3px solid #ffffff;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0.9;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+}
+
+.card.selected {
+  transform: scale(1.08);
+  z-index: 60;
+}
+
+.card.selected::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 4px solid #449058;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0.9;
+  box-shadow: 0 0 20px rgba(68, 144, 88, 0.8);
+}
+
+.card.attachTarget {
+  outline: 2px solid gold;
+  outline-offset: 2px;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.65);
+  z-index: 45;
+}
+
+.card:not(.empty):not(.selectable):not(.selected):hover {
+  transform: scale(1.1);
+  z-index: 40;
+}
+
+.card.asleep {
+  transform: rotate(-90deg);
+}
+
+.card.confused {
+  transform: rotate(180deg);
+}
+
+.card.paralyzed {
+  transform: rotate(90deg);
+}
+
+.mainFace {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.mainFace img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 3.5%;
+}
+
+.energyRow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.energyIcon {
+  width: 30%;
+  top: 80%;
+  left: -11%;
+  z-index: 3;
+  position: absolute;
+  clip-path: circle(34%);
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.energyIcon:nth-child(2) {
+  left: calc(-11% + 13%);
+}
+.energyIcon:nth-child(3) {
+  left: calc(-11% + 26%);
+}
+.energyIcon:nth-child(4) {
+  left: calc(-11% + 39%);
+}
+.energyIcon:nth-child(5) {
+  left: calc(-11% + 52%);
+}
+.energyIcon:nth-child(6) {
+  left: calc(-11% + 65%);
+}
+.energyIcon:nth-child(7) {
+  left: calc(-11% + 78%);
+}
+.energyIcon:nth-child(8) {
+  left: calc(-11% + 91%);
+}
+
+.energyMore {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(-100%);
+  background: rgba(26, 32, 44, 0.9);
+  color: #fff;
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  z-index: 4;
+}
+
+.toolCards {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.toolIcon {
+  position: absolute;
+  left: -5px;
+  top: 20%;
+  width: 28%;
+  clip-path: inset(10% 55% 10% 0);
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.damage {
+  position: absolute;
+  top: -10%;
+  right: -10%;
+  z-index: 5;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffeb3b 0%, #ff9800 50%, #ff5722 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  border: 1px solid #fff;
+  color: #fff;
+  font-weight: bold;
+  font-size: 10px;
+  text-shadow:
+    -0.5px -0.5px 0 #000,
+    0.5px -0.5px 0 #000,
+    -0.5px 0.5px 0 #000,
+    0.5px 0.5px 0 #000;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.abilityUsed {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #c62828;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 3px 6px;
+  border-radius: 4px;
+  z-index: 6;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.cardCounts {
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  padding: 4px 8px;
+  font-size: 8px;
+  font-weight: 500;
+  z-index: 1;
+  white-space: nowrap;
+  background: rgba(26, 32, 44);
+  border-radius: 6px;
+}
+
+.marker {
+  position: absolute;
+  top: -5%;
+  right: -5%;
+  width: 25%;
+  aspect-ratio: 1;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 7;
+  pointer-events: none;
+}
+
+.marker + .marker {
+  top: 10%;
+}
+.marker + .marker + .marker {
+  top: 25%;
+}
+.marker + .marker + .marker + .marker {
+  top: 40%;
+}
+.marker + .marker + .marker + .marker + .marker {
+  top: 55%;
+}
+
+.poison {
+  background-image: url('/assets/poison-marker.webp');
+}
+.paralyzedMarker {
+  background-image: url('/assets/paralyzed-marker.webp');
+}
+.confusedMarker {
+  background-image: url('/assets/confused-marker.webp');
+}
+.asleepMarker {
+  background-image: url('/assets/asleep-marker.webp');
+}
+.burnedMarker {
+  background-image: url('/assets/burned-marker.webp');
+}
+.imprisonMarker {
+  background-image: url('/assets/imprison-marker.webp');
+}
+
+.breakCard {
+  width: 100%;
+  left: 50%;
+  top: -35%;
+  position: absolute;
+  transform: translateX(-50%) rotate(90deg);
+  z-index: 1;
+}
+
+.dualStadium {
+  display: flex;
+  width: 200%;
+  gap: 2px;
+  position: absolute;
+  inset: 0;
+}
+
+.dualHalf {
+  flex: 1;
+  width: 50%;
+  height: 100%;
+}

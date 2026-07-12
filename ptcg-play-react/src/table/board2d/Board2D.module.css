@@ -1,0 +1,440 @@
+/* Fixed design-space board. Outer host scales this canvas uniformly — slots never reflow. */
+.root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: #091624;
+  position: relative;
+  overflow: hidden;
+  /* Design units — never use vmin for slot geometry. cardScale applies via outer fit scale. */
+  --design-w: 1200px;
+  --design-h: 700px;
+  --card-w: 55px;
+  --card-h: calc(55px * 1.4);
+  --active-w: calc(var(--card-w) * 1.45);
+  --active-h: calc(var(--card-h) * 1.45);
+  --zone-w: calc(var(--card-w) * 1.15);
+  --zone-h: calc(var(--card-h) * 1.15);
+  --col-side: 146px;
+  --col-mid: 138px;
+  --col-active: 168px;
+  --gap: 8px;
+  --prize-cell-w: var(--zone-w);
+  --prize-cell-h: var(--zone-h);
+}
+
+.handsAndBoard {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+  /* Match Board2DHand visible strip so the playfield never sits under hands. */
+  --hand-card-w: 88px;
+  --hand-card-h: calc(var(--hand-card-w) * 1.4);
+  --hand-visible-h: calc(var(--hand-card-h) * 0.65);
+}
+
+.boardHost {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--hand-visible-h);
+  bottom: var(--hand-visible-h);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Angular parity: perspective on the outer host, rotateX on the scaled canvas. */
+.boardHost.perspective {
+  perspective: 55em;
+  -webkit-perspective: 55em;
+}
+
+.boardHost.flat {
+  perspective: none;
+  -webkit-perspective: none;
+}
+
+/* Fixed design canvas — scaled by JS to fit host. */
+.boardCanvas {
+  width: var(--design-w);
+  height: var(--design-h);
+  position: relative;
+  flex-shrink: 0;
+  transform-origin: center center;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition: transform 0.5s ease;
+  z-index: 1;
+}
+
+.boardCanvas * {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.boardInner {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  /* Two equal halves — identical row height so columns mirror across the midline. */
+  grid-template-rows: 1fr 1fr;
+  position: relative;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  z-index: 1;
+}
+
+.topWash,
+.bottomWash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bottomWash::after {
+  content: '';
+  position: absolute;
+  opacity: var(--bottom-opacity, 0.2);
+  top: 55%;
+  left: -40%;
+  right: -40%;
+  height: 100%;
+  background: rgba(0, 90, 207, 0.225);
+  border: 8px solid rgba(0, 90, 207, 0.225);
+  border-top-left-radius: 50% 100%;
+  border-top-right-radius: 50% 100%;
+  transition: opacity 0.3s ease;
+}
+
+.topWash::after {
+  content: '';
+  position: absolute;
+  opacity: var(--top-opacity, 0.2);
+  bottom: 55%;
+  left: -40%;
+  right: -40%;
+  height: 100%;
+  background: rgba(255, 0, 0, 0.225);
+  border: 8px solid rgba(255, 0, 0, 0.225);
+  border-bottom-left-radius: 50% 100%;
+  border-bottom-right-radius: 50% 100%;
+  transition: opacity 0.3s ease;
+}
+
+.topWash.active {
+  --top-opacity: 1;
+}
+
+.bottomWash.active {
+  --bottom-opacity: 1;
+}
+
+/*
+ * Shared column tracks for BOTH player halves.
+ * prizes | stadium | active | supporter | deck
+ * prizes | bench(3)         | discard
+ */
+.player {
+  display: grid;
+  grid-template-columns:
+    var(--col-side)
+    var(--col-mid)
+    var(--col-active)
+    var(--col-mid)
+    var(--col-side);
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    'prizes stadium active supporter deck'
+    'prizes bench bench bench discard';
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 12px 24px;
+  gap: var(--gap);
+  position: relative;
+  z-index: 1;
+  /* Center fixed tracks so both halves share the same midline. */
+  justify-content: center;
+  /* Prevent content from stretching tracks. */
+  min-height: 0;
+  min-width: 0;
+}
+
+.player.upsideDown {
+  /* Local -Y becomes screen-down after the 180° flip. */
+  transform: rotate(180deg) translateY(-7.5%);
+}
+
+.player:not(.upsideDown) {
+  transform: translateY(-22.5%);
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 0;
+  position: relative;
+}
+
+.cellActive {
+  grid-area: active;
+  align-items: flex-end;
+}
+
+/* Same absolute shift for active + zone row so centers stay aligned
+   ( %-translate is relative to each box, so active would drift otherwise). */
+.player:not(.upsideDown) .slotActive,
+.player:not(.upsideDown) .supporterSlot,
+.player:not(.upsideDown) .cellDeck .stackContainer {
+  transform: translateY(calc(var(--active-h) * 0.4));
+}
+
+.player:not(.upsideDown) .lostZone {
+  transform: translateY(calc(var(--active-h) * 0.4)) rotate(-90deg);
+}
+
+.cellBench {
+  grid-area: bench;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-evenly;
+  gap: 6px;
+}
+
+.cellStadium {
+  grid-area: stadium;
+  align-items: flex-end;
+  justify-content: center;
+  padding-top: 0;
+}
+
+.cellSupporter {
+  grid-area: supporter;
+  align-items: flex-end;
+  justify-content: center;
+  padding-top: 0;
+}
+
+.cellDeck {
+  grid-area: deck;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.cellDiscard {
+  grid-area: discard;
+  align-items: flex-end;
+}
+
+.cellPrizes {
+  grid-area: prizes;
+  /* Bottom prize row sits on the bench row. */
+  align-items: flex-end;
+  justify-content: center;
+}
+
+/* Fixed slot boxes — never percentage-based. */
+.slot {
+  width: var(--zone-w);
+  height: var(--zone-h);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.slotActive {
+  width: var(--active-w);
+  height: var(--active-h);
+}
+
+.slotBench {
+  width: var(--zone-w);
+  height: var(--zone-h);
+}
+
+.stackContainer {
+  position: relative;
+  width: var(--zone-w);
+  height: var(--zone-h);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.discardStack {
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+.stackCard {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.cardCount {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  padding: 3px 7px;
+  font-size: 9px;
+  font-weight: 500;
+  z-index: 2;
+  white-space: nowrap;
+  background: rgba(26, 32, 44);
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+.deckClickOverlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  z-index: 3;
+}
+
+.lostZone {
+  transform: rotate(-90deg);
+  z-index: 2;
+  /* Match vertical center of the active slot (also flex-end in this row). */
+  margin-bottom: calc((var(--active-h) - var(--zone-h)) / 2);
+}
+
+.lostZoneTop {
+  transform: rotate(90deg);
+  align-self: flex-end;
+  margin-bottom: calc((var(--active-h) - var(--zone-h)) / 2);
+}
+
+.supporterSlot,
+.cellDeck .stackContainer {
+  /* Zone-sized slots share active vertical center when parent is flex-end. */
+  margin-bottom: calc((var(--active-h) - var(--zone-h)) / 2);
+}
+
+/*
+ * Shared stadium sits on the board midline in the stadium/lost-zone column,
+ * vertically between the two players' lost zones.
+ * Horizontal offset: left of active by half-active + gap + half-mid column.
+ */
+.stadiumMidline {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--zone-w);
+  height: var(--zone-h);
+  z-index: 3;
+  pointer-events: auto;
+}
+
+.prizesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, var(--prize-cell-w));
+  grid-template-rows: repeat(3, var(--prize-cell-h));
+  gap: 6px;
+  width: calc(var(--prize-cell-w) * 2 + 6px);
+  height: calc(var(--prize-cell-h) * 3 + 12px);
+  flex-shrink: 0;
+}
+
+.prizeSlot {
+  position: relative;
+  width: var(--prize-cell-w);
+  height: var(--prize-cell-h);
+}
+
+.centerChrome {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 0;
+}
+
+.centerLogo {
+  width: 120px;
+  height: auto;
+  display: block;
+}
+
+.markerContainer {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.topMarkers {
+  left: calc(50% - 220px);
+}
+
+.topMarkers .gxMarker,
+.topMarkers .vstarMarker {
+  transform: rotate(180deg);
+}
+
+.bottomMarkers {
+  right: calc(50% - 220px);
+}
+
+.gxMarker,
+.vstarMarker {
+  width: 60px;
+  height: 30px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: block;
+}
+
+.vstarMarker {
+  background-image: url('/assets/markers/vstar-marker.png');
+}
+
+.vstarUsed {
+  background-image: url('/assets/markers/vstar-used.png');
+}
+
+.gxMarker {
+  background-image: url('/assets/markers/gx-marker.png');
+}
+
+.gxUsed {
+  background-image: url('/assets/markers/gx-used.png');
+}
+
+.dropHighlight {
+  outline: 2px solid rgba(74, 222, 128, 0.85);
+  outline-offset: 2px;
+  box-shadow: 0 0 16px rgba(74, 222, 128, 0.45);
+  border-radius: 4px;
+}

@@ -25,8 +25,12 @@ import {
   isSetupActivePhaseSkipped,
 } from './prompts/chooseCardsHandSelection';
 
+import {
+  TRAINER_PLAY_EFFECT_PROMPT_DELAY_MS as SHARED_TRAINER_PLAY_EFFECT_PROMPT_DELAY_MS,
+} from './animationTiming';
+
 /** Pause before trainer effect prompts so the hand → board play animation can finish. */
-export const TRAINER_PLAY_EFFECT_PROMPT_DELAY_MS = 2500;
+export const TRAINER_PLAY_EFFECT_PROMPT_DELAY_MS = SHARED_TRAINER_PLAY_EFFECT_PROMPT_DELAY_MS;
 
 type SelectionOverlayKind =
   | 'choose-pokemon'

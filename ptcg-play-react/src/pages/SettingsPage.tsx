@@ -20,6 +20,7 @@ export function SettingsPage() {
     showCardName: s.showCardName,
     showTags: s.showTags,
     hiddenFormats: [...s.hiddenFormats],
+    use3dBoardDefault: s.use3dBoardDefault,
     board2dPerspectiveEnabled: s.board2dPerspectiveEnabled,
     sfxEnabled: s.sfxEnabled,
     debugMarkersEnabled: s.debugMarkersEnabled,
@@ -47,7 +48,7 @@ export function SettingsPage() {
       showCardName: draft.showCardName,
       showTags: draft.showTags,
       hiddenFormats: draft.hiddenFormats,
-      use3dBoardDefault: true,
+      use3dBoardDefault: draft.use3dBoardDefault,
       board2dPerspectiveEnabled: draft.board2dPerspectiveEnabled,
       sfxEnabled: draft.sfxEnabled,
       debugMarkersEnabled: draft.debugMarkersEnabled,
@@ -124,12 +125,22 @@ export function SettingsPage() {
           <label className={styles.row}>
             <input
               type="checkbox"
+              checked={!draft.use3dBoardDefault}
+              onChange={(e) =>
+                setDraft((d) => ({ ...d, use3dBoardDefault: !e.target.checked }))
+              }
+            />
+            Use 2D Game Board
+          </label>
+          <label className={styles.row}>
+            <input
+              type="checkbox"
               checked={draft.board2dPerspectiveEnabled}
               onChange={(e) =>
                 setDraft((d) => ({ ...d, board2dPerspectiveEnabled: e.target.checked }))
               }
             />
-            3D Board Perspective
+            2D Board Perspective
           </label>
 
           <div className={styles.sliderBlock}>
