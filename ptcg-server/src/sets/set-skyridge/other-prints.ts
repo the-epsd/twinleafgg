@@ -1,6 +1,6 @@
-import { ApricornMaker } from '../set-celestial-storm/apricorn-maker';
-import { CrystalShard } from '../set-ex-deoxys/crystal-shard';
-import { Fisherman } from '../set-celestial-storm/fisherman';
+import { ApricornMaker } from '../08-sun-and-moon/set-celestial-storm/apricorn-maker';
+import { CrystalShard } from '../03-ex-ruby-and-sapphire/set-ex-deoxys/crystal-shard';
+import { Fisherman } from '../08-sun-and-moon/set-celestial-storm/fisherman';
 
 export class ApricornMakerSK extends ApricornMaker {
   public fullName = 'Apricorn Maker SK';

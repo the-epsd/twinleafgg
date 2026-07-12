@@ -81,6 +81,10 @@ import {
 } from './board3dMeshIdForPlayTarget';
 import { DropZoneType } from './board-3d-drop-zone';
 import { getBenchPositions, ZONE_POSITIONS } from './board-3d-zone-positions';
+import {
+  getSetupPlaySlotForPickOrder,
+  setupPreviewMeshId,
+} from '../prompts/chooseCardsHandSelection';
 import { r3fPointerEventAsMouse } from './board3dR3fPointer';
 import { subscribeBoard3dInteractionStreams } from './board3dControllerSubscriptions';
 import type { Board3dCard } from './board-3d-card';
@@ -322,6 +326,11 @@ export class Board3dController {
   /** Keep discard pile mesh frozen while KO ghost flies (avoid duplicate top card at discard + flying ghost). */
   private koDiscardVisualFreezePlayerId: number | null = null;
   private onKoSequenceActiveChange?: (active: boolean) => void;
+  /** Drop stale overlapping {@link syncSetupStartingPokemonPreview} runs. */
+  private setupPreviewSyncGeneration = 0;
+  /** Hand indices animating onto the board during setup (block hand resync). */
+  private setupPlacementInFlight = new Set<number>();
+  private setupHandSyncBlocked = false;
   /** Drop stale overlapping {@link syncGameState} runs (discard freeze races). */
   private syncGameStateGeneration = 0;
 
@@ -347,13 +356,38 @@ export class Board3dController {
   }
 
   private shouldDisableHandDragForSelection(): boolean {
+    if (this.boardInteractionService.isChooseStartingPokemonsSelectionActive()) {
+      return false;
+    }
     return this.boardInteractionService.isChooseHandCardsSelectionActive();
+  }
+
+  private refreshSetupStartingPokemonDragState(): void {
+    const startingSetup = this.boardInteractionService.isChooseStartingPokemonsSelectionActive();
+    this.interactionService.setSetupStartingPokemonDrag(
+      startingSetup
+        ? {
+            activeLocked: this.boardInteractionService.isSetupActiveLocked(),
+            skipActivePhase: this.boardInteractionService.isSetupActivePhaseSkipped(),
+          }
+        : null,
+    );
   }
 
   private refreshHandSelectionVisualsIfNeeded(): void {
     if (this.boardInteractionService.isSelectionActive()) {
       this.updateHandSelectionVisuals(true);
     }
+  }
+
+  private getSetupOmittedHandIndices(): ReadonlySet<number> | undefined {
+    if (!this.boardInteractionService.isChooseStartingPokemonsSelectionActive()) {
+      return undefined;
+    }
+    return new Set([
+      ...this.boardInteractionService.getChooseHandCardSelectionHandIndices(),
+      ...this.setupPlacementInFlight,
+    ]);
   }
 
   getStateSync(): Board3dStateSyncService {
@@ -376,7 +410,10 @@ export class Board3dController {
       this.shouldDisableHandDragForSelection(),
     );
     if (card) {
-      canvas.style.cursor = this.shouldDisableHandDragForSelection() ? 'pointer' : 'grabbing';
+      const startingSetup = this.boardInteractionService.isChooseStartingPokemonsSelectionActive();
+      const disableHandDrag = this.shouldDisableHandDragForSelection();
+      canvas.style.cursor =
+        disableHandDrag && !startingSetup ? 'pointer' : 'grabbing';
       this.markDirty();
     }
   }
@@ -1948,6 +1985,11 @@ export class Board3dController {
       return;
     }
 
+    if (this.setupHandSyncBlocked) {
+      this.pendingHandSyncWhileDragging = true;
+      return;
+    }
+
     if (!this.bottomPlayerHand || !this.bottomPlayer) {
       return;
     }
@@ -2347,7 +2389,8 @@ export class Board3dController {
           this.bottomPlayerHand,
           isOwnerImm,
           this.handSlot,
-          playableImm
+          playableImm,
+          this.getSetupOmittedHandIndices(),
         );
         if (genAtStart !== this.handSyncInvalidationGen) {
           return;
@@ -2468,7 +2511,8 @@ export class Board3dController {
             this.bottomPlayerHand,
             isOwner,
             this.handSlot,
-            playableCardIds
+            playableCardIds,
+            this.getSetupOmittedHandIndices(),
           );
           handUpdatedByAnimation = true;
         }
@@ -2521,7 +2565,8 @@ export class Board3dController {
             this.bottomPlayerHand,
             isOwner,
             this.handSlot,
-            playableCardIds
+            playableCardIds,
+            this.getSetupOmittedHandIndices(),
           );
           handUpdatedByAnimation = true;
         }
@@ -2530,7 +2575,8 @@ export class Board3dController {
           this.bottomPlayerHand,
           isOwner,
           this.handSlot,
-          playableCardIds
+          playableCardIds,
+          this.getSetupOmittedHandIndices(),
         );
       }
 
@@ -2637,7 +2683,10 @@ export class Board3dController {
     );
 
     if (card) {
-      canvas.style.cursor = disableHandDrag ? 'pointer' : 'grabbing';
+      const startingSetup = this.boardInteractionService.isChooseStartingPokemonsSelectionActive();
+      const disableHandDrag = this.shouldDisableHandDragForSelection();
+      canvas.style.cursor =
+        disableHandDrag && !startingSetup ? 'pointer' : 'grabbing';
       this.markDirty();
     }
   };
@@ -2663,9 +2712,10 @@ export class Board3dController {
       if (hoveredCard !== this.currentHoveredCard) {
         if (hoveredCard) {
           const chooseHandCards = this.boardInteractionService.isChooseHandCardsSelectionActive();
+          const startingSetup = this.boardInteractionService.isChooseStartingPokemonsSelectionActive();
           canvas.style.cursor =
             hoveredCard.userData.isHandCard
-              ? (chooseHandCards ? 'pointer' : 'grab')
+              ? (startingSetup || !chooseHandCards ? 'grab' : 'pointer')
               : 'pointer';
         } else {
           canvas.style.cursor = 'default';
@@ -2721,7 +2771,13 @@ export class Board3dController {
         });
         this.updateSelectionVisuals();
       } else if (result.action === 'playCard' && result.handIndex !== undefined && result.zone) {
-        this.executeHandPlayCard(result);
+        if (this.boardInteractionService.isChooseStartingPokemonsSelectionActive()) {
+          void this.executeSetupHandCardPlacement(result.handIndex, result.playCardFlight);
+        } else {
+          this.executeHandPlayCard(result);
+        }
+      } else if (result.action === 'setupSelectCard' && result.handIndex !== undefined) {
+        void this.executeSetupHandCardPlacement(result.handIndex, result.playCardFlight);
       } else if (result.action === 'retreat' && result.benchIndex !== undefined) {
         void this.gameActions.retreatAction(this.gameState.gameId, result.benchIndex);
       }
@@ -2862,6 +2918,121 @@ export class Board3dController {
         abortFlight();
       }
     })();
+  }
+
+  private releaseSetupHandSyncIfIdle(): void {
+    if (this.setupPlacementInFlight.size === 0) {
+      this.setupHandSyncBlocked = false;
+      this.flushPendingHandSyncAfterDrag();
+    }
+  }
+
+  private executeSetupHandCardPlacement(
+    handIndex: number,
+    flight?: PlayCardFlightPayload,
+  ): void {
+    const prompt = this.boardInteractionService.getChooseCardsPrompt();
+    if (!prompt || !this.bottomPlayer) {
+      return;
+    }
+    if (!this.boardInteractionService.isChooseStartingPokemonsSelectionActive()) {
+      return;
+    }
+
+    const handTarget: CardTarget = {
+      player: PlayerType.BOTTOM_PLAYER,
+      slot: SlotType.HAND,
+      index: handIndex,
+    };
+    if (!this.boardInteractionService.isTargetEligible(handTarget)) {
+      return;
+    }
+    const selected = this.boardInteractionService.getChooseHandCardSelectionHandIndices();
+    if (selected.includes(handIndex) || this.setupPlacementInFlight.has(handIndex)) {
+      return;
+    }
+
+    const pickOrder = selected.length;
+    const slotTarget = getSetupPlaySlotForPickOrder(prompt, pickOrder);
+    if (!slotTarget) {
+      return;
+    }
+
+    const card = prompt.player.hand.cards[handIndex];
+    if (!card) {
+      return;
+    }
+
+    const meshId = setupPreviewMeshId(this.bottomPlayer.id, slotTarget.slot, slotTarget.index);
+    const position =
+      slotTarget.slot === SlotType.ACTIVE
+        ? ZONE_POSITIONS.bottomPlayer.active.clone()
+        : getBenchPositions(this.bottomPlayer.bench.length, PlayerType.BOTTOM_PLAYER)[
+            slotTarget.index
+          ].clone();
+    const endScale = slotTarget.slot === SlotType.ACTIVE ? 1.5 : 1.0;
+    const endRotationY = 0;
+    const targetWorld = flight?.targetWorld ?? position.clone();
+    targetWorld.y = Math.max(targetWorld.y, 0.08);
+
+    const cardTarget: CardTarget = {
+      player: slotTarget.player,
+      slot: slotTarget.slot,
+      index: slotTarget.index,
+    };
+
+    this.setupHandSyncBlocked = true;
+    this.setupPlacementInFlight.add(handIndex);
+
+    let board3dCard = flight?.board3dCard ?? null;
+    if (!board3dCard) {
+      board3dCard = this.handService.liftHandCardForSetupAnimation(handIndex, this.worldContentRoot);
+    }
+    if (!board3dCard) {
+      this.setupPlacementInFlight.delete(handIndex);
+      this.releaseSetupHandSyncIfIdle();
+      if (this.boardInteractionService.addChooseHandCardForSetup(handIndex)) {
+        void this.syncSetupStartingPokemonPreview();
+      }
+      return;
+    }
+
+    this.handService.repositionSetupHandVisuals();
+
+    const group = board3dCard.getGroup();
+    gsap.killTweensOf(group.position);
+    gsap.killTweensOf(group.rotation);
+    gsap.killTweensOf(group.scale);
+
+    void this.animationService
+      .playHandCardDropOnBoard(group, targetWorld, {
+        endScale: flight?.endScale ?? endScale,
+        endRotationY: flight?.endRotationY ?? endRotationY,
+      })
+      .then(() => {
+        this.setupPlacementInFlight.delete(handIndex);
+        this.boardInteractionService.addChooseHandCardForSetup(handIndex);
+        this.stateSync.adoptSetupPreviewCard(
+          board3dCard!,
+          meshId,
+          handIndex,
+          card,
+          cardTarget,
+          {
+            position: targetWorld.clone(),
+            rotationY: endRotationY,
+            scale: flight?.endScale ?? endScale,
+          },
+        );
+        this.releaseSetupHandSyncIfIdle();
+        this.updateSelectionVisuals();
+        this.stateSync.publishSceneModel(this.handService.getHandSlotSnapshots());
+        this.interactionService.updateInteractiveObjects(this.scene);
+        this.markDirty();
+      });
+
+    this.updateHandSelectionVisuals(true);
+    this.markDirty();
   }
 
   private executeHandPlayCard(result: DropResult): void {
@@ -3022,7 +3193,7 @@ export class Board3dController {
       canvas,
     );
     if (card) {
-      this.onCardClicked(card);
+      this.showCardInfoPane(card);
     }
   };
 
@@ -3041,6 +3212,44 @@ export class Board3dController {
     // Update hand cards
     this.updateHandSelectionVisuals(isSelectionMode);
 
+    this.refreshSetupStartingPokemonDragState();
+    void this.syncSetupStartingPokemonPreview();
+
+    this.markDirty();
+  }
+
+  private async syncSetupStartingPokemonPreview(): Promise<void> {
+    const gen = ++this.setupPreviewSyncGeneration;
+    const startingSetup = this.boardInteractionService.isChooseStartingPokemonsSelectionActive();
+
+    if (!startingSetup || !this.bottomPlayer) {
+      this.stateSync.clearSetupStartingPokemonPreview();
+      if (gen === this.setupPreviewSyncGeneration) {
+        this.stateSync.publishSceneModel(this.handService.getHandSlotSnapshots());
+        this.interactionService.updateInteractiveObjects(this.scene);
+      }
+      return;
+    }
+
+    const prompt = this.boardInteractionService.getChooseCardsPrompt();
+    if (!prompt) {
+      this.stateSync.clearSetupStartingPokemonPreview();
+      return;
+    }
+
+    const handIndices = this.boardInteractionService.getChooseHandCardSelectionHandIndices();
+    await this.stateSync.updateSetupStartingPokemonPreview(
+      this.bottomPlayer,
+      prompt,
+      handIndices,
+    );
+
+    if (gen !== this.setupPreviewSyncGeneration) {
+      return;
+    }
+
+    this.stateSync.publishSceneModel(this.handService.getHandSlotSnapshots());
+    this.interactionService.updateInteractiveObjects(this.scene);
     this.markDirty();
   }
 
@@ -3054,15 +3263,29 @@ export class Board3dController {
    */
   private updateHandSelectionVisuals(isSelectionMode: boolean): void {
     const chooseHandCards = this.boardInteractionService.isChooseHandCardsSelectionActive();
-    const handGroup = this.handService.getHandGroup();
-    handGroup.children.forEach((cardGroup, index) => {
-      const card3d = this.handService.getCardAtIndex(index);
-      if (!card3d) return;
+    const startingSetup = this.boardInteractionService.isChooseStartingPokemonsSelectionActive();
+    const selectedHandIndices = startingSetup
+      ? new Set([
+          ...this.boardInteractionService.getChooseHandCardSelectionHandIndices(),
+          ...this.setupPlacementInFlight,
+        ])
+      : null;
 
+    for (const [mapIndex, card3d] of this.handService.getHandCardEntries()) {
+      const cardGroup = card3d.getGroup();
       const cardData = cardGroup.userData.cardData;
-      if (!cardData) return;
+      if (!cardData) continue;
 
-      const handIndex = (cardGroup.userData.handIndex as number | undefined) ?? index;
+      const handIndex = (cardGroup.userData.handIndex as number | undefined) ?? mapIndex;
+      const group = card3d.getGroup();
+
+      if (startingSetup && selectedHandIndices?.has(handIndex)) {
+        group.visible = false;
+        card3d.setOutline(false);
+        continue;
+      }
+
+      group.visible = true;
 
       // Create target for this hand card
       const target: CardTarget = {
@@ -3075,7 +3298,7 @@ export class Board3dController {
         const isEligible = this.boardInteractionService.isTargetEligible(target);
         const isSelected = this.boardInteractionService.isTargetSelected(target);
 
-        if (isSelected) {
+        if (isSelected && !startingSetup) {
           card3d.setOutline(true, 0x4ade80); // Green for selected
         } else if (isEligible) {
           card3d.setOutline(true, 0xffffff); // White for selectable
@@ -3088,7 +3311,42 @@ export class Board3dController {
       } else {
         card3d.setOutline(false);
       }
-    });
+    }
+  }
+
+  /**
+   * Open the card info pane (used for right-click and in-game inspection).
+   */
+  private showCardInfoPane(cardObject: Object3D): void {
+    const cardData = cardObject.userData.cardData as Card;
+    if (!cardData) {
+      return;
+    }
+
+    const cardList = cardObject.userData.cardList;
+    const cardTarget = cardObject.userData.cardTarget as CardTarget;
+    const isHandCard = cardObject.userData.isHandCard;
+    const isSetupPreview = cardObject.userData.isSetupPreview === true;
+
+    if (isHandCard || isSetupPreview) {
+      this.cardsAdapter.showCardInfo({
+        card: cardData,
+        cardList: cardList ?? this.bottomPlayerHand,
+        players: [this.topPlayer, this.bottomPlayer].filter(p => p),
+      });
+      return;
+    }
+
+    if (cardTarget?.slot === SlotType.ACTIVE || cardTarget?.slot === SlotType.BENCH) {
+      this.cardsAdapter.showCardInfo({
+        card: cardData,
+        cardList,
+        players: [this.topPlayer, this.bottomPlayer].filter(p => p),
+      });
+      return;
+    }
+
+    this.onCardClicked(cardObject);
   }
 
   /**
@@ -3312,8 +3570,29 @@ export class Board3dController {
 
     if (!cardData) return;
 
+    // Setup preview cards are locked once placed — no return to hand.
+    if (cardObject.userData.isSetupPreview === true) {
+      return;
+    }
+
     // Check if we're in selection mode (for ChoosePokemonPrompt etc.)
     if (this.boardInteractionService.isSelectionActive()) {
+      if (this.boardInteractionService.isChooseStartingPokemonsSelectionActive() && isHandCard) {
+        const handIndex = (cardObject.userData.handIndex as number | undefined) ?? 0;
+        const target: CardTarget = {
+          player: PlayerType.BOTTOM_PLAYER,
+          slot: SlotType.HAND,
+          index: handIndex,
+        };
+        if (
+          !this.boardInteractionService.isTargetSelected(target) &&
+          this.boardInteractionService.isTargetEligible(target)
+        ) {
+          void this.executeSetupHandCardPlacement(handIndex);
+        }
+        return;
+      }
+
       // Build target for selection
       const target: CardTarget = cardTarget || {
         player: PlayerType.BOTTOM_PLAYER,

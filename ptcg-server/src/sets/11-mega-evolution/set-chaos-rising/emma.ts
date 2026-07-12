@@ -3,7 +3,7 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { StateUtils, StoreLike, State } from '../../../game';
+import { StateUtils, StoreLike, State, Player } from '../../../game';
 import {
   ADD_MARKER,
   DRAW_CARDS,
@@ -23,6 +23,14 @@ export class Emma extends TrainerCard {
   public fullName: string = 'Emma M4';
   public text: string =
     'Your opponent reveals their hand, and you draw a card for each Pokémon you find there.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

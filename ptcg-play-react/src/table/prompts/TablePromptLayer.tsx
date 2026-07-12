@@ -93,6 +93,23 @@ function gameMessageText(t: TFunction, message: string | number): string {
   return t(key, { defaultValue: String(message) });
 }
 
+function setupStartingSnackbarMessage(
+  boardInteraction: BoardInteractionService,
+  t: TFunction,
+  fallback: string,
+): string {
+  if (!boardInteraction.isChooseStartingPokemonsSelectionActive()) {
+    return fallback;
+  }
+  if (!boardInteraction.isSetupActivePhaseSkipped() && !boardInteraction.isSetupActiveLocked()) {
+    return t('REACT_SETUP_CHOOSE_ACTIVE', { defaultValue: 'Choose your Active Pokémon' });
+  }
+  if (boardInteraction.hasMoreSetupBenchBasicsAvailable()) {
+    return t('REACT_SETUP_CHOOSE_BENCH', { defaultValue: 'Play any Benched Pokémon' });
+  }
+  return fallback;
+}
+
 /** Matches legacy server WaitPrompt message used before attack damage (see game-effect useAttack). */
 function isAttackAnimationWaitPrompt(wp: WaitPrompt): boolean {
   const m = wp.message;
@@ -459,14 +476,14 @@ function ChoosePokemonActionBar(props: {
   );
 }
 
-/** Board hand Choose cards: top snackbar + OK centered between Active and Bench. */
+/** Board hand Choose cards: full-width instruction bar at top with inline OK. */
 function ChooseHandCardsBoardOverlay(props: {
   boardInteraction: BoardInteractionService;
-  message: string;
+  defaultMessage: string;
   allowCancel: boolean;
 }) {
   const { t } = useTranslation();
-  const { boardInteraction, message, allowCancel } = props;
+  const { boardInteraction, defaultMessage, allowCancel } = props;
   const [, setTick] = useState(0);
 
   useEffect(() => {
@@ -481,27 +498,39 @@ function ChooseHandCardsBoardOverlay(props: {
 
   const valid = boardInteraction.isSelectionValid();
   const active = boardInteraction.isSelectionActive();
+  const message = setupStartingSnackbarMessage(boardInteraction, t, defaultMessage);
 
   if (!active) {
     return null;
   }
 
   return (
-    <>
-      <div className={styles.chooseStartingTopSnackbar} role="status">
-        {message}
-      </div>
-      <div className={styles.chooseStartingBoardOk}>
-        {allowCancel ? (
-          <ShellButton type="button" variant="secondary" onClick={() => boardInteraction.cancelSelection()}>
-            {t('BUTTON_CANCEL')}
+    <div className={styles.chooseStartingTopBar} role="status">
+      <div className={styles.chooseStartingTopBarContent}>
+        <div className={styles.chooseStartingTopBarMessage}>{message}</div>
+        <div className={styles.chooseStartingTopBarActions}>
+          {allowCancel ? (
+            <ShellButton
+              type="button"
+              variant="plain"
+              className={styles.chooseStartingTopBarCancelBtn}
+              onClick={() => boardInteraction.cancelSelection()}
+            >
+              {t('BUTTON_CANCEL')}
+            </ShellButton>
+          ) : null}
+          <ShellButton
+            type="button"
+            variant="plain"
+            className={styles.chooseStartingTopBarOkBtn}
+            disabled={!valid}
+            onClick={() => boardInteraction.confirmSelection()}
+          >
+            {t('BUTTON_OK')}
           </ShellButton>
-        ) : null}
-        <ShellButton type="button" disabled={!valid} onClick={() => boardInteraction.confirmSelection()}>
-          {t('BUTTON_OK')}
-        </ShellButton>
+        </div>
       </div>
-    </>
+    </div>
   );
 }
 
@@ -535,7 +564,6 @@ export function TablePromptLayer({
   const chooseHandCardsId =
     activePrompt?.type === 'Choose cards' &&
     !localGame.replay &&
-    !suppressTrainerEffectPrompts &&
     shouldUseBoardHandForChooseCards(activePrompt as ChooseCardsPrompt, clientId)
       ? activePrompt.id
       : null;
@@ -672,6 +700,20 @@ export function TablePromptLayer({
   }
 
   if (suppressTrainerEffectPrompts) {
+    if (
+      activePrompt.type === 'Choose cards' &&
+      shouldUseBoardHandForChooseCards(activePrompt as ChooseCardsPrompt, clientId)
+    ) {
+      const ccp = activePrompt as ChooseCardsPrompt;
+      const msg = gameMessageText(t, ccp.message);
+      return (
+        <ChooseHandCardsBoardOverlay
+          boardInteraction={boardInteraction}
+          defaultMessage={msg}
+          allowCancel={ccp.options.allowCancel}
+        />
+      );
+    }
     return null;
   }
 
@@ -838,7 +880,7 @@ export function TablePromptLayer({
       return (
         <ChooseHandCardsBoardOverlay
           boardInteraction={boardInteraction}
-          message={msg}
+          defaultMessage={msg}
           allowCancel={ccp.options.allowCancel}
         />
       );

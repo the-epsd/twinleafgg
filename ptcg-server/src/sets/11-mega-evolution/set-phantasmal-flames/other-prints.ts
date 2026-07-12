@@ -14,7 +14,7 @@ import { Firebreather as FirebreatherPFL89 } from './firebreather';
 import { GrimsleysGambit as GrimsleysGambitPFL90 } from './grimsleys-gambit';
 import { SacredCharm as SacredCharmPFL93 } from './sacred-charm';
 import { Switch } from '../../set-base-set/switch';
-import { IgnitionEnergy } from '../../set-black-bolt-white-flare/ignition-energy';
+import { IgnitionEnergy } from '../../10-scarlet-and-violet/set-black-bolt-white-flare/ignition-energy';
 export class Ludicolo2PFL extends LudicoloPFL7 {
   public setNumber = '95';
   public fullName: string = 'Ludicolo2 PFL';

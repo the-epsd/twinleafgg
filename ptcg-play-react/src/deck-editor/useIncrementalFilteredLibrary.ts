@@ -1,23 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Card } from 'ptcg-server';
-import { isDeckLibraryFilterEmpty, matchesDeckLibraryFilter } from './filterLibrary';
+import { isDeckLibraryFilterEmpty, matchesDeckLibraryFilter, sortFilteredLibrary } from './filterLibrary';
 import type { DeckEditToolbarFilter } from './types';
 
 const CHUNK_BASE = 400;
 const SCROLL_BOOST_MAX = 8;
 const MS_BUDGET = 14;
-
-function sortSelectedSet(filtered: Card[]): Card[] {
-  return filtered.slice().sort((a, b) => {
-    const sa = a.setNumber ?? '';
-    const sb = b.setNumber ?? '';
-    const byNum = sa.localeCompare(sb, undefined, { numeric: true, sensitivity: 'base' });
-    if (byNum !== 0) {
-      return byNum;
-    }
-    return a.fullName.localeCompare(b.fullName);
-  });
-}
 
 export function useIncrementalFilteredLibrary(allCards: Card[], filter: DeckEditToolbarFilter) {
   const [cards, setCards] = useState<Card[]>([]);
@@ -77,9 +65,7 @@ export function useIncrementalFilteredLibrary(allCards: Card[], filter: DeckEdit
           setCards((prev) => [...prev, ...batch]);
         }
         if (cursor >= allCards.length) {
-          if (filter.selectedSet) {
-            setCards((prev) => sortSelectedSet(prev));
-          }
+          setCards((prev) => sortFilteredLibrary(prev, filter));
           setDone(true);
           return;
         }

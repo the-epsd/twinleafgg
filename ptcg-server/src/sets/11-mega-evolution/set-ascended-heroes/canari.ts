@@ -1,3 +1,4 @@
+import { Player } from '../../../game/store/state/player';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, CardType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
@@ -111,6 +112,18 @@ export class Canari extends TrainerCard {
   public text: string = `You can use this card only if you discard another card from your hand.
   
   Search your deck for up to 4 [L] Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.`;
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    const otherCards = player.hand.cards.filter(c => c !== this);
+    if (otherCards.length < 1) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

@@ -18,8 +18,8 @@ import { MegaZygardeex } from './mega-zygarde-ex';
 import { Yveltalex } from './yveltal-ex';
 import { MegaSkarmoryex } from './mega-skarmory-ex';
 import { Meowthex } from './meowth-ex';
-import { EnergyRecycler } from '../../set-battle-styles/energy-recycler';
-import { SacredAsh } from '../../set-destined-rivals/sacred-ash';
+import { EnergyRecycler } from '../../09-sword-and-shield/set-battle-styles/energy-recycler';
+import { SacredAsh } from '../../10-scarlet-and-violet/set-destined-rivals/sacred-ash';
 import { PokePad } from '../set-ascended-heroes/poke-pad';
 import { WonderPatch } from '../set-phantasmal-flames/wonder-patch';
 import { Tarragon } from './tarragon';
@@ -28,12 +28,12 @@ import { RosasEncouragement } from './rosas-encouragement';
 import { Jacinthe } from './jacinthe';
 import { LushForest } from '../set-mega-evolution/forest-of-vitality';
 import { LumioiseCity } from './lumioise-city';
-import { CrushingHammer } from '../../set-scarlet-and-violet/crushing-hammer';
-import { EnergySearch } from '../../set-scarlet-and-violet/energy-search';
-import { Judge } from '../../set-scarlet-and-violet/judge';
+import { CrushingHammer } from '../../10-scarlet-and-violet/set-scarlet-and-violet/crushing-hammer';
+import { EnergySearch } from '../../10-scarlet-and-violet/set-scarlet-and-violet/energy-search';
+import { Judge } from '../../10-scarlet-and-violet/set-scarlet-and-violet/judge';
 import { PokeBall } from '../../set-jungle/pokeball';
-import { PokemonCatcher } from '../../set-scarlet-and-violet/pokemon-catcher';
-import { Potion } from '../../set-scarlet-and-violet/potion';
+import { PokemonCatcher } from '../../10-scarlet-and-violet/set-scarlet-and-violet/pokemon-catcher';
+import { Potion } from '../../10-scarlet-and-violet/set-scarlet-and-violet/potion';
 
 // MARK: Trainer Reprints
 

@@ -1,4 +1,4 @@
-import { EmceesHype } from '../../set-destined-rivals/mcs-hype-up';
+import { EmceesHype } from '../../10-scarlet-and-violet/set-destined-rivals/mcs-hype-up';
 
 export class EmceesHypeM6 extends EmceesHype {
   public set: string = 'M6';

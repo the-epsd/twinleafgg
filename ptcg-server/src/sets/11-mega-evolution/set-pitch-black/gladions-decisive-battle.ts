@@ -1,3 +1,4 @@
+import { Player } from '../../../game/store/state/player';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { GameError } from '../../../game/game-error';
@@ -21,6 +22,17 @@ export class GladionsDecisiveBattle extends TrainerCard {
   public text: string = `You may only play this card if it is the only card in your hand.\n\nDuring this turn, attacks used by your Pokémon that do not have a Rule Box deal 80 more damage to your opponent's Active Pokémon.`;
 
   public readonly GLADION_MARKER = 'M5_GLADIONS_DECISIVE_BATTLE';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (player.hand.cards.filter(c => c !== this).length !== 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(_store: StoreLike, state: State, effect: Effect): State {
 

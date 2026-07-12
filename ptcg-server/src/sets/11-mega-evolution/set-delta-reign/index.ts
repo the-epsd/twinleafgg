@@ -9,6 +9,9 @@ import { ZinniasTrust } from './zinnias-trust';
 import { EmceesHypeM6 } from './other-prints';
 import { LegendarySummitLeft } from './legendary-summit-left';
 import { LegendarySummitRight } from './legendary-summit-right';
+import { Sableye } from './sableye';
+import { Inkay } from './inkay';
+import { MegaMalamarex } from './mega-malamar-ex';
 
 export const setDeltaReign: Card[] = [
   new MegaRayquazaex(),
@@ -21,4 +24,7 @@ export const setDeltaReign: Card[] = [
   new ZinniasTrust(),
   new LegendarySummitLeft(),
   new LegendarySummitRight(),
+  new Sableye(),
+  new Inkay(),
+  new MegaMalamarex(),
 ];

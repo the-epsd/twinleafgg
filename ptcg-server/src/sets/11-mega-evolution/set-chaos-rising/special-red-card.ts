@@ -2,7 +2,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { StateUtils, StoreLike, State } from '../../../game';
+import { StateUtils, StoreLike, State, Player } from '../../../game';
 import { GameError, GameMessage } from '../../../game';
 import { CardList } from '../../../game/store/state/card-list';
 import { DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
@@ -18,6 +18,16 @@ export class SpecialRedCard extends TrainerCard {
   public text: string =
     'You can use this card only if your opponent has 3 or fewer Prize cards remaining.\n\n' +
     'Your opponent shuffles their hand and puts it on the bottom of their deck. If they put any cards on the bottom of their deck in this way, they draw 3 cards.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const opponent = StateUtils.getOpponent(state, player);
+    const prizeCount = opponent.prizes.filter(p => p.cards.length > 0).length;
+    if (prizeCount > 3) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

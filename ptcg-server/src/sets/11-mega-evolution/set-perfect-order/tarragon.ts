@@ -1,4 +1,4 @@
-import { GameError, PokemonCard } from '../../../game';
+import { GameError, PokemonCard, Player } from '../../../game';
 import { GameMessage } from '../../../game/game-message';
 import { Card } from '../../../game/store/card/card';
 import { CardType, EnergyType, SuperType, TrainerType } from '../../../game/store/card/card-types';
@@ -75,6 +75,14 @@ export class Tarragon extends TrainerCard {
   public name: string = 'Tarragon';
   public fullName: string = 'Tarragon M3';
   public text: string = 'Put up to 4 in any combination of [F] Pokémon and Basic [F] Energy cards from your discard pile into your hand.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

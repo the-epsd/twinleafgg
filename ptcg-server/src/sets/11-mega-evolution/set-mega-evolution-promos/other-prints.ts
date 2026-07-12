@@ -1,3 +1,19 @@
+import { MegaCharizardXex as MegaCharizardXexPFL13 } from "../set-phantasmal-flames/mega-charizard-x-ex";
+import { MegaCharizardYex } from "../set-ascended-heroes/mega-charizard-y-ex";
+import { NsZekrom } from "../set-ascended-heroes/ns-zekrom";
+import { MegaGardevoirex } from "../set-mega-evolution/mega-gardevoir-ex";
+import { MegaLucarioex as MegaLucarioexMEG77 } from "../set-mega-evolution/mega-lucario-ex";
+import { MegaMeganiumex } from "../set-ascended-heroes/mega-meganium-ex";
+import { MegaEmboarex } from "../set-ascended-heroes/mega-emboar-ex";
+import { MegaFeraligatrex } from "../set-ascended-heroes/mega-feraligatr-ex";
+import { Makuhita } from "../set-mega-evolution/makuhita";
+import { Chikorita } from "../set-mega-evolution/chikorita";
+import { Delphox } from "../set-chaos-rising/delphox";
+import { Crobat } from "../set-chaos-rising/crobat";
+import { Goodra } from "../set-chaos-rising/goodra";
+import { Toxel } from "../set-phantasmal-flames/toxel";
+import { Charmeleon } from "../set-phantasmal-flames/charmeleon";
+import { Fennekin } from "../set-chaos-rising/fennekin";
 import { Meganium } from '../set-mega-evolution/meganium';
 import { Inteleon } from '../set-mega-evolution/inteleon';
 import { Alakazam } from '../set-mega-evolution/alakazam';
@@ -143,5 +159,100 @@ export class TyrantrumMEP extends Tyrantrum {
 export class DoubladeMEP extends Doublade {
   public setNumber = '67';
   public fullName: string = 'Doublade MEP';
+  public set = 'MEP';
+}
+export class MegaCharizardXex2MEP extends MegaCharizardXexPFL13 {
+  public setNumber = '29';
+  public fullName: string = 'Mega Charizard X ex2 MEP';
+  public set = 'MEP';
+}
+
+export class MegaCharizardYexMEP extends MegaCharizardYex {
+  public setNumber = '30';
+  public fullName: string = 'Mega Charizard Y ex MEP';
+  public set = 'MEP';
+}
+
+export class NsZekromMEP extends NsZekrom {
+  public setNumber = '31';
+  public fullName: string = 'N\'s Zekrom MEP';
+  public set = 'MEP';
+}
+
+export class MegaGardevoirexMEP extends MegaGardevoirex {
+  public setNumber = '32';
+  public fullName: string = 'Mega Gardevoir ex MEP';
+  public set = 'MEP';
+}
+
+export class MegaLucarioex2MEP extends MegaLucarioexMEG77 {
+  public setNumber = '33';
+  public fullName: string = 'Mega Lucario ex2 MEP';
+  public set = 'MEP';
+}
+
+export class MegaMeganiumexMEP extends MegaMeganiumex {
+  public setNumber = '34';
+  public fullName: string = 'Mega Meganium ex MEP';
+  public set = 'MEP';
+}
+
+export class MegaEmboarexMEP extends MegaEmboarex {
+  public setNumber = '35';
+  public fullName: string = 'Mega Emboar ex MEP';
+  public set = 'MEP';
+}
+
+export class MegaFeraligatrexMEP extends MegaFeraligatrex {
+  public setNumber = '36';
+  public fullName: string = 'Mega Feraligatr ex MEP';
+  public set = 'MEP';
+}
+
+export class MakuhitaMEP extends Makuhita {
+  public setNumber = '68';
+  public fullName: string = 'Makuhita MEP';
+  public set = 'MEP';
+}
+
+export class ChikoritaMEP extends Chikorita {
+  public setNumber = '69';
+  public fullName: string = 'Chikorita MEP';
+  public set = 'MEP';
+}
+
+export class DelphoxMEP extends Delphox {
+  public setNumber = '74';
+  public fullName: string = 'Delphox MEP';
+  public set = 'MEP';
+}
+
+export class CrobatMEP extends Crobat {
+  public setNumber = '76';
+  public fullName: string = 'Crobat MEP';
+  public set = 'MEP';
+}
+
+export class GoodraMEP extends Goodra {
+  public setNumber = '77';
+  public fullName: string = 'Goodra MEP';
+  public set = 'MEP';
+}
+
+export class ToxelMEP extends Toxel {
+  public setNumber = '78';
+  public fullName: string = 'Toxel MEP';
+  public set = 'MEP';
+}
+
+export class CharmeleonMEP extends Charmeleon {
+  public setNumber = '79';
+  public fullName: string = 'Charmeleon MEP';
+  public set = 'MEP';
+}
+
+export class FennekinMEP extends Fennekin {
+  public setNumber = '80';
+  public fullName: string = 'Fennekin MEP';
   public set = 'MEP';
 }

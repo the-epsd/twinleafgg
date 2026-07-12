@@ -8,7 +8,7 @@ import { State } from '../../../game/store/state/state';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { DRAW_CARDS_UNTIL_CARDS_IN_HAND, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { CardList } from '../../../game/store/state/card-list';
-import { ChooseCardsPrompt } from '../../../game';
+import { ChooseCardsPrompt, Player } from '../../../game';
 
 export class Naveen extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -19,6 +19,17 @@ export class Naveen extends TrainerCard {
   public name: string = 'Naveen';
   public fullName: string = 'Naveen M3';
   public text: string = 'Draw cards until you have 5 cards in your hand. Before drawing cards, you may discard any number of cards from your hand. (If you can\'t draw any cards in this way, you can\'t use this card.)';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

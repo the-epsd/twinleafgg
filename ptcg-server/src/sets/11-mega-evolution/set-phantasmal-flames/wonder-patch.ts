@@ -1,3 +1,4 @@
+import { Player } from '../../../game/store/state/player';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, CardType, EnergyType, SuperType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
@@ -22,6 +23,33 @@ export class WonderPatch extends TrainerCard {
   public setNumber: string = '94';
   public fullName: string = 'Wonder Patch MBD';
   public text: string = 'Attach a basic [P] Energy card from your discard pile to 1 of your Benched [P] Pokémon.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const hasEnergyInDiscard = player.discard.cards.some(c =>
+      c instanceof EnergyCard &&
+      c.energyType === EnergyType.BASIC &&
+      c.provides.includes(CardType.PSYCHIC)
+    );
+    if (!hasEnergyInDiscard) {
+      return false;
+    }
+    let hasPsychicOnBench = false;
+    player.bench.forEach(bench => {
+      if (bench.cards.length === 0) {
+        return;
+      }
+      const checkPokemonTypeEffect = new CheckPokemonTypeEffect(bench);
+      store.reduceEffect(state, checkPokemonTypeEffect);
+      if (checkPokemonTypeEffect.cardTypes.includes(CardType.PSYCHIC)) {
+        hasPsychicOnBench = true;
+      }
+    });
+    if (!hasPsychicOnBench) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

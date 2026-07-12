@@ -1,4 +1,4 @@
-import { PokemonCard } from '../../../game';
+import { PokemonCard, Player } from '../../../game';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { Effect } from '../../../game/store/effects/effect';
@@ -71,6 +71,23 @@ export class Gwynn extends TrainerCard {
   public name: string = 'Gwynn';
   public fullName: string = 'Gwynn M5';
   public text: string = 'Discard 2 Pokémon from your hand (excluding any Rule Box Pokémon). Draw 3 cards for each Pokémon discarded in this way.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    const blocked: number[] = [];
+    player.hand.cards.forEach((c, i) => {
+      if (!(c instanceof PokemonCard) || pokemonCardHasRuleBox(c)) {
+        blocked.push(i);
+      }
+    });
+    if (player.hand.cards.length - blocked.length < 2) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

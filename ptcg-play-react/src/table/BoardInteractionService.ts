@@ -17,8 +17,12 @@ import {
   chooseCardsHandIndicesToCards,
   chooseCardsHandIndexToPromptIndex,
   chooseCardsHandTargetsToPromptIndices,
+  countEligibleUnselectedSetupHandBasics,
+  getChooseHandCardSelectionHandIndices,
   isChooseCardsHandIndexEligible,
   isChooseCardsFromPlayerHand,
+  isChooseStartingPokemonsHandPrompt,
+  isSetupActivePhaseSkipped,
 } from './prompts/chooseCardsHandSelection';
 
 /** Pause before trainer effect prompts so the hand → board play animation can finish. */
@@ -225,6 +229,116 @@ export class BoardInteractionService {
 
   public isChooseHandCardsSelectionActive(): boolean {
     return this.overlayKind === 'choose-hand-cards';
+  }
+
+  public isChooseStartingPokemonsSelectionActive(): boolean {
+    return (
+      this.overlayKind === 'choose-hand-cards' &&
+      this.chooseCardsPrompt != null &&
+      isChooseStartingPokemonsHandPrompt(this.chooseCardsPrompt)
+    );
+  }
+
+  public getChooseCardsPrompt(): ChooseCardsPrompt | null {
+    return this.chooseCardsPrompt;
+  }
+
+  public getChooseHandCardSelectionHandIndices(): number[] {
+    return getChooseHandCardSelectionHandIndices(this.selectedTargetsSubject.value);
+  }
+
+  public removeChooseHandCardByHandIndex(handIndex: number): void {
+    if (this.isChooseStartingPokemonsSelectionActive()) {
+      return;
+    }
+    const currentTargets = this.selectedTargetsSubject.value;
+    const newTargets = currentTargets.filter(
+      t => !(t.slot === SlotType.HAND && t.index === handIndex),
+    );
+    if (newTargets.length !== currentTargets.length) {
+      this.selectedTargetsSubject.next(newTargets);
+    }
+  }
+
+  /** Initial setup: Active is chosen and cannot be changed. */
+  public isSetupActivePhaseSkipped(): boolean {
+    const prompt = this.chooseCardsPrompt;
+    if (!prompt || !this.isChooseStartingPokemonsSelectionActive()) {
+      return false;
+    }
+    return isSetupActivePhaseSkipped(prompt);
+  }
+
+  public isSetupActiveLocked(): boolean {
+    if (!this.isChooseStartingPokemonsSelectionActive()) {
+      return false;
+    }
+    if (this.isSetupActivePhaseSkipped()) {
+      return true;
+    }
+    return this.getChooseHandCardSelectionHandIndices().length >= 1;
+  }
+
+  public isSetupActiveSelection(handIndex: number): boolean {
+    if (this.isSetupActivePhaseSkipped()) {
+      return false;
+    }
+    const indices = this.getChooseHandCardSelectionHandIndices();
+    return indices.length > 0 && indices[0] === handIndex;
+  }
+
+  /** Initial setup: any placed Basic (Active or Bench) cannot be returned to hand. */
+  public isSetupSelectionLocked(handIndex: number): boolean {
+    if (!this.isChooseStartingPokemonsSelectionActive()) {
+      return false;
+    }
+    return this.getChooseHandCardSelectionHandIndices().includes(handIndex);
+  }
+
+  public hasMoreSetupBenchBasicsAvailable(): boolean {
+    const prompt = this.chooseCardsPrompt;
+    if (!prompt || !this.isChooseStartingPokemonsSelectionActive()) {
+      return false;
+    }
+    const selected = this.getChooseHandCardSelectionHandIndices();
+    if (selected.length >= this.maxSelectionsSubject.value) {
+      return false;
+    }
+    return countEligibleUnselectedSetupHandBasics(prompt, selected) > 0;
+  }
+
+  /** Pick a Basic during setup (click or drop). Active is chosen first and locked. */
+  public addChooseHandCardForSetup(handIndex: number): boolean {
+    if (!this.isChooseStartingPokemonsSelectionActive() || !this.chooseCardsPrompt) {
+      return false;
+    }
+    const target: CardTarget = {
+      player: PlayerType.BOTTOM_PLAYER,
+      slot: SlotType.HAND,
+      index: handIndex,
+    };
+    if (!this.isTargetEligible(target)) {
+      return false;
+    }
+
+    const currentTargets = this.selectedTargetsSubject.value;
+    if (currentTargets.some(t => t.slot === SlotType.HAND && t.index === handIndex)) {
+      return false;
+    }
+
+    const maxSelections = this.maxSelectionsSubject.value;
+
+    if (!this.isSetupActiveLocked()) {
+      this.selectedTargetsSubject.next([target]);
+      return true;
+    }
+
+    if (currentTargets.length >= maxSelections) {
+      return false;
+    }
+
+    this.selectedTargetsSubject.next([...currentTargets, target]);
+    return true;
   }
 
   public cancelHandPlayTargetSelection(): void {
@@ -494,6 +608,20 @@ export class BoardInteractionService {
       }
       this.selectionCallback([target]);
       this.endBoardSelection();
+      return;
+    }
+
+    if (this.isChooseStartingPokemonsSelectionActive() && target.slot === SlotType.HAND) {
+      const currentTargets = this.selectedTargetsSubject.value;
+      const targetIndex = currentTargets.findIndex(t =>
+        t.player === target.player &&
+        t.slot === target.slot &&
+        t.index === target.index
+      );
+      if (targetIndex !== -1) {
+        return;
+      }
+      this.addChooseHandCardForSetup(target.index);
       return;
     }
 

@@ -1,14 +1,14 @@
-import { BillsMaintenance } from '../set-ex-firered-leafgreen/bills-maintenance';
-import { Copycat } from '../set-ex-dragon-frontiers/copycat';
-import { DualBall } from '../set-unleashed/dual-ball';
-import { EnergyRemoval2 } from '../set-ex-power-keepers/energy-removal-2';
-import { EnergySearch } from '../set-scarlet-and-violet/energy-search';
-import { PokemonReversal } from '../set-ex-unseen-forces/pokemon-reversal';
-import { ProfessorElmsTrainingMethod } from '../set-ex-unseen-forces/professors-elm-training-method';
-import { ProfessorOaksResearch } from '../set-ex-dragon-frontiers/professor-oaks-research';
-import { StrengthCharm } from '../set-ex-dragon-frontiers/strength-charm';
-import { SuperScoopUp } from '../set-diamond-and-pearl/super-scoop-up';
-import { Switch } from '../set-scarlet-and-violet/switch';
+import { BillsMaintenance } from '../03-ex-ruby-and-sapphire/set-ex-firered-leafgreen/bills-maintenance';
+import { Copycat } from '../03-ex-ruby-and-sapphire/set-ex-dragon-frontiers/copycat';
+import { DualBall } from '../05-heartgold-and-soulsilver/set-unleashed/dual-ball';
+import { EnergyRemoval2 } from '../03-ex-ruby-and-sapphire/set-ex-power-keepers/energy-removal-2';
+import { EnergySearch } from '../10-scarlet-and-violet/set-scarlet-and-violet/energy-search';
+import { PokemonReversal } from '../03-ex-ruby-and-sapphire/set-ex-unseen-forces/pokemon-reversal';
+import { ProfessorElmsTrainingMethod } from '../03-ex-ruby-and-sapphire/set-ex-unseen-forces/professors-elm-training-method';
+import { ProfessorOaksResearch } from '../03-ex-ruby-and-sapphire/set-ex-dragon-frontiers/professor-oaks-research';
+import { StrengthCharm } from '../03-ex-ruby-and-sapphire/set-ex-dragon-frontiers/strength-charm';
+import { SuperScoopUp } from '../04-diamond-pearl-platinum/set-diamond-and-pearl/super-scoop-up';
+import { Switch } from '../10-scarlet-and-violet/set-scarlet-and-violet/switch';
 
 export class BillsMaintenanceEX extends BillsMaintenance {
   public fullName = 'Bill\'s Maintenance EX';

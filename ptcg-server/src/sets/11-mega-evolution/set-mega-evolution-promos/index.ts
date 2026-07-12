@@ -1,4 +1,4 @@
-import { MeganiumMEP, InteleonMEP, AlakazamMEP, LunatoneMEP, Alakazam2MEP, RioluMEP, MegaLatiasexMEP, MegaLucarioexMEP, MegaVenusaurExMEP, CeruledgeMEP, ZacianMEP, ToxtricityMEP, CharcadetMEP, MegaCharizardXexMEP, OricorioexMEP, MegaKangaskhanexMEP, HaunterMEP, DoubladeMEP, TyrantrumMEP, BarbaracleMEP, SerperiorMEP } from './other-prints';
+import { MeganiumMEP, InteleonMEP, AlakazamMEP, LunatoneMEP, Alakazam2MEP, RioluMEP, MegaLatiasexMEP, MegaLucarioexMEP, MegaVenusaurExMEP, CeruledgeMEP, ZacianMEP, ToxtricityMEP, CharcadetMEP, MegaCharizardXexMEP, OricorioexMEP, MegaKangaskhanexMEP, HaunterMEP, DoubladeMEP, TyrantrumMEP, BarbaracleMEP, SerperiorMEP, MegaCharizardXex2MEP, MegaCharizardYexMEP, NsZekromMEP, MegaGardevoirexMEP, MegaLucarioex2MEP, MegaMeganiumexMEP, MegaEmboarexMEP, MegaFeraligatrexMEP, MakuhitaMEP, ChikoritaMEP, DelphoxMEP, CrobatMEP, GoodraMEP, ToxelMEP, CharmeleonMEP, FennekinMEP } from './other-prints';
 import { Card } from '../../../game/store/card/card';
 import { Psyduck } from './psyduck';
 import { Sneasel } from './sneasel';
@@ -45,4 +45,20 @@ export const setMegaEvolutionPromos: Card[] = [
   new BarbaracleMEP(),
   new TyrantrumMEP(),
   new DoubladeMEP(),
+  new MegaCharizardXex2MEP(),
+  new MegaCharizardYexMEP(),
+  new NsZekromMEP(),
+  new MegaGardevoirexMEP(),
+  new MegaLucarioex2MEP(),
+  new MegaMeganiumexMEP(),
+  new MegaEmboarexMEP(),
+  new MegaFeraligatrexMEP(),
+  new MakuhitaMEP(),
+  new ChikoritaMEP(),
+  new DelphoxMEP(),
+  new CrobatMEP(),
+  new GoodraMEP(),
+  new ToxelMEP(),
+  new CharmeleonMEP(),
+  new FennekinMEP(),
 ];
