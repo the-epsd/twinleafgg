@@ -8,10 +8,27 @@ import type {
   UserInfo,
 } from 'ptcg-server';
 import type { RankingInfo } from 'ptcg-server';
-import type { Archetype, CardTag, CardType, Format } from 'ptcg-server';
+import type { Archetype, CardTag, CardType, Format, SuperType } from 'ptcg-server';
 
 export interface OkResponse {
   ok: boolean | number;
+}
+
+/** Runtime class-inheritance edge from GET /v1/cards/parent-map. */
+export interface CardParentMapEntry {
+  fullName: string;
+  name: string;
+  set: string;
+  setNumber: string;
+  className: string;
+  parentClassName: string | null;
+  parentFullName: string | null;
+  regulationMark?: string;
+  superType: SuperType;
+}
+
+export interface CardParentMap {
+  entries: CardParentMapEntry[];
 }
 
 export interface LoginResponseBody extends OkResponse {
@@ -42,6 +59,10 @@ export interface CardsHashResponse extends OkResponse {
 export interface CardsResponse extends OkResponse {
   cards: Card[];
   cardsInfo: CardsInfo;
+}
+
+export interface CardsParentMapResponse extends OkResponse {
+  parentMap: CardParentMap;
 }
 
 export interface DeckListEntry {
