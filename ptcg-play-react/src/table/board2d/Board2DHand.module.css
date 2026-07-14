@@ -1,0 +1,146 @@
+/* Hand cards: full card height, hung off the edge so only ~65% shows in-view.
+   Horizontal scroll/swipe when the row is wider than the viewport.
+   Hover lift needs room above the peek — padding/margin on .scroller so
+   overflow-x scrolling does not clip the scaled card (overflow-y:visible is
+   impossible alongside overflow-x:auto per CSS). */
+.hand {
+  --hand-card-w: 116px;
+  --hand-card-h: calc(var(--hand-card-w) * 1.4);
+  --hand-visible-h: calc(var(--hand-card-h) * 0.65);
+  --hand-hidden-h: calc(var(--hand-card-h) - var(--hand-visible-h));
+  --hand-hover-room: 28px;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  /* Above boardHost so hover lift isn't covered by the playfield layer. */
+  z-index: 7;
+  height: var(--hand-visible-h);
+  padding: 0;
+  overflow: visible;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+.scroller {
+  height: calc(var(--hand-visible-h) + var(--hand-hover-room));
+  margin-top: calc(-1 * var(--hand-hover-room));
+  padding-top: var(--hand-hover-room);
+  box-sizing: border-box;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  pointer-events: auto;
+  touch-action: pan-x;
+}
+
+.scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.track {
+  display: flex;
+  align-items: flex-start;
+  justify-content: safe center;
+  width: max-content;
+  min-width: 100%;
+  height: var(--hand-visible-h);
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+
+.hand:not(.opponent) {
+  /* Hang so the visible peek sits in the bottom strip; card bottoms clip below. */
+  bottom: 0;
+}
+
+.hand.opponent {
+  top: 0;
+  transform: rotate(180deg);
+}
+
+.cardWrap {
+  width: var(--hand-card-w);
+  height: var(--hand-card-h);
+  margin: 0 3px;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  /* Prefer horizontal swipe-to-scroll; dnd-kit still activates after move threshold. */
+  touch-action: pan-x;
+  pointer-events: auto;
+  transition: transform 0.15s ease, margin 0.15s ease;
+  /* Sit in the strip with the top of the card at the strip top; bottom hangs off-screen. */
+  transform-origin: center top;
+  align-self: flex-start;
+}
+
+.hand:not(.opponent) .cardWrap:hover {
+  transform: scale(1.12) translateY(-8px);
+  z-index: 10;
+}
+
+.hand.opponent .cardWrap:hover {
+  transform: scale(1.08) translateY(-6px);
+  z-index: 10;
+}
+
+.cardWrap.playable {
+  outline: 2px solid #4ade80;
+  outline-offset: 0;
+  border-radius: 5.15%;
+  box-shadow: 0 0 12px rgba(74, 222, 128, 0.55);
+}
+
+.cardWrap.dragging {
+  opacity: 0.45;
+}
+
+.cardWrap.selectable {
+  outline: 2px solid #ffffff;
+  outline-offset: 0;
+  border-radius: 5.15%;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+}
+
+.cardWrap.selected {
+  outline: 3px solid #449058;
+  outline-offset: 0;
+  border-radius: 5.15%;
+  box-shadow: 0 0 14px rgba(68, 144, 88, 0.75);
+}
+
+.dense {
+  margin-left: -18px;
+  margin-right: -18px;
+}
+
+.dense:first-child {
+  margin-left: 3px;
+}
+
+.face {
+  width: 100%;
+  aspect-ratio: 2.5 / 3.5;
+  display: block;
+  border-radius: 3.5%;
+}
+
+/* Match Board2D portrait hand tokens (root sets data-portrait). */
+:global([data-portrait]) .hand {
+  --hand-card-w: 110px;
+  --hand-card-h: calc(var(--hand-card-w) * 1.4);
+  --hand-visible-h: calc(var(--hand-card-h) * 0.62);
+  --hand-hidden-h: calc(var(--hand-card-h) - var(--hand-visible-h));
+  --hand-hover-room: 26px;
+}
+
+:global([data-portrait]) .track {
+  padding: 0 8px;
+}
+
+:global([data-portrait]) .hand:not(.opponent) .cardWrap:hover {
+  transform: scale(1.1) translateY(-8px);
+}

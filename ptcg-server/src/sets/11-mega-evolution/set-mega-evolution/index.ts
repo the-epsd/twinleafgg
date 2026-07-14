@@ -62,6 +62,7 @@ import { DangerousRuins } from './risky-ruins';
 import { Drizzile } from './drizzile';
 import { Electrike } from './electrike';
 import { FightingGong } from './fighting-gong';
+import { Frosmoth } from './frosmoth';
 import { Garganacl } from './garganacl';
 import { Gimmighoul } from './gimmighoul';
 import { Greavard } from './greavard';
@@ -132,6 +133,7 @@ export const setMegaEvolution: Card[] = [
   new Drizzile(),
   new Electrike(),
   new FightingGong(),
+  new Frosmoth(),
   new Garganacl(),
   new Gimmighoul(),
   new Greavard(),

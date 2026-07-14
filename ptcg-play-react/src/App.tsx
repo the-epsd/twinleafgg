@@ -20,6 +20,7 @@ import { ProfilePage } from './pages/ProfilePage';
 import { TablePage } from './pages/TablePage';
 import { SpectatePage } from './pages/SpectatePage';
 import { FriendsPage } from './pages/FriendsPage';
+import { ParentPage } from './pages/ParentPage';
 
 function ProfileMeRedirect() {
   const { user } = useAuth();
@@ -59,6 +60,7 @@ export default function App() {
                 <Route path="/settings" element={<SettingsPage />} />
                 <Route path="/profile" element={<ProfileMeRedirect />} />
                 <Route path="/profile/:userId" element={<ProfilePageRoute />} />
+                <Route path="/parent" element={<ParentPage />} />
               </Route>
             </Route>
             <Route path="/" element={<Navigate to="/games" replace />} />

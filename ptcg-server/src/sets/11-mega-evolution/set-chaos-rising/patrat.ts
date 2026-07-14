@@ -3,6 +3,7 @@ import { PowerType } from '../../../game/store/card/pokemon-types';
 import { PokemonCard, PlayerType, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { MoveDamageCountersEffect } from '../../../game/store/effects/game-effects';
+import { MoveCountersAttackEffect } from '../../../game/store/effects/attack-effects';
 
 export class Patrat extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -35,7 +36,7 @@ export class Patrat extends PokemonCard {
   public fullName: string = 'Patrat M4';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof MoveDamageCountersEffect) {
+    if (effect instanceof MoveDamageCountersEffect || effect instanceof MoveCountersAttackEffect) {
       let hasPatrat = false;
       state.players.forEach((p) => {
         p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {

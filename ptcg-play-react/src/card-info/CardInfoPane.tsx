@@ -298,13 +298,13 @@ export function CardInfoPane({
             >
               <div className={styles.power}>
                 <div className={styles.powerHeader}>
-                  <div className={styles.powerType}>
-                    {powerTypeLabel(power.powerType) ? (
+                  {powerTypeLabel(power.powerType) ? (
+                    <div className={styles.powerType}>
                       <span className={power.powerType === PowerType.POKEBODY ? styles.pokeBody : styles.ability}>
                         {powerTypeLabel(power.powerType)}
                       </span>
-                    ) : null}
-                  </div>
+                    </div>
+                  ) : null}
                   <div className={styles.powerName}>{power.name}</div>
                 </div>
                 <div
@@ -484,11 +484,11 @@ export function CardInfoPane({
             >
               <div className={styles.power}>
                 <div className={styles.powerHeader}>
-                  <div className={styles.powerType}>
-                    {powerTypeLabel(power.powerType) ? (
+                  {powerTypeLabel(power.powerType) ? (
+                    <div className={styles.powerType}>
                       <span className={styles.ability}>{powerTypeLabel(power.powerType)}</span>
-                    ) : null}
-                  </div>
+                    </div>
+                  ) : null}
                   <div className={styles.powerName}>{power.name}</div>
                 </div>
                 <div
@@ -553,11 +553,11 @@ export function CardInfoPane({
             >
               <div className={styles.power}>
                 <div className={styles.powerHeader}>
-                  <div className={styles.powerType}>
-                    {powerTypeLabel(power.powerType) ? (
+                  {powerTypeLabel(power.powerType) ? (
+                    <div className={styles.powerType}>
                       <span className={styles.ability}>{powerTypeLabel(power.powerType)}</span>
-                    ) : null}
-                  </div>
+                    </div>
+                  ) : null}
                   <div className={styles.powerName}>{power.name}</div>
                 </div>
                 <div

@@ -1,5 +1,7 @@
-import { Ludicolo2PFL, Zacian2PFL, Toxtricity2PFL, Wigglytuff2PFL, MegaCharizardXex2PFL, Oricorioex2PFL, Rotomex2PFL, MegaSharpedoex2PFL, MegaLopunnyex2PFL, BattleColosseum2PFL, Dawn2PFL, Firebreather2PFL, GrimsleysGambit2PFL, SacredCharm2PFL, SwitchPFL, IgnitionEnergyPFL, MegaCharizardXex3PFL, Rotomex3PFL, MegaSharpedoex3PFL, MegaLopunnyex3PFL, Dawn3PFL, Blowtorch2PFL, MegaCharizardXex4PFL } from './other-prints';
+import { Ludicolo2PFL, Zacian2PFL, Toxtricity2PFL, Wigglytuff2PFL, MegaCharizardXex2PFL, Oricorioex2PFL, Rotomex2PFL, MegaSharpedoex2PFL, MegaLopunnyex2PFL, BattleColosseum2PFL, Dawn2PFL, Firebreather2PFL, GrimsleysGambit2PFL, SacredCharm2PFL, SwitchPFL, IgnitionEnergyPFL, MegaCharizardXex3PFL, Rotomex3PFL, MegaSharpedoex3PFL, MegaLopunnyex3PFL, Dawn3PFL, Blowtorch2PFL, MegaCharizardXex4PFL, AmbipomIR } from './other-prints';
 import { Card } from '../../../game';
+import { Ambipom } from './ambipom';
+import { Archaludon } from './archaludon';
 import { BattleColosseum } from './battle-colosseum';
 import { Blowtorch } from './blowtorch';
 import { Bronzong } from './bronzong';
@@ -48,6 +50,8 @@ import { WonderPatch } from './wonder-patch';
 import { Zacian } from './zacian';
 
 export const setPhantasmalFlames: Card[] = [
+  new Ambipom(),
+  new Archaludon(),
   new BattleColosseum(),
   new Blowtorch(),
   new Bronzong(),
@@ -98,6 +102,7 @@ export const setPhantasmalFlames: Card[] = [
   new Zacian2PFL(),
   new Toxtricity2PFL(),
   new Wigglytuff2PFL(),
+  new AmbipomIR(),
   new MegaCharizardXex2PFL(),
   new Oricorioex2PFL(),
   new Rotomex2PFL(),

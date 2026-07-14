@@ -27,6 +27,7 @@ export enum AttackEffects {
   LOST_ZONED_CARDS_EFFECT = 'LOST_ZONED_CARDS_EFFECT',
   AFTER_WEAKNESS_AND_RESISTANCE_EFFECT = 'AFTER_WEAKNESS_AND_RESISTANCE_EFFECT',
   MOVE_OPPONENT_ENERGY_EFFECT = 'MOVE_OPPONENT_ENERGY_EFFECT',
+  MOVE_COUNTERS_EFFECT = 'MOVE_COUNTERS_EFFECT',
 }
 
 export abstract class AbstractAttackEffect {
@@ -130,6 +131,24 @@ export class PutCountersEffect extends AbstractAttackEffect implements Effect {
 
   constructor(base: AttackEffect | AbstractAttackEffect, damage: number) {
     super(base);
+    this.damage = damage;
+  }
+}
+
+// Moves damage counters from one Pokemon to another as part of an attack
+// (e.g. Dedenne ex's Tail Swap). Unlike MoveDamageCountersEffect (a power/UI
+// hook), this carries an explicit source/target/amount and has no move UI.
+export class MoveCountersAttackEffect extends AbstractAttackEffect implements Effect {
+  readonly type: string = AttackEffects.MOVE_COUNTERS_EFFECT;
+  public preventDefault = false;
+  public source: PokemonCardList;
+  public target: PokemonCardList;
+  public damage: number;
+
+  constructor(base: AttackEffect | AbstractAttackEffect, source: PokemonCardList, target: PokemonCardList, damage: number) {
+    super(base);
+    this.source = source;
+    this.target = target;
     this.damage = damage;
   }
 }

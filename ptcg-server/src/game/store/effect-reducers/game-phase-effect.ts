@@ -205,6 +205,22 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
     const opponent = StateUtils.getOpponent(state, player);
     opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
       cardList.damageReductionNextTurn = 0;
+      cardList.preventDamageNextTurn = null;
+      cardList.preventDamageNextTurnPending = null;
+      cardList.preventEffectsOfAttacksNextTurn = false;
+      cardList.preventEffectsOfAttacksNextTurnPending = false;
+    });
+
+    // Activate pending prevent-damage on this player's Pokémon
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+      if (cardList.preventDamageNextTurnPending !== null) {
+        cardList.preventDamageNextTurn = cardList.preventDamageNextTurnPending;
+        cardList.preventDamageNextTurnPending = null;
+      }
+      if (cardList.preventEffectsOfAttacksNextTurnPending) {
+        cardList.preventEffectsOfAttacksNextTurn = true;
+        cardList.preventEffectsOfAttacksNextTurnPending = false;
+      }
     });
 
     // Activate pending defending Pokemon extra damage at end of the defending player's turn

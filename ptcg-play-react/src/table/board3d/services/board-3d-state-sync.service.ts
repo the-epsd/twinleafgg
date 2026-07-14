@@ -28,6 +28,15 @@ import { ZONE_POSITIONS, getBenchPositions } from '../board-3d-zone-positions';
 import { apply3dCardHolo } from '../board-3d-holo-apply';
 import type { Board3dBoardCardSnapshot, Board3dHandSlotSnapshot, Board3dSceneModelSnapshot } from '../board3dSceneModel';
 import { emptySceneModelSnapshot } from '../board3dSceneModel';
+import { CARD_WIDTH } from '../board-3d-overlay-layout';
+import {
+  resolveDualStadiumDisplayHalves,
+  SHARED_STADIUM_LEFT_MESH_ID,
+  SHARED_STADIUM_MESH_ID,
+  SHARED_STADIUM_MESH_IDS,
+  SHARED_STADIUM_RIGHT_MESH_ID,
+  isSharedStadiumMeshId,
+} from '../dual-stadium.utils';
 
 export interface Board3dSyncStateOptions {
   skippedCardId?: string | null;
@@ -294,24 +303,87 @@ export class Board3dStateSyncService {
     // Find the stadium CardList that actually has cards (only one player will have cards at a time)
     const stadium = state.players.find(p => p.stadium.cards.length > 0)?.stadium;
     if (stadium && stadium.cards.length > 0) {
-      await this.updateCard(
-        stadium,
-        'shared_stadium',
-        ZONE_POSITIONS.stadium,
-        true, // Always visible
-        0,    // No rotation (horizontal orientation)
-        undefined, // No cardTarget
-        1.0  // Same scale as bench/supporter cards
-      );
-
-      // Mark stadium card for click detection
-      const stadiumCardMesh = this.cardsMap.get('shared_stadium');
-      if (stadiumCardMesh) {
-        stadiumCardMesh.getGroup().userData.isStadium = true;
-      }
+      await this.syncSharedStadium(stadium);
     } else {
-      this.removeCard('shared_stadium');
+      this.clearSharedStadiumMeshes();
     }
+  }
+
+  private clearSharedStadiumMeshes(): void {
+    for (const meshId of SHARED_STADIUM_MESH_IDS) {
+      this.removeCard(meshId);
+    }
+  }
+
+  private markStadiumMesh(meshId: string, stadium: CardList): void {
+    const mesh = this.cardsMap.get(meshId);
+    if (!mesh) {
+      return;
+    }
+    const group = mesh.getGroup();
+    group.userData.isStadium = true;
+    // Keep the full stadium CardList for click / trainer activation
+    group.userData.cardList = stadium;
+  }
+
+  private async syncSharedStadium(stadium: CardList): Promise<void> {
+    const dualHalves = resolveDualStadiumDisplayHalves(stadium.cards);
+    if (dualHalves) {
+      const [leftHalf, rightHalf] = dualHalves;
+      const halfOffset = CARD_WIDTH / 2;
+      const leftPos = ZONE_POSITIONS.stadium.clone().add(new Vector3(-halfOffset, 0, 0));
+      const rightPos = ZONE_POSITIONS.stadium.clone().add(new Vector3(halfOffset, 0, 0));
+
+      const leftList = new CardList();
+      leftList.cards = [leftHalf];
+      leftList.isPublic = true;
+
+      const rightList = new CardList();
+      rightList.cards = [rightHalf];
+      rightList.isPublic = true;
+
+      this.removeCard(SHARED_STADIUM_MESH_ID);
+
+      await Promise.all([
+        this.updateCard(
+          leftList,
+          SHARED_STADIUM_LEFT_MESH_ID,
+          leftPos,
+          true,
+          0,
+          undefined,
+          1.0,
+        ),
+        this.updateCard(
+          rightList,
+          SHARED_STADIUM_RIGHT_MESH_ID,
+          rightPos,
+          true,
+          0,
+          undefined,
+          1.0,
+        ),
+      ]);
+
+      this.markStadiumMesh(SHARED_STADIUM_LEFT_MESH_ID, stadium);
+      this.markStadiumMesh(SHARED_STADIUM_RIGHT_MESH_ID, stadium);
+      return;
+    }
+
+    this.removeCard(SHARED_STADIUM_LEFT_MESH_ID);
+    this.removeCard(SHARED_STADIUM_RIGHT_MESH_ID);
+
+    await this.updateCard(
+      stadium,
+      SHARED_STADIUM_MESH_ID,
+      ZONE_POSITIONS.stadium,
+      true, // Always visible
+      0,    // No rotation (horizontal orientation)
+      undefined, // No cardTarget
+      1.0  // Same scale as bench/supporter cards
+    );
+
+    this.markStadiumMesh(SHARED_STADIUM_MESH_ID, stadium);
   }
 
   /**
@@ -613,7 +685,17 @@ export class Board3dStateSyncService {
 
     const stadium = state?.players?.find((p: Player) => p.stadium?.cards?.length > 0)?.stadium;
     if (stadium?.cards?.length) {
-      collectFromCardList(stadium, true);
+      const dualHalves = resolveDualStadiumDisplayHalves(stadium.cards);
+      if (dualHalves) {
+        for (const half of dualHalves) {
+          const halfList = new CardList();
+          halfList.cards = [half];
+          halfList.isPublic = true;
+          collectFromCardList(halfList, true);
+        }
+      } else {
+        collectFromCardList(stadium, true);
+      }
     }
 
     return urls;
@@ -867,7 +949,7 @@ export class Board3dStateSyncService {
       // Clear all cards except stadium
       const cardsToRemove: string[] = [];
       this.cardsMap.forEach((card, cardId) => {
-        if (cardId !== 'shared_stadium') {
+        if (!isSharedStadiumMeshId(cardId)) {
           cardsToRemove.push(cardId);
         }
       });
@@ -896,7 +978,7 @@ export class Board3dStateSyncService {
     const cardsToRemove: string[] = [];
     this.cardsMap.forEach((card, cardId) => {
       // Skip stadium (it's shared)
-      if (cardId === 'shared_stadium') {
+      if (isSharedStadiumMeshId(cardId)) {
         return;
       }
 

@@ -1,6 +1,6 @@
 import { Card } from '../../../game/store/card/card';
 import { Annihilape } from './annihilape';
-import { AntiqueShieldFossil } from './antique-shield-fossil';
+import { AntiqueArmorFossil } from './antique-armor-fossil';
 import { AntiqueSkullFossil } from './antique-skull-fossil';
 import { Armarouge } from './armarouge';
 import { Banette } from './banette';
@@ -81,7 +81,7 @@ import { Zarude } from './zarude';
 
 export const setPitchBlack: Card[] = [
   new Annihilape(),
-  new AntiqueShieldFossil(),
+  new AntiqueArmorFossil(),
   new AntiqueSkullFossil(),
   new Armarouge(),
   new Banette(),

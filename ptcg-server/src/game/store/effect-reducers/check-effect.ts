@@ -475,6 +475,19 @@ export function* executeCheckState(next: Function, store: StoreLike, state: Stat
     }
   }
 
+  // Last-prize auto-win (or TAKE_X_PRIZES during an attack) must not open Choose Active
+  if (state.phase === GamePhase.FINISHED) {
+    if (onComplete) {
+      onComplete();
+    }
+    return state;
+  }
+
+  const prizesAlreadyTaken = state.players.some(p => p.prizes.every(pr => pr.cards.length === 0));
+  if (prizesAlreadyTaken) {
+    return checkWinner(store, state, onComplete);
+  }
+
   // Then handle new active Pokemon selection - opponent then player
   const activePrompts = chooseActivePokemons(state);
   for (const prompt of activePrompts) {

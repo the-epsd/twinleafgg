@@ -1,0 +1,183 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+  flex: 1;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.titleBlock h1 {
+  margin: 0 0 4px;
+  font-size: 1.4rem;
+}
+
+.titleBlock p {
+  margin: 0;
+  opacity: 0.75;
+  font-size: 0.9rem;
+  max-width: 52rem;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.filterGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.filterChip {
+  padding: 6px 12px;
+  border: 1px solid #c5c5c5;
+  border-radius: 999px;
+  background: #fff;
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: #333;
+}
+
+.filterChip:hover {
+  border-color: #888;
+}
+
+.filterChipActive {
+  border-color: #2563eb;
+  background: #eff6ff;
+  color: #1e3a8a;
+  font-weight: 600;
+}
+
+.filterChipActive.filterChipPokemon {
+  border-color: #0284c7;
+  background: #e0f2fe;
+  color: #075985;
+}
+
+.filterChipActive.filterChipTrainer {
+  border-color: #ca8a04;
+  background: #fef9c3;
+  color: #854d0e;
+}
+
+.filterChipActive.filterChipEnergy {
+  border-color: #16a34a;
+  background: #dcfce7;
+  color: #166534;
+}
+
+.search {
+  min-width: 220px;
+  padding: 8px 10px;
+  border: 1px solid #c5c5c5;
+  border-radius: 6px;
+  font: inherit;
+}
+
+.meta {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.status {
+  flex-shrink: 0;
+  font-size: 0.95rem;
+}
+
+.error {
+  color: #b00020;
+}
+
+.viewport {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    #f7f7f5;
+  background-size: 24px 24px;
+}
+
+.canvas {
+  position: relative;
+  padding: 24px;
+  box-sizing: content-box;
+}
+
+.forest {
+  position: absolute;
+}
+
+.edgeSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.edge {
+  fill: none;
+  stroke: #3b82f6;
+  stroke-width: 2;
+}
+
+.node {
+  position: absolute;
+  box-sizing: border-box;
+  width: 168px;
+  height: 48px;
+  padding: 6px 8px;
+  border: 1px solid #8a8a8a;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.72rem;
+  line-height: 1.2;
+  background: #fff8dc;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  word-break: break-word;
+}
+
+.nodeBase {
+  background: #d8d8d8;
+  font-weight: 600;
+}
+
+.nodePokemon {
+  background: #dceefc;
+}
+
+.nodeTrainer {
+  background: #fff3bf;
+}
+
+.nodeEnergy {
+  background: #dff5d8;
+}
+
+.nodeSelected {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}

@@ -65,3 +65,31 @@
   margin-top: 5px;
   font-size: 0.72rem;
 }
+
+@media (max-aspect-ratio: 17/20) {
+  .rootCompact {
+    padding: 5px 7px;
+  }
+
+  .rootCompact .name {
+    margin: 0 0 3px;
+    font-size: 0.72rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .rootCompact .badges {
+    gap: 3px;
+  }
+
+  .rootCompact .badge {
+    font-size: 0.5rem;
+    padding: 1px 4px;
+  }
+
+  .rootCompact .timer {
+    margin-top: 3px;
+    font-size: 0.62rem;
+  }
+}

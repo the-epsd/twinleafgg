@@ -13,6 +13,7 @@ import { Clavell } from './clavell';
 import { Crocalor } from './crocalor';
 import { Cufant } from './cufant';
 import { Deino } from './deino';
+import { Dedenneex } from './dedenne-ex';
 import { DeliveryDrone } from './delivery-drone';
 import { Dudunsparce } from './dudunsparce';
 import { FightingAuLait } from './fighting-au-lait';
@@ -54,6 +55,7 @@ import { Squawkabillyex } from './squawkabilly-ex';
 import { SuperRod } from './super-rod';
 import { SuperiorEnergyRetrieval } from './superior-energy-retrieval';
 import { Tadbulb } from './tadbulb';
+import { Tandemaus } from './tandemaus';
 import { Tarountula } from './tarountula';
 import { TherapeuticEnergy } from './theraputic-energy';
 import { TingLuex } from './ting-lu-ex';
@@ -105,6 +107,7 @@ export const setPaldeaEvolved: Card[] = [
   new Clavell(),
   new Cufant(),
   new Deino(),
+  new Dedenneex(),
   new DeliveryDrone(),
   new Dudunsparce(),
   new Dunsparce(),
@@ -145,6 +148,7 @@ export const setPaldeaEvolved: Card[] = [
   new SuperRod(),
   new SuperiorEnergyRetrieval(),
   new Tadbulb(),
+  new Tandemaus(),
   new Tarountula(),
   new TherapeuticEnergy(),
   new TingLuex(),

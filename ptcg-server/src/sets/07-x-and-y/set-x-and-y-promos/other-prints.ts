@@ -17,6 +17,7 @@ import { MagearnaEX } from '../set-steam-siege/magearna-ex';
 import { Jirachi as JirachiXYP67 } from './jirachi';
 import { Karen as KarenXYP177 } from './karen';
 import { Bronzong } from '../set-phantom-forces/bronzong';
+import { Sylveon } from './sylveon';
 
 export class PalaceBookXYP extends PalaceBook {
   public setNumber = 'NAN83';
@@ -135,4 +136,10 @@ export class Karen2XYP extends KarenXYP177 {
   public setNumber = '177a';
   public fullName: string = 'Karen2 XYP';
   public set = 'XYP';
+}
+
+export class SylveonTK6S extends Sylveon {
+  public setNumber = '30';
+  public fullName: string = 'Sylveon TK6S';
+  public set = 'TK6S';
 }

@@ -62,6 +62,7 @@ import {
   DealDamageEffect,
   DiscardCardsEffect,
   HealTargetEffect,
+  MoveCountersAttackEffect,
   PutCountersEffect,
   PutDamageEffect,
   GustOpponentBenchEffect,
@@ -90,7 +91,7 @@ import {
 } from '../effects/game-effects';
 import { AfterAttackEffect, BeforeDoingDamageEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
-import { preventRetreatEffect, preventDamageEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect } from '../effects/effect-of-attack-effects';
+import { preventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, PreventDamageOptions, shouldPreventAttackEffects } from '../effects/effect-of-attack-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
 
 /**
@@ -918,11 +919,28 @@ export function TAKE_X_PRIZES(
   callback?: (chosenPrizes: CardList[]) => void,
 ): State {
   const { promptOptions = {}, ...takeOptions } = options;
+  const prizeLeft = player.getPrizeLeft();
+  const takeCount = Math.min(count, prizeLeft);
+
+  if (takeCount <= 0) {
+    return state;
+  }
+
+  // Taking all remaining prizes — auto-resolve so clients never get an unsolvable prompt
+  // (e.g. KO awards 2 prizes with only 1 left). checkState/checkWinner will end the game.
+  if (count >= prizeLeft) {
+    const prizes = player.prizes.filter(p => p.cards.length > 0).slice(0, takeCount);
+    TAKE_SPECIFIC_PRIZES(store, state, player, prizes, takeOptions);
+    if (callback) {
+      callback(prizes);
+    }
+    return state;
+  }
 
   state = store.prompt(
     state,
     new ChoosePrizePrompt(player.id, GameMessage.CHOOSE_PRIZE_CARD, {
-      count,
+      count: takeCount,
       allowCancel: false,
       ...promptOptions,
     }),
@@ -2416,6 +2434,76 @@ export function MOVE_DAMAGE_COUNTERS(
   );
 }
 
+/**
+ * Fixed (no move-UI) attack helper for text like:
+ * "Move all damage counters from 1 of your Benched Pokemon to your opponent's Active Pokemon."
+ *
+ * Prompts for 1 damaged Benched Pokemon, then moves ALL of its damage onto the
+ * opponent's Active Pokemon. Respects "damage counters can't be moved" effects
+ * (via MoveDamageCountersEffect) and lets other cards intercept the move via
+ * MoveCountersAttackEffect.
+ */
+export function MOVE_DAMAGE_FROM_YOUR_BENCH_TO_OPPONENTS_ACTIVE(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect | AbstractAttackEffect,
+): State {
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+
+  const blocked: CardTarget[] = [];
+  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+    if (cardList === player.active || cardList.damage === 0) {
+      blocked.push(target);
+    }
+  });
+
+  const hasDamagedBench = player.bench.some(b => b.cards.length > 0 && b.damage > 0);
+  if (!hasDamagedBench) {
+    return state;
+  }
+
+  return store.prompt(state, new ChoosePokemonPrompt(
+    player.id,
+    GameMessage.CHOOSE_POKEMON,
+    PlayerType.BOTTOM_PLAYER,
+    [SlotType.BENCH],
+    { min: 1, max: 1, allowCancel: false, blocked },
+  ), selected => {
+    if (!selected || selected.length === 0) {
+      return;
+    }
+    const source = selected[0];
+    const damageToMove = source.damage;
+    if (damageToMove <= 0) {
+      return;
+    }
+
+    // "Damage counters can't be moved" (e.g. Patrat) cancels the whole move:
+    // the counters stay on the source Pokemon and nothing is placed.
+    const moveCheck = new MoveDamageCountersEffect(player);
+    state = store.reduceEffect(state, moveCheck);
+    if (moveCheck.preventDefault) {
+      return;
+    }
+
+    const moveEffect = new MoveCountersAttackEffect(effect, source, opponent.active, damageToMove);
+    state = store.reduceEffect(state, moveEffect);
+
+    // The counters always leave the source Pokemon once the move is allowed...
+    moveEffect.source.damage -= moveEffect.damage;
+    if (moveEffect.source.damage < 0) {
+      moveEffect.source.damage = 0;
+    }
+
+    // ...but a target that prevents effects of attacks (e.g. Mist Energy)
+    // does not receive them.
+    if (!moveEffect.preventDefault) {
+      moveEffect.target.damage += moveEffect.damage;
+    }
+  });
+}
+
 export type TopDeckRemainderDestination = 'shuffle' | 'bottom' | 'discard' | 'lostzone';
 
 function cardMatchesPartialFilter(card: Card, filter: Partial<Card>): boolean {
@@ -3636,7 +3724,7 @@ export function CAN_USE_FROM_HAND_TO_BENCH_POWER(
     }
 
     const benchCount = player.bench.filter(b => b.cards.length > 0).length;
-    if (benchCount >= 5) {
+    if (benchCount >= player.bench.length) {
       return false;
     }
 
@@ -3678,16 +3766,17 @@ export function CAN_PLAY_POKEMON_CARD(
       return false;
     }
 
-    // Check if there's space on bench (max 5 bench Pokemon)
+    // Check if there's space on bench (capacity follows stadiums like Area Zero → 8)
     const benchCount = player.bench.filter((b) => b.cards.length > 0).length;
+    const benchCapacity = player.bench.length;
     const sandboxAllBasic = Boolean(
       state.gameSettings?.sandboxMode && state.gameSettings?.sandboxAllPokemonBasic,
     );
-    if (sandboxAllBasic && benchCount < 5) {
+    if (sandboxAllBasic && benchCount < benchCapacity) {
       return true;
     }
 
-    if (benchCount >= 5 && pokemonCard.stage === Stage.BASIC) {
+    if (benchCount >= benchCapacity && pokemonCard.stage === Stage.BASIC) {
       return false;
     }
 
@@ -3808,6 +3897,19 @@ export function DEFENDING_POKEMON_TAKES_MORE_DAMAGE_DURING_YOUR_NEXT_TURN(
 }
 
 /**
+ * During the opponent's next turn, the Defending Pokémon can't use attacks.
+ */
+export function DEFENDING_POKEMON_CANNOT_ATTACK(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+): State {
+  const attackEffect = preventAttackEffect(effect, source);
+  return store.reduceEffect(state, attackEffect);
+}
+
+/**
  * Prompts the player to choose one of the opponent's Active Pokemon's attacks to disable
  * during the opponent's next turn.
  */
@@ -3859,9 +3961,34 @@ export function PREVENT_DAMAGE(
   state: State,
   effect: AttackEffect,
   source: Card,
+  options?: PreventDamageOptions,
 ): State {
-  const damageEffect = preventDamageEffect(effect, source);
+  const damageEffect = preventDamageEffect(effect, source, options);
   return store.reduceEffect(state, damageEffect);
+}
+
+/**
+ * During the opponent's next turn, prevents effects of attacks done to this Pokémon.
+ * Damage is not an effect — pair with {@link PREVENT_DAMAGE} when card text blocks both.
+ * Enforcement uses the same rules as Mist Energy and is handled by the attack reducer.
+ */
+export function PREVENT_EFFECTS_OF_ATTACKS(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+): State {
+  const effectsEffect = preventEffectsOfAttacksEffect(effect, source);
+  return store.reduceEffect(state, effectsEffect);
+}
+
+/**
+ * Blocks non-damage attack effects on a Pokémon that has
+ * {@link PokemonCardList.preventEffectsOfAttacksNextTurn} active.
+ * Ref: set-temporal-forces/mist-energy.ts
+ */
+export function BLOCK_EFFECTS_OF_ATTACKS_IF_PREVENTED(state: State, effect: Effect): boolean {
+  return shouldPreventAttackEffects(state, effect);
 }
 
 /**

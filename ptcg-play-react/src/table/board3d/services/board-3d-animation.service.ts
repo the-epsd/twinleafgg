@@ -13,6 +13,10 @@ import {
 import type { Board3dCard } from '../board-3d-card';
 import { CARD_HEIGHT } from '../board-3d-overlay-layout';
 import { energyIconLocalPosition, ENERGY_SPRITE_HEIGHT } from '../board-3d-energy-sprite';
+import {
+  BOARD_ATTACK_ANIMATION_DURATION_SEC,
+  BOARD_ABILITY_ANIMATION_DURATION_SEC,
+} from '../../animationTiming';
 
 /** World Z: flip in the plane of the hand / table (not Y, which tumbles the card edge-on). */
 const DRAW_FLIP_AXIS_Z = new Vector3(0, 0, 1);
@@ -22,10 +26,10 @@ const HAND_DRAW_SCALE = 1.1;
 export const HAND_DRAW_STAGE_SCALE = 2.15;
 
 /** Total duration (seconds) of {@link Board3dAnimationService.playAttackAnimation}; keep in sync with server attack WaitPrompt. */
-export const BOARD3D_ATTACK_ANIMATION_DURATION_SEC = 1.35;
+export const BOARD3D_ATTACK_ANIMATION_DURATION_SEC = BOARD_ATTACK_ANIMATION_DURATION_SEC;
 
 /** Total duration (seconds) of {@link Board3dAnimationService.playAbilityActivationAnimation}. */
-export const BOARD3D_ABILITY_ANIMATION_DURATION_SEC = 0.9;
+export const BOARD3D_ABILITY_ANIMATION_DURATION_SEC = BOARD_ABILITY_ANIMATION_DURATION_SEC;
 
 /** Card mesh width in world units at scale 1 (match board-3d-config / hand service). */
 const HAND_CARD_MESH_WIDTH_WORLD = 2.75;

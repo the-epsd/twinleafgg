@@ -81,6 +81,7 @@ import {
 } from './board3dMeshIdForPlayTarget';
 import { DropZoneType } from './board-3d-drop-zone';
 import { getBenchPositions, ZONE_POSITIONS } from './board-3d-zone-positions';
+import { isSharedStadiumMeshId } from './dual-stadium.utils';
 import {
   getSetupPlaySlotForPickOrder,
   setupPreviewMeshId,
@@ -3533,7 +3534,7 @@ export class Board3dController {
     }
 
     // Handle Stadium click
-    const isStadium = cardObject.userData.isStadium === true || cardObject.userData.cardId === 'shared_stadium';
+    const isStadium = cardObject.userData.isStadium === true || isSharedStadiumMeshId(cardObject.userData.cardId);
     if (isStadium && cardList) {
       const isBottomOwner = this.bottomPlayer && this.bottomPlayer.id === this.clientId;
       const isDeleted = this.gameState.deleted;

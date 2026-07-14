@@ -8,6 +8,16 @@ interface SocketAck<R> {
   data?: R;
 }
 
+const SOCKET_IO_OPTIONS = {
+  autoConnect: false,
+  reconnection: true,
+  reconnectionAttempts: Infinity,
+  reconnectionDelay: 1000,
+  reconnectionDelayMax: 10_000,
+  transports: ['websocket'] as string[],
+  timeout: 20_000,
+};
+
 function normalizeSocketBaseUrl(url: string): string {
   return url.replace(/\/$/, '');
 }
@@ -41,16 +51,15 @@ function socketAckErrorMessage(data: unknown, fallback: string): string {
 export class PtcgSocketManager {
   private socket: Socket;
   private enabled = false;
+  /** True while we intentionally disconnect (logout / server switch) so UI won't treat it as a drop. */
+  private intentionalDisconnect = false;
   /** Normalized base URL for the current `this.socket` instance. */
   private activeBaseUrl: string;
 
   constructor() {
     this.activeBaseUrl = normalizeSocketBaseUrl(appConfig.apiUrl);
     this.socket = io(this.activeBaseUrl, {
-      autoConnect: false,
-      reconnection: false,
-      transports: ['websocket'],
-      timeout: 20_000,
+      ...SOCKET_IO_OPTIONS,
       query: {},
     });
   }
@@ -64,17 +73,17 @@ export class PtcgSocketManager {
     if (this.enabled) {
       this.disable();
     }
+    this.intentionalDisconnect = true;
     this.socket.disconnect();
     this.socket = io(next, {
-      autoConnect: false,
-      reconnection: false,
-      transports: ['websocket'],
-      timeout: 20_000,
+      ...SOCKET_IO_OPTIONS,
       query: {},
     });
+    this.intentionalDisconnect = false;
   }
 
   enable(authToken: string): void {
+    this.intentionalDisconnect = false;
     const q = this.socket.io.opts.query as Record<string, string>;
     const tokenChanged = q.token !== authToken;
     q.token = authToken;
@@ -84,7 +93,9 @@ export class PtcgSocketManager {
       return;
     }
     if (tokenChanged) {
+      this.intentionalDisconnect = true;
       this.socket.disconnect();
+      this.intentionalDisconnect = false;
       this.socket.connect();
       return;
     }
@@ -94,8 +105,31 @@ export class PtcgSocketManager {
   }
 
   disable(): void {
+    this.intentionalDisconnect = true;
+    this.clearReconnectingQuery();
     this.socket.disconnect();
     this.enabled = false;
+  }
+
+  /** Whether the last disconnect was intentional (logout / disable). */
+  get wasIntentionalDisconnect(): boolean {
+    return this.intentionalDisconnect;
+  }
+
+  markReconnecting(): void {
+    try {
+      (this.socket.io.opts.query as Record<string, string>).reconnection = 'true';
+    } catch {
+      /* noop */
+    }
+  }
+
+  clearReconnectingQuery(): void {
+    try {
+      delete (this.socket.io.opts.query as Record<string, string>).reconnection;
+    } catch {
+      /* noop */
+    }
   }
 
   get raw(): Socket {
