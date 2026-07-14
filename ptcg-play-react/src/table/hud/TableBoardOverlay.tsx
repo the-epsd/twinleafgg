@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { GamePhase } from 'ptcg-server';
 import type { Player, StateLog } from 'ptcg-server';
@@ -10,6 +10,9 @@ import { TableGameLogToasts } from './TableGameLogToasts';
 import { TableGameLogsPrompt } from './TableGameLogsPrompt';
 import { AdminSpectatorControls, type AdminSpectatorReveal } from './AdminSpectatorControls';
 import styles from './TableBoardOverlay.module.css';
+
+/** Match Board2D / board3d portrait threshold (aspect &lt; 0.85 ≈ 17/20). */
+const PORTRAIT_MQ = '(max-aspect-ratio: 17/20)';
 
 export type TableBoardOverlayProps = {
   localGame: LocalGameState;
@@ -82,9 +85,20 @@ export function TableBoardOverlay(props: TableBoardOverlayProps) {
     });
   }, [localGame.logs]);
 
-  // TEMP: hide most chrome while iterating on mobile board layout.
-  // Leave / End Turn stay visible so matches remain controllable.
-  const hideHudForLayout = true;
+  // Landscape / desktop: full chrome. Portrait: keep only Leave / End Turn while mobile layout is refined.
+  const [isPortrait, setIsPortrait] = useState(() =>
+    typeof window !== 'undefined' ? window.matchMedia(PORTRAIT_MQ).matches : false,
+  );
+
+  useLayoutEffect(() => {
+    const mq = window.matchMedia(PORTRAIT_MQ);
+    const update = () => setIsPortrait(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+
+  const hideHudForLayout = isPortrait;
 
   return (
     <div className={styles.root}>

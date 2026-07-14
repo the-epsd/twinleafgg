@@ -753,7 +753,7 @@ export function TablePromptLayer({
         ? `${confirmTitleBase} [${selfPlayGoFirstDeckName}]`
         : confirmTitleBase;
     return (
-      <div className={styles.backdrop} role="presentation">
+      <div key={cp.id} className={styles.backdrop} role="presentation">
         <div className={styles.panel} role="dialog" aria-modal="true">
           <h2 className={styles.title}>{confirmTitle}</h2>
           <p className={styles.message}>{gameMessageText(t, cp.message)}</p>
@@ -773,7 +773,7 @@ export function TablePromptLayer({
   if (p.type === 'Alert') {
     const ap = p as AlertPrompt;
     return (
-      <div className={styles.backdrop} role="presentation">
+      <div key={ap.id} className={styles.backdrop} role="presentation">
         <div className={styles.panel} role="dialog" aria-modal="true">
           <h2 className={styles.title}>{t('ALERT_MESSAGE_TITLE', { defaultValue: 'Message' })}</h2>
           <p className={styles.message}>{gameMessageText(t, ap.message)}</p>
@@ -1022,7 +1022,7 @@ export function TablePromptLayer({
   }
 
   return (
-    <div className={styles.backdrop} role="presentation">
+    <div key={p.id} className={styles.backdrop} role="presentation">
       <div className={styles.panel} role="dialog" aria-modal="true">
         <h2 className={styles.title}>
           {t('PROMPT_UNKNOWN_TYPE', {
