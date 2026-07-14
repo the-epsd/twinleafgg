@@ -30,7 +30,7 @@
   position: relative;
   overflow: hidden;
   /* Match Board2DHand visible strip so the playfield never sits under hands. */
-  --hand-card-w: 88px;
+  --hand-card-w: 116px;
   --hand-card-h: calc(var(--hand-card-w) * 1.4);
   --hand-visible-h: calc(var(--hand-card-h) * 0.65);
 }
@@ -45,7 +45,9 @@
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  z-index: 1;
+  /* Above hands so perspective-tipped board Pokémon stay clickable/hoverable.
+     Hands occupy the strips outside this box and remain interactive there. */
+  z-index: 6;
 }
 
 /* Angular parity: perspective on the outer host, rotateX on the scaled canvas. */
@@ -146,11 +148,7 @@
 .player {
   display: grid;
   grid-template-columns:
-    var(--col-side)
-    var(--col-mid)
-    var(--col-active)
-    var(--col-mid)
-    var(--col-side);
+    var(--col-side) var(--col-mid) var(--col-active) var(--col-mid) var(--col-side);
   grid-template-rows: 1fr 1fr;
   grid-template-areas:
     'prizes stadium active supporter deck'
@@ -212,6 +210,17 @@
   gap: 6px;
 }
 
+.cellBench[data-bench-count="6"] .slotBench,
+.cellBench[data-bench-count="7"] .slotBench,
+.cellBench[data-bench-count="8"] .slotBench {
+  width: calc(var(--zone-w) * 0.78);
+  height: calc(var(--zone-h) * 0.78);
+}
+
+.cellBench[data-bench-count="8"] {
+  gap: 3px;
+}
+
 .cellStadium {
   grid-area: stadium;
   align-items: flex-end;
@@ -270,12 +279,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.discardStack {
-  border: 1px solid rgba(255, 255, 255, 0.125);
-  padding: 4px;
-  box-sizing: border-box;
 }
 
 .stackCard {
@@ -437,4 +440,299 @@
   outline-offset: 2px;
   box-shadow: 0 0 16px rgba(74, 222, 128, 0.45);
   border-radius: 4px;
+}
+
+/*
+ * Portrait / PTCGL-like stack (aspect < 0.85).
+ * Active row: prizes | active | deck+discard (stacked).
+ * Bench row: full-width so slots can grow as large as the canvas allows.
+ * Equal side columns keep Active centered after the 180° opponent flip.
+ */
+.portrait {
+  --design-w: 400px;
+  --design-h: 820px;
+  --card-w: 44px;
+  --card-h: calc(44px * 1.4);
+  --active-w: calc(var(--card-w) * 1.9);
+  --active-h: calc(var(--card-h) * 1.9);
+  --zone-w: calc(var(--card-w) * 0.92);
+  --zone-h: calc(var(--card-h) * 0.92);
+  /* Symmetric — required so rotate(180deg) keeps both Actives on the same vertical axis. */
+  --col-side: 64px;
+  --col-mid: 0px;
+  --col-active: 0px;
+  --gap: 4px;
+  --prize-cell-w: 26px;
+  --prize-cell-h: calc(26px * 1.4);
+}
+
+.portrait .handsAndBoard {
+  /* Keep hand size close to desktop; only peek a bit less so the board still fits. */
+  --hand-card-w: 110px;
+  --hand-card-h: calc(var(--hand-card-w) * 1.4);
+  --hand-visible-h: calc(var(--hand-card-h) * 0.62);
+}
+
+/* Turn-color arcs — off on portrait to free the center field. */
+.portrait .topWash,
+.portrait .bottomWash {
+  display: none;
+}
+
+.portrait .player {
+  grid-template-columns: var(--col-side) minmax(0, 1fr) var(--col-side);
+  /* Pack Active + Bench toward the hand edge so the center logo has room. */
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    'prizes active stacks'
+    'bench bench bench';
+  padding: 8px 4px 104px;
+  gap: 8px;
+  align-content: end;
+  position: relative;
+  overflow: visible;
+  transform: none;
+  --bench-slot-h: 95px;
+}
+
+.portrait .player.upsideDown {
+  transform: rotate(180deg);
+}
+
+.portrait .player:not(.upsideDown) {
+  transform: none;
+}
+
+.portrait .cellActive {
+  /* Local bottom = toward hand / bench for both halves (top half is rotated 180°). */
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 3;
+  padding-bottom: 0;
+}
+
+.portrait .cellBench {
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 3px;
+  padding: 0;
+  width: 95%;
+  max-width: 95%;
+  justify-self: center;
+  min-width: 0;
+}
+
+/*
+ * Fixed design-space card ratio (2.5×3.5). Avoid % / cqw / flex-grow heights —
+ * those were getting crushed by the grid row into squares.
+ */
+.portrait .slotBench {
+  flex: 0 0 auto;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: 68px;
+  height: 95px;
+  /* 68 × 1.4 */
+  max-width: none;
+  aspect-ratio: unset;
+}
+
+.portrait .cellBench[data-bench-count='6'] .slotBench {
+  width: 58px;
+  height: 81px;
+}
+
+.portrait .cellBench[data-bench-count='7'] .slotBench {
+  width: 50px;
+  height: 70px;
+}
+
+.portrait .cellBench[data-bench-count='8'] .slotBench {
+  width: 44px;
+  height: 62px;
+  /* 44 × 1.4 */
+}
+
+.portrait .cellBench[data-bench-count='8'] {
+  gap: 2px;
+}
+
+.portrait .player:has(.cellBench[data-bench-count='6']) {
+  --bench-slot-h: 81px;
+}
+
+.portrait .player:has(.cellBench[data-bench-count='7']) {
+  --bench-slot-h: 70px;
+}
+
+.portrait .player:has(.cellBench[data-bench-count='8']) {
+  --bench-slot-h: 62px;
+}
+
+.portrait .player .slotActive {
+  /* Toward board center (~20% of active height). */
+  transform: translateY(calc(var(--active-h) * -0.2));
+}
+
+.portrait .player:not(.upsideDown) .supporterSlot {
+  transform: none;
+}
+
+.portrait .player:not(.upsideDown) .lostZone {
+  transform: none;
+}
+
+.portrait .lostZone,
+.portrait .lostZoneTop {
+  transform: none;
+  align-self: center;
+  margin-bottom: 0;
+}
+
+.portrait .supporterSlot,
+.portrait .cellDeck .stackContainer,
+.portrait .cellDiscard .stackContainer {
+  margin-bottom: 0;
+}
+
+/* Same lift as Active so stack shares Active’s vertical band. */
+.portrait .player .cellDeck .stackContainer,
+.portrait .player .cellDiscard .stackContainer {
+  transform: translateY(calc(var(--active-h) * -0.2));
+}
+
+/*
+ * Lost zone (left of Active) + supporter (right of Active):
+ * horizontally centered in each gutter (prizes↔Active / Active↔deck),
+ * vertically centered on Active.
+ */
+.portrait .cellStadium,
+.portrait .cellSupporter {
+  grid-area: 1 / 1 / -1 / -1;
+  position: absolute;
+  width: var(--zone-w);
+  height: var(--zone-h);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  pointer-events: none;
+  top: auto;
+  bottom: calc(
+    var(--bench-slot-h, 95px) + 8px + var(--active-h) * 0.7 - var(--zone-h) * 0.5
+  );
+}
+
+.portrait .cellStadium > *,
+.portrait .cellSupporter > * {
+  pointer-events: auto;
+}
+
+.portrait .player:not(.upsideDown) .cellStadium,
+.portrait .player.upsideDown .cellStadium {
+  /* Center in the gap between prizes column and Active. */
+  left: calc(
+    (var(--col-side) + (50% - var(--active-w) / 2)) / 2 - var(--zone-w) / 2
+  );
+  right: auto;
+}
+
+.portrait .player:not(.upsideDown) .cellSupporter,
+.portrait .player.upsideDown .cellSupporter {
+  /* Center in the gap between Active and deck/discard column. */
+  left: calc(
+    ((50% + var(--active-w) / 2) + (100% - var(--col-side))) / 2 - var(--zone-w) / 2
+  );
+  right: auto;
+}
+
+.portrait .lostZone,
+.portrait .lostZoneTop,
+.portrait .supporterSlot {
+  transform: none;
+  margin-bottom: 0;
+  align-self: center;
+}
+
+.portrait .cellPrizes {
+  grid-area: prizes;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 0;
+}
+
+/* Match Active lift so prizes share Active’s vertical band (like deck/discard). */
+.portrait .player .prizesGrid {
+  transform: translateY(calc(var(--active-h) * -0.2));
+}
+
+/*
+ * Deck + discard share the right column beside Active.
+ * Discard bottom lines up with Active bottom; deck top ≈ Active top
+ * (padding = active-h − zone-h). Same translateY as Active.
+ */
+.portrait .cellDeck {
+  grid-area: stacks;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: calc(var(--active-h) - var(--zone-h));
+  z-index: 2;
+}
+
+.portrait .cellDiscard {
+  grid-area: stacks;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 0;
+  z-index: 1;
+}
+
+.portrait .prizesGrid {
+  gap: 2px;
+  width: calc(var(--prize-cell-w) * 2 + 2px);
+  height: calc(var(--prize-cell-h) * 3 + 4px);
+}
+
+.portrait .cardCount {
+  /* Bottom of the pile, horizontally centered, above stacked backs. */
+  top: auto;
+  right: auto;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 2px 5px;
+  font-size: 8px;
+  z-index: 10;
+}
+
+.portrait .centerLogo {
+  width: 168px;
+}
+
+.portrait .centerChrome {
+  z-index: 0;
+}
+
+.portrait .topMarkers {
+  left: calc(50% - 100px);
+}
+
+.portrait .bottomMarkers {
+  right: calc(50% - 100px);
+}
+
+.portrait .gxMarker,
+.portrait .vstarMarker {
+  width: 32px;
+  height: 16px;
+}
+
+.portrait .markerContainer {
+  gap: 6px;
+}
+
+.portrait .stadiumMidline {
+  width: var(--zone-w);
+  height: var(--zone-h);
 }

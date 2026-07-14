@@ -109,9 +109,10 @@
   top: 50%;
   right: 16px;
   transform: translateY(-50%);
-  width: 158px;
+  width: 118px;
   max-width: 67%;
   pointer-events: auto;
+  z-index: 50;
 }
 
 .adminSpectatorControls {
@@ -137,4 +138,65 @@
   line-height: 1.25;
   width: fit-content;
   max-width: 100%;
+}
+
+/* Phone / tall portrait: clear the playfield and sit in chrome bands. */
+@media (max-aspect-ratio: 17/20) {
+  .opponentBar {
+    top: 6px;
+    left: 6px;
+    max-width: min(168px, 42vw);
+    min-width: 0;
+    width: auto;
+  }
+
+  .selfBar {
+    top: auto;
+    right: 6px;
+    left: auto;
+    /* Sit above the hand peek strip (~55% of 64×1.4 ≈ 49px) + margin. */
+    bottom: 58px;
+    max-width: min(168px, 42vw);
+    min-width: 0;
+    width: auto;
+  }
+
+  .rightColumn {
+    top: 6px;
+    right: 6px;
+    width: auto;
+    max-width: min(160px, 40vw);
+    align-items: flex-end;
+  }
+
+  .turnBadge {
+    font-size: 0.55rem;
+    padding: 3px 6px;
+  }
+
+  .boardFpsLine,
+  .logsButton {
+    font-size: 0.52rem;
+    padding: 2px 6px;
+  }
+
+  .adminSpectatorControls {
+    left: 6px;
+    bottom: 120px;
+  }
+
+  .boardFpsLine {
+    display: none;
+  }
+
+  /* Hug the phone’s right edge (fixed escapes any narrowed containing block). */
+  .actionsRow {
+    position: fixed;
+    top: 50%;
+    right: 4px;
+    left: auto;
+    transform: translateY(-50%);
+    width: auto;
+    max-width: min(120px, 34vw);
+  }
 }

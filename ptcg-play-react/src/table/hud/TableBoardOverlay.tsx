@@ -82,63 +82,88 @@ export function TableBoardOverlay(props: TableBoardOverlayProps) {
     });
   }, [localGame.logs]);
 
+  // TEMP: hide most chrome while iterating on mobile board layout.
+  // Leave / End Turn stay visible so matches remain controllable.
+  const hideHudForLayout = true;
+
   return (
     <div className={styles.root}>
-      <div className={styles.opponentBar}>
-        <TablePlayerBar
-          player={topPlayer}
-          isActive={topActive}
-          playerStats={topStats}
-          timeLimit={timeLimit}
-          compact
-        />
-      </div>
-
-      <div className={styles.selfBar}>
-        <TablePlayerBar
-          player={bottomPlayer}
-          isActive={bottomActive}
-          playerStats={bottomStats}
-          timeLimit={timeLimit}
-          compact
-        />
-      </div>
-
-      <div className={styles.rightColumn}>
-        <div className={styles.turnBadgeGroup}>
-          <div className={styles.turnBadge}>
-            {t('TABLE_TABLE_NAME', { id: localGame.gameId })} —{' '}
-            {t('TABLE_TURN_NUMBER', { turn: state.turn })}
+      {!hideHudForLayout ? (
+        <>
+          <div className={styles.opponentBar}>
+            <TablePlayerBar
+              player={topPlayer}
+              isActive={topActive}
+              playerStats={topStats}
+              timeLimit={timeLimit}
+              compact
+            />
           </div>
-          <div className={styles.badgeRow}>
-            <div className={styles.boardFpsLine} aria-live="polite">
-              {boardFps != null ? t('TABLE_BOARD_FPS', { fps: boardFps }) : t('TABLE_BOARD_FPS_MEASURING')}
+
+          <div className={styles.selfBar}>
+            <TablePlayerBar
+              player={bottomPlayer}
+              isActive={bottomActive}
+              playerStats={bottomStats}
+              timeLimit={timeLimit}
+              compact
+            />
+          </div>
+
+          <div className={styles.rightColumn}>
+            <div className={styles.turnBadgeGroup}>
+              <div className={styles.turnBadge}>
+                {t('TABLE_TABLE_NAME', { id: localGame.gameId })} —{' '}
+                {t('TABLE_TURN_NUMBER', { turn: state.turn })}
+              </div>
+              <div className={styles.badgeRow}>
+                <div className={styles.boardFpsLine} aria-live="polite">
+                  {boardFps != null
+                    ? t('TABLE_BOARD_FPS', { fps: boardFps })
+                    : t('TABLE_BOARD_FPS_MEASURING')}
+                </div>
+                <button
+                  type="button"
+                  className={styles.logsButton}
+                  aria-expanded={logsOpen}
+                  onClick={() => setLogsOpen(true)}
+                >
+                  {t('TABLE_LOGS')}
+                </button>
+              </div>
             </div>
-            <button
-              type="button"
-              className={styles.logsButton}
-              aria-expanded={logsOpen}
-              onClick={() => setLogsOpen(true)}
-            >
-              {t('TABLE_LOGS')}
-            </button>
+            <TableGameLogToasts localGame={localGame} clientId={clientId} players={players} />
+            {showReplay && localGame.replay ? (
+              <TableReplayControls
+                localGame={localGame}
+                replay={localGame.replay}
+                onStep={onReplayStep}
+              />
+            ) : null}
           </div>
-        </div>
-        <TableGameLogToasts localGame={localGame} clientId={clientId} players={players} />
-        {showReplay && localGame.replay ? (
-          <TableReplayControls localGame={localGame} replay={localGame.replay} onStep={onReplayStep} />
-        ) : null}
-      </div>
 
-      {logsOpen ? (
-        <TableGameLogsPrompt
-          logs={sessionLogs}
-          localGame={localGame}
-          clientId={clientId}
-          players={players}
-          onClose={() => setLogsOpen(false)}
-          onSendChat={onSendChat}
-        />
+          {logsOpen ? (
+            <TableGameLogsPrompt
+              logs={sessionLogs}
+              localGame={localGame}
+              clientId={clientId}
+              players={players}
+              onClose={() => setLogsOpen(false)}
+              onSendChat={onSendChat}
+            />
+          ) : null}
+
+          {showAdminSpectatorControls &&
+          adminSpectatorReveal &&
+          onAdminSpectatorRevealChange ? (
+            <div className={styles.adminSpectatorControls}>
+              <AdminSpectatorControls
+                reveal={adminSpectatorReveal}
+                onRevealChange={onAdminSpectatorRevealChange}
+              />
+            </div>
+          ) : null}
+        </>
       ) : null}
 
       <div className={styles.actionsRow}>
@@ -152,15 +177,6 @@ export function TableBoardOverlay(props: TableBoardOverlayProps) {
           onSwitchSides={onSwitchSides}
         />
       </div>
-
-      {showAdminSpectatorControls && adminSpectatorReveal && onAdminSpectatorRevealChange ? (
-        <div className={styles.adminSpectatorControls}>
-          <AdminSpectatorControls
-            reveal={adminSpectatorReveal}
-            onRevealChange={onAdminSpectatorRevealChange}
-          />
-        </div>
-      ) : null}
     </div>
   );
 }

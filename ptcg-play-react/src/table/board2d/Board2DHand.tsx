@@ -105,21 +105,25 @@ export function Board2DHand({
       className={cn(styles.hand, opponent && styles.opponent)}
       data-board2d-hand={handTag}
     >
-      {cards.map((card, index) => (
-        <HandCard
-          key={`${card.id}-${index}`}
-          card={card}
-          index={index}
-          src={scanUrl(card, cardList)}
-          interactive={interactive}
-          playable={!faceDown && playableSet.has(card.id)}
-          selected={!!selectedHandIndexes?.has(index)}
-          selectable={!!selectableHandIndexes?.has(index)}
-          dense={useDense}
-          faceDown={faceDown}
-          onClick={() => onCardClick?.(card, index)}
-        />
-      ))}
+      <div className={styles.scroller}>
+        <div className={styles.track}>
+          {cards.map((card, index) => (
+            <HandCard
+              key={`${card.id}-${index}`}
+              card={card}
+              index={index}
+              src={scanUrl(card, cardList)}
+              interactive={interactive}
+              playable={!faceDown && playableSet.has(card.id)}
+              selected={!!selectedHandIndexes?.has(index)}
+              selectable={!!selectableHandIndexes?.has(index)}
+              dense={useDense}
+              faceDown={faceDown}
+              onClick={() => onCardClick?.(card, index)}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

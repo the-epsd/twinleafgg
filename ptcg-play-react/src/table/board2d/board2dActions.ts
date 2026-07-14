@@ -447,7 +447,8 @@ export function resolveClickToPlayTarget(
     if (activeEmpty && stage === Stage.BASIC) {
       return { player: PlayerType.BOTTOM_PLAYER, slot: SlotType.ACTIVE, index: 0 };
     }
-    const emptyBench = bottomPlayer.bench?.findIndex((b) => !b.cards?.length) ?? -1;
+    const emptyBench =
+      bottomPlayer.bench?.findIndex((b) => (b?.cards?.length ?? 0) === 0) ?? -1;
     if (emptyBench >= 0 && stage === Stage.BASIC) {
       return {
         player: PlayerType.BOTTOM_PLAYER,

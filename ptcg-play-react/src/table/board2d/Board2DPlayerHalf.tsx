@@ -16,7 +16,7 @@ import {
 } from './board2dDropIds';
 import styles from './Board2D.module.css';
 
-const BENCH_SLOTS = 5;
+const DEFAULT_BENCH_SLOTS = 5;
 
 export function slotKey(player: PlayerType, slot: SlotType, index = 0): string {
   return `${player}-${slot}-${index}`;
@@ -42,10 +42,14 @@ function DroppableSlot({
 function DraggableBoardCard({
   dragId,
   enabled,
+  onClick,
+  onContextMenu,
   children,
 }: {
   dragId: string;
   enabled: boolean;
+  onClick?: () => void;
+  onContextMenu?: () => void;
   children: React.ReactNode;
 }) {
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
@@ -61,7 +65,20 @@ function DraggableBoardCard({
         width: '100%',
         height: '100%',
         touchAction: 'none',
+        cursor: onClick ? 'pointer' : undefined,
       }}
+      // Click must live on the same node as drag listeners (see Board2DHand).
+      // Putting onClick only on a child under useDraggable listeners swallows clicks.
+      onClick={onClick}
+      onContextMenu={
+        onContextMenu
+          ? (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onContextMenu();
+            }
+          : undefined
+      }
       {...(enabled ? { ...listeners, ...attributes } : {})}
     >
       {children}
@@ -133,6 +150,8 @@ export function Board2DPlayerHalf({
   const side = isBottom ? 'bottom' : 'top';
 
   const activeKey = slotKey(playerType, SlotType.ACTIVE, 0);
+  // Server grows/shrinks player.bench (e.g. Area Zero Underdepths → 8).
+  const benchSlotCount = Math.max(player?.bench?.length ?? DEFAULT_BENCH_SLOTS, DEFAULT_BENCH_SLOTS);
 
   return (
     <div className={cn(styles.player, upsideDown && styles.upsideDown)}>
@@ -145,6 +164,8 @@ export function Board2DPlayerHalf({
           <DraggableBoardCard
             dragId={board2dActiveBenchDragId(playerType, SlotType.ACTIVE, 0)}
             enabled={canInteract && isOwner && (player?.active?.cards?.length ?? 0) > 0}
+            onClick={() => onActiveClick()}
+            onContextMenu={onActiveContextMenu}
           >
             <div data-slot-key={activeKey} data-board2d-active={side} style={{ width: '100%', height: '100%' }}>
               <Board2DCard
@@ -154,8 +175,6 @@ export function Board2DPlayerHalf({
                 selectable={isSelectable(activeTarget)}
                 selected={isSelected(activeTarget)}
                 attachTarget={isAttachTarget(activeTarget)}
-                onClick={() => onActiveClick()}
-                onContextMenu={onActiveContextMenu ? () => onActiveContextMenu() : undefined}
                 onEnergyClick={(c) =>
                   player?.active && onEnergyClick(c, activeTarget, player.active)
                 }
@@ -168,9 +187,12 @@ export function Board2DPlayerHalf({
         </DroppableSlot>
       </div>
 
-      {/* Bench — always exactly BENCH_SLOTS fixed slots */}
-      <div className={cn(styles.cell, styles.cellBench)}>
-        {Array.from({ length: BENCH_SLOTS }, (_, i) => {
+      {/* Bench — slot count follows server bench array (5 default, up to 8). */}
+      <div
+        className={cn(styles.cell, styles.cellBench)}
+        data-bench-count={benchSlotCount}
+      >
+        {Array.from({ length: benchSlotCount }, (_, i) => {
           const target: CardTarget = {
             player: playerType,
             slot: SlotType.BENCH,
@@ -187,6 +209,10 @@ export function Board2DPlayerHalf({
               <DraggableBoardCard
                 dragId={board2dActiveBenchDragId(playerType, SlotType.BENCH, i)}
                 enabled={canInteract && isOwner && (list?.cards?.length ?? 0) > 0}
+                onClick={() => onBenchClick(i)}
+                onContextMenu={
+                  onBenchContextMenu ? () => onBenchContextMenu(i) : undefined
+                }
               >
                 <div data-slot-key={key} style={{ width: '100%', height: '100%' }}>
                   <Board2DCard
@@ -196,10 +222,6 @@ export function Board2DPlayerHalf({
                     selectable={isSelectable(target)}
                     selected={isSelected(target)}
                     attachTarget={isAttachTarget(target)}
-                    onClick={() => onBenchClick(i)}
-                    onContextMenu={
-                      onBenchContextMenu ? () => onBenchContextMenu(i) : undefined
-                    }
                     onEnergyClick={(c) => list && onEnergyClick(c, target, list)}
                     onToolClick={(c) => list && onToolClick(c, target, list)}
                   />
@@ -298,26 +320,30 @@ export function Board2DPlayerHalf({
       {/* Discard */}
       <div className={cn(styles.cell, styles.cellDiscard)}>
         <div
-          className={cn(styles.stackContainer, styles.discardStack)}
+          className={styles.stackContainer}
           data-board2d-discard={side}
           onClick={onDiscardClick}
         >
-          {Array.from({ length: visibleDiscard }, (_, idx) => (
-            <div
-              key={idx}
-              className={styles.stackCard}
-              style={{
-                transform: `translate(${idx * 0.25}px, ${isBottom ? -idx * 0.25 : idx * 0.25}px)`,
-                zIndex: idx,
-              }}
-            >
-              <Board2DCard
-                cardList={player?.discard}
-                owner={isOwner}
-                scanUrl={scanUrl}
-              />
-            </div>
-          ))}
+          {visibleDiscard === 0 ? (
+            <Board2DCard cardList={player?.discard} owner={isOwner} scanUrl={scanUrl} />
+          ) : (
+            Array.from({ length: visibleDiscard }, (_, idx) => (
+              <div
+                key={idx}
+                className={styles.stackCard}
+                style={{
+                  transform: `translate(${idx * 0.25}px, ${isBottom ? -idx * 0.25 : idx * 0.25}px)`,
+                  zIndex: idx,
+                }}
+              >
+                <Board2DCard
+                  cardList={player?.discard}
+                  owner={isOwner}
+                  scanUrl={scanUrl}
+                />
+              </div>
+            ))
+          )}
           <div className={styles.cardCount}>{discardCards.length}</div>
         </div>
       </div>

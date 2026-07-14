@@ -110,13 +110,39 @@ function StadiumMidlineSlot({
       const bottomRect = bottomLz.getBoundingClientRect();
       if (topRect.width <= 0 || bottomRect.width <= 0) return;
 
-      const targetX =
-        (topRect.left + topRect.width / 2 + bottomRect.left + bottomRect.width / 2) / 2;
+      const canvasRect = canvas.getBoundingClientRect();
+      const portrait = canvas.closest('[data-portrait]') != null;
+
+      // Portrait: center stadium in the open column between prizes and Active.
+      // Landscape: keep midway between the two lost-zone slots.
+      let targetX: number;
+      if (portrait) {
+        const bottomActive = canvas.querySelector(
+          '[data-board2d-active="bottom"]',
+        ) as HTMLElement | null;
+        // Prefer bottom player's prizes (unrotated half); fall back to canvas left.
+        let leftBound = canvasRect.left + 8;
+        canvas.querySelectorAll(`.${styles.prizesGrid}`).forEach((el) => {
+          const r = el.getBoundingClientRect();
+          // Bottom half prizes sit lower on screen than opponent’s.
+          if (r.top > canvasRect.top + canvasRect.height * 0.45) {
+            leftBound = Math.max(leftBound, r.right);
+          }
+        });
+        const activeRect = bottomActive?.getBoundingClientRect();
+        const rightBound = activeRect
+          ? activeRect.left
+          : canvasRect.left + canvasRect.width / 2;
+        targetX = (leftBound + rightBound) / 2;
+      } else {
+        targetX =
+          (topRect.left + topRect.width / 2 + bottomRect.left + bottomRect.width / 2) / 2;
+      }
       const targetY =
         (topRect.top + topRect.height / 2 + bottomRect.top + bottomRect.height / 2) / 2;
 
       // Iteratively correct local top/left so the stadium center matches the
-      // lost-zone midpoint in viewport space (works under scale + rotateX).
+      // target in viewport space (works under scale + rotateX).
       let localTop = posRef.current?.top ?? canvas.offsetHeight / 2;
       let localLeft = posRef.current?.left ?? canvas.offsetWidth / 2;
 
@@ -149,6 +175,9 @@ function StadiumMidlineSlot({
     const bottomLz = canvas.querySelector('[data-board2d-lostzone="bottom"]');
     if (topLz) ro.observe(topLz);
     if (bottomLz) ro.observe(bottomLz);
+    const bottomActive = canvas.querySelector('[data-board2d-active="bottom"]');
+    if (bottomActive) ro.observe(bottomActive);
+    canvas.querySelectorAll(`.${styles.prizesGrid}`).forEach((el) => ro.observe(el));
 
     return () => ro.disconnect();
   }, [canvasRef, layoutKey]);
@@ -221,36 +250,52 @@ export function Board2D(props: Board2DProps) {
     adminSpectatorReveal,
   } = props;
 
+  const rootRef = useRef<HTMLDivElement>(null);
   const boardHostRef = useRef<HTMLDivElement>(null);
   const boardCanvasRef = useRef<HTMLDivElement>(null);
   const [boardScale, setBoardScale] = useState(1);
   const [hostWideEnough, setHostWideEnough] = useState(true);
+  const [portrait, setPortrait] = useState(false);
 
-  // Uniform scale-to-fit: design canvas never reflows; slots stay pixel-stable.
-  useEffect(() => {
+  // Landscape: 1200×700. Portrait: 420×780 (PTCGL-like tall stack). Uniform scale-to-fit.
+  useLayoutEffect(() => {
+    const root = rootRef.current;
     const host = boardHostRef.current;
-    if (!host) return;
-    const DESIGN_W = 1200;
-    const DESIGN_H = 700;
+    if (!root || !host) return;
+
+    const LANDSCAPE_W = 1200;
+    const LANDSCAPE_H = 700;
+    const PORTRAIT_W = 400;
+    const PORTRAIT_H = 820;
+
     const update = () => {
+      const { clientWidth: rootW, clientHeight: rootH } = root;
+      if (rootW <= 0 || rootH <= 0) return;
+
+      const aspect = rootW / rootH;
+      const nextPortrait = aspect < 0.85;
+      setPortrait(nextPortrait);
+      setHostWideEnough(aspect >= 4 / 3);
+
+      const designW = nextPortrait ? PORTRAIT_W : LANDSCAPE_W;
+      const designH = nextPortrait ? PORTRAIT_H : LANDSCAPE_H;
       const { clientWidth, clientHeight } = host;
       if (clientWidth <= 0 || clientHeight <= 0) return;
-      const fit = Math.min(clientWidth / DESIGN_W, clientHeight / DESIGN_H);
+      const fit = Math.min(clientWidth / designW, clientHeight / designH);
       setBoardScale(fit * Math.max(0.5, cardScale));
-      // Angular only tips the board at min-aspect-ratio 4/3.
-      setHostWideEnough(clientWidth / clientHeight >= 4 / 3);
     };
+
     update();
     const ro = new ResizeObserver(update);
+    ro.observe(root);
     ro.observe(host);
     return () => ro.disconnect();
-  }, [cardScale]);
+  }, [cardScale, portrait]);
 
-  const tipBoard = perspectiveEnabled && hostWideEnough;
+  const tipBoard = perspectiveEnabled && hostWideEnough && !portrait;
   const boardTransform = tipBoard
     ? `scale(${boardScale}) rotateX(15deg) translate3d(0, 0, 0)`
     : `scale(${boardScale})`;
-
   const scanUrl = useCallback(
     (card: Card, list?: CardList | PokemonCardList | null) =>
       cardsAdapter.getScanUrlFor3D(card, list ?? undefined),
@@ -439,7 +484,11 @@ export function Board2D(props: Board2DProps) {
   const bottomCards = bottomPlayerHand?.cards ?? bottomPlayer?.hand?.cards ?? [];
 
   return (
-    <div className={styles.root}>
+    <div
+      ref={rootRef}
+      className={cn(styles.root, portrait && styles.portrait)}
+      data-portrait={portrait ? '' : undefined}
+    >
       <DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd}>
         <div className={styles.handsAndBoard}>
           <div
@@ -458,6 +507,7 @@ export function Board2D(props: Board2DProps) {
             faceDown={topHandFaceDown}
             scanUrl={scanUrl}
             handTag="top"
+            dense={portrait ? false : undefined}
           />
 
           <div
@@ -664,6 +714,7 @@ export function Board2D(props: Board2DProps) {
             scanUrl={scanUrl}
             onCardClick={onHandCardClick}
             handTag="bottom"
+            dense={portrait ? false : undefined}
           />
         </div>
 
