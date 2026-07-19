@@ -1586,7 +1586,7 @@ export function ATTACH_UP_TO_X_ENERGY_FROM_DECK_TO_Y_OF_YOUR_POKEMON(
 }
 
 /**
- * Discards the top `amount` cards of your own deck (self-mill).
+ * Discards the top `amount` cards of a player's deck.
  */
 export function DISCARD_TOP_X_CARDS_FROM_YOUR_DECK(
   store: StoreLike,
