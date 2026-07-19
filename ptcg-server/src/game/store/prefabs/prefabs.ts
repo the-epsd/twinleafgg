@@ -52,6 +52,7 @@ import {
 import { Attack } from '../card/pokemon-types';
 import { GamePhase } from '../state/state';
 import { canPlayDualStadium } from '../dual-stadium-utils';
+import { canPlayDualLegend } from '../dual-legend-utils';
 import { PokemonCard } from '../card/pokemon-card';
 import {
   AbstractAttackEffect,
@@ -3930,6 +3931,12 @@ export function CAN_PLAY_POKEMON_CARD(
 
     if (CAN_USE_FROM_HAND_TO_BENCH_POWER(store, state, player, pokemonCard)) {
       return true;
+    }
+
+    if (canPlayDualLegend(store, state, player, pokemonCard)) {
+      if (!IS_ABILITY_BLOCKED(store, state, player, pokemonCard)) {
+        return true;
+      }
     }
 
     // For evolution cards, check if base Pokemon is in play AND can be evolved

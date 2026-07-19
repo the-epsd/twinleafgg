@@ -82,6 +82,7 @@ import {
 import { DropZoneType } from './board-3d-drop-zone';
 import { getBenchPositions, ZONE_POSITIONS } from './board-3d-zone-positions';
 import { isSharedStadiumMeshId } from './dual-stadium.utils';
+import { cardCanAssembleLegendFromHand, resolveLegendAssemblyBenchTarget } from './dual-legend.utils';
 import {
   getSetupPlaySlotForPickOrder,
   setupPreviewMeshId,
@@ -350,7 +351,10 @@ export class Board3dController {
   ) { }
 
   private getHandPlayableCardIdsForDisplay(): number[] | undefined {
-    if (this.boardInteractionService.isChooseHandCardsSelectionActive()) {
+    if (
+      this.boardInteractionService.isChooseHandCardsSelectionActive() ||
+      this.boardInteractionService.isLegendAssemblySelectionActive()
+    ) {
       return undefined;
     }
     return this.isReplayOmniscient() ? undefined : this.bottomPlayer?.playableCardIds;
@@ -360,7 +364,13 @@ export class Board3dController {
     if (this.boardInteractionService.isChooseStartingPokemonsSelectionActive()) {
       return false;
     }
-    return this.boardInteractionService.isChooseHandCardsSelectionActive();
+    if (this.boardInteractionService.isChooseHandCardsSelectionActive()) {
+      return true;
+    }
+    if (this.boardInteractionService.isLegendAssemblySelectionActive()) {
+      return true;
+    }
+    return false;
   }
 
   private refreshSetupStartingPokemonDragState(): void {
@@ -430,6 +440,7 @@ export class Board3dController {
     this.adminSpectatorReveal = p.adminSpectatorReveal;
     this.onKoSequenceActiveChange = p.onKoSequenceActiveChange;
     this.interactionService.setHandPlayZoneGameSettings(p.gameState.state.gameSettings);
+    this.interactionService.setBottomHandCards(p.bottomPlayerHand?.cards ?? []);
   }
 
   init(canvas: HTMLCanvasElement, initial: Board3dControllerProps): void {
@@ -2673,14 +2684,13 @@ export class Board3dController {
 
   private onMouseDown = (event: MouseEvent): void => {
     const canvas = this.canvasEl;
-    const disableHandDrag = this.shouldDisableHandDragForSelection();
     const card = this.interactionService.onMouseDown(
       event,
       this.camera,
       this.scene,
       canvas,
       undefined,
-      disableHandDrag,
+      this.shouldDisableHandDragForSelection(),
     );
 
     if (card) {
@@ -2713,10 +2723,11 @@ export class Board3dController {
       if (hoveredCard !== this.currentHoveredCard) {
         if (hoveredCard) {
           const chooseHandCards = this.boardInteractionService.isChooseHandCardsSelectionActive();
+          const legendAssembly = this.boardInteractionService.isLegendAssemblySelectionActive();
           const startingSetup = this.boardInteractionService.isChooseStartingPokemonsSelectionActive();
           canvas.style.cursor =
             hoveredCard.userData.isHandCard
-              ? (startingSetup || !chooseHandCards ? 'grab' : 'pointer')
+              ? (startingSetup || (!chooseHandCards && !legendAssembly) ? 'grab' : 'pointer')
               : 'pointer';
         } else {
           canvas.style.cursor = 'default';
@@ -2788,6 +2799,26 @@ export class Board3dController {
     this.flushPendingHandSyncAfterDrag();
     this.markDirty();
   };
+
+  private handleLegendAssemblyHandClick(handIndex: number): void {
+    const card = this.bottomPlayerHand?.cards?.[handIndex];
+    if (!card || !this.bottomPlayer) {
+      return;
+    }
+
+    this.boardInteractionService.startLegendAssemblySelection(
+      this.bottomPlayerHand.cards,
+      handIndex,
+      (playHandIndex) => {
+        const target = resolveLegendAssemblyBenchTarget(this.bottomPlayer!);
+        if (target) {
+          this.executeHandPlayCard({ action: 'playCard', handIndex: playHandIndex, zone: target });
+        }
+      },
+    );
+    this.updateSelectionVisuals();
+    this.markDirty();
+  }
 
   private executeHandAttachPlay(handIndex: number, zone: CardTarget): void {
     const handCard = handIndex >= 0 ? this.bottomPlayerHand.cards[handIndex] : undefined;
@@ -3308,7 +3339,11 @@ export class Board3dController {
         }
       } else if (!chooseHandCards) {
         const isPlayable = this.bottomPlayer?.playableCardIds?.includes(cardData.id);
-        card3d.setOutline(isPlayable, 0x4ade80);
+        if (isPlayable) {
+          card3d.setOutline(true, 0x4ade80);
+        } else {
+          card3d.setOutline(false);
+        }
       } else {
         card3d.setOutline(false);
       }
@@ -3380,6 +3415,19 @@ export class Board3dController {
         players: [this.topPlayer, this.bottomPlayer].filter(p => p)
       });
       return;
+    }
+
+    // Handle legend half click (show that half's card info; host target for prompts)
+    if (cardObject.userData.isLegendHalf && cardData && cardList) {
+      if (this.boardInteractionService.isSelectionActive()) {
+        const hostTarget =
+          (cardTarget as CardTarget | undefined) ??
+          this.resolveBoardPokemonCardTargetFromObject(cardObject);
+        if (hostTarget !== null && this.boardInteractionService.isTargetEligible(hostTarget)) {
+          this.boardInteractionService.toggleTarget(hostTarget);
+          return;
+        }
+      }
     }
 
     // Handle tool card click (show tool card info)
@@ -3576,6 +3624,20 @@ export class Board3dController {
       return;
     }
 
+    if (
+      isHandCard &&
+      !this.boardInteractionService.isSelectionActive() &&
+      this.bottomPlayer?.id === this.clientId &&
+      !this.gameState.deleted
+    ) {
+      const handIndex = (cardObject.userData.handIndex as number | undefined) ?? 0;
+      const handCard = this.bottomPlayerHand?.cards?.[handIndex];
+      if (cardCanAssembleLegendFromHand(handCard, this.bottomPlayerHand?.cards ?? [])) {
+        this.handleLegendAssemblyHandClick(handIndex);
+        return;
+      }
+    }
+
     // Check if we're in selection mode (for ChoosePokemonPrompt etc.)
     if (this.boardInteractionService.isSelectionActive()) {
       if (this.boardInteractionService.isChooseStartingPokemonsSelectionActive() && isHandCard) {
@@ -3604,6 +3666,9 @@ export class Board3dController {
       // Toggle selection if target is eligible
       if (this.boardInteractionService.isTargetEligible(target)) {
         this.boardInteractionService.toggleTarget(target);
+        if (isHandCard) {
+          this.updateSelectionVisuals();
+        }
       }
       return; // Don't show info pane in selection mode
     }

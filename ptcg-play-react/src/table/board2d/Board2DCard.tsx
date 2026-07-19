@@ -66,6 +66,7 @@ export function Board2DCard({
   }, [sleeveUrl, model.isFaceDown]);
 
   const cond = model.specialConditions;
+  const showLegendStack = !!(model.legendTopCard && model.legendBottomCard);
   const classNames = cn(
     styles.card,
     model.isEmpty && styles.empty,
@@ -81,7 +82,13 @@ export function Board2DCard({
 
   function handleMainClick(e: MouseEvent) {
     e.stopPropagation();
-    onClick?.(model.mainCard ?? model.dualStadiumLeftCard, cardList);
+    onClick?.(
+      model.mainCard ??
+        model.legendTopCard ??
+        model.legendBottomCard ??
+        model.dualStadiumLeftCard,
+      cardList,
+    );
   }
 
   function handleContextMenu(e: MouseEvent) {
@@ -91,6 +98,11 @@ export function Board2DCard({
     e.preventDefault();
     e.stopPropagation();
     onContextMenu(model.mainCard ?? model.dualStadiumLeftCard, cardList);
+  }
+
+  function handleLegendClick(e: MouseEvent, card: Card) {
+    e.stopPropagation();
+    onClick?.(card, cardList);
   }
 
   if (model.dualStadiumLeftCard && model.dualStadiumRightCard) {
@@ -126,26 +138,6 @@ export function Board2DCard({
       onClick={handleMainClick}
       onContextMenu={handleContextMenu}
     >
-      {!model.isEmpty && !model.isFaceDown && model.mainCard ? (
-        <CardFace
-          className={styles.mainFace}
-          src={scanUrl(model.mainCard, cardList)}
-          card={model.mainCard}
-          name={model.mainCard.name}
-          draggable={false}
-        />
-      ) : null}
-
-      {model.breakCard ? (
-        <div className={styles.breakCard}>
-          <CardFace
-            src={scanUrl(model.breakCard, cardList)}
-            card={model.breakCard}
-            name={model.breakCard.name}
-          />
-        </div>
-      ) : null}
-
       {!model.isFaceDown && model.energyCards.length > 0 ? (
         <div className={styles.energyRow}>
           {model.energyCards.map((energy, i) => {
@@ -169,6 +161,52 @@ export function Board2DCard({
 
       {model.moreEnergies > 0 ? (
         <div className={styles.energyMore}>+{model.moreEnergies}</div>
+      ) : null}
+
+      {model.breakCard ? (
+        <div className={styles.breakCard}>
+          <CardFace
+            src={scanUrl(model.breakCard, cardList)}
+            card={model.breakCard}
+            name={model.breakCard.name}
+          />
+        </div>
+      ) : null}
+
+      {model.legendTopCard ? (
+        <div
+          className={styles.legendTopCard}
+          onClick={(e) => handleLegendClick(e, model.legendTopCard!)}
+        >
+          <CardFace
+            src={scanUrl(model.legendTopCard, cardList)}
+            card={model.legendTopCard}
+            name={model.legendTopCard.name}
+          />
+        </div>
+      ) : null}
+
+      {model.legendBottomCard ? (
+        <div
+          className={styles.legendBottomCard}
+          onClick={(e) => handleLegendClick(e, model.legendBottomCard!)}
+        >
+          <CardFace
+            src={scanUrl(model.legendBottomCard, cardList)}
+            card={model.legendBottomCard}
+            name={model.legendBottomCard.name}
+          />
+        </div>
+      ) : null}
+
+      {!model.isEmpty && !model.isFaceDown && model.mainCard && !showLegendStack ? (
+        <CardFace
+          className={styles.mainFace}
+          src={scanUrl(model.mainCard, cardList)}
+          card={model.mainCard}
+          name={model.mainCard.name}
+          draggable={false}
+        />
       ) : null}
 
       {!model.isFaceDown && model.tools.length > 0 ? (

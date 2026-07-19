@@ -14,6 +14,7 @@ import { StoreLike } from '../store-like';
 import { TrainerCard } from '../card/trainer-card';
 import { TrainerType, CardTag } from '../card/card-types';
 import { assembleDualStadiumFromHand } from '../dual-stadium-utils';
+import { assembleDualLegendFromHand } from '../dual-legend-utils';
 import { Effect } from '../effects/effect';
 import { StateUtils } from '../state-utils';
 import { Player } from '../state/player';
@@ -85,6 +86,13 @@ export function playCardReducer(store: StoreLike, state: State, action: Action):
             target,
           );
           return store.reduceEffect(state, usePower);
+        }
+
+        if (handCard.tags.includes(CardTag.DUAL_LEGEND)) {
+          if (action.target.slot !== SlotType.BENCH || target.cards.length > 0) {
+            throw new GameError(GameMessage.INVALID_TARGET);
+          }
+          return assembleDualLegendFromHand(store, state, player, handCard);
         }
 
         const effect = new PlayPokemonEffect(player, handCard, target, action.target.slot, action.target.index);
