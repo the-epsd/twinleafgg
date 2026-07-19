@@ -38,9 +38,15 @@ export class Armarouge extends PokemonCard {
         }
         const checkEnergy = new CheckProvidedEnergyEffect(effect.player, slot);
         store.reduceEffect(state, checkEnergy);
-        const hasFireEnergy = checkEnergy.energyMap.some(em =>
-          em.provides.some(t =>
-            t === CardType.FIRE || t === CardType.ANY || t === CardType.WLFM || t === CardType.GRW));
+        const hasFireEnergy = checkEnergy.energyMap.some((em) =>
+          em.provides.some(
+            (t) =>
+              t === CardType.FIRE ||
+              t === CardType.ANY ||
+              t === CardType.GRPD ||
+              t === CardType.GRW,
+          ),
+        );
         if (hasFireEnergy) {
           benchesWithFire += 1;
         }
