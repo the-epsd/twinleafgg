@@ -1,0 +1,46 @@
+.avatar {
+  height: var(--twinleaf-avatar-size);
+  width: var(--twinleaf-avatar-size);
+  border-radius: 50%;
+  display: block;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.profile {
+  height: var(--twinleaf-profile-avatar-size);
+  width: var(--twinleaf-profile-avatar-size);
+}
+
+.double {
+  height: calc(var(--twinleaf-profile-avatar-size) * 2);
+  width: calc(var(--twinleaf-profile-avatar-size) * 2);
+}
+
+.image {
+  display: block;
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.empty {
+  background: var(--twinleaf-200);
+  border-radius: 50%;
+  height: 100%;
+  width: 100%;
+}
+
+.hoverable {
+  cursor: pointer;
+  position: relative;
+}
+
+.hoverable::after {
+  inset: 0;
+  content: '';
+  display: block;
+  position: absolute;
+  border-radius: 50%;
+}

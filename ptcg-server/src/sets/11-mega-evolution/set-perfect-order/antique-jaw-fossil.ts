@@ -15,10 +15,11 @@ import {
   GamePhase,
   Player,
   CardTag,
+  PokemonCard,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { RetreatEffect } from '../../../game/store/effects/game-effects';
-import { PlayItemEffect } from '../../../game/store/effects/play-card-effects';
+import { PlayItemEffect, PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import {
   AddSpecialConditionsEffect,
   PutDamageEffect,
@@ -96,6 +97,17 @@ export class AntiqueJawFossil extends TrainerCard {
 
     // Play as Pokemon
     if (effect instanceof PlayItemEffect && effect.trainerCard === this) {
+      const player = effect.player;
+      const emptySlots = player.bench.filter((b) => b.cards.length === 0);
+      if (emptySlots.length === 0) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+      const playPokemonEffect = new PlayPokemonEffect(
+        player,
+        this as unknown as PokemonCard,
+        emptySlots[0],
+      );
+      store.reduceEffect(state, playPokemonEffect);
     }
 
     // Prevent retreat
