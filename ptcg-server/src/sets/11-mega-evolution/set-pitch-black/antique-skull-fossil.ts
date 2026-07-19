@@ -29,19 +29,21 @@ export class AntiqueSkullFossil extends TrainerCard {
   public maxTools: number = 1;
   public evolvesFromBase: string[] = [];
 
-  public powers: Power[] = [{
-    name: 'Spiky Skull',
-    powerType: PowerType.ABILITY,
-    text: 'If this Pokémon is in the Active Spot and takes damage from an attack from your opponent\'s Pokémon, put 3 damage counters on the attacking Pokémon.',
-  },
-  {
-    name: 'Antique Skull Fossil',
-    text: `Play this card as if it were a 60-HP Basic [C] Pokémon. This card can't be affected by any Special Conditions and can't retreat. At any time during your turn, you may discard this card from play.`,
-    useWhenInPlay: true,
-    exemptFromAbilityLock: true,
-    isFossil: true,
-    powerType: PowerType.TRAINER_ABILITY,
-  }];
+  public powers: Power[] = [
+    {
+      name: 'Antique Skull Fossil',
+      text: `Play this card as if it were a 60-HP Basic [C] Pokémon. This card can't be affected by any Special Conditions and can't retreat. At any time during your turn, you may discard this card from play.`,
+      useWhenInPlay: true,
+      exemptFromAbilityLock: true,
+      isFossil: true,
+      powerType: PowerType.TRAINER_ABILITY,
+    },
+    {
+      name: 'Spiky Skull',
+      powerType: PowerType.ABILITY,
+      text: "If this Pokémon is in the Active Spot and takes damage from an attack from your opponent's Pokémon, put 3 damage counters on the attacking Pokémon.",
+    },
+  ];
 
   public set: string = 'M5';
   public setNumber: string = '71';
@@ -51,13 +53,12 @@ export class AntiqueSkullFossil extends TrainerCard {
   public fullName: string = 'Antique Skull Fossil M5';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
-    const openSlots = player.bench.filter(b => b.cards.length === 0);
+    const openSlots = player.bench.filter((b) => b.cards.length === 0);
     if (openSlots.length === 0) {
       return false;
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AddSpecialConditionsEffect && effect.target.getPokemonCard() === this) {
@@ -65,17 +66,24 @@ export class AntiqueSkullFossil extends TrainerCard {
     }
 
     // Ref: set-rebel-clash/sigilyph.ts (Counterattack)
-    if (effect instanceof AfterDamageEffect
-      && effect.target.cards.includes(this)
-      && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof AfterDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const targetPlayer = StateUtils.findOwner(state, effect.target);
       const attackingPlayer = effect.player;
-      if (effect.damage > 0
-        && attackingPlayer !== targetPlayer
-        && targetPlayer.active === effect.target
-        && state.phase === GamePhase.ATTACK) {
+      if (
+        effect.damage > 0 &&
+        attackingPlayer !== targetPlayer &&
+        targetPlayer.active === effect.target &&
+        state.phase === GamePhase.ATTACK
+      ) {
         try {
-          store.reduceEffect(state, new PowerEffect(targetPlayer, this.powers[0], this as unknown as PokemonCard));
+          store.reduceEffect(
+            state,
+            new PowerEffect(targetPlayer, this.powers[0], this as unknown as PokemonCard),
+          );
         } catch {
           return state;
         }
@@ -83,20 +91,28 @@ export class AntiqueSkullFossil extends TrainerCard {
       }
     }
 
-    if (WAS_POWER_USED(effect, 1, this)) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
-      store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: this.name, effect: this.powers[1].name });
+      store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, {
+        name: player.name,
+        card: this.name,
+        effect: this.powers[1].name,
+      });
       const cardList = StateUtils.findCardList(state, this);
       cardList.moveCardTo(this, player.discard);
     }
 
     if (effect instanceof PlayItemEffect && effect.trainerCard === this) {
       const player = effect.player;
-      const emptySlots = player.bench.filter(b => b.cards.length === 0);
+      const emptySlots = player.bench.filter((b) => b.cards.length === 0);
       if (emptySlots.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-      const playPokemonEffect = new PlayPokemonEffect(player, this as unknown as PokemonCard, emptySlots[0]);
+      const playPokemonEffect = new PlayPokemonEffect(
+        player,
+        this as unknown as PokemonCard,
+        emptySlots[0],
+      );
       store.reduceEffect(state, playPokemonEffect);
     }
 
