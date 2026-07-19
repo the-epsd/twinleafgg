@@ -5,9 +5,11 @@ import { Cacnea } from './cacnea';
 import { Cacturne } from './cacturne';
 import { CustomVest } from './custom-vest';
 import { DeliciousRiceBalls } from './delicious-rice-balls';
+import { Enamorus } from './enamorus';
 import { Fletchinder } from './fletchinder';
 import { Fletchling } from './fletchling';
 import { Inkay } from './inkay';
+import { Landorus } from './landorus';
 import { LegendaryOceanTrenchLeft } from './legendary-ocean-trench-left';
 import { LegendaryOceanTrenchRight } from './legendary-ocean-trench-right';
 import { LegendarySummitLeft } from './legendary-summit-left';
@@ -19,6 +21,8 @@ import { MegaRayquazaex } from './mega-rayquaza-ex';
 import { EmceesHypeM6 } from './other-prints';
 import { Sableye } from './sableye';
 import { Talonflameex } from './talonflame-ex';
+import { Thundurus } from './thundurus';
+import { Tornadus } from './tornadus';
 import { Wimpod } from './wimpod';
 import { Wishiwashiex } from './wishiwashi-ex';
 import { ZinniasTrust } from './zinnias-trust';
@@ -33,6 +37,10 @@ export const setDeltaReign: Card[] = [
   new Fletchling(),
   new Fletchinder(),
   new Talonflameex(),
+  new Thundurus(),
+  new Enamorus(),
+  new Landorus(),
+  new Tornadus(),
   new Sableye(),
   new Inkay(),
   new MegaMalamarex(),
