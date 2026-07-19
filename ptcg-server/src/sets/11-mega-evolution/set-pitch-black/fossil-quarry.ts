@@ -8,7 +8,7 @@ import {
   StateUtils,
   StoreLike,
 } from '../../../game';
-import { SuperType, TrainerType } from '../../../game/store/card/card-types';
+import { CardTag, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
@@ -30,7 +30,7 @@ function* useStadium(
   const maxPick = Math.min(2, slots.length);
   const blocked: number[] = [];
   player.deck.cards.forEach((card, index) => {
-    if (!(card instanceof TrainerCard && card.name.includes('Antique'))) {
+    if (!(card instanceof TrainerCard && card.tags.includes(CardTag.ANTIQUE))) {
       blocked.push(index);
     }
   });
