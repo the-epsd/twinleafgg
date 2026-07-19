@@ -7,19 +7,21 @@ import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/s
 
 export class Shieldon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public evolvesFrom = 'Antique Shield Fossil';
+  public evolvesFrom = 'Antique Armor Fossil';
   public cardType: CardType = M;
   public hp: number = 100;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C, C];
 
-  public attacks = [{
-    name: 'Smash',
-    cost: [M, C],
-    damage: 50,
-    text: 'Discard 1 Energy from your opponent\'s Active Pokémon.',
-  }];
+  public attacks = [
+    {
+      name: 'Smash',
+      cost: [M, C],
+      damage: 50,
+      text: "Discard 1 Energy from your opponent's Active Pokémon.",
+    },
+  ];
 
   public set: string = 'M5';
   public setNumber: string = '59';
