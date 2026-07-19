@@ -1,5 +1,5 @@
 import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { TrainerType, CardType } from '../../../game/store/card/card-types';
+import { TrainerType, CardType, SpecialCondition } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, Player } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
@@ -17,17 +17,37 @@ export class DarkBell extends TrainerCard {
   public text: string = 'Both Active non-[D] Pokémon are now Confused.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const opponent = StateUtils.getOpponent(state, player);
+    const actives = [player.active, opponent.active];
+
+    const bothConfused = actives.every(
+      active => active.cards.length > 0 && active.specialConditions.includes(SpecialCondition.CONFUSED),
+    );
+    if (bothConfused) {
+      return false;
+    }
+
+    const bothDark = actives.every(active => {
+      if (active.cards.length === 0) {
+        return false;
+      }
+      const checkType = new CheckPokemonTypeEffect(active);
+      store.reduceEffect(state, checkType);
+      return checkType.cardTypes.includes(CardType.DARK);
+    });
+    if (bothDark) {
+      return false;
+    }
+
     return true;
   }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Refs: set-crimson-invasion/nihilego-gx.ts (Empty Light - both Active Confused),
-    //       set-chilling-reign/weeding-gloves.ts (CheckPokemonTypeEffect)
     if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const maybeConfuse = (targetPlayer: typeof player, active: typeof player.active) => {
+      const confuseTarget = (targetPlayer: typeof player, active: typeof player.active) => {
         if (active.cards.length === 0) {
           return;
         }
@@ -38,8 +58,8 @@ export class DarkBell extends TrainerCard {
         }
       };
 
-      maybeConfuse(player, player.active);
-      maybeConfuse(opponent, opponent.active);
+      confuseTarget(player, player.active);
+      confuseTarget(opponent, opponent.active);
     }
 
     return state;
