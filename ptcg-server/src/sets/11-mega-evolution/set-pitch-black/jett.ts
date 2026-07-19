@@ -10,14 +10,14 @@ import { Player } from '../../../game/store/state/player';
 
 export class Jett extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-  public set: string = 'MEP';
+  public set: string = 'PBL';
   public name: string = 'Jett';
   public fullName: string = 'Jett MEP';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '75';
+  public setNumber: string = '79';
 
   public text: string =
-    'Draw a card for each of your opponent\'s Mega Evolution Pokemon ex in play.';
+    "Draw a card for each of your opponent's Mega Evolution Pokémon ex in play.";
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     // Check if deck has cards
@@ -51,16 +51,16 @@ export class Jett extends TrainerCard {
       // Count opponent's Mega Evolution Pokemon ex in play
       let megaEvolutionExCount = 0;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, pokemonCard) => {
-        if (pokemonCard instanceof PokemonCard &&
+        if (
+          pokemonCard instanceof PokemonCard &&
           pokemonCard.tags.includes(CardTag.POKEMON_SV_MEGA) &&
-          pokemonCard.tags.includes(CardTag.POKEMON_ex)) {
+          pokemonCard.tags.includes(CardTag.POKEMON_ex)
+        ) {
           megaEvolutionExCount++;
         }
       });
 
       DRAW_CARDS(store, state, player, megaEvolutionExCount);
-
-
     }
 
     return state;

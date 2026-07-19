@@ -14,21 +14,23 @@ export class Slowpoke extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Unlimited Disposal',
-    cost: [P],
-    damage: 0,
-    text: 'You may discard as many cards from your hand as you like.',
-  },
-  {
-    name: 'Headbutt',
-    cost: [C, C],
-    damage: 20,
-    text: '',
-  }];
+  public attacks = [
+    {
+      name: 'All-You-Can-Yeet',
+      cost: [P],
+      damage: 0,
+      text: 'You may discard any number of cards from your hand.',
+    },
+    {
+      name: 'Headbutt',
+      cost: [C, C],
+      damage: 20,
+      text: '',
+    },
+  ];
 
-  public set: string = 'M5';
-  public setNumber: string = '28';
+  public set: string = 'PBL';
+  public setNumber: string = '29';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Slowpoke';
@@ -39,27 +41,35 @@ export class Slowpoke extends PokemonCard {
       const self = this;
       const attackEffect = effect as AttackEffect;
       const player = attackEffect.player;
-      function* useUnlimitedDisposal(next: Function): IterableIterator<State> {
+      function* yeetCards(next: Function): IterableIterator<State> {
         const max = player.hand.cards.length;
         if (max === 0) {
           return state;
         }
-        yield store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_DISCARD,
-          player.hand,
-          { superType: SuperType.ANY },
-          { min: 0, max, allowCancel: false }
-        ), selected => {
-          const cards = selected || [];
-          if (cards.length > 0) {
-            MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: self, sourceEffect: attackEffect });
-          }
-          next();
-        });
+        yield store.prompt(
+          state,
+          new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_CARD_TO_DISCARD,
+            player.hand,
+            { superType: SuperType.ANY },
+            { min: 0, max, allowCancel: false },
+          ),
+          (selected) => {
+            const cards = selected || [];
+            if (cards.length > 0) {
+              MOVE_CARDS(store, state, player.hand, player.discard, {
+                cards,
+                sourceCard: self,
+                sourceEffect: attackEffect,
+              });
+            }
+            next();
+          },
+        );
         return state;
       }
-      const generator = useUnlimitedDisposal(() => generator.next());
+      const generator = yeetCards(() => generator.next());
       return generator.next().value;
     }
     return state;

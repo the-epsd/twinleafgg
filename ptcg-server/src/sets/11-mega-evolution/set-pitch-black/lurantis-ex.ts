@@ -5,7 +5,13 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_MARKER,
+  HAS_MARKER,
+  REMOVE_MARKER,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Lurantisex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -16,21 +22,23 @@ export class Lurantisex extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Lively Cutter',
-    cost: [G],
-    damage: 60,
-    damageCalculation: '+',
-    text: 'If this Pokémon healed during this turn, this attack does 200 more damage.',
-  },
-  {
-    name: 'Leaf Guard',
-    cost: [G, C],
-    damage: 140,
-    text: 'During your opponent\'s next turn, this Pokémon takes 50 less damage from attacks.',
-  }];
+  public attacks = [
+    {
+      name: 'Lively Cutter',
+      cost: [G],
+      damage: 60,
+      damageCalculation: '+',
+      text: 'If this Pokémon was healed during this turn, this attack does 200 more damage.',
+    },
+    {
+      name: 'Leaf Guard',
+      cost: [G, C],
+      damage: 140,
+      text: "During your opponent's next turn, this Pokémon takes 50 less damage from attacks (after applying Weakness and Resistance).",
+    },
+  ];
 
-  public set: string = 'M5';
+  public set: string = 'PBL';
   public setNumber: string = '4';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
@@ -48,7 +56,10 @@ export class Lurantisex extends PokemonCard {
     }
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.HEALED_THIS_TURN, this);
 
-    if (WAS_ATTACK_USED(effect, 0, this) && HAS_MARKER(this.HEALED_THIS_TURN, effect.player, this)) {
+    if (
+      WAS_ATTACK_USED(effect, 0, this) &&
+      HAS_MARKER(this.HEALED_THIS_TURN, effect.player, this)
+    ) {
       effect.damage += 200;
     }
     if (WAS_ATTACK_USED(effect, 1, this)) {

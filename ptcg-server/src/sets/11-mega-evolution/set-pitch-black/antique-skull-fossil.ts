@@ -60,14 +60,14 @@ export class AntiqueSkullFossil extends TrainerCard {
       powerType: PowerType.TRAINER_ABILITY,
     },
     {
-      name: 'Spiky Skull',
+      name: 'Spiny Skull',
       powerType: PowerType.ABILITY,
       text: "If this Pokémon is in the Active Spot and takes damage from an attack from your opponent's Pokémon, put 3 damage counters on the attacking Pokémon.",
     },
   ];
 
-  public set: string = 'M5';
-  public setNumber: string = '71';
+  public set: string = 'PBL';
+  public setNumber: string = '73';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Antique Skull Fossil';

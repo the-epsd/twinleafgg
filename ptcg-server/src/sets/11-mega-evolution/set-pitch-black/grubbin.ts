@@ -22,7 +22,7 @@ export class Grubbin extends PokemonCard {
     },
   ];
 
-  public set: string = 'M5';
+  public set: string = 'PBL';
   public setNumber: string = '2';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
@@ -31,7 +31,7 @@ export class Grubbin extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, heads => {
+      COIN_FLIP_PROMPT(store, state, effect.player, (heads) => {
         if (heads) {
           YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
         }

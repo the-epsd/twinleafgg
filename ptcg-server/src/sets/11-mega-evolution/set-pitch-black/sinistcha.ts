@@ -18,7 +18,7 @@ export class Sinistcha extends PokemonCard {
     {
       name: "Hide 'n' Sneak",
       powerType: PowerType.ABILITY,
-      text: "This Pokémon can't be affected by effects of attacks or Abilities from your opponent's Pokémon.",
+      text: "Prevent all effects of your opponent's Pokémon's attacks and Abilities done to this Pokémon. (Damage is not an effect.)",
     },
   ];
 
@@ -27,11 +27,11 @@ export class Sinistcha extends PokemonCard {
       name: 'Matcha Spin',
       cost: [C],
       damage: 0,
-      text: "If you have 6 or more Pokémon in your discard with the Hide 'n' Sneak Ability, place 4 damage counters on each of your opponent's Pokémon.",
+      text: "If you have 6 or more Pokémon that have the Hide 'n' Sneak Ability in your discard pile, place 4 damage counters on each of your opponent's Pokémon.",
     },
   ];
 
-  public set: string = 'M5';
+  public set: string = 'PBL';
   public setNumber: string = '6';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';

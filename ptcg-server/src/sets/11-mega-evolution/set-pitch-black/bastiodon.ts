@@ -17,21 +17,25 @@ export class Bastiodon extends PokemonCard {
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C, C, C];
 
-  public powers = [{
-    name: 'Ancient Bulwark',
-    powerType: PowerType.ABILITY,
-    text: 'While this Pokémon is on your Bench, prevent all damage done to your Pokémon by attacks from your opponent\'s Pokémon that have 2 or fewer Energy attached.',
-  }];
+  public powers = [
+    {
+      name: 'Ancient Bulwark',
+      powerType: PowerType.ABILITY,
+      text: "As long as this Pokémon is on your Bench, prevent all damage done to each of your Pokémon by attacks from your opponent's Pokémon that have 2 or less Energy attached.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Hammer In',
-    cost: [M, M, C],
-    damage: 160,
-    text: '',
-  }];
+  public attacks = [
+    {
+      name: 'Hammer In',
+      cost: [M, M, C],
+      damage: 160,
+      text: '',
+    },
+  ];
 
-  public set: string = 'M5';
-  public setNumber: string = '60';
+  public set: string = 'PBL';
+  public setNumber: string = '62';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bastiodon';
@@ -41,10 +45,11 @@ export class Bastiodon extends PokemonCard {
     store: StoreLike,
     state: State,
     defenderOwner: Player,
-    source: Player['active']
+    source: Player['active'],
   ): boolean {
     let hasBastiodon = false;
-    const defenderPlayerType = state.players[0] === defenderOwner ? PlayerType.BOTTOM_PLAYER : PlayerType.TOP_PLAYER;
+    const defenderPlayerType =
+      state.players[0] === defenderOwner ? PlayerType.BOTTOM_PLAYER : PlayerType.TOP_PLAYER;
     defenderOwner.forEachPokemon(defenderPlayerType, (cardList, card) => {
       if (card instanceof Bastiodon && cardList !== defenderOwner.active) {
         if (!IS_ABILITY_BLOCKED(store, state, defenderOwner, card)) {
@@ -66,18 +71,22 @@ export class Bastiodon extends PokemonCard {
     if (effect instanceof DealDamageEffect && state.phase === GamePhase.ATTACK) {
       const defenderOwner = StateUtils.findOwner(state, effect.target);
       const attackerOwner = StateUtils.findOwner(state, effect.source);
-      if (defenderOwner !== attackerOwner
-        && attackerOwner === StateUtils.getOpponent(state, defenderOwner)
-        && this.bastiodonProtects(store, state, defenderOwner, effect.source)) {
+      if (
+        defenderOwner !== attackerOwner &&
+        attackerOwner === StateUtils.getOpponent(state, defenderOwner) &&
+        this.bastiodonProtects(store, state, defenderOwner, effect.source)
+      ) {
         effect.damage = 0;
       }
     }
     if (effect instanceof PutDamageEffect && state.phase === GamePhase.ATTACK) {
       const defenderOwner = StateUtils.findOwner(state, effect.target);
       const attackerOwner = StateUtils.findOwner(state, effect.source);
-      if (defenderOwner !== attackerOwner
-        && attackerOwner === StateUtils.getOpponent(state, defenderOwner)
-        && this.bastiodonProtects(store, state, defenderOwner, effect.source)) {
+      if (
+        defenderOwner !== attackerOwner &&
+        attackerOwner === StateUtils.getOpponent(state, defenderOwner) &&
+        this.bastiodonProtects(store, state, defenderOwner, effect.source)
+      ) {
         effect.preventDefault = true;
       }
     }

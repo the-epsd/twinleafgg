@@ -8,18 +8,17 @@ import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class DarkBell extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
-  public set: string = 'M5';
-  public setNumber: string = '70';
+  public set: string = 'PBL';
+  public setNumber: string = '75';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dark Bell';
   public fullName: string = 'Dark Bell M5';
-  public text: string = 'Both Active Pokémon (except any [D] Pokémon) are now Confused.';
+  public text: string = 'Both Active non-[D] Pokémon are now Confused.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Refs: set-crimson-invasion/nihilego-gx.ts (Empty Light - both Active Confused),

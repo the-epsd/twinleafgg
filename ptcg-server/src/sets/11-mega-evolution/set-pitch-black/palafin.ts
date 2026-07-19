@@ -12,16 +12,18 @@ export class Palafin extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Justice Knuckle',
-    cost: [W, W],
-    damage: 80,
-    damageCalculation: '+',
-    text: 'If your opponent has 1 Prize card remaining, this attack does 200 more damage.',
-  }];
+  public attacks = [
+    {
+      name: 'Knuckle Justice',
+      cost: [W, W],
+      damage: 80,
+      damageCalculation: '+',
+      text: 'If your opponent has 1 Prize card remaining, this attack does 200 more damage.',
+    },
+  ];
 
-  public set: string = 'M5';
-  public setNumber: string = '21';
+  public set: string = 'PBL';
+  public setNumber: string = '22';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Palafin';

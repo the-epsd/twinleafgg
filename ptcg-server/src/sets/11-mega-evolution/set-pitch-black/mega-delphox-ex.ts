@@ -1,9 +1,19 @@
 import { CardList, GameMessage, StateUtils, StoreLike, State } from '../../../game';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { CardTag, CardType, SpecialCondition, Stage, SuperType } from '../../../game/store/card/card-types';
+import {
+  CardTag,
+  CardType,
+  SpecialCondition,
+  Stage,
+  SuperType,
+} from '../../../game/store/card/card-types';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { WAS_ATTACK_USED, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  SHOW_CARDS_TO_PLAYER,
+  SHUFFLE_DECK,
+} from '../../../game/store/prefabs/prefabs';
 
 export class MegaDelphoxex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -14,22 +24,24 @@ export class MegaDelphoxex extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Trick Portal',
-    cost: [R],
-    damage: 0,
-    text: 'Look at the top 9 cards of your deck and put as many Pokémon you find there as you like onto your Bench. Then, shuffle the other cards into your deck.',
-  },
-  {
-    name: 'Eerie Glow',
-    cost: [R, C, C],
-    damage: 200,
-    text: 'Your opponent\'s Active Pokémon is now Burned and Confused.',
-  }];
+  public attacks = [
+    {
+      name: 'Trick Portal',
+      cost: [R],
+      damage: 0,
+      text: 'Look at the top 9 cards of your deck, and you may put any number of Pokémon you find there onto your Bench. Shuffle the other cards back into your deck.',
+    },
+    {
+      name: 'Eerie Glow',
+      cost: [R, C, C],
+      damage: 200,
+      text: "Your opponent's Active Pokémon is now Burned and Confused.",
+    },
+  ];
 
   public regulationMark: string = 'J';
-  public set: string = 'M-P';
-  public setNumber: string = '96';
+  public set: string = 'PBL';
+  public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Delphox ex';
   public fullName: string = 'Mega Delphox ex M-P';
@@ -49,9 +61,9 @@ export class MegaDelphoxex extends PokemonCard {
 
       SHOW_CARDS_TO_PLAYER(store, state, player, deckTop.cards);
 
-      const openSlots = player.bench.filter(b => b.cards.length === 0).length;
-      const basicCount = deckTop.cards.filter(c =>
-        c instanceof PokemonCard && c.stage === Stage.BASIC
+      const openSlots = player.bench.filter((b) => b.cards.length === 0).length;
+      const basicCount = deckTop.cards.filter(
+        (c) => c instanceof PokemonCard && c.stage === Stage.BASIC,
       ).length;
 
       if (basicCount === 0 || openSlots === 0) {
@@ -62,24 +74,28 @@ export class MegaDelphoxex extends PokemonCard {
 
       const maxToSelect = Math.min(basicCount, openSlots);
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-        deckTop,
-        { superType: SuperType.POKEMON, stage: Stage.BASIC },
-        { min: 0, max: maxToSelect, allowCancel: false }
-      ), selected => {
-        const cards = selected || [];
-        cards.forEach(card => {
-          const emptySlot = player.bench.find(b => b.cards.length === 0);
-          if (emptySlot) {
-            deckTop.moveCardTo(card, emptySlot);
-            emptySlot.pokemonPlayedTurn = state.turn;
-          }
-        });
-        deckTop.moveTo(player.deck);
-        SHUFFLE_DECK(store, state, player);
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+          deckTop,
+          { superType: SuperType.POKEMON, stage: Stage.BASIC },
+          { min: 0, max: maxToSelect, allowCancel: false },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          cards.forEach((card) => {
+            const emptySlot = player.bench.find((b) => b.cards.length === 0);
+            if (emptySlot) {
+              deckTop.moveCardTo(card, emptySlot);
+              emptySlot.pokemonPlayedTurn = state.turn;
+            }
+          });
+          deckTop.moveTo(player.deck);
+          SHUFFLE_DECK(store, state, player);
+        },
+      );
     }
 
     // Eerie Glow

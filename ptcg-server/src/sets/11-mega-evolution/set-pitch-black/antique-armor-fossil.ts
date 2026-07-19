@@ -61,13 +61,13 @@ export class AntiqueArmorFossil extends TrainerCard {
       powerType: PowerType.TRAINER_ABILITY,
     },
     {
-      name: 'Armor Protection',
+      name: 'Protective Armor',
       powerType: PowerType.ABILITY,
       text: "While this Pokémon is in the Active Spot, all of your Pokémon take 10 less damage from attacks from your opponent's Pokémon.",
     },
   ];
 
-  public set: string = 'M5';
+  public set: string = 'PBL';
   public setNumber: string = '72';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';

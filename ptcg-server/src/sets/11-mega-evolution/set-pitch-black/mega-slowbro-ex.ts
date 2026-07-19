@@ -21,13 +21,13 @@ export class MegaSlowbroex extends PokemonCard {
       name: 'Shellnado Spin',
       cost: [P, P, P],
       damage: 180,
-      text: "During your opponent's next turn, if this Pokemon takes damage from an attack, put 12 damage counters on the Attacking Pokemon.",
+      text: "During your opponent's next turn, if this Pokémon is damaged by an attack (even if this Pokémon is Knocked Out), place 12 damage counters on the Attacking Pokémon.",
     },
   ];
 
   public regulationMark = 'J';
-  public set: string = 'MEP';
-  public setNumber = '71';
+  public set: string = 'PBL';
+  public setNumber = '31';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Slowbro ex';
   public fullName: string = 'Mega Slowbro ex MEP';
@@ -63,8 +63,10 @@ export class MegaSlowbroex extends PokemonCard {
     }
 
     // Clear marker at end of opponent's turn
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_SHELLNADO_SPIN_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_SHELLNADO_SPIN_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_SHELLNADO_SPIN_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {

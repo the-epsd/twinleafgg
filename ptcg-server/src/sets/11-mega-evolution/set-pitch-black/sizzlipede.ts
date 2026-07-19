@@ -3,7 +3,12 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { Card } from '../../../game/store/card/card';
 import { State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { DISCARD_TOP_X_OF_OPPONENTS_DECK, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  DISCARD_TOP_X_OF_OPPONENTS_DECK,
+  SHOW_CARDS_TO_PLAYER,
+  SHUFFLE_DECK,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { StateUtils } from '../../../game/store/state-utils';
 
 export class Sizzlipede extends PokemonCard {
@@ -13,22 +18,24 @@ export class Sizzlipede extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Controlled Burn',
-    cost: [R],
-    damage: 0,
-    text: 'Discard the top card of your opponent\'s deck.',
-  },
-  {
-    name: 'Bug Panic',
-    cost: [C, C, C],
-    damage: 0,
-    damageCalculation: '+',
-    text: 'Reveal the bottom 7 cards of your deck. This attack does 50 damage times the number of Pokémon that have the attack Bug Panic. Then, shuffle those Pokémon back into your deck and discard all other revealed cards.',
-  }];
+  public attacks = [
+    {
+      name: 'Controlled Burn',
+      cost: [R],
+      damage: 0,
+      text: "Discard the top card of your opponent's deck.",
+    },
+    {
+      name: 'Bug Out',
+      cost: [C, C, C],
+      damage: 50,
+      damageCalculation: 'x',
+      text: 'Reveal the bottom 7 cards of your deck, and this attack does 50 damage for each Pokémon you find there that has the Bug Out attack. Then, shuffle any revealed Pokémon back into your deck. Discard the other cards.',
+    },
+  ];
 
-  public set: string = 'M5';
-  public setNumber: string = '8';
+  public set: string = 'PBL';
+  public setNumber: string = '9';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sizzlipede';
@@ -54,14 +61,18 @@ export class Sizzlipede extends PokemonCard {
       SHOW_CARDS_TO_PLAYER(store, state, player, revealed);
       SHOW_CARDS_TO_PLAYER(store, state, opponent, revealed);
 
-      const bugPanicPokemon = revealed.filter(c =>
-        c instanceof PokemonCard && c.attacks.some(a => a.name === 'Bug Panic')
+      const bugOutPokemon = revealed.filter(
+        (c) => c instanceof PokemonCard && c.attacks.some((a) => a.name === 'Bug Out'),
       );
 
-      effect.damage += 50 * bugPanicPokemon.length;
+      effect.damage = 50 * bugOutPokemon.length;
 
-      bugPanicPokemon.forEach(c => { player.deck.cards.push(c); });
-      revealed.filter(c => !bugPanicPokemon.includes(c)).forEach(c => player.discard.cards.push(c));
+      bugOutPokemon.forEach((c) => {
+        player.deck.cards.push(c);
+      });
+      revealed
+        .filter((c) => !bugOutPokemon.includes(c))
+        .forEach((c) => player.discard.cards.push(c));
       SHUFFLE_DECK(store, state, player);
     }
 

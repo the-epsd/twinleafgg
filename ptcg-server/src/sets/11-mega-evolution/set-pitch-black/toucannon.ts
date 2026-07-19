@@ -25,23 +25,27 @@ export class Toucannon extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Sky Draw',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may draw a card.',
-  },];
+  public powers = [
+    {
+      name: 'Aerial Draw',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn, you may use this Ability. Draw a card.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Feather Rondo',
-    cost: [C],
-    damage: 60,
-    damageCalculation: '+',
-    text: 'This attack does 20 more damage for each Benched Pokémon in play (both yours and your opponent\'s).',
-  }];
+  public attacks = [
+    {
+      name: 'Feather Rondo',
+      cost: [C],
+      damage: 60,
+      damageCalculation: '+',
+      text: "This attack does 20 more damage for each Benched Pokémon (both yours and your opponent's).",
+    },
+  ];
 
-  public set: string = 'M5';
-  public setNumber: string = '66';
+  public set: string = 'PBL';
+  public setNumber: string = '68';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Toucannon';

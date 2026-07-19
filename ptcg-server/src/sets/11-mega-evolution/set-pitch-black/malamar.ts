@@ -28,8 +28,8 @@ export class Malamar extends PokemonCard {
     },
   ];
 
-  public set: string = 'M5';
-  public setNumber: string = '50';
+  public set: string = 'PBL';
+  public setNumber: string = '52';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Malamar';

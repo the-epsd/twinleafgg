@@ -15,15 +15,17 @@ export class Trumbeak extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Fly',
-    cost: [C],
-    damage: 30,
-    text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage and effects of attacks done to this Pokémon. If tails, this attack fails.',
-  }];
+  public attacks = [
+    {
+      name: 'Fly',
+      cost: [C],
+      damage: 30,
+      text: "Flip a coin. If tails, this attack does nothing. If heads, during your opponent's next turn, prevent all damage from and effects of attacks done to this Pokémon.",
+    },
+  ];
 
-  public set: string = 'M5';
-  public setNumber: string = '65';
+  public set: string = 'PBL';
+  public setNumber: string = '67';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Trumbeak';
@@ -38,7 +40,7 @@ export class Trumbeak extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      COIN_FLIP_PROMPT(store, state, player, heads => {
+      COIN_FLIP_PROMPT(store, state, player, (heads) => {
         if (!heads) {
           effect.damage = 0;
           return state;
@@ -49,16 +51,21 @@ export class Trumbeak extends PokemonCard {
       });
     }
 
-    if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect)
-      && effect.target.marker.hasMarker(this.FLY_MARKER, this)) {
+    if (
+      (effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
+      effect.target.marker.hasMarker(this.FLY_MARKER, this)
+    ) {
       effect.preventDefault = true;
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_FLY_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_FLY_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_FLY_MARKER, this);
       const opp = StateUtils.getOpponent(state, effect.player);
-      opp.forEachPokemon(PlayerType.TOP_PLAYER, cardList =>
-        cardList.marker.removeMarker(this.FLY_MARKER, this)
+      opp.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) =>
+        cardList.marker.removeMarker(this.FLY_MARKER, this),
       );
     }
 

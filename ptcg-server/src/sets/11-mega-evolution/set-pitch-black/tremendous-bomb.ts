@@ -9,15 +9,17 @@ import { State } from '../../../game/store/state/state';
 import { StateUtils } from '../../../game/store/state-utils';
 import { IS_TOOL_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
-export class HeroicBomb extends TrainerCard {
+export class TremendousBomb extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'M5';
   public setNumber: string = '73';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Heroic Bomb';
+  public name: string = 'Tremendous Bomb';
   public fullName: string = 'Heroic Bomb M5';
-  public text = `If the Pokémon this card is attached to is not a Mega Pokémon ex and takes 240 or more damage from your opponent's Active Mega Pokémon ex, place 12 damage counters on the Attacking Pokémon. Then, discard this card.`;
+  public text =
+    "If the Pokémon this card is attached to isn't a Mega Evolution Pokémon ex, is in the Active Spot, and takes 240 or more damage from an attack from your opponent's Mega Evolution Pokémon ex (even if this Pokémon is Knocked Out), place 12 damage counters on the Attacking Pokémon." +
+    'If you placed any damage counters in this way, discard this card.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (!(effect instanceof DealDamageEffect)) {
@@ -35,7 +37,9 @@ export class HeroicBomb extends TrainerCard {
       return state;
     }
 
-    const heroicOnDefender = effect.target.tools.find((t): t is HeroicBomb => t instanceof HeroicBomb);
+    const heroicOnDefender = effect.target.tools.find(
+      (t): t is TremendousBomb => t instanceof TremendousBomb,
+    );
     if (heroicOnDefender === undefined) {
       return state;
     }
@@ -50,8 +54,8 @@ export class HeroicBomb extends TrainerCard {
     }
 
     const defenderIsMegaEx =
-      defenderCard.tags.includes(CardTag.POKEMON_SV_MEGA)
-      && defenderCard.tags.includes(CardTag.POKEMON_ex);
+      defenderCard.tags.includes(CardTag.POKEMON_SV_MEGA) &&
+      defenderCard.tags.includes(CardTag.POKEMON_ex);
 
     if (defenderIsMegaEx) {
       return state;
@@ -59,8 +63,8 @@ export class HeroicBomb extends TrainerCard {
 
     const attackerCard = effect.player.active.getPokemonCard();
     const attackerIsMegaEx =
-      attackerCard?.tags.includes(CardTag.POKEMON_SV_MEGA)
-      && attackerCard?.tags.includes(CardTag.POKEMON_ex);
+      attackerCard?.tags.includes(CardTag.POKEMON_SV_MEGA) &&
+      attackerCard?.tags.includes(CardTag.POKEMON_ex);
 
     if (!attackerIsMegaEx || effect.source !== effect.player.active) {
       return state;

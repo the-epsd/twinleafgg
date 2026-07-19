@@ -18,7 +18,7 @@ export class Banette extends PokemonCard {
     {
       name: "Hide 'n' Sneak",
       powerType: PowerType.ABILITY,
-      text: "This Pokémon can't be affected by effects of attacks or Abilities from your opponent's Pokémon.",
+      text: "Prevent all effects of your opponent's Pokémon's attacks and Abilities done to this Pokémon. (Damage is not an effect.)",
     },
   ];
 
@@ -27,12 +27,12 @@ export class Banette extends PokemonCard {
       name: 'Puppet Pull',
       cost: [P],
       damage: 80,
-      text: 'You may search your deck for any card and put it into your hand. If you do, shuffle your deck.',
+      text: 'You may search your deck for a card and put it into your hand. Then, shuffle your deck.',
     },
   ];
 
-  public set: string = 'M5';
-  public setNumber: string = '32';
+  public set: string = 'PBL';
+  public setNumber: string = '34';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Banette';

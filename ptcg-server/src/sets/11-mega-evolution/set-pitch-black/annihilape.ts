@@ -26,21 +26,25 @@ export class Annihilape extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Durable Body',
-    powerType: PowerType.ABILITY,
-    text: 'If this Pokémon would be Knocked Out by damage from an attack, flip a coin. If heads, this Pokémon is not Knocked Out and its remaining HP becomes 10 instead.',
-  }];
+  public powers = [
+    {
+      name: 'Durable Body',
+      powerType: PowerType.ABILITY,
+      text: 'If this Pokémon would be Knocked Out by damage from an attack, flip a coin. If heads, this Pokémon is not Knocked Out, and its remaining HP becomes 10.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Ghost Blow',
-    cost: [P, P],
-    damage: 100,
-    text: 'Place 5 damage counters on 1 of your opponent\'s Benched Pokémon.',
-  }];
+  public attacks = [
+    {
+      name: 'Ghostly Blow',
+      cost: [P, P],
+      damage: 100,
+      text: "Place 5 damage counters on 1 of your opponent's Benched Pokémon.",
+    },
+  ];
 
-  public set: string = 'M5';
-  public setNumber: string = '39';
+  public set: string = 'PBL';
+  public setNumber: string = '41';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Annihilape';
@@ -48,8 +52,11 @@ export class Annihilape extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-ascended-heroes/mega-hawlucha-ex.ts (Tenacious Body)
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)
-      && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const owner = StateUtils.findOwner(state, effect.target);
 
       if (IS_ABILITY_BLOCKED(store, state, owner, this)) {
@@ -60,15 +67,16 @@ export class Annihilape extends PokemonCard {
       store.reduceEffect(state, checkHpEffect);
 
       if (effect.damage >= checkHpEffect.hp) {
-        return store.prompt(state, new CoinFlipPrompt(
-          owner.id,
-          GameMessage.COIN_FLIP,
-        ), result => {
-          if (result === true) {
-            effect.surviveOnTenHPReason = this.powers[0].name;
-          }
-          return state;
-        });
+        return store.prompt(
+          state,
+          new CoinFlipPrompt(owner.id, GameMessage.COIN_FLIP),
+          (result) => {
+            if (result === true) {
+              effect.surviveOnTenHPReason = this.powers[0].name;
+            }
+            return state;
+          },
+        );
       }
     }
 
@@ -76,24 +84,28 @@ export class Annihilape extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (!opponent.bench.some(b => b.cards.length > 0)) {
+      if (!opponent.bench.some((b) => b.cards.length > 0)) {
         return state;
       }
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.BENCH],
-        { allowCancel: false, min: 1, max: 1 },
-      ), picked => {
-        if (!picked || picked.length === 0) {
-          return;
-        }
-        const dest = picked[0];
-        const putCounters = new PlaceDamageCountersEffect(player, dest, 50, this);
-        store.reduceEffect(state, putCounters);
-      });
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.BENCH],
+          { allowCancel: false, min: 1, max: 1 },
+        ),
+        (picked) => {
+          if (!picked || picked.length === 0) {
+            return;
+          }
+          const dest = picked[0];
+          const putCounters = new PlaceDamageCountersEffect(player, dest, 50, this);
+          store.reduceEffect(state, putCounters);
+        },
+      );
     }
 
     return state;

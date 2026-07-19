@@ -29,7 +29,13 @@ function pokemonCardHasRuleBox(card: PokemonCard): boolean {
   );
 }
 
-function* playGwynn(next: Function, store: StoreLike, state: State, effect: TrainerEffect, self: Gwynn): IterableIterator<State> {
+function* playGwynn(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+  self: Gwynn,
+): IterableIterator<State> {
   const player = effect.player;
 
   const blocked: number[] = [];
@@ -45,16 +51,20 @@ function* playGwynn(next: Function, store: StoreLike, state: State, effect: Trai
   }
 
   let cards: typeof player.hand.cards = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_DISCARD,
-    player.hand,
-    {},
-    { min: 1, max: 2, allowCancel: false, blocked },
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_DISCARD,
+      player.hand,
+      {},
+      { min: 1, max: 2, allowCancel: false, blocked },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: self });
   DRAW_CARDS(store, state, player, cards.length * 3);
@@ -64,12 +74,13 @@ function* playGwynn(next: Function, store: StoreLike, state: State, effect: Trai
 export class Gwynn extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark: string = 'J';
-  public set: string = 'M5';
+  public set: string = 'PBL';
   public setNumber: string = '78';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gwynn';
   public fullName: string = 'Gwynn M5';
-  public text: string = 'Discard 2 Pokémon from your hand (excluding any Rule Box Pokémon). Draw 3 cards for each Pokémon discarded in this way.';
+  public text: string =
+    "Discard up to 2 Pokémon that don't have a Rule Box from your hand, and draw 3 cards for each card you discarded in this way. (Pokémon ex, Pokémon V, etc. have Rule Boxes.)";
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     if (player.supporterTurn > 0) {
@@ -86,7 +97,6 @@ export class Gwynn extends TrainerCard {
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

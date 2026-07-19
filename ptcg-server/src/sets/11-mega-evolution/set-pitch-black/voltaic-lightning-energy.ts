@@ -1,6 +1,9 @@
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { CardType, EnergyType } from '../../../game/store/card/card-types';
-import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
+import {
+  CheckPokemonTypeEffect,
+  CheckProvidedEnergyEffect,
+} from '../../../game/store/effects/check-effects';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { EnergyEffect } from '../../../game/store/effects/play-card-effects';
@@ -9,21 +12,20 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 /** Bolty Lightning Energy — set M5 card #80. */
-export class BoltyLightningEnergy extends EnergyCard {
+export class VoltaicLightningEnergy extends EnergyCard {
   public provides: CardType[] = [CardType.COLORLESS];
   public energyType = EnergyType.SPECIAL;
-  public set: string = 'M5';
+  public set: string = 'PBL';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '80';
-  public name = 'Bolty [L] Energy';
+  public setNumber: string = '84';
+  public name = 'Voltaic [L] Energy';
   public fullName: string = 'Bolty [L] Energy M5';
-  public text = `As long as this card is attached to a Pokémon, it provides [L] Energy.
-
-The attacks of the [L] Pokémon this card is attached to do 20 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).`;
+  public text =
+    'As long as this card is attached to a Pokémon, it provides [L] Energy.\n\n' +
+    "Attacks used by the [L] Pokémon this card is attached to do 20 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
       try {
         const energyEffect = new EnergyEffect(effect.player, this);

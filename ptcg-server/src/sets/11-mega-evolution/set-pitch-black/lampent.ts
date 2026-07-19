@@ -19,15 +19,17 @@ export class Lampent extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Returning Lights',
-    cost: [P],
-    damage: 0,
-    text: 'Search your deck for up to 3 Lampent and put them onto your Bench.',
-  }];
+  public attacks = [
+    {
+      name: 'Spreading Light',
+      cost: [P],
+      damage: 0,
+      text: 'Search your deck for up to 3 Lampent and put them onto your Bench. Then, shuffle your deck.',
+    },
+  ];
 
-  public set: string = 'M5';
-  public setNumber: string = '35';
+  public set: string = 'PBL';
+  public setNumber: string = '37';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lampent';
@@ -44,22 +46,26 @@ export class Lampent extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-        player.deck,
-        { superType: SuperType.POKEMON, name: 'Lampent' },
-        { min: 0, max: maxPut, allowCancel: false },
-      ), selected => {
-        const cards = selected || [];
-        cards.forEach((card, index) => {
-          const slot = slots[index];
-          if (slot && card instanceof PokemonCard) {
-            store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card, slot));
-          }
-        });
-        SHUFFLE_DECK(store, state, player);
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+          player.deck,
+          { superType: SuperType.POKEMON, name: 'Lampent' },
+          { min: 0, max: maxPut, allowCancel: false },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          cards.forEach((card, index) => {
+            const slot = slots[index];
+            if (slot && card instanceof PokemonCard) {
+              store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card, slot));
+            }
+          });
+          SHUFFLE_DECK(store, state, player);
+        },
+      );
     }
 
     return state;
