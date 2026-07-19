@@ -1,0 +1,28 @@
+.badge {
+  border-radius: 8px;
+  padding: 2px 6px;
+  font-size: 8px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  color: white;
+  backdrop-filter: blur(2px);
+}
+
+.valid {
+  background-color: #4caf50;
+}
+
+.invalid {
+  background-color: #ff4444;
+}
+
+.absolute {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+}

@@ -1,0 +1,253 @@
+.page {
+  min-height: 100dvh;
+  background: #f0f1f3;
+  color: #252935;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+.header {
+  padding: 32px 24px 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.title {
+  margin: 0 0 8px;
+  font-family: 'Urbanist', system-ui, sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  color: #111;
+}
+
+.subtitle {
+  margin: 0;
+  max-width: 720px;
+  color: #555;
+  line-height: 1.5;
+}
+
+.backLink {
+  display: inline-block;
+  margin-top: 12px;
+  color: #2e7d32;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.backLink:hover {
+  text-decoration: underline;
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 24px 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: linear-gradient(#f0f1f3 70%, rgba(240, 241, 243, 0));
+  padding-bottom: 20px;
+}
+
+.tab {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #444;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.tab:hover {
+  border-color: #999;
+  color: #111;
+}
+
+.tabActive {
+  background: #252935;
+  border-color: #252935;
+  color: #fff;
+}
+
+.content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px 48px;
+}
+
+.section {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.sectionTitle {
+  margin: 0 0 6px;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.sectionDesc {
+  margin: 0 0 20px;
+  color: #666;
+  font-size: 0.92rem;
+}
+
+.group {
+  margin-bottom: 28px;
+}
+
+.group:last-child {
+  margin-bottom: 0;
+}
+
+.groupTitle {
+  margin: 0 0 6px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.groupDesc {
+  margin: 0 0 12px;
+  color: #777;
+  font-size: 0.85rem;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.formStack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 360px;
+}
+
+.formatCardsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: flex-start;
+}
+
+.formatCardFixed {
+  width: 200px;
+  max-width: 200px;
+  flex: 0 0 200px;
+}
+
+.deckGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+
+.cardFaceDemo {
+  width: 140px;
+}
+
+.energyRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+}
+
+.archetypeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
+}
+
+.avatarPlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e8e8e8;
+  color: #555;
+  font-weight: 700;
+  font-size: 0.85rem;
+  border-radius: 50%;
+}
+
+.spinnerDemo {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #ccc;
+  border-top-color: #333;
+  border-radius: 50%;
+  animation: showcaseSpin 1s linear infinite;
+}
+
+@keyframes showcaseSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.queueSamples {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 280px;
+}
+
+.darkPanel {
+  background: linear-gradient(135deg, #0a0a14 0%, #1a1a2e 100%);
+  border: 1px solid rgba(68, 144, 88, 0.2);
+  border-radius: 12px;
+  padding: 24px;
+  color: var(--twinleaf-text-primary);
+}
+
+.darkPanel .groupTitle {
+  color: #449058;
+}
+
+.darkPanel .groupDesc {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.formatTabsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.navDemo {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 16px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.trainerTypeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}

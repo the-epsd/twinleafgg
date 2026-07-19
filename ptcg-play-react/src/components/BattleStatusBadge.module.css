@@ -1,0 +1,19 @@
+.badge {
+  background: #449058;
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-block;
+}
+
+.blocked {
+  background: #ef4444;
+}
+
+.pending {
+  background: #707278;
+}
