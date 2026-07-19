@@ -174,6 +174,7 @@ export class UseAttackEffect implements Effect {
   public player: Player;
   public attack: Attack;
   public source: PokemonCardList;
+  public ignoreStatusConditions = false;
   constructor(player: Player, attack: Attack) {
     this.player = player;
     this.attack = attack;
