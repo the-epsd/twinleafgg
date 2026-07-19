@@ -16,14 +16,16 @@ export class MegaSlowbroex extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C, C];
 
-  public attacks = [{
-    name: 'Shellnado Spin',
-    cost: [P, P, P],
-    damage: 180,
-    text: 'During your opponent\'s next turn, if this Pokemon takes damage from an attack, put 12 damage counters on the Attacking Pokemon.'
-  }];
+  public attacks = [
+    {
+      name: 'Shellnado Spin',
+      cost: [P, P, P],
+      damage: 180,
+      text: "During your opponent's next turn, if this Pokemon takes damage from an attack, put 12 damage counters on the Attacking Pokemon.",
+    },
+  ];
 
-  public regulationMark = 'I';
+  public regulationMark = 'J';
   public set: string = 'MEP';
   public setNumber = '71';
   public cardImage: string = 'assets/cardback.png';
