@@ -1,5 +1,11 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, PokemonType, TrainerType } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  PokemonType,
+  TrainerType,
+  CardTag,
+} from '../../../game/store/card/card-types';
 import {
   GameError,
   GameLog,
@@ -32,6 +38,7 @@ export class AntiqueArmorFossil extends TrainerCard {
   public pokemonType = PokemonType.NORMAL;
   public evolvesFrom = '';
   public cardTag = [];
+  public tags = [CardTag.ANTIQUE];
   public tools = [];
   public evolvesTo = ['Shieldon'];
   public evolvesToStage = [];

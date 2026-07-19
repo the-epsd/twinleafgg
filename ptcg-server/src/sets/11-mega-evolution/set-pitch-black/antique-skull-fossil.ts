@@ -1,7 +1,27 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, PokemonType, TrainerType } from '../../../game/store/card/card-types';
-import { GameError, GameLog, GameMessage, Power, PowerType, State, StateUtils, StoreLike, TrainerCard, Player } from '../../../game';
-import { AddSpecialConditionsEffect, AfterDamageEffect } from '../../../game/store/effects/attack-effects';
+import {
+  Stage,
+  CardType,
+  PokemonType,
+  TrainerType,
+  CardTag,
+} from '../../../game/store/card/card-types';
+import {
+  GameError,
+  GameLog,
+  GameMessage,
+  Power,
+  PowerType,
+  State,
+  StateUtils,
+  StoreLike,
+  TrainerCard,
+  Player,
+} from '../../../game';
+import {
+  AddSpecialConditionsEffect,
+  AfterDamageEffect,
+} from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { PowerEffect, RetreatEffect } from '../../../game/store/effects/game-effects';
 import { PlayItemEffect, PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
@@ -17,6 +37,7 @@ export class AntiqueSkullFossil extends TrainerCard {
   public pokemonType = PokemonType.NORMAL;
   public evolvesFrom = '';
   public cardTag = [];
+  public tags = [CardTag.ANTIQUE];
   public tools = [];
   public evolvesTo = ['Cranidos'];
   public evolvesToStage = [];

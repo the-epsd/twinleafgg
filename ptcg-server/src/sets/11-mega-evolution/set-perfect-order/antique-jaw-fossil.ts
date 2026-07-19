@@ -1,8 +1,28 @@
-import { TrainerCard, TrainerType, Stage, CardType, PokemonType, Power, PowerType, StoreLike, State, GameLog, StateUtils, GameError, GameMessage, PokemonCard, GamePhase, Player } from '../../../game';
+import {
+  TrainerCard,
+  TrainerType,
+  Stage,
+  CardType,
+  PokemonType,
+  Power,
+  PowerType,
+  StoreLike,
+  State,
+  GameLog,
+  StateUtils,
+  GameError,
+  GameMessage,
+  GamePhase,
+  Player,
+  CardTag,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { RetreatEffect } from '../../../game/store/effects/game-effects';
-import { PlayItemEffect, PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { AddSpecialConditionsEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import { PlayItemEffect } from '../../../game/store/effects/play-card-effects';
+import {
+  AddSpecialConditionsEffect,
+  PutDamageEffect,
+} from '../../../game/store/effects/attack-effects';
 import { IS_ABILITY_BLOCKED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class AntiqueJawFossil extends TrainerCard {
@@ -14,6 +34,7 @@ export class AntiqueJawFossil extends TrainerCard {
   public pokemonType = PokemonType.NORMAL;
   public evolvesFrom = '';
   public cardTag = [];
+  public tags = [CardTag.ANTIQUE];
   public tools = [];
   public evolvesTo = [];
   public evolvesToStage = [];
@@ -29,20 +50,21 @@ export class AntiqueJawFossil extends TrainerCard {
   public evolvesFromBase: string[] = [];
   public maxTools: number = 1;
 
-  public powers: Power[] = [{
-    name: 'Antique Jaw Fossil',
-    text: 'Play this card as a 60 HP Basic [C] Pokémon. This card can\'t be affected by Special Conditions and can\'t retreat. At any time during your turn, you may discard this card from play.',
-    useWhenInPlay: true,
-    exemptFromAbilityLock: true,
-    isFossil: true,
-    powerType: PowerType.TRAINER_ABILITY
-  },
-  {
-    name: 'Intimidating Jaw',
-    powerType: PowerType.ABILITY,
-    isFossil: true,
-    text: 'As long as this Pokémon is in the Active Spot, attacks used by your opponent\'s Active Pokémon do 30 less damage (before applying Weakness and Resistance).'
-  }];
+  public powers: Power[] = [
+    {
+      name: 'Antique Jaw Fossil',
+      text: "Play this card as a 60 HP Basic [C] Pokémon. This card can't be affected by Special Conditions and can't retreat. At any time during your turn, you may discard this card from play.",
+      useWhenInPlay: true,
+      exemptFromAbilityLock: true,
+      isFossil: true,
+      powerType: PowerType.TRAINER_ABILITY,
+    },
+    {
+      name: 'Intimidating Jaw',
+      powerType: PowerType.ABILITY,
+      text: "As long as this Pokémon is in the Active Spot, attacks used by your opponent's Active Pokémon do 30 less damage (before applying Weakness and Resistance).",
+    },
+  ];
 
   public regulationMark = 'J';
   public set: string = 'POR';
@@ -52,32 +74,28 @@ export class AntiqueJawFossil extends TrainerCard {
   public fullName: string = 'Antique Jaw Fossil M3';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
-    const openSlots = player.bench.filter(b => b.cards.length === 0);
+    const openSlots = player.bench.filter((b) => b.cards.length === 0);
     if (openSlots.length === 0) {
       return false;
     }
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Discard from play
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
-      store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: this.name, effect: 'Antique Jaw Fossil' });
+      store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, {
+        name: player.name,
+        card: this.name,
+        effect: 'Antique Jaw Fossil',
+      });
       const cardList = StateUtils.findCardList(state, this);
       cardList.moveCardTo(this, player.discard);
     }
 
     // Play as Pokemon
     if (effect instanceof PlayItemEffect && effect.trainerCard === this) {
-      const player = effect.player;
-      const emptySlots = player.bench.filter(b => b.cards.length === 0);
-      if (emptySlots.length === 0) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      }
-      const playPokemonEffect = new PlayPokemonEffect(player, this as unknown as PokemonCard, emptySlots[0]);
-      store.reduceEffect(state, playPokemonEffect);
     }
 
     // Prevent retreat

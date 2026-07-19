@@ -1,5 +1,11 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, PokemonType } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  SuperType,
+  PokemonType,
+  CardTag,
+} from '../../../game/store/card/card-types';
 import {
   GameError,
   GameLog,
@@ -31,6 +37,7 @@ export class AntiqueHelixFossil extends TrainerCard {
   public pokemonType = PokemonType.NORMAL;
   public evolvesFrom = '';
   public cardTag = [];
+  public tags = [CardTag.ANTIQUE];
   public tools = [];
   public archetype = [];
   public weakness = [];
