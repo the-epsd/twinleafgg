@@ -85,7 +85,7 @@ export class SilvallyIR extends Silvally {
   public setNumber = '95';
 }
 
-// MARK: Full art Pokémon ex
+// MARK: Full art Pokémon
 
 export class LurantisexFA extends Lurantisex {
   public fullName = 'Lurantis ex FA PBL';
