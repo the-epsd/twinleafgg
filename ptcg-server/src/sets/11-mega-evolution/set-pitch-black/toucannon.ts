@@ -5,10 +5,18 @@ import { GameMessage } from '../../../game/game-message';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { DRAW_CARDS, IS_ABILITY_BLOCKED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ABILITY_USED,
+  DRAW_CARDS,
+  IS_ABILITY_BLOCKED,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  USE_ABILITY_ONCE_PER_TURN,
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Toucannon extends PokemonCard {
+  // toucan,
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Trumbeak';
   public cardType: CardType = C;
@@ -42,7 +50,7 @@ export class Toucannon extends PokemonCard {
   public readonly SKY_DRAW_MARKER = 'M5_TOUCANNON_SKYDRAW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-sword-and-shield/cinccino.ts (marker once per turn)
+    // Ref: set-sword-and-shield/cinccino.ts (marker once per turn), set-pitch-black/rampardos-ex.ts (once per turn prefabs)
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       effect.player.marker.removeMarker(this.SKY_DRAW_MARKER, this);
     }
@@ -52,27 +60,24 @@ export class Toucannon extends PokemonCard {
       if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
-      if (player.marker.hasMarker(this.SKY_DRAW_MARKER, this)) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
-      }
+      USE_ABILITY_ONCE_PER_TURN(player, this.SKY_DRAW_MARKER, this);
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       player.marker.addMarker(this.SKY_DRAW_MARKER, this);
       DRAW_CARDS(store, state, player, 1);
+      ABILITY_USED(player, this);
     }
+
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.SKY_DRAW_MARKER, this);
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      let benches = player.bench.filter(b => b.cards.length > 0).length;
-      benches += opponent.bench.filter(b => b.cards.length > 0).length;
+      let benches = player.bench.filter((b) => b.cards.length > 0).length;
+      benches += opponent.bench.filter((b) => b.cards.length > 0).length;
       effect.damage += 20 * benches;
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.SKY_DRAW_MARKER, this)) {
-      effect.player.marker.removeMarker(this.SKY_DRAW_MARKER, this);
     }
 
     return state;
