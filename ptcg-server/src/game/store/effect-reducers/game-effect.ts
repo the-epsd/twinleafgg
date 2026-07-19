@@ -122,7 +122,8 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   }
 
   const sp = player.active.specialConditions;
-  if ((sp.includes(SpecialCondition.PARALYZED) || sp.includes(SpecialCondition.ASLEEP)) && !effect.ignoreStatusConditions) {
+  const ignoreStatusConditions = effect instanceof UseAttackEffect && effect.ignoreStatusConditions;
+  if ((sp.includes(SpecialCondition.PARALYZED) || sp.includes(SpecialCondition.ASLEEP)) && !ignoreStatusConditions) {
     throw new GameError(GameMessage.BLOCKED_BY_SPECIAL_CONDITION);
   }
 
