@@ -38,7 +38,7 @@ export function cardIsSupporter(card: Card | undefined | null): boolean {
 
 /**
  * Item-style Fossils (and similar) are Trainer cards in hand but play as Basic Pokémon onto the bench.
- * Matches server cards that set `power.isFossil` on a power (see e.g. Rare Fossil, Antique Shield Fossil).
+ * Matches server cards that set `power.isFossil` on a power (see e.g. Rare Fossil, Antique Armor Fossil).
  */
 export function cardIsFossilLikeTrainer(card: Card | undefined | null): boolean {
   if (!card) {

@@ -86,9 +86,13 @@ export class PokemonCardList extends CardList {
   public getPokemons(): PokemonCard[] {
     const result: PokemonCard[] = [];
     for (const card of this.cards) {
-      if (card.superType === SuperType.POKEMON && !this.tools.includes(card) && !this.energies.cards.includes(card)) {
+      if (
+        card.superType === SuperType.POKEMON &&
+        !this.tools.includes(card) &&
+        !this.energies.cards.includes(card)
+      ) {
         result.push(card as PokemonCard);
-      } else if (card.name === 'Lillie\'s Poké Doll') {
+      } else if (card.name === "Lillie's Poké Doll") {
         result.push(card as PokemonCard);
       } else if (card.name === 'Clefairy Doll') {
         result.push(card as PokemonCard);
@@ -106,7 +110,7 @@ export class PokemonCardList extends CardList {
         result.push(card as PokemonCard);
       } else if (card.name === 'Antique Skull Fossil') {
         result.push(card as PokemonCard);
-      } else if (card.name === 'Antique Shield Fossil') {
+      } else if (card.name === 'Antique Armor Fossil') {
         result.push(card as PokemonCard);
       } else if (card.name === 'Antique Jaw Fossil') {
         result.push(card as PokemonCard);
