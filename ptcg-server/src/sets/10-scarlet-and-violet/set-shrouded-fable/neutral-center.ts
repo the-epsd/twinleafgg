@@ -7,34 +7,22 @@ import { Effect } from '../../../game/store/effects/effect';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 
 export class NeutralCenter extends TrainerCard {
-
   public trainerType = TrainerType.STADIUM;
-
   public tags = [CardTag.ACE_SPEC];
-
   public set = 'SFA';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '60';
-
   public regulationMark = 'H';
-
   public name = 'Neutralization Zone';
-
   public fullName = 'Neutralization Zone SFA';
 
-  public text = `Prevent all damage done to Pokémon that don't have a Rule Box (both yours and your opponent's) by attacks from the opponent's Pokémon ex and Pokémon V. (Pokémon ex, Pokémon V, etc. have Rule Boxes.)
-
-This card can't be put into your hand or deck from the discard pile. `;
+  public text =
+    "Prevent all damage done to Pokémon that don't have a Rule Box (both yours and your opponent's) by attacks from the opponent's Pokémon ex and Pokémon V. (Pokémon ex, Pokémon V, etc. have Rule Boxes.)\n\n" +
+    "This card can't be put into your hand or deck from the discard pile. ";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // Prevent damage from Pokemon V and ex
     if (effect instanceof PutDamageEffect && StateUtils.getStadiumCard(state) === this) {
-      const pokemonCard = effect.target.getPokemonCard();
-      const sourceCard = effect.source.getPokemonCard();
-
       // Do not ignore self-damage from Pokemon-Ex
       const player = StateUtils.findOwner(state, effect.target);
       const opponent = StateUtils.findOwner(state, effect.source);
@@ -48,72 +36,9 @@ This card can't be put into your hand or deck from the discard pile. `;
         return state;
       }
 
-      const nonRuleBox = pokemonCard && !pokemonCard.tags.includes(CardTag.POKEMON_ex) && !pokemonCard.tags.includes(CardTag.POKEMON_V) && !pokemonCard.tags.includes(CardTag.POKEMON_VMAX) && !pokemonCard.tags.includes(CardTag.POKEMON_VSTAR);
-
-      if (sourceCard && sourceCard.tags.includes(CardTag.POKEMON_V)) {
-        if (nonRuleBox) {
-          effect.preventDefault = true;
-        } else {
-          effect.preventDefault = false;
-        }
+      if ((effect.source.vPokemon() || effect.source.exPokemon()) && !effect.target.hasRuleBox()) {
+        effect.preventDefault = true;
       }
-
-      if (sourceCard && sourceCard.tags.includes(CardTag.POKEMON_VSTAR)) {
-        if (nonRuleBox) {
-          effect.preventDefault = true;
-        }
-      } else {
-        effect.preventDefault = false;
-      }
-
-      if (sourceCard && sourceCard.tags.includes(CardTag.POKEMON_VMAX)) {
-        if (nonRuleBox) {
-          effect.preventDefault = true;
-        } else {
-          effect.preventDefault = false;
-        }
-      }
-
-      if (sourceCard && sourceCard.tags.includes(CardTag.POKEMON_ex)) {
-        if (nonRuleBox) {
-          effect.preventDefault = true;
-        } else {
-          effect.preventDefault = false;
-        }
-      }
-
-      if (sourceCard && sourceCard.tags.includes(CardTag.RADIANT)) {
-        if (nonRuleBox) {
-          effect.preventDefault = true;
-        } else {
-          effect.preventDefault = false;
-        }
-      }
-
-      if (sourceCard && sourceCard.tags.includes(CardTag.POKEMON_EX)) {
-        if (nonRuleBox) {
-          effect.preventDefault = true;
-        } else {
-          effect.preventDefault = false;
-        }
-      }
-
-      if (sourceCard && sourceCard.tags.includes(CardTag.POKEMON_GX)) {
-        if (nonRuleBox) {
-          effect.preventDefault = true;
-        } else {
-          effect.preventDefault = false;
-        }
-      }
-
-      if (sourceCard && sourceCard.tags.includes(CardTag.POKEMON_LV_X)) {
-        if (nonRuleBox) {
-          effect.preventDefault = true;
-        } else {
-          effect.preventDefault = false;
-        }
-      }
-
       return state;
     }
     return state;

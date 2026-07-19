@@ -14,7 +14,6 @@ export interface PreventDamageFilter {
 }
 
 export class PokemonCardList extends CardList {
-
   public damage: number = 0;
   public hp: number = 0;
   public specialConditions: SpecialCondition[] = [];
@@ -52,7 +51,6 @@ export class PokemonCardList extends CardList {
   public blockedAttackNameNextTurn: string | undefined = undefined;
   public _preservedConditionsDuringEvolution?: SpecialCondition[];
 
-
   public static readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public static readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
   public static readonly CLEAR_KNOCKOUT_MARKER = 'CLEAR_KNOCKOUT_MARKER';
@@ -60,25 +58,44 @@ export class PokemonCardList extends CardList {
   public static readonly KNOCKOUT_MARKER = 'KNOCKOUT_MARKER';
   public static readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'NEXT_TURN_MORE_DAMAGE_MARKER';
   public static readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';
-  public static readonly PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN = 'PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN';
-  public static readonly CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN = 'CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN';
-  public static readonly PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN = 'PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN';
-  public static readonly CLEAR_PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN = 'CLEAR_PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN';
-  public static readonly OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER = 'OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER';
-  public static readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
-  public static readonly PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
-  public static readonly CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
-  public static readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
-  public static readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
-  public static readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
-  public static readonly DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER';
-  public static readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER';
-  public static readonly PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER: string = 'PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER';
-  public static readonly CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER: string = 'CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER';
-  public static readonly PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER = 'PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER';
-  public static readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
-  public static readonly PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER = 'PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER';
-  public static readonly CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER = 'CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER';
+  public static readonly PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN =
+    'PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN';
+  public static readonly CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN =
+    'CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN';
+  public static readonly PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN =
+    'PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN';
+  public static readonly CLEAR_PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN =
+    'CLEAR_PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN';
+  public static readonly OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER =
+    'OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER';
+  public static readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER =
+    'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
+  public static readonly PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER =
+    'PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
+  public static readonly CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER =
+    'CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
+  public static readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER =
+    'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
+  public static readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER =
+    'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
+  public static readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER =
+    'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
+  public static readonly DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER =
+    'DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER';
+  public static readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER =
+    'CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER';
+  public static readonly PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER: string =
+    'PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER';
+  public static readonly CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER: string =
+    'CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER';
+  public static readonly PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER =
+    'PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER';
+  public static readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER =
+    'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
+  public static readonly PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER =
+    'PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER';
+  public static readonly CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER =
+    'CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER';
 
   public static readonly UNRELENTING_ONSLAUGHT_MARKER = 'UNRELENTING_ONSLAUGHT_MARKER';
   public static readonly UNRELENTING_ONSLAUGHT_2_MARKER = 'UNRELENTING_ONSLAUGHT_2_MARKER';
@@ -209,10 +226,10 @@ export class PokemonCardList extends CardList {
       SpecialCondition.ASLEEP,
       SpecialCondition.BURNED,
       SpecialCondition.CONFUSED,
-      SpecialCondition.PARALYZED
-    ].filter(condition => !preservedConditions.includes(condition));
+      SpecialCondition.PARALYZED,
+    ].filter((condition) => !preservedConditions.includes(condition));
 
-    conditionsToRemove.forEach(condition => {
+    conditionsToRemove.forEach((condition) => {
       this.removeSpecialCondition(condition);
     });
 
@@ -254,8 +271,7 @@ export class PokemonCardList extends CardList {
     if (!this.specialConditions.includes(sp)) {
       return;
     }
-    this.specialConditions = this.specialConditions
-      .filter(s => s !== sp);
+    this.specialConditions = this.specialConditions.filter((s) => s !== sp);
   }
 
   addSpecialCondition(sp: SpecialCondition): void {
@@ -275,11 +291,12 @@ export class PokemonCardList extends CardList {
       this.specialConditions.push(sp);
       return;
     }
-    this.specialConditions = this.specialConditions.filter(s => [
-      SpecialCondition.PARALYZED,
-      SpecialCondition.CONFUSED,
-      SpecialCondition.ASLEEP,
-    ].includes(s) === false);
+    this.specialConditions = this.specialConditions.filter(
+      (s) =>
+        [SpecialCondition.PARALYZED, SpecialCondition.CONFUSED, SpecialCondition.ASLEEP].includes(
+          s,
+        ) === false,
+    );
     this.specialConditions.push(sp);
   }
 
@@ -287,86 +304,93 @@ export class PokemonCardList extends CardList {
     if (!this.boardEffect.includes(sp)) {
       return;
     }
-    this.boardEffect = this.boardEffect
-      .filter(s => s !== sp);
+    this.boardEffect = this.boardEffect.filter((s) => s !== sp);
   }
 
   addBoardEffect(sp: BoardEffect): void {
     if (this.boardEffect.includes(sp)) {
       return;
     }
-    this.boardEffect = this.boardEffect.filter(s => [
-      BoardEffect.ABILITY_USED,
-      BoardEffect.POWER_GLOW,
-      BoardEffect.POWER_NEGATED_GLOW,
-      BoardEffect.POWER_RETURN,
-    ].includes(s) === false);
+    this.boardEffect = this.boardEffect.filter(
+      (s) =>
+        [
+          BoardEffect.ABILITY_USED,
+          BoardEffect.POWER_GLOW,
+          BoardEffect.POWER_NEGATED_GLOW,
+          BoardEffect.POWER_RETURN,
+        ].includes(s) === false,
+    );
     this.boardEffect.push(sp);
   }
-
 
   //Rule-Box Pokemon
 
   hasRuleBox(): boolean {
-    return this.cards.some(c => c.tags.includes(CardTag.POKEMON_ex) || c.tags.includes(CardTag.RADIANT) || c.tags.includes(CardTag.POKEMON_V) || c.tags.includes(CardTag.POKEMON_VMAX) || c.tags.includes(CardTag.POKEMON_VSTAR) || c.tags.includes(CardTag.POKEMON_GX) || c.tags.includes(CardTag.PRISM_STAR) || c.tags.includes(CardTag.BREAK) || c.tags.includes(CardTag.POKEMON_SV_MEGA) || c.tags.includes(CardTag.LEGEND) || c.tags.includes(CardTag.POKEMON_LV_X) || c.tags.includes(CardTag.POKEMON_VUNION) || c.tags.includes(CardTag.TAG_TEAM) || c.tags.includes(CardTag.MEGA) || c.tags.includes(CardTag.POKEMON_EX));
+    return this.cards.some((c) => c.hasRuleBox());
   }
 
   vPokemon(): boolean {
-    return this.cards.some(c => c.tags.includes(CardTag.POKEMON_V) || c.tags.includes(CardTag.POKEMON_VMAX) || c.tags.includes(CardTag.POKEMON_VSTAR) || c.tags.includes(CardTag.POKEMON_VUNION));
+    return this.cards.some(
+      (c) =>
+        c.tags.includes(CardTag.POKEMON_V) ||
+        c.tags.includes(CardTag.POKEMON_VMAX) ||
+        c.tags.includes(CardTag.POKEMON_VSTAR) ||
+        c.tags.includes(CardTag.POKEMON_VUNION),
+    );
   }
 
   exPokemon(): boolean {
-    return this.cards.some(c => c.tags.includes(CardTag.POKEMON_ex));
+    return this.cards.some((c) => c.tags.includes(CardTag.POKEMON_ex));
   }
 
   isTera(): boolean {
-    return this.cards.some(c => c.tags.includes(CardTag.POKEMON_TERA));
+    return this.cards.some((c) => c.tags.includes(CardTag.POKEMON_TERA));
   }
 
   //Single/Rapid/Fusion Strike
 
   singleStrikePokemon(): boolean {
-    return this.cards.some(c => c.tags.includes(CardTag.SINGLE_STRIKE));
+    return this.cards.some((c) => c.tags.includes(CardTag.SINGLE_STRIKE));
   }
 
   rapidStrikePokemon(): boolean {
-    return this.cards.some(c => c.tags.includes(CardTag.RAPID_STRIKE));
+    return this.cards.some((c) => c.tags.includes(CardTag.RAPID_STRIKE));
   }
 
   fusionStrikePokemon(): boolean {
-    return this.cards.some(c => c.tags.includes(CardTag.FUSION_STRIKE));
+    return this.cards.some((c) => c.tags.includes(CardTag.FUSION_STRIKE));
   }
 
   //Future/Ancient
 
   futurePokemon(): boolean {
-    return this.cards.some(c => c.tags.includes(CardTag.FUTURE));
+    return this.cards.some((c) => c.tags.includes(CardTag.FUTURE));
   }
 
   ancientPokemon(): boolean {
-    return this.cards.some(c => c.tags.includes(CardTag.ANCIENT));
+    return this.cards.some((c) => c.tags.includes(CardTag.ANCIENT));
   }
 
   //Trainer Pokemon
 
   isLillies(): boolean {
-    return this.cards.some(c => c.tags.includes(CardTag.LILLIES));
+    return this.cards.some((c) => c.tags.includes(CardTag.LILLIES));
   }
 
   isNs(): boolean {
-    return this.cards.some(c => c.tags.includes(CardTag.NS));
+    return this.cards.some((c) => c.tags.includes(CardTag.NS));
   }
 
   isIonos(): boolean {
-    return this.cards.some(c => c.tags.includes(CardTag.IONOS));
+    return this.cards.some((c) => c.tags.includes(CardTag.IONOS));
   }
 
   isHops(): boolean {
-    return this.cards.some(c => c.tags.includes(CardTag.HOPS));
+    return this.cards.some((c) => c.tags.includes(CardTag.HOPS));
   }
 
   isEthans(): boolean {
-    return this.cards.some(c => c.tags.includes(CardTag.ETHANS));
+    return this.cards.some((c) => c.tags.includes(CardTag.ETHANS));
   }
 
   getToolEffect(): Power | Attack | undefined {
@@ -459,7 +483,8 @@ export class PokemonCardList extends CardList {
             destination.cards.push(card[0]);
             // If destination is a PokemonCardList and card is an energy card, add to energies.cards
             if (destination instanceof PokemonCardList) {
-              const isEnergyCard = card[0].superType === SuperType.ENERGY || (card[0] as any).energyType !== undefined;
+              const isEnergyCard =
+                card[0].superType === SuperType.ENERGY || (card[0] as any).energyType !== undefined;
               if (isEnergyCard && !destination.energies.cards.includes(card[0])) {
                 destination.energies.cards.push(card[0]);
               }

@@ -1,4 +1,4 @@
-import { CardType, EnergyType, Format, SuperType } from './card-types';
+import { CardTag, CardType, EnergyType, Format, SuperType } from './card-types';
 import { Effect } from '../effects/effect';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
@@ -8,7 +8,6 @@ import { Attack, Power } from './pokemon-types';
 import { Player } from '../state/player';
 
 export abstract class Card {
-
   public abstract set: string;
 
   public abstract superType: SuperType;
@@ -39,7 +38,7 @@ export abstract class Card {
 
   static tags: any;
 
-  public cards: CardList = new CardList;
+  public cards: CardList = new CardList();
 
   public marker = new Marker();
 
@@ -54,10 +53,28 @@ export abstract class Card {
    * Optional check for useFromHandToBench abilities (Excitedive, Swelling Flash, etc.).
    * Assumes bench space and ability-lock are checked by the caller.
    */
-  public canUseFromHandToBench?(store: StoreLike, state: State, player: Player): boolean | undefined;
+  public canUseFromHandToBench?(
+    store: StoreLike,
+    state: State,
+    player: Player,
+  ): boolean | undefined;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     return state;
   }
 
+  public hasRuleBox() {
+    return (
+      (this.tags.includes(CardTag.POKEMON_ex) && this.regulationMark) || // Gen 3-era ex do not have a Rule box. Separate Mega ex check not necessary
+      this.tags.includes(CardTag.POKEMON_V) ||
+      this.tags.includes(CardTag.POKEMON_VMAX) ||
+      this.tags.includes(CardTag.POKEMON_VSTAR) ||
+      this.tags.includes(CardTag.POKEMON_VUNION) ||
+      this.tags.includes(CardTag.POKEMON_GX) || // All rule box TAG TEAM mons are Pokémon-GX so an extra check is not necessary
+      this.tags.includes(CardTag.POKEMON_EX) || // Same with M EX/Primals/etc.
+      this.tags.includes(CardTag.BREAK) ||
+      this.tags.includes(CardTag.PRISM_STAR) ||
+      this.tags.includes(CardTag.RADIANT)
+    );
+  }
 }

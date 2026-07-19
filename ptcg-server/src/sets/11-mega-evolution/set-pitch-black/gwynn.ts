@@ -4,30 +4,11 @@ import { GameMessage } from '../../../game/game-message';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { CardTag, TrainerType } from '../../../game/store/card/card-types';
+import { TrainerType } from '../../../game/store/card/card-types';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
-
-function pokemonCardHasRuleBox(card: PokemonCard): boolean {
-  return (
-    card.tags.includes(CardTag.POKEMON_ex) ||
-    card.tags.includes(CardTag.POKEMON_EX) ||
-    card.tags.includes(CardTag.POKEMON_V) ||
-    card.tags.includes(CardTag.POKEMON_VMAX) ||
-    card.tags.includes(CardTag.POKEMON_VSTAR) ||
-    card.tags.includes(CardTag.POKEMON_VUNION) ||
-    card.tags.includes(CardTag.POKEMON_GX) ||
-    card.tags.includes(CardTag.TAG_TEAM) ||
-    card.tags.includes(CardTag.POKEMON_LV_X) ||
-    card.tags.includes(CardTag.BREAK) ||
-    card.tags.includes(CardTag.PRISM_STAR) ||
-    card.tags.includes(CardTag.MEGA) ||
-    card.tags.includes(CardTag.POKEMON_SV_MEGA) ||
-    card.tags.includes(CardTag.RADIANT)
-  );
-}
 
 function* playGwynn(
   next: Function,
@@ -40,7 +21,7 @@ function* playGwynn(
 
   const blocked: number[] = [];
   player.hand.cards.forEach((c, i) => {
-    if (!(c instanceof PokemonCard) || pokemonCardHasRuleBox(c)) {
+    if (!(c instanceof PokemonCard) || c.hasRuleBox()) {
       blocked.push(i);
     }
   });
@@ -88,7 +69,7 @@ export class Gwynn extends TrainerCard {
     }
     const blocked: number[] = [];
     player.hand.cards.forEach((c, i) => {
-      if (!(c instanceof PokemonCard) || pokemonCardHasRuleBox(c)) {
+      if (!(c instanceof PokemonCard) || c.hasRuleBox()) {
         blocked.push(i);
       }
     });
