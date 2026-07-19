@@ -75,3 +75,36 @@ export function resolveLegendAssemblyBenchTarget(player: Player): CardTarget | n
     index: emptyBench,
   };
 }
+
+/** Map play + partner hand indices to top/bottom LEGEND halves. */
+export function resolveLegendAssemblyHalfHandIndices(
+  handCards: readonly Card[],
+  playHandIndex: number,
+  partnerHandIndex: number,
+): { topIndex: number; bottomIndex: number } | null {
+  const playCard = handCards[playHandIndex];
+  const partnerCard = handCards[partnerHandIndex];
+  if (!playCard || !partnerCard || !isMatchingLegendHalf(playCard, partnerCard)) {
+    return null;
+  }
+
+  const playIsTop = playCard.fullName.includes('(Top)');
+  const partnerIsTop = partnerCard.fullName.includes('(Top)');
+  if (playIsTop && !partnerIsTop) {
+    return { topIndex: playHandIndex, bottomIndex: partnerHandIndex };
+  }
+  if (partnerIsTop && !playIsTop) {
+    return { topIndex: partnerHandIndex, bottomIndex: playHandIndex };
+  }
+
+  const halves = getDualLegendHalvesInHand(handCards, playCard);
+  if (halves.length < 2) {
+    return null;
+  }
+  const topIndex = handCards.indexOf(halves[0]);
+  const bottomIndex = handCards.indexOf(halves[1]);
+  if (topIndex < 0 || bottomIndex < 0) {
+    return null;
+  }
+  return { topIndex, bottomIndex };
+}
