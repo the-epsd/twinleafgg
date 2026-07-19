@@ -958,6 +958,100 @@ export function TAKE_X_MORE_PRIZE_CARDS(effect: KnockOutEffect, state: State) {
   return state;
 }
 
+export interface TakeMorePrizesOnKnockOutOptions {
+  /** Only award bonus prizes if this attack was used (via state.playerLastAttack). */
+  attackName?: string;
+  /** Check IS_ABILITY_BLOCKED on the attacker before awarding (for Abilities like Overflow). */
+  checkAbilityBlocked?: boolean;
+  /** Extra validation after standard checks pass. */
+  validate?: (
+    store: StoreLike,
+    state: State,
+    effect: KnockOutEffect,
+    attacker: Player,
+    knockedOutOwner: Player,
+  ) => boolean;
+  /** Number of extra prizes to award (default 1). */
+  extraPrizes?: number;
+}
+
+/**
+ * If your opponent's Pokemon is Knocked Out by damage from an attack of this Pokemon,
+ * take more Prize card(s). Valid for Active or Bench KOs.
+ *
+ * Use `attackName` for attack-specific bonus prizes (uses playerLastAttack, not boolean flags).
+ * Use `checkAbilityBlocked` for Ability-based versions (e.g. Lugia-EX Overflow).
+ */
+export function IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES(
+  store: StoreLike,
+  state: State,
+  effect: Effect,
+  source: PokemonCard,
+  options: TakeMorePrizesOnKnockOutOptions = {},
+): State {
+  if (!(effect instanceof KnockOutEffect)) {
+    return state;
+  }
+
+  const {
+    attackName,
+    checkAbilityBlocked = false,
+    validate,
+    extraPrizes = 1,
+  } = options;
+
+  const knockedOutOwner = effect.player;
+  const attacker = StateUtils.getOpponent(state, knockedOutOwner);
+
+  const isDefendingPokemon = knockedOutOwner.active === effect.target ||
+    knockedOutOwner.bench.includes(effect.target);
+
+  if (!isDefendingPokemon) {
+    return state;
+  }
+
+  if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== attacker) {
+    return state;
+  }
+
+  if (!knockedOutOwner.marker.hasMarker(knockedOutOwner.DAMAGE_DEALT_MARKER)) {
+    return state;
+  }
+
+  const lastAttackInfo = state.playerLastAttack?.[attacker.id];
+  if (!lastAttackInfo || lastAttackInfo.sourceCard !== source) {
+    return state;
+  }
+
+  if (attackName !== undefined && lastAttackInfo.attack.name !== attackName) {
+    return state;
+  }
+
+  if (checkAbilityBlocked && IS_ABILITY_BLOCKED(store, state, attacker, source)) {
+    return state;
+  }
+
+  if (validate && !validate(store, state, effect, attacker, knockedOutOwner)) {
+    return state;
+  }
+
+  if (effect.prizeCount > 0) {
+    effect.prizeCount += extraPrizes;
+  }
+
+  return state;
+}
+
+/** Delta Plus Ancient Trait: take 1 more Prize card when you KO an opponent's Pokemon with this Pokemon's attack. */
+export function DELTA_PLUS(
+  store: StoreLike,
+  state: State,
+  effect: Effect,
+  source: PokemonCard,
+): State {
+  return IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES(store, state, effect, source);
+}
+
 export function PLAY_POKEMON_FROM_HAND_TO_BENCH(
   state: State,
   player: Player,
