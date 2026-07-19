@@ -25,7 +25,6 @@ function pokemonCardHasRuleBox(card: PokemonCard): boolean {
     card.tags.includes(CardTag.PRISM_STAR) ||
     card.tags.includes(CardTag.MEGA) ||
     card.tags.includes(CardTag.POKEMON_SV_MEGA) ||
-    card.tags.includes(CardTag.LEGEND) ||
     card.tags.includes(CardTag.RADIANT)
   );
 }
