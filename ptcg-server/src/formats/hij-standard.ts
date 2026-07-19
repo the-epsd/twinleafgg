@@ -10,7 +10,7 @@ import { getPrintingReleaseDate } from '../game/format/printing-release-date';
 import { SetReleaseDates } from '../backend/controllers/decks';
 
 export class HIJStandard extends ConstructedFormat {
-  name = 'Standard';
+  name = 'HIJ Standard';
   shortName = 'TEF-on';
   fullName = 'HIJ Standard';
 
@@ -37,7 +37,6 @@ export class HIJStandard extends ConstructedFormat {
       !!setDate &&
       setDate <= new Date()
     );
-    // TODO: handle reprints
   }
 
   isDeckLegal(deck: Card[]): boolean {

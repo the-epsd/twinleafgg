@@ -1,17 +1,22 @@
 import { Card } from '../card/card';
 import { Stage } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
-import { AT_LEAST_ONE_BASIC, COUNT_CARDS_IN_DECK } from '../prefabs/formats';
+import { AT_LEAST_ONE_BASIC, CARD_TEXT_IDENTICAL, COUNT_CARDS_IN_DECK } from '../prefabs/formats';
+import { FLIP_UNTIL_TAILS_AND_COUNT_HEADS } from '../prefabs/prefabs';
 import { Erratum, GameplayRule } from './format-types';
 
 type CardNameAndSet = { name: string; set: string; setNumber: string };
 
+/**
+ * Base class for all formats.
+ */
 export abstract class Format {
   public abstract name: string; // Display name, e.g. "2010 Worlds"
   public shortName: string = ''; // Use for set span identifiers where appropriate, e.g. "DP-UL"
   public abstract fullName: string; // Database identifier. Do not change these!
 
-  public deckSize = 60;
+  public minimumDeckSize = 60;
+  public maximumDeckSize = 60;
   public numPrizeCards = 6;
 
   public gameplayRules: GameplayRule[] = [
@@ -26,15 +31,49 @@ export abstract class Format {
  * A format where players build their own decks according to certain rules.
  */
 export abstract class ConstructedFormat extends Format {
+  constructor() {
+    super();
+
+    // For every card on the client
+    // call isCardLegal
+    // if yes, safely add to legalCards
+  }
+
   /**
    * Returns `true` if the provided card is legal in this format, `false` otherwise.
+   * This should only be used on init, and its results cached in legalCards. Use validateCard() to check if a card is legal during runtime.
    * @param card The card to check
    */
-  public abstract isCardLegal(card: Card): boolean;
+  abstract isCardLegal(card: Card): boolean;
+
+  /**
+   * Returns `true` if the provided card is legal in this format, `false` otherwise. Handles reprints.
+   * @param card The card to check
+   */
+  public validateCard(card: Card): boolean {
+    var isLegal = true;
+
+    // Firstly, if there aren't any cards with the same name in this format, we can just say no
+    var cardsWithSameNameInThisFormat = this.legalCards.get(card.name) || [];
+    if (cardsWithSameNameInThisFormat.length == 0) return false;
+
+    // If there *is* a hit and this card isn't a Pokémon we can just return true at this point
+    if (!(card instanceof PokemonCard)) return true;
+
+    isLegal = false;
+    // If there are matches, for each card in samename, check if they're the exact same card.
+    // If it's not yet a hit, check if the
+    for (let checkCard of cardsWithSameNameInThisFormat) {
+      isLegal ||= card.fullName == checkCard.fullName;
+      isLegal ||= CARD_TEXT_IDENTICAL(card, checkCard as PokemonCard);
+    }
+
+    return isLegal;
+  }
 
   /**
    * Returns `true` if the provided list of cards is a legal deck in this format, `false` otherwise.
-   * @param deck
+   * @param deck The deck to check
    */
   public isDeckLegal(deck: Card[]): boolean {
     // null is not legal
@@ -43,16 +82,25 @@ export abstract class ConstructedFormat extends Format {
     var isLegal = true;
 
     // Deck size check
-    isLegal &&= deck.length == this.deckSize;
+    isLegal &&= deck.length >= this.minimumDeckSize;
+    isLegal &&= deck.length <= this.maximumDeckSize;
 
     // Card legality check
     for (let card of deck) {
-      isLegal &&= this.isCardLegal(card);
+      isLegal &&= this.validateCard(card);
     }
 
     return isLegal;
   }
 
+  /**
+   * Precomputed list of legal cards in this format.
+   */
+  legalCards: Map<string, Card[]> = new Map();
+
+  /**
+   * Convenience list to disallow specific cards at a more granular level.
+   */
   banlist: CardNameAndSet[] = []; // For convenience's sake
 
   /**

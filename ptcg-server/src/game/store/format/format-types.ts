@@ -25,6 +25,7 @@ export enum GameplayRule {
   PRE_SUMO_BURN = 'Burn: 20 damage on tails, not cured',
 
   SAME_STADIUM_PLAY = 'Can play Stadiums with the same name',
+  UNLIMITED_STADIUMS = 'Can play an unlimited number of Stadiums per turn',
 
   UNLIMITED_RETREAT = 'Unlimited retreats per turn',
 
@@ -50,9 +51,9 @@ export enum Erratum {
   GREAT_BALL_TOP_7 = 'Great Ball finds a Pokémon from the top 7 cards of your deck',
   POKEMON_CATCHER_COIN_FLIP = 'Pokémon Catcher requires a coin flip',
   ENERGY_RETRIEVAL_UP_TO_2 = 'Energy Retrieval may return less than 2 cards',
-  PAL_PAD_UP_TO_2 = 'Pal Pad may shuffle in less 2 cards',
+  PAL_PAD_UP_TO_2 = 'Pal Pad may shuffle in less than 2 cards',
   ENERGY_RECYCLER_UP_TO_5 = 'Energy Recycler may shuffle in less than 5 cards',
-  SACRED_ASH_UP_TO_5 = 'Sacred Ash may shuffle in less 5 cards',
+  SACRED_ASH_UP_TO_5 = 'Sacred Ash may shuffle in less than 5 cards',
   LUM_BERRY_END_OF_TURN = 'Lum Berry triggers at the end of turn before Pokémon Checkup',
   SITRUS_BERRY_END_OF_TURN = 'Sitrus Berry triggers at the end of turn before Pokémon Checkup',
   HYPER_POTION_HEALS_120 = 'Hyper Potion heals 120 damage from a Pokémon and always discards 2 Energy',

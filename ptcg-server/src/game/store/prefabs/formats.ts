@@ -12,8 +12,67 @@ type DeckCounts = {
   basicUnownCount: number;
 };
 
-function defaultValue(value: number | undefined): number {
-  return value !== undefined ? value : 0;
+function compareArrayContents(array: Array<any>, other: Array<any>) {
+  return array.length == other.length && array.sort().toString() == other.sort().toString();
+}
+
+export function CARD_TEXT_IDENTICAL(card: PokemonCard, other: PokemonCard): boolean {
+  var isIdentical = true;
+
+  isIdentical &&= card.name == other.name;
+  isIdentical &&= card.stage == other.stage;
+  isIdentical &&= card.evolvesFrom == other.evolvesFrom;
+  isIdentical &&= card.cardType == other.cardType;
+
+  // Weakness
+  isIdentical &&= card.weakness.length == other.weakness.length;
+  if (isIdentical) {
+    for (var i in card.weakness) {
+      isIdentical &&= card.weakness[i].type == other.weakness[i].type;
+      isIdentical &&= card.weakness[i].value == other.weakness[i].value;
+    }
+  }
+
+  // Resistance
+  isIdentical &&= card.resistance.length == other.resistance.length;
+  if (isIdentical) {
+    for (var i in card.resistance) {
+      isIdentical &&= card.resistance[i].type == other.resistance[i].type;
+      isIdentical &&= card.resistance[i].value == other.resistance[i].value;
+    }
+  }
+
+  isIdentical &&= compareArrayContents(card.retreat, other.retreat);
+
+  // Card tags
+  isIdentical &&= compareArrayContents(card.cardTag, other.cardTag);
+
+  // Powers
+  isIdentical &&= card.powers.length == other.powers.length;
+  if (isIdentical) {
+    for (var i in card.powers) {
+      isIdentical &&= card.powers[i].name == other.powers[i].name;
+      isIdentical &&= card.powers[i].powerType == other.powers[i].powerType;
+      isIdentical &&= card.powers[i].text == other.powers[i].text;
+    }
+  }
+
+  // Attacks
+  isIdentical &&= card.attacks.length == other.attacks.length;
+  if (isIdentical) {
+    for (var i in card.attacks) {
+      isIdentical &&= card.attacks[i].name == other.attacks[i].name;
+      isIdentical &&= card.attacks[i].damage == other.attacks[i].damage;
+      isIdentical &&= card.attacks[i].damageCalculation == other.attacks[i].damageCalculation;
+      isIdentical &&= card.attacks[i].text == other.attacks[i].text;
+      isIdentical &&= compareArrayContents(card.attacks[i].cost, other.attacks[i].cost);
+    }
+  }
+
+  // Game effect
+  isIdentical &&= card.reduceEffect == other.reduceEffect;
+
+  return isIdentical;
 }
 
 export function COUNT_CARDS_IN_DECK(deck: Card[]): DeckCounts {
@@ -33,13 +92,13 @@ export function COUNT_CARDS_IN_DECK(deck: Card[]): DeckCounts {
       if (card.tags.includes(CardTag.PRISM_STAR))
         deckCounts.prismStarCounts.set(
           card.name,
-          defaultValue(deckCounts.prismStarCounts.get(card.name)) + 1,
+          (deckCounts.prismStarCounts.get(card.name) || 0) + 1,
         );
-      else deckCounts.counts.set(card.name, defaultValue(deckCounts.counts.get(card.name)) + 1);
+      else deckCounts.counts.set(card.name, (deckCounts.counts.get(card.name) || 0) + 1);
 
       // Tag count
       for (let tag of card.tags) {
-        deckCounts.tagCounts.set(tag, defaultValue(deckCounts.tagCounts.get(tag)) + 1);
+        deckCounts.tagCounts.set(tag, (deckCounts.tagCounts.get(tag) || 0) + 1);
       }
 
       // Pokémon-specific counts
@@ -49,15 +108,13 @@ export function COUNT_CARDS_IN_DECK(deck: Card[]): DeckCounts {
         // Count number of Pokémon types
         deckCounts.typeCounts.set(
           card.cardType,
-          defaultValue(deckCounts.typeCounts.get(card.cardType)) + 1,
+          (deckCounts.typeCounts.get(card.cardType) || 0) + 1,
         );
-        if (card.additionalCardTypes != undefined) {
-          for (let additionalType of card.additionalCardTypes) {
-            deckCounts.typeCounts.set(
-              additionalType,
-              defaultValue(deckCounts.typeCounts.get(additionalType)) + 1,
-            );
-          }
+        for (let additionalType of card.additionalCardTypes || []) {
+          deckCounts.typeCounts.set(
+            additionalType,
+            (deckCounts.typeCounts.get(additionalType) || 0) + 1,
+          );
         }
 
         // Basic count
@@ -80,11 +137,11 @@ export function CHECK_MAX_COUNTS(deckCounts: DeckCounts, maxCopies: number = 4):
   var isLegal = true;
 
   // Neo Unown check -- if any Neo-era Unown are in the deck, all Basics with Unown get counted together
-  const hasNeoUnown = defaultValue(deckCounts.tagCounts.get(CardTag.UNOWN)) >= 1;
+  const hasNeoUnown = (deckCounts.tagCounts.get(CardTag.UNOWN) || 0) >= 1;
   isLegal &&= !(hasNeoUnown || deckCounts.basicUnownCount > 4);
 
   // Platinum Arceus check -- if any Arceus AR are in the deck, don't check Arceus
-  const hasPlatinumArceus = defaultValue(deckCounts.tagCounts.get(CardTag.ARCEUS)) >= 1;
+  const hasPlatinumArceus = (deckCounts.tagCounts.get(CardTag.ARCEUS) || 0) >= 1;
 
   // Check that each named non-Basic Energy card has an allowed number of cards.
   // Except Arceus, if Platinum Arceus are in the deck.
@@ -96,8 +153,8 @@ export function CHECK_MAX_COUNTS(deckCounts: DeckCounts, maxCopies: number = 4):
   for (let [_, count] of deckCounts.prismStarCounts) isLegal &&= count <= 1;
 
   // ACE SPEC, Radiant check
-  isLegal &&= defaultValue(deckCounts.tagCounts.get(CardTag.ACE_SPEC)) <= 1;
-  isLegal &&= defaultValue(deckCounts.tagCounts.get(CardTag.RADIANT)) <= 1;
+  isLegal &&= (deckCounts.tagCounts.get(CardTag.ACE_SPEC) || 0) <= 1;
+  isLegal &&= (deckCounts.tagCounts.get(CardTag.RADIANT) || 0) <= 1;
 
   return isLegal;
 }
