@@ -1,29 +1,28 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GamePhase } from '../../../game';
+import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { KnockOutEffect } from '../../../game/store/effects/game-effects';
-import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES, MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Guzzlord extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType = D;
   public hp: number = 150;
   public tags = [CardTag.ULTRA_BEAST];
-  public weakness = [{ type: CardType.FIGHTING }];
-  public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public resistance = [{ type: P, value: -20 }];
+  public retreat = [C, C, C, C];
 
   public attacks = [{
     name: 'Mountain Munch',
-    cost: [CardType.DARK],
+    cost: [D],
     damage: 0,
     text: 'Discard the top card of your opponent\'s deck.'
   },
   {
     name: 'Red Banquet',
-    cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS, CardType.COLORLESS],
+    cost: [D, D, C, C],
     damage: 120,
     text: 'If your opponent\'s Pokemon is Knocked Out by damage from this attack, take 1 more Prize card.'
   }];
@@ -34,41 +33,17 @@ export class Guzzlord extends PokemonCard {
   public name: string = 'Guzzlord';
   public fullName: string = 'Guzzlord CEC';
 
-  private usedRedBanquet = false;
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      this.usedRedBanquet = false;
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: 1, sourceCard: this, sourceEffect: this.attacks[0] });
     }
 
-    if (WAS_ATTACK_USED(effect, 1, this)) {
-      this.usedRedBanquet = true;
-    }
-
-    if (effect instanceof KnockOutEffect && effect.target === effect.player.active) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // Do not activate between turns, or when it's not opponents turn.
-      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
-        return state;
-      }
-
-      // Check if the attack that caused the KnockOutEffect is "Red Banquet"
-      if (this.usedRedBanquet === true) {
-        if (effect.prizeCount > 0) {
-          effect.prizeCount += 1;
-          this.usedRedBanquet = false;
-        }
-      }
-
-      return state;
-    }
-    return state;
+    return IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES(store, state, effect, this, {
+      attackName: 'Red Banquet',
+    });
   }
 }

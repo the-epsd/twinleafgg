@@ -107,6 +107,27 @@ export function WAS_ATTACK_USED(
   return effect instanceof AttackEffect && effect.attack === user.attacks[index];
 }
 
+/**
+ * Returns true if the Pokémon can provide the attack's cost plus extra Colorless energy.
+ * Use during AttackEffect or when resolving deferred attack effects (e.g. KO prize bonuses).
+ */
+export function HAS_EXTRA_ENERGY_BEYOND_ATTACK_COST(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  attack: Attack,
+  extraEnergyCount: number,
+  source?: PokemonCardList,
+): boolean {
+  const checkEnergy = new CheckProvidedEnergyEffect(player, source);
+  store.reduceEffect(state, checkEnergy);
+  const requiredEnergy = [
+    ...attack.cost,
+    ...Array(extraEnergyCount).fill(CardType.COLORLESS),
+  ];
+  return StateUtils.checkEnoughEnergy(checkEnergy.energyMap, requiredEnergy);
+}
+
 export function DEAL_DAMAGE(effect: Effect): effect is DealDamageEffect {
   return effect instanceof DealDamageEffect;
 }
@@ -963,6 +984,8 @@ export interface TakeMorePrizesOnKnockOutOptions {
   attackName?: string;
   /** Check IS_ABILITY_BLOCKED on the attacker before awarding (for Abilities like Overflow). */
   checkAbilityBlocked?: boolean;
+  /** Check IS_POKEBODY_BLOCKED on the attacker before awarding (for Poké-Bodies like Space Virus). */
+  checkPokebodyBlocked?: boolean;
   /** Extra validation after standard checks pass. */
   validate?: (
     store: StoreLike,
@@ -971,8 +994,25 @@ export interface TakeMorePrizesOnKnockOutOptions {
     attacker: Player,
     knockedOutOwner: Player,
   ) => boolean;
-  /** Number of extra prizes to award (default 1). */
+  /** Number of extra prizes to award (default 1). Ignored when getExtraPrizes is set. */
   extraPrizes?: number;
+  /** Dynamic prize bonus; overrides extraPrizes when provided. */
+  getExtraPrizes?: (
+    store: StoreLike,
+    state: State,
+    effect: KnockOutEffect,
+    attacker: Player,
+    knockedOutOwner: Player,
+  ) => number;
+  /** Called after bonus prizes are added to effect.prizeCount. */
+  onAwarded?: (
+    store: StoreLike,
+    state: State,
+    effect: KnockOutEffect,
+    attacker: Player,
+    knockedOutOwner: Player,
+    extraPrizesAwarded: number,
+  ) => void;
 }
 
 /**
@@ -996,8 +1036,11 @@ export function IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES(
   const {
     attackName,
     checkAbilityBlocked = false,
+    checkPokebodyBlocked = false,
     validate,
     extraPrizes = 1,
+    getExtraPrizes,
+    onAwarded,
   } = options;
 
   const knockedOutOwner = effect.player;
@@ -1031,12 +1074,23 @@ export function IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES(
     return state;
   }
 
+  if (checkPokebodyBlocked && IS_POKEBODY_BLOCKED(store, state, attacker, source)) {
+    return state;
+  }
+
   if (validate && !validate(store, state, effect, attacker, knockedOutOwner)) {
     return state;
   }
 
   if (effect.prizeCount > 0) {
-    effect.prizeCount += extraPrizes;
+    const prizeBonus = getExtraPrizes
+      ? getExtraPrizes(store, state, effect, attacker, knockedOutOwner)
+      : extraPrizes;
+
+    if (prizeBonus > 0) {
+      effect.prizeCount += prizeBonus;
+      onAwarded?.(store, state, effect, attacker, knockedOutOwner, prizeBonus);
+    }
   }
 
   return state;
