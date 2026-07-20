@@ -27,6 +27,9 @@ function ensureAbsolute(url: string, apiBase: string): string {
   if (!t) {
     return '';
   }
+  if (t.startsWith('//')) {
+    return `https:${t}`;
+  }
   if (/^https?:\/\//i.test(t) || t.startsWith('data:') || t.startsWith('blob:')) {
     return t;
   }
