@@ -179,6 +179,8 @@ export class CoinFlipEffect implements Effect {
   public result?: boolean;
   /** When true, stadiums like Glimwood Tangle will not intercept (used for reflips). */
   public skipReflipStadium?: boolean;
+  /** When true, tools like Backtrack Badge will not intercept (used for reflips / sequence flips). */
+  public skipReflipTool?: boolean;
 
   constructor(player: Player, callback?: (result: boolean) => void) {
     this.player = player;
@@ -193,6 +195,10 @@ export class CoinFlipSequenceEffect implements Effect {
   /** 'untilTails' or fixed count */
   public mode: 'untilTails' | number;
   public callback: (results: boolean[]) => void;
+  /** When true, stadiums like Glimwood Tangle will not intercept (used for reflips). */
+  public skipReflipStadium?: boolean;
+  /** When true, skip tool-based coin re-flip prompts (used when re-flipping a sequence). */
+  public skipReflipTool?: boolean;
 
   constructor(player: Player, mode: 'untilTails' | number, callback: (results: boolean[]) => void) {
     this.player = player;

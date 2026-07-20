@@ -65,7 +65,7 @@ import {
 } from './board3d-constants';
 import type { CardInfoPaneOptions } from '../../card-info/CardInfoPane';
 import type { Board3dGameActions } from './board3dGameActions';
-import { BoardInteractionService, type AbilityAnimationEvent, type AbilityFocusAnchor, type BasicEntranceAnimationEvent } from '../BoardInteractionService';
+import { BoardInteractionService, type AbilityAnimationEvent, type AbilityFocusAnchor, type BasicEntranceAnimationEvent, type CoinFlipAnimationEvent } from '../BoardInteractionService';
 import {
   getBoardConfig,
   getCameraConfig,
@@ -527,9 +527,12 @@ export class Board3dController {
         playBoardBasicAnimation: (ev) => this.playBoardBasicAnimation(ev),
         playBoardEvolutionAnimation: (ev) => this.playBoardEvolutionAnimation(ev),
         playBoardAbilityAnimation: (ev) => this.playBoardAbilityAnimation(ev),
+        playBoardCoinFlipAnimation: (ev) => this.playBoardCoinFlipAnimation(ev),
+        cancelBoardCoinFlipAnimation: () => this.cancelBoardCoinFlipAnimation(),
       }),
     );
 
+    this.animationService.initCoinFlipScene(this.scene);
     this.stateSync.setBoardInteractionForDamagePreview(this.boardInteractionService);
   }
 
@@ -563,9 +566,12 @@ export class Board3dController {
         playBoardBasicAnimation: (ev) => this.playBoardBasicAnimation(ev),
         playBoardEvolutionAnimation: (ev) => this.playBoardEvolutionAnimation(ev),
         playBoardAbilityAnimation: (ev) => this.playBoardAbilityAnimation(ev),
+        playBoardCoinFlipAnimation: (ev) => this.playBoardCoinFlipAnimation(ev),
+        cancelBoardCoinFlipAnimation: () => this.cancelBoardCoinFlipAnimation(),
       }),
     );
 
+    this.animationService.initCoinFlipScene(this.scene);
     this.stateSync.setBoardInteractionForDamagePreview(this.boardInteractionService);
   }
 
@@ -655,6 +661,7 @@ export class Board3dController {
 
     // Kill any active animations
     this.animationService.killAllAnimations();
+    this.animationService.disposeCoinFlipScene();
     this.stopAbilityFocusTracking();
 
     this.lastSupporterTopCardIdByPlayerId.clear();
@@ -1709,6 +1716,17 @@ export class Board3dController {
     };
 
     tryPlay(0);
+  }
+
+  private playBoardCoinFlipAnimation(ev: CoinFlipAnimationEvent): void {
+    if (!this.scene) {
+      return;
+    }
+    this.animationService.playCoinFlipAnimation(this.scene, ev.result);
+  }
+
+  private cancelBoardCoinFlipAnimation(): void {
+    this.animationService.cancelCoinFlipAnimation();
   }
 
   private projectCardGroupToScreenRect(group: Object3D): AbilityFocusAnchor | null {

@@ -20,3 +20,6 @@ export const TRAINER_PLAY_EFFECT_PROMPT_DELAY_MS = 2500;
 
 /** Delay after KO discard before choose-prize prompt. */
 export const KO_TO_PRIZE_PROMPT_DELAY_MS = 350;
+
+/** Coin flip animation — keep in sync with server COIN_FLIP_ANIMATION_WAIT_MS. */
+export const BOARD_COIN_FLIP_SERVER_WAIT_MS = 2000;

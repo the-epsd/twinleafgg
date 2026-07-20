@@ -26,6 +26,11 @@ import {
   LEGEND_ASSEMBLY_STAGE_SCALE,
   legendAssemblyStackedHalfLocalPositions,
 } from '../legend-display.utils';
+import {
+  buildCoinFlipTimeline,
+  createCoinFlipSceneGraph,
+  type CoinFlipSceneGraph,
+} from '../board-3d-coin-flip';
 
 /** World Z: flip in the plane of the hand / table (not Y, which tumbles the card edge-on). */
 const DRAW_FLIP_AXIS_Z = new Vector3(0, 0, 1);
@@ -161,6 +166,8 @@ function stageToHandTiming(
 export class Board3dAnimationService {
   private activeAnimations: gsap.core.Timeline[] = [];
   private activeAbilityTimeline: gsap.core.Timeline | null = null;
+  private activeCoinFlipTimeline: gsap.core.Timeline | null = null;
+  private activeCoinFlipScene: CoinFlipSceneGraph | null = null;
   private hasActiveAnimationsCache: boolean = false;
   private lastAnimationCheck: number = 0;
   private animationCheckInterval: number = 50; // Check every 50ms (20fps check rate)
@@ -417,6 +424,64 @@ export class Board3dAnimationService {
       this.activeAnimations.push(timeline);
       this.updateAnimationState();
     });
+  }
+
+  /** Angular visual-coin-flip timing on the persistent board coin mesh. */
+  initCoinFlipScene(scene: Scene): void {
+    if (this.activeCoinFlipScene) {
+      if (!this.activeCoinFlipScene.root.parent) {
+        scene.add(this.activeCoinFlipScene.root);
+      }
+      return;
+    }
+    const graph = createCoinFlipSceneGraph();
+    scene.add(graph.root);
+    this.activeCoinFlipScene = graph;
+  }
+
+  playCoinFlipAnimation(scene: Scene, isHeads: boolean): void {
+    this.initCoinFlipScene(scene);
+    const graph = this.activeCoinFlipScene;
+    if (!graph) {
+      return;
+    }
+
+    if (this.activeCoinFlipTimeline) {
+      this.removeAnimation(this.activeCoinFlipTimeline);
+      this.activeCoinFlipTimeline.kill();
+      this.activeCoinFlipTimeline = null;
+    }
+
+    let timeline: gsap.core.Timeline;
+    const finish = (): void => {
+      this.activeCoinFlipTimeline = null;
+      this.removeAnimation(timeline);
+      this.updateAnimationState();
+    };
+
+    timeline = buildCoinFlipTimeline(graph.coin, isHeads, finish);
+
+    this.activeCoinFlipTimeline = timeline;
+    this.activeAnimations.push(timeline);
+    this.updateAnimationState();
+  }
+
+  cancelCoinFlipAnimation(): void {
+    if (this.activeCoinFlipTimeline) {
+      this.removeAnimation(this.activeCoinFlipTimeline);
+      this.activeCoinFlipTimeline.kill();
+      this.activeCoinFlipTimeline = null;
+      this.updateAnimationState();
+    }
+  }
+
+  disposeCoinFlipScene(): void {
+    this.cancelCoinFlipAnimation();
+    if (this.activeCoinFlipScene) {
+      this.activeCoinFlipScene.root.parent?.remove(this.activeCoinFlipScene.root);
+      this.activeCoinFlipScene.dispose();
+      this.activeCoinFlipScene = null;
+    }
   }
 
   /** Wall-clock wait used when the board mesh is not ready; matches {@link BOARD3D_ABILITY_ANIMATION_DURATION_SEC}. */
@@ -1263,6 +1328,7 @@ export class Board3dAnimationService {
       this.activeAbilityTimeline.kill();
       this.activeAbilityTimeline = null;
     }
+    this.cancelCoinFlipAnimation();
     this.activeAnimations.forEach(animation => {
       animation.kill();
     });

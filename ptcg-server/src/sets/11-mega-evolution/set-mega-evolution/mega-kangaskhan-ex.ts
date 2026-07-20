@@ -2,8 +2,9 @@ import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { CoinFlipPrompt, GameError, GameMessage, PokemonCard, PowerType } from '../../../game';
+import { GameError, GameMessage, PokemonCard, PowerType } from '../../../game';
 import { ABILITY_USED, DRAW_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_MORE_DAMAGE_PER_HEADS } from '../../../game/store/prefabs/attack-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 export class MegaKangaskhanex extends PokemonCard {
@@ -59,21 +60,9 @@ export class MegaKangaskhanex extends PokemonCard {
       player.usedRunErrand = true;
     }
 
+    // Rapid-Fire Combo
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-
-      const flipCoin = (heads: number = 0): State => {
-        return store.prompt(state, [
-          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-        ], result => {
-          if (result === true) {
-            return flipCoin(heads + 1);
-          }
-          effect.damage += 50 * heads;
-          return state;
-        });
-      };
-      return flipCoin();
+      return FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_MORE_DAMAGE_PER_HEADS(store, state, effect, 50);
     }
 
     return state;
