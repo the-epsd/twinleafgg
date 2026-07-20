@@ -1,5 +1,5 @@
 import { Effect } from '../effects/effect';
-import { EndTurnEffect, BetweenTurnsEffect, BeginTurnEffect, DrawCardForTurnEffect, DrewTopdeckEffect } from '../effects/game-phase-effects';
+import { AfterAttackEffect, EndTurnEffect, BetweenTurnsEffect, BeginTurnEffect, DrawCardForTurnEffect, DrewTopdeckEffect } from '../effects/game-phase-effects';
 import { GameError } from '../../game-error';
 import { GameMessage, GameLog } from '../../game-message';
 import { Player } from '../state/player';
@@ -182,8 +182,18 @@ function handleSpecialConditions(store: StoreLike, state: State, effect: Between
 
 export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect): State {
 
+  if (effect instanceof AfterAttackEffect) {
+    effect.opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+      if (cardList.defendingPokemonExtraDamageRearmAfterAttack) {
+        cardList.defendingPokemonExtraDamageRearmAfterAttack = false;
+        cardList.defendingPokemonExtraDamagePending = true;
+      }
+    });
+  }
+
   if (effect instanceof EndTurnEffect) {
-    const player = state.players[state.activePlayer];
+    const player = effect.player;
+    const opponent = StateUtils.getOpponent(state, player);
 
     state = RESOLVE_PENDING_END_OF_OPPONENTS_NEXT_TURN_EFFECTS(store, state, effect);
 
@@ -202,7 +212,6 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
     }
 
     // Clear damage reduction effects on opponent's Pokémon when their turn ends
-    const opponent = StateUtils.getOpponent(state, player);
     opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
       cardList.damageReductionNextTurn = 0;
       cardList.preventDamageNextTurn = null;
@@ -223,11 +232,16 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
       }
     });
 
-    // Activate pending defending Pokemon extra damage at end of the defending player's turn
-    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-      if (cardList.defendingPokemonExtraDamagePending) {
-        cardList.defendingPokemonExtraDamagePending = false;
-      }
+    // Activate pending extra damage at end of the defending player's turn (not the attacker's).
+    // The effect is armed by the attacker on the opponent's Active; it becomes active once
+    // that opponent finishes their next turn, before the attacker's following turn.
+    [player, opponent].forEach(p => {
+      p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+        if (cardList.defendingPokemonExtraDamagePending
+          && cardList.defendingPokemonExtraDamageAttackerId !== player.id) {
+          cardList.defendingPokemonExtraDamagePending = false;
+        }
+      });
     });
 
     // Clear active defending Pokemon extra damage at end of the attacking player's turn

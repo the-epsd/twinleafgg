@@ -265,9 +265,22 @@ export class DefendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect extends
   }
 
   applyEffect(): void {
-    this.opponent.active.defendingPokemonExtraDamageNextTurn = this.damageBonus;
-    this.opponent.active.defendingPokemonExtraDamageAttackerId = this.player.id;
-    this.opponent.active.defendingPokemonExtraDamagePending = true;
+    const target = this.opponent.active;
+    const bonusAlreadyActive = target.defendingPokemonExtraDamageNextTurn > 0
+      && !target.defendingPokemonExtraDamagePending
+      && target.defendingPokemonExtraDamageAttackerId === this.player.id;
+
+    target.defendingPokemonExtraDamageNextTurn = this.damageBonus;
+    target.defendingPokemonExtraDamageAttackerId = this.player.id;
+
+    if (bonusAlreadyActive) {
+      // Attack effects run before damage. Keep the bonus active for this attack,
+      // then re-arm pending afterward so the next trap cycle can begin.
+      target.defendingPokemonExtraDamageRearmAfterAttack = true;
+      return;
+    }
+
+    target.defendingPokemonExtraDamagePending = true;
   }
 }
 

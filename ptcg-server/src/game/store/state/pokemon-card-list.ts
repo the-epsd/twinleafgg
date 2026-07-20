@@ -42,6 +42,7 @@ export class PokemonCardList extends CardList {
   public defendingPokemonExtraDamageNextTurn: number = 0;
   public defendingPokemonExtraDamageAttackerId: number | undefined = undefined;
   public defendingPokemonExtraDamagePending: boolean = false;
+  public defendingPokemonExtraDamageRearmAfterAttack: boolean = false;
   public cannotAttackNextTurn: boolean = false;
   public cannotAttackNextTurnPending: boolean = false;
   public cannotUseAttacksNextTurn: string[] = [];
@@ -207,6 +208,7 @@ export class PokemonCardList extends CardList {
     this.defendingPokemonExtraDamageNextTurn = 0;
     this.defendingPokemonExtraDamageAttackerId = undefined;
     this.defendingPokemonExtraDamagePending = false;
+    this.defendingPokemonExtraDamageRearmAfterAttack = false;
   }
 
   clearEffects(): void {
@@ -244,6 +246,7 @@ export class PokemonCardList extends CardList {
     this.defendingPokemonExtraDamageNextTurn = 0;
     this.defendingPokemonExtraDamageAttackerId = undefined;
     this.defendingPokemonExtraDamagePending = false;
+    this.defendingPokemonExtraDamageRearmAfterAttack = false;
     this.cannotAttackNextTurn = false;
     this.cannotAttackNextTurnPending = false;
     this.cannotUseAttacksNextTurn = [];
