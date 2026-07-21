@@ -15,7 +15,9 @@ import { GrimsleysGambit as GrimsleysGambitPFL90 } from './grimsleys-gambit';
 import { SacredCharm as SacredCharmPFL93 } from './sacred-charm';
 import { Switch } from '../../set-base-set/switch';
 import { IgnitionEnergy } from '../../10-scarlet-and-violet/set-black-bolt-white-flare/ignition-energy';
+import { Flygon } from './flygon';
 import { Ambipom } from './ambipom';
+
 export class Ludicolo2PFL extends LudicoloPFL7 {
   public setNumber = '95';
   public fullName: string = 'Ludicolo2 PFL';
@@ -25,6 +27,12 @@ export class Ludicolo2PFL extends LudicoloPFL7 {
 export class Zacian2PFL extends ZacianPFL45 {
   public setNumber = '100';
   public fullName: string = 'Zacian2 PFL';
+  public set = 'PFL';
+}
+
+export class FlygonIR extends Flygon {
+  public setNumber = '101';
+  public fullName: string = 'FlygonIR PFL';
   public set = 'PFL';
 }
 
