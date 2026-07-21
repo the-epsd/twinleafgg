@@ -20,6 +20,7 @@ import { getSocketManager } from '../socket/socketManager';
 import { ArchetypeIcon } from './ArchetypeIcon';
 import { deckArchetypeForDisplay } from './deckArchetypeDisplay';
 import { MATCH_FORMAT_VALUES } from './matchFormats';
+import { pickDefaultDeckIdForFormat } from './deckDefaultPreferences';
 import styles from './MatchmakingLobby.module.css';
 
 function decksForFormat(all: DeckListEntry[], format: Format): DeckListEntry[] {
@@ -33,8 +34,9 @@ function computeDefaultSelections(
   const next: Partial<Record<Format, number>> = {};
   for (const f of formatList) {
     const list = decksForFormat(all, f);
-    if (list.length) {
-      next[f] = list[0]!.id;
+    const id = pickDefaultDeckIdForFormat(list, f);
+    if (id != null) {
+      next[f] = id;
     }
   }
   return next;

@@ -8,9 +8,9 @@ import { useSnackbar } from '../context/SnackbarContext';
 import { getDeck, getDeckList } from '../api/deckApi';
 import { ApiError } from '../api/apiError';
 import type { DeckListEntry } from '../types/responses';
-import { FormatValidator } from '../deck-editor/formatValidator';
 import { formatOptionLabel } from '../deck-editor/formatLabelI18n';
 import { CREATE_GAME_FORMAT_VALUES } from './matchFormats';
+import { pickDefaultDeckIdForFormat, validDecksForFormat } from './deckDefaultPreferences';
 import { toGameSettingsPayload } from '../game/gameSettingsPayload';
 import styles from './CreateGameInviteDialog.module.css';
 
@@ -22,12 +22,6 @@ const TIME_LIMIT_OPTIONS: { value: number; labelKey: string }[] = [
   { value: 1500, labelKey: 'GAMES_LIMIT_25_MIN' },
   { value: 1800, labelKey: 'GAMES_LIMIT_30_MIN' },
 ];
-
-function decksForFormat(all: DeckListEntry[], format: Format): DeckListEntry[] {
-  return all.filter(
-    (d) => Array.isArray(d.format) && d.format.includes(format) && FormatValidator.isDeckValidForFormat(d, format),
-  );
-}
 
 export type SelfPlayGameDialogProps = {
   open: boolean;
@@ -108,7 +102,7 @@ export function SelfPlayGameDialog({ open, onClose }: SelfPlayGameDialogProps) {
     };
   }, [open, t]);
 
-  const validDecks = useMemo(() => decksForFormat(allDecks, format), [allDecks, format]);
+  const validDecks = useMemo(() => validDecksForFormat(allDecks, format), [allDecks, format]);
 
   useEffect(() => {
     if (!open) {
@@ -119,19 +113,10 @@ export function SelfPlayGameDialog({ open, onClose }: SelfPlayGameDialogProps) {
       setSecondDeckId(null);
       return;
     }
-    setDeckId((prev) => {
-      if (prev != null && validDecks.some((d) => d.id === prev)) {
-        return prev;
-      }
-      return validDecks[0]!.id;
-    });
-    setSecondDeckId((prev) => {
-      if (prev != null && validDecks.some((d) => d.id === prev)) {
-        return prev;
-      }
-      return validDecks[0]!.id;
-    });
-  }, [open, validDecks]);
+    const defaultId = pickDefaultDeckIdForFormat(validDecks, format);
+    setDeckId(defaultId);
+    setSecondDeckId(defaultId);
+  }, [open, format, validDecks]);
 
   useEffect(() => {
     if (!open) {

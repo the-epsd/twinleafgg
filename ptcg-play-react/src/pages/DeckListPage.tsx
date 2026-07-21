@@ -14,6 +14,7 @@ import {
 import type { DeckListEntry } from '../types/responses';
 import { ApiError } from '../api/apiError';
 import { useSettings } from '../context/SettingsContext';
+import { useSnackbar } from '../context/SnackbarContext';
 import { appConfig } from '../env/config';
 import { FormAlert } from '../components/ui/FormAlert';
 import { ShellButton } from '../components/ui/ShellButton';
@@ -175,11 +176,11 @@ export function DeckListPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { hiddenFormats } = useSettings();
+  const { showSnackbar } = useSnackbar();
 
   const [decks, setDecks] = useState<DeckListEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [toast, setToast] = useState<string | null>(null);
   const [selectedFormat, setSelectedFormat] = useState<TabKey>('all');
   const [showThemeDecksInAllTab, setShowThemeDecksInAllTab] = useState(readShowThemeDecks);
   const [defaultDeckId, setDefaultDeckId] = useState<number | null>(readDefaultDeckId);
@@ -371,8 +372,7 @@ export function DeckListPage() {
     const name = trimmed;
     try {
       await renameDeck(id, name);
-      setToast(t('BUTTON_RENAME') + ' — OK');
-      window.setTimeout(() => setToast(null), 2400);
+      showSnackbar(`${t('BUTTON_RENAME')} — OK`);
       await refresh();
     } catch (e) {
       setError(e instanceof ApiError ? e.message : t('ERROR_UNKNOWN'));
@@ -386,8 +386,7 @@ export function DeckListPage() {
     }
     try {
       await duplicateDeck(id, name);
-      setToast(`${t('DECK_DUPLICATE')} — OK`);
-      window.setTimeout(() => setToast(null), 2400);
+      showSnackbar(`${t('DECK_DUPLICATE')} — OK`);
       await refresh();
     } catch (e) {
       setError(e instanceof ApiError ? e.message : t('ERROR_UNKNOWN'));
@@ -400,8 +399,7 @@ export function DeckListPage() {
       const lines = res.deck.cards ?? [];
       const text = deckListExportText(lines);
       await navigator.clipboard.writeText(text);
-      setToast(t('DECK_EXPORTED_TO_CLIPBOARD'));
-      window.setTimeout(() => setToast(null), 2400);
+      showSnackbar(t('DECK_EXPORTED_TO_CLIPBOARD'));
     } catch (e) {
       setError(e instanceof ApiError ? e.message : t('ERROR_CLIPBOARD_ACCESS'));
     }
@@ -410,8 +408,7 @@ export function DeckListPage() {
   function setAsDefault(deckId: number) {
     setDefaultDeckId(deckId);
     localStorage.setItem(LS_DEFAULT_DECK_ID, String(deckId));
-    setToast(t('DECK_SET_AS_DEFAULT'));
-    window.setTimeout(() => setToast(null), 2400);
+    showSnackbar(t('DECK_SET_AS_DEFAULT'));
   }
 
   function setAsFormatDefault(deckId: number, formatKey: TabKey) {
@@ -421,8 +418,7 @@ export function DeckListPage() {
     const next = { ...formatDefaultDecks, [formatKey]: deckId };
     setFormatDefaultDecks(next);
     localStorage.setItem(LS_FORMAT_DEFAULTS, JSON.stringify(next));
-    setToast(t('DECK_SET_AS_FORMAT_DEFAULT', { format: getFormatDisplayName(formatKey) }));
-    window.setTimeout(() => setToast(null), 2400);
+    showSnackbar(t('DECK_SET_AS_FORMAT_DEFAULT', { format: getFormatDisplayName(formatKey) }));
   }
 
   if (loading) {
@@ -447,7 +443,6 @@ export function DeckListPage() {
       </div>
 
       {error ? <FormAlert>{error}</FormAlert> : null}
-      {toast ? <div className={styles.toast}>{toast}</div> : null}
 
       <div className={styles.formatRow}>
         <div className={styles.formatTabs}>
@@ -511,7 +506,10 @@ export function DeckListPage() {
           <>
           <div className={styles.grid}>
             {paginatedDecks.map((d) => (
-              <div key={d.id} className={styles.tile}>
+              <div
+                key={d.id}
+                className={`${styles.tile}${openMenuDeckId === d.id ? ` ${styles.tileMenuOpen}` : ''}`}
+              >
                 <div
                   className={styles.card}
                   role="button"

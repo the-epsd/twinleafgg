@@ -170,10 +170,15 @@
   flex-direction: column;
 }
 
+.tileMenuOpen {
+  position: relative;
+  z-index: 50;
+}
+
 .card {
   background: #fff;
   border-radius: 12px;
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   flex-direction: column;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
@@ -273,6 +278,8 @@
   justify-content: center;
   align-items: center;
   position: relative;
+  border-radius: 12px 12px 0 0;
+  overflow: hidden;
 }
 
 .archetype:hover .eyeBtn {
@@ -313,6 +320,7 @@
   align-items: center;
   gap: 4px;
   border-top: 1px solid #e8e8e8;
+  border-radius: 0 0 12px 12px;
 }
 
 .deckName {
@@ -417,16 +425,6 @@
 .loading {
   padding: 24px;
   color: #555;
-}
-
-.toast {
-  margin-top: 8px;
-  padding: 8px 12px;
-  background: #fff8e1;
-  border: 1px solid #ffe082;
-  border-radius: 8px;
-  color: #5d4037;
-  font-size: 14px;
 }
 
 .pagination {
