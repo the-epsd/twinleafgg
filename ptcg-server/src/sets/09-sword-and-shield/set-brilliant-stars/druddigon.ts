@@ -3,69 +3,45 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { MarkerConstants } from '../../../game/store/markers/marker-constants';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN } from '../../../game/store/prefabs/prefabs';
 
 export class Druddigon extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.DRAGON;
-
+  public cardType: CardType = N;
   public hp: number = 120;
+  public retreat = [C, C];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
-
-  public attacks = [
-    {
-      name: 'Revenge',
-      cost: [CardType.FIRE, CardType.WATER],
-      damage: 40,
-      text: 'If any of your Pokémon were Knocked Out by damage from an attack from your opponent\'s Pokémon during their last turn, this attack does 120 more damage.'
-    },
-    {
-      name: 'Dragon Claw',
-      cost: [CardType.FIRE, CardType.WATER, CardType.COLORLESS],
-      damage: 120,
-      text: ''
-    }
-  ];
-
-  public set: string = 'BRS';
+  public attacks = [{
+    name: 'Revenge',
+    cost: [R, W],
+    damage: 40,
+    text: 'If any of your Pokémon were Knocked Out by damage from an attack from your opponent\'s Pokémon during their last turn, this attack does 120 more damage.'
+  },
+  {
+    name: 'Dragon Claw',
+    cost: [R, W, C],
+    damage: 120,
+    text: ''
+  }];
 
   public regulationMark = 'E';
-
+  public set: string = 'BRS';
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '113';
-
   public name: string = 'Druddigon';
-
   public fullName: string = 'Druddigon BRS';
 
-  // public damageDealt = false;
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Revenge
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      if (player.marker.hasMarker(MarkerConstants.REVENGE_MARKER)) {
+      if (WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN(player, { byAttackDamage: true })) {
         effect.damage += 120;
       }
-
       return state;
     }
 
-    // if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
-    //   effect.target.tools.includes(this)) {
-    //   const player = StateUtils.getOpponent(state, effect.player);
-
-    //   if (player.active.tools.includes(this)) {
-    //     this.damageDealt = true;
-    //   }
-    // }
-
     return state;
   }
-
 }

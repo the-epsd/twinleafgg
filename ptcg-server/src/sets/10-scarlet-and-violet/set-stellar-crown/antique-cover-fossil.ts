@@ -1,7 +1,29 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, PokemonType } from '../../../game/store/card/card-types';
-import { GameError, GameLog, GameMessage, Player, Power, PowerType, State, StateUtils, StoreLike, TrainerCard } from '../../../game';
-import { AbstractAttackEffect, ApplyWeaknessEffect, PutDamageEffect, DealDamageEffect } from '../../../game/store/effects/attack-effects';
+import {
+  Stage,
+  CardType,
+  SuperType,
+  PokemonType,
+  CardTag,
+} from '../../../game/store/card/card-types';
+import {
+  GameError,
+  GameLog,
+  GameMessage,
+  Player,
+  Power,
+  PowerType,
+  State,
+  StateUtils,
+  StoreLike,
+  TrainerCard,
+} from '../../../game';
+import {
+  AbstractAttackEffect,
+  ApplyWeaknessEffect,
+  PutDamageEffect,
+  DealDamageEffect,
+} from '../../../game/store/effects/attack-effects';
 import { PowerEffect, RetreatEffect } from '../../../game/store/effects/game-effects';
 import { PlayItemEffect, PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { MOVE_CARDS, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
@@ -16,6 +38,7 @@ export class AntiqueCoverFossil extends TrainerCard {
   public pokemonType = PokemonType.NORMAL;
   public evolvesFrom = '';
   public cardTag = [];
+  public tags = [CardTag.ANTIQUE];
   public tools = [];
   public archetype = [];
   public weakness = [];
@@ -30,22 +53,21 @@ export class AntiqueCoverFossil extends TrainerCard {
   public evolvesTo = [];
   public evolvesToStage = [];
 
-  public powers: Power[] = [{
-    name: 'Antique Cover Fossil',
-    text: `Play this card as if it were a 60-HP [C] Basic Pokémon. This card can't be affected by any Special Conditions and can't retreat.
-
-At any time during your turn, you may discard this card from play.`,
-    useWhenInPlay: true,
-    exemptFromAbilityLock: true,
-    isFossil: true,
-    powerType: PowerType.TRAINER_ABILITY
-  },
-  {
-    name: 'Protective Cover',
-    powerType: PowerType.ABILITY,
-    isFossil: true,
-    text: 'Prevent all effects of attacks used by your opponent\'s Pokémon done to this Pokémon. (Damage is not an effect.)'
-  }];
+  public powers: Power[] = [
+    {
+      name: 'Antique Cover Fossil',
+      text: "Play this card as if it were a 60-HP [C] Basic Pokémon. This card can't be affected by any Special Conditions and can't retreat. At any time during your turn, you may discard this card from play.",
+      useWhenInPlay: true,
+      exemptFromAbilityLock: true,
+      isFossil: true,
+      powerType: PowerType.TRAINER_ABILITY,
+    },
+    {
+      name: 'Protective Cover',
+      powerType: PowerType.ABILITY,
+      text: "Prevent all effects of attacks used by your opponent's Pokémon done to this Pokémon. (Damage is not an effect.)",
+    },
+  ];
 
   public set: string = 'SCR';
   public cardImage: string = 'assets/cardback.png';
@@ -54,13 +76,12 @@ At any time during your turn, you may discard this card from play.`,
   public fullName: string = 'Antique Cover Fossil SCR';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
-    const openSlots = player.bench.filter(b => b.cards.length === 0);
+    const openSlots = player.bench.filter((b) => b.cards.length === 0);
     if (openSlots.length === 0) {
       return false;
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: any): State {
     if (WAS_POWER_USED(effect, 0, this)) {
@@ -71,24 +92,27 @@ At any time during your turn, you may discard this card from play.`,
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_ON_BOTTOM_OF_DECK, { name: player.name, card: this.name });
+      store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_ON_BOTTOM_OF_DECK, {
+        name: player.name,
+        card: this.name,
+      });
 
       // Move Lillie's Poke Doll to bottom of deck
       state = MOVE_CARDS(store, state, pokeDollCardList, player.deck, {
         cards: [this],
-        toBottom: true
+        toBottom: true,
       });
 
       // Move any attached cards to discard
       state = MOVE_CARDS(store, state, pokeDollCardList, player.discard, {
-        cards: pokeDollCardList.cards.filter(c => c !== this)
+        cards: pokeDollCardList.cards.filter((c) => c !== this),
       });
     }
 
     if (effect instanceof PlayItemEffect && effect.trainerCard === this) {
       const player = effect.player;
 
-      const emptySlots = player.bench.filter(b => b.cards.length === 0);
+      const emptySlots = player.bench.filter((b) => b.cards.length === 0);
       if (emptySlots.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
@@ -118,11 +142,15 @@ At any time during your turn, you may discard this card from play.`,
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
           const player = StateUtils.findOwner(state, effect.target);
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
+          const stub = new PowerEffect(
+            player,
+            {
+              name: 'test',
+              powerType: PowerType.ABILITY,
+              text: '',
+            },
+            this,
+          );
           store.reduceEffect(state, stub);
         } catch {
           return state;

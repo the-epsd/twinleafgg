@@ -8,15 +8,17 @@ export class Maschiff extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Bite',
-    cost: [D, D],
-    damage: 40,
-    text: '',
-  }];
+  public attacks = [
+    {
+      name: 'Bite',
+      cost: [D, D],
+      damage: 40,
+      text: '',
+    },
+  ];
 
-  public set: string = 'M5';
-  public setNumber: string = '55';
+  public set: string = 'PBL';
+  public setNumber: string = '57';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Maschiff';

@@ -1,6 +1,7 @@
 import type { Card } from 'ptcg-server';
 import type { Board3dCardInfoData, Board3dCardsAdapter, CardInfoPaneActionResult } from './board3dCardsAdapter';
 import { resolveScanUrl, type CardImageMaps } from '../../deck-editor/resolveScanUrl';
+import { proxyImageUrlForWebGl } from '../../utils/proxyImageUrl';
 
 function getScanUrlFromCardList(
   card: Card,
@@ -36,12 +37,7 @@ function getScanUrlFor3D(
   if (!baseUrl?.trim()) {
     return baseUrl;
   }
-  const isExternal = baseUrl.startsWith('http://') || baseUrl.startsWith('https://');
-  if (isExternal) {
-    const base = apiBase.replace(/\/$/, '');
-    return `${base}/v1/images/proxy?url=${encodeURIComponent(baseUrl)}`;
-  }
-  return baseUrl;
+  return proxyImageUrlForWebGl(baseUrl);
 }
 
 export function createBoard3dCardsAdapter(input: {

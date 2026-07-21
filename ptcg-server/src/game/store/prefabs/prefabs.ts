@@ -52,6 +52,7 @@ import {
 import { Attack } from '../card/pokemon-types';
 import { GamePhase } from '../state/state';
 import { canPlayDualStadium } from '../dual-stadium-utils';
+import { canPlayDualLegend } from '../dual-legend-utils';
 import { PokemonCard } from '../card/pokemon-card';
 import {
   AbstractAttackEffect,
@@ -91,7 +92,7 @@ import {
 } from '../effects/game-effects';
 import { AfterAttackEffect, BeforeDoingDamageEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
-import { preventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, PreventDamageOptions, shouldPreventAttackEffects } from '../effects/effect-of-attack-effects';
+import { preventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect, PreventDamageOptions, shouldPreventAttackEffects } from '../effects/effect-of-attack-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
 
 /**
@@ -105,6 +106,27 @@ export function WAS_ATTACK_USED(
   user: PokemonCard,
 ): effect is AttackEffect {
   return effect instanceof AttackEffect && effect.attack === user.attacks[index];
+}
+
+/**
+ * Returns true if the Pokémon can provide the attack's cost plus extra Colorless energy.
+ * Use during AttackEffect or when resolving deferred attack effects (e.g. KO prize bonuses).
+ */
+export function HAS_EXTRA_ENERGY_BEYOND_ATTACK_COST(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  attack: Attack,
+  extraEnergyCount: number,
+  source?: PokemonCardList,
+): boolean {
+  const checkEnergy = new CheckProvidedEnergyEffect(player, source);
+  store.reduceEffect(state, checkEnergy);
+  const requiredEnergy = [
+    ...attack.cost,
+    ...Array(extraEnergyCount).fill(CardType.COLORLESS),
+  ];
+  return StateUtils.checkEnoughEnergy(checkEnergy.energyMap, requiredEnergy);
 }
 
 export function DEAL_DAMAGE(effect: Effect): effect is DealDamageEffect {
@@ -958,6 +980,133 @@ export function TAKE_X_MORE_PRIZE_CARDS(effect: KnockOutEffect, state: State) {
   return state;
 }
 
+export interface TakeMorePrizesOnKnockOutOptions {
+  /** Only award bonus prizes if this attack was used (via state.playerLastAttack). */
+  attackName?: string;
+  /** Check IS_ABILITY_BLOCKED on the attacker before awarding (for Abilities like Overflow). */
+  checkAbilityBlocked?: boolean;
+  /** Check IS_POKEBODY_BLOCKED on the attacker before awarding (for Poké-Bodies like Space Virus). */
+  checkPokebodyBlocked?: boolean;
+  /** Extra validation after standard checks pass. */
+  validate?: (
+    store: StoreLike,
+    state: State,
+    effect: KnockOutEffect,
+    attacker: Player,
+    knockedOutOwner: Player,
+  ) => boolean;
+  /** Number of extra prizes to award (default 1). Ignored when getExtraPrizes is set. */
+  extraPrizes?: number;
+  /** Dynamic prize bonus; overrides extraPrizes when provided. */
+  getExtraPrizes?: (
+    store: StoreLike,
+    state: State,
+    effect: KnockOutEffect,
+    attacker: Player,
+    knockedOutOwner: Player,
+  ) => number;
+  /** Called after bonus prizes are added to effect.prizeCount. */
+  onAwarded?: (
+    store: StoreLike,
+    state: State,
+    effect: KnockOutEffect,
+    attacker: Player,
+    knockedOutOwner: Player,
+    extraPrizesAwarded: number,
+  ) => void;
+}
+
+/**
+ * If your opponent's Pokemon is Knocked Out by damage from an attack of this Pokemon,
+ * take more Prize card(s). Valid for Active or Bench KOs.
+ *
+ * Use `attackName` for attack-specific bonus prizes (uses playerLastAttack, not boolean flags).
+ * Use `checkAbilityBlocked` for Ability-based versions (e.g. Lugia-EX Overflow).
+ */
+export function IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES(
+  store: StoreLike,
+  state: State,
+  effect: Effect,
+  source: PokemonCard,
+  options: TakeMorePrizesOnKnockOutOptions = {},
+): State {
+  if (!(effect instanceof KnockOutEffect)) {
+    return state;
+  }
+
+  const {
+    attackName,
+    checkAbilityBlocked = false,
+    checkPokebodyBlocked = false,
+    validate,
+    extraPrizes = 1,
+    getExtraPrizes,
+    onAwarded,
+  } = options;
+
+  const knockedOutOwner = effect.player;
+  const attacker = StateUtils.getOpponent(state, knockedOutOwner);
+
+  const isDefendingPokemon = knockedOutOwner.active === effect.target ||
+    knockedOutOwner.bench.includes(effect.target);
+
+  if (!isDefendingPokemon) {
+    return state;
+  }
+
+  if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== attacker) {
+    return state;
+  }
+
+  if (!knockedOutOwner.marker.hasMarker(knockedOutOwner.DAMAGE_DEALT_MARKER)) {
+    return state;
+  }
+
+  const lastAttackInfo = state.playerLastAttack?.[attacker.id];
+  if (!lastAttackInfo || lastAttackInfo.sourceCard !== source) {
+    return state;
+  }
+
+  if (attackName !== undefined && lastAttackInfo.attack.name !== attackName) {
+    return state;
+  }
+
+  if (checkAbilityBlocked && IS_ABILITY_BLOCKED(store, state, attacker, source)) {
+    return state;
+  }
+
+  if (checkPokebodyBlocked && IS_POKEBODY_BLOCKED(store, state, attacker, source)) {
+    return state;
+  }
+
+  if (validate && !validate(store, state, effect, attacker, knockedOutOwner)) {
+    return state;
+  }
+
+  if (effect.prizeCount > 0) {
+    const prizeBonus = getExtraPrizes
+      ? getExtraPrizes(store, state, effect, attacker, knockedOutOwner)
+      : extraPrizes;
+
+    if (prizeBonus > 0) {
+      effect.prizeCount += prizeBonus;
+      onAwarded?.(store, state, effect, attacker, knockedOutOwner, prizeBonus);
+    }
+  }
+
+  return state;
+}
+
+/** Delta Plus Ancient Trait: take 1 more Prize card when you KO an opponent's Pokemon with this Pokemon's attack. */
+export function DELTA_PLUS(
+  store: StoreLike,
+  state: State,
+  effect: Effect,
+  source: PokemonCard,
+): State {
+  return IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES(store, state, effect, source);
+}
+
 export function PLAY_POKEMON_FROM_HAND_TO_BENCH(
   state: State,
   player: Player,
@@ -1586,7 +1735,7 @@ export function ATTACH_UP_TO_X_ENERGY_FROM_DECK_TO_Y_OF_YOUR_POKEMON(
 }
 
 /**
- * Discards the top `amount` cards of your own deck (self-mill).
+ * Discards the top `amount` cards of a player's deck.
  */
 export function DISCARD_TOP_X_CARDS_FROM_YOUR_DECK(
   store: StoreLike,
@@ -3266,6 +3415,34 @@ export function REMOVE_MARKER_AT_END_OF_TURN(effect: Effect, marker: string, sou
     REMOVE_MARKER(marker, effect.player, source);
 }
 
+export interface PokemonKnockedOutLastTurnFilter {
+  /** Require KO from attack damage during the opponent's attack. */
+  byAttackDamage?: boolean;
+  /** Knocked-out Pokemon must have all of these tags. */
+  tags?: CardTag[];
+}
+
+export function WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN(
+  player: Player,
+  filter?: PokemonKnockedOutLastTurnFilter,
+): boolean {
+  if (filter?.byAttackDamage) {
+    if (!player.pokemonKnockedOutByAttackDuringOpponentsLastTurn) {
+      return false;
+    }
+  } else if (!player.pokemonKnockedOutDuringOpponentsLastTurn) {
+    return false;
+  }
+
+  if (filter?.tags?.length) {
+    return player.pokemonKnockedOutLastTurnEntries.some(entry =>
+      filter.tags!.every(tag => entry.includes(tag))
+    );
+  }
+
+  return true;
+}
+
 /**
  * Clear markers that track events from "your opponent's last turn" (e.g. a KO).
  * Skipped when the player has an additional turn pending (Dialga-GX Timeless, etc.)
@@ -3784,6 +3961,12 @@ export function CAN_PLAY_POKEMON_CARD(
       return true;
     }
 
+    if (canPlayDualLegend(store, state, player, pokemonCard)) {
+      if (!IS_ABILITY_BLOCKED(store, state, player, pokemonCard)) {
+        return true;
+      }
+    }
+
     // For evolution cards, check if base Pokemon is in play AND can be evolved
     if (pokemonCard.stage !== Stage.BASIC) {
       // Check active Pokemon
@@ -3894,6 +4077,22 @@ export function DEFENDING_POKEMON_TAKES_MORE_DAMAGE_DURING_YOUR_NEXT_TURN(
 ): State {
   const bonusEffect = defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect(effect, source, damageBonus);
   return store.reduceEffect(state, bonusEffect);
+}
+
+/**
+ * During the opponent's next turn, whenever they attach an Energy card from their hand
+ * to the Defending Pokémon, place damage counters on that Pokémon.
+ * @param damage Total HP to place as damage counters via PutCountersEffect (e.g. 80 for 8 counters).
+ */
+export function DEFENDING_POKEMON_TAKES_DAMAGE_ON_ENERGY_ATTACH_FROM_HAND_NEXT_TURN(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+  damage: number,
+): State {
+  const attachEffect = defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect(effect, source, damage);
+  return store.reduceEffect(state, attachEffect);
 }
 
 /**

@@ -2,7 +2,11 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { DISCARD_TOP_X_OF_OPPONENTS_DECK, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  DISCARD_TOP_X_OF_OPPONENTS_DECK,
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Centiskorch extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -12,21 +16,23 @@ export class Centiskorch extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C, C];
 
-  public attacks = [{
-    name: 'Controlled Burn',
-    cost: [R],
-    damage: 0,
-    text: 'Discard 2 cards from your opponent\'s deck.',
-  },
-  {
-    name: 'Heat Tackle',
-    cost: [R, C, C, C],
-    damage: 160,
-    text: 'This Pokémon also does 30 damage to itself.',
-  }];
+  public attacks = [
+    {
+      name: 'Controlled Burn',
+      cost: [R],
+      damage: 0,
+      text: "Discard the top 2 cards of your opponent's deck.",
+    },
+    {
+      name: 'Heat Tackle',
+      cost: [R, C, C, C],
+      damage: 160,
+      text: 'This Pokémon also does 30 damage to itself.',
+    },
+  ];
 
-  public set: string = 'M5';
-  public setNumber: string = '9';
+  public set: string = 'PBL';
+  public setNumber: string = '10';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Centiskorch';

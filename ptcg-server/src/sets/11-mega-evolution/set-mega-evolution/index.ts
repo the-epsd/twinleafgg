@@ -58,6 +58,7 @@ import { Cinderace } from './cinderace';
 import { Clauncher } from './clauncher';
 import { Corphish } from './corphish';
 import { Crawdaunt } from './crawdaunt';
+import { Dialga } from './dialga';
 import { DangerousRuins } from './risky-ruins';
 import { Drizzile } from './drizzile';
 import { Electrike } from './electrike';
@@ -99,6 +100,7 @@ import { Nincada } from './nincada';
 import { Ninjask } from './ninjask';
 import { Numel } from './numel';
 import { Onix } from './onix';
+import { Pachirisu } from './pachirisu';
 import { PowerProtein } from './power-protein';
 import { Raboot } from './raboot';
 import { Ralts } from './ralts';
@@ -130,6 +132,7 @@ export const setMegaEvolution: Card[] = [
   new Corphish(),
   new Crawdaunt(),
   new DangerousRuins(),
+  new Dialga(),
   new Drizzile(),
   new Electrike(),
   new FightingGong(),
@@ -171,6 +174,7 @@ export const setMegaEvolution: Card[] = [
   new Ninjask(),
   new Numel(),
   new Onix(),
+  new Pachirisu(),
   new PowerProtein(),
   new Raboot(),
   new Ralts(),

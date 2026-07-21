@@ -1,10 +1,9 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardTag } from '../../../game/store/card/card-types';
 import { PowerType } from '../../../game/store/card/pokemon-types';
-import { GamePhase, State, StateUtils, StoreLike } from '../../../game';
+import { State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { KnockOutEffect } from '../../../game/store/effects/game-effects';
-import { IS_ABILITY_BLOCKED, BLOCK_RETREAT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT, IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Hydreigonex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -41,22 +40,9 @@ export class Hydreigonex extends PokemonCard {
       return BLOCK_RETREAT(store, state, effect, this);
     }
 
-    if (effect instanceof KnockOutEffect && effect.target.isStage(Stage.BASIC)) {
-      const knockedOutOwner = effect.player;
-      const attacker = StateUtils.getOpponent(state, knockedOutOwner);
-      // Only during attack phase, and only if Hydreigon ex is attacking
-      if (state.phase !== GamePhase.ATTACK || attacker.active.getPokemonCard() !== this) {
-        return state;
-      }
-
-      if (IS_ABILITY_BLOCKED(store, state, attacker, this)) {
-        return state;
-      }
-
-      if (effect.prizeCount > 0) {
-        effect.prizeCount += 1;
-      }
-    }
-    return state;
+    return IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES(store, state, effect, this, {
+      checkAbilityBlocked: true,
+      validate: (store, state, koEffect) => koEffect.target.isStage(Stage.BASIC),
+    });
   }
-} 
+}

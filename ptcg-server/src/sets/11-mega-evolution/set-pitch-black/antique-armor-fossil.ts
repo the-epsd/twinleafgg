@@ -1,5 +1,11 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, PokemonType, TrainerType } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  PokemonType,
+  TrainerType,
+  CardTag,
+} from '../../../game/store/card/card-types';
 import {
   GameError,
   GameLog,
@@ -32,6 +38,7 @@ export class AntiqueArmorFossil extends TrainerCard {
   public pokemonType = PokemonType.NORMAL;
   public evolvesFrom = '';
   public cardTag = [];
+  public tags = [CardTag.ANTIQUE];
   public tools = [];
   public evolvesTo = ['Shieldon'];
   public evolvesToStage = [];
@@ -46,11 +53,6 @@ export class AntiqueArmorFossil extends TrainerCard {
 
   public powers: Power[] = [
     {
-      name: 'Armor Protection',
-      powerType: PowerType.ABILITY,
-      text: "While this Pokémon is in the Active Spot, all of your Pokémon take 10 less damage from attacks from your opponent's Pokémon.",
-    },
-    {
       name: 'Antique Armor Fossil',
       text: `Play this card as if it were a 60-HP Basic [C] Pokémon. This card can't be affected by any Special Conditions and can't retreat. At any time during your turn, you may discard this card from play.`,
       useWhenInPlay: true,
@@ -58,9 +60,14 @@ export class AntiqueArmorFossil extends TrainerCard {
       isFossil: true,
       powerType: PowerType.TRAINER_ABILITY,
     },
+    {
+      name: 'Protective Armor',
+      powerType: PowerType.ABILITY,
+      text: "While this Pokémon is in the Active Spot, all of your Pokémon take 10 less damage from attacks from your opponent's Pokémon.",
+    },
   ];
 
-  public set: string = 'M5';
+  public set: string = 'PBL';
   public setNumber: string = '72';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
@@ -123,7 +130,7 @@ export class AntiqueArmorFossil extends TrainerCard {
       }
     }
 
-    if (WAS_POWER_USED(effect, 1, this)) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, {
         name: player.name,

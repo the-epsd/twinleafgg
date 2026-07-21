@@ -1,0 +1,26 @@
+.tab {
+  padding: 6px 16px;
+  border-radius: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(42, 47, 58, 0.5);
+  transition: all 0.2s ease;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  min-width: unset;
+  flex-shrink: 0;
+  white-space: nowrap;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.tab:hover {
+  color: white;
+  background-color: rgba(42, 47, 58, 0.8);
+}
+
+.active {
+  color: white;
+  background-color: #384259;
+  font-weight: 700;
+}

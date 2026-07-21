@@ -3,7 +3,10 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { HEAL_X_DAMAGE_FROM_THIS_POKEMON, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  HEAL_X_DAMAGE_FROM_THIS_POKEMON,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Finizen extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -12,15 +15,17 @@ export class Finizen extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Drain Fin',
-    cost: [W, W],
-    damage: 20,
-    text: 'Heal 20 damage from this Pokémon.',
-  }];
+  public attacks = [
+    {
+      name: 'Draining Fin',
+      cost: [W, W],
+      damage: 20,
+      text: 'Heal 20 damage from this Pokémon.',
+    },
+  ];
 
-  public set: string = 'M5';
-  public setNumber: string = '20';
+  public set: string = 'PBL';
+  public setNumber: string = '21';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Finizen';

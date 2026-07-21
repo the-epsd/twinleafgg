@@ -40,6 +40,7 @@ import { MegaGardevoirex } from './mega-gardevoir-ex';
 import { MegaKangaskhanex } from './mega-kangaskhan-ex';
 import { MegaLucarioex } from './mega-lucario-ex';
 import { MegaVenusaurEx } from './mega-venusaur-ex';
+import { PokemonCenterLady } from '../../07-x-and-y/set-flashfire/pokemon-center-lady';
 
 export class BulbasaurM1S extends Bulbasaur {
   public fullName = 'Bulbasaur M1S 64';
@@ -106,6 +107,13 @@ export class RepelMEG extends Repel {
 export class EnergySwitchPKMEG extends EnergySwitchPK {
   public setNumber = '115';
   public fullName: string = 'Energy Switch MEG';
+  public set = 'MEG';
+  public regulationMark = 'I';
+}
+
+export class PokemonCenterLadyMEG extends PokemonCenterLady {
+  public setNumber = '116';
+  public fullName: string = 'Pokemon Center Lady MEG';
   public set = 'MEG';
   public regulationMark = 'I';
 }

@@ -9,6 +9,7 @@ import {
   type Card,
 } from 'ptcg-server';
 import { resolveDualStadiumDisplayHalves } from '../board3d/dual-stadium.utils';
+import { resolveLegendDisplayHalves } from '../board3d/legend-display.utils';
 
 const MAX_ENERGY_CARDS = 8;
 
@@ -98,24 +99,12 @@ export function buildBoard2dCardModel(
       }
     }
 
-    let legendTopCard: Card | undefined;
-    let legendBottomCard: Card | undefined;
-    const pokemonCard = cardList.getPokemonCard();
-    if (pokemonCard?.tags?.includes(CardTag.LEGEND)) {
-      legendTopCard = cardList.cards.find(
-        (c) =>
-          c.superType === SuperType.POKEMON &&
-          c.tags?.includes(CardTag.LEGEND) &&
-          c.fullName.includes('(Top)'),
-      );
-      legendBottomCard = cardList.cards.find(
-        (c) =>
-          c.superType === SuperType.POKEMON &&
-          c.tags?.includes(CardTag.LEGEND) &&
-          c.fullName.includes('(Bottom)'),
-      );
-    }
+    const { top, bottom } = resolveLegendDisplayHalves(cardList);
+    const legendTopCard = top;
+    const legendBottomCard = bottom;
+    const showLegendStack = !!(legendTopCard && legendBottomCard);
 
+    const pokemonCard = cardList.getPokemonCard();
     let vunionTopLeftCard: Card | undefined;
     let vunionTopRightCard: Card | undefined;
     let vunionBottomLeftCard: Card | undefined;
@@ -129,7 +118,7 @@ export function buildBoard2dCardModel(
 
     return {
       isEmpty: false,
-      mainCard,
+      mainCard: showLegendStack ? undefined : mainCard,
       breakCard,
       legendTopCard,
       legendBottomCard,

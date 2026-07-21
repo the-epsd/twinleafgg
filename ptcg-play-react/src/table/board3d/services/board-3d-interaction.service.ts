@@ -32,6 +32,7 @@ import {
   trainerTypeIsSupporter,
   type HandPlayPokemonZoneGameSettings,
 } from '../board3dMeshIdForPlayTarget';
+import { cardCanAssembleLegendFromHand } from '../dual-legend.utils';
 import { isOpponentAttachTool, isOpponentPokemonExToolTarget } from '../opponent-attach-tool.util';
 import { Board3dAssetLoaderService } from './board-3d-asset-loader.service';
 import { Board3dStateSyncService } from './board-3d-state-sync.service';
@@ -159,6 +160,9 @@ export class Board3dInteractionService {
   /** Matches server {@link GameSettings} flags for sandbox bench targeting. */
   private handPlayZoneGameSettings: HandPlayPokemonZoneGameSettings = undefined;
 
+  /** Bottom player's hand cards — used for dual LEGEND assembly checks. */
+  private bottomHandCards: Card[] = [];
+
   /** Game setup: drag Basics to Active/Bench instead of playCardAction. */
   private setupStartingPokemonDrag: SetupStartingPokemonDragState | null = null;
 
@@ -180,8 +184,17 @@ export class Board3dInteractionService {
     this.handPlayZoneGameSettings = gs;
   }
 
+  /** Called when the bottom player's hand updates (dual LEGEND assembly targeting). */
+  setBottomHandCards(cards: Card[]): void {
+    this.bottomHandCards = cards;
+  }
+
   private playsAsBasicPokemonFromHand(card: Card | undefined | null): boolean {
     return cardPlaysAsBasicPokemonFromHand(card, this.handPlayZoneGameSettings);
+  }
+
+  private canAssembleLegendFromHand(card: Card | undefined | null): boolean {
+    return cardCanAssembleLegendFromHand(card, this.bottomHandCards);
   }
 
   /**
@@ -799,7 +812,7 @@ export class Board3dInteractionService {
     // Handle BENCH_GENERAL zone - only valid for Basic Pokemon (and fossils played as Basic) with open bench slots
     if (config.type === DropZoneType.BENCH_GENERAL) {
       const { card } = this.currentDragContext;
-      if (cardHasUseFromHandToBenchPower(card)) {
+      if (cardHasUseFromHandToBenchPower(card) || this.canAssembleLegendFromHand(card)) {
         return false;
       }
       if (this.playsAsBasicPokemonFromHand(card)) {
@@ -813,6 +826,11 @@ export class Board3dInteractionService {
 
     // useFromHandToBench abilities (Talonflame ex, Luxray, etc.) — open Bench slots only
     if (cardHasUseFromHandToBenchPower(card)) {
+      return config.type === DropZoneType.BENCH && !isOccupied;
+    }
+
+    // Dual LEGEND halves — both must be in hand; open Bench slots only
+    if (this.canAssembleLegendFromHand(card)) {
       return config.type === DropZoneType.BENCH && !isOccupied;
     }
 
@@ -897,6 +915,16 @@ export class Board3dInteractionService {
 
       // useFromHandToBench: highlight open bench slots (player picks the slot)
       if (cardHasUseFromHandToBenchPower(card)) {
+        if (config.type === DropZoneType.BENCH && this.isValidDropZone(zone)) {
+          zone.setValid();
+        } else {
+          zone.hide();
+        }
+        continue;
+      }
+
+      // Dual LEGEND: both halves in hand — open bench slots only
+      if (this.canAssembleLegendFromHand(card)) {
         if (config.type === DropZoneType.BENCH && this.isValidDropZone(zone)) {
           zone.setValid();
         } else {
@@ -1516,6 +1544,14 @@ export class Board3dInteractionService {
       return null;
     }
 
+    if (this.canAssembleLegendFromHand(card)) {
+      const benchZone = this.findNextOpenBenchSlot(PlayerType.BOTTOM_PLAYER);
+      if (benchZone && this.isValidDropZone(benchZone)) {
+        return this.configToCardTarget(benchZone.getConfig());
+      }
+      return null;
+    }
+
     if (this.playsAsBasicPokemonFromHand(card)) {
       const activeZone = this.findDropZoneByType(DropZoneType.ACTIVE, PlayerType.BOTTOM_PLAYER, 0);
       if (activeZone && this.isValidDropZone(activeZone)) {
@@ -1687,6 +1723,12 @@ export class Board3dInteractionService {
       return result;
     }
 
+    if (cardCanAssembleLegendFromHand(ctx.card, this.bottomHandCards)) {
+      this.resetDragState();
+      this.hideAllDropZones();
+      return null;
+    }
+
     const zone = this.resolveDefaultPlayZone(ctx);
     if (!zone) {
       this.currentDragContext = null;
@@ -1725,6 +1767,10 @@ export class Board3dInteractionService {
     }
 
     if (card.userData.isHandCard) {
+      const cardData = card.userData.cardData as Card | undefined;
+      if (cardCanAssembleLegendFromHand(cardData, this.bottomHandCards)) {
+        return { action: 'click', clickedCard: card };
+      }
       return this.tryPlayHandCardFromClick(card);
     }
 
@@ -1769,7 +1815,18 @@ export class Board3dInteractionService {
         !isSelectionActive &&
         event.button !== 2 &&
         clickedCard.userData.isHandCard;
-      const playResult = playOnClick ? this.tryPlayHandCardFromClick(clickedCard) : null;
+      let playResult: DropResult | null = null;
+      if (playOnClick) {
+        const cardData = clickedCard.userData.cardData as Card | undefined;
+        if (cardCanAssembleLegendFromHand(cardData, this.bottomHandCards)) {
+          this.returnCardToHand(this.draggedCard);
+          this.resetDragState();
+          this.hideAllDropZones();
+          this.mouseDownCard = null;
+          return { action: 'click', clickedCard: clickedCard };
+        }
+        playResult = this.tryPlayHandCardFromClick(clickedCard);
+      }
 
       if (!playResult) {
         this.returnCardToHand(this.draggedCard);
@@ -2479,6 +2536,16 @@ export class Board3dInteractionService {
 
       // useFromHandToBench: open bench slots only
       if (cardHasUseFromHandToBenchPower(card)) {
+        if (config.type === DropZoneType.BENCH && this.isValidDropZone(zone)) {
+          zone.setValid();
+        } else {
+          zone.hide();
+        }
+        continue;
+      }
+
+      // Dual LEGEND: open bench slots only
+      if (this.canAssembleLegendFromHand(card)) {
         if (config.type === DropZoneType.BENCH && this.isValidDropZone(zone)) {
           zone.setValid();
         } else {

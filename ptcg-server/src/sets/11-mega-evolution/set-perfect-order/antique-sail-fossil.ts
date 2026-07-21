@@ -1,7 +1,28 @@
-import { TrainerCard, TrainerType, Stage, CardType, PokemonType, Power, PowerType, StoreLike, State, GameLog, StateUtils, GameError, GameMessage, PokemonCard, Player } from '../../../game';
+import {
+  TrainerCard,
+  TrainerType,
+  Stage,
+  CardType,
+  PokemonType,
+  Power,
+  PowerType,
+  StoreLike,
+  State,
+  GameLog,
+  StateUtils,
+  GameError,
+  GameMessage,
+  PokemonCard,
+  Player,
+  CardTag,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { RetreatEffect } from '../../../game/store/effects/game-effects';
-import { PlayItemEffect, PlayPokemonEffect, TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import {
+  PlayItemEffect,
+  PlayPokemonEffect,
+  TrainerEffect,
+} from '../../../game/store/effects/play-card-effects';
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
 import { IS_ABILITY_BLOCKED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
@@ -14,6 +35,7 @@ export class AntiqueSailFossil extends TrainerCard {
   public pokemonType = PokemonType.NORMAL;
   public evolvesFrom = '';
   public cardTag = [];
+  public tags = [CardTag.ANTIQUE];
   public tools = [];
   public evolvesTo = [];
   public evolvesToStage = [];
@@ -29,20 +51,21 @@ export class AntiqueSailFossil extends TrainerCard {
   public evolvesFromBase: string[] = [];
   public maxTools: number = 1;
 
-  public powers: Power[] = [{
-    name: 'Antique Sail Fossil',
-    text: 'Play this card as a 60 HP Basic [C] Pokémon. This card can\'t be affected by Special Conditions and can\'t retreat. At any time during your turn, you may discard this card from play.',
-    useWhenInPlay: true,
-    exemptFromAbilityLock: true,
-    isFossil: true,
-    powerType: PowerType.TRAINER_ABILITY
-  },
-  {
-    name: 'Protective Sail',
-    powerType: PowerType.ABILITY,
-    isFossil: true,
-    text: 'Whenever your opponent plays a Supporter card from their hand, prevent all effects of that card done to this Pokémon.'
-  }];
+  public powers: Power[] = [
+    {
+      name: 'Antique Sail Fossil',
+      text: "Play this card as a 60 HP Basic [C] Pokémon. This card can't be affected by Special Conditions and can't retreat. At any time during your turn, you may discard this card from play.",
+      useWhenInPlay: true,
+      exemptFromAbilityLock: true,
+      isFossil: true,
+      powerType: PowerType.TRAINER_ABILITY,
+    },
+    {
+      name: 'Protective Sail',
+      powerType: PowerType.ABILITY,
+      text: 'Whenever your opponent plays a Supporter card from their hand, prevent all effects of that card done to this Pokémon.',
+    },
+  ];
 
   public regulationMark = 'J';
   public set: string = 'POR';
@@ -52,19 +75,22 @@ export class AntiqueSailFossil extends TrainerCard {
   public fullName: string = 'Antique Sail Fossil M3';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
-    const openSlots = player.bench.filter(b => b.cards.length === 0);
+    const openSlots = player.bench.filter((b) => b.cards.length === 0);
     if (openSlots.length === 0) {
       return false;
     }
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Discard from play
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
-      store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: this.name, effect: 'Antique Sail Fossil' });
+      store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, {
+        name: player.name,
+        card: this.name,
+        effect: 'Antique Sail Fossil',
+      });
       const cardList = StateUtils.findCardList(state, this);
       cardList.moveCardTo(this, player.discard);
     }
@@ -72,11 +98,15 @@ export class AntiqueSailFossil extends TrainerCard {
     // Play as Pokemon
     if (effect instanceof PlayItemEffect && effect.trainerCard === this) {
       const player = effect.player;
-      const emptySlots = player.bench.filter(b => b.cards.length === 0);
+      const emptySlots = player.bench.filter((b) => b.cards.length === 0);
       if (emptySlots.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-      const playPokemonEffect = new PlayPokemonEffect(player, this as unknown as PokemonCard, emptySlots[0]);
+      const playPokemonEffect = new PlayPokemonEffect(
+        player,
+        this as unknown as PokemonCard,
+        emptySlots[0],
+      );
       store.reduceEffect(state, playPokemonEffect);
     }
 
@@ -91,7 +121,10 @@ export class AntiqueSailFossil extends TrainerCard {
     }
 
     // Block Supporter effects from opponent
-    if (effect instanceof TrainerEffect && effect.trainerCard.trainerType === TrainerType.SUPPORTER) {
+    if (
+      effect instanceof TrainerEffect &&
+      effect.trainerCard.trainerType === TrainerType.SUPPORTER
+    ) {
       const cardList = StateUtils.findCardList(state, this);
       const player = StateUtils.findOwner(state, cardList);
       const opponent = StateUtils.getOpponent(state, player);

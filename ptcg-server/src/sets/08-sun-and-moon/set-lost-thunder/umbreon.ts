@@ -5,9 +5,8 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
-import { MarkerConstants } from '../../../game/store/markers/marker-constants';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN } from '../../../game/store/prefabs/prefabs';
 
 export class Umbreon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -18,21 +17,19 @@ export class Umbreon extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Retaliate',
-      cost: [D],
-      damage: 30,
-      damageCalculation: '+',
-      text: 'If any of your Pokémon were Knocked Out by damage from an opponent\'s attack during their last turn, this attack does 90 more damage.'
-    },
-    {
-      name: 'Dark Cutter',
-      cost: [D, C],
-      damage: 60,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Retaliate',
+    cost: [D],
+    damage: 30,
+    damageCalculation: '+',
+    text: 'If any of your Pokémon were Knocked Out by damage from an opponent\'s attack during their last turn, this attack does 90 more damage.'
+  },
+  {
+    name: 'Dark Cutter',
+    cost: [D, C],
+    damage: 60,
+    text: ''
+  }];
 
   public set: string = 'LOT';
   public setNumber: string = '120';
@@ -41,11 +38,10 @@ export class Umbreon extends PokemonCard {
   public fullName: string = 'Umbreon LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 1: Retaliate
-    // Ref: set-ultra-prism/toxicroak.ts (Exact Revenge - REVENGE_MARKER)
+    // Retaliate
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      if (player.marker.hasMarker(MarkerConstants.REVENGE_MARKER)) {
+      if (WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN(player, { byAttackDamage: true })) {
         effect.damage += 90;
       }
     }

@@ -3,68 +3,53 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SpecialCondition } from '../../../game/store/card/card-types';
 import { Card, ChooseEnergyPrompt, GameMessage, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-
 import { AddSpecialConditionsEffect, DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { MarkerConstants } from '../../../game/store/markers/marker-constants';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN } from '../../../game/store/prefabs/prefabs';
 
 export class TapuKokoex extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
+  public tags = [CardTag.POKEMON_ex];
+  public cardType: CardType = L;
+  public hp: number = 210;
+  public weakness = [{ type: F }];
+  public retreat = [C];
+
+  public attacks = [{
+    name: 'Vengeful Shock',
+    cost: [L, C],
+    damage: 30,
+    damageCalculation: '+',
+    text: 'If any of your Pokémon were Knocked Out by damage from an attack during your opponent\'s last turn, this attack does 90 more damage, and your opponent\'s Active Pokémon is now Paralyzed.'
+  },
+  {
+    name: 'Extreme Current',
+    cost: [L, L, C],
+    damage: 180,
+    text: 'Discard an Energy from this Pokémon.'
+  }];
 
   public regulationMark = 'G';
-
-  public tags = [CardTag.POKEMON_ex];
-
-  public cardType: CardType = CardType.LIGHTNING;
-
-  public hp: number = 210;
-
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public retreat = [CardType.COLORLESS];
-
-  public attacks = [
-    {
-      name: 'Vengeful Shock',
-      cost: [CardType.LIGHTNING, CardType.COLORLESS],
-      damage: 30,
-      damageCalculation: '+',
-      text: 'If any of your Pokémon were Knocked Out by damage from an attack during your opponent\'s last turn, this attack does 90 more damage, and your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Extreme Current',
-      cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS],
-      damage: 180,
-      text: 'Discard an Energy from this Pokémon.'
-    },
-  ];
-
   public set: string = 'PAR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '68';
-
   public name: string = 'Tapu Koko ex';
-
   public fullName: string = 'Tapu Koko ex PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Vengeful Shock
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      if (player.marker.hasMarker(MarkerConstants.REVENGE_MARKER)) {
+      if (WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN(player, { byAttackDamage: true })) {
         effect.damage += 90;
         const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED]);
         store.reduceEffect(state, specialConditionEffect);
       }
-
       return state;
     }
 
+    // Extreme Current
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
@@ -85,7 +70,7 @@ export class TapuKokoex extends PokemonCard {
         return state;
       });
     }
+
     return state;
   }
-
 }

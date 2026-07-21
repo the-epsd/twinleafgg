@@ -154,6 +154,9 @@ import { Whimsicottex } from './whimsicott-ex';
 import { Zekromex } from './zekrom-ex';
 import { Zoroark } from './zoroark';
 import { Zorua } from './zorua';
+import { Hydreigonex } from './hydreigon-ex';
+import { Zweilous } from './zweilous';
+import { Deino } from './deino';
 
 export const setSV11: Card[] = [
   new Harlequin(),
@@ -219,6 +222,9 @@ export const setSV11: Card[] = [
   new Tympole(),
   new Volcarona(),
   new Ducklett(),
+  new Deino(),
+  new Zweilous(),
+  new Hydreigonex(),
 
   new CherenSV11(),
   new ProfessorsResearchSV11(),

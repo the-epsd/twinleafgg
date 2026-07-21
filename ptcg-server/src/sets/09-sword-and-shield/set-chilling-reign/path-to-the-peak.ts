@@ -9,25 +9,18 @@ import { Effect } from '../../../game/store/effects/effect';
 import { GameError, GameMessage, PokemonCardList, PowerType } from '../../../game';
 
 export class PathToThePeak extends TrainerCard {
-
   public trainerType = TrainerType.STADIUM;
-
   public set = 'CRE';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '148';
-
   public regulationMark = 'E';
-
   public name = 'Path to the Peak';
-
   public fullName = 'Path to the Peak CRE';
 
-  public text = 'Pokémon with a Rule Box in play (both yours and your opponent\'s) have no Abilities. (Pokémon V, Pokémon-GX, etc. have Rule Boxes.)';
+  public text =
+    "Pokémon with a Rule Box in play (both yours and your opponent's) have no Abilities. (Pokémon V, Pokémon-GX, etc. have Rule Boxes.)";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof CheckPokemonPowersEffect && StateUtils.getStadiumCard(state) === this) {
       const targetPokemon = effect.target;
       if (!targetPokemon) {
@@ -41,31 +34,24 @@ export class PathToThePeak extends TrainerCard {
       }
 
       // Check if Pokemon has a Rule Box
-      if (targetPokemon.tags.includes(CardTag.POKEMON_V) ||
-        targetPokemon.tags.includes(CardTag.POKEMON_VMAX) ||
-        targetPokemon.tags.includes(CardTag.POKEMON_VSTAR) ||
-        targetPokemon.tags.includes(CardTag.POKEMON_ex) ||
-        targetPokemon.tags.includes(CardTag.POKEMON_EX) ||
-        targetPokemon.tags.includes(CardTag.BREAK) ||
-        targetPokemon.tags.includes(CardTag.POKEMON_GX) ||
-        targetPokemon.tags.includes(CardTag.PRISM_STAR) ||
-        targetPokemon.tags.includes(CardTag.RADIANT)) {
+      if (targetPokemon.hasRuleBox()) {
         // Filter out all abilities
-        effect.powers = effect.powers.filter(power =>
-          power.powerType !== PowerType.ABILITY
-        );
+        effect.powers = effect.powers.filter((power) => power.powerType !== PowerType.ABILITY);
       }
     }
 
-    if (effect instanceof PowerEffect && StateUtils.getStadiumCard(state) === this &&
-      !effect.power.exemptFromAbilityLock) {
-
+    if (
+      effect instanceof PowerEffect &&
+      StateUtils.getStadiumCard(state) === this &&
+      !effect.power.exemptFromAbilityLock
+    ) {
       if (effect.power.useFromDiscard || effect.power.useFromHand) {
         return state;
       }
 
       const pokemonCard = effect.card;
-      if (pokemonCard.tags.includes(CardTag.POKEMON_V) ||
+      if (
+        pokemonCard.tags.includes(CardTag.POKEMON_V) ||
         pokemonCard.tags.includes(CardTag.POKEMON_VMAX) ||
         pokemonCard.tags.includes(CardTag.POKEMON_VSTAR) ||
         pokemonCard.tags.includes(CardTag.POKEMON_ex) ||
@@ -73,7 +59,8 @@ export class PathToThePeak extends TrainerCard {
         pokemonCard.tags.includes(CardTag.BREAK) ||
         pokemonCard.tags.includes(CardTag.POKEMON_GX) ||
         pokemonCard.tags.includes(CardTag.PRISM_STAR) ||
-        pokemonCard.tags.includes(CardTag.RADIANT)) {
+        pokemonCard.tags.includes(CardTag.RADIANT)
+      ) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
     }

@@ -9,21 +9,23 @@ export class Charjabug extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Vise Grip',
-    cost: [L],
-    damage: 30,
-    text: '',
-  },
-  {
-    name: 'Ram',
-    cost: [L, L],
-    damage: 50,
-    text: '',
-  }];
+  public attacks = [
+    {
+      name: 'Vise Grip',
+      cost: [L],
+      damage: 30,
+      text: '',
+    },
+    {
+      name: 'Ram',
+      cost: [L, L],
+      damage: 50,
+      text: '',
+    },
+  ];
 
-  public set: string = 'M5';
-  public setNumber: string = '24';
+  public set: string = 'PBL';
+  public setNumber: string = '25';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Charjabug';

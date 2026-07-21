@@ -33,9 +33,9 @@ import { StoreLike } from '../store-like';
 import { MoveCardsEffect } from '../effects/game-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
 import { PokemonCardList } from '../state/pokemon-card-list';
-import { MOVE_CARDS, ADD_MARKER, HAS_MARKER } from '../prefabs/prefabs';
+import { MOVE_CARDS } from '../prefabs/prefabs';
+import { RESOLVE_COIN_FLIP_EFFECT, RUN_COIN_FLIP_SEQUENCE } from '../prefabs/attack-coin-reflip';
 import { CardList } from '../state/card-list';
-import { MarkerConstants } from '../markers/marker-constants';
 import { ConfirmPrompt } from '../prompts/confirm-prompt';
 import { checkState } from './check-effect';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
@@ -122,7 +122,8 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   }
 
   const sp = player.active.specialConditions;
-  if (sp.includes(SpecialCondition.PARALYZED) || sp.includes(SpecialCondition.ASLEEP)) {
+  const ignoreStatusConditions = effect instanceof UseAttackEffect && effect.ignoreStatusConditions;
+  if ((sp.includes(SpecialCondition.PARALYZED) || sp.includes(SpecialCondition.ASLEEP)) && !ignoreStatusConditions) {
     throw new GameError(GameMessage.BLOCKED_BY_SPECIAL_CONDITION);
   }
 
@@ -368,17 +369,20 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
 
       store.log(state, GameLog.LOG_POKEMON_KO, { name: card.name });
 
-      // Centralized revenge attack detection: if Pokémon was knocked out during opponent's attack
-      // effect.player is the owner of the knocked out Pokémon
       const knockedOutOwner = effect.player;
       const attacker = StateUtils.getOpponent(state, knockedOutOwner);
+      const duringOpponentsTurn = [GamePhase.PLAYER_TURN, GamePhase.ATTACK].includes(state.phase)
+        && state.players[state.activePlayer] === attacker;
 
-      // Check if knockout occurred during opponent's attack phase and damage was dealt
-      // The DAMAGE_DEALT_MARKER is set on the player who received damage (knockedOutOwner)
+      if (duringOpponentsTurn) {
+        knockedOutOwner.pokemonKnockedOutDuringOpponentsLastTurn = true;
+        knockedOutOwner.pokemonKnockedOutLastTurnEntries.push([...(card.tags || [])] as CardTag[]);
+      }
+
       if (state.phase === GamePhase.ATTACK &&
         state.players[state.activePlayer] === attacker &&
         knockedOutOwner.marker.hasMarker(knockedOutOwner.DAMAGE_DEALT_MARKER)) {
-        knockedOutOwner.marker.addMarkerToState(MarkerConstants.REVENGE_MARKER);
+        knockedOutOwner.pokemonKnockedOutByAttackDuringOpponentsLastTurn = true;
       }
 
       // Handle Lost City marker or PRISM_STAR cards
@@ -694,86 +698,11 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
   }
 
   if (effect instanceof CoinFlipSequenceEffect) {
-    const seqEffect = effect as CoinFlipSequenceEffect;
-    const player = seqEffect.player;
-    const GLIMWOOD_REFLIP_USED = 'GLIMWOOD_REFLIP_USED';
-
-    const doOneFlip = (s: State, resultsSoFar: boolean[], onDone: (results: boolean[]) => void): State => {
-      const coinFlip = new CoinFlipEffect(player, (result: boolean) => {
-        const newResults = [...resultsSoFar, result];
-        if (seqEffect.mode === 'untilTails' && result) {
-          doOneFlip(s, newResults, onDone);
-        } else if (seqEffect.mode === 'untilTails' && !result) {
-          onDone(newResults);
-        } else if (typeof seqEffect.mode === 'number' && newResults.length < seqEffect.mode) {
-          doOneFlip(s, newResults, onDone);
-        } else {
-          onDone(newResults);
-        }
-      });
-      coinFlip.skipReflipStadium = true;
-      return store.reduceEffect(s, coinFlip);
-    };
-
-    const finish = (results: boolean[]) => {
-      const stadium = StateUtils.getStadiumCard(state);
-      const isGlimwood = stadium?.name === 'Glimwood Tangle';
-      if (state.phase === GamePhase.ATTACK && isGlimwood && stadium && !HAS_MARKER(GLIMWOOD_REFLIP_USED, player, stadium)) {
-        store.prompt(state, new ConfirmPrompt(player.id, GameMessage.WANT_TO_USE_ABILITY), wantToReflip => {
-          if (wantToReflip) {
-            store.log(state, GameLog.LOG_PLAYER_REFLIPS_WITH_GLIMWOOD_TANGLE, { name: player.name });
-            ADD_MARKER(GLIMWOOD_REFLIP_USED, player, stadium as Card);
-            doOneFlip(state, [], finish);
-          } else {
-            seqEffect.callback(results);
-          }
-        });
-      } else {
-        seqEffect.callback(results);
-      }
-    };
-
-    return doOneFlip(state, [], finish);
+    return RUN_COIN_FLIP_SEQUENCE(store, state, effect);
   }
 
   if (effect instanceof CoinFlipEffect) {
-    // Simulate coin flip and store result
-    const result = Math.random() < 0.5;
-    (effect as CoinFlipEffect).result = result;
-
-    const player = (effect as CoinFlipEffect).player;
-
-    // Emit coin flip animation event
-    const game = (store as any).handler;
-    if (game && game.core && typeof game.core.emit === 'function') {
-      game.core.emit((c: any) => {
-        if (typeof c.socket !== 'undefined') {
-          c.socket.emit(`game[${game.id}]:coinFlip`, {
-            playerId: player.id,
-            result: result
-          });
-        }
-      });
-    }
-
-    // Wait for animation to complete (6 seconds)
-    // Capture the state that will be available in the callback
-    const stateForCallback = state;
-    state = store.prompt(state, new WaitPrompt(player.id, 2000, 'Coin flip animation'), () => {
-      // Animation complete, continue with game logic
-      // Log the coin flip result
-      const gameMessage = result ? GameLog.LOG_PLAYER_FLIPS_HEADS : GameLog.LOG_PLAYER_FLIPS_TAILS;
-      store.log(stateForCallback, gameMessage, { name: player.name });
-
-      // Call callback if provided
-      // The callback executes after the WaitPrompt completes
-      // Store the state in the effect so the callback can access it if needed
-      if ((effect as CoinFlipEffect).callback) {
-        (effect as CoinFlipEffect).callback!(result);
-      }
-    });
-
-    return state;
+    return RESOLVE_COIN_FLIP_EFFECT(store, state, effect);
   }
 
   return state;

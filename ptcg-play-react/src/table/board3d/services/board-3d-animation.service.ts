@@ -4,6 +4,7 @@ import {
   Vector3,
   Quaternion,
   Scene,
+  Group,
   Mesh,
   PlaneGeometry,
   MeshBasicMaterial,
@@ -17,6 +18,19 @@ import {
   BOARD_ATTACK_ANIMATION_DURATION_SEC,
   BOARD_ABILITY_ANIMATION_DURATION_SEC,
 } from '../../animationTiming';
+import {
+  LEGEND_3D_HALF_ROTATION,
+  LEGEND_3D_HALF_SCALE,
+  LEGEND_3D_Y,
+  LEGEND_ASSEMBLY_REVEAL_SEPARATION,
+  LEGEND_ASSEMBLY_STAGE_SCALE,
+  legendAssemblyStackedHalfLocalPositions,
+} from '../legend-display.utils';
+import {
+  buildCoinFlipTimeline,
+  createCoinFlipSceneGraph,
+  type CoinFlipSceneGraph,
+} from '../board-3d-coin-flip';
 
 /** World Z: flip in the plane of the hand / table (not Y, which tumbles the card edge-on). */
 const DRAW_FLIP_AXIS_Z = new Vector3(0, 0, 1);
@@ -152,6 +166,8 @@ function stageToHandTiming(
 export class Board3dAnimationService {
   private activeAnimations: gsap.core.Timeline[] = [];
   private activeAbilityTimeline: gsap.core.Timeline | null = null;
+  private activeCoinFlipTimeline: gsap.core.Timeline | null = null;
+  private activeCoinFlipScene: CoinFlipSceneGraph | null = null;
   private hasActiveAnimationsCache: boolean = false;
   private lastAnimationCheck: number = 0;
   private animationCheckInterval: number = 50; // Check every 50ms (20fps check rate)
@@ -408,6 +424,64 @@ export class Board3dAnimationService {
       this.activeAnimations.push(timeline);
       this.updateAnimationState();
     });
+  }
+
+  /** Angular visual-coin-flip timing on the persistent board coin mesh. */
+  initCoinFlipScene(scene: Scene): void {
+    if (this.activeCoinFlipScene) {
+      if (!this.activeCoinFlipScene.root.parent) {
+        scene.add(this.activeCoinFlipScene.root);
+      }
+      return;
+    }
+    const graph = createCoinFlipSceneGraph();
+    scene.add(graph.root);
+    this.activeCoinFlipScene = graph;
+  }
+
+  playCoinFlipAnimation(scene: Scene, isHeads: boolean): void {
+    this.initCoinFlipScene(scene);
+    const graph = this.activeCoinFlipScene;
+    if (!graph) {
+      return;
+    }
+
+    if (this.activeCoinFlipTimeline) {
+      this.removeAnimation(this.activeCoinFlipTimeline);
+      this.activeCoinFlipTimeline.kill();
+      this.activeCoinFlipTimeline = null;
+    }
+
+    let timeline: gsap.core.Timeline;
+    const finish = (): void => {
+      this.activeCoinFlipTimeline = null;
+      this.removeAnimation(timeline);
+      this.updateAnimationState();
+    };
+
+    timeline = buildCoinFlipTimeline(graph.coin, isHeads, finish);
+
+    this.activeCoinFlipTimeline = timeline;
+    this.activeAnimations.push(timeline);
+    this.updateAnimationState();
+  }
+
+  cancelCoinFlipAnimation(): void {
+    if (this.activeCoinFlipTimeline) {
+      this.removeAnimation(this.activeCoinFlipTimeline);
+      this.activeCoinFlipTimeline.kill();
+      this.activeCoinFlipTimeline = null;
+      this.updateAnimationState();
+    }
+  }
+
+  disposeCoinFlipScene(): void {
+    this.cancelCoinFlipAnimation();
+    if (this.activeCoinFlipScene) {
+      this.activeCoinFlipScene.root.parent?.remove(this.activeCoinFlipScene.root);
+      this.activeCoinFlipScene.dispose();
+      this.activeCoinFlipScene = null;
+    }
   }
 
   /** Wall-clock wait used when the board mesh is not ready; matches {@link BOARD3D_ABILITY_ANIMATION_DURATION_SEC}. */
@@ -770,6 +844,206 @@ export class Board3dAnimationService {
   }
 
   /**
+   * Dual LEGEND assembly: both halves rise to center (separated), snap together, then fly to bench.
+   */
+  playLegendAssemblyAnimation(
+    sceneRoot: Object3D,
+    topHalf: Object3D,
+    bottomHalf: Object3D,
+    stageCenter: Vector3,
+    targetWorld: Vector3,
+    endRotationY: number,
+  ): Promise<void> {
+    const halfRotY = (LEGEND_3D_HALF_ROTATION * Math.PI) / 180;
+    const stageHalfScale = LEGEND_ASSEMBLY_STAGE_SCALE * LEGEND_3D_HALF_SCALE;
+    const benchHalfScale = LEGEND_3D_HALF_SCALE;
+    const stacked = legendAssemblyStackedHalfLocalPositions();
+    const revealSeparation = LEGEND_ASSEMBLY_REVEAL_SEPARATION;
+
+    topHalf.renderOrder = 200;
+    bottomHalf.renderOrder = 200;
+
+    const topStage = stageCenter.clone().add(
+      new Vector3(0, LEGEND_3D_Y + 0.35, -revealSeparation * 0.5),
+    );
+    const bottomStage = stageCenter.clone().add(
+      new Vector3(0, LEGEND_3D_Y + 0.35, revealSeparation * 0.5),
+    );
+
+    const flashMeshes: Mesh[] = [];
+    const flashMats: MeshBasicMaterial[] = [];
+    const addSnapFlash = (cardRoot: Object3D): void => {
+      const board3dCard = cardRoot.userData.board3dCard as Board3dCard | undefined;
+      if (!board3dCard) {
+        return;
+      }
+      const mat = new MeshBasicMaterial({
+        color: 0xffffff,
+        transparent: true,
+        opacity: 0,
+        depthWrite: false,
+      });
+      flashMats.push(mat);
+      const mesh = new Mesh(new PlaneGeometry(2.5, 3.5), mat);
+      mesh.renderOrder = 220;
+      mesh.rotation.y = halfRotY;
+      mesh.position.set(0, 0, 0.03);
+      board3dCard.getMesh().add(mesh);
+      flashMeshes.push(mesh);
+    };
+    addSnapFlash(topHalf);
+    addSnapFlash(bottomHalf);
+
+    const disposeFlash = (): void => {
+      for (const mesh of flashMeshes) {
+        mesh.parent?.remove(mesh);
+        mesh.geometry.dispose();
+      }
+      flashMeshes.length = 0;
+      for (const mat of flashMats) {
+        mat.dispose();
+      }
+      flashMats.length = 0;
+    };
+
+    const assembly = new Group();
+    assembly.renderOrder = 200;
+    sceneRoot.add(assembly);
+
+    return new Promise(resolve => {
+      const timeline = gsap.timeline({
+        onComplete: () => {
+          disposeFlash();
+          topHalf.removeFromParent();
+          bottomHalf.removeFromParent();
+          assembly.removeFromParent();
+          topHalf.renderOrder = 0;
+          bottomHalf.renderOrder = 0;
+          this.removeAnimation(timeline);
+          resolve();
+        },
+      });
+
+      timeline
+        .to(topHalf.position, {
+          x: topStage.x,
+          y: topStage.y,
+          z: topStage.z,
+          duration: 0.48,
+          ease: 'power2.out',
+        })
+        .to(
+          bottomHalf.position,
+          {
+            x: bottomStage.x,
+            y: bottomStage.y,
+            z: bottomStage.z,
+            duration: 0.48,
+            ease: 'power2.out',
+          },
+          '<',
+        )
+        .to(
+          topHalf.rotation,
+          { x: 0, y: halfRotY, z: 0, duration: 0.42, ease: 'power2.out' },
+          '<0.05',
+        )
+        .to(
+          bottomHalf.rotation,
+          { x: 0, y: halfRotY, z: 0, duration: 0.42, ease: 'power2.out' },
+          '<',
+        )
+        .to(
+          topHalf.scale,
+          { x: stageHalfScale, y: stageHalfScale, z: stageHalfScale, duration: 0.42, ease: 'back.out(1.4)' },
+          '<',
+        )
+        .to(
+          bottomHalf.scale,
+          { x: stageHalfScale, y: stageHalfScale, z: stageHalfScale, duration: 0.42, ease: 'back.out(1.4)' },
+          '<',
+        )
+        .to({}, { duration: 0.12 })
+        .call(() => {
+          assembly.position.copy(stageCenter);
+          assembly.rotation.set(0, 0, 0);
+          assembly.scale.set(1, 1, 1);
+          assembly.attach(topHalf);
+          assembly.attach(bottomHalf);
+          topHalf.position.set(0, LEGEND_3D_Y, -revealSeparation * 0.5);
+          bottomHalf.position.set(0, LEGEND_3D_Y, revealSeparation * 0.5);
+          topHalf.rotation.set(0, halfRotY, 0);
+          bottomHalf.rotation.set(0, halfRotY, 0);
+          topHalf.scale.setScalar(stageHalfScale);
+          bottomHalf.scale.setScalar(stageHalfScale);
+        })
+        .to(topHalf.position, {
+          x: stacked.top.x,
+          y: stacked.top.y,
+          z: stacked.top.z,
+          duration: 0.32,
+          ease: 'power3.in',
+        })
+        .to(
+          bottomHalf.position,
+          {
+            x: stacked.bottom.x,
+            y: stacked.bottom.y,
+            z: stacked.bottom.z,
+            duration: 0.32,
+            ease: 'power3.in',
+          },
+          '<',
+        )
+        .to(
+          flashMats,
+          {
+            opacity: 0.85,
+            duration: 0.06,
+            ease: 'power1.out',
+          },
+          '<0.08',
+        )
+        .to(
+          flashMats,
+          {
+            opacity: 0,
+            duration: 0.18,
+            ease: 'power2.in',
+          },
+          '<0.04',
+        )
+        .to({}, { duration: 0.65 })
+        .to(assembly.position, {
+          x: targetWorld.x,
+          y: Math.max(targetWorld.y, 0.08),
+          z: targetWorld.z,
+          duration: 0.52,
+          ease: 'power2.inOut',
+        })
+        .to(
+          assembly.rotation,
+          { y: endRotationY, duration: 0.52, ease: 'power2.inOut' },
+          '<',
+        )
+        .to(
+          assembly.scale,
+          {
+            x: benchHalfScale / stageHalfScale,
+            y: benchHalfScale / stageHalfScale,
+            z: benchHalfScale / stageHalfScale,
+            duration: 0.52,
+            ease: 'power2.inOut',
+          },
+          '<',
+        );
+
+      this.activeAnimations.push(timeline);
+      this.updateAnimationState();
+    });
+  }
+
+  /**
    * Energy from hand: arc onto the host Pokémon, then shrink/warp into the bottom energy icon slot.
    */
   playEnergyAttachToPokemon(
@@ -1054,6 +1328,7 @@ export class Board3dAnimationService {
       this.activeAbilityTimeline.kill();
       this.activeAbilityTimeline = null;
     }
+    this.cancelCoinFlipAnimation();
     this.activeAnimations.forEach(animation => {
       animation.kill();
     });

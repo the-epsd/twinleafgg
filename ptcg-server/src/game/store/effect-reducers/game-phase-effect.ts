@@ -1,5 +1,5 @@
 import { Effect } from '../effects/effect';
-import { EndTurnEffect, BetweenTurnsEffect, BeginTurnEffect, DrawCardForTurnEffect, DrewTopdeckEffect } from '../effects/game-phase-effects';
+import { AfterAttackEffect, EndTurnEffect, BetweenTurnsEffect, BeginTurnEffect, DrawCardForTurnEffect, DrewTopdeckEffect } from '../effects/game-phase-effects';
 import { GameError } from '../../game-error';
 import { GameMessage, GameLog } from '../../game-message';
 import { Player } from '../state/player';
@@ -9,9 +9,9 @@ import { StoreLike } from '../store-like';
 import { checkState, endGame } from './check-effect';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
 import { PlayerType } from '../actions/play-card-action';
-import { MarkerConstants } from '../markers/marker-constants';
 import { StateUtils } from '../state-utils';
 import { RESOLVE_PENDING_END_OF_OPPONENTS_NEXT_TURN_EFFECTS } from '../prefabs/attack-effects';
+import { MOVE_CARDS } from '../prefabs/prefabs';
 
 function getActivePlayer(state: State): Player {
   return state.players[state.activePlayer];
@@ -82,22 +82,27 @@ export function initNextTurn(store: StoreLike, state: State): State {
   store.reduceEffect(state, beginTurn);
 
   // Draw card for turn (can be blocked by effects like Luvdisc's Heart Wink)
+  let drawCardForTurn: DrawCardForTurnEffect;
   try {
-    const drawCardForTurn = new DrawCardForTurnEffect(player);
+    drawCardForTurn = new DrawCardForTurnEffect(player);
     store.reduceEffect(state, drawCardForTurn);
   } catch {
     return state;
   }
 
-  player.deck.moveTo(player.hand, 1);
+  const handStartLength = player.hand.cards.length;
+  state = MOVE_CARDS(store, state, player.deck, player.hand, { count: drawCardForTurn.drawCount });
 
-  // Check the drawn card
-  const drawnCard = player.hand.cards[player.hand.cards.length - 1];
-  try {
-    const drewTopdeck = new DrewTopdeckEffect(player, drawnCard);
-    store.reduceEffect(state, drewTopdeck);
-  } catch {
-    return state;
+  // Check each drawn card (for cards like Metagross Emergency Entry, Nugget, etc.)
+  const drawnCount = player.hand.cards.length - handStartLength;
+  for (let i = 0; i < drawnCount; i++) {
+    const drawnCard = player.hand.cards[handStartLength + i];
+    try {
+      const drewTopdeck = new DrewTopdeckEffect(player, drawnCard);
+      store.reduceEffect(state, drewTopdeck);
+    } catch {
+      return state;
+    }
   }
   return state;
 }
@@ -182,8 +187,18 @@ function handleSpecialConditions(store: StoreLike, state: State, effect: Between
 
 export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect): State {
 
+  if (effect instanceof AfterAttackEffect) {
+    effect.opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+      if (cardList.defendingPokemonExtraDamageRearmAfterAttack) {
+        cardList.defendingPokemonExtraDamageRearmAfterAttack = false;
+        cardList.defendingPokemonExtraDamagePending = true;
+      }
+    });
+  }
+
   if (effect instanceof EndTurnEffect) {
-    const player = state.players[state.activePlayer];
+    const player = effect.player;
+    const opponent = StateUtils.getOpponent(state, player);
 
     state = RESOLVE_PENDING_END_OF_OPPONENTS_NEXT_TURN_EFFECTS(store, state, effect);
 
@@ -198,11 +213,12 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
 
     effect.player.marker.removeMarker(effect.player.DAMAGE_DEALT_MARKER);
     if (!player.usedTurnSkip) {
-      effect.player.marker.removeMarker(MarkerConstants.REVENGE_MARKER);
+      player.pokemonKnockedOutDuringOpponentsLastTurn = false;
+      player.pokemonKnockedOutByAttackDuringOpponentsLastTurn = false;
+      player.pokemonKnockedOutLastTurnEntries = [];
     }
 
     // Clear damage reduction effects on opponent's Pokémon when their turn ends
-    const opponent = StateUtils.getOpponent(state, player);
     opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
       cardList.damageReductionNextTurn = 0;
       cardList.preventDamageNextTurn = null;
@@ -223,11 +239,16 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
       }
     });
 
-    // Activate pending defending Pokemon extra damage at end of the defending player's turn
-    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-      if (cardList.defendingPokemonExtraDamagePending) {
-        cardList.defendingPokemonExtraDamagePending = false;
-      }
+    // Activate pending extra damage at end of the defending player's turn (not the attacker's).
+    // The effect is armed by the attacker on the opponent's Active; it becomes active once
+    // that opponent finishes their next turn, before the attacker's following turn.
+    [player, opponent].forEach(p => {
+      p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+        if (cardList.defendingPokemonExtraDamagePending
+          && cardList.defendingPokemonExtraDamageAttackerId !== player.id) {
+          cardList.defendingPokemonExtraDamagePending = false;
+        }
+      });
     });
 
     // Clear active defending Pokemon extra damage at end of the attacking player's turn
@@ -268,6 +289,9 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
       if (cardList.cannotRetreatNextTurnPending) {
         cardList.cannotRetreatNextTurn = true;
         cardList.cannotRetreatNextTurnPending = false;
+      }
+      if (cardList.pendingEnergyAttachDamageCounters) {
+        cardList.pendingEnergyAttachDamageCounters = null;
       }
       if (cardList.blockedAttackNameNextTurn !== undefined) {
         cardList.blockedAttackNameNextTurn = undefined;

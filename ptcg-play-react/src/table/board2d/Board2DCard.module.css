@@ -298,6 +298,24 @@
   z-index: 1;
 }
 
+.legendTopCard {
+  width: 100%;
+  left: 50%;
+  top: -28%;
+  position: absolute;
+  transform: translateX(-50%) rotate(90deg) scale(0.75);
+  z-index: 1;
+}
+
+.legendBottomCard {
+  width: 100%;
+  left: 50%;
+  top: 25%;
+  position: absolute;
+  transform: translateX(-50%) rotate(90deg) scale(0.75);
+  z-index: 1;
+}
+
 .dualStadium {
   display: flex;
   width: 200%;

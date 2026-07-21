@@ -13,21 +13,23 @@ export class Malamar extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Perplex',
-    cost: [D],
-    damage: 0,
-    text: 'Your opponent\'s Active Pokémon is now Confused.',
-  },
-  {
-    name: 'Brain Crush',
-    cost: [D, D],
-    damage: 130,
-    text: 'If your opponent\'s Active Pokémon isn\'t Confused, this attack does nothing.',
-  }];
+  public attacks = [
+    {
+      name: 'Perplex',
+      cost: [D],
+      damage: 0,
+      text: "Your opponent's Active Pokémon is now Confused.",
+    },
+    {
+      name: 'Brain Crush',
+      cost: [D],
+      damage: 130,
+      text: "If your opponent's Active Pokémon isn't Confused, this attack does nothing.",
+    },
+  ];
 
-  public set: string = 'M5';
-  public setNumber: string = '50';
+  public set: string = 'PBL';
+  public setNumber: string = '52';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Malamar';

@@ -5,13 +5,15 @@ import { Attack, Weakness, Resistance, Power } from './pokemon-types';
 import { TrainerCard } from './trainer-card';
 
 export abstract class PokemonCard extends Card {
-
   public superType: SuperType = SuperType.POKEMON;
 
   public cardType: CardType = CardType.COLORLESS;
 
   public additionalCardTypes?: CardType[];
 
+  /**
+   * Deprecated. Use Card.tags instead.
+   */
   public cardTag: CardTag[] = [];
 
   public pokemonType: PokemonType = PokemonType.NORMAL;

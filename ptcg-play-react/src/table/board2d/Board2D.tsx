@@ -48,6 +48,7 @@ import {
   handleBoard2dPrizeClick,
   handleBoard2dRetreat,
   handleBoard2dStadiumClick,
+  tryLegendAssemblyClickToPlay,
   resolveClickToPlayTarget,
   type Board2dActionContext,
 } from './board2dActions';
@@ -361,9 +362,52 @@ export function Board2D(props: Board2DProps) {
     bottomPlayer &&
     gameState.state.players[gameState.state.activePlayer]?.id === bottomPlayer.id;
 
+  const topHandFaceDown =
+    !(adminSpectatorReveal?.hands) && topPlayer?.id !== clientId;
+  const topCards = topPlayerHand?.cards ?? topPlayer?.hand?.cards ?? [];
+  const bottomCards = bottomPlayerHand?.cards ?? bottomPlayer?.hand?.cards ?? [];
+
   const playableIds = useMemo(() => {
     return new Set(bottomPlayer?.playableCardIds ?? []);
   }, [bottomPlayer]);
+
+  const chooseHandCardsActive = boardInteraction.isChooseHandCardsSelectionActive();
+  const legendAssemblyActive = boardInteraction.isLegendAssemblySelectionActive();
+
+  const handSelectionHighlights = useMemo(() => {
+    if (!selectionMode || (!chooseHandCardsActive && !legendAssemblyActive)) {
+      return null;
+    }
+
+    const selected = new Set<number>();
+    const selectable = new Set<number>();
+
+    for (const target of selectedTargets) {
+      if (target.player === PlayerType.BOTTOM_PLAYER && target.slot === SlotType.HAND) {
+        selected.add(target.index);
+      }
+    }
+
+    for (let index = 0; index < bottomCards.length; index++) {
+      const target: CardTarget = {
+        player: PlayerType.BOTTOM_PLAYER,
+        slot: SlotType.HAND,
+        index,
+      };
+      if (boardInteraction.isTargetEligible(target)) {
+        selectable.add(index);
+      }
+    }
+
+    return { selected, selectable };
+  }, [
+    selectionMode,
+    chooseHandCardsActive,
+    legendAssemblyActive,
+    selectedTargets,
+    bottomCards,
+    boardInteraction,
+  ]);
 
   const isSelectable = useCallback(
     (target: CardTarget) =>
@@ -450,6 +494,10 @@ export function Board2D(props: Board2DProps) {
         return;
       }
 
+      if (canInteract && tryLegendAssemblyClickToPlay(ctx, card, index)) {
+        return;
+      }
+
       if (canInteract && playableIds.has(card.id)) {
         const resolved = resolveClickToPlayTarget(bottomPlayer, card);
         if (Array.isArray(resolved)) {
@@ -477,11 +525,6 @@ export function Board2D(props: Board2DProps) {
       ctx,
     ],
   );
-
-  const topHandFaceDown =
-    !(adminSpectatorReveal?.hands) && topPlayer?.id !== clientId;
-  const topCards = topPlayerHand?.cards ?? topPlayer?.hand?.cards ?? [];
-  const bottomCards = bottomPlayerHand?.cards ?? bottomPlayer?.hand?.cards ?? [];
 
   return (
     <div
@@ -710,7 +753,11 @@ export function Board2D(props: Board2DProps) {
             cards={bottomCards}
             cardList={bottomPlayerHand ?? bottomPlayer?.hand}
             interactive={canInteract}
-            playableCardIds={playableIds}
+            playableCardIds={
+              chooseHandCardsActive || legendAssemblyActive ? [] : playableIds
+            }
+            selectedHandIndexes={handSelectionHighlights?.selected}
+            selectableHandIndexes={handSelectionHighlights?.selectable}
             scanUrl={scanUrl}
             onCardClick={onHandCardClick}
             handTag="bottom"

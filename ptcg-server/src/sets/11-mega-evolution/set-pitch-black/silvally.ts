@@ -1,11 +1,4 @@
-import {
-  GameError,
-  GameMessage,
-  PowerType,
-  StateUtils,
-  StoreLike,
-  State,
-} from '../../../game';
+import { GameError, GameMessage, PowerType, StateUtils, StoreLike, State } from '../../../game';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
@@ -29,27 +22,31 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class Silvally extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Type: Null';
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType = C;
   public hp: number = 140;
-  public weakness = [{ type: CardType.FIGHTING }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public retreat = [C, C];
 
-  public powers = [{
-    name: 'Buddy Call',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may use this Ability if you have no cards in your hand. Search your deck for a Supporter card, reveal it, and put it into your hand. Then, shuffle your deck.',
-  }];
+  public powers = [
+    {
+      name: 'Call a Buddy',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn, if you have no cards in your hand, you may use this Ability. Search your deck for a Supporter card, reveal it, and put it into your hand. Then, shuffle your deck.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Air Slash',
-    cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
-    damage: 130,
-    text: 'Discard 1 Energy attached to this Pokémon.',
-  }];
+  public attacks = [
+    {
+      name: 'Air Slash',
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+      damage: 130,
+      text: 'Discard an Energy attached to this Pokémon.',
+    },
+  ];
 
-  public set: string = 'M5';
-  public setNumber: string = '68';
+  public set: string = 'PBL';
+  public setNumber: string = '70';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Silvally';
@@ -62,7 +59,10 @@ export class Silvally extends PokemonCard {
       effect.player.marker.removeMarker(this.BUDDY_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.BUDDY_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.BUDDY_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.BUDDY_MARKER, this);
     }
 
@@ -100,20 +100,24 @@ export class Silvally extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        {},
-        { min: 1, max: 1, blocked, allowCancel: false },
-      ), picked => {
-        const sel = picked || [];
-        if (sel.length > 0) {
-          SHOW_CARDS_TO_PLAYER(store, state, opponent, sel);
-          player.deck.moveCardsTo(sel, player.hand);
-        }
-        SHUFFLE_DECK(store, state, player);
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.deck,
+          {},
+          { min: 1, max: 1, blocked, allowCancel: false },
+        ),
+        (picked) => {
+          const sel = picked || [];
+          if (sel.length > 0) {
+            SHOW_CARDS_TO_PLAYER(store, state, opponent, sel);
+            player.deck.moveCardsTo(sel, player.hand);
+          }
+          SHUFFLE_DECK(store, state, player);
+        },
+      );
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
@@ -123,21 +127,25 @@ export class Silvally extends PokemonCard {
       const check = new CheckProvidedEnergyEffect(player);
       store.reduceEffect(state, check);
 
-      return store.prompt(state, new ChooseEnergyPrompt(
-        player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        check.energyMap,
-        [CardType.COLORLESS],
-        { allowCancel: false },
-      ), sel => {
-        const cards = (sel || []).map(e => e.card).filter(Boolean);
-        if (cards.length === 0) {
-          return;
-        }
-        const discard = new DiscardCardsEffect(atk, cards);
-        discard.target = player.active;
-        store.reduceEffect(state, discard);
-      });
+      return store.prompt(
+        state,
+        new ChooseEnergyPrompt(
+          player.id,
+          GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+          check.energyMap,
+          [CardType.COLORLESS],
+          { allowCancel: false },
+        ),
+        (sel) => {
+          const cards = (sel || []).map((e) => e.card).filter(Boolean);
+          if (cards.length === 0) {
+            return;
+          }
+          const discard = new DiscardCardsEffect(atk, cards);
+          discard.target = player.active;
+          store.reduceEffect(state, discard);
+        },
+      );
     }
 
     return state;

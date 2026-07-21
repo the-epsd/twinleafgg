@@ -11,15 +11,17 @@ export class Charcadet extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Best Punch',
-    cost: [R],
-    damage: 40,
-    text: 'Flip a coin. If tails, this attack does nothing.',
-  }];
+  public attacks = [
+    {
+      name: 'Best Punch',
+      cost: [R],
+      damage: 40,
+      text: 'Flip a coin. If tails, this attack does nothing.',
+    },
+  ];
 
-  public set: string = 'M5';
-  public setNumber: string = '10';
+  public set: string = 'PBL';
+  public setNumber: string = '11';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Charcadet';
@@ -27,7 +29,7 @@ export class Charcadet extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (!result) {
           effect.damage = 0;
         }

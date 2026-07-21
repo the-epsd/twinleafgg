@@ -2,8 +2,7 @@ import { State, StoreLike } from '../../../game';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { MarkerConstants } from '../../../game/store/markers/marker-constants';
-import { TERA_RULE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { TERA_RULE, WAS_ATTACK_USED, WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN } from '../../../game/store/prefabs/prefabs';
 
 export class Koraidonex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -36,15 +35,15 @@ export class Koraidonex extends PokemonCard {
   public fullName: string = 'Koraidon ex ASC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    // Ref: set-twilight-masquerade/iron-leaves.ts (Avenging Edge — REVENGE_MARKER)
+    // Orichalcum Fang
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      if (effect.player.marker.hasMarker(MarkerConstants.REVENGE_MARKER)) {
+      if (WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN(effect.player, { byAttackDamage: true })) {
         effect.damage += 120;
       }
+      return state;
     }
 
-    // Ref: set-fusion-strike/breloom.ts (Impact Blow — cannotUseAttacksNextTurnPending)
+    // Impact Blow
     if (WAS_ATTACK_USED(effect, 1, this)) {
       effect.player.active.cannotUseAttacksNextTurnPending.push('Impact Blow');
     }

@@ -13,6 +13,7 @@ import { useSnackbar } from '../context/SnackbarContext';
 import { translateGameSocketError } from '../i18n/translateGameSocketError';
 import { buildLocalGameFromMatchReplay } from '../api/replayApi';
 import type { LocalGameState } from '../table/types/localGameState';
+import { shouldCancelCoinFlipAnimation } from '../table/coin-flip-animation';
 import { gameStateToLocal, mergeStateChange } from '../table/gameSessionUtils';
 import { BoardInteractionService } from '../table/BoardInteractionService';
 import type { Board3dGameActions } from '../table/board3d/board3dGameActions';
@@ -199,6 +200,9 @@ export function TablePage() {
         setLocalGame((g) => {
           if (!g || g.gameId !== gameId) return g;
           const next = mergeStateChange(g, data.stateData, data.playerStats);
+          if (shouldCancelCoinFlipAnimation(g, next)) {
+            boardInteraction.cancelCoinFlipAnimation();
+          }
           boardInteraction.updateGameLogs(next.logs);
           if (next.state.phase === GamePhase.FINISHED) {
             clearPersistedGameId();

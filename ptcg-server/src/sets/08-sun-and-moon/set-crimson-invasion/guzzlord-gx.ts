@@ -1,19 +1,18 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GamePhase, CardList, EnergyCard } from '../../../game';
+import { StoreLike, State, CardList, EnergyCard } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { KnockOutEffect } from '../../../game/store/effects/game-effects';
-import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class GuzzlordGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType = D;
   public hp: number = 210;
   public tags = [CardTag.ULTRA_BEAST, CardTag.POKEMON_GX];
-  public weakness = [{ type: CardType.FIGHTING }];
-  public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public resistance = [{ type: P, value: -20 }];
+  public retreat = [C, C, C, C];
 
   public attacks = [{
     name: 'Eat Sloppily',
@@ -31,6 +30,7 @@ export class GuzzlordGX extends PokemonCard {
     name: 'Glutton-GX',
     cost: [D, D, D, D, D],
     damage: 100,
+    gxAttack: true,
     text: 'If your opponent\'s Pokémon is Knocked Out by damage from this attack, take 2 more Prize cards. (You can\'t use more than 1 GX attack in a game.)'
   }];
 
@@ -39,8 +39,6 @@ export class GuzzlordGX extends PokemonCard {
   public setNumber: string = '63';
   public name: string = 'Guzzlord-GX';
   public fullName: string = 'Guzzlord-GX CIN';
-
-  private usedGluttonGX = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -58,28 +56,11 @@ export class GuzzlordGX extends PokemonCard {
       const player = effect.player;
       BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
-      this.usedGluttonGX = true;
     }
 
-    if (effect instanceof KnockOutEffect && effect.target === effect.player.active) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // Do not activate between turns, or when it's not opponents turn.
-      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
-        return state;
-      }
-
-      // Check if the attack that caused the KnockOutEffect is "Red Banquet"
-      if (this.usedGluttonGX === true) {
-        if (effect.prizeCount > 0) {
-          effect.prizeCount += 2;
-        }
-        this.usedGluttonGX = false;
-      }
-
-      return state;
-    }
-    return state;
+    return IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES(store, state, effect, this, {
+      attackName: 'Glutton-GX',
+      extraPrizes: 2,
+    });
   }
 }

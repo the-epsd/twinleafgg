@@ -41,6 +41,7 @@ import { RemoveDamageOverlay } from './RemoveDamageOverlay';
 import { MoveDamageOverlay } from './MoveDamageOverlay';
 import { scanBlockedOwnZeroDamageFromState } from './pokemonPromptRows';
 import { BOARD3D_ATTACK_ANIMATION_DURATION_SEC, BOARD3D_ABILITY_ANIMATION_DURATION_SEC } from '../board3d/services/board-3d-animation.service';
+import { COIN_FLIP_SERVER_WAIT_MS } from '../coin-flip-animation';
 import {
   autoTakeChoosePrizeIndices,
   shouldAutoTakeChoosePrize,
@@ -126,6 +127,30 @@ function isAbilityAnimationWaitPrompt(wp: WaitPrompt): boolean {
     return false;
   }
   return String(m).toLowerCase().includes('ability animation');
+}
+
+/** Matches server WaitPrompt before coin flip resolution (see attack-coin-reflip.ts). */
+function isCoinFlipAnimationWaitPrompt(wp: WaitPrompt): boolean {
+  const m = wp.message;
+  if (m === undefined || m === null) {
+    return false;
+  }
+  return String(m).toLowerCase().includes('coin flip animation');
+}
+
+function CoinFlipAnimationWaitPrompt(props: {
+  promptId: number;
+  durationMs: number;
+  resolve: (id: number, result: unknown) => void | Promise<void>;
+}) {
+  const { promptId, durationMs, resolve } = props;
+  useEffect(() => {
+    const tmr = window.setTimeout(() => {
+      void resolve(promptId, null);
+    }, durationMs);
+    return () => clearTimeout(tmr);
+  }, [promptId, durationMs, resolve]);
+  return null;
 }
 
 function AttackAnimationWaitPrompt(props: {
@@ -813,6 +838,16 @@ export function TablePromptLayer({
           key={wp.id}
           promptId={wp.id}
           boardInteraction={boardInteraction}
+          resolve={resolve}
+        />
+      );
+    }
+    if (isCoinFlipAnimationWaitPrompt(wp)) {
+      return (
+        <CoinFlipAnimationWaitPrompt
+          key={wp.id}
+          promptId={wp.id}
+          durationMs={wp.duration > 0 ? wp.duration : COIN_FLIP_SERVER_WAIT_MS}
           resolve={resolve}
         />
       );

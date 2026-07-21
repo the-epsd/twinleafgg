@@ -14,6 +14,12 @@ import {
 } from 'ptcg-server';
 import { cardTargetKey } from './prompts/removeDamagePromptModel';
 import {
+  cardCanAssembleLegendFromHand,
+  findLegendAssemblyPartnerHandIndex,
+  isMatchingLegendHalf,
+} from './board3d/dual-legend.utils';
+import type { Card } from 'ptcg-server';
+import {
   chooseCardsHandIndicesToCards,
   chooseCardsHandIndexToPromptIndex,
   chooseCardsHandTargetsToPromptIndices,
@@ -35,6 +41,7 @@ export const TRAINER_PLAY_EFFECT_PROMPT_DELAY_MS = SHARED_TRAINER_PLAY_EFFECT_PR
 type SelectionOverlayKind =
   | 'choose-pokemon'
   | 'choose-hand-cards'
+  | 'legend-assembly'
   | 'remove-damage'
   | 'move-damage'
   | 'put-damage'
@@ -126,6 +133,10 @@ export class BoardInteractionService {
 
   /** Explicit eligible targets when playing attach/evolution cards from hand. */
   private handPlayEligibleTargets: CardTarget[] = [];
+
+  /** Hand snapshot for dual LEGEND click-to-play assembly (drag unchanged). */
+  private legendAssemblyHandCards: readonly Card[] = [];
+  private legendAssemblyOnComplete: ((playHandIndex: number) => void) | null = null;
 
   /** Client pixel position for Remove damage floating +/- HUD (updated by Board3dController each frame). */
   private removeDamageHudAnchor: { x: number; y: number } | null = null;
@@ -229,6 +240,50 @@ export class BoardInteractionService {
 
   public isHandPlayTargetSelectionActive(): boolean {
     return this.overlayKind === 'hand-play-target';
+  }
+
+  public isLegendAssemblySelectionActive(): boolean {
+    return this.overlayKind === 'legend-assembly';
+  }
+
+  /**
+   * Click-to-play dual LEGEND: enters hand selection mode (same visuals as ChooseCardsPrompt).
+   * Second click on the partner half completes via onComplete.
+   */
+  public startLegendAssemblySelection(
+    handCards: readonly Card[],
+    firstHandIndex: number,
+    onComplete: (playHandIndex: number) => void,
+  ): void {
+    if (this.isReplayModeActive) {
+      return;
+    }
+
+    const card = handCards[firstHandIndex];
+    if (!card || !cardCanAssembleLegendFromHand(card, handCards)) {
+      return;
+    }
+
+    this.legendAssemblyHandCards = handCards;
+    this.legendAssemblyOnComplete = onComplete;
+    this.overlayKind = 'legend-assembly';
+    this.chooseCardsPrompt = null;
+    this.chooseCardsCallback = null;
+    this.promptSubject.next(null);
+    this.selectionModeSubject.next(true);
+    this.selectedTargetsSubject.next([
+      {
+        player: PlayerType.BOTTOM_PLAYER,
+        slot: SlotType.HAND,
+        index: firstHandIndex,
+      },
+    ]);
+    this.blockedTargetsSubject.next([]);
+    this.eligiblePlayerTypeSubject.next(PlayerType.BOTTOM_PLAYER);
+    this.eligibleSlotsSubject.next([SlotType.HAND]);
+    this.minSelectionsSubject.next(1);
+    this.maxSelectionsSubject.next(1);
+    this.selectionCallback = null;
   }
 
   public isChooseHandCardsSelectionActive(): boolean {
@@ -579,6 +634,8 @@ export class BoardInteractionService {
     this.removeDamageHudAnchor = null;
     this.overlayKind = null;
     this.handPlayEligibleTargets = [];
+    this.legendAssemblyHandCards = [];
+    this.legendAssemblyOnComplete = null;
     this.clearPutDamagePlacementPreview();
     this.selectionModeSubject.next(false);
     this.promptSubject.next(null);
@@ -606,6 +663,45 @@ export class BoardInteractionService {
    * Toggle selection of a card target
    */
   public toggleTarget(target: CardTarget): void {
+    if (this.overlayKind === 'legend-assembly') {
+      if (!this.isTargetEligible(target)) {
+        return;
+      }
+
+      const currentTargets = this.selectedTargetsSubject.value;
+      const selectedHand = currentTargets.find(
+        (t) => t.player === target.player && t.slot === SlotType.HAND,
+      );
+
+      if (
+        selectedHand &&
+        selectedHand.index !== target.index &&
+        target.slot === SlotType.HAND
+      ) {
+        const firstCard = this.legendAssemblyHandCards[selectedHand.index];
+        const secondCard = this.legendAssemblyHandCards[target.index];
+        if (firstCard && secondCard && isMatchingLegendHalf(firstCard, secondCard)) {
+          const onComplete = this.legendAssemblyOnComplete;
+          this.endBoardSelection();
+          onComplete?.(target.index);
+          return;
+        }
+      }
+
+      if (
+        selectedHand &&
+        selectedHand.player === target.player &&
+        selectedHand.slot === target.slot &&
+        selectedHand.index === target.index
+      ) {
+        this.endBoardSelection();
+        return;
+      }
+
+      this.selectedTargetsSubject.next([target]);
+      return;
+    }
+
     if (this.overlayKind === 'hand-play-target') {
       if (!this.isTargetEligible(target) || !this.selectionCallback) {
         return;
@@ -664,6 +760,32 @@ export class BoardInteractionService {
       return this.handPlayEligibleTargets.some(
         (t) => t.player === target.player && t.slot === target.slot && t.index === target.index,
       );
+    }
+
+    if (this.overlayKind === 'legend-assembly') {
+      if (target.player !== PlayerType.BOTTOM_PLAYER || target.slot !== SlotType.HAND) {
+        return false;
+      }
+
+      const card = this.legendAssemblyHandCards[target.index];
+      if (!cardCanAssembleLegendFromHand(card, this.legendAssemblyHandCards)) {
+        return false;
+      }
+
+      const selectedHand = this.selectedTargetsSubject.value.find((t) => t.slot === SlotType.HAND);
+      if (!selectedHand) {
+        return true;
+      }
+
+      if (selectedHand.index === target.index) {
+        return true;
+      }
+
+      const partnerIndex = findLegendAssemblyPartnerHandIndex(
+        this.legendAssemblyHandCards,
+        selectedHand.index,
+      );
+      return partnerIndex === target.index;
     }
 
     const eligiblePlayerType = this.eligiblePlayerTypeSubject.value;
@@ -745,6 +867,11 @@ export class BoardInteractionService {
       if (this.chooseCardsCallback) {
         this.chooseCardsCallback(null);
       }
+      this.endBoardSelection();
+      return;
+    }
+
+    if (this.overlayKind === 'legend-assembly') {
       this.endBoardSelection();
       return;
     }

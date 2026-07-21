@@ -11,6 +11,7 @@ import {
   type PokemonCard,
   type TrainerCard,
 } from 'ptcg-server';
+import { cardCanAssembleLegendFromHand, resolveLegendAssemblyBenchTarget } from '../board3d/dual-legend.utils';
 import type { LocalGameState } from '../types/localGameState';
 import type { Board3dCardsAdapter } from '../board3d/board3dCardsAdapter';
 import type { Board3dGameActions } from '../board3d/board3dGameActions';
@@ -362,7 +363,34 @@ export async function handleBoard2dPlayFromHand(
   handIndex: number,
   target: CardTarget,
 ): Promise<void> {
+  if (ctx.boardInteraction.isLegendAssemblySelectionActive()) {
+    ctx.boardInteraction.endBoardSelection();
+  }
   await ctx.gameActions.playCardAction(ctx.gameState.gameId, handIndex, target);
+}
+
+/** Click-to-play dual LEGEND: enter hand selection mode. Returns true if handled. */
+export function tryLegendAssemblyClickToPlay(
+  ctx: Board2dActionContext,
+  card: Card,
+  handIndex: number,
+): boolean {
+  if (ctx.boardInteraction.isLegendAssemblySelectionActive()) {
+    return false;
+  }
+
+  const handCards = ctx.bottomPlayer?.hand?.cards ?? [];
+  if (!cardCanAssembleLegendFromHand(card, handCards)) {
+    return false;
+  }
+
+  ctx.boardInteraction.startLegendAssemblySelection(handCards, handIndex, (playHandIndex) => {
+    const target = resolveLegendAssemblyBenchTarget(ctx.bottomPlayer);
+    if (target) {
+      void handleBoard2dPlayFromHand(ctx, playHandIndex, target);
+    }
+  });
+  return true;
 }
 
 export async function handleBoard2dRetreat(
