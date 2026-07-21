@@ -98,6 +98,7 @@ import { r3fPointerEventAsMouse } from './board3dR3fPointer';
 import { subscribeBoard3dInteractionStreams } from './board3dControllerSubscriptions';
 import { Board3dCard } from './board-3d-card';
 import { projectCardFaceToScreenAnchor } from './board3dAbilityFocusProjection';
+import { playDeckShufflePreview } from './board3dDeckShufflePreview';
 import {
   LEGEND_3D_HALF_ROTATION,
   LEGEND_3D_HALF_SCALE,
