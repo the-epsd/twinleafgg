@@ -162,7 +162,6 @@ export class MarkerConstants {
   public static readonly PSYCHIC_LOCK_MARKER = 'PSYCHIC_LOCK_MARKER';
   public static readonly QUICK_SHOOTING_MARKER = 'QUICK_SHOOTING_MARKER';
   public static readonly RAIHAN_MARKER = 'RAIHAN_MARKER';
-  public static readonly REVENGE_MARKER = 'REVENGE_MARKER';
   public static readonly STEEL_WING_MARKER = 'STEEL_WING_MARKER';
   public static readonly TELEPASS_MARKER = 'TELEPASS_MARKER';
   public static readonly TOGEKISS_KNOCKOUT_FLIP = 'TOGEKISS_KNOCKOUT_FLIP';

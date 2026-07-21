@@ -3415,6 +3415,34 @@ export function REMOVE_MARKER_AT_END_OF_TURN(effect: Effect, marker: string, sou
     REMOVE_MARKER(marker, effect.player, source);
 }
 
+export interface PokemonKnockedOutLastTurnFilter {
+  /** Require KO from attack damage during the opponent's attack. */
+  byAttackDamage?: boolean;
+  /** Knocked-out Pokemon must have all of these tags. */
+  tags?: CardTag[];
+}
+
+export function WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN(
+  player: Player,
+  filter?: PokemonKnockedOutLastTurnFilter,
+): boolean {
+  if (filter?.byAttackDamage) {
+    if (!player.pokemonKnockedOutByAttackDuringOpponentsLastTurn) {
+      return false;
+    }
+  } else if (!player.pokemonKnockedOutDuringOpponentsLastTurn) {
+    return false;
+  }
+
+  if (filter?.tags?.length) {
+    return player.pokemonKnockedOutLastTurnEntries.some(entry =>
+      filter.tags!.every(tag => entry.includes(tag))
+    );
+  }
+
+  return true;
+}
+
 /**
  * Clear markers that track events from "your opponent's last turn" (e.g. a KO).
  * Skipped when the player has an additional turn pending (Dialga-GX Timeless, etc.)

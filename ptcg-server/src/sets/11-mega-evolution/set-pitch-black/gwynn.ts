@@ -8,7 +8,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
-import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playGwynn(
   next: Function,
@@ -49,7 +49,6 @@ function* playGwynn(
 
   MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: self });
   DRAW_CARDS(store, state, player, cards.length * 3);
-  CLEAN_UP_SUPPORTER(store, effect, player);
 }
 
 export class Gwynn extends TrainerCard {

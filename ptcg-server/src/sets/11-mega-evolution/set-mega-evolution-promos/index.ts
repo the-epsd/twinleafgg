@@ -46,6 +46,8 @@ import { Slowpoke } from './slowpoke';
 import { Pikachuex } from './pikachu-ex';
 import { Pikachuex2 } from './pikachu-ex-2';
 import { Grisham } from './grisham';
+import { MegaTatsugiriex } from './mega-tatsugiri-ex';
+import { Lida } from './lida';
 
 export const setMegaEvolutionPromos: Card[] = [
   new Psyduck(),
@@ -73,6 +75,8 @@ export const setMegaEvolutionPromos: Card[] = [
   new Pikachuex(),
   new Pikachuex2(),
   new Grisham(),
+  new MegaTatsugiriex(),
+  new Lida(),
   new SerperiorMEP(),
   new BarbaracleMEP(),
   new TyrantrumMEP(),

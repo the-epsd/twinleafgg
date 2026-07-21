@@ -9,7 +9,6 @@ import { StoreLike } from '../store-like';
 import { checkState, endGame } from './check-effect';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
 import { PlayerType } from '../actions/play-card-action';
-import { MarkerConstants } from '../markers/marker-constants';
 import { StateUtils } from '../state-utils';
 import { RESOLVE_PENDING_END_OF_OPPONENTS_NEXT_TURN_EFFECTS } from '../prefabs/attack-effects';
 import { MOVE_CARDS } from '../prefabs/prefabs';
@@ -214,7 +213,9 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
 
     effect.player.marker.removeMarker(effect.player.DAMAGE_DEALT_MARKER);
     if (!player.usedTurnSkip) {
-      effect.player.marker.removeMarker(MarkerConstants.REVENGE_MARKER);
+      player.pokemonKnockedOutDuringOpponentsLastTurn = false;
+      player.pokemonKnockedOutByAttackDuringOpponentsLastTurn = false;
+      player.pokemonKnockedOutLastTurnEntries = [];
     }
 
     // Clear damage reduction effects on opponent's Pokémon when their turn ends

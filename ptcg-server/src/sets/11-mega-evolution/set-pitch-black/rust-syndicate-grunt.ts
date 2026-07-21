@@ -13,10 +13,9 @@ import { GameMessage } from '../../../game/game-message';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { MarkerConstants } from '../../../game/store/markers/marker-constants';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { CLEAN_UP_SUPPORTER } from '../../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER, WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN } from '../../../game/store/prefabs/prefabs';
 
 export class RustSyndicateGrunt extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -37,7 +36,7 @@ export class RustSyndicateGrunt extends TrainerCard {
     if (player.hand.cards.filter((c) => c !== this).length > 0) {
       return false;
     }
-    if (!player.marker.hasMarker(MarkerConstants.REVENGE_MARKER)) {
+    if (!WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN(player)) {
       return false;
     }
     const opponent = StateUtils.getOpponent(state, player);
@@ -78,7 +77,7 @@ function playRust(
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  if (!player.marker.hasMarker(MarkerConstants.REVENGE_MARKER)) {
+  if (!WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN(player)) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 

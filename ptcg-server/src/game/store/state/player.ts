@@ -118,6 +118,9 @@ export class Player {
   usedRunErrand: any;
   usedTributeDance: any;
   chainsOfControlUsed: any;
+  pokemonKnockedOutDuringOpponentsLastTurn = false;
+  pokemonKnockedOutByAttackDuringOpponentsLastTurn = false;
+  pokemonKnockedOutLastTurnEntries: CardTag[][] = [];
   usedDragonsWish = false;
   pecharuntexIsInPlay = false;
   usedFanCall = false;
