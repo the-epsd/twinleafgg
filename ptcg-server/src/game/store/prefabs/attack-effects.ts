@@ -8,7 +8,8 @@ import { AttackEffect } from '../effects/game-effects';
 import { AfterAttackEffect, BeforeDoingDamageEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { Effect } from '../effects/effect';
 import { PokemonCardList } from '../state/pokemon-card-list';
-import { PendingEndOfTurnEffect } from '../state/pending-end-of-turn-effects';
+import { AttachEnergyEffect } from '../effects/play-card-effects';
+import { PendingEndOfTurnEffect, PendingEndOfTurnEffectBase } from '../state/pending-end-of-turn-effects';
 import { Player } from '../state/player';
 import { FLIP_UNTIL_TAILS_AND_COUNT_HEADS, MOVE_CARDS } from './prefabs';
 import { CoinFlipEffect } from '../effects/play-card-effects';
@@ -171,10 +172,10 @@ function scheduleDefendingPokemonEffectAtEndOfOpponentsNextTurn(
   } as PendingEndOfTurnEffect);
 }
 
-function buildAttackEffectFromPending(
+function buildAttackEffectFromSource(
   state: State,
   defendingPlayer: Player,
-  item: PendingEndOfTurnEffect,
+  item: Pick<PendingEndOfTurnEffectBase, 'attack' | 'sourceCard' | 'attackerPlayerId'>,
 ): AttackEffect | null {
   const attacker = state.players.find(p => p.id === item.attackerPlayerId);
   if (!attacker) {
@@ -191,6 +192,40 @@ function buildAttackEffectFromPending(
   const attackEffect = new AttackEffect(attacker, defendingPlayer, item.attack);
   attackEffect.source = sourceList;
   return attackEffect;
+}
+
+function buildAttackEffectFromPending(
+  state: State,
+  defendingPlayer: Player,
+  item: PendingEndOfTurnEffect,
+): AttackEffect | null {
+  return buildAttackEffectFromSource(state, defendingPlayer, item);
+}
+
+/**
+ * Places pending damage counters on the Defending Pokémon when Energy is attached from hand.
+ */
+export function RESOLVE_PENDING_ENERGY_ATTACH_DAMAGE_COUNTERS(
+  store: StoreLike,
+  state: State,
+  attachEffect: AttachEnergyEffect,
+): State {
+  const pending = attachEffect.target.pendingEnergyAttachDamageCounters;
+  if (!pending) {
+    return state;
+  }
+  if (!attachEffect.player.hand.cards.includes(attachEffect.energyCard)) {
+    return state;
+  }
+
+  const attackEffect = buildAttackEffectFromSource(state, attachEffect.player, pending);
+  if (!attackEffect) {
+    return state;
+  }
+
+  const putCounters = new PutCountersEffect(attackEffect, pending.damage);
+  putCounters.target = attachEffect.target;
+  return store.reduceEffect(state, putCounters);
 }
 
 /**

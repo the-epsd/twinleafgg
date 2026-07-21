@@ -1,4 +1,5 @@
 import { BiancasDevotion } from './biancas-devotion';
+import { Bronzor } from './bronzor';
 import { Charjabug } from './charjabug';
 import { Chatot } from './chatot';
 import { Cinccino } from './cincinno';
@@ -56,10 +57,10 @@ export class CharjabugIR extends Charjabug {
   public fullName: string = 'CharjabugIR TEF';
 }
 
-// export class BronzorIR extends Bronzor {
-//   public setNumber = '170';
-//   public fullName: string = 'BronzorIR TEF';
-// }
+export class BronzorIR extends Bronzor {
+  public setNumber = '170';
+  public fullName: string = 'BronzorIR TEF';
+}
 
 export class ReuniclusIR extends Reuniclus {
   public setNumber = '171';

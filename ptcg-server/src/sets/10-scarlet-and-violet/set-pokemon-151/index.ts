@@ -50,6 +50,7 @@ import { Nidorina } from './nidorina';
 import { Nidorino } from './nidorino';
 import { Oddish } from './oddish';
 import { Onix } from './onix';
+import { Pidgeot } from './pidgeot';
 import { Pidgeotto } from './pidgeotto';
 import { Pidgey } from './pidgey';
 import { Ponyta } from './ponyta';
@@ -123,6 +124,7 @@ export const setPokemon151: Card[] = [
   new Nidoqueen(),
   new Oddish(),
   new Onix(),
+  new Pidgeot(),
   new Pidgeotto(),
   new Pidgey(),
   new Ponyta(),

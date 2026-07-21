@@ -17,6 +17,7 @@ import {
   KeldeoExBWP,
   TropicalBeach2
 } from './other-prints';
+import { PalaceBelt } from './palace-belt';
 
 export const setBlackAndWhitePromos: Card[] = [
   new Snivy(),
@@ -30,6 +31,7 @@ export const setBlackAndWhitePromos: Card[] = [
   new TropicalBeach(),
   new Pikachu(),
   new Minccino(),
+  new PalaceBelt(),
 
   // Other Prints
   new KeldeoExBWP(),

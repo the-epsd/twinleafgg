@@ -12,6 +12,7 @@ import { PlayerType } from '../actions/play-card-action';
 import { MarkerConstants } from '../markers/marker-constants';
 import { StateUtils } from '../state-utils';
 import { RESOLVE_PENDING_END_OF_OPPONENTS_NEXT_TURN_EFFECTS } from '../prefabs/attack-effects';
+import { MOVE_CARDS } from '../prefabs/prefabs';
 
 function getActivePlayer(state: State): Player {
   return state.players[state.activePlayer];
@@ -82,22 +83,27 @@ export function initNextTurn(store: StoreLike, state: State): State {
   store.reduceEffect(state, beginTurn);
 
   // Draw card for turn (can be blocked by effects like Luvdisc's Heart Wink)
+  let drawCardForTurn: DrawCardForTurnEffect;
   try {
-    const drawCardForTurn = new DrawCardForTurnEffect(player);
+    drawCardForTurn = new DrawCardForTurnEffect(player);
     store.reduceEffect(state, drawCardForTurn);
   } catch {
     return state;
   }
 
-  player.deck.moveTo(player.hand, 1);
+  const handStartLength = player.hand.cards.length;
+  state = MOVE_CARDS(store, state, player.deck, player.hand, { count: drawCardForTurn.drawCount });
 
-  // Check the drawn card
-  const drawnCard = player.hand.cards[player.hand.cards.length - 1];
-  try {
-    const drewTopdeck = new DrewTopdeckEffect(player, drawnCard);
-    store.reduceEffect(state, drewTopdeck);
-  } catch {
-    return state;
+  // Check each drawn card (for cards like Metagross Emergency Entry, Nugget, etc.)
+  const drawnCount = player.hand.cards.length - handStartLength;
+  for (let i = 0; i < drawnCount; i++) {
+    const drawnCard = player.hand.cards[handStartLength + i];
+    try {
+      const drewTopdeck = new DrewTopdeckEffect(player, drawnCard);
+      store.reduceEffect(state, drewTopdeck);
+    } catch {
+      return state;
+    }
   }
   return state;
 }
@@ -282,6 +288,9 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
       if (cardList.cannotRetreatNextTurnPending) {
         cardList.cannotRetreatNextTurn = true;
         cardList.cannotRetreatNextTurnPending = false;
+      }
+      if (cardList.pendingEnergyAttachDamageCounters) {
+        cardList.pendingEnergyAttachDamageCounters = null;
       }
       if (cardList.blockedAttackNameNextTurn !== undefined) {
         cardList.blockedAttackNameNextTurn = undefined;

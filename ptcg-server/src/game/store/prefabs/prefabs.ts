@@ -92,7 +92,7 @@ import {
 } from '../effects/game-effects';
 import { AfterAttackEffect, BeforeDoingDamageEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
-import { preventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, PreventDamageOptions, shouldPreventAttackEffects } from '../effects/effect-of-attack-effects';
+import { preventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect, PreventDamageOptions, shouldPreventAttackEffects } from '../effects/effect-of-attack-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
 
 /**
@@ -4049,6 +4049,22 @@ export function DEFENDING_POKEMON_TAKES_MORE_DAMAGE_DURING_YOUR_NEXT_TURN(
 ): State {
   const bonusEffect = defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect(effect, source, damageBonus);
   return store.reduceEffect(state, bonusEffect);
+}
+
+/**
+ * During the opponent's next turn, whenever they attach an Energy card from their hand
+ * to the Defending Pokémon, place damage counters on that Pokémon.
+ * @param damage Total HP to place as damage counters via PutCountersEffect (e.g. 80 for 8 counters).
+ */
+export function DEFENDING_POKEMON_TAKES_DAMAGE_ON_ENERGY_ATTACH_FROM_HAND_NEXT_TURN(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+  damage: number,
+): State {
+  const attachEffect = defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect(effect, source, damage);
+  return store.reduceEffect(state, attachEffect);
 }
 
 /**

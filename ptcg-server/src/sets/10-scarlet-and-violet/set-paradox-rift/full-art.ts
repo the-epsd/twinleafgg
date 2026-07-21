@@ -20,6 +20,7 @@ import { Mantyke } from './mantyke';
 import { Mela } from './mela';
 import { Minior } from './minior';
 import { Morpeko } from './morpeko';
+import { Plusle } from './plusle';
 import { ProfessorSadasVitality } from './professor-sadas-vitality';
 import { ProfessorTurosScenario } from './professor-turos-scenario';
 import { RoaringMoonex } from './roaring-moon-ex';
@@ -81,10 +82,10 @@ export class MantykeIR extends Mantyke {
 //   public fullName: string = 'VeluzaIR PAR';
 // }
 
-// export class PlusleIR extends Plusle {
-//   public setNumber = '193';
-//   public fullName: string = 'PlusleIR PAR';
-// }
+export class PlusleIR extends Plusle {
+  public setNumber = '193';
+  public fullName: string = 'PlusleIR PAR';
+}
 
 // export class MinunIR extends Minun {
 //   public setNumber = '194';

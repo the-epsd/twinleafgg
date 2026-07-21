@@ -10,6 +10,7 @@ import { State } from '../state/state';
 import { StateUtils } from '../state-utils';
 import { Attack } from '../card/pokemon-types';
 import { Card } from '../card/card';
+import { PokemonCard } from '../card/pokemon-card';
 import { MarkerConstants } from '../markers/marker-constants';
 import { PokemonCardList, PreventDamageFilter } from '../state/pokemon-card-list';
 
@@ -290,6 +291,37 @@ export function defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect(
   damageBonus: number,
 ): DefendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect {
   const effect = new DefendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect(attackEffect, damageBonus);
+  effect.markerSource = source;
+  return effect;
+}
+
+/**
+ * During the opponent's next turn, whenever they attach an Energy card from their hand
+ * to the Defending Pokémon, place damage counters on that Pokémon.
+ */
+export class DefendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect extends EffectOfAttackEffect {
+  readonly type: string = 'DEFENDING_POKEMON_TAKES_DAMAGE_ON_ENERGY_ATTACH_FROM_HAND_NEXT_TURN_EFFECT';
+
+  constructor(base: AttackEffect, public damage: number) {
+    super(base);
+  }
+
+  applyEffect(): void {
+    this.opponent.active.pendingEnergyAttachDamageCounters = {
+      damage: this.damage,
+      attack: this.attackEffect.attack,
+      sourceCard: this.markerSource as PokemonCard,
+      attackerPlayerId: this.player.id,
+    };
+  }
+}
+
+export function defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  damage: number,
+): DefendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect {
+  const effect = new DefendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect(attackEffect, damage);
   effect.markerSource = source;
   return effect;
 }

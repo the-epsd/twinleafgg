@@ -3,6 +3,7 @@ import { Absolex } from './absol-ex';
 import { Barboach } from './barboach';
 import { Bellibolt } from './bellibolt';
 import { Bonsly } from './bonsly';
+import { Bronzor } from './bronzor';
 import { ArvenOBF } from './other-prints';
 import { Charizardex } from './charizard-ex';
 import { Charmander } from './charmander';
@@ -68,6 +69,7 @@ export const setObsidianFlames: Card[] = [
   new ArvenOBF(),
   new Barboach(),
   new Bonsly(),
+  new Bronzor(),
   new Charizardex(),
   new Charmander(),
   new Charmeleon(),
