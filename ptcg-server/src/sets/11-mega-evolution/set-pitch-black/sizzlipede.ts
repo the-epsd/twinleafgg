@@ -1,15 +1,7 @@
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../../game/store/card/card-types';
-import { Card } from '../../../game/store/card/card';
-import { State, StoreLike } from '../../../game';
-import { Effect } from '../../../game/store/effects/effect';
-import {
-  DISCARD_TOP_X_OF_OPPONENTS_DECK,
-  SHOW_CARDS_TO_PLAYER,
-  SHUFFLE_DECK,
-  WAS_ATTACK_USED,
-} from '../../../game/store/prefabs/prefabs';
-import { StateUtils } from '../../../game/store/state-utils';
+import { CardType, PokemonCard, Stage, State, StoreLike } from "../../../game";
+import { Effect } from "../../../game/store/effects/effect";
+import { WAS_ATTACK_USED, DISCARD_TOP_X_OF_OPPONENTS_DECK } from "../../../game/store/prefabs/prefabs";
+import { BUG_OUT } from "../../../game/store/prefabs/shared-attack-prefabs";
 
 export class Sizzlipede extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -47,33 +39,7 @@ export class Sizzlipede extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const revealCount = Math.min(7, player.deck.cards.length);
-      const revealed: Card[] = [];
-      for (let i = 0; i < revealCount; i++) {
-        const c = player.deck.cards.pop();
-        if (c !== undefined) {
-          revealed.push(c);
-        }
-      }
-
-      SHOW_CARDS_TO_PLAYER(store, state, player, revealed);
-      SHOW_CARDS_TO_PLAYER(store, state, opponent, revealed);
-
-      const bugOutPokemon = revealed.filter(
-        (c) => c instanceof PokemonCard && c.attacks.some((a) => a.name === 'Bug Out'),
-      );
-
-      effect.damage = 50 * bugOutPokemon.length;
-
-      bugOutPokemon.forEach((c) => {
-        player.deck.cards.push(c);
-      });
-      revealed
-        .filter((c) => !bugOutPokemon.includes(c))
-        .forEach((c) => player.discard.cards.push(c));
-      SHUFFLE_DECK(store, state, player);
+      BUG_OUT(store, state, effect);
     }
 
     return state;

@@ -21,6 +21,7 @@ import type {
   WaitPrompt,
   ChooseAttackPrompt,
   ChooseEnergyPrompt,
+  DiscardEnergyPrompt,
   MoveEnergyPrompt,
 } from 'ptcg-server';
 import type { LocalGameState } from '../types/localGameState';
@@ -36,6 +37,7 @@ import { AttachEnergyPromptPanel } from './AttachEnergyPromptPanel';
 import { ChooseAttackPromptPanel } from './ChooseAttackPromptPanel';
 import { ChooseEnergyPromptPanel } from './ChooseEnergyPromptPanel';
 import { MoveEnergyPromptPanel } from './MoveEnergyPromptPanel';
+import { DiscardEnergyPromptPanel } from './DiscardEnergyPromptPanel';
 import { PutDamageOverlay } from './PutDamageOverlay';
 import { RemoveDamageOverlay } from './RemoveDamageOverlay';
 import { MoveDamageOverlay } from './MoveDamageOverlay';
@@ -138,19 +140,38 @@ function isCoinFlipAnimationWaitPrompt(wp: WaitPrompt): boolean {
   return String(m).toLowerCase().includes('coin flip animation');
 }
 
-function CoinFlipAnimationWaitPrompt(props: {
+function SilentWaitPrompt(props: {
   promptId: number;
   durationMs: number;
   resolve: (id: number, result: unknown) => void | Promise<void>;
 }) {
   const { promptId, durationMs, resolve } = props;
   useEffect(() => {
+    if (durationMs <= 0) {
+      void resolve(promptId, null);
+      return;
+    }
     const tmr = window.setTimeout(() => {
       void resolve(promptId, null);
     }, durationMs);
     return () => clearTimeout(tmr);
   }, [promptId, durationMs, resolve]);
   return null;
+}
+
+function CoinFlipAnimationWaitPrompt(props: {
+  promptId: number;
+  durationMs: number;
+  resolve: (id: number, result: unknown) => void | Promise<void>;
+}) {
+  const { promptId, durationMs, resolve } = props;
+  return (
+    <SilentWaitPrompt
+      promptId={promptId}
+      durationMs={durationMs > 0 ? durationMs : COIN_FLIP_SERVER_WAIT_MS}
+      resolve={resolve}
+    />
+  );
 }
 
 function AttackAnimationWaitPrompt(props: {
@@ -821,6 +842,16 @@ export function TablePromptLayer({
 
   if (p.type === 'WaitPrompt') {
     const wp = p as WaitPrompt;
+    if (wp.showVisual === false) {
+      return (
+        <SilentWaitPrompt
+          key={wp.id}
+          promptId={wp.id}
+          durationMs={wp.duration > 0 ? wp.duration : 0}
+          resolve={resolve}
+        />
+      );
+    }
     // Server used to block attacks on this prompt; 3D board plays motion from the socket event instead.
     if (isAttackAnimationWaitPrompt(wp)) {
       return (
@@ -1031,6 +1062,21 @@ export function TablePromptLayer({
       <MoveEnergyPromptPanel
         key={mep.id}
         prompt={mep}
+        localGame={localGame}
+        getScanUrl={getScanUrl}
+        t={t}
+        gameMessageText={gameMessageText}
+        resolve={resolve}
+      />
+    );
+  }
+
+  if (p.type === 'Discard energy') {
+    const dep = p as DiscardEnergyPrompt;
+    return (
+      <DiscardEnergyPromptPanel
+        key={dep.id}
+        prompt={dep}
         localGame={localGame}
         getScanUrl={getScanUrl}
         t={t}

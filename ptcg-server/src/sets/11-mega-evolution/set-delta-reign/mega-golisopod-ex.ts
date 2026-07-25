@@ -9,7 +9,6 @@ export class MegaGolisopodex extends PokemonCard {
   public cardType: CardType = G;
   public hp: number = 340;
   public weakness = [{ type: R }];
-  public resistance = [];
   public retreat = [C, C, C];
 
   public attacks = [{

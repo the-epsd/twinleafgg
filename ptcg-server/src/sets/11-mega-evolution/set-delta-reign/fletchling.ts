@@ -26,7 +26,7 @@ export class Fletchling extends PokemonCard {
   public fullName: string = 'Fletchling M6';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-chaos-rising/weedle.ts (Surprise Attack)
+    // Surprise Attack
     if (WAS_ATTACK_USED(effect, 0, this)) {
       COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (!result) {

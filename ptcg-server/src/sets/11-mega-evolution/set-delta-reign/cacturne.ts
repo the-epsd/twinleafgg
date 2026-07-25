@@ -10,7 +10,6 @@ export class Cacturne extends PokemonCard {
   public cardType: CardType = G;
   public hp: number = 130;
   public weakness = [{ type: R }];
-  public resistance = [];
   public retreat = [C, C];
 
   public attacks = [{
