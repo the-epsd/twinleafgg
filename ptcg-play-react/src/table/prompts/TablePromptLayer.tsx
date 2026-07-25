@@ -22,7 +22,10 @@ import type {
   ChooseAttackPrompt,
   ChooseEnergyPrompt,
   DiscardEnergyPrompt,
+  InvitePlayerPrompt,
   MoveEnergyPrompt,
+  OrderCardsPrompt,
+  SelectOptionPrompt,
 } from 'ptcg-server';
 import type { LocalGameState } from '../types/localGameState';
 import { activeGamePrompt } from '../activeGamePrompt';
@@ -38,6 +41,9 @@ import { ChooseAttackPromptPanel } from './ChooseAttackPromptPanel';
 import { ChooseEnergyPromptPanel } from './ChooseEnergyPromptPanel';
 import { MoveEnergyPromptPanel } from './MoveEnergyPromptPanel';
 import { DiscardEnergyPromptPanel } from './DiscardEnergyPromptPanel';
+import { InvitePlayerPromptPanel } from './InvitePlayerPromptPanel';
+import { OrderCardsPromptPanel } from './OrderCardsPromptPanel';
+import { SelectOptionPromptPanel } from './SelectOptionPromptPanel';
 import { PutDamageOverlay } from './PutDamageOverlay';
 import { RemoveDamageOverlay } from './RemoveDamageOverlay';
 import { MoveDamageOverlay } from './MoveDamageOverlay';
@@ -1095,6 +1101,47 @@ export function TablePromptLayer({
         localGame={localGame}
         catalog={catalog}
         getScanUrl={getScanUrl}
+        t={t}
+        gameMessageText={gameMessageText}
+        resolve={resolve}
+      />
+    );
+  }
+
+  if (p.type === 'Order cards') {
+    const ocp = p as OrderCardsPrompt;
+    return (
+      <OrderCardsPromptPanel
+        key={ocp.id}
+        prompt={ocp}
+        getScanUrl={getScanUrl}
+        t={t}
+        gameMessageText={gameMessageText}
+        resolve={resolve}
+      />
+    );
+  }
+
+  if (p.type === 'SelectOption') {
+    const sop = p as SelectOptionPrompt;
+    return (
+      <SelectOptionPromptPanel
+        key={sop.id}
+        prompt={sop}
+        t={t}
+        gameMessageText={gameMessageText}
+        resolve={resolve}
+      />
+    );
+  }
+
+  if (p.type === 'Invite player') {
+    const ipp = p as InvitePlayerPrompt;
+    return (
+      <InvitePlayerPromptPanel
+        key={ipp.id}
+        prompt={ipp}
+        localGame={localGame}
         t={t}
         gameMessageText={gameMessageText}
         resolve={resolve}

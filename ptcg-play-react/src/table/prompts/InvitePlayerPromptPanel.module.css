@@ -1,0 +1,208 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(8, 12, 20, 0.72);
+  backdrop-filter: blur(6px);
+  animation: promptBackdropEnter 150ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.panel {
+  box-sizing: border-box;
+  width: min(900px, calc(100vw - 48px));
+  max-height: min(90vh, 880px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(165deg, rgba(22, 28, 40, 0.98), rgba(14, 18, 28, 0.98));
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+  color: rgba(245, 248, 255, 0.94);
+  animation: promptPanelEnter 150ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+@keyframes promptBackdropEnter {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes promptPanelEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.header {
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(120, 200, 140, 0.25);
+  flex-shrink: 0;
+}
+
+.title {
+  margin: 0 0 8px;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.formatBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(120, 200, 140, 0.35);
+  background: rgba(120, 200, 140, 0.08);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.formatValue {
+  color: rgba(140, 220, 160, 0.95);
+}
+
+.content {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding: 24px;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-height: 200px;
+  color: rgba(230, 235, 245, 0.75);
+}
+
+.messageBox {
+  margin-bottom: 20px;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(120, 200, 140, 0.25);
+  background: rgba(255, 255, 255, 0.04);
+  line-height: 1.45;
+}
+
+.selectionHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.selectionTitle {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.deckCount {
+  font-size: 0.85rem;
+  color: rgba(200, 210, 225, 0.7);
+}
+
+.deckGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.deckCard {
+  padding: 12px;
+  border-radius: 12px;
+  border: 2px solid rgba(120, 200, 140, 0.25);
+  background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+  text-align: center;
+}
+
+.deckCard:hover:not(:disabled) {
+  border-color: rgba(255, 215, 120, 0.55);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.deckCardSelected {
+  border-color: rgba(120, 200, 140, 0.85);
+  background: rgba(120, 200, 140, 0.08);
+}
+
+.deckCardDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(0.6);
+}
+
+.deckArtwork {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 72px;
+  margin-bottom: 8px;
+}
+
+.deckName {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+.noDecks {
+  text-align: center;
+  padding: 32px 16px;
+}
+
+.noDecksTitle {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.noDecksDesc {
+  margin: 0 0 20px;
+  color: rgba(200, 210, 225, 0.75);
+  line-height: 1.45;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 16px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
