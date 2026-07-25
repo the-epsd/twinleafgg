@@ -66,6 +66,7 @@ import { Riolu } from './riolu';
 import { Riolu2 } from './riolu2';
 import { RockChestplate } from './rock-chestplate';
 import { RockyHelmet } from './rocky-helmet';
+import { Rotom } from './rotom';
 import { Seviper } from './seviper';
 import { Scatterbug } from './scatterbug';
 import { Scovillain } from './scovillain';
@@ -160,6 +161,7 @@ export const setScarletAndViolet: Card[] = [
   new Riolu2(),
   new RockChestplate(),
   new RockyHelmet(),
+  new Rotom(),
   new Scatterbug(),
   new Scovillain(),
   new Seviper(),

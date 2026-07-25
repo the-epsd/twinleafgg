@@ -50,6 +50,7 @@ import { MistysVitality } from './mistys-vitality';
 import { Miraidon } from './miraidon';
 import { Morpekoex } from './morpeko-ex';
 import { Mabosstiff } from './mabosstiff';
+import { Mandibuzz } from './mandibuzz';
 import { Nickit } from './nickit';
 import { Palafin } from './palafin';
 import { Pikipek } from './pikipek';
@@ -78,6 +79,7 @@ import { Trumbeak } from './trumbeak';
 import { Tropius } from './tropius';
 import { TypeNull } from './type-null';
 import { Vikavolt } from './vikavolt';
+import { Vullaby } from './vullaby';
 import { Wailmer } from './wailmer';
 import { Wailordex } from './wailord-ex';
 import { Zarude } from './zarude';
@@ -172,6 +174,7 @@ export const setPitchBlack: Card[] = [
   new Miraidon(),
   new Morpekoex(),
   new Mabosstiff(),
+  new Mandibuzz(),
   new Nickit(),
   new Palafin(),
   new Pikipek(),
@@ -200,6 +203,7 @@ export const setPitchBlack: Card[] = [
   new Tropius(),
   new TypeNull(),
   new Vikavolt(),
+  new Vullaby(),
   new Wailmer(),
   new Wailordex(),
   new Zarude(),

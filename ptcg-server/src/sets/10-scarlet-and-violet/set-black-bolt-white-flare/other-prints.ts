@@ -25,6 +25,8 @@ import { Fraxure } from './fraxure';
 import { Frillish } from './frillish';
 import { Galvantula } from './galvantula';
 import { Genesectex } from './genesect-ex';
+import { Golett } from './golett';
+import { Golurk } from './golurk';
 import { Haxorus } from './haxorus';
 import { Hilda } from './hilda';
 import { Hydreigonex } from './hydreigon-ex';
@@ -206,6 +208,18 @@ export class EelektrikAR extends Eelektrik {
   public setNumber = '114';
   public set = 'BLK';
   public fullName: string = 'EelektrikAR SV11B';
+}
+
+export class GolettAR extends Golett {
+  public setNumber = '122';
+  public set = 'BLK';
+  public fullName: string = 'GolettAR SV11B';
+}
+
+export class GolurkAR extends Golurk {
+  public setNumber = '123';
+  public set = 'BLK';
+  public fullName: string = 'GolurkAR SV11B';
 }
 
 export class DrilburAR extends Drilbur {
