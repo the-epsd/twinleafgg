@@ -495,7 +495,7 @@
   "REACT_OPTIONAL_API_URL": "URL de la API (opcional)",
   "REACT_PRIVACY_NOTICE": "Aviso de privacidad",
   "REACT_REGISTER_API_HINT": "Para ptcg-server local usa http:// (p. ej. http://localhost:8080). https:// en localhost provoca errores TLS en Safari.",
-  "REACT_REGISTER_SERVER_PASSWORD": "Contraseña del servidor (si aplica)",
+  "REACT_REGISTER_SERVER_PASSWORD": "Contraseña del servidor",
   "REACT_REMEMBER_LOGIN": "Recordar inicio de sesión",
   "REACT_SERVER_SETTINGS": "Ajustes del servidor",
   "REACT_SERVER_URL_ADVANCED": "URL del servidor (avanzado)",
