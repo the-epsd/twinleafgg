@@ -9,45 +9,35 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 
 export class FightingStadium extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.STADIUM;
   public set: string = 'FFI';
   public name: string = 'Fighting Stadium';
   public fullName: string = 'Fighting Stadium FFI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '90';
-
-  public text: string =
-    'The attacks of each [F] Pokémon in play (both yours and your opponent\'s) ' +
-    'do 20 more damage to the Defending Pokemon-EX (before applying Weakness ' +
-    'and Resistance).';
+  public text: string = 'The attacks of each [F] Pokémon in play (both yours and your opponent\'s) do 20 more damage to the Defending Pokémon-EX (before applying Weakness and Resistance).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof DealDamageEffect && StateUtils.getStadiumCard(state) === this) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // Not opponent's active pokemon
-      if (effect.target !== opponent.active) {
-        return state;
-      }
-
-      // Not attacking Pokemon EX
+      const opponent = StateUtils.getOpponent(state, effect.player);
       const targetCard = effect.target.getPokemonCard();
-      if (!targetCard || !targetCard.tags.includes(CardTag.POKEMON_EX)) {
-        return state;
-      }
-
-      // Attack not made by the Fighting Pokemon
       const checkPokemonType = new CheckPokemonTypeEffect(effect.source);
-      store.reduceEffect(state, checkPokemonType);
-      if (!checkPokemonType.cardTypes.includes(CardType.FIGHTING)) {
+
+      if (
+        effect.target !== opponent.active ||
+        !targetCard?.tags.includes(CardTag.POKEMON_EX) ||
+        IS_STADIUM_EFFECT_BLOCKED(store, state, opponent, effect.target)
+      ) {
         return state;
       }
 
-      effect.damage += 20;
+      store.reduceEffect(state, checkPokemonType);
+      if (checkPokemonType.cardTypes.includes(CardType.FIGHTING)) {
+        effect.damage += 20;
+      }
     }
 
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
@@ -56,5 +46,4 @@ export class FightingStadium extends TrainerCard {
 
     return state;
   }
-
 }

@@ -4,6 +4,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, CardType, CardTag } from '../../../game/store/card/card-types';
 import { CheckAttackCostEffect } from '../../../game/store/effects/check-effects';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 import { StateUtils } from '../../../game/store/state-utils';
 
 export class NightMine extends TrainerCard {
@@ -14,13 +15,16 @@ export class NightMine extends TrainerCard {
   public setNumber: string = '197';
   public name: string = 'Nighttime Mine';
   public fullName: string = 'Night Mine M2a';
-
   public text: string = 'Attacks used by each Tera Pokémon in play (both yours and your opponent\'s) cost [C] more.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckAttackCostEffect && StateUtils.getStadiumCard(state) === this) {
       const player = effect.player;
       const pokemonCard = player.active.getPokemonCard();
+
+      if (IS_STADIUM_EFFECT_BLOCKED(store, state, player, player.active, this)) {
+        return state;
+      }
 
       if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_TERA)) {
         const index = effect.cost.indexOf(CardType.COLORLESS);
@@ -33,6 +37,7 @@ export class NightMine extends TrainerCard {
       }
       return state;
     }
+
     return state;
   }
 }

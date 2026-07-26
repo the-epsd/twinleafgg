@@ -27,6 +27,7 @@ import { Greavard } from './greavard';
 import { Houndstoneex } from './houndstone-ex';
 import { Larvitar } from './larvitar';
 import { LetterOfEncouragement } from './letter-of-encouragement';
+import { Lunatone } from './lunatone';
 import { Miraidonex } from './miraidon-ex';
 import { Ninetales } from './ninetales';
 import { Oddish } from './oddish';
@@ -83,6 +84,7 @@ export const setObsidianFlames: Card[] = [
   new Finizen(),
   new Froakie(),
   new LetterOfEncouragement(),
+  new Lunatone(),
   new Ninetales(),
   new Oddish(),
   new Palafin(),

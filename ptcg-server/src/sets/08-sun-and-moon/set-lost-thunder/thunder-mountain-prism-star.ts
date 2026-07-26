@@ -7,10 +7,8 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { MoveCardsEffect, UseStadiumEffect } from '../../../game/store/effects/game-effects';
-import {
-  CheckAttackCostEffect,
-  CheckPokemonTypeEffect,
-} from '../../../game/store/effects/check-effects';
+import { CheckAttackCostEffect, CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 
 export class ThunderMountainPrismStar extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
@@ -20,29 +18,22 @@ export class ThunderMountainPrismStar extends TrainerCard {
   public fullName: string = 'Thunder Mountain Prism Star LOT';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '191';
-
-  public text: string =
-    "The attacks of [L] Pokémon (both yours and your opponent's) cost [L] less." +
-    'Whenever any player plays an Item or Supporter card from their hand, prevent all effects of that card done to this Stadium card.';
+  public text: string = 'The attacks of [L] Pokémon (both yours and your opponent\'s) cost [L] less.\n\nWhenever any player plays an Item or Supporter card from their hand, prevent all effects of that card done to this Stadium card.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckAttackCostEffect && StateUtils.getStadiumCard(state) === this) {
-      const player = effect.player;
       const index = effect.cost.indexOf(CardType.LIGHTNING);
+      const checkPokemonType = new CheckPokemonTypeEffect(effect.player.active);
 
-      // No cost to reduce
-      if (index === -1) {
+      if (index === -1 || IS_STADIUM_EFFECT_BLOCKED(store, state, effect.player, effect.player.active, this)) {
         return state;
       }
 
-      const checkPokemonTypeEffect = new CheckPokemonTypeEffect(player.active);
-      store.reduceEffect(state, checkPokemonTypeEffect);
+      store.reduceEffect(state, checkPokemonType);
 
-      if (checkPokemonTypeEffect.cardTypes.includes(CardType.LIGHTNING)) {
+      if (checkPokemonType.cardTypes.includes(CardType.LIGHTNING)) {
         effect.cost.splice(index, 1);
       }
-
-      return state;
     }
 
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {

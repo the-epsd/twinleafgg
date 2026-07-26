@@ -9,6 +9,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
 import { PlayStadiumEffect } from '../../../game/store/effects/play-card-effects';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 
 export class AngeFloette extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
@@ -17,10 +18,7 @@ export class AngeFloette extends TrainerCard {
   public name: string = 'Ange Floette';
   public fullName: string = 'Hyperrogue Ange Floette M4';
   public cardImage: string = 'assets/cardback.png';
-
-  public text: string =
-    'You can put this card into play only if you discard a Prism Tower in play, and you can put this card into play during the same turn you play Prism Tower.\n\n' +
-    "Each Mega Floette ex in play (both yours and your opponent's) gets +150 HP.";
+  public text: string = 'You can put this card into play only if you discard a Prism Tower in play, and you can put this card into play during the same turn you play Prism Tower.\n\nEach Mega Floette ex in play (both yours and your opponent\'s) gets +150 HP.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayStadiumEffect && effect.trainerCard === this) {
@@ -31,12 +29,14 @@ export class AngeFloette extends TrainerCard {
     }
 
     if (effect instanceof CheckHpEffect && StateUtils.getStadiumCard(state) === this) {
+      const owner = StateUtils.findOwner(state, effect.target);
       const pokemonCard = effect.target.getPokemonCard();
-      if (
-        pokemonCard &&
-        pokemonCard.name === 'Mega Floette ex' &&
-        pokemonCard.tags.includes(CardTag.POKEMON_SV_MEGA)
-      ) {
+
+      if (IS_STADIUM_EFFECT_BLOCKED(store, state, owner, effect.target, this)) {
+        return state;
+      }
+
+      if (pokemonCard && pokemonCard.name === 'Mega Floette ex' && pokemonCard.tags.includes(CardTag.POKEMON_SV_MEGA)) {
         effect.hp += 150;
       }
     }

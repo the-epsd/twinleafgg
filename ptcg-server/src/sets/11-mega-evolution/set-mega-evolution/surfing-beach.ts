@@ -8,6 +8,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 
 export class SurfingBeach extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
@@ -17,7 +18,6 @@ export class SurfingBeach extends TrainerCard {
   public name = 'Surfing Beach';
   public fullName = 'Surfing Beach M1S';
   public regulationMark = 'I';
-
   public text = 'Once during each player\'s turn, that player may switch their Active [W] Pokémon with 1 of their Benched [W] Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -44,6 +44,10 @@ export class SurfingBeach extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_USE_STADIUM);
       }
 
+      if (IS_STADIUM_EFFECT_BLOCKED(store, state, player, player.active, this)) {
+        throw new GameError(GameMessage.CANNOT_USE_STADIUM);
+      }
+
       store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
@@ -54,9 +58,13 @@ export class SurfingBeach extends TrainerCard {
         if (!selected || selected.length === 0)
           return state;
         const target = selected[0];
+        if (IS_STADIUM_EFFECT_BLOCKED(store, state, player, target, this)) {
+          return state;
+        }
         player.switchPokemon(target);
       });
     }
+
     return state;
   }
 }

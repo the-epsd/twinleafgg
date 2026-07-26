@@ -6,77 +6,77 @@ import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../../../game
 import { Effect } from '../../../game/store/effects/effect';
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
 import { StateUtils } from '../../../game/store/state-utils';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
-export class StarkMountain extends TrainerCard {
+const STARK_TYPES = [CardType.FIRE, CardType.FIGHTING];
+const MOVABLE_ENERGY = [...STARK_TYPES, CardType.ANY];
 
+export class StarkMountain extends TrainerCard {
   public trainerType = TrainerType.STADIUM;
   public set = 'LA';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '135';
   public name = 'Stark Mountain';
   public fullName = 'Stark Mountain LA';
-
   public text = 'Once during each player\'s turn, that player may choose a [R] or [F] Energy attached to 1 of his or her Pokémon and move that Energy to 1 of his or her [R] or [F] Pokémon.';
 
   reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
-
       const player = effect.player;
       const blockedMap: { source: CardTarget, blocked: number[] }[] = [];
+      const blockedTo: CardTarget[] = [];
 
-      // Determine blocked energy cards for each Pokémon
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, _card, target) => {
         const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, cardList);
         store.reduceEffect(state, checkProvidedEnergy);
 
-        const blockedIndices = new Set<number>();
-        checkProvidedEnergy.energyMap.forEach(em => {
-          if (!em.provides.includes(CardType.FIRE) && !em.provides.includes(CardType.FIGHTING) && !em.provides.includes(CardType.ANY)) {
-            const index = cardList.cards.indexOf(em.card);
-            if (index !== -1) {
-              blockedIndices.add(index);
-            }
-          }
-        });
+        const blocked = checkProvidedEnergy.energyMap
+          .filter(em => !MOVABLE_ENERGY.some(t => em.provides.includes(t)))
+          .map(em => cardList.cards.indexOf(em.card))
+          .filter(index => index !== -1);
 
-        if (blockedIndices.size > 0) {
-          blockedMap.push({ source: target, blocked: Array.from(blockedIndices) });
+        if (blocked.length > 0) {
+          blockedMap.push({ source: target, blocked: [...new Set(blocked)] });
         }
-      });
 
-      // Determine valid targets (Fire or Fighting Pokémon)
-      const invalidTargets: CardTarget[] = [];
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        const checkPokemonTypeEffect = new CheckPokemonTypeEffect(list);
-        store.reduceEffect(state, checkPokemonTypeEffect);
-
-        if (!checkPokemonTypeEffect.cardTypes.includes(CardType.FIRE) && !checkPokemonTypeEffect.cardTypes.includes(CardType.FIGHTING)) {
-          invalidTargets.push(target);
+        const checkPokemonType = new CheckPokemonTypeEffect(cardList);
+        store.reduceEffect(state, checkPokemonType);
+        if (!STARK_TYPES.some(t => checkPokemonType.cardTypes.includes(t))) {
+          blockedTo.push(target);
         }
       });
 
       store.prompt(state, new MoveEnergyPrompt(
-        effect.player.id,
+        player.id,
         GameMessage.MOVE_ENERGY_CARDS,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY },
-        { allowCancel: true, min: 1, max: 1, blockedMap, blockedTo: invalidTargets }
+        { allowCancel: true, min: 1, max: 1, blockedMap, blockedTo }
       ), transfers => {
-        if (transfers && transfers.length > 0) {
-          for (const transfer of transfers) {
-            const source = StateUtils.getTarget(state, player, transfer.from);
-            const target = StateUtils.getTarget(state, player, transfer.to);
+        if (!transfers?.length) {
+          return;
+        }
 
-            if (source && target) {
-              source.moveCardTo(transfer.card, target);
-            }
+        for (const transfer of transfers) {
+          const source = StateUtils.getTarget(state, player, transfer.from);
+          const target = StateUtils.getTarget(state, player, transfer.to);
+          if (!source || !target) {
+            continue;
           }
+          if (
+            IS_STADIUM_EFFECT_BLOCKED(store, state, player, source, this) ||
+            IS_STADIUM_EFFECT_BLOCKED(store, state, player, target, this)
+          ) {
+            continue;
+          }
+          source.moveCardTo(transfer.card, target);
         }
       });
     }
+
     return state;
   }
 }

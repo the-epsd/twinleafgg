@@ -9,6 +9,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
 import { HANDLE_ABILITY_LOCK } from '../../../game/store/prefabs/ability-lock';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
 
 export class TeamRocketsWatchtower extends TrainerCard {
@@ -19,12 +20,9 @@ export class TeamRocketsWatchtower extends TrainerCard {
   public fullName: string = 'Team Rocket\'s Watchtower DRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '180';
-
-  public text: string =
-    '[C] Pokémon in play (both yours and your opponent\'s) have no Abilities.';
+  public text: string = '[C] Pokémon in play (both yours and your opponent\'s) have no Abilities.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     HANDLE_ABILITY_LOCK(effect, ({ card }) => {
       if (StateUtils.getStadiumCard(state) !== this) {
         return false;
@@ -32,6 +30,10 @@ export class TeamRocketsWatchtower extends TrainerCard {
       try {
         const cardList = StateUtils.findCardList(state, card);
         if (!(cardList instanceof PokemonCardList)) {
+          return false;
+        }
+        const owner = StateUtils.findOwner(state, cardList);
+        if (IS_STADIUM_EFFECT_BLOCKED(store, state, owner, cardList, this)) {
           return false;
         }
         const checkType = new CheckPokemonTypeEffect(cardList);
@@ -52,5 +54,4 @@ export class TeamRocketsWatchtower extends TrainerCard {
 
     return state;
   }
-
 }

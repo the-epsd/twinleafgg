@@ -9,25 +9,19 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
 import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
-import {
-  HANDLE_ABILITY_BLOCK,
-  POKEPOWER_AND_BODY_TYPES,
-} from '../../../game/store/prefabs/ability-lock';
+import { HANDLE_ABILITY_BLOCK, POKEPOWER_AND_BODY_TYPES } from '../../../game/store/prefabs/ability-lock';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 
 export class BattleFrontier extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.STADIUM;
   public set: string = 'PK';
   public name: string = 'Battle Frontier';
   public fullName: string = 'Battle Frontier PK';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '71';
-
-  public text: string =
-    'Each player\'s [C] Evolved Pokémon, [D] Evolved Pokémon, and [M] Evolved Pokémon can\'t use any Poké-Powers or Poké-Bodies.';
+  public text: string = 'Each player\'s [C] Evolved Pokémon, [D] Evolved Pokémon, and [M] Evolved Pokémon can\'t use any Poké-Powers or Poké-Bodies.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     HANDLE_ABILITY_BLOCK(effect, ({ card }) => {
       if (StateUtils.getStadiumCard(state) !== this) {
         return false;
@@ -35,6 +29,10 @@ export class BattleFrontier extends TrainerCard {
       try {
         const cardList = StateUtils.findCardList(state, card);
         if (!(cardList instanceof PokemonCardList)) {
+          return false;
+        }
+        const owner = StateUtils.findOwner(state, cardList);
+        if (IS_STADIUM_EFFECT_BLOCKED(store, state, owner, cardList)) {
           return false;
         }
         if (cardList.getPokemons().length <= 1) {
@@ -60,5 +58,4 @@ export class BattleFrontier extends TrainerCard {
 
     return state;
   }
-
 }

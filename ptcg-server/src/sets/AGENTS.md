@@ -1310,6 +1310,31 @@ if (IS_TOOL_BLOCKED(store, state, player, this)) {
 
 Reference: `set-evolving-skies/spirit-mask.ts`, `set-evolving-skies/digging-gloves.ts`
 
+### Stadium effects on Pokémon must check `IS_STADIUM_EFFECT_BLOCKED`
+
+Stadiums that apply effects **to Pokémon in play** (HP, retreat/attack cost, damage mods, checkup, heal, ability lock, tool/special-energy nullify, etc.) must call `IS_STADIUM_EFFECT_BLOCKED` before mutating. This gates Lunatone OBF New Moon and similar prevention.
+
+```typescript
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
+
+// CheckHp / PutDamage / DealDamage / stats — target on effect
+const owner = StateUtils.findOwner(state, effect.target);
+if (IS_STADIUM_EFFECT_BLOCKED(store, state, owner, effect.target)) {
+  return state;
+}
+
+// CheckAttackCost / CheckRetreatCost — Active of effect.player
+if (IS_STADIUM_EFFECT_BLOCKED(store, state, effect.player, effect.player.active)) {
+  return state;
+}
+```
+
+Do **not** gate search/draw stadiums, bench-size/table rules, or stadium meta (Chaotic Swell). Ability-lock stadiums check inside the `HANDLE_ABILITY_LOCK` predicate.
+
+**Priority:** New Moon outprioritizes stadium ability locks (Silent Lab, Path to the Peak, etc.). Nested `IS_STADIUM_EFFECT_BLOCKED` probes set `StadiumEffect.skipAbilityLockCheck` so Silent Lab cannot shut off New Moon while asking whether New Moon blocks it. Non-stadium locks (Garbotoxin, Hex Maniac) still disable New Moon on the outer probe.
+
+Reference: `set-obsidian-flames/lunatone.ts` (New Moon), `set-obsidian-flames/pokemon-league-headquarters.ts`
+
 ### Async callback bug: modify `effect.damage` INSIDE the callback
 
 When a prompt callback determines how much extra damage to deal, the damage modification MUST happen inside the callback. Code after `store.prompt()` runs BEFORE the callback:

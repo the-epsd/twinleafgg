@@ -4,11 +4,13 @@ import { GameMessage } from '../../../game/game-message';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { TrainerType, CardType } from '../../../game/store/card/card-types';
+import { TrainerType, CardType, SpecialCondition } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
 import { CheckPokemonTypeEffect, CheckTableStateEffect } from '../../../game/store/effects/check-effects';
-import { SpecialCondition } from '../../../game/store/card/card-types';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
+
+const BLOCKED_CONDITIONS = [SpecialCondition.ASLEEP, SpecialCondition.CONFUSED, SpecialCondition.PARALYZED];
 
 export class SidneysStadium extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
@@ -17,31 +19,24 @@ export class SidneysStadium extends TrainerCard {
   public fullName: string = 'Sidney\'s Stadium PK';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '82';
-
-  public text: string =
-    'Each player\'s [D] Pokémon can\'t be Asleep, Confused, or Paralyzed.';
+  public text: string = 'Each player\'s [D] Pokémon can\'t be Asleep, Confused, or Paralyzed.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckTableStateEffect && StateUtils.getStadiumCard(state) === this) {
       state.players.forEach(player => {
-        if (!player.active.specialConditions.includes(SpecialCondition.ASLEEP) &&
-          !player.active.specialConditions.includes(SpecialCondition.CONFUSED) &&
-          !player.active.specialConditions.includes(SpecialCondition.PARALYZED)) {
+        if (IS_STADIUM_EFFECT_BLOCKED(store, state, player, player.active)) {
           return;
         }
 
-        const checkPokemonTypeEffect = new CheckPokemonTypeEffect(player.active);
-        store.reduceEffect(state, checkPokemonTypeEffect);
+        if (!BLOCKED_CONDITIONS.some(c => player.active.specialConditions.includes(c))) {
+          return;
+        }
 
-        if (checkPokemonTypeEffect.cardTypes.includes(CardType.DARK)) {
-          const conditions = player.active.specialConditions.slice();
-          conditions.forEach(condition => {
-            if (condition === SpecialCondition.ASLEEP ||
-              condition === SpecialCondition.CONFUSED ||
-              condition === SpecialCondition.PARALYZED) {
-              player.active.removeSpecialCondition(condition);
-            }
-          });
+        const checkPokemonType = new CheckPokemonTypeEffect(player.active);
+        store.reduceEffect(state, checkPokemonType);
+
+        if (checkPokemonType.cardTypes.includes(CardType.DARK)) {
+          BLOCKED_CONDITIONS.forEach(c => player.active.removeSpecialCondition(c));
         }
       });
       return state;
@@ -53,5 +48,4 @@ export class SidneysStadium extends TrainerCard {
 
     return state;
   }
-
 }

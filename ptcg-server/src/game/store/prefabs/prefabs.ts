@@ -2271,6 +2271,8 @@ export function IS_TOOL_BLOCKED(
   return false;
 }
 
+export { IS_STADIUM_EFFECT_BLOCKED } from './stadium-effect';
+
 /**
  * True when an attack effect originated from the target owner's opponent's Pokémon.
  * Used for text like "Prevent effects of attacks from your opponent's Pokémon done to …"

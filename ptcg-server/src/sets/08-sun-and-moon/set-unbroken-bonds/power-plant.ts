@@ -8,6 +8,7 @@ import { TrainerType, CardTag } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
 import { HANDLE_ABILITY_LOCK } from '../../../game/store/prefabs/ability-lock';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 
 export class PowerPlant extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
@@ -16,12 +17,9 @@ export class PowerPlant extends TrainerCard {
   public fullName: string = 'Power Plant UNB';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '183';
-
-  public text: string =
-    'Pokémon-GX and Pokémon-EX in play (both yours and your opponent\'s) have no Abilities.';
+  public text: string = 'Pokémon-GX and Pokémon-EX in play (both yours and your opponent\'s) have no Abilities.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     HANDLE_ABILITY_LOCK(effect, ({ card }) => {
       if (StateUtils.getStadiumCard(state) !== this) {
         return false;
@@ -30,7 +28,15 @@ export class PowerPlant extends TrainerCard {
       if (!isEXorGX) {
         return false;
       }
-      return StateUtils.findPokemonSlot(state, card) !== undefined;
+      const slot = StateUtils.findPokemonSlot(state, card);
+      if (slot === undefined) {
+        return false;
+      }
+      const owner = StateUtils.findOwner(state, slot);
+      if (IS_STADIUM_EFFECT_BLOCKED(store, state, owner, slot)) {
+        return false;
+      }
+      return true;
     }, {
       allowUseFromHand: true,
       allowUseFromDiscard: true,
@@ -43,5 +49,4 @@ export class PowerPlant extends TrainerCard {
 
     return state;
   }
-
 }

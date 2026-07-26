@@ -4,6 +4,7 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { assembleDualStadiumFromHand } from '../../../game/store/dual-stadium-utils';
 import { Effect } from '../../../game/store/effects/effect';
 import { HealEffect, TrainerPowerEffect } from '../../../game/store/effects/game-effects';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 
 export class LegendaryOceanTrenchLeft extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
@@ -14,9 +15,8 @@ export class LegendaryOceanTrenchLeft extends TrainerCard {
   public setNumber: string = '71';
   public name: string = 'Legendary Ocean Trench';
   public fullName: string = 'Legendary Ocean Trench (Left) M6';
-  public text: string = `You can only put this card into play from your hand with the other half of Legendary Ocean Trench, and it counts as one Stadium card while in play.
-  
-When a Pokémon in play is healed (both yours or your opponent's), double the amount of damage healed.`;
+  public text: string = 'You can only put this card into play from your hand with the other half of Legendary Ocean Trench, and it counts as one Stadium card while in play.\n\nWhen a Pokémon in play is healed (both yours or your opponent\'s), double the amount of damage healed.';
+
   public powers = [{
     name: 'Stadium Assembly',
     text: 'Put this card from your hand into play only with the other half of Legendary Ocean Trench.',
@@ -30,8 +30,11 @@ When a Pokémon in play is healed (both yours or your opponent's), double the am
       return assembleDualStadiumFromHand(store, state, effect.player, this);
     }
 
-    // Ref: set-delta-reign/legendary-summit-left.ts (dual stadium), HealEffect damage modification
     if (effect instanceof HealEffect && StateUtils.getStadiumCard(state) === this) {
+      const owner = StateUtils.findOwner(state, effect.target);
+      if (IS_STADIUM_EFFECT_BLOCKED(store, state, owner, effect.target, this)) {
+        return state;
+      }
       effect.damage *= 2;
     }
 

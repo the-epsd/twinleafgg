@@ -8,6 +8,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { BetweenTurnsEffect } from '../../../game/store/effects/game-phase-effects';
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
 import { CheckPokemonPowersEffect } from '../../../game/store/effects/check-effects';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 
 export class CursedStone extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
@@ -16,17 +17,19 @@ export class CursedStone extends TrainerCard {
   public cardImage = 'assets/cardback.png';
   public name: string = 'Cursed Stone';
   public fullName: string = 'Cursed Stone LM';
-
-  public text: string =
-    'At any time between turns, each player puts 1 damage counter on his or her Pokémon that has a Poké-Power.';
+  public text: string = 'At any time between turns, each player puts 1 damage counter on his or her Pokémon that has a Poké-Power.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof BetweenTurnsEffect && StateUtils.getStadiumCard(state) === this) {
       const player = effect.player;
 
       // idk why this hits both player's pokemon, it might be getting confused as to what the player specified is so it defaults to both, but hey, it works, so i don't care.
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+        const owner = StateUtils.findOwner(state, cardList);
+        if (IS_STADIUM_EFFECT_BLOCKED(store, state, owner, cardList)) {
+          return;
+        }
+
         if (card) {
           const powersEffect = new CheckPokemonPowersEffect(player, card);
           state = store.reduceEffect(state, powersEffect);
@@ -39,10 +42,8 @@ export class CursedStone extends TrainerCard {
       if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
         throw new GameError(GameMessage.CANNOT_USE_STADIUM);
       }
-
     }
 
     return state;
   }
-
 }
