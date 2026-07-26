@@ -19,6 +19,12 @@ export class CardSerializer implements Serializer<Card> {
 
     const result: Serialized = { _type: 'Card', index };
 
+    // Persist runtime tag mutations (e.g. Team Plasma Badge) so the client card info pane
+    // and reconnect restore see the same tags as the server.
+    if (Array.isArray(card.tags)) {
+      result.tags = [...card.tags];
+    }
+
     // Persist runtime evolution flags for PokemonCard (evolvesFromBase, evolvesToStage)
     // so they survive serialization and reach the client for 3D board hover effects
     if (card instanceof PokemonCard) {
@@ -39,6 +45,10 @@ export class CardSerializer implements Serializer<Card> {
     const card = context.cards[index];
     if (card === undefined) {
       throw new GameError(GameCoreError.ERROR_SERIALIZER, `Card not found on index '${index}'.`);
+    }
+
+    if (Array.isArray((data as any).tags)) {
+      card.tags = [...(data as any).tags];
     }
 
     // Restore runtime evolution flags from serialized state
