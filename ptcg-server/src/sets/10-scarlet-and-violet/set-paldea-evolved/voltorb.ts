@@ -21,10 +21,10 @@ export class Voltorb extends PokemonCard {
     text: ''
   }];
 
-  public set: string = 'PAL';
   public regulationMark = 'G';
-  public cardImage: string = 'assets/cardback.png';
+  public set: string = 'PAL';
   public setNumber: string = '66';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Voltorb';
   public fullName: string = 'Voltorb PAL';
 }

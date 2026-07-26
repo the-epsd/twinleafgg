@@ -8,16 +8,17 @@ export class Riolu extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    { name: 'Low Kick', cost: [F, F], damage: 50, text: '' }
-  ];
+  public attacks = [{
+    name: 'Low Kick',
+    cost: [F, F],
+    damage: 50,
+    text: ''
+  }];
 
-  public set: string = 'BRS';
   public regulationMark = 'F';
-  public cardImage: string = 'assets/cardback.png';
+  public set: string = 'BRS';
   public setNumber: string = '78';
-
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Riolu';
   public fullName: string = 'Riolu BRS';
-
 }

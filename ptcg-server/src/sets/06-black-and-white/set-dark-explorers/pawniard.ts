@@ -9,20 +9,18 @@ export class Pawniard extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Scratch',
-      cost: [C, C],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Metal Claw',
-      cost: [M, M, C],
-      damage: 40,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Scratch',
+    cost: [C, C],
+    damage: 20,
+    text: ''
+  },
+  {
+    name: 'Metal Claw',
+    cost: [M, M, C],
+    damage: 40,
+    text: ''
+  }];
 
   public set: string = 'DEX';
   public setNumber: string = '78';

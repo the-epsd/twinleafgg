@@ -1,4 +1,5 @@
-import { CardType, PokemonCard, Stage } from '../../../game';
+import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Frillish extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -14,10 +15,10 @@ export class Frillish extends PokemonCard {
     text: ''
   }];
 
-  public regulationMark: string = 'J';
+  public regulationMark = 'J';
   public set: string = 'M6';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '19';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Frillish';
   public fullName: string = 'Frillish M6';
 }

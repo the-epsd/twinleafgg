@@ -3,24 +3,22 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Primeape extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public evolvesFrom: string = 'Mankey';
+  public evolvesFrom = 'Mankey';
   public cardType: CardType = F;
   public hp: number = 110;
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Corkscrew Punch',
-      cost: [C, C],
-      damage: 50,
-      text: '',
-    },
-  ];
+  public attacks = [{
+    name: 'Corkscrew Punch',
+    cost: [C, C],
+    damage: 50,
+    text: ''
+  }];
 
+  public regulationMark = 'J';
   public set: string = 'PBL';
   public setNumber: string = '43';
-  public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Primeape';
   public fullName: string = 'Primeape M5';

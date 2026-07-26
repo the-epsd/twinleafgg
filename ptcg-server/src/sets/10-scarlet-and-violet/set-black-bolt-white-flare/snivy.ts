@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType } from '../../../game';
+import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Snivy extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = G;
   public hp: number = 70;
@@ -13,7 +13,8 @@ export class Snivy extends PokemonCard {
     cost: [G],
     damage: 10,
     text: ''
-  }, {
+  },
+  {
     name: 'Vine Whip',
     cost: [G, G],
     damage: 30,

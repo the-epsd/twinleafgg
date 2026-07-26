@@ -22,9 +22,9 @@ export class Vullaby extends PokemonCard {
     text: ''
   }];
 
+  public regulationMark = 'J';
   public set: string = 'PBL';
   public setNumber: string = '49';
-  public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vullaby';
   public fullName: string = 'Vullaby M5';

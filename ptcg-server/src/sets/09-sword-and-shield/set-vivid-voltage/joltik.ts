@@ -1,4 +1,5 @@
-import { PokemonCard, Stage, CardType } from '../../../game';
+import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Joltik extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -15,8 +16,8 @@ export class Joltik extends PokemonCard {
   }];
 
   public set: string = 'VIV';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '55';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Joltik';
   public fullName: string = 'Joltik VIV';
 }

@@ -3,10 +3,10 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class AlolanRattata extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType = D;
   public hp: number = 40;
-  public weakness = [{ type: CardType.FIGHTING }];
-  public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
+  public weakness = [{ type: F }];
+  public resistance = [{ type: P, value: -20 }];
   public retreat = [];
 
   public attacks = [{
@@ -17,8 +17,8 @@ export class AlolanRattata extends PokemonCard {
   }];
 
   public set: string = 'SUM';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '76';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Rattata';
   public fullName: string = 'Alolan Rattata SUM';
 }

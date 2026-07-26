@@ -9,25 +9,23 @@ export class Pupitar extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Sand Spray',
-      cost: [C],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Hammer In',
-      cost: [C, C, C],
-      damage: 60,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Sand Spray',
+    cost: [C],
+    damage: 20,
+    text: ''
+  },
+  {
+    name: 'Hammer In',
+    cost: [C, C, C],
+    damage: 60,
+    text: ''
+  }];
 
-  public set: string = 'PRE';
   public regulationMark = 'H';
-  public cardImage: string = 'assets/cardback.png';
+  public set: string = 'PRE';
   public setNumber: string = '48';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pupitar';
   public fullName: string = 'Pupitar PRE';
 }

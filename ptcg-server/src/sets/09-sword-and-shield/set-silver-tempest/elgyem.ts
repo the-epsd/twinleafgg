@@ -2,38 +2,24 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Elgyem extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.PSYCHIC;
-
+  public cardType: CardType = P;
   public hp: number = 60;
+  public weakness = [{ type: D }];
+  public resistance = [{ type: F, value: -30 }];
+  public retreat = [C];
 
-  public weakness = [{ type: CardType.DARK }];
-
-  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
-
-  public retreat = [CardType.COLORLESS];
-
-  public attacks = [
-    {
-      name: 'Headbutt',
-      cost: [CardType.PSYCHIC],
-      damage: 20,
-      text: ''
-    }
-  ];
-
-  public set: string = 'SIT';
+  public attacks = [{
+    name: 'Headbutt',
+    cost: [P],
+    damage: 20,
+    text: ''
+  }];
 
   public regulationMark = 'F';
-
-  public cardImage: string = 'assets/cardback.png';
-
+  public set: string = 'SIT';
   public setNumber: string = '79';
-
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Elgyem';
-
   public fullName: string = 'Elgyem SIT';
-
 }

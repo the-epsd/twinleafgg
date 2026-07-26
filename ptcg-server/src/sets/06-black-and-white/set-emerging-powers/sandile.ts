@@ -8,18 +8,16 @@ export class Sandile extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Bite',
-      cost: [F, C],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Bite',
+    cost: [F, C],
+    damage: 20,
+    text: ''
+  }];
 
   public set: string = 'EPO';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '60';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sandile';
   public fullName: string = 'Sandile EPO';
 }

@@ -8,20 +8,18 @@ export class Eevee2 extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Smash Kick',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Tail Whap',
-      cost: [C, C],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Smash Kick',
+    cost: [C],
+    damage: 10,
+    text: ''
+  },
+  {
+    name: 'Tail Whap',
+    cost: [C, C],
+    damage: 20,
+    text: ''
+  }];
 
   public set: string = 'DEX';
   public setNumber: string = '84';

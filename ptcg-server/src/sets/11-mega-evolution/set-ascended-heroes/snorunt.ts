@@ -13,13 +13,12 @@ export class Snorunt extends PokemonCard {
     cost: [W],
     damage: 10,
     text: ''
-  }
-  ];
+  }];
 
   public regulationMark = 'I';
   public set: string = 'ASC';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '46';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Snorunt';
   public fullName: string = 'Snorunt M2a';
 }

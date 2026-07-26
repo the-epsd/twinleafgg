@@ -23,8 +23,8 @@ export class Chikorita extends PokemonCard {
   }];
 
   public set: string = 'UF';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '51';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chikorita';
   public fullName: string = 'Chikorita UF';
 }

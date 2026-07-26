@@ -15,10 +15,10 @@ export class Magnemite extends PokemonCard {
     text: ''
   }];
 
+  public regulationMark = 'I';
   public set: string = 'MEG';
+  public setNumber: string = '45';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magnemite';
   public fullName: string = 'Magnemite M1S';
-  public setNumber: string = '45';
-  public regulationMark: string = 'I';
-  public cardImage: string = 'assets/cardback.png';
 }

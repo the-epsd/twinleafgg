@@ -1,21 +1,24 @@
-import { Attack, CardType, PokemonCard, Stage, Weakness } from '../../../game';
+import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Bramblin extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = G;
   public hp: number = 50;
-  public weakness: Weakness[] = [{ type: R }];
-  public retreat: CardType[] = [C];
+  public weakness = [{ type: R }];
+  public retreat = [C];
 
-  public attacks: Attack[] = [
-    { name: 'Spike Sting', cost: [C, C], damage: 30, text: '' },
-  ];
+  public attacks = [{
+    name: 'Spike Sting',
+    cost: [C, C],
+    damage: 30,
+    text: ''
+  }];
 
+  public regulationMark = 'H';
   public set: string = 'TEF';
-  public regulationMark: string = 'H';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '20';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bramblin';
   public fullName: string = 'Bramblin TEF';
 }

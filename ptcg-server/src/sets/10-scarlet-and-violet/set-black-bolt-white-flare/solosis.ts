@@ -1,4 +1,5 @@
-import { PokemonCard, Stage, CardType } from '../../../game';
+import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Solosis extends PokemonCard {
   public stage: Stage = Stage.BASIC;

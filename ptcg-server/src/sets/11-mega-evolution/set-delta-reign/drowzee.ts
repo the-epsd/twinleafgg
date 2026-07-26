@@ -1,4 +1,5 @@
-import { CardType, PokemonCard, Stage } from '../../../game';
+import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Drowzee extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -15,10 +16,10 @@ export class Drowzee extends PokemonCard {
     text: ''
   }];
 
-  public regulationMark: string = 'J';
+  public regulationMark = 'J';
   public set: string = 'M6';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '29';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Drowzee';
   public fullName: string = 'Drowzee M6';
 }

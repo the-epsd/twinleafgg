@@ -9,16 +9,14 @@ export class Ducklett extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Flap',
-      cost: [C],
-      damage: 20,
-      text: '',
-    },
-  ];
+  public attacks = [{
+    name: 'Flap',
+    cost: [C],
+    damage: 20,
+    text: ''
+  }];
 
-  public regulationMark: string = 'D';
+  public regulationMark = 'D';
   public set: string = 'DAA';
   public setNumber: string = '148';
   public cardImage: string = 'assets/cardback.png';

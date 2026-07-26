@@ -1,5 +1,5 @@
-import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Makuhita extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -21,10 +21,10 @@ export class Makuhita extends PokemonCard {
     text: ''
   }];
 
+  public regulationMark = 'I';
   public set: string = 'MEG';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '72';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Makuhita';
   public fullName: string = 'Makuhita M1L';
-  public regulationMark = 'I';
 }

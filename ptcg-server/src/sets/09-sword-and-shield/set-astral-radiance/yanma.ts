@@ -3,22 +3,21 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Yanma extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType = G;
   public hp: number = 60;
-  public weakness = [{ type: CardType.FIRE }];
+  public weakness = [{ type: R }];
 
   public attacks = [{
     name: 'Speed Dive',
-    cost: [CardType.GRASS],
+    cost: [G],
     damage: 20,
     text: ''
   }];
 
-  public set: string = 'ASR';
   public regulationMark = 'F';
-  public cardImage: string = 'assets/cardback.png';
-  public fullName: string = 'Yanma ASR';
-  public name: string = 'Yanma';
+  public set: string = 'ASR';
   public setNumber: string = '6';
-
+  public cardImage: string = 'assets/cardback.png';
+  public name: string = 'Yanma';
+  public fullName: string = 'Yanma ASR';
 }

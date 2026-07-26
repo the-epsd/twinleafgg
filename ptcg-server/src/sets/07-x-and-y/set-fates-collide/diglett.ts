@@ -15,10 +15,9 @@ export class Diglett extends PokemonCard {
     text: ''
   }];
 
-  public set = 'FCO';
-  public cardImage: string = 'assets/cardback.png';
+  public set: string = 'FCO';
   public setNumber: string = '36';
-  public name = 'Diglett';
-  public fullName = 'Diglett FCO';
-
+  public cardImage: string = 'assets/cardback.png';
+  public name: string = 'Diglett';
+  public fullName: string = 'Diglett FCO';
 }

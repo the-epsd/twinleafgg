@@ -8,14 +8,12 @@ export class Joltik2 extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Static Shock',
-      cost: [L],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Static Shock',
+    cost: [L],
+    damage: 20,
+    text: ''
+  }];
 
   public set: string = 'DEX';
   public setNumber: string = '42';

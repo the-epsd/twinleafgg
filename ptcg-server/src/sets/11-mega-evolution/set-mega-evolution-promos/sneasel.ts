@@ -24,8 +24,8 @@ export class Sneasel extends PokemonCard {
 
   public regulationMark = 'I';
   public set: string = 'MEP';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '20';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sneasel';
   public fullName: string = 'Sneasel M2';
 }

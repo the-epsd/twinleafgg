@@ -1,5 +1,5 @@
-import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Porygon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -16,8 +16,8 @@ export class Porygon extends PokemonCard {
   }];
 
   public set: string = 'DS';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '80';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Porygon';
   public fullName: string = 'Porygon DS';
 }

@@ -2,29 +2,29 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Riolu extends PokemonCard {
-  public regulationMark = 'G';
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType = F;
   public hp: number = 70;
-  public weakness = [{ type: CardType.PSYCHIC }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: P }];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Jab',
-    cost: [CardType.COLORLESS],
+    cost: [C],
     damage: 10,
     text: ''
   },
   {
     name: 'Low Kick',
-    cost: [CardType.FIGHTING, CardType.COLORLESS],
+    cost: [F, C],
     damage: 20,
     text: ''
   }];
 
+  public regulationMark = 'G';
   public set: string = 'SVI';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '112';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Riolu';
   public fullName: string = 'Riolu SVI';
 }

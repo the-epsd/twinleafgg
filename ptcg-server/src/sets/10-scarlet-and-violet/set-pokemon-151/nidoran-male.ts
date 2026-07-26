@@ -3,24 +3,22 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class NidoranMale extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType = D;
   public hp: number = 60;
-  public weakness = [{ type: CardType.FIGHTING }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Horn Attack',
-      cost: [CardType.DARK],
-      damage: 20,
-      text: '',
-    },
-  ];
+  public attacks = [{
+    name: 'Horn Attack',
+    cost: [D],
+    damage: 20,
+    text: ''
+  }];
 
-  public set: string = 'MEW';
   public regulationMark = 'G';
-  public cardImage: string = 'assets/cardback.png';
+  public set: string = 'MEW';
   public setNumber: string = '32';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nidoran ♂';
   public fullName: string = 'Nidoran M MEW';
 }

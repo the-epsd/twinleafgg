@@ -8,18 +8,16 @@ export class Goldeen extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Pierce',
-      cost: [C, C],
-      damage: 30,
-      text: '',
-    },
-  ];
+  public attacks = [{
+    name: 'Pierce',
+    cost: [C, C],
+    damage: 30,
+    text: ''
+  }];
 
+  public regulationMark = 'J';
   public set: string = 'PBL';
   public setNumber: string = '13';
-  public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Goldeen';
   public fullName: string = 'Goldeen M5';

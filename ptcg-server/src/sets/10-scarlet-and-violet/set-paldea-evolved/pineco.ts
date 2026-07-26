@@ -17,9 +17,8 @@ export class Pineco extends PokemonCard {
 
   public regulationMark = 'G';
   public set: string = 'PAL';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '4';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pineco';
   public fullName: string = 'Pineco PAL';
-
 }

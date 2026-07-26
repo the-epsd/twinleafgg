@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType } from '../../../game';
+import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Oshawott extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 70;
@@ -13,7 +13,8 @@ export class Oshawott extends PokemonCard {
     cost: [W],
     damage: 10,
     text: ''
-  }, {
+  },
+  {
     name: 'Water Gun',
     cost: [W, W],
     damage: 30,

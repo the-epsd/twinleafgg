@@ -1,44 +1,30 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { Attack } from '../../game/store/card/pokemon-types';
 
 export class Diglett extends PokemonCard {
-
-  public name = 'Diglett';
-
-  public cardImage: string = 'assets/cardback.png';
-
-  public set = 'BS';
-
-  public setNumber = '47';
-
-  public fullName = 'Diglett BS';
-
-  public cardType = CardType.FIGHTING;
-
-  public stage = Stage.BASIC;
-
-  public hp = 30;
-
-  public weakness = [{ type: CardType.GRASS }];
-
-  public resistance = [{ type: CardType.LIGHTNING, value: -30 }];
-
+  public stage: Stage = Stage.BASIC;
+  public cardType: CardType = F;
+  public hp: number = 30;
+  public weakness = [{ type: G }];
+  public resistance = [{ type: L, value: -30 }];
   public retreat = [];
 
-  public attacks: Attack[] = [
-    {
-      name: 'Dig',
-      cost: [CardType.FIGHTING],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Mud Slap',
-      cost: [CardType.FIGHTING, CardType.FIGHTING],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Dig',
+    cost: [F],
+    damage: 10,
+    text: ''
+  },
+  {
+    name: 'Mud Slap',
+    cost: [F, F],
+    damage: 30,
+    text: ''
+  }];
 
+  public set: string = 'BS';
+  public setNumber: string = '47';
+  public cardImage: string = 'assets/cardback.png';
+  public name: string = 'Diglett';
+  public fullName: string = 'Diglett BS';
 }

@@ -17,8 +17,8 @@ export class Milcery extends PokemonCard {
 
   public regulationMark = 'H';
   public set: string = 'SCR';
+  public setNumber: string = '64';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Milcery';
   public fullName: string = 'Milcery SCR';
-  public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '64';
 }

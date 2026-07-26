@@ -14,15 +14,12 @@ export class Snom extends PokemonCard {
     cost: [W],
     damage: 20,
     text: ''
-  }
-  ];
+  }];
 
   public regulationMark = 'I';
   public set: string = 'ASC';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '52';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Snom';
   public fullName: string = 'Snom M2a';
 }
-
-

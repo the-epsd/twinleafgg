@@ -9,24 +9,22 @@ export class Rufflet extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Peck',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Slash',
-      cost: [C, C],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Peck',
+    cost: [C],
+    damage: 10,
+    text: ''
+  },
+  {
+    name: 'Slash',
+    cost: [C, C],
+    damage: 20,
+    text: ''
+  }];
 
   public set: string = 'EPO';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '86';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rufflet';
   public fullName: string = 'Rufflet EPO';
 }

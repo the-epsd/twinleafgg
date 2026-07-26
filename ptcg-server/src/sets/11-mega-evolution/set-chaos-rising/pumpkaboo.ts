@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { CardType, Stage } from '../../../game/store/card/card-types';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Pumpkaboo extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -9,19 +9,17 @@ export class Pumpkaboo extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Stampede',
-      cost: [P],
-      damage: 20,
-      text: '',
-    },
-  ];
+  public attacks = [{
+    name: 'Stampede',
+    cost: [P],
+    damage: 20,
+    text: ''
+  }];
 
-  public regulationMark: string = 'J';
+  public regulationMark = 'J';
   public set: string = 'CRI';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '40';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pumpkaboo';
   public fullName: string = 'Pumpkaboo M4';
 }

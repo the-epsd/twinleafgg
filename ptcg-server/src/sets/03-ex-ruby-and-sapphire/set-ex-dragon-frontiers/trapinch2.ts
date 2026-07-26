@@ -2,8 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 
 export class Trapinch2 extends PokemonCard {
-  public tags = [CardTag.DELTA_SPECIES];
   public stage: Stage = Stage.BASIC;
+  public tags = [CardTag.DELTA_SPECIES];
   public cardType: CardType = P;
   public hp: number = 40;
   public weakness = [{ type: G }];
@@ -23,8 +23,8 @@ export class Trapinch2 extends PokemonCard {
   }];
 
   public set: string = 'DF';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '68';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Trapinch';
   public fullName: string = 'Trapinch DF 68';
 }

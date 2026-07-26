@@ -8,19 +8,16 @@ export class Carvanha extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Bite',
-      cost: [C],
-      damage: 10,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Bite',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }];
 
   public set: string = 'GRI';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '27';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Carvanha';
   public fullName: string = 'Carvanha GRI';
-
 }

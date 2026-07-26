@@ -8,18 +8,16 @@ export class Gothita2 extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Smack',
-      cost: [C, C],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Smack',
+    cost: [C, C],
+    damage: 20,
+    text: ''
+  }];
 
   public set: string = 'EPO';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '44';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gothita';
   public fullName: string = 'Gothita EPO 44';
 }

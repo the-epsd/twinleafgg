@@ -23,8 +23,8 @@ export class Seel extends PokemonCard {
 
   public regulationMark = 'J';
   public set: string = 'POR';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '18';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Seel';
   public fullName: string = 'Seel M3';
 }
