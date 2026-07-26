@@ -140,23 +140,12 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
       }
 
       if (pokemonCard !== undefined) {
-        //throw new GameError(GameMessage.INVALID_TARGET);
-        let power;
-        if (action.target.slot === SlotType.ACTIVE || action.target.slot === SlotType.BENCH) {
-          const target = StateUtils.getTarget(state, player, action.target);
-
-          const targetPokemon = target.getPokemonCard();
-          if (!targetPokemon) {
-            throw new GameError(GameMessage.INVALID_TARGET);
-          }
-
-          const powersEffect = new CheckPokemonPowersEffect(player, targetPokemon);
-          state = store.reduceEffect(state, powersEffect);
-
-          power = [...pokemonCard.powers, ...powersEffect.powers].find(a => a.name === action.name);
-        } else {
-          power = pokemonCard.powers.find(a => a.name === action.name);
-        }
+        // Always resolve powers through CheckPokemonPowersEffect so ability locks
+        // (Hex Maniac, Silent Lab, Garbodor, etc.) can filter the list. Do not merge
+        // raw pokemonCard.powers — that bypasses Check filters.
+        const powersEffect = new CheckPokemonPowersEffect(player, pokemonCard);
+        state = store.reduceEffect(state, powersEffect);
+        const power = powersEffect.powers.find(a => a.name === action.name);
 
         if (power === undefined) {
           throw new GameError(GameMessage.UNKNOWN_POWER);

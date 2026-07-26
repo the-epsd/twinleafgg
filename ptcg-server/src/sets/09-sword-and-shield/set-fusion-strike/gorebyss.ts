@@ -4,13 +4,11 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { PowerType as PowerTypeEnum, StoreLike, State, StateUtils, PokemonCardList, PlayerType } from '../../../game';
+import { PowerType as PowerTypeEnum, StoreLike, State, StateUtils, PokemonCardList, PlayerType, Player } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
-import { CheckPokemonPowersEffect } from '../../../game/store/effects/check-effects';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/attack-effects';
-import { GameError, GameMessage } from '../../../game';
+import { HANDLE_ABILITY_LOCK } from '../../../game/store/prefabs/ability-lock';
 
 export class Gorebyss extends PokemonCard {
   public tags = [CardTag.FUSION_STRIKE];
@@ -44,103 +42,50 @@ export class Gorebyss extends PokemonCard {
   public fullName: string = 'Gorebyss FST 67';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Rapid Strike Canceler
-    // Opponent's Rapid Strike Pokemon have no Abilities
-    // Ref: set-chilling-reign/path-to-the-peak.ts (ability blocking via CheckPokemonPowersEffect and PowerEffect)
-    if (effect instanceof CheckPokemonPowersEffect) {
-      const targetPokemon = effect.target;
-      if (!targetPokemon || !targetPokemon.tags || !targetPokemon.tags.includes(CardTag.RAPID_STRIKE)) {
-        return state;
+    HANDLE_ABILITY_LOCK(effect, ({ card }) => {
+      if (!card.tags?.includes(CardTag.RAPID_STRIKE)) {
+        return false;
       }
 
-      // Check if this Gorebyss is in play (opponent of the target)
-      const targetOwner = StateUtils.findCardList(state, targetPokemon);
-      if (!(targetOwner instanceof PokemonCardList)) {
-        return state;
-      }
-
-      // Find Gorebyss in play
-      let goreByssOwner: any = null;
+      let gorebyssOwner: Player | null = null;
       state.players.forEach(p => {
         p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList: PokemonCardList) => {
           if (cardList.getPokemonCard() === this) {
-            goreByssOwner = p;
+            gorebyssOwner = p;
           }
         });
       });
-      if (!goreByssOwner) {
-        return state;
+      if (!gorebyssOwner) {
+        return false;
       }
 
-      // Determine if Gorebyss belongs to the opponent of the target
-      let targetPlayer: any = null;
+      let targetPlayer: Player | null = null;
       state.players.forEach(p => {
-        p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList: PokemonCardList) => {
-          if (cardList === targetOwner) {
+        p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList: PokemonCardList, pokemon) => {
+          if (pokemon === card) {
             targetPlayer = p;
           }
         });
       });
 
-      if (!targetPlayer || targetPlayer === goreByssOwner) {
-        return state;
+      if (!targetPlayer || targetPlayer === gorebyssOwner) {
+        return false;
       }
 
-      // Check if Gorebyss's ability is blocked
-      if (IS_ABILITY_BLOCKED(store, state, goreByssOwner, this)) {
-        return state;
+      if (IS_ABILITY_BLOCKED(store, state, gorebyssOwner, this)) {
+        return false;
       }
 
-      // Remove all abilities from the Rapid Strike target
-      effect.powers = effect.powers.filter(power =>
-        power.powerType !== PowerTypeEnum.ABILITY
-      );
-    }
-
-    if (effect instanceof PowerEffect) {
-      const pokemonCard = effect.card;
-      if (!pokemonCard.tags || !pokemonCard.tags.includes(CardTag.RAPID_STRIKE)) {
-        return state;
+      try {
+        return StateUtils.findCardList(state, card) instanceof PokemonCardList;
+      } catch {
+        return false;
       }
-      if (effect.power.powerType !== PowerTypeEnum.ABILITY) {
-        return state;
-      }
-      if (effect.power.exemptFromAbilityLock) {
-        return state;
-      }
+    }, {
+      allowUseFromHand: true,
+      allowUseFromDiscard: true,
+    });
 
-      // Find Gorebyss in play and check if it's the opponent of the Pokemon using the ability
-      let gorebyss: { owner: any } | null = null;
-      state.players.forEach(p => {
-        p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList: PokemonCardList) => {
-          if (cardList.getPokemonCard() === this) {
-            gorebyss = { owner: p };
-          }
-        });
-      });
-      if (!gorebyss) {
-        return state;
-      }
-
-      // The ability user is effect.player; if gorebyss.owner is opponent, block it
-      if ((gorebyss as any).owner === effect.player) {
-        return state;
-      }
-
-      if (effect.power.useFromDiscard || effect.power.useFromHand) {
-        return state;
-      }
-
-      // Check if Gorebyss's ability is blocked
-      if (IS_ABILITY_BLOCKED(store, state, (gorebyss as any).owner, this)) {
-        return state;
-      }
-
-      throw new GameError(GameMessage.CANNOT_USE_POWER);
-    }
-
-    // Attack 1: Draining Kiss
-    // Ref: set-burning-shadows/gyarados.ts (Splashing Around - heal 30)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       HEAL_X_DAMAGE_FROM_THIS_POKEMON(30, effect, store, state);
     }

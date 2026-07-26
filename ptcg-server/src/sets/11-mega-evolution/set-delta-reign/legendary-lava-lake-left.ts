@@ -1,10 +1,10 @@
-import { CardTag, GameError, GameMessage, PowerType, Stage, State, StateUtils, StoreLike } from '../../../game';
+import { CardTag, PowerType, Stage, State, StateUtils, StoreLike } from '../../../game';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { assembleDualStadiumFromHand } from '../../../game/store/dual-stadium-utils';
-import { CheckPokemonPowersEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { PowerEffect, TrainerPowerEffect } from '../../../game/store/effects/game-effects';
+import { TrainerPowerEffect } from '../../../game/store/effects/game-effects';
+import { HANDLE_ABILITY_LOCK } from '../../../game/store/prefabs/ability-lock';
 import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
 
 export class LegendaryLavaLakeLeft extends TrainerCard {
@@ -32,36 +32,22 @@ export class LegendaryLavaLakeLeft extends TrainerCard {
       return assembleDualStadiumFromHand(store, state, effect.player, this);
     }
 
-    if (effect instanceof CheckPokemonPowersEffect && StateUtils.getStadiumCard(state) === this) {
-      const targetPokemon = effect.target;
-      if (!targetPokemon) {
-        return state;
+    HANDLE_ABILITY_LOCK(effect, ({ card }) => {
+      if (StateUtils.getStadiumCard(state) !== this) {
+        return false;
       }
-
-      const targetCardList = StateUtils.findCardList(state, targetPokemon);
-      if (!(targetCardList instanceof PokemonCardList)) {
-        return state;
+      if (card.stage === Stage.BASIC) {
+        return false;
       }
-
-      if (targetPokemon.stage !== Stage.BASIC) {
-        effect.powers = effect.powers.filter(power => power.powerType !== PowerType.ABILITY);
+      try {
+        return StateUtils.findCardList(state, card) instanceof PokemonCardList;
+      } catch {
+        return false;
       }
-    }
-
-    if (
-      effect instanceof PowerEffect &&
-      StateUtils.getStadiumCard(state) === this &&
-      !effect.power.exemptFromAbilityLock
-    ) {
-      if (effect.power.useFromDiscard || effect.power.useFromHand) {
-        return state;
-      }
-
-      const pokemonCard = effect.card;
-      if (pokemonCard.stage !== Stage.BASIC) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
-    }
+    }, {
+      allowUseFromHand: true,
+      allowUseFromDiscard: true,
+    });
 
     return state;
   }

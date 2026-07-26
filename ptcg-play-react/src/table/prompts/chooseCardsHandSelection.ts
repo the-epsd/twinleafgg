@@ -9,9 +9,9 @@ export function isChooseCardsFromPlayerHand(prompt: ChooseCardsPrompt): boolean 
   if (prompt.cards.cards.length === 0) {
     return false;
   }
-  const handCards = prompt.player.hand.cards;
-  const handSet = new Set(handCards);
-  return prompt.cards.cards.every(c => handSet.has(c));
+  // Match by id so deserialize / sandbox hand edits still count as "from hand".
+  const handIds = new Set(prompt.player.hand.cards.map(c => c.id));
+  return prompt.cards.cards.every(c => handIds.has(c.id));
 }
 
 /** Use 3D hand clicks instead of the Choose cards popup when selecting from your own hand. */
@@ -111,7 +111,11 @@ export function chooseCardsHandIndexToPromptIndex(
   if (!handCard) {
     return -1;
   }
-  return prompt.cards.cards.indexOf(handCard);
+  const byRef = prompt.cards.cards.indexOf(handCard);
+  if (byRef !== -1) {
+    return byRef;
+  }
+  return prompt.cards.cards.findIndex(c => c.id === handCard.id);
 }
 
 export function chooseCardsHandTargetsToPromptIndices(

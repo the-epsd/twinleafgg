@@ -3,12 +3,15 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
-import { CheckPokemonPowersEffect } from '../../../game/store/effects/check-effects';
-import { GameError, GameMessage, SlotType, StateUtils } from '../../../game';
+import { SlotType, StateUtils } from '../../../game';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE } from '../../../game/store/prefabs/attack-effects';
+import {
+  HANDLE_ABILITY_LOCK,
+  LOCKER_ABILITY_APPLIES,
+} from '../../../game/store/prefabs/ability-lock';
+import { GameMessage } from '../../../game/game-message';
 
 export class FlutterMane extends PokemonCard {
 
@@ -52,57 +55,26 @@ export class FlutterMane extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckPokemonPowersEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
+    HANDLE_ABILITY_LOCK(effect, ({ player, card }) => {
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
 
-      // Only proceed if Flutter Mane is in the Active spot
       if (owner.active.getPokemonCard() !== this) {
-        return state;
+        return false;
       }
 
-      // Only filter opponent's Active Pokemon abilities
-      const targetOwner = StateUtils.findOwner(state, StateUtils.findCardList(state, effect.target));
-      if (targetOwner === owner || StateUtils.findCardList(state, effect.target) !== opponent.active) {
-        return state;
+      const opponent = StateUtils.getOpponent(state, owner);
+      const targetCardList = StateUtils.findCardList(state, card);
+      if (targetCardList !== opponent.active) {
+        return false;
       }
 
-      // Filter out all abilities except Midnight Fluttering
-      effect.powers = effect.powers.filter(power =>
-        power.powerType !== PowerType.ABILITY || power.name === 'Midnight Fluttering'
-      );
-    }
-
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY && effect.power.name !== 'Midnight Fluttering') {
-      const player = effect.player;
-
-      const cardList = StateUtils.findCardList(state, this);
-      const owner = StateUtils.findOwner(state, cardList);
-
-      // Only proceed if Flutter Mane is in the Active spot
-      if (owner.active.getPokemonCard() !== this) {
-        return state;
-      }
-
-      // Only check opponent's Active Pokemon
-      if (player === owner || player.active.getPokemonCard() !== effect.card) {
-        return state;
-      }
-
-      // Try reducing ability
-      try {
-        const powerEffect = new PowerEffect(player, this.powers[0], this);
-        store.reduceEffect(state, powerEffect);
-      } catch {
-        return state;
-      }
-      if (!effect.power.exemptFromAbilityLock) {
-        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
-      }
-    }
+      // Check + PowerEffect: Midnight Fluttering must itself be usable (e.g. Path to the Peak).
+      return LOCKER_ABILITY_APPLIES(store, state, owner, this, this.powers[0], card);
+    }, {
+      exemptPowerNames: ['Midnight Fluttering'],
+      error: GameMessage.BLOCKED_BY_ABILITY,
+    });
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE(2, store, state, effect, [SlotType.BENCH]);

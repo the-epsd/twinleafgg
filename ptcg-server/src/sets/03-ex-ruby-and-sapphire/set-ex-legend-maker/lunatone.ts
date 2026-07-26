@@ -1,11 +1,15 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { PowerType } from '../../../game/store/card/pokemon-types';
-import { StoreLike, State, GameMessage, GameError, StateUtils, PlayerType, PokemonCardList, ChooseCardsPrompt, Card, TrainerCard } from '../../../game';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
+import { StoreLike, State, GameMessage, StateUtils, PlayerType, ChooseCardsPrompt, Card, TrainerCard } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, IS_POKEBODY_BLOCKED, MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
+import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
+import {
+  HANDLE_ABILITY_BLOCK,
+  POKEPOWER_TYPES,
+} from '../../../game/store/prefabs/ability-lock';
 
 export class Lunatone extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -43,53 +47,51 @@ export class Lunatone extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    // Block Poké-Powers from basics when active
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.POKEPOWER) {
-      const player = effect.player;
+    HANDLE_ABILITY_BLOCK(effect, ({ player, card }) => {
       const thisCardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, thisCardList);
       const opponent = StateUtils.getOpponent(state, player);
 
       if (IS_POKEBODY_BLOCKED(store, state, opponent, this)) {
-        return state;
+        return false;
       }
 
       let isSolrockInPlay = false;
       let isThisInPlay = false;
-      owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card.name === 'Solrock') {
+      owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemon) => {
+        if (pokemon.name === 'Solrock') {
           isSolrockInPlay = true;
         }
-        if (card === this) {
+        if (pokemon === this) {
           isThisInPlay = true;
         }
       });
 
       if (!isSolrockInPlay || !isThisInPlay) {
-        return state;
+        return false;
       }
 
-      let cardTypes = [effect.card.cardType];
-      const cardList = StateUtils.findCardList(state, effect.card);
-      if (cardList instanceof PokemonCardList) {
-        const checkPokemonType = new CheckPokemonTypeEffect(cardList);
-        store.reduceEffect(state, checkPokemonType);
-        cardTypes = checkPokemonType.cardTypes;
+      if (card.tags.includes(CardTag.POKEMON_ex)) {
+        return false;
       }
 
-      // We are blocking the powers from fire Pokemon
-      if (!cardTypes.includes(CardType.FIRE)) {
-        return state;
+      try {
+        const cardList = StateUtils.findCardList(state, card);
+        if (cardList instanceof PokemonCardList) {
+          const checkPokemonType = new CheckPokemonTypeEffect(cardList);
+          store.reduceEffect(state, checkPokemonType);
+          return checkPokemonType.cardTypes.includes(CardType.FIRE);
+        }
+      } catch {
+        return false;
       }
+      return card.cardType === CardType.FIRE;
+    }, {
+      powerTypes: POKEPOWER_TYPES,
+      error: GameMessage.BLOCKED_BY_EFFECT,
+    });
 
-      if (!effect.card.tags.includes(CardTag.POKEMON_ex)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-    }
-
-    // Moon Guidance
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // TODO: make this format dependent (only items in modern or unlimited fomrats)
       const player = effect.player;
 
       if (player.deck.cards.length === 0) {

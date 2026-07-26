@@ -36,7 +36,9 @@ export class CheckPokemonPowersEffect implements Effect {
   constructor(player: Player, target: PokemonCard) {
     this.player = player;
     this.target = target;
-    this.powers = target.powers;
+    // Copy so ability-lock filters can reassign without mutating the card,
+    // and so UsePower discovery can trust this list as the sole source of truth.
+    this.powers = [...target.powers];
   }
 }
 

@@ -78,9 +78,8 @@ export function cardPlaysAsBasicPokemonFromHand(
   ) {
     return true;
   }
-  if (cardHasUseFromHandToBenchPower(card)) {
-    return true;
-  }
+  // useFromHandToBench (Excitedive, etc.) is not "play as Basic" — it has its own
+  // gated drop path so ability lock can clear playability like item lock.
   if (card.superType === SuperType.POKEMON) {
     const stage = (card as { stage?: Stage }).stage;
     return stage === Stage.BASIC;

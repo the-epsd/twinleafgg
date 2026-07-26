@@ -372,6 +372,18 @@ export class Board3dController {
     return this.isReplayOmniscient() ? undefined : this.bottomPlayer?.playableCardIds;
   }
 
+  private getHandPlayableAbilityCardIdsForDisplay(): number[] | undefined {
+    if (
+      this.boardInteractionService.isChooseHandCardsSelectionActive() ||
+      this.boardInteractionService.isLegendAssemblySelectionActive()
+    ) {
+      return undefined;
+    }
+    return this.isReplayOmniscient()
+      ? undefined
+      : this.bottomPlayer?.playableHandAbilityCardIds;
+  }
+
   private shouldDisableHandDragForSelection(): boolean {
     if (this.boardInteractionService.isChooseStartingPokemonsSelectionActive()) {
       return false;
@@ -453,6 +465,10 @@ export class Board3dController {
     this.onKoSequenceActiveChange = p.onKoSequenceActiveChange;
     this.interactionService.setHandPlayZoneGameSettings(p.gameState.state.gameSettings);
     this.interactionService.setBottomHandCards(p.bottomPlayerHand?.cards ?? []);
+    this.interactionService.setPlayableCardIds(this.getHandPlayableCardIdsForDisplay());
+    this.interactionService.setPlayableHandAbilityCardIds(
+      this.getHandPlayableAbilityCardIdsForDisplay(),
+    );
   }
 
   init(canvas: HTMLCanvasElement, initial: Board3dControllerProps): void {
@@ -3116,15 +3132,36 @@ export class Board3dController {
     }
   }
 
+  private abandonSetupHandCardFlight(flight?: PlayCardFlightPayload): void {
+    if (!flight?.board3dCard) {
+      return;
+    }
+    const group = flight.board3dCard.getGroup();
+    gsap.killTweensOf(group.position);
+    gsap.killTweensOf(group.rotation);
+    gsap.killTweensOf(group.scale);
+    if (group.parent) {
+      group.removeFromParent();
+    }
+    flight.board3dCard.dispose();
+    this.forceHandResyncAfterFailedPlay();
+  }
+
   private executeSetupHandCardPlacement(
     handIndex: number,
     flight?: PlayCardFlightPayload,
   ): void {
+    const fail = (): void => {
+      this.abandonSetupHandCardFlight(flight);
+    };
+
     const prompt = this.boardInteractionService.getChooseCardsPrompt();
     if (!prompt || !this.bottomPlayer) {
+      fail();
       return;
     }
     if (!this.boardInteractionService.isChooseStartingPokemonsSelectionActive()) {
+      fail();
       return;
     }
 
@@ -3134,21 +3171,26 @@ export class Board3dController {
       index: handIndex,
     };
     if (!this.boardInteractionService.isTargetEligible(handTarget)) {
+      fail();
       return;
     }
     const selected = this.boardInteractionService.getChooseHandCardSelectionHandIndices();
     if (selected.includes(handIndex) || this.setupPlacementInFlight.has(handIndex)) {
+      fail();
       return;
     }
 
     const pickOrder = selected.length;
     const slotTarget = getSetupPlaySlotForPickOrder(prompt, pickOrder);
     if (!slotTarget) {
+      fail();
       return;
     }
 
-    const card = prompt.player.hand.cards[handIndex];
+    // Live hand — sandbox may have added cards after the prompt was captured.
+    const card = this.bottomPlayer.hand.cards[handIndex];
     if (!card) {
+      fail();
       return;
     }
 
@@ -3984,8 +4026,13 @@ export class Board3dController {
     let canRetreat = false;
 
     if (isHandCard) {
-      // Hand cards: enable abilities with useFromHand (like Luxray's Swelling Flash)
-      options = { enableAbility: { useFromHand: true }, enableAttack: false };
+      // Hand cards: enable useFromHand abilities only when still playable (ability lock clears this).
+      const handPlayable = !!cardData?.id &&
+        !!this.bottomPlayer?.playableCardIds?.includes(cardData.id);
+      options = {
+        enableAbility: handPlayable ? { useFromHand: true } : undefined,
+        enableAttack: false,
+      };
     } else if (cardTarget) {
       if (cardTarget.slot === SlotType.ACTIVE) {
         // Active Pokemon: enable abilities (useWhenInPlay), attacks, and retreat (if not already retreated this turn)

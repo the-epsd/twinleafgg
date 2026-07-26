@@ -6,8 +6,8 @@ import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, CardTag } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
-import { UseStadiumEffect, PowerEffect } from '../../../game/store/effects/game-effects';
-import { PowerType } from '../../../game';
+import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
+import { HANDLE_ABILITY_LOCK } from '../../../game/store/prefabs/ability-lock';
 
 export class PowerPlant extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
@@ -22,22 +22,20 @@ export class PowerPlant extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && StateUtils.getStadiumCard(state) === this) {
-      const pokemonCard = effect.card;
-
-      const isEXorGX = pokemonCard.tags.includes(CardTag.POKEMON_GX) || pokemonCard.tags.includes(CardTag.POKEMON_EX);
-
-      if (effect.power.useFromDiscard || effect.power.useFromHand) {
-        return state;
+    HANDLE_ABILITY_LOCK(effect, ({ card }) => {
+      if (StateUtils.getStadiumCard(state) !== this) {
+        return false;
       }
-
-      if (!effect.power.exemptFromAbilityLock) {
-        if (isEXorGX && pokemonCard.powers.some(power => power.powerType === PowerType.ABILITY)) {
-          throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-        }
-        return state;
+      const isEXorGX = card.tags.includes(CardTag.POKEMON_GX) || card.tags.includes(CardTag.POKEMON_EX);
+      if (!isEXorGX) {
+        return false;
       }
-    }
+      return StateUtils.findPokemonSlot(state, card) !== undefined;
+    }, {
+      allowUseFromHand: true,
+      allowUseFromDiscard: true,
+      error: GameMessage.BLOCKED_BY_EFFECT,
+    });
 
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
       throw new GameError(GameMessage.CANNOT_USE_STADIUM);

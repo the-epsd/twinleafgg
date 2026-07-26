@@ -12,6 +12,7 @@ import {
   type TrainerCard,
 } from 'ptcg-server';
 import { cardCanAssembleLegendFromHand, resolveLegendAssemblyBenchTarget } from '../board3d/dual-legend.utils';
+import { cardHasUseFromHandToBenchPower } from '../board3d/board3dMeshIdForPlayTarget';
 import type { LocalGameState } from '../types/localGameState';
 import type { Board3dCardsAdapter } from '../board3d/board3dCardsAdapter';
 import type { Board3dGameActions } from '../board3d/board3dGameActions';
@@ -349,10 +350,14 @@ export async function handleBoard2dHandClick(
     slot: SlotType.HAND,
     index,
   };
+  const handPlayable = !!ctx.bottomPlayer?.playableCardIds?.includes(card.id);
   const result = await ctx.cardsAdapter.showCardInfo({
     card,
     cardList: list,
-    options: { enableAbility: { useFromHand: true }, enableAttack: false },
+    options: {
+      enableAbility: handPlayable ? { useFromHand: true } : undefined,
+      enableAttack: false,
+    },
     players: players(ctx),
   });
   await applyCardInfoResult(ctx, result, target, card);
@@ -448,6 +453,27 @@ export function resolveClickToPlayTarget(
 ): CardTarget | CardTarget[] | null {
   const isPokemon = card.superType === SuperType.POKEMON;
   const trainer = card.superType === SuperType.TRAINER ? (card as TrainerCard) : null;
+
+  // Excitedive / Swelling Flash — open Bench when that ability is legal; otherwise evolve normally.
+  if (isPokemon && cardHasUseFromHandToBenchPower(card)) {
+    const abilityIds = bottomPlayer.playableHandAbilityCardIds;
+    const abilityOk =
+      abilityIds === undefined
+        ? !!bottomPlayer.playableCardIds?.includes(card.id)
+        : abilityIds.includes(card.id);
+    if (abilityOk) {
+      const emptyBench =
+        bottomPlayer.bench?.findIndex((b) => (b?.cards?.length ?? 0) === 0) ?? -1;
+      if (emptyBench >= 0) {
+        return {
+          player: PlayerType.BOTTOM_PLAYER,
+          slot: SlotType.BENCH,
+          index: emptyBench,
+        };
+      }
+    }
+    // Ability locked / no open bench: fall through to evolution attach below.
+  }
 
   if (isEnergyOrToolOrEvo(card)) {
     const targets = findAttachTargets(bottomPlayer, card);

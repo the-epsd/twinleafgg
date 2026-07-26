@@ -339,6 +339,7 @@ function useChooseHandCardsBoardEffect(
   onResolvePrompt: (promptId: number, result: unknown) => void,
   chooseHandCardsPromptId: number | null,
   replay: boolean | undefined,
+  handCardsFingerprint: string,
 ) {
   useEffect(() => {
     if (chooseHandCardsPromptId == null) {
@@ -373,6 +374,30 @@ function useChooseHandCardsBoardEffect(
       boardInteraction.endBoardSelection();
     };
   }, [chooseHandCardsPromptId, clientId, boardInteraction, onResolvePrompt, replay]);
+
+  // Sandbox (and similar) can change the hand while the same prompt id is active.
+  useEffect(() => {
+    if (chooseHandCardsPromptId == null || replay || !handCardsFingerprint) {
+      return;
+    }
+    const game = localGameRef.current;
+    const prompt = activeGamePrompt(game, clientId);
+    if (!prompt || prompt.id !== chooseHandCardsPromptId || prompt.type !== 'Choose cards') {
+      return;
+    }
+    const ccp = prompt as ChooseCardsPrompt;
+    if (!shouldUseBoardHandForChooseCards(ccp, clientId)) {
+      return;
+    }
+    boardInteraction.refreshChooseHandCardsPrompt(ccp);
+  }, [
+    chooseHandCardsPromptId,
+    handCardsFingerprint,
+    clientId,
+    boardInteraction,
+    replay,
+    localGameRef,
+  ]);
 }
 
 function useRemoveDamageBoardEffect(
@@ -620,6 +645,11 @@ export function TablePromptLayer({
       ? activePrompt.id
       : null;
 
+  const chooseHandCardsFingerprint =
+    chooseHandCardsId != null && activePrompt?.type === 'Choose cards'
+      ? (activePrompt as ChooseCardsPrompt).player.hand.cards.map(c => c.id).join(',')
+      : '';
+
   const removeDamageId =
     activePrompt?.type === 'Remove damage' && !localGame.replay && !suppressTrainerEffectPrompts
       ? activePrompt.id
@@ -651,6 +681,7 @@ export function TablePromptLayer({
     onResolvePrompt,
     chooseHandCardsId,
     !!localGame.replay,
+    chooseHandCardsFingerprint,
   );
 
   useRemoveDamageBoardEffect(

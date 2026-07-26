@@ -5,13 +5,13 @@
 import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, HAS_MARKER, REMOVE_MARKER, REPLACE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { CardType, Stage } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
-import { GameError } from '../../../game/game-error';
-import { GameMessage } from '../../../game/game-message';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { PowerType, State, StoreLike } from '../../../game';
+import { State, StoreLike } from '../../../game';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
+import { HANDLE_ABILITY_LOCK } from '../../../game/store/prefabs/ability-lock';
+import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
+
 export class Arbok extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Ekans';
@@ -55,13 +55,15 @@ export class Arbok extends PokemonCard {
       player.marker.addMarker(this.GASTRO_ACID_TURN1_MARKER, this);
     }
 
-    // Block abilities on marked Pokemon
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY) {
-      const player = effect.player;
-      if (player.active.marker.hasMarker(this.GASTRO_ACID_MARKER, this)) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
+    HANDLE_ABILITY_LOCK(effect, ({ card }) => {
+      try {
+        const cardList = StateUtils.findCardList(state, card);
+        return cardList instanceof PokemonCardList
+          && cardList.marker.hasMarker(this.GASTRO_ACID_MARKER, this);
+      } catch {
+        return false;
       }
-    }
+    });
 
     // 2-phase cleanup: "until end of your next turn"
     // Phase 1: At end of current turn, replace TURN1 marker with CLEAR marker

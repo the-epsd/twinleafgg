@@ -442,21 +442,7 @@ export class BoardInteractionService {
     this.selectionCallback = onComplete;
   }
 
-  /**
-   * Select cards from the 3D hand for a Choose cards prompt (own hand only).
-   */
-  public startChooseHandCardsSelection(
-    prompt: ChooseCardsPrompt,
-    onComplete: (indices: number[] | null) => void,
-  ): void {
-    if (this.isReplayModeActive) {
-      return;
-    }
-
-    if (!isChooseCardsFromPlayerHand(prompt)) {
-      return;
-    }
-
+  private buildChooseHandCardsBlockedTargets(prompt: ChooseCardsPrompt): CardTarget[] {
     const cards = prompt.cards.cards;
     const blocked = prompt.options.blocked ?? [];
     const blockedTargets: CardTarget[] = [];
@@ -474,6 +460,25 @@ export class BoardInteractionService {
         });
       }
     }
+    return blockedTargets;
+  }
+
+  /**
+   * Select cards from the 3D hand for a Choose cards prompt (own hand only).
+   */
+  public startChooseHandCardsSelection(
+    prompt: ChooseCardsPrompt,
+    onComplete: (indices: number[] | null) => void,
+  ): void {
+    if (this.isReplayModeActive) {
+      return;
+    }
+
+    if (!isChooseCardsFromPlayerHand(prompt)) {
+      return;
+    }
+
+    const blockedTargets = this.buildChooseHandCardsBlockedTargets(prompt);
 
     this.overlayKind = 'choose-hand-cards';
     this.chooseCardsPrompt = prompt;
@@ -487,6 +492,45 @@ export class BoardInteractionService {
     this.minSelectionsSubject.next(prompt.options.min);
     this.maxSelectionsSubject.next(prompt.options.max);
     this.selectionCallback = null;
+  }
+
+  /**
+   * Keep an active choose-hand overlay in sync when the hand/prompt updates
+   * (e.g. sandbox hand edits during setup) without clearing the current selection.
+   */
+  public refreshChooseHandCardsPrompt(prompt: ChooseCardsPrompt): void {
+    if (this.isReplayModeActive) {
+      return;
+    }
+    if (this.overlayKind !== 'choose-hand-cards' || !this.chooseCardsPrompt) {
+      return;
+    }
+    if (prompt.id !== this.chooseCardsPrompt.id) {
+      return;
+    }
+    if (!isChooseCardsFromPlayerHand(prompt)) {
+      return;
+    }
+
+    const blockedTargets = this.buildChooseHandCardsBlockedTargets(prompt);
+    const handLen = prompt.player.hand.cards.length;
+    const blockedHand = new Set(
+      blockedTargets.filter(t => t.slot === SlotType.HAND).map(t => t.index),
+    );
+    const selected = this.selectedTargetsSubject.value.filter(
+      t => t.slot === SlotType.HAND && t.index >= 0 && t.index < handLen && !blockedHand.has(t.index),
+    );
+
+    this.chooseCardsPrompt = prompt;
+    this.blockedTargetsSubject.next(blockedTargets);
+    this.minSelectionsSubject.next(prompt.options.min);
+    this.maxSelectionsSubject.next(prompt.options.max);
+    if (
+      selected.length !== this.selectedTargetsSubject.value.length ||
+      selected.some((t, i) => t.index !== this.selectedTargetsSubject.value[i]?.index)
+    ) {
+      this.selectedTargetsSubject.next(selected);
+    }
   }
 
   /**

@@ -1,11 +1,13 @@
-import { GameError, GameMessage, PowerType, StateUtils } from '../../../game';
+import { GameError, GameMessage, StateUtils } from '../../../game';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { CheckPokemonPowersEffect } from '../../../game/store/effects/check-effects';
-import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER } from '../../../game/store/prefabs/prefabs';
+import {
+  APPLY_ABILITY_LOCK_MARKERS,
+  CLEAR_ABILITY_LOCK_AT_END_OF_OPPONENTS_TURN,
+  HANDLE_ABILITY_LOCK,
+  HAS_ABILITY_LOCK_MARKER,
+} from '../../../game/store/prefabs/ability-lock';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
@@ -39,41 +41,15 @@ export class HexManiac extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      ADD_MARKER(this.HEX_MANIAC_MARKER, player, this);
-      ADD_MARKER(this.HEX_MANIAC_MARKER, opponent, this);
+      APPLY_ABILITY_LOCK_MARKERS(this.HEX_MANIAC_MARKER, this, player, opponent);
     }
 
-    if (effect instanceof CheckPokemonPowersEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+    HANDLE_ABILITY_LOCK(effect, ({ player }) =>
+      HAS_ABILITY_LOCK_MARKER(this.HEX_MANIAC_MARKER, player, this, state)
+    );
 
-      // Check if Hex Maniac marker is active on either player
-      if (HAS_MARKER(this.HEX_MANIAC_MARKER, player, this) || HAS_MARKER(this.HEX_MANIAC_MARKER, opponent, this)) {
-        // Filter out all abilities
-        effect.powers = effect.powers.filter(power =>
-          power.powerType !== PowerType.ABILITY
-        );
-      }
-    }
-
-    if (effect instanceof PowerEffect && HAS_MARKER(this.HEX_MANIAC_MARKER, effect.player, this)
-      && (effect.power.powerType === PowerType.ABILITY)) {
-
-      throw new GameError(GameMessage.CANNOT_USE_POWER);
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const owner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
-
-      if (player !== owner) {
-        REMOVE_MARKER(this.HEX_MANIAC_MARKER, player, this);
-        REMOVE_MARKER(this.HEX_MANIAC_MARKER, opponent, this);
-      }
-    }
+    CLEAR_ABILITY_LOCK_AT_END_OF_OPPONENTS_TURN(effect, state, this.HEX_MANIAC_MARKER, this);
 
     return state;
-
   }
 }

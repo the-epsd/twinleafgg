@@ -2,8 +2,9 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, PowerType, ChooseCardsPrompt, GameMessage, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 import { COIN_FLIP_PROMPT, IS_POKEMON_POWER_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { HANDLE_ABILITY_BLOCK } from '../../game/store/prefabs/ability-lock';
 
 export class DarkFeraligatr extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -34,32 +35,30 @@ export class DarkFeraligatr extends PokemonCard {
   public fullName: string = 'Dark Feraligatr N4';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Baby Rule effect blocking
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.BABY_RULE) {
-      const player = effect.player;
+
+    HANDLE_ABILITY_BLOCK(effect, ({ player, powerEffect }) => {
       const opponent = StateUtils.getOpponent(state, player);
 
-      // is not active Pokemon
       if (opponent.active.getPokemonCard() !== this) {
-        return state;
+        return false;
       }
 
-      // is affected by a special condition
-      if (opponent.active.getPokemonCard() === this &&
-        (opponent.active.specialConditions.includes(SpecialCondition.ASLEEP) ||
-          opponent.active.specialConditions.includes(SpecialCondition.CONFUSED) ||
-          opponent.active.specialConditions.includes(SpecialCondition.PARALYZED))) {
-        return state;
+      if (opponent.active.specialConditions.includes(SpecialCondition.ASLEEP) ||
+        opponent.active.specialConditions.includes(SpecialCondition.CONFUSED) ||
+        opponent.active.specialConditions.includes(SpecialCondition.PARALYZED)) {
+        return false;
       }
 
-      if (IS_POKEMON_POWER_BLOCKED(store, state, opponent, this)) {
-        return state;
+      if (powerEffect && IS_POKEMON_POWER_BLOCKED(store, state, opponent, this)) {
+        return false;
       }
 
-      if (!effect.power.exemptFromAbilityLock) {
-        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
-      }
-    }
+      return true;
+    }, {
+      powerTypes: [PowerType.BABY_RULE],
+      error: GameMessage.BLOCKED_BY_ABILITY,
+    });
+
     // Babies can not attack
     if (effect instanceof AttackEffect && effect.source.getPokemonCard()?.tags.includes(CardTag.BABY)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
@@ -69,9 +68,9 @@ export class DarkFeraligatr extends PokemonCard {
       }
 
       if (opponent.active.getPokemonCard() === this &&
-        opponent.active.specialConditions.includes(SpecialCondition.ASLEEP) ||
-        opponent.active.specialConditions.includes(SpecialCondition.CONFUSED) ||
-        opponent.active.specialConditions.includes(SpecialCondition.PARALYZED)) {
+        (opponent.active.specialConditions.includes(SpecialCondition.ASLEEP) ||
+          opponent.active.specialConditions.includes(SpecialCondition.CONFUSED) ||
+          opponent.active.specialConditions.includes(SpecialCondition.PARALYZED))) {
         return state;
       }
 

@@ -25,6 +25,7 @@ export function subscribeBoard3dInteractionStreams(
   return [
     boardInteraction.selectionMode$.subscribe(() => sink.updateSelectionVisuals()),
     boardInteraction.selectedTargets$.subscribe(() => sink.updateSelectionVisuals()),
+    boardInteraction.blockedTargets$.subscribe(() => sink.updateSelectionVisuals()),
     boardInteraction.putDamagePlacementPreview$.subscribe(() => sink.refreshPutDamagePlacementOverlays()),
     boardInteraction.attackAnimation$.subscribe((ev) => sink.playBoardAttackAnimation(ev)),
     boardInteraction.basicAnimation$.subscribe((ev) => sink.playBoardBasicAnimation(ev)),

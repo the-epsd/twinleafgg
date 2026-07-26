@@ -49,7 +49,7 @@ import {
   SuperType,
   TrainerType,
 } from '../card/card-types';
-import { Attack } from '../card/pokemon-types';
+import { Attack, Power } from '../card/pokemon-types';
 import { GamePhase } from '../state/state';
 import { canPlayDualStadium } from '../dual-stadium-utils';
 import { canPlayDualLegend } from '../dual-legend-utils';
@@ -2054,12 +2054,18 @@ export function GET_CARDS_ON_BOTTOM_OF_DECK(player: Player, amount: number = 1):
 /**
  * Checks if abilities are blocked on `card` for `player`.
  * @returns `true` if the ability is blocked, `false` if the ability is able to go thru.
+ *
+ * Ability-locking cards (Hex Maniac, Silent Lab, Garbodor, etc.) should implement their
+ * lock via `HANDLE_ABILITY_LOCK` in `prefabs/ability-lock.ts` so Check + PowerEffect stay in sync.
+ * Ability owners must still call this before applying ability effects.
  */
 export function IS_ABILITY_BLOCKED(
   store: StoreLike,
   state: State,
   player: Player,
   card: PokemonCard,
+  /** When probing a specific power (e.g. useFromHand), pass it so allowUseFromHand locks match. */
+  power?: Partial<Power>,
 ): boolean {
   // Try to reduce PowerEffect, to check if something is blocking our ability
   try {
@@ -2069,8 +2075,13 @@ export function IS_ABILITY_BLOCKED(
         player,
         {
           name: 'test',
-          powerType: PowerType.ABILITY,
+          powerType: power?.powerType ?? PowerType.ABILITY,
           text: '',
+          exemptFromAbilityLock: power?.exemptFromAbilityLock,
+          exemptFromInitialize: power?.exemptFromInitialize,
+          knocksOutSelf: power?.knocksOutSelf,
+          useFromHand: power?.useFromHand,
+          useFromDiscard: power?.useFromDiscard,
         },
         card,
       ),
@@ -3880,6 +3891,8 @@ export function CAN_PLAY_ENERGY_CARD(
 
 /**
  * True when a hand Pokémon with useFromHandToBench can be played onto an open Bench slot.
+ * Hand-affecting ability locks (Wobbuffet, Greninja, Hex Maniac, Silent Lab, etc.) fail this
+ * the same way item lock fails {@link CAN_PLAY_TRAINER_CARD}.
  */
 export function CAN_USE_FROM_HAND_TO_BENCH_POWER(
   store: StoreLike,
@@ -3905,7 +3918,16 @@ export function CAN_USE_FROM_HAND_TO_BENCH_POWER(
       return false;
     }
 
-    if (IS_ABILITY_BLOCKED(store, state, player, pokemonCard)) {
+    // Probe with the real power's hand flags so Path-style allowUseFromHand still works,
+    // while Wobbuffet / Greninja / Hex Maniac (hand locks) block playability.
+    if (IS_ABILITY_BLOCKED(store, state, player, pokemonCard, power)) {
+      return false;
+    }
+
+    // Remove-mode locks strip the power from discovery — treat as unusable for canPlay.
+    const powersEffect = new CheckPokemonPowersEffect(player, pokemonCard);
+    store.reduceEffect(state, powersEffect);
+    if (!powersEffect.powers.some(p => p.name === power.name && p.useFromHandToBench === true)) {
       return false;
     }
 
@@ -3962,7 +3984,10 @@ export function CAN_PLAY_POKEMON_CARD(
     }
 
     if (canPlayDualLegend(store, state, player, pokemonCard)) {
-      if (!IS_ABILITY_BLOCKED(store, state, player, pokemonCard)) {
+      const legendPower = pokemonCard.powers?.find(
+        p => p.useFromHand === true && p.powerType === PowerType.LEGEND_ASSEMBLY,
+      );
+      if (!IS_ABILITY_BLOCKED(store, state, player, pokemonCard, legendPower)) {
         return true;
       }
     }

@@ -1,4 +1,3 @@
-import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import {
   CardType,
@@ -9,11 +8,16 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import {
+  HANDLE_ABILITY_LOCK,
+  IS_ABILITY_LOCKER_ACTIVE,
+  LOCKER_ABILITY_APPLIES,
+} from '../../game/store/prefabs/ability-lock';
+import { PlayerType, PokemonCardList } from '../../game';
 
 export class GalarianWeezing extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -28,6 +32,7 @@ export class GalarianWeezing extends PokemonCard {
     {
       name: 'Neutralizing Gas',
       powerType: PowerType.ABILITY,
+      abilityLock: true,
       text: "As long as this Pokémon is in the Active Spot, your opponent's Pokémon in play have no Abilities, except for Neutralizing Gas.",
     },
   ];
@@ -56,44 +61,39 @@ export class GalarianWeezing extends PokemonCard {
       store.reduceEffect(state, specialCondition);
     }
 
-    if (
-      effect instanceof PowerEffect &&
-      effect.power.powerType === PowerType.ABILITY &&
-      effect.power.name !== 'Neutralizing Gas'
-    ) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+    HANDLE_ABILITY_LOCK(effect, ({ player, card }) => {
+      if (!IS_ABILITY_LOCKER_ACTIVE(state, player, this)) {
+        return false;
+      }
 
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
+      const opponent = StateUtils.getOpponent(state, owner);
 
-      if (
-        !player.active.cards.includes(this) &&
-        !opponent.active.cards.includes(this)
-      ) {
-        return state;
+      let targetBelongsToOpponent = false;
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (_list, pokemon) => {
+        if (pokemon === card) {
+          targetBelongsToOpponent = true;
+        }
+      });
+      if (!targetBelongsToOpponent) {
+        return false;
       }
 
-      if (owner === player) {
-        return state;
+      const targetCardList = StateUtils.findCardList(state, card);
+      if (!(targetCardList instanceof PokemonCardList)) {
+        return false;
       }
 
-      // Try reducing ability for opponent
-      try {
-        const powerEffect = new PowerEffect(player, this.powers[0], this);
-        store.reduceEffect(state, powerEffect);
-      } catch {
-        return state;
-      }
+      // Check + PowerEffect: Neutralizing Gas must itself be usable (e.g. Path to the Peak).
+      return LOCKER_ABILITY_APPLIES(store, state, owner, this, this.powers[0], card);
+    }, {
+      exemptPowerNames: ['Neutralizing Gas'],
+      allowUseFromHand: true,
+      allowUseFromDiscard: true,
+      error: GameMessage.BLOCKED_BY_ABILITY,
+    });
 
-      if (effect.power.useFromDiscard || effect.power.useFromHand) {
-        return state;
-      }
-
-      if (!effect.power.exemptFromAbilityLock) {
-        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
-      }
-    }
     return state;
   }
 }

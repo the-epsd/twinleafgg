@@ -1,9 +1,15 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameError, GameMessage, AttachEnergyPrompt, PlayerType, SlotType, StateUtils, PokemonCardList } from '../../../game';
+import { PowerType, StoreLike, State, GameMessage, AttachEnergyPrompt, PlayerType, SlotType, StateUtils, PokemonCardList } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { EffectOfAbilityEffect, PowerEffect } from '../../../game/store/effects/game-effects';
+import { EffectOfAbilityEffect } from '../../../game/store/effects/game-effects';
 import { AfterAttackEffect } from '../../../game/store/effects/game-phase-effects';
+import {
+  CAN_APPLY_LOCK_TO_TARGET,
+  HANDLE_ABILITY_LOCK,
+  IS_ABILITY_LOCKER_ACTIVE,
+  LOCKER_ABILITY_APPLIES,
+} from '../../../game/store/prefabs/ability-lock';
 
 export class IronThornsex extends PokemonCard {
   public tags = [CardTag.POKEMON_ex, CardTag.FUTURE];
@@ -16,6 +22,7 @@ export class IronThornsex extends PokemonCard {
   public powers = [{
     name: 'Initialization',
     powerType: PowerType.ABILITY,
+    abilityLock: true,
     exemptFromInitialize: true,
     text: 'As long as this Pokémon is in the Active Spot, Pokémon with a Rule Box in play (both yours and your opponent\'s) have no Abilities, except for Future Pokémon. (Pokémon ex, Pokémon V, etc. have Rule Boxes.)'
   }];
@@ -36,51 +43,48 @@ export class IronThornsex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY && effect.power.name !== 'Initialization') {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // Iron Thorns ex is not active Pokemon
-      if (player.active.getPokemonCard() !== this
-        && opponent.active.getPokemonCard() !== this) {
-        return state;
-      }
-
-      const ruleBoxScratch = new PokemonCardList();
-      ruleBoxScratch.cards.push(effect.card);
-      // Pokémon without a Rule Box — don't block ability
-      if (!ruleBoxScratch.hasRuleBox()) {
-        return state;
-      }
-
-      if (effect.power.useFromDiscard || effect.power.useFromHand) {
-        return state;
-      }
-
-      // Try reducing ability for each player  
-      try {
-        const powerEffect = new PowerEffect(player, this.powers[0], this);
-        store.reduceEffect(state, powerEffect);
-      } catch {
-        return state;
-      }
-
-      // Check if we can apply the ability lock to target Pokemon
-      const cardList = StateUtils.findCardList(state, effect.card);
-      if (cardList instanceof PokemonCardList) {
-        const canApplyAbility = new EffectOfAbilityEffect(
-          player.active.getPokemonCard() === this ? player : opponent, this.powers[0], this, cardList);
-        store.reduceEffect(state, canApplyAbility);
-        if (!canApplyAbility.target) {
-          return state;
-        }
-      }
-
-      // Apply ability lock
-      if (!effect.power.exemptFromAbilityLock) {
-        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+    if (effect instanceof EffectOfAbilityEffect && effect.card === this && effect.power === this.powers[0]) {
+      const targetCard = effect.target?.getPokemonCard();
+      if (targetCard?.tags.includes(CardTag.FUTURE)) {
+        effect.target = undefined;
       }
     }
+
+    HANDLE_ABILITY_LOCK(effect, ({ player, card, powerEffect }) => {
+      if (!IS_ABILITY_LOCKER_ACTIVE(state, player, this)) {
+        return false;
+      }
+
+      try {
+        const targetCardList = StateUtils.findCardList(state, card);
+        if (!(targetCardList instanceof PokemonCardList)) {
+          return false;
+        }
+      } catch {
+        return false;
+      }
+
+      if (card.tags.includes(CardTag.FUTURE) || !card.hasRuleBox()) {
+        return false;
+      }
+
+      const opponent = StateUtils.getOpponent(state, player);
+      const lockerOwner = player.active.getPokemonCard() === this ? player : opponent;
+
+      // Check + PowerEffect: Initialization must itself be usable (e.g. Path to the Peak).
+      if (!LOCKER_ABILITY_APPLIES(store, state, lockerOwner, this, this.powers[0], card)) {
+        return false;
+      }
+      if (powerEffect) {
+        return CAN_APPLY_LOCK_TO_TARGET(store, state, lockerOwner, this, this.powers[0], card);
+      }
+      return true;
+    }, {
+      allowUseFromHand: true,
+      allowUseFromDiscard: true,
+      respectExemptFromInitialize: true,
+      error: GameMessage.BLOCKED_BY_ABILITY,
+    });
 
     if (effect instanceof AfterAttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
@@ -90,7 +94,6 @@ export class IronThornsex extends PokemonCard {
         return state;
       }
 
-      // Then prompt for energy movement
       return store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
