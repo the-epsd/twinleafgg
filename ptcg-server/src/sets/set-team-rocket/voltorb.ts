@@ -16,8 +16,8 @@ export class Voltorb extends PokemonCard {
   }];
 
   public set: string = 'TR';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '69';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Voltorb';
   public fullName: string = 'Voltorb TR';
 }

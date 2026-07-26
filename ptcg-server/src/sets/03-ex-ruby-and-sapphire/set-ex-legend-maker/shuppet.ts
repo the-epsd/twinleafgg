@@ -9,24 +9,22 @@ export class Shuppet extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Headbutt',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Will-o\'-the-wisp',
-      cost: [P, C],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Headbutt',
+    cost: [C],
+    damage: 10,
+    text: ''
+  },
+  {
+    name: 'Will-o\'-the-wisp',
+    cost: [P, C],
+    damage: 20,
+    text: ''
+  }];
 
   public set: string = 'LM';
   public setNumber: string = '63';
-  public cardImage = 'assets/cardback.png';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shuppet';
   public fullName: string = 'Shuppet LM';
 }

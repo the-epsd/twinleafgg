@@ -1,15 +1,22 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import {
-  StoreLike, State, StateUtils, GameMessage,
-  ChooseAttackPrompt, PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  ChooseAttackPrompt,
+  PowerType,
   EnergyMap,
   GameError,
-  Player
+  Player,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { UseAttackEffect } from '../../../game/store/effects/game-effects';
-import { CheckProvidedEnergyEffect, CheckAttackCostEffect } from '../../../game/store/effects/check-effects';
+import {
+  CheckProvidedEnergyEffect,
+  CheckAttackCostEffect,
+} from '../../../game/store/effects/check-effects';
 import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 // function* useApexDragon(next: Function, store: StoreLike, state: State,
@@ -78,38 +85,29 @@ import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 // }
 
 export class Ditto extends PokemonCard {
-
   public regulationMark = 'F';
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.COLORLESS;
-
+  public cardType: CardType = C;
   public hp: number = 70;
+  public weakness = [{ type: F }];
+  public retreat = [C];
 
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public retreat = [CardType.COLORLESS];
-
-  public powers = [{
-    name: 'Sudden Transormation',
-    powerType: PowerType.ABILITY,
-    useWhenInPlay: true,
-    text: 'This Pokémon can use the attacks of any Basic Pokémon in your discard pile, except for Pokémon with a Rule Box (Pokémon V, Pokémon-GX, etc. have Rule Boxes). (You still need the necessary Energy to use each attack.)'
-  }];
+  public powers = [
+    {
+      name: 'Sudden Transformation',
+      powerType: PowerType.ABILITY,
+      useWhenInPlay: true,
+      text: 'This Pokémon can use the attacks of any Basic Pokémon in your discard pile, except for Pokémon with a Rule Box (Pokémon V, Pokémon-GX, etc. have Rule Boxes). (You still need the necessary Energy to use each attack.)',
+    },
+  ];
 
   public set: string = 'PGO';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '53';
-
   public name: string = 'Ditto';
-
   public fullName: string = 'Ditto PGO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const pokemonCard = player.active.getPokemonCard();
@@ -126,33 +124,36 @@ export class Ditto extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      return store.prompt(state, new ChooseAttackPrompt(
-        player.id,
-        GameMessage.CHOOSE_ATTACK_TO_COPY,
-        pokemonCards,
-        { allowCancel: true, blocked }
-      ), attack => {
-        if (attack !== null) {
-          const useAttackEffect = new UseAttackEffect(player, attack);
-          store.reduceEffect(state, useAttackEffect);
-        }
-      });
+      return store.prompt(
+        state,
+        new ChooseAttackPrompt(player.id, GameMessage.CHOOSE_ATTACK_TO_COPY, pokemonCards, {
+          allowCancel: true,
+          blocked,
+        }),
+        (attack) => {
+          if (attack !== null) {
+            const useAttackEffect = new UseAttackEffect(player, attack);
+            store.reduceEffect(state, useAttackEffect);
+          }
+        },
+      );
     }
     return state;
   }
 
   private buildAttackList(
-    state: State, store: StoreLike, player: Player
-  ): { pokemonCards: PokemonCard[], blocked: { index: number, attack: string }[] } {
-
+    state: State,
+    store: StoreLike,
+    player: Player,
+  ): { pokemonCards: PokemonCard[]; blocked: { index: number; attack: string }[] } {
     const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
     store.reduceEffect(state, checkProvidedEnergyEffect);
     const energyMap = checkProvidedEnergyEffect.energyMap;
 
     const pokemonCards: PokemonCard[] = [];
-    const blocked: { index: number, attack: string }[] = [];
-    player.discard.cards.forEach(card => {
-      if (card instanceof PokemonCard && card.stage === Stage.BASIC) {
+    const blocked: { index: number; attack: string }[] = [];
+    player.discard.cards.forEach((card) => {
+      if (card instanceof PokemonCard && card.stage === Stage.BASIC && !card.hasRuleBox()) {
         this.checkAttack(state, store, player, card, energyMap, pokemonCards, blocked);
       }
     });
@@ -160,20 +161,24 @@ export class Ditto extends PokemonCard {
     return { pokemonCards, blocked };
   }
 
-  private checkAttack(state: State, store: StoreLike, player: Player,
-    card: PokemonCard, energyMap: EnergyMap[], pokemonCards: PokemonCard[],
-    blocked: { index: number, attack: string }[]
+  private checkAttack(
+    state: State,
+    store: StoreLike,
+    player: Player,
+    card: PokemonCard,
+    energyMap: EnergyMap[],
+    pokemonCards: PokemonCard[],
+    blocked: { index: number; attack: string }[],
   ) {
     {
-
-      const attacks = card.attacks.filter(attack => {
+      const attacks = card.attacks.filter((attack) => {
         const checkAttackCost = new CheckAttackCostEffect(player, attack);
         state = store.reduceEffect(state, checkAttackCost);
         return StateUtils.checkEnoughEnergy(energyMap, checkAttackCost.cost as CardType[]);
       });
       const index = pokemonCards.length;
       pokemonCards.push(card);
-      card.attacks.forEach(attack => {
+      card.attacks.forEach((attack) => {
         if (!attacks.includes(attack)) {
           blocked.push({ index, attack: attack.name });
         }

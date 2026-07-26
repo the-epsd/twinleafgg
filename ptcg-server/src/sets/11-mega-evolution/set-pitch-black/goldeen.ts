@@ -12,12 +12,12 @@ export class Goldeen extends PokemonCard {
     name: 'Pierce',
     cost: [C, C],
     damage: 30,
-    text: '',
+    text: ''
   }];
 
-  public set: string = 'M5';
-  public setNumber: string = '12';
-  public regulationMark: string = 'J';
+  public regulationMark = 'J';
+  public set: string = 'PBL';
+  public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Goldeen';
   public fullName: string = 'Goldeen M5';

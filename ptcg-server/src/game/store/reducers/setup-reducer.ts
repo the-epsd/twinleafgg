@@ -23,6 +23,7 @@ import { WhoBeginsEffect } from '../effects/game-phase-effects';
 import { PokemonCard } from '../card/pokemon-card';
 import { ShowMulliganPrompt } from '../prompts/show-mulligan-prompt';
 import { ConfirmPrompt } from '../prompts/confirm-prompt';
+import { STAMP_STARTING_ABILITY_LOCKS } from '../prefabs/ability-lock';
 
 function sandboxAllPokemonBasicEnabled(state: State): boolean {
   return Boolean(state.gameSettings?.sandboxMode && state.gameSettings?.sandboxAllPokemonBasic);
@@ -36,6 +37,32 @@ function isStartingPokemonCandidate(state: State, c: Card): boolean {
     return c.stage === Stage.BASIC || sandboxAllPokemonBasicEnabled(state);
   }
   return false;
+}
+
+/** After sandbox hand edits during setup, recompute Choose Starting Pokémon blocked indices. */
+export function refreshStartingPokemonPromptBlocked(state: State, player: Player): void {
+  for (const prompt of state.prompts) {
+    if (!(prompt instanceof ChooseCardsPrompt)) {
+      continue;
+    }
+    if (prompt.message !== GameMessage.CHOOSE_STARTING_POKEMONS) {
+      continue;
+    }
+    if (prompt.playerId !== player.id) {
+      continue;
+    }
+    if (prompt.cards !== player.hand) {
+      continue;
+    }
+
+    const blocked: number[] = [];
+    player.hand.cards.forEach((c, index) => {
+      if (!isStartingPokemonCandidate(state, c)) {
+        blocked.push(index);
+      }
+    });
+    prompt.options.blocked = blocked;
+  }
 }
 
 function handHasStartingPokemon(state: State, player: Player): boolean {
@@ -268,6 +295,8 @@ function* alternativeSetupGame(next: Function, store: StoreLike, state: State): 
     p.active.isSecret = false;
     p.bench.forEach(list => { list.isSecret = false; });
   }
+
+  STAMP_STARTING_ABILITY_LOCKS(state);
 
   return initNextTurn(store, state);
 }
@@ -543,6 +572,8 @@ export function* setupGame(next: Function, store: StoreLike, state: State): Iter
     p.active.isSecret = false;
     p.bench.forEach(list => { list.isSecret = false; });
   }
+
+  STAMP_STARTING_ABILITY_LOCKS(state);
 
   return initNextTurn(store, state);
 }

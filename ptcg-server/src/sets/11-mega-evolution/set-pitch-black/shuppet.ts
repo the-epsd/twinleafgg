@@ -16,7 +16,7 @@ export class Shuppet extends PokemonCard {
     {
       name: "Hide 'n' Sneak",
       powerType: PowerType.ABILITY,
-      text: "This Pokémon can't be affected by effects of attacks or Abilities from your opponent's Pokémon.",
+      text: "Prevent all effects of your opponent's Pokémon's attacks and Abilities done to this Pokémon. (Damage is not an effect.)",
     },
   ];
 
@@ -29,8 +29,8 @@ export class Shuppet extends PokemonCard {
     },
   ];
 
-  public set: string = 'M5';
-  public setNumber: string = '31';
+  public set: string = 'PBL';
+  public setNumber: string = '33';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shuppet';

@@ -3,23 +3,23 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Ferroseed extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType = M;
   public hp: number = 70;
-  public weakness = [{ type: CardType.FIRE }];
-  public resistance = [{ type: CardType.GRASS, value: -30 }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public resistance = [{ type: G, value: -30 }];
+  public retreat = [C, C];
 
   public attacks = [{
     name: 'Rollout',
-    cost: [CardType.COLORLESS],
+    cost: [C],
     damage: 10,
     text: ''
   }];
 
-  public set = 'SSH';
   public regulationMark = 'D';
-  public cardImage: string = 'assets/cardback.png';
+  public set: string = 'SSH';
   public setNumber: string = '130';
-  public name = 'Ferroseed';
-  public fullName = 'Ferroseed SSH';
+  public cardImage: string = 'assets/cardback.png';
+  public name: string = 'Ferroseed';
+  public fullName: string = 'Ferroseed SSH';
 }

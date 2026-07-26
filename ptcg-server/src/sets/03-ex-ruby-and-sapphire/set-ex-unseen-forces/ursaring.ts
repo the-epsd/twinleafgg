@@ -2,10 +2,14 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { StoreLike, State, GameMessage, GameError, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType, PokemonCardList } from '../../../game';
-import { AttackEffect, PowerEffect } from '../../../game/store/effects/game-effects';
+import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { CONFIRMATION_PROMPT, IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefabs/attack-effects';
+import {
+  HANDLE_ABILITY_BLOCK,
+  POKEPOWER_TYPES,
+} from '../../../game/store/prefabs/ability-lock';
 
 export class Ursaring extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -45,7 +49,6 @@ export class Ursaring extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    // Block attacks from basics when active
     if (effect instanceof AttackEffect && effect.source.getPokemonCard()?.stage === Stage.BASIC) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -59,27 +62,35 @@ export class Ursaring extends PokemonCard {
       }
     }
 
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.POKEPOWER) {
-      const player = effect.player;
+    HANDLE_ABILITY_BLOCK(effect, ({ player, card }) => {
       const opponent = StateUtils.getOpponent(state, player);
 
       if (IS_POKEBODY_BLOCKED(store, state, opponent, this)) {
-        return state;
+        return false;
       }
 
-      let effectCardList: PokemonCardList | undefined;
-      player.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (card === effect.card) {
-          effectCardList = cardList;
+      if (opponent.active.getPokemonCard() !== this) {
+        return false;
+      }
+
+      if (card.tags.includes(CardTag.POKEMON_ex)) {
+        return false;
+      }
+
+      try {
+        const cardList = StateUtils.findCardList(state, card);
+        if (cardList instanceof PokemonCardList) {
+          return cardList.getPokemons().length === 1 || card.tags.includes(CardTag.LEGEND);
         }
-      });
-
-      if ((effectCardList?.getPokemons().length === 1 || effect.card.tags.includes(CardTag.LEGEND)) && opponent.active.getPokemonCard() === this) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      } catch {
+        return false;
       }
-    }
+      return card.stage === Stage.BASIC;
+    }, {
+      powerTypes: POKEPOWER_TYPES,
+      error: GameMessage.BLOCKED_BY_EFFECT,
+    });
 
-    // Drag Off
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -105,7 +116,6 @@ export class Ursaring extends PokemonCard {
       }, GameMessage.WANT_TO_SWITCH_POKEMON);
     }
 
-    // Rock Smash
     if (WAS_ATTACK_USED(effect, 1, this)) {
       FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE(store, state, effect, 20);
     }

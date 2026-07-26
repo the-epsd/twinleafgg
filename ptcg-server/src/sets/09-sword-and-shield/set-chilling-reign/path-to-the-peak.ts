@@ -1,86 +1,50 @@
 import { StateUtils } from '../../../game/store/state-utils';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { CardTag, TrainerType } from '../../../game/store/card/card-types';
-import { PowerEffect, UseStadiumEffect } from '../../../game/store/effects/game-effects';
-import { CheckPokemonPowersEffect } from '../../../game/store/effects/check-effects';
+import { TrainerType } from '../../../game/store/card/card-types';
+import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { GameError, GameMessage, PokemonCardList, PowerType } from '../../../game';
+import { GameError, GameMessage } from '../../../game';
+import { HANDLE_ABILITY_LOCK } from '../../../game/store/prefabs/ability-lock';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 
 export class PathToThePeak extends TrainerCard {
-
   public trainerType = TrainerType.STADIUM;
-
   public set = 'CRE';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '148';
-
   public regulationMark = 'E';
-
   public name = 'Path to the Peak';
-
   public fullName = 'Path to the Peak CRE';
-
   public text = 'Pokémon with a Rule Box in play (both yours and your opponent\'s) have no Abilities. (Pokémon V, Pokémon-GX, etc. have Rule Boxes.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof CheckPokemonPowersEffect && StateUtils.getStadiumCard(state) === this) {
-      const targetPokemon = effect.target;
-      if (!targetPokemon) {
-        return state;
+    HANDLE_ABILITY_LOCK(effect, ({ card }) => {
+      if (StateUtils.getStadiumCard(state) !== this) {
+        return false;
       }
-
-      // Check if target is in play
-      const targetCardList = StateUtils.findCardList(state, targetPokemon);
-      if (!(targetCardList instanceof PokemonCardList)) {
-        return state;
+      if (!card.hasRuleBox()) {
+        return false;
       }
-
-      // Check if Pokemon has a Rule Box
-      if (targetPokemon.tags.includes(CardTag.POKEMON_V) ||
-        targetPokemon.tags.includes(CardTag.POKEMON_VMAX) ||
-        targetPokemon.tags.includes(CardTag.POKEMON_VSTAR) ||
-        targetPokemon.tags.includes(CardTag.POKEMON_ex) ||
-        targetPokemon.tags.includes(CardTag.POKEMON_EX) ||
-        targetPokemon.tags.includes(CardTag.BREAK) ||
-        targetPokemon.tags.includes(CardTag.POKEMON_GX) ||
-        targetPokemon.tags.includes(CardTag.PRISM_STAR) ||
-        targetPokemon.tags.includes(CardTag.RADIANT)) {
-        // Filter out all abilities
-        effect.powers = effect.powers.filter(power =>
-          power.powerType !== PowerType.ABILITY
-        );
+      const slot = StateUtils.findPokemonSlot(state, card);
+      if (slot === undefined) {
+        return false;
       }
-    }
-
-    if (effect instanceof PowerEffect && StateUtils.getStadiumCard(state) === this &&
-      !effect.power.exemptFromAbilityLock) {
-
-      if (effect.power.useFromDiscard || effect.power.useFromHand) {
-        return state;
+      const owner = StateUtils.findOwner(state, slot);
+      if (IS_STADIUM_EFFECT_BLOCKED(store, state, owner, slot)) {
+        return false;
       }
-
-      const pokemonCard = effect.card;
-      if (pokemonCard.tags.includes(CardTag.POKEMON_V) ||
-        pokemonCard.tags.includes(CardTag.POKEMON_VMAX) ||
-        pokemonCard.tags.includes(CardTag.POKEMON_VSTAR) ||
-        pokemonCard.tags.includes(CardTag.POKEMON_ex) ||
-        pokemonCard.tags.includes(CardTag.POKEMON_EX) ||
-        pokemonCard.tags.includes(CardTag.BREAK) ||
-        pokemonCard.tags.includes(CardTag.POKEMON_GX) ||
-        pokemonCard.tags.includes(CardTag.PRISM_STAR) ||
-        pokemonCard.tags.includes(CardTag.RADIANT)) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
-    }
+      return true;
+    }, {
+      allowUseFromHand: true,
+      allowUseFromDiscard: true
+    });
 
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
       throw new GameError(GameMessage.CANNOT_USE_STADIUM);
     }
+
     return state;
   }
 }

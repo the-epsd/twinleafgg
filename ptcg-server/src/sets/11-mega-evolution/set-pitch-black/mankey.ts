@@ -12,12 +12,12 @@ export class Mankey extends PokemonCard {
     name: 'Low Kick',
     cost: [C],
     damage: 20,
-    text: '',
+    text: ''
   }];
 
-  public set: string = 'M5';
-  public setNumber: string = '40';
-  public regulationMark: string = 'J';
+  public regulationMark = 'J';
+  public set: string = 'PBL';
+  public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mankey';
   public fullName: string = 'Mankey M5';

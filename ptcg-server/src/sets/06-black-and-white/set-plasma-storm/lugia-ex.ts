@@ -1,14 +1,12 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
-import { State, GamePhase } from '../../../game/store/state/state';
+import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { PowerType } from '../../../game/store/card/pokemon-types';
-import { StateUtils } from '../../../game/store/state-utils';
 import { GameMessage, ChooseCardsPrompt } from '../../../game';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class LugiaEx extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -34,17 +32,13 @@ export class LugiaEx extends PokemonCard {
   }];
 
   public set: string = 'PLS';
-
   public name: string = 'Lugia-EX';
-
   public fullName: string = 'Lugia EX PLS';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '108';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Plasma Gale
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const pokemon = player.active;
@@ -82,30 +76,8 @@ export class LugiaEx extends PokemonCard {
       });
     }
 
-    // Overflow
-    if (effect instanceof KnockOutEffect && effect.target === effect.player.active) {
-      const knockedOutOwner = effect.player;
-      const attacker = StateUtils.getOpponent(state, knockedOutOwner);
-
-      // Do not activate between turns, or when it's not opponents turn.
-      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== attacker) {
-        return state;
-      }
-
-      // Lugia wasn't attacking
-      const pokemonCard = attacker.active.getPokemonCard();
-      if (pokemonCard !== this) {
-        return state;
-      }
-
-      if (IS_ABILITY_BLOCKED(store, state, attacker, this)) {
-        return state;
-      }
-      if (effect.prizeCount > 0) {
-        effect.prizeCount += 1;
-        return state;
-      }
-    }
-    return state;
+    return IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES(store, state, effect, this, {
+      checkAbilityBlocked: true,
+    });
   }
 }

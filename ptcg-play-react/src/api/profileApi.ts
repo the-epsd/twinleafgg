@@ -24,3 +24,11 @@ export function getCardImagesUrl(): Promise<ProfileJsonUrlResponse> {
 export function getNightlyImagesUrl(): Promise<ProfileJsonUrlResponse> {
   return apiGet<ProfileJsonUrlResponse>('/v1/profile/nightlyImagesUrl');
 }
+
+export function setCardImagesUrl(jsonUrl: string): Promise<{ ok: boolean }> {
+  return apiPost<{ ok: boolean }>('/v1/profile/setCardImagesUrl', { jsonUrl });
+}
+
+export function setNightlyImagesUrl(jsonUrl: string): Promise<{ ok: boolean }> {
+  return apiPost<{ ok: boolean }>('/v1/profile/setNightlyImagesUrl', { jsonUrl });
+}

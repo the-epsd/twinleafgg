@@ -2,9 +2,7 @@ import { CardTag, CardType, PokemonCard, Stage, State, StateUtils, StoreLike } f
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckHpEffect, CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { MarkerConstants } from '../../../game/store/markers/marker-constants';
-
+import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED, WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN } from '../../../game/store/prefabs/prefabs';
 
 export class MarshadowMachampGX extends PokemonCard {
   public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
@@ -14,28 +12,26 @@ export class MarshadowMachampGX extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Revenge',
-      cost: [F, C],
-      damage: 30,
-      damageCalculation: '+',
-      text: 'If any of your Pokémon were Knocked Out by damage from an opponent\'s attack during their last turn, this attack does 90 more damage.'
-    },
-    {
-      name: 'Hundred-Blows Impact',
-      cost: [F, F, C],
-      damage: 160,
-      text: ''
-    },
-    {
-      name: 'Acme of Heroism-GX',
-      cost: [F, F, C],
-      damage: 200,
-      gxAttack: true,
-      text: 'If this Pokémon has at least 1 extra Energy attached to it (in addition to this attack\'s cost), and if it would be Knocked Out by damage from an opponent\'s attack during their next turn, it is not Knocked Out, and its remaining HP becomes 10. (You can\'t use more than 1 GX attack in a game.)'
-    },
-  ];
+  public attacks = [{
+    name: 'Revenge',
+    cost: [F, C],
+    damage: 30,
+    damageCalculation: '+',
+    text: 'If any of your Pokémon were Knocked Out by damage from an opponent\'s attack during their last turn, this attack does 90 more damage.'
+  },
+  {
+    name: 'Hundred-Blows Impact',
+    cost: [F, F, C],
+    damage: 160,
+    text: ''
+  },
+  {
+    name: 'Acme of Heroism-GX',
+    cost: [F, F, C],
+    damage: 200,
+    gxAttack: true,
+    text: 'If this Pokémon has at least 1 extra Energy attached to it (in addition to this attack\'s cost), and if it would be Knocked Out by damage from an opponent\'s attack during their next turn, it is not Knocked Out, and its remaining HP becomes 10. (You can\'t use more than 1 GX attack in a game.)'
+  }];
 
   public set = 'UNB';
   public setNumber = '82';
@@ -48,7 +44,7 @@ export class MarshadowMachampGX extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Revenge
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      if (effect.player.marker.hasMarker(MarkerConstants.REVENGE_MARKER)) { effect.damage += 90; }
+      if (WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN(effect.player, { byAttackDamage: true })) { effect.damage += 90; }
     }
 
     // Acme of Heroism-GX

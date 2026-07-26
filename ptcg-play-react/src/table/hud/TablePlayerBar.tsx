@@ -7,6 +7,8 @@ import styles from './TablePlayerBar.module.css';
 export type TablePlayerBarProps = {
   player: Player;
   isActive: boolean;
+  /** Gold glow — this player goes first (setup / who-begins). */
+  isGoingFirst?: boolean;
   playerStats?: PlayerStats;
   timeLimit: number;
   className?: string;
@@ -22,7 +24,7 @@ function formatClock(seconds: number): string {
 
 export function TablePlayerBar(props: TablePlayerBarProps) {
   const { t } = useTranslation();
-  const { player, isActive, playerStats, timeLimit, className, compact } = props;
+  const { player, isActive, isGoingFirst, playerStats, timeLimit, className, compact } = props;
   const showTimer =
     timeLimit > 0 &&
     playerStats &&
@@ -66,8 +68,15 @@ export function TablePlayerBar(props: TablePlayerBarProps) {
 
   return (
     <div
-      className={cn(styles.root, compact && styles.rootCompact, isActive && styles.rootActive, className)}
+      className={cn(
+        styles.root,
+        compact && styles.rootCompact,
+        isActive && styles.rootActive,
+        isGoingFirst && styles.rootGoingFirst,
+        className,
+      )}
       data-active={isActive || undefined}
+      data-going-first={isGoingFirst || undefined}
     >
       <h4 className={styles.name}>{player.name || '—'}</h4>
       <div className={styles.badges}>

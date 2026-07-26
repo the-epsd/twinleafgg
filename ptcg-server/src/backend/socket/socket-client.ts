@@ -57,8 +57,9 @@ export class SocketClient implements Client {
   }
 
   public onStateChange(game: Game, state: State): void {
-    this.coreSocket.onStateChange(game, state);
+    // Emit table state before lobby delete so clients apply FINISHED before core:deleteGame
     this.gameSocket.onStateChange(game, state);
+    this.coreSocket.onStateChange(game, state);
   }
 
   public onGameJoin(game: Game, client: Client): void {

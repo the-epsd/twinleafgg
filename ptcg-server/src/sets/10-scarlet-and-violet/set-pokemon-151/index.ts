@@ -50,8 +50,10 @@ import { Nidorina } from './nidorina';
 import { Nidorino } from './nidorino';
 import { Oddish } from './oddish';
 import { Onix } from './onix';
+import { Pidgeot } from './pidgeot';
 import { Pidgeotto } from './pidgeotto';
 import { Pidgey } from './pidgey';
+import { Ponyta } from './ponyta';
 import { ProtectiveGoggles } from './protective-goggles';
 import { RigidBand } from './rigid-band';
 import { Sandshrew } from './sandshrew';
@@ -122,8 +124,10 @@ export const setPokemon151: Card[] = [
   new Nidoqueen(),
   new Oddish(),
   new Onix(),
+  new Pidgeot(),
   new Pidgeotto(),
   new Pidgey(),
+  new Ponyta(),
   new ProtectiveGoggles(),
   new RigidBand(),
   new Sandshrew(),

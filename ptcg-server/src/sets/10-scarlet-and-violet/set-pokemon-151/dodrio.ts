@@ -1,10 +1,17 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, BoardEffect } from '../../../game/store/card/card-types';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PowerType } from '../../../game/store/card/pokemon-types';
-import { StoreLike, State, PlayerType, GameError, GameMessage } from '../../../game';
-import { AttackEffect } from '../../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { StoreLike, State, GameError, GameMessage, StateUtils, PokemonCardList } from '../../../game';
+import { Effect } from '../../../game/store/effects/effect';
+import {
+  ABILITY_USED,
+  DRAW_CARDS,
+  IS_ABILITY_BLOCKED,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  USE_ABILITY_ONCE_PER_TURN,
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 
 export class Dodrio extends PokemonCard {
@@ -54,47 +61,28 @@ export class Dodrio extends PokemonCard {
 
   public readonly ZOOMING_DRAW_MARKER = 'ZOOMING_DRAW_MARKER';
 
-  public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect) {
-      const player = effect.player;
-      player.marker.removeMarker(this.ZOOMING_DRAW_MARKER, this);
-    }
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.ZOOMING_DRAW_MARKER, this);
 
     if (WAS_POWER_USED(effect, 0, this)) {
-
       const player = effect.player;
-      if (player.marker.hasMarker(this.ZOOMING_DRAW_MARKER, this)) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
+
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-        if (cardList.getPokemonCard() === this) {
-          cardList.damage += 10;
-        }
-      });
+      USE_ABILITY_ONCE_PER_TURN(player, this.ZOOMING_DRAW_MARKER, this);
+      ABILITY_USED(player, this);
 
-      player.deck.moveTo(player.hand, 1);
-      player.marker.addMarker(this.ZOOMING_DRAW_MARKER, this);
-
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-        if (cardList.getPokemonCard() === this) {
-          cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-        }
-      });
-
+      const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
+      cardList.damage += 10;
+      DRAW_CARDS(store, state, player, 1);
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
-      // Get Dodrio's damage
       const dodrioDamage = effect.player.active.damage;
-
-      // Calculate 30 damage per counter
-      const damagePerCounter = 30;
-      effect.damage += (dodrioDamage * damagePerCounter / 10);
-
-      return state;
+      effect.damage += (dodrioDamage * 30 / 10);
     }
 
     return state;

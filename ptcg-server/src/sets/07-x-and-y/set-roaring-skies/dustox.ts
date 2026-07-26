@@ -1,19 +1,18 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PowerType } from '../../../game/store/card/pokemon-types';
-import { StoreLike, State, StateUtils, GamePhase, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../../game';
+import { StoreLike, State, StateUtils, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { DELTA_PLUS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Dustox extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Cascoon';
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType = G;
   public hp: number = 130;
-  public weakness = [{ type: CardType.FIRE }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public retreat = [C];
 
   public powers = [{
     name: 'Delta Plus',
@@ -24,13 +23,13 @@ export class Dustox extends PokemonCard {
 
   public attacks = [{
     name: 'Flap',
-    cost: [CardType.GRASS],
+    cost: [G],
     damage: 20,
     text: ''
   },
   {
     name: 'Wind Shard',
-    cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
+    cost: [G, C, C],
     damage: 0,
     text: ' This attack does 50 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.) '
   }];
@@ -42,28 +41,6 @@ export class Dustox extends PokemonCard {
   public setNumber: string = '8';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    // Delta Plus
-    if (effect instanceof KnockOutEffect && effect.target === effect.player.active) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // Do not activate between turns, or when it's not opponents turn.
-      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
-        return state;
-      }
-
-      // Swellow wasn't attacking
-      const pokemonCard = opponent.active.getPokemonCard();
-      if (pokemonCard !== this) {
-        return state;
-      }
-      if (effect.prizeCount > 0) {
-        effect.prizeCount += 1;
-        return state;
-      }
-    }
-
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -87,10 +64,9 @@ export class Dustox extends PokemonCard {
         damageEffect.target = targets[0];
         store.reduceEffect(state, damageEffect);
       });
-
       return state;
     }
 
-    return state;
+    return DELTA_PLUS(store, state, effect, this);
   }
 }

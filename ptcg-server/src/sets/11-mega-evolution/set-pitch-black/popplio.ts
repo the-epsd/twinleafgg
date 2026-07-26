@@ -12,12 +12,12 @@ export class Popplio extends PokemonCard {
     name: 'Pound',
     cost: [W],
     damage: 20,
-    text: '',
+    text: ''
   }];
 
-  public set: string = 'M5';
-  public setNumber: string = '17';
-  public regulationMark: string = 'J';
+  public regulationMark = 'J';
+  public set: string = 'PBL';
+  public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Popplio';
   public fullName: string = 'Popplio M5';

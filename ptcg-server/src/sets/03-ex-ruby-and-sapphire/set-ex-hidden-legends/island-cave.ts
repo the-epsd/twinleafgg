@@ -1,9 +1,10 @@
 import { State, StateUtils, StoreLike } from '../../../game';
-import { CardType, SpecialCondition, TrainerType } from '../../../game/store/card/card-types';
+import { CardType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttachEnergyEffect } from '../../../game/store/effects/play-card-effects';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 
 export class IslandCave extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
@@ -12,28 +13,25 @@ export class IslandCave extends TrainerCard {
   public set = 'HL';
   public name = 'Island Cave';
   public fullName = 'Island Cave HL';
-
   public text = 'Whenever any player attaches an Energy card from his or hand to [W] Pokémon, [F] Pokémon, or [M] Pokémon, remove any Special Conditions from that Pokémon.';
 
   reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof AttachEnergyEffect && StateUtils.getStadiumCard(state) === this) {
+      const owner = StateUtils.findOwner(state, effect.target);
+      const checkPokemonType = new CheckPokemonTypeEffect(effect.target);
+      const islandTypes = [CardType.WATER, CardType.FIGHTING, CardType.METAL];
 
-      const checkPokemonTypeEffect = new CheckPokemonTypeEffect(effect.target);
-      store.reduceEffect(state, checkPokemonTypeEffect);
+      if (IS_STADIUM_EFFECT_BLOCKED(store, state, owner, effect.target)) {
+        return state;
+      }
 
-      if (checkPokemonTypeEffect.cardTypes.includes(CardType.WATER) ||
-        checkPokemonTypeEffect.cardTypes.includes(CardType.FIGHTING) ||
-        checkPokemonTypeEffect.cardTypes.includes(CardType.METAL)) {
-        effect.target.removeSpecialCondition(SpecialCondition.ASLEEP);
-        effect.target.removeSpecialCondition(SpecialCondition.PARALYZED);
-        effect.target.removeSpecialCondition(SpecialCondition.CONFUSED);
-        effect.target.removeSpecialCondition(SpecialCondition.BURNED);
-        effect.target.removeSpecialCondition(SpecialCondition.POISONED);
+      store.reduceEffect(state, checkPokemonType);
+
+      if (islandTypes.some(t => checkPokemonType.cardTypes.includes(t))) {
+        effect.target.clearAllSpecialConditions();
       }
     }
 
     return state;
   }
-
 }

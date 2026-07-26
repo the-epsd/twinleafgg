@@ -13,6 +13,7 @@ import {
   type PokemonCard,
 } from 'ptcg-server';
 import { DropZoneType } from './board-3d-drop-zone';
+import { SHARED_STADIUM_MESH_ID } from './dual-stadium.utils';
 import { ZONE_POSITIONS } from './board-3d-zone-positions';
 
 export function trainerTypeIsSupporter(tt: TrainerType | undefined | null): boolean {
@@ -37,7 +38,7 @@ export function cardIsSupporter(card: Card | undefined | null): boolean {
 
 /**
  * Item-style Fossils (and similar) are Trainer cards in hand but play as Basic Pokémon onto the bench.
- * Matches server cards that set `power.isFossil` on a power (see e.g. Rare Fossil, Antique Shield Fossil).
+ * Matches server cards that set `power.isFossil` on a power (see e.g. Rare Fossil, Antique Armor Fossil).
  */
 export function cardIsFossilLikeTrainer(card: Card | undefined | null): boolean {
   if (!card) {
@@ -77,9 +78,8 @@ export function cardPlaysAsBasicPokemonFromHand(
   ) {
     return true;
   }
-  if (cardHasUseFromHandToBenchPower(card)) {
-    return true;
-  }
+  // useFromHandToBench (Excitedive, etc.) is not "play as Basic" — it has its own
+  // gated drop path so ability lock can clear playability like item lock.
   if (card.superType === SuperType.POKEMON) {
     const stage = (card as { stage?: Stage }).stage;
     return stage === Stage.BASIC;
@@ -154,7 +154,7 @@ export function board3dMeshIdForPlayTarget(
   }
   if (zone.slot === SlotType.BOARD) {
     if (dropZoneType === DropZoneType.STADIUM) {
-      return 'shared_stadium';
+      return SHARED_STADIUM_MESH_ID;
     }
     if (dropZoneType === DropZoneType.SUPPORTER) {
       return `${playerPrefix}_supporter`;

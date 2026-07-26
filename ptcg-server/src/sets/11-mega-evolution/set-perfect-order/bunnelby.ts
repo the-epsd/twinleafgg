@@ -17,8 +17,8 @@ export class Bunnelby extends PokemonCard {
 
   public regulationMark = 'J';
   public set: string = 'POR';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '64';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bunnelby';
   public fullName: string = 'Bunnelby M3';
 }

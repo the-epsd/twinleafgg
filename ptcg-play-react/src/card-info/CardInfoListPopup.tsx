@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import type { Card, CardList, Player } from 'ptcg-server';
 import { SuperType as SuperTypeEnum } from 'ptcg-server';
@@ -67,7 +68,7 @@ export function CardInfoListPopup({
     return () => window.removeEventListener('keydown', onKey);
   }, [onClose, detailCard]);
 
-  return (
+  return createPortal(
     <div
       className={styles.backdrop}
       role="presentation"
@@ -141,6 +142,7 @@ export function CardInfoListPopup({
           }
         />
       ) : null}
-    </div>
+    </div>,
+    document.body,
   );
 }

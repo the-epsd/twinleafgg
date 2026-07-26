@@ -410,38 +410,41 @@ export function SandboxControlPanel({ gameId, gameState, players }: SandboxContr
     if (!selectedPlayer) {
       return;
     }
-    const runMove = async (names: string[]) => {
-      for (const name of names) {
-        await getSocketManager().emit('game:sandbox:modifyCard', {
-          gameId,
-          targetPlayerId: selectedPlayer.id,
-          action: 'move',
-          cardName: name,
-          fromZone,
-          toZone,
-        });
+    const emitMove = async (cardNameValue: string, fromIndex?: number) => {
+      await getSocketManager().emit('game:sandbox:modifyCard', {
+        gameId,
+        targetPlayerId: selectedPlayer.id,
+        action: 'move',
+        cardName: cardNameValue,
+        fromZone,
+        toZone,
+        ...(fromIndex !== undefined ? { fromIndex } : {}),
+      });
+    };
+    try {
+      if (selectedCardIndices.size > 0) {
+        // High→low so fromIndex stays valid as cards are removed from the zone.
+        const indices = [...selectedCardIndices]
+          .filter((index) => availableCards[index])
+          .sort((a, b) => b - a);
+        if (indices.length === 0) {
+          return;
+        }
+        for (const index of indices) {
+          await emitMove(availableCards[index]!, index);
+        }
+      } else if (selectedCardIndex !== null && availableCards[selectedCardIndex]) {
+        await emitMove(availableCards[selectedCardIndex]!, selectedCardIndex);
+      } else if (cardName.trim()) {
+        await emitMove(cardName.trim());
+      } else {
+        return;
       }
       ok('SANDBOX_CARD_MOVED');
       setSelectedCardIndices(new Set());
       setSelectedCardIndex(null);
       setCardName('');
       refreshAfterMutation();
-    };
-    try {
-      if (selectedCardIndices.size > 0) {
-        const cardsToMove: string[] = [];
-        selectedCardIndices.forEach((index) => {
-          if (availableCards[index]) {
-            cardsToMove.push(availableCards[index]!);
-          }
-        });
-        if (cardsToMove.length === 0) {
-          return;
-        }
-        await runMove(cardsToMove);
-      } else if (cardName.trim()) {
-        await runMove([cardName.trim()]);
-      }
     } catch (e) {
       onSocketErr(e);
     }

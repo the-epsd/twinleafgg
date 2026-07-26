@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType, CardTag } from '../../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, SuperType } from '../../../game/store/card/card-types';
 import {
   PowerType,
   StoreLike,
@@ -68,25 +68,7 @@ export class Cherrim extends PokemonCard {
 
       const blocked2: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        if (card.tags.includes(CardTag.POKEMON_V)) {
-          blocked2.push(target);
-        }
-        if (card.tags.includes(CardTag.POKEMON_VSTAR)) {
-          blocked2.push(target);
-        }
-        if (card.tags.includes(CardTag.POKEMON_ex)) {
-          blocked2.push(target);
-        }
-        if (card.tags.includes(CardTag.POKEMON_VMAX)) {
-          blocked2.push(target);
-        }
-        if (card.tags.includes(CardTag.RADIANT)) {
-          blocked2.push(target);
-        }
-        if (card.tags.includes(CardTag.POKEMON_GX)) {
-          blocked2.push(target);
-        }
-        if (card.tags.includes(CardTag.POKEMON_EX)) {
+        if (card.hasRuleBox()) {
           blocked2.push(target);
         }
       });

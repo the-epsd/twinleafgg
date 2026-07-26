@@ -1,36 +1,24 @@
-import { CardType, Stage } from '../../../game';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Sneasel extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.DARK;
-
-  public regulationMark: string = 'H';
-
+  public cardType: CardType = D;
   public hp: number = 60;
-
-  public weakness = [{ type: CardType.GRASS }];
-
+  public weakness = [{ type: G }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Claw Slash',
-      cost: [CardType.DARK],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Claw Slash',
+    cost: [D],
+    damage: 20,
+    text: ''
+  }];
 
+  public regulationMark = 'H';
   public set: string = 'PRE';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '61';
-
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sneasel';
-
   public fullName: string = 'Sneasel PRE';
 }

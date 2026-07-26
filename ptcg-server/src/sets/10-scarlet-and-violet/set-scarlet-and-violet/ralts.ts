@@ -2,37 +2,24 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Ralts extends PokemonCard {
+  public stage: Stage = Stage.BASIC;
+  public cardType: CardType = P;
+  public hp: number = 70;
+  public weakness = [{ type: D }];
+  public resistance = [{ type: F, value: -30 }];
+  public retreat = [C];
+
+  public attacks = [{
+    name: 'Psyshot',
+    cost: [P, C],
+    damage: 30,
+    text: '   '
+  }];
 
   public regulationMark = 'G';
-
-  public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.PSYCHIC;
-
-  public hp: number = 70;
-
-  public weakness = [{ type: CardType.DARK }];
-
-  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
-
-  public retreat = [CardType.COLORLESS];
-
-  public attacks = [
-    {
-      name: 'Psyshot',
-      cost: [CardType.PSYCHIC, CardType.COLORLESS],
-      damage: 30,
-      text: '   '
-    }
-  ];
-
   public set: string = 'SVI';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '84';
-
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ralts';
-
   public fullName: string = 'Ralts SVI';
 }

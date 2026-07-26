@@ -1,5 +1,7 @@
-import { Ludicolo2PFL, Zacian2PFL, Toxtricity2PFL, Wigglytuff2PFL, MegaCharizardXex2PFL, Oricorioex2PFL, Rotomex2PFL, MegaSharpedoex2PFL, MegaLopunnyex2PFL, BattleColosseum2PFL, Dawn2PFL, Firebreather2PFL, GrimsleysGambit2PFL, SacredCharm2PFL, SwitchPFL, IgnitionEnergyPFL, MegaCharizardXex3PFL, Rotomex3PFL, MegaSharpedoex3PFL, MegaLopunnyex3PFL, Dawn3PFL, Blowtorch2PFL, MegaCharizardXex4PFL } from './other-prints';
+import { Ludicolo2PFL, Zacian2PFL, Toxtricity2PFL, Wigglytuff2PFL, MegaCharizardXex2PFL, Oricorioex2PFL, Rotomex2PFL, MegaSharpedoex2PFL, MegaLopunnyex2PFL, BattleColosseum2PFL, Dawn2PFL, Firebreather2PFL, GrimsleysGambit2PFL, SacredCharm2PFL, SwitchPFL, IgnitionEnergyPFL, MegaCharizardXex3PFL, Rotomex3PFL, MegaSharpedoex3PFL, MegaLopunnyex3PFL, Dawn3PFL, Blowtorch2PFL, MegaCharizardXex4PFL, FlygonIR, AmbipomIR } from './other-prints';
 import { Card } from '../../../game';
+import { Ambipom } from './ambipom';
+import { Archaludon } from './archaludon';
 import { BattleColosseum } from './battle-colosseum';
 import { Blowtorch } from './blowtorch';
 import { Bronzong } from './bronzong';
@@ -15,6 +17,7 @@ import { Darumaka } from './darumaka';
 import { Dawn } from './dawn';
 import { Empoleonex } from './empoleon-ex';
 import { Firebreather } from './firebreather';
+import { Flygon } from './flygon';
 import { Gastly } from './gastly';
 import { Genesect } from './genesect';
 import { GrimsleysGambit } from './grimsleys-gambit';
@@ -41,13 +44,17 @@ import { Rotomex } from './rotom-ex';
 import { Sableye } from './sableye';
 import { SacredCharm } from './sacred-charm';
 import { Seviper } from './seviper';
+import { Trapinch } from './trapinch';
 import { Toxel } from './toxel';
+import { Vibrava } from './vibrava';
 import { Toxtricity } from './toxtricity';
 import { Wigglytuff } from './wigglytuff';
 import { WonderPatch } from './wonder-patch';
 import { Zacian } from './zacian';
 
 export const setPhantasmalFlames: Card[] = [
+  new Ambipom(),
+  new Archaludon(),
   new BattleColosseum(),
   new Blowtorch(),
   new Bronzong(),
@@ -63,6 +70,7 @@ export const setPhantasmalFlames: Card[] = [
   new Dawn(),
   new Empoleonex(),
   new Firebreather(),
+  new Flygon(),
   new Gastly(),
   new Genesect(),
   new GrimsleysGambit(),
@@ -90,7 +98,9 @@ export const setPhantasmalFlames: Card[] = [
   new SacredCharm(),
   new Seviper(),
   new Toxel(),
+  new Trapinch(),
   new Toxtricity(),
+  new Vibrava(),
   new Wigglytuff(),
   new WonderPatch(),
   new Zacian(),
@@ -98,6 +108,8 @@ export const setPhantasmalFlames: Card[] = [
   new Zacian2PFL(),
   new Toxtricity2PFL(),
   new Wigglytuff2PFL(),
+  new FlygonIR(),
+  new AmbipomIR(),
   new MegaCharizardXex2PFL(),
   new Oricorioex2PFL(),
   new Rotomex2PFL(),

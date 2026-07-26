@@ -25,6 +25,8 @@ import { Fraxure } from './fraxure';
 import { Frillish } from './frillish';
 import { Galvantula } from './galvantula';
 import { Genesectex } from './genesect-ex';
+import { Golett } from './golett';
+import { Golurk } from './golurk';
 import { Haxorus } from './haxorus';
 import { Hilda } from './hilda';
 import { Hydreigonex } from './hydreigon-ex';
@@ -57,6 +59,9 @@ import { Zekromex } from './zekrom-ex';
 import { Zoroark } from './zoroark';
 import { Zorua } from './zorua';
 import { Zweilous } from './zweilous';
+import { Lillipup } from './lillipup';
+import { Herdier } from './herdier';
+import { Stoutland } from './stoutland';
 
 export class AirBalloonSV11 extends AirBalloon {
   public regulationMark = 'I';
@@ -203,6 +208,18 @@ export class EelektrikAR extends Eelektrik {
   public setNumber = '114';
   public set = 'BLK';
   public fullName: string = 'EelektrikAR SV11B';
+}
+
+export class GolettAR extends Golett {
+  public setNumber = '122';
+  public set = 'BLK';
+  public fullName: string = 'GolettAR SV11B';
+}
+
+export class GolurkAR extends Golurk {
+  public setNumber = '123';
+  public set = 'BLK';
+  public fullName: string = 'GolurkAR SV11B';
 }
 
 export class DrilburAR extends Drilbur {
@@ -451,6 +468,24 @@ export class ZweilousAR extends Zweilous {
   public setNumber = '147';
   public set = 'WHT';
   public fullName: string = 'ZweilousAR SV11W';
+}
+
+export class LillipupAR extends Lillipup {
+  public setNumber = '154';
+  public set = 'WHT';
+  public fullName: string = 'LillipupAR SV11W';
+}
+
+export class HerdierAR extends Herdier {
+  public setNumber = '155';
+  public set = 'WHT';
+  public fullName: string = 'HerdierAR SV11W';
+}
+
+export class StoutlandAR extends Stoutland {
+  public setNumber = '156';
+  public set = 'WHT';
+  public fullName: string = 'StoutlandAR SV11W';
 }
 
 // SV11W FAs

@@ -22,8 +22,8 @@ export class Machop extends PokemonCard {
   }];
 
   public set: string = 'TR';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '59';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Machop';
   public fullName: string = 'Machop TR';
 }

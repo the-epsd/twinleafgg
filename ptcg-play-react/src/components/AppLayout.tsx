@@ -12,12 +12,17 @@ function isTablePath(pathname: string): boolean {
   return /^\/table\/replay\/[^/]+\/?$/.test(pathname) || /^\/table\/[^/]+\/?$/.test(pathname);
 }
 
+function isParentMapPath(pathname: string): boolean {
+  return pathname === '/parent' || pathname.startsWith('/parent/');
+}
+
 export function AppLayout() {
   const { t } = useTranslation();
   const { pathname } = useLocation();
   const { language, setLanguage, labels } = useLanguage();
   const deckEditorFullBleed = isDeckEditorPath(pathname);
   const tableFullBleed = isTablePath(pathname);
+  const parentMap = isParentMapPath(pathname);
 
   return (
     <div
@@ -49,6 +54,7 @@ export function AppLayout() {
             <Link to="/friends">{t('MAIN_FRIENDS')}</Link>
             <Link to="/message">{t('MAIN_MESSAGES')}</Link>
             <Link to="/battle-pass">{t('MAIN_BATTLE_PASS')}</Link>
+            <Link to="/parent">Parents</Link>
             <Link to="/settings">{t('BUTTON_SETTINGS')}</Link>
           </nav>
           <label style={{ display: 'flex', alignItems: 'center', gap: 6, marginLeft: 'auto' }}>
@@ -73,8 +79,8 @@ export function AppLayout() {
           padding: deckEditorFullBleed || tableFullBleed ? 0 : 20,
           flex: 1,
           minHeight: 0,
-          overflowX: 'hidden',
-          overflowY: tableFullBleed ? 'hidden' : 'auto',
+          overflowX: parentMap ? 'auto' : 'hidden',
+          overflowY: tableFullBleed ? 'hidden' : parentMap ? 'hidden' : 'auto',
           display: 'flex',
           flexDirection: 'column',
         }}

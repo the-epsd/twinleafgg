@@ -1,29 +1,30 @@
-import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Blitzle extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType = L;
   public hp: number = 70;
-  public weakness = [{ type: CardType.FIGHTING }];
-  public retreat = [CardType.COLORLESS];
-  public resistance = [{ type: CardType.METAL, value: -20 }];
-  public evolvesInto = 'Zebstrika';
+  public weakness = [{ type: F }];
+  public resistance = [{ type: M, value: -20 }];
+  public retreat = [C];
+
   public attacks = [{
     name: 'Flop',
-    cost: [CardType.LIGHTNING],
+    cost: [L],
     damage: 10,
     text: ''
-  }, {
+  },
+  {
     name: 'Zap Kick',
-    cost: [CardType.LIGHTNING, CardType.COLORLESS],
+    cost: [L, C],
     damage: 20,
     text: ''
   }];
 
   public set: string = 'LOT';
-  public name: string = 'Blitzle';
-  public fullName: string = 'Blitzle LOT';
   public setNumber: string = '81';
   public cardImage: string = 'assets/cardback.png';
+  public name: string = 'Blitzle';
+  public fullName: string = 'Blitzle LOT';
 }

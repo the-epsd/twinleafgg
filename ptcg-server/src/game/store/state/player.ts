@@ -118,6 +118,9 @@ export class Player {
   usedRunErrand: any;
   usedTributeDance: any;
   chainsOfControlUsed: any;
+  pokemonKnockedOutDuringOpponentsLastTurn = false;
+  pokemonKnockedOutByAttackDuringOpponentsLastTurn = false;
+  pokemonKnockedOutLastTurnEntries: CardTag[][] = [];
   usedDragonsWish = false;
   pecharuntexIsInPlay = false;
   usedFanCall = false;
@@ -136,6 +139,13 @@ export class Player {
 
   // Track which card IDs in hand are playable (stored as array for serialization)
   playableCardIds: number[] = [];
+
+  /**
+   * Subset of hand cards whose useFromHandToBench ability is currently legal
+   * (Excitedive, Swelling Flash, …). Distinct from {@link playableCardIds} so
+   * evolution can remain playable when a hand ability lock is active.
+   */
+  playableHandAbilityCardIds: number[] = [];
 
   // Game statistics tracking
   gameStats: GameStats = {

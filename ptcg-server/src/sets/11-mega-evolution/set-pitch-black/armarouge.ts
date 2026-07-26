@@ -13,34 +13,42 @@ export class Armarouge extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Flame Legion',
-    cost: [R],
-    damage: 40,
-    damageCalculation: '+',
-    text: 'This attack does 40 more damage for each Benched Pokémon that has an [R] Energy attached.',
-  }];
+  public attacks = [
+    {
+      name: 'Flame Legion',
+      cost: [R],
+      damage: 40,
+      damageCalculation: '+',
+      text: 'This attack does 40 more damage for each of your Benched Pokémon that has any [R] Energy attached.',
+    },
+  ];
 
-  public set: string = 'M5';
-  public setNumber: string = '11';
+  public set: string = 'PBL';
+  public setNumber: string = '12';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Armarouge';
   public fullName: string = 'Armarouge M5';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-chaos-rising/mega-pyroar-ex.ts (+40 benches with energy type via CheckProvidedEnergyEffect)
+    // Ref: set-chaos-rising/gourgeist-ex.ts (+40 benches with energy type via CheckProvidedEnergyEffect)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       let benchesWithFire = 0;
-      effect.player.bench.forEach(slot => {
+      effect.player.bench.forEach((slot) => {
         if (slot.cards.length === 0) {
           return;
         }
         const checkEnergy = new CheckProvidedEnergyEffect(effect.player, slot);
         store.reduceEffect(state, checkEnergy);
-        const hasFireEnergy = checkEnergy.energyMap.some(em =>
-          em.provides.some(t =>
-            t === CardType.FIRE || t === CardType.ANY || t === CardType.WLFM || t === CardType.GRW));
+        const hasFireEnergy = checkEnergy.energyMap.some((em) =>
+          em.provides.some(
+            (t) =>
+              t === CardType.FIRE ||
+              t === CardType.ANY ||
+              t === CardType.GRPD ||
+              t === CardType.GRW,
+          ),
+        );
         if (hasFireEnergy) {
           benchesWithFire += 1;
         }

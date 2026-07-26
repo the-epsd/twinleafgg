@@ -1,0 +1,76 @@
+.selectedPane {
+  margin-top: 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.25);
+  padding: 12px 16px;
+}
+
+.selectedHeading {
+  margin: 0 0 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba(230, 235, 245, 0.88);
+}
+
+.selectionCount {
+  font-weight: 500;
+  color: rgba(160, 210, 255, 0.9);
+}
+
+.selectionCountInvalid {
+  color: rgba(255, 160, 160, 0.95);
+}
+
+.selectedList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  min-height: 48px;
+}
+
+.selectedCard {
+  position: relative;
+  cursor: pointer;
+  border-radius: 8px;
+  border: 2px solid rgba(120, 200, 255, 0.55);
+  transition:
+    border-color 0.12s ease,
+    opacity 0.12s ease;
+}
+
+.selectedCard:hover {
+  border-color: rgba(255, 120, 120, 0.75);
+}
+
+.selectedEmpty {
+  margin: 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba(200, 210, 225, 0.55);
+}
+
+.energySelectable {
+  cursor: pointer;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  transition:
+    border-color 0.12s ease,
+    box-shadow 0.15s ease;
+}
+
+.energySelectable:hover {
+  border-color: rgba(120, 200, 255, 0.55);
+}
+
+.energySelected {
+  border-color: rgba(120, 200, 255, 0.85);
+  box-shadow: 0 0 0 1px rgba(120, 200, 255, 0.35);
+}
+
+.energySelectableDisabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+}

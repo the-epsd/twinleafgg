@@ -64,11 +64,27 @@ export class ChoosePrizePrompt extends Prompt<CardList[]> {
     return result.map(index => prizes[index]);
   }
 
-  public validate(result: CardList[] | null): boolean {
+  public validate(result: CardList[] | null, state: State): boolean {
     if (result === null) {
       return this.options.allowCancel;
     }
-    if (result.length !== this.options.count) {
+
+    const player = state.players.find(p => p.id === this.playerId);
+    if (player === undefined) {
+      return false;
+    }
+
+    const targetPlayer = this.options.useOpponentPrizes
+      ? state.players.find(p => p.id !== this.playerId)
+      : player;
+
+    if (targetPlayer === undefined) {
+      return false;
+    }
+
+    const prizeLeft = targetPlayer.prizes.filter(p => p.cards.length > 0).length;
+    const required = Math.min(this.options.count, prizeLeft);
+    if (result.length !== required) {
       return false;
     }
     const hasDuplicates = result.some((p, index) => {
@@ -77,7 +93,7 @@ export class ChoosePrizePrompt extends Prompt<CardList[]> {
     if (hasDuplicates) {
       return false;
     }
-    const hasEmpty = result.some(p => p.cards.length === 0);
+    const hasEmpty = result.some(p => !p || p.cards.length === 0);
     if (hasEmpty) {
       return false;
     }

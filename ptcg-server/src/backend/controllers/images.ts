@@ -43,6 +43,12 @@ export class Images extends Controller {
         return;
       }
 
+      const origin = req.headers.origin;
+      if (config.backend.allowCors && typeof origin === 'string' && origin.length > 0) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+        res.setHeader('Vary', 'Origin');
+      }
+
       const contentType = upstreamRes.headers['content-type'];
       if (contentType) {
         res.setHeader('Content-Type', contentType);

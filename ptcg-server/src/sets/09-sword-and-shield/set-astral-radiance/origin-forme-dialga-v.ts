@@ -1,63 +1,48 @@
 
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../../game/store/card/card-types';
+import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
 import { StoreLike, State, GameError, GameMessage, StateUtils, ChooseCardsPrompt, EnergyCard } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class OriginFormeDialgaV extends PokemonCard {
-
   public tags = [CardTag.POKEMON_V];
+  public stage: Stage = Stage.BASIC;
+  public cardType: CardType = M;
+  public hp: number = 220;
+  public weakness = [{ type: R }];
+  public resistance = [{ type: G, value: -30 }];
+  public retreat = [C, C];
+
+  public attacks = [{
+    name: 'Metal Coating',
+    cost: [C],
+    damage: 0,
+    text: 'Attach up to 2 [M] Energy cards from your discard pile to this Pokémon.'
+  },
+  {
+    name: 'Temporal Rupture',
+    cost: [M, M, M, C],
+    damage: 180,
+    text: ''
+  }];
 
   public regulationMark = 'F';
-
-  public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.METAL;
-
-  public hp: number = 220;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public resistance = [{ type: CardType.GRASS, value: -30 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
-
-  public attacks = [
-    {
-      name: 'Metal Coating',
-      cost: [CardType.COLORLESS],
-      damage: 0,
-      text: 'Attach up to 2 [M] Energy cards from your discard pile to this Pokémon.'
-    },
-    {
-      name: 'Temporal Rupture',
-      cost: [CardType.METAL, CardType.METAL, CardType.METAL, CardType.COLORLESS],
-      damage: 180,
-      text: ''
-    }
-  ];
-
   public set: string = 'ASR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '113';
-
   public name: string = 'Origin Forme Dialga V';
-
   public fullName: string = 'Origin Forme Dialga V ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Metal Coating
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       const hasMetalEnergyInDiscard = player.discard.cards.some(c => {
         return c.superType === SuperType.ENERGY
-          && c.energyType === EnergyType.BASIC
           && (c as EnergyCard).provides.includes(CardType.METAL);
       });
       if (!hasMetalEnergyInDiscard) {
@@ -73,8 +58,8 @@ export class OriginFormeDialgaV extends PokemonCard {
         player,
         GameMessage.CHOOSE_CARD_TO_ATTACH,
         player.discard,
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Metal Energy' },
-        { min: 0, max: 2, allowCancel: true }
+        { superType: SuperType.ENERGY, name: 'Metal Energy' },
+        { min: 0, max: 2, allowCancel: false }
       ), cards => {
         cards = cards || [];
         if (cards.length > 0) {
@@ -82,6 +67,7 @@ export class OriginFormeDialgaV extends PokemonCard {
         }
       });
     }
+
     return state;
   }
 }

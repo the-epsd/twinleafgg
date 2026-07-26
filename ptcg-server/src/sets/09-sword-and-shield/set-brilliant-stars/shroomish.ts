@@ -8,16 +8,17 @@ export class Shroomish extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    { name: 'Headbutt', cost: [G], damage: 20, text: '' }
-  ];
+  public attacks = [{
+    name: 'Headbutt',
+    cost: [G],
+    damage: 20,
+    text: ''
+  }];
 
-  public set: string = 'BRS';
   public regulationMark = 'F';
-  public cardImage: string = 'assets/cardback.png';
+  public set: string = 'BRS';
   public setNumber: string = '3';
-
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shroomish';
   public fullName: string = 'Shroomish BRS';
-
 }

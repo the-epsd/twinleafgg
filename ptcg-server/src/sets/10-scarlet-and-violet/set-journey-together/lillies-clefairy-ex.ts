@@ -4,7 +4,7 @@ import { StoreLike, State, PowerType, StateUtils, PlayerType } from '../../../ga
 import { EffectOfAbilityEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckPokemonStatsEffect } from '../../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class LilliesClefairyex extends PokemonCard {
 
@@ -21,15 +21,13 @@ export class LilliesClefairyex extends PokemonCard {
     text: 'The Weakness of each of your opponent\'s [N] Pokémon in play is now [P]. (Apply Weakness as x2.) ',
   }];
 
-  public attacks = [
-    {
-      name: 'Full Moon Rondo',
-      cost: [P, C],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'This attack does 20 more damage for each Benched Pokémon (both yours and your opponent\'s).'
-    }
-  ];
+  public attacks = [{
+    name: 'Full Moon Rondo',
+    cost: [P, C],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'This attack does 20 more damage for each Benched Pokémon (both yours and your opponent\'s).'
+  }];
 
   public regulationMark = 'I';
   public set: string = 'JTG';
@@ -53,6 +51,10 @@ export class LilliesClefairyex extends PokemonCard {
           isClefairyexInPlay = true;
         }
       });
+
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+        return state;
+      }
 
       // Return if no Clefairy or target is not Dragon type
       if (!isClefairyexInPlay || pokemonCard.getPokemonCard()?.cardType !== CardType.DRAGON) {

@@ -12,12 +12,12 @@ export class Maschiff extends PokemonCard {
     name: 'Bite',
     cost: [D, D],
     damage: 40,
-    text: '',
+    text: ''
   }];
 
-  public set: string = 'M5';
-  public setNumber: string = '55';
-  public regulationMark: string = 'J';
+  public regulationMark = 'J';
+  public set: string = 'PBL';
+  public setNumber: string = '57';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Maschiff';
   public fullName: string = 'Maschiff M5';

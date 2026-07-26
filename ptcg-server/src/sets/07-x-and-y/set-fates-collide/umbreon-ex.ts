@@ -4,11 +4,9 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, GameMessage, GamePhase, StoreLike, State, StateUtils } from '../../../game';
+import { Card, ChooseCardsPrompt, GameMessage, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { KnockOutEffect } from '../../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
+import { IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES, DRAW_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class UmbreonEx extends PokemonCard {
   public tags = [CardTag.POKEMON_EX];
@@ -19,20 +17,18 @@ export class UmbreonEx extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Veil of Darkness',
-      cost: [C],
-      damage: 20,
-      text: 'Discard as many cards as you like from your hand. Then, draw that many cards.'
-    },
-    {
-      name: 'Endgame',
-      cost: [D, C, C],
-      damage: 70,
-      text: 'If your opponent\'s Mega Evolution Pokémon is Knocked Out by damage from this attack, take 2 more Prize cards.'
-    }
-  ];
+  public attacks = [{
+    name: 'Veil of Darkness',
+    cost: [C],
+    damage: 20,
+    text: 'Discard as many cards as you like from your hand. Then, draw that many cards.'
+  },
+  {
+    name: 'Endgame',
+    cost: [D, C, C],
+    damage: 70,
+    text: 'If your opponent\'s Mega Evolution Pokémon is Knocked Out by damage from this attack, take 2 more Prize cards.'
+  }];
 
   public set: string = 'FCO';
   public setNumber: string = '55';
@@ -40,13 +36,8 @@ export class UmbreonEx extends PokemonCard {
   public name: string = 'Umbreon-EX';
   public fullName: string = 'Umbreon-EX FCO';
 
-  private usedEndgame = false;
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 1: Veil of Darkness
-    // Ref: set-skyridge/haunter.ts (Shadow Hand)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      this.usedEndgame = false;
       const player = effect.player;
 
       if (player.hand.cards.length > 0) {
@@ -67,43 +58,10 @@ export class UmbreonEx extends PokemonCard {
       }
     }
 
-    // Attack 2: Endgame - set flag
-    // Ref: set-breakthrough/marowak-break.ts (prize-based logic)
-    if (WAS_ATTACK_USED(effect, 1, this)) {
-      this.usedEndgame = true;
-    }
-
-    // Endgame - take 2 more prizes only for this card's attacking context.
-    // This mirrors established extra-prize checks in other cards.
-    if (effect instanceof KnockOutEffect && this.usedEndgame) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
-        return state;
-      }
-
-      const pokemonCard = opponent.active.getPokemonCard();
-      if (pokemonCard !== this) {
-        return state;
-      }
-
-      if (effect.prizeCount <= 0) {
-        return state;
-      }
-
-      this.usedEndgame = false;
-      const targetCard = effect.target.getPokemonCard();
-
-      if (targetCard && targetCard.stage === Stage.MEGA) {
-        effect.prizeCount += 2;
-      }
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      this.usedEndgame = false;
-    }
-
-    return state;
+    return IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES(store, state, effect, this, {
+      attackName: 'Endgame',
+      extraPrizes: 2,
+      validate: (store, state, koEffect) => koEffect.target.getPokemonCard()?.stage === Stage.MEGA,
+    });
   }
 }

@@ -1,0 +1,33 @@
+.spinner {
+  animation: twinleafRotator 1.4s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.path {
+  stroke: currentColor;
+  stroke-dasharray: 90, 150;
+  stroke-dashoffset: 0;
+  animation: twinleafDash 1.5s ease-in-out infinite;
+}
+
+@keyframes twinleafRotator {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes twinleafDash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
+}

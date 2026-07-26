@@ -3,6 +3,7 @@ import { Absolex } from './absol-ex';
 import { Barboach } from './barboach';
 import { Bellibolt } from './bellibolt';
 import { Bonsly } from './bonsly';
+import { Bronzor } from './bronzor';
 import { ArvenOBF } from './other-prints';
 import { Charizardex } from './charizard-ex';
 import { Charmander } from './charmander';
@@ -26,6 +27,7 @@ import { Greavard } from './greavard';
 import { Houndstoneex } from './houndstone-ex';
 import { Larvitar } from './larvitar';
 import { LetterOfEncouragement } from './letter-of-encouragement';
+import { Lunatone } from './lunatone';
 import { Miraidonex } from './miraidon-ex';
 import { Ninetales } from './ninetales';
 import { Oddish } from './oddish';
@@ -68,6 +70,7 @@ export const setObsidianFlames: Card[] = [
   new ArvenOBF(),
   new Barboach(),
   new Bonsly(),
+  new Bronzor(),
   new Charizardex(),
   new Charmander(),
   new Charmeleon(),
@@ -81,6 +84,7 @@ export const setObsidianFlames: Card[] = [
   new Finizen(),
   new Froakie(),
   new LetterOfEncouragement(),
+  new Lunatone(),
   new Ninetales(),
   new Oddish(),
   new Palafin(),

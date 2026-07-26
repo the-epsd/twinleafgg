@@ -1,9 +1,9 @@
-import { PokemonCard } from '../../../game';
-import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
+import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 
 export class StevensBeldum extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags: CardTag[] = [CardTag.STEVENS];
+  public tags = [CardTag.STEVENS];
   public cardType: CardType = M;
   public hp: number = 70;
   public weakness = [{ type: R }];
@@ -17,7 +17,7 @@ export class StevensBeldum extends PokemonCard {
     text: ''
   }];
 
-  public regulationMark: string = 'I';
+  public regulationMark = 'I';
   public set: string = 'DRI';
   public setNumber: string = '143';
   public cardImage: string = 'assets/cardback.png';

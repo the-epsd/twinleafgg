@@ -1,4 +1,5 @@
-import { PokemonCard, Stage, CardTag, CardType } from '../../../game';
+import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 
 export class ErikasBellsprout extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -18,8 +19,8 @@ export class ErikasBellsprout extends PokemonCard {
 
   public regulationMark = 'I';
   public set: string = 'ASC';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '4';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Erika\'s Bellsprout';
   public fullName: string = 'Erika\'s Bellsprout MC';
 }

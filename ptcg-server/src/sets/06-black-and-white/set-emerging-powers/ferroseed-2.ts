@@ -9,18 +9,16 @@ export class Ferroseed2 extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Pierce',
-      cost: [M, M],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Pierce',
+    cost: [M, M],
+    damage: 20,
+    text: ''
+  }];
 
   public set: string = 'EPO';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '71';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ferroseed';
   public fullName: string = 'Ferroseed EPO 71';
 }

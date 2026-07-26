@@ -1,0 +1,36 @@
+.cardRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  padding: 16px 8px;
+  min-height: 140px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.cardSlot {
+  width: 100px;
+  line-height: 0;
+  cursor: grab;
+  touch-action: none;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  transition:
+    border-color 0.12s ease,
+    box-shadow 0.15s ease,
+    opacity 0.12s ease;
+}
+
+.cardSlot:active {
+  cursor: grabbing;
+}
+
+.cardSlotDragging {
+  opacity: 0.35;
+}
+
+.cardSlotOver {
+  border-color: rgba(120, 200, 255, 0.55);
+}

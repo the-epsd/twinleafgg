@@ -5,6 +5,7 @@ import {
   CardList,
   BoardEffect,
   SuperType,
+  type CardTarget,
 } from 'ptcg-server';
 import { Board3dCard } from '../board-3d-card';
 import { Board3dAssetLoaderService } from './board-3d-asset-loader.service';
@@ -20,6 +21,14 @@ import {
   disposeToolCardHitTarget,
   refreshToolCardHitTarget,
 } from '../board-3d-tool-hit';
+import {
+  LEGEND_3D_BOTTOM_Z,
+  LEGEND_3D_HALF_ROTATION,
+  LEGEND_3D_HALF_SCALE,
+  LEGEND_3D_TOP_Z,
+  LEGEND_3D_Y,
+  resolveLegendDisplayHalves,
+} from '../legend-display.utils';
 
 function overlayAttachRoot(host: Board3dCard | Group): Group {
   return host instanceof Board3dCard ? host.getGroup() : host;
@@ -37,6 +46,8 @@ export interface CardOverlays {
   marker: Board3dMarker;
   abilityUsedBadge: Board3dAbilityUsedBadge;
   breakCard?: Board3dCard;
+  legendTopCard?: Board3dCard;
+  legendBottomCard?: Board3dCard;
   toolCards: Board3dCard[];
 }
 
@@ -105,6 +116,16 @@ export class Board3dCardOverlayService {
     overlays.abilityUsedBadge.updateAbilityUsed(hasAbilityUsed);
 
     await this.updateBreakOverlay(cardId, overlays, root, breakCard, isFaceDown, scene, cardList);
+    const { top: legendTop, bottom: legendBottom } = resolveLegendDisplayHalves(cardList);
+    await this.updateLegendOverlay(
+      overlays,
+      root,
+      legendTop,
+      legendBottom,
+      isFaceDown,
+      cardList,
+      cardHost,
+    );
     await this.updateToolOverlay(cardId, overlays, cardList.tools, root, scene, cardList);
   }
 
@@ -255,6 +276,110 @@ export class Board3dCardOverlayService {
     }
   }
 
+  private hostCardTarget(cardHost: Board3dCard | Group): CardTarget | undefined {
+    const group = cardHost instanceof Board3dCard ? cardHost.getGroup() : cardHost;
+    return group.userData.cardTarget as CardTarget | undefined;
+  }
+
+  private async updateLegendOverlay(
+    overlays: CardOverlays,
+    attachRoot: Group,
+    legendTop: Card | undefined,
+    legendBottom: Card | undefined,
+    isFaceDown: boolean,
+    cardList: PokemonCardList,
+    cardHost: Board3dCard | Group,
+  ): Promise<void> {
+    const hostTarget = this.hostCardTarget(cardHost);
+    overlays.legendTopCard = await this.syncLegendHalfOverlay(
+      overlays.legendTopCard,
+      legendTop && !isFaceDown ? legendTop : undefined,
+      attachRoot,
+      new Vector3(0, LEGEND_3D_Y, LEGEND_3D_TOP_Z),
+      cardList,
+      hostTarget,
+    );
+    overlays.legendBottomCard = await this.syncLegendHalfOverlay(
+      overlays.legendBottomCard,
+      legendBottom && !isFaceDown ? legendBottom : undefined,
+      attachRoot,
+      new Vector3(0, LEGEND_3D_Y + 0.01, LEGEND_3D_BOTTOM_Z),
+      cardList,
+      hostTarget,
+    );
+  }
+
+  private async syncLegendHalfOverlay(
+    existing: Board3dCard | undefined,
+    card: Card | undefined,
+    attachRoot: Group,
+    position: Vector3,
+    cardList: PokemonCardList,
+    hostTarget: CardTarget | undefined,
+  ): Promise<Board3dCard | undefined> {
+    if (!card) {
+      if (existing) {
+        attachRoot.remove(existing.getGroup());
+        existing.dispose();
+      }
+      return undefined;
+    }
+
+    const scanUrl = this.cardsAdapter.getScanUrlFor3D(card, cardList);
+    const loadFrontTexture = async () => {
+      if (!scanUrl?.trim()) {
+        return this.assetLoader.loadCardBack();
+      }
+      try {
+        return await this.assetLoader.loadCardTexture(scanUrl);
+      } catch {
+        return this.assetLoader.loadCardBack();
+      }
+    };
+
+    const [frontTexture, backTexture, maskTexture] = await Promise.all([
+      loadFrontTexture(),
+      this.assetLoader.loadCardBack(),
+      this.assetLoader.loadCardMaskTexture(),
+    ]);
+
+    let mesh = existing;
+    if (!mesh) {
+      mesh = new Board3dCard(
+        frontTexture,
+        backTexture,
+        position,
+        LEGEND_3D_HALF_ROTATION,
+        LEGEND_3D_HALF_SCALE,
+        maskTexture,
+      );
+      const group = mesh.getGroup();
+      group.userData.cardData = card;
+      group.userData.cardList = cardList;
+      group.userData.isLegendHalf = true;
+      if (hostTarget) {
+        group.userData.cardTarget = hostTarget;
+      }
+      group.renderOrder = 120;
+      mesh.getMesh().renderOrder = 120;
+      attachRoot.add(group);
+    } else {
+      mesh.setPosition(position);
+      mesh.setRotation(LEGEND_3D_HALF_ROTATION);
+      mesh.setScale(LEGEND_3D_HALF_SCALE);
+      mesh.updateTexture(frontTexture, backTexture, maskTexture);
+      const group = mesh.getGroup();
+      group.userData.cardData = card;
+      group.userData.cardList = cardList;
+      if (hostTarget) {
+        group.userData.cardTarget = hostTarget;
+      }
+    }
+
+    void apply3dCardHolo(this.assetLoader, mesh, card, false);
+    return mesh;
+  }
+
   private async updateToolOverlay(
     cardId: string,
     overlays: CardOverlays,
@@ -375,6 +500,12 @@ export class Board3dCardOverlayService {
       overlays.abilityUsedBadge.dispose();
       if (overlays.breakCard) {
         overlays.breakCard.dispose();
+      }
+      if (overlays.legendTopCard) {
+        overlays.legendTopCard.dispose();
+      }
+      if (overlays.legendBottomCard) {
+        overlays.legendBottomCard.dispose();
       }
       for (const toolCard of overlays.toolCards) {
         toolCard.dispose();

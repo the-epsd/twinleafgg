@@ -3,12 +3,16 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
-import { CheckPokemonPowersEffect } from '../../../game/store/effects/check-effects';
 import { PowerType } from '../../../game/store/card/pokemon-types';
-import { GameError, GameMessage, PokemonCardList, StateUtils } from '../../../game';
+import { PokemonCardList, StateUtils } from '../../../game';
 import { BEFORE_DAMAGE } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_CARDS_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
+import {
+  HANDLE_ABILITY_LOCK,
+  IS_ABILITY_LOCKER_ACTIVE,
+  LOCKER_ABILITY_APPLIES,
+} from '../../../game/store/prefabs/ability-lock';
+import { GameMessage } from '../../../game/game-message';
 
 export class Klefki extends PokemonCard {
 
@@ -52,70 +56,29 @@ export class Klefki extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckPokemonPowersEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // Klefki is not active Pokemon
-      if (player.active.getPokemonCard() !== this
-        && opponent.active.getPokemonCard() !== this) {
-        return state;
+    HANDLE_ABILITY_LOCK(effect, ({ player, card }) => {
+      if (!IS_ABILITY_LOCKER_ACTIVE(state, player, this)) {
+        return false;
       }
 
-      // Get the target Pokemon card
-      const targetPokemon = effect.target;
-      if (!targetPokemon) {
-        return state;
-      }
-
-      // only remove abilities from Pokemon in play
-      const targetCardList = StateUtils.findCardList(state, targetPokemon);
+      const targetCardList = StateUtils.findCardList(state, card);
       if (!(targetCardList instanceof PokemonCardList)) {
-        return state;
+        return false;
       }
 
-      // We are not removing abilities from Non-Basic Pokemon
-      if (targetPokemon.stage !== Stage.BASIC) {
-        return state;
+      if (card.stage !== Stage.BASIC) {
+        return false;
       }
 
-      // Filter out abilities (except Mischievous Lock) from Basic Pokemon
-      effect.powers = effect.powers.filter(power =>
-        power.powerType !== PowerType.ABILITY || power.name === 'Mischievous Lock'
-      );
-    }
-
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY && effect.power.name !== 'Mischievous Lock') {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // Klefki is not active Pokemon
-      if (player.active.getPokemonCard() !== this
-        && opponent.active.getPokemonCard() !== this) {
-        return state;
-      }
-
-      // Mischievous Lock only affects Pokemon in play, not abilities used from discard.
-      if (effect.power.useFromDiscard || effect.power.useFromHand) {
-        return state;
-      }
-
-      // We are not blocking the Abilities from Non-Basic Pokemon
-      if (effect.card.stage !== Stage.BASIC) {
-        return state;
-      }
-
-      // Try reducing ability for each player  
-      try {
-        const powerEffect = new PowerEffect(player, this.powers[0], this);
-        store.reduceEffect(state, powerEffect);
-      } catch {
-        return state;
-      }
-      if (!effect.power.exemptFromAbilityLock) {
-        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
-      }
-    }
+      const lockerOwner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
+      // Check + PowerEffect: Mischievous Lock must itself be usable (e.g. Path to the Peak).
+      return LOCKER_ABILITY_APPLIES(store, state, lockerOwner, this, this.powers[0], card);
+    }, {
+      exemptPowerNames: ['Mischievous Lock'],
+      allowUseFromHand: true,
+      allowUseFromDiscard: true,
+      error: GameMessage.BLOCKED_BY_ABILITY,
+    });
 
     if (BEFORE_DAMAGE(effect, 0, this)) {
       const tools = [...effect.opponent.active.tools];

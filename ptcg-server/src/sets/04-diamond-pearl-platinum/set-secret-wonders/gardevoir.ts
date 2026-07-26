@@ -3,7 +3,10 @@ import { CardType, Stage, SuperType, TrainerType } from '../../../game/store/car
 import { StoreLike, State, PowerType, StateUtils, TrainerCard, ChooseCardsPrompt, GameMessage, GameError } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { ABILITY_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED, CAN_PLAY_SUPPORTER_CARD } from '../../../game/store/prefabs/prefabs';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
+import {
+  HANDLE_ABILITY_BLOCK,
+  POKEPOWER_TYPES,
+} from '../../../game/store/prefabs/ability-lock';
 
 export class Gardevoir extends PokemonCard {
 
@@ -49,7 +52,6 @@ export class Gardevoir extends PokemonCard {
   public readonly PSCHIC_LOCK_MARKER = 'PSYCHIC_LOCK_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    //Telepass
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -62,12 +64,10 @@ export class Gardevoir extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      //One per turn only
       if (HAS_MARKER(this.TELEPASS_MARKER, player)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      //Do not allow if affected by a Special Condition
       if (player.active.cards[0] === this && player.active.specialConditions.length > 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
@@ -83,8 +83,6 @@ export class Gardevoir extends PokemonCard {
         { allowCancel: false, min: 1, max: 1 }
       ), cards => {
         const trainerCard = cards[0] as TrainerCard;
-        // Validate that the copied supporter can be played
-        // Bypass supporterTurn check since Telepass allows playing supporters even after one was already played
         if (!CAN_PLAY_SUPPORTER_CARD(store, state, player, trainerCard, true)) {
           return state;
         }
@@ -92,18 +90,19 @@ export class Gardevoir extends PokemonCard {
       });
     }
 
-    //Attack
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       ADD_MARKER(this.PSCHIC_LOCK_MARKER, opponent, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.POKEPOWER && HAS_MARKER(this.PSCHIC_LOCK_MARKER, effect.player)) {
-      throw new GameError(GameMessage.ABILITY_BLOCKED);
-    }
+    HANDLE_ABILITY_BLOCK(effect, ({ player }) => {
+      return HAS_MARKER(this.PSCHIC_LOCK_MARKER, player, this);
+    }, {
+      powerTypes: POKEPOWER_TYPES,
+      error: GameMessage.BLOCKED_BY_ABILITY,
+    });
 
-    //Remove Markers
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.TELEPASS_MARKER, this);
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.PSCHIC_LOCK_MARKER, this);
 

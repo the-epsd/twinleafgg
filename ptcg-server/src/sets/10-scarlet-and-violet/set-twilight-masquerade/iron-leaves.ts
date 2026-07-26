@@ -4,53 +4,39 @@ import { StoreLike, State, ChooseCardsPrompt } from '../../../game';
 
 import { Effect } from '../../../game/store/effects/effect';
 import { GameMessage } from '../../../game/game-message';
-import { MarkerConstants } from '../../../game/store/markers/marker-constants';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN } from '../../../game/store/prefabs/prefabs';
 
 export class IronLeaves extends PokemonCard {
-
   public tags = [CardTag.FUTURE];
+  public stage: Stage = Stage.BASIC;
+  public cardType: CardType = G;
+  public hp: number = 120;
+  public weakness = [{ type: R }];
+  public retreat = [C];
+
+  public attacks = [{
+    name: 'Recovery Net',
+    cost: [G],
+    damage: 0,
+    text: 'Choose up to 2 Pokémon from your discard pile, reveal them, and put them into your hand.'
+  },
+  {
+    name: 'Avenging Edge',
+    cost: [G, C, C],
+    damage: 100,
+    damageCalculation: '+',
+    text: 'If any of your Pokémon were Knocked Out by damage from an attack during your opponent\'s last turn, this attack does 60 more damage.'
+  }];
 
   public regulationMark = 'H';
-
-  public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.GRASS;
-
-  public hp: number = 120;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public retreat = [CardType.COLORLESS];
-
-  public attacks = [
-    {
-      name: 'Recovery Net',
-      cost: [CardType.GRASS],
-      damage: 0,
-      text: 'Choose up to 2 Pokémon from your discard pile, reveal them, and put them into your hand.'
-    },
-    {
-      name: 'Avenging Edge',
-      cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
-      damage: 100,
-      damageCalculation: '+',
-      text: 'If any of your Pokémon were Knocked Out by damage from an attack during your opponent\'s last turn, this attack does 60 more damage.'
-    }
-  ];
-
   public set: string = 'TWM';
-
   public name: string = 'Iron Leaves';
-
   public fullName: string = 'Iron Leaves TWM';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '19';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Recovery Net
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
@@ -77,8 +63,9 @@ export class IronLeaves extends PokemonCard {
         });
     }
 
+    // Avenging Edge
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      if (effect.player.marker.hasMarker(MarkerConstants.REVENGE_MARKER)) {
+      if (WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN(effect.player, { byAttackDamage: true })) {
         effect.damage += 60;
       }
     }

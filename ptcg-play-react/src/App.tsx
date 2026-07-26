@@ -20,6 +20,9 @@ import { ProfilePage } from './pages/ProfilePage';
 import { TablePage } from './pages/TablePage';
 import { SpectatePage } from './pages/SpectatePage';
 import { FriendsPage } from './pages/FriendsPage';
+import { ParentPage } from './pages/ParentPage';
+import { UiShowcasePage } from './pages/ui-showcase/UiShowcasePage';
+import { AbilityLockPage } from './pages/ability-lock/AbilityLockPage';
 
 function ProfileMeRedirect() {
   const { user } = useAuth();
@@ -42,6 +45,8 @@ export default function App() {
           <Routes>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/ui-showcase" element={<UiShowcasePage />} />
+            <Route path="/ability-lock" element={<AbilityLockPage />} />
             <Route element={<ProtectedRoute />}>
               <Route element={<AppLayout />}>
                 <Route path="/games" element={<GamesPage />} />
@@ -59,6 +64,7 @@ export default function App() {
                 <Route path="/settings" element={<SettingsPage />} />
                 <Route path="/profile" element={<ProfileMeRedirect />} />
                 <Route path="/profile/:userId" element={<ProfilePageRoute />} />
+                <Route path="/parent" element={<ParentPage />} />
               </Route>
             </Route>
             <Route path="/" element={<Navigate to="/games" replace />} />

@@ -106,10 +106,12 @@ export class PromptChoosePrizeComponent implements OnChanges, AfterViewChecked {
     }
 
     const count = this.prompt.options.count || 1;
+    const available = this.prizes.filter(p => p && p.cards.length > 0).length;
+    const required = Math.min(count, available);
     const isCurrentlySelected = this.isPrizeSelected(gridIndex);
 
     // Single selection mode (most common case)
-    if (count === 1) {
+    if (required === 1) {
       if (isCurrentlySelected) {
         // If already selected, unselect it
         this.result = [];
@@ -125,14 +127,13 @@ export class PromptChoosePrizeComponent implements OnChanges, AfterViewChecked {
         if (index !== -1) {
           this.result.splice(index, 1);
         }
-      } else if (this.result.length < count) {
+      } else if (this.result.length < required) {
         // If not selected and we haven't reached the limit, add it
         this.result.push(nonEmptyPrizeIndex);
       }
     }
 
-    // Update validation state
-    this.isInvalid = this.result.length !== count;
+    this.isInvalid = this.result.length !== required;
   }
 
   // Check if a prize is selected by comparing the actual prize index
@@ -152,15 +153,23 @@ export class PromptChoosePrizeComponent implements OnChanges, AfterViewChecked {
   // Keep this for backward compatibility
   public onChange(result: number[]) {
     const count = this.prompt.options.count;
+    const available = this.prizes.filter(p => p && p.cards.length > 0).length;
     this.result = result;
-    this.isInvalid = result.length !== count;
+    this.isInvalid = result.length !== Math.min(count, available);
   }
 
   ngOnChanges() {
     if (this.prompt && this.gameState && !this.promptId) {
       const state = this.gameState.state;
       const prompt = this.prompt;
-      const player = state.players.find(p => p.id === this.prompt.playerId);
+      const taker = state.players.find(p => p.id === this.prompt.playerId);
+      if (taker === undefined) {
+        return;
+      }
+
+      const player = prompt.options.useOpponentPrizes
+        ? state.players.find(p => p.id !== prompt.playerId)
+        : taker;
       if (player === undefined) {
         return;
       }

@@ -6,8 +6,9 @@ import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, CardTag } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
-import { UseStadiumEffect, PowerEffect } from '../../../game/store/effects/game-effects';
-import { PowerType } from '../../../game';
+import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
+import { HANDLE_ABILITY_LOCK } from '../../../game/store/prefabs/ability-lock';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 
 export class PowerPlant extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
@@ -16,28 +17,31 @@ export class PowerPlant extends TrainerCard {
   public fullName: string = 'Power Plant UNB';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '183';
-
-  public text: string =
-    'Pokémon-GX and Pokémon-EX in play (both yours and your opponent\'s) have no Abilities.';
+  public text: string = 'Pokémon-GX and Pokémon-EX in play (both yours and your opponent\'s) have no Abilities.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof PowerEffect && StateUtils.getStadiumCard(state) === this) {
-      const pokemonCard = effect.card;
-
-      const isEXorGX = pokemonCard.tags.includes(CardTag.POKEMON_GX) || pokemonCard.tags.includes(CardTag.POKEMON_EX);
-
-      if (effect.power.useFromDiscard || effect.power.useFromHand) {
-        return state;
+    HANDLE_ABILITY_LOCK(effect, ({ card }) => {
+      if (StateUtils.getStadiumCard(state) !== this) {
+        return false;
       }
-
-      if (!effect.power.exemptFromAbilityLock) {
-        if (isEXorGX && pokemonCard.powers.some(power => power.powerType === PowerType.ABILITY)) {
-          throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-        }
-        return state;
+      const isEXorGX = card.tags.includes(CardTag.POKEMON_GX) || card.tags.includes(CardTag.POKEMON_EX);
+      if (!isEXorGX) {
+        return false;
       }
-    }
+      const slot = StateUtils.findPokemonSlot(state, card);
+      if (slot === undefined) {
+        return false;
+      }
+      const owner = StateUtils.findOwner(state, slot);
+      if (IS_STADIUM_EFFECT_BLOCKED(store, state, owner, slot)) {
+        return false;
+      }
+      return true;
+    }, {
+      allowUseFromHand: true,
+      allowUseFromDiscard: true,
+      error: GameMessage.BLOCKED_BY_EFFECT,
+    });
 
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
       throw new GameError(GameMessage.CANNOT_USE_STADIUM);
@@ -45,5 +49,4 @@ export class PowerPlant extends TrainerCard {
 
     return state;
   }
-
 }

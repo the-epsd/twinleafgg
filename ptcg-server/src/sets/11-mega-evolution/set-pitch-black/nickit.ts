@@ -10,21 +10,23 @@ export class Nickit extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Gnaw',
-    cost: [D],
-    damage: 10,
-    text: '',
-  },
-  {
-    name: 'Rear Kick',
-    cost: [D, C],
-    damage: 30,
-    text: '',
-  }];
+  public attacks = [
+    {
+      name: 'Gnaw',
+      cost: [D],
+      damage: 10,
+      text: '',
+    },
+    {
+      name: 'Rear Kick',
+      cost: [D, C],
+      damage: 30,
+      text: '',
+    },
+  ];
 
-  public set: string = 'M5';
-  public setNumber: string = '51';
+  public set: string = 'PBL';
+  public setNumber: string = '53';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nickit';

@@ -142,7 +142,8 @@ export class Login extends Controller {
       avatarMaxSize: config.backend.avatarMaxSize,
       replayFileSize: config.backend.replayFileSize,
       refreshTokenInterval: config.backend.refreshTokenInterval,
-      board3dWhitelist: board3dWhitelist
+      board3dWhitelist: board3dWhitelist,
+      serverPasswordRequired: Boolean(process.env.SERVER_PASSWORD),
     };
   }
 

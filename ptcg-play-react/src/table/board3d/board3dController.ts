@@ -13,6 +13,7 @@ import {
   DoubleSide,
   Object3D,
   Clock,
+  Texture,
 } from 'three';
 import { updateBoard3dHoloTime } from './board-3d-holo-material';
 import { Subscription } from 'rxjs';
@@ -47,6 +48,7 @@ import {
   TrainerCard,
   GamePhase,
   PokemonCardList,
+  CardTag,
   type CardTarget,
   type State,
 } from 'ptcg-server';
@@ -63,7 +65,7 @@ import {
 } from './board3d-constants';
 import type { CardInfoPaneOptions } from '../../card-info/CardInfoPane';
 import type { Board3dGameActions } from './board3dGameActions';
-import { BoardInteractionService, type AbilityAnimationEvent, type AbilityFocusAnchor, type BasicEntranceAnimationEvent } from '../BoardInteractionService';
+import { BoardInteractionService, type AbilityAnimationEvent, type AbilityFocusAnchor, type BasicEntranceAnimationEvent, type CoinFlipAnimationEvent } from '../BoardInteractionService';
 import {
   getBoardConfig,
   getCameraConfig,
@@ -81,15 +83,27 @@ import {
 } from './board3dMeshIdForPlayTarget';
 import { DropZoneType } from './board-3d-drop-zone';
 import { getBenchPositions, ZONE_POSITIONS } from './board-3d-zone-positions';
+import { isSharedStadiumMeshId } from './dual-stadium.utils';
+import {
+  cardCanAssembleLegendFromHand,
+  findLegendAssemblyPartnerHandIndex,
+  resolveLegendAssemblyBenchTarget,
+  resolveLegendAssemblyHalfHandIndices,
+} from './dual-legend.utils';
 import {
   getSetupPlaySlotForPickOrder,
   setupPreviewMeshId,
 } from '../prompts/chooseCardsHandSelection';
 import { r3fPointerEventAsMouse } from './board3dR3fPointer';
 import { subscribeBoard3dInteractionStreams } from './board3dControllerSubscriptions';
-import type { Board3dCard } from './board-3d-card';
+import { Board3dCard } from './board-3d-card';
 import { projectCardFaceToScreenAnchor } from './board3dAbilityFocusProjection';
 import { playDeckShufflePreview } from './board3dDeckShufflePreview';
+import {
+  LEGEND_3D_HALF_ROTATION,
+  LEGEND_3D_HALF_SCALE,
+  resolveLegendDisplayHalves,
+} from './legend-display.utils';
 
 export type AdminSpectatorReveal = {
   revealPrizes: boolean;
@@ -349,17 +363,38 @@ export class Board3dController {
   ) { }
 
   private getHandPlayableCardIdsForDisplay(): number[] | undefined {
-    if (this.boardInteractionService.isChooseHandCardsSelectionActive()) {
+    if (
+      this.boardInteractionService.isChooseHandCardsSelectionActive() ||
+      this.boardInteractionService.isLegendAssemblySelectionActive()
+    ) {
       return undefined;
     }
     return this.isReplayOmniscient() ? undefined : this.bottomPlayer?.playableCardIds;
+  }
+
+  private getHandPlayableAbilityCardIdsForDisplay(): number[] | undefined {
+    if (
+      this.boardInteractionService.isChooseHandCardsSelectionActive() ||
+      this.boardInteractionService.isLegendAssemblySelectionActive()
+    ) {
+      return undefined;
+    }
+    return this.isReplayOmniscient()
+      ? undefined
+      : this.bottomPlayer?.playableHandAbilityCardIds;
   }
 
   private shouldDisableHandDragForSelection(): boolean {
     if (this.boardInteractionService.isChooseStartingPokemonsSelectionActive()) {
       return false;
     }
-    return this.boardInteractionService.isChooseHandCardsSelectionActive();
+    if (this.boardInteractionService.isChooseHandCardsSelectionActive()) {
+      return true;
+    }
+    if (this.boardInteractionService.isLegendAssemblySelectionActive()) {
+      return true;
+    }
+    return false;
   }
 
   private refreshSetupStartingPokemonDragState(): void {
@@ -429,6 +464,11 @@ export class Board3dController {
     this.adminSpectatorReveal = p.adminSpectatorReveal;
     this.onKoSequenceActiveChange = p.onKoSequenceActiveChange;
     this.interactionService.setHandPlayZoneGameSettings(p.gameState.state.gameSettings);
+    this.interactionService.setBottomHandCards(p.bottomPlayerHand?.cards ?? []);
+    this.interactionService.setPlayableCardIds(this.getHandPlayableCardIdsForDisplay());
+    this.interactionService.setPlayableHandAbilityCardIds(
+      this.getHandPlayableAbilityCardIdsForDisplay(),
+    );
   }
 
   init(canvas: HTMLCanvasElement, initial: Board3dControllerProps): void {
@@ -504,9 +544,12 @@ export class Board3dController {
         playBoardBasicAnimation: (ev) => this.playBoardBasicAnimation(ev),
         playBoardEvolutionAnimation: (ev) => this.playBoardEvolutionAnimation(ev),
         playBoardAbilityAnimation: (ev) => this.playBoardAbilityAnimation(ev),
+        playBoardCoinFlipAnimation: (ev) => this.playBoardCoinFlipAnimation(ev),
+        cancelBoardCoinFlipAnimation: () => this.cancelBoardCoinFlipAnimation(),
       }),
     );
 
+    this.animationService.initCoinFlipScene(this.scene);
     this.stateSync.setBoardInteractionForDamagePreview(this.boardInteractionService);
   }
 
@@ -540,9 +583,12 @@ export class Board3dController {
         playBoardBasicAnimation: (ev) => this.playBoardBasicAnimation(ev),
         playBoardEvolutionAnimation: (ev) => this.playBoardEvolutionAnimation(ev),
         playBoardAbilityAnimation: (ev) => this.playBoardAbilityAnimation(ev),
+        playBoardCoinFlipAnimation: (ev) => this.playBoardCoinFlipAnimation(ev),
+        cancelBoardCoinFlipAnimation: () => this.cancelBoardCoinFlipAnimation(),
       }),
     );
 
+    this.animationService.initCoinFlipScene(this.scene);
     this.stateSync.setBoardInteractionForDamagePreview(this.boardInteractionService);
   }
 
@@ -632,6 +678,7 @@ export class Board3dController {
 
     // Kill any active animations
     this.animationService.killAllAnimations();
+    this.animationService.disposeCoinFlipScene();
     this.stopAbilityFocusTracking();
 
     this.lastSupporterTopCardIdByPlayerId.clear();
@@ -1688,6 +1735,17 @@ export class Board3dController {
     tryPlay(0);
   }
 
+  private playBoardCoinFlipAnimation(ev: CoinFlipAnimationEvent): void {
+    if (!this.scene) {
+      return;
+    }
+    this.animationService.playCoinFlipAnimation(this.scene, ev.result);
+  }
+
+  private cancelBoardCoinFlipAnimation(): void {
+    this.animationService.cancelCoinFlipAnimation();
+  }
+
   private projectCardGroupToScreenRect(group: Object3D): AbilityFocusAnchor | null {
     if (!this.canvasEl || !this.camera) {
       return null;
@@ -1724,12 +1782,130 @@ export class Board3dController {
    * Basic Pokémon entrance from deck/item (socket): same motion as dragging from hand to bench
    * ({@link Board3dAnimationService.playHandCardDropOnBoard}), not {@link Board3dAnimationService.playBasicAnimation}.
    */
-  private playBoardBasicAnimation(ev: BasicEntranceAnimationEvent): void {
-    const maxAttempts = 12;
+  private playHandCardDropBasicAnimation(group: Group, meshId: string): void {
     /** Matches {@link Board3dHandService} hand row Z. */
     const handPlayFlightStartZ = 30;
     /** Matches retained drag scale when {@link Board3dInteractionService} uses hand play flight. */
     const handPlayFlightInitialScale = 1.3;
+
+    const targetWorld = group.position.clone();
+    targetWorld.y = Math.max(targetWorld.y, 0.08);
+
+    const isTopPlayer = meshId.startsWith('topPlayer_');
+    const endRotationY = isTopPlayer ? Math.PI : 0;
+    const isActive = meshId.endsWith('_active');
+    const endScale = isActive ? 1.5 : 1.0;
+
+    gsap.killTweensOf(group.position);
+    gsap.killTweensOf(group.rotation);
+    gsap.killTweensOf(group.scale);
+
+    group.position.set(targetWorld.x, 0.15, handPlayFlightStartZ);
+    group.rotation.set(0, 0, 0);
+    group.scale.setScalar(handPlayFlightInitialScale);
+
+    void this.animationService.playHandCardDropOnBoard(group, targetWorld, {
+      endScale,
+      endRotationY,
+    });
+  }
+
+  private async createLegendHalfFlightCard(
+    card: Card,
+    cardList: PokemonCardList,
+    startPosition: Vector3,
+  ): Promise<Board3dCard | null> {
+    const scanUrl = this.cardsAdapter.getScanUrlFor3D(card, cardList);
+    const loadFrontTexture = async (): Promise<Texture> => {
+      if (!scanUrl?.trim()) {
+        return this.assetLoader.loadCardBack();
+      }
+      try {
+        return await this.assetLoader.loadCardTexture(scanUrl);
+      } catch {
+        return this.assetLoader.loadCardBack();
+      }
+    };
+
+    const [frontTexture, backTexture, maskTexture] = await Promise.all([
+      loadFrontTexture(),
+      this.assetLoader.loadCardBack(),
+      this.assetLoader.loadCardMaskTexture(),
+    ]);
+
+    const mesh = new Board3dCard(
+      frontTexture,
+      backTexture,
+      startPosition,
+      LEGEND_3D_HALF_ROTATION,
+      LEGEND_3D_HALF_SCALE,
+      maskTexture,
+    );
+    const cardGroup = mesh.getGroup();
+    cardGroup.userData.cardData = card;
+    cardGroup.userData.board3dCard = mesh;
+    this.worldContentRoot.add(cardGroup);
+    return mesh;
+  }
+
+  private playRemoteLegendAssemblyAnimation(
+    meshId: string,
+    boardCard: Board3dCard,
+    topCard: Card,
+    bottomCard: Card,
+    cardList: PokemonCardList,
+  ): void {
+    this.beginHandPlayFlightHiddenMeshes([meshId]);
+
+    const aspect =
+      this.canvasEl.clientWidth / Math.max(this.canvasEl.clientHeight, 1);
+    const stageCenter = getDrawFlightStageCenterWorld(aspect, this.isUpsideDown);
+    const targetWorld = boardCard.getGroup().position.clone();
+    targetWorld.y = Math.max(targetWorld.y, 0.08);
+    const isTopPlayer = meshId.startsWith('topPlayer_');
+    const endRotationY = isTopPlayer ? Math.PI : 0;
+    const startPosition = new Vector3(stageCenter.x, 0.15, 30);
+
+    let disposed = false;
+    const finish = (topHalf: Board3dCard | null, bottomHalf: Board3dCard | null): void => {
+      if (disposed) {
+        return;
+      }
+      disposed = true;
+      topHalf?.dispose();
+      bottomHalf?.dispose();
+      this.endHandPlayFlightHiddenMeshes([meshId]);
+      this.syncGameState();
+      this.markDirty();
+    };
+
+    void (async () => {
+      const [topHalf, bottomHalf] = await Promise.all([
+        this.createLegendHalfFlightCard(topCard, cardList, startPosition.clone()),
+        this.createLegendHalfFlightCard(bottomCard, cardList, startPosition.clone()),
+      ]);
+      if (!topHalf || !bottomHalf) {
+        finish(topHalf, bottomHalf);
+        return;
+      }
+
+      try {
+        await this.animationService.playLegendAssemblyAnimation(
+          this.worldContentRoot,
+          topHalf.getGroup(),
+          bottomHalf.getGroup(),
+          stageCenter,
+          targetWorld,
+          endRotationY,
+        );
+      } finally {
+        finish(topHalf, bottomHalf);
+      }
+    })();
+  }
+
+  private playBoardBasicAnimation(ev: BasicEntranceAnimationEvent): void {
+    const maxAttempts = 12;
 
     const tryPlay = (attempt: number): void => {
       const meshId = this.boardMeshIdFromAnimationEvent(ev);
@@ -1759,26 +1935,35 @@ export class Board3dController {
         return;
       }
 
-      const targetWorld = group.position.clone();
-      targetWorld.y = Math.max(targetWorld.y, 0.08);
+      const cardList = group.userData?.cardList as PokemonCardList | undefined;
+      const { top: topHalfCard, bottom: bottomHalfCard } = cardList
+        ? resolveLegendDisplayHalves(cardList)
+        : {};
+      const waitingForLegendHalves =
+        !!cardList &&
+        !!cardList.getPokemonCard()?.tags?.includes(CardTag.LEGEND) &&
+        (!topHalfCard || !bottomHalfCard) &&
+        cardList.cards.some(
+          (c) => c.fullName.includes('(Top)') || c.fullName.includes('(Bottom)'),
+        );
+      if (waitingForLegendHalves) {
+        if (attempt < maxAttempts) {
+          requestAnimationFrame(() => tryPlay(attempt + 1));
+        }
+        return;
+      }
+      if (topHalfCard && bottomHalfCard && cardList) {
+        this.playRemoteLegendAssemblyAnimation(
+          meshId,
+          boardCard,
+          topHalfCard,
+          bottomHalfCard,
+          cardList,
+        );
+        return;
+      }
 
-      const isTopPlayer = meshId.startsWith('topPlayer_');
-      const endRotationY = isTopPlayer ? Math.PI : 0;
-      const isActive = meshId.endsWith('_active');
-      const endScale = isActive ? 1.5 : 1.0;
-
-      gsap.killTweensOf(group.position);
-      gsap.killTweensOf(group.rotation);
-      gsap.killTweensOf(group.scale);
-
-      group.position.set(targetWorld.x, 0.15, handPlayFlightStartZ);
-      group.rotation.set(0, 0, 0);
-      group.scale.setScalar(handPlayFlightInitialScale);
-
-      void this.animationService.playHandCardDropOnBoard(group, targetWorld, {
-        endScale,
-        endRotationY,
-      });
+      this.playHandCardDropBasicAnimation(group, meshId);
     };
     tryPlay(0);
   }
@@ -2672,14 +2857,13 @@ export class Board3dController {
 
   private onMouseDown = (event: MouseEvent): void => {
     const canvas = this.canvasEl;
-    const disableHandDrag = this.shouldDisableHandDragForSelection();
     const card = this.interactionService.onMouseDown(
       event,
       this.camera,
       this.scene,
       canvas,
       undefined,
-      disableHandDrag,
+      this.shouldDisableHandDragForSelection(),
     );
 
     if (card) {
@@ -2712,10 +2896,11 @@ export class Board3dController {
       if (hoveredCard !== this.currentHoveredCard) {
         if (hoveredCard) {
           const chooseHandCards = this.boardInteractionService.isChooseHandCardsSelectionActive();
+          const legendAssembly = this.boardInteractionService.isLegendAssemblySelectionActive();
           const startingSetup = this.boardInteractionService.isChooseStartingPokemonsSelectionActive();
           canvas.style.cursor =
             hoveredCard.userData.isHandCard
-              ? (startingSetup || !chooseHandCards ? 'grab' : 'pointer')
+              ? (startingSetup || (!chooseHandCards && !legendAssembly) ? 'grab' : 'pointer')
               : 'pointer';
         } else {
           canvas.style.cursor = 'default';
@@ -2787,6 +2972,26 @@ export class Board3dController {
     this.flushPendingHandSyncAfterDrag();
     this.markDirty();
   };
+
+  private handleLegendAssemblyHandClick(handIndex: number): void {
+    const card = this.bottomPlayerHand?.cards?.[handIndex];
+    if (!card || !this.bottomPlayer) {
+      return;
+    }
+
+    this.boardInteractionService.startLegendAssemblySelection(
+      this.bottomPlayerHand.cards,
+      handIndex,
+      (playHandIndex) => {
+        const target = resolveLegendAssemblyBenchTarget(this.bottomPlayer!);
+        if (target) {
+          this.executeHandPlayCard({ action: 'playCard', handIndex: playHandIndex, zone: target });
+        }
+      },
+    );
+    this.updateSelectionVisuals();
+    this.markDirty();
+  }
 
   private executeHandAttachPlay(handIndex: number, zone: CardTarget): void {
     const handCard = handIndex >= 0 ? this.bottomPlayerHand.cards[handIndex] : undefined;
@@ -2927,15 +3132,36 @@ export class Board3dController {
     }
   }
 
+  private abandonSetupHandCardFlight(flight?: PlayCardFlightPayload): void {
+    if (!flight?.board3dCard) {
+      return;
+    }
+    const group = flight.board3dCard.getGroup();
+    gsap.killTweensOf(group.position);
+    gsap.killTweensOf(group.rotation);
+    gsap.killTweensOf(group.scale);
+    if (group.parent) {
+      group.removeFromParent();
+    }
+    flight.board3dCard.dispose();
+    this.forceHandResyncAfterFailedPlay();
+  }
+
   private executeSetupHandCardPlacement(
     handIndex: number,
     flight?: PlayCardFlightPayload,
   ): void {
+    const fail = (): void => {
+      this.abandonSetupHandCardFlight(flight);
+    };
+
     const prompt = this.boardInteractionService.getChooseCardsPrompt();
     if (!prompt || !this.bottomPlayer) {
+      fail();
       return;
     }
     if (!this.boardInteractionService.isChooseStartingPokemonsSelectionActive()) {
+      fail();
       return;
     }
 
@@ -2945,21 +3171,26 @@ export class Board3dController {
       index: handIndex,
     };
     if (!this.boardInteractionService.isTargetEligible(handTarget)) {
+      fail();
       return;
     }
     const selected = this.boardInteractionService.getChooseHandCardSelectionHandIndices();
     if (selected.includes(handIndex) || this.setupPlacementInFlight.has(handIndex)) {
+      fail();
       return;
     }
 
     const pickOrder = selected.length;
     const slotTarget = getSetupPlaySlotForPickOrder(prompt, pickOrder);
     if (!slotTarget) {
+      fail();
       return;
     }
 
-    const card = prompt.player.hand.cards[handIndex];
+    // Live hand — sandbox may have added cards after the prompt was captured.
+    const card = this.bottomPlayer.hand.cards[handIndex];
     if (!card) {
+      fail();
       return;
     }
 
@@ -3035,6 +3266,144 @@ export class Board3dController {
     this.markDirty();
   }
 
+  private executeLegendAssemblyPlay(
+    playHandIndex: number,
+    playTarget: CardTarget,
+    existingFlight?: PlayCardFlightPayload,
+  ): void {
+    const handCards = this.bottomPlayerHand.cards;
+    const triggered = handCards[playHandIndex];
+    if (!triggered || !cardCanAssembleLegendFromHand(triggered, handCards)) {
+      void this.gameActions
+        .playCardAction(this.gameState.gameId, playHandIndex, playTarget)
+        .catch(() => this.forceHandResyncAfterFailedPlay());
+      return;
+    }
+
+    const partnerIndex = findLegendAssemblyPartnerHandIndex(handCards, playHandIndex);
+    if (partnerIndex === null) {
+      void this.gameActions
+        .playCardAction(this.gameState.gameId, playHandIndex, playTarget)
+        .catch(() => this.forceHandResyncAfterFailedPlay());
+      return;
+    }
+
+    const halfIndices = resolveLegendAssemblyHalfHandIndices(handCards, playHandIndex, partnerIndex);
+    if (!halfIndices) {
+      void this.gameActions
+        .playCardAction(this.gameState.gameId, playHandIndex, playTarget)
+        .catch(() => this.forceHandResyncAfterFailedPlay());
+      return;
+    }
+
+    const flownCard = existingFlight?.board3dCard ?? null;
+    let topHalf: Board3dCard | null =
+      flownCard && playHandIndex === halfIndices.topIndex ? flownCard : null;
+    let bottomHalf: Board3dCard | null =
+      flownCard && playHandIndex === halfIndices.bottomIndex ? flownCard : null;
+
+    const detachAt = (index: number): Board3dCard | null =>
+      this.handService.detachCardForBoardPlay(index, this.worldContentRoot);
+
+    if (!topHalf && !bottomHalf) {
+      for (const index of [halfIndices.topIndex, halfIndices.bottomIndex].sort((a, b) => b - a)) {
+        const detached = detachAt(index);
+        if (index === halfIndices.topIndex) {
+          topHalf = detached;
+        }
+        if (index === halfIndices.bottomIndex) {
+          bottomHalf = detached;
+        }
+      }
+    } else {
+      if (!topHalf) {
+        topHalf = detachAt(halfIndices.topIndex);
+      }
+      if (!bottomHalf) {
+        bottomHalf = detachAt(halfIndices.bottomIndex);
+      }
+    }
+
+    if (!topHalf || !bottomHalf) {
+      topHalf?.getGroup().removeFromParent();
+      topHalf?.dispose();
+      bottomHalf?.getGroup().removeFromParent();
+      bottomHalf?.dispose();
+      void this.gameActions
+        .playCardAction(this.gameState.gameId, playHandIndex, playTarget)
+        .catch(() => this.forceHandResyncAfterFailedPlay());
+      this.forceHandResyncAfterFailedPlay();
+      return;
+    }
+
+    topHalf.setOutline(false);
+    bottomHalf.setOutline(false);
+
+    const aspect =
+      this.canvasEl.clientWidth / Math.max(this.canvasEl.clientHeight, 1);
+    const stageCenter = getDrawFlightStageCenterWorld(aspect, this.isUpsideDown);
+    const benchPositions = getBenchPositions(
+      this.bottomPlayer.bench.length,
+      PlayerType.BOTTOM_PLAYER,
+      aspect,
+    );
+    const targetWorld = benchPositions[playTarget.index]?.clone() ?? new Vector3();
+    targetWorld.y = Math.max(targetWorld.y, 0.08);
+    const endRotationY = 0;
+
+    const hiddenMeshId = board3dMeshIdForPlayTarget(
+      playTarget,
+      DropZoneType.BENCH,
+      this.bottomPlayer,
+      this.topPlayer,
+    );
+    if (hiddenMeshId) {
+      this.beginHandPlayFlightHiddenMeshes([hiddenMeshId]);
+    }
+
+    const topGroup = topHalf.getGroup();
+    const bottomGroup = bottomHalf.getGroup();
+    let disposed = false;
+    const disposeHalves = (): void => {
+      if (disposed) {
+        return;
+      }
+      disposed = true;
+      if (hiddenMeshId) {
+        this.endHandPlayFlightHiddenMeshes([hiddenMeshId]);
+      }
+      topHalf!.dispose();
+      bottomHalf!.dispose();
+      this.interactionService.updateInteractiveObjects(this.scene);
+      this.syncGameState();
+      this.markDirty();
+    };
+
+    void this.gameActions
+      .playCardAction(this.gameState.gameId, playHandIndex, playTarget)
+      .catch(() => {
+        gsap.killTweensOf(topGroup.position);
+        gsap.killTweensOf(bottomGroup.position);
+        gsap.killTweensOf(topGroup.rotation);
+        gsap.killTweensOf(bottomGroup.rotation);
+        gsap.killTweensOf(topGroup.scale);
+        gsap.killTweensOf(bottomGroup.scale);
+        disposeHalves();
+        this.forceHandResyncAfterFailedPlay();
+      });
+
+    void this.animationService
+      .playLegendAssemblyAnimation(
+        this.worldContentRoot,
+        topGroup,
+        bottomGroup,
+        stageCenter,
+        targetWorld,
+        endRotationY,
+      )
+      .then(() => disposeHalves());
+  }
+
   private executeHandPlayCard(result: DropResult): void {
     if (result.handIndex === undefined || !result.zone) {
       return;
@@ -3042,6 +3411,16 @@ export class Board3dController {
 
     const playedHandCard =
       result.handIndex >= 0 ? this.bottomPlayerHand.cards[result.handIndex] : undefined;
+
+    if (
+      playedHandCard &&
+      cardCanAssembleLegendFromHand(playedHandCard, this.bottomPlayerHand.cards) &&
+      result.zone.slot === SlotType.BENCH
+    ) {
+      this.executeLegendAssemblyPlay(result.handIndex, result.zone, result.playCardFlight);
+      return;
+    }
+
     if (
       !this.gameState.replay &&
       playedHandCard?.superType === SuperType.TRAINER &&
@@ -3307,7 +3686,11 @@ export class Board3dController {
         }
       } else if (!chooseHandCards) {
         const isPlayable = this.bottomPlayer?.playableCardIds?.includes(cardData.id);
-        card3d.setOutline(isPlayable, 0x4ade80);
+        if (isPlayable) {
+          card3d.setOutline(true, 0x4ade80);
+        } else {
+          card3d.setOutline(false);
+        }
       } else {
         card3d.setOutline(false);
       }
@@ -3379,6 +3762,19 @@ export class Board3dController {
         players: [this.topPlayer, this.bottomPlayer].filter(p => p)
       });
       return;
+    }
+
+    // Handle legend half click (show that half's card info; host target for prompts)
+    if (cardObject.userData.isLegendHalf && cardData && cardList) {
+      if (this.boardInteractionService.isSelectionActive()) {
+        const hostTarget =
+          (cardTarget as CardTarget | undefined) ??
+          this.resolveBoardPokemonCardTargetFromObject(cardObject);
+        if (hostTarget !== null && this.boardInteractionService.isTargetEligible(hostTarget)) {
+          this.boardInteractionService.toggleTarget(hostTarget);
+          return;
+        }
+      }
     }
 
     // Handle tool card click (show tool card info)
@@ -3533,7 +3929,7 @@ export class Board3dController {
     }
 
     // Handle Stadium click
-    const isStadium = cardObject.userData.isStadium === true || cardObject.userData.cardId === 'shared_stadium';
+    const isStadium = cardObject.userData.isStadium === true || isSharedStadiumMeshId(cardObject.userData.cardId);
     if (isStadium && cardList) {
       const isBottomOwner = this.bottomPlayer && this.bottomPlayer.id === this.clientId;
       const isDeleted = this.gameState.deleted;
@@ -3575,6 +3971,20 @@ export class Board3dController {
       return;
     }
 
+    if (
+      isHandCard &&
+      !this.boardInteractionService.isSelectionActive() &&
+      this.bottomPlayer?.id === this.clientId &&
+      !this.gameState.deleted
+    ) {
+      const handIndex = (cardObject.userData.handIndex as number | undefined) ?? 0;
+      const handCard = this.bottomPlayerHand?.cards?.[handIndex];
+      if (cardCanAssembleLegendFromHand(handCard, this.bottomPlayerHand?.cards ?? [])) {
+        this.handleLegendAssemblyHandClick(handIndex);
+        return;
+      }
+    }
+
     // Check if we're in selection mode (for ChoosePokemonPrompt etc.)
     if (this.boardInteractionService.isSelectionActive()) {
       if (this.boardInteractionService.isChooseStartingPokemonsSelectionActive() && isHandCard) {
@@ -3603,6 +4013,9 @@ export class Board3dController {
       // Toggle selection if target is eligible
       if (this.boardInteractionService.isTargetEligible(target)) {
         this.boardInteractionService.toggleTarget(target);
+        if (isHandCard) {
+          this.updateSelectionVisuals();
+        }
       }
       return; // Don't show info pane in selection mode
     }
@@ -3613,8 +4026,13 @@ export class Board3dController {
     let canRetreat = false;
 
     if (isHandCard) {
-      // Hand cards: enable abilities with useFromHand (like Luxray's Swelling Flash)
-      options = { enableAbility: { useFromHand: true }, enableAttack: false };
+      // Hand cards: enable useFromHand abilities only when still playable (ability lock clears this).
+      const handPlayable = !!cardData?.id &&
+        !!this.bottomPlayer?.playableCardIds?.includes(cardData.id);
+      options = {
+        enableAbility: handPlayable ? { useFromHand: true } : undefined,
+        enableAttack: false,
+      };
     } else if (cardTarget) {
       if (cardTarget.slot === SlotType.ACTIVE) {
         // Active Pokemon: enable abilities (useWhenInPlay), attacks, and retreat (if not already retreated this turn)

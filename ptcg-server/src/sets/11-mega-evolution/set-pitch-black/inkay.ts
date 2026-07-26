@@ -3,7 +3,10 @@ import { Stage, CardType, SuperType, TrainerType } from '../../../game/store/car
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  SEARCH_DECK_FOR_CARDS_TO_HAND,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Inkay extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -12,21 +15,23 @@ export class Inkay extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Procurement',
-    cost: [D],
-    damage: 0,
-    text: 'Search your deck for an Item card and put it into your hand. Then, shuffle your deck.',
-  },
-  {
-    name: 'Spinning Attack',
-    cost: [D, D],
-    damage: 30,
-    text: '',
-  }];
+  public attacks = [
+    {
+      name: 'Procurement',
+      cost: [D],
+      damage: 0,
+      text: 'Search your deck for an Item card, reveal it, and put it into your hand. Then, shuffle your deck.',
+    },
+    {
+      name: 'Spinning Attack',
+      cost: [D, D],
+      damage: 30,
+      text: '',
+    },
+  ];
 
-  public set: string = 'M5';
-  public setNumber: string = '49';
+  public set: string = 'PBL';
+  public setNumber: string = '51';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Inkay';
@@ -37,9 +42,13 @@ export class Inkay extends PokemonCard {
     // Ref: set-unified-minds/honedge.ts (Lucky Find)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this,
+      SEARCH_DECK_FOR_CARDS_TO_HAND(
+        store,
+        state,
+        player,
+        this,
         { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM } as Partial<TrainerCard>,
-        { min: 0, max: 1, allowCancel: true }
+        { min: 0, max: 1, allowCancel: true },
       );
     }
 

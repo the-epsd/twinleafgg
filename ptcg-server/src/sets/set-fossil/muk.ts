@@ -2,12 +2,16 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
-import { PowerEffect } from '../../game/store/effects/game-effects';
-import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { CoinFlipPrompt, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, StateUtils } from '../../game';
+import { CoinFlipPrompt, GameMessage, PokemonCardList, PowerType, StateUtils } from '../../game';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import {
+  CAN_APPLY_LOCKER_ABILITY,
+  HANDLE_ABILITY_BLOCK,
+  IS_ABILITY_LOCKER_IN_PLAY,
+  POKEMON_POWER_TYPES,
+} from '../../game/store/prefabs/ability-lock';
 
 export class Muk extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -45,99 +49,32 @@ export class Muk extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckPokemonPowersEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
-
-      // Check if Muk is affected by special conditions
-      if (cardList && (cardList.specialConditions.includes(SpecialCondition.ASLEEP) ||
-        cardList.specialConditions.includes(SpecialCondition.CONFUSED) ||
-        cardList.specialConditions.includes(SpecialCondition.PARALYZED))) {
-        return state;
+    HANDLE_ABILITY_BLOCK(effect, ({ player, powerEffect }) => {
+      if (!IS_ABILITY_LOCKER_IN_PLAY(state, player, this)) {
+        return false;
       }
 
-      // Check if any Muk in play has special conditions
-      let mukHasSpecialCondition = false;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-        if (cardList.getPokemonCard() === this && cardList.specialConditions.length > 0) {
-          mukHasSpecialCondition = true;
-        }
-      });
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
-        if (cardList.getPokemonCard() === this && cardList.specialConditions.length > 0) {
-          mukHasSpecialCondition = true;
-        }
-      });
-
-      if (mukHasSpecialCondition) {
-        return state;
-      }
-
-      let isMukInPlay = false;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this) {
-          isMukInPlay = true;
-        }
-      });
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card === this) {
-          isMukInPlay = true;
-        }
-      });
-
-      if (isMukInPlay) {
-        // Filter out all Pokémon Powers except Toxic Gas
-        effect.powers = effect.powers.filter(power =>
-          power.powerType !== PowerType.POKEMON_POWER || power.name === 'Toxic Gas'
-        );
-      }
-    }
-
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.POKEMON_POWER && effect.power.name !== 'Toxic Gas') {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
-
-      if (cardList.specialConditions.includes(SpecialCondition.ASLEEP) ||
-        cardList.specialConditions.includes(SpecialCondition.CONFUSED) ||
-        cardList.specialConditions.includes(SpecialCondition.PARALYZED)) {
-        return state;
-      }
-
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-        if (cardList.getPokemonCard() === this && cardList.specialConditions.length > 0) {
-          return state;
-        }
-      });
-
-      let isMukInPlay = false;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this) {
-          isMukInPlay = true;
-        }
-      });
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card === this) {
-          isMukInPlay = true;
-        }
-      });
-
-      if (!isMukInPlay) {
-        return state;
-      }
-
-      // Try reducing ability for each player  
       try {
-        const powerEffect = new PowerEffect(player, this.powers[0], this);
-        store.reduceEffect(state, powerEffect);
+        const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
+        if (
+          cardList.specialConditions.includes(SpecialCondition.ASLEEP) ||
+          cardList.specialConditions.includes(SpecialCondition.CONFUSED) ||
+          cardList.specialConditions.includes(SpecialCondition.PARALYZED)
+        ) {
+          return false;
+        }
       } catch {
-        return state;
+        return false;
       }
-      if (!effect.power.exemptFromAbilityLock) {
-        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
-      }
-    }
+
+      const lockerOwner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
+      // Check + PowerEffect: Toxic Gas must itself be usable.
+      return CAN_APPLY_LOCKER_ABILITY(store, state, lockerOwner, this, this.powers[0]);
+    }, {
+      powerTypes: POKEMON_POWER_TYPES,
+      exemptPowerNames: ['Toxic Gas'],
+      error: GameMessage.BLOCKED_BY_ABILITY,
+    });
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;

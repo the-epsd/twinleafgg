@@ -26,7 +26,6 @@ export class Sableye extends PokemonCard {
   public cardType: CardType = D;
   public hp: number = 80;
   public weakness = [{ type: G }];
-  public resistance = [];
   public retreat = [C];
 
   public attacks = [{

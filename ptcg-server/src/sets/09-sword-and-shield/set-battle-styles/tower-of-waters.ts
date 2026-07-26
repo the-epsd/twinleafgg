@@ -8,30 +8,26 @@ import { TrainerType, CardType, CardTag } from '../../../game/store/card/card-ty
 import { CheckRetreatCostEffect } from '../../../game/store/effects/check-effects';
 import { StateUtils } from '../../../game/store/state-utils';
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 
 export class TowerOfWaters extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.STADIUM;
-
   public regulationMark = 'E';
-
   public set: string = 'BST';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '138';
-
   public name: string = 'Tower of Waters';
-
   public fullName: string = 'Tower of Waters BST';
-
-  public text: string =
-    'The Retreat Cost of each Rapid Strike Pokémon in play (both yours and your opponent\'s) is [C][C] less.';
+  public text: string = 'The Retreat Cost of each Rapid Strike Pokémon in play (both yours and your opponent\'s) is [C][C] less.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckRetreatCostEffect && StateUtils.getStadiumCard(state) === this) {
       const player = effect.player;
       const pokemonCard = player.active.getPokemonCard();
+
+      if (IS_STADIUM_EFFECT_BLOCKED(store, state, effect.player, effect.player.active, this)) {
+        return state;
+      }
 
       if (pokemonCard && pokemonCard.tags.includes(CardTag.RAPID_STRIKE)) {
         const index = effect.cost.indexOf(CardType.COLORLESS);
@@ -47,5 +43,4 @@ export class TowerOfWaters extends TrainerCard {
 
     return state;
   }
-
 }

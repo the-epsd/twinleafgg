@@ -8,6 +8,7 @@ import { TrainerType, CardTag } from '../../../game/store/card/card-types';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 import { StateUtils } from '../../../game/store/state-utils';
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 
 export class RocketsHideout extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
@@ -16,12 +17,15 @@ export class RocketsHideout extends TrainerCard {
   public fullName: string = 'Rocket\'s Hideout TRR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '87';
-
-  public text: string =
-    'Each Pokémon with Dark or Rocket\'s in its name (both yours and your opponent\'s) gets +20 HP.';
+  public text: string = 'Each Pokémon with Dark or Rocket\'s in its name (both yours and your opponent\'s) gets +20 HP.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckHpEffect && StateUtils.getStadiumCard(state) === this) {
+      const owner = StateUtils.findOwner(state, effect.target);
+      if (IS_STADIUM_EFFECT_BLOCKED(store, state, owner, effect.target)) {
+        return state;
+      }
+
       if (effect.target.getPokemonCard()?.tags.includes(CardTag.DARK) || effect.target.getPokemonCard()?.tags.includes(CardTag.ROCKETS)) {
         effect.hp += 20;
       }
@@ -33,5 +37,4 @@ export class RocketsHideout extends TrainerCard {
 
     return state;
   }
-
 }

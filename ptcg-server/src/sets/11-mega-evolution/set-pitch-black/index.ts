@@ -1,11 +1,11 @@
 import { Card } from '../../../game/store/card/card';
 import { Annihilape } from './annihilape';
-import { AntiqueShieldFossil } from './antique-shield-fossil';
+import { AntiqueArmorFossil } from './antique-armor-fossil';
 import { AntiqueSkullFossil } from './antique-skull-fossil';
 import { Armarouge } from './armarouge';
 import { Banette } from './banette';
 import { Bastiodon } from './bastiodon';
-import { BoltyLightningEnergy } from './bolty-lightning-energy';
+import { VoltaicLightningEnergy } from './voltaic-lightning-energy';
 import { Bombirdier } from './bombirdier';
 import { Brionne } from './brionne';
 import { Bronzong } from './bronzong';
@@ -21,14 +21,15 @@ import { Drilbur } from './drilbur';
 import { Electrike } from './electrike';
 import { Finizen } from './finizen';
 import { Fomantis } from './fomantis';
-import { FossilExcavationSite } from './fossil-excavation-site';
-import { GladionsDecisiveBattle } from './gladions-decisive-battle';
+import { FossilQuarry } from './fossil-quarry';
+import { GladionsFinalBattle } from './gladions-final-battle';
 import { Goldeen } from './goldeen';
 import { Grubbin } from './grubbin';
 import { Gwynn } from './gwynn';
 import { Heatran } from './heatran';
-import { HeroicBomb } from './heroic-bomb';
+import { TremendousBomb } from './tremendous-bomb';
 import { Inkay } from './inkay';
+import { Jett } from './jett';
 import { Jynx } from './jynx';
 import { Koraidon } from './koraidon';
 import { Lampent } from './lampent';
@@ -41,12 +42,15 @@ import { Maschiff } from './maschiff';
 import { Marshadow } from './marshadow';
 import { MegaChandelureex } from './mega-chandelure-ex';
 import { MegaDarkraiex } from './mega-darkrai-ex';
+import { MegaDelphoxex } from './mega-delphox-ex';
 import { MegaExcadrillex } from './mega-excadrill-ex';
+import { MegaSlowbroex } from './mega-slowbro-ex';
 import { MegaZeraoraex } from './mega-zeraora-ex';
-import { MistysCheerfulness } from './mistys-cheerfulness';
+import { MistysVitality } from './mistys-vitality';
 import { Miraidon } from './miraidon';
 import { Morpekoex } from './morpeko-ex';
 import { Mabosstiff } from './mabosstiff';
+import { Mandibuzz } from './mandibuzz';
 import { Nickit } from './nickit';
 import { Palafin } from './palafin';
 import { Pikipek } from './pikipek';
@@ -56,9 +60,9 @@ import { Primarina } from './primarina';
 import { Primeape } from './primeape';
 import { Rampardosex } from './rampardos-ex';
 import { Relicanth } from './relicanth';
-import { RetryBadge } from './retry-badge';
+import { BacktrackBadge } from './backtrack-badge';
 import { RustSyndicateGrunt } from './rust-syndicate-grunt';
-import { ShadowDarknessEnergy } from './shadow-darkness-energy';
+import { ShadowyDarknessEnergy } from './shadowy-darkness-energy';
 import { Seaking } from './seaking';
 import { Shieldon } from './shieldon';
 import { Shuppet } from './shuppet';
@@ -75,18 +79,57 @@ import { Trumbeak } from './trumbeak';
 import { Tropius } from './tropius';
 import { TypeNull } from './type-null';
 import { Vikavolt } from './vikavolt';
+import { Vullaby } from './vullaby';
 import { Wailmer } from './wailmer';
 import { Wailordex } from './wailord-ex';
 import { Zarude } from './zarude';
+import {
+  ArmarougeIR,
+  BastiodonIR,
+  BraveBangleFAPBL,
+  CrushingHammerFAPBL,
+  DarkBellFA,
+  DhelmiseIR,
+  FomantisIR,
+  GladionsFinalBattleFA,
+  GladionsFinalBattleSIR,
+  GoldeenIR,
+  GwynnFA,
+  GwynnSIR,
+  IronDefenderFAPBL,
+  LurantisexFA,
+  ManectricIR,
+  MegaChandelureexFA,
+  MegaChandelureexSIR,
+  MegaDarkraiexFA,
+  MegaDarkraiexHR,
+  MegaDarkraiexSIR,
+  MegaExcadrillexFA,
+  MegaZeraoraexFA,
+  MegaZeraoraexSIR,
+  MistysVitalityFA,
+  MorpekoexFA,
+  MorpekoexSIR,
+  PrimarinaIR,
+  RampardosexFA,
+  RustSyndicateGruntFA,
+  SilvallyIR,
+  SlowbroIR,
+  ThievulIR,
+  ToucannonIR,
+  TremendousBombFA,
+  WailordexFA,
+} from './other-prints';
 
 export const setPitchBlack: Card[] = [
+  // MARK: Main set
   new Annihilape(),
-  new AntiqueShieldFossil(),
+  new AntiqueArmorFossil(),
   new AntiqueSkullFossil(),
   new Armarouge(),
   new Banette(),
   new Bastiodon(),
-  new BoltyLightningEnergy(),
+  new VoltaicLightningEnergy(),
   new Bombirdier(),
   new Brionne(),
   new Bronzong(),
@@ -102,14 +145,15 @@ export const setPitchBlack: Card[] = [
   new Electrike(),
   new Finizen(),
   new Fomantis(),
-  new FossilExcavationSite(),
-  new GladionsDecisiveBattle(),
+  new FossilQuarry(),
+  new GladionsFinalBattle(),
   new Goldeen(),
   new Grubbin(),
   new Gwynn(),
   new Heatran(),
-  new HeroicBomb(),
+  new TremendousBomb(),
   new Inkay(),
+  new Jett(),
   new Jynx(),
   new Koraidon(),
   new Lampent(),
@@ -122,12 +166,15 @@ export const setPitchBlack: Card[] = [
   new Marshadow(),
   new MegaChandelureex(),
   new MegaDarkraiex(),
+  new MegaDelphoxex(),
   new MegaExcadrillex(),
+  new MegaSlowbroex(),
   new MegaZeraoraex(),
-  new MistysCheerfulness(),
+  new MistysVitality(),
   new Miraidon(),
   new Morpekoex(),
   new Mabosstiff(),
+  new Mandibuzz(),
   new Nickit(),
   new Palafin(),
   new Pikipek(),
@@ -137,9 +184,9 @@ export const setPitchBlack: Card[] = [
   new Primeape(),
   new Rampardosex(),
   new Relicanth(),
-  new RetryBadge(),
+  new BacktrackBadge(),
   new RustSyndicateGrunt(),
-  new ShadowDarknessEnergy(),
+  new ShadowyDarknessEnergy(),
   new Seaking(),
   new Shieldon(),
   new Shuppet(),
@@ -156,7 +203,49 @@ export const setPitchBlack: Card[] = [
   new Tropius(),
   new TypeNull(),
   new Vikavolt(),
+  new Vullaby(),
   new Wailmer(),
   new Wailordex(),
   new Zarude(),
+
+  // MARK: Secret rares
+  new FomantisIR(),
+  new ArmarougeIR(),
+  new GoldeenIR(),
+  new PrimarinaIR(),
+  new ManectricIR(),
+  new SlowbroIR(),
+  new DhelmiseIR(),
+  new ThievulIR(),
+  new BastiodonIR(),
+  new ToucannonIR(),
+  new SilvallyIR(),
+
+  new LurantisexFA(),
+  new WailordexFA(),
+  new MegaZeraoraexFA(),
+  new MegaChandelureexFA(),
+  new RampardosexFA(),
+  new MegaDarkraiexFA(),
+  new MorpekoexFA(),
+  new MegaExcadrillexFA(),
+
+  new BraveBangleFAPBL(),
+  new CrushingHammerFAPBL(),
+  new DarkBellFA(),
+  new GladionsFinalBattleFA(),
+  new GwynnFA(),
+  new IronDefenderFAPBL(),
+  new MistysVitalityFA(),
+  new RustSyndicateGruntFA(),
+  new TremendousBombFA(),
+
+  new MegaZeraoraexSIR(),
+  new MegaChandelureexSIR(),
+  new MegaDarkraiexSIR(),
+  new MorpekoexSIR(),
+  new GladionsFinalBattleSIR(),
+  new GwynnSIR(),
+
+  new MegaDarkraiexHR(),
 ];

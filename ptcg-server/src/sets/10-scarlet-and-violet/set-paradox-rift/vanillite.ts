@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { CardType, Stage } from '../../../game/store/card/card-types';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Vanillite extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -15,10 +15,10 @@ export class Vanillite extends PokemonCard {
     text: ''
   }];
 
-  public set: string = 'PAR';
   public regulationMark = 'G';
-  public cardImage: string = 'assets/cardback.png';
+  public set: string = 'PAR';
   public setNumber: string = '43';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vanillite';
   public fullName: string = 'Vanillite PAR';
 }

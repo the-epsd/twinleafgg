@@ -8,6 +8,8 @@
   padding: 24px;
   background: rgba(8, 12, 20, 0.72);
   backdrop-filter: blur(6px);
+  /* Match Angular ptcgPromptAnimations: fade in with the panel. */
+  animation: promptBackdropEnter 150ms cubic-bezier(0, 0, 0.2, 1);
 }
 
 .panel {
@@ -20,6 +22,31 @@
   background: linear-gradient(165deg, rgba(22, 28, 40, 0.98), rgba(14, 18, 28, 0.98));
   box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
   color: rgba(245, 248, 255, 0.94);
+  transform-origin: center center;
+  /* Match Angular: scale 0.7 → 1 + opacity over 150ms. */
+  animation: promptPanelEnter 150ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+@keyframes promptBackdropEnter {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes promptPanelEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
 }
 
 .panelWide {
@@ -125,13 +152,17 @@
   gap: 10px;
 }
 
-/* Board hand choose-cards on 3D board — full-width instruction bar at top. */
+/*
+ * Board hand choose-cards / setup Active — full-width instruction bar at top.
+ * Above the board (z ~0–10), below TableBoardOverlay (40) and sandboxDock (42)
+ * so Leave / End Turn / sandbox controls stay usable on top of the bar.
+ */
 .chooseStartingTopBar {
   position: fixed;
   top: 55px;
   left: 0;
   right: 0;
-  z-index: 10000;
+  z-index: 30;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -373,7 +404,7 @@
 
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
   }
 }
 

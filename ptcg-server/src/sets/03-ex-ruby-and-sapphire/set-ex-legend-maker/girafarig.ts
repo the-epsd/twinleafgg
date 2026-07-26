@@ -1,10 +1,14 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../../game/store/card/card-types';
 import { PowerType } from '../../../game/store/card/pokemon-types';
-import { StoreLike, State, GameMessage, GameError, StateUtils, CardList, OrderCardsPrompt, SelectPrompt, PlayerType, PokemonCardList } from '../../../game';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
+import { StoreLike, State, GameMessage, GameError, StateUtils, CardList, OrderCardsPrompt, SelectPrompt, PokemonCardList } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  HANDLE_ABILITY_BLOCK,
+  IS_ABILITY_LOCKER_IN_PLAY,
+  POKEPOWER_TYPES,
+} from '../../../game/store/prefabs/ability-lock';
 
 export class Girafarig extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -42,46 +46,44 @@ export class Girafarig extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    // Block Poké-Powers from basics when active
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.POKEPOWER) {
-      const player = effect.player;
-      const thisCardList = StateUtils.findCardList(state, this);
-      const owner = StateUtils.findOwner(state, thisCardList);
-      const opponent = StateUtils.getOpponent(state, player);
+    HANDLE_ABILITY_BLOCK(effect, ({ player, card }) => {
+      if (!IS_ABILITY_LOCKER_IN_PLAY(state, player, this)) {
+        return false;
+      }
 
-      let isGirafarigInPlay = false;
-      owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this) {
-          isGirafarigInPlay = true;
+      let lockerOwner;
+      try {
+        lockerOwner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
+      } catch {
+        return false;
+      }
+      if (IS_POKEBODY_BLOCKED(store, state, lockerOwner, this)) {
+        return false;
+      }
+
+      if (player.active.getPokemonCard() !== card) {
+        return false;
+      }
+
+      if (card.tags.includes(CardTag.POKEMON_ex)) {
+        return false;
+      }
+
+      try {
+        const cardList = StateUtils.findCardList(state, card);
+        if (cardList instanceof PokemonCardList) {
+          return cardList.getPokemons().length === 1
+            || (card.tags.includes(CardTag.LEGEND) && !card.tags.includes(CardTag.POKEMON_ex));
         }
-      });
-
-      if (!isGirafarigInPlay) {
-        return state;
+      } catch {
+        return false;
       }
+      return false;
+    }, {
+      powerTypes: POKEPOWER_TYPES,
+      error: GameMessage.BLOCKED_BY_EFFECT,
+    });
 
-      if (IS_POKEBODY_BLOCKED(store, state, opponent, this)) {
-        return state;
-      }
-
-      // Only check opponent's Active Pokemon
-      if (player.active.getPokemonCard() !== effect.card) {
-        return state;
-      }
-
-      let effectCardList: PokemonCardList | undefined;
-      owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === effect.card) {
-          effectCardList = cardList;
-        }
-      });
-
-      if (effectCardList?.getPokemons().length === 1 || effect.card.tags.includes(CardTag.LEGEND) && !effect.card.tags.includes(CardTag.POKEMON_ex)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-    }
-
-    // Drag Off
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

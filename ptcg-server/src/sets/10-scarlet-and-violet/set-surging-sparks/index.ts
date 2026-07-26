@@ -67,6 +67,7 @@ import { LisiasAppeal } from './lisias-appeal';
 import { Magnemite } from './magnemite';
 import { Magneton } from './magneton';
 import { Marill } from './marill';
+import { Maushold } from './maushold';
 import { MeddlingMemo } from './meddling-memo';
 import { MegatonBlower } from './megaton-blower';
 import { Meowstic } from './meowstic';
@@ -103,6 +104,7 @@ import { Surfer } from './surfer';
 import { Sylveonex } from './sylveon-ex';
 import { TapuKoko } from './tapu-koko';
 import { Tatsugiriex } from './tatsugiri-ex';
+import { Tandemaus } from './tandemaus';
 import { TeraOrb } from './tera-orb';
 import { Terapagos } from './terapagos';
 import { Togekiss } from './togekiss';
@@ -155,6 +157,8 @@ export const setSurgingSparks: Card[] = [
   new Ninetales(),
   new Ceruledge(),
   new Tatsugiriex(),
+  new Tandemaus(),
+  new Maushold(),
   new Palkia(),
   new HoOh(),
   new Azumarill(),

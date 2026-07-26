@@ -1,5 +1,6 @@
 import { AttachEnergyEffect } from '../effects/play-card-effects';
 import { GameError } from '../../game-error';
+import { RESOLVE_PENDING_ENERGY_ATTACH_DAMAGE_COUNTERS } from '../prefabs/attack-effects';
 import { GameMessage, GameLog } from '../../game-message';
 import { Effect } from '../effects/effect';
 import { State } from '../state/state';
@@ -38,6 +39,11 @@ export function playEnergyReducer(store: StoreLike, state: State, effect: Effect
     if (effect.energyCard.energyType === EnergyType.SPECIAL
       && effect.player.marker.hasMarker(effect.player.ATTACK_EFFECT_SPECIAL_ENERGY_LOCK)) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    }
+
+    const fromHand = effect.player.hand.cards.includes(effect.energyCard);
+    if (fromHand && effect.target.pendingEnergyAttachDamageCounters) {
+      state = RESOLVE_PENDING_ENERGY_ATTACH_DAMAGE_COUNTERS(store, state, effect);
     }
 
     store.log(state, GameLog.LOG_PLAYER_ATTACHES_CARD, {

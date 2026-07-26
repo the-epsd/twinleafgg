@@ -1,17 +1,16 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PowerType } from '../../../game/store/card/pokemon-types';
-import { StoreLike, State, StateUtils, GamePhase, EnergyCard } from '../../../game';
+import { StoreLike, State, StateUtils, EnergyCard } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { KnockOutEffect } from '../../../game/store/effects/game-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { DELTA_PLUS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Natu extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType = P;
   public hp: number = 40;
-  public weakness = [{ type: CardType.PSYCHIC }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: P }];
+  public retreat = [C];
 
   public powers = [{
     name: 'Delta Plus',
@@ -22,7 +21,7 @@ export class Natu extends PokemonCard {
 
   public attacks = [{
     name: 'Psywave',
-    cost: [CardType.PSYCHIC, CardType.COLORLESS],
+    cost: [P, C],
     damage: 10,
     text: ' This attack does 10 damage times the amount of Energy attached to your opponent\'s Active Pokémon.'
   }];
@@ -34,28 +33,7 @@ export class Natu extends PokemonCard {
   public fullName: string = 'Natu ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    // Delta Plus
-    if (effect instanceof KnockOutEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // Do not activate between turns, or when it's not opponents turn.
-      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
-        return state;
-      }
-
-      // Natu wasn't attacking
-      const pokemonCard = opponent.active.getPokemonCard();
-      if (pokemonCard !== this) {
-        return state;
-      }
-      if (effect.prizeCount > 0) {
-        effect.prizeCount += 1;
-        return state;
-      }
-    }
-
+    // Psywave
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -68,10 +46,9 @@ export class Natu extends PokemonCard {
           energyCount++;
         }
       });
-
       effect.damage = energyCount * 10;
     }
 
-    return state;
+    return DELTA_PLUS(store, state, effect, this);
   }
 }

@@ -1,32 +1,32 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../../game/store/card/card-types';
-import { ChooseCardsPrompt, GameError, GameMessage, PowerType, ShowCardsPrompt, ShuffleDeckPrompt, State, StateUtils, StoreLike } from '../../../game';
+import { ChooseCardsPrompt, GameError, GameMessage, PowerType, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { IS_ABILITY_BLOCKED, MOVE_CARDS, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { ABILITY_USED, IS_ABILITY_BLOCKED, MOVE_CARDS, SHUFFLE_DECK, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Grotle extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Turtwig';
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType = G;
   public hp: number = 100;
-  public weakness = [{ type: CardType.FIRE }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public retreat = [C, C, C];
+
   public powers = [{
     name: 'Sun-Drenched Shell',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'Once during your turn, you may search your deck for a [G] Pokémon, reveal it, and put it into your hand. Shuffle your deck afterward.'
   }];
-  public attacks = [
-    {
-      name: 'Razor Leaf',
-      cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
-      damage: 50,
-      text: ''
-    }
-  ];
+
+  public attacks = [{
+    name: 'Razor Leaf',
+    cost: [G, C, C],
+    damage: 50,
+    text: ''
+  }];
 
   public regulationMark: string = 'F';
   public set: string = 'BRS';
@@ -50,13 +50,11 @@ export class Grotle extends PokemonCard {
 
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
       // Check to see if anything is blocking our Ability
       if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
-
 
       if (player.marker.hasMarker(this.SUN_DRENCHED_SHELL_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
@@ -67,20 +65,12 @@ export class Grotle extends PokemonCard {
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
         { superType: SuperType.POKEMON, cardType: CardType.GRASS },
-        { min: 0, max: 1, allowCancel: true }
+        { min: 0, max: 1, allowCancel: false }
       ), cards => {
+        ABILITY_USED(player, this);
+        player.marker.addMarker(this.SUN_DRENCHED_SHELL_MARKER, this);
         MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: this, sourceEffect: this.powers[0] });
-
-        state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-          player.marker.addMarker(this.SUN_DRENCHED_SHELL_MARKER, this);
-        });
-
-        return store.prompt(state, new ShowCardsPrompt(
-          opponent.id,
-          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-          cards), () => state
-        );
+        return SHUFFLE_DECK(store, state, player);
       });
     }
 

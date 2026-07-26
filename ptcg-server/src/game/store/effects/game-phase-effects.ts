@@ -31,6 +31,7 @@ export class DrawCardForTurnEffect implements Effect {
   readonly type: string = GamePhaseEffects.DRAW_CARD_FOR_TURN_EFFECT;
   public preventDefault = false;
   public player: Player;
+  public drawCount = 1;
 
   constructor(player: Player) {
     this.player = player;

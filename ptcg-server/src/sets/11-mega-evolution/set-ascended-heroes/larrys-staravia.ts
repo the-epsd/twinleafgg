@@ -1,4 +1,5 @@
-import { PokemonCard, Stage, CardTag, CardType } from '../../../game';
+import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 
 export class LarrysStaravia extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -24,8 +25,8 @@ export class LarrysStaravia extends PokemonCard {
 
   public regulationMark = 'I';
   public set: string = 'ASC';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '169';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Larry\'s Staravia';
   public fullName: string = 'Larry\'s Staravia MC';
 }

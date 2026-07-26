@@ -3,9 +3,12 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { Card, CardTarget, ChoosePokemonPrompt, GameError, GameMessage, MoveEnergyPrompt, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
-import { CheckPokemonPowersEffect } from '../../../game/store/effects/check-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
+import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
+import {
+  HANDLE_ABILITY_BLOCK,
+  POKEPOWER_AND_BODY_TYPES,
+} from '../../../game/store/prefabs/ability-lock';
 
 export class Gardevoirex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -71,27 +74,21 @@ export class Gardevoirex extends PokemonCard {
         return state;
       });
     }
-    if (effect instanceof CheckPokemonPowersEffect) {
-      // Check if the target has an Imprison marker
-      if (HAS_MARKER(this.IMPRISON_MARKER, effect.target, this)) {
-        // Filter out all Poké Powers and Poké Bodies
-        effect.powers = effect.powers.filter(power =>
-          power.powerType !== PowerType.POKEPOWER && power.powerType !== PowerType.POKEBODY
-        );
-      }
-    }
 
-    if (effect instanceof PowerEffect
-      && (effect.power.powerType === PowerType.POKEPOWER || effect.power.powerType === PowerType.POKEBODY)) {
-      // Find the PokemonCardList that contains effect.card (probably a better way to do this tbh)
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const allLists = [player.active, ...player.bench, ...opponent.active ? [opponent.active] : [], ...opponent.bench];
-      const pokemonCardList = allLists.find(list => list.cards.includes(effect.card));
-      if (pokemonCardList && HAS_MARKER(this.IMPRISON_MARKER, pokemonCardList, this)) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
+    HANDLE_ABILITY_BLOCK(effect, ({ card }) => {
+      if (card instanceof PokemonCardList) {
+        return HAS_MARKER(this.IMPRISON_MARKER, card, this);
       }
-    }
+      try {
+        const cardList = StateUtils.findCardList(state, card);
+        return cardList instanceof PokemonCardList && HAS_MARKER(this.IMPRISON_MARKER, cardList, this);
+      } catch {
+        return false;
+      }
+    }, {
+      powerTypes: POKEPOWER_AND_BODY_TYPES,
+      error: GameMessage.CANNOT_USE_POWER,
+    });
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;

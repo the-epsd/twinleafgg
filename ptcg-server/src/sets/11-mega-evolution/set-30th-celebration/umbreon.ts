@@ -1,9 +1,8 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
-import { MarkerConstants } from '../../../game/store/markers/marker-constants';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN } from '../../../game/store/prefabs/prefabs';
 
 export class Umbreon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -38,10 +37,13 @@ export class Umbreon extends PokemonCard {
     // Ref: set-lost-thunder/umbreon.ts (Retaliate — REVENGE_MARKER)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      if (player.marker.hasMarker(MarkerConstants.REVENGE_MARKER)) {
+
+      if (WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN(player, { byAttackDamage: true })) {
         effect.damage += 100;
       }
+      return state;
     }
+
     return state;
   }
 }

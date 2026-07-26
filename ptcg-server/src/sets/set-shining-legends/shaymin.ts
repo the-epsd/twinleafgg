@@ -2,8 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { DRAW_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { MarkerConstants } from '../../game/store/markers/marker-constants';
+import { DRAW_CARDS, MOVE_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED, WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN } from '../../game/store/prefabs/prefabs';
 
 export class Shaymin extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -34,23 +33,22 @@ export class Shaymin extends PokemonCard {
   public fullName: string = 'Shaymin SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Flippity Flap
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      //MOVE_CARDS(store, state, player.hand, player.deck, { cards: player.hand.cards });
-      player.hand.moveTo(player.deck);
+      MOVE_CARDS(store, state, player.hand, player.deck, { cards: player.hand.cards });
       SHUFFLE_DECK(store, state, player);
       DRAW_CARDS(store, state, player, 6);
     }
 
+    // Rally Back
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      if (player.marker.hasMarker(MarkerConstants.REVENGE_MARKER)) {
+      if (WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN(player, { byAttackDamage: true })) {
         effect.damage += 90;
       }
-
       return state;
     }
 

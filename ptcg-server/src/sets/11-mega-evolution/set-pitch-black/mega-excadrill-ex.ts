@@ -2,8 +2,14 @@ import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED, DISCARD_TOP_X_CARDS_FROM_YOUR_DECK } from '../../../game/store/prefabs/prefabs';
+import {
+  CheckAttackCostEffect,
+  CheckProvidedEnergyEffect,
+} from '../../../game/store/effects/check-effects';
+import {
+  WAS_ATTACK_USED,
+  DISCARD_TOP_X_CARDS_FROM_YOUR_DECK,
+} from '../../../game/store/prefabs/prefabs';
 
 export class MegaExcadrillex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -15,22 +21,24 @@ export class MegaExcadrillex extends PokemonCard {
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C, C, C];
 
-  public attacks = [{
-    name: 'Dig And Break',
-    cost: [M, M],
-    damage: 90,
-    text: 'Discard the top 2 cards from your opponent\'s deck.',
-  },
-  {
-    name: 'Maximum Drill',
-    cost: [M, M, M],
-    damage: 200,
-    damageCalculation: '+',
-    text: 'If this Pokémon has at least 2 extra Energy attached to it (in addition to this attack\'s cost), this attack does 130 more damage.',
-  }];
+  public attacks = [
+    {
+      name: 'Undermine',
+      cost: [M, M],
+      damage: 90,
+      text: "Discard the top 2 cards of your opponent's deck.",
+    },
+    {
+      name: 'Maximum Drilling',
+      cost: [M, M, M],
+      damage: 200,
+      damageCalculation: '+',
+      text: "If this Pokémon has at least 2 extra Energy attached (in addition to this attack's cost), this attack does 130 more damage.",
+    },
+  ];
 
-  public set: string = 'M5';
-  public setNumber: string = '63';
+  public set: string = 'PBL';
+  public setNumber: string = '65';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Excadrill ex';

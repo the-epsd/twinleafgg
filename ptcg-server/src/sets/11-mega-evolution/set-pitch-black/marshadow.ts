@@ -13,16 +13,18 @@ export class Marshadow extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Shadow Knot',
-    cost: [P],
-    damage: 30,
-    damageCalculation: 'x',
-    text: 'This attack does 30 damage times the number of [C] in your opponent\'s Active Pokémon\'s Retreat Cost.',
-  }];
+  public attacks = [
+    {
+      name: 'Shadowy Knot',
+      cost: [P],
+      damage: 30,
+      damageCalculation: 'x',
+      text: "This attack does 30 damage for each [C] in your opponent's Active Pokémon's Retreat Cost.",
+    },
+  ];
 
-  public set: string = 'M5';
-  public setNumber: string = '38';
+  public set: string = 'PBL';
+  public setNumber: string = '40';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Marshadow';
@@ -36,7 +38,7 @@ export class Marshadow extends PokemonCard {
 
       const checkRetreat = new CheckRetreatCostEffect(opponent);
       store.reduceEffect(state, checkRetreat);
-      const colorlessCount = checkRetreat.cost.filter(c => c === CardType.COLORLESS).length;
+      const colorlessCount = checkRetreat.cost.filter((c) => c === CardType.COLORLESS).length;
 
       effect.damage = 30 * colorlessCount;
     }

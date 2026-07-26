@@ -16,21 +16,23 @@ export class Jynx extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Wicked Kiss',
-    cost: [P],
-    damage: 0,
-    text: 'At the end of your opponent\'s next turn, discard the Defending Pokémon and all cards attached to it.',
-  },
-  {
-    name: 'Psyshock',
-    cost: [P, C],
-    damage: 50,
-    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.',
-  }];
+  public attacks = [
+    {
+      name: 'Intense Kiss',
+      cost: [P],
+      damage: 0,
+      text: "At the end of your opponent's next turn, discard the Defending Pokémon and all attached cards.",
+    },
+    {
+      name: 'Psy Bolt',
+      cost: [P, C],
+      damage: 50,
+      text: "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed.",
+    },
+  ];
 
-  public set: string = 'M5';
-  public setNumber: string = '30';
+  public set: string = 'PBL';
+  public setNumber: string = '32';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jynx';
@@ -42,7 +44,7 @@ export class Jynx extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, heads => {
+      COIN_FLIP_PROMPT(store, state, effect.player, (heads) => {
         if (heads) {
           YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
         }

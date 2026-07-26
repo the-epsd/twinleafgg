@@ -1,6 +1,6 @@
 import { AnimationEvent } from '@angular/animations';
 import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { Prompt, GamePhase } from 'ptcg-server';
+import { Prompt, GamePhase, WaitPrompt } from 'ptcg-server';
 
 import { GameService } from '../../api/services/game.service';
 import { GameOverPrompt } from './prompt-game-over/game-over.prompt';
@@ -46,6 +46,13 @@ export class PromptComponent implements OnChanges {
         this.toggle(false);
         return;
       }
+    }
+
+    // Don't keep gameplay prompts open once the match has ended
+    if (this.gameState.state.phase === GamePhase.FINISHED) {
+      this.prompt = undefined;
+      this.toggle(false);
+      return;
     }
 
     let prompt = this.gameState.state.prompts.find(p => {
@@ -104,10 +111,16 @@ export class PromptComponent implements OnChanges {
 
   public cannotBeMinimized(): boolean {
     // Add all prompt types you want to NEVER be minimized here
-    return this.prompt?.type === 'Choose pokemon' || this.prompt?.type === 'WaitPrompt';
+    if (this.prompt?.type === 'WaitPrompt') {
+      return (this.prompt as WaitPrompt).showVisual !== false;
+    }
+    return this.prompt?.type === 'Choose pokemon';
   }
 
   public isFullScreenPrompt(): boolean {
-    return this.prompt?.type === 'Choose pokemon' || this.prompt?.type === 'WaitPrompt' || this.prompt?.type === 'Choose prize' || this.prompt?.type === 'Choose cards';
+    if (this.prompt?.type === 'WaitPrompt') {
+      return (this.prompt as WaitPrompt).showVisual !== false;
+    }
+    return this.prompt?.type === 'Choose pokemon' || this.prompt?.type === 'Choose prize' || this.prompt?.type === 'Choose cards';
   }
 }

@@ -12,18 +12,18 @@ export class Wailmer extends PokemonCard {
     name: 'Water Gun',
     cost: [W, W],
     damage: 40,
-    text: '',
+    text: ''
   },
   {
     name: 'Wave Splash',
     cost: [W, W, W],
     damage: 80,
-    text: '',
+    text: ''
   }];
 
-  public set: string = 'M5';
-  public setNumber: string = '14';
-  public regulationMark: string = 'J';
+  public regulationMark = 'J';
+  public set: string = 'PBL';
+  public setNumber: string = '15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wailmer';
   public fullName: string = 'Wailmer M5';

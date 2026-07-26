@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../../game/store/card/card-types';
+import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, PlayerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
@@ -11,16 +11,18 @@ export class Relicanth extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Fossil Beatdown',
-    cost: [C],
-    damage: 10,
-    damageCalculation: '+',
-    text: 'This attack does 30 more damage for each of your Benched Pokémon with "Antique" in its name.',
-  }];
+  public attacks = [
+    {
+      name: 'Fossil Beatdown',
+      cost: [C],
+      damage: 10,
+      damageCalculation: '+',
+      text: 'This attack does 30 more damage for each of your Benched Pokémon with "Antique" in its name.',
+    },
+  ];
 
-  public set: string = 'M5';
-  public setNumber: string = '16';
+  public set: string = 'PBL';
+  public setNumber: string = '17';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Relicanth';
@@ -34,7 +36,7 @@ export class Relicanth extends PokemonCard {
         if (cardList === player.active) {
           return;
         }
-        if (card.name.includes('Antique')) {
+        if (card.tags.includes(CardTag.ANTIQUE)) {
           antiqueBench++;
         }
       });

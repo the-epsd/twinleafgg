@@ -3,14 +3,14 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 
 export class Psyduck extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType = W;
   public hp: number = 60;
-  public retreat = [CardType.COLORLESS];
-  public weakness = [{ type: CardType.GRASS }];
+  public weakness = [{ type: G }];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Headache',
-    cost: [CardType.WATER],
+    cost: [W],
     damage: 20,
     text: ''
   }];
@@ -20,6 +20,4 @@ export class Psyduck extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Psyduck';
   public fullName: string = 'Psyduck HIF';
-
-
 }

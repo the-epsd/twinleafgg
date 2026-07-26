@@ -1,30 +1,156 @@
 import { Card } from '../../../game/store/card/card';
+import { Aarune } from './aarune';
 import { AdventuringLantern } from './adventuring-lantern';
+import { Altaria } from './altaria';
+import { Arcanine } from './arcanine';
+import { Ariados } from './ariados';
+import { Azurill } from './azurill';
+import { Cacnea } from './cacnea';
+import { Cacturne } from './cacturne';
+import { Combee } from './combee';
+import { CustomVest } from './custom-vest';
+import { Cyclizar } from './cyclizar';
+import { DeliciousRiceBalls } from './delicious-rice-balls';
+import { Druddigon } from './druddigon';
+import { Drowzee } from './drowzee';
+import { Electabuzz } from './electabuzz';
+import { Electivire } from './electivire';
+import { Enamorus } from './enamorus';
 import { Fletchinder } from './fletchinder';
 import { Fletchling } from './fletchling';
-import { MegaRayquazaCap } from './mega-rayquaza-cap';
-import { MegaRayquazaex } from './mega-rayquaza-ex';
-import { Talonflameex } from './talonflame-ex';
-import { ZinniasTrust } from './zinnias-trust';
-import { EmceesHypeM6 } from './other-prints';
+import { Frillish } from './frillish';
+import { Giratina } from './giratina';
+import { Golett } from './golett';
+import { Groudon } from './groudon';
+import { Growlithe } from './growlithe';
+import { HakamoO } from './hakamo-o';
+import { Heatmor } from './heatmor';
+import { HeatRotomex } from './heat-rotom-ex';
+import { Heracross } from './heracross';
+import { Hypno } from './hypno';
+import { Inkay } from './inkay';
+import { JangmoO } from './jangmo-o';
+import { Jellicent } from './jellicent';
+import { Kecleon } from './kecleon';
+import { Kilowattrel } from './kilowattrel';
+import { KommoO } from './kommo-o';
+import { Kyogre } from './kyogre';
+import { Landorus } from './landorus';
+import { LegendaryLavaLakeLeft } from './legendary-lava-lake-left';
+import { LegendaryLavaLakeRight } from './legendary-lava-lake-right';
+import { LegendaryOceanTrenchLeft } from './legendary-ocean-trench-left';
+import { LegendaryOceanTrenchRight } from './legendary-ocean-trench-right';
 import { LegendarySummitLeft } from './legendary-summit-left';
 import { LegendarySummitRight } from './legendary-summit-right';
-import { Sableye } from './sableye';
-import { Inkay } from './inkay';
+import { Magmar } from './magmar';
+import { Magmortar } from './magmortar';
+import { Mantine } from './mantine';
+import { Masquerain } from './masquerain';
+import { MegaGolurkex } from './mega-golurk-ex';
+import { MegaGolisopodex } from './mega-golisopod-ex';
 import { MegaMalamarex } from './mega-malamar-ex';
+import { MegaRayquazaCap } from './mega-rayquaza-cap';
+import { MegaRayquazaex } from './mega-rayquaza-ex';
+import { EmceesHypeM6 } from './other-prints';
+import { Nidoqueen } from './nidoqueen';
+import { NidoranFemale } from './nidoran-f';
+import { Nidorina } from './nidorina';
+import { Onix } from './onix';
+import { Pincurchin } from './pincurchin';
+import { Raikouex } from './raikou-ex';
+import { Sableye } from './sableye';
+import { Sandshrew } from './sandshrew';
+import { Sandslash } from './sandslash';
+import { Spinarak } from './spinarak';
+import { Steelix } from './steelix';
+import { Surskit } from './surskit';
+import { Swablu } from './swablu';
+import { Talonflameex } from './talonflame-ex';
+import { TateAndLizasTraining } from './tate-and-lizas-training';
+import { Thundurus } from './thundurus';
+import { Torkoal } from './torkoal';
+import { Tornadus } from './tornadus';
+import { Vespiquen } from './vespiquen';
+import { Wattrel } from './wattrel';
+import { Wimpod } from './wimpod';
+import { Wishiwashiex } from './wishiwashi-ex';
+import { ZinniasTrust } from './zinnias-trust';
 
 export const setDeltaReign: Card[] = [
-  new MegaRayquazaex(),
-  new Fletchling(),
-  new Fletchinder(),
-  new Talonflameex(),
-  new AdventuringLantern(),
-  new MegaRayquazaCap(),
-  new EmceesHypeM6(),
-  new ZinniasTrust(),
-  new LegendarySummitLeft(),
-  new LegendarySummitRight(),
+  new Heracross(),
+  new Surskit(),
+  new Masquerain(),
+  new Cacnea(),
+  new Cacturne(),
+  new Combee(),
+  new Vespiquen(),
+  new Wimpod(),
+  new MegaGolisopodex(),
+  new Growlithe(),
+  new Arcanine(),
+  new Magmar(),
+  new Magmortar(),
+  new Torkoal(),
+  new HeatRotomex(),
+  new Heatmor(),
+  new Mantine(),
+  new Kyogre(),
+  new Frillish(),
+  new Jellicent(),
+  new Wishiwashiex(),
+  new Electabuzz(),
+  new Electivire(),
+  new Raikouex(),
+  new Thundurus(),
+  new Pincurchin(),
+  new Wattrel(),
+  new Kilowattrel(),
+  new Drowzee(),
+  new Hypno(),
+  new Giratina(),
+  new Golett(),
+  new MegaGolurkex(),
+  new Enamorus(),
+  new Sandshrew(),
+  new Sandslash(),
+  new Onix(),
+  new Steelix(),
+  new Groudon(),
+  new Landorus(),
+  new NidoranFemale(),
+  new Nidorina(),
+  new Nidoqueen(),
+  new Spinarak(),
+  new Ariados(),
   new Sableye(),
   new Inkay(),
   new MegaMalamarex(),
+  new Druddigon(),
+  new JangmoO(),
+  new HakamoO(),
+  new KommoO(),
+  new Cyclizar(),
+  new Azurill(),
+  new Swablu(),
+  new Altaria(),
+  new Kecleon(),
+  new MegaRayquazaex(),
+  new Tornadus(),
+  new Fletchling(),
+  new Fletchinder(),
+  new Talonflameex(),
+  new DeliciousRiceBalls(),
+  new AdventuringLantern(),
+  new CustomVest(),
+  new MegaRayquazaCap(),
+  new Aarune(),
+  new EmceesHypeM6(),
+  new ZinniasTrust(),
+  new TateAndLizasTraining(),
+  new LegendaryOceanTrenchLeft(),
+  new LegendaryOceanTrenchRight(),
+  new LegendarySummitLeft(),
+  new LegendarySummitRight(),
+  new LegendaryLavaLakeLeft(),
+  new LegendaryLavaLakeRight(),
 ];

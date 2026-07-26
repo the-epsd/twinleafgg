@@ -2,8 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 
 export class Horsea extends PokemonCard {
-  public tags = [CardTag.DELTA_SPECIES];
   public stage: Stage = Stage.BASIC;
+  public tags = [CardTag.DELTA_SPECIES];
   public cardType: CardType = R;
   public hp: number = 50;
   public weakness = [{ type: L }];
@@ -23,8 +23,8 @@ export class Horsea extends PokemonCard {
   }];
 
   public set: string = 'HP';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '66';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Horsea';
   public fullName: string = 'Horsea HP';
 }

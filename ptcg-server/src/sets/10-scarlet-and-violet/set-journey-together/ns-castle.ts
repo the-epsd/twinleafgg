@@ -8,6 +8,7 @@ import { TrainerType, CardTag } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
 import { CheckRetreatCostEffect } from '../../../game/store/effects/check-effects';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 
 export class NsCastle extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
@@ -18,11 +19,14 @@ export class NsCastle extends TrainerCard {
   public regulationMark = 'I';
   public cardImage: string = 'assets/cardback.png';
   public setNumber = '152';
-
   public text: string = 'Each N\'s Pokémon in play (both yours and your opponent\'s) has no Retreat Cost.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckRetreatCostEffect && StateUtils.getStadiumCard(state) === this) {
+      if (IS_STADIUM_EFFECT_BLOCKED(store, state, effect.player, effect.player.active, this)) {
+        return state;
+      }
+
       if (effect.player.active.getPokemonCard()?.tags.includes(CardTag.NS)) {
         effect.cost = [];
       }

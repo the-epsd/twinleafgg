@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import type { Card, CardList, Player } from 'ptcg-server';
+import type { Card, CardList, CardType, Player } from 'ptcg-server';
 import { GamePhase } from 'ptcg-server';
 import { useAuth } from '../context/AuthContext';
 import { useDeckCardScanUrl } from '../context/CardImagesContext';
@@ -13,10 +13,13 @@ import { useSnackbar } from '../context/SnackbarContext';
 import { translateGameSocketError } from '../i18n/translateGameSocketError';
 import { buildLocalGameFromMatchReplay } from '../api/replayApi';
 import type { LocalGameState } from '../table/types/localGameState';
+import { shouldCancelCoinFlipAnimation } from '../table/coin-flip-animation';
 import { gameStateToLocal, mergeStateChange } from '../table/gameSessionUtils';
 import { BoardInteractionService } from '../table/BoardInteractionService';
 import type { Board3dGameActions } from '../table/board3d/board3dGameActions';
 import { Board3DCanvas } from '../table/board3d/Board3DCanvas';
+import { Board2DCanvas } from '../table/board2d/Board2DCanvas';
+import { useSettings } from '../context/SettingsContext';
 import { TablePromptLayer } from '../table/prompts/TablePromptLayer';
 import { TableBoardOverlay } from '../table/hud/TableBoardOverlay';
 import type { AdminSpectatorReveal } from '../table/hud/AdminSpectatorControls';
@@ -70,6 +73,7 @@ export function TablePage() {
   const catalog = useMemo(() => cardsInfo?.cards ?? EMPTY_CATALOG, [cardsInfo?.cards]);
   const getScanUrl = useDeckCardScanUrl(serverConfig?.scansUrl);
   const { clientId, connected: coreConnected } = useCoreSession();
+  const { use3dBoardDefault } = useSettings();
 
   const hasReplayParam = matchIdParam != null && matchIdParam !== '';
   const replayMatchId = hasReplayParam ? Number(matchIdParam) : NaN;
@@ -196,6 +200,9 @@ export function TablePage() {
         setLocalGame((g) => {
           if (!g || g.gameId !== gameId) return g;
           const next = mergeStateChange(g, data.stateData, data.playerStats);
+          if (shouldCancelCoinFlipAnimation(g, next)) {
+            boardInteraction.cancelCoinFlipAnimation();
+          }
           boardInteraction.updateGameLogs(next.logs);
           if (next.state.phase === GamePhase.FINISHED) {
             clearPersistedGameId();
@@ -225,8 +232,20 @@ export function TablePage() {
         cardId: number | string;
         slot: string;
         index?: number;
+        cardType?: number;
+        opponentId?: number;
       }) => {
         boardInteraction.triggerAttackAnimation(data);
+        if (data.cardType !== undefined && data.opponentId !== undefined) {
+          boardInteraction.triggerAttackEffect({
+            playerId: data.playerId,
+            cardId: data.cardId,
+            slot: data.slot,
+            index: data.index,
+            cardType: data.cardType as CardType,
+            opponentId: data.opponentId,
+          });
+        }
       };
       const onAbility = (data: {
         playerId: number;
@@ -601,20 +620,44 @@ export function TablePage() {
             />
           </div>
         ) : null}
-      <Board3DCanvas
-        gameState={localGame}
-        topPlayer={topPlayer}
-        bottomPlayer={bottomPlayer}
-        bottomPlayerHand={bottomHand}
-        topPlayerHand={topHand}
-        clientId={tableClientId}
-        catalog={catalog}
-        adminSpectatorReveal={showAdminSpectatorControls ? adminSpectatorReveal : undefined}
-        boardInteraction={boardInteraction}
-        gameActions={gameActions}
-        onKoSequenceActiveChange={onKoSequenceActiveChange}
-        onBoardFps={onBoardFps}
-      />
+      {use3dBoardDefault ? (
+        <Board3DCanvas
+          gameState={localGame}
+          topPlayer={topPlayer}
+          bottomPlayer={bottomPlayer}
+          bottomPlayerHand={bottomHand}
+          topPlayerHand={topHand}
+          clientId={tableClientId}
+          catalog={catalog}
+          adminSpectatorReveal={showAdminSpectatorControls ? adminSpectatorReveal : undefined}
+          boardInteraction={boardInteraction}
+          gameActions={gameActions}
+          onKoSequenceActiveChange={onKoSequenceActiveChange}
+          onBoardFps={onBoardFps}
+        />
+      ) : (
+        <Board2DCanvas
+          gameState={localGame}
+          topPlayer={topPlayer}
+          bottomPlayer={bottomPlayer}
+          bottomPlayerHand={bottomHand}
+          topPlayerHand={topHand}
+          clientId={tableClientId}
+          catalog={catalog}
+          adminSpectatorReveal={
+            showAdminSpectatorControls
+              ? {
+                  hands: adminSpectatorReveal.revealHands,
+                  prizes: adminSpectatorReveal.revealPrizes,
+                }
+              : undefined
+          }
+          boardInteraction={boardInteraction}
+          gameActions={gameActions}
+          onKoSequenceActiveChange={onKoSequenceActiveChange}
+          onBoardFps={onBoardFps}
+        />
+      )}
       <TableBoardOverlay
         localGame={localGame}
         clientId={tableClientId}

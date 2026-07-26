@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Card, CardList, EnergyCard, Player, PokemonCard, TrainerCard } from 'ptcg-server';
-import { CardType, BoardEffect, EnergyType, PokemonCardList, PowerType, SuperType, TrainerType } from 'ptcg-server';
+import { CardType, BoardEffect, EnergyType, PokemonCardList, PowerType, SuperType, TrainerType, CardTag } from 'ptcg-server';
 import { CardSwapDialog } from './CardSwapDialog';
 import { EnergyTypeIcon } from './EnergyTypeIcon';
 import { isFavoriteCard, toggleFavoriteCard } from './favoriteCardsStorage';
@@ -22,6 +22,7 @@ import {
   formatCardText,
   CARD_INFO_ENERGY_ICON_SIZE,
 } from './cardInfoUtils';
+import { hasBothDualLegendHalvesInHand } from '../table/board3d/dual-legend.utils';
 import { useOptionalSettings } from '../context/SettingsContext';
 import { HoverHighlight } from './HoverHighlight';
 import { CardInfoImageColumn } from './CardInfoImageColumn';
@@ -141,14 +142,23 @@ export function CardInfoPane({
     const e = options.enableAbility;
     if (!e) return m;
     for (const power of displayPowers) {
-      const ok =
+      let ok =
         !!(e.useWhenInPlay && power.useWhenInPlay && !abilityUsedThisTurn) ||
         !!(e.useFromDiscard && power.useFromDiscard) ||
         !!(e.useFromHand && power.useFromHand);
+      if (
+        ok &&
+        e.useFromHand &&
+        power.useFromHand &&
+        power.powerType === PowerType.LEGEND_ASSEMBLY &&
+        card.tags?.includes(CardTag.DUAL_LEGEND)
+      ) {
+        ok = hasBothDualLegendHalvesInHand(cardList?.cards ?? [], card);
+      }
       if (ok) m[power.name] = true;
     }
     return m;
-  }, [abilityUsedThisTurn, displayPowers, options.enableAbility]);
+  }, [abilityUsedThisTurn, card, cardList, displayPowers, options.enableAbility]);
 
   const viewingToolCard = isToolCardInList(card, cardList);
   const shouldEnableAttacks =
@@ -298,13 +308,13 @@ export function CardInfoPane({
             >
               <div className={styles.power}>
                 <div className={styles.powerHeader}>
-                  <div className={styles.powerType}>
-                    {powerTypeLabel(power.powerType) ? (
+                  {powerTypeLabel(power.powerType) ? (
+                    <div className={styles.powerType}>
                       <span className={power.powerType === PowerType.POKEBODY ? styles.pokeBody : styles.ability}>
                         {powerTypeLabel(power.powerType)}
                       </span>
-                    ) : null}
-                  </div>
+                    </div>
+                  ) : null}
                   <div className={styles.powerName}>{power.name}</div>
                 </div>
                 <div
@@ -484,11 +494,11 @@ export function CardInfoPane({
             >
               <div className={styles.power}>
                 <div className={styles.powerHeader}>
-                  <div className={styles.powerType}>
-                    {powerTypeLabel(power.powerType) ? (
+                  {powerTypeLabel(power.powerType) ? (
+                    <div className={styles.powerType}>
                       <span className={styles.ability}>{powerTypeLabel(power.powerType)}</span>
-                    ) : null}
-                  </div>
+                    </div>
+                  ) : null}
                   <div className={styles.powerName}>{power.name}</div>
                 </div>
                 <div
@@ -553,11 +563,11 @@ export function CardInfoPane({
             >
               <div className={styles.power}>
                 <div className={styles.powerHeader}>
-                  <div className={styles.powerType}>
-                    {powerTypeLabel(power.powerType) ? (
+                  {powerTypeLabel(power.powerType) ? (
+                    <div className={styles.powerType}>
                       <span className={styles.ability}>{powerTypeLabel(power.powerType)}</span>
-                    ) : null}
-                  </div>
+                    </div>
+                  ) : null}
                   <div className={styles.powerName}>{power.name}</div>
                 </div>
                 <div

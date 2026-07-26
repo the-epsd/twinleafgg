@@ -1,36 +1,23 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { Attack } from '../../game/store/card/pokemon-types';
 
 export class Seel extends PokemonCard {
+  public stage: Stage = Stage.BASIC;
+  public cardType: CardType = W;
+  public hp: number = 60;
+  public weakness = [{ type: L }];
+  public retreat = [C];
 
-  public name = 'Seel';
+  public attacks = [{
+    name: 'Headbutt',
+    cost: [W],
+    damage: 10,
+    text: ''
+  }];
 
+  public set: string = 'BS';
+  public setNumber: string = '41';
   public cardImage: string = 'assets/cardback.png';
-
-  public set = 'BS';
-
-  public setNumber = '41';
-
-  public fullName = 'Seel BS';
-
-  public cardType = CardType.WATER;
-
-  public stage = Stage.BASIC;
-
-  public hp = 60;
-
-  public weakness = [{ type: CardType.LIGHTNING }];
-
-  public retreat = [CardType.COLORLESS];
-
-  public attacks: Attack[] = [
-    {
-      name: 'Headbutt',
-      cost: [CardType.WATER],
-      damage: 10,
-      text: ''
-    }
-  ];
-
+  public name: string = 'Seel';
+  public fullName: string = 'Seel BS';
 }

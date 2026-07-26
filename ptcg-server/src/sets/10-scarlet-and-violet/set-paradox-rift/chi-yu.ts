@@ -2,58 +2,40 @@ import { AttachEnergyPrompt, EnergyCard, GameError, GameMessage, PlayerType, Slo
 import { CardType, EnergyType, Stage, SuperType } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
-
-import { MarkerConstants } from '../../../game/store/markers/marker-constants';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN } from '../../../game/store/prefabs/prefabs';
 
 export class ChiYu extends PokemonCard {
+  public stage: Stage = Stage.BASIC;
+  public cardType: CardType = R;
+  public hp: number = 110;
+  public weakness = [{ type: W }];
+  public retreat = [C];
+
+  public attacks = [{
+    name: 'Flare Bringer',
+    cost: [R],
+    damage: 0,
+    text: 'Attach up to 2 Basic [R] Energy cards from your discard pile to 1 of your Pokémon.'
+  },
+  {
+    name: 'Megafire of Envy',
+    cost: [R, R],
+    damage: 50,
+    damageCalculation: '+',
+    text: 'If any of your Pokémon were Knocked Out by damage from an attack during your opponent\'s last turn, this attack does 90 more damage.'
+  }];
 
   public regulationMark = 'G';
-
-  public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.FIRE;
-
-  public hp: number = 110;
-
-  public weakness = [{ type: CardType.WATER }];
-
-  public retreat = [CardType.COLORLESS];
-
-  public attacks = [
-    {
-      name: 'Flare Bringer',
-      cost: [CardType.FIRE],
-      damage: 0,
-      text: 'Attach up to 2 Basic [R] Energy cards from your discard pile to 1 of your Pokémon.'
-    },
-    {
-      name: 'Megafire of Envy',
-      cost: [CardType.FIRE, CardType.FIRE],
-      damage: 50,
-      damageCalculation: '+',
-      text: 'If any of your Pokémon were Knocked Out by damage from an attack during your opponent\'s last turn, this attack does 90 more damage.'
-    }
-  ];
-
   public set: string = 'PAR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '29';
-
   public name: string = 'Chi-Yu';
-
   public fullName: string = 'Chi-Yu PAR';
 
-  // public damageDealt = false;
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Flare Bringer
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      // this.damageDealt = false;
-
       const hasEnergyInDiscard = player.discard.cards.some(c => {
         return c.superType === SuperType.ENERGY
           && c.energyType === EnergyType.BASIC
@@ -87,12 +69,14 @@ export class ChiYu extends PokemonCard {
       return state;
     }
 
+    // Megafire of Envy
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      if (player.marker.hasMarker(MarkerConstants.REVENGE_MARKER)) {
+      if (WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN(player, { byAttackDamage: true })) {
         effect.damage += 90;
       }
+      return state;
     }
 
     return state;

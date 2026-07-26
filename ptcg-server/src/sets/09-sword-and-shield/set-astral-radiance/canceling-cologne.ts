@@ -1,15 +1,16 @@
-import { TrainerCard } from '../../../game/store/card/trainer-card';
+import { StateUtils } from '../../..';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
+import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { GameError, GameMessage, StateUtils } from '../../..';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { CheckPokemonPowersEffect } from '../../../game/store/effects/check-effects';
-import { PowerType } from '../../../game/store/card/pokemon-types';
-import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER } from '../../../game/store/prefabs/prefabs';
+import {
+  APPLY_ABILITY_LOCK_MARKERS,
+  CLEAR_ABILITY_LOCK_AT_END_OF_YOUR_TURN,
+  HANDLE_ABILITY_LOCK,
+} from '../../../game/store/prefabs/ability-lock';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
+import { State } from '../../../game/store/state/state';
+import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
+import { StoreLike } from '../../../game/store/store-like';
 
 export class CancelingCologne extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -29,38 +30,23 @@ export class CancelingCologne extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      ADD_MARKER(this.CANCELING_COLOGNE_MARKER, opponent, this);
+      APPLY_ABILITY_LOCK_MARKERS(this.CANCELING_COLOGNE_MARKER, this, opponent);
     }
 
-    if (effect instanceof CheckPokemonPowersEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // Check if Canceling Cologne marker is active on either player
-      if (HAS_MARKER(this.CANCELING_COLOGNE_MARKER, player, this) || HAS_MARKER(this.CANCELING_COLOGNE_MARKER, opponent, this)) {
-        // Filter out all abilities
-        effect.powers = effect.powers.filter(power =>
-          power.powerType !== PowerType.ABILITY
-        );
+    // Only the marked player's Active Pokémon is locked (not bench / not both players).
+    HANDLE_ABILITY_LOCK(effect, ({ player, card }) => {
+      if (!player.marker.hasMarker(this.CANCELING_COLOGNE_MARKER, this)) {
+        return false;
       }
-    }
-
-    if (effect instanceof PowerEffect && HAS_MARKER(this.CANCELING_COLOGNE_MARKER, effect.player, this)
-      && (effect.power.powerType === PowerType.ABILITY)) {
-
-      throw new GameError(GameMessage.CANNOT_USE_POWER);
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const owner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
-
-      if (player === owner) {
-        REMOVE_MARKER(this.CANCELING_COLOGNE_MARKER, player, this);
-        REMOVE_MARKER(this.CANCELING_COLOGNE_MARKER, opponent, this);
+      try {
+        const cardList = StateUtils.findCardList(state, card);
+        return cardList instanceof PokemonCardList && cardList === player.active;
+      } catch {
+        return false;
       }
-    }
+    });
+
+    CLEAR_ABILITY_LOCK_AT_END_OF_YOUR_TURN(effect, state, this.CANCELING_COLOGNE_MARKER, this);
 
     return state;
   }

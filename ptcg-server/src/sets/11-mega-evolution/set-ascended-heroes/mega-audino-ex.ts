@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardTag, CardType, StoreLike, State, CoinFlipPrompt, GameMessage, AttachEnergyPrompt, PlayerType, SlotType, SuperType, EnergyType, StateUtils } from '../../../game';
+import { PokemonCard, Stage, CardTag, CardType, StoreLike, State, GameMessage, AttachEnergyPrompt, PlayerType, SlotType, SuperType, EnergyType, StateUtils } from '../../../game';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, SHUFFLE_DECK, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class MegaAudinoex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -34,18 +34,12 @@ export class MegaAudinoex extends PokemonCard {
   public fullName: string = 'Mega Audino ex MC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Kaleidowaltz attack
+    // Kaleidowaltz
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const coinFlips: CoinFlipPrompt[] = [
-        new CoinFlipPrompt(player.id, GameMessage.FLIP_COIN),
-        new CoinFlipPrompt(player.id, GameMessage.FLIP_COIN),
-        new CoinFlipPrompt(player.id, GameMessage.FLIP_COIN)
-      ];
-
-      return store.prompt(state, coinFlips, results => {
-        const headsCount = Array.isArray(results) ? results.filter(r => r === true).length : (results === true ? 1 : 0);
+      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 3, results => {
+        const headsCount = results.filter(r => r).length;
         const energyToAttach = headsCount * 2;
 
         if (energyToAttach > 0) {
@@ -73,7 +67,7 @@ export class MegaAudinoex extends PokemonCard {
       });
     }
 
-    // Ear Force attack
+    // Ear Force
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

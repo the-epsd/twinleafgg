@@ -16,6 +16,7 @@ import { MegaEelektrossex } from './mega-eelektross-ex';
 import { MegaFroslassex } from './mega-froslass-ex';
 import { MegaHawluchaex } from './mega-hawlucha-ex';
 import { MegaScraftyex } from './mega-scrafty-ex';
+import { Koraidonex } from './koraidon-ex';
 import { Miraidonex } from './miraidon-ex';
 import { Misdreavus } from './misdreavus';
 import { Mismagius } from './mismagius';
@@ -72,6 +73,8 @@ import { LarrysBraviary } from './larrys-braviary';
 import { LarrysKomala } from './larrys-komala';
 import { Waitress } from './waitress';
 import { BossOrdersASC } from './other-prints';
+import { NsVanillite } from './ns-vanillite';
+import { NsVanillish } from './ns-vanillish';
 
 export const setAscendedHeroes: Card[] = [
   //Start Deck 100 Reprints
@@ -101,12 +104,15 @@ export const setAscendedHeroes: Card[] = [
   new MegaFroslassex(),
   new MegaHawluchaex(),
   new MegaScraftyex(),
+  new Koraidonex(),
   new Miraidonex(),
   new Misdreavus(),
   new Mismagius(),
   new NightMine(),
   new Numel(),
   new NsZekrom(),
+  new NsVanillite(),
+  new NsVanillish(),
   new NsVanilluxe(),
   new PokePad(),
   new Rayquaza(),

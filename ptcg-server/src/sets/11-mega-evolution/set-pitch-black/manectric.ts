@@ -18,22 +18,24 @@ export class Manectric extends PokemonCard {
   public readonly FLASH_BARRIER_MARKER = 'M5_MANECTRIC_FLASH_BARRIER';
   public readonly CLEAR_FLASH_BARRIER_MARKER = 'M5_MANECTRIC_CLEAR_FLASH';
 
-  public attacks = [{
-    name: 'Flash Barrier',
-    cost: [L, L],
-    damage: 50,
-    text: 'During your opponent\'s next turn, prevent all damage done to this Pokémon by attacks from your opponent\'s Evolution Pokémon.',
-  },
-  {
-    name: 'Sonic Edge',
-    cost: [L, L, L],
-    damage: 110,
-    shredAttack: true,
-    text: 'This attack\'s damage isn\'t affected by effects on your opponent\'s Active Pokémon.',
-  }];
+  public attacks = [
+    {
+      name: 'Flashing Barrier',
+      cost: [L, L],
+      damage: 50,
+      text: "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Evolution Pokémon.",
+    },
+    {
+      name: 'Sonic Edge',
+      cost: [L, L, L],
+      damage: 110,
+      shredAttack: true,
+      text: "This attack's damage isn't affected by any effects on your opponent's Active Pokémon.",
+    },
+  ];
 
-  public set: string = 'M5';
-  public setNumber: string = '23';
+  public set: string = 'PBL';
+  public setNumber: string = '24';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Manectric';
@@ -52,18 +54,23 @@ export class Manectric extends PokemonCard {
       THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS(store, state, effect, 110);
     }
 
-    if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect)
-      && effect.target.marker.hasMarker(this.FLASH_BARRIER_MARKER, this)) {
+    if (
+      (effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
+      effect.target.marker.hasMarker(this.FLASH_BARRIER_MARKER, this)
+    ) {
       const atk = effect.source.getPokemonCard();
       if (atk && atk.stage !== Stage.BASIC) {
         effect.preventDefault = true;
       }
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_FLASH_BARRIER_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_FLASH_BARRIER_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_FLASH_BARRIER_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         cardList.marker.removeMarker(this.FLASH_BARRIER_MARKER, this);
       });
     }

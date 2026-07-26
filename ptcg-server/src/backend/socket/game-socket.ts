@@ -18,7 +18,7 @@ import { CoreSocket } from './core-socket';
 import { ApiErrorEnum } from '../common/errors';
 import { Game } from '../../game/core/game';
 import { selfPlayFocusPlayerId } from '../../game/core/self-play-focus';
-import { State } from '../../game/store/state/state';
+import { GamePhase, State } from '../../game/store/state/state';
 import { Core } from '../../game/core/core';
 import { GameState } from '../interfaces/core.interface';
 import { ResolvePromptAction } from '../../game/store/actions/resolve-prompt-action';
@@ -85,7 +85,9 @@ export class GameSocket {
       return;
     }
 
-    if (this.core.games.indexOf(game) !== -1) {
+    // Always emit FINISHED so clients can show game-over UI even if the game was
+    // already removed from the core lobby list in the same tick.
+    if (this.core.games.indexOf(game) !== -1 || state.phase === GamePhase.FINISHED) {
       game.setBonusHps(state);
       const viewAs = game.gameSettings.selfPlay === true ? selfPlayFocusPlayerId(game.state) : undefined;
       state = this.stateSanitizer.sanitize(game.state, game.id, viewAs);

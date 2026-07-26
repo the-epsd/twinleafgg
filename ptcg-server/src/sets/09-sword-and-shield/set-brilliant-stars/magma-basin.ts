@@ -8,30 +8,20 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { AttachEnergyPrompt, PlayerType, SlotType, GameError, CardTarget, PokemonCard } from '../../../game';
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 
 export class MagmaBasin extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.STADIUM;
-
   public regulationMark = 'F';
-
   public set: string = 'BRS';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '144';
-
   public name: string = 'Magma Basin';
-
   public fullName: string = 'Magma Basin BRS';
-
-  public text: string =
-    'Once during each player\'s turn, that player may attach a [R] Energy card from their discard pile to 1 of their Benched [R] Pokémon. If a player attached Energy to a Pokémon in this way, put 2 damage counters on that Pokémon.';
+  public text: string = 'Once during each player\'s turn, that player may attach a [R] Energy card from their discard pile to 1 of their Benched [R] Pokémon. If a player attached Energy to a Pokémon in this way, put 2 damage counters on that Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
-
       const player = effect.player;
       const hasFirePokemonOnBench = player.bench.some(b =>
         b.cards.some(c => c instanceof PokemonCard && c.cardType === CardType.FIRE)
@@ -66,24 +56,24 @@ export class MagmaBasin extends TrainerCard {
         { allowCancel: false, min: 1, max: 1, blockedTo: blocked2 },
       ), transfers => {
         transfers = transfers || [];
-        // cancelled by user
+
         if (transfers.length === 0) {
           return state;
         }
+
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          // const pokemonCard = target.cards[0] as PokemonCard;
-          // if (pokemonCard.cardType !== CardType.FIRE) {
-          //   throw new GameError(GameMessage.INVALID_TARGET);
-          // }
+          if (IS_STADIUM_EFFECT_BLOCKED(store, state, player, target, this)) {
+            MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this });
+            continue;
+          }
           MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this });
           target.damage += 20;
         }
-
-        return state;
       });
       return state;
     }
+
     return state;
   }
 }

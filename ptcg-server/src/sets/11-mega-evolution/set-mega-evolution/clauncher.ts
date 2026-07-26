@@ -15,10 +15,10 @@ export class Clauncher extends PokemonCard {
     text: ''
   }];
 
+  public regulationMark = 'I';
   public set: string = 'MEG';
+  public setNumber: string = '37';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Clauncher';
   public fullName: string = 'Clauncher M1S';
-  public setNumber: string = '37';
-  public regulationMark: string = 'I';
-  public cardImage: string = 'assets/cardback.png';
 }

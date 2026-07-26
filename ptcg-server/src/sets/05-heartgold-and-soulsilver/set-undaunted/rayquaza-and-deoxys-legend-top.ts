@@ -1,11 +1,10 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardTag, CardType } from '../../../game/store/card/card-types';
-import { GameError, GameMessage, GamePhase, PokemonCardList, PowerType, State, StateUtils, StoreLike } from '../../../game';
+import { GameError, GameMessage, PokemonCardList, PowerType, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { RayquazaAndDeoxysLegendBottom } from './rayquaza-and-deoxys-legend-bottom';
-import { IS_POKEBODY_BLOCKED, MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES, MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 
 export class RayquazaAndDeoxysLegendTop extends PokemonCard {
   public stage: Stage = Stage.LEGEND;
@@ -80,29 +79,9 @@ export class RayquazaAndDeoxysLegendTop extends PokemonCard {
     }
 
     // Space Virus
-    if (effect instanceof KnockOutEffect && effect.target === effect.player.active) {
-      const knockedOutOwner = effect.player;
-      const attacker = StateUtils.getOpponent(state, knockedOutOwner);
-
-      // Do not activate between turns, or when it's not opponents turn.
-      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== attacker) {
-        return state;
-      }
-
-      const pokemonCard = attacker.active.getPokemonCard();
-      if (pokemonCard !== this) {
-        return state;
-      }
-
-      if (IS_POKEBODY_BLOCKED(store, state, attacker, this)) {
-        return state;
-      }
-
-      if (effect.prizeCount > 0) {
-        effect.prizeCount += 1;
-        return state;
-      }
-    }
+    state = IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES(store, state, effect, this, {
+      checkPokebodyBlocked: true,
+    });
 
     // Ozone Buster
     if (WAS_ATTACK_USED(effect, 0, this)) {

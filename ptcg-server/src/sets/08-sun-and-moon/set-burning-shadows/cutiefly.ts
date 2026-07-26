@@ -16,8 +16,8 @@ export class Cutiefly extends PokemonCard {
   }];
 
   public set: string = 'BUS';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '95';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cutiefly';
   public fullName: string = 'Cutiefly BUS';
 }

@@ -1,10 +1,9 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GamePhase } from '../../../game';
+import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { KnockOutEffect } from '../../../game/store/effects/game-effects';
-import { DRAW_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class GreedentVMAX extends PokemonCard {
   public stage: Stage = Stage.VMAX;
@@ -34,48 +33,16 @@ export class GreedentVMAX extends PokemonCard {
   public name: string = 'Greedent VMAX';
   public fullName: string = 'Greedent VMAX FST';
 
-  private usedTurnAProfit = false;
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      const opponent = effect.opponent;
-      if (opponent.active.getPokemonCard()?.stage === Stage.BASIC) {
-        this.usedTurnAProfit = true;
-      }
-    }
-
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
-      this.usedTurnAProfit = false;
-      DRAW_CARDS(store, state, player, 3);
+      DRAW_CARDS(store, state, effect.player, 3);
     }
 
-    if (effect instanceof KnockOutEffect && effect.target === effect.player.active) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // Do not activate between turns, or when it's not opponents turn.
-      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
-        return state;
-      }
-
-      // Guzzy wasn't attacking
-      const pokemonCard = opponent.active.getPokemonCard();
-      if (pokemonCard !== this) {
-        return state;
-      }
-
-      // Check if the attack that caused the KnockOutEffect is "Turn a Profit"
-      if (this.usedTurnAProfit === true) {
-        if (effect.prizeCount > 0) {
-          effect.prizeCount += 2;
-        }
-        this.usedTurnAProfit = false;
-      }
-
-      return state;
-    }
-    return state;
+    return IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES(store, state, effect, this, {
+      attackName: 'Turn a Profit',
+      extraPrizes: 2,
+      validate: (store, state, koEffect) => koEffect.target.isStage(Stage.BASIC),
+    });
   }
 }

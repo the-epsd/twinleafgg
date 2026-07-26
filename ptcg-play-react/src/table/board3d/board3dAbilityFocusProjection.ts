@@ -7,11 +7,19 @@ const CARD_HALF_W = 1.25;
 const CARD_HALF_H = 1.75;
 const CARD_HALF_D = 0.01;
 
+/** Card-local +Y inset on the top edge so the cutout does not sit above the visible card. */
+const ABILITY_FOCUS_TOP_INSET = 0.18;
+
+/** Indices of the card artwork top edge in {@link FACE_CORNER_LOCAL}. */
+const ABILITY_FOCUS_TOP_CORNER_INDICES = new Set([2, 3]);
+
+const TOP_CORNER_Y = CARD_HALF_H - ABILITY_FOCUS_TOP_INSET;
+
 const FACE_CORNER_LOCAL = [
   new Vector3(-CARD_HALF_W, -CARD_HALF_H, CARD_HALF_D),
   new Vector3(CARD_HALF_W, -CARD_HALF_H, CARD_HALF_D),
-  new Vector3(CARD_HALF_W, CARD_HALF_H, CARD_HALF_D),
-  new Vector3(-CARD_HALF_W, CARD_HALF_H, CARD_HALF_D),
+  new Vector3(CARD_HALF_W, TOP_CORNER_Y, CARD_HALF_D),
+  new Vector3(-CARD_HALF_W, TOP_CORNER_Y, CARD_HALF_D),
 ];
 
 const WORLD_CORNER = new Vector3();
@@ -34,17 +42,44 @@ export function expandScreenPolygon(
   points: readonly AbilityFocusPoint[],
   padPx: number,
 ): AbilityFocusPoint[] {
+  return expandScreenPolygonWithCornerPad(points, padPx);
+}
+
+/** Radial screen-space padding; top artwork corners can use a smaller pad. */
+function expandScreenPolygonWithCornerPad(
+  points: readonly AbilityFocusPoint[],
+  padPx: number,
+  cornerPadPx: readonly number[] | number = padPx,
+): AbilityFocusPoint[] {
   if (points.length === 0 || padPx <= 0) {
     return [...points];
   }
   const cx = points.reduce((s, p) => s + p.x, 0) / points.length;
   const cy = points.reduce((s, p) => s + p.y, 0) / points.length;
-  return points.map((p) => {
+  return points.map((p, index) => {
+    const pad =
+      typeof cornerPadPx === 'number'
+        ? cornerPadPx
+        : cornerPadPx[index] ?? padPx;
+    if (pad <= 0) {
+      return { ...p };
+    }
     const dx = p.x - cx;
     const dy = p.y - cy;
     const len = Math.hypot(dx, dy) || 1;
-    return { x: p.x + (dx / len) * padPx, y: p.y + (dy / len) * padPx };
+    return { x: p.x + (dx / len) * pad, y: p.y + (dy / len) * pad };
   });
+}
+
+/** Side/bottom padding only — top corners stay tight so the hole is not too tall. */
+function expandAbilityFocusPolygon(
+  points: readonly AbilityFocusPoint[],
+  padPx: number,
+): AbilityFocusPoint[] {
+  const cornerPadPx = points.map((_, index) =>
+    ABILITY_FOCUS_TOP_CORNER_INDICES.has(index) ? 0 : padPx,
+  );
+  return expandScreenPolygonWithCornerPad(points, padPx, cornerPadPx);
 }
 
 /**
@@ -71,6 +106,6 @@ export function projectCardFaceToScreenAnchor(
   }
 
   return {
-    polygon: padPx > 0 ? expandScreenPolygon(polygon, padPx) : polygon,
+    polygon: padPx > 0 ? expandAbilityFocusPolygon(polygon, padPx) : polygon,
   };
 }

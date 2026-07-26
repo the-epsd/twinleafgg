@@ -2,23 +2,23 @@ import { useEffect, useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { appConfig } from '../env/config';
+import { useLanguage } from '../context/LanguageContext';
+import { SUPPORTED_LANGUAGE_CODES, type SupportedLanguageCode } from '../i18n/languages';
 import { ApiError } from '../api/apiError';
-import { setPreferSessionOnly } from '../api/storage';
+import styles from './auth/AuthShell.module.css';
 
 const SAVED_USERNAME_KEY = 'ptcg_login_saved_username';
 
 export function LoginPage() {
   const { t } = useTranslation();
-  const { login, isAuthenticated, ready, setApiUrlOverride } = useAuth();
+  const { login, isAuthenticated, ready } = useAuth();
+  const { language, setLanguage, labels } = useLanguage();
   const location = useLocation();
   const from = (location.state as { from?: string } | null)?.from ?? '/games';
 
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-  const [apiUrl, setApiUrl] = useState('');
   const [rememberUsername, setRememberUsername] = useState(true);
-  const [rememberLogin, setRememberLogin] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -38,8 +38,6 @@ export function LoginPage() {
     setError(null);
     setLoading(true);
     try {
-      setApiUrlOverride(apiUrl.trim() || undefined);
-      setPreferSessionOnly(!rememberLogin);
       await login(name.trim(), password);
       if (rememberUsername) {
         localStorage.setItem(SAVED_USERNAME_KEY, name.trim());
@@ -55,68 +53,82 @@ export function LoginPage() {
   }
 
   return (
-    <div style={{ maxWidth: 400, margin: '48px auto', padding: 24 }}>
-      <h1>{t('LOGIN_SIGN_IN')}</h1>
-      <form onSubmit={onSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <label>
-          {t('REACT_OPTIONAL_API_URL')}
-          <input
-            type="url"
-            value={apiUrl}
-            onChange={(e) => setApiUrl(e.target.value)}
-            placeholder={appConfig.apiUrl}
-            autoComplete="off"
-            style={{ width: '100%', marginTop: 4 }}
-          />
-          <span style={{ display: 'block', fontSize: 13, opacity: 0.75, marginTop: 4 }}>
-            {t('REACT_REGISTER_API_HINT')}
-          </span>
-        </label>
-        <label>
-          {t('LOGIN_USERNAME')}
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            autoComplete="username"
-            required
-            style={{ width: '100%', marginTop: 4 }}
-          />
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            checked={rememberUsername}
-            onChange={(e) => setRememberUsername(e.target.checked)}
-          />{' '}
-          {t('LOGIN_REMEMBER_USERNAME')}
-        </label>
-        <label>
-          {t('LOGIN_PASSWORD')}
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            autoComplete="current-password"
-            required
-            style={{ width: '100%', marginTop: 4 }}
-          />
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            checked={rememberLogin}
-            onChange={(e) => setRememberLogin(e.target.checked)}
-          />{' '}
-          {t('REACT_REMEMBER_LOGIN')}
-        </label>
-        {error && <p style={{ color: 'crimson' }}>{error}</p>}
-        <button type="submit" disabled={loading}>
-          {loading ? t('REACT_SIGNING_IN') : t('LOGIN_SIGN_IN')}
-        </button>
-      </form>
-      <p style={{ marginTop: 16 }}>
-        <Link to="/register">{t('LOGIN_CREATE_ACCOUNT')}</Link>
-      </p>
+    <div className={styles.screen}>
+      <div className={styles.cornerTL} aria-hidden />
+      <div className={styles.cornerBR} aria-hidden />
+      <div className={styles.dots} aria-hidden />
+
+      <div className={styles.panel}>
+        <div className={styles.sunburstClip} aria-hidden>
+          <div className={styles.sunburst} />
+        </div>
+        <div className={styles.inner}>
+          <div className={styles.logoWrap}>
+            <img className={styles.logo} src="/tl-open-beta-sm.webp" alt="" />
+            <h1 className={styles.title}>{t('LOGIN_SIGN_IN')}</h1>
+          </div>
+
+          <form className={styles.form} onSubmit={onSubmit}>
+            <label className={styles.field}>
+              {t('LOGIN_USERNAME')}
+              <input
+                className={styles.input}
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                autoComplete="username"
+                required
+              />
+            </label>
+
+            <label className={styles.check}>
+              <input
+                type="checkbox"
+                checked={rememberUsername}
+                onChange={(e) => setRememberUsername(e.target.checked)}
+              />
+              {t('LOGIN_REMEMBER_USERNAME')}
+            </label>
+
+            <label className={styles.field}>
+              {t('LOGIN_PASSWORD')}
+              <input
+                className={styles.input}
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="current-password"
+                required
+              />
+            </label>
+
+            {error ? <p className={styles.error}>{error}</p> : null}
+
+            <button type="submit" className={styles.submit} disabled={loading}>
+              {loading ? t('REACT_SIGNING_IN') : t('LOGIN_SIGN_IN')}
+            </button>
+          </form>
+
+          <p className={styles.footer}>
+            <Link to="/register">{t('LOGIN_CREATE_ACCOUNT')}</Link>
+          </p>
+
+          <div className={styles.langRow}>
+            <select
+              className={styles.langSelect}
+              value={language}
+              onChange={(e) => setLanguage(e.target.value as SupportedLanguageCode)}
+              aria-label={t('LABEL_LANGUAGE')}
+            >
+              {SUPPORTED_LANGUAGE_CODES.map((code) => (
+                <option key={code} value={code}>
+                  {labels[code]}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

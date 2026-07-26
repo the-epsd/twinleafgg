@@ -17,8 +17,8 @@ export class Scatterbug extends PokemonCard {
 
   public regulationMark = 'J';
   public set: string = 'POR';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '7';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scatterbug';
   public fullName: string = 'Scatterbug M3';
 }

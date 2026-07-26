@@ -6,23 +6,16 @@ import { Effect } from '../../../game/store/effects/effect';
 import { HealEffect, UseStadiumEffect } from '../../../game/store/effects/game-effects';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 
 export class CrystalCave extends TrainerCard {
-
   public regulationMark = 'E';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '144';
-
   public trainerType = TrainerType.STADIUM;
-
   public set = 'EVS';
-
   public name = 'Crystal Cave';
-
   public fullName = 'Crystal Cave EVS';
-
   public text = 'Once during each player\'s turn, that player may heal 30 damage from each of their [M] Pokémon and [N] Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -41,7 +34,10 @@ export class CrystalCave extends TrainerCard {
       }
 
       targets.forEach(target => {
-        // Heal Pokemon
+        if (IS_STADIUM_EFFECT_BLOCKED(store, state, player, target, this)) {
+          return;
+        }
+
         const healEffect = new HealEffect(player, target, 30);
         store.reduceEffect(state, healEffect);
       });

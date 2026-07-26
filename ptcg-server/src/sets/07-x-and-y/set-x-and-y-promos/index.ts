@@ -6,6 +6,8 @@ import { Jirachi } from './jirachi';
 import { Karen } from './karen';
 import { Meloetta } from './meloetta';
 import { Regirock } from './regirock';
+import { Sylveon } from './sylveon';
+import { Noivern } from './noivern';
 
 // Other Prints
 import {
@@ -39,6 +41,8 @@ export const setXYPromos: Card[] = [
   new Karen(),
   new Meloetta(),
   new Regirock(),
+  new Sylveon(),
+  new Noivern(),
 
   // Other Prints
   new PalaceBookXYP(),

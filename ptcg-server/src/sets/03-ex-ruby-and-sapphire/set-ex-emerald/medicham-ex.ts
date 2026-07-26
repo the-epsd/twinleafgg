@@ -1,17 +1,20 @@
-import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { CardType, Stage, CardTag } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { Effect } from '../../../game/store/effects/effect';
-import { EffectOfAbilityEffect, PowerEffect } from '../../../game/store/effects/game-effects';
-import { CheckPokemonPowersEffect } from '../../../game/store/effects/check-effects';
 import { StateUtils } from '../../../game/store/state-utils';
-import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE } from '../../../game/store/prefabs/attack-effects';
+import {
+  CAN_APPLY_LOCK_TO_TARGET,
+  CAN_APPLY_LOCKER_ABILITY,
+  HANDLE_ABILITY_BLOCK,
+  IS_ABILITY_LOCKER_ACTIVE,
+  POKEPOWER_TYPES,
+} from '../../../game/store/prefabs/ability-lock';
 
 export class Medichamex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -51,98 +54,30 @@ export class Medichamex extends PokemonCard {
   public evolvesFrom: string = 'Meditite';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Handle Wise Aura Poké-Body
-    if (effect instanceof CheckPokemonPowersEffect) {
-      const player = effect.player;
+
+    HANDLE_ABILITY_BLOCK(effect, ({ player, card }) => {
+      if (!IS_ABILITY_LOCKER_ACTIVE(state, player, this)) {
+        return false;
+      }
+      if (card.tags.includes(CardTag.POKEMON_ex)) {
+        return false;
+      }
+
       const opponent = StateUtils.getOpponent(state, player);
-
-      // Medicham ex is not active Pokemon
-      const playerHasMedicham = player.active.getPokemonCard() === this;
-      const opponentHasMedicham = opponent.active.getPokemonCard() === this;
-      if (!playerHasMedicham && !opponentHasMedicham) {
-        return state;
+      const lockerOwner = player.active.getPokemonCard() === this ? player : opponent;
+      if (!CAN_APPLY_LOCKER_ABILITY(store, state, lockerOwner, this, this.powers[0])) {
+        return false;
       }
+      return CAN_APPLY_LOCK_TO_TARGET(store, state, lockerOwner, this, this.powers[0], card);
+    }, {
+      powerTypes: POKEPOWER_TYPES,
+      error: GameMessage.BLOCKED_BY_ABILITY,
+    });
 
-      const targetPokemon = effect.target;
-      if (!targetPokemon) {
-        return state;
-      }
-
-      // Check if the Pokemon is a Pokemon-ex
-      if (targetPokemon.tags.includes(CardTag.POKEMON_ex)) {
-        return state;
-      }
-
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const powerEffect = new PowerEffect(player, this.powers[0], this);
-        store.reduceEffect(state, powerEffect);
-      } catch {
-        return state;
-      }
-
-      // Check if we can apply the Ability lock to target Pokemon
-      const cardList = effect.target;
-      if (cardList instanceof PokemonCardList) {
-        const canApplyAbility = new EffectOfAbilityEffect(playerHasMedicham ? player : opponent, this.powers[0], this, cardList);
-        store.reduceEffect(state, canApplyAbility);
-        if (!canApplyAbility.target) {
-          return state;
-        }
-      }
-
-      // Filter out Poké Powers
-      effect.powers = effect.powers.filter(power =>
-        power.powerType !== PowerType.POKEPOWER
-      );
-    }
-
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.POKEPOWER && effect.power.name !== 'Wise Aura') {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const cardList = StateUtils.findCardList(state, effect.card);
-
-      // Medicham ex is not active Pokemon
-      const playerHasMedicham = player.active.getPokemonCard() === this;
-      const opponentHasMedicham = opponent.active.getPokemonCard() === this;
-      if (!playerHasMedicham && !opponentHasMedicham) {
-        return state;
-      }
-
-      // Check if the Pokemon is a Pokemon-ex
-      if (effect.card.tags.includes(CardTag.POKEMON_ex)) {
-        return state;
-      }
-
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const powerEffect = new PowerEffect(player, this.powers[0], this);
-        store.reduceEffect(state, powerEffect);
-      } catch {
-        return state;
-      }
-
-      // Check if we can apply the Ability lock to target Pokemon
-      if (cardList instanceof PokemonCardList) {
-        const canApplyAbility = new EffectOfAbilityEffect(playerHasMedicham ? player : opponent, this.powers[0], this, cardList);
-        store.reduceEffect(state, canApplyAbility);
-        if (!canApplyAbility.target) {
-          return state;
-        }
-      }
-
-      // Apply Ability lock
-      if (!effect.power.exemptFromAbilityLock) {
-        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
-      }
-    }
-
-    // Handle Pure Power attack
     if (WAS_ATTACK_USED(effect, 0, this)) {
       PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE(3, store, state, effect);
     }
 
-    // Handle Sky Kick attack
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const opponent = effect.opponent;
       const defendingPokemon = opponent.active.getPokemonCard();
@@ -156,4 +91,4 @@ export class Medichamex extends PokemonCard {
     }
     return state;
   }
-} 
+}

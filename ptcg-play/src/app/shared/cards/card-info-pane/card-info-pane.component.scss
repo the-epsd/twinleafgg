@@ -147,6 +147,27 @@
   padding: map-get($padding, small);
 }
 
+.power-header {
+  display: flex;
+  align-items: baseline;
+}
+
+.power-type {
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  margin-right: map-get($padding, small);
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+}
+
+.power-name {
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+}
+
 .attack-cost {
   display: flex;
 }

@@ -1,0 +1,232 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--twinleaf-text-primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(37, 41, 53, 0.05);
+  border: 1px solid var(--twinleaf-border);
+  border-radius: 8px;
+  color: var(--twinleaf-text-primary);
+  font-size: 14px;
+  font-family: 'Urbanist', sans-serif;
+  transition: all 0.3s ease;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.input::placeholder {
+  color: rgba(250, 250, 250, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.input:focus {
+  border-color: var(--twinleaf-500);
+  background: rgba(112, 114, 120, 0.1);
+  box-shadow: 0 0 0 2px rgba(112, 114, 120, 0.2);
+}
+
+.inputValid {
+  border-color: var(--twinleaf-500);
+  background: rgba(112, 114, 120, 0.1);
+}
+
+.inputInvalid {
+  border-color: var(--twinleaf-600);
+  background: rgba(82, 85, 92, 0.1);
+}
+
+.glow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, transparent, rgba(112, 114, 120, 0.1), transparent);
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.inputWrapper:hover .glow {
+  opacity: 1;
+}
+
+.status {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.statusIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.statusValid {
+  color: var(--twinleaf-500);
+}
+
+.statusInvalid {
+  color: var(--twinleaf-600);
+}
+
+.hint {
+  font-size: 12px;
+  color: var(--twinleaf-text-muted);
+  font-style: italic;
+}
+
+.error {
+  font-size: 12px;
+  color: var(--twinleaf-600);
+  font-weight: 500;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--twinleaf-text-primary);
+  font-weight: 500;
+}
+
+.checkboxInput {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.checkmark {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--twinleaf-border);
+  border-radius: 4px;
+  position: relative;
+  transition: all 0.3s ease;
+  background: rgba(37, 41, 53, 0.05);
+  flex-shrink: 0;
+}
+
+.checkmark::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 6px;
+  height: 10px;
+  border: solid var(--twinleaf-500);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.checkboxInput:checked + .checkmark {
+  background: var(--twinleaf-500);
+  border-color: var(--twinleaf-500);
+}
+
+.checkboxInput:checked + .checkmark::after {
+  opacity: 1;
+}
+
+.checkboxLabel:hover .checkmark {
+  border-color: var(--twinleaf-500);
+  background: rgba(112, 114, 120, 0.1);
+}
+
+.select {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(37, 41, 53, 0.05);
+  border: 1px solid var(--twinleaf-border);
+  border-radius: 8px;
+  color: var(--twinleaf-text-primary);
+  font-size: 14px;
+  font-family: 'Urbanist', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.select:focus {
+  border-color: var(--twinleaf-500);
+  background: rgba(112, 114, 120, 0.1);
+  box-shadow: 0 0 0 2px rgba(112, 114, 120, 0.2);
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.futuristic .input {
+  background: linear-gradient(135deg, rgba(37, 41, 53, 0.1), rgba(37, 41, 53, 0.05));
+  backdrop-filter: blur(20px);
+  border-radius: 12px;
+}
+
+.futuristic .input:focus {
+  border-color: var(--twinleaf-500);
+  background: linear-gradient(135deg, rgba(112, 114, 120, 0.1), rgba(112, 114, 120, 0.05));
+  box-shadow: 0 0 20px rgba(112, 114, 120, 0.3);
+}
+
+.minimal .input {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--twinleaf-border);
+  border-radius: 0;
+  padding: 8px 0;
+}
+
+.minimal .input:focus {
+  border-bottom-color: var(--twinleaf-500);
+  background: transparent;
+  box-shadow: none;
+}
+
+@media (max-width: 768px) {
+  .input {
+    padding: 10px 14px;
+    font-size: 16px;
+  }
+}

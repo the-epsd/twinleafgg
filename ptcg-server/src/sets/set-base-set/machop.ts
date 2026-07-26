@@ -1,36 +1,23 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { Attack } from '../../game/store/card/pokemon-types';
 
 export class Machop extends PokemonCard {
+  public stage: Stage = Stage.BASIC;
+  public cardType: CardType = F;
+  public hp: number = 50;
+  public weakness = [{ type: P }];
+  public retreat = [C];
 
-  public name = 'Machop';
+  public attacks = [{
+    name: 'Low Kick',
+    cost: [F],
+    damage: 20,
+    text: ''
+  }];
 
+  public set: string = 'BS';
+  public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';
-
-  public set = 'BS';
-
-  public setNumber = '52';
-
-  public fullName = 'Machop BS';
-
-  public cardType = CardType.FIGHTING;
-
-  public stage = Stage.BASIC;
-
-  public retreat = [CardType.COLORLESS];
-
-  public hp = 50;
-
-  public weakness = [{ type: CardType.PSYCHIC }];
-
-  public attacks: Attack[] = [
-    {
-      name: 'Low Kick',
-      cost: [CardType.FIGHTING],
-      damage: 20,
-      text: ''
-    }
-  ];
-
+  public name: string = 'Machop';
+  public fullName: string = 'Machop BS';
 }

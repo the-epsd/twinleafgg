@@ -12,21 +12,23 @@ export class Electrike extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Collect',
-    cost: [L],
-    damage: 0,
-    text: 'Draw a card.'
-  },
-  {
-    name: 'Tackle',
-    cost: [L, L],
-    damage: 30,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Collect',
+      cost: [L],
+      damage: 0,
+      text: 'Draw a card.',
+    },
+    {
+      name: 'Tackle',
+      cost: [L, L],
+      damage: 30,
+      text: '',
+    },
+  ];
 
-  public set: string = 'M5';
-  public setNumber: string = '22';
+  public set: string = 'PBL';
+  public setNumber: string = '23';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Electrike';

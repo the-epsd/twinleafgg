@@ -21,7 +21,11 @@ import type {
   WaitPrompt,
   ChooseAttackPrompt,
   ChooseEnergyPrompt,
+  DiscardEnergyPrompt,
+  InvitePlayerPrompt,
   MoveEnergyPrompt,
+  OrderCardsPrompt,
+  SelectOptionPrompt,
 } from 'ptcg-server';
 import type { LocalGameState } from '../types/localGameState';
 import { activeGamePrompt } from '../activeGamePrompt';
@@ -36,11 +40,16 @@ import { AttachEnergyPromptPanel } from './AttachEnergyPromptPanel';
 import { ChooseAttackPromptPanel } from './ChooseAttackPromptPanel';
 import { ChooseEnergyPromptPanel } from './ChooseEnergyPromptPanel';
 import { MoveEnergyPromptPanel } from './MoveEnergyPromptPanel';
+import { DiscardEnergyPromptPanel } from './DiscardEnergyPromptPanel';
+import { InvitePlayerPromptPanel } from './InvitePlayerPromptPanel';
+import { OrderCardsPromptPanel } from './OrderCardsPromptPanel';
+import { SelectOptionPromptPanel } from './SelectOptionPromptPanel';
 import { PutDamageOverlay } from './PutDamageOverlay';
 import { RemoveDamageOverlay } from './RemoveDamageOverlay';
 import { MoveDamageOverlay } from './MoveDamageOverlay';
 import { scanBlockedOwnZeroDamageFromState } from './pokemonPromptRows';
 import { BOARD3D_ATTACK_ANIMATION_DURATION_SEC, BOARD3D_ABILITY_ANIMATION_DURATION_SEC } from '../board3d/services/board-3d-animation.service';
+import { COIN_FLIP_SERVER_WAIT_MS } from '../coin-flip-animation';
 import {
   autoTakeChoosePrizeIndices,
   shouldAutoTakeChoosePrize,
@@ -126,6 +135,49 @@ function isAbilityAnimationWaitPrompt(wp: WaitPrompt): boolean {
     return false;
   }
   return String(m).toLowerCase().includes('ability animation');
+}
+
+/** Matches server WaitPrompt before coin flip resolution (see attack-coin-reflip.ts). */
+function isCoinFlipAnimationWaitPrompt(wp: WaitPrompt): boolean {
+  const m = wp.message;
+  if (m === undefined || m === null) {
+    return false;
+  }
+  return String(m).toLowerCase().includes('coin flip animation');
+}
+
+function SilentWaitPrompt(props: {
+  promptId: number;
+  durationMs: number;
+  resolve: (id: number, result: unknown) => void | Promise<void>;
+}) {
+  const { promptId, durationMs, resolve } = props;
+  useEffect(() => {
+    if (durationMs <= 0) {
+      void resolve(promptId, null);
+      return;
+    }
+    const tmr = window.setTimeout(() => {
+      void resolve(promptId, null);
+    }, durationMs);
+    return () => clearTimeout(tmr);
+  }, [promptId, durationMs, resolve]);
+  return null;
+}
+
+function CoinFlipAnimationWaitPrompt(props: {
+  promptId: number;
+  durationMs: number;
+  resolve: (id: number, result: unknown) => void | Promise<void>;
+}) {
+  const { promptId, durationMs, resolve } = props;
+  return (
+    <SilentWaitPrompt
+      promptId={promptId}
+      durationMs={durationMs > 0 ? durationMs : COIN_FLIP_SERVER_WAIT_MS}
+      resolve={resolve}
+    />
+  );
 }
 
 function AttackAnimationWaitPrompt(props: {
@@ -287,6 +339,7 @@ function useChooseHandCardsBoardEffect(
   onResolvePrompt: (promptId: number, result: unknown) => void,
   chooseHandCardsPromptId: number | null,
   replay: boolean | undefined,
+  handCardsFingerprint: string,
 ) {
   useEffect(() => {
     if (chooseHandCardsPromptId == null) {
@@ -321,6 +374,30 @@ function useChooseHandCardsBoardEffect(
       boardInteraction.endBoardSelection();
     };
   }, [chooseHandCardsPromptId, clientId, boardInteraction, onResolvePrompt, replay]);
+
+  // Sandbox (and similar) can change the hand while the same prompt id is active.
+  useEffect(() => {
+    if (chooseHandCardsPromptId == null || replay || !handCardsFingerprint) {
+      return;
+    }
+    const game = localGameRef.current;
+    const prompt = activeGamePrompt(game, clientId);
+    if (!prompt || prompt.id !== chooseHandCardsPromptId || prompt.type !== 'Choose cards') {
+      return;
+    }
+    const ccp = prompt as ChooseCardsPrompt;
+    if (!shouldUseBoardHandForChooseCards(ccp, clientId)) {
+      return;
+    }
+    boardInteraction.refreshChooseHandCardsPrompt(ccp);
+  }, [
+    chooseHandCardsPromptId,
+    handCardsFingerprint,
+    clientId,
+    boardInteraction,
+    replay,
+    localGameRef,
+  ]);
 }
 
 function useRemoveDamageBoardEffect(
@@ -568,6 +645,11 @@ export function TablePromptLayer({
       ? activePrompt.id
       : null;
 
+  const chooseHandCardsFingerprint =
+    chooseHandCardsId != null && activePrompt?.type === 'Choose cards'
+      ? (activePrompt as ChooseCardsPrompt).player.hand.cards.map(c => c.id).join(',')
+      : '';
+
   const removeDamageId =
     activePrompt?.type === 'Remove damage' && !localGame.replay && !suppressTrainerEffectPrompts
       ? activePrompt.id
@@ -599,6 +681,7 @@ export function TablePromptLayer({
     onResolvePrompt,
     chooseHandCardsId,
     !!localGame.replay,
+    chooseHandCardsFingerprint,
   );
 
   useRemoveDamageBoardEffect(
@@ -753,7 +836,7 @@ export function TablePromptLayer({
         ? `${confirmTitleBase} [${selfPlayGoFirstDeckName}]`
         : confirmTitleBase;
     return (
-      <div className={styles.backdrop} role="presentation">
+      <div key={cp.id} className={styles.backdrop} role="presentation">
         <div className={styles.panel} role="dialog" aria-modal="true">
           <h2 className={styles.title}>{confirmTitle}</h2>
           <p className={styles.message}>{gameMessageText(t, cp.message)}</p>
@@ -773,7 +856,7 @@ export function TablePromptLayer({
   if (p.type === 'Alert') {
     const ap = p as AlertPrompt;
     return (
-      <div className={styles.backdrop} role="presentation">
+      <div key={ap.id} className={styles.backdrop} role="presentation">
         <div className={styles.panel} role="dialog" aria-modal="true">
           <h2 className={styles.title}>{t('ALERT_MESSAGE_TITLE', { defaultValue: 'Message' })}</h2>
           <p className={styles.message}>{gameMessageText(t, ap.message)}</p>
@@ -796,6 +879,16 @@ export function TablePromptLayer({
 
   if (p.type === 'WaitPrompt') {
     const wp = p as WaitPrompt;
+    if (wp.showVisual === false) {
+      return (
+        <SilentWaitPrompt
+          key={wp.id}
+          promptId={wp.id}
+          durationMs={wp.duration > 0 ? wp.duration : 0}
+          resolve={resolve}
+        />
+      );
+    }
     // Server used to block attacks on this prompt; 3D board plays motion from the socket event instead.
     if (isAttackAnimationWaitPrompt(wp)) {
       return (
@@ -813,6 +906,16 @@ export function TablePromptLayer({
           key={wp.id}
           promptId={wp.id}
           boardInteraction={boardInteraction}
+          resolve={resolve}
+        />
+      );
+    }
+    if (isCoinFlipAnimationWaitPrompt(wp)) {
+      return (
+        <CoinFlipAnimationWaitPrompt
+          key={wp.id}
+          promptId={wp.id}
+          durationMs={wp.duration > 0 ? wp.duration : COIN_FLIP_SERVER_WAIT_MS}
           resolve={resolve}
         />
       );
@@ -1005,6 +1108,21 @@ export function TablePromptLayer({
     );
   }
 
+  if (p.type === 'Discard energy') {
+    const dep = p as DiscardEnergyPrompt;
+    return (
+      <DiscardEnergyPromptPanel
+        key={dep.id}
+        prompt={dep}
+        localGame={localGame}
+        getScanUrl={getScanUrl}
+        t={t}
+        gameMessageText={gameMessageText}
+        resolve={resolve}
+      />
+    );
+  }
+
   if (p.type === 'Choose attack') {
     const cap = p as ChooseAttackPrompt;
     return (
@@ -1021,8 +1139,49 @@ export function TablePromptLayer({
     );
   }
 
+  if (p.type === 'Order cards') {
+    const ocp = p as OrderCardsPrompt;
+    return (
+      <OrderCardsPromptPanel
+        key={ocp.id}
+        prompt={ocp}
+        getScanUrl={getScanUrl}
+        t={t}
+        gameMessageText={gameMessageText}
+        resolve={resolve}
+      />
+    );
+  }
+
+  if (p.type === 'SelectOption') {
+    const sop = p as SelectOptionPrompt;
+    return (
+      <SelectOptionPromptPanel
+        key={sop.id}
+        prompt={sop}
+        t={t}
+        gameMessageText={gameMessageText}
+        resolve={resolve}
+      />
+    );
+  }
+
+  if (p.type === 'Invite player') {
+    const ipp = p as InvitePlayerPrompt;
+    return (
+      <InvitePlayerPromptPanel
+        key={ipp.id}
+        prompt={ipp}
+        localGame={localGame}
+        t={t}
+        gameMessageText={gameMessageText}
+        resolve={resolve}
+      />
+    );
+  }
+
   return (
-    <div className={styles.backdrop} role="presentation">
+    <div key={p.id} className={styles.backdrop} role="presentation">
       <div className={styles.panel} role="dialog" aria-modal="true">
         <h2 className={styles.title}>
           {t('PROMPT_UNKNOWN_TYPE', {

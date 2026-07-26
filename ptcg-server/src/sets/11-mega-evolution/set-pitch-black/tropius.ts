@@ -4,7 +4,11 @@ import { Stage, CardType, SuperType } from '../../../game/store/card/card-types'
 import { Effect } from '../../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { GameMessage } from '../../../game/game-message';
-import { SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  SHOW_CARDS_TO_PLAYER,
+  SHUFFLE_DECK,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { State, StateUtils } from '../../../game';
 import { StoreLike } from '../../../game/store/store-like';
 
@@ -15,20 +19,22 @@ export class Tropius extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Fruity Scent',
-    cost: [C],
-    damage: 0,
-    text: 'Look at the top 6 cards of your deck. You may reveal any number of Pokémon you find there and put them into your hand. Then, shuffle the remaining cards back into your deck.',
-  },
-  {
-    name: 'Solarbeam',
-    cost: [G, C],
-    damage: 60,
-    text: '',
-  }];
+  public attacks = [
+    {
+      name: 'Fruity Aroma',
+      cost: [C],
+      damage: 0,
+      text: 'Look at the top 6 cards of your deck, and you may reveal any number of Pokémon you find there and put them into your hand. Shuffle the other cards back into your deck.',
+    },
+    {
+      name: 'Solar Beam',
+      cost: [G, C],
+      damage: 60,
+      text: '',
+    },
+  ];
 
-  public set: string = 'M5';
+  public set: string = 'PBL';
   public setNumber: string = '1';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
@@ -52,23 +58,27 @@ export class Tropius extends PokemonCard {
       SHOW_CARDS_TO_PLAYER(store, state, player, looked);
       SHOW_CARDS_TO_PLAYER(store, state, opponent, looked);
 
-      const pokemonInPreview = looked.filter(c => c instanceof PokemonCard).length;
+      const pokemonInPreview = looked.filter((c) => c instanceof PokemonCard).length;
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        topCards,
-        { superType: SuperType.POKEMON },
-        { min: 0, max: pokemonInPreview, allowCancel: false },
-      ), selected => {
-        const pokemonTaken = selected || [];
-        if (pokemonTaken.length > 0) {
-          SHOW_CARDS_TO_PLAYER(store, state, opponent, pokemonTaken);
-          topCards.moveCardsTo(pokemonTaken, player.hand);
-        }
-        topCards.moveTo(player.deck);
-        SHUFFLE_DECK(store, state, player);
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          topCards,
+          { superType: SuperType.POKEMON },
+          { min: 0, max: pokemonInPreview, allowCancel: false },
+        ),
+        (selected) => {
+          const pokemonTaken = selected || [];
+          if (pokemonTaken.length > 0) {
+            SHOW_CARDS_TO_PLAYER(store, state, opponent, pokemonTaken);
+            topCards.moveCardsTo(pokemonTaken, player.hand);
+          }
+          topCards.moveTo(player.deck);
+          SHUFFLE_DECK(store, state, player);
+        },
+      );
     }
 
     return state;

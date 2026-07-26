@@ -8,7 +8,6 @@ export class Inkay extends PokemonCard {
   public cardType: CardType = D;
   public hp: number = 60;
   public weakness = [{ type: G }];
-  public resistance = [];
   public retreat = [C];
 
   public attacks = [{

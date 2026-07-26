@@ -2,7 +2,6 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Smoliv extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = G;
   public hp: number = 60;

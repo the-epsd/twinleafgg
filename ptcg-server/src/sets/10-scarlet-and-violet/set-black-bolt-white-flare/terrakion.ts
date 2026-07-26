@@ -1,7 +1,5 @@
 import { PokemonCard, Stage, CardType, State, StoreLike } from '../../../game';
-
-import { MarkerConstants } from '../../../game/store/markers/marker-constants';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN } from '../../../game/store/prefabs/prefabs';
 
 export class Terrakion extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -32,14 +30,16 @@ export class Terrakion extends PokemonCard {
   public fullName: string = 'Terrakion SV11W';
 
   public reduceEffect(store: StoreLike, state: State, effect: any): State {
+    // Retaliate
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      if (player.marker.hasMarker(MarkerConstants.REVENGE_MARKER)) {
+      if (WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN(player, { byAttackDamage: true })) {
         effect.damage += 80;
       }
       return state;
     }
+
     return state;
   }
 } 

@@ -14,22 +14,24 @@ export class MegaDarkraiex extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Night Raid',
-    cost: [D, D],
-    damage: 110,
-    damageCalculation: '+',
-    text: 'If any of your Benched Pokémon have any damage counters on them, this attack does 110 more damage.',
-  },
-  {
-    name: 'Abyss Eye',
-    cost: [D, D, D],
-    damage: 0,
-    text: 'If your opponent\'s Active Pokémon is affected by any Special Condition, it is now Knocked Out.',
-  }];
+  public attacks = [
+    {
+      name: 'Dusk Raid',
+      cost: [D, D],
+      damage: 110,
+      damageCalculation: '+',
+      text: 'If your Benched Pokémon have any damage counters on them, this attack does 110 more damage.',
+    },
+    {
+      name: 'Abyss Eye',
+      cost: [D, D, D],
+      damage: 0,
+      text: "If your opponent's Active Pokémon is affected by a Special Condition, it is Knocked Out.",
+    },
+  ];
 
-  public set: string = 'M5';
-  public setNumber: string = '46';
+  public set: string = 'PBL';
+  public setNumber: string = '48';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Darkrai ex';
@@ -40,7 +42,7 @@ export class MegaDarkraiex extends PokemonCard {
     // Ref: set-mega-evolution/mega-camerupt-ex.ts (Roasting Heat - conditional bonus damage)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      const benchDamaged = player.bench.some(b => b.cards.length > 0 && b.damage > 0);
+      const benchDamaged = player.bench.some((b) => b.cards.length > 0 && b.damage > 0);
       if (benchDamaged) {
         effect.damage += 110;
       }

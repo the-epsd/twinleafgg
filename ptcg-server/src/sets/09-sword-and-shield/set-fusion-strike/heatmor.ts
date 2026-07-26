@@ -1,53 +1,40 @@
-import { AttachEnergyPrompt, ChoosePokemonPrompt, EnergyCard, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike } from '../../../game';
+import { AttachEnergyPrompt, EnergyCard, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike } from '../../../game';
 import { CardType, EnergyType, Stage, SuperType } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
+import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-
+import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON } from '../../../game/store/prefabs/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Heatmor extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.FIRE;
-
+  public cardType: CardType = R;
   public hp: number = 110;
+  public weakness = [{ type: W }];
+  public retreat = [C, C];
 
-  public weakness = [{ type: CardType.WATER }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
-
-  public attacks = [
-    {
-      name: 'Flame Cloak',
-      cost: [CardType.FIRE],
-      damage: 20,
-      text: 'Attach a [R] Energy card from your discard pile to this Pokémon.'
-    },
-    {
-      name: 'Exciting Flame',
-      cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS],
-      damage: 90,
-      text: 'If this Pokémon has at least 3 extra Energy attached (in addition to this attack\'s cost), this attack also does 180 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
-  ];
+  public attacks = [{
+    name: 'Flame Cloak',
+    cost: [R],
+    damage: 20,
+    text: 'Attach a [R] Energy card from your discard pile to this Pokémon.'
+  },
+  {
+    name: 'Exciting Flame',
+    cost: [R, R, C],
+    damage: 90,
+    text: 'If this Pokémon has at least 3 extra Energy attached (in addition to this attack\'s cost), this attack also does 180 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }];
 
   public set: string = 'FST';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '41';
-
   public regulationMark = 'E';
-
   public name: string = 'Heatmor';
-
   public fullName: string = 'Heatmor FST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Flame Cloak
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
@@ -85,48 +72,18 @@ export class Heatmor extends PokemonCard {
       return state;
     }
 
+    // Exciting Flame
     if (WAS_ATTACK_USED(effect, 1, this)) {
+      const checkEnergy = new CheckProvidedEnergyEffect(effect.player);
+      store.reduceEffect(state, checkEnergy);
 
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const hasBenched = opponent.bench.some(b => b.cards.length > 0);
-      if (!hasBenched) {
-        return state;
-      }
+      const extraEffectCost = [
+        ...this.attacks[1].cost,
+        ...Array(3).fill(CardType.COLORLESS),
+      ];
 
-      // Check attack cost
-      const checkCost = new CheckAttackCostEffect(player, this.attacks[1]);
-      state = store.reduceEffect(state, checkCost);
-
-      // Check attached energy
-      const checkEnergy = new CheckProvidedEnergyEffect(player);
-      state = store.reduceEffect(state, checkEnergy);
-
-      // Count total Fire energy provided
-      const totalFireEnergy = checkEnergy.energyMap.reduce((sum, energy) => {
-        return sum + energy.provides.filter(type => type === CardType.FIRE).length;
-      }, 0);
-
-      // Get number of extra Fire energy (total Fire energy minus Fire cost)
-      const extraFireEnergy = totalFireEnergy - 2; // Subtract 2 for the [R][R] in the cost
-
-      // Apply damage boost based on extra Fire energy
-      if (extraFireEnergy >= 3) {
-        return store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-          PlayerType.TOP_PLAYER,
-          [SlotType.BENCH],
-          { min: 1, max: 1, allowCancel: false }
-        ), selected => {
-          const targets = selected || [];
-          targets.forEach(target => {
-            const damageEffect = new PutDamageEffect(effect, 180);
-            damageEffect.target = target;
-            store.reduceEffect(state, damageEffect);
-          });
-          return state;
-        });
+      if (StateUtils.checkEnoughEnergy(checkEnergy.energyMap, extraEffectCost)) {
+        return THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON(180, effect, store, state);
       }
     }
     return state;

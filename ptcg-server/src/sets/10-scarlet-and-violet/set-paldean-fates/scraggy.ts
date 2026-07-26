@@ -1,5 +1,5 @@
-import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Scraggy extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -13,7 +13,8 @@ export class Scraggy extends PokemonCard {
     cost: [C],
     damage: 10,
     text: ''
-  }, {
+  },
+  {
     name: 'Headstrike',
     cost: [D, D, C],
     damage: 50,
@@ -22,7 +23,7 @@ export class Scraggy extends PokemonCard {
 
   public regulationMark = 'G';
   public set: string = 'PAF';
-  public setNumber = '60';
+  public setNumber: string = '60';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scraggy';
   public fullName: string = 'Scraggy PAF';

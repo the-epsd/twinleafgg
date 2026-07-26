@@ -122,6 +122,11 @@ export function useCardImageMaps(): CardImageMaps {
   return c?.maps ?? readCardImageMapsFromStorage();
 }
 
+export function useCardImagesRefresh(): () => void {
+  const c = useContext(CardImagesContext);
+  return c?.refreshFromStorage ?? (() => {});
+}
+
 export function useDeckCardScanUrl(scansUrl: string | undefined): (card: Card) => string {
   const ctx = useContext(CardImagesContext);
   const maps = ctx?.maps ?? readCardImageMapsFromStorage();

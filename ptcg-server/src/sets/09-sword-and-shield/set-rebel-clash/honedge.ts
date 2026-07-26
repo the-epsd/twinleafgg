@@ -3,23 +3,23 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Honedge extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType = M;
   public hp: number = 60;
-  public weakness = [{ type: CardType.FIRE }];
-  public resistance = [{ type: CardType.GRASS, value: -30 }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public resistance = [{ type: G, value: -30 }];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Slicing Blade',
-    cost: [CardType.METAL, CardType.COLORLESS],
+    cost: [M, C],
     damage: 30,
     text: ''
   }];
 
-  public set = 'RCL';
   public regulationMark = 'D';
-  public cardImage: string = 'assets/cardback.png';
+  public set: string = 'RCL';
   public setNumber: string = '133';
-  public name = 'Honedge';
-  public fullName = 'Honedge RCL';
+  public cardImage: string = 'assets/cardback.png';
+  public name: string = 'Honedge';
+  public fullName: string = 'Honedge RCL';
 }

@@ -14,10 +14,12 @@ import { StoreLike } from '../store-like';
 import { TrainerCard } from '../card/trainer-card';
 import { TrainerType, CardTag } from '../card/card-types';
 import { assembleDualStadiumFromHand } from '../dual-stadium-utils';
+import { assembleDualLegendFromHand } from '../dual-legend-utils';
 import { Effect } from '../effects/effect';
 import { StateUtils } from '../state-utils';
 import { Player } from '../state/player';
 import { UsePowerEffect } from '../effects/game-effects';
+import { CAN_USE_FROM_HAND_TO_BENCH_POWER } from '../prefabs/prefabs';
 
 function findPokemonTarget(state: State, player: Player, target: CardTarget): PokemonCardList | undefined {
   try {
@@ -75,8 +77,11 @@ export function playCardReducer(store: StoreLike, state: State, action: Action):
         if (
           benchPower &&
           action.target.slot === SlotType.BENCH &&
-          target.cards.length === 0
+          target.cards.length === 0 &&
+          CAN_USE_FROM_HAND_TO_BENCH_POWER(store, state, player, handCard)
         ) {
+          // Only the ability path when still legal — hand ability locks clear this
+          // (same gate as playableCardIds). Otherwise fall through (e.g. sandbox all-basic).
           const usePower = new UsePowerEffect(
             player,
             benchPower,
@@ -85,6 +90,13 @@ export function playCardReducer(store: StoreLike, state: State, action: Action):
             target,
           );
           return store.reduceEffect(state, usePower);
+        }
+
+        if (handCard.tags.includes(CardTag.DUAL_LEGEND)) {
+          if (action.target.slot !== SlotType.BENCH || target.cards.length > 0) {
+            throw new GameError(GameMessage.INVALID_TARGET);
+          }
+          return assembleDualLegendFromHand(store, state, player, handCard);
         }
 
         const effect = new PlayPokemonEffect(player, handCard, target, action.target.slot, action.target.index);

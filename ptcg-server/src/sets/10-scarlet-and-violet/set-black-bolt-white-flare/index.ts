@@ -10,6 +10,7 @@ import { BraveBangle } from './brave-bangle';
 import { Carracosta } from './carracosta';
 import { Cobalion } from './cobalion';
 import { Cottonee } from './cottonee';
+import { Cubchoo } from './cubchoo';
 import { Dewott } from './dewott';
 import { Drilbur } from './drilbur';
 import { Ducklett } from './ducklett';
@@ -26,17 +27,21 @@ import { Foongus } from './foongus';
 import { Fraxure } from './fraxure';
 import { Frillish } from './frillish';
 import { Genesectex } from './genesect-ex';
+import { Golett } from './golett';
+import { Golurk } from './golurk';
 import { Gothita } from './gothita';
 import { Gothorita } from './gothorita';
 import { Gothitelle } from './gothitelle';
 import { Harlequin } from './harlequin';
 import { Haxorus } from './haxorus';
+import { Herdier } from './herdier';
 import { Hilda } from './hilda';
 import { IgnitionEnergy } from './ignition-energy';
 import { Jellicentex } from './jellicent-ex';
 import { Keldeoex } from './keldeo-ex';
 import { Kyuremex } from './kyurem-ex';
 import { Larvesta } from './larvesta';
+import { Lillipup } from './lillipup';
 import { Meloettaex } from './meloetta-ex';
 import { NsPlan } from './ns-plan';
 import { Oshawott } from './oshawott';
@@ -118,8 +123,14 @@ import {
   VictiniRRB,
   VictiniRRW,
   Pokegear30SV11,
+  HerdierAR,
+  LillipupAR,
+  StoutlandAR,
+  GolettAR,
+  GolurkAR,
 } from './other-prints';
 import { Palpitoad } from './palpitoad';
+import { Pidove } from './pidove';
 import { Pignite } from './pignite';
 import { Purrloin } from './purrloin';
 import { Reshiramex } from './reshiram-ex';
@@ -131,12 +142,15 @@ import { Servine } from './servine';
 import { Shelmet } from './shelmet';
 import { Snivy } from './snivy';
 import { Solosis } from './solosis';
+import { Stoutland } from './stoutland';
 import { Swadloon } from './swadloon';
 import { Tepig } from './tepig';
 import { Terrakion } from './terrakion';
 import { Tirtouga } from './tirtouga';
+import { Tranquill } from './tranquill';
 import { Tympole } from './tympole';
 import { Tynamo } from './tynamo';
+import { Unfezant } from './unfezant';
 import { Victini } from './victini';
 import { Virizion } from './virizion';
 import { Volcarona } from './volcarona';
@@ -144,6 +158,9 @@ import { Whimsicottex } from './whimsicott-ex';
 import { Zekromex } from './zekrom-ex';
 import { Zoroark } from './zoroark';
 import { Zorua } from './zorua';
+import { Hydreigonex } from './hydreigon-ex';
+import { Zweilous } from './zweilous';
+import { Deino } from './deino';
 
 export const setSV11: Card[] = [
   new Harlequin(),
@@ -175,6 +192,8 @@ export const setSV11: Card[] = [
   new Swadloon(),
   new Duosion(),
   new Elgyem(),
+  new Golett(),
+  new Golurk(),
   new Reuniclus(),
   new Shelmet(),
   new Karrablast(),
@@ -183,11 +202,15 @@ export const setSV11: Card[] = [
   new Archeops(),
   new Carracosta(),
   new Cobalion(),
+  new Cubchoo(),
   new Durant(),
   new Genesectex(),
   new Keldeoex(),
   new Terrakion(),
   new Tirtouga(),
+  new Lillipup(),
+  new Herdier(),
+  new Stoutland(),
   new Virizion(),
   new Alomomola(),
   new Drilbur(),
@@ -198,10 +221,16 @@ export const setSV11: Card[] = [
   new Larvesta(),
   new Meloettaex(),
   new Palpitoad(),
+  new Pidove(),
+  new Tranquill(),
+  new Unfezant(),
   new Seismitoad(),
   new Tympole(),
   new Volcarona(),
   new Ducklett(),
+  new Deino(),
+  new Zweilous(),
+  new Hydreigonex(),
 
   new CherenSV11(),
   new ProfessorsResearchSV11(),
@@ -239,6 +268,8 @@ export const setSV11: Card[] = [
   new EmolgaAR(),
   new TynamoAR(),
   new EelektrikAR(),
+  new GolettAR(),
+  new GolurkAR(),
   new DrilburAR(),
   new CobalionAR(),
   new AxewAR(),
@@ -289,6 +320,9 @@ export const setSV11: Card[] = [
   new ZoroarkAR(),
   new DeinoAR(),
   new ZweilousAR(),
+  new LillipupAR(),
+  new HerdierAR(),
+  new StoutlandAR(),
 
   //SV11W FA
   new WhimsicottexFA(),

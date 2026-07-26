@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import type { Card, CardList, Player } from 'ptcg-server';
 import type { CardInfoPaneOptions, CardInfoTableAction } from './CardInfoPane';
@@ -57,7 +58,7 @@ export function CardInfoPopup({
     return () => window.removeEventListener('keydown', onKey);
   }, [onClose]);
 
-  return (
+  return createPortal(
     <div
       className={styles.backdrop}
       role="presentation"
@@ -120,6 +121,7 @@ export function CardInfoPopup({
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

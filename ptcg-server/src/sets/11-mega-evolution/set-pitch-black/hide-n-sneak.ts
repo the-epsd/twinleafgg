@@ -1,3 +1,8 @@
+/**
+ * Not a card!
+ * Contains shared reduceEffect code and utility functions for all of the Hide 'n' Sneak mons.
+ */
+
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Player } from '../../../game/store/state/player';
 import { State } from '../../../game/store/state/state';

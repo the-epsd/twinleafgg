@@ -1,10 +1,14 @@
 import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { StoreLike, State, PowerType, GameError, GameMessage, PlayerType, StateUtils } from '../../../game';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
+import { StoreLike, State, PowerType, GameMessage, StateUtils, PokemonCardList } from '../../../game';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  CAN_APPLY_LOCKER_ABILITY,
+  HANDLE_ABILITY_LOCK,
+  IS_ABILITY_LOCKER_IN_PLAY,
+} from '../../../game/store/prefabs/ability-lock';
 
 export class Golduck extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -36,41 +40,29 @@ export class Golduck extends PokemonCard {
   public fullName: string = 'Golduck MEP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY && effect.power.name !== 'Damp') {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      let isGolduckInPlay = false;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this) {
-          isGolduckInPlay = true;
-        }
-      });
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card === this) {
-          isGolduckInPlay = true;
-        }
-      });
-
-      if (!isGolduckInPlay) {
-        return state;
+    HANDLE_ABILITY_LOCK(effect, ({ player, card }) => {
+      if (!IS_ABILITY_LOCKER_IN_PLAY(state, player, this)) {
+        return false;
       }
 
-      if (!effect.power.knocksOutSelf) {
-        return state;
-      }
-
-      // Try reducing ability for each player  
       try {
-        const powerEffect = new PowerEffect(player, this.powers[0], this);
-        store.reduceEffect(state, powerEffect);
+        if (!(StateUtils.findCardList(state, card) instanceof PokemonCardList)) {
+          return false;
+        }
       } catch {
-        return state;
+        return false;
       }
-      if (!effect.power.exemptFromAbilityLock) {
-        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
-      }
-    }
+
+      const lockerOwner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
+      // Check + PowerEffect: Damp must itself be usable (e.g. Path to the Peak).
+      return CAN_APPLY_LOCKER_ABILITY(store, state, lockerOwner, this, this.powers[0]);
+    }, {
+      onlyKnocksOutSelf: true,
+      exemptPowerNames: ['Damp'],
+      allowUseFromHand: true,
+      allowUseFromDiscard: true,
+      error: GameMessage.BLOCKED_BY_ABILITY,
+    });
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;

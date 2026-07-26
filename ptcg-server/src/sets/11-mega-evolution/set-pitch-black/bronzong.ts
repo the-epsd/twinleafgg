@@ -15,21 +15,23 @@ export class Bronzong extends PokemonCard {
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C, C];
 
-  public attacks = [{
-    name: 'Gentle Slap',
-    cost: [M],
-    damage: 40,
-    text: '',
-  },
-  {
-    name: 'Metal Block',
-    cost: [M, M, C],
-    damage: 120,
-    text: 'During your opponent\'s next turn, this Pokémon takes 100 less damage from attacks from your opponent\'s Evolution Pokémon.',
-  }];
+  public attacks = [
+    {
+      name: 'Gentle Slap',
+      cost: [M],
+      damage: 40,
+      text: '',
+    },
+    {
+      name: 'Metal Block',
+      cost: [M, M, C],
+      damage: 120,
+      text: "During your opponent's next turn, this Pokémon takes 100 less damage from attacks from Evolution Pokémon.",
+    },
+  ];
 
-  public set: string = 'M5';
-  public setNumber: string = '62';
+  public set: string = 'PBL';
+  public setNumber: string = '64';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bronzong';
@@ -47,9 +49,11 @@ export class Bronzong extends PokemonCard {
       opp.marker.addMarker(this.CLEAR_METAL_BLOCK_MARKER, this);
     }
 
-    if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect)
-      && state.phase === GamePhase.ATTACK
-      && effect.target.marker.hasMarker(this.METAL_BLOCK_MARKER, this)) {
+    if (
+      (effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
+      state.phase === GamePhase.ATTACK &&
+      effect.target.marker.hasMarker(this.METAL_BLOCK_MARKER, this)
+    ) {
       const defenderOwner = StateUtils.findOwner(state, effect.target);
       if (effect.player === defenderOwner) {
         return state;
@@ -60,11 +64,14 @@ export class Bronzong extends PokemonCard {
       }
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_METAL_BLOCK_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_METAL_BLOCK_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_METAL_BLOCK_MARKER, this);
       const opp = StateUtils.getOpponent(state, effect.player);
-      opp.forEachPokemon(PlayerType.TOP_PLAYER, cardList =>
-        cardList.marker.removeMarker(this.METAL_BLOCK_MARKER, this)
+      opp.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) =>
+        cardList.marker.removeMarker(this.METAL_BLOCK_MARKER, this),
       );
     }
 

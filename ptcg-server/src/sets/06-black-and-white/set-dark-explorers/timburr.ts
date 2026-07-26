@@ -8,20 +8,18 @@ export class Timburr extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Low Kick',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Hammer In',
-      cost: [F, C, C],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Low Kick',
+    cost: [C],
+    damage: 10,
+    text: ''
+  },
+  {
+    name: 'Hammer In',
+    cost: [F, C, C],
+    damage: 30,
+    text: ''
+  }];
 
   public set: string = 'DEX';
   public setNumber: string = '58';

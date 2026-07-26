@@ -15,11 +15,10 @@ export class Glimmet extends PokemonCard {
     text: ''
   }];
 
+  public regulationMark = 'G';
   public set: string = 'PAL';
-  public regulationMark: string = 'G';
   public setNumber: string = '125';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Glimmet';
   public fullName: string = 'Glimmet PAL';
-
 }

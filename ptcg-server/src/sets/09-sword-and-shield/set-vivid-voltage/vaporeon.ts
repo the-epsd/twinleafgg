@@ -5,12 +5,12 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { GameError, GameMessage, PlayerType, PowerType, StoreLike, State, StateUtils } from '../../../game';
+import { GameMessage, PlayerType, PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { HANDLE_ABILITY_LOCK } from '../../../game/store/prefabs/ability-lock';
 
 export class Vaporeon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -42,64 +42,64 @@ export class Vaporeon extends PokemonCard {
   public name: string = 'Vaporeon';
   public fullName: string = 'Vaporeon VIV';
 
-  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Torrential Awakening (passive - block Fire Pokemon abilities if Memory Capsule attached)
-    // Ref: set-vivid-voltage/jolteon.ts (Thunderous Awakening - same pattern for Water Pokemon)
-    if (effect instanceof PowerEffect && effect.power !== this.powers[0]) {
-      const targetCard = effect.card;
-
-      // Use CheckPokemonTypeEffect to get the dynamic type of the target Pokemon
-      const targetCardList = StateUtils.findCardList(state, targetCard);
-      if (!(targetCardList instanceof PokemonCardList)) {
-        return state;
-      }
-
-      const checkType = new CheckPokemonTypeEffect(targetCardList);
-      store.reduceEffect(state, checkType);
-
-      // Only affects Fire-type Pokemon
-      if (!checkType.cardTypes.includes(CardType.FIRE)) {
-        return state;
-      }
-
-      // Check if this Vaporeon is in play on either side and has Memory Capsule attached
-      let vaporeonCardList: PokemonCardList | null = null;
-      let vaporeonOwner: any = null;
-      for (const player of state.players) {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-          if (cardList.getPokemonCard() === this) {
-            vaporeonCardList = cardList;
-            vaporeonOwner = player;
-          }
-        });
-      }
-
-      if (!vaporeonCardList || !vaporeonOwner) {
-        return state;
-      }
-
-      if (effect.power.useFromDiscard || effect.power.useFromHand) {
-        return state;
-      }
-
-
-      // Check if Vaporeon has Memory Capsule attached
-      const hasMemoryCapsule = (vaporeonCardList as PokemonCardList).tools.some(
-        (tool) => tool instanceof TrainerCard && tool.name === 'Memory Capsule'
-      );
-
-      if (!hasMemoryCapsule) {
-        return state;
-      }
-
-      if (IS_ABILITY_BLOCKED(store, state, vaporeonOwner, this)) {
-        return state;
-      }
-
-      if (!effect.power.exemptFromAbilityLock) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+  private findVaporeonInPlay(state: State): { cardList: PokemonCardList; owner: import('../../../game/store/state/player').Player } | null {
+    for (const player of state.players) {
+      let found: PokemonCardList | null = null;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+        if (cardList.getPokemonCard() === this) {
+          found = cardList;
+        }
+      });
+      if (found) {
+        return { cardList: found, owner: player };
       }
     }
+    return null;
+  }
+
+  private hasMemoryCapsule(cardList: PokemonCardList): boolean {
+    return cardList.tools.some(
+      (tool) => tool instanceof TrainerCard && tool.name === 'Memory Capsule'
+    );
+  }
+
+  private isFirePokemon(store: StoreLike, state: State, card: PokemonCard): boolean {
+    const targetCardList = StateUtils.findCardList(state, card);
+    if (!(targetCardList instanceof PokemonCardList)) {
+      return false;
+    }
+    const checkType = new CheckPokemonTypeEffect(targetCardList);
+    store.reduceEffect(state, checkType);
+    return checkType.cardTypes.includes(CardType.FIRE);
+  }
+
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    const isTargetLocked = ({ card }: { card: PokemonCard }) => {
+      if (!this.isFirePokemon(store, state, card)) {
+        return false;
+      }
+
+      const vaporeon = this.findVaporeonInPlay(state);
+      if (!vaporeon || !this.hasMemoryCapsule(vaporeon.cardList)) {
+        return false;
+      }
+
+      if (IS_ABILITY_BLOCKED(store, state, vaporeon.owner, this)) {
+        return false;
+      }
+
+      try {
+        return StateUtils.findCardList(state, card) instanceof PokemonCardList;
+      } catch {
+        return false;
+      }
+    };
+
+    HANDLE_ABILITY_LOCK(effect, ({ card }) => isTargetLocked({ card }), {
+      allowUseFromHand: true,
+      allowUseFromDiscard: true,
+      error: GameMessage.BLOCKED_BY_EFFECT,
+    });
 
     return state;
   }

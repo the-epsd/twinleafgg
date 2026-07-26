@@ -6,24 +6,28 @@ import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, CardType } from '../../../game/store/card/card-types';
 import { CheckHpEffect, CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 import { StateUtils } from '../../../game/store/state-utils';
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
 
 export class AspertiaCityGym extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.STADIUM;
   public set: string = 'BCR';
   public name: string = 'Aspertia City Gym';
   public fullName: string = 'Aspertia City Gym BCR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '127';
-
-  public text: string =
-    'Each [C] Pokemon in play (both yours and your opponent\'s) gets +20 HP.';
+  public text: string = 'Each [C] Pokemon in play (both yours and your opponent\'s) gets +20 HP.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckHpEffect && StateUtils.getStadiumCard(state) === this) {
+      const owner = StateUtils.findOwner(state, effect.target);
       const checkPokemonTypeEffect = new CheckPokemonTypeEffect(effect.target);
+
+      if (IS_STADIUM_EFFECT_BLOCKED(store, state, owner, effect.target)) {
+        return state;
+      }
+
       store.reduceEffect(state, checkPokemonTypeEffect);
 
       if (checkPokemonTypeEffect.cardTypes.includes(CardType.COLORLESS)) {
@@ -37,5 +41,4 @@ export class AspertiaCityGym extends TrainerCard {
 
     return state;
   }
-
 }

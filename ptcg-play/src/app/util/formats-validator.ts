@@ -677,7 +677,6 @@ export const BanLists: { [key: number]: string[] } = {
     "Duskull CEC 83",
     "Espeon AQ 11",
     "Espeon AQ H9",
-    "Vaporeon ex DS 110",
     "Eevee SSP 143",
     "Eevee PRE 74",
     "Naganadel-GX FLI 121",

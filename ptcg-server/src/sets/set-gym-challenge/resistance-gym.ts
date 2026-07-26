@@ -7,6 +7,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StateUtils } from '../../game/store/state-utils';
 import { UseStadiumEffect } from '../../game/store/effects/game-effects';
 import { CheckPokemonStatsEffect } from '../../game/store/effects/check-effects';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../game/store/prefabs/stadium-effect';
 
 export class ResistanceGym extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
@@ -15,24 +16,21 @@ export class ResistanceGym extends TrainerCard {
   public cardImage = 'assets/cardback.png';
   public name: string = 'Resistance Gym';
   public fullName: string = 'Resistance Gym G2';
-
-  public text: string =
-    'Each Pokémon\'s Resistance is reduced by 20. (If a Pokémon\'s Resistance is -30, it becomes -10.)';
+  public text: string = 'Each Pokémon\'s Resistance is reduced by 20. (If a Pokémon\'s Resistance is -30, it becomes -10.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof CheckPokemonStatsEffect && StateUtils.getStadiumCard(state) === this) {
-      // honestly don't understand this, but the AI cooked
+      const owner = StateUtils.findOwner(state, effect.target);
       const target = effect.target.getPokemonCard();
+
+      if (IS_STADIUM_EFFECT_BLOCKED(store, state, owner, effect.target)) {
+        return state;
+      }
+
       if (target && Array.isArray(target.resistance)) {
-        // Reduce each resistance value by 20, but not below -10
         effect.resistance = target.resistance.map(res => {
-          // If resistance is a number, reduce by 20, min -10
           if (typeof res.value === 'number') {
-            return {
-              ...res,
-              value: Math.min(res.value + 20, 0)
-            };
+            return { ...res, value: Math.min(res.value + 20, 0) };
           }
           return res;
         });
@@ -45,5 +43,4 @@ export class ResistanceGym extends TrainerCard {
 
     return state;
   }
-
 }

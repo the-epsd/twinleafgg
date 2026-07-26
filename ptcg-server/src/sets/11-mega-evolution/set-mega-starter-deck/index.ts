@@ -10,14 +10,19 @@ import { Floragato } from './floragato';
 import { Jolteon } from './jolteon';
 import { Liepard } from './liepard';
 import { Meowscaradaex } from './meowscarada-ex';
+import { Miraidon } from './miraidon';
 import { Morpeko } from './morpeko';
 import { Pawmi } from './pawmi';
 import { Pawmo } from './pawmo';
 import { Pawmot } from './pawmot';
 import { Purrloin } from './purrloin';
+import { Rotom } from './rotom';
 import { Sharpedo } from './sharpedo';
+import { Shaymin } from './shaymin';
 import { Smoliv } from './smoliv';
 import { Sprigatito } from './sprigatito';
+import { Tauros } from './tauros';
+import { Virizion } from './virizion';
 import { Zarude } from './zarude';
 import { Zoroarkex } from './zoroark-ex';
 import { Zorua } from './zorua';
@@ -45,4 +50,9 @@ export const setMegaStarterDeck: Card[] = [
   new Zoroarkex(),
   new Morpeko(),
   new Zarude(),
+  new Shaymin(),
+  new Virizion(),
+  new Rotom(),
+  new Miraidon(),
+  new Tauros(),
 ];

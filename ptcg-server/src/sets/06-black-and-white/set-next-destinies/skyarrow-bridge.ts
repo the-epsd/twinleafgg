@@ -6,30 +6,27 @@ import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, Stage, CardType } from '../../../game/store/card/card-types';
 import { CheckRetreatCostEffect } from '../../../game/store/effects/check-effects';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 import { StateUtils } from '../../../game/store/state-utils';
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
 
 export class SkyarrowBridge extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.STADIUM;
-
   public set: string = 'NXD';
-
   public name: string = 'Skyarrow Bridge';
-
   public fullName: string = 'Skyarrow Bridge NXD';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '91';
-
-  public text: string =
-    'The Retreat Cost of each Basic Pokemon in play is [C] less.';
+  public text: string = 'The Retreat Cost of each Basic Pokémon in play is [C] less.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckRetreatCostEffect && StateUtils.getStadiumCard(state) === this) {
       const player = effect.player;
       const pokemonCard = player.active.getPokemonCard();
+
+      if (IS_STADIUM_EFFECT_BLOCKED(store, state, effect.player, effect.player.active)) {
+        return state;
+      }
 
       if (pokemonCard && pokemonCard.stage == Stage.BASIC) {
         const index = effect.cost.indexOf(CardType.COLORLESS);
@@ -45,5 +42,4 @@ export class SkyarrowBridge extends TrainerCard {
 
     return state;
   }
-
 }

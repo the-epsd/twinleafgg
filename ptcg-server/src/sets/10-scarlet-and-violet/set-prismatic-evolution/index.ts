@@ -3,11 +3,13 @@ import { ApplinPRE, DipplinPRE, HydrappleexPRE, TealMaskOgerponexPRE, Hearthflam
 import { Amarys } from './amarys';
 import { BlackBeltsTraining } from './black-belts-training';
 import { Bronzor } from './bronzor';
+import { Bronzong } from './bronzong';
 import { Budew } from './budew';
 import { Eeveeex } from './eevee-ex';
 import { Espeonex } from './espeon-ex';
 import { Flareonex } from './flareon-ex';
 import { AmarysFA, AmarysSAR, AtticusFA, AtticusFA2, BloodmoonUrsalunaexSAR, CeruledgeexSAR, CornerstoneMaskOgerponexSAR, CrispinSAR, DragapultexSAR, DraytonSAR, EeveeexSAR, EriFA, EspeonexSAR, FlareonexSAR, GholdengoexSAR, GiacomoFA, GlaceonexSAR, HearthflameMaskOgerponexSAR, IronCrownexSAR, IronHandsexSAR, IronLeavesexUR, IronValiantexSAR, JaninesSecretArtSAR, JolteonexSAR, KieranSAR, LaceySAR, LeafeonexSAR, LarrysSkillSAR, MelaFA, PalafinexSAR, PecharuntexSAR, PikachuexUR, RagingBoltexSAR, RoaringMoonexSAR, SandyShocksexSAR, SylveonexSAR, TealMaskOgerponexSAR, TealMaskOgerponexUR, TerapagosexSAR, TerapagosexUR, UmbreonexSAR, VaporeonexSAR, WalkingWakeexUR, WellspringMaskOgerponexSAR } from './full-art';
+import { HabanBerry } from './haban-berry';
 import { Glaceonex } from './glaceon-ex';
 import { Hoothoot } from './hoothoot';
 import { Jolteonex } from './jolteon-ex';
@@ -52,6 +54,8 @@ export const setPrismaticEvolution: Card[] = [
   new Pupitar(),
   new Tyranitarex(),
   new Bronzor(),
+  new Bronzong(),
+  new HabanBerry(),
   new Hoothoot(),
 
   // Reprints

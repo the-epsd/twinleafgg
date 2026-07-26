@@ -2,17 +2,22 @@ import { SRGBColorSpace, TextureLoader, Texture, RepeatWrapping } from 'three';
 import type { HoloVariant } from '../../../components/cards/holoVariant';
 import { holoMaskUrl } from '../../../components/cards/holoMaskUrl';
 import { publicAssetUrl } from '../../../utils/publicAssetUrl';
+import { imageUrlNeedsCrossOrigin, isProxiedImageUrl, proxyImageUrlForWebGl } from '../../../utils/proxyImageUrl';
 
-/** Remote scans stay as-is; everything else (e.g. assets/energy/*.png) is resolved for the router base. */
+/** Resolve local asset paths, then proxy external scans for WebGL. */
 function resolveTextureRequestUrl(url: string): string {
   const t = url.trim();
   if (!t) {
     return t;
   }
-  if (t.startsWith('http://') || t.startsWith('https://')) {
+  if (isProxiedImageUrl(t)) {
     return t;
   }
-  return publicAssetUrl(t.replace(/^\//, ''));
+  if (t.startsWith('http://') || t.startsWith('https://') || t.startsWith('//')) {
+    return proxyImageUrlForWebGl(t);
+  }
+  const local = t.startsWith('/') ? t : publicAssetUrl(t);
+  return proxyImageUrlForWebGl(local);
 }
 
 export class Board3dAssetLoaderService {
@@ -74,8 +79,9 @@ export class Board3dAssetLoaderService {
       }
 
       try {
-        const isExternal = resolved.startsWith('http://') || resolved.startsWith('https://');
-        const loader = isExternal ? new TextureLoader().setCrossOrigin('anonymous') : this.textureLoader;
+        const loader = imageUrlNeedsCrossOrigin(resolved)
+          ? new TextureLoader().setCrossOrigin('anonymous')
+          : this.textureLoader;
         const texture = await loader.loadAsync(resolved);
 
         texture.colorSpace = 'srgb';
@@ -100,8 +106,9 @@ export class Board3dAssetLoaderService {
       return this.textureCache.get(resolved)!;
     }
     try {
-      const isExternal = resolved.startsWith('http://') || resolved.startsWith('https://');
-      const loader = isExternal ? new TextureLoader().setCrossOrigin('anonymous') : this.textureLoader;
+      const loader = imageUrlNeedsCrossOrigin(resolved)
+        ? new TextureLoader().setCrossOrigin('anonymous')
+        : this.textureLoader;
       const texture = await loader.loadAsync(resolved);
       texture.colorSpace = 'srgb';
       texture.anisotropy = 4;
@@ -123,8 +130,9 @@ export class Board3dAssetLoaderService {
       return this.textureCache.get(resolved)!;
     }
     try {
-      const isExternal = resolved.startsWith('http://') || resolved.startsWith('https://');
-      const loader = isExternal ? new TextureLoader().setCrossOrigin('anonymous') : this.textureLoader;
+      const loader = imageUrlNeedsCrossOrigin(resolved)
+        ? new TextureLoader().setCrossOrigin('anonymous')
+        : this.textureLoader;
       const texture = await loader.loadAsync(resolved);
       texture.colorSpace = 'srgb';
       texture.anisotropy = 4;

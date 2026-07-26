@@ -3,6 +3,7 @@ import { Beldum } from './beldum';
 import { BiancasDevotion } from './biancas-devotion';
 import { Brambleghast } from './brambleghast';
 import { Bramblin } from './bramblin';
+import { Bronzor } from './bronzor';
 import { Bronzong } from './bronzong';
 import { BuddyBuddyPoffin } from './buddy-buddy-poffin';
 import { AncientBoosterEnergyCapsuleTEF, FutureBoosterEnergyCapsuleTEF } from './other-prints';
@@ -22,7 +23,7 @@ import { ExplorersGuidance } from './explorers-guidance';
 import { Farigirafex } from './farigiraf-ex';
 import { Feraligatr } from './feraligatr';
 import { FlutterMane } from './flutter-mane';
-import { GrotleIR, CharjabugIR, ReuniclusIR, GastlyIR, MetagrossIR, ChatotIR, MinccinoIR, CinccinoIR, TorterraexFA, IronLeavesexFA, GougingFireexFA, WalkingWakeexFA, IronCrownexFA, GengarexFA, RagingBoltexFA, BiancasDevotionFA, CryptomaniacsDecipheringFA, EriFA, ExplorersGuidanceFA, MortysConvictionFA, SalvatoreFA, IronLeavesexSIR, GougingFireexSIR, WalkingWakeexSIR, IronCrownexSIR, RagingBoltexSIR, BiancasDevotionSIR, EriSIR, MortysConvictionSIR, SalvatoreSIR, IronLeavesexHR, GougingFireexHR, WalkingWakeexHR, IronCrownexHR, RagingBoltexHR, RelicanthIR } from './full-art';
+import { GrotleIR, CharjabugIR, BronzorIR, ReuniclusIR, GastlyIR, MetagrossIR, ChatotIR, MinccinoIR, CinccinoIR, TorterraexFA, IronLeavesexFA, GougingFireexFA, WalkingWakeexFA, IronCrownexFA, GengarexFA, RagingBoltexFA, BiancasDevotionFA, CryptomaniacsDecipheringFA, EriFA, ExplorersGuidanceFA, MortysConvictionFA, SalvatoreFA, IronLeavesexSIR, GougingFireexSIR, WalkingWakeexSIR, IronCrownexSIR, RagingBoltexSIR, BiancasDevotionSIR, EriSIR, MortysConvictionSIR, SalvatoreSIR, IronLeavesexHR, GougingFireexHR, WalkingWakeexHR, IronCrownexHR, RagingBoltexHR, RelicanthIR } from './full-art';
 import { FullMetalLab } from './full-metal-lab';
 import { Gastly } from './gastly';
 import { Gengarex } from './gengar-ex';
@@ -102,6 +103,7 @@ export const setTemporalForces: Card[] = [
   new BiancasDevotion(),
   new Brambleghast(),
   new Bramblin(),
+  new Bronzor(),
   new Bronzong(),
   new BuddyBuddyPoffin(),
   new Charjabug(),
@@ -190,6 +192,7 @@ export const setTemporalForces: Card[] = [
   //FA
   new GrotleIR(),
   new CharjabugIR(),
+  new BronzorIR(),
   new ReuniclusIR(),
   new RelicanthIR(),
   new GastlyIR(),

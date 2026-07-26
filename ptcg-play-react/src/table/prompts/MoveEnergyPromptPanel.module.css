@@ -10,6 +10,7 @@
   padding: 24px;
   background: rgba(8, 12, 20, 0.72);
   backdrop-filter: blur(6px);
+  animation: promptBackdropEnter 150ms cubic-bezier(0, 0, 0.2, 1);
 }
 
 .panel {
@@ -26,6 +27,30 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  transform-origin: center center;
+  animation: promptPanelEnter 150ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+@keyframes promptBackdropEnter {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes promptPanelEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
 }
 
 .promptTitle {
