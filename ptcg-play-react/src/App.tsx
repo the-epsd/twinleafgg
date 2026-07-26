@@ -19,10 +19,12 @@ import { SettingsPage } from './pages/SettingsPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { TablePage } from './pages/TablePage';
 import { SpectatePage } from './pages/SpectatePage';
+import { ReplaysPage } from './pages/ReplaysPage';
 import { FriendsPage } from './pages/FriendsPage';
 import { ParentPage } from './pages/ParentPage';
 import { UiShowcasePage } from './pages/ui-showcase/UiShowcasePage';
 import { AbilityLockPage } from './pages/ability-lock/AbilityLockPage';
+import { EffectlessCardsPage } from './pages/effectless-cards/EffectlessCardsPage';
 
 function ProfileMeRedirect() {
   const { user } = useAuth();
@@ -47,16 +49,20 @@ export default function App() {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/ui-showcase" element={<UiShowcasePage />} />
             <Route path="/ability-lock" element={<AbilityLockPage />} />
+            <Route path="/effectless-cards" element={<EffectlessCardsPage />} />
+
             <Route element={<ProtectedRoute />}>
               <Route element={<AppLayout />}>
                 <Route path="/games" element={<GamesPage />} />
                 <Route path="/spectate" element={<SpectatePage />} />
                 <Route path="/table/replay/:matchId" element={<TablePage />} />
+                <Route path="/table/saved-replay/:replayId" element={<TablePage />} />
                 <Route path="/table/:gameId" element={<TablePage />} />
                 <Route path="/deck" element={<DeckListPage />} />
                 <Route path="/deck/:deckId/stats" element={<DeckStatsPage />} />
                 <Route path="/deck/:deckId" element={<DeckEditPage />} />
                 <Route path="/ranking" element={<RankingPage />} />
+                <Route path="/replays" element={<ReplaysPage />} />
                 <Route path="/friends" element={<FriendsPage />} />
                 <Route path="/message" element={<MessagesPage />} />
                 <Route path="/message/:userId" element={<MessagesPage />} />

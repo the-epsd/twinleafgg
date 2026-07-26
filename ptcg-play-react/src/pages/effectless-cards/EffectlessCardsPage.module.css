@@ -1,7 +1,7 @@
 .page {
   min-height: 100dvh;
   background:
-    radial-gradient(ellipse 80% 50% at 20% -10%, rgba(68, 144, 88, 0.12), transparent 55%),
+    radial-gradient(ellipse 80% 50% at 20% -10%, rgba(37, 99, 235, 0.1), transparent 55%),
     radial-gradient(ellipse 60% 40% at 90% 0%, rgba(37, 41, 53, 0.08), transparent 50%),
     #f0f1f3;
   color: #252935;
@@ -24,7 +24,7 @@
 
 .subtitle {
   margin: 0;
-  max-width: 640px;
+  max-width: 720px;
   color: #555;
   line-height: 1.5;
   font-size: 0.95rem;
@@ -33,7 +33,7 @@
 .backLink {
   display: inline-block;
   margin-top: 12px;
-  color: #2e7d32;
+  color: #1d4ed8;
   font-size: 0.9rem;
   text-decoration: none;
 }
@@ -56,8 +56,27 @@
   background: linear-gradient(#f0f1f3 65%, rgba(240, 241, 243, 0));
 }
 
-.tab {
-  padding: 8px 14px;
+.search {
+  min-width: 180px;
+  flex: 1 1 200px;
+  max-width: 280px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #111;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.search:focus {
+  outline: 2px solid #1d4ed8;
+  outline-offset: 1px;
+  border-color: #1d4ed8;
+}
+
+.setSelect {
+  padding: 8px 12px;
   border-radius: 999px;
   border: 1px solid #ccc;
   background: #fff;
@@ -65,18 +84,6 @@
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
-}
-
-.tab:hover {
-  border-color: #999;
-  color: #111;
-}
-
-.tabActive {
-  background: #252935;
-  border-color: #252935;
-  color: #fff;
 }
 
 .count {
@@ -120,7 +127,7 @@
 }
 
 .faceBtn:focus-visible {
-  outline: 2px solid #2e7d32;
+  outline: 2px solid #1d4ed8;
   outline-offset: 3px;
 }
 
@@ -155,11 +162,11 @@
   height: 16px;
   margin: 0;
   cursor: pointer;
-  accent-color: #2e7d32;
+  accent-color: #1d4ed8;
 }
 
 .cardTested .face {
-  outline: 2px solid rgba(46, 125, 50, 0.55);
+  outline: 2px solid rgba(29, 78, 216, 0.55);
   outline-offset: -2px;
   border-radius: 6px;
 }
@@ -211,26 +218,6 @@
   font-size: 0.72rem;
   color: #666;
   font-variant-numeric: tabular-nums;
-}
-
-.badge {
-  align-self: flex-start;
-  padding: 2px 8px;
-  border-radius: 999px;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.badgeLock {
-  background: rgba(37, 41, 53, 0.1);
-  color: #252935;
-}
-
-.badgeBlock {
-  background: rgba(180, 83, 9, 0.12);
-  color: #92400e;
 }
 
 @media (max-width: 520px) {

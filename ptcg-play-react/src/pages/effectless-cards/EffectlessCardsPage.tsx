@@ -6,20 +6,12 @@ import { CardFace } from '../../components/cards/CardFace';
 import { CardInfoPopup } from '../../card-info/CardInfoPopup';
 import { useAuth } from '../../context/AuthContext';
 import { useDeckCardScanUrl } from '../../context/CardImagesContext';
-import { ABILITY_LOCK_CARDS, type AbilityLockCardEntry, type AbilityLockMode } from './abilityLockCards';
-import { readFlaggedCards, toggleFlaggedCard } from './abilityLockFlaggedStorage';
-import { readTestedCards, toggleTestedCard } from './abilityLockTestedStorage';
-import styles from './AbilityLockPage.module.css';
+import { EFFECTLESS_CARDS, type EffectlessCardEntry } from './effectlessCards';
+import { readFlaggedCards, toggleFlaggedCard } from './effectlessFlaggedStorage';
+import { readTestedCards, toggleTestedCard } from './effectlessTestedStorage';
+import styles from './EffectlessCardsPage.module.css';
 
-type FilterId = 'all' | AbilityLockMode;
-
-const FILTERS: { id: FilterId; label: string }[] = [
-  { id: 'all', label: 'All' },
-  { id: 'lock', label: 'Remove (no Abilities)' },
-  { id: 'block', label: "Block (can't use)" },
-];
-
-function toScanCard(entry: AbilityLockCardEntry): Card {
+function toScanCard(entry: EffectlessCardEntry): Card {
   return {
     set: entry.set,
     setNumber: entry.setNumber,
@@ -28,14 +20,8 @@ function toScanCard(entry: AbilityLockCardEntry): Card {
   } as Card;
 }
 
-function modeLabel(mode: AbilityLockMode): string {
-  if (mode === 'block') return 'block';
-  if (mode === 'both') return 'both';
-  return 'lock';
-}
-
 function resolveCatalogCard(
-  entry: AbilityLockCardEntry,
+  entry: EffectlessCardEntry,
   byFullName: Map<string, Card>,
   bySetId: Map<string, Card>,
 ): Card {
@@ -46,18 +32,24 @@ function resolveCatalogCard(
   );
 }
 
-export function AbilityLockPage() {
+export function EffectlessCardsPage() {
   const { serverConfig, cardsInfo } = useAuth();
   const getScanUrl = useDeckCardScanUrl(serverConfig?.scansUrl);
-  const [filter, setFilter] = useState<FilterId>('all');
+  const [setFilter, setSetFilter] = useState('all');
+  const [query, setQuery] = useState('');
   const [catalog, setCatalog] = useState<Card[]>(() => cardsInfo?.cards ?? []);
   const [infoFullName, setInfoFullName] = useState<string | null>(null);
   const [swappedCard, setSwappedCard] = useState<Card | null>(null);
   const [tested, setTested] = useState<Set<string>>(() => readTestedCards());
   const [flagged, setFlagged] = useState<Set<string>>(() => readFlaggedCards());
 
+  const sets = useMemo(() => {
+    const unique = new Set(EFFECTLESS_CARDS.map((c) => c.set));
+    return [...unique].sort((a, b) => a.localeCompare(b));
+  }, []);
+
   const testedCount = useMemo(
-    () => ABILITY_LOCK_CARDS.filter((c) => tested.has(c.fullName)).length,
+    () => EFFECTLESS_CARDS.filter((c) => tested.has(c.fullName)).length,
     [tested],
   );
 
@@ -94,11 +86,21 @@ export function AbilityLockPage() {
   }, [catalog]);
 
   const cards = useMemo(() => {
-    if (filter === 'all') {
-      return ABILITY_LOCK_CARDS;
-    }
-    return ABILITY_LOCK_CARDS.filter((c) => c.mode === filter || c.mode === 'both');
-  }, [filter]);
+    const q = query.trim().toLowerCase();
+    return EFFECTLESS_CARDS.filter((c) => {
+      if (setFilter !== 'all' && c.set !== setFilter) {
+        return false;
+      }
+      if (!q) {
+        return true;
+      }
+      return (
+        c.name.toLowerCase().includes(q) ||
+        c.fullName.toLowerCase().includes(q) ||
+        `${c.set} ${c.setNumber}`.toLowerCase().includes(q)
+      );
+    });
+  }, [setFilter, query]);
 
   const infoIndex = infoFullName
     ? cards.findIndex((c) => c.fullName === infoFullName)
@@ -115,7 +117,7 @@ export function AbilityLockPage() {
     }
   }, [infoFullName, infoIndex]);
 
-  const openEntry = (entry: AbilityLockCardEntry) => {
+  const openEntry = (entry: EffectlessCardEntry) => {
     setInfoFullName(entry.fullName);
     setSwappedCard(null);
   };
@@ -140,10 +142,11 @@ export function AbilityLockPage() {
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <h1 className={styles.title}>Ability lock cards</h1>
+        <h1 className={styles.title}>Effectless restructure cards</h1>
         <p className={styles.subtitle}>
-          Cards on the shared ability-lock prefab. Images use the same JSON map resolution as the
-          deck editor (nightly / custom / scansUrl). Click a card for details.
+          Cards touched in commit 16cd523d (Effectless Card Format Restructured). Images use the
+          same JSON map resolution as the deck editor. Click a card for details; check off ones
+          you&apos;ve verified.
         </p>
         <Link className={styles.backLink} to="/games">
           ← Back to games
@@ -151,18 +154,29 @@ export function AbilityLockPage() {
       </header>
 
       <div className={styles.toolbar}>
-        {FILTERS.map((tab) => (
-          <button
-            key={tab.id}
-            type="button"
-            className={filter === tab.id ? `${styles.tab} ${styles.tabActive}` : styles.tab}
-            onClick={() => setFilter(tab.id)}
-          >
-            {tab.label}
-          </button>
-        ))}
+        <input
+          className={styles.search}
+          type="search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search name or set…"
+          aria-label="Search cards"
+        />
+        <select
+          className={styles.setSelect}
+          value={setFilter}
+          onChange={(e) => setSetFilter(e.target.value)}
+          aria-label="Filter by set"
+        >
+          <option value="all">All sets ({sets.length})</option>
+          {sets.map((set) => (
+            <option key={set} value={set}>
+              {set}
+            </option>
+          ))}
+        </select>
         <span className={styles.count}>
-          {testedCount}/{ABILITY_LOCK_CARDS.length} tested · {cards.length} shown
+          {testedCount}/{EFFECTLESS_CARDS.length} tested · {cards.length} shown
         </span>
       </div>
 
@@ -214,13 +228,6 @@ export function AbilityLockPage() {
                 <p className={styles.id}>
                   {entry.set} {entry.setNumber}
                 </p>
-                <span
-                  className={`${styles.badge} ${
-                    entry.mode === 'block' ? styles.badgeBlock : styles.badgeLock
-                  }`}
-                >
-                  {modeLabel(entry.mode)}
-                </span>
               </div>
             </article>
           );

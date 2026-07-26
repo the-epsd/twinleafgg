@@ -9,7 +9,11 @@ function isDeckEditorPath(pathname: string): boolean {
 }
 
 function isTablePath(pathname: string): boolean {
-  return /^\/table\/replay\/[^/]+\/?$/.test(pathname) || /^\/table\/[^/]+\/?$/.test(pathname);
+  return (
+    /^\/table\/replay\/[^/]+\/?$/.test(pathname) ||
+    /^\/table\/saved-replay\/[^/]+\/?$/.test(pathname) ||
+    /^\/table\/[^/]+\/?$/.test(pathname)
+  );
 }
 
 function isParentMapPath(pathname: string): boolean {
@@ -49,6 +53,7 @@ export function AppLayout() {
           <nav style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
             <Link to="/games">{t('MAIN_GAMES')}</Link>
             <Link to="/spectate">{t('MAIN_SPECTATE')}</Link>
+            <Link to="/replays">{t('MAIN_REPLAYS')}</Link>
             <Link to="/deck">{t('DECK_TITLE')}</Link>
             <Link to="/ranking">{t('MAIN_RANKING')}</Link>
             <Link to="/friends">{t('MAIN_FRIENDS')}</Link>
