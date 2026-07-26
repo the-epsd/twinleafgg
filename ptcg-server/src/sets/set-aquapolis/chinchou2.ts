@@ -2,9 +2,12 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { ADD_MARKER, COIN_FLIP_PROMPT, HAS_MARKER, REMOVE_MARKER, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { AbstractAttackEffect } from '../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import {
+  COIN_FLIP_PROMPT,
+  PREVENT_DAMAGE,
+  PREVENT_EFFECTS_OF_ATTACKS,
+  WAS_ATTACK_USED,
+} from '../../game/store/prefabs/prefabs';
 
 export class Chinchou2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -27,33 +30,19 @@ export class Chinchou2 extends PokemonCard {
   }];
 
   public set: string = 'AQ';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '70';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chinchou';
   public fullName: string = 'Chinchou AQ 70';
 
-  public readonly FLOAT_MARKER = 'FLOAT_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {
-          this.marker.addMarker(this.FLOAT_MARKER, this);
-          ADD_MARKER(this.FLOAT_MARKER, effect.opponent, this);
+          PREVENT_DAMAGE(store, state, effect, this);
+          PREVENT_EFFECTS_OF_ATTACKS(store, state, effect, this);
         }
       });
-    }
-
-    if (effect instanceof AbstractAttackEffect && effect.target.getPokemonCard() === this) {
-      if (this.marker.hasMarker(this.FLOAT_MARKER, this)) {
-        effect.preventDefault = true;
-      }
-    }
-
-    if (effect instanceof EndTurnEffect && HAS_MARKER(this.FLOAT_MARKER, effect.player, this)) {
-      REMOVE_MARKER(this.FLOAT_MARKER, effect.player, this);
-      this.marker.removeMarker(this.FLOAT_MARKER, this);
     }
 
     return state;

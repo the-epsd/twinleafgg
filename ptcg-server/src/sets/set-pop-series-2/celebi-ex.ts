@@ -2,9 +2,16 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, StateUtils, CardList, ChooseCardsPrompt, GameMessage, GameLog } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { ABILITY_USED, ADD_MARKER, CONFIRMATION_PROMPT, HAS_MARKER, IS_POKEPOWER_BLOCKED, MOVE_CARD_TO, REMOVE_MARKER, SHOW_CARDS_TO_PLAYER, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { AbstractAttackEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import {
+  ABILITY_USED,
+  CONFIRMATION_PROMPT,
+  IS_POKEPOWER_BLOCKED,
+  MOVE_CARD_TO,
+  PREVENT_DAMAGE,
+  PREVENT_EFFECTS_OF_ATTACKS,
+  SHOW_CARDS_TO_PLAYER,
+  WAS_ATTACK_USED,
+} from '../../game/store/prefabs/prefabs';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 
@@ -35,10 +42,7 @@ export class Celebiex extends PokemonCard {
   public name: string = 'Celebi ex';
   public fullName: string = 'Celebi ex P2';
 
-  public readonly PSYCHIC_SHIELD_MARKER = 'PSYCHIC_SHIELD_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -79,20 +83,11 @@ export class Celebiex extends PokemonCard {
       }, GameMessage.WANT_TO_USE_ABILITY);
     }
 
+    // Psychic Shield
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      this.marker.addMarker(this.PSYCHIC_SHIELD_MARKER, this);
-      ADD_MARKER(this.PSYCHIC_SHIELD_MARKER, effect.opponent, this);
-    }
-
-    if ((effect instanceof PutDamageEffect || effect instanceof AbstractAttackEffect) && effect.target.getPokemonCard() === this && effect.source.getPokemonCard()?.tags.includes(CardTag.POKEMON_ex)) {
-      if (this.marker.hasMarker(this.PSYCHIC_SHIELD_MARKER, this)) {
-        effect.preventDefault = true;
-      }
-    }
-
-    if (effect instanceof EndTurnEffect && HAS_MARKER(this.PSYCHIC_SHIELD_MARKER, effect.player, this)) {
-      REMOVE_MARKER(this.PSYCHIC_SHIELD_MARKER, effect.player, this);
-      this.marker.removeMarker(this.PSYCHIC_SHIELD_MARKER, this);
+      const options = { sourceTags: [CardTag.POKEMON_ex] };
+      PREVENT_DAMAGE(store, state, effect, this, options);
+      PREVENT_EFFECTS_OF_ATTACKS(store, state, effect, this, options);
     }
 
     return state;

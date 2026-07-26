@@ -1,82 +1,44 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, PlayerType, CoinFlipPrompt, PokemonCardList } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, PREVENT_DAMAGE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Wartortle extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Squirtle';
-
-  public cardType: CardType = CardType.WATER;
-
+  public cardType: CardType = W;
   public hp: number = 70;
-
-  public weakness = [{ type: CardType.LIGHTNING }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: L }];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Withdraw',
-    cost: [CardType.WATER, CardType.COLORLESS],
+    cost: [W, C],
     damage: 0,
     text: 'Flip a coin. If heads, prevent all damage done to Wartortle during your opponent\'s next turn. (Any other effects of attacks still happen.)'
   }, {
     name: 'Bite',
-    cost: [CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
+    cost: [W, C, C],
     damage: 40,
     text: ''
   }];
 
   public set: string = 'BS';
-
+  public setNumber: string = '42';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wartortle';
-
   public fullName: string = 'Wartortle BS';
 
-  public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '42';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      return store.prompt(state, new CoinFlipPrompt(
-        player.id, GameMessage.COIN_FLIP
-      ), flipResult => {
-        if (flipResult) {
-          player.active.marker.addMarker(PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-          opponent.marker.addMarker(PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        if (result) {
+          PREVENT_DAMAGE(store, state, effect, this);
         }
-      });
-    }
-
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
-      if (effect.target.marker.hasMarker(PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
-        effect.preventDefault = true;
-        return state;
-      }
-    }
-
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
-
-      effect.player.marker.removeMarker(PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
       });
     }
 
     return state;
   }
-
 }

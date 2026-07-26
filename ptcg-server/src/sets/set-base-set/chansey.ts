@@ -1,25 +1,16 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PlayerType } from '../../game';
-
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
-import { SIMULATE_COIN_FLIP, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { COIN_FLIP_PROMPT, PREVENT_DAMAGE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Chansey extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
   public cardType: CardType = C;
-
   public hp: number = 120;
-
   public weakness = [{ type: F }];
-
   public resistance = [{ type: P, value: -30 }];
-
   public retreat = [C];
 
   public attacks = [
@@ -38,66 +29,30 @@ export class Chansey extends PokemonCard {
   ];
 
   public set: string = 'BS';
-
   public fullName = 'Chansey BS';
-
   public name = 'Chansey';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '3';
 
-  public readonly PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
-  public readonly CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Scrunch
+    // Ref: set-astral-radiance/hisuian-growlithe.ts (Defensive Posture)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      try {
-        const coinFlip = new CoinFlipEffect(player);
-        store.reduceEffect(state, coinFlip);
-      } catch {
-        return state;
-      }
-
-      const coinFlipResult = SIMULATE_COIN_FLIP(store, state, player);
-
-      if (coinFlipResult) {
-
-        player.active.marker.addMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
-        opponent.marker.addMarker(this.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
-      }
-
-      return state;
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        if (result) {
+          PREVENT_DAMAGE(store, state, effect, this);
+        }
+      });
     }
 
+    // Double-edge
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-
       const dealDamage = new DealDamageEffect(effect, 80);
       dealDamage.target = player.active;
       return store.reduceEffect(state, dealDamage);
     }
 
-    if (effect instanceof PutDamageEffect
-      && effect.target.marker.hasMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER)) {
-      effect.preventDefault = true;
-      return state;
-    }
-
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this)) {
-
-      effect.player.marker.removeMarker(this.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
-
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
-      });
-    }
     return state;
   }
 }

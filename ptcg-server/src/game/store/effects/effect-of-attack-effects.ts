@@ -8,11 +8,37 @@ import {
 import { AttackEffect } from './game-effects';
 import { State } from '../state/state';
 import { StateUtils } from '../state-utils';
-import { Attack } from '../card/pokemon-types';
+import { Attack, PowerType } from '../card/pokemon-types';
 import { Card } from '../card/card';
 import { PokemonCard } from '../card/pokemon-card';
 import { MarkerConstants } from '../markers/marker-constants';
 import { PokemonCardList, PreventDamageFilter } from '../state/pokemon-card-list';
+
+function sourceMatchesPreventFilter(
+  sourceCard: PokemonCard,
+  filter: PreventDamageFilter,
+): boolean {
+  if (filter.sourceStage !== undefined && sourceCard.stage !== filter.sourceStage) {
+    return false;
+  }
+
+  if (filter.sourceTags !== undefined
+    && !filter.sourceTags.some(tag => sourceCard.tags.includes(tag))) {
+    return false;
+  }
+
+  if (filter.sourceCardTypes !== undefined
+    && !filter.sourceCardTypes.includes(sourceCard.cardType)) {
+    return false;
+  }
+
+  if (filter.sourceHasAbility === true
+    && !sourceCard.powers.some(p => p.powerType === PowerType.ABILITY)) {
+    return false;
+  }
+
+  return true;
+}
 
 /**
  * Base class for effects that are caused by attacks
@@ -69,16 +95,7 @@ export function shouldPreventAttackDamage(
     return false;
   }
 
-  if (filter.sourceStage !== undefined && sourceCard.stage !== filter.sourceStage) {
-    return false;
-  }
-
-  if (filter.sourceTags !== undefined
-    && !filter.sourceTags.some(tag => sourceCard.tags.includes(tag))) {
-    return false;
-  }
-
-  return true;
+  return sourceMatchesPreventFilter(sourceCard, filter);
 }
 
 /**
@@ -91,7 +108,8 @@ export function shouldPreventAttackEffects(state: State, effect: Effect): boolea
     return false;
   }
 
-  if (!effect.target.preventEffectsOfAttacksNextTurn) {
+  const filter = effect.target.preventEffectsOfAttacksNextTurn;
+  if (!filter) {
     return false;
   }
 
@@ -101,7 +119,8 @@ export function shouldPreventAttackEffects(state: State, effect: Effect): boolea
     return false;
   }
 
-  if (!effect.source.getPokemonCard()) {
+  const sourceCard = effect.source.getPokemonCard();
+  if (!sourceCard) {
     return false;
   }
 
@@ -113,7 +132,7 @@ export function shouldPreventAttackEffects(state: State, effect: Effect): boolea
     return false;
   }
 
-  return true;
+  return sourceMatchesPreventFilter(sourceCard, filter);
 }
 
 /**
@@ -138,6 +157,12 @@ export class PreventDamageEffect extends EffectOfAttackEffect {
     if (this.options.sourceTags !== undefined) {
       filter.sourceTags = this.options.sourceTags;
     }
+    if (this.options.sourceCardTypes !== undefined) {
+      filter.sourceCardTypes = this.options.sourceCardTypes;
+    }
+    if (this.options.sourceHasAbility !== undefined) {
+      filter.sourceHasAbility = this.options.sourceHasAbility;
+    }
     this.player.active.preventDamageNextTurnPending = filter;
   }
 }
@@ -145,17 +170,31 @@ export class PreventDamageEffect extends EffectOfAttackEffect {
 /**
  * During the opponent's next turn, prevents effects of attacks done to this Pokémon.
  * Damage is not an effect and is handled separately (e.g. {@link PreventDamageEffect}).
+ * Use {@link PreventDamageOptions} to restrict which attackers are blocked.
  */
 export class PreventEffectsOfAttacksEffect extends EffectOfAttackEffect {
   readonly type: string = 'PREVENT_EFFECTS_OF_ATTACKS_EFFECT';
 
-  constructor(base: AttackEffect) {
+  constructor(base: AttackEffect, public readonly options: PreventDamageOptions = {}) {
     super(base);
     this.target = base.source;
   }
 
   applyEffect(): void {
-    this.player.active.preventEffectsOfAttacksNextTurnPending = true;
+    const filter: PreventDamageFilter = {};
+    if (this.options.sourceStage !== undefined) {
+      filter.sourceStage = this.options.sourceStage;
+    }
+    if (this.options.sourceTags !== undefined) {
+      filter.sourceTags = this.options.sourceTags;
+    }
+    if (this.options.sourceCardTypes !== undefined) {
+      filter.sourceCardTypes = this.options.sourceCardTypes;
+    }
+    if (this.options.sourceHasAbility !== undefined) {
+      filter.sourceHasAbility = this.options.sourceHasAbility;
+    }
+    this.player.active.preventEffectsOfAttacksNextTurnPending = filter;
   }
 }
 
@@ -226,8 +265,9 @@ export function preventDamageEffect(
 export function preventEffectsOfAttacksEffect(
   attackEffect: AttackEffect,
   source: Card,
+  options: PreventDamageOptions = {},
 ): PreventEffectsOfAttacksEffect {
-  const effect = new PreventEffectsOfAttacksEffect(attackEffect);
+  const effect = new PreventEffectsOfAttacksEffect(attackEffect, options);
   effect.markerSource = source;
   return effect;
 }

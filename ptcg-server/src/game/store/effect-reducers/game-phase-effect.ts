@@ -223,8 +223,8 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
       cardList.damageReductionNextTurn = 0;
       cardList.preventDamageNextTurn = null;
       cardList.preventDamageNextTurnPending = null;
-      cardList.preventEffectsOfAttacksNextTurn = false;
-      cardList.preventEffectsOfAttacksNextTurnPending = false;
+      cardList.preventEffectsOfAttacksNextTurn = null;
+      cardList.preventEffectsOfAttacksNextTurnPending = null;
     });
 
     // Activate pending prevent-damage on this player's Pokémon
@@ -233,9 +233,9 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
         cardList.preventDamageNextTurn = cardList.preventDamageNextTurnPending;
         cardList.preventDamageNextTurnPending = null;
       }
-      if (cardList.preventEffectsOfAttacksNextTurnPending) {
-        cardList.preventEffectsOfAttacksNextTurn = true;
-        cardList.preventEffectsOfAttacksNextTurnPending = false;
+      if (cardList.preventEffectsOfAttacksNextTurnPending !== null) {
+        cardList.preventEffectsOfAttacksNextTurn = cardList.preventEffectsOfAttacksNextTurnPending;
+        cardList.preventEffectsOfAttacksNextTurnPending = null;
       }
     });
 

@@ -68,8 +68,8 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
       targetOwner.marker.addMarkerToState(targetOwner.DAMAGE_DEALT_MARKER);
     }
 
-    // Apply damage reduction for "during opponent's next turn" effects
-    if (target.damageReductionNextTurn > 0) {
+    // Apply damage reduction (or increase via negative values) for "during opponent's next turn" effects
+    if (target.damageReductionNextTurn !== 0) {
       effect.damage = Math.max(0, effect.damage - target.damageReductionNextTurn);
     }
 

@@ -4203,8 +4203,9 @@ export function PREVENT_EFFECTS_OF_ATTACKS(
   state: State,
   effect: AttackEffect,
   source: Card,
+  options?: PreventDamageOptions,
 ): State {
-  const effectsEffect = preventEffectsOfAttacksEffect(effect, source);
+  const effectsEffect = preventEffectsOfAttacksEffect(effect, source, options);
   return store.reduceEffect(state, effectsEffect);
 }
 

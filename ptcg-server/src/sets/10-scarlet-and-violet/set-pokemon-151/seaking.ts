@@ -1,11 +1,13 @@
-import { PokemonCard, State, StateUtils, StoreLike } from '../../../game';
+import { PokemonCard, State, StoreLike } from '../../../game';
 import { CardType, Stage } from '../../../game/store/card/card-types';
-import { AbstractAttackEffect } from '../../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-
-import { MarkerConstants } from '../../../game/store/markers/marker-constants';
-import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, PREVENT_DAMAGE, CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
+import {
+  COIN_FLIP_PROMPT,
+  PREVENT_DAMAGE,
+  PREVENT_EFFECTS_OF_ATTACKS,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Seaking extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -39,7 +41,18 @@ export class Seaking extends PokemonCard {
   public fullName: string = 'Seaking MEW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Swim Freely
+    // Ref: set-burning-shadows/ledyba.ts (Agility)
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        if (result) {
+          PREVENT_DAMAGE(store, state, effect, this);
+          PREVENT_EFFECTS_OF_ATTACKS(store, state, effect, this);
+        }
+      });
+    }
 
+    // Aqua Horn
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
@@ -54,28 +67,7 @@ export class Seaking extends PokemonCard {
       });
 
       effect.damage += energyCount * 30;
-
-      return state;
     }
-
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
-        if (result) {
-          PREVENT_DAMAGE(store, state, effect, this);
-        }
-      });
-    }
-
-    if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      const sourceCard = effect.source.getPokemonCard();
-
-      if (sourceCard && opponent.active.marker.hasMarker(MarkerConstants.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this)) {
-        effect.preventDefault = true;
-      }
-    }
-
-    CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(state, effect, MarkerConstants.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, MarkerConstants.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
 
     return state;
   }
