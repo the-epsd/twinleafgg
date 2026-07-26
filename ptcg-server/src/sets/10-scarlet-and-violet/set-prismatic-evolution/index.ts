@@ -3,6 +3,7 @@ import { ApplinPRE, DipplinPRE, HydrappleexPRE, TealMaskOgerponexPRE, Hearthflam
 import { Amarys } from './amarys';
 import { BlackBeltsTraining } from './black-belts-training';
 import { Bronzor } from './bronzor';
+import { Bronzong } from './bronzong';
 import { Budew } from './budew';
 import { Eeveeex } from './eevee-ex';
 import { Espeonex } from './espeon-ex';
@@ -53,6 +54,7 @@ export const setPrismaticEvolution: Card[] = [
   new Pupitar(),
   new Tyranitarex(),
   new Bronzor(),
+  new Bronzong(),
   new HabanBerry(),
   new Hoothoot(),
 

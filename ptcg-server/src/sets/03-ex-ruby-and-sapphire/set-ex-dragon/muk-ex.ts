@@ -1,12 +1,17 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PowerType, GameError, GameMessage } from '../../../game';
+import { StoreLike, State, StateUtils, PowerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { ADD_POISON_TO_PLAYER_ACTIVE, IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { ADD_POISON_TO_PLAYER_ACTIVE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
-import { CheckPokemonPowersEffect } from '../../../game/store/effects/check-effects';
 import { CheckRetreatCostEffect } from '../../../game/store/effects/check-effects';
+import {
+  CAN_APPLY_LOCKER_ABILITY,
+  HANDLE_ABILITY_BLOCK,
+  IS_ABILITY_LOCKER_ACTIVE,
+  POKEPOWER_AND_BODY_TYPES,
+} from '../../../game/store/prefabs/ability-lock';
+import { GameMessage } from '../../../game/game-message';
 
 export class Mukex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -47,45 +52,16 @@ export class Mukex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    // Toxic Gas
-    if (effect instanceof CheckPokemonPowersEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // Muk ex is not active Pokemon
-      if (player.active.getPokemonCard() !== this
-        && opponent.active.getPokemonCard() !== this) {
-        return state;
+    HANDLE_ABILITY_BLOCK(effect, ({ player }) => {
+      if (!IS_ABILITY_LOCKER_ACTIVE(state, player, this)) {
+        return false;
       }
-
-      if (IS_POKEBODY_BLOCKED(store, state, player, this)) {
-        return state;
-      }
-
-      // Filter out all Poké Powers and Poké Bodies except Toxic Gas
-      effect.powers = effect.powers.filter(power =>
-        (power.powerType !== PowerType.POKEPOWER && power.powerType !== PowerType.POKEBODY) || power.name === 'Toxic Gas'
-      );
-    }
-
-    if (effect instanceof PowerEffect && (effect.power.powerType === PowerType.POKEPOWER || effect.power.powerType === PowerType.POKEBODY) && effect.power.name !== 'Toxic Gas') {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // Muk is not active Pokemon
-      if (player.active.getPokemonCard() !== this
-        && opponent.active.getPokemonCard() !== this) {
-        return state;
-      }
-
-      if (IS_POKEBODY_BLOCKED(store, state, player, this)) {
-        return state;
-      }
-
-      if (!effect.power.exemptFromAbilityLock) {
-        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
-      }
-    }
+      return CAN_APPLY_LOCKER_ABILITY(store, state, player, this, this.powers[0]);
+    }, {
+      powerTypes: POKEPOWER_AND_BODY_TYPES,
+      exemptPowerNames: ['Toxic Gas'],
+      error: GameMessage.BLOCKED_BY_ABILITY,
+    });
 
     // Poison Breath
     if (WAS_ATTACK_USED(effect, 0, this)) {

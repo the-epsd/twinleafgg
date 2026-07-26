@@ -13,6 +13,20 @@
   box-shadow: 0 0 0 2px rgba(120, 200, 255, 0.55);
 }
 
+.rootGoingFirst {
+  border-color: rgba(251, 191, 36, 0.65);
+  box-shadow:
+    0 0 0 2px rgba(251, 191, 36, 0.75),
+    0 0 18px 2px rgba(251, 191, 36, 0.35);
+}
+
+.rootActive.rootGoingFirst {
+  border-color: rgba(251, 191, 36, 0.65);
+  box-shadow:
+    0 0 0 2px rgba(251, 191, 36, 0.8),
+    0 0 18px 2px rgba(251, 191, 36, 0.4);
+}
+
 .name {
   margin: 0 0 8px;
   font-size: 1rem;

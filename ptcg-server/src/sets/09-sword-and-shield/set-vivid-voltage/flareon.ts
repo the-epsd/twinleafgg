@@ -4,10 +4,13 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { GameError, GameMessage, PlayerType, PowerType, StoreLike, State } from '../../../game';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
+import { TrainerCard } from '../../../game/store/card/trainer-card';
+import { GameMessage, PlayerType, PowerType, StoreLike, State, StateUtils } from '../../../game';
+import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
+import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { HANDLE_ABILITY_LOCK } from '../../../game/store/prefabs/ability-lock';
 
 export class Flareon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -39,55 +42,64 @@ export class Flareon extends PokemonCard {
   public name: string = 'Flareon';
   public fullName: string = 'Flareon VIV';
 
-  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Incandescent Awakening (passive - block Grass Pokemon abilities if Memory Capsule attached)
-    // Ref: set-vivid-voltage/jolteon.ts (same pattern for Water Pokemon)
-    if (effect instanceof PowerEffect && effect.power !== this.powers[0]) {
-      const targetCard = effect.card;
-
-      // Only affects Grass-type Pokemon
-      if (targetCard.cardType !== CardType.GRASS) {
-        return state;
-      }
-
-      // Check if this Flareon is in play on either side and has Memory Capsule attached
-      let flareonCardList: any = null;
-      let flareonOwner: any = null;
-      for (const player of state.players) {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-          if (cardList.getPokemonCard() === this) {
-            flareonCardList = cardList;
-            flareonOwner = player;
-          }
-        });
-      }
-
-      if (!flareonCardList || !flareonOwner) {
-        return state;
-      }
-
-      // Check if Flareon has Memory Capsule attached
-      const hasMemoryCapsule = flareonCardList.tools.some(
-        (tool: any) => tool.name === 'Memory Capsule'
-      );
-
-      if (!hasMemoryCapsule) {
-        return state;
-      }
-
-      if (effect.power.useFromDiscard || effect.power.useFromHand) {
-        return state;
-      }
-
-
-      if (IS_ABILITY_BLOCKED(store, state, flareonOwner, this)) {
-        return state;
-      }
-
-      if (!effect.power.exemptFromAbilityLock) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+  private findFlareonInPlay(state: State): { cardList: PokemonCardList; owner: import('../../../game/store/state/player').Player } | null {
+    for (const player of state.players) {
+      let found: PokemonCardList | null = null;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+        if (cardList.getPokemonCard() === this) {
+          found = cardList;
+        }
+      });
+      if (found) {
+        return { cardList: found, owner: player };
       }
     }
+    return null;
+  }
+
+  private hasMemoryCapsule(cardList: PokemonCardList): boolean {
+    return cardList.tools.some(
+      (tool) => tool instanceof TrainerCard && tool.name === 'Memory Capsule'
+    );
+  }
+
+  private isGrassPokemon(store: StoreLike, state: State, card: PokemonCard): boolean {
+    const targetCardList = StateUtils.findCardList(state, card);
+    if (!(targetCardList instanceof PokemonCardList)) {
+      return false;
+    }
+    const checkType = new CheckPokemonTypeEffect(targetCardList);
+    store.reduceEffect(state, checkType);
+    return checkType.cardTypes.includes(CardType.GRASS);
+  }
+
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    const isTargetLocked = ({ card }: { card: PokemonCard }) => {
+      if (!this.isGrassPokemon(store, state, card)) {
+        return false;
+      }
+
+      const flareon = this.findFlareonInPlay(state);
+      if (!flareon || !this.hasMemoryCapsule(flareon.cardList)) {
+        return false;
+      }
+
+      if (IS_ABILITY_BLOCKED(store, state, flareon.owner, this)) {
+        return false;
+      }
+
+      try {
+        return StateUtils.findCardList(state, card) instanceof PokemonCardList;
+      } catch {
+        return false;
+      }
+    };
+
+    HANDLE_ABILITY_LOCK(effect, ({ card }) => isTargetLocked({ card }), {
+      allowUseFromHand: true,
+      allowUseFromDiscard: true,
+      error: GameMessage.BLOCKED_BY_EFFECT,
+    });
 
     return state;
   }

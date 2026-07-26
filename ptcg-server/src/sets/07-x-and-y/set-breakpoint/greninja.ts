@@ -1,11 +1,11 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameMessage, PlayerType, GameError, StateUtils, ConfirmPrompt, ChooseEnergyPrompt, Card } from '../../../game';
+import { StoreLike, State, GameMessage, PlayerType, StateUtils, ConfirmPrompt, ChooseEnergyPrompt, Card } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { CheckProvidedEnergyEffect, CheckPokemonPowersEffect } from '../../../game/store/effects/check-effects';
+import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
+import { HANDLE_ABILITY_LOCK } from '../../../game/store/prefabs/ability-lock';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Greninja extends PokemonCard {
@@ -96,47 +96,23 @@ export class Greninja extends PokemonCard {
       });
     }
 
-    // the shadow ability blocking
-    if (effect instanceof CheckPokemonPowersEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // Check if Shadow Stitching marker is active on opponent
-      if (opponent.marker.hasMarker(this.CLEAR_SHADOW_STITCHING_MARKER, this)) {
-        // Check if the target belongs to the opponent
-        const targetCardList = StateUtils.findCardList(state, effect.target);
-        const targetOwner = StateUtils.findOwner(state, targetCardList);
-        if (targetOwner === opponent) {
-          // Filter out all abilities
-          effect.powers = effect.powers.filter(power =>
-            power.powerType !== PowerType.ABILITY
-          );
-        }
-      }
-    }
-
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY) {
-      const player = effect.player;
-
+    // Shadow Stitching locks the marked player's Abilities (opponent after the attack).
+    HANDLE_ABILITY_LOCK(effect, ({ player }) => {
       if (!player.marker.hasMarker(this.CLEAR_SHADOW_STITCHING_MARKER, this)) {
-        return state;
+        return false;
       }
-
-      // checking if the effect is one you own
+      // Do not lock the Greninja owner's own Abilities if they somehow share the marker.
       let doesPlayerOwn = false;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (_cardList, card) => {
         if (card === this) {
           doesPlayerOwn = true;
         }
       });
-      if (doesPlayerOwn) {
-        return state;
-      }
+      return !doesPlayerOwn;
+    }, {
+      error: GameMessage.BLOCKED_BY_ABILITY,
+    });
 
-      throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
-    }
-
-    // wow ability locking off an attack is actually pretty difficult
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_SHADOW_STITCHING_MARKER, this)) {
       effect.player.marker.removeMarker(this.CLEAR_SHADOW_STITCHING_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);

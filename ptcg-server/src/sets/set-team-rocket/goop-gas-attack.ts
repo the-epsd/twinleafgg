@@ -1,11 +1,15 @@
-import { GameError, GameMessage, PowerType, StateUtils } from '../../game';
+import { GameMessage, StateUtils } from '../../game';
 import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
-import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER } from '../../game/store/prefabs/prefabs';
+import {
+  APPLY_ABILITY_LOCK_MARKERS,
+  CLEAR_ABILITY_LOCK_AT_END_OF_OPPONENTS_TURN,
+  HANDLE_ABILITY_BLOCK,
+  HAS_ABILITY_LOCK_MARKER,
+  POKEPOWER_AND_BODY_TYPES,
+  POKEMON_POWER_TYPES,
+} from '../../game/store/prefabs/ability-lock';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -21,7 +25,6 @@ export class GoopGasAttack extends TrainerCard {
   public text: string = 'All Pokémon Powers stop working until the end of your opponent\'s next turn.';
 
   public GOOP_GAS_MARKER = 'GOOP_GAS_MARKER';
-  public GOOP_GAS_MARKER_2 = 'GOOP_GAS_MARKER_2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -29,35 +32,18 @@ export class GoopGasAttack extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      ADD_MARKER(this.GOOP_GAS_MARKER, player, this);
-      ADD_MARKER(this.GOOP_GAS_MARKER, opponent, this);
+      APPLY_ABILITY_LOCK_MARKERS(this.GOOP_GAS_MARKER, this, player, opponent);
     }
 
-    if (effect instanceof CheckPokemonPowersEffect && HAS_MARKER(this.GOOP_GAS_MARKER, effect.player, this)) {
-      // Filter out all Pokémon Powers, Poké Bodies, and Poké Powers
-      effect.powers = effect.powers.filter(power =>
-        power.powerType !== PowerType.POKEMON_POWER &&
-        power.powerType !== PowerType.POKEBODY &&
-        power.powerType !== PowerType.POKEPOWER
-      );
-    }
-
-    if (effect instanceof PowerEffect && HAS_MARKER(this.GOOP_GAS_MARKER, effect.player, this)
-      && (effect.power.powerType === PowerType.POKEMON_POWER || effect.power.powerType === PowerType.POKEBODY || effect.power.powerType === PowerType.POKEPOWER)) {
-
-      throw new GameError(GameMessage.CANNOT_USE_POWER);
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const owner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
-
-      if (player !== owner) {
-        REMOVE_MARKER(this.GOOP_GAS_MARKER, player, this);
-        REMOVE_MARKER(this.GOOP_GAS_MARKER, opponent, this);
+    HANDLE_ABILITY_BLOCK(effect, ({ player }) =>
+      HAS_ABILITY_LOCK_MARKER(this.GOOP_GAS_MARKER, player, this, state),
+      {
+        powerTypes: [...POKEPOWER_AND_BODY_TYPES, ...POKEMON_POWER_TYPES],
+        error: GameMessage.CANNOT_USE_POWER,
       }
-    }
+    );
+
+    CLEAR_ABILITY_LOCK_AT_END_OF_OPPONENTS_TURN(effect, state, this.GOOP_GAS_MARKER, this);
 
     return state;
 

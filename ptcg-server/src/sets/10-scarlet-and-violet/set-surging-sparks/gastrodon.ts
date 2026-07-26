@@ -3,11 +3,10 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
-import { CheckPokemonPowersEffect } from '../../../game/store/effects/check-effects';
 import { PowerType } from '../../../game/store/card/pokemon-types';
-import { GameError, GameMessage, PlayerType, StateUtils } from '../../../game';
+import { GameMessage, PokemonCardList, StateUtils } from '../../../game';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { HANDLE_ABILITY_LOCK } from '../../../game/store/prefabs/ability-lock';
 
 export class Gastrodon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -39,70 +38,39 @@ export class Gastrodon extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckPokemonPowersEffect) {
-      const player = effect.player;
+    HANDLE_ABILITY_LOCK(effect, ({ player, card }) => {
       const opponent = StateUtils.getOpponent(state, player);
-
-      // Check if Gastrodon is on the Bench
-      const isGastrodonOnPlayerBench = player.bench.some(benchPokemon => benchPokemon.getPokemonCard() === this);
-      const isGastrodonOnOpponentBench = opponent.bench.some(benchPokemon => benchPokemon.getPokemonCard() === this);
-
-      if (isGastrodonOnPlayerBench || isGastrodonOnOpponentBench) {
-        const targetPokemon = effect.target;
-        const targetCardList = StateUtils.findCardList(state, targetPokemon);
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-          if (cardList === targetCardList && card.stage === Stage.STAGE_2 && cardList !== player.active) {
-            // Check if Gastrodon's ability is blocked
-            const gastrodonPlayer = isGastrodonOnPlayerBench ? player : opponent;
-            if (!IS_ABILITY_BLOCKED(store, state, gastrodonPlayer, this)) {
-              // Filter out all abilities
-              effect.powers = effect.powers.filter(power =>
-                power.powerType !== PowerType.ABILITY
-              );
-            }
-          }
-        });
-        opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-          if (cardList === targetCardList && card.stage === Stage.STAGE_2 && cardList !== opponent.active) {
-            // Check if Gastrodon's ability is blocked
-            const gastrodonPlayer = isGastrodonOnPlayerBench ? player : opponent;
-            if (!IS_ABILITY_BLOCKED(store, state, gastrodonPlayer, this)) {
-              // Filter out all abilities
-              effect.powers = effect.powers.filter(power =>
-                power.powerType !== PowerType.ABILITY
-              );
-            }
-          }
-        });
-      }
-    }
-
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // We are not blocking the Abilities from Non-Stage 2 Pokemon
-      if (effect.card.stage !== Stage.STAGE_2) {
-        return state;
-      }
-
-      // Check if Gastrodon is on the Bench
       const isGastrodonOnPlayerBench = player.bench.some(benchPokemon => benchPokemon.getPokemonCard() === this);
       const isGastrodonOnOpponentBench = opponent.bench.some(benchPokemon => benchPokemon.getPokemonCard() === this);
 
       if (!isGastrodonOnPlayerBench && !isGastrodonOnOpponentBench) {
-        return state;
+        return false;
+      }
+
+      if (card.stage !== Stage.STAGE_2) {
+        return false;
+      }
+
+      const targetCardList = StateUtils.findCardList(state, card);
+      if (!(targetCardList instanceof PokemonCardList)) {
+        return false;
+      }
+
+      if (targetCardList === player.active || targetCardList === opponent.active) {
+        return false;
       }
 
       const gastrodonPlayer = isGastrodonOnPlayerBench ? player : opponent;
       if (IS_ABILITY_BLOCKED(store, state, gastrodonPlayer, this)) {
-        return state;
+        return false;
       }
 
-      if (!effect.power.exemptFromAbilityLock) {
-        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
-      }
-    }
+      return true;
+    }, {
+      allowUseFromHand: true,
+      allowUseFromDiscard: true,
+      error: GameMessage.BLOCKED_BY_ABILITY,
+    });
 
     return state;
   }

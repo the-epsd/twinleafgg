@@ -1,7 +1,10 @@
-import { CardTag, CardType, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCard, PowerType, SlotType, Stage, State, StateUtils, StoreLike } from '../../../game';
+import { CardTag, CardType, ChoosePokemonPrompt, GameMessage, PlayerType, PokemonCard, PowerType, SlotType, Stage, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { ADD_MARKER, BLOCK_RETREAT, HAS_MARKER, IS_POKEPOWER_BLOCKED, JUST_EVOLVED, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  HANDLE_ABILITY_BLOCK,
+  POKEPOWER_TYPES,
+} from '../../../game/store/prefabs/ability-lock';
 
 export class Umbreonex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -42,7 +45,6 @@ export class Umbreonex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    // Darker Ring
     if (JUST_EVOLVED(effect, this) && !IS_POKEPOWER_BLOCKED(store, state, effect.player, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -67,7 +69,6 @@ export class Umbreonex extends PokemonCard {
       });
     }
 
-    // Black Cry
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
       ADD_MARKER(this.BLACK_CRY_MARKER, opponent.active, this);
@@ -75,10 +76,12 @@ export class Umbreonex extends PokemonCard {
     }
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.BLACK_CRY_MARKER, this);
 
-    // Black Cry Power
-    if (effect instanceof PowerEffect && HAS_MARKER(this.BLACK_CRY_MARKER, effect.player.active, this) && effect.power.powerType === PowerType.POKEPOWER) {
-      throw new GameError(GameMessage.CANNOT_USE_POWER);
-    }
+    HANDLE_ABILITY_BLOCK(effect, ({ player }) => {
+      return HAS_MARKER(this.BLACK_CRY_MARKER, player.active, this);
+    }, {
+      powerTypes: POKEPOWER_TYPES,
+      error: GameMessage.CANNOT_USE_POWER,
+    });
 
     return state;
   }

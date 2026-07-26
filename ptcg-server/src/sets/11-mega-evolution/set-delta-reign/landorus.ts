@@ -9,7 +9,6 @@ export class Landorus extends PokemonCard {
   public cardType: CardType = F;
   public hp: number = 130;
   public weakness = [{ type: G }];
-  public resistance = [];
   public retreat = [C, C];
 
   public powers = [{
@@ -33,12 +32,12 @@ export class Landorus extends PokemonCard {
   public fullName: string = 'Landorus M6';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-furious-fists/politoed.ts (King's Song - CheckAttackCostEffect Colorless removal)
+    // Incarnate Union
     if (effect instanceof CheckAttackCostEffect) {
       return reduceIncarnateUnionEffect(store, state, effect, this);
     }
 
-    // Ref: set-furious-fists/golurk.ts (Wreck)
+    // Gaia Crush
     if (WAS_ATTACK_USED(effect, 0, this)) {
       DISCARD_A_STADIUM_CARD_IN_PLAY(state);
     }

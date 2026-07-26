@@ -6,6 +6,7 @@ import { Chimecho } from './chimecho';
 import { Corphish } from './corphish';
 import { CrawdauntEx } from './crawdaunt-ex';
 import { DeltaRainbowEnergy } from './delta-rainbow-energy';
+import { Deoxys } from './deoxys';
 import { Exeggcute } from './exeggcute';
 import { Exeggutor } from './exeggutor';
 import { Flygon } from './flygon';
@@ -17,6 +18,7 @@ import { Latias } from './latias';
 import { Meowth } from './meowth';
 import { Oddish } from './oddish';
 import { Omastar } from './omastar';
+import { Pidgeot } from './pidgeot';
 import { Pidgey } from './pidgey';
 import { Pidgeotto } from './pidgeotto';
 import { Pikachu } from './pikachu';
@@ -37,6 +39,7 @@ export const setEXHolonPhantoms: Card[] = [
   new Corphish(),
   new CrawdauntEx(),
   new DeltaRainbowEnergy(),
+  new Deoxys(),
   new Exeggcute(),
   new Exeggutor(),
   new Flygon(),
@@ -45,6 +48,7 @@ export const setEXHolonPhantoms: Card[] = [
   new Meowth(),
   new Oddish(),
   new Omastar(),
+  new Pidgeot(),
   new Pidgey(),
   new Pidgeotto(),
   new Pikachu(),
@@ -55,6 +59,7 @@ export const setEXHolonPhantoms: Card[] = [
   new HolonsCastform(),
   new Trapinch(),
   new Vibrava(),
+
 
   // Other Prints
   new DarknessEnergySpecialHP(),

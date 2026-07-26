@@ -23,6 +23,12 @@ export class PokemonCardList extends CardList {
   public confusionDamage: number = 30;
   public marker = new Marker();
   public pokemonPlayedTurn: number = 0;
+  /**
+   * When this slot's Pokemon last activated an `abilityLock` Ability while Active.
+   * Lower values win against later lockers (TPCi "first in effect" rulings).
+   * `0` means not currently an established ability locker.
+   */
+  public abilityLockActivationOrder: number = 0;
   public sleepFlips = 1;
   public boardEffect: BoardEffect[] = [];
   public hpBonus: number = 0;

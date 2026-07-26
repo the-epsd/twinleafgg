@@ -411,7 +411,7 @@ When the 2-coin sleep mechanic is part of an ability (e.g., Snorlax's "Stir and 
 
 ### Activated abilities MUST have IS_ABILITY_BLOCKED check
 
-Every `WAS_POWER_USED` handler (activated abilities) must include an `IS_ABILITY_BLOCKED` check immediately after entering the block. Without this, the ability bypasses Garbodor's Garbotoxin, Silent Lab, etc.
+Every `WAS_POWER_USED` handler (activated abilities) must include an `IS_ABILITY_BLOCKED` check immediately after entering the block. Without this, the ability bypasses Garbodor's Garbotoxin, Silent Lab, Hex Maniac, etc.
 
 ```typescript
 if (WAS_POWER_USED(effect, 0, this)) {
@@ -425,7 +425,46 @@ if (WAS_POWER_USED(effect, 0, this)) {
 }
 ```
 
+For Poké-Powers / Poké-Bodies / Pokémon Powers, use the matching helper instead:
+- `IS_POKEPOWER_BLOCKED` for `PowerType.POKEPOWER`
+- `IS_POKEBODY_BLOCKED` for `PowerType.POKEBODY`
+- `IS_POKEMON_POWER_BLOCKED` for `PowerType.POKEMON_POWER`
+
+Activated powers used via `UseAbilityAction` are also pre-flighted in `usePower` (probe `PowerEffect` before owner `WAS_POWER_USED` side effects), so locker throws cannot lose a same-pass race to the power owner. Card-level `IS_*_BLOCKED` checks remain required for **passive** powers and any path that does not go through `usePower`.
+
 Note: Passive abilities (effect interception) also need `IS_ABILITY_BLOCKED` but handle it differently — they `return state` instead of throwing.
+
+### Ability suppressors: REMOVE vs BLOCK
+
+"Ability lock" in player slang covers two different card texts. Use the matching prefab from `game/store/prefabs/ability-lock.ts`:
+
+| Card text | Prefab | Discovery (`CheckPokemonPowersEffect`) | Activation (`PowerEffect`) |
+|-----------|--------|----------------------------------------|----------------------------|
+| "have no Abilities" / "has no Abilities" | `HANDLE_ABILITY_LOCK` | Powers **removed** from the list (UI hides / Use Ability → unknown power) | Throws |
+| "can't use any Poké-Powers/Abilities" | `HANDLE_ABILITY_BLOCK` | Powers **remain** in the list | Throws `CANNOT_USE_POWER` |
+
+```typescript
+import {
+  APPLY_ABILITY_LOCK_MARKERS,
+  CLEAR_ABILITY_LOCK_AT_END_OF_OPPONENTS_TURN,
+  HANDLE_ABILITY_BLOCK,
+  HANDLE_ABILITY_LOCK,
+  HAS_ABILITY_LOCK_MARKER,
+} from '../../../game/store/prefabs/ability-lock';
+
+// REMOVE — Path to the Peak / Hex Maniac / Silent Lab:
+HANDLE_ABILITY_LOCK(effect, ({ card }) => {
+  if (StateUtils.getStadiumCard(state) !== this) return false;
+  return card.hasRuleBox();
+}, { allowUseFromHand: true, allowUseFromDiscard: true });
+
+// BLOCK — Mesprit Psychic Bind / Gardevoir Psychic Lock:
+HANDLE_ABILITY_BLOCK(effect, ({ player }) => {
+  return HAS_MARKER(this.PSYCHIC_BIND_MARKER, player, this);
+}, { powerTypes: POKEPOWER_TYPES, error: GameMessage.CANNOT_USE_POWER });
+```
+
+Do not use `HANDLE_ABILITY_LOCK` for "can't use" cards — that strips powers and surfaces as "unknown power" instead of "cannot use".
 
 ### Passive abilities should NOT have `useWhenInPlay: true`
 

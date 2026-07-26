@@ -1,46 +1,31 @@
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, CardTag } from '../../../game/store/card/card-types';
-import {
-  StoreLike,
-  State,
-  StateUtils,
-  AttachEnergyPrompt,
-  PlayerType,
-  SlotType,
-  GameError,
-  PowerType,
-} from '../../../game';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
-import { Effect } from '../../../game/store/effects/effect';
-import { GameMessage } from '../../../game/game-message';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { AttachEnergyPrompt, CardTag, CardType, GameMessage, PlayerType, PokemonCard, PokemonCardList, PowerType, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from "../../../game";
+import { Effect } from "../../../game/store/effects/effect";
+import { HANDLE_ABILITY_LOCK, LOCKER_ABILITY_APPLIES } from "../../../game/store/prefabs/ability-lock";
+import { WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
 
 export class EmpoleonV extends PokemonCard {
   public tags = [CardTag.POKEMON_V, CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public regulationMark = 'E';
   public cardType: CardType = W;
   public hp: number = 210;
   public weakness = [{ type: L }];
   public retreat = [C, C];
 
-  public powers = [
-    {
-      name: "Emperor's Eyes",
-      powerType: PowerType.ABILITY,
-      text: "As long as this Pokémon is in the Active Spot, your opponent's Basic Pokémon in play have no Abilities, except for Pokémon with a Rule Box (Pokémon V, Pokémon-GX, etc. have Rule Boxes).",
-    },
-  ];
+  public powers = [{
+    name: "Emperor's Eyes",
+    powerType: PowerType.ABILITY,
+    abilityLock: true,
+    text: "As long as this Pokémon is in the Active Spot, your opponent's Basic Pokémon in play have no Abilities, except for Pokémon with a Rule Box (Pokémon V, Pokémon-GX, etc. have Rule Boxes).",
+  }];
 
-  public attacks = [
-    {
-      name: 'Swirling Slice',
-      cost: [W, C, C],
-      damage: 130,
-      text: 'Move an Energy from this Pokémon to 1 of your Benched Pokémon.',
-    },
-  ];
+  public attacks = [{
+    name: 'Swirling Slice',
+    cost: [W, C, C],
+    damage: 130,
+    text: 'Move an Energy from this Pokémon to 1 of your Benched Pokémon.',
+  }];
 
+  public regulationMark = 'E';
   public set: string = 'BST';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '40';
@@ -77,48 +62,47 @@ export class EmpoleonV extends PokemonCard {
       );
     }
 
-    if (
-      effect instanceof PowerEffect &&
-      effect.power.powerType === PowerType.ABILITY &&
-      effect.power.name !== "Emperor's Eyes"
-    ) {
-      const player = effect.player;
-
+    HANDLE_ABILITY_LOCK(effect, ({ card }) => {
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
-      const opponent = StateUtils.getOpponent(state, player);
+      const opponent = StateUtils.getOpponent(state, owner);
 
-      // Only proceed if Empoleon V is in the Active spot
       if (owner.active.getPokemonCard() !== this) {
-        return state;
+        return false;
       }
 
-      // Only check opponent's Active Pokemon
-      if (player === owner || player.active.getPokemonCard() !== effect.card) {
-        return state;
+      let targetBelongsToOpponent = false;
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (_list, pokemon) => {
+        if (pokemon === card) {
+          targetBelongsToOpponent = true;
+        }
+      });
+      if (!targetBelongsToOpponent) {
+        return false;
       }
 
-      // Check if the opponent's active Pokémon has a rule box
-      if (player.active.hasRuleBox() || opponent.active.hasRuleBox()) {
-        return state; // Return if the opponent's active Pokémon has a rule box
+      const targetCardList = StateUtils.findCardList(state, card);
+      if (!(targetCardList instanceof PokemonCardList)) {
+        return false;
       }
 
-      if (effect.power.useFromDiscard || effect.power.useFromHand) {
-        return state;
+      if (card.stage !== Stage.BASIC) {
+        return false;
       }
 
-      // Try reducing ability
-      try {
-        const powerEffect = new PowerEffect(player, this.powers[0], this);
-        store.reduceEffect(state, powerEffect);
-      } catch {
-        return state;
+      if (card.hasRuleBox()) {
+        return false;
       }
 
-      if (!effect.power.exemptFromAbilityLock) {
-        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
-      }
-    }
+      // Check + PowerEffect: Emperor's Eyes must itself be usable (e.g. Path to the Peak).
+      // First-in-wins vs other Active ability lockers (Bide Barricade, Mischievous Lock, …).
+      return LOCKER_ABILITY_APPLIES(store, state, owner, this, this.powers[0], card);
+    }, {
+      allowUseFromHand: true,
+      allowUseFromDiscard: true,
+      error: GameMessage.BLOCKED_BY_ABILITY,
+    });
+
     return state;
   }
 }

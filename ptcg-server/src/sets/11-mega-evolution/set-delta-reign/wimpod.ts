@@ -8,7 +8,6 @@ export class Wimpod extends PokemonCard {
   public cardType: CardType = G;
   public hp: number = 70;
   public weakness = [{ type: R }];
-  public resistance = [];
   public retreat = [C, C, C];
 
   public powers = [{

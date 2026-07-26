@@ -1221,7 +1221,8 @@ export class Board3dStateSyncService {
 
     for (let pickOrder = 0; pickOrder < handIndices.length; pickOrder++) {
       const handIndex = handIndices[pickOrder];
-      const card = prompt.player.hand.cards[handIndex];
+      // Prefer the live player hand — sandbox may have added cards after the prompt was captured.
+      const card = player.hand.cards[handIndex] ?? prompt.player.hand.cards[handIndex];
       const slotTarget = getSetupPlaySlotForPickOrder(prompt, pickOrder);
       if (!card || !slotTarget) {
         continue;

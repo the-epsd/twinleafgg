@@ -59,6 +59,10 @@ export function TableBoardOverlay(props: TableBoardOverlayProps) {
   const active = state.players[state.activePlayer];
   const topActive = !!active && active.id === topPlayer.id && state.phase === GamePhase.PLAYER_TURN;
   const bottomActive = !!active && active.id === bottomPlayer.id && state.phase === GamePhase.PLAYER_TURN;
+  // Who-begins is stored on activePlayer during SETUP (before turns start).
+  const showGoingFirst = state.phase === GamePhase.SETUP;
+  const topGoingFirst = showGoingFirst && !!active && active.id === topPlayer.id;
+  const bottomGoingFirst = showGoingFirst && !!active && active.id === bottomPlayer.id;
 
   const topStats = localGame.playerStats?.find((s) => s.clientId === topPlayer.id);
   const bottomStats = localGame.playerStats?.find((s) => s.clientId === bottomPlayer.id);
@@ -108,6 +112,7 @@ export function TableBoardOverlay(props: TableBoardOverlayProps) {
             <TablePlayerBar
               player={topPlayer}
               isActive={topActive}
+              isGoingFirst={topGoingFirst}
               playerStats={topStats}
               timeLimit={timeLimit}
               compact
@@ -118,6 +123,7 @@ export function TableBoardOverlay(props: TableBoardOverlayProps) {
             <TablePlayerBar
               player={bottomPlayer}
               isActive={bottomActive}
+              isGoingFirst={bottomGoingFirst}
               playerStats={bottomStats}
               timeLimit={timeLimit}
               compact

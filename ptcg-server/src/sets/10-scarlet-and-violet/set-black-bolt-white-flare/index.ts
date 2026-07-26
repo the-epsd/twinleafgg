@@ -27,6 +27,8 @@ import { Foongus } from './foongus';
 import { Fraxure } from './fraxure';
 import { Frillish } from './frillish';
 import { Genesectex } from './genesect-ex';
+import { Golett } from './golett';
+import { Golurk } from './golurk';
 import { Gothita } from './gothita';
 import { Gothorita } from './gothorita';
 import { Gothitelle } from './gothitelle';
@@ -124,6 +126,8 @@ import {
   HerdierAR,
   LillipupAR,
   StoutlandAR,
+  GolettAR,
+  GolurkAR,
 } from './other-prints';
 import { Palpitoad } from './palpitoad';
 import { Pidove } from './pidove';
@@ -188,6 +192,8 @@ export const setSV11: Card[] = [
   new Swadloon(),
   new Duosion(),
   new Elgyem(),
+  new Golett(),
+  new Golurk(),
   new Reuniclus(),
   new Shelmet(),
   new Karrablast(),
@@ -262,6 +268,8 @@ export const setSV11: Card[] = [
   new EmolgaAR(),
   new TynamoAR(),
   new EelektrikAR(),
+  new GolettAR(),
+  new GolurkAR(),
   new DrilburAR(),
   new CobalionAR(),
   new AxewAR(),

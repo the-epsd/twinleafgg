@@ -1,10 +1,14 @@
-import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { PowerType, StoreLike, State, GameMessage, StateUtils, GameError, GameLog } from '../../../game';
-import { ADD_MARKER, CONFIRMATION_PROMPT, HAS_MARKER, IS_POKEPOWER_BLOCKED, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PowerType, StoreLike, State, GameMessage, StateUtils, GameLog } from '../../../game';
+import { ABILITY_USED, ADD_MARKER, CONFIRMATION_PROMPT, HAS_MARKER, IS_POKEPOWER_BLOCKED, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PowerEffect } from '../../../game/store/effects/game-effects';
+import {
+  HANDLE_ABILITY_BLOCK,
+  POKEPOWER_TYPES,
+} from '../../../game/store/prefabs/ability-lock';
 
 export class Mesprit extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -51,18 +55,19 @@ export class Mesprit extends PokemonCard {
 
           const opponent = StateUtils.getOpponent(state, player);
           ADD_MARKER(this.PSYCHIC_BIND_MARKER, opponent, this);
+          ABILITY_USED(player, this);
 
-          // Log the ability usage
           store.log(state, GameLog.LOG_PLAYER_USES_ABILITY, { name: this.name, ability: this.powers[0].name });
         }
       });
     }
 
-    if (effect instanceof PowerEffect && HAS_MARKER(this.PSYCHIC_BIND_MARKER, effect.player, this)
-      && (effect.power.powerType === PowerType.POKEPOWER)) {
-
-      throw new GameError(GameMessage.CANNOT_USE_POWER);
-    }
+    HANDLE_ABILITY_BLOCK(effect, ({ player }) => {
+      return HAS_MARKER(this.PSYCHIC_BIND_MARKER, player, this);
+    }, {
+      powerTypes: POKEPOWER_TYPES,
+      error: GameMessage.CANNOT_USE_POWER,
+    });
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.PSYCHIC_BIND_MARKER, this);
 

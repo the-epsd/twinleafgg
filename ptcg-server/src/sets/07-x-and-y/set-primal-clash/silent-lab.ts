@@ -6,10 +6,9 @@ import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, Stage } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
-import { UseStadiumEffect, PowerEffect } from '../../../game/store/effects/game-effects';
-import { CheckPokemonPowersEffect } from '../../../game/store/effects/check-effects';
+import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
+import { HANDLE_ABILITY_LOCK } from '../../../game/store/prefabs/ability-lock';
 import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
-import { PowerType } from '../../../game';
 
 export class SilentLab extends TrainerCard {
 
@@ -31,40 +30,20 @@ export class SilentLab extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckPokemonPowersEffect && StateUtils.getStadiumCard(state) === this) {
-      const targetPokemon = effect.target;
-      if (!targetPokemon) {
-        return state;
+    HANDLE_ABILITY_LOCK(effect, ({ card }) => {
+      if (StateUtils.getStadiumCard(state) !== this) {
+        return false;
       }
-
-      const cardList = effect.target;
-      const isBasic = cardList instanceof PokemonCardList
-        ? cardList.isStage(Stage.BASIC)
-        : targetPokemon.stage === Stage.BASIC;
-
-      if (isBasic) {
-        // Filter out all abilities
-        effect.powers = effect.powers.filter(power =>
-          power.powerType !== PowerType.ABILITY
-        );
-      }
-    }
-
-    if (effect instanceof PowerEffect && StateUtils.getStadiumCard(state) === this) {
-      const pokemonCard = effect.card;
-      const cardList = StateUtils.findCardList(state, pokemonCard);
-
-      const isBasic = cardList instanceof PokemonCardList
-        ? cardList.isStage(Stage.BASIC)
-        : pokemonCard.stage === Stage.BASIC;
-      if (!effect.power.exemptFromAbilityLock) {
-        if (isBasic && pokemonCard.powers.some(power => power.powerType === PowerType.ABILITY)) {
-          throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      try {
+        const cardList = StateUtils.findCardList(state, card);
+        if (cardList instanceof PokemonCardList) {
+          return cardList.isStage(Stage.BASIC);
         }
-
-        return state;
+      } catch {
+        // Card may be mid-probe; fall through to printed stage.
       }
-    }
+      return card.stage === Stage.BASIC;
+    });
 
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
       throw new GameError(GameMessage.CANNOT_USE_STADIUM);

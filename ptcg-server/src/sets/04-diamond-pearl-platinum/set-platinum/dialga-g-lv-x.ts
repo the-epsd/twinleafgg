@@ -1,25 +1,9 @@
-import {
-  ChooseCardsPrompt,
-  CoinFlipPrompt,
-  GameError,
-  GameMessage,
-  PlayerType,
-  PowerType,
-  State,
-  StateUtils,
-  StoreLike,
-} from '../../../game';
-import { CardTag, CardType, Stage, SuperType } from '../../../game/store/card/card-types';
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import {
-  CheckPokemonAttacksEffect,
-  CheckPokemonPowersEffect,
-  CheckTableStateEffect,
-} from '../../../game/store/effects/check-effects';
-import { Effect } from '../../../game/store/effects/effect';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
-import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { IS_POKEBODY_BLOCKED, MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { CardTag, CardType, ChooseCardsPrompt, CoinFlipPrompt, GameError, GameMessage, PlayerType, PokemonCard, PowerType, Stage, State, StateUtils, StoreLike, SuperType } from "../../../game";
+import { CheckTableStateEffect, CheckPokemonAttacksEffect, CheckPokemonPowersEffect } from "../../../game/store/effects/check-effects";
+import { Effect } from "../../../game/store/effects/effect";
+import { PlayPokemonEffect } from "../../../game/store/effects/play-card-effects";
+import { HANDLE_ABILITY_BLOCK, IS_ABILITY_LOCKER_IN_PLAY, POKEBODY_TYPES } from "../../../game/store/prefabs/ability-lock";
+import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED, MOVE_CARDS } from "../../../game/store/prefabs/prefabs";
 
 export class DialgaGLVX extends PokemonCard {
   public stage: Stage = Stage.LV_X;
@@ -55,33 +39,22 @@ export class DialgaGLVX extends PokemonCard {
   public fullName: string = 'Dialga G LV.X PL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Time Crystal
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.POKEBODY) {
-      const player = effect.player;
+
+    HANDLE_ABILITY_BLOCK(effect, ({ player, card }) => {
+      if (card.tags.includes(CardTag.POKEMON_SP)) {
+        return false;
+      }
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
-
-      if (effect.card.tags.includes(CardTag.POKEMON_SP)) {
-        return state;
-      }
       if (IS_POKEBODY_BLOCKED(store, state, owner, this)) {
-        return state;
+        return false;
       }
+      return IS_ABILITY_LOCKER_IN_PLAY(state, player, this);
+    }, {
+      powerTypes: POKEBODY_TYPES,
+      error: GameMessage.BLOCKED_BY_ABILITY,
+    });
 
-      let isThisInPlay = false;
-      player.forEachPokemon(PlayerType.ANY, (card) => {
-        if (card.getPokemonCard() === this) {
-          isThisInPlay = true;
-        }
-      });
-      if (!isThisInPlay) {
-        return state;
-      }
-
-      throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
-    }
-
-    // Remove Lost
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = effect.opponent;
@@ -122,14 +95,12 @@ export class DialgaGLVX extends PokemonCard {
       );
     }
 
-    // making sure it gets put on the active pokemon
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       if (effect.target !== effect.player.active) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
     }
 
-    // Trying to get all of the previous stage's attacks and powers
     if (effect instanceof CheckTableStateEffect) {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
@@ -172,7 +143,6 @@ export class DialgaGLVX extends PokemonCard {
         return state;
       }
 
-      // Add attacks from the previous stage to this one
       for (const evolutionCard of cardList.cards) {
         if (
           evolutionCard.superType === SuperType.POKEMON &&
@@ -204,7 +174,6 @@ export class DialgaGLVX extends PokemonCard {
         return state;
       }
 
-      // Adds the powers from the previous stage
       for (const evolutionCard of cardList.cards) {
         if (
           evolutionCard.superType === SuperType.POKEMON &&

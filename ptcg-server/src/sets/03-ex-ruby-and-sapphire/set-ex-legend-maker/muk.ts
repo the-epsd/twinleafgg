@@ -3,10 +3,16 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { PowerType } from '../../../game/store/card/pokemon-types';
-import { GameError, GameMessage, StateUtils } from '../../../game';
-import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, BLOCK_RETREAT, IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { GameMessage } from '../../../game/game-message';
+import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, BLOCK_RETREAT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  CAN_APPLY_LOCKER_ABILITY,
+  HANDLE_ABILITY_BLOCK,
+  IS_ABILITY_LOCKER_ACTIVE,
+  POKEPOWER_TYPES,
+} from '../../../game/store/prefabs/ability-lock';
+
 export class Muk extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Grimer';
@@ -44,24 +50,15 @@ export class Muk extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.POKEPOWER) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // Muk is not active Pokemon
-      if (player.active.getPokemonCard() !== this
-        && opponent.active.getPokemonCard() !== this) {
-        return state;
+    HANDLE_ABILITY_BLOCK(effect, ({ player }) => {
+      if (!IS_ABILITY_LOCKER_ACTIVE(state, player, this)) {
+        return false;
       }
-
-      if (IS_POKEBODY_BLOCKED(store, state, player, this)) {
-        return state;
-      }
-
-      if (!effect.power.exemptFromAbilityLock) {
-        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
-      }
-    }
+      return CAN_APPLY_LOCKER_ABILITY(store, state, player, this, this.powers[0]);
+    }, {
+      powerTypes: POKEPOWER_TYPES,
+      error: GameMessage.BLOCKED_BY_ABILITY,
+    });
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       return BLOCK_RETREAT(store, state, effect, this);

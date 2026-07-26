@@ -19,6 +19,7 @@ import { Effect } from '../effects/effect';
 import { StateUtils } from '../state-utils';
 import { Player } from '../state/player';
 import { UsePowerEffect } from '../effects/game-effects';
+import { CAN_USE_FROM_HAND_TO_BENCH_POWER } from '../prefabs/prefabs';
 
 function findPokemonTarget(state: State, player: Player, target: CardTarget): PokemonCardList | undefined {
   try {
@@ -76,8 +77,11 @@ export function playCardReducer(store: StoreLike, state: State, action: Action):
         if (
           benchPower &&
           action.target.slot === SlotType.BENCH &&
-          target.cards.length === 0
+          target.cards.length === 0 &&
+          CAN_USE_FROM_HAND_TO_BENCH_POWER(store, state, player, handCard)
         ) {
+          // Only the ability path when still legal — hand ability locks clear this
+          // (same gate as playableCardIds). Otherwise fall through (e.g. sandbox all-basic).
           const usePower = new UsePowerEffect(
             player,
             benchPower,

@@ -1,8 +1,14 @@
-import { TrainerCard, TrainerType, State, StoreLike, GameError, GameMessage, PowerType, StateUtils } from '../../../game';
+import { TrainerCard, TrainerType, State, StoreLike, StateUtils } from '../../../game';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { IS_TOOL_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
+import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { GameMessage } from '../../../game/game-message';
+import {
+  HANDLE_ABILITY_BLOCK,
+  POKEPOWER_AND_BODY_TYPES,
+} from '../../../game/store/prefabs/ability-lock';
 
 export class EnergyRoot extends TrainerCard {
   public trainerType = TrainerType.TOOL;
@@ -30,15 +36,29 @@ export class EnergyRoot extends TrainerCard {
       effect.hp += this.HP_BONUS;
     }
 
-    if (effect instanceof PowerEffect
-      && !IS_TOOL_BLOCKED(store, state, effect.player, this)
-      && (effect.power.powerType === PowerType.POKEPOWER || effect.power.powerType === PowerType.POKEBODY)) {
-      const pokemonSlot = effect.target ?? StateUtils.findPokemonSlot(state, effect.card);
-
-      if (pokemonSlot?.tools.includes(this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    HANDLE_ABILITY_BLOCK(effect, ({ card }) => {
+      let cardList: PokemonCardList | undefined;
+      if (card instanceof PokemonCardList) {
+        cardList = card;
+      } else if (card instanceof PokemonCard) {
+        try {
+          const found = StateUtils.findCardList(state, card);
+          if (found instanceof PokemonCardList) {
+            cardList = found;
+          }
+        } catch {
+          return false;
+        }
       }
-    }
+      if (!cardList || !cardList.tools.includes(this)) {
+        return false;
+      }
+      const owner = StateUtils.findOwner(state, cardList);
+      return !IS_TOOL_BLOCKED(store, state, owner, this);
+    }, {
+      powerTypes: POKEPOWER_AND_BODY_TYPES,
+      error: GameMessage.BLOCKED_BY_EFFECT,
+    });
 
     return state;
   }

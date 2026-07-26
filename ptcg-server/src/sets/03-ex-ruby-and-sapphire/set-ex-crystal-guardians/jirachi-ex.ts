@@ -1,10 +1,8 @@
-import { GameError, GameMessage, PlayerType, PowerType, State, StateUtils, StoreLike } from '../../../game';
-import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { CheckAttackCostEffect } from '../../../game/store/effects/check-effects';
-import { Effect } from '../../../game/store/effects/effect';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
-import { ADD_MARKER, HAS_MARKER, IS_POKEBODY_BLOCKED, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { CardTag, CardType, GameMessage, PlayerType, PokemonCard, PowerType, Stage, State, StateUtils, StoreLike } from "../../../game";
+import { CheckAttackCostEffect } from "../../../game/store/effects/check-effects";
+import { Effect } from "../../../game/store/effects/effect";
+import { HANDLE_ABILITY_BLOCK, POKEPOWER_TYPES } from "../../../game/store/prefabs/ability-lock";
+import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN } from "../../../game/store/prefabs/prefabs";
 
 export class Jirachiex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -77,11 +75,12 @@ export class Jirachiex extends PokemonCard {
       ADD_MARKER(this.SHIELD_BEAM_MARKER, opponent, this);
     }
 
-    if (effect instanceof PowerEffect && HAS_MARKER(this.SHIELD_BEAM_MARKER, effect.player, this)
-      && (effect.power.powerType === PowerType.POKEPOWER)) {
-
-      throw new GameError(GameMessage.CANNOT_USE_POWER);
-    }
+    HANDLE_ABILITY_BLOCK(effect, ({ player }) => {
+      return HAS_MARKER(this.SHIELD_BEAM_MARKER, player, this);
+    }, {
+      powerTypes: POKEPOWER_TYPES,
+      error: GameMessage.CANNOT_USE_POWER,
+    });
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.SHIELD_BEAM_MARKER, this);
 

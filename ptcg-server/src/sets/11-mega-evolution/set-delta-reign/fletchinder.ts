@@ -30,7 +30,7 @@ export class Fletchinder extends PokemonCard {
   public fullName: string = 'Fletchinder M6';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-evolving-skies/talonflame.ts (Clutch)
+    // Clutch
     if (WAS_ATTACK_USED(effect, 0, this)) {
       return BLOCK_RETREAT(store, state, effect, this);
     }

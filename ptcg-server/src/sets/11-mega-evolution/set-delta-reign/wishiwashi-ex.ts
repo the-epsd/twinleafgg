@@ -1,14 +1,7 @@
-import { CardTag, CardType, GameError, GameMessage, PokemonCard, PowerType, Stage, State, StateUtils, StoreLike } from '../../../game';
-import { Effect } from '../../../game/store/effects/effect';
-import { HealEffect } from '../../../game/store/effects/game-effects';
-import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
-import {
-  ABILITY_USED,
-  IS_ABILITY_BLOCKED,
-  REMOVE_MARKER_AT_END_OF_TURN,
-  USE_ABILITY_ONCE_PER_TURN,
-  WAS_POWER_USED,
-} from '../../../game/store/prefabs/prefabs';
+import { CardTag, CardType, GameError, GameMessage, PokemonCard, PokemonCardList, PowerType, Stage, State, StateUtils, StoreLike } from "../../../game";
+import { Effect } from "../../../game/store/effects/effect";
+import { HealEffect } from "../../../game/store/effects/game-effects";
+import { WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN } from "../../../game/store/prefabs/prefabs";
 
 export class Wishiwashiex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -16,7 +9,6 @@ export class Wishiwashiex extends PokemonCard {
   public cardType: CardType = W;
   public hp: number = 260;
   public weakness = [{ type: L }];
-  public resistance = [];
   public retreat = [C, C, C];
 
   public powers = [{

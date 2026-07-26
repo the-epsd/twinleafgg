@@ -3,14 +3,16 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { StateUtils } from '../../../game/store/state-utils';
-import { PlayerType } from '../../../game/store/actions/play-card-action';
-import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { CheckAttackCostEffect } from '../../../game/store/effects/check-effects';
+import {
+  HANDLE_ABILITY_BLOCK,
+  IS_ABILITY_LOCKER_IN_PLAY,
+  POKEPOWER_TYPES,
+} from '../../../game/store/prefabs/ability-lock';
 
 export class Sceptileex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -44,66 +46,46 @@ export class Sceptileex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    // Extra Liquid
-    // Power blocker
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.POKEPOWER) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      let playerHasExtraLiquid = false;
-      let opponentHasExtraLiquid = false;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this) {
-          playerHasExtraLiquid = true;
-        }
-      });
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card === this) {
-          opponentHasExtraLiquid = true;
-        }
-      });
-
-      if (!playerHasExtraLiquid && !opponentHasExtraLiquid) {
-        return state;
+    HANDLE_ABILITY_BLOCK(effect, ({ player, card }) => {
+      if (!IS_ABILITY_LOCKER_IN_PLAY(state, player, this)) {
+        return false;
       }
 
-      // Try reducing ability for each player  
-      if (IS_POKEBODY_BLOCKED(store, state, player, this)) {
-        return state;
+      let lockerOwner;
+      try {
+        lockerOwner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
+      } catch {
+        return false;
       }
 
-      if (effect.card.tags.includes(CardTag.POKEMON_ex)) {
-        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+      if (IS_POKEBODY_BLOCKED(store, state, lockerOwner, this)) {
+        return false;
       }
-    }
 
-    // Increase attack cost
+      return card.tags.includes(CardTag.POKEMON_ex);
+    }, {
+      powerTypes: POKEPOWER_TYPES,
+      error: GameMessage.BLOCKED_BY_ABILITY,
+    });
+
     if (effect instanceof CheckAttackCostEffect) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
-      if (IS_POKEBODY_BLOCKED(store, state, player, this)) {
+      if (!IS_ABILITY_LOCKER_IN_PLAY(state, player, this)) {
         return state;
       }
 
-      let playerHasExtraLiquid = false;
-      let opponentHasExtraLiquid = false;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this) {
-          playerHasExtraLiquid = true;
-        }
-      });
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card === this) {
-          opponentHasExtraLiquid = true;
-        }
-      });
-
-      if (!playerHasExtraLiquid && !opponentHasExtraLiquid) {
+      let lockerOwner;
+      try {
+        lockerOwner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
+      } catch {
         return state;
       }
 
-      // Check if ex is in the active position
+      if (IS_POKEBODY_BLOCKED(store, state, lockerOwner, this)) {
+        return state;
+      }
+
       if (player.active.getPokemonCard()?.tags.includes(CardTag.POKEMON_ex)) {
 
         const index = effect.cost.indexOf(CardType.COLORLESS);
@@ -117,7 +99,6 @@ export class Sceptileex extends PokemonCard {
       }
     }
 
-    // Offensive Bomb
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

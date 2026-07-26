@@ -3,10 +3,17 @@ import { AbortGameAction } from './actions/abort-game-action';
 import { AppendLogAction } from './actions/append-log-action';
 import { ConcedeAction } from './actions/concede-action';
 import { Card } from './card/card';
+import { SuperType, TrainerType } from './card/card-types';
+import { TrainerCard } from './card/trainer-card';
 import { ChangeAvatarAction } from './actions/change-avatar-action';
 import { Effect } from './effects/effect';
 import { PlayPokemonEffect } from './effects/play-card-effects';
-import { CheckAttackCostEffect, CheckRetreatCostEffect } from './effects/check-effects';
+import { CheckAttackCostEffect, CheckPokemonPowersEffect, CheckRetreatCostEffect } from './effects/check-effects';
+import { MovedFromActiveToBenchEffect, MovedToActiveEffect, PowerEffect } from './effects/game-effects';
+import {
+  CLEAR_ABILITY_LOCK_ACTIVATION,
+  STAMP_ABILITY_LOCK_ACTIVATION,
+} from './prefabs/ability-lock';
 import { GameError } from '../game-error';
 import { GameMessage, GameLog } from '../game-message';
 import { Prompt } from './prompts/prompt';
@@ -123,6 +130,12 @@ export class Store implements StoreLike {
   }
 
   public reduceEffect(state: State, effect: Effect): State {
+    // Track Active ability-lock activation order before card handlers run.
+    if (effect instanceof MovedToActiveEffect) {
+      STAMP_ABILITY_LOCK_ACTIVATION(state, effect.player.active, effect.pokemonCard);
+    } else if (effect instanceof MovedFromActiveToBenchEffect) {
+      CLEAR_ABILITY_LOCK_ACTIVATION(state, effect.pokemonCard);
+    }
 
     state = this.propagateEffect(state, effect);
 
@@ -320,6 +333,7 @@ export class Store implements StoreLike {
       // Clear playability for all players when not in player turn or during setup
       for (const player of state.players) {
         player.playableCardIds = [];
+        player.playableHandAbilityCardIds = [];
       }
       return state;
     }
@@ -337,11 +351,13 @@ export class Store implements StoreLike {
     const waitItemsBefore = this.waitItems.length;
 
     try {
-      const { CAN_PLAY_CARD } = require('./prefabs/prefabs');
+      const { CAN_PLAY_CARD, CAN_USE_FROM_HAND_TO_BENCH_POWER } = require('./prefabs/prefabs');
+      const { PokemonCard } = require('./card/pokemon-card');
 
       for (const player of state.players) {
         // Clear previous playability
         player.playableCardIds = [];
+        player.playableHandAbilityCardIds = [];
 
         // Only calculate for the active player
         if (state.players[state.activePlayer]?.id !== player.id) {
@@ -359,6 +375,12 @@ export class Store implements StoreLike {
             if (CAN_PLAY_CARD(this, state, player, card)) {
               player.playableCardIds.push(card.id);
             }
+            if (
+              card instanceof PokemonCard &&
+              CAN_USE_FROM_HAND_TO_BENCH_POWER(this, state, player, card)
+            ) {
+              player.playableHandAbilityCardIds.push(card.id);
+            }
           } catch (error) {
             // If check fails, card is not playable - silently continue
           }
@@ -369,6 +391,7 @@ export class Store implements StoreLike {
       // This prevents setup from breaking
       for (const player of state.players) {
         player.playableCardIds = [];
+        player.playableHandAbilityCardIds = [];
       }
     } finally {
       // Clean up any prompts or wait items that were created during playability checks
@@ -412,7 +435,29 @@ export class Store implements StoreLike {
       state = this.callReduceEffect(t, this, state, effect);
     });
 
-    cards.sort(c => c.superType);
+    // Ability locks live on Trainers/Stadiums.
+    // PowerEffect: run lockers first so they throw before ability owners mutate state.
+    // CheckPokemonPowersEffect: run stadiums last so filters apply after tools / BREAK /
+    // LV.X handlers contribute powers (otherwise Path to the Peak etc. get undone).
+    if (effect instanceof PowerEffect) {
+      const rank = (c: Card) => {
+        if (c.superType === SuperType.TRAINER) return 0;
+        if (c.superType === SuperType.ENERGY) return 1;
+        return 2;
+      };
+      cards.sort((a, b) => rank(a) - rank(b));
+    } else if (effect instanceof CheckPokemonPowersEffect) {
+      const rank = (c: Card) => {
+        if (c.superType === SuperType.POKEMON) return 0;
+        if (c.superType === SuperType.ENERGY) return 1;
+        if (c instanceof TrainerCard && c.trainerType === TrainerType.STADIUM) return 3;
+        if (c.superType === SuperType.TRAINER) return 2;
+        return 2;
+      };
+      cards.sort((a, b) => rank(a) - rank(b));
+    } else {
+      cards.sort((a, b) => a.superType - b.superType);
+    }
     cards.forEach(c => {
       if (playPokemonTargetTools.includes(c)) {
         return;

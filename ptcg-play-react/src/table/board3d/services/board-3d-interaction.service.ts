@@ -162,6 +162,13 @@ export class Board3dInteractionService {
 
   /** Bottom player's hand cards — used for dual LEGEND assembly checks. */
   private bottomHandCards: Card[] = [];
+  /** null = unknown / omit gate (e.g. replay); otherwise server playableCardIds */
+  private playableCardIds: Set<number> | null = null;
+  /**
+   * null = unknown / omit gate; otherwise server playableHandAbilityCardIds
+   * (useFromHandToBench legal — distinct from evolution playability).
+   */
+  private playableHandAbilityCardIds: Set<number> | null = null;
 
   /** Game setup: drag Basics to Active/Bench instead of playCardAction. */
   private setupStartingPokemonDrag: SetupStartingPokemonDragState | null = null;
@@ -189,12 +196,67 @@ export class Board3dInteractionService {
     this.bottomHandCards = cards;
   }
 
+  /** Server playableCardIds — general hand playability (glow / can play). */
+  setPlayableCardIds(ids: number[] | undefined): void {
+    this.playableCardIds = ids === undefined ? null : new Set(ids);
+  }
+
+  /**
+   * Server playableHandAbilityCardIds — gates Excitedive-style empty-bench drops
+   * under ability lock without blocking normal evolution.
+   */
+  setPlayableHandAbilityCardIds(ids: number[] | undefined): void {
+    this.playableHandAbilityCardIds = ids === undefined ? null : new Set(ids);
+  }
+
+  private isHandCardPlayable(card: Card | undefined | null): boolean {
+    if (!card || this.playableCardIds === null) {
+      return true;
+    }
+    return this.playableCardIds.has(card.id);
+  }
+
   private playsAsBasicPokemonFromHand(card: Card | undefined | null): boolean {
     return cardPlaysAsBasicPokemonFromHand(card, this.handPlayZoneGameSettings);
   }
 
   private canAssembleLegendFromHand(card: Card | undefined | null): boolean {
     return cardCanAssembleLegendFromHand(card, this.bottomHandCards);
+  }
+
+  /** Hand→bench ability path only when the server marks that ability legal. */
+  private canUseFromHandToBenchPlay(card: Card | undefined | null): boolean {
+    if (!cardHasUseFromHandToBenchPower(card)) {
+      return false;
+    }
+    if (this.playableHandAbilityCardIds === null) {
+      // Replay / selection omit: fall back to general playability.
+      return this.isHandCardPlayable(card);
+    }
+    return this.playableHandAbilityCardIds.has(card!.id);
+  }
+
+  /**
+   * Direct hand→board plays (Basic, LEGEND) — not energy/tool/evo attach.
+   * useFromHandToBench is zone-aware (empty bench vs evolve) and handled separately.
+   */
+  private actsAsDirectBoardPlayFromHand(card: Card | undefined | null): boolean {
+    return (
+      this.playsAsBasicPokemonFromHand(card) ||
+      this.canAssembleLegendFromHand(card)
+    );
+  }
+
+  /** Empty-bench Excitedive drop (not evolution onto an occupied host). */
+  private isEmptyBenchHandAbilityDrop(card: Card, zone: CardTarget): boolean {
+    if (!this.canUseFromHandToBenchPlay(card)) {
+      return false;
+    }
+    if (zone.slot !== SlotType.BENCH) {
+      return false;
+    }
+    const key = `${PlayerType.BOTTOM_PLAYER}_${DropZoneType.BENCH}_${zone.index}`;
+    return !this.occupiedZones.has(key);
   }
 
   /**
@@ -603,7 +665,12 @@ export class Board3dInteractionService {
     if (ctx.trainerType === TrainerType.TOOL) {
       return isOpponentAttachTool(ctx.card) ? PlayerType.TOP_PLAYER : PlayerType.BOTTOM_PLAYER;
     }
-    if (ctx.superType === SuperType.POKEMON && ctx.stage !== undefined && ctx.stage !== Stage.BASIC) {
+    if (
+      ctx.superType === SuperType.POKEMON &&
+      ctx.stage !== undefined &&
+      ctx.stage !== Stage.BASIC &&
+      !this.actsAsDirectBoardPlayFromHand(ctx.card)
+    ) {
       return PlayerType.BOTTOM_PLAYER;
     }
     return null;
@@ -624,7 +691,7 @@ export class Board3dInteractionService {
       ctx.superType === SuperType.POKEMON &&
       ctx.stage !== undefined &&
       ctx.stage !== Stage.BASIC &&
-      !cardPlaysAsBasicPokemonFromHand(ctx.card, this.handPlayZoneGameSettings);
+      !this.actsAsDirectBoardPlayFromHand(ctx.card);
     const isEnergyOrTool =
       ctx.superType === SuperType.ENERGY || ctx.trainerType === TrainerType.TOOL;
 
@@ -812,7 +879,7 @@ export class Board3dInteractionService {
     // Handle BENCH_GENERAL zone - only valid for Basic Pokemon (and fossils played as Basic) with open bench slots
     if (config.type === DropZoneType.BENCH_GENERAL) {
       const { card } = this.currentDragContext;
-      if (cardHasUseFromHandToBenchPower(card) || this.canAssembleLegendFromHand(card)) {
+      if (this.canUseFromHandToBenchPlay(card) || this.canAssembleLegendFromHand(card)) {
         return false;
       }
       if (this.playsAsBasicPokemonFromHand(card)) {
@@ -824,9 +891,14 @@ export class Board3dInteractionService {
     // Hand to Board
     const { superType, stage, trainerType, card } = this.currentDragContext;
 
-    // useFromHandToBench abilities (Talonflame ex, Luxray, etc.) — open Bench slots only
-    if (cardHasUseFromHandToBenchPower(card)) {
-      return config.type === DropZoneType.BENCH && !isOccupied;
+    // useFromHandToBench ability: open Bench slots when the ability is legal.
+    // Evolution onto occupied hosts still falls through to the Stage 1/2 rules below.
+    if (
+      this.canUseFromHandToBenchPlay(card) &&
+      config.type === DropZoneType.BENCH &&
+      !isOccupied
+    ) {
+      return true;
     }
 
     // Dual LEGEND halves — both must be in hand; open Bench slots only
@@ -913,9 +985,9 @@ export class Board3dInteractionService {
     for (const zone of this.dropZones) {
       const config = zone.getConfig();
 
-      // useFromHandToBench: highlight open bench slots (player picks the slot)
+      // useFromHandToBench: empty bench (ability) and/or occupied evo hosts
       if (cardHasUseFromHandToBenchPower(card)) {
-        if (config.type === DropZoneType.BENCH && this.isValidDropZone(zone)) {
+        if (this.isValidDropZone(zone)) {
           zone.setValid();
         } else {
           zone.hide();
@@ -1275,7 +1347,7 @@ export class Board3dInteractionService {
         this.currentDragContext.superType === SuperType.POKEMON &&
         this.currentDragContext.stage !== undefined &&
         this.currentDragContext.stage !== Stage.BASIC &&
-        !cardPlaysAsBasicPokemonFromHand(this.currentDragContext.card, this.handPlayZoneGameSettings);
+        !this.actsAsDirectBoardPlayFromHand(this.currentDragContext.card);
 
       // Check if retreat drag (board card for active/bench swap)
       const isRetreatDrag = this.currentDragContext?.source === 'board';
@@ -1415,7 +1487,7 @@ export class Board3dInteractionService {
       ctx.superType === SuperType.POKEMON &&
       ctx.stage !== undefined &&
       ctx.stage !== Stage.BASIC &&
-      !this.playsAsBasicPokemonFromHand(ctx.card);
+      !this.actsAsDirectBoardPlayFromHand(ctx.card);
     const checkOpponentEx = ctx.trainerType === TrainerType.TOOL && isOpponentAttachTool(ctx.card);
     const benchSize =
       allowedPlayer === PlayerType.BOTTOM_PLAYER
@@ -1485,7 +1557,11 @@ export class Board3dInteractionService {
   }
 
   private isAttachPlayFromHand(ctx: DragContext): boolean {
-    if (this.playsAsBasicPokemonFromHand(ctx.card)) {
+    if (this.actsAsDirectBoardPlayFromHand(ctx.card)) {
+      return false;
+    }
+    // Prefer Excitedive empty-bench click when that ability is legal.
+    if (this.canUseFromHandToBenchPlay(ctx.card)) {
       return false;
     }
     return (
@@ -1536,12 +1612,12 @@ export class Board3dInteractionService {
   private resolveDefaultPlayZone(ctx: DragContext): CardTarget | null {
     const { card, superType, stage, trainerType } = ctx;
 
-    if (cardHasUseFromHandToBenchPower(card)) {
+    if (this.canUseFromHandToBenchPlay(card)) {
       const benchZone = this.findNextOpenBenchSlot(PlayerType.BOTTOM_PLAYER);
       if (benchZone && this.isValidDropZone(benchZone)) {
         return this.configToCardTarget(benchZone.getConfig());
       }
-      return null;
+      // Ability legal but no open bench — fall through to evolution if possible.
     }
 
     if (this.canAssembleLegendFromHand(card)) {
@@ -1610,9 +1686,10 @@ export class Board3dInteractionService {
       return null;
     }
 
-    const actsAsBasicFromHand = this.playsAsBasicPokemonFromHand(ctx.card);
+    const emptyBenchAbility = this.isEmptyBenchHandAbilityDrop(ctx.card, zone);
     const isAttachDropHand =
-      !actsAsBasicFromHand &&
+      !this.actsAsDirectBoardPlayFromHand(ctx.card) &&
+      !emptyBenchAbility &&
       (ctx.superType === SuperType.ENERGY ||
         ctx.trainerType === TrainerType.TOOL ||
         (ctx.superType === SuperType.POKEMON &&
@@ -1871,12 +1948,10 @@ export class Board3dInteractionService {
     }
 
     const ctx = this.currentDragContext;
-    const actsAsBasicFromHand =
-      ctx && cardPlaysAsBasicPokemonFromHand(ctx.card, this.handPlayZoneGameSettings);
-    const isAttachDropHand =
-      ctx?.source === 'hand' &&
-      ctx &&
-      !actsAsBasicFromHand &&
+    const mayBeEvoOrAttach =
+      !!ctx &&
+      ctx.source === 'hand' &&
+      !this.actsAsDirectBoardPlayFromHand(ctx.card) &&
       (ctx.superType === SuperType.ENERGY ||
         ctx.trainerType === TrainerType.TOOL ||
         (ctx.superType === SuperType.POKEMON &&
@@ -1887,7 +1962,7 @@ export class Board3dInteractionService {
     const opponentAttachTool =
       ctx?.trainerType === TrainerType.TOOL && ctx && isOpponentAttachTool(ctx.card);
     let zone: CardTarget | undefined;
-    if (isAttachDropHand && ctx) {
+    if (mayBeEvoOrAttach && ctx) {
       zone = this.findPokemonAttachTargetFromPointer(event, camera, canvas, ctx) ?? undefined;
     }
     if (!zone) {
@@ -1899,6 +1974,12 @@ export class Board3dInteractionService {
         }
       }
     }
+    // Empty-bench Excitedive is a direct play (flight); occupied evo hosts are attach.
+    const isAttachDropHand =
+      mayBeEvoOrAttach &&
+      !!ctx &&
+      !!zone &&
+      !this.isEmptyBenchHandAbilityDrop(ctx.card, zone);
 
     if (zone) {
       const dropZoneForFlight = this.findValidDropZone(worldPos);
@@ -2534,9 +2615,9 @@ export class Board3dInteractionService {
     for (const zone of this.dropZones) {
       const config = zone.getConfig();
 
-      // useFromHandToBench: open bench slots only
+      // useFromHandToBench: empty bench (ability) and/or occupied evo hosts
       if (cardHasUseFromHandToBenchPower(card)) {
-        if (config.type === DropZoneType.BENCH && this.isValidDropZone(zone)) {
+        if (this.isValidDropZone(zone)) {
           zone.setValid();
         } else {
           zone.hide();

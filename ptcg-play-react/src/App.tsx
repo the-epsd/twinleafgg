@@ -22,6 +22,7 @@ import { SpectatePage } from './pages/SpectatePage';
 import { FriendsPage } from './pages/FriendsPage';
 import { ParentPage } from './pages/ParentPage';
 import { UiShowcasePage } from './pages/ui-showcase/UiShowcasePage';
+import { AbilityLockPage } from './pages/ability-lock/AbilityLockPage';
 
 function ProfileMeRedirect() {
   const { user } = useAuth();
@@ -45,6 +46,7 @@ export default function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/ui-showcase" element={<UiShowcasePage />} />
+            <Route path="/ability-lock" element={<AbilityLockPage />} />
             <Route element={<ProtectedRoute />}>
               <Route element={<AppLayout />}>
                 <Route path="/games" element={<GamesPage />} />

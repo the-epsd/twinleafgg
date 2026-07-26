@@ -1,0 +1,81 @@
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.option {
+  padding: 16px;
+  border-radius: 8px;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+  cursor: pointer;
+  background: linear-gradient(to bottom, #3d4b63, #303b4e);
+  border: 2px solid #4a5a77;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(48, 59, 78, 0.3);
+  transform-origin: center;
+}
+
+.option::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.option:hover:not(.optionDisabled) {
+  background: linear-gradient(to bottom, #4a5a77, #3d4b63);
+  border-color: #5c6f8f;
+  transform: scale(1.03);
+  box-shadow: 0 6px 12px rgba(48, 59, 78, 0.4);
+}
+
+.option:hover:not(.optionDisabled)::before {
+  opacity: 0.5;
+}
+
+.option:active:not(.optionDisabled) {
+  transform: scale(0.98);
+  background: linear-gradient(to bottom, #252f3d, #1a2230);
+  box-shadow: 0 2px 4px rgba(48, 59, 78, 0.3);
+}
+
+.optionDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: linear-gradient(to bottom, #1a1a1a, #0a0a0a);
+  border-color: #2a2a2a;
+  box-shadow: none;
+  transform: none;
+}
+
+.optionText {
+  font-size: 1rem;
+  line-height: 1.4;
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  font-weight: 500;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.optionDisabled .optionText {
+  color: #666;
+}
+
+.promptActionsOnlyCancel {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 8px;
+}

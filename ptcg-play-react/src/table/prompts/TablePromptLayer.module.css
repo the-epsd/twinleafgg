@@ -152,13 +152,17 @@
   gap: 10px;
 }
 
-/* Board hand choose-cards on 3D board — full-width instruction bar at top. */
+/*
+ * Board hand choose-cards / setup Active — full-width instruction bar at top.
+ * Above the board (z ~0–10), below TableBoardOverlay (40) and sandboxDock (42)
+ * so Leave / End Turn / sandbox controls stay usable on top of the bar.
+ */
 .chooseStartingTopBar {
   position: fixed;
   top: 55px;
   left: 0;
   right: 0;
-  z-index: 10000;
+  z-index: 30;
   display: flex;
   align-items: center;
   justify-content: center;

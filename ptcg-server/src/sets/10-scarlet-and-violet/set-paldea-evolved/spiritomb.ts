@@ -3,13 +3,15 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
-import { CheckPokemonPowersEffect } from '../../../game/store/effects/check-effects';
 import { PowerType } from '../../../game/store/card/pokemon-types';
-import { GameError } from '../../../game/game-error';
-import { GameMessage } from '../../../game/game-message';
-import { PlayerType, PokemonCardList, StateUtils } from '../../../game';
+import { PokemonCardList, StateUtils } from '../../../game';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  CAN_APPLY_LOCKER_ABILITY,
+  HANDLE_ABILITY_LOCK,
+  IS_ABILITY_LOCKER_IN_PLAY,
+} from '../../../game/store/prefabs/ability-lock';
+import { GameMessage } from '../../../game/game-message';
 
 export class Spiritomb extends PokemonCard {
 
@@ -51,98 +53,45 @@ export class Spiritomb extends PokemonCard {
 
   public fullName: string = 'Spiritomb PAL';
 
+  private static readonly RULE_BOX_V_TAGS = [
+    CardTag.POKEMON_V,
+    CardTag.POKEMON_VSTAR,
+    CardTag.POKEMON_VMAX,
+  ];
+
+  private isBasicPokemonV(card: PokemonCard): boolean {
+    return card.stage === Stage.BASIC
+      && Spiritomb.RULE_BOX_V_TAGS.some(tag => card.tags.includes(tag));
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckPokemonPowersEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+    HANDLE_ABILITY_LOCK(effect, ({ player, card, power }) => {
+      if (!IS_ABILITY_LOCKER_IN_PLAY(state, player, this)) {
+        return false;
+      }
 
-      const ruleBoxTags = [
-        CardTag.POKEMON_V,
-        CardTag.POKEMON_VSTAR,
-        CardTag.POKEMON_VMAX
-      ];
-
-      let isSpiritombInPlay = false;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this) {
-          isSpiritombInPlay = true;
-        }
-      });
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card === this) {
-          isSpiritombInPlay = true;
-        }
-      });
-
-      const targetCardList = StateUtils.findCardList(state, effect.target);
+      const targetCardList = StateUtils.findCardList(state, card);
       if (!(targetCardList instanceof PokemonCardList)) {
-        return state;
+        return false;
       }
 
-      if (isSpiritombInPlay) {
-        const targetPokemon = effect.target;
-        if (targetPokemon && targetPokemon.stage === Stage.BASIC && ruleBoxTags.some(tag => targetPokemon.tags.includes(tag))) {
-          // Try reducing ability for each player  
-          try {
-            const powerEffect = new PowerEffect(player, this.powers[0], this);
-            store.reduceEffect(state, powerEffect);
-          } catch {
-            return state;
-          }
-          // Filter out all abilities
-          effect.powers = effect.powers.filter(power =>
-            power.powerType !== PowerType.ABILITY
-          );
-        }
-      }
-    }
-
-    if (effect instanceof PowerEffect
-      && effect.power.powerType === PowerType.ABILITY
-      && effect.power.name !== 'Fettered in Misfortune') {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      const ruleBoxTags = [
-        CardTag.POKEMON_V,
-        CardTag.POKEMON_VSTAR,
-        CardTag.POKEMON_VMAX
-      ];
-
-      let isSpiritombInPlay = false;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this) {
-          isSpiritombInPlay = true;
-        }
-      });
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card === this) {
-          isSpiritombInPlay = true;
-        }
-      });
-
-      if (!isSpiritombInPlay) {
-        return state;
+      if (!this.isBasicPokemonV(card)) {
+        return false;
       }
 
-      if (effect.power.useFromDiscard || effect.power.useFromHand) {
-        return state;
+      if (power?.exemptFromInitialize) {
+        return false;
       }
 
-      // Try reducing ability for each player  
-      try {
-        const powerEffect = new PowerEffect(player, this.powers[0], this);
-        store.reduceEffect(state, powerEffect);
-      } catch {
-        return state;
-      }
-      if (ruleBoxTags.some(tag => effect.card.tags.includes(tag)) && !effect.power.exemptFromInitialize) {
-        if (!effect.power.exemptFromAbilityLock) {
-          throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
-        }
-      }
-    }
+      const lockerOwner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
+      // Check + PowerEffect: Fettered in Misfortune must itself be usable (e.g. Path to the Peak).
+      return CAN_APPLY_LOCKER_ABILITY(store, state, lockerOwner, this, this.powers[0]);
+    }, {
+      allowUseFromHand: true,
+      allowUseFromDiscard: true,
+      error: GameMessage.BLOCKED_BY_ABILITY,
+    });
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;

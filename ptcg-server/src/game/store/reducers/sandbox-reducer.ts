@@ -13,6 +13,7 @@ import { CardList } from '../state/card-list';
 import { Player } from '../state/player';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { SpecialCondition } from '../card/card-types';
+import { refreshStartingPokemonPromptBlocked } from './setup-reducer';
 
 export function sandboxReducer(store: StoreLike, state: State, action: Action, clientRoleId: number): State {
   // Validate sandbox mode is enabled
@@ -61,25 +62,21 @@ export function sandboxReducer(store: StoreLike, state: State, action: Action, c
       }
     }
 
-    // Modify hand size
+    // Modify hand size — draw from / return to deck (works during SETUP for opening-hand edits).
     if (mods.handSize !== undefined) {
       const diff = mods.handSize - player.hand.cards.length;
       if (diff > 0) {
-        // Add cards to hand
-        const cardManager = CardManager.getInstance();
-        const placeholder = cardManager.getCardByName('Pikachu');
-        if (placeholder) {
-          for (let i = 0; i < diff; i++) {
-            const card = cardManager.getCardByName('Pikachu');
-            if (card) {
-              player.hand.cards.push(card);
-            }
-          }
+        const draw = Math.min(diff, player.deck.cards.length);
+        if (draw > 0) {
+          player.deck.moveTo(player.hand, draw);
         }
       } else if (diff < 0) {
-        // Remove cards from hand
-        for (let i = 0; i < Math.abs(diff) && player.hand.cards.length > 0; i++) {
-          player.hand.cards.pop();
+        const count = Math.min(Math.abs(diff), player.hand.cards.length);
+        for (let i = 0; i < count; i++) {
+          const card = player.hand.cards.pop();
+          if (card) {
+            player.deck.cards.push(card);
+          }
         }
       }
     }
@@ -158,6 +155,7 @@ export function sandboxReducer(store: StoreLike, state: State, action: Action, c
     if (mods.ancientSupporter !== undefined) player.ancientSupporter = mods.ancientSupporter;
     if (mods.rocketSupporter !== undefined) player.rocketSupporter = mods.rocketSupporter;
 
+    refreshStartingPokemonPromptBlocked(state, player);
     return state;
   }
 
@@ -241,6 +239,7 @@ export function sandboxReducer(store: StoreLike, state: State, action: Action, c
       }
     }
 
+    refreshStartingPokemonPromptBlocked(state, player);
     return state;
   }
 

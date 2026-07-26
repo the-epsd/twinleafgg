@@ -3,12 +3,15 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { PowerType } from '../../../game/store/card/pokemon-types';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
-import { CheckPokemonPowersEffect } from '../../../game/store/effects/check-effects';
-import { Effect } from '../../../game/store/effects/effect';
-import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, SlotType, StateUtils } from '../../../game';
+import { ChoosePokemonPrompt, GameMessage, PlayerType, PokemonCardList, SlotType, StateUtils } from '../../../game';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  HANDLE_ABILITY_LOCK,
+  IS_ABILITY_LOCKER_ACTIVE,
+  LOCKER_ABILITY_APPLIES,
+} from '../../../game/store/prefabs/ability-lock';
 
 export class TingLuex extends PokemonCard {
 
@@ -29,6 +32,7 @@ export class TingLuex extends PokemonCard {
   public powers = [{
     name: 'Cursed Land',
     powerType: PowerType.ABILITY,
+    abilityLock: true,
     text: 'As long as this Pokémon is in the Active Spot, your opponent\'s Pokémon in play that have any damage counters on them have no Abilities, except for Pokémon ex.'
   }];
 
@@ -51,74 +55,41 @@ export class TingLuex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckPokemonPowersEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // Ting-Lu ex is not active Pokemon
-      if (player.active.getPokemonCard() !== this
-        && opponent.active.getPokemonCard() !== this) {
-        return state;
+    HANDLE_ABILITY_LOCK(effect, ({ player, card }) => {
+      if (!IS_ABILITY_LOCKER_ACTIVE(state, player, this)) {
+        return false;
       }
 
-      const targetCardList = StateUtils.findCardList(state, effect.target);
+      const cardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, cardList);
+      const opponent = StateUtils.getOpponent(state, owner);
 
-      // Only filter opponent's Pokemon
-      const targetOwner = StateUtils.findOwner(state, targetCardList);
-      if (targetOwner === player) {
-        return state;
+      let targetBelongsToOpponent = false;
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (_cardList, pokemon) => {
+        if (pokemon === card) {
+          targetBelongsToOpponent = true;
+        }
+      });
+      if (!targetBelongsToOpponent) {
+        return false;
       }
 
-      const targetPokemon = effect.target;
-      if (!targetPokemon) {
-        return state;
+      if (card.tags.includes(CardTag.POKEMON_ex)) {
+        return false;
       }
 
-      // We are not blocking the Abilities from Pokémon ex
-      if (targetPokemon.tags.includes(CardTag.POKEMON_ex)) {
-        return state;
+      const targetCardList = StateUtils.findCardList(state, card);
+      if (!(targetCardList instanceof PokemonCardList) || targetCardList.damage <= 0) {
+        return false;
       }
 
-      // Only filter if Pokemon has damage counters
-      if (targetCardList instanceof PokemonCardList && targetCardList.damage > 0) {
-        // Filter out all abilities except Cursed Land
-        effect.powers = effect.powers.filter(power =>
-          power.powerType !== PowerType.ABILITY || power.name === 'Cursed Land'
-        );
-      }
-    }
-
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY && effect.power.name !== 'Cursed Land') {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // Ting-Lu ex is not active Pokemon
-      if (player.active.getPokemonCard() !== this
-        && opponent.active.getPokemonCard() !== this) {
-        return state;
-      }
-
-      // We are not blocking the Abilities from Pokémon ex
-      if (effect.card.tags.includes(CardTag.POKEMON_ex)) {
-        return state;
-      }
-
-      // Try reducing ability for each player  
-      try {
-        const powerEffect = new PowerEffect(player, this.powers[0], this);
-        store.reduceEffect(state, powerEffect);
-      } catch {
-        return state;
-      }
-
-      if (effect.power.useFromDiscard || effect.power.useFromHand) {
-        return state;
-      }
-
-      if (!effect.power.exemptFromAbilityLock) {
-        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
-      }
-    }
+      // Check + PowerEffect: Cursed Land must itself be usable (e.g. Path to the Peak).
+      return LOCKER_ABILITY_APPLIES(store, state, owner, this, this.powers[0], card);
+    }, {
+      allowUseFromHand: true,
+      allowUseFromDiscard: true,
+      error: GameMessage.BLOCKED_BY_ABILITY,
+    });
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;

@@ -4,11 +4,12 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { PowerType, PlayerType, StoreLike, State, StateUtils, GameError, GameMessage, PokemonCardList } from '../../../game';
+import { GameMessage, PlayerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { HANDLE_ABILITY_LOCK } from '../../../game/store/prefabs/ability-lock';
+import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
 
 export class Victreebel extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -64,16 +65,17 @@ export class Victreebel extends PokemonCard {
       player.marker.addMarker(this.GASTRO_ACID_2_MARKER, this);
     }
 
-    // Block abilities for marked Pokemon
-    // Ref: set-unbroken-bonds/power-plant.ts (PowerEffect ability block)
-    if (effect instanceof PowerEffect
-      && effect.power.powerType === PowerType.ABILITY
-      && !effect.power.exemptFromAbilityLock) {
-      const cardList = StateUtils.findCardList(state, effect.card) as PokemonCardList;
-      if (cardList.marker && cardList.marker.hasMarker(this.GASTRO_ACID_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    HANDLE_ABILITY_LOCK(effect, ({ card }) => {
+      try {
+        const cardList = StateUtils.findCardList(state, card);
+        return cardList instanceof PokemonCardList
+          && cardList.marker.hasMarker(this.GASTRO_ACID_MARKER, this);
+      } catch {
+        return false;
       }
-    }
+    }, {
+      error: GameMessage.BLOCKED_BY_EFFECT,
+    });
 
     // 2-phase cleanup
     if (effect instanceof EndTurnEffect) {

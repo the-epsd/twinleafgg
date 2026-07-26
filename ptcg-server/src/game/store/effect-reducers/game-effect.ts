@@ -1,8 +1,10 @@
 import { GameError } from '../../game-error';
 import { GameLog, GameMessage } from '../../game-message';
 import { BoardEffect, CardTag, CardType, SpecialCondition, SuperType } from '../card/card-types';
-import { Resistance, Weakness } from '../card/pokemon-types';
+import { PokemonCard } from '../card/pokemon-card';
+import { Power, Resistance, Weakness } from '../card/pokemon-types';
 import { ApplyWeaknessEffect, DealDamageEffect } from '../effects/attack-effects';
+import { Player } from '../state/player';
 import {
   AddSpecialConditionsPowerEffect,
   CheckAttackCostEffect,
@@ -34,6 +36,7 @@ import { MoveCardsEffect } from '../effects/game-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { MOVE_CARDS } from '../prefabs/prefabs';
+import { STAMP_ABILITY_LOCK_ACTIVATION } from '../prefabs/ability-lock';
 import { RESOLVE_COIN_FLIP_EFFECT, RUN_COIN_FLIP_SEQUENCE } from '../prefabs/attack-coin-reflip';
 import { CardList } from '../state/card-list';
 import { ConfirmPrompt } from '../prompts/confirm-prompt';
@@ -326,10 +329,52 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   return store.reduceEffect(state, new EndTurnEffect(player));
 }
 
+/**
+ * Probe ability/Poké-Power locks before the real PowerEffect runs.
+ *
+ * Locker cards (Mesprit, Hex Maniac, etc.) and ability owners both handle the same
+ * PowerEffect in one propagateEffect pass. If the owner runs first, side effects
+ * (draw, damage, markers) can apply before the locker throws — with no rollback.
+ * This probe uses a distinct Power object so WAS_POWER_USED never matches, while
+ * still carrying the real power's lock-relevant flags.
+ */
+function assertActivatedPowerNotLocked(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  card: PokemonCard,
+  power: Power,
+): void {
+  try {
+    store.reduceEffect(
+      state,
+      new PowerEffect(
+        player,
+        {
+          name: 'test',
+          powerType: power.powerType,
+          text: '',
+          exemptFromAbilityLock: power.exemptFromAbilityLock,
+          exemptFromInitialize: power.exemptFromInitialize,
+          knocksOutSelf: power.knocksOutSelf,
+          useFromHand: power.useFromHand,
+          useFromDiscard: power.useFromDiscard,
+        },
+        card,
+      ),
+    );
+  } catch {
+    throw new GameError(GameMessage.CANNOT_USE_POWER);
+  }
+}
+
 function* usePower(next: Function, store: StoreLike, state: State, effect: UsePowerEffect): IterableIterator<State> {
   const player = effect.player;
   const power = effect.power;
   const card = effect.card;
+
+  // Reject locked powers before animation / owner side effects.
+  assertActivatedPowerNotLocked(store, state, player, card, power);
 
   store.log(state, GameLog.LOG_PLAYER_USES_ABILITY, { name: player.name, ability: power.name });
 
@@ -594,6 +639,12 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
     effect.player.hand.moveCardTo(effect.pokemonCard, effect.target);
     effect.target.pokemonPlayedTurn = state.turn;
     effect.target.marker.markers = [];
+
+    // Evolving the Active Pokemon can bring a new ability lock online (e.g. Lazy).
+    if (effect.player.active === effect.target) {
+      effect.target.abilityLockActivationOrder = 0;
+      STAMP_ABILITY_LOCK_ACTIVATION(state, effect.target, effect.pokemonCard);
+    }
   }
 
   if (effect instanceof MoveCardsEffect) {

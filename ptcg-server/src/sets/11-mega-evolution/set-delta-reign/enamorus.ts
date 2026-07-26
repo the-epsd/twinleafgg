@@ -9,7 +9,6 @@ export class Enamorus extends PokemonCard {
   public cardType: CardType = P;
   public hp: number = 120;
   public weakness = [{ type: M }];
-  public resistance = [];
   public retreat = [C];
 
   public powers = [{
@@ -34,12 +33,12 @@ export class Enamorus extends PokemonCard {
   public fullName: string = 'Enamorus M6';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-furious-fists/politoed.ts (King's Song - CheckAttackCostEffect Colorless removal)
+    // Incarnate Union
     if (effect instanceof CheckAttackCostEffect) {
       return reduceIncarnateUnionEffect(store, state, effect, this);
     }
 
-    // Ref: set-delta-reign/wimpod.ts (Punk Out - Pokémon ex check)
+    // Rising Heart
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const opponentActive = effect.opponent.active.getPokemonCard();
       if (opponentActive?.tags.includes(CardTag.POKEMON_ex)) {

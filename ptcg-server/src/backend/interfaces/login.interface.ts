@@ -10,6 +10,8 @@ export interface ServerConfig {
   replayFileSize: number;
   refreshTokenInterval: number;
   board3dWhitelist: string[];
+  /** True when SERVER_PASSWORD is set; clients should prompt for it on register. */
+  serverPasswordRequired: boolean;
 }
 
 export interface RegisterRequest {

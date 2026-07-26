@@ -6,11 +6,14 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { PowerEffect, AttackEffect } from '../../../game/store/effects/game-effects';
-import { CheckPokemonPowersEffect } from '../../../game/store/effects/check-effects';
+import { AttackEffect, PowerEffect } from '../../../game/store/effects/game-effects';
 import { CardTag } from '../../../game/store/card/card-types';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefabs/attack-effects';
+import {
+  CAN_APPLY_LOCKER_ABILITY,
+  HANDLE_ABILITY_LOCK,
+} from '../../../game/store/prefabs/ability-lock';
 
 export class Wobbuffet extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -54,50 +57,22 @@ export class Wobbuffet extends PokemonCard {
   }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Shady Tail - block Prism Star abilities
-    // Ref: set-ultra-prism/glaceon-gx.ts (Freezing Gaze - block abilities by tag)
-    if (effect instanceof CheckPokemonPowersEffect) {
+    HANDLE_ABILITY_LOCK(effect, ({ card }) => {
       if (!this.isOnBench(state)) {
-        return state;
+        return false;
       }
 
-      const targetPokemon = effect.target;
-      if (targetPokemon && targetPokemon.tags.includes(CardTag.PRISM_STAR)) {
-        try {
-          const owner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
-          const powerEffect = new PowerEffect(owner, this.powers[0], this);
-          store.reduceEffect(state, powerEffect);
-        } catch {
-          return state;
-        }
-
-        effect.powers = effect.powers.filter(power =>
-          power.powerType !== PowerType.ABILITY
-        );
-      }
-    }
-
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY && effect.power.name !== 'Shady Tail') {
-      if (!this.isOnBench(state)) {
-        return state;
+      if (!card.tags.includes(CardTag.PRISM_STAR)) {
+        return false;
       }
 
-      if (effect.card.tags.includes(CardTag.PRISM_STAR)) {
-        try {
-          const owner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
-          const powerEffect = new PowerEffect(owner, this.powers[0], this);
-          store.reduceEffect(state, powerEffect);
-        } catch {
-          return state;
-        }
-
-        if (effect.power.useFromDiscard) {
-          return state;
-        }
-
-        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
-      }
-    }
+      const owner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
+      // Check + PowerEffect: Shady Tail must itself be usable (e.g. Path to the Peak).
+      return CAN_APPLY_LOCKER_ABILITY(store, state, owner, this, this.powers[0]);
+    }, {
+      allowUseFromDiscard: true,
+      error: GameMessage.BLOCKED_BY_ABILITY,
+    });
 
     // Ability: Shady Tail - block Prism Star attacks
     if (effect instanceof AttackEffect) {

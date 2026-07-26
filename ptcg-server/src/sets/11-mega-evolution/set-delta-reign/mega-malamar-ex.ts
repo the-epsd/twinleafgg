@@ -12,7 +12,6 @@ export class MegaMalamarex extends PokemonCard {
   public cardType: CardType = D;
   public hp: number = 320;
   public weakness = [{ type: G }];
-  public resistance = [];
   public retreat = [C, C];
 
   public attacks = [{

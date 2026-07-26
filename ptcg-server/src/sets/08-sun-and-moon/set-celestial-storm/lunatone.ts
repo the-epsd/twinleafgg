@@ -2,15 +2,20 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { CheckPokemonPowersEffect } from '../../../game/store/effects/check-effects';
-import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
-import { GameError } from '../../../game/game-error';
-import { GameMessage } from '../../../game/game-message';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { PlayerType, PowerType, State, StoreLike } from '../../../game';
+import { Player, PlayerType, PowerType, State, StoreLike } from '../../../game';
+import { StateUtils } from '../../../game/store/state-utils';
+import {
+  CAN_APPLY_LOCKER_ABILITY,
+  HANDLE_ABILITY_LOCK,
+} from '../../../game/store/prefabs/ability-lock';
+import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
+import { GameMessage } from '../../../game/game-message';
+
 export class Lunatone extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
@@ -39,9 +44,9 @@ export class Lunatone extends PokemonCard {
   public name: string = 'Lunatone';
   public fullName: string = 'Lunatone CES';
 
-  private hasSolrockInPlay(player: any): boolean {
+  private hasSolrockInPlay(player: Player): boolean {
     let found = false;
-    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (_cardList: any, card: PokemonCard) => {
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (_cardList, card) => {
       if (card.name === 'Solrock') {
         found = true;
       }
@@ -49,10 +54,10 @@ export class Lunatone extends PokemonCard {
     return found;
   }
 
-  private findLunatoneOwner(state: State): any {
+  private findLunatoneOwner(state: State): Player | null {
     for (const player of state.players) {
       let found = false;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (_cardList: any, card: PokemonCard) => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (_cardList, card) => {
         if (card === this) { found = true; }
       });
       if (found) { return player; }
@@ -61,56 +66,37 @@ export class Lunatone extends PokemonCard {
   }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Sol Shade (passive - block Fire Pokemon abilities)
-    // Ref: set-surging-sparks/gastrodon.ts (Sticky Bind - ability blocking pattern)
-    if (effect instanceof CheckPokemonPowersEffect) {
+    HANDLE_ABILITY_LOCK(effect, ({ card }) => {
       const lunatoneOwner = this.findLunatoneOwner(state);
-      if (!lunatoneOwner || IS_ABILITY_BLOCKED(store, state, lunatoneOwner, this)) {
-        return state;
+      if (!lunatoneOwner || !this.hasSolrockInPlay(lunatoneOwner)) {
+        return false;
       }
 
-      if (!this.hasSolrockInPlay(lunatoneOwner)) {
-        return state;
+      if (card.tags.includes(CardTag.POKEMON_GX) || card.tags.includes(CardTag.POKEMON_EX)) {
+        return false;
       }
 
-      // Check if target Pokemon is Fire type and not GX/EX
-      const targetPokemon = effect.target;
-      if (targetPokemon && targetPokemon.cardType === CardType.FIRE) {
-        if (!targetPokemon.tags.includes(CardTag.POKEMON_GX) && !targetPokemon.tags.includes(CardTag.POKEMON_EX)) {
-          effect.powers = effect.powers.filter(power => power.powerType !== PowerType.ABILITY);
+      try {
+        const cardList = StateUtils.findCardList(state, card);
+        if (cardList instanceof PokemonCardList) {
+          const checkType = new CheckPokemonTypeEffect(cardList);
+          store.reduceEffect(state, checkType);
+          if (!checkType.cardTypes.includes(CardType.FIRE)) {
+            return false;
+          }
+        } else if (card.cardType !== CardType.FIRE) {
+          return false;
         }
+      } catch {
+        return false;
       }
-    }
 
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY) {
-      // Check if the Pokemon using the ability is Fire type and not GX/EX
-      if (effect.card instanceof PokemonCard) {
-        if (effect.card.tags.includes(CardTag.POKEMON_GX) || effect.card.tags.includes(CardTag.POKEMON_EX)) {
-          return state;
-        }
-
-        if (effect.card.cardType !== CardType.FIRE) {
-          return state;
-        }
-
-        const lunatoneOwner = this.findLunatoneOwner(state);
-        if (!lunatoneOwner || IS_ABILITY_BLOCKED(store, state, lunatoneOwner, this)) {
-          return state;
-        }
-
-        if (!this.hasSolrockInPlay(lunatoneOwner)) {
-          return state;
-        }
-
-        if (effect.power.useFromDiscard) {
-          return state;
-        }
-
-        if (!effect.power.exemptFromAbilityLock) {
-          throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
-        }
-      }
-    }
+      // Check + PowerEffect: Sol Shade must itself be usable (e.g. Path to the Peak).
+      return CAN_APPLY_LOCKER_ABILITY(store, state, lunatoneOwner, this, this.powers[0]);
+    }, {
+      allowUseFromDiscard: true,
+      error: GameMessage.BLOCKED_BY_ABILITY,
+    });
 
     // Attack 1: Psyshock
     // Ref: set-ultra-prism/bronzong.ts (Psy Bolt)

@@ -53,4 +53,10 @@ export class State {
   public benchSizeChangeHandled: boolean = false;
 
   public gameSettings: GameSettings = new GameSettings();
+
+  /**
+   * Monotonic counter for Active ability-lock activation order
+   * (Emperor's Eyes vs Bide Barricade / Mischievous Lock "first in wins").
+   */
+  public abilityLockOrderCounter: number = 0;
 }

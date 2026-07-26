@@ -10,7 +10,6 @@ export class Thundurus extends PokemonCard {
   public cardType: CardType = L;
   public hp: number = 120;
   public weakness = [{ type: F }];
-  public resistance = [];
   public retreat = [C];
 
   public powers = [{
@@ -34,12 +33,12 @@ export class Thundurus extends PokemonCard {
   public fullName: string = 'Thundurus M6';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-furious-fists/politoed.ts (King's Song - CheckAttackCostEffect Colorless removal)
+    // Incarnate Union
     if (effect instanceof CheckAttackCostEffect) {
       return reduceIncarnateUnionEffect(store, state, effect, this);
     }
 
-    // Ref: set-neo-discovery/yanma.ts (Sonicboom)
+    // Thunder Edge
     if (WAS_ATTACK_USED(effect, 0, this)) {
       THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS(store, state, effect, 90);
     }
