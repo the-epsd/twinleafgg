@@ -25,6 +25,12 @@ import { N } from '../../07-x-and-y/set-fates-collide/n';
 import { KeldeoEx } from '../set-boundaries-crossed/keldeo-ex';
 import { TropicalBeach } from './tropical-beach';
 import { Excadrill } from '../set-emerging-powers/excadrill';
+import { Axew } from './axew';
+
+export class Axew2BWP extends Axew {
+  public setNumber: string = '16';
+  public fullName: string = 'Axew2 BWP';
+}
 
 export class KeldeoExBWP extends KeldeoEx {
   public set: string = 'BWP';
