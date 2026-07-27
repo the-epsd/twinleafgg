@@ -59,6 +59,7 @@ export class PokemonCardList extends CardList {
   public cannotRetreatNextTurn: boolean = false;
   public cannotRetreatNextTurnPending: boolean = false;
   public pendingEnergyAttachDamageCounters: PendingEnergyAttachDamageCounters | null = null;
+  public pendingEnergyReturnToHand: Card[] = [];
   public blockedAttackNameNextTurn: string | undefined = undefined;
   public _preservedConditionsDuringEvolution?: SpecialCondition[];
 
@@ -210,6 +211,7 @@ export class PokemonCardList extends CardList {
     this.cannotRetreatNextTurn = false;
     this.cannotRetreatNextTurnPending = false;
     this.pendingEnergyAttachDamageCounters = null;
+    this.pendingEnergyReturnToHand = [];
     this.blockedAttackNameNextTurn = undefined;
     this.damageReductionNextTurn = 0;
     this.preventDamageNextTurn = null;
@@ -265,6 +267,7 @@ export class PokemonCardList extends CardList {
     this.cannotRetreatNextTurn = false;
     this.cannotRetreatNextTurnPending = false;
     this.pendingEnergyAttachDamageCounters = null;
+    this.pendingEnergyReturnToHand = [];
     this.blockedAttackNameNextTurn = undefined;
     // if (this.cards.length === 0) {
     //   this.damage = 0;
