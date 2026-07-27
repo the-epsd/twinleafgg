@@ -49,8 +49,29 @@ export class Cards extends Controller {
     const cardManager = CardManager.getInstance();
     const allCards = cardManager.getAllCards();
 
+    const cards = allCards.map((card) => {
+      const c = card as any;
+
+      const tags: unknown[] = Array.isArray(c.tags) ? c.tags : Array.isArray(c._tags) ? c._tags : [];
+
+      const json: any = {
+        ...c,
+        tags: [...tags],
+      };
+
+      // legacy
+      if (Array.isArray(c.cardTag)) {
+        json.cardTag = [...c.cardTag];
+      }
+
+      if ('_tags' in json) delete json._tags;
+      if ('_runtimeTags' in json) delete json._runtimeTags;
+
+      return json;
+    }) as unknown as Card[];
+
     const cardsInfo: CardsInfo = {
-      cards: allCards,
+      cards,
       hash: ''
     };
 
