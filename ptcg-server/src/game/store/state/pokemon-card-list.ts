@@ -11,6 +11,8 @@ import { StateUtils } from '../state-utils';
 /** Filters for {@link PokemonCardList.preventDamageNextTurn} attack damage prevention. */
 export interface PreventDamageFilter {
   sourceStage?: Stage;
+  /** When true, only Evolution Pokémon (stage !== BASIC) match. */
+  sourceIsEvolution?: boolean;
   sourceTags?: CardTag[];
   sourceCardTypes?: CardType[];
   sourceHasAbility?: boolean;
@@ -44,6 +46,8 @@ export class PokemonCardList extends CardList {
   public showBasicAnimation: boolean = false;
   public triggerAttackAnimation: boolean = false;
   public damageReductionNextTurn: number = 0;
+  /** Optional source filter for {@link damageReductionNextTurn} (e.g. Evolution-only). */
+  public damageReductionNextTurnFilter: PreventDamageFilter | null = null;
   public preventDamageNextTurn: PreventDamageFilter | null = null;
   public preventDamageNextTurnPending: PreventDamageFilter | null = null;
   public preventEffectsOfAttacksNextTurn: PreventDamageFilter | null = null;
@@ -231,6 +235,7 @@ export class PokemonCardList extends CardList {
     this.pendingEnergyReturnToHand = [];
     this.blockedAttackNameNextTurn = undefined;
     this.damageReductionNextTurn = 0;
+    this.damageReductionNextTurnFilter = null;
     this.preventDamageNextTurn = null;
     this.preventDamageNextTurnPending = null;
     this.preventEffectsOfAttacksNextTurn = null;
@@ -272,6 +277,7 @@ export class PokemonCardList extends CardList {
     this.burnDamage = 20;
     this.confusionDamage = 30;
     this.damageReductionNextTurn = 0;
+    this.damageReductionNextTurnFilter = null;
     this.preventDamageNextTurn = null;
     this.preventDamageNextTurnPending = null;
     this.preventEffectsOfAttacksNextTurn = null;

@@ -27,6 +27,7 @@ import {
   EffectOfAttackEffect,
   shouldPreventAttackDamage,
   shouldPreventAttackEffects,
+  shouldApplyDamageReduction,
 } from '../effects/effect-of-attack-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
 import { CheckHpEffect } from '../effects/check-effects';
@@ -75,7 +76,7 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
     }
 
     // Apply damage reduction (or increase via negative values) for "during opponent's next turn" effects
-    if (target.damageReductionNextTurn !== 0) {
+    if (shouldApplyDamageReduction(target, effect.source)) {
       effect.damage = Math.max(0, effect.damage - target.damageReductionNextTurn);
     }
 

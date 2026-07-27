@@ -1,10 +1,9 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, PlayerType, StateUtils, ChooseCardsPrompt } from '../../../game';
+import { StoreLike, State, GameMessage, ChooseCardsPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { DISCARD_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 export class TeamRocketsMoltresex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -34,29 +33,11 @@ export class TeamRocketsMoltresex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Rocket\'s Moltres ex';
   public fullName: string = 'Team Rocket\'s Moltres ex DRI';
-  public readonly FLAME_SCREEN_MARKER = 'FLAME_SCREEN_MARKER';
-  public readonly CLEAR_FLAME_SCREEN_MARKER = 'CLEAR_FLAME_SCREEN_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Flame Screen
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = effect.opponent;
-
-      player.active.marker.addMarker(this.FLAME_SCREEN_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_FLAME_SCREEN_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_FLAME_SCREEN_MARKER, this)) {
-      const opponent = effect.player;
-      const player = StateUtils.getOpponent(state, opponent);
-
-      opponent.marker.removeMarker(this.CLEAR_FLAME_SCREEN_MARKER, this);
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
-        if (card.getPokemonCard() === this) {
-          card.marker.removeMarker(this.FLAME_SCREEN_MARKER, this);
-        }
-      });
+      effect.player.active.damageReductionNextTurn = 50;
     }
 
     // Evil Burn

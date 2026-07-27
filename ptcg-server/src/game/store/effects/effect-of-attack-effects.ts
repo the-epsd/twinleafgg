@@ -10,7 +10,7 @@ import { State } from '../state/state';
 import { StateUtils } from '../state-utils';
 import { Attack, PowerType } from '../card/pokemon-types';
 import { Card } from '../card/card';
-import { CardType } from '../card/card-types';
+import { CardType, Stage } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { PokemonCardList, PreventDamageFilter } from '../state/pokemon-card-list';
 
@@ -19,6 +19,10 @@ function sourceMatchesPreventFilter(
   filter: PreventDamageFilter,
 ): boolean {
   if (filter.sourceStage !== undefined && sourceCard.stage !== filter.sourceStage) {
+    return false;
+  }
+
+  if (filter.sourceIsEvolution === true && sourceCard.stage === Stage.BASIC) {
     return false;
   }
 
@@ -88,6 +92,28 @@ export function shouldPreventAttackDamage(
   const filter = target.preventDamageNextTurn;
   if (!filter) {
     return false;
+  }
+
+  const sourceCard = source.getPokemonCard();
+  if (!sourceCard) {
+    return false;
+  }
+
+  return sourceMatchesPreventFilter(sourceCard, filter);
+}
+
+/** Whether {@link PokemonCardList.damageReductionNextTurn} should apply for this source. */
+export function shouldApplyDamageReduction(
+  target: PokemonCardList,
+  source: PokemonCardList,
+): boolean {
+  if (target.damageReductionNextTurn === 0) {
+    return false;
+  }
+
+  const filter = target.damageReductionNextTurnFilter;
+  if (!filter) {
+    return true;
   }
 
   const sourceCard = source.getPokemonCard();

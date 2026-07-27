@@ -2,26 +2,16 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-
-import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class LeafeonVSTAR extends PokemonCard {
-
-  public stage = Stage.STAGE_1;
-
-  public evolvesFrom = 'Leafeon V';
-
-  public cardType = CardType.GRASS;
-
-  public hp = 260;
-
+  public stage: Stage = Stage.STAGE_1;
+  public evolvesFrom: string = 'Leafeon V';
+  public cardType: CardType = G;
+  public hp: number = 260;
   public tags = [CardTag.POKEMON_VSTAR];
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Ivy Star',
@@ -32,29 +22,20 @@ export class LeafeonVSTAR extends PokemonCard {
 
   public attacks = [{
     name: 'Leaf Guard',
-    cost: [CardType.GRASS, CardType.GRASS, CardType.COLORLESS],
+    cost: [G, G, C],
     damage: 180,
     text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
   }];
 
   public regulationMark = 'F';
-
   public set = 'SWSH';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '195';
-
   public name = 'Leafeon VSTAR';
-
   public fullName = 'Leafeon VSTAR SWSH';
 
-  public readonly LEAF_GUARD_MARKER = 'LEAF_GUARD_MARKER';
-
-  public readonly CLEAR_LEAF_GUARD_MARKER = 'CLEAR_LEAF_GUARD_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Ivy Star
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -81,29 +62,11 @@ export class LeafeonVSTAR extends PokemonCard {
       });
     }
 
+    // Leaf Guard
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      player.active.marker.addMarker(this.LEAF_GUARD_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_LEAF_GUARD_MARKER, this);
-
-      if (effect instanceof PutDamageEffect
-        && effect.target.marker.hasMarker(this.LEAF_GUARD_MARKER)) {
-        effect.damage -= 30;
-        return state;
-      }
-      if (effect instanceof EndTurnEffect
-        && effect.player.marker.hasMarker(this.CLEAR_LEAF_GUARD_MARKER, this)) {
-        effect.player.marker.removeMarker(this.CLEAR_LEAF_GUARD_MARKER, this);
-        const opponent = StateUtils.getOpponent(state, effect.player);
-        opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-          cardList.marker.removeMarker(this.LEAF_GUARD_MARKER, this);
-        });
-      }
-      return state;
+      effect.player.active.damageReductionNextTurn = 30;
     }
+
     return state;
   }
 }

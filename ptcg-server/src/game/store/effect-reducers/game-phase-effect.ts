@@ -221,6 +221,7 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
     // Clear damage reduction effects on opponent's Pokémon when their turn ends
     opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
       cardList.damageReductionNextTurn = 0;
+      cardList.damageReductionNextTurnFilter = null;
       cardList.preventDamageNextTurn = null;
       cardList.preventDamageNextTurnPending = null;
       cardList.preventEffectsOfAttacksNextTurn = null;
