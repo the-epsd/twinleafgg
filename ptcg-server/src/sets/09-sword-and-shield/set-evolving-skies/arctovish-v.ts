@@ -11,7 +11,7 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class ArctovishV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 220;
@@ -25,14 +25,14 @@ export class ArctovishV extends PokemonCard {
       name: 'Ancient Freeze',
       cost: [W, C, C],
       damage: 80,
-      text: 'If the Defending Pokémon is a Pokémon V or a Pokémon-GX, it can\'t attack during your opponent\'s next turn.'
+      text: "If the Defending Pokémon is a Pokémon V or a Pokémon-GX, it can't attack during your opponent's next turn.",
     },
     {
       name: 'Giga Impact',
       cost: [W, W, C, C],
       damage: 220,
-      text: 'During your next turn, this Pokémon can\'t attack.'
-    }
+      text: "During your next turn, this Pokémon can't attack.",
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -50,13 +50,13 @@ export class ArctovishV extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const defenderCard = opponent.active.getPokemonCard();
-      const isVOrGX = defenderCard && (
-        defenderCard.tags.includes(CardTag.POKEMON_V) ||
-        defenderCard.tags.includes(CardTag.POKEMON_VMAX) ||
-        defenderCard.tags.includes(CardTag.POKEMON_VSTAR) ||
-        defenderCard.tags.includes(CardTag.POKEMON_GX) ||
-        defenderCard.tags.includes(CardTag.TAG_TEAM)
-      );
+      const isVOrGX =
+        defenderCard &&
+        (defenderCard.hasTag(CardTag.POKEMON_V) ||
+          defenderCard.hasTag(CardTag.POKEMON_VMAX) ||
+          defenderCard.hasTag(CardTag.POKEMON_VSTAR) ||
+          defenderCard.hasTag(CardTag.POKEMON_GX) ||
+          defenderCard.hasTag(CardTag.TAG_TEAM));
 
       if (isVOrGX) {
         opponent.active.marker.addMarker(this.CANT_ATTACK_MARKER, this);
@@ -64,13 +64,19 @@ export class ArctovishV extends PokemonCard {
       }
     }
 
-    if (effect instanceof AttackEffect && effect.player.active.marker.hasMarker(this.CANT_ATTACK_MARKER, this)) {
+    if (
+      effect instanceof AttackEffect &&
+      effect.player.active.marker.hasMarker(this.CANT_ATTACK_MARKER, this)
+    ) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CANT_ATTACK_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CANT_ATTACK_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CANT_ATTACK_MARKER, this);
-      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         cardList.marker.removeMarker(this.CANT_ATTACK_MARKER, this);
       });
     }

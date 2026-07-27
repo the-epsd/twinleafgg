@@ -11,7 +11,7 @@ import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE } from '../../../game/store/p
 import { AttachEnergyEffect } from '../../../game/store/effects/play-card-effects';
 
 export class GalarianCursolaV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 190;
@@ -19,19 +19,21 @@ export class GalarianCursolaV extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Gnawing Aura',
-    powerType: PowerType.ABILITY,
-    text: 'As long as this Pokémon is in the Active Spot, whenever your opponent attaches an Energy card from their hand to 1 of their Pokémon, put 3 damage counters on that Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Gnawing Aura',
+      powerType: PowerType.ABILITY,
+      text: 'As long as this Pokémon is in the Active Spot, whenever your opponent attaches an Energy card from their hand to 1 of their Pokémon, put 3 damage counters on that Pokémon.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Hollow Missile',
       cost: [P, C],
       damage: 60,
-      text: 'Put 3 damage counters on your opponent\'s Benched Pokémon in any way you like.'
-    }
+      text: "Put 3 damage counters on your opponent's Benched Pokémon in any way you like.",
+    },
   ];
 
   public regulationMark: string = 'D';

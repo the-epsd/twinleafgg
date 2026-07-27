@@ -8,12 +8,11 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class FlyingPikachuVMAX extends PokemonCard {
-
   public stage: Stage = Stage.VMAX;
 
   public evolvesFrom = 'Flying Pikachu V';
 
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
 
   public regulationMark = 'E';
 
@@ -32,8 +31,8 @@ export class FlyingPikachuVMAX extends PokemonCard {
       name: 'Max Balloon',
       cost: [CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS],
       damage: 160,
-      text: 'During your opponent\'s next turn, prevent all damage done to this Pokémon by attacks from Basic Pokémon.'
-    }
+      text: "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Basic Pokémon.",
+    },
   ];
 
   public set: string = 'CEL';
@@ -51,7 +50,6 @@ export class FlyingPikachuVMAX extends PokemonCard {
   public readonly CLEAR_MAX_BALLOON_MARKER: string = 'CLEAR_MAX_BALLOON_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -60,8 +58,10 @@ export class FlyingPikachuVMAX extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof PutDamageEffect
-      && effect.target.marker.hasMarker(this.MAX_BALLOON_MARKER)) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.marker.hasMarker(this.MAX_BALLOON_MARKER)
+    ) {
       const card = effect.source.getPokemonCard();
       const stage = card !== undefined ? card.stage : undefined;
 
@@ -73,7 +73,6 @@ export class FlyingPikachuVMAX extends PokemonCard {
     }
 
     if (effect instanceof EndTurnEffect) {
-
       if (effect.player.marker.hasMarker(this.CLEAR_MAX_BALLOON_MARKER, this)) {
         effect.player.marker.removeMarker(this.CLEAR_MAX_BALLOON_MARKER, this);
         const opponent = StateUtils.getOpponent(state, effect.player);
@@ -85,5 +84,4 @@ export class FlyingPikachuVMAX extends PokemonCard {
 
     return state;
   }
-
 }

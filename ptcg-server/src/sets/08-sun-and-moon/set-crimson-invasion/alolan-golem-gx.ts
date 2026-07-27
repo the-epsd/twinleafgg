@@ -7,12 +7,23 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameError, GameMessage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { PlayItemEffect, PlaySupporterEffect, PlayPokemonEffect, PlayStadiumEffect, AttachPokemonToolEffect, AttachEnergyEffect } from '../../../game/store/effects/play-card-effects';
+import {
+  PlayItemEffect,
+  PlaySupporterEffect,
+  PlayPokemonEffect,
+  PlayStadiumEffect,
+  AttachPokemonToolEffect,
+  AttachEnergyEffect,
+} from '../../../game/store/effects/play-card-effects';
 import { EvolveEffect } from '../../../game/store/effects/game-effects';
-import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+  BLOCK_IF_GX_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class AlolanGolemGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Alolan Graveler';
   public cardType: CardType = L;
@@ -28,20 +39,20 @@ export class AlolanGolemGx extends PokemonCard {
       name: 'Hammer In',
       cost: [L, C, C],
       damage: 80,
-      text: ''
+      text: '',
     },
     {
       name: 'Super Electromagnetic Tackle',
       cost: [L, L, C, C],
       damage: 200,
-      text: 'This Pokémon does 50 damage to itself.'
+      text: 'This Pokémon does 50 damage to itself.',
     },
     {
       name: 'Heavy Rock-GX',
       cost: [L, L, C, C],
       damage: 100,
-      text: 'Your opponent can\'t play any cards from their hand during their next turn. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Your opponent can't play any cards from their hand during their next turn. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'CIN';
@@ -69,25 +80,46 @@ export class AlolanGolemGx extends PokemonCard {
     }
 
     // Block all card plays from hand
-    if (effect instanceof PlayItemEffect && effect.player.marker.hasMarker(this.BLOCK_CARDS_MARKER, this)) {
+    if (
+      effect instanceof PlayItemEffect &&
+      effect.player.marker.hasMarker(this.BLOCK_CARDS_MARKER, this)
+    ) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
-    if (effect instanceof PlaySupporterEffect && effect.player.marker.hasMarker(this.BLOCK_CARDS_MARKER, this)) {
+    if (
+      effect instanceof PlaySupporterEffect &&
+      effect.player.marker.hasMarker(this.BLOCK_CARDS_MARKER, this)
+    ) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
-    if (effect instanceof PlayPokemonEffect && effect.player.marker.hasMarker(this.BLOCK_CARDS_MARKER, this)) {
+    if (
+      effect instanceof PlayPokemonEffect &&
+      effect.player.marker.hasMarker(this.BLOCK_CARDS_MARKER, this)
+    ) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
-    if (effect instanceof PlayStadiumEffect && effect.player.marker.hasMarker(this.BLOCK_CARDS_MARKER, this)) {
+    if (
+      effect instanceof PlayStadiumEffect &&
+      effect.player.marker.hasMarker(this.BLOCK_CARDS_MARKER, this)
+    ) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
-    if (effect instanceof AttachPokemonToolEffect && effect.player.marker.hasMarker(this.BLOCK_CARDS_MARKER, this)) {
+    if (
+      effect instanceof AttachPokemonToolEffect &&
+      effect.player.marker.hasMarker(this.BLOCK_CARDS_MARKER, this)
+    ) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
-    if (effect instanceof AttachEnergyEffect && effect.player.marker.hasMarker(this.BLOCK_CARDS_MARKER, this)) {
+    if (
+      effect instanceof AttachEnergyEffect &&
+      effect.player.marker.hasMarker(this.BLOCK_CARDS_MARKER, this)
+    ) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
-    if (effect instanceof EvolveEffect && effect.player.marker.hasMarker(this.BLOCK_CARDS_MARKER, this)) {
+    if (
+      effect instanceof EvolveEffect &&
+      effect.player.marker.hasMarker(this.BLOCK_CARDS_MARKER, this)
+    ) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 

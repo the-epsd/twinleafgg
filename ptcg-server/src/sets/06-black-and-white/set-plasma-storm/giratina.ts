@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Giratina extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 130;
@@ -22,14 +22,14 @@ export class Giratina extends PokemonCard {
       cost: [P, C, C],
       damage: 50,
       damageCalculation: '+',
-      text: 'If the Defending Pokémon is affected by a Special Condition, this attack does 50 more damage.'
+      text: 'If the Defending Pokémon is affected by a Special Condition, this attack does 50 more damage.',
     },
     {
       name: 'Shadow Claw',
       cost: [P, P, C, C],
       damage: 90,
-      text: 'Discard a random card from your opponent\'s hand.'
-    }
+      text: "Discard a random card from your opponent's hand.",
+    },
   ];
 
   public set: string = 'PLS';

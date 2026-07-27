@@ -3,14 +3,28 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../../game/store/card/card-types';
-import { PlayerType, SlotType, StoreLike, State, StateUtils, GameMessage, AttachEnergyPrompt } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  EnergyType,
+  SuperType,
+} from '../../../game/store/card/card-types';
+import {
+  PlayerType,
+  SlotType,
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  AttachEnergyPrompt,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 
 export class BoltundV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = L;
   public hp: number = 200;
@@ -22,15 +36,15 @@ export class BoltundV extends PokemonCard {
       name: 'Electrify',
       cost: [L],
       damage: 0,
-      text: 'Search your deck for up to 2 [L] Energy cards and attach them to your Benched Pokémon in any way you like. Then, shuffle your deck.'
+      text: 'Search your deck for up to 2 [L] Energy cards and attach them to your Benched Pokémon in any way you like. Then, shuffle your deck.',
     },
     {
       name: 'Bolt Storm',
       cost: [L, C],
       damage: 10,
       damageCalculation: '+',
-      text: 'This attack does 30 more damage for each [L] Energy attached to all of your Pokémon.'
-    }
+      text: 'This attack does 30 more damage for each [L] Energy attached to all of your Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -46,22 +60,26 @@ export class BoltundV extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      state = store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_CARDS,
-        player.deck,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },
-        { allowCancel: true, min: 0, max: 2 },
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.deck.moveCardTo(transfer.card, target);
-        }
-        SHUFFLE_DECK(store, state, player);
-      });
+      state = store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_CARDS,
+          player.deck,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },
+          { allowCancel: true, min: 0, max: 2 },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.deck.moveCardTo(transfer.card, target);
+          }
+          SHUFFLE_DECK(store, state, player);
+        },
+      );
     }
 
     // Attack 2: Bolt Storm
@@ -73,8 +91,10 @@ export class BoltundV extends PokemonCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         const checkEnergy = new CheckProvidedEnergyEffect(player, cardList);
         store.reduceEffect(state, checkEnergy);
-        checkEnergy.energyMap.forEach(em => {
-          lightningCount += em.provides.filter(c => c === CardType.LIGHTNING || c === CardType.ANY).length;
+        checkEnergy.energyMap.forEach((em) => {
+          lightningCount += em.provides.filter(
+            (c) => c === CardType.LIGHTNING || c === CardType.ANY,
+          ).length;
         });
       });
 

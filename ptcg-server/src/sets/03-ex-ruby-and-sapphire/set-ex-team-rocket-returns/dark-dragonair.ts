@@ -3,32 +3,46 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { GameError, GameMessage, PowerType, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, IS_POKEPOWER_BLOCKED, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ABILITY_USED,
+  ADD_MARKER,
+  BLOCK_IF_HAS_SPECIAL_CONDITION,
+  IS_POKEPOWER_BLOCKED,
+  REMOVE_MARKER,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class DarkDragonair extends PokemonCard {
-  public tags = [CardTag.DARK];
+  protected _tags = [CardTag.DARK];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Dratini';
   public cardType: CardType = D;
   public hp: number = 70;
   public weakness = [{ type: C }];
-  public resistance = [{ type: G, value: -30 }, { type: F, value: -30 }];
+  public resistance = [
+    { type: G, value: -30 },
+    { type: F, value: -30 },
+  ];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Evolutionary Light',
-    useWhenInPlay: true,
-    powerType: PowerType.POKEPOWER,
-    text: 'Once during your turn (before your attack), if Dark Dragonair is your Active Pokémon, you may search your deck for an Evolution card. Show it to your opponent and put it into your hand. Shuffle your deck afterward. This power can\'t be used if Dark Dragonair is affected by a Special Condition.'
-  }];
+  public powers = [
+    {
+      name: 'Evolutionary Light',
+      useWhenInPlay: true,
+      powerType: PowerType.POKEPOWER,
+      text: "Once during your turn (before your attack), if Dark Dragonair is your Active Pokémon, you may search your deck for an Evolution card. Show it to your opponent and put it into your hand. Shuffle your deck afterward. This power can't be used if Dark Dragonair is affected by a Special Condition.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Dragon Rage',
       cost: [W, L],
       damage: 30,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'TRR';
@@ -74,7 +88,13 @@ export class DarkDragonair extends PokemonCard {
         }
       });
 
-      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, player, {}, { min: 0, max: 1, blocked });
+      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(
+        store,
+        state,
+        player,
+        {},
+        { min: 0, max: 1, blocked },
+      );
 
       ADD_MARKER(this.EVOLUTIONARY_LIGHT_MARKER, player, this);
       ABILITY_USED(player, this);

@@ -19,7 +19,8 @@ export class SnowLeafBadge extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Snow Leaf Badge';
   public fullName: string = 'Snow Leaf Badge EVS';
-  public text: string = 'If the Pokémon V this card is attached to has "Leafeon" or "Glaceon" in its name, it has no Retreat Cost and no Weakness. You may play any number of Item cards during your turn. Attach a Pokémon Tool to 1 of your Pokémon that doesn\'t already have a Pokémon Tool attached.';
+  public text: string =
+    'If the Pokémon V this card is attached to has "Leafeon" or "Glaceon" in its name, it has no Retreat Cost and no Weakness. You may play any number of Item cards during your turn. Attach a Pokémon Tool to 1 of your Pokémon that doesn\'t already have a Pokémon Tool attached.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-sword-and-shield/air-balloon.ts (CheckRetreatCostEffect + tool check pattern)
@@ -32,9 +33,11 @@ export class SnowLeafBadge extends TrainerCard {
       }
 
       const attachedPokemon = effect.player.active.getPokemonCard();
-      if (attachedPokemon &&
-        attachedPokemon.tags.includes(CardTag.POKEMON_V) &&
-        (attachedPokemon.name.includes('Leafeon') || attachedPokemon.name.includes('Glaceon'))) {
+      if (
+        attachedPokemon &&
+        attachedPokemon.hasTag(CardTag.POKEMON_V) &&
+        (attachedPokemon.name.includes('Leafeon') || attachedPokemon.name.includes('Glaceon'))
+      ) {
         effect.cost = [];
       }
     }
@@ -48,9 +51,11 @@ export class SnowLeafBadge extends TrainerCard {
       }
 
       const attachedPokemon = effect.target.getPokemonCard();
-      if (attachedPokemon &&
-        attachedPokemon.tags.includes(CardTag.POKEMON_V) &&
-        (attachedPokemon.name.includes('Leafeon') || attachedPokemon.name.includes('Glaceon'))) {
+      if (
+        attachedPokemon &&
+        attachedPokemon.hasTag(CardTag.POKEMON_V) &&
+        (attachedPokemon.name.includes('Leafeon') || attachedPokemon.name.includes('Glaceon'))
+      ) {
         effect.ignoreWeakness = true;
       }
     }

@@ -7,7 +7,10 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PlayerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED, DISCARD_ALL_ENERGY_FROM_POKEMON } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  DISCARD_ALL_ENERGY_FROM_POKEMON,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Raichu extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -22,14 +25,14 @@ export class Raichu extends PokemonCard {
       name: 'Big Sparking',
       cost: [L],
       damage: 0,
-      text: 'This attack does 50 damage to each Pokémon V and Pokémon-GX (both yours and your opponent\'s). (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack does 50 damage to each Pokémon V and Pokémon-GX (both yours and your opponent's). (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Thunderbolt',
       cost: [L, L, C],
       damage: 180,
-      text: 'Discard all Energy from this Pokémon.'
-    }
+      text: 'Discard all Energy from this Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -47,10 +50,10 @@ export class Raichu extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const isVOrGX = (card: PokemonCard) =>
-        card.tags.includes(CardTag.POKEMON_V) ||
-        card.tags.includes(CardTag.POKEMON_GX) ||
-        card.tags.includes(CardTag.POKEMON_VMAX) ||
-        card.tags.includes(CardTag.POKEMON_VSTAR);
+        card.hasTag(CardTag.POKEMON_V) ||
+        card.hasTag(CardTag.POKEMON_GX) ||
+        card.hasTag(CardTag.POKEMON_VMAX) ||
+        card.hasTag(CardTag.POKEMON_VSTAR);
 
       // Damage all V/GX Pokemon (both players)
       [player, opponent].forEach((p, playerIndex) => {

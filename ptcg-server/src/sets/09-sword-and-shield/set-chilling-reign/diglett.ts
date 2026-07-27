@@ -11,7 +11,7 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Diglett extends PokemonCard {
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = F;
   public hp: number = 50;
@@ -26,8 +26,8 @@ export class Diglett extends PokemonCard {
       name: 'Dig',
       cost: [F],
       damage: 10,
-      text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage from and effects of attacks done to this Pokémon.'
-    }
+      text: "Flip a coin. If heads, during your opponent's next turn, prevent all damage from and effects of attacks done to this Pokémon.",
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -43,7 +43,7 @@ export class Diglett extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      COIN_FLIP_PROMPT(store, state, player, result => {
+      COIN_FLIP_PROMPT(store, state, player, (result) => {
         if (result) {
           player.active.marker.addMarker(this.PREVENT_MARKER, this);
           opponent.marker.addMarker(this.CLEAR_PREVENT_MARKER, this);
@@ -51,14 +51,18 @@ export class Diglett extends PokemonCard {
       });
     }
 
-    if (effect instanceof AbstractAttackEffect
-      && effect.target.marker.hasMarker(this.PREVENT_MARKER, this)) {
+    if (
+      effect instanceof AbstractAttackEffect &&
+      effect.target.marker.hasMarker(this.PREVENT_MARKER, this)
+    ) {
       effect.preventDefault = true;
       return state;
     }
 
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_PREVENT_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_PREVENT_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_PREVENT_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {

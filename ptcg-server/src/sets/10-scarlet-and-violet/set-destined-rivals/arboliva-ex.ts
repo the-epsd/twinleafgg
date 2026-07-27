@@ -11,15 +11,12 @@ import {
   StateUtils,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import {
-  WAS_ATTACK_USED,
-  DAMAGE_OPPONENT_POKEMON,
-} from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, DAMAGE_OPPONENT_POKEMON } from '../../../game/store/prefabs/prefabs';
 
 export class Arbolivaex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Dolliv';
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public cardType: CardType = G;
   public hp: number = 310;
   public weakness = [{ type: R }];
@@ -54,12 +51,9 @@ export class Arbolivaex extends PokemonCard {
       const opponent = effect.opponent;
 
       const maxAllowedDamage: DamageMap[] = [];
-      opponent.forEachPokemon(
-        PlayerType.TOP_PLAYER,
-        (cardList, card, target) => {
-          maxAllowedDamage.push({ target, damage: card.hp + 120 });
-        },
-      );
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
+        maxAllowedDamage.push({ target, damage: card.hp + 120 });
+      });
 
       const damage = 120;
 
@@ -78,9 +72,7 @@ export class Arbolivaex extends PokemonCard {
           const results = targets || [];
           for (const result of results) {
             const target = StateUtils.getTarget(state, player, result.target);
-            DAMAGE_OPPONENT_POKEMON(store, state, effect, result.damage, [
-              target,
-            ]);
+            DAMAGE_OPPONENT_POKEMON(store, state, effect, result.damage, [target]);
           }
         },
       );

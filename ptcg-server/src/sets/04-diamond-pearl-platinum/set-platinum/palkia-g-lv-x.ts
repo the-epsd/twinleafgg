@@ -27,7 +27,7 @@ export class PalkiaGLVX extends PokemonCard {
   public stage: Stage = Stage.LV_X;
   public evolvesFrom = 'Palkia G';
   public cardType: CardType = W;
-  public tags = [CardTag.POKEMON_LV_X, CardTag.POKEMON_SP];
+  protected _tags = [CardTag.POKEMON_LV_X, CardTag.POKEMON_SP];
   public hp: number = 120;
   public weakness = [{ type: L }];
   public retreat = [C, C];

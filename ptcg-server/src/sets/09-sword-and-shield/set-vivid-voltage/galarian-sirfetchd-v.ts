@@ -3,42 +3,66 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
-import { BoardEffect, CardTransfer, GameMessage, MoveEnergyPrompt, PlayerType, PowerType, SlotType, StoreLike, State, StateUtils } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+} from '../../../game/store/card/card-types';
+import {
+  BoardEffect,
+  CardTransfer,
+  GameMessage,
+  MoveEnergyPrompt,
+  PlayerType,
+  PowerType,
+  SlotType,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { CardTarget } from '../../../game/store/actions/play-card-action';
 import { Effect } from '../../../game/store/effects/effect';
 import { MovedToActiveEffect } from '../../../game/store/effects/game-effects';
-import { MOVED_TO_ACTIVE_THIS_TURN, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import {
+  MOVED_TO_ACTIVE_THIS_TURN,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class GalarianSirfetchdV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = F;
   public hp: number = 210;
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Resolute Spear',
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, when this Pokémon moves from your Bench to the Active Spot, you may move any amount of [F] Energy from your other Pokémon to it.'
-  }];
+  public powers = [
+    {
+      name: 'Resolute Spear',
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn, when this Pokémon moves from your Bench to the Active Spot, you may move any amount of [F] Energy from your other Pokémon to it.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Meteor Smash',
       cost: [F, F, C],
       damage: 200,
-      text: 'During your next turn, this Pokémon can\'t attack.'
-    }
+      text: "During your next turn, this Pokémon can't attack.",
+    },
   ];
 
   public regulationMark: string = 'D';
   public set: string = 'VIV';
   public setNumber: string = '174';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Galarian Sirfetch\'d V';
-  public fullName: string = 'Galarian Sirfetch\'d V VIV';
+  public name: string = "Galarian Sirfetch'd V";
+  public fullName: string = "Galarian Sirfetch'd V VIV";
 
   public readonly ABILITY_USED_MARKER = 'GALARIAN_SIRFETCHD_V_ABILITY_USED_MARKER';
 
@@ -70,7 +94,7 @@ export class GalarianSirfetchdV extends PokemonCard {
           return;
         }
         blockedTo.push(target);
-        if (cardList.cards.some(c => c.superType === SuperType.ENERGY)) {
+        if (cardList.cards.some((c) => c.superType === SuperType.ENERGY)) {
           hasFightingEnergyOnBench = true;
         }
       });
@@ -79,32 +103,36 @@ export class GalarianSirfetchdV extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, new MoveEnergyPrompt(
-        player.id,
-        GameMessage.MOVE_ENERGY_CARDS,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fighting Energy' },
-        { allowCancel: true, blockedTo, blockedFrom }
-      ), transfers => {
-        if (!transfers || transfers.length === 0) {
-          return;
-        }
-
-        const validTransfers: CardTransfer[] = transfers || [];
-        for (const transfer of validTransfers) {
-          const source = StateUtils.getTarget(state, player, transfer.from);
-          source.moveCardTo(transfer.card, player.active);
-        }
-
-        player.marker.addMarker(this.ABILITY_USED_MARKER, this);
-
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (cardList.getPokemonCard() === this) {
-            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+      return store.prompt(
+        state,
+        new MoveEnergyPrompt(
+          player.id,
+          GameMessage.MOVE_ENERGY_CARDS,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fighting Energy' },
+          { allowCancel: true, blockedTo, blockedFrom },
+        ),
+        (transfers) => {
+          if (!transfers || transfers.length === 0) {
+            return;
           }
-        });
-      });
+
+          const validTransfers: CardTransfer[] = transfers || [];
+          for (const transfer of validTransfers) {
+            const source = StateUtils.getTarget(state, player, transfer.from);
+            source.moveCardTo(transfer.card, player.active);
+          }
+
+          player.marker.addMarker(this.ABILITY_USED_MARKER, this);
+
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+            if (cardList.getPokemonCard() === this) {
+              cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+            }
+          });
+        },
+      );
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -12,7 +12,7 @@ export class ArceusFighting extends PokemonCard {
   public weakness = [{ type: W }];
   public resistance = [{ type: L, value: -20 }];
   public retreat = [C, C];
-  public tags = [CardTag.ARCEUS];
+  protected _tags = [CardTag.ARCEUS];
 
   public attacks = [
     {

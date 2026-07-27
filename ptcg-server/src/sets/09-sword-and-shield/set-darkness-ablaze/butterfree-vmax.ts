@@ -7,10 +7,13 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED, YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../../game/store/prefabs/attack-effects';
+import {
+  YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED,
+  YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED,
+} from '../../../game/store/prefabs/attack-effects';
 
 export class ButterfreeVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Butterfree V';
   public cardType: CardType = G;
@@ -23,8 +26,8 @@ export class ButterfreeVmax extends PokemonCard {
       name: 'G-Max Toxbreeze',
       cost: [G, G, C],
       damage: 150,
-      text: 'Your opponent\'s Active Pokémon is now Confused and Poisoned.'
-    }
+      text: "Your opponent's Active Pokémon is now Confused and Poisoned.",
+    },
   ];
 
   public regulationMark: string = 'D';

@@ -6,7 +6,7 @@ import { AFTER_ATTACK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class TeamRocketsLarvitar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.TEAM_ROCKET];
+  protected _tags = [CardTag.TEAM_ROCKET];
   public cardType: CardType = F;
   public hp: number = 70;
   public weakness = [{ type: G }];
@@ -17,20 +17,26 @@ export class TeamRocketsLarvitar extends PokemonCard {
       name: 'Mountain Munch',
       cost: [C],
       damage: 10,
-      text: 'Discard the top card of your opponent\'s deck.'
-    }
+      text: "Discard the top card of your opponent's deck.",
+    },
   ];
 
   public regulationMark = 'I';
   public set: string = 'DRI';
   public setNumber: string = '94';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Team Rocket\'s Larvitar';
-  public fullName: string = 'Team Rocket\'s Larvitar DRI';
+  public name: string = "Team Rocket's Larvitar";
+  public fullName: string = "Team Rocket's Larvitar DRI";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (AFTER_ATTACK(effect, 0, this)) {
-      MOVE_CARDS(store, state, StateUtils.getOpponent(state, effect.player).deck, StateUtils.getOpponent(state, effect.player).discard, { count: 1, sourceCard: this, sourceEffect: this.attacks[0] });
+      MOVE_CARDS(
+        store,
+        state,
+        StateUtils.getOpponent(state, effect.player).deck,
+        StateUtils.getOpponent(state, effect.player).discard,
+        { count: 1, sourceCard: this, sourceEffect: this.attacks[0] },
+      );
     }
 
     return state;

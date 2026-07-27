@@ -18,33 +18,36 @@ export class SpaceCenter extends TrainerCard {
   public fullName: string = 'Space Center DX';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '91';
-  public text: string = 'Ignore Poké-Bodies for all Basic Pokémon in play (both yours and your opponent\'s) (excluding Pokémon-ex and Pokémon that has an owner in its name).';
+  public text: string =
+    "Ignore Poké-Bodies for all Basic Pokémon in play (both yours and your opponent's) (excluding Pokémon-ex and Pokémon that has an owner in its name).";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    HANDLE_ABILITY_BLOCK(effect, ({ card }) => {
-      if (StateUtils.getStadiumCard(state) !== this) {
-        return false;
-      }
-      if (card.tags.includes(CardTag.POKEMON_ex)) {
-        return false;
-      }
-      try {
-        const cardList = StateUtils.findCardList(state, card);
-        if (cardList instanceof PokemonCardList) {
-          const owner = StateUtils.findOwner(state, cardList);
-          if (IS_STADIUM_EFFECT_BLOCKED(store, state, owner, cardList)) {
-            return false;
-          }
-          return cardList.getPokemons().length === 1 || card.tags.includes(CardTag.LEGEND);
+    HANDLE_ABILITY_BLOCK(
+      effect,
+      ({ card }) => {
+        if (StateUtils.getStadiumCard(state) !== this) {
+          return false;
         }
-      } catch {
-      }
-      return false;
-    }, {
-      powerTypes: POKEBODY_TYPES,
-      error: GameMessage.BLOCKED_BY_EFFECT,
-    });
+        if (card.hasTag(CardTag.POKEMON_ex)) {
+          return false;
+        }
+        try {
+          const cardList = StateUtils.findCardList(state, card);
+          if (cardList instanceof PokemonCardList) {
+            const owner = StateUtils.findOwner(state, cardList);
+            if (IS_STADIUM_EFFECT_BLOCKED(store, state, owner, cardList)) {
+              return false;
+            }
+            return cardList.getPokemons().length === 1 || card.hasTag(CardTag.LEGEND);
+          }
+        } catch {}
+        return false;
+      },
+      {
+        powerTypes: POKEBODY_TYPES,
+        error: GameMessage.BLOCKED_BY_EFFECT,
+      },
+    );
 
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
       throw new GameError(GameMessage.CANNOT_USE_STADIUM);

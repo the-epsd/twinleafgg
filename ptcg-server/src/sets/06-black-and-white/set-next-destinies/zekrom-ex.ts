@@ -9,8 +9,7 @@ import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class ZekromEx extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
 
   public stage: Stage = Stage.BASIC;
 
@@ -27,12 +26,13 @@ export class ZekromEx extends PokemonCard {
       name: 'Glinting Claw',
       cost: [CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS],
       damage: 50,
-      text: 'Flip a coin. If heads, this attack does 30 more damage.'
-    }, {
+      text: 'Flip a coin. If heads, this attack does 30 more damage.',
+    },
+    {
       name: 'Strong Volt',
       cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS],
       damage: 150,
-      text: 'Discard 2 Energy attached to this Pokemon.'
+      text: 'Discard 2 Energy attached to this Pokemon.',
     },
   ];
 
@@ -47,17 +47,18 @@ export class ZekromEx extends PokemonCard {
   public setNumber: string = '51';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
-        if (result === true) {
-          effect.damage += 30;
-        }
-      });
+      return store.prompt(
+        state,
+        [new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)],
+        (result) => {
+          if (result === true) {
+            effect.damage += 30;
+          }
+        },
+      );
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
@@ -66,21 +67,24 @@ export class ZekromEx extends PokemonCard {
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
-      state = store.prompt(state, new ChooseEnergyPrompt(
-        player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        checkProvidedEnergy.energyMap,
-        [CardType.COLORLESS, CardType.COLORLESS],
-        { allowCancel: false }
-      ), energy => {
-        const cards: Card[] = (energy || []).map(e => e.card);
-        const discardEnergy = new DiscardCardsEffect(effect, cards);
-        discardEnergy.target = player.active;
-        store.reduceEffect(state, discardEnergy);
-      });
+      state = store.prompt(
+        state,
+        new ChooseEnergyPrompt(
+          player.id,
+          GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+          checkProvidedEnergy.energyMap,
+          [CardType.COLORLESS, CardType.COLORLESS],
+          { allowCancel: false },
+        ),
+        (energy) => {
+          const cards: Card[] = (energy || []).map((e) => e.card);
+          const discardEnergy = new DiscardCardsEffect(effect, cards);
+          discardEnergy.target = player.active;
+          store.reduceEffect(state, discardEnergy);
+        },
+      );
     }
 
     return state;
   }
-
 }

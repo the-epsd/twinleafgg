@@ -1,15 +1,25 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
 import { PowerType } from '../../../game/store/card/pokemon-types';
-import { StoreLike, State, GameMessage, StateUtils, PlayerType, ChooseCardsPrompt } from '../../../game';
+import {
+  StoreLike,
+  State,
+  GameMessage,
+  StateUtils,
+  PlayerType,
+  ChooseCardsPrompt,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { COIN_FLIP_PROMPT, IS_POKEBODY_BLOCKED, MOVE_CARDS, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  COIN_FLIP_PROMPT,
+  IS_POKEBODY_BLOCKED,
+  MOVE_CARDS,
+  SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
 import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
-import {
-  HANDLE_ABILITY_BLOCK,
-  POKEPOWER_TYPES,
-} from '../../../game/store/prefabs/ability-lock';
+import { HANDLE_ABILITY_BLOCK, POKEPOWER_TYPES } from '../../../game/store/prefabs/ability-lock';
 
 export class Solrock extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -18,25 +28,27 @@ export class Solrock extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Luna Shade',
-    powerType: PowerType.POKEBODY,
-    text: 'As long as you have Lunatone in play, each player\'s [C] Pokémon (excluding Pokémon-ex) can\'t use any Poké-Powers.'
-  }];
+  public powers = [
+    {
+      name: 'Luna Shade',
+      powerType: PowerType.POKEBODY,
+      text: "As long as you have Lunatone in play, each player's [C] Pokémon (excluding Pokémon-ex) can't use any Poké-Powers.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Call for Family',
       cost: [C],
       damage: 0,
-      text: 'Search your deck for a Lunatone and put it onto your Bench. Shuffle your deck afterward.'
+      text: 'Search your deck for a Lunatone and put it onto your Bench. Shuffle your deck afterward.',
     },
     {
       name: 'Hyper Beam',
       cost: [F],
       damage: 0,
-      text: 'Flip a coin. If heads, discard an Energy card attached to the Defending Pokémon.'
-    }
+      text: 'Flip a coin. If heads, discard an Energy card attached to the Defending Pokémon.',
+    },
   ];
 
   public set: string = 'LM';
@@ -46,50 +58,53 @@ export class Solrock extends PokemonCard {
   public setNumber: string = '25';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    HANDLE_ABILITY_BLOCK(
+      effect,
+      ({ player, card }) => {
+        const thisCardList = StateUtils.findCardList(state, this);
+        const owner = StateUtils.findOwner(state, thisCardList);
+        const opponent = StateUtils.getOpponent(state, player);
 
-    HANDLE_ABILITY_BLOCK(effect, ({ player, card }) => {
-      const thisCardList = StateUtils.findCardList(state, this);
-      const owner = StateUtils.findOwner(state, thisCardList);
-      const opponent = StateUtils.getOpponent(state, player);
-
-      if (IS_POKEBODY_BLOCKED(store, state, opponent, this)) {
-        return false;
-      }
-
-      let isLunatoneInPlay = false;
-      let isThisInPlay = false;
-      owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemon) => {
-        if (pokemon.name === 'Lunatone') {
-          isLunatoneInPlay = true;
+        if (IS_POKEBODY_BLOCKED(store, state, opponent, this)) {
+          return false;
         }
-        if (pokemon === this) {
-          isThisInPlay = true;
+
+        let isLunatoneInPlay = false;
+        let isThisInPlay = false;
+        owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemon) => {
+          if (pokemon.name === 'Lunatone') {
+            isLunatoneInPlay = true;
+          }
+          if (pokemon === this) {
+            isThisInPlay = true;
+          }
+        });
+
+        if (!isLunatoneInPlay || !isThisInPlay) {
+          return false;
         }
-      });
 
-      if (!isLunatoneInPlay || !isThisInPlay) {
-        return false;
-      }
-
-      if (card.tags.includes(CardTag.POKEMON_ex)) {
-        return false;
-      }
-
-      try {
-        const cardList = StateUtils.findCardList(state, card);
-        if (cardList instanceof PokemonCardList) {
-          const checkPokemonType = new CheckPokemonTypeEffect(cardList);
-          store.reduceEffect(state, checkPokemonType);
-          return checkPokemonType.cardTypes.includes(CardType.COLORLESS);
+        if (card.hasTag(CardTag.POKEMON_ex)) {
+          return false;
         }
-      } catch {
-        return false;
-      }
-      return card.cardType === CardType.COLORLESS;
-    }, {
-      powerTypes: POKEPOWER_TYPES,
-      error: GameMessage.BLOCKED_BY_EFFECT,
-    });
+
+        try {
+          const cardList = StateUtils.findCardList(state, card);
+          if (cardList instanceof PokemonCardList) {
+            const checkPokemonType = new CheckPokemonTypeEffect(cardList);
+            store.reduceEffect(state, checkPokemonType);
+            return checkPokemonType.cardTypes.includes(CardType.COLORLESS);
+          }
+        } catch {
+          return false;
+        }
+        return card.cardType === CardType.COLORLESS;
+      },
+      {
+        powerTypes: POKEPOWER_TYPES,
+        error: GameMessage.BLOCKED_BY_EFFECT,
+      },
+    );
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const blocked: number[] = [];
@@ -102,32 +117,43 @@ export class Solrock extends PokemonCard {
       });
 
       SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(
-        store, state, effect.player, {}, { min: 0, max: 1, blocked }
+        store,
+        state,
+        effect.player,
+        {},
+        { min: 0, max: 1, blocked },
       );
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      COIN_FLIP_PROMPT(store, state, player, result => {
+      COIN_FLIP_PROMPT(store, state, player, (result) => {
         if (result) {
-          store.prompt(state, new ChooseCardsPrompt(
-            player,
-            GameMessage.CHOOSE_CARD_TO_DISCARD,
-            opponent.active,
-            { superType: SuperType.ENERGY },
-            { min: 1, max: 1, allowCancel: false }
-          ), selected => {
-            const card = selected[0];
+          store.prompt(
+            state,
+            new ChooseCardsPrompt(
+              player,
+              GameMessage.CHOOSE_CARD_TO_DISCARD,
+              opponent.active,
+              { superType: SuperType.ENERGY },
+              { min: 1, max: 1, allowCancel: false },
+            ),
+            (selected) => {
+              const card = selected[0];
 
-            MOVE_CARDS(store, state, opponent.active, opponent.discard, { cards: [card], sourceCard: this, sourceEffect: this.attacks[1] });
-            return state;
-          });
+              MOVE_CARDS(store, state, opponent.active, opponent.discard, {
+                cards: [card],
+                sourceCard: this,
+                sourceEffect: this.attacks[1],
+              });
+              return state;
+            },
+          );
         }
       });
     }
 
     return state;
   }
-
 }

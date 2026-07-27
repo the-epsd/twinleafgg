@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class AltariaEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
   public hp: number = 170;
@@ -27,14 +27,14 @@ export class AltariaEx extends PokemonCard {
       cost: [C, C],
       damage: 30,
       damageCalculation: '+',
-      text: 'If this Pokémon was healed during this turn, this attack does 60 more damage and heal 30 damage from this Pokémon.'
+      text: 'If this Pokémon was healed during this turn, this attack does 60 more damage and heal 30 damage from this Pokémon.',
     },
     {
       name: 'Shining Wind',
       cost: [C, C, C],
       damage: 80,
-      text: 'During your opponent\'s next turn, this Pokémon has no Weakness.'
-    }
+      text: "During your opponent's next turn, this Pokémon has no Weakness.",
+    },
   ];
 
   public set: string = 'FCO';

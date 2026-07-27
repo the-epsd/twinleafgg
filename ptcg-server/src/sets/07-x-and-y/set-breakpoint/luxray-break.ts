@@ -10,7 +10,7 @@ import { BREAK_RULE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs
 import { FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_MORE_DAMAGE_PER_HEADS } from '../../../game/store/prefabs/attack-effects';
 
 export class LuxrayBreak extends PokemonCard {
-  public tags = [CardTag.BREAK];
+  protected _tags = [CardTag.BREAK];
   public stage: Stage = Stage.BREAK;
   public evolvesFrom: string = 'Luxray';
   public cardType: CardType = L;

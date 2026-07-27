@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class DialgaEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;
   public hp: number = 180;
@@ -28,14 +28,14 @@ export class DialgaEx extends PokemonCard {
       name: 'Chrono Wind',
       cost: [M, C, C],
       damage: 60,
-      text: 'If the Defending Pokémon is a Pokémon-EX, it can\'t attack during your opponent\'s next turn.'
+      text: "If the Defending Pokémon is a Pokémon-EX, it can't attack during your opponent's next turn.",
     },
     {
       name: 'Full Metal Impact',
       cost: [M, M, C, C],
       damage: 150,
-      text: 'Discard 2 [M] Energy attached to this Pokémon.'
-    }
+      text: 'Discard 2 [M] Energy attached to this Pokémon.',
+    },
   ];
 
   public set: string = 'PHF';
@@ -52,7 +52,7 @@ export class DialgaEx extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       const defendingPokemon = opponent.active.getPokemonCard();
 
-      if (defendingPokemon && defendingPokemon.tags.includes(CardTag.POKEMON_EX)) {
+      if (defendingPokemon && defendingPokemon.hasTag(CardTag.POKEMON_EX)) {
         opponent.active.marker.addMarker(this.CHRONO_WIND_MARKER, this);
         opponent.marker.addMarker(this.CLEAR_CHRONO_WIND_MARKER, this);
       }

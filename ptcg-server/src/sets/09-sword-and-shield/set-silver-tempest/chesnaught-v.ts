@@ -6,30 +6,36 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
+} from '../../../game/store/prefabs/prefabs';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 
 export class ChesnaughtV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = G;
   public hp: number = 230;
   public weakness = [{ type: R }];
   public retreat = [C, C, C, C];
 
-  public powers = [{
-    name: 'Needle Line',
-    powerType: PowerType.ABILITY,
-    text: 'If your Active Chesnaught V is damaged by an attack from your opponent\'s Pokémon (even if it is Knocked Out), put 3 damage counters on the Attacking Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Needle Line',
+      powerType: PowerType.ABILITY,
+      text: "If your Active Chesnaught V is damaged by an attack from your opponent's Pokémon (even if it is Knocked Out), put 3 damage counters on the Attacking Pokémon.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Touchdown',
       cost: [G, G, C],
       damage: 130,
-      text: 'Heal 30 damage from this Pokémon.'
-    }
+      text: 'Heal 30 damage from this Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'F';

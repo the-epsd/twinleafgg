@@ -1,6 +1,14 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, EnergyCard, StateUtils, Card, ChooseEnergyPrompt, GameMessage } from '../../../game';
+import {
+  StoreLike,
+  State,
+  EnergyCard,
+  StateUtils,
+  Card,
+  ChooseEnergyPrompt,
+  GameMessage,
+} from '../../../game';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 
@@ -8,10 +16,9 @@ import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Beedrill extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_2;
 
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
 
   public evolvesFrom = 'Kakuna';
 
@@ -32,14 +39,14 @@ export class Beedrill extends PokemonCard {
       name: 'Persist Sting',
       cost: [CardType.GRASS],
       damage: 0,
-      text: 'If your opponent\'s Active Pokémon has any Special Energy attached, it is Knocked Out.'
+      text: "If your opponent's Active Pokémon has any Special Energy attached, it is Knocked Out.",
     },
     {
       name: 'Jet Spear',
       cost: [CardType.GRASS],
       damage: 110,
-      text: 'Discard an Energy from this Pokémon.'
-    }
+      text: 'Discard an Energy from this Pokémon.',
+    },
   ];
 
   public set: string = 'CRE';
@@ -53,9 +60,7 @@ export class Beedrill extends PokemonCard {
   public fullName: string = 'Beedrill CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       const player = effect.player;
       const pokemon = player.active;
       const opponent = StateUtils.getOpponent(state, player);
@@ -63,10 +68,9 @@ export class Beedrill extends PokemonCard {
       const checkEnergy = new CheckProvidedEnergyEffect(opponent, pokemon);
       store.reduceEffect(state, checkEnergy);
 
-      checkEnergy.energyMap.forEach(em => {
+      checkEnergy.energyMap.forEach((em) => {
         const energyCard = em.card;
         if (energyCard instanceof EnergyCard && energyCard.energyType === EnergyType.SPECIAL) {
-
           const activePokemon = opponent.active.getPokemonCard();
           if (activePokemon) {
             activePokemon.hp = 0;
@@ -78,19 +82,23 @@ export class Beedrill extends PokemonCard {
           const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
           state = store.reduceEffect(state, checkProvidedEnergy);
 
-          return store.prompt(state, new ChooseEnergyPrompt(
-            player.id,
-            GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-            checkProvidedEnergy.energyMap,
-            [CardType.COLORLESS],
-            { allowCancel: false }
-          ), energy => {
-            const cards: Card[] = (energy || []).map(e => e.card);
-            const discardEnergy = new DiscardCardsEffect(effect, cards);
-            discardEnergy.target = player.active;
-            store.reduceEffect(state, discardEnergy);
-            return state;
-          });
+          return store.prompt(
+            state,
+            new ChooseEnergyPrompt(
+              player.id,
+              GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+              checkProvidedEnergy.energyMap,
+              [CardType.COLORLESS],
+              { allowCancel: false },
+            ),
+            (energy) => {
+              const cards: Card[] = (energy || []).map((e) => e.card);
+              const discardEnergy = new DiscardCardsEffect(effect, cards);
+              discardEnergy.target = player.active;
+              store.reduceEffect(state, discardEnergy);
+              return state;
+            },
+          );
         }
         return state;
       });

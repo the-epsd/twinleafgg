@@ -1,6 +1,15 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, Card, ChooseCardsPrompt, GameMessage, PowerType, StateUtils, GameError } from '../../../game';
+import {
+  StoreLike,
+  State,
+  Card,
+  ChooseCardsPrompt,
+  GameMessage,
+  PowerType,
+  StateUtils,
+  GameError,
+} from '../../../game';
 import { UseAttackEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
@@ -8,8 +17,7 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs
 
 // CEC Ultra Necrozma 164 (https://limitlesstcg.com/cards/CEC/164)
 export class UltraNecrozma extends PokemonCard {
-
-  public tags = [CardTag.ULTRA_BEAST]; // idk is this how you indicate that the pokemon is an ultra beast?
+  protected _tags = [CardTag.ULTRA_BEAST]; // idk is this how you indicate that the pokemon is an ultra beast?
 
   public stage: Stage = Stage.BASIC;
 
@@ -25,8 +33,8 @@ export class UltraNecrozma extends PokemonCard {
     {
       name: 'Ultra Burst',
       powerType: PowerType.ABILITY,
-      text: 'This Pokémon can\'t attack unless your opponent has 2 or fewer Prize cards remaining.'
-    }
+      text: "This Pokémon can't attack unless your opponent has 2 or fewer Prize cards remaining.",
+    },
   ];
 
   public attacks = [
@@ -34,8 +42,8 @@ export class UltraNecrozma extends PokemonCard {
       name: 'Luster of Downfall',
       cost: [CardType.PSYCHIC, CardType.METAL],
       damage: 170,
-      text: 'Discard an Energy from your opponent\'s Active Pokémon.'
-    }
+      text: "Discard an Energy from your opponent's Active Pokémon.",
+    },
   ];
 
   public set: string = 'CEC';
@@ -49,7 +57,6 @@ export class UltraNecrozma extends PokemonCard {
   public fullName: string = 'Ultra Necrozma CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // check to see if the opponent has less than 3 prize cards before allowing an attack
     // (Ultra Burst)
     if (effect instanceof UseAttackEffect && effect.source.cards.includes(this)) {
@@ -75,7 +82,7 @@ export class UltraNecrozma extends PokemonCard {
 
       let hasPokemonWithEnergy = false;
 
-      if (activePokemonCard && activeCardList.cards.some(c => c.superType === SuperType.ENERGY)) {
+      if (activePokemonCard && activeCardList.cards.some((c) => c.superType === SuperType.ENERGY)) {
         hasPokemonWithEnergy = true;
       }
 
@@ -84,20 +91,23 @@ export class UltraNecrozma extends PokemonCard {
       }
 
       let cards: Card[] = [];
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        opponent.active,
-        { superType: SuperType.ENERGY },
-        { min: 1, max: 1, allowCancel: false },
-      ), selected => {
-        cards = selected || [];
-        const discardEnergy = new DiscardCardsEffect(effect, cards);
-        return store.reduceEffect(state, discardEnergy);
-      });
+      state = store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          opponent.active,
+          { superType: SuperType.ENERGY },
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          cards = selected || [];
+          const discardEnergy = new DiscardCardsEffect(effect, cards);
+          return store.reduceEffect(state, discardEnergy);
+        },
+      );
     }
 
     return state;
   }
-
 }

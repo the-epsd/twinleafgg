@@ -1,6 +1,24 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType, BoardEffect } from '../../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, ShuffleDeckPrompt, PowerType, PlayerType, SlotType, GameError, ShowCardsPrompt, StateUtils } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  EnergyType,
+  SuperType,
+  BoardEffect,
+} from '../../../game/store/card/card-types';
+import {
+  StoreLike,
+  State,
+  ChooseCardsPrompt,
+  ShuffleDeckPrompt,
+  PowerType,
+  PlayerType,
+  SlotType,
+  GameError,
+  ShowCardsPrompt,
+  StateUtils,
+} from '../../../game';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { GameLog, GameMessage } from '../../../game/game-message';
@@ -9,21 +27,22 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { DISCARD_UP_TO_X_TYPE_ENERGY_FROM_YOUR_POKEMON } from '../../../game/store/prefabs/costs';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
-
 export class ChienPaoex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public cardType: CardType = W;
   public hp: number = 220;
   public weakness = [{ type: M }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Shivery Chill',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, if this Pokémon is in the Active Spot, you may search your deck for up to 2 Basic [W] Energy cards, reveal them, and put them into your hand. Then, shuffle your deck.'
-  }];
+  public powers = [
+    {
+      name: 'Shivery Chill',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn, if this Pokémon is in the Active Spot, you may search your deck for up to 2 Basic [W] Energy cards, reveal them, and put them into your hand. Then, shuffle your deck.',
+    },
+  ];
 
   public attacks = [
     {
@@ -31,8 +50,8 @@ export class ChienPaoex extends PokemonCard {
       cost: [W, W],
       damage: 60,
       damageCalculation: 'x',
-      text: 'You may discard any amount of [W] Energy from your Pokémon. This attack does 60 damage for each card you discarded in this way.'
-    }
+      text: 'You may discard any amount of [W] Energy from your Pokémon. This attack does 60 damage for each card you discarded in this way.',
+    },
   ];
 
   public regulationMark = 'G';
@@ -46,7 +65,6 @@ export class ChienPaoex extends PokemonCard {
 
   // Implement power
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.marker.removeMarker(this.SHIVERY_CHILL_MARKER, this);
@@ -58,7 +76,6 @@ export class ChienPaoex extends PokemonCard {
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -74,44 +91,50 @@ export class ChienPaoex extends PokemonCard {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
-        { min: 0, max: 2, allowCancel: false }
-      ), cards => {
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.deck,
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
+          { min: 0, max: 2, allowCancel: false },
+        ),
+        (cards) => {
+          player.marker.addMarker(this.SHIVERY_CHILL_MARKER, this);
 
-        player.marker.addMarker(this.SHIVERY_CHILL_MARKER, this);
-
-        if (cards.length === 0) {
-          return state;
-        }
-
-        cards.forEach((card, index) => {
-          store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-        });
-
-        if (cards.length > 0) {
-          state = store.prompt(state, new ShowCardsPrompt(
-            opponent.id,
-            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-            cards
-          ), () => state);
-        }
-
-        player.deck.moveCardsTo(cards, player.hand);
-
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (cardList.getPokemonCard() === this) {
-            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+          if (cards.length === 0) {
+            return state;
           }
 
-          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
+          cards.forEach((card, index) => {
+            store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, {
+              name: player.name,
+              card: card.name,
+            });
           });
-        });
-      });
+
+          if (cards.length > 0) {
+            state = store.prompt(
+              state,
+              new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+              () => state,
+            );
+          }
+
+          player.deck.moveCardsTo(cards, player.hand);
+
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+            if (cardList.getPokemonCard() === this) {
+              cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+            }
+
+            return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+              player.deck.applyOrder(order);
+            });
+          });
+        },
+      );
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
@@ -132,9 +155,9 @@ export class ChienPaoex extends PokemonCard {
         CardType.WATER,
         0,
         [SlotType.ACTIVE, SlotType.BENCH],
-        transfers => {
+        (transfers) => {
           effect.damage = transfers.length * 60;
-        }
+        },
       );
     }
     return state;

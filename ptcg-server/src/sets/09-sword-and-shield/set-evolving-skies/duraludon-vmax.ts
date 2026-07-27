@@ -8,16 +8,19 @@ import { PowerType } from '../../../game/store/card/pokemon-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { EnergyCard } from '../../../game';
-import { AfterDamageEffect, ApplyWeaknessEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import {
+  AfterDamageEffect,
+  ApplyWeaknessEffect,
+  PutDamageEffect,
+} from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class DuraludonVMAX extends PokemonCard {
-
   public stage: Stage = Stage.VMAX;
 
   public regulationMark = 'E';
 
-  public tags = [CardTag.POKEMON_VMAX, CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.POKEMON_VMAX, CardTag.SINGLE_STRIKE];
 
   public evolvesFrom = 'Duraludon V';
 
@@ -29,22 +32,28 @@ export class DuraludonVMAX extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Skyscraper',
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all damage done to this Pokemon by attacks ' +
-      'from your opponent\'s Pokémon that have Special Energy ' +
-      'attached.'
-  }];
+  public powers = [
+    {
+      name: 'Skyscraper',
+      powerType: PowerType.ABILITY,
+      text:
+        'Prevent all damage done to this Pokemon by attacks ' +
+        "from your opponent's Pokémon that have Special Energy " +
+        'attached.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'G-Max Pulverization',
-    cost: [CardType.FIGHTING, CardType.METAL, CardType.METAL],
-    damage: 220,
-    shredAttack: true,
-    text: 'This attack\'s damage isn\'t affected by any effects on your ' +
-      'opponent\'s Active Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'G-Max Pulverization',
+      cost: [CardType.FIGHTING, CardType.METAL, CardType.METAL],
+      damage: 220,
+      shredAttack: true,
+      text:
+        "This attack's damage isn't affected by any effects on your " +
+        "opponent's Active Pokémon.",
+    },
+  ];
 
   public set: string = 'EVS';
 
@@ -57,7 +66,6 @@ export class DuraludonVMAX extends PokemonCard {
   public fullName: string = 'Duraludon VMAX EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -83,13 +91,10 @@ export class DuraludonVMAX extends PokemonCard {
       const checkEnergy = new CheckProvidedEnergyEffect(opponent, opponentPokemon);
       store.reduceEffect(state, checkEnergy);
 
-      checkEnergy.energyMap.forEach(em => {
+      checkEnergy.energyMap.forEach((em) => {
         const energyCard = em.card;
-        if (energyCard instanceof EnergyCard &&
-          energyCard.energyType === EnergyType.SPECIAL) {
-
-          if (effect instanceof PutDamageEffect
-            && opponent.active.cards.includes(energyCard)) {
+        if (energyCard instanceof EnergyCard && energyCard.energyType === EnergyType.SPECIAL) {
+          if (effect instanceof PutDamageEffect && opponent.active.cards.includes(energyCard)) {
             effect.preventDefault = true;
             return state;
           }
@@ -98,5 +103,4 @@ export class DuraludonVMAX extends PokemonCard {
     }
     return state;
   }
-
 }

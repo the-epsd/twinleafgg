@@ -2,7 +2,12 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_CONFUSION_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  BLOCK_IF_GX_ATTACK_USED,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
@@ -12,7 +17,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayerType, SlotType, State, StoreLike } from '../../../game';
 export class ShiftryGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Nuzleaf';
   public cardType: CardType = G;
@@ -25,21 +30,21 @@ export class ShiftryGx extends PokemonCard {
       name: 'Perplex',
       cost: [G],
       damage: 40,
-      text: 'Your opponent\'s Active Pokémon is now Confused.'
+      text: "Your opponent's Active Pokémon is now Confused.",
     },
     {
       name: 'Extrasensory',
       cost: [G, C, C],
       damage: 90,
       damageCalculation: '+',
-      text: 'If you have the same number of cards in your hand as your opponent, this attack does 90 more damage.'
+      text: 'If you have the same number of cards in your hand as your opponent, this attack does 90 more damage.',
     },
     {
       name: 'Den of Iniquity-GX',
       cost: [G, C, C],
       damage: 0,
-      text: 'Choose 1 of your opponent\'s Pokémon. Your opponent shuffles that Pokémon and all cards attached to it into their deck. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Choose 1 of your opponent's Pokémon. Your opponent shuffles that Pokémon and all cards attached to it into their deck. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'CES';
@@ -75,25 +80,31 @@ export class ShiftryGx extends PokemonCard {
       BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
 
-      store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false }
-      ), selection => {
-        selection.forEach(r => {
-          // Move tools to deck first (moveTo doesn't handle tools)
-          const tools = r.tools.slice();
-          tools.forEach(tool => { r.moveCardTo(tool, opponent.deck); });
-          r.moveTo(opponent.deck);
-          r.clearEffects();
-        });
+      store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
+          PlayerType.TOP_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selection) => {
+          selection.forEach((r) => {
+            // Move tools to deck first (moveTo doesn't handle tools)
+            const tools = r.tools.slice();
+            tools.forEach((tool) => {
+              r.moveCardTo(tool, opponent.deck);
+            });
+            r.moveTo(opponent.deck);
+            r.clearEffects();
+          });
 
-        store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
-          opponent.deck.applyOrder(order);
-        });
-      });
+          store.prompt(state, new ShuffleDeckPrompt(opponent.id), (order) => {
+            opponent.deck.applyOrder(order);
+          });
+        },
+      );
     }
 
     return state;

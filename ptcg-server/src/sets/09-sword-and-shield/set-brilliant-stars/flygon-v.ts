@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class FlygonV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = N;
   public hp: number = 220;
@@ -21,15 +21,15 @@ export class FlygonV extends PokemonCard {
       name: 'Sand Spray',
       cost: [G, F],
       damage: 70,
-      text: ''
+      text: '',
     },
     {
       name: 'Draconic Impulse',
       cost: [G, F, F, C],
       damage: 160,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is a Pokémon VMAX, this attack does 160 more damage, and discard 3 Energy from this Pokémon.'
-    }
+      text: "If your opponent's Active Pokémon is a Pokémon VMAX, this attack does 160 more damage, and discard 3 Energy from this Pokémon.",
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -48,7 +48,7 @@ export class FlygonV extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       const defending = opponent.active.getPokemonCard();
 
-      if (defending && defending.tags.includes(CardTag.POKEMON_VMAX)) {
+      if (defending && defending.hasTag(CardTag.POKEMON_VMAX)) {
         effect.damage += 160;
         DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 3);
       }

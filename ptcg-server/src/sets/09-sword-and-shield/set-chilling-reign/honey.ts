@@ -17,7 +17,8 @@ export class Honey extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Honey';
   public fullName: string = 'Honey CRE';
-  public text: string = 'Draw a card for each of your opponent\'s Benched Pokémon V. You may play only 1 Supporter card during your turn.';
+  public text: string =
+    "Draw a card for each of your opponent's Benched Pokémon V. You may play only 1 Supporter card during your turn.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-chilling-reign/doctor.ts (WAS_TRAINER_USED pattern), set-roaring-skies/altaria.ts (draw for each bench count)
@@ -27,13 +28,14 @@ export class Honey extends TrainerCard {
 
       // Count opponent's benched Pokemon V (including VMAX, VSTAR)
       let vCount = 0;
-      opponent.bench.forEach(slot => {
+      opponent.bench.forEach((slot) => {
         const card = slot.getPokemonCard();
-        if (card && (
-          card.tags.includes(CardTag.POKEMON_V) ||
-          card.tags.includes(CardTag.POKEMON_VMAX) ||
-          card.tags.includes(CardTag.POKEMON_VSTAR)
-        )) {
+        if (
+          card &&
+          (card.hasTag(CardTag.POKEMON_V) ||
+            card.hasTag(CardTag.POKEMON_VMAX) ||
+            card.hasTag(CardTag.POKEMON_VSTAR))
+        ) {
           vCount++;
         }
       });

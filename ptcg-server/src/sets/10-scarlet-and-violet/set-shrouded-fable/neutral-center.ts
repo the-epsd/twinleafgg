@@ -10,14 +10,15 @@ import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-e
 
 export class NeutralCenter extends TrainerCard {
   public trainerType = TrainerType.STADIUM;
-  public tags = [CardTag.ACE_SPEC];
+  protected _tags = [CardTag.ACE_SPEC];
   public set = 'SFA';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '60';
   public regulationMark = 'H';
   public name = 'Neutralization Zone';
   public fullName = 'Neutralization Zone SFA';
-  public text = 'Prevent all damage done to Pokémon that don\'t have a Rule Box (both yours and your opponent\'s) by attacks from the opponent\'s Pokémon ex and Pokémon V. (Pokémon ex, Pokémon V, etc. have Rule Boxes.)\n\nThis card can\'t be put into your hand or deck from the discard pile.';
+  public text =
+    "Prevent all damage done to Pokémon that don't have a Rule Box (both yours and your opponent's) by attacks from the opponent's Pokémon ex and Pokémon V. (Pokémon ex, Pokémon V, etc. have Rule Boxes.)\n\nThis card can't be put into your hand or deck from the discard pile.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
@@ -54,18 +55,18 @@ export class NeutralCenter extends TrainerCard {
           if (!effect.cards.includes(this)) {
             continue;
           }
-          effect.cards = effect.cards.filter(c => c !== this);
+          effect.cards = effect.cards.filter((c) => c !== this);
           if (effect.cards.length === 0) {
             effect.preventDefault = true;
           }
         } else if (effect.count !== undefined) {
-          effect.cards = player.discard.cards.filter(c => c !== this).slice(0, effect.count);
+          effect.cards = player.discard.cards.filter((c) => c !== this).slice(0, effect.count);
           effect.count = undefined;
           if (effect.cards.length === 0) {
             effect.preventDefault = true;
           }
         } else {
-          effect.cards = player.discard.cards.filter(c => c !== this);
+          effect.cards = player.discard.cards.filter((c) => c !== this);
           if (effect.cards.length === 0) {
             effect.preventDefault = true;
           }

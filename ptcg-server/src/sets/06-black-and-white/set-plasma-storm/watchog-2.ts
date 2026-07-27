@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Watchog2 extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Patrat';
   public cardType: CardType = C;
@@ -23,14 +23,14 @@ export class Watchog2 extends PokemonCard {
       cost: [C, C],
       damage: 20,
       damageCalculation: '+',
-      text: 'Does 10 more damage for each damage counter on the Defending Pokémon.'
+      text: 'Does 10 more damage for each damage counter on the Defending Pokémon.',
     },
     {
       name: 'Low Kick',
       cost: [C, C, C],
       damage: 60,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'PLS';

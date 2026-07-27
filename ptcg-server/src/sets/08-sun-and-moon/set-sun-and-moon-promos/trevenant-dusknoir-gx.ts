@@ -1,18 +1,26 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, GameError, GameMessage, ShowCardsPrompt, ShuffleDeckPrompt, State, StateUtils, StoreLike } from '../../../game';
+import {
+  Card,
+  ChooseCardsPrompt,
+  GameError,
+  GameMessage,
+  ShowCardsPrompt,
+  ShuffleDeckPrompt,
+  State,
+  StateUtils,
+  StoreLike,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
-import {
-  KNOCK_OUT_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN,
-} from '../../../game/store/prefabs/attack-effects';
+import { KNOCK_OUT_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN } from '../../../game/store/prefabs/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class TrevenantDusknoirGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.TAG_TEAM, CardTag.POKEMON_GX];
+  protected _tags = [CardTag.TAG_TEAM, CardTag.POKEMON_GX];
   public cardType: CardType = P;
   public hp: number = 270;
   public weakness = [{ type: D }];
@@ -24,13 +32,13 @@ export class TrevenantDusknoirGX extends PokemonCard {
       name: 'Night Watch',
       cost: [P, P, P],
       damage: 150,
-      text: 'Choose 2 random cards from your opponent\'s hand. Your opponent reveals those cards and shuffles them into their deck.'
+      text: "Choose 2 random cards from your opponent's hand. Your opponent reveals those cards and shuffles them into their deck.",
     },
     {
       name: 'Pale Moon-GX',
       cost: [P, C],
       damage: 0,
-      text: 'At the end of your opponent\'s next turn, the Defending Pokemon will be Knocked Out. If this Pokemon has at least 1 extra [P] Energy attached to it (in addition to this attack\'s cost), discard all Energy from your opponent\'s Active Pokemon. (You can\'t use more than 1 GX attack in a game.)'
+      text: "At the end of your opponent's next turn, the Defending Pokemon will be Knocked Out. If this Pokemon has at least 1 extra [P] Energy attached to it (in addition to this attack's cost), discard all Energy from your opponent's Active Pokemon. (You can't use more than 1 GX attack in a game.)",
     },
   ];
 
@@ -51,27 +59,31 @@ export class TrevenantDusknoirGX extends PokemonCard {
       }
       const cardsToShuffle = Math.min(2, opponent.hand.cards.length);
 
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        opponent.hand,
-        {},
-        { allowCancel: false, min: cardsToShuffle, max: cardsToShuffle, isSecret: true }
-      ), cards => {
-        cards = cards || [];
+      state = store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          opponent.hand,
+          {},
+          { allowCancel: false, min: cardsToShuffle, max: cardsToShuffle, isSecret: true },
+        ),
+        (cards) => {
+          cards = cards || [];
 
-        store.prompt(state, new ShowCardsPrompt(
-          player.id,
-          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-          cards
-        ), () => []);
+          store.prompt(
+            state,
+            new ShowCardsPrompt(player.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+            () => [],
+          );
 
-        opponent.hand.moveCardsTo(cards, opponent.deck);
+          opponent.hand.moveCardsTo(cards, opponent.deck);
 
-        return store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
-          opponent.deck.applyOrder(order);
-        });
-      });
+          return store.prompt(state, new ShuffleDeckPrompt(opponent.id), (order) => {
+            opponent.deck.applyOrder(order);
+          });
+        },
+      );
     }
 
     // Pale Moon-GX
@@ -89,15 +101,20 @@ export class TrevenantDusknoirGX extends PokemonCard {
       const extraEffectCost: CardType[] = [P, P, C];
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       store.reduceEffect(state, checkProvidedEnergy);
-      const meetsExtraEffectCost = StateUtils.checkEnoughEnergy(checkProvidedEnergy.energyMap, extraEffectCost);
+      const meetsExtraEffectCost = StateUtils.checkEnoughEnergy(
+        checkProvidedEnergy.energyMap,
+        extraEffectCost,
+      );
 
-      if (!meetsExtraEffectCost) { return state; }
+      if (!meetsExtraEffectCost) {
+        return state;
+      }
 
       const opponentEnergy = new CheckProvidedEnergyEffect(opponent, opponent.active);
       state = store.reduceEffect(state, opponentEnergy);
 
       const oppCards: Card[] = [];
-      opponentEnergy.energyMap.forEach(em => {
+      opponentEnergy.energyMap.forEach((em) => {
         oppCards.push(em.card);
       });
 

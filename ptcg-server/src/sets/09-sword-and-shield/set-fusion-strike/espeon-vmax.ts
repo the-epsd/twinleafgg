@@ -7,11 +7,16 @@ import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/ca
 import { PowerType, StoreLike, State, StateUtils, PlayerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { AbstractAttackEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import {
+  AbstractAttackEffect,
+  ApplyWeaknessEffect,
+  DealDamageEffect,
+  PutDamageEffect,
+} from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class EspeonVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Espeon V';
   public cardType: CardType = P;
@@ -20,11 +25,13 @@ export class EspeonVmax extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Solar Revelation',
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all effects of attacks from your opponent\'s Pokémon done to all of your Pokémon that have Energy attached.(Existing effects are not removed. Damage is not an effect.)'
-  }];
+  public powers = [
+    {
+      name: 'Solar Revelation',
+      powerType: PowerType.ABILITY,
+      text: "Prevent all effects of attacks from your opponent's Pokémon done to all of your Pokémon that have Energy attached.(Existing effects are not removed. Damage is not an effect.)",
+    },
+  ];
 
   public attacks = [
     {
@@ -32,8 +39,8 @@ export class EspeonVmax extends PokemonCard {
       cost: [P, C, C],
       damage: 60,
       damageCalculation: 'x',
-      text: 'This attack does 60 damage for each Energy attached to all of your opponent\'s Pokémon.'
-    }
+      text: "This attack does 60 damage for each Energy attached to all of your opponent's Pokémon.",
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -73,7 +80,7 @@ export class EspeonVmax extends PokemonCard {
       }
 
       // Check if the target Pokemon has energy attached
-      if (effect.target.cards.some(c => c.superType === SuperType.ENERGY)) {
+      if (effect.target.cards.some((c) => c.superType === SuperType.ENERGY)) {
         // Allow Weakness/Resistance
         if (effect instanceof ApplyWeaknessEffect) {
           return state;
@@ -101,7 +108,7 @@ export class EspeonVmax extends PokemonCard {
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         const checkEnergy = new CheckProvidedEnergyEffect(player, cardList);
         store.reduceEffect(state, checkEnergy);
-        checkEnergy.energyMap.forEach(em => {
+        checkEnergy.energyMap.forEach((em) => {
           energyCount += em.provides.length;
         });
       });

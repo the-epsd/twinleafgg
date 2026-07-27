@@ -8,7 +8,7 @@ import { PlayerType } from '../../../game';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Vaporeonex extends PokemonCard {
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Eevee';
   public cardType: CardType = W;
@@ -16,18 +16,20 @@ export class Vaporeonex extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Severe Squall',
-    cost: [W, C],
-    damage: 0,
-    text: 'This attack does 60 damage to each of your opponent\'s Pokémon ex. Don\'t apply Weakness and Resistance for this damage.'
-  },
-  {
-    name: 'Aquamarine',
-    cost: [R, W, L],
-    damage: 280,
-    text: 'During your next turn, this Pokemon can\'t attack.'
-  }];
+  public attacks = [
+    {
+      name: 'Severe Squall',
+      cost: [W, C],
+      damage: 0,
+      text: "This attack does 60 damage to each of your opponent's Pokémon ex. Don't apply Weakness and Resistance for this damage.",
+    },
+    {
+      name: 'Aquamarine',
+      cost: [R, W, L],
+      damage: 280,
+      text: "During your next turn, this Pokemon can't attack.",
+    },
+  ];
 
   public regulationMark: string = 'H';
   public set: string = 'PRE';
@@ -43,7 +45,7 @@ export class Vaporeonex extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card.tags.includes(CardTag.POKEMON_ex)) {
+        if (card.hasTag(CardTag.POKEMON_ex)) {
           const damageEffect = new PutDamageEffect(effect, 60);
           damageEffect.target = cardList;
           store.reduceEffect(state, damageEffect);
@@ -57,7 +59,11 @@ export class Vaporeonex extends PokemonCard {
       player.active.cannotAttackNextTurnPending = true;
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

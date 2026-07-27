@@ -8,7 +8,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class CoalossalV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = F;
   public hp: number = 220;
@@ -20,14 +20,14 @@ export class CoalossalV extends PokemonCard {
       name: 'Searing Flame',
       cost: [F, F, C],
       damage: 90,
-      text: 'Your opponent\'s Active Pokémon is now Burned.'
+      text: "Your opponent's Active Pokémon is now Burned.",
     },
     {
       name: 'Boulder Crush',
       cost: [F, F, F, C],
       damage: 180,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'D';

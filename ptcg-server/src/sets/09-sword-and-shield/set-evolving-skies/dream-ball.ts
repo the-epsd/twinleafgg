@@ -3,7 +3,12 @@ import { CardTag, TrainerType } from '../../../game/store/card/card-types';
 import { DrawPrizesEffect } from '../../../game/store/effects/game-effects';
 import { StoreLike, State, PokemonCard, GameError } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH, CONFIRMATION_PROMPT, GET_PLAYER_BENCH_SLOTS, TAKE_SPECIFIC_PRIZES } from '../../../game/store/prefabs/prefabs';
+import {
+  SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH,
+  CONFIRMATION_PROMPT,
+  GET_PLAYER_BENCH_SLOTS,
+  TAKE_SPECIFIC_PRIZES,
+} from '../../../game/store/prefabs/prefabs';
 import { GameMessage } from '../../../game/game-message';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 
@@ -29,7 +34,6 @@ export class DreamBall extends TrainerCard {
     'Search your deck for a Pokémon and put it onto your Bench. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
     }
@@ -42,12 +46,22 @@ export class DreamBall extends TrainerCard {
     return state;
   }
 
-  private *handlePrizeEffect(next: Function, store: StoreLike, state: State, effect: DrawPrizesEffect): IterableIterator<State> {
+  private *handlePrizeEffect(
+    next: Function,
+    store: StoreLike,
+    state: State,
+    effect: DrawPrizesEffect,
+  ): IterableIterator<State> {
     const player = effect.player;
-    const prizeCard = effect.prizes.find(cardList => cardList.cards.includes(this));
+    const prizeCard = effect.prizes.find((cardList) => cardList.cards.includes(this));
 
     // Check if play conditions are met
-    if (!prizeCard || GET_PLAYER_BENCH_SLOTS(player).length === 0 || !prizeCard.isSecret || effect.destination !== player.hand) {
+    if (
+      !prizeCard ||
+      GET_PLAYER_BENCH_SLOTS(player).length === 0 ||
+      !prizeCard.isSecret ||
+      effect.destination !== player.hand
+    ) {
       return state;
     }
 
@@ -56,17 +70,25 @@ export class DreamBall extends TrainerCard {
 
     // Ask player if they want to use the card
     let wantToUse = false;
-    yield CONFIRMATION_PROMPT(store, state, player, result => {
-      wantToUse = result;
-      next();
-    }, GameMessage.WANT_TO_USE_ITEM_FROM_PRIZES);
+    yield CONFIRMATION_PROMPT(
+      store,
+      state,
+      player,
+      (result) => {
+        wantToUse = result;
+        next();
+      },
+      GameMessage.WANT_TO_USE_ITEM_FROM_PRIZES,
+    );
 
     // If the player declines, move the original prize card to hand
     if (!wantToUse) {
       effect.preventDefault = false;
-      const prizeIndex = player.prizes.findIndex(prize => prize.cards.includes(this));
+      const prizeIndex = player.prizes.findIndex((prize) => prize.cards.includes(this));
       if (prizeIndex !== -1) {
-        TAKE_SPECIFIC_PRIZES(store, state, player, [player.prizes[prizeIndex]], { skipReduce: true });
+        TAKE_SPECIFIC_PRIZES(store, state, player, [player.prizes[prizeIndex]], {
+          skipReduce: true,
+        });
       }
       return state;
     }
@@ -92,12 +114,13 @@ export class DreamBall extends TrainerCard {
     // Can't search for Pokémon with specific "coming into play" rules
     const searchBlocked: number[] = [];
     player.deck.cards.forEach((card, index) => {
-      if (card instanceof PokemonCard && (
-        card.tags.includes(CardTag.POKEMON_LV_X) ||
-        card.tags.includes(CardTag.LEGEND) ||
-        card.tags.includes(CardTag.BREAK) ||
-        card.tags.includes(CardTag.POKEMON_VUNION)
-      )) {
+      if (
+        card instanceof PokemonCard &&
+        (card.hasTag(CardTag.POKEMON_LV_X) ||
+          card.hasTag(CardTag.LEGEND) ||
+          card.hasTag(CardTag.BREAK) ||
+          card.hasTag(CardTag.POKEMON_VUNION))
+      ) {
         searchBlocked.push(index);
       }
     });
@@ -109,7 +132,7 @@ export class DreamBall extends TrainerCard {
       state,
       player,
       {},
-      { min: 1, max: 1, allowCancel: false, blocked: searchBlocked }
+      { min: 1, max: 1, allowCancel: false, blocked: searchBlocked },
     );
 
     return state;

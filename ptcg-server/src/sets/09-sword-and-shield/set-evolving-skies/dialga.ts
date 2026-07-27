@@ -11,7 +11,7 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Dialga extends PokemonCard {
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = N;
   public hp: number = 130;
@@ -24,14 +24,14 @@ export class Dialga extends PokemonCard {
       name: 'Chrono Wind',
       cost: [C, C, C],
       damage: 80,
-      text: 'If the Defending Pokémon is a Pokémon V, it can\'t attack during your opponent\'s next turn.'
+      text: "If the Defending Pokémon is a Pokémon V, it can't attack during your opponent's next turn.",
     },
     {
       name: 'Heavy Impact',
       cost: [P, M, M, C],
       damage: 210,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -50,11 +50,11 @@ export class Dialga extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const defenderCard = opponent.active.getPokemonCard();
-      const isV = defenderCard && (
-        defenderCard.tags.includes(CardTag.POKEMON_V) ||
-        defenderCard.tags.includes(CardTag.POKEMON_VMAX) ||
-        defenderCard.tags.includes(CardTag.POKEMON_VSTAR)
-      );
+      const isV =
+        defenderCard &&
+        (defenderCard.hasTag(CardTag.POKEMON_V) ||
+          defenderCard.hasTag(CardTag.POKEMON_VMAX) ||
+          defenderCard.hasTag(CardTag.POKEMON_VSTAR));
 
       if (isV) {
         opponent.active.marker.addMarker(this.CANT_ATTACK_MARKER, this);
@@ -63,16 +63,20 @@ export class Dialga extends PokemonCard {
     }
 
     // Block attacks when marker is set
-    if (effect instanceof AttackEffect
-      && effect.player.active.marker.hasMarker(this.CANT_ATTACK_MARKER, this)) {
+    if (
+      effect instanceof AttackEffect &&
+      effect.player.active.marker.hasMarker(this.CANT_ATTACK_MARKER, this)
+    ) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
     // Cleanup at end of opponent's turn
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CANT_ATTACK_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CANT_ATTACK_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CANT_ATTACK_MARKER, this);
-      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         cardList.marker.removeMarker(this.CANT_ATTACK_MARKER, this);
       });
     }

@@ -10,13 +10,18 @@ import { PlayerType, SlotType } from '../../../game/store/actions/play-card-acti
 import { StateUtils } from '../../../game/store/state-utils';
 import { GameError, PokemonCardList } from '../../../game';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   const name = effect.trainerCard.name;
 
   // Must have another Cross Switcher in hand besides this one
-  const second = player.hand.cards.find(c => {
+  const second = player.hand.cards.find((c) => {
     return c.name === name && c !== effect.trainerCard;
   });
   if (second === undefined) {
@@ -24,7 +29,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   // Check if opponent has any benched Pokemon
-  const benchCount = opponent.bench.some(b => b.cards.length > 0);
+  const benchCount = opponent.bench.some((b) => b.cards.length > 0);
   if (!benchCount) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
@@ -34,66 +39,73 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
-  return store.prompt(state, new ChoosePokemonPrompt(
-    player.id,
-    GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-    PlayerType.TOP_PLAYER,
-    [SlotType.BENCH],
-    { allowCancel: false }
-  ), targets => {
-    if (!targets || targets.length === 0) {
-      return;
-    }
-    opponent.active.clearEffects();
-    opponent.switchPokemon(targets[0]);
-    next();
-
-    // Do not discard the card yet
-    effect.preventDefault = true;
-
-    // Check if player has any benched Pokemon
-    const hasBench = player.bench.some(b => b.cards.length > 0);
-    if (!hasBench) {
-      // No bench for player: discard both Cross Switchers now and finish
-      if (second !== undefined) {
-        player.hand.moveCardTo(second, player.discard);
-      }
-
-      return state;
-    }
-
-    let target: PokemonCardList[] = [];
-    return store.prompt(state, new ChoosePokemonPrompt(
+  return store.prompt(
+    state,
+    new ChoosePokemonPrompt(
       player.id,
       GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-      PlayerType.BOTTOM_PLAYER,
+      PlayerType.TOP_PLAYER,
       [SlotType.BENCH],
-      { allowCancel: false }
-    ), results => {
-      target = results || [];
+      { allowCancel: false },
+    ),
+    (targets) => {
+      if (!targets || targets.length === 0) {
+        return;
+      }
+      opponent.active.clearEffects();
+      opponent.switchPokemon(targets[0]);
       next();
 
-      if (target.length === 0) {
+      // Do not discard the card yet
+      effect.preventDefault = true;
+
+      // Check if player has any benched Pokemon
+      const hasBench = player.bench.some((b) => b.cards.length > 0);
+      if (!hasBench) {
+        // No bench for player: discard both Cross Switchers now and finish
+        if (second !== undefined) {
+          player.hand.moveCardTo(second, player.discard);
+        }
+
         return state;
       }
 
-      // Perform player's switch, then discard both Cross Switchers
-      player.active.clearEffects();
-      player.switchPokemon(target[0]);
+      let target: PokemonCardList[] = [];
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          { allowCancel: false },
+        ),
+        (results) => {
+          target = results || [];
+          next();
 
-      if (second !== undefined) {
-        player.hand.moveCardTo(second, player.discard);
-      }
+          if (target.length === 0) {
+            return state;
+          }
 
-      return state;
-    });
-  });
+          // Perform player's switch, then discard both Cross Switchers
+          player.active.clearEffects();
+          player.switchPokemon(target[0]);
+
+          if (second !== undefined) {
+            player.hand.moveCardTo(second, player.discard);
+          }
+
+          return state;
+        },
+      );
+    },
+  );
 }
 
 export class CrossSwitcher extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.ITEM;
-  public tags = [CardTag.FUSION_STRIKE];
+  protected _tags = [CardTag.FUSION_STRIKE];
   public regulationMark = 'E';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '230';
@@ -101,8 +113,7 @@ export class CrossSwitcher extends TrainerCard {
   public name: string = 'Cross Switcher';
   public fullName: string = 'Cross Switcher FST';
 
-  public text: string =
-    `You must play 2 Cross Switcher cards at once. (This effect works one time for 2 cards.)
+  public text: string = `You must play 2 Cross Switcher cards at once. (This effect works one time for 2 cards.)
 
 Switch 1 of your opponent's Benched Pokémon with their Active Pokémon. If you do, switch your Active Pokémon with 1 of your Benched Pokémon.`;
 
@@ -114,5 +125,4 @@ Switch 1 of your opponent's Benched Pokémon with their Active Pokémon. If you 
 
     return state;
   }
-
 }

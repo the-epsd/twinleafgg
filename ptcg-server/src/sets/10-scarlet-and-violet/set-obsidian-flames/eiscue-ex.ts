@@ -12,7 +12,7 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 
 export class Eiscueex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public cardType: CardType = R;
   public hp: number = 210;
   public weakness = [{ type: W }];
@@ -23,8 +23,8 @@ export class Eiscueex extends PokemonCard {
       name: 'Scalding Block',
       cost: [W, W, W],
       damage: 160,
-      text: 'Discard an Energy from this Pokémon. During your opponent\'s next turn, the Defending Pokémon can\'t attack.'
-    }
+      text: "Discard an Energy from this Pokémon. During your opponent's next turn, the Defending Pokémon can't attack.",
+    },
   ];
 
   public regulationMark = 'G';
@@ -45,13 +45,18 @@ export class Eiscueex extends PokemonCard {
       opponent.active.marker.addMarker(this.SCALDING_BLOCK_MARKER, this);
     }
 
-    if (effect instanceof AttackEffect
-      && effect.player.marker.hasMarker(this.SCALDING_BLOCK_MARKER, this)
-      && effect.source.marker.hasMarker(this.SCALDING_BLOCK_MARKER, this)) {
+    if (
+      effect instanceof AttackEffect &&
+      effect.player.marker.hasMarker(this.SCALDING_BLOCK_MARKER, this) &&
+      effect.source.marker.hasMarker(this.SCALDING_BLOCK_MARKER, this)
+    ) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.SCALDING_BLOCK_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.SCALDING_BLOCK_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.SCALDING_BLOCK_MARKER, this);
 
       effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
@@ -61,7 +66,11 @@ export class Eiscueex extends PokemonCard {
       });
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

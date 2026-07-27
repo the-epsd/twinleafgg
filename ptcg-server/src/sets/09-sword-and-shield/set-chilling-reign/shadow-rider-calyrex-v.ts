@@ -1,22 +1,33 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, ChoosePokemonPrompt, GameError, PlayerType, SlotType, StateUtils } from '../../../game';
+import {
+  StoreLike,
+  State,
+  GameMessage,
+  ChoosePokemonPrompt,
+  GameError,
+  PlayerType,
+  SlotType,
+  StateUtils,
+} from '../../../game';
 
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { AttachEnergyEffect, PlayStadiumEffect } from '../../../game/store/effects/play-card-effects';
+import {
+  AttachEnergyEffect,
+  PlayStadiumEffect,
+} from '../../../game/store/effects/play-card-effects';
 import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class ShadowRiderCalyrexV extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
   public regulationMark = 'E';
 
   public cardType: CardType = CardType.PSYCHIC;
 
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
 
   public hp: number = 210;
 
@@ -31,13 +42,13 @@ export class ShadowRiderCalyrexV extends PokemonCard {
       name: 'Shadow Mist',
       cost: [CardType.PSYCHIC],
       damage: 10,
-      text: 'During your opponent\'s next turn, they can\'t play any Special Energy or Stadium cards from their hand.'
+      text: "During your opponent's next turn, they can't play any Special Energy or Stadium cards from their hand.",
     },
     {
       name: 'Astral Barrage',
       cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 0,
-      text: 'Choose 2 of your opponent\'s Pokémon and put 5 damage counters on each of them.'
+      text: "Choose 2 of your opponent's Pokémon and put 5 damage counters on each of them.",
     },
   ];
 
@@ -54,7 +65,6 @@ export class ShadowRiderCalyrexV extends PokemonCard {
   public readonly SHADOW_MIST_MARKER = 'SHADOW_MIST_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -72,23 +82,30 @@ export class ShadowRiderCalyrexV extends PokemonCard {
 
       const max = Math.min(2, benched);
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE],
-        { min: max, max, allowCancel: false }
-      ), selected => {
-        const targets = selected || [];
-        targets.forEach(target => {
-          const damageEffect = new PutCountersEffect(effect, 50);
-          damageEffect.target = target;
-          store.reduceEffect(state, damageEffect);
-        });
-      });
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          { min: max, max, allowCancel: false },
+        ),
+        (selected) => {
+          const targets = selected || [];
+          targets.forEach((target) => {
+            const damageEffect = new PutCountersEffect(effect, 50);
+            damageEffect.target = target;
+            store.reduceEffect(state, damageEffect);
+          });
+        },
+      );
     }
 
-    if (effect instanceof AttachEnergyEffect && effect.energyCard.energyType === EnergyType.SPECIAL) {
+    if (
+      effect instanceof AttachEnergyEffect &&
+      effect.energyCard.energyType === EnergyType.SPECIAL
+    ) {
       const player = effect.player;
 
       if (player.marker.hasMarker(this.SHADOW_MIST_MARKER, this)) {
@@ -104,11 +121,13 @@ export class ShadowRiderCalyrexV extends PokemonCard {
       }
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.SHADOW_MIST_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.SHADOW_MIST_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.SHADOW_MIST_MARKER, this);
     }
 
     return state;
   }
-
 }

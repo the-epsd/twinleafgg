@@ -12,7 +12,7 @@ import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class LusaminePrismStar extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-  public tags = [CardTag.PRISM_STAR];
+  protected _tags = [CardTag.PRISM_STAR];
   public set: string = 'LOT';
   public setNumber: string = '182';
   public cardImage: string = 'assets/cardback.png';
@@ -38,7 +38,7 @@ export class LusaminePrismStar extends TrainerCard {
 
       // Mark all Ultra Beasts for protection
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card.tags && card.tags.includes(CardTag.ULTRA_BEAST)) {
+        if (card.hasTag(CardTag.ULTRA_BEAST)) {
           cardList.marker.addMarker(this.PREVENT_DAMAGE_MARKER, this);
         }
       });
@@ -51,7 +51,7 @@ export class LusaminePrismStar extends TrainerCard {
       effect.target.marker.hasMarker(this.PREVENT_DAMAGE_MARKER, this)
     ) {
       const targetCard = effect.target.getPokemonCard();
-      if (targetCard && targetCard.tags.includes(CardTag.ULTRA_BEAST)) {
+      if (targetCard && targetCard.hasTag(CardTag.ULTRA_BEAST)) {
         effect.damage = 0;
         return state;
       }
@@ -62,7 +62,7 @@ export class LusaminePrismStar extends TrainerCard {
       effect.target.marker.hasMarker(this.PREVENT_DAMAGE_MARKER, this)
     ) {
       const targetCard = effect.target.getPokemonCard();
-      if (targetCard && targetCard.tags.includes(CardTag.ULTRA_BEAST)) {
+      if (targetCard && targetCard.hasTag(CardTag.ULTRA_BEAST)) {
         effect.preventDefault = true;
         return state;
       }

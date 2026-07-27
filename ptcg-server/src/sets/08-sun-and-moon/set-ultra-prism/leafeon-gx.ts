@@ -4,15 +4,36 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { Card, CardManager, CardTarget, PowerType, PlayerType, SlotType, GameError, GameMessage, StoreLike, State, ChooseCardsPrompt } from '../../../game';
+import {
+  Card,
+  CardManager,
+  CardTarget,
+  PowerType,
+  PlayerType,
+  SlotType,
+  GameError,
+  GameMessage,
+  StoreLike,
+  State,
+  ChooseCardsPrompt,
+} from '../../../game';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, REMOVE_MARKER_AT_END_OF_TURN, ABILITY_USED, BLOCK_IF_GX_ATTACK_USED, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  USE_ABILITY_ONCE_PER_TURN,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  ABILITY_USED,
+  BLOCK_IF_GX_ATTACK_USED,
+  SHUFFLE_DECK,
+} from '../../../game/store/prefabs/prefabs';
 
 export class LeafeonGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Eevee';
   public cardType: CardType = G;
@@ -20,26 +41,28 @@ export class LeafeonGx extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Breath of the Leaves',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'If this Pokémon is your Active Pokémon, once during your turn (before your attack), you may heal 50 damage from 1 of your Pokémon that has any Energy attached to it.'
-  }];
+  public powers = [
+    {
+      name: 'Breath of the Leaves',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'If this Pokémon is your Active Pokémon, once during your turn (before your attack), you may heal 50 damage from 1 of your Pokémon that has any Energy attached to it.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Solar Beam',
       cost: [G, C, C],
       damage: 110,
-      text: ''
+      text: '',
     },
     {
       name: 'Grand Bloom-GX',
       cost: [G],
       damage: 0,
-      text: 'For each of your Benched Basic Pokémon, search your deck for a card that evolves from that Pokémon and put it onto that Pokémon to evolve it. Then, shuffle your deck. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "For each of your Benched Basic Pokémon, search your deck for a card that evolves from that Pokémon and put it onto that Pokémon to evolve it. Then, shuffle your deck. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'UPR';
@@ -88,18 +111,22 @@ export class LeafeonGx extends PokemonCard {
       USE_ABILITY_ONCE_PER_TURN(player, this.BREATH_OF_THE_LEAVES_MARKER, this);
       ABILITY_USED(player, this);
 
-      store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_HEAL,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { allowCancel: false, blocked }
-      ), targets => {
-        if (targets && targets.length > 0) {
-          const healEffect = new HealEffect(player, targets[0], 50);
-          store.reduceEffect(state, healEffect);
-        }
-      });
+      store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_HEAL,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { allowCancel: false, blocked },
+        ),
+        (targets) => {
+          if (targets && targets.length > 0) {
+            const healEffect = new HealEffect(player, targets[0], 50);
+            store.reduceEffect(state, healEffect);
+          }
+        },
+      );
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.BREATH_OF_THE_LEAVES_MARKER, this);
@@ -113,16 +140,16 @@ export class LeafeonGx extends PokemonCard {
       player.usedGX = true;
 
       const cm = CardManager.getInstance();
-      const allEvolutions = cm.getAllCards().filter(c =>
-        c instanceof PokemonCard && c.stage !== Stage.BASIC
-      ) as PokemonCard[];
+      const allEvolutions = cm
+        .getAllCards()
+        .filter((c) => c instanceof PokemonCard && c.stage !== Stage.BASIC) as PokemonCard[];
 
       // Find benched Basic Pokemon that can evolve
-      const benchBasics: { list: any, card: PokemonCard }[] = [];
+      const benchBasics: { list: any; card: PokemonCard }[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
         if (target.slot === SlotType.BENCH && card.stage === Stage.BASIC) {
           // Check if there's a valid evolution in deck
-          const canEvolve = allEvolutions.some(e => e.evolvesFrom === card.name);
+          const canEvolve = allEvolutions.some((e) => e.evolvesFrom === card.name);
           if (canEvolve) {
             benchBasics.push({ list, card });
           }
@@ -150,7 +177,7 @@ function* useGrandBloom(
   store: StoreLike,
   state: State,
   player: Player,
-  benchBasics: { list: PokemonCardList, card: PokemonCard }[]
+  benchBasics: { list: PokemonCardList; card: PokemonCard }[],
 ): IterableIterator<State> {
   for (const basic of benchBasics) {
     if (player.deck.cards.length === 0) break;
@@ -164,22 +191,26 @@ function* useGrandBloom(
     });
 
     // Check if there are any valid evolution cards in deck
-    const hasEvolution = player.deck.cards.some(c =>
-      c instanceof PokemonCard && c.evolvesFrom === basic.card.name
+    const hasEvolution = player.deck.cards.some(
+      (c) => c instanceof PokemonCard && c.evolvesFrom === basic.card.name,
     );
     if (!hasEvolution) continue;
 
     let cards: Card[] = [];
-    yield store.prompt(state, new ChooseCardsPrompt(
-      player,
-      GameMessage.CHOOSE_CARD_TO_EVOLVE,
-      player.deck,
-      { superType: SuperType.POKEMON, evolvesFrom: basic.card.name },
-      { min: 0, max: 1, allowCancel: true, blocked }
-    ), selected => {
-      cards = selected || [];
-      next();
-    });
+    yield store.prompt(
+      state,
+      new ChooseCardsPrompt(
+        player,
+        GameMessage.CHOOSE_CARD_TO_EVOLVE,
+        player.deck,
+        { superType: SuperType.POKEMON, evolvesFrom: basic.card.name },
+        { min: 0, max: 1, allowCancel: true, blocked },
+      ),
+      (selected) => {
+        cards = selected || [];
+        next();
+      },
+    );
 
     if (cards.length > 0) {
       const evolution = cards[0] as PokemonCard;

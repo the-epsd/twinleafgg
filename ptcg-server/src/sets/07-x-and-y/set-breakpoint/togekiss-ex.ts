@@ -4,13 +4,21 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, PlayerType, SlotType, EnergyCard, StateUtils } from '../../../game';
+import {
+  StoreLike,
+  State,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  EnergyCard,
+  StateUtils,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-prompt';
 import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class TogekissEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = Y;
   public hp: number = 170;
@@ -23,15 +31,15 @@ export class TogekissEx extends PokemonCard {
       name: 'Mighty Wind',
       cost: [Y],
       damage: 20,
-      text: 'You may attach an Energy card from your hand to 1 of your Benched Pokémon.'
+      text: 'You may attach an Energy card from your hand to 1 of your Benched Pokémon.',
     },
     {
       name: 'Hurricane Wing',
       cost: [Y, C, C, C],
       damage: 50,
       damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 50 damage times the number of heads.'
-    }
+      text: 'Flip 4 coins. This attack does 50 damage times the number of heads.',
+    },
   ];
 
   public set: string = 'BKP';
@@ -46,34 +54,38 @@ export class TogekissEx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const hasEnergy = player.hand.cards.some(c => c instanceof EnergyCard);
-      const hasBenched = player.bench.some(b => b.cards.length > 0);
+      const hasEnergy = player.hand.cards.some((c) => c instanceof EnergyCard);
+      const hasBenched = player.bench.some((b) => b.cards.length > 0);
 
       if (hasEnergy && hasBenched) {
-        state = store.prompt(state, new AttachEnergyPrompt(
-          player.id,
-          GameMessage.ATTACH_ENERGY_CARDS,
-          player.hand,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.BENCH],
-          { superType: SuperType.ENERGY },
-          { allowCancel: true, min: 0, max: 1 }
-        ), transfers => {
-          if (transfers) {
-            for (const transfer of transfers) {
-              const target = StateUtils.getTarget(state, player, transfer.to);
-              player.hand.moveCardTo(transfer.card, target);
+        state = store.prompt(
+          state,
+          new AttachEnergyPrompt(
+            player.id,
+            GameMessage.ATTACH_ENERGY_CARDS,
+            player.hand,
+            PlayerType.BOTTOM_PLAYER,
+            [SlotType.BENCH],
+            { superType: SuperType.ENERGY },
+            { allowCancel: true, min: 0, max: 1 },
+          ),
+          (transfers) => {
+            if (transfers) {
+              for (const transfer of transfers) {
+                const target = StateUtils.getTarget(state, player, transfer.to);
+                player.hand.moveCardTo(transfer.card, target);
+              }
             }
-          }
-        });
+          },
+        );
       }
     }
 
     // Attack 2: Hurricane Wing
     // Ref: set-evolutions/machop.ts (Dual Chop)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 4, results => {
-        const heads = results.filter(r => r).length;
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 4, (results) => {
+        const heads = results.filter((r) => r).length;
         effect.damage = 50 * heads;
       });
     }

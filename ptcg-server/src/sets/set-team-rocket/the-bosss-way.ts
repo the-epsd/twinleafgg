@@ -11,14 +11,14 @@ export class TheBosssWay extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'TR';
   public setNumber = '73';
-  public name: string = 'The Boss\'s Way';
-  public fullName: string = 'The Boss\'s Way TR';
+  public name: string = "The Boss's Way";
+  public fullName: string = "The Boss's Way TR";
   public cardImage: string = 'assets/cardback.png';
 
-  public text: string = 'Search your deck for an Evolution card with Dark in its name. Show it to your opponent and put it into your hand. Shuffle your deck afterward.';
+  public text: string =
+    'Search your deck for an Evolution card with Dark in its name. Show it to your opponent and put it into your hand. Shuffle your deck afterward.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
       effect.preventDefault = true;
@@ -26,14 +26,25 @@ export class TheBosssWay extends TrainerCard {
       const blocked: number[] = [];
       player.deck.cards.forEach((card, index) => {
         // eslint-disable-next-line no-empty
-        if (card instanceof PokemonCard && card.evolvesFrom !== '' && card.stage !== Stage.LV_X && card.tags.includes(CardTag.DARK)) {
+        if (
+          card instanceof PokemonCard &&
+          card.evolvesFrom !== '' &&
+          card.stage !== Stage.LV_X &&
+          card.hasTag(CardTag.DARK)
+        ) {
           // Valid card
         } else {
           blocked.push(index);
         }
       });
 
-      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, player, {}, { blocked, min: 0, max: 1 });
+      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(
+        store,
+        state,
+        player,
+        {},
+        { blocked, min: 0, max: 1 },
+      );
     }
 
     return state;

@@ -18,7 +18,8 @@ export class FightingStadium extends TrainerCard {
   public fullName: string = 'Fighting Stadium FFI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '90';
-  public text: string = 'The attacks of each [F] Pokémon in play (both yours and your opponent\'s) do 20 more damage to the Defending Pokémon-EX (before applying Weakness and Resistance).';
+  public text: string =
+    "The attacks of each [F] Pokémon in play (both yours and your opponent's) do 20 more damage to the Defending Pokémon-EX (before applying Weakness and Resistance).";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof DealDamageEffect && StateUtils.getStadiumCard(state) === this) {
@@ -28,7 +29,7 @@ export class FightingStadium extends TrainerCard {
 
       if (
         effect.target !== opponent.active ||
-        !targetCard?.tags.includes(CardTag.POKEMON_EX) ||
+        !targetCard?.hasTag(CardTag.POKEMON_EX) ||
         IS_STADIUM_EFFECT_BLOCKED(store, state, opponent, effect.target)
       ) {
         return state;

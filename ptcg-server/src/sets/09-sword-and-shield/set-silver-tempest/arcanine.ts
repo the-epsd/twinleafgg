@@ -3,8 +3,21 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, EnergyType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, EnergyCard, ChooseCardsPrompt, StateUtils } from '../../../game';
+import {
+  Stage,
+  CardType,
+  SuperType,
+  EnergyType,
+  CardTag,
+} from '../../../game/store/card/card-types';
+import {
+  StoreLike,
+  State,
+  GameMessage,
+  EnergyCard,
+  ChooseCardsPrompt,
+  StateUtils,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
@@ -21,15 +34,15 @@ export class Arcanine extends PokemonCard {
       name: 'Flame Cloak',
       cost: [C],
       damage: 30,
-      text: 'Attach a [R] Energy card from your discard pile to this Pokémon.'
+      text: 'Attach a [R] Energy card from your discard pile to this Pokémon.',
     },
     {
       name: 'Fighting Tackle',
       cost: [R, R, C],
       damage: 100,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is a Pokémon V, this attack does 100 more damage.'
-    }
+      text: "If your opponent's Active Pokémon is a Pokémon V, this attack does 100 more damage.",
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -45,27 +58,30 @@ export class Arcanine extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const fireEnergy = player.discard.cards.filter(c =>
-        c instanceof EnergyCard &&
-        c.energyType === EnergyType.BASIC &&
-        c.name === 'Fire Energy'
+      const fireEnergy = player.discard.cards.filter(
+        (c) =>
+          c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Fire Energy',
       );
 
       if (fireEnergy.length === 0) {
         return state;
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_ATTACH,
-        player.discard,
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        if (selected && selected.length > 0) {
-          player.discard.moveCardTo(selected[0], player.active);
-        }
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_ATTACH,
+          player.discard,
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          if (selected && selected.length > 0) {
+            player.discard.moveCardTo(selected[0], player.active);
+          }
+        },
+      );
     }
 
     // Attack 2: Fighting Tackle
@@ -75,11 +91,12 @@ export class Arcanine extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const pokemonCard = opponent.active.getPokemonCard();
-      if (pokemonCard && (
-        pokemonCard.tags.includes(CardTag.POKEMON_V) ||
-        pokemonCard.tags.includes(CardTag.POKEMON_VMAX) ||
-        pokemonCard.tags.includes(CardTag.POKEMON_VSTAR)
-      )) {
+      if (
+        pokemonCard &&
+        (pokemonCard.hasTag(CardTag.POKEMON_V) ||
+          pokemonCard.hasTag(CardTag.POKEMON_VMAX) ||
+          pokemonCard.hasTag(CardTag.POKEMON_VSTAR))
+      ) {
         effect.damage += 100;
       }
     }

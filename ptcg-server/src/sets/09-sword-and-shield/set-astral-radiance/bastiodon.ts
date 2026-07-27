@@ -7,7 +7,11 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+} from '../../../game/store/prefabs/prefabs';
 import { GamePhase } from '../../../game/store/state/state';
 
 export class Bastiodon extends PokemonCard {
@@ -19,19 +23,21 @@ export class Bastiodon extends PokemonCard {
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C, C, C];
 
-  public powers = [{
-    name: 'Primal Fortress',
-    powerType: PowerType.ABILITY,
-    text: 'Your Pokémon take 30 less damage from attacks from your opponent\'s Pokémon V (after applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: 'Primal Fortress',
+      powerType: PowerType.ABILITY,
+      text: "Your Pokémon take 30 less damage from attacks from your opponent's Pokémon V (after applying Weakness and Resistance).",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Iron Tackle',
       cost: [M, M, C],
       damage: 180,
-      text: 'This Pokémon also does 30 damage to itself.'
-    }
+      text: 'This Pokémon also does 30 damage to itself.',
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -72,11 +78,12 @@ export class Bastiodon extends PokemonCard {
       }
 
       const sourceCard = effect.source.getPokemonCard();
-      if (sourceCard && (
-        sourceCard.tags.includes(CardTag.POKEMON_V) ||
-        sourceCard.tags.includes(CardTag.POKEMON_VMAX) ||
-        sourceCard.tags.includes(CardTag.POKEMON_VSTAR)
-      )) {
+      if (
+        sourceCard &&
+        (sourceCard.hasTag(CardTag.POKEMON_V) ||
+          sourceCard.hasTag(CardTag.POKEMON_VMAX) ||
+          sourceCard.hasTag(CardTag.POKEMON_VSTAR))
+      ) {
         effect.reduceDamage(30);
       }
     }

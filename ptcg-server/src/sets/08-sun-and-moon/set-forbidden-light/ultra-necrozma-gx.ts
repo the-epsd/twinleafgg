@@ -1,14 +1,21 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameError, GameMessage, PlayerType, EnergyCard } from '../../../game';
+import {
+  StoreLike,
+  State,
+  StateUtils,
+  GameError,
+  GameMessage,
+  PlayerType,
+  EnergyCard,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { DiscardCardsEffect, PutCountersEffect } from '../../../game/store/effects/attack-effects';
 import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class UltraNecrozmaGX extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
+  protected _tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
 
   public stage: Stage = Stage.BASIC;
 
@@ -26,7 +33,7 @@ export class UltraNecrozmaGX extends PokemonCard {
       cost: [CardType.PSYCHIC, CardType.METAL],
       damage: 20,
       damageCalculation: 'x',
-      text: 'Discard all basic [P] Energy from this Pokémon. This attack does 80 more damage for each card you discarded in this way.'
+      text: 'Discard all basic [P] Energy from this Pokémon. This attack does 80 more damage for each card you discarded in this way.',
     },
 
     {
@@ -34,8 +41,8 @@ export class UltraNecrozmaGX extends PokemonCard {
       cost: [CardType.PSYCHIC, CardType.METAL],
       damage: 0,
       gxAttack: true,
-      text: 'You can use this attack only if the total of both players\' remaining Prize cards is 6 or less. Put 6 damage counters on each of your opponent\'s Pokémon. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "You can use this attack only if the total of both players' remaining Prize cards is 6 or less. Put 6 damage counters on each of your opponent's Pokémon. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'FLI';
@@ -53,8 +60,8 @@ export class UltraNecrozmaGX extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const psychicEnergy = player.active.cards.filter(card =>
-        card instanceof EnergyCard && card.name === 'Psychic Energy'
+      const psychicEnergy = player.active.cards.filter(
+        (card) => card instanceof EnergyCard && card.name === 'Psychic Energy',
       );
 
       const discardEnergy = new DiscardCardsEffect(effect, psychicEnergy);

@@ -12,10 +12,9 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class RapidStrikeScrollOfSwirls extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.TOOL;
 
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
 
   public regulationMark = 'E';
 
@@ -29,38 +28,45 @@ export class RapidStrikeScrollOfSwirls extends TrainerCard {
 
   public fullName: string = 'Rapid Strike Scroll of Swirls BST';
 
-  public attacks: Attack[] = [{
-    name: 'Matchless Maelstrom',
-    cost: [CardType.FIGHTING, CardType.COLORLESS, CardType.COLORLESS],
-    damage: 0,
-    text: 'This attack does 30 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-  }];
+  public attacks: Attack[] = [
+    {
+      name: 'Matchless Maelstrom',
+      cost: [CardType.FIGHTING, CardType.COLORLESS, CardType.COLORLESS],
+      damage: 0,
+      text: "This attack does 30 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
+  ];
 
-  public text: string = 'The Rapid Strike Pokémon this card is attached to can use the attack on this card. (You still need the necessary Energy to use this attack.)';
+  public text: string =
+    'The Rapid Strike Pokémon this card is attached to can use the attack on this card. (You still need the necessary Energy to use this attack.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof CheckPokemonAttacksEffect && effect.player.active.getPokemonCard()?.tools.includes(this) &&
-      !effect.attacks.includes(this.attacks[0])) {
-
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
+    if (
+      effect instanceof CheckPokemonAttacksEffect &&
+      effect.player.active.getPokemonCard()?.tools.includes(this) &&
+      !effect.attacks.includes(this.attacks[0])
+    ) {
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+        return state;
+      }
 
       effect.attacks.push(this.attacks[0]);
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
       const player = effect.player;
-      if (!player.active.cards.some(c => c instanceof PokemonCard && c.tags.includes(CardTag.RAPID_STRIKE))) {
+      if (
+        !player.active.cards.some((c) => c instanceof PokemonCard && c.hasTag(CardTag.RAPID_STRIKE))
+      ) {
         return state;
       }
 
       const opponent = effect.opponent;
-      const benched = opponent.bench.filter(b => b.cards.length > 0);
+      const benched = opponent.bench.filter((b) => b.cards.length > 0);
 
       effect.damage = 30;
 
-      benched.forEach(target => {
+      benched.forEach((target) => {
         const damageEffect = new PutDamageEffect(effect, 30);
         damageEffect.target = target;
         store.reduceEffect(state, damageEffect);
@@ -69,6 +75,4 @@ export class RapidStrikeScrollOfSwirls extends TrainerCard {
 
     return state;
   }
-
 }
-

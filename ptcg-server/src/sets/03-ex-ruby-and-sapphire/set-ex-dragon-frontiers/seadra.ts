@@ -4,30 +4,38 @@ import { StoreLike, State, StateUtils } from '../../../game';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { CoinFlipEffect } from '../../../game/store/effects/play-card-effects';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
-import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER, SIMULATE_COIN_FLIP, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_MARKER,
+  HAS_MARKER,
+  REMOVE_MARKER,
+  SIMULATE_COIN_FLIP,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 export class Seadra extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Horsea';
   public cardType: CardType = F;
-  public tags = [CardTag.DELTA_SPECIES];
+  protected _tags = [CardTag.DELTA_SPECIES];
   public hp: number = 70;
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Smokescreen',
-    cost: [C, C],
-    damage: 20,
-    text: 'If the Defending Pokémon tries to attack during your opponent\'s next turn, your opponent flips a coin.If tails, that attack does nothing.'
-  },
-  {
-    name: 'Razor Wing',
-    cost: [F, C, C],
-    damage: 40,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Smokescreen',
+      cost: [C, C],
+      damage: 20,
+      text: "If the Defending Pokémon tries to attack during your opponent's next turn, your opponent flips a coin.If tails, that attack does nothing.",
+    },
+    {
+      name: 'Razor Wing',
+      cost: [F, C, C],
+      damage: 40,
+      text: '',
+    },
+  ];
 
   public set: string = 'DF';
   public name: string = 'Seadra';
@@ -38,7 +46,6 @@ export class Seadra extends PokemonCard {
   public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     //Attack
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
@@ -46,7 +53,10 @@ export class Seadra extends PokemonCard {
       ADD_MARKER(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, opponent.active, this);
     }
 
-    if (effect instanceof AttackEffect && HAS_MARKER(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, effect.player.active, this)) {
+    if (
+      effect instanceof AttackEffect &&
+      HAS_MARKER(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, effect.player.active, this)
+    ) {
       const player = effect.player;
 
       try {
@@ -72,5 +82,4 @@ export class Seadra extends PokemonCard {
 
     return state;
   }
-
 }

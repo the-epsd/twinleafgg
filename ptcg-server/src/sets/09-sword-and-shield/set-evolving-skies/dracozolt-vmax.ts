@@ -7,10 +7,15 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED, ADD_MARKER, ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT, CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  ADD_MARKER,
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
+  CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN,
+} from '../../../game/store/prefabs/prefabs';
 
 export class DracozoltVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Dracozolt V';
   public cardType: CardType = L;
@@ -26,14 +31,14 @@ export class DracozoltVmax extends PokemonCard {
       name: 'Spark Trap',
       cost: [L],
       damage: 60,
-      text: 'During your opponent\'s next turn, if this Pokémon is damaged by an attack (even if it is Knocked Out), put 12 damage counters on the Attacking Pokémon.'
+      text: "During your opponent's next turn, if this Pokémon is damaged by an attack (even if it is Knocked Out), put 12 damage counters on the Attacking Pokémon.",
     },
     {
       name: 'Max Impact',
       cost: [L, C, C, C],
       damage: 200,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -65,7 +70,13 @@ export class DracozoltVmax extends PokemonCard {
       }
     }
 
-    CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(state, effect, this.CLEAR_SPARK_TRAP_MARKER, this.SPARK_TRAP_MARKER, this);
+    CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(
+      state,
+      effect,
+      this.CLEAR_SPARK_TRAP_MARKER,
+      this.SPARK_TRAP_MARKER,
+      this,
+    );
 
     return state;
   }

@@ -7,14 +7,12 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { CardList, ChooseCardsPrompt, GameError, GameMessage, Player } from '../../../game';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
-
 export class ExplorersGuidance extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'TEF';
 
-  public tags = [CardTag.ANCIENT];
+  protected _tags = [CardTag.ANCIENT];
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -22,11 +20,12 @@ export class ExplorersGuidance extends TrainerCard {
 
   public regulationMark = 'H';
 
-  public name: string = 'Explorer\'s Guidance';
+  public name: string = "Explorer's Guidance";
 
-  public fullName: string = 'Explorer\'s Guidance TEF';
+  public fullName: string = "Explorer's Guidance TEF";
 
-  public text: string = 'Look at the top 6 cards of your deck and put 2 of them into your hand. Discard the other cards.';
+  public text: string =
+    'Look at the top 6 cards of your deck and put 2 of them into your hand. Discard the other cards.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     if (player.supporterTurn > 0) {
@@ -38,9 +37,7 @@ export class ExplorersGuidance extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof EndTurnEffect && effect.player.ancientSupporter) {
       effect.player.ancientSupporter = false;
     }
@@ -67,21 +64,22 @@ export class ExplorersGuidance extends TrainerCard {
 
       const min = player.deck.cards.length > 1 ? Math.min(2, deckTop.cards.length) : 1;
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        deckTop,
-        {},
-        { min, max: 2, allowCancel: false }
-      ), selected => {
-        player.ancientSupporter = true;
-        deckTop.moveCardsTo(selected, player.hand);
-        deckTop.moveTo(player.discard);
-
-
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          deckTop,
+          {},
+          { min, max: 2, allowCancel: false },
+        ),
+        (selected) => {
+          player.ancientSupporter = true;
+          deckTop.moveCardsTo(selected, player.hand);
+          deckTop.moveTo(player.discard);
+        },
+      );
     }
     return state;
   }
-
 }

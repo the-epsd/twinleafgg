@@ -3,9 +3,9 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, BLOCK_RETREAT } from '../../../game/store/prefabs/prefabs';
-import { } from '../../../game/store/prefabs/prefabs';
+import {} from '../../../game/store/prefabs/prefabs';
 export class Sableye extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 70;
@@ -16,14 +16,14 @@ export class Sableye extends PokemonCard {
       name: 'Scratch',
       cost: [C],
       damage: 10,
-      text: ''
+      text: '',
     },
     {
       name: 'Shadow Cage',
       cost: [P, C],
       damage: 20,
-      text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
-    }
+      text: "The Defending Pokémon can't retreat during your opponent's next turn.",
+    },
   ];
 
   public set: string = 'PLF';

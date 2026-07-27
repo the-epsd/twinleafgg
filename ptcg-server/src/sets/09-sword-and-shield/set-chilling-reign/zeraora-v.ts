@@ -4,15 +4,27 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, GameMessage } from '../../../game';
+import {
+  StoreLike,
+  State,
+  ChoosePokemonPrompt,
+  PlayerType,
+  SlotType,
+  GameMessage,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, REPLACE_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  HAS_MARKER,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  REPLACE_MARKER_AT_END_OF_TURN,
+} from '../../../game/store/prefabs/prefabs';
 
 export class ZeraoraV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V, CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.POKEMON_V, CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = L;
   public hp: number = 210;
@@ -28,8 +40,8 @@ export class ZeraoraV extends PokemonCard {
       name: 'Cross Fist',
       cost: [L, C, C],
       damage: 100,
-      text: 'If 1 of your other Rapid Strike Pokémon used an attack during your last turn, this attack also does 160 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "If 1 of your other Rapid Strike Pokémon used an attack during your last turn, this attack also does 160 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -45,7 +57,7 @@ export class ZeraoraV extends PokemonCard {
     if (effect instanceof AttackEffect) {
       const player = effect.player;
       const attacker = player.active.getPokemonCard();
-      if (attacker && attacker !== this && attacker.tags.includes(CardTag.RAPID_STRIKE)) {
+      if (attacker && attacker !== this && attacker.hasTag(CardTag.RAPID_STRIKE)) {
         player.marker.addMarker(this.RS_USED_LAST_TURN_MARKER, this);
       }
     }
@@ -53,7 +65,12 @@ export class ZeraoraV extends PokemonCard {
     // 2-phase marker cleanup
     if (effect instanceof EndTurnEffect) {
       REMOVE_MARKER_AT_END_OF_TURN(effect, this.CLEAR_RS_USED_LAST_TURN_MARKER, this);
-      REPLACE_MARKER_AT_END_OF_TURN(effect, this.RS_USED_LAST_TURN_MARKER, this.CLEAR_RS_USED_LAST_TURN_MARKER, this);
+      REPLACE_MARKER_AT_END_OF_TURN(
+        effect,
+        this.RS_USED_LAST_TURN_MARKER,
+        this.CLEAR_RS_USED_LAST_TURN_MARKER,
+        this,
+      );
     }
 
     // Attack 1: Cross Fist
@@ -62,22 +79,28 @@ export class ZeraoraV extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      if (HAS_MARKER(this.RS_USED_LAST_TURN_MARKER, player, this) ||
-        HAS_MARKER(this.CLEAR_RS_USED_LAST_TURN_MARKER, player, this)) {
-        return store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-          PlayerType.TOP_PLAYER,
-          [SlotType.BENCH],
-          { min: 1, max: 1, allowCancel: false }
-        ), selected => {
-          if (selected && selected.length > 0) {
-            const target = selected[0];
-            const damageEffect = new PutDamageEffect(effect, 160);
-            damageEffect.target = target;
-            store.reduceEffect(state, damageEffect);
-          }
-        });
+      if (
+        HAS_MARKER(this.RS_USED_LAST_TURN_MARKER, player, this) ||
+        HAS_MARKER(this.CLEAR_RS_USED_LAST_TURN_MARKER, player, this)
+      ) {
+        return store.prompt(
+          state,
+          new ChoosePokemonPrompt(
+            player.id,
+            GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+            PlayerType.TOP_PLAYER,
+            [SlotType.BENCH],
+            { min: 1, max: 1, allowCancel: false },
+          ),
+          (selected) => {
+            if (selected && selected.length > 0) {
+              const target = selected[0];
+              const damageEffect = new PutDamageEffect(effect, 160);
+              damageEffect.target = target;
+              store.reduceEffect(state, damageEffect);
+            }
+          },
+        );
       }
     }
 

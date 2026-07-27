@@ -13,10 +13,9 @@ import { CardTarget, PlayerType, SlotType } from '../../../game/store/actions/pl
 import { Player } from '../../../game/store/state/player';
 
 export class RebootPod extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public tags = [CardTag.ACE_SPEC, CardTag.FUTURE];
+  protected _tags = [CardTag.ACE_SPEC, CardTag.FUTURE];
 
   public regulationMark = 'H';
 
@@ -34,15 +33,14 @@ export class RebootPod extends TrainerCard {
     'Attach a Basic Energy card from your discard pile to each of your Future Pokémon in play.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
-    const hasBasicEnergy = player.discard.cards.some(c =>
-      c instanceof EnergyCard && c.energyType === EnergyType.BASIC
+    const hasBasicEnergy = player.discard.cards.some(
+      (c) => c instanceof EnergyCard && c.energyType === EnergyType.BASIC,
     );
     if (!hasBasicEnergy) {
       return false;
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -63,7 +61,7 @@ export class RebootPod extends TrainerCard {
 
       const blocked2: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        if (!card.tags.includes(CardTag.FUTURE)) {
+        if (!card.hasTag(CardTag.FUTURE)) {
           blocked2.push(target);
         }
       });
@@ -71,28 +69,38 @@ export class RebootPod extends TrainerCard {
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      state = store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_TO_ACTIVE,
-        player.discard,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { allowCancel: false, min: 0, max: hasEnergyInDiscard, blockedTo: blocked2, differentTargets: true }
-      ), transfers => {
-        transfers = transfers || [];
+      state = store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_TO_ACTIVE,
+          player.discard,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+          {
+            allowCancel: false,
+            min: 0,
+            max: hasEnergyInDiscard,
+            blockedTo: blocked2,
+            differentTargets: true,
+          },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
 
-        if (transfers.length === 0) {
-          player.supporter.moveCardTo(this, player.discard);
-          return;
-        }
+          if (transfers.length === 0) {
+            player.supporter.moveCardTo(this, player.discard);
+            return;
+          }
 
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
-          player.supporter.moveCardTo(this, player.discard);
-        }
-      });
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.discard.moveCardTo(transfer.card, target);
+            player.supporter.moveCardTo(this, player.discard);
+          }
+        },
+      );
     }
     return state;
   }

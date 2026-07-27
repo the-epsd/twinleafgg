@@ -9,12 +9,11 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class DuraludonV extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
   public regulationMark = 'E';
 
-  public tags = [CardTag.POKEMON_V, CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.POKEMON_V, CardTag.SINGLE_STRIKE];
 
   public cardType: CardType = CardType.DRAGON;
 
@@ -29,14 +28,14 @@ export class DuraludonV extends PokemonCard {
       name: 'Metal Claw',
       cost: [CardType.FIGHTING, CardType.METAL],
       damage: 70,
-      text: ''
+      text: '',
     },
     {
       name: 'Breaking Swipe',
       cost: [CardType.FIGHTING, CardType.METAL, CardType.METAL],
       damage: 140,
-      text: 'During your opponent\'s next turn, the Defending Pokémon\'s attacks do 30 less damage (before applying Weakness and Resistance).'
-    }
+      text: "During your opponent's next turn, the Defending Pokémon's attacks do 30 less damage (before applying Weakness and Resistance).",
+    },
   ];
 
   public set: string = 'EVS';
@@ -52,16 +51,16 @@ export class DuraludonV extends PokemonCard {
   public readonly BREAKING_SWIPE_MARKER = 'BREAKING_SWIPE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const addMarkerEffect = new AddMarkerEffect(effect, this.BREAKING_SWIPE_MARKER, this);
       return store.reduceEffect(state, addMarkerEffect);
     }
 
     // Reduce damage by 30
-    if (effect instanceof PutDamageEffect
-      && effect.source.marker.hasMarker(this.BREAKING_SWIPE_MARKER, this)) {
-
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.source.marker.hasMarker(this.BREAKING_SWIPE_MARKER, this)
+    ) {
       // It's not an attack
       if (state.phase !== GamePhase.ATTACK) {
         return state;
@@ -77,5 +76,4 @@ export class DuraludonV extends PokemonCard {
 
     return state;
   }
-
 }

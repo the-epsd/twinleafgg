@@ -3,8 +3,23 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
-import { AttachEnergyPrompt, EnergyCard, GameMessage, PlayerType, SlotType, StoreLike, State, StateUtils } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+} from '../../../game/store/card/card-types';
+import {
+  AttachEnergyPrompt,
+  EnergyCard,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { AbstractAttackEffect } from '../../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
@@ -13,7 +28,7 @@ import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/pr
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class LatiasAndLatiosGx extends PokemonCard {
-  public tags = [CardTag.TAG_TEAM, CardTag.POKEMON_GX];
+  protected _tags = [CardTag.TAG_TEAM, CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = N;
   public hp: number = 250;
@@ -28,14 +43,14 @@ export class LatiasAndLatiosGx extends PokemonCard {
       name: 'Buster Purge',
       cost: [W, P, P, C],
       damage: 240,
-      text: 'Discard 3 Energy from this Pokémon.'
+      text: 'Discard 3 Energy from this Pokémon.',
     },
     {
       name: 'Aero Unit-GX',
       cost: [P],
       damage: 0,
-      text: 'Attach 5 basic Energy cards from your discard pile to your Pokémon in any way you like. If this Pokémon has at least 1 extra Energy attached to it (in addition to this attack\'s cost), prevent all effects of attacks, including damage, done to it during your opponent\'s next turn. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Attach 5 basic Energy cards from your discard pile to your Pokémon in any way you like. If this Pokémon has at least 1 extra Energy attached to it (in addition to this attack's cost), prevent all effects of attacks, including damage, done to it during your opponent's next turn. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'TEU';
@@ -67,27 +82,31 @@ export class LatiasAndLatiosGx extends PokemonCard {
       const hasExtraEnergy = totalEnergy >= 2;
 
       // Attach up to 5 basic Energy from discard
-      const basicEnergyInDiscard = player.discard.cards.filter(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC
+      const basicEnergyInDiscard = player.discard.cards.filter(
+        (c) => c instanceof EnergyCard && c.energyType === EnergyType.BASIC,
       );
 
       if (basicEnergyInDiscard.length > 0) {
         const maxAttach = Math.min(5, basicEnergyInDiscard.length);
-        state = store.prompt(state, new AttachEnergyPrompt(
-          player.id,
-          GameMessage.ATTACH_ENERGY_CARDS,
-          player.discard,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.ACTIVE, SlotType.BENCH],
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-          { allowCancel: false, min: maxAttach, max: 5 }
-        ), transfers => {
-          transfers = transfers || [];
-          for (const transfer of transfers) {
-            const target = StateUtils.getTarget(state, player, transfer.to);
-            player.discard.moveCardTo(transfer.card, target);
-          }
-        });
+        state = store.prompt(
+          state,
+          new AttachEnergyPrompt(
+            player.id,
+            GameMessage.ATTACH_ENERGY_CARDS,
+            player.discard,
+            PlayerType.BOTTOM_PLAYER,
+            [SlotType.ACTIVE, SlotType.BENCH],
+            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+            { allowCancel: false, min: maxAttach, max: 5 },
+          ),
+          (transfers) => {
+            transfers = transfers || [];
+            for (const transfer of transfers) {
+              const target = StateUtils.getTarget(state, player, transfer.to);
+              player.discard.moveCardTo(transfer.card, target);
+            }
+          },
+        );
       }
 
       // If extra energy, set prevention markers
@@ -119,11 +138,13 @@ export class LatiasAndLatiosGx extends PokemonCard {
     }
 
     // Cleanup at end of opponent's turn
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_AERO_UNIT_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_AERO_UNIT_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_AERO_UNIT_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         cardList.marker.removeMarker(this.AERO_UNIT_MARKER, this);
       });
     }

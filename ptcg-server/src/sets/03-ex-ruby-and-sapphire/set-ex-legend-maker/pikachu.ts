@@ -6,12 +6,16 @@ import { Effect } from '../../../game/store/effects/effect';
 
 import { CoinFlipPrompt } from '../../../game/store/prompts/coin-flip-prompt';
 import { GameMessage } from '../../../game';
-import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_PARALYZED_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  COIN_FLIP_PROMPT,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Pikachu extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.DELTA_SPECIES];
+  protected _tags = [CardTag.DELTA_SPECIES];
   public cardType: CardType = M;
   public hp: number = 40;
   public weakness = [{ type: F }];
@@ -22,15 +26,15 @@ export class Pikachu extends PokemonCard {
       name: 'Thunder Wave',
       cost: [C],
       damage: 0,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.',
     },
     {
       name: 'Iron Tail',
       cost: [M, C],
       damage: 20,
       damageCalculation: 'x',
-      text: 'Flip a coin until you get tails. This attack does 20 damage times the number of heads.'
-    }
+      text: 'Flip a coin until you get tails. This attack does 20 damage times the number of heads.',
+    },
   ];
 
   public set: string = 'LM';
@@ -52,15 +56,17 @@ export class Pikachu extends PokemonCard {
       const player = effect.player;
 
       const flipCoin = (heads: number = 0): State => {
-        return store.prompt(state, [
-          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-        ], result => {
-          if (result === true) {
-            return flipCoin(heads + 1);
-          }
-          effect.damage = 20 * heads;
-          return state;
-        });
+        return store.prompt(
+          state,
+          [new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)],
+          (result) => {
+            if (result === true) {
+              return flipCoin(heads + 1);
+            }
+            effect.damage = 20 * heads;
+            return state;
+          },
+        );
       };
       return flipCoin();
     }

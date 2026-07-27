@@ -11,7 +11,7 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Dugtrio extends PokemonCard {
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Diglett';
   public cardType: CardType = F;
@@ -28,8 +28,8 @@ export class Dugtrio extends PokemonCard {
       cost: [F, C],
       damage: 60,
       damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 60 damage for each heads. If all of them are heads, during your opponent\'s next turn, prevent all damage from and effects of attacks done to this Pokémon.'
-    }
+      text: "Flip 3 coins. This attack does 60 damage for each heads. If all of them are heads, during your opponent's next turn, prevent all damage from and effects of attacks done to this Pokémon.",
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -46,8 +46,8 @@ export class Dugtrio extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 3, results => {
-        const heads = results.filter(r => r).length;
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 3, (results) => {
+        const heads = results.filter((r) => r).length;
         effect.damage = 60 * heads;
 
         if (heads === 3) {
@@ -57,14 +57,18 @@ export class Dugtrio extends PokemonCard {
       });
     }
 
-    if (effect instanceof AbstractAttackEffect
-      && effect.target.marker.hasMarker(this.PREVENT_MARKER, this)) {
+    if (
+      effect instanceof AbstractAttackEffect &&
+      effect.target.marker.hasMarker(this.PREVENT_MARKER, this)
+    ) {
       effect.preventDefault = true;
       return state;
     }
 
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_PREVENT_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_PREVENT_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_PREVENT_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {

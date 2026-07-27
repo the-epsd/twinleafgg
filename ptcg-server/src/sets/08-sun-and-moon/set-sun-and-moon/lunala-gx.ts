@@ -4,32 +4,55 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameMessage, GameError, PlayerType, SlotType, Card, CardTarget, MoveEnergyPrompt, ChoosePokemonPrompt } from '../../../game';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  GameError,
+  PlayerType,
+  SlotType,
+  Card,
+  CardTarget,
+  MoveEnergyPrompt,
+  ChoosePokemonPrompt,
+} from '../../../game';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 import { HealTargetEffect } from '../../../game/store/effects/attack-effects';
 import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  BLOCK_IF_GX_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
-function* usePsychicTransfer(next: Function, store: StoreLike, state: State, effect: import('../../../game/store/effects/game-effects').PowerEffect): IterableIterator<State> {
+function* usePsychicTransfer(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: import('../../../game/store/effects/game-effects').PowerEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
-  const blockedMap: { source: CardTarget, blocked: number[] }[] = [];
+  const blockedMap: { source: CardTarget; blocked: number[] }[] = [];
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
     const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, cardList);
     store.reduceEffect(state, checkProvidedEnergy);
     const blockedCards: Card[] = [];
 
-    checkProvidedEnergy.energyMap.forEach(em => {
+    checkProvidedEnergy.energyMap.forEach((em) => {
       if (!em.provides.includes(CardType.PSYCHIC) && !em.provides.includes(CardType.ANY)) {
         blockedCards.push(em.card);
       }
     });
 
     const blocked: number[] = [];
-    blockedCards.forEach(bc => {
+    blockedCards.forEach((bc) => {
       const index = cardList.cards.indexOf(bc);
       if (index !== -1 && !blocked.includes(index)) {
         blocked.push(index);
@@ -41,28 +64,32 @@ function* usePsychicTransfer(next: Function, store: StoreLike, state: State, eff
     }
   });
 
-  return store.prompt(state, new MoveEnergyPrompt(
-    effect.player.id,
-    GameMessage.MOVE_ENERGY_CARDS,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.BENCH, SlotType.ACTIVE],
-    { superType: SuperType.ENERGY },
-    { allowCancel: true, blockedMap }
-  ), transfers => {
-    if (transfers === null) {
-      return;
-    }
+  return store.prompt(
+    state,
+    new MoveEnergyPrompt(
+      effect.player.id,
+      GameMessage.MOVE_ENERGY_CARDS,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.BENCH, SlotType.ACTIVE],
+      { superType: SuperType.ENERGY },
+      { allowCancel: true, blockedMap },
+    ),
+    (transfers) => {
+      if (transfers === null) {
+        return;
+      }
 
-    for (const transfer of transfers) {
-      const source = StateUtils.getTarget(state, player, transfer.from);
-      const target = StateUtils.getTarget(state, player, transfer.to);
-      source.moveCardTo(transfer.card, target);
-    }
-  });
+      for (const transfer of transfers) {
+        const source = StateUtils.getTarget(state, player, transfer.from);
+        const target = StateUtils.getTarget(state, player, transfer.to);
+        source.moveCardTo(transfer.card, target);
+      }
+    },
+  );
 }
 
 export class LunalaGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Cosmoem';
   public cardType: CardType = P;
@@ -71,26 +98,28 @@ export class LunalaGx extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Psychic Transfer',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'As often as you like during your turn (before your attack), you may move a [P] Energy from 1 of your Pokémon to another of your Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Psychic Transfer',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'As often as you like during your turn (before your attack), you may move a [P] Energy from 1 of your Pokémon to another of your Pokémon.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Moongeist Beam',
       cost: [P, P, P, P],
       damage: 120,
-      text: 'The Defending Pokémon can\'t be healed during your opponent\'s next turn.'
+      text: "The Defending Pokémon can't be healed during your opponent's next turn.",
     },
     {
       name: 'Lunar Fall-GX',
       cost: [P, P, P],
       damage: 0,
-      text: 'Knock Out 1 of your opponent\'s Basic Pokémon that isn\'t a Pokémon-GX. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Knock Out 1 of your opponent's Basic Pokémon that isn't a Pokémon-GX. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'SUM';
@@ -127,20 +156,26 @@ export class LunalaGx extends PokemonCard {
     }
 
     // Intercept healing on marked Pokemon
-    if (effect instanceof HealEffect
-      && effect.target.marker.hasMarker(this.CANT_HEAL_MARKER, this)) {
+    if (
+      effect instanceof HealEffect &&
+      effect.target.marker.hasMarker(this.CANT_HEAL_MARKER, this)
+    ) {
       effect.preventDefault = true;
       return state;
     }
-    if (effect instanceof HealTargetEffect
-      && effect.target.marker.hasMarker(this.CANT_HEAL_MARKER, this)) {
+    if (
+      effect instanceof HealTargetEffect &&
+      effect.target.marker.hasMarker(this.CANT_HEAL_MARKER, this)
+    ) {
       effect.preventDefault = true;
       return state;
     }
 
     // Cleanup at end of opponent's turn
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_CANT_HEAL_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_CANT_HEAL_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_CANT_HEAL_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
@@ -160,30 +195,34 @@ export class LunalaGx extends PokemonCard {
       // Find Basic non-GX Pokemon on opponent's side
       const blocked: CardTarget[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, pokemonCard, target) => {
-        if (pokemonCard.stage !== Stage.BASIC || pokemonCard.tags.includes(CardTag.POKEMON_GX)) {
+        if (pokemonCard.stage !== Stage.BASIC || pokemonCard.hasTag(CardTag.POKEMON_GX)) {
           blocked.push(target);
         }
       });
 
       // Check if there are any valid targets
-      const hasValidTarget = opponent.getPokemonInPlay().some(cardList => {
+      const hasValidTarget = opponent.getPokemonInPlay().some((cardList) => {
         const pokemon = cardList.getPokemonCard();
-        return pokemon && pokemon.stage === Stage.BASIC && !pokemon.tags.includes(CardTag.POKEMON_GX);
+        return pokemon && pokemon.stage === Stage.BASIC && !pokemon.hasTag(CardTag.POKEMON_GX);
       });
 
       if (!hasValidTarget) {
         return state;
       }
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false, blocked }
-      ), selected => {
-        KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(store, state, effect, selected[0]);
-      });
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON,
+          PlayerType.TOP_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { min: 1, max: 1, allowCancel: false, blocked },
+        ),
+        (selected) => {
+          KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(store, state, effect, selected[0]);
+        },
+      );
     }
 
     return state;

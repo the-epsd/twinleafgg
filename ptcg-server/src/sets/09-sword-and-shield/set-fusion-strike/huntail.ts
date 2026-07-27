@@ -10,7 +10,7 @@ import { CheckAttackCostEffect } from '../../../game/store/effects/check-effects
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Huntail extends PokemonCard {
-  public tags = [CardTag.FUSION_STRIKE];
+  protected _tags = [CardTag.FUSION_STRIKE];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Clamperl';
   public cardType: CardType = W;
@@ -18,19 +18,21 @@ export class Huntail extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Single Strike Jammer',
-    powerType: PowerType.ABILITY,
-    text: 'Your opponent\'s Single Strike Pokémon\'s attacks cost Colorless more.'
-  }];
+  public powers = [
+    {
+      name: 'Single Strike Jammer',
+      powerType: PowerType.ABILITY,
+      text: "Your opponent's Single Strike Pokémon's attacks cost Colorless more.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Cavernous Chomp',
       cost: [W, C, C],
       damage: 80,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -50,7 +52,7 @@ export class Huntail extends PokemonCard {
       // effect.player is the one attacking (whose cost we're checking)
       // This ability affects the opponent's Pokemon, so we check on the opposite player's side
       const attackingPokemon = player.active.getPokemonCard();
-      if (!attackingPokemon || !attackingPokemon.tags.includes(CardTag.SINGLE_STRIKE)) {
+      if (!attackingPokemon || !attackingPokemon.hasTag(CardTag.SINGLE_STRIKE)) {
         return state;
       }
 
@@ -58,7 +60,7 @@ export class Huntail extends PokemonCard {
       let huntailInPlay = false;
       // We need to find if this huntail is in play for the opponent of the attacker
       // The attacker is effect.player, so we iterate over state.players to find the opponent
-      state.players.forEach(p => {
+      state.players.forEach((p) => {
         if (p !== player) {
           p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
             if (card === this) {
@@ -73,7 +75,7 @@ export class Huntail extends PokemonCard {
       }
 
       // Find the owner of this Huntail (opponent of the attacking player)
-      let huntailOwner = state.players.find(p => p !== player);
+      let huntailOwner = state.players.find((p) => p !== player);
       if (!huntailOwner) {
         return state;
       }

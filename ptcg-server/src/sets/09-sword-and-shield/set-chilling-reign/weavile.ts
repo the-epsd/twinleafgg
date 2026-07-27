@@ -9,10 +9,17 @@ import { Effect } from '../../../game/store/effects/effect';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, SEARCH_DECK_FOR_CARDS_TO_HAND, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, REPLACE_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  SEARCH_DECK_FOR_CARDS_TO_HAND,
+  HAS_MARKER,
+  REMOVE_MARKER,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  REPLACE_MARKER_AT_END_OF_TURN,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Weavile extends PokemonCard {
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Sneasel';
   public cardType: CardType = W;
@@ -28,14 +35,14 @@ export class Weavile extends PokemonCard {
       name: 'Two-Hit KO',
       cost: [C],
       damage: 0,
-      text: 'During your next turn, if the Defending Pokémon is damaged by an attack from a Rapid Strike Pokémon, it will be Knocked Out.'
+      text: 'During your next turn, if the Defending Pokémon is damaged by an attack from a Rapid Strike Pokémon, it will be Knocked Out.',
     },
     {
       name: 'Nasty Plot',
       cost: [W],
       damage: 0,
-      text: 'Search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck.'
-    }
+      text: 'Search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -63,7 +70,7 @@ export class Weavile extends PokemonCard {
     if (effect instanceof DealDamageEffect && effect.damage > 0) {
       if (effect.target.marker.hasMarker(this.TWO_HIT_KO_MARKER, this)) {
         const attackerCard = effect.source.getPokemonCard();
-        if (attackerCard && attackerCard.tags.includes(CardTag.RAPID_STRIKE)) {
+        if (attackerCard && attackerCard.hasTag(CardTag.RAPID_STRIKE)) {
           const checkHp = new CheckHpEffect(effect.player, effect.target);
           store.reduceEffect(state, checkHp);
           effect.damage = checkHp.hp;
@@ -77,19 +84,31 @@ export class Weavile extends PokemonCard {
       if (HAS_MARKER(this.CLEAR_TWO_HIT_KO_MARKER, effect.player, this)) {
         const opponent = StateUtils.getOpponent(state, effect.player);
         opponent.active.marker.removeMarker(this.TWO_HIT_KO_MARKER, this);
-        opponent.bench.forEach(b => b.marker.removeMarker(this.TWO_HIT_KO_MARKER, this));
+        opponent.bench.forEach((b) => b.marker.removeMarker(this.TWO_HIT_KO_MARKER, this));
         REMOVE_MARKER(this.CLEAR_TWO_HIT_KO_MARKER, effect.player, this);
       }
       // Phase transition: TWO_HIT_KO_MARKER -> CLEAR_TWO_HIT_KO_MARKER at end of attacker's turn
       REMOVE_MARKER_AT_END_OF_TURN(effect, this.CLEAR_TWO_HIT_KO_MARKER, this);
-      REPLACE_MARKER_AT_END_OF_TURN(effect, this.TWO_HIT_KO_MARKER, this.CLEAR_TWO_HIT_KO_MARKER, this);
+      REPLACE_MARKER_AT_END_OF_TURN(
+        effect,
+        this.TWO_HIT_KO_MARKER,
+        this.CLEAR_TWO_HIT_KO_MARKER,
+        this,
+      );
     }
 
     // Attack 2: Nasty Plot
     // Ref: AGENTS-patterns.md (SEARCH_DECK_FOR_CARDS_TO_HAND with max:2)
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this, {}, { min: 0, max: 2, allowCancel: false });
+      SEARCH_DECK_FOR_CARDS_TO_HAND(
+        store,
+        state,
+        player,
+        this,
+        {},
+        { min: 0, max: 2, allowCancel: false },
+      );
     }
 
     return state;

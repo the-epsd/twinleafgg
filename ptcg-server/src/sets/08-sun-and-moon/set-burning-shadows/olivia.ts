@@ -4,7 +4,17 @@
 
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardTag, SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { Card, GameError, GameMessage, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, StoreLike, State, StateUtils } from '../../../game';
+import {
+  Card,
+  GameError,
+  GameMessage,
+  PokemonCard,
+  ShowCardsPrompt,
+  ShuffleDeckPrompt,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
@@ -16,7 +26,8 @@ export class Olivia extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Olivia';
   public fullName: string = 'Olivia BUS';
-  public text: string = 'Search your deck for up to 2 Pokémon-GX, reveal them, and put them into your hand. Then, shuffle your deck. You may play only 1 Supporter card during your turn (before your attack).';
+  public text: string =
+    'Search your deck for up to 2 Pokémon-GX, reveal them, and put them into your hand. Then, shuffle your deck. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-unified-minds/cherish-ball.ts (Cherish Ball - search for GX)
@@ -30,36 +41,40 @@ export class Olivia extends TrainerCard {
 
       const searchBlocked: number[] = [];
       player.deck.cards.forEach((card, index) => {
-        if (card instanceof PokemonCard && !card.tags.includes(CardTag.POKEMON_GX)) {
+        if (card instanceof PokemonCard && !card.hasTag(CardTag.POKEMON_GX)) {
           searchBlocked.push(index);
         }
       });
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        { superType: SuperType.POKEMON },
-        { min: 0, max: 2, allowCancel: true, blocked: searchBlocked }
-      ), selected => {
-        const cards: Card[] = selected || [];
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.deck,
+          { superType: SuperType.POKEMON },
+          { min: 0, max: 2, allowCancel: true, blocked: searchBlocked },
+        ),
+        (selected) => {
+          const cards: Card[] = selected || [];
 
-        if (cards.length > 0) {
-          cards.forEach(card => {
-            player.deck.moveCardTo(card, player.hand);
+          if (cards.length > 0) {
+            cards.forEach((card) => {
+              player.deck.moveCardTo(card, player.hand);
+            });
+
+            store.prompt(
+              state,
+              new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+              () => {},
+            );
+          }
+
+          store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+            player.deck.applyOrder(order);
           });
-
-          store.prompt(state, new ShowCardsPrompt(
-            opponent.id,
-            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-            cards
-          ), () => { });
-        }
-
-        store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-        });
-      });
+        },
+      );
     }
 
     return state;

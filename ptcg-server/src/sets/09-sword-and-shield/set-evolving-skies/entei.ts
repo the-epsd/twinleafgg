@@ -6,10 +6,13 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Entei extends PokemonCard {
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = R;
   public hp: number = 120;
@@ -22,14 +25,14 @@ export class Entei extends PokemonCard {
       cost: [R, C],
       damage: 10,
       damageCalculation: 'x',
-      text: 'This attack does 10 damage for each damage counter on all of your Benched Single Strike Pokémon.'
+      text: 'This attack does 10 damage for each damage counter on all of your Benched Single Strike Pokémon.',
     },
     {
       name: 'Heat Tackle',
       cost: [R, R, C],
       damage: 120,
-      text: 'This Pokémon also does 30 damage to itself.'
-    }
+      text: 'This Pokémon also does 30 damage to itself.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -45,9 +48,9 @@ export class Entei extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       let damageCounters = 0;
-      player.bench.forEach(benched => {
+      player.bench.forEach((benched) => {
         const pokemonCard = benched.getPokemonCard();
-        if (pokemonCard && pokemonCard.tags.includes(CardTag.SINGLE_STRIKE)) {
+        if (pokemonCard && pokemonCard.hasTag(CardTag.SINGLE_STRIKE)) {
           damageCounters += benched.damage / 10;
         }
       });

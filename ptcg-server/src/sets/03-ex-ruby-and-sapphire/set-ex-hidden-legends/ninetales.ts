@@ -1,4 +1,16 @@
-import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, GamePhase, CardTag, GameMessage, CoinFlipPrompt } from '../../../game';
+import {
+  PokemonCard,
+  Stage,
+  CardType,
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  GamePhase,
+  CardTag,
+  GameMessage,
+  CoinFlipPrompt,
+} from '../../../game';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 
@@ -12,11 +24,13 @@ export class Ninetales extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Safeguard',
-    powerType: PowerType.POKEBODY,
-    text: 'Prevent all effects of attacks, including damage, done to Ninetales by your opponent\'s Pokémon-ex.'
-  }];
+  public powers = [
+    {
+      name: 'Safeguard',
+      powerType: PowerType.POKEBODY,
+      text: "Prevent all effects of attacks, including damage, done to Ninetales by your opponent's Pokémon-ex.",
+    },
+  ];
 
   public attacks = [
     {
@@ -24,14 +38,14 @@ export class Ninetales extends PokemonCard {
       cost: [C, C],
       damage: 20,
       damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 damage plus 20 more damage.'
+      text: 'Flip a coin. If heads, this attack does 20 damage plus 20 more damage.',
     },
     {
-      name: 'Will-o\'-the-wisp',
+      name: "Will-o'-the-wisp",
       cost: [R, C, C],
       damage: 50,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'HL';
@@ -63,7 +77,7 @@ export class Ninetales extends PokemonCard {
         return state;
       }
 
-      if (sourceCard.tags.includes(CardTag.POKEMON_ex)) {
+      if (sourceCard.hasTag(CardTag.POKEMON_ex)) {
         effect.preventDefault = true;
       }
     }
@@ -73,17 +87,18 @@ export class Ninetales extends PokemonCard {
       const player = effect.player;
 
       // Flip a coin
-      state = store.prompt(state, new CoinFlipPrompt(
-        player.id,
-        GameMessage.FLIP_COIN
-      ), result => {
-        if (result) {
-          effect.damage += 20; // 20 base + 20 for heads
-        }
-        return state;
-      });
+      state = store.prompt(
+        state,
+        new CoinFlipPrompt(player.id, GameMessage.FLIP_COIN),
+        (result) => {
+          if (result) {
+            effect.damage += 20; // 20 base + 20 for heads
+          }
+          return state;
+        },
+      );
     }
 
     return state;
   }
-} 
+}

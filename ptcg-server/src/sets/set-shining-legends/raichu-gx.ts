@@ -7,11 +7,15 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+  BLOCK_IF_GX_ATTACK_USED,
+} from '../../game/store/prefabs/prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../game/store/prefabs/attack-effects';
 
 export class RaichuGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Pikachu';
   public cardType: CardType = L;
@@ -26,21 +30,21 @@ export class RaichuGx extends PokemonCard {
       cost: [C, C],
       damage: 20,
       damageCalculation: '+',
-      text: 'This attack does 20 more damage times the amount of [L] Energy attached to your Pokémon.'
+      text: 'This attack does 20 more damage times the amount of [L] Energy attached to your Pokémon.',
     },
     {
       name: 'Thunder',
       cost: [L, L, C],
       damage: 160,
-      text: 'This Pokémon does 30 damage to itself.'
+      text: 'This Pokémon does 30 damage to itself.',
     },
     {
       name: 'Voltail GX',
       cost: [L, L, C],
       damage: 120,
       gxAttack: true,
-      text: 'Your opponent\'s Active Pokémon is now Paralyzed. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Your opponent's Active Pokémon is now Paralyzed. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'SLG';
@@ -59,8 +63,8 @@ export class RaichuGx extends PokemonCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         const checkEnergy = new CheckProvidedEnergyEffect(player, cardList);
         store.reduceEffect(state, checkEnergy);
-        checkEnergy.energyMap.forEach(em => {
-          em.provides.forEach(type => {
+        checkEnergy.energyMap.forEach((em) => {
+          em.provides.forEach((type) => {
             if (type === CardType.LIGHTNING || type === CardType.ANY) {
               lightningEnergyCount++;
             }

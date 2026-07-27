@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Mankey extends PokemonCard {
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = F;
   public hp: number = 60;
@@ -21,8 +21,8 @@ export class Mankey extends PokemonCard {
       name: 'Focus Fist',
       cost: [F, C],
       damage: 50,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
+      text: 'Flip a coin. If tails, this attack does nothing.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -37,7 +37,7 @@ export class Mankey extends PokemonCard {
     // Ref: AGENTS-patterns.md (Flip a coin. If tails, this attack does nothing.)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      COIN_FLIP_PROMPT(store, state, player, result => {
+      COIN_FLIP_PROMPT(store, state, player, (result) => {
         if (!result) {
           effect.damage = 0;
         }

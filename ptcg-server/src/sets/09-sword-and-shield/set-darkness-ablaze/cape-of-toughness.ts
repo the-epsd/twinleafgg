@@ -8,7 +8,6 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class CapeOfToughness extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.TOOL;
 
   public regulationMark = 'D';
@@ -27,7 +26,6 @@ export class CapeOfToughness extends TrainerCard {
     'The Basic Pokémon this card is attached to gets +50 HP, except Pokémon-GX.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof CheckHpEffect && effect.target.tools.includes(this)) {
       const card = effect.target.getPokemonCard();
 
@@ -43,11 +41,10 @@ export class CapeOfToughness extends TrainerCard {
         return state;
       }
 
-      if (card.stage === Stage.BASIC && !card.tags.includes(CardTag.POKEMON_GX)) {
+      if (card.stage === Stage.BASIC && !card.hasTag(CardTag.POKEMON_GX)) {
         effect.hp += 50;
       }
     }
     return state;
   }
-
 }

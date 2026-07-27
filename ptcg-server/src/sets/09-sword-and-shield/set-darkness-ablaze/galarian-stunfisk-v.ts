@@ -8,10 +8,16 @@ import { PowerType, StoreLike, State, StateUtils, EnergyCard } from '../../../ga
 import { Effect } from '../../../game/store/effects/effect';
 import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, ADD_MARKER, ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT, CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  ADD_MARKER,
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
+  CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN,
+} from '../../../game/store/prefabs/prefabs';
 
 export class GalarianStunfiskV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;
   public hp: number = 200;
@@ -22,19 +28,21 @@ export class GalarianStunfiskV extends PokemonCard {
   public readonly TRAPPING_BITE_MARKER = 'GALARIAN_STUNFISK_V_TRAPPING_BITE_MARKER';
   public readonly CLEAR_TRAPPING_BITE_MARKER = 'GALARIAN_STUNFISK_V_CLEAR_TRAPPING_BITE_MARKER';
 
-  public powers = [{
-    name: 'Metal Skin',
-    powerType: PowerType.ABILITY,
-    text: 'This Pokémon gets +20 HP for each [M] Energy attached to it.'
-  }];
+  public powers = [
+    {
+      name: 'Metal Skin',
+      powerType: PowerType.ABILITY,
+      text: 'This Pokémon gets +20 HP for each [M] Energy attached to it.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Trapping Bite',
       cost: [C, C],
       damage: 60,
-      text: 'During your opponent\'s next turn, if this Pokémon is damaged by an attack (even if it is Knocked Out), put 12 damage counters on the Attacking Pokémon.'
-    }
+      text: "During your opponent's next turn, if this Pokémon is damaged by an attack (even if it is Knocked Out), put 12 damage counters on the Attacking Pokémon.",
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -47,9 +55,11 @@ export class GalarianStunfiskV extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Metal Skin (passive - HP boost per Metal Energy attached)
     // Ref: set-rebel-clash/arcanine.ts (Warming Up - CheckHpEffect passive HP boost)
-    if (effect instanceof CheckHpEffect
-      && effect.target.cards.includes(this)
-      && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof CheckHpEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = effect.player;
 
       if (IS_ABILITY_BLOCKED(store, state, player, this)) {
@@ -57,10 +67,11 @@ export class GalarianStunfiskV extends PokemonCard {
       }
 
       // Count Metal Energy attached to this Pokemon
-      const metalEnergyCount = effect.target.cards.filter(c =>
-        c instanceof EnergyCard &&
-        c.energyType === EnergyType.BASIC &&
-        c.provides.includes(CardType.METAL)
+      const metalEnergyCount = effect.target.cards.filter(
+        (c) =>
+          c instanceof EnergyCard &&
+          c.energyType === EnergyType.BASIC &&
+          c.provides.includes(CardType.METAL),
       ).length;
 
       effect.hp += 20 * metalEnergyCount;
@@ -79,13 +90,19 @@ export class GalarianStunfiskV extends PokemonCard {
     // Retaliate when damaged
     if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
       if (effect.target.marker.hasMarker(this.TRAPPING_BITE_MARKER, this)) {
-        const damageEffect = new PutCountersEffect(effect, 120);  // 12 damage counters = 120 damage
+        const damageEffect = new PutCountersEffect(effect, 120); // 12 damage counters = 120 damage
         damageEffect.target = effect.source;
         store.reduceEffect(state, damageEffect);
       }
     }
 
-    CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(state, effect, this.CLEAR_TRAPPING_BITE_MARKER, this.TRAPPING_BITE_MARKER, this);
+    CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(
+      state,
+      effect,
+      this.CLEAR_TRAPPING_BITE_MARKER,
+      this.TRAPPING_BITE_MARKER,
+      this,
+    );
 
     return state;
   }

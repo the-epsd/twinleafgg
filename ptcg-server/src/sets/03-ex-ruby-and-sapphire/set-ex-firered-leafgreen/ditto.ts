@@ -69,7 +69,7 @@ export class Ditto extends PokemonCard {
       player.discard.cards.forEach((card, index) => {
         if (
           card instanceof PokemonCard &&
-          (card.name === 'Ditto' || card.tags.includes(CardTag.POKEMON_ex))
+          (card.name === 'Ditto' || card.hasTag(CardTag.POKEMON_ex))
         ) {
           blocked.push(index);
         } else if (card instanceof PokemonCard && card.stage === Stage.BASIC) {

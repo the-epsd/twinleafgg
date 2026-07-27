@@ -20,13 +20,17 @@ import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect, KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { IS_POKEBODY_BLOCKED, MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  IS_POKEBODY_BLOCKED,
+  MOVE_CARDS,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class GiratinaLVX extends PokemonCard {
   public stage: Stage = Stage.LV_X;
   public evolvesFrom = 'Giratina';
   public cardType: CardType = P;
-  public tags = [CardTag.POKEMON_LV_X];
+  protected _tags = [CardTag.POKEMON_LV_X];
   public hp: number = 130;
   public weakness = [{ type: D }];
   public resistance = [{ type: C, value: -20 }];

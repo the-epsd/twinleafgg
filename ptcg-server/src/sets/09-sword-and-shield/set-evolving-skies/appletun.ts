@@ -24,15 +24,15 @@ export class Appletun extends PokemonCard {
       cost: [C],
       damage: 70,
       damageCalculation: 'x',
-      text: 'This attack does 70 damage for each Special Energy card attached to your opponent\'s Pokémon.'
+      text: "This attack does 70 damage for each Special Energy card attached to your opponent's Pokémon.",
     },
     {
       name: 'Fighting Tackle',
       cost: [G, R],
       damage: 80,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is a Pokémon V, this attack does 80 more damage.'
-    }
+      text: "If your opponent's Active Pokémon is a Pokémon V, this attack does 80 more damage.",
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -50,7 +50,7 @@ export class Appletun extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       let specialEnergyCount = 0;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.energies.cards.forEach(c => {
+        cardList.energies.cards.forEach((c) => {
           if ((c as EnergyCard).energyType === EnergyType.SPECIAL) {
             specialEnergyCount++;
           }
@@ -65,7 +65,7 @@ export class Appletun extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const opponentActive = opponent.active.getPokemonCard();
-      if (opponentActive && opponentActive.tags.includes(CardTag.POKEMON_V)) {
+      if (opponentActive && opponentActive.hasTag(CardTag.POKEMON_V)) {
         effect.damage += 80;
       }
     }

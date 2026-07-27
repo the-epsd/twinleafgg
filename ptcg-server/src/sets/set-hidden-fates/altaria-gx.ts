@@ -9,10 +9,13 @@ import { Effect } from '../../game/store/effects/effect';
 import { AbstractAttackEffect, HealTargetEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS, YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from '../../game/store/prefabs/attack-effects';
+import {
+  THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS,
+  YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP,
+} from '../../game/store/prefabs/attack-effects';
 
 export class AltariaGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Swablu';
   public cardType: CardType = N;
@@ -28,20 +31,20 @@ export class AltariaGx extends PokemonCard {
       name: 'Bright Tone',
       cost: [Y, C],
       damage: 50,
-      text: 'During your opponent\'s next turn, prevent all damage done to this Pokémon by attacks from Pokémon-GX and Pokémon-EX.'
+      text: "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Pokémon-GX and Pokémon-EX.",
     },
     {
       name: 'Sonic Edge',
       cost: [W, Y, C],
       damage: 110,
-      text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
+      text: "This attack's damage isn't affected by any effects on your opponent's Active Pokémon.",
     },
     {
       name: 'Euphoria-GX',
       cost: [Y, C],
       damage: 0,
-      text: 'Your opponent\'s Active Pokémon is now Asleep. Heal all damage from all of your Pokémon. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Your opponent's Active Pokémon is now Asleep. Heal all damage from all of your Pokémon. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'HIF';
@@ -60,22 +63,30 @@ export class AltariaGx extends PokemonCard {
       opponent.marker.addMarker(this.CLEAR_BRIGHT_TONE_MARKER, this);
     }
 
-    if (effect instanceof AbstractAttackEffect && effect.target.marker.hasMarker(this.BRIGHT_TONE_MARKER, this)) {
+    if (
+      effect instanceof AbstractAttackEffect &&
+      effect.target.marker.hasMarker(this.BRIGHT_TONE_MARKER, this)
+    ) {
       const pokemonCard = effect.target.getPokemonCard();
       if (pokemonCard !== this) {
         return state;
       }
       const sourceCard = effect.source.getPokemonCard();
-      if (sourceCard && (sourceCard.tags.includes(CardTag.POKEMON_GX) || sourceCard.tags.includes(CardTag.POKEMON_EX))) {
+      if (
+        sourceCard &&
+        (sourceCard.hasTag(CardTag.POKEMON_GX) || sourceCard.hasTag(CardTag.POKEMON_EX))
+      ) {
         effect.preventDefault = true;
       }
     }
 
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_BRIGHT_TONE_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_BRIGHT_TONE_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_BRIGHT_TONE_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         cardList.marker.removeMarker(this.BRIGHT_TONE_MARKER, this);
       });
     }

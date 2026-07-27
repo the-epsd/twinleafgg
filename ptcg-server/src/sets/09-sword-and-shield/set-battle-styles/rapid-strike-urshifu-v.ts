@@ -1,14 +1,20 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, ConfirmPrompt } from '../../../game';
+import {
+  StoreLike,
+  State,
+  ChoosePokemonPrompt,
+  PlayerType,
+  SlotType,
+  ConfirmPrompt,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { GameMessage } from '../../../game/game-message';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class RapidStrikeUrshifuV extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_V, CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.POKEMON_V, CardTag.RAPID_STRIKE];
 
   public regulationMark = 'E';
 
@@ -27,13 +33,14 @@ export class RapidStrikeUrshifuV extends PokemonCard {
       name: 'Strafe',
       cost: [CardType.FIGHTING],
       damage: 30,
-      text: 'You may switch this Pokémon with 1 of your Benched Pokémon.'
-    }, {
+      text: 'You may switch this Pokémon with 1 of your Benched Pokémon.',
+    },
+    {
       name: 'Hundred Furious Blows',
       cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS],
       damage: 150,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'BST';
@@ -47,37 +54,40 @@ export class RapidStrikeUrshifuV extends PokemonCard {
   public fullName: string = 'Rapid Strike Urshifu V BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const hasBenched = player.bench.some(b => b.cards.length > 0);
+      const hasBenched = player.bench.some((b) => b.cards.length > 0);
       if (!hasBenched) {
         return state;
       }
 
-      state = store.prompt(state, new ConfirmPrompt(
-        effect.player.id,
-        GameMessage.WANT_TO_USE_ABILITY,
-      ), wantToUse => {
-        if (wantToUse) {
-
-          return store.prompt(state, new ChoosePokemonPrompt(
-            player.id,
-            GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
-            PlayerType.BOTTOM_PLAYER,
-            [SlotType.BENCH],
-            { allowCancel: true },
-          ), selected => {
-            if (!selected || selected.length === 0) {
-              return state;
-            }
-            const target = selected[0];
-            player.switchPokemon(target);
-          });
-        }
-        return state;
-      });
+      state = store.prompt(
+        state,
+        new ConfirmPrompt(effect.player.id, GameMessage.WANT_TO_USE_ABILITY),
+        (wantToUse) => {
+          if (wantToUse) {
+            return store.prompt(
+              state,
+              new ChoosePokemonPrompt(
+                player.id,
+                GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
+                PlayerType.BOTTOM_PLAYER,
+                [SlotType.BENCH],
+                { allowCancel: true },
+              ),
+              (selected) => {
+                if (!selected || selected.length === 0) {
+                  return state;
+                }
+                const target = selected[0];
+                player.switchPokemon(target);
+              },
+            );
+          }
+          return state;
+        },
+      );
     }
     return state;
   }

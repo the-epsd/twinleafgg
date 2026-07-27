@@ -21,15 +21,15 @@ export class Magcargo2 extends PokemonCard {
       name: 'Ram',
       cost: [R, C],
       damage: 30,
-      text: ''
+      text: '',
     },
     {
       name: 'Indomitable Blaze',
       cost: [R, C, C],
       damage: 60,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is a Pokémon-EX, this attack does 60 more damage.'
-    }
+      text: "If your opponent's Active Pokémon is a Pokémon-EX, this attack does 60 more damage.",
+    },
   ];
 
   public set: string = 'PRC';
@@ -44,7 +44,7 @@ export class Magcargo2 extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
       const opponentPokemon = opponent.active.getPokemonCard();
-      if (opponentPokemon && opponentPokemon.tags.includes(CardTag.POKEMON_EX)) {
+      if (opponentPokemon && opponentPokemon.hasTag(CardTag.POKEMON_EX)) {
         effect.damage += 60;
       }
     }

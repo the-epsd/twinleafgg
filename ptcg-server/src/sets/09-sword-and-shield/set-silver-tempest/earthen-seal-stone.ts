@@ -4,7 +4,15 @@
 
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, CardTag, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, PlayerType, SlotType, CardTarget, GameError } from '../../../game';
+import {
+  StoreLike,
+  State,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  CardTarget,
+  GameError,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { Attack } from '../../../game/store/card/pokemon-types';
 
@@ -23,28 +31,44 @@ export class EarthenSealStone extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Earthen Seal Stone';
   public fullName: string = 'Earthen Seal Stone SIT 154';
-  public text: string = 'The Pokémon V this card is attached to can use the VSTAR Power on this card. (You still need the necessary Energy to use this attack.) You may play any number of Item cards during your turn. Attach a Pokémon Tool to 1 of your Pokémon that doesn\'t already have a Pokémon Tool attached.';
+  public text: string =
+    "The Pokémon V this card is attached to can use the VSTAR Power on this card. (You still need the necessary Energy to use this attack.) You may play any number of Item cards during your turn. Attach a Pokémon Tool to 1 of your Pokémon that doesn't already have a Pokémon Tool attached.";
 
-  public attacks: Attack[] = [{
-    name: 'Stone Gift',
-    cost: [CardType.COLORLESS],
-    damage: 0,
-    text: 'You may play any number of Item cards during your turn. Attach a Pokémon Tool to 1 of your Pokémon that doesn\'t already have a Pokémon Tool attached. (You can\'t use more than 1 VSTAR Power in a game.)'
-  }];
+  public attacks: Attack[] = [
+    {
+      name: 'Stone Gift',
+      cost: [CardType.COLORLESS],
+      damage: 0,
+      text: "You may play any number of Item cards during your turn. Attach a Pokémon Tool to 1 of your Pokémon that doesn't already have a Pokémon Tool attached. (You can't use more than 1 VSTAR Power in a game.)",
+    },
+  ];
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Add the VSTAR attack to the attached Pokemon's attack list
     // Ref: set-cosmic-eclipse/dragonium-z.ts (CheckPokemonAttacksEffect to inject tool attack)
     if (effect instanceof CheckPokemonAttacksEffect) {
       // Use PokemonCardList.tools (not PokemonCard.tools) — tools are stored on the card list
-      if (!effect.player.active.tools.includes(this)) { return state; }
+      if (!effect.player.active.tools.includes(this)) {
+        return state;
+      }
       const pokemonCard = effect.player.active.getPokemonCard();
-      if (!pokemonCard) { return state; }
+      if (!pokemonCard) {
+        return state;
+      }
       // Only add attack if the Pokemon is a V, VMAX, VSTAR, or V-UNION
-      const vTags = [CardTag.POKEMON_V, CardTag.POKEMON_VMAX, CardTag.POKEMON_VSTAR, CardTag.POKEMON_VUNION];
-      if (!vTags.some(tag => pokemonCard.tags.includes(tag))) { return state; }
+      const vTags = [
+        CardTag.POKEMON_V,
+        CardTag.POKEMON_VMAX,
+        CardTag.POKEMON_VSTAR,
+        CardTag.POKEMON_VUNION,
+      ];
+      if (!vTags.some((tag) => pokemonCard.hasTag(tag))) {
+        return state;
+      }
       // Don't add the attack if the tool is blocked
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+        return state;
+      }
       if (!effect.attacks.includes(this.attacks[0])) {
         effect.attacks.push(this.attacks[0]);
       }
@@ -69,8 +93,8 @@ export class EarthenSealStone extends TrainerCard {
       // The game doesn't restrict Item plays per turn, so this is effectively a no-op.
 
       // "Attach a Pokemon Tool to 1 of your Pokemon that doesn't already have a Pokemon Tool attached."
-      const hasTool = player.hand.cards.some(c =>
-        c instanceof TrainerCard && (c as TrainerCard).trainerType === TrainerType.TOOL
+      const hasTool = player.hand.cards.some(
+        (c) => c instanceof TrainerCard && (c as TrainerCard).trainerType === TrainerType.TOOL,
       );
 
       if (!hasTool) {
@@ -85,45 +109,63 @@ export class EarthenSealStone extends TrainerCard {
         }
       });
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_ATTACH,
-        player.hand,
-        { trainerType: TrainerType.TOOL },
-        { min: 1, max: 1, allowCancel: true, blocked }
-      ), selectedCards => {
-        if (!selectedCards || selectedCards.length === 0) { return; }
-        const toolCard = selectedCards[0] as TrainerCard;
-
-        // Find Pokemon without a tool
-        const validTargets: CardTarget[] = [];
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-          if (cardList.tools.length === 0) {
-            validTargets.push(target);
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_ATTACH,
+          player.hand,
+          { trainerType: TrainerType.TOOL },
+          { min: 1, max: 1, allowCancel: true, blocked },
+        ),
+        (selectedCards) => {
+          if (!selectedCards || selectedCards.length === 0) {
+            return;
           }
-        });
+          const toolCard = selectedCards[0] as TrainerCard;
 
-        if (validTargets.length === 0) { return; }
+          // Find Pokemon without a tool
+          const validTargets: CardTarget[] = [];
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+            if (cardList.tools.length === 0) {
+              validTargets.push(target);
+            }
+          });
 
-        const blockedTargets: CardTarget[] = [];
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-          if (!validTargets.includes(target)) {
-            blockedTargets.push(target);
+          if (validTargets.length === 0) {
+            return;
           }
-        });
 
-        store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.ACTIVE, SlotType.BENCH],
-          { min: 1, max: 1, allowCancel: false, blocked: blockedTargets }
-        ), selectedPokemon => {
-          if (!selectedPokemon || selectedPokemon.length === 0) { return; }
-          const attachEffect = new AttachPokemonToolEffect(player, toolCard, selectedPokemon[0]);
-          store.reduceEffect(state, attachEffect);
-        });
-      });
+          const blockedTargets: CardTarget[] = [];
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+            if (!validTargets.includes(target)) {
+              blockedTargets.push(target);
+            }
+          });
+
+          store.prompt(
+            state,
+            new ChoosePokemonPrompt(
+              player.id,
+              GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
+              PlayerType.BOTTOM_PLAYER,
+              [SlotType.ACTIVE, SlotType.BENCH],
+              { min: 1, max: 1, allowCancel: false, blocked: blockedTargets },
+            ),
+            (selectedPokemon) => {
+              if (!selectedPokemon || selectedPokemon.length === 0) {
+                return;
+              }
+              const attachEffect = new AttachPokemonToolEffect(
+                player,
+                toolCard,
+                selectedPokemon[0],
+              );
+              store.reduceEffect(state, attachEffect);
+            },
+          );
+        },
+      );
     }
 
     return state;

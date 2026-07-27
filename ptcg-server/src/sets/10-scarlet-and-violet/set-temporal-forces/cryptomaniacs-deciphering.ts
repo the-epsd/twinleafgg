@@ -12,9 +12,13 @@ import { CardList } from '../../../game/store/state/card-list';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { OrderCardsPrompt, Player } from '../../../game';
 
-
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: CiphermaniacsCodebreaking, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: CiphermaniacsCodebreaking,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   let cards: Card[] = [];
 
@@ -34,48 +38,49 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   const deckTop = new CardList();
 
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARDS,
-    player.deck,
-    {},
-    { min: 2, max: 2, allowCancel: false }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARDS,
+      player.deck,
+      {},
+      { min: 2, max: 2, allowCancel: false },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   player.deck.moveCardsTo(cards, deckTop);
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);
 
-    return store.prompt(state, new OrderCardsPrompt(
-      player.id,
-      GameMessage.CHOOSE_CARDS_ORDER,
-      deckTop,
-      { allowCancel: false },
-    ), order => {
-      if (order === null) {
-        return state;
-      }
+    return store.prompt(
+      state,
+      new OrderCardsPrompt(player.id, GameMessage.CHOOSE_CARDS_ORDER, deckTop, {
+        allowCancel: false,
+      }),
+      (order) => {
+        if (order === null) {
+          return state;
+        }
 
-      deckTop.applyOrder(order);
-      deckTop.moveToTopOfDestination(player.deck);
-
-
-
-    });
+        deckTop.applyOrder(order);
+        deckTop.moveToTopOfDestination(player.deck);
+      },
+    );
   });
 }
 
 export class CiphermaniacsCodebreaking extends TrainerCard {
-
   public regulationMark = 'H';
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public tags = [CardTag.FUTURE];
+  protected _tags = [CardTag.FUTURE];
 
   public set: string = 'TEF';
 
@@ -83,9 +88,9 @@ export class CiphermaniacsCodebreaking extends TrainerCard {
 
   public setNumber: string = '145';
 
-  public name: string = 'Ciphermaniac\'s Codebreaking';
+  public name: string = "Ciphermaniac's Codebreaking";
 
-  public fullName: string = 'Ciphermaniac\'s Codebreaking TEF';
+  public fullName: string = "Ciphermaniac's Codebreaking TEF";
 
   public text: string =
     'Search your deck for 2 cards, shuffle your deck, then put those cards on top of it in any order.';
@@ -100,7 +105,6 @@ export class CiphermaniacsCodebreaking extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const generator = playCard(() => generator.next(), store, state, this, effect);
@@ -108,5 +112,4 @@ export class CiphermaniacsCodebreaking extends TrainerCard {
     }
     return state;
   }
-
 }

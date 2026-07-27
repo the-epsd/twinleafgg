@@ -17,7 +17,8 @@ export class FairyCharmLightning extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fairy Charm Lightning';
   public fullName: string = 'Fairy Charm Lightning UNB';
-  public text: string = 'Prevent all damage done to the Fairy Pokémon this card is attached to by attacks from your opponent\'s Lightning Pokémon-GX and Lightning Pokémon-EX.';
+  public text: string =
+    "Prevent all damage done to the Fairy Pokémon this card is attached to by attacks from your opponent's Lightning Pokémon-GX and Lightning Pokémon-EX.";
 
   // Ref: set-lost-thunder/fairy-charm-psychic.ts (Fairy Charm type-based damage prevention)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -37,7 +38,10 @@ export class FairyCharmLightning extends TrainerCard {
 
       // Check if attacking Pokemon is Lightning GX or EX
       const sourceCard = effect.source.getPokemonCard();
-      if (sourceCard && (sourceCard.tags.includes(CardTag.POKEMON_GX) || sourceCard.tags.includes(CardTag.POKEMON_EX))) {
+      if (
+        sourceCard &&
+        (sourceCard.hasTag(CardTag.POKEMON_GX) || sourceCard.hasTag(CardTag.POKEMON_EX))
+      ) {
         const checkSourceType = new CheckPokemonTypeEffect(effect.source);
         store.reduceEffect(state, checkSourceType);
         if (checkSourceType.cardTypes.includes(CardType.LIGHTNING)) {

@@ -11,7 +11,7 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class LeafeonV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = G;
   public hp: number = 210;
@@ -26,14 +26,14 @@ export class LeafeonV extends PokemonCard {
       name: 'Leaf Guard',
       cost: [G],
       damage: 30,
-      text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
+      text: "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).",
     },
     {
       name: 'Slashing Strike',
       cost: [G, G, C],
       damage: 180,
-      text: 'During your next turn, this Pokémon can\'t use Slashing Strike.'
-    }
+      text: "During your next turn, this Pokémon can't use Slashing Strike.",
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -54,14 +54,18 @@ export class LeafeonV extends PokemonCard {
     }
 
     // Intercept damage
-    if (effect instanceof DealDamageEffect
-      && effect.target.marker.hasMarker(this.LEAF_GUARD_MARKER, this)) {
+    if (
+      effect instanceof DealDamageEffect &&
+      effect.target.marker.hasMarker(this.LEAF_GUARD_MARKER, this)
+    ) {
       effect.damage = Math.max(0, effect.damage - 30);
     }
 
     // Cleanup at end of opponent's turn
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_LEAF_GUARD_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_LEAF_GUARD_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_LEAF_GUARD_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {

@@ -14,7 +14,7 @@ import {
 } from '../../../game/store/prefabs/prefabs';
 
 export class ZoroarkBreak extends PokemonCard {
-  public tags = [CardTag.BREAK];
+  protected _tags = [CardTag.BREAK];
   public stage: Stage = Stage.BREAK;
   public evolvesFrom: string = 'Zoroark';
   public cardType: CardType = D;

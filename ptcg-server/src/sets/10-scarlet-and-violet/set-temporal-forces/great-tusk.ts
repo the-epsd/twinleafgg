@@ -6,12 +6,11 @@ import { Effect } from '../../../game/store/effects/effect';
 import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class GreatTusk extends PokemonCard {
-
   public regulationMark = 'H';
 
   public stage: Stage = Stage.BASIC;
 
-  public tags = [CardTag.ANCIENT];
+  protected _tags = [CardTag.ANCIENT];
 
   public cardType: CardType = CardType.FIGHTING;
 
@@ -26,14 +25,14 @@ export class GreatTusk extends PokemonCard {
       name: 'Land Collapse',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 0,
-      text: 'Discard the top card of your opponent\'s deck. If you played an Ancient Supporter card from your hand during this turn, discard 3 more cards.'
+      text: "Discard the top card of your opponent's deck. If you played an Ancient Supporter card from your hand during this turn, discard 3 more cards.",
     },
     {
       name: 'Giant Tusk',
       cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS, CardType.COLORLESS],
       damage: 160,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'TEF';
@@ -47,16 +46,23 @@ export class GreatTusk extends PokemonCard {
   public fullName: string = 'Great Tusk TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // Discard 1 card from opponent's deck 
-      MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: 1, sourceCard: this, sourceEffect: this.attacks[0] });
+      // Discard 1 card from opponent's deck
+      MOVE_CARDS(store, state, opponent.deck, opponent.discard, {
+        count: 1,
+        sourceCard: this,
+        sourceEffect: this.attacks[0],
+      });
 
       if (player.ancientSupporter == true) {
-        MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: 3, sourceCard: this, sourceEffect: this.attacks[0] });
+        MOVE_CARDS(store, state, opponent.deck, opponent.discard, {
+          count: 3,
+          sourceCard: this,
+          sourceEffect: this.attacks[0],
+        });
       }
 
       return state;

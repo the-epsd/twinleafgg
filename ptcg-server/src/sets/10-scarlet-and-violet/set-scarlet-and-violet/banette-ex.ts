@@ -1,6 +1,14 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, GameError, TrainerCard, ShowCardsPrompt } from '../../../game';
+import {
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  GameError,
+  TrainerCard,
+  ShowCardsPrompt,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
@@ -8,10 +16,9 @@ import { PlayItemEffect } from '../../../game/store/effects/play-card-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Banetteex extends PokemonCard {
-
   public regulationMark = 'G';
 
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
 
   public stage: Stage = Stage.STAGE_1;
 
@@ -32,7 +39,7 @@ export class Banetteex extends PokemonCard {
       name: 'Everlasting Darkness',
       cost: [CardType.PSYCHIC],
       damage: 30,
-      text: 'During your opponent\'s next turn, they can\'t play any Item cards from their hand.',
+      text: "During your opponent's next turn, they can't play any Item cards from their hand.",
     },
     {
       name: 'Poltergeist',
@@ -41,7 +48,6 @@ export class Banetteex extends PokemonCard {
       damageCalculation: 'x',
       text: 'Your opponent reveals their hand. This attack does 60 damage for each Trainer card you find there.',
     },
-
   ];
   public set: string = 'SVI';
 
@@ -56,7 +62,6 @@ export class Banetteex extends PokemonCard {
   public readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -68,18 +73,22 @@ export class Banetteex extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      state = store.prompt(state, new ShowCardsPrompt(
-        player.id,
-        GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-        opponent.hand.cards
-      ), () => {
+      state = store.prompt(
+        state,
+        new ShowCardsPrompt(
+          player.id,
+          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+          opponent.hand.cards,
+        ),
+        () => {
+          const cardsInOpponentHand = opponent.hand.cards.filter(
+            (card) => card instanceof TrainerCard,
+          ).length;
+          const damage = opponent.hand.cards.slice(0, cardsInOpponentHand);
 
-        const cardsInOpponentHand = opponent.hand.cards.filter(card => card instanceof TrainerCard).length;
-        const damage = opponent.hand.cards.slice(0, cardsInOpponentHand);
-
-        effect.damage = damage.length * 60;
-
-      });
+          effect.damage = damage.length * 60;
+        },
+      );
     }
 
     if (effect instanceof PlayItemEffect) {
@@ -95,4 +104,3 @@ export class Banetteex extends PokemonCard {
     return state;
   }
 }
-

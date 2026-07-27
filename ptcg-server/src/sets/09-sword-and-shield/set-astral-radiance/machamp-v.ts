@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class MachampV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = F;
   public hp: number = 220;
@@ -22,14 +22,14 @@ export class MachampV extends PokemonCard {
       cost: [F, C],
       damage: 50,
       damageCalculation: '+',
-      text: 'If your Benched Pokémon have any damage counters on them, this attack does 50 more damage.'
+      text: 'If your Benched Pokémon have any damage counters on them, this attack does 50 more damage.',
     },
     {
       name: 'Seismic Toss',
       cost: [F, F, C],
       damage: 140,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -44,7 +44,7 @@ export class MachampV extends PokemonCard {
     // Ref: set-brilliant-stars/wormadam-3.ts (checking bench for condition)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      const hasBenchDamage = player.bench.some(b => b.cards.length > 0 && b.damage > 0);
+      const hasBenchDamage = player.bench.some((b) => b.cards.length > 0 && b.damage > 0);
       if (hasBenchDamage) {
         effect.damage += 50;
       }

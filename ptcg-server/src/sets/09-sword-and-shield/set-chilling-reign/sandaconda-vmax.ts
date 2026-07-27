@@ -4,13 +4,22 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { CardTransfer, GameMessage, MoveEnergyPrompt, PlayerType, SlotType, StoreLike, State, StateUtils } from '../../../game';
+import {
+  CardTransfer,
+  GameMessage,
+  MoveEnergyPrompt,
+  PlayerType,
+  SlotType,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class SandacondaVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Sandaconda V';
   public cardType: CardType = F;
@@ -23,14 +32,14 @@ export class SandacondaVmax extends PokemonCard {
       name: 'Sand Pulse',
       cost: [F],
       damage: 60,
-      text: 'This attack also does 20 damage to each of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack also does 20 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'G-Max Cyclone',
       cost: [F, F, C],
       damage: 180,
-      text: 'Move any amount of Energy from your Pokémon to your other Pokémon in any way you like.'
-    }
+      text: 'Move any amount of Energy from your Pokémon to your other Pokémon in any way you like.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -48,7 +57,7 @@ export class SandacondaVmax extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // 20 damage to each of opponent's Benched Pokemon
-      opponent.bench.forEach(benched => {
+      opponent.bench.forEach((benched) => {
         if (benched.cards.length > 0) {
           const benchDamage = new PutDamageEffect(effect, 20);
           benchDamage.target = benched;
@@ -62,21 +71,25 @@ export class SandacondaVmax extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      store.prompt(state, new MoveEnergyPrompt(
-        player.id,
-        GameMessage.MOVE_ENERGY_CARDS,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY },
-        { min: 0, max: 99, allowCancel: false }
-      ), result => {
-        const transfers: CardTransfer[] = result || [];
-        transfers.forEach(transfer => {
-          const source = StateUtils.getTarget(state, player, transfer.from);
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          source.moveCardTo(transfer.card, target);
-        });
-      });
+      store.prompt(
+        state,
+        new MoveEnergyPrompt(
+          player.id,
+          GameMessage.MOVE_ENERGY_CARDS,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { superType: SuperType.ENERGY },
+          { min: 0, max: 99, allowCancel: false },
+        ),
+        (result) => {
+          const transfers: CardTransfer[] = result || [];
+          transfers.forEach((transfer) => {
+            const source = StateUtils.getTarget(state, player, transfer.from);
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            source.moveCardTo(transfer.card, target);
+          });
+        },
+      );
     }
 
     return state;

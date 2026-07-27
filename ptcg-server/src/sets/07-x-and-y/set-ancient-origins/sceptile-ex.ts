@@ -7,11 +7,14 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP, YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../../game/store/prefabs/attack-effects';
+import {
+  YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP,
+  YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED,
+} from '../../../game/store/prefabs/attack-effects';
 import { StateUtils } from '../../../game/store/state-utils';
 
 export class SceptileEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = G;
   public hp: number = 170;
@@ -23,15 +26,15 @@ export class SceptileEx extends PokemonCard {
       name: 'Sleep Poison',
       cost: [G],
       damage: 10,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Asleep and Poisoned.'
+      text: "Flip a coin. If heads, your opponent's Active Pokémon is now Asleep and Poisoned.",
     },
     {
       name: 'Unseen Claw',
       cost: [G, C],
       damage: 60,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is affected by a Special Condition, this attack does 70 more damage.'
-    }
+      text: "If your opponent's Active Pokémon is affected by a Special Condition, this attack does 70 more damage.",
+    },
   ];
 
   public set: string = 'AOR';
@@ -44,7 +47,7 @@ export class SceptileEx extends PokemonCard {
     // Attack 1: Sleep Poison
     // Ref: set-roaring-skies/gligar.ts (Stun Poison)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (result) {
           YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(store, state, effect);
           YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED(store, state, effect);

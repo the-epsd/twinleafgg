@@ -11,25 +11,30 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 export class Salamenceex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Shelgon';
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public cardType: CardType = C;
   public hp: number = 160;
   public weakness = [{ type: C }];
-  public resistance = [{ type: R, value: -30 }, { type: F, value: -30 }];
+  public resistance = [
+    { type: R, value: -30 },
+    { type: F, value: -30 },
+  ];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Volcanic Flame',
-    cost: [R, R, C, C],
-    damage: 150,
-    text: 'Discard the top 5 cards of your deck.'
-  },
-  {
-    name: 'Hydro Wave',
-    cost: [W, W, C, C],
-    damage: 0,
-    text: 'Discard all [W] Energy attached to Salamence ex. This attack does 30 damage to each of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-  }];
+  public attacks = [
+    {
+      name: 'Volcanic Flame',
+      cost: [R, R, C, C],
+      damage: 150,
+      text: 'Discard the top 5 cards of your deck.',
+    },
+    {
+      name: 'Hydro Wave',
+      cost: [W, W, C, C],
+      damage: 0,
+      text: "Discard all [W] Energy attached to Salamence ex. This attack does 30 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
+  ];
 
   public set: string = 'PK';
   public cardImage: string = 'assets/cardback.png';
@@ -38,7 +43,6 @@ export class Salamenceex extends PokemonCard {
   public fullName: string = 'Salamence ex PK';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       player.deck.moveTo(player.discard, 5);
@@ -49,7 +53,7 @@ export class Salamenceex extends PokemonCard {
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, player.active);
       store.reduceEffect(state, checkProvidedEnergy);
 
-      checkProvidedEnergy.energyMap.forEach(em => {
+      checkProvidedEnergy.energyMap.forEach((em) => {
         if (em.provides.includes(CardType.WATER) || em.provides.includes(CardType.ANY)) {
           MOVE_CARDS(store, state, player.active, player.discard, { cards: [em.card] });
         }

@@ -4,35 +4,51 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { ChoosePokemonPrompt, GameMessage, PlayerType, PowerType, SlotType, StoreLike, State, StateUtils, PokemonCardList } from '../../../game';
+import {
+  ChoosePokemonPrompt,
+  GameMessage,
+  PlayerType,
+  PowerType,
+  SlotType,
+  StoreLike,
+  State,
+  StateUtils,
+  PokemonCardList,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { CardTarget } from '../../../game/store/actions/play-card-action';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, CONFIRMATION_PROMPT } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  CONFIRMATION_PROMPT,
+} from '../../../game/store/prefabs/prefabs';
 import { PUT_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_HAND } from '../../../game/store/prefabs/attack-effects';
 
 export class LiepardV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = D;
   public hp: number = 190;
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Hidden Claw',
-    powerType: PowerType.ABILITY,
-    text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may discard a Pokémon Tool from a Pokémon (yours or your opponent\'s).'
-  }];
+  public powers = [
+    {
+      name: 'Hidden Claw',
+      powerType: PowerType.ABILITY,
+      text: "When you play this Pokémon from your hand onto your Bench during your turn, you may discard a Pokémon Tool from a Pokémon (yours or your opponent's).",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Shadow Ripper',
       cost: [D, C, C],
       damage: 110,
-      text: 'You may put this Pokémon and all attached cards into your hand.'
-    }
+      text: 'You may put this Pokémon and all attached cards into your hand.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -71,7 +87,7 @@ export class LiepardV extends PokemonCard {
         return state;
       }
 
-      CONFIRMATION_PROMPT(store, state, player, result => {
+      CONFIRMATION_PROMPT(store, state, player, (result) => {
         if (!result) return;
 
         // Block Pokemon without tools
@@ -83,23 +99,27 @@ export class LiepardV extends PokemonCard {
           if (cardList.tools.length === 0) blocked.push(target);
         });
 
-        store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
-          PlayerType.ANY,
-          [SlotType.ACTIVE, SlotType.BENCH],
-          { allowCancel: false, min: 1, max: 1, blocked }
-        ), (selected: PokemonCardList[] | null) => {
-          const targets: PokemonCardList[] = selected || [];
-          if (targets.length === 0) return;
+        store.prompt(
+          state,
+          new ChoosePokemonPrompt(
+            player.id,
+            GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
+            PlayerType.ANY,
+            [SlotType.ACTIVE, SlotType.BENCH],
+            { allowCancel: false, min: 1, max: 1, blocked },
+          ),
+          (selected: PokemonCardList[] | null) => {
+            const targets: PokemonCardList[] = selected || [];
+            if (targets.length === 0) return;
 
-          const target = targets[0];
-          if (target.tools.length > 0) {
-            // Find which player owns this target to discard tool to correct discard pile
-            const targetOwner = StateUtils.findOwner(state, target);
-            target.moveCardTo(target.tools[0], targetOwner.discard);
-          }
-        });
+            const target = targets[0];
+            if (target.tools.length > 0) {
+              // Find which player owns this target to discard tool to correct discard pile
+              const targetOwner = StateUtils.findOwner(state, target);
+              target.moveCardTo(target.tools[0], targetOwner.discard);
+            }
+          },
+        );
       });
     }
 
@@ -111,7 +131,7 @@ export class LiepardV extends PokemonCard {
 
     if (effect instanceof AfterAttackEffect && this.wantsToShadowRipper) {
       this.wantsToShadowRipper = false;
-      CONFIRMATION_PROMPT(store, state, effect.player, result => {
+      CONFIRMATION_PROMPT(store, state, effect.player, (result) => {
         if (result) {
           PUT_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_HAND(store, state, effect);
         }

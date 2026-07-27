@@ -10,7 +10,7 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs
 import { UseAttackEffect } from '../../../game/store/effects/game-effects';
 
 export class Slaking extends PokemonCard {
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Vigoroth';
   public cardType: CardType = C;
@@ -18,11 +18,13 @@ export class Slaking extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C, C, C];
 
-  public powers = [{
-    name: 'Act Freely',
-    powerType: PowerType.ABILITY,
-    text: 'If a Stadium is in play, this Pokémon can\'t attack.'
-  }];
+  public powers = [
+    {
+      name: 'Act Freely',
+      powerType: PowerType.ABILITY,
+      text: "If a Stadium is in play, this Pokémon can't attack.",
+    },
+  ];
 
   public attacks = [
     {
@@ -30,8 +32,8 @@ export class Slaking extends PokemonCard {
       cost: [C, C, C],
       damage: 120,
       damageCalculation: '+',
-      text: 'This attack does 30 more damage for each of your opponent\'s Benched Pokémon.'
-    }
+      text: "This attack does 30 more damage for each of your opponent's Benched Pokémon.",
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -62,7 +64,7 @@ export class Slaking extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const benchedCount = opponent.bench.filter(b => b.cards.length > 0).length;
+      const benchedCount = opponent.bench.filter((b) => b.cards.length > 0).length;
       effect.damage += 30 * benchedCount;
     }
 

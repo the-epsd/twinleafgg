@@ -6,9 +6,16 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PlayerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { AddSpecialConditionsEffect, DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import {
+  AddSpecialConditionsEffect,
+  DealDamageEffect,
+  PutDamageEffect,
+} from '../../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Hippowdon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -26,14 +33,14 @@ export class Hippowdon extends PokemonCard {
       name: 'Resistance Desert',
       cost: [F, C, C],
       damage: 60,
-      text: 'During your opponent\'s next turn, prevent all effects of attacks, including damage, done to this Pokémon by Pokémon-EX.'
+      text: "During your opponent's next turn, prevent all effects of attacks, including damage, done to this Pokémon by Pokémon-EX.",
     },
     {
       name: 'Double-Edge',
       cost: [F, F, C, C],
       damage: 100,
-      text: 'This Pokémon does 20 damage to itself.'
-    }
+      text: 'This Pokémon does 20 damage to itself.',
+    },
   ];
 
   public set: string = 'PRC';
@@ -52,17 +59,24 @@ export class Hippowdon extends PokemonCard {
       opponent.marker.addMarker(this.CLEAR_RESISTANCE_DESERT_MARKER, this);
     }
 
-    if ((effect instanceof PutDamageEffect || effect instanceof DealDamageEffect || effect instanceof AddSpecialConditionsEffect)
-      && effect.target.cards.includes(this)
-      && effect.target.marker.hasMarker(this.RESISTANCE_DESERT_MARKER, this)) {
+    if (
+      (effect instanceof PutDamageEffect ||
+        effect instanceof DealDamageEffect ||
+        effect instanceof AddSpecialConditionsEffect) &&
+      effect.target.cards.includes(this) &&
+      effect.target.marker.hasMarker(this.RESISTANCE_DESERT_MARKER, this)
+    ) {
       const sourcePokemon = effect.source.getPokemonCard();
-      if (sourcePokemon && sourcePokemon.tags.includes(CardTag.POKEMON_EX)) {
+      if (sourcePokemon && sourcePokemon.hasTag(CardTag.POKEMON_EX)) {
         effect.preventDefault = true;
         return state;
       }
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_RESISTANCE_DESERT_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_RESISTANCE_DESERT_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_RESISTANCE_DESERT_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {

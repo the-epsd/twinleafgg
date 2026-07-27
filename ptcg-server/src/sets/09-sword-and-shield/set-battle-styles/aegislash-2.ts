@@ -4,12 +4,27 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, PlayerType } from '../../../game';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  GameError,
+  GameMessage,
+  PlayerType,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { WAS_ATTACK_USED, WAS_POWER_USED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  USE_ABILITY_ONCE_PER_TURN,
+  ABILITY_USED,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  IS_ABILITY_BLOCKED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Aegislash2 extends PokemonCard {
   public readonly STANCE_CHANGE_MARKER = 'AEGISLASH2_BST_STANCE_CHANGE_MARKER';
@@ -23,20 +38,22 @@ export class Aegislash2 extends PokemonCard {
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C, C];
 
-  public powers = [{
-    name: 'Stance Change',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may switch this Pokémon with an Aegislash in your hand. Any attached cards, damage counters, Special Conditions, turns in play, and any other effects remain on the new Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Stance Change',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn, you may switch this Pokémon with an Aegislash in your hand. Any attached cards, damage counters, Special Conditions, turns in play, and any other effects remain on the new Pokémon.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Gigaton Bash',
       cost: [M, C],
       damage: 70,
-      text: 'During your opponent\'s next turn, prevent all damage done to this Pokémon by attacks from Pokémon VMAX.'
-    }
+      text: "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Pokémon VMAX.",
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -58,7 +75,7 @@ export class Aegislash2 extends PokemonCard {
 
       // Check if there's an Aegislash in hand (different card instance)
       const aegislashInHand = player.hand.cards.filter(
-        c => c instanceof PokemonCard && c.name === 'Aegislash' && c !== this
+        (c) => c instanceof PokemonCard && c.name === 'Aegislash' && c !== this,
       );
 
       if (aegislashInHand.length === 0) {
@@ -88,31 +105,35 @@ export class Aegislash2 extends PokemonCard {
         }
       });
 
-      store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.hand,
-        { superType: SuperType.POKEMON },
-        { min: 1, max: 1, allowCancel: false, blocked }
-      ), selected => {
-        if (!selected || selected.length === 0) {
-          return;
-        }
-
-        const newAegislash = selected[0] as PokemonCard;
-
-        // Swap: remove this card from the PokemonCardList, insert new one
-        const thisIndex = cardList.cards.indexOf(this);
-        if (thisIndex !== -1) {
-          cardList.cards.splice(thisIndex, 1);
-          const handIndex = player.hand.cards.indexOf(newAegislash);
-          if (handIndex !== -1) {
-            player.hand.cards.splice(handIndex, 1);
+      store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.hand,
+          { superType: SuperType.POKEMON },
+          { min: 1, max: 1, allowCancel: false, blocked },
+        ),
+        (selected) => {
+          if (!selected || selected.length === 0) {
+            return;
           }
-          cardList.cards.splice(thisIndex, 0, newAegislash);
-          player.hand.cards.push(this);
-        }
-      });
+
+          const newAegislash = selected[0] as PokemonCard;
+
+          // Swap: remove this card from the PokemonCardList, insert new one
+          const thisIndex = cardList.cards.indexOf(this);
+          if (thisIndex !== -1) {
+            cardList.cards.splice(thisIndex, 1);
+            const handIndex = player.hand.cards.indexOf(newAegislash);
+            if (handIndex !== -1) {
+              player.hand.cards.splice(handIndex, 1);
+            }
+            cardList.cards.splice(thisIndex, 0, newAegislash);
+            player.hand.cards.push(this);
+          }
+        },
+      );
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.STANCE_CHANGE_MARKER, this);
@@ -128,19 +149,23 @@ export class Aegislash2 extends PokemonCard {
     }
 
     // Prevent damage from VMAX attacks during opponent's next turn
-    if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect)
-      && effect.target.cards.includes(this)
-      && effect.target.marker.hasMarker(this.GIGATON_BASH_MARKER, this)) {
+    if (
+      (effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
+      effect.target.cards.includes(this) &&
+      effect.target.marker.hasMarker(this.GIGATON_BASH_MARKER, this)
+    ) {
       const sourceCard = effect.source.getPokemonCard();
-      if (sourceCard && sourceCard.tags.includes(CardTag.POKEMON_VMAX)) {
+      if (sourceCard && sourceCard.hasTag(CardTag.POKEMON_VMAX)) {
         effect.preventDefault = true;
         return state;
       }
     }
 
     // Cleanup markers at end of opponent's turn
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_GIGATON_BASH_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_GIGATON_BASH_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_GIGATON_BASH_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {

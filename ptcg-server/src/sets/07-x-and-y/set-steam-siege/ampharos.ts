@@ -4,14 +4,27 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { CardTarget, GameError, GameMessage, PlayerType, PowerType, StoreLike, State, StateUtils } from '../../../game';
+import {
+  CardTarget,
+  GameError,
+  GameMessage,
+  PlayerType,
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { SlotType } from '../../../game/store/actions/play-card-action';
 import { Effect } from '../../../game/store/effects/effect';
 import {
-  WAS_ATTACK_USED, WAS_POWER_USED, COIN_FLIP_PROMPT,
-  IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED,
-  REMOVE_MARKER_AT_END_OF_TURN
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  COIN_FLIP_PROMPT,
+  IS_ABILITY_BLOCKED,
+  USE_ABILITY_ONCE_PER_TURN,
+  ABILITY_USED,
+  REMOVE_MARKER_AT_END_OF_TURN,
 } from '../../../game/store/prefabs/prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../../game/store/prefabs/attack-effects';
 
@@ -26,12 +39,14 @@ export class Ampharos extends PokemonCard {
 
   public readonly SHOCKING_LIGHT_MARKER = 'AMPHAROS_STS_SHOCKING_LIGHT_MARKER';
 
-  public powers = [{
-    name: 'Shocking Light',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), you may put 3 damage counters on 1 of your opponent\'s Pokémon-EX.'
-  }];
+  public powers = [
+    {
+      name: 'Shocking Light',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: "Once during your turn (before your attack), you may put 3 damage counters on 1 of your opponent's Pokémon-EX.",
+    },
+  ];
 
   public attacks = [
     {
@@ -39,8 +54,8 @@ export class Ampharos extends PokemonCard {
       cost: [L, L, C],
       damage: 80,
       damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 40 more damage. If tails, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
+      text: "Flip a coin. If heads, this attack does 40 more damage. If tails, your opponent's Active Pokémon is now Paralyzed.",
+    },
   ];
 
   public set: string = 'STS';
@@ -64,7 +79,7 @@ export class Ampharos extends PokemonCard {
       let hasEX = false;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         const pokemonCard = cardList.getPokemonCard();
-        if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_EX)) {
+        if (pokemonCard && pokemonCard.hasTag(CardTag.POKEMON_EX)) {
           hasEX = true;
         }
       });
@@ -80,22 +95,28 @@ export class Ampharos extends PokemonCard {
       const blocked: CardTarget[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
         const pokemonCard = cardList.getPokemonCard();
-        if (!pokemonCard || !pokemonCard.tags.includes(CardTag.POKEMON_EX)) {
+        if (!pokemonCard || !pokemonCard.hasTag(CardTag.POKEMON_EX)) {
           blocked.push(target);
         }
       });
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false, blocked }
-      ), targets => {
-        if (!targets || targets.length === 0) { return; }
-        const target = targets[0];
-        target.damage += 30;
-      });
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON,
+          PlayerType.TOP_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { min: 1, max: 1, allowCancel: false, blocked },
+        ),
+        (targets) => {
+          if (!targets || targets.length === 0) {
+            return;
+          }
+          const target = targets[0];
+          target.damage += 30;
+        },
+      );
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.SHOCKING_LIGHT_MARKER, this);
@@ -104,7 +125,7 @@ export class Ampharos extends PokemonCard {
     // Ref: AGENTS-patterns.md (coin flip with heads/tails effects)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      COIN_FLIP_PROMPT(store, state, player, result => {
+      COIN_FLIP_PROMPT(store, state, player, (result) => {
         if (result) {
           effect.damage += 40;
         } else {

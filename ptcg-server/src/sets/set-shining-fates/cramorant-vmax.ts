@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class CramorantVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Cramorant V';
   public cardType: CardType = C;
@@ -25,8 +25,8 @@ export class CramorantVmax extends PokemonCard {
       cost: [C, C, C],
       damage: 80,
       damageCalculation: 'x',
-      text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 80 damage for each heads.'
-    }
+      text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 80 damage for each heads.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -52,9 +52,7 @@ export class CramorantVmax extends PokemonCard {
       effect.damage = 0;
 
       for (let i = 0; i < energyCount; i++) {
-        store.prompt(state, [
-          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-        ], result => {
+        store.prompt(state, [new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)], (result) => {
           if (result === true) {
             effect.damage += 80;
           }

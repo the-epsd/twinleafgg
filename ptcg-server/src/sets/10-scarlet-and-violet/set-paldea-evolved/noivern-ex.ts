@@ -5,16 +5,18 @@ import { StoreLike, State, PlayerType, StateUtils, GameError, GameMessage } from
 
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { AttachEnergyEffect, PlayStadiumEffect } from '../../../game/store/effects/play-card-effects';
+import {
+  AttachEnergyEffect,
+  PlayStadiumEffect,
+} from '../../../game/store/effects/play-card-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Noivernex extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom = 'Noibat';
 
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
 
   public regulationMark = 'G';
 
@@ -27,13 +29,13 @@ export class Noivernex extends PokemonCard {
       name: 'Covert Flight',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 70,
-      text: 'During your opponent\'s next turn, prevent all damage done to this Pokémon by attacks from Basic Pokémon.'
+      text: "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Basic Pokémon.",
     },
     {
       name: 'Dominating Echo',
       cost: [CardType.PSYCHIC, CardType.DARK],
       damage: 140,
-      text: 'During your opponent\'s next turn, they can\'t play any Special Energy or Stadium cards from their hand.'
+      text: "During your opponent's next turn, they can't play any Special Energy or Stadium cards from their hand.",
     },
   ];
 
@@ -47,13 +49,14 @@ export class Noivernex extends PokemonCard {
 
   public fullName: string = 'Noivern ex PAL';
 
-  public readonly PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER: string = 'PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER';
-  public readonly CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER: string = 'CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER';
+  public readonly PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER: string =
+    'PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER';
+  public readonly CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER: string =
+    'CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER';
 
   public readonly DOMINATING_ECHO_MARKER = 'DOMINATING_ECHO_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -62,8 +65,10 @@ export class Noivernex extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof PutDamageEffect
-      && effect.target.marker.hasMarker(this.PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER)) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.marker.hasMarker(this.PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER)
+    ) {
       const card = effect.source.getPokemonCard();
       const stage = card !== undefined ? card.stage : undefined;
 
@@ -87,7 +92,10 @@ export class Noivernex extends PokemonCard {
       }
     }
 
-    if (effect instanceof AttachEnergyEffect && effect.energyCard.energyType === EnergyType.SPECIAL) {
+    if (
+      effect instanceof AttachEnergyEffect &&
+      effect.energyCard.energyType === EnergyType.SPECIAL
+    ) {
       const player = effect.player;
       if (player.marker.hasMarker(this.DOMINATING_ECHO_MARKER, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
@@ -95,9 +103,13 @@ export class Noivernex extends PokemonCard {
     }
 
     if (effect instanceof EndTurnEffect) {
-
-      if (effect.player.marker.hasMarker(this.CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER, this)) {
-        effect.player.marker.removeMarker(this.CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER, this);
+      if (
+        effect.player.marker.hasMarker(this.CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER, this)
+      ) {
+        effect.player.marker.removeMarker(
+          this.CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER,
+          this,
+        );
         const opponent = StateUtils.getOpponent(state, effect.player);
         opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
           cardList.marker.removeMarker(this.PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER, this);
@@ -106,7 +118,6 @@ export class Noivernex extends PokemonCard {
     }
 
     if (effect instanceof EndTurnEffect) {
-
       if (effect.player.marker.hasMarker(this.DOMINATING_ECHO_MARKER, this)) {
         effect.player.marker.removeMarker(this.DOMINATING_ECHO_MARKER, this);
         const opponent = StateUtils.getOpponent(state, effect.player);
@@ -118,5 +129,4 @@ export class Noivernex extends PokemonCard {
 
     return state;
   }
-
 }

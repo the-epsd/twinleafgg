@@ -7,28 +7,34 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, BLOCK_RETREAT } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  BLOCK_RETREAT,
+} from '../../../game/store/prefabs/prefabs';
 export class DrednawV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 210;
   public weakness = [{ type: L }];
   public retreat = [C, C, C, C];
 
-  public powers = [{
-    name: 'Solid Shell',
-    powerType: PowerType.ABILITY,
-    text: 'This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: 'Solid Shell',
+      powerType: PowerType.ABILITY,
+      text: 'This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Powerful Bite',
       cost: [W, W, C],
       damage: 130,
-      text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
-    }
+      text: "During your opponent's next turn, the Defending Pokémon can't retreat.",
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -41,7 +47,11 @@ export class DrednawV extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Solid Shell (passive - permanent damage reduction)
     // Ref: set-sword-and-shield/sandaconda-2.ts (Sand Sac - DealDamageEffect + IS_ABILITY_BLOCKED)
-    if (effect instanceof DealDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof DealDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = StateUtils.findOwner(state, effect.target);
 
       if (IS_ABILITY_BLOCKED(store, state, player, this)) {

@@ -6,8 +6,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class IronCrown extends PokemonCard {
-
-  public tags = [CardTag.FUTURE];
+  protected _tags = [CardTag.FUTURE];
 
   public stage: Stage = Stage.BASIC;
 
@@ -26,16 +25,15 @@ export class IronCrown extends PokemonCard {
       name: 'Deleting Slash',
       cost: [CardType.METAL, CardType.COLORLESS],
       damage: 40,
-      text: 'If your opponent has 3 or more Benched Pokémon, this attack does 80 more damage.'
+      text: 'If your opponent has 3 or more Benched Pokémon, this attack does 80 more damage.',
     },
 
     {
       name: 'Slicing Blade',
       cost: [CardType.METAL, CardType.COLORLESS, CardType.COLORLESS],
       damage: 100,
-      text: ''
+      text: '',
     },
-
   ];
 
   public set: string = 'SSP';
@@ -63,5 +61,4 @@ export class IronCrown extends PokemonCard {
 
     return state;
   }
-
 }

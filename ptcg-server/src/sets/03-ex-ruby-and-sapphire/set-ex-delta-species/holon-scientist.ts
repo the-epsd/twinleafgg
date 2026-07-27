@@ -1,22 +1,33 @@
-import { Card, ChooseCardsPrompt, GameError, GameLog, GameMessage, StateUtils } from '../../../game';
+import {
+  Card,
+  ChooseCardsPrompt,
+  GameError,
+  GameLog,
+  GameMessage,
+  StateUtils,
+} from '../../../game';
 import { CardTag, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { DRAW_CARDS, DRAW_CARDS_UNTIL_CARDS_IN_HAND, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import {
+  DRAW_CARDS,
+  DRAW_CARDS_UNTIL_CARDS_IN_HAND,
+  MOVE_CARDS,
+} from '../../../game/store/prefabs/prefabs';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class HolonScientist extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-  public tags = [CardTag.DELTA_SPECIES];
+  protected _tags = [CardTag.DELTA_SPECIES];
   public set: string = 'DS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '97';
   public name: string = 'Holon Scientist';
   public fullName: string = 'Holon Scientist DS';
-  public text: string = 'Discard a card from your hand. If you can\'t discard a card from your hand, you can\'t play this card.\n\nIf you have less cards in your hand than your opponent, draw cards until you have the same number of cards as your opponent.';
+  public text: string =
+    "Discard a card from your hand. If you can't discard a card from your hand, you can't play this card.\n\nIf you have less cards in your hand than your opponent, draw cards until you have the same number of cards as your opponent.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -29,9 +40,9 @@ export class HolonScientist extends TrainerCard {
       }
 
       let cards: Card[] = [];
-      cards = player.hand.cards.filter(c => c !== effect.trainerCard);
+      cards = player.hand.cards.filter((c) => c !== effect.trainerCard);
 
-      const hasCardInHand = player.hand.cards.some(c => {
+      const hasCardInHand = player.hand.cards.some((c) => {
         return c instanceof Card;
       });
       if (!hasCardInHand) {
@@ -44,23 +55,30 @@ export class HolonScientist extends TrainerCard {
       }
 
       if (cards.length > 1) {
-        state = store.prompt(state, new ChooseCardsPrompt(
-          effect.player,
-          GameMessage.CHOOSE_CARD_TO_DISCARD,
-          player.hand,
-          {},
-          { allowCancel: false, min: 1, max: 1 }
-        ), cards => {
-          cards = cards || [];
-          if (cards.length === 0) {
-            return;
-          }
-          player.hand.moveCardsTo(cards, player.discard);
-          cards.forEach((card, index) => {
-            store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
-          });
-          DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, opponent.hand.cards.length);
-        });
+        state = store.prompt(
+          state,
+          new ChooseCardsPrompt(
+            effect.player,
+            GameMessage.CHOOSE_CARD_TO_DISCARD,
+            player.hand,
+            {},
+            { allowCancel: false, min: 1, max: 1 },
+          ),
+          (cards) => {
+            cards = cards || [];
+            if (cards.length === 0) {
+              return;
+            }
+            player.hand.moveCardsTo(cards, player.discard);
+            cards.forEach((card, index) => {
+              store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, {
+                name: player.name,
+                card: card.name,
+              });
+            });
+            DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, opponent.hand.cards.length);
+          },
+        );
       }
       return state;
     }

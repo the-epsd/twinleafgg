@@ -6,7 +6,7 @@ import { DRAW_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs
 
 export class GalarianPerrserkerV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public cardType: CardType = M;
   public hp: number = 200;
   public weakness = [{ type: R }];
@@ -15,18 +15,18 @@ export class GalarianPerrserkerV extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Feelin\' Fine',
+      name: "Feelin' Fine",
       cost: [C],
       damage: 0,
-      text: 'Draw 3 cards.'
+      text: 'Draw 3 cards.',
     },
     {
       name: 'Treasure Rush',
       cost: [M, C],
       damage: 20,
       damageCalculation: 'x',
-      text: 'This attack does 20 damage for each card in your hand.'
-    }
+      text: 'This attack does 20 damage for each card in your hand.',
+    },
   ];
 
   public regulationMark = 'F';

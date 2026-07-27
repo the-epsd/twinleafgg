@@ -1,12 +1,26 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, EnergyCard } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+} from '../../../game/store/card/card-types';
+import {
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  EnergyCard,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-prompt';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class TerrakionEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = F;
   public hp: number = 180;
@@ -18,14 +32,14 @@ export class TerrakionEx extends PokemonCard {
       name: 'Rock Tumble',
       cost: [F, C],
       damage: 50,
-      text: 'This attack\'s damage isn\'t affected by Resistance.'
+      text: "This attack's damage isn't affected by Resistance.",
     },
     {
       name: 'Pump-up Smash',
       cost: [F, F, C],
       damage: 90,
-      text: 'Attach 2 basic Energy cards from your hand to your Benched Pokemon in any way you like.'
-    }
+      text: 'Attach 2 basic Energy cards from your hand to your Benched Pokemon in any way you like.',
+    },
   ];
 
   public set: string = 'DRX';
@@ -44,40 +58,44 @@ export class TerrakionEx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      const hasBasicEnergy = player.hand.cards.some(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC
+      const hasBasicEnergy = player.hand.cards.some(
+        (c) => c instanceof EnergyCard && c.energyType === EnergyType.BASIC,
       );
 
       if (!hasBasicEnergy) {
         return state;
       }
 
-      const hasBenched = player.bench.some(b => b.cards.length > 0);
+      const hasBenched = player.bench.some((b) => b.cards.length > 0);
       if (!hasBenched) {
         return state;
       }
 
-      const availableCount = player.hand.cards.filter(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC
+      const availableCount = player.hand.cards.filter(
+        (c) => c instanceof EnergyCard && c.energyType === EnergyType.BASIC,
       ).length;
       const count = Math.min(2, availableCount);
 
-      return store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_CARDS,
-        player.hand,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { allowCancel: false, min: count, max: count }
-      ), transfers => {
-        if (transfers) {
-          for (const transfer of transfers) {
-            const target = StateUtils.getTarget(state, player, transfer.to);
-            player.hand.moveCardTo(transfer.card, target);
+      return store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_CARDS,
+          player.hand,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+          { allowCancel: false, min: count, max: count },
+        ),
+        (transfers) => {
+          if (transfers) {
+            for (const transfer of transfers) {
+              const target = StateUtils.getTarget(state, player, transfer.to);
+              player.hand.moveCardTo(transfer.card, target);
+            }
           }
-        }
-      });
+        },
+      );
     }
 
     return state;

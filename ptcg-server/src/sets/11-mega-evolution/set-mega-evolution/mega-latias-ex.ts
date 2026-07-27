@@ -10,23 +10,25 @@ import { SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../../game/store
 
 export class MegaLatiasex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_SV_MEGA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_SV_MEGA];
   public hp: number = 280;
   public cardType: CardType = N;
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Strafe',
-    cost: [C],
-    damage: 40,
-    text: 'You may switch this Pokémon with 1 of your Benched Pokémon.'
-  },
-  {
-    name: 'Illusory Impulse',
-    cost: [R, P, C],
-    damage: 300,
-    text: 'Discard all Energy from this Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'Strafe',
+      cost: [C],
+      damage: 40,
+      text: 'You may switch this Pokémon with 1 of your Benched Pokémon.',
+    },
+    {
+      name: 'Illusory Impulse',
+      cost: [R, P, C],
+      damage: 300,
+      text: 'Discard all Energy from this Pokémon.',
+    },
+  ];
 
   public regulationMark = 'I';
   public set: string = 'MEG';
@@ -46,14 +48,15 @@ export class MegaLatiasex extends PokemonCard {
       this.strafeUsed = false;
       const player = effect.player;
       if (player.bench.length > 0) {
-        store.prompt(state, new ConfirmPrompt(
-          player.id,
-          GameMessage.WANT_TO_SWITCH_POKEMON
-        ), wantToSwitch => {
-          if (wantToSwitch) {
-            SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
-          }
-        });
+        store.prompt(
+          state,
+          new ConfirmPrompt(player.id, GameMessage.WANT_TO_SWITCH_POKEMON),
+          (wantToSwitch) => {
+            if (wantToSwitch) {
+              SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
+            }
+          },
+        );
       }
     }
 
@@ -63,7 +66,7 @@ export class MegaLatiasex extends PokemonCard {
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
-      const cards: Card[] = checkProvidedEnergy.energyMap.map(e => e.card);
+      const cards: Card[] = checkProvidedEnergy.energyMap.map((e) => e.card);
       const discardEnergy = new DiscardCardsEffect(effect, cards);
       discardEnergy.target = player.active;
       store.reduceEffect(state, discardEnergy);
@@ -71,4 +74,4 @@ export class MegaLatiasex extends PokemonCard {
 
     return state;
   }
-} 
+}

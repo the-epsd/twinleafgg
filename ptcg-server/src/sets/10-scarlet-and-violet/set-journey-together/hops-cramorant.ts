@@ -5,10 +5,9 @@ import { State, StateUtils, StoreLike } from '../../../game';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class HopsCramorant extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
-  public tags = [CardTag.HOPS];
+  protected _tags = [CardTag.HOPS];
 
   public cardType: CardType = C;
 
@@ -25,8 +24,8 @@ export class HopsCramorant extends PokemonCard {
       name: 'Fickle Spitting',
       cost: [C],
       damage: 120,
-      text: 'If your opponent doesn\'t have exactly 3 or 4 Prize cards remaining, this attack does nothing.'
-    }
+      text: "If your opponent doesn't have exactly 3 or 4 Prize cards remaining, this attack does nothing.",
+    },
   ];
 
   public regulationMark = 'I';
@@ -37,12 +36,11 @@ export class HopsCramorant extends PokemonCard {
 
   public setNumber: string = '138';
 
-  public name: string = 'Hop\'s Cramorant';
+  public name: string = "Hop's Cramorant";
 
-  public fullName: string = 'Hop\'s Cramorant JTG';
+  public fullName: string = "Hop's Cramorant JTG";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

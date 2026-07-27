@@ -6,14 +6,12 @@ import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { IS_SPECIAL_ENERGY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
-
 export class LegacyEnergy extends EnergyCard {
-
   public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
-  public tags = [CardTag.ACE_SPEC];
+  protected _tags = [CardTag.ACE_SPEC];
 
   public set: string = 'TWM';
 
@@ -32,7 +30,6 @@ export class LegacyEnergy extends EnergyCard {
 If the Pokémon this card is attached to is Knocked Out by damage from an attack from your opponent's Pokémon, that player takes 1 fewer Prize card. This effect of your Legacy Energy can't be applied more than once per game.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
       effect.energyMap.push({ card: this, provides: [CardType.ANY] });
     }

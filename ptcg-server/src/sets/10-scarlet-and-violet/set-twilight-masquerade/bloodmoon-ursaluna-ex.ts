@@ -6,25 +6,29 @@ import { CheckAttackCostEffect } from '../../../game/store/effects/check-effects
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class BloodmoonUrsalunaex extends PokemonCard {
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
   public hp: number = 260;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
 
-  public powers = [{
-    name: 'Seasoned Skill',
-    powerType: PowerType.ABILITY,
-    text: 'Blood Moon used by this Pokémon costs [C] less for each Prize card your opponent has taken.'
-  }];
+  public powers = [
+    {
+      name: 'Seasoned Skill',
+      powerType: PowerType.ABILITY,
+      text: 'Blood Moon used by this Pokémon costs [C] less for each Prize card your opponent has taken.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Blood Moon',
-    cost: [C, C, C, C, C],
-    damage: 240,
-    text: 'During your next turn, this Pokémon can\'t attack.'
-  }];
+  public attacks = [
+    {
+      name: 'Blood Moon',
+      cost: [C, C, C, C, C],
+      damage: 240,
+      text: "During your next turn, this Pokémon can't attack.",
+    },
+  ];
 
   public regulationMark = 'H';
   public set: string = 'TWM';
@@ -41,7 +45,6 @@ export class BloodmoonUrsalunaex extends PokemonCard {
   // }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -63,10 +66,11 @@ export class BloodmoonUrsalunaex extends PokemonCard {
         4: 2,
         3: 3,
         2: 4,
-        1: 5
+        1: 5,
       };
 
-      const colorlessToRemove = prizeToColorlessReduction[remainingPrizes as keyof typeof prizeToColorlessReduction] || 0;
+      const colorlessToRemove =
+        prizeToColorlessReduction[remainingPrizes as keyof typeof prizeToColorlessReduction] || 0;
 
       for (let i = 0; i < colorlessToRemove; i++) {
         const index = effect.cost.indexOf(CardType.COLORLESS);

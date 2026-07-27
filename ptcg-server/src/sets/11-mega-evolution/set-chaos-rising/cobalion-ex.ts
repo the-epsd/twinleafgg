@@ -26,7 +26,7 @@ import {
 
 export class Cobalionex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public cardType: CardType = M;
   public hp: number = 210;
   public weakness = [{ type: R }];

@@ -6,7 +6,7 @@ import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/p
 
 export class TeamRocketsNidoranFemale extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.TEAM_ROCKET];
+  protected _tags = [CardTag.TEAM_ROCKET];
   public cardType: CardType = D;
   public hp: number = 70;
   public weakness = [{ type: F }];

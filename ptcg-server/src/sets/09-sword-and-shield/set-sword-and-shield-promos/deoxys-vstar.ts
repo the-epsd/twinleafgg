@@ -1,6 +1,16 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { CardTarget, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike } from '../../../game';
+import {
+  CardTarget,
+  ChoosePokemonPrompt,
+  GameError,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  State,
+  StateUtils,
+  StoreLike,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
@@ -8,7 +18,6 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class DeoxysVSTAR extends PokemonCard {
-
   public stage = Stage.VSTAR;
 
   public cardType = CardType.PSYCHIC;
@@ -17,7 +26,7 @@ export class DeoxysVSTAR extends PokemonCard {
 
   public hp = 270;
 
-  public tags = [CardTag.POKEMON_VSTAR];
+  protected _tags = [CardTag.POKEMON_VSTAR];
 
   public weakness = [{ type: CardType.DARK }];
 
@@ -30,14 +39,14 @@ export class DeoxysVSTAR extends PokemonCard {
       name: 'Psychic Javelin',
       cost: [CardType.PSYCHIC, CardType.PSYCHIC, CardType.COLORLESS],
       damage: 190,
-      text: 'This attack also does 60 damage to 1 of your opponent\'s Benched Pokémon V. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack also does 60 damage to 1 of your opponent's Benched Pokémon V. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Star Force',
       cost: [CardType.PSYCHIC],
       damage: 60,
       damageCalculation: 'x',
-      text: 'This attack does 60 damage for each Energy attached to both Active Pokémon. (You can\'t use more than 1 VSTAR Power in a game.)'
+      text: "This attack does 60 damage for each Energy attached to both Active Pokémon. (You can't use more than 1 VSTAR Power in a game.)",
     },
   ];
 
@@ -54,15 +63,18 @@ export class DeoxysVSTAR extends PokemonCard {
   public fullName = 'Deoxys VSTAR SWSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       let hasBenchedPokemonV = false;
 
-      opponent.bench.forEach(benchSpot => {
-        if (benchSpot.getPokemonCard()?.tags.includes(CardTag.POKEMON_V) || benchSpot.getPokemonCard()?.tags.includes(CardTag.POKEMON_VMAX) || benchSpot.getPokemonCard()?.tags.includes(CardTag.POKEMON_VSTAR)) {
+      opponent.bench.forEach((benchSpot) => {
+        if (
+          benchSpot.getPokemonCard()?.hasTag(CardTag.POKEMON_V) ||
+          benchSpot.getPokemonCard()?.hasTag(CardTag.POKEMON_VMAX) ||
+          benchSpot.getPokemonCard()?.hasTag(CardTag.POKEMON_VSTAR)
+        ) {
           hasBenchedPokemonV = true;
         }
       });
@@ -73,28 +85,34 @@ export class DeoxysVSTAR extends PokemonCard {
 
       const blocked: CardTarget[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (list, card, target) => {
-        if (!card.tags.includes(CardTag.POKEMON_V)
-          && !card.tags.includes(CardTag.POKEMON_VMAX)
-          && !card.tags.includes(CardTag.POKEMON_VSTAR)) {
+        if (
+          !card.hasTag(CardTag.POKEMON_V) &&
+          !card.hasTag(CardTag.POKEMON_VMAX) &&
+          !card.hasTag(CardTag.POKEMON_VSTAR)
+        ) {
           blocked.push(target);
         }
       });
 
-      state = store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false, blocked }
-      ), targets => {
-        if (!targets || targets.length === 0) {
-          return;
-        }
+      state = store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.BENCH],
+          { min: 1, max: 1, allowCancel: false, blocked },
+        ),
+        (targets) => {
+          if (!targets || targets.length === 0) {
+            return;
+          }
 
-        const damageEffect = new PutDamageEffect(effect, 60);
-        damageEffect.target = targets[0];
-        store.reduceEffect(state, damageEffect);
-      });
+          const damageEffect = new PutDamageEffect(effect, 60);
+          damageEffect.target = targets[0];
+          store.reduceEffect(state, damageEffect);
+        },
+      );
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
@@ -109,13 +127,17 @@ export class DeoxysVSTAR extends PokemonCard {
 
       const playerProvidedEnergy = new CheckProvidedEnergyEffect(player);
       store.reduceEffect(state, playerProvidedEnergy);
-      const playerEnergyCount = playerProvidedEnergy.energyMap
-        .reduce((left, p) => left + p.provides.length, 0);
+      const playerEnergyCount = playerProvidedEnergy.energyMap.reduce(
+        (left, p) => left + p.provides.length,
+        0,
+      );
 
       const opponentProvidedEnergy = new CheckProvidedEnergyEffect(opponent);
       store.reduceEffect(state, opponentProvidedEnergy);
-      const opponentEnergyCount = opponentProvidedEnergy.energyMap
-        .reduce((left, p) => left + p.provides.length, 0);
+      const opponentEnergyCount = opponentProvidedEnergy.energyMap.reduce(
+        (left, p) => left + p.provides.length,
+        0,
+      );
 
       effect.damage = (playerEnergyCount + opponentEnergyCount) * 60;
     }

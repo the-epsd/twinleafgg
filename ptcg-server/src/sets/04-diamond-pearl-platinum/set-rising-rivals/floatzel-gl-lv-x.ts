@@ -34,7 +34,7 @@ export class FloatzelGLLVX extends PokemonCard {
   public stage: Stage = Stage.LV_X;
   public evolvesFrom = 'Floatzel GL';
   public cardType: CardType = W;
-  public tags = [CardTag.POKEMON_LV_X, CardTag.POKEMON_SP];
+  protected _tags = [CardTag.POKEMON_LV_X, CardTag.POKEMON_SP];
   public hp: number = 100;
   public weakness = [{ type: L }];
   public retreat = [];

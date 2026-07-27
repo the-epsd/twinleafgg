@@ -3,9 +3,23 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  EnergyType,
+  SuperType,
+} from '../../../game/store/card/card-types';
 import { EnergyCard } from '../../../game/store/card/energy-card';
-import { StoreLike, State, StateUtils, PlayerType, SlotType, GameMessage, AttachEnergyPrompt } from '../../../game';
+import {
+  StoreLike,
+  State,
+  StateUtils,
+  PlayerType,
+  SlotType,
+  GameMessage,
+  AttachEnergyPrompt,
+} from '../../../game';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
@@ -13,7 +27,7 @@ import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/pr
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class TurtonatorGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = R;
   public hp: number = 190;
@@ -28,20 +42,20 @@ export class TurtonatorGx extends PokemonCard {
       name: 'Shell Trap',
       cost: [C, C],
       damage: 20,
-      text: 'During your opponent\'s next turn, if this Pokémon is damaged by an attack (even if this Pokémon is Knocked Out), put 8 damage counters on the Attacking Pokémon.'
+      text: "During your opponent's next turn, if this Pokémon is damaged by an attack (even if this Pokémon is Knocked Out), put 8 damage counters on the Attacking Pokémon.",
     },
     {
       name: 'Bright Flame',
       cost: [R, R, C],
       damage: 160,
-      text: 'Discard 2 [R] Energy from this Pokémon.'
+      text: 'Discard 2 [R] Energy from this Pokémon.',
     },
     {
       name: 'Nitro Tank-GX',
       cost: [R],
       damage: 0,
-      text: 'Attach 5 [R] Energy cards from your discard pile to your Pokémon in any way you like. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Attach 5 [R] Energy cards from your discard pile to your Pokémon in any way you like. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'GRI';
@@ -62,17 +76,22 @@ export class TurtonatorGx extends PokemonCard {
     }
 
     // When this Pokemon is damaged by an attack, put 8 damage counters on attacker
-    if (effect instanceof DealDamageEffect
-      && effect.target.marker.hasMarker(this.SHELL_TRAP_MARKER, this)
-      && effect.damage > 0) {
+    if (
+      effect instanceof DealDamageEffect &&
+      effect.target.marker.hasMarker(this.SHELL_TRAP_MARKER, this) &&
+      effect.damage > 0
+    ) {
       effect.source.damage += 80;
     }
 
     // Cleanup Shell Trap marker at end of opponent's turn
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_SHELL_TRAP_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_SHELL_TRAP_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_SHELL_TRAP_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         cardList.marker.removeMarker(this.SHELL_TRAP_MARKER, this);
       });
     }
@@ -91,8 +110,11 @@ export class TurtonatorGx extends PokemonCard {
       BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
 
-      const fireEnergyInDiscard = player.discard.cards.filter(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.FIRE)
+      const fireEnergyInDiscard = player.discard.cards.filter(
+        (c) =>
+          c instanceof EnergyCard &&
+          c.energyType === EnergyType.BASIC &&
+          c.provides.includes(CardType.FIRE),
       );
 
       if (fireEnergyInDiscard.length === 0) {
@@ -101,21 +123,25 @@ export class TurtonatorGx extends PokemonCard {
 
       const maxAttach = Math.min(5, fireEnergyInDiscard.length);
 
-      return store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_CARDS,
-        player.discard,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
-        { allowCancel: false, min: maxAttach, max: maxAttach }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
-        }
-      });
+      return store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_CARDS,
+          player.discard,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
+          { allowCancel: false, min: maxAttach, max: maxAttach },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.discard.moveCardTo(transfer.card, target);
+          }
+        },
+      );
     }
 
     return state;

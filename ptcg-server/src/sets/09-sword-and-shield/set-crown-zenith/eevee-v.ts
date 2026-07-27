@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class EeveeV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
   public hp: number = 200;
@@ -21,15 +21,15 @@ export class EeveeV extends PokemonCard {
       name: 'Tackle',
       cost: [C],
       damage: 30,
-      text: ''
+      text: '',
     },
     {
       name: 'Vee Brave',
       cost: [C, C, C],
       damage: 80,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is a Pokémon V, this attack does 80 more damage.'
-    }
+      text: "If your opponent's Active Pokémon is a Pokémon V, this attack does 80 more damage.",
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -47,11 +47,12 @@ export class EeveeV extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       const opponentActiveCard = opponent.active.getPokemonCard();
 
-      if (opponentActiveCard && (
-        opponentActiveCard.tags.includes(CardTag.POKEMON_V) ||
-        opponentActiveCard.tags.includes(CardTag.POKEMON_VMAX) ||
-        opponentActiveCard.tags.includes(CardTag.POKEMON_VSTAR)
-      )) {
+      if (
+        opponentActiveCard &&
+        (opponentActiveCard.hasTag(CardTag.POKEMON_V) ||
+          opponentActiveCard.hasTag(CardTag.POKEMON_VMAX) ||
+          opponentActiveCard.hasTag(CardTag.POKEMON_VSTAR))
+      ) {
         effect.damage += 80;
       }
     }

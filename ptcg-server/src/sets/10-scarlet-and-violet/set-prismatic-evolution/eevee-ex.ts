@@ -6,8 +6,7 @@ import { CheckTableStateEffect } from '../../../game/store/effects/check-effects
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 
 export class Eeveeex extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
   public stage: Stage = Stage.BASIC;
 
@@ -19,19 +18,21 @@ export class Eeveeex extends PokemonCard {
 
   public retreat = [CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Rainbow DNA',
-    powerType: PowerType.ABILITY,
-    text: 'You can play Pokemon ex that evolve from Eevee onto this Pokemon to evolve it. (You can\'t evolve this Pokemon during your first turn or during the turn you play it.)'
-  }];
+  public powers = [
+    {
+      name: 'Rainbow DNA',
+      powerType: PowerType.ABILITY,
+      text: "You can play Pokemon ex that evolve from Eevee onto this Pokemon to evolve it. (You can't evolve this Pokemon during your first turn or during the turn you play it.)",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Coruscating Quartz',
       cost: [CardType.FIRE, CardType.WATER, CardType.LIGHTNING],
       damage: 200,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'H';
@@ -75,11 +76,15 @@ export class Eeveeex extends PokemonCard {
       // }
 
       try {
-        const stub = new PowerEffect(owner, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
+        const stub = new PowerEffect(
+          owner,
+          {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: '',
+          },
+          this,
+        );
         store.reduceEffect(state, stub);
         this.evolvesFromBase = ['Eevee'];
       } catch {
@@ -87,7 +92,11 @@ export class Eeveeex extends PokemonCard {
       }
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

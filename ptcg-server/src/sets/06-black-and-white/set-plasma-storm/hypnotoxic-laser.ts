@@ -9,7 +9,12 @@ import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { CoinFlipPrompt } from '../../../game/store/prompts/coin-flip-prompt';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   const active = opponent.active;
@@ -25,15 +30,12 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   active.addSpecialCondition(SpecialCondition.POISONED);
 
   let coinResult: boolean = false;
-  yield store.prompt(state, [
-    new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-  ], result => {
+  yield store.prompt(state, [new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)], (result) => {
     coinResult = result;
     next();
   });
 
   if (coinResult === false) {
-
     return state;
   }
 
@@ -42,10 +44,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 }
 
 export class HypnotoxicLaser extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public tags: string[] = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
 
   public set: string = 'PLS';
 
@@ -58,8 +59,8 @@ export class HypnotoxicLaser extends TrainerCard {
   public setNumber: string = '123';
 
   public text: string =
-    'Your opponent\'s Active Pokemon is now Poisoned. Flip a coin. ' +
-    'If heads, your opponent\'s Active Pokemon is also Asleep.';
+    "Your opponent's Active Pokemon is now Poisoned. Flip a coin. " +
+    "If heads, your opponent's Active Pokemon is also Asleep.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -69,5 +70,4 @@ export class HypnotoxicLaser extends TrainerCard {
 
     return state;
   }
-
 }

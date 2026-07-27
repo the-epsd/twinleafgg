@@ -4,16 +4,29 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, DiscardEnergyPrompt, ConfirmPrompt } from '../../../game';
+import {
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  DiscardEnergyPrompt,
+  ConfirmPrompt,
+} from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  BLOCK_IF_GX_ATTACK_USED,
+  SWITCH_ACTIVE_WITH_BENCHED,
+} from '../../../game/store/prefabs/prefabs';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class UmbreonGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Eevee';
   public cardType: CardType = D;
@@ -27,20 +40,20 @@ export class UmbreonGx extends PokemonCard {
       name: 'Strafe',
       cost: [D],
       damage: 30,
-      text: 'You may switch this Pokémon with 1 of your Benched Pokémon.'
+      text: 'You may switch this Pokémon with 1 of your Benched Pokémon.',
     },
     {
       name: 'Shadow Bullet',
       cost: [D, C, C],
       damage: 90,
-      text: 'This attack does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack does 30 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Dark Call-GX',
       cost: [D, C],
       damage: 0,
-      text: 'Discard 2 Energy from your opponent\'s Pokémon. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Discard 2 Energy from your opponent's Pokémon. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'SUM';
@@ -63,15 +76,16 @@ export class UmbreonGx extends PokemonCard {
       this.usedStrafe = false;
       const player = effect.player;
 
-      if (player.bench.some(b => b.cards.length > 0)) {
-        store.prompt(state, new ConfirmPrompt(
-          player.id,
-          GameMessage.WANT_TO_SWITCH_POKEMON,
-        ), wantToSwitch => {
-          if (wantToSwitch) {
-            SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
-          }
-        });
+      if (player.bench.some((b) => b.cards.length > 0)) {
+        store.prompt(
+          state,
+          new ConfirmPrompt(player.id, GameMessage.WANT_TO_SWITCH_POKEMON),
+          (wantToSwitch) => {
+            if (wantToSwitch) {
+              SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
+            }
+          },
+        );
       }
     }
 
@@ -97,7 +111,7 @@ export class UmbreonGx extends PokemonCard {
       // Count total energy on opponent's Pokemon
       let totalEnergy = 0;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        totalEnergy += cardList.cards.filter(c => c instanceof EnergyCard).length;
+        totalEnergy += cardList.cards.filter((c) => c instanceof EnergyCard).length;
       });
 
       if (totalEnergy === 0) {
@@ -106,25 +120,29 @@ export class UmbreonGx extends PokemonCard {
 
       const maxDiscard = Math.min(2, totalEnergy);
 
-      return store.prompt(state, new DiscardEnergyPrompt(
-        player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY },
-        { allowCancel: false, min: maxDiscard, max: maxDiscard }
-      ), transfers => {
-        if (transfers === null || transfers.length === 0) {
-          return state;
-        }
+      return store.prompt(
+        state,
+        new DiscardEnergyPrompt(
+          player.id,
+          GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+          PlayerType.TOP_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { superType: SuperType.ENERGY },
+          { allowCancel: false, min: maxDiscard, max: maxDiscard },
+        ),
+        (transfers) => {
+          if (transfers === null || transfers.length === 0) {
+            return state;
+          }
 
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, opponent, transfer.from);
-          const discardEffect = new DiscardCardsEffect(effect, [transfer.card]);
-          discardEffect.target = target;
-          store.reduceEffect(state, discardEffect);
-        }
-      });
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, opponent, transfer.from);
+            const discardEffect = new DiscardCardsEffect(effect, [transfer.card]);
+            discardEffect.target = target;
+            store.reduceEffect(state, discardEffect);
+          }
+        },
+      );
     }
 
     return state;

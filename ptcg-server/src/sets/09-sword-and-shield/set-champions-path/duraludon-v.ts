@@ -11,7 +11,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class DuraludonV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;
   public hp: number = 220;
@@ -19,11 +19,13 @@ export class DuraludonV extends PokemonCard {
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C, C];
 
-  public powers = [{
-    name: 'Hard Coat',
-    powerType: PowerType.ABILITY,
-    text: 'This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: 'Hard Coat',
+      powerType: PowerType.ABILITY,
+      text: 'This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).',
+    },
+  ];
 
   public attacks = [
     {
@@ -31,8 +33,8 @@ export class DuraludonV extends PokemonCard {
       cost: [C, C, C],
       damage: 10,
       damageCalculation: '+',
-      text: 'This attack does 40 more damage for each [M] Energy attached to this Pokémon.'
-    }
+      text: 'This attack does 40 more damage for each [M] Energy attached to this Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -45,7 +47,11 @@ export class DuraludonV extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Hard Coat (passive - permanent damage reduction)
     // Ref: set-sword-and-shield/sandaconda-2.ts (Sand Sac - DealDamageEffect + IS_ABILITY_BLOCKED)
-    if (effect instanceof DealDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof DealDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = StateUtils.findOwner(state, effect.target);
 
       if (IS_ABILITY_BLOCKED(store, state, player, this)) {
@@ -63,8 +69,11 @@ export class DuraludonV extends PokemonCard {
       const checkEnergy = new CheckProvidedEnergyEffect(player);
       store.reduceEffect(state, checkEnergy);
 
-      const metalCount = checkEnergy.energyMap.reduce((sum, em) =>
-        sum + em.provides.filter(t => t === CardType.METAL || t === CardType.ANY).length, 0);
+      const metalCount = checkEnergy.energyMap.reduce(
+        (sum, em) =>
+          sum + em.provides.filter((t) => t === CardType.METAL || t === CardType.ANY).length,
+        0,
+      );
 
       effect.damage += 40 * metalCount;
     }

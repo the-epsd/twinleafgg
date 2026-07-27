@@ -7,8 +7,7 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { DEVOLVE_POKEMON, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Espeonex extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
   public stage: Stage = Stage.STAGE_1;
 
@@ -29,14 +28,14 @@ export class Espeonex extends PokemonCard {
       name: 'Psych Out',
       cost: [P, C, C],
       damage: 160,
-      text: 'Discard 1 random card from your opponent\'s hand.'
+      text: "Discard 1 random card from your opponent's hand.",
     },
     {
       name: 'Amethyst',
       cost: [G, P, D],
       damage: 0,
-      text: 'Devolve each of your opponent\'s evolved Pokémon by shuffling the highest Stage Evolution card on it into your opponent\'s deck.'
-    }
+      text: "Devolve each of your opponent's evolved Pokémon by shuffling the highest Stage Evolution card on it into your opponent's deck.",
+    },
   ];
 
   public regulationMark: string = 'H';
@@ -70,12 +69,16 @@ export class Espeonex extends PokemonCard {
         }
       });
 
-      return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+      return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
         player.deck.applyOrder(order);
       });
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

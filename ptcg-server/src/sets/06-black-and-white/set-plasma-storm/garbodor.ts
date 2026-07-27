@@ -6,11 +6,14 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED, DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
+import {
+  YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED,
+  DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON,
+} from '../../../game/store/prefabs/attack-effects';
 import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Garbodor extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Trubbish';
   public cardType: CardType = P;
@@ -23,14 +26,14 @@ export class Garbodor extends PokemonCard {
       name: 'Biosmog',
       cost: [C],
       damage: 20,
-      text: 'The Defending Pokémon is now Poisoned. Flip a coin. If heads, discard an Energy attached to that Pokémon.'
+      text: 'The Defending Pokémon is now Poisoned. Flip a coin. If heads, discard an Energy attached to that Pokémon.',
     },
     {
       name: 'Sludge Bomb',
       cost: [P, P, C],
       damage: 70,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'PLS';
@@ -44,7 +47,7 @@ export class Garbodor extends PokemonCard {
     // Refs: set-boundaries-crossed/psyduck.ts (coin flip condition), set-boundaries-crossed/white-kyurem-ex.ts (discard energy)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED(store, state, effect);
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (result) {
           DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
         }

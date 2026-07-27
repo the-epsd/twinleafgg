@@ -5,16 +5,24 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { CoinFlipEffect, PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { GameLog, GameMessage } from '../../../game/game-message';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
-import { ABILITY_USED, ADD_MARKER, ADD_POISON_TO_PLAYER_ACTIVE, HAS_MARKER, REMOVE_MARKER, SIMULATE_COIN_FLIP, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ABILITY_USED,
+  ADD_MARKER,
+  ADD_POISON_TO_PLAYER_ACTIVE,
+  HAS_MARKER,
+  REMOVE_MARKER,
+  SIMULATE_COIN_FLIP,
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 export class SkuntankG extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.PSYCHIC;
 
-  public tags = [CardTag.POKEMON_SP];
+  protected _tags = [CardTag.POKEMON_SP];
 
   public hp: number = 80;
 
@@ -22,19 +30,23 @@ export class SkuntankG extends PokemonCard {
 
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Poison Structure',
-    powerType: PowerType.POKEPOWER,
-    useWhenInPlay: true,
-    text: 'Once during your turn (before your attack), if you have a Stadium card in play, you may use this power. Each Active Pokémon (both yours and your opponent\'s) (excluding Pokémon SP) is now Poisoned. This power can\'t be used if Skuntank is affected by a Special Condition.'
-  }];
+  public powers = [
+    {
+      name: 'Poison Structure',
+      powerType: PowerType.POKEPOWER,
+      useWhenInPlay: true,
+      text: "Once during your turn (before your attack), if you have a Stadium card in play, you may use this power. Each Active Pokémon (both yours and your opponent's) (excluding Pokémon SP) is now Poisoned. This power can't be used if Skuntank is affected by a Special Condition.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Smokescreen',
-    cost: [CardType.COLORLESS, CardType.COLORLESS],
-    damage: 20,
-    text: 'If the Defending Pokémon tries to attack during your opponent\'s next turn, your opponent flips a coin. If tails, that attack does nothing.'
-  }];
+  public attacks = [
+    {
+      name: 'Smokescreen',
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
+      damage: 20,
+      text: "If the Defending Pokémon tries to attack during your opponent's next turn, your opponent flips a coin. If tails, that attack does nothing.",
+    },
+  ];
 
   public set: string = 'PL';
 
@@ -76,11 +88,11 @@ export class SkuntankG extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      if (!player.active?.getPokemonCard()?.tags.includes(CardTag.POKEMON_SP)) {
+      if (!player.active?.getPokemonCard()?.hasTag(CardTag.POKEMON_SP)) {
         ADD_POISON_TO_PLAYER_ACTIVE(store, state, player, this);
       }
 
-      if (!opponent.active?.getPokemonCard()?.tags.includes(CardTag.POKEMON_SP)) {
+      if (!opponent.active?.getPokemonCard()?.hasTag(CardTag.POKEMON_SP)) {
         ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this);
       }
 
@@ -100,7 +112,10 @@ export class SkuntankG extends PokemonCard {
       ADD_MARKER(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, opponent.active, this);
     }
 
-    if (effect instanceof AttackEffect && HAS_MARKER(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, effect.player.active, this)) {
+    if (
+      effect instanceof AttackEffect &&
+      HAS_MARKER(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, effect.player.active, this)
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -115,7 +130,10 @@ export class SkuntankG extends PokemonCard {
 
       if (!coinFlipResult) {
         effect.damage = 0;
-        store.log(state, GameLog.LOG_ABILITY_BLOCKS_DAMAGE, { name: opponent.name, pokemon: this.name });
+        store.log(state, GameLog.LOG_ABILITY_BLOCKS_DAMAGE, {
+          name: opponent.name,
+          pokemon: this.name,
+        });
       }
     }
 
@@ -131,5 +149,4 @@ export class SkuntankG extends PokemonCard {
 
     return state;
   }
-
 }

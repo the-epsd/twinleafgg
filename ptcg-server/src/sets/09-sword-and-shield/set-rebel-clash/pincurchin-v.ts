@@ -6,29 +6,35 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT, IS_ABILITY_BLOCKED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
+import {
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
+  IS_ABILITY_BLOCKED,
+  MULTIPLE_COIN_FLIPS_PROMPT,
+} from '../../../game/store/prefabs/prefabs';
 
 export class PincurchinV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = L;
   public hp: number = 170;
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Counterattack Kerzap',
-    powerType: PowerType.ABILITY,
-    text: 'If this Pokémon is in the Active Spot and is damaged by an opponent\'s attack (even if it is Knocked Out), flip 3 coins. For each heads, put 3 damage counters on the Attacking Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Counterattack Kerzap',
+      powerType: PowerType.ABILITY,
+      text: "If this Pokémon is in the Active Spot and is damaged by an opponent's attack (even if it is Knocked Out), flip 3 coins. For each heads, put 3 damage counters on the Attacking Pokémon.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Sparking Strike',
       cost: [L, L, C],
       damage: 120,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -48,8 +54,8 @@ export class PincurchinV extends PokemonCard {
         return state;
       }
 
-      MULTIPLE_COIN_FLIPS_PROMPT(store, state, targetPlayer, 3, results => {
-        const heads = results.filter(r => r).length;
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, targetPlayer, 3, (results) => {
+        const heads = results.filter((r) => r).length;
         effect.source.damage += 30 * heads;
       });
     }

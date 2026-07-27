@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefabs/attack-effects';
 
 export class Leafeon extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Eevee';
   public cardType: CardType = G;
@@ -18,20 +18,22 @@ export class Leafeon extends PokemonCard {
   public resistance = [{ type: W, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Energy Crush',
-    cost: [C],
-    damage: 20,
-    damageCalculation: 'x',
-    text: 'Does 20 damage times the amount of Energy attached to all of your opponent\'s Pokémon.'
-  },
-  {
-    name: 'Leaf Blade',
-    cost: [G, C, C],
-    damage: 60,
-    damageCalculation: '+',
-    text: 'Flip a coin. If heads, this attack does 20 more damage.'
-  }];
+  public attacks = [
+    {
+      name: 'Energy Crush',
+      cost: [C],
+      damage: 20,
+      damageCalculation: 'x',
+      text: "Does 20 damage times the amount of Energy attached to all of your opponent's Pokémon.",
+    },
+    {
+      name: 'Leaf Blade',
+      cost: [G, C, C],
+      damage: 60,
+      damageCalculation: '+',
+      text: 'Flip a coin. If heads, this attack does 20 more damage.',
+    },
+  ];
 
   public set: string = 'PLF';
   public cardImage: string = 'assets/cardback.png';
@@ -49,7 +51,7 @@ export class Leafeon extends PokemonCard {
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
         const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(opponent, cardList);
         store.reduceEffect(state, checkProvidedEnergyEffect);
-        checkProvidedEnergyEffect.energyMap.forEach(energy => {
+        checkProvidedEnergyEffect.energyMap.forEach((energy) => {
           energies++;
         });
       });

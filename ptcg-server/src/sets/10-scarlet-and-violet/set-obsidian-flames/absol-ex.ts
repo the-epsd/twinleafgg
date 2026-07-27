@@ -1,15 +1,22 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, CardList, OrderCardsPrompt, SelectPrompt } from '../../../game';
+import {
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  CardList,
+  OrderCardsPrompt,
+  SelectPrompt,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Absolex extends PokemonCard {
-
   public regulationMark = 'G';
 
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
 
   public stage: Stage = Stage.BASIC;
 
@@ -26,15 +33,15 @@ export class Absolex extends PokemonCard {
       name: 'Future Sight',
       cost: [CardType.DARK],
       damage: 0,
-      text: 'Look at the top 3 cards of either player\'s deck and put them back in any order.'
+      text: "Look at the top 3 cards of either player's deck and put them back in any order.",
     },
     {
       name: 'Cursed Slug',
       cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS],
       damage: 100,
       damageCalculation: '+',
-      text: 'If your opponent has 3 or fewer cards in their hand, this attack does 120 more damage.'
-    }
+      text: 'If your opponent has 3 or fewer cards in their hand, this attack does 120 more damage.',
+    },
   ];
 
   public set: string = 'OBF';
@@ -48,34 +55,32 @@ export class Absolex extends PokemonCard {
   public fullName: string = 'Absol ex OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const options: { message: GameMessage, action: () => void }[] = [
+      const options: { message: GameMessage; action: () => void }[] = [
         {
           message: GameMessage.ORDER_OPPONENT_DECK,
           action: () => {
-
             const opponentDeckTop = new CardList();
             opponent.deck.moveTo(opponentDeckTop, 3);
 
-            return store.prompt(state, new OrderCardsPrompt(
-              player.id,
-              GameMessage.CHOOSE_CARDS_ORDER,
-              opponentDeckTop,
-              { allowCancel: false },
-            ), order => {
-              if (order === null) {
-                return state;
-              }
+            return store.prompt(
+              state,
+              new OrderCardsPrompt(player.id, GameMessage.CHOOSE_CARDS_ORDER, opponentDeckTop, {
+                allowCancel: false,
+              }),
+              (order) => {
+                if (order === null) {
+                  return state;
+                }
 
-              opponentDeckTop.applyOrder(order);
-              opponentDeckTop.moveToTopOfDestination(opponent.deck);
-
-            });
-          }
+                opponentDeckTop.applyOrder(order);
+                opponentDeckTop.moveToTopOfDestination(opponent.deck);
+              },
+            );
+          },
         },
         {
           message: GameMessage.ORDER_YOUR_DECK,
@@ -85,31 +90,36 @@ export class Absolex extends PokemonCard {
             const playerDeckTop = new CardList();
             player.deck.moveTo(playerDeckTop, 3);
 
-            return store.prompt(state, new OrderCardsPrompt(
-              player.id,
-              GameMessage.CHOOSE_CARDS_ORDER,
-              playerDeckTop,
-              { allowCancel: false },
-            ), order => {
-              if (order === null) {
-                return state;
-              }
+            return store.prompt(
+              state,
+              new OrderCardsPrompt(player.id, GameMessage.CHOOSE_CARDS_ORDER, playerDeckTop, {
+                allowCancel: false,
+              }),
+              (order) => {
+                if (order === null) {
+                  return state;
+                }
 
-              playerDeckTop.applyOrder(order);
-              playerDeckTop.moveToTopOfDestination(player.deck);
-            });
-          }
-        }
+                playerDeckTop.applyOrder(order);
+                playerDeckTop.moveToTopOfDestination(player.deck);
+              },
+            );
+          },
+        },
       ];
-      return store.prompt(state, new SelectPrompt(
-        player.id,
-        GameMessage.CHOOSE_OPTION,
-        options.map(opt => opt.message),
-        { allowCancel: false }
-      ), choice => {
-        const option = options[choice];
-        option.action();
-      });
+      return store.prompt(
+        state,
+        new SelectPrompt(
+          player.id,
+          GameMessage.CHOOSE_OPTION,
+          options.map((opt) => opt.message),
+          { allowCancel: false },
+        ),
+        (choice) => {
+          const option = options[choice];
+          option.action();
+        },
+      );
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

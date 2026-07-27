@@ -36,7 +36,7 @@ export class Relicanth extends PokemonCard {
         if (cardList === player.active) {
           return;
         }
-        if (card.tags.includes(CardTag.ANTIQUE)) {
+        if (card.hasTag(CardTag.ANTIQUE)) {
           antiqueBench++;
         }
       });

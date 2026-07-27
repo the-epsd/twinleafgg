@@ -17,7 +17,8 @@ export class HolonRuins extends TrainerCard {
   public name = 'Holon Ruins';
   public fullName = 'Holon Ruins DS';
 
-  public text = 'Each player that has any Pokémon in play that has delta on its card may draw a card once during his or her turn. If the player does, he or she discards a card from his or her hand.';
+  public text =
+    'Each player that has any Pokémon in play that has delta on its card may draw a card once during his or her turn. If the player does, he or she discards a card from his or her hand.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
@@ -25,7 +26,7 @@ export class HolonRuins extends TrainerCard {
 
       let deltaCount = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card) => {
-        if (card.tags.includes(CardTag.DELTA_SPECIES)) {
+        if (card.hasTag(CardTag.DELTA_SPECIES)) {
           deltaCount++;
         }
       });
@@ -35,22 +36,29 @@ export class HolonRuins extends TrainerCard {
       }
 
       DRAW_CARDS(store, state, player, 1);
-      state = store.prompt(state, new ChooseCardsPrompt(
-        effect.player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        player.hand,
-        {},
-        { allowCancel: false, min: 1, max: 1 }
-      ), cards => {
-        cards = cards || [];
-        if (cards.length === 0) {
-          return;
-        }
-        MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
-        cards.forEach((card, index) => {
-          store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
-        });
-      });
+      state = store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          effect.player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          player.hand,
+          {},
+          { allowCancel: false, min: 1, max: 1 },
+        ),
+        (cards) => {
+          cards = cards || [];
+          if (cards.length === 0) {
+            return;
+          }
+          MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
+          cards.forEach((card, index) => {
+            store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, {
+              name: player.name,
+              card: card.name,
+            });
+          });
+        },
+      );
     }
     return state;
   }

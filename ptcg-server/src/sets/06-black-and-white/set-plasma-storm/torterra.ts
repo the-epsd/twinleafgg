@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_MORE_DAMAGE_PER_HEADS } from '../../../game/store/prefabs/attack-effects';
 
 export class Torterra extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Grotle';
   public cardType: CardType = G;
@@ -24,15 +24,15 @@ export class Torterra extends PokemonCard {
       name: 'Guard Press',
       cost: [G, C, C],
       damage: 60,
-      text: 'During your opponent\'s next turn, any damage to this Pokémon by attacks is reduced by 20 (after applying Weakness and Resistance).'
+      text: "During your opponent's next turn, any damage to this Pokémon by attacks is reduced by 20 (after applying Weakness and Resistance).",
     },
     {
       name: 'Rumble Stomp',
       cost: [G, C, C, C],
       damage: 80,
       damageCalculation: '+',
-      text: 'Flip a coin until you get tails. This attack does 20 more damage for each heads.'
-    }
+      text: 'Flip a coin until you get tails. This attack does 20 more damage for each heads.',
+    },
   ];
 
   public set: string = 'PLS';

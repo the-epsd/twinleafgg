@@ -7,10 +7,9 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 // FCI Buzzwole 77 (https://limitlesstcg.com/cards/FLI/77)
 export class Buzzwole extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
-  public tags = [CardTag.ULTRA_BEAST];
+  protected _tags = [CardTag.ULTRA_BEAST];
 
   public cardType: CardType = CardType.FIGHTING;
 
@@ -21,8 +20,18 @@ export class Buzzwole extends PokemonCard {
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
-    { name: 'Sledgehammer', cost: [CardType.FIGHTING], damage: 30, text: 'If your opponent has exactly 4 Prize cards remaining, this attack does 90 more damage.' },
-    { name: 'Swing Around', cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS], damage: 80, text: 'Flip 2 coins. This attack does 20 more damage for each heads.' }
+    {
+      name: 'Sledgehammer',
+      cost: [CardType.FIGHTING],
+      damage: 30,
+      text: 'If your opponent has exactly 4 Prize cards remaining, this attack does 90 more damage.',
+    },
+    {
+      name: 'Swing Around',
+      cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS],
+      damage: 80,
+      text: 'Flip 2 coins. This attack does 20 more damage for each heads.',
+    },
   ];
 
   public set: string = 'FLI';
@@ -36,7 +45,6 @@ export class Buzzwole extends PokemonCard {
   public setNumber: string = '77';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -49,17 +57,22 @@ export class Buzzwole extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
-        let heads: number = 0;
-        results.forEach(r => { heads += r ? 1 : 0; });
-        effect.damage += 20 * heads;
-      });
+      return store.prompt(
+        state,
+        [
+          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
+          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
+        ],
+        (results) => {
+          let heads: number = 0;
+          results.forEach((r) => {
+            heads += r ? 1 : 0;
+          });
+          effect.damage += 20 * heads;
+        },
+      );
     }
 
     return state;
   }
-
 }

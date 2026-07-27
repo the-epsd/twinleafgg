@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, MOVED_TO_ACTIVE_THIS_TURN } from '../../../game/store/prefabs/prefabs';
 
 export class ScizorEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;
   public hp: number = 170;
@@ -22,15 +22,15 @@ export class ScizorEx extends PokemonCard {
       name: 'Steel Wing',
       cost: [M],
       damage: 20,
-      text: 'During your opponent\'s next turn, any damage done to this Pokémon by attacks is reduced by 20 (after applying Weakness and Resistance).'
+      text: "During your opponent's next turn, any damage done to this Pokémon by attacks is reduced by 20 (after applying Weakness and Resistance).",
     },
     {
       name: 'Gale Thrust',
       cost: [M, M],
       damage: 50,
       damageCalculation: '+',
-      text: 'If this Pokémon was on the Bench and became your Active Pokémon this turn, this attack does 60 more damage.'
-    }
+      text: 'If this Pokémon was on the Bench and became your Active Pokémon this turn, this attack does 60 more damage.',
+    },
   ];
 
   public set: string = 'BKP';

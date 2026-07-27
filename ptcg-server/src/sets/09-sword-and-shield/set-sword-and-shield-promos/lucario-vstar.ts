@@ -9,10 +9,9 @@ import { PlayerType, GameError, GameMessage } from '../../../game';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class LucarioVSTAR extends PokemonCard {
-
   public stage: Stage = Stage.VSTAR;
 
-  public tags = [CardTag.POKEMON_VSTAR];
+  protected _tags = [CardTag.POKEMON_VSTAR];
 
   public evolvesFrom = 'Lucario V';
 
@@ -32,15 +31,15 @@ export class LucarioVSTAR extends PokemonCard {
       cost: [CardType.FIGHTING, CardType.COLORLESS, CardType.COLORLESS],
       damage: 120,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is a Pokémon V, this attack does 120 more damage.'
+      text: "If your opponent's Active Pokémon is a Pokémon V, this attack does 120 more damage.",
     },
     {
       name: 'Aura Star',
       cost: [CardType.FIGHTING, CardType.COLORLESS],
       damage: 70,
       damageCalculation: 'x',
-      text: 'This attack does 70 damage for each Energy attached to all of your opponent\'s Pokémon. (You can\'t use more than 1 VSTAR Power in a game.)'
-    }
+      text: "This attack does 70 damage for each Energy attached to all of your opponent's Pokémon. (You can't use more than 1 VSTAR Power in a game.)",
+    },
   ];
 
   public set: string = 'SWSH';
@@ -54,13 +53,16 @@ export class LucarioVSTAR extends PokemonCard {
   public fullName: string = 'Lucario VSTAR SWSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       const defending = opponent.active.getPokemonCard();
-      if (defending && defending.tags.includes(CardTag.POKEMON_V) || defending && defending.tags.includes(CardTag.POKEMON_VSTAR) || defending && defending.tags.includes(CardTag.POKEMON_VMAX)) {
+      if (
+        (defending && defending.hasTag(CardTag.POKEMON_V)) ||
+        (defending && defending.hasTag(CardTag.POKEMON_VSTAR)) ||
+        (defending && defending.hasTag(CardTag.POKEMON_VMAX))
+      ) {
         effect.damage += 120;
         return state;
       }
@@ -76,7 +78,7 @@ export class LucarioVSTAR extends PokemonCard {
 
       let totalEnergy = 0;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        totalEnergy += cardList.cards.filter(c => c.superType === SuperType.ENERGY).length;
+        totalEnergy += cardList.cards.filter((c) => c.superType === SuperType.ENERGY).length;
       });
       effect.damage += totalEnergy * 70;
       player.usedVSTAR = true;

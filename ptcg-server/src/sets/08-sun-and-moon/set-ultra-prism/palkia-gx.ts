@@ -4,39 +4,55 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, MoveEnergyPrompt, Attack, Weakness } from '../../../game';
+import {
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  MoveEnergyPrompt,
+  Attack,
+  Weakness,
+} from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  BLOCK_IF_GX_ATTACK_USED,
+  SHUFFLE_DECK,
+} from '../../../game/store/prefabs/prefabs';
 
 export class PalkiaGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = N;
   public hp: number = 180;
   public weakness: Weakness[] = [{ type: Y }];
   public retreat = [C, C, C];
 
-  public attacks: Attack[] = [{
-    name: 'Spatial Control',
-    cost: [W],
-    damage: 0,
-    text: 'Move any number of Energy from your Benched Pokémon to this Pokémon.'
-  },
-  {
-    name: 'Hydro Pressure',
-    cost: [C, C, C],
-    damage: 60,
-    damageCalculation: '+',
-    text: 'This attack does 20 more damage times the amount of [W] Energy attached to this Pokémon.'
-  },
-  {
-    name: 'Zero Vanish-GX',
-    cost: [W, W, W, C, C],
-    damage: 150,
-    text: 'Shuffle all Energy from each of your opponent\'s Pokémon into their deck. (You can\'t use more than 1 GX attack in a game.)'
-  }];
+  public attacks: Attack[] = [
+    {
+      name: 'Spatial Control',
+      cost: [W],
+      damage: 0,
+      text: 'Move any number of Energy from your Benched Pokémon to this Pokémon.',
+    },
+    {
+      name: 'Hydro Pressure',
+      cost: [C, C, C],
+      damage: 60,
+      damageCalculation: '+',
+      text: 'This attack does 20 more damage times the amount of [W] Energy attached to this Pokémon.',
+    },
+    {
+      name: 'Zero Vanish-GX',
+      cost: [W, W, W, C, C],
+      damage: 150,
+      text: "Shuffle all Energy from each of your opponent's Pokémon into their deck. (You can't use more than 1 GX attack in a game.)",
+    },
+  ];
 
   public set: string = 'UPR';
   public setNumber: string = '101';
@@ -52,29 +68,43 @@ export class PalkiaGx extends PokemonCard {
 
       // Only allow moving from bench, only allow moving to active
       const blockedTo = player.bench.map((_, index) => {
-        return { player: PlayerType.BOTTOM_PLAYER, slot: SlotType.BENCH, index } as import('../../../game').CardTarget;
+        return {
+          player: PlayerType.BOTTOM_PLAYER,
+          slot: SlotType.BENCH,
+          index,
+        } as import('../../../game').CardTarget;
       });
 
-      const blockedFrom = [{ player: PlayerType.BOTTOM_PLAYER, slot: SlotType.ACTIVE, index: 0 } as import('../../../game').CardTarget];
+      const blockedFrom = [
+        {
+          player: PlayerType.BOTTOM_PLAYER,
+          slot: SlotType.ACTIVE,
+          index: 0,
+        } as import('../../../game').CardTarget,
+      ];
 
-      store.prompt(state, new MoveEnergyPrompt(
-        player.id,
-        GameMessage.MOVE_ENERGY_CARDS,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE],
-        { superType: SuperType.ENERGY },
-        { allowCancel: true, blockedTo, blockedFrom }
-      ), transfers => {
-        if (transfers === null) {
-          return;
-        }
+      store.prompt(
+        state,
+        new MoveEnergyPrompt(
+          player.id,
+          GameMessage.MOVE_ENERGY_CARDS,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          { superType: SuperType.ENERGY },
+          { allowCancel: true, blockedTo, blockedFrom },
+        ),
+        (transfers) => {
+          if (transfers === null) {
+            return;
+          }
 
-        for (const transfer of transfers) {
-          const source = StateUtils.getTarget(state, player, transfer.from);
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          source.moveCardTo(transfer.card, target);
-        }
-      });
+          for (const transfer of transfers) {
+            const source = StateUtils.getTarget(state, player, transfer.from);
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            source.moveCardTo(transfer.card, target);
+          }
+        },
+      );
     }
 
     // Attack 2: Hydro Pressure
@@ -86,8 +116,8 @@ export class PalkiaGx extends PokemonCard {
       store.reduceEffect(state, checkEnergy);
 
       let waterCount = 0;
-      checkEnergy.energyMap.forEach(em => {
-        waterCount += em.provides.filter(p => p === CardType.WATER || p === CardType.ANY).length;
+      checkEnergy.energyMap.forEach((em) => {
+        waterCount += em.provides.filter((p) => p === CardType.WATER || p === CardType.ANY).length;
       });
 
       effect.damage += 20 * waterCount;
@@ -104,8 +134,8 @@ export class PalkiaGx extends PokemonCard {
 
       // Shuffle all Energy from each of opponent's Pokemon into their deck
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        const energyCards = cardList.cards.filter(c => c instanceof EnergyCard);
-        energyCards.forEach(card => {
+        const energyCards = cardList.cards.filter((c) => c instanceof EnergyCard);
+        energyCards.forEach((card) => {
           cardList.moveCardTo(card, opponent.deck);
         });
       });

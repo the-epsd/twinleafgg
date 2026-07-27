@@ -6,10 +6,14 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, CONFIRMATION_PROMPT, DISCARD_ALL_ENERGY_FROM_POKEMON } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  CONFIRMATION_PROMPT,
+  DISCARD_ALL_ENERGY_FROM_POKEMON,
+} from '../../../game/store/prefabs/prefabs';
 
 export class PikachuVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Pikachu V';
   public cardType: CardType = L;
@@ -23,8 +27,8 @@ export class PikachuVmax extends PokemonCard {
       cost: [L, L, L],
       damage: 120,
       damageCalculation: '+',
-      text: 'You may discard all Energy from this Pokémon. If you do, this attack does 150 more damage.'
-    }
+      text: 'You may discard all Energy from this Pokémon. If you do, this attack does 150 more damage.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -40,7 +44,7 @@ export class PikachuVmax extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      CONFIRMATION_PROMPT(store, state, player, result => {
+      CONFIRMATION_PROMPT(store, state, player, (result) => {
         if (result) {
           DISCARD_ALL_ENERGY_FROM_POKEMON(store, state, effect, this);
           effect.damage += 150;

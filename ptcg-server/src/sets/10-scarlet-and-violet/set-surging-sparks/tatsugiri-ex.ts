@@ -2,16 +2,28 @@ import { CardTag, CardType, Stage, SuperType } from '../../../game/store/card/ca
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { Card, CardList, ChooseCardsPrompt, GameError, GameMessage, PokemonCard, ShuffleDeckPrompt, StateUtils } from '../../../game';
-import { ApplyWeaknessEffect, AfterDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import {
+  Card,
+  CardList,
+  ChooseCardsPrompt,
+  GameError,
+  GameMessage,
+  PokemonCard,
+  ShuffleDeckPrompt,
+  StateUtils,
+} from '../../../game';
+import {
+  ApplyWeaknessEffect,
+  AfterDamageEffect,
+  PutDamageEffect,
+} from '../../../game/store/effects/attack-effects';
 
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Tatsugiriex extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
   public regulationMark = 'H';
 
@@ -31,14 +43,14 @@ export class Tatsugiriex extends PokemonCard {
       cost: [R, W],
       damage: 100,
       shredAttack: true,
-      text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
+      text: "This attack's damage isn't affected by any effects on your opponent's Active Pokémon.",
     },
     {
       name: 'Cinnabar Lure',
       cost: [R, W, D],
       damage: 0,
-      text: 'Look at the top 10 cards of your deck. You may put any number of Pokémon you find there onto your Bench. Shuffle the other cards back into your deck.'
-    }
+      text: 'Look at the top 10 cards of your deck. You may put any number of Pokémon you find there onto your Bench. Shuffle the other cards back into your deck.',
+    },
   ];
 
   public set: string = 'SSP';
@@ -52,7 +64,6 @@ export class Tatsugiriex extends PokemonCard {
   public fullName: string = 'Tatsugiri ex SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -71,14 +82,13 @@ export class Tatsugiriex extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-
       const player = effect.player;
 
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
       // Check if bench has open slots
-      const openSlots = player.bench.filter(b => b.cards.length === 0);
+      const openSlots = player.bench.filter((b) => b.cards.length === 0);
 
       if (openSlots.length === 0) {
         // No open slots, throw error
@@ -92,28 +102,36 @@ export class Tatsugiriex extends PokemonCard {
       player.deck.moveTo(deckTop, 10);
 
       let cards: Card[] = [];
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-        deckTop,
-        { superType: SuperType.POKEMON },
-        { min: 0, max: maxPokemons, allowCancel: false }
-      ), selectedCards => {
-        cards = selectedCards || [];
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+          deckTop,
+          { superType: SuperType.POKEMON },
+          { min: 0, max: maxPokemons, allowCancel: false },
+        ),
+        (selectedCards) => {
+          cards = selectedCards || [];
 
-        cards.forEach((card, index) => {
-          deckTop.moveCardTo(card, openSlots[index]);
-          openSlots[index].pokemonPlayedTurn = state.turn;
-        });
-        deckTop.moveTo(player.deck);
+          cards.forEach((card, index) => {
+            deckTop.moveCardTo(card, openSlots[index]);
+            openSlots[index].pokemonPlayedTurn = state.turn;
+          });
+          deckTop.moveTo(player.deck);
 
-        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-        });
-      });
+          return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+            player.deck.applyOrder(order);
+          });
+        },
+      );
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

@@ -9,14 +9,12 @@ import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { ToolEffect } from '../../../game/store/effects/play-card-effects';
 import { IS_TOOL_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
-
 export class FutureBoosterEnergyCapsule extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.TOOL;
 
   public regulationMark = 'G';
 
-  public tags = [CardTag.FUTURE];
+  protected _tags = [CardTag.FUTURE];
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -29,15 +27,16 @@ export class FutureBoosterEnergyCapsule extends TrainerCard {
   public fullName: string = 'Future Booster Energy Capsule PAR';
 
   public text: string =
-    'The Future Pokémon this card is attached to has no Retreat Cost, and the attacks it uses do 20 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
+    "The Future Pokémon this card is attached to has no Retreat Cost, and the attacks it uses do 20 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof DealDamageEffect && effect.player.active.tools.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, effect.player);
 
-      if (IS_TOOL_BLOCKED(store, state, player, this)) { return state; }
+      if (IS_TOOL_BLOCKED(store, state, player, this)) {
+        return state;
+      }
 
       if (effect.target !== player.active && effect.target !== opponent.active) {
         return state;
@@ -49,7 +48,6 @@ export class FutureBoosterEnergyCapsule extends TrainerCard {
     }
 
     if (effect instanceof CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
-
       // Try to reduce ToolEffect, to check if something is blocking the tool from working
       try {
         const stub = new ToolEffect(effect.player, this);
@@ -65,6 +63,4 @@ export class FutureBoosterEnergyCapsule extends TrainerCard {
     }
     return state;
   }
-
 }
-

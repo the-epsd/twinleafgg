@@ -11,7 +11,7 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class MewtwoEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 170;
@@ -23,14 +23,14 @@ export class MewtwoEx extends PokemonCard {
       name: 'Photon Wave',
       cost: [C, C],
       damage: 30,
-      text: 'During your opponent\'s next turn, any damage done by attacks from the Defending Pokémon is reduced by 30 (before applying Weakness and Resistance).'
+      text: "During your opponent's next turn, any damage done by attacks from the Defending Pokémon is reduced by 30 (before applying Weakness and Resistance).",
     },
     {
       name: 'Psyburn',
       cost: [P, P, C, C],
       damage: 120,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'BKT';
@@ -58,8 +58,10 @@ export class MewtwoEx extends PokemonCard {
       }
     }
 
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {

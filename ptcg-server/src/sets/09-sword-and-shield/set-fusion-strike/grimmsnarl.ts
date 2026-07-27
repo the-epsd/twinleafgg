@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Grimmsnarl extends PokemonCard {
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Morgrem';
   public cardType: CardType = D;
@@ -22,15 +22,15 @@ export class Grimmsnarl extends PokemonCard {
       name: 'Bite',
       cost: [D],
       damage: 60,
-      text: ''
+      text: '',
     },
     {
       name: 'Rear Attack',
       cost: [D, D],
       damage: 100,
       damageCalculation: '+',
-      text: 'If you have 2 or fewer Benched Pokémon, this attack does 140 more damage.'
-    }
+      text: 'If you have 2 or fewer Benched Pokémon, this attack does 140 more damage.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -45,7 +45,7 @@ export class Grimmsnarl extends PokemonCard {
     // Ref: set-evolving-skies/hydreigon.ts (count benched Pokemon condition)
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      const benchedCount = player.bench.filter(b => b.cards.length > 0).length;
+      const benchedCount = player.bench.filter((b) => b.cards.length > 0).length;
       if (benchedCount <= 2) {
         effect.damage += 140;
       }

@@ -7,8 +7,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class TapuKokoV extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
 
   public regulationMark = 'E';
 
@@ -27,16 +26,17 @@ export class TapuKokoV extends PokemonCard {
       name: 'Electro Ball',
       cost: [CardType.LIGHTNING],
       damage: 40,
-      text: ''
+      text: '',
     },
     {
       name: 'Spiral Thunder',
       cost: [L, L, C],
       damage: 20,
       damageCalculation: '+',
-      text: 'This attack does 40 more damage for each Energy' +
-        'attached to all of your opponent\'s Pokémon.'
-    }
+      text:
+        'This attack does 40 more damage for each Energy' +
+        "attached to all of your opponent's Pokémon.",
+    },
   ];
 
   public set: string = 'BST';
@@ -50,19 +50,19 @@ export class TapuKokoV extends PokemonCard {
   public fullName: string = 'Tapu Koko V BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(opponent);
       store.reduceEffect(state, checkProvidedEnergyEffect);
-      const energyCount = checkProvidedEnergyEffect.energyMap
-        .reduce((left, p) => left + p.provides.length, 0);
+      const energyCount = checkProvidedEnergyEffect.energyMap.reduce(
+        (left, p) => left + p.provides.length,
+        0,
+      );
 
-      effect.damage = 20 + (energyCount * 40);
+      effect.damage = 20 + energyCount * 40;
     }
     return state;
   }
-
 }

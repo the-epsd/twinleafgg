@@ -3,34 +3,60 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, PlayerType, AttachEnergyPrompt, EnergyCard, GameError, GameMessage, SlotType, CardTarget } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  EnergyType,
+  SuperType,
+} from '../../../game/store/card/card-types';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  PlayerType,
+  AttachEnergyPrompt,
+  EnergyCard,
+  GameError,
+  GameMessage,
+  SlotType,
+  CardTarget,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, REMOVE_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  USE_ABILITY_ONCE_PER_TURN,
+  REMOVE_MARKER_AT_END_OF_TURN,
+} from '../../../game/store/prefabs/prefabs';
 import { DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 export class Latias extends PokemonCard {
-  public tags = [CardTag.FUSION_STRIKE];
+  protected _tags = [CardTag.FUSION_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = N;
   public hp: number = 120;
   public retreat = [C];
 
-  public powers = [{
-    name: 'Red Assist',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may attach a [P] Energy card from your hand to 1 of your Latios.'
-  }];
+  public powers = [
+    {
+      name: 'Red Assist',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn, you may attach a [P] Energy card from your hand to 1 of your Latios.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Dyna Barrier',
       cost: [R, P, C],
       damage: 70,
-      text: 'During your opponent\'s next turn, prevent all damage done to this Pokémon by attacks from Pokémon VMAX.'
-    }
+      text: "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Pokémon VMAX.",
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -58,7 +84,7 @@ export class Latias extends PokemonCard {
 
       // Check that we have a Psychic energy in hand
       const hasPsychicInHand = player.hand.cards.some(
-        c => c instanceof EnergyCard && c.provides.includes(CardType.PSYCHIC)
+        (c) => c instanceof EnergyCard && c.provides.includes(CardType.PSYCHIC),
       );
       if (!hasPsychicInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -83,24 +109,32 @@ export class Latias extends PokemonCard {
         }
       });
 
-      state = store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_CARDS,
-        player.hand,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, provides: [CardType.PSYCHIC] },
-        { allowCancel: true, min: 1, max: 1, blockedTo }
-      ), transfers => {
-        transfers = transfers || [];
-        if (transfers.length === 0) {
-          return;
-        }
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.hand.moveCardTo(transfer.card, target);
-        }
-      });
+      state = store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_CARDS,
+          player.hand,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          {
+            superType: SuperType.ENERGY,
+            energyType: EnergyType.BASIC,
+            provides: [CardType.PSYCHIC],
+          },
+          { allowCancel: true, min: 1, max: 1, blockedTo },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          if (transfers.length === 0) {
+            return;
+          }
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.hand.moveCardTo(transfer.card, target);
+          }
+        },
+      );
     }
 
     // Attack 1: Dyna Barrier
@@ -114,11 +148,13 @@ export class Latias extends PokemonCard {
     }
 
     // Prevent damage from VMAX attacks during opponent's next turn
-    if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect)
-      && effect.target.cards.includes(this)
-      && effect.target.marker.hasMarker(this.DYNA_BARRIER_MARKER, this)) {
+    if (
+      (effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
+      effect.target.cards.includes(this) &&
+      effect.target.marker.hasMarker(this.DYNA_BARRIER_MARKER, this)
+    ) {
       const sourceCard = effect.source.getPokemonCard();
-      if (sourceCard && sourceCard.tags.includes(CardTag.POKEMON_VMAX)) {
+      if (sourceCard && sourceCard.hasTag(CardTag.POKEMON_VMAX)) {
         effect.preventDefault = true;
         return state;
       }
@@ -128,8 +164,10 @@ export class Latias extends PokemonCard {
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.RED_ASSIST_MARKER, this);
 
     // Cleanup markers at end of opponent's turn
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_DYNA_BARRIER_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_DYNA_BARRIER_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_DYNA_BARRIER_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {

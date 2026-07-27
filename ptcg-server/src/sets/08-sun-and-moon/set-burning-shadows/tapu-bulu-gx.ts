@@ -9,8 +9,7 @@ import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/pr
 
 // BUS Tapu Bulu-GX 130 (https://limitlesstcg.com/cards/BUS/130)
 export class TapuBuluGX extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
 
   public stage: Stage = Stage.BASIC;
 
@@ -25,20 +24,20 @@ export class TapuBuluGX extends PokemonCard {
       name: 'Horn Attack',
       cost: [CardType.GRASS],
       damage: 30,
-      text: ''
+      text: '',
     },
     {
-      name: 'Nature\'s Judgement',
+      name: "Nature's Judgement",
       cost: [CardType.GRASS, CardType.GRASS, CardType.COLORLESS],
       damage: 120,
-      text: 'You may discard all Energy from this Pokémon. If you do, this attack does 60 more damage.'
+      text: 'You may discard all Energy from this Pokémon. If you do, this attack does 60 more damage.',
     },
     {
       name: 'Tapu Wilderness-GX',
       cost: [CardType.GRASS, CardType.GRASS, CardType.COLORLESS],
       damage: 150,
-      text: 'Heal all damage from this Pokémon. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Heal all damage from this Pokémon. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'BUS';
@@ -56,26 +55,27 @@ export class TapuBuluGX extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      state = store.prompt(state, new ConfirmPrompt(
-        effect.player.id,
-        GameMessage.WANT_TO_USE_ABILITY,
-      ), wantToUse => {
-        if (wantToUse) {
-          const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
-          state = store.reduceEffect(state, checkProvidedEnergy);
+      state = store.prompt(
+        state,
+        new ConfirmPrompt(effect.player.id, GameMessage.WANT_TO_USE_ABILITY),
+        (wantToUse) => {
+          if (wantToUse) {
+            const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
+            state = store.reduceEffect(state, checkProvidedEnergy);
 
-          const cards: Card[] = [];
-          checkProvidedEnergy.energyMap.forEach(em => {
-            cards.push(em.card);
-          });
+            const cards: Card[] = [];
+            checkProvidedEnergy.energyMap.forEach((em) => {
+              cards.push(em.card);
+            });
 
-          const discardEnergy = new DiscardCardsEffect(effect, cards);
-          discardEnergy.target = player.active;
-          store.reduceEffect(state, discardEnergy);
+            const discardEnergy = new DiscardCardsEffect(effect, cards);
+            discardEnergy.target = player.active;
+            store.reduceEffect(state, discardEnergy);
 
-          effect.damage += 60;
-        }
-      });
+            effect.damage += 60;
+          }
+        },
+      );
     }
 
     // Absorption GX

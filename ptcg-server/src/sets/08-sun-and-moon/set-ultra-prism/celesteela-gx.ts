@@ -10,7 +10,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class CelesteelaGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
+  protected _tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;
   public hp: number = 200;
@@ -24,20 +24,20 @@ export class CelesteelaGx extends PokemonCard {
       cost: [M, C, C],
       damage: 30,
       damageCalculation: '+',
-      text: 'This attack does 30 more damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
+      text: "This attack does 30 more damage for each Colorless in your opponent's Active Pokémon's Retreat Cost.",
     },
     {
       name: 'Moon Press',
       cost: [M, C, C, C],
       damage: 130,
-      text: ''
+      text: '',
     },
     {
       name: 'Blaster-GX',
       cost: [M, C, C, C],
       damage: 180,
-      text: 'Turn all of your Prize cards face up. (Those Prize cards remain face up for the rest of the game.) (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Turn all of your Prize cards face up. (Those Prize cards remain face up for the rest of the game.) (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'UPR';
@@ -69,7 +69,7 @@ export class CelesteelaGx extends PokemonCard {
       player.usedGX = true;
 
       // Turn all prize cards face up
-      player.prizes.forEach(prizeList => {
+      player.prizes.forEach((prizeList) => {
         prizeList.isSecret = false;
         prizeList.isPublic = true;
       });

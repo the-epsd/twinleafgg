@@ -6,10 +6,14 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, SEARCH_DECK_FOR_CARDS_TO_HAND, NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  SEARCH_DECK_FOR_CARDS_TO_HAND,
+  NEXT_TURN_ATTACK_BONUS,
+} from '../../../game/store/prefabs/prefabs';
 
 export class MetagrossVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX, CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.POKEMON_VMAX, CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Metagross V';
   public cardType: CardType = M;
@@ -23,14 +27,14 @@ export class MetagrossVmax extends PokemonCard {
       name: 'Zap Traction',
       cost: [M],
       damage: 0,
-      text: 'Search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck.'
+      text: 'Search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck.',
     },
     {
       name: 'Max Rush',
       cost: [M, C],
       damage: 100,
-      text: 'During your next turn, this Pokémon\'s Max Rush attack does 150 more damage.'
-    }
+      text: "During your next turn, this Pokémon's Max Rush attack does 150 more damage.",
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -41,7 +45,8 @@ export class MetagrossVmax extends PokemonCard {
   public fullName: string = 'Metagross VMAX CRE';
 
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'METAGROSS_VMAX_CRE_NEXT_TURN_DAMAGE_MARKER';
-  public readonly NEXT_TURN_MORE_DAMAGE_CLEAR_MARKER = 'METAGROSS_VMAX_CRE_NEXT_TURN_DAMAGE_CLEAR_MARKER';
+  public readonly NEXT_TURN_MORE_DAMAGE_CLEAR_MARKER =
+    'METAGROSS_VMAX_CRE_NEXT_TURN_DAMAGE_CLEAR_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Zap Traction
@@ -58,7 +63,7 @@ export class MetagrossVmax extends PokemonCard {
       source: this,
       bonusDamage: 150,
       bonusMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER,
-      clearMarker: this.NEXT_TURN_MORE_DAMAGE_CLEAR_MARKER
+      clearMarker: this.NEXT_TURN_MORE_DAMAGE_CLEAR_MARKER,
     });
 
     return state;

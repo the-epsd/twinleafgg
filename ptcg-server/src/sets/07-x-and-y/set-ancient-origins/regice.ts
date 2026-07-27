@@ -2,10 +2,19 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_PARALYZED_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  COIN_FLIP_PROMPT,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
-import { AddSpecialConditionsEffect, DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import {
+  AddSpecialConditionsEffect,
+  DealDamageEffect,
+  PutDamageEffect,
+} from '../../../game/store/effects/attack-effects';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayerType, State, StoreLike } from '../../../game';
@@ -22,14 +31,14 @@ export class Regice extends PokemonCard {
       name: 'Ice Beam',
       cost: [W, C],
       damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+      text: "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed.",
     },
     {
       name: 'Resistance Blizzard',
       cost: [W, C, C],
       damage: 70,
-      text: 'During your opponent\'s next turn, prevent all effects of attacks, including damage, done to this Pokémon by Pokémon-EX.'
-    }
+      text: "During your opponent's next turn, prevent all effects of attacks, including damage, done to this Pokémon by Pokémon-EX.",
+    },
   ];
 
   public set: string = 'AOR';
@@ -45,7 +54,7 @@ export class Regice extends PokemonCard {
     // Attack 1: Ice Beam
     // Ref: AGENTS-patterns.md (Coin flip + Paralyzed)
     if (AFTER_ATTACK(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (result) {
           ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
         }
@@ -61,17 +70,24 @@ export class Regice extends PokemonCard {
       opponent.marker.addMarker(this.CLEAR_RESISTANCE_BLIZZARD_MARKER, this);
     }
 
-    if ((effect instanceof PutDamageEffect || effect instanceof DealDamageEffect || effect instanceof AddSpecialConditionsEffect)
-      && effect.target.cards.includes(this)
-      && effect.target.marker.hasMarker(this.RESISTANCE_BLIZZARD_MARKER, this)) {
+    if (
+      (effect instanceof PutDamageEffect ||
+        effect instanceof DealDamageEffect ||
+        effect instanceof AddSpecialConditionsEffect) &&
+      effect.target.cards.includes(this) &&
+      effect.target.marker.hasMarker(this.RESISTANCE_BLIZZARD_MARKER, this)
+    ) {
       const sourcePokemon = effect.source.getPokemonCard();
-      if (sourcePokemon && sourcePokemon.tags.includes(CardTag.POKEMON_EX)) {
+      if (sourcePokemon && sourcePokemon.hasTag(CardTag.POKEMON_EX)) {
         effect.preventDefault = true;
         return state;
       }
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_RESISTANCE_BLIZZARD_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_RESISTANCE_BLIZZARD_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_RESISTANCE_BLIZZARD_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {

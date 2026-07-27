@@ -5,7 +5,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, BLOCK_RETREAT } from '../../../game/store/prefabs/prefabs';
 
 export class Dreepy extends PokemonCard {
-  public tags = [CardTag.FUSION_STRIKE];
+  protected _tags = [CardTag.FUSION_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 60;
@@ -13,12 +13,14 @@ export class Dreepy extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Infestation',
-    cost: [P],
-    damage: 10,
-    text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
-  }];
+  public attacks = [
+    {
+      name: 'Infestation',
+      cost: [P],
+      damage: 10,
+      text: "During your opponent's next turn, the Defending Pokémon can't retreat.",
+    },
+  ];
 
   public regulationMark = 'E';
   public set: string = 'FST';

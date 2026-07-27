@@ -9,10 +9,18 @@ import { Effect } from '../../../game/store/effects/effect';
 import { DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED, DRAW_CARDS, SHUFFLE_DECK, ADD_MARKER, HAS_MARKER, REMOVE_MARKER } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  BLOCK_IF_GX_ATTACK_USED,
+  DRAW_CARDS,
+  SHUFFLE_DECK,
+  ADD_MARKER,
+  HAS_MARKER,
+  REMOVE_MARKER,
+} from '../../../game/store/prefabs/prefabs';
 
 export class VenomothGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Venonat';
   public cardType: CardType = G;
@@ -26,14 +34,14 @@ export class VenomothGx extends PokemonCard {
       cost: [G, C, C],
       damage: 110,
       damageCalculation: '+',
-      text: 'If you played Koga\'s Trap from your hand during this turn, this attack does 90 more damage. If you played Janine from your hand during this turn, prevent all damage done to this Pokémon by attacks from Basic Pokémon during your opponent\'s next turn.'
+      text: "If you played Koga's Trap from your hand during this turn, this attack does 90 more damage. If you played Janine from your hand during this turn, prevent all damage done to this Pokémon by attacks from Basic Pokémon during your opponent's next turn.",
     },
     {
       name: 'Ten-Card Return-GX',
       cost: [C],
       damage: 60,
-      text: 'Shuffle your hand into your deck. Then, draw 10 cards. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Shuffle your hand into your deck. Then, draw 10 cards. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'UNB';
@@ -44,13 +52,15 @@ export class VenomothGx extends PokemonCard {
 
   public readonly KOGAS_TRAP_MARKER = 'VENOMOTH_GX_KOGAS_TRAP_MARKER';
   public readonly JANINE_MARKER = 'VENOMOTH_GX_JANINE_MARKER';
-  public readonly PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER = 'VENOMOTH_GX_PREVENT_DAMAGE_FROM_BASIC_MARKER';
-  public readonly CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER = 'VENOMOTH_GX_CLEAR_PREVENT_DAMAGE_FROM_BASIC_MARKER';
+  public readonly PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER =
+    'VENOMOTH_GX_PREVENT_DAMAGE_FROM_BASIC_MARKER';
+  public readonly CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER =
+    'VENOMOTH_GX_CLEAR_PREVENT_DAMAGE_FROM_BASIC_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Track if Koga's Trap or Janine was played this turn
     // Ref: set-ultra-prism/garchomp.ts (Royal Blades - track specific supporter played)
-    if (effect instanceof TrainerEffect && effect.trainerCard.name === 'Koga\'s Trap') {
+    if (effect instanceof TrainerEffect && effect.trainerCard.name === "Koga's Trap") {
       const player = effect.player;
       ADD_MARKER(this.KOGAS_TRAP_MARKER, player, this);
     }
@@ -70,8 +80,13 @@ export class VenomothGx extends PokemonCard {
       }
 
       // Cleanup prevent damage markers
-      if (effect.player.marker.hasMarker(this.CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER, this)) {
-        effect.player.marker.removeMarker(this.CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER, this);
+      if (
+        effect.player.marker.hasMarker(this.CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER, this)
+      ) {
+        effect.player.marker.removeMarker(
+          this.CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER,
+          this,
+        );
         const opponent = StateUtils.getOpponent(state, effect.player);
         opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
           cardList.marker.removeMarker(this.PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER, this);
@@ -99,16 +114,20 @@ export class VenomothGx extends PokemonCard {
 
     // Intercept damage from Basic Pokemon
     // Ref: set-stellar-crown/dipplin.ts (prevent damage from Basic Pokemon)
-    if (effect instanceof DealDamageEffect
-      && effect.target.marker.hasMarker(this.PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER, this)) {
+    if (
+      effect instanceof DealDamageEffect &&
+      effect.target.marker.hasMarker(this.PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER, this)
+    ) {
       const card = effect.source.getPokemonCard();
       if (card && card.stage === Stage.BASIC) {
         effect.damage = 0;
       }
     }
 
-    if (effect instanceof PutDamageEffect
-      && effect.target.marker.hasMarker(this.PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER, this)) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.marker.hasMarker(this.PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER, this)
+    ) {
       const card = effect.source.getPokemonCard();
       if (card && card.stage === Stage.BASIC) {
         effect.preventDefault = true;
@@ -125,7 +144,7 @@ export class VenomothGx extends PokemonCard {
 
       // Shuffle hand into deck
       const cards = player.hand.cards.slice();
-      cards.forEach(c => {
+      cards.forEach((c) => {
         player.hand.moveCardTo(c, player.deck);
       });
       SHUFFLE_DECK(store, state, player);

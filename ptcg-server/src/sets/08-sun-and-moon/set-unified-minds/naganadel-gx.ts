@@ -4,15 +4,34 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { PowerType, PlayerType, SlotType, StoreLike, State, StateUtils, GameMessage, GameError, ChooseCardsPrompt } from '../../../game';
+import {
+  PowerType,
+  PlayerType,
+  SlotType,
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  GameError,
+  ChooseCardsPrompt,
+} from '../../../game';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, BLOCK_IF_GX_ATTACK_USED, DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  USE_ABILITY_ONCE_PER_TURN,
+  ABILITY_USED,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  BLOCK_IF_GX_ATTACK_USED,
+  DRAW_CARDS,
+} from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class NaganadelGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
+  protected _tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Poipole';
   public cardType: CardType = N;
@@ -22,26 +41,28 @@ export class NaganadelGx extends PokemonCard {
 
   public readonly ULTRA_CONVERSION_MARKER = 'NAGANADEL_GX_UNM_ULTRA_CONVERSION_MARKER';
 
-  public powers = [{
-    name: 'Ultra Conversion',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), you may discard an Ultra Beast card from your hand. If you do, draw 3 cards.'
-  }];
+  public powers = [
+    {
+      name: 'Ultra Conversion',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn (before your attack), you may discard an Ultra Beast card from your hand. If you do, draw 3 cards.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Venom Shot',
       cost: [P, C, C, C],
       damage: 0,
-      text: 'Discard 2 Energy from this Pokemon. This attack does 170 damage to 1 of your opponent\'s Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+      text: "Discard 2 Energy from this Pokemon. This attack does 170 damage to 1 of your opponent's Pokemon. (Don't apply Weakness and Resistance for Benched Pokemon.)",
     },
     {
       name: 'Injection-GX',
       cost: [L],
       damage: 0,
-      text: 'Add a card from your opponent\'s discard pile to their Prize cards face down. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Add a card from your opponent's discard pile to their Prize cards face down. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'UNM';
@@ -61,8 +82,8 @@ export class NaganadelGx extends PokemonCard {
       }
 
       // Check if player has an Ultra Beast card in hand
-      const hasUltraBeast = player.hand.cards.some(c =>
-        c instanceof PokemonCard && c.tags.includes(CardTag.ULTRA_BEAST)
+      const hasUltraBeast = player.hand.cards.some(
+        (c) => c instanceof PokemonCard && c.hasTag(CardTag.ULTRA_BEAST),
       );
 
       if (!hasUltraBeast) {
@@ -75,24 +96,28 @@ export class NaganadelGx extends PokemonCard {
       // Block non-Ultra Beast cards
       const blocked: number[] = [];
       player.hand.cards.forEach((c, index) => {
-        if (!(c instanceof PokemonCard && c.tags.includes(CardTag.ULTRA_BEAST))) {
+        if (!(c instanceof PokemonCard && c.hasTag(CardTag.ULTRA_BEAST))) {
           blocked.push(index);
         }
       });
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        player.hand,
-        {},
-        { min: 1, max: 1, allowCancel: false, blocked }
-      ), selected => {
-        const cards = selected || [];
-        if (cards.length > 0) {
-          player.hand.moveCardTo(cards[0], player.discard);
-          DRAW_CARDS(store, state, player, 3);
-        }
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          player.hand,
+          {},
+          { min: 1, max: 1, allowCancel: false, blocked },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          if (cards.length > 0) {
+            player.hand.moveCardTo(cards[0], player.discard);
+            DRAW_CARDS(store, state, player, 3);
+          }
+        },
+      );
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.ULTRA_CONVERSION_MARKER, this);
@@ -102,20 +127,24 @@ export class NaganadelGx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 2);
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        effect.player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false }
-      ), targets => {
-        if (!targets || targets.length === 0) {
-          return;
-        }
-        const damageEffect = new PutDamageEffect(effect, 170);
-        damageEffect.target = targets[0];
-        store.reduceEffect(state, damageEffect);
-      });
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          effect.player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (targets) => {
+          if (!targets || targets.length === 0) {
+            return;
+          }
+          const damageEffect = new PutDamageEffect(effect, 170);
+          damageEffect.target = targets[0];
+          store.reduceEffect(state, damageEffect);
+        },
+      );
     }
 
     // Attack 2: Injection-GX
@@ -132,25 +161,29 @@ export class NaganadelGx extends PokemonCard {
       }
 
       // Find an empty prize slot
-      const emptyPrize = opponent.prizes.find(p => p.cards.length === 0);
+      const emptyPrize = opponent.prizes.find((p) => p.cards.length === 0);
       if (!emptyPrize) {
         return state;
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        opponent.discard,
-        {},
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        const cards = selected || [];
-        if (cards.length > 0) {
-          opponent.discard.moveCardTo(cards[0], emptyPrize);
-          emptyPrize.isSecret = true;
-          emptyPrize.isPublic = false;
-        }
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          opponent.discard,
+          {},
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          if (cards.length > 0) {
+            opponent.discard.moveCardTo(cards[0], emptyPrize);
+            emptyPrize.isSecret = true;
+            emptyPrize.isPublic = false;
+          }
+        },
+      );
     }
 
     return state;

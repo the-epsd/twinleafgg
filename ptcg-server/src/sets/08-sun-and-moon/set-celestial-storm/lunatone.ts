@@ -2,7 +2,11 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_PARALYZED_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  COIN_FLIP_PROMPT,
+} from '../../../game/store/prefabs/prefabs';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
@@ -23,19 +27,21 @@ export class Lunatone extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Sol Shade',
-    powerType: PowerType.ABILITY,
-    text: 'If you have Solrock in play, Fire Pokémon in play (both yours and your opponent\'s) have no Abilities, except Pokémon-GX and Pokémon-EX.'
-  }];
+  public powers = [
+    {
+      name: 'Sol Shade',
+      powerType: PowerType.ABILITY,
+      text: "If you have Solrock in play, Fire Pokémon in play (both yours and your opponent's) have no Abilities, except Pokémon-GX and Pokémon-EX.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Psyshock',
       cost: [P],
       damage: 10,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
+      text: "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed.",
+    },
   ];
 
   public set: string = 'CES';
@@ -58,50 +64,58 @@ export class Lunatone extends PokemonCard {
     for (const player of state.players) {
       let found = false;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (_cardList, card) => {
-        if (card === this) { found = true; }
+        if (card === this) {
+          found = true;
+        }
       });
-      if (found) { return player; }
+      if (found) {
+        return player;
+      }
     }
     return null;
   }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    HANDLE_ABILITY_LOCK(effect, ({ card }) => {
-      const lunatoneOwner = this.findLunatoneOwner(state);
-      if (!lunatoneOwner || !this.hasSolrockInPlay(lunatoneOwner)) {
-        return false;
-      }
-
-      if (card.tags.includes(CardTag.POKEMON_GX) || card.tags.includes(CardTag.POKEMON_EX)) {
-        return false;
-      }
-
-      try {
-        const cardList = StateUtils.findCardList(state, card);
-        if (cardList instanceof PokemonCardList) {
-          const checkType = new CheckPokemonTypeEffect(cardList);
-          store.reduceEffect(state, checkType);
-          if (!checkType.cardTypes.includes(CardType.FIRE)) {
-            return false;
-          }
-        } else if (card.cardType !== CardType.FIRE) {
+    HANDLE_ABILITY_LOCK(
+      effect,
+      ({ card }) => {
+        const lunatoneOwner = this.findLunatoneOwner(state);
+        if (!lunatoneOwner || !this.hasSolrockInPlay(lunatoneOwner)) {
           return false;
         }
-      } catch {
-        return false;
-      }
 
-      // Check + PowerEffect: Sol Shade must itself be usable (e.g. Path to the Peak).
-      return CAN_APPLY_LOCKER_ABILITY(store, state, lunatoneOwner, this, this.powers[0]);
-    }, {
-      allowUseFromDiscard: true,
-      error: GameMessage.BLOCKED_BY_ABILITY,
-    });
+        if (card.hasTag(CardTag.POKEMON_GX) || card.hasTag(CardTag.POKEMON_EX)) {
+          return false;
+        }
+
+        try {
+          const cardList = StateUtils.findCardList(state, card);
+          if (cardList instanceof PokemonCardList) {
+            const checkType = new CheckPokemonTypeEffect(cardList);
+            store.reduceEffect(state, checkType);
+            if (!checkType.cardTypes.includes(CardType.FIRE)) {
+              return false;
+            }
+          } else if (card.cardType !== CardType.FIRE) {
+            return false;
+          }
+        } catch {
+          return false;
+        }
+
+        // Check + PowerEffect: Sol Shade must itself be usable (e.g. Path to the Peak).
+        return CAN_APPLY_LOCKER_ABILITY(store, state, lunatoneOwner, this, this.powers[0]);
+      },
+      {
+        allowUseFromDiscard: true,
+        error: GameMessage.BLOCKED_BY_ABILITY,
+      },
+    );
 
     // Attack 1: Psyshock
     // Ref: set-ultra-prism/bronzong.ts (Psy Bolt)
     if (AFTER_ATTACK(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (result) {
           ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
         }

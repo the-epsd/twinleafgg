@@ -1,14 +1,30 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameError, GameMessage, PlayerType, PowerType } from '../../../game';
+import {
+  StoreLike,
+  State,
+  StateUtils,
+  GameError,
+  GameMessage,
+  PlayerType,
+  PowerType,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { EffectOfAbilityEffect } from '../../../game/store/effects/game-effects';
-import { ADD_MARKER, HAS_MARKER, IS_ABILITY_BLOCKED, MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { CheckPokemonPowersEffect, CheckPokemonStatsEffect } from '../../../game/store/effects/check-effects';
+import {
+  ADD_MARKER,
+  HAS_MARKER,
+  IS_ABILITY_BLOCKED,
+  MULTIPLE_COIN_FLIPS_PROMPT,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
+import {
+  CheckPokemonPowersEffect,
+  CheckPokemonStatsEffect,
+} from '../../../game/store/effects/check-effects';
 
 export class UnownVSTAR extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_VSTAR];
+  protected _tags = [CardTag.POKEMON_VSTAR];
   public regulationMark = 'F';
   public stage: Stage = Stage.VSTAR;
   public evolvesFrom = 'Unown V';
@@ -24,13 +40,13 @@ export class UnownVSTAR extends PokemonCard {
       cost: [P],
       damage: 70,
       damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 70 damage for each heads.'
+      text: 'Flip 3 coins. This attack does 70 damage for each heads.',
     },
     {
       name: 'Star Cipher',
       cost: [C, C, C],
       damage: 0,
-      text: 'Until this Pokémon leaves play, it gains an Ability that has the effect "The Weakness of each of your opponent\'s Pokémon in play is now [P]. (The amount of Weakness doesn\'t change.)" (You can\'t use more than 1 VSTAR Power in a game.)'
+      text: "Until this Pokémon leaves play, it gains an Ability that has the effect \"The Weakness of each of your opponent's Pokémon in play is now [P]. (The amount of Weakness doesn't change.)\" (You can't use more than 1 VSTAR Power in a game.)",
     },
   ];
 
@@ -43,12 +59,11 @@ export class UnownVSTAR extends PokemonCard {
   public readonly STAR_CIPHER_MARKER = 'STAR_CIPHER_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 3, results => {
+      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 3, (results) => {
         let heads: number = 0;
-        results.forEach(r => {
+        results.forEach((r) => {
           if (r) heads++;
         });
         effect.damage = 70 * heads;
@@ -95,7 +110,7 @@ export class UnownVSTAR extends PokemonCard {
       effect.powers.push({
         name: 'Star Cipher',
         powerType: PowerType.ABILITY,
-        text: 'The Weakness of each of your opponent\'s Pokémon in play is now [P]. (The amount of Weakness doesn\'t change.)',
+        text: "The Weakness of each of your opponent's Pokémon in play is now [P]. (The amount of Weakness doesn't change.)",
       });
     }
 
@@ -112,7 +127,7 @@ export class UnownVSTAR extends PokemonCard {
         }
       });
 
-      // Return if no Unown VSTAR 
+      // Return if no Unown VSTAR
       if (!isUnownInPlay) {
         return state;
       }
@@ -126,7 +141,12 @@ export class UnownVSTAR extends PokemonCard {
       }
 
       // Check if weakness can be changed
-      const canApplyAbility = new EffectOfAbilityEffect(opponent, this.powers[0], this, pokemonCard);
+      const canApplyAbility = new EffectOfAbilityEffect(
+        opponent,
+        this.powers[0],
+        this,
+        pokemonCard,
+      );
       store.reduceEffect(state, canApplyAbility);
       if (canApplyAbility.target) {
         effect.weakness = [{ type: CardType.PSYCHIC }];
@@ -135,4 +155,4 @@ export class UnownVSTAR extends PokemonCard {
 
     return state;
   }
-}  
+}

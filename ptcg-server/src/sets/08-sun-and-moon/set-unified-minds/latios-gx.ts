@@ -4,15 +4,27 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { PlayerType, PowerType, StoreLike, State, StateUtils, GameError, GameMessage } from '../../../game';
+import {
+  PlayerType,
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  GameError,
+  GameMessage,
+} from '../../../game';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  BLOCK_IF_GX_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class LatiosGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 170;
@@ -23,25 +35,27 @@ export class LatiosGx extends PokemonCard {
   public readonly CLEAR_TAG_PURGE_MARKER = 'LATIOS_GX_UNM_CLEAR_TAG_PURGE_MARKER';
   public readonly CLEAR_VISION_MARKER = 'LATIOS_GX_UNM_CLEAR_VISION_MARKER';
 
-  public powers = [{
-    name: 'Power Bind',
-    powerType: PowerType.ABILITY,
-    text: 'If you have 4 or fewer Pokemon in play, this Pokemon can\'t attack.'
-  }];
+  public powers = [
+    {
+      name: 'Power Bind',
+      powerType: PowerType.ABILITY,
+      text: "If you have 4 or fewer Pokemon in play, this Pokemon can't attack.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Tag Purge',
       cost: [P, C, C],
       damage: 120,
-      text: 'During your opponent\'s next turn, prevent all damage done to this Pokemon by attacks from TAG TEAM Pokemon.'
+      text: "During your opponent's next turn, prevent all damage done to this Pokemon by attacks from TAG TEAM Pokemon.",
     },
     {
       name: 'Clear Vision-GX',
       cost: [P],
       damage: 0,
-      text: 'For the rest of this game, your opponent can\'t use any GX attacks. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "For the rest of this game, your opponent can't use any GX attacks. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'UNM';
@@ -81,9 +95,12 @@ export class LatiosGx extends PokemonCard {
     }
 
     // Prevent damage from TAG TEAM attacks
-    if (effect instanceof DealDamageEffect && effect.target.marker.hasMarker(this.TAG_PURGE_MARKER, this)) {
+    if (
+      effect instanceof DealDamageEffect &&
+      effect.target.marker.hasMarker(this.TAG_PURGE_MARKER, this)
+    ) {
       const sourceCard = effect.source.getPokemonCard();
-      if (sourceCard && sourceCard.tags.includes(CardTag.TAG_TEAM)) {
+      if (sourceCard && sourceCard.hasTag(CardTag.TAG_TEAM)) {
         const targetOwner = StateUtils.findOwner(state, effect.target);
         const sourceOwner = StateUtils.findOwner(state, effect.source);
         if (targetOwner !== sourceOwner) {
@@ -94,11 +111,13 @@ export class LatiosGx extends PokemonCard {
     }
 
     // Cleanup Tag Purge marker
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_TAG_PURGE_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_TAG_PURGE_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_TAG_PURGE_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         cardList.marker.removeMarker(this.TAG_PURGE_MARKER, this);
       });
     }

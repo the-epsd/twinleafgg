@@ -8,10 +8,9 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Magnezoneex extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_2;
 
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
 
   public evolvesFrom = 'Magneton';
 
@@ -31,14 +30,14 @@ export class Magnezoneex extends PokemonCard {
       cost: [CardType.LIGHTNING],
       damage: 50,
       damageCalculation: 'x',
-      text: 'This attack does 50 damage for each Energy attached to all of your opponent\'s Pokémon.'
+      text: "This attack does 50 damage for each Energy attached to all of your opponent's Pokémon.",
     },
     {
       name: 'Pulse Launcher',
       cost: [CardType.LIGHTNING, CardType.LIGHTNING],
       damage: 220,
-      text: 'This Pokémon also does 30 damage to itself.'
-    }
+      text: 'This Pokémon also does 30 damage to itself.',
+    },
   ];
 
   public set: string = 'SVI';
@@ -52,9 +51,7 @@ export class Magnezoneex extends PokemonCard {
   public fullName: string = 'Magnezone ex SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -62,7 +59,7 @@ export class Magnezoneex extends PokemonCard {
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
         const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, cardList);
         store.reduceEffect(state, checkProvidedEnergyEffect);
-        checkProvidedEnergyEffect.energyMap.forEach(energy => {
+        checkProvidedEnergyEffect.energyMap.forEach((energy) => {
           energies += energy.provides.length;
         });
       });
@@ -71,7 +68,6 @@ export class Magnezoneex extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-
       const player = effect.player;
 
       const dealDamage = new DealDamageEffect(effect, 30);
@@ -80,5 +76,4 @@ export class Magnezoneex extends PokemonCard {
     }
     return state;
   }
-
 }

@@ -8,7 +8,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 
 export class TeamPlasmaBadge extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public set: string = 'PLF';
   public setNumber: string = '104';
   public cardImage: string = 'assets/cardback.png';
@@ -22,16 +22,17 @@ export class TeamPlasmaBadge extends TrainerCard {
     if (effect instanceof CheckTableStateEffect) {
       const activeBadgeTargets = new Set<number>();
 
-      state.players.forEach(player => {
+      state.players.forEach((player) => {
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard) => {
-          const hasBadge = cardList.tools.includes(this) && !IS_TOOL_BLOCKED(store, state, player, this);
+          const hasBadge =
+            cardList.tools.includes(this) && !IS_TOOL_BLOCKED(store, state, player, this);
           if (!hasBadge) {
             return;
           }
 
           activeBadgeTargets.add(pokemonCard.id);
 
-          if (!pokemonCard.tags.includes(CardTag.TEAM_PLASMA)) {
+          if (!pokemonCard.hasTag(CardTag.TEAM_PLASMA)) {
             pokemonCard.tags.push(CardTag.TEAM_PLASMA);
             this.injectedTeamPlasmaTags.set(pokemonCard.id, pokemonCard);
           }

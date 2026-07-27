@@ -1,36 +1,53 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, ChooseAttackPrompt, GameLog } from '../../../game';
+import {
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  ChooseAttackPrompt,
+  GameLog,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
-import { ApplyWeaknessEffect, AfterDamageEffect, DealDamageEffect } from '../../../game/store/effects/attack-effects';
+import {
+  ApplyWeaknessEffect,
+  AfterDamageEffect,
+  DealDamageEffect,
+} from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
-function* useCrossFusionStrike(next: Function, store: StoreLike, state: State,
-  effect: AttackEffect): IterableIterator<State> {
+function* useCrossFusionStrike(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
-  const benched = player.bench.filter(b =>
-    b.cards.length > 0 &&
-    b.getPokemonCard()?.tags.includes(CardTag.FUSION_STRIKE)
+  const benched = player.bench.filter(
+    (b) => b.cards.length > 0 && b.getPokemonCard()?.hasTag(CardTag.FUSION_STRIKE),
   );
-  const fusionStrike = benched.map(b => b.getPokemonCard()).filter((c): c is PokemonCard => c !== undefined);
+  const fusionStrike = benched
+    .map((b) => b.getPokemonCard())
+    .filter((c): c is PokemonCard => c !== undefined);
 
   if (fusionStrike.length === 0) {
     return state;
   }
 
   let selected: any;
-  yield store.prompt(state, new ChooseAttackPrompt(
-    player.id,
-    GameMessage.CHOOSE_ATTACK_TO_COPY,
-    fusionStrike,
-    { allowCancel: false }
-  ), result => {
-    selected = result;
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseAttackPrompt(player.id, GameMessage.CHOOSE_ATTACK_TO_COPY, fusionStrike, {
+      allowCancel: false,
+    }),
+    (result) => {
+      selected = result;
+      next();
+    },
+  );
 
   if (!selected || selected.copycatAttack) {
     return state;
@@ -38,7 +55,7 @@ function* useCrossFusionStrike(next: Function, store: StoreLike, state: State,
 
   store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
     name: player.name,
-    attack: selected.name
+    attack: selected.name,
   });
 
   // Perform attack
@@ -58,7 +75,7 @@ function* useCrossFusionStrike(next: Function, store: StoreLike, state: State,
 }
 
 export class MewVMAX extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX, CardTag.FUSION_STRIKE];
+  protected _tags = [CardTag.POKEMON_VMAX, CardTag.FUSION_STRIKE];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom = 'Mew V';
   public cardType: CardType = P;
@@ -66,20 +83,22 @@ export class MewVMAX extends PokemonCard {
   public weakness = [{ type: D }];
   public retreat = [];
 
-  public attacks = [{
-    name: 'Cross Fusion Strike',
-    cost: [C, C],
-    copycatAttack: true,
-    damage: 0,
-    text: 'Choose 1 of your Benched Fusion Strike Pokémon\'s attacks and use it as this attack.'
-  },
-  {
-    name: 'Max Miracle',
-    cost: [P, P],
-    damage: 130,
-    shredAttack: true,
-    text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'Cross Fusion Strike',
+      cost: [C, C],
+      copycatAttack: true,
+      damage: 0,
+      text: "Choose 1 of your Benched Fusion Strike Pokémon's attacks and use it as this attack.",
+    },
+    {
+      name: 'Max Miracle',
+      cost: [P, P],
+      damage: 130,
+      shredAttack: true,
+      text: "This attack's damage isn't affected by any effects on your opponent's Active Pokémon.",
+    },
+  ];
 
   public regulationMark = 'E';
   public set: string = 'FST';

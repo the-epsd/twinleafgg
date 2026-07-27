@@ -8,7 +8,7 @@ import { CheckPokemonStatsEffect } from '../../../game/store/effects/check-effec
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 export class GardevoirEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = Y;
   public hp: number = 170;
@@ -21,12 +21,13 @@ export class GardevoirEx extends PokemonCard {
       name: 'Life Leap',
       cost: [Y],
       damage: 20,
-      text: 'Heal from this Pokémon the same amount of damage you did to your opponent\'s Active Pokémon.'
-    }, {
+      text: "Heal from this Pokémon the same amount of damage you did to your opponent's Active Pokémon.",
+    },
+    {
       name: 'Shining Wind',
       cost: [Y, Y, Y],
       damage: 100,
-      text: 'During your opponent\'s next turn, this Pokémon has no Weakness.'
+      text: "During your opponent's next turn, this Pokémon has no Weakness.",
     },
   ];
 
@@ -66,8 +67,10 @@ export class GardevoirEx extends PokemonCard {
       }
     }
 
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_SHINING_WIND_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_SHINING_WIND_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_SHINING_WIND_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
@@ -77,5 +80,4 @@ export class GardevoirEx extends PokemonCard {
 
     return state;
   }
-
 }

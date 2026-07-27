@@ -1,6 +1,14 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CardTag, CardType, EnergyType, Stage } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, GameError, PlayerType, PokemonCardList } from '../../../game';
+import {
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  GameError,
+  PlayerType,
+  PokemonCardList,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
@@ -10,7 +18,7 @@ import { DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../../game/store/pr
 export class NoivernGX extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Noibat';
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public cardType: CardType = N;
   public hp: number = 200;
   public weakness = [{ type: Y }];
@@ -21,22 +29,21 @@ export class NoivernGX extends PokemonCard {
       name: 'Distort',
       cost: [D, C],
       damage: 50,
-      text: 'Your opponent can\'t play any Item cards from their hand during their next turn.',
+      text: "Your opponent can't play any Item cards from their hand during their next turn.",
     },
     {
       name: 'Sonic Volume',
       cost: [P, D, C],
       damage: 120,
-      text: 'Your opponent can\'t play any Special Energy cards from their hand during their next turn.',
+      text: "Your opponent can't play any Special Energy cards from their hand during their next turn.",
     },
     {
       name: 'Boomburst-GX',
       cost: [P, D, C],
       damage: 0,
       gxAttack: true,
-      text: 'This attack does 50 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.) (You can\'t use more than 1 GX attack in a game.)'
-    }
-
+      text: "This attack does 50 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'BUS';
@@ -46,7 +53,8 @@ export class NoivernGX extends PokemonCard {
   public fullName: string = 'Noivern-GX BUS';
 
   public readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
-  public readonly OPPONENT_CANNOT_PLAY_SPECIAL_ENERGY_MARKER = 'OPPONENT_CANNOT_PLAY_SPECIAL_ENERGY_MARKER';
+  public readonly OPPONENT_CANNOT_PLAY_SPECIAL_ENERGY_MARKER =
+    'OPPONENT_CANNOT_PLAY_SPECIAL_ENERGY_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Distort
@@ -64,7 +72,10 @@ export class NoivernGX extends PokemonCard {
       }
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this);
     }
 
@@ -76,14 +87,20 @@ export class NoivernGX extends PokemonCard {
       opponent.marker.addMarker(this.OPPONENT_CANNOT_PLAY_SPECIAL_ENERGY_MARKER, this);
     }
 
-    if (effect instanceof AttachEnergyEffect && effect.energyCard.energyType === EnergyType.SPECIAL) {
+    if (
+      effect instanceof AttachEnergyEffect &&
+      effect.energyCard.energyType === EnergyType.SPECIAL
+    ) {
       const player = effect.player;
       if (player.marker.hasMarker(this.OPPONENT_CANNOT_PLAY_SPECIAL_ENERGY_MARKER, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.OPPONENT_CANNOT_PLAY_SPECIAL_ENERGY_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.OPPONENT_CANNOT_PLAY_SPECIAL_ENERGY_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.OPPONENT_CANNOT_PLAY_SPECIAL_ENERGY_MARKER, this);
     }
 

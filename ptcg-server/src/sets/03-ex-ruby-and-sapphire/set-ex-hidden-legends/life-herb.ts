@@ -19,7 +19,8 @@ export class LifeHerb extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Life Herb';
   public fullName: string = 'Life Herb HL';
-  public text: string = 'Flip a coin. If heads, choose 1 your Pokémon (excluding Pokémon-ex) and remove all Special Conditions and 6 damage counters from it (all if there are less than 6).';
+  public text: string =
+    'Flip a coin. If heads, choose 1 your Pokémon (excluding Pokémon-ex) and remove all Special Conditions and 6 damage counters from it (all if there are less than 6).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_TRAINER_USED(effect, this)) {
@@ -28,7 +29,7 @@ export class LifeHerb extends TrainerCard {
       let hasValidTarget = false;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (_cardList, card, target) => {
-        if (card.tags.includes(CardTag.POKEMON_ex)) {
+        if (card.hasTag(CardTag.POKEMON_ex)) {
           blocked.push(target);
         } else {
           hasValidTarget = true;
@@ -39,23 +40,27 @@ export class LifeHerb extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      COIN_FLIP_PROMPT(store, state, player, result => {
+      COIN_FLIP_PROMPT(store, state, player, (result) => {
         if (result) {
-          store.prompt(state, new ChoosePokemonPrompt(
-            player.id,
-            GameMessage.CHOOSE_POKEMON_TO_HEAL,
-            PlayerType.BOTTOM_PLAYER,
-            [SlotType.ACTIVE, SlotType.BENCH],
-            { min: 1, max: 1, allowCancel: false, blocked }
-          ), targets => {
-            if (!targets || targets.length === 0) {
-              return;
-            }
-            const target = targets[0];
-            const healEffect = new HealEffect(player, target, 60);
-            store.reduceEffect(state, healEffect);
-            target.specialConditions = [];
-          });
+          store.prompt(
+            state,
+            new ChoosePokemonPrompt(
+              player.id,
+              GameMessage.CHOOSE_POKEMON_TO_HEAL,
+              PlayerType.BOTTOM_PLAYER,
+              [SlotType.ACTIVE, SlotType.BENCH],
+              { min: 1, max: 1, allowCancel: false, blocked },
+            ),
+            (targets) => {
+              if (!targets || targets.length === 0) {
+                return;
+              }
+              const target = targets[0];
+              const healEffect = new HealEffect(player, target, 60);
+              store.reduceEffect(state, healEffect);
+              target.specialConditions = [];
+            },
+          );
         }
       });
     }

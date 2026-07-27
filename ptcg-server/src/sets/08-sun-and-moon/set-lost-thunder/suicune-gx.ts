@@ -4,14 +4,30 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { PowerType, PlayerType, StoreLike, State, StateUtils, GameError, GameMessage, ShuffleDeckPrompt, PokemonCardList } from '../../../game';
+import {
+  PowerType,
+  PlayerType,
+  StoreLike,
+  State,
+  StateUtils,
+  GameError,
+  GameMessage,
+  ShuffleDeckPrompt,
+  PokemonCardList,
+} from '../../../game';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, BLOCK_IF_GX_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  BLOCK_IF_GX_ATTACK_USED,
+  SWITCH_ACTIVE_WITH_BENCHED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class SuicuneGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 180;
@@ -23,26 +39,28 @@ export class SuicuneGx extends PokemonCard {
 
   public usedBriniclesGx = false;
 
-  public powers = [{
-    name: 'Phantom Winds',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), if this Pokémon is on your Bench, you may shuffle it and all cards attached to it into your deck.'
-  }];
+  public powers = [
+    {
+      name: 'Phantom Winds',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn (before your attack), if this Pokémon is on your Bench, you may shuffle it and all cards attached to it into your deck.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Cure Stream',
       cost: [W, W, C],
       damage: 120,
-      text: 'During your opponent\'s next turn, the Defending Pokémon\'s attacks do 30 less damage (before applying Weakness and Resistance).'
+      text: "During your opponent's next turn, the Defending Pokémon's attacks do 30 less damage (before applying Weakness and Resistance).",
     },
     {
       name: 'Brinicles-GX',
       cost: [W, W, C],
       damage: 150,
-      text: 'Switch this Pokémon with 1 of your Benched Pokémon. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Switch this Pokémon with 1 of your Benched Pokémon. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'LOT';
@@ -69,12 +87,14 @@ export class SuicuneGx extends PokemonCard {
 
       // Move tools first (moveTo doesn't handle tools)
       const tools = cardList.tools.slice();
-      tools.forEach(t => { cardList.moveCardTo(t, player.deck); });
+      tools.forEach((t) => {
+        cardList.moveCardTo(t, player.deck);
+      });
       // Shuffle this Pokemon and all attached cards into deck
       cardList.moveTo(player.deck);
       cardList.clearEffects();
 
-      return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+      return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
         player.deck.applyOrder(order);
       });
     }
@@ -89,14 +109,18 @@ export class SuicuneGx extends PokemonCard {
     }
 
     // Reduce damage from the marked Pokemon's attacks
-    if (effect instanceof DealDamageEffect
-      && effect.source.marker.hasMarker(this.CURE_STREAM_MARKER, this)) {
+    if (
+      effect instanceof DealDamageEffect &&
+      effect.source.marker.hasMarker(this.CURE_STREAM_MARKER, this)
+    ) {
       effect.damage = Math.max(0, effect.damage - 30);
     }
 
     // Cleanup at end of opponent's turn
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_CURE_STREAM_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_CURE_STREAM_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_CURE_STREAM_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
@@ -116,7 +140,7 @@ export class SuicuneGx extends PokemonCard {
       this.usedBriniclesGx = false;
       const player = effect.player;
 
-      if (player.bench.some(b => b.cards.length > 0)) {
+      if (player.bench.some((b) => b.cards.length > 0)) {
         SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
       }
     }

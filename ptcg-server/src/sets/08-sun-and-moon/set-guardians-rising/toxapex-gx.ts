@@ -5,13 +5,23 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../../game';
-import { AddSpecialConditionsEffect, DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import {
+  AddSpecialConditionsEffect,
+  DealDamageEffect,
+  PutDamageEffect,
+} from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, BLOCK_IF_GX_ATTACK_USED, ADD_MARKER, CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  MULTIPLE_COIN_FLIPS_PROMPT,
+  BLOCK_IF_GX_ATTACK_USED,
+  ADD_MARKER,
+  CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN,
+} from '../../../game/store/prefabs/prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../../game/store/prefabs/attack-effects';
 
 export class ToxapexGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Mareanie';
   public cardType: CardType = P;
@@ -28,20 +38,20 @@ export class ToxapexGx extends PokemonCard {
       cost: [P],
       damage: 30,
       damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 30 damage for each heads.'
+      text: 'Flip 4 coins. This attack does 30 damage for each heads.',
     },
     {
       name: 'Super Intense Poison',
       cost: [P, P, P],
       damage: 0,
-      text: 'Your opponent\'s Active Pokémon is now Poisoned. Put 10 damage counters instead of 1 on that Pokémon between turns.'
+      text: "Your opponent's Active Pokémon is now Poisoned. Put 10 damage counters instead of 1 on that Pokémon between turns.",
     },
     {
       name: 'Total Shelter-GX',
       cost: [P, P, P],
       damage: 150,
-      text: 'Prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Prevent all effects of attacks, including damage, done to this Pokémon during your opponent's next turn. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'GRI';
@@ -54,8 +64,8 @@ export class ToxapexGx extends PokemonCard {
     // Attack 1: Spike Cannon
     // Ref: set-sun-and-moon/torracat.ts (Fury Swipes)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 4, results => {
-        const heads = results.filter(r => r).length;
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 4, (results) => {
+        const heads = results.filter((r) => r).length;
         effect.damage = 30 * heads;
       });
     }
@@ -82,14 +92,24 @@ export class ToxapexGx extends PokemonCard {
     }
 
     // Prevent all effects of attacks, including damage
-    if ((effect instanceof PutDamageEffect || effect instanceof DealDamageEffect || effect instanceof AddSpecialConditionsEffect)
-      && effect.target.cards.includes(this)
-      && effect.target.marker.hasMarker(this.TOTAL_SHELTER_MARKER, this)) {
+    if (
+      (effect instanceof PutDamageEffect ||
+        effect instanceof DealDamageEffect ||
+        effect instanceof AddSpecialConditionsEffect) &&
+      effect.target.cards.includes(this) &&
+      effect.target.marker.hasMarker(this.TOTAL_SHELTER_MARKER, this)
+    ) {
       effect.preventDefault = true;
       return state;
     }
 
-    CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(state, effect, this.CLEAR_TOTAL_SHELTER_MARKER, this.TOTAL_SHELTER_MARKER, this);
+    CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(
+      state,
+      effect,
+      this.CLEAR_TOTAL_SHELTER_MARKER,
+      this.TOTAL_SHELTER_MARKER,
+      this,
+    );
 
     return state;
   }

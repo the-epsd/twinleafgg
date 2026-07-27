@@ -1,6 +1,19 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, PlayerType, ChooseCardsPrompt, GameMessage, StateUtils } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  EnergyType,
+  SuperType,
+} from '../../../game/store/card/card-types';
+import {
+  StoreLike,
+  State,
+  PlayerType,
+  ChooseCardsPrompt,
+  GameMessage,
+  StateUtils,
+} from '../../../game';
 
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
@@ -8,9 +21,8 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Mewtwoex extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public cardType: CardType = L;
   public hp: number = 230;
   public weakness = [{ type: F }];
@@ -21,14 +33,14 @@ export class Mewtwoex extends PokemonCard {
       name: 'Transfer Charge',
       cost: [P],
       damage: 0,
-      text: 'Attach up to 2 Basic [P] Energy cards from your discard pile to your Pokémon in any way you like.'
+      text: 'Attach up to 2 Basic [P] Energy cards from your discard pile to your Pokémon in any way you like.',
     },
     {
       name: 'Photon Kinesis',
       cost: [P, P],
       damage: 10,
       damageCalculation: '+',
-      text: 'This attack does 30 more damage for each [P] Energy attached to all of your Pokémon.'
+      text: 'This attack does 30 more damage for each [P] Energy attached to all of your Pokémon.',
     },
   ];
 
@@ -40,7 +52,6 @@ export class Mewtwoex extends PokemonCard {
   public fullName: string = 'Mewtwo ex PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
@@ -49,19 +60,23 @@ export class Mewtwoex extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_ATTACH,
-        player.discard,
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Psychic Energy' },
-        { min: 0, max: 2, allowCancel: true }
-      ), cards => {
-        cards = cards || [];
-        if (cards.length > 0) {
-          player.discard.moveCardsTo(cards, cardList);
-        }
-        return state;
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_ATTACH,
+          player.discard,
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Psychic Energy' },
+          { min: 0, max: 2, allowCancel: true },
+        ),
+        (cards) => {
+          cards = cards || [];
+          if (cards.length > 0) {
+            player.discard.moveCardsTo(cards, cardList);
+          }
+          return state;
+        },
+      );
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
@@ -71,7 +86,7 @@ export class Mewtwoex extends PokemonCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, cardList);
         store.reduceEffect(state, checkProvidedEnergyEffect);
-        checkProvidedEnergyEffect.energyMap.forEach(energy => {
+        checkProvidedEnergyEffect.energyMap.forEach((energy) => {
           if (energy.provides.includes(CardType.PSYCHIC)) {
             psychicEnergies += 1;
           }
@@ -80,7 +95,11 @@ export class Mewtwoex extends PokemonCard {
       effect.damage = 10 + psychicEnergies * 30;
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

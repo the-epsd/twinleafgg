@@ -8,10 +8,14 @@ import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AfterAttackEffect } from '../../../game/store/effects/game-phase-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED, CONFIRMATION_PROMPT } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  SWITCH_ACTIVE_WITH_BENCHED,
+  CONFIRMATION_PROMPT,
+} from '../../../game/store/prefabs/prefabs';
 
 export class MPidgeotEx extends PokemonCard {
-  public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
+  protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Pidgeot-EX';
   public cardType: CardType = C;
@@ -25,8 +29,8 @@ export class MPidgeotEx extends PokemonCard {
       name: 'Mach Cyclone',
       cost: [C, C, C],
       damage: 130,
-      text: 'You may have your opponent switch his or her Active Pokémon with 1 of his or her Benched Pokémon.'
-    }
+      text: 'You may have your opponent switch his or her Active Pokémon with 1 of his or her Benched Pokémon.',
+    },
   ];
 
   public set: string = 'EVO';
@@ -43,9 +47,9 @@ export class MPidgeotEx extends PokemonCard {
     // Refs: set-steam-siege/probopass.ts (Bounce Back - AfterAttackEffect opponent switch), AGENTS-patterns.md (optional switch)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
-      if (opponent.bench.some(b => b.cards.length > 0)) {
+      if (opponent.bench.some((b) => b.cards.length > 0)) {
         this.usedMachCyclone = true;
-        CONFIRMATION_PROMPT(store, state, effect.player, result => {
+        CONFIRMATION_PROMPT(store, state, effect.player, (result) => {
           this.wantsToSwitch = result;
         });
       }
@@ -56,7 +60,7 @@ export class MPidgeotEx extends PokemonCard {
       if (this.wantsToSwitch) {
         this.wantsToSwitch = false;
         const opponent = StateUtils.getOpponent(state, effect.player);
-        if (opponent.bench.some(b => b.cards.length > 0)) {
+        if (opponent.bench.some((b) => b.cards.length > 0)) {
           SWITCH_ACTIVE_WITH_BENCHED(store, state, opponent);
         }
       }

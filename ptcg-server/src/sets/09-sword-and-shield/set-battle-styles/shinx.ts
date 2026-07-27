@@ -3,18 +3,20 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 
 export class Shinx extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public cardType: CardType = L;
   public hp: number = 60;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Rear Kick',
-    cost: [L],
-    damage: 20,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Rear Kick',
+      cost: [L],
+      damage: 20,
+      text: '',
+    },
+  ];
 
   public regulationMark = 'E';
   public set: string = 'BST';

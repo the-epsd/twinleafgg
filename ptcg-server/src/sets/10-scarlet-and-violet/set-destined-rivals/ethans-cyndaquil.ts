@@ -5,10 +5,9 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { Effect } from '../../../game/store/effects/effect';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
-
 export class EthansCyndaquil extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.ETHANS];
+  protected _tags = [CardTag.ETHANS];
   public cardType: CardType = R;
   public hp: number = 70;
   public weakness = [{ type: W }];
@@ -20,22 +19,20 @@ export class EthansCyndaquil extends PokemonCard {
       cost: [R],
       damage: 30,
       text: 'Discard an Energy from this Pokémon.',
-    }
+    },
   ];
 
   public regulationMark = 'I';
   public set: string = 'DRI';
   public setNumber: string = '32';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Ethan\'s Cyndaquil';
-  public fullName: string = 'Ethan\'s Cyndaquil DRI';
+  public name: string = "Ethan's Cyndaquil";
+  public fullName: string = "Ethan's Cyndaquil DRI";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1);
     }
     return state;
   }
-
 }

@@ -8,10 +8,15 @@ import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { AttachEnergyEffect } from '../../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, IS_ABILITY_BLOCKED, ADD_SLEEP_TO_PLAYER_ACTIVE } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  MULTIPLE_COIN_FLIPS_PROMPT,
+  IS_ABILITY_BLOCKED,
+  ADD_SLEEP_TO_PLAYER_ACTIVE,
+} from '../../../game/store/prefabs/prefabs';
 
 export class MalamarEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = D;
   public hp: number = 170;
@@ -19,12 +24,14 @@ export class MalamarEx extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Hyper Hypnosis',
-    useWhenInPlay: false,
-    powerType: PowerType.ABILITY,
-    text: 'When you attach an Energy from your hand to this Pokémon, you may use this Ability. Your opponent\'s Active Pokémon is now Asleep.'
-  }];
+  public powers = [
+    {
+      name: 'Hyper Hypnosis',
+      useWhenInPlay: false,
+      powerType: PowerType.ABILITY,
+      text: "When you attach an Energy from your hand to this Pokémon, you may use this Ability. Your opponent's Active Pokémon is now Asleep.",
+    },
+  ];
 
   public attacks = [
     {
@@ -32,8 +39,8 @@ export class MalamarEx extends PokemonCard {
       cost: [D, C],
       damage: 60,
       damageCalculation: 'x',
-      text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 60 damage times the number of heads.'
-    }
+      text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 60 damage times the number of heads.',
+    },
   ];
 
   public set: string = 'PHF';
@@ -68,15 +75,17 @@ export class MalamarEx extends PokemonCard {
     // Ref: set-next-destinies/darmanitan.ts (DarMAXitan)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      const energyCount = player.active.cards.filter(c => c.superType === SuperType.ENERGY).length;
+      const energyCount = player.active.cards.filter(
+        (c) => c.superType === SuperType.ENERGY,
+      ).length;
 
       if (energyCount === 0) {
         effect.damage = 0;
         return state;
       }
 
-      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, energyCount, results => {
-        const heads = results.filter(r => r).length;
+      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, energyCount, (results) => {
+        const heads = results.filter((r) => r).length;
         effect.damage = 60 * heads;
       });
     }

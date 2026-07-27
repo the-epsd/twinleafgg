@@ -9,10 +9,9 @@ import { GameMessage } from '../../../game';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Pikachu extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
-  public tags = [CardTag.DELTA_SPECIES];
+  protected _tags = [CardTag.DELTA_SPECIES];
 
   public cardType: CardType = M;
 
@@ -27,14 +26,14 @@ export class Pikachu extends PokemonCard {
       name: 'Tail Whap',
       cost: [C],
       damage: 10,
-      text: ''
+      text: '',
     },
     {
       name: 'Steel Headbutt',
       cost: [M, C, C],
       damage: 30,
-      text: 'Flip a coin. If heads, this attack does 30 damage plus 10 more damage.'
-    }
+      text: 'Flip a coin. If heads, this attack does 30 damage plus 10 more damage.',
+    },
   ];
 
   public set: string = 'HP';
@@ -50,13 +49,15 @@ export class Pikachu extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      state = store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
-        if (results) {
-          effect.damage += 10;
-        }
-      });
+      state = store.prompt(
+        state,
+        [new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)],
+        (results) => {
+          if (results) {
+            effect.damage += 10;
+          }
+        },
+      );
     }
     return state;
   }

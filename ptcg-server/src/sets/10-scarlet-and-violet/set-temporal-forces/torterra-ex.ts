@@ -8,8 +8,7 @@ import { HealTargetEffect } from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Torterraex extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
 
   public stage: Stage = Stage.STAGE_2;
 
@@ -29,14 +28,14 @@ export class Torterraex extends PokemonCard {
       cost: [CardType.GRASS],
       damage: 30,
       damageCalculation: 'x',
-      text: 'This attack does 30 damage for each [G] Pokémon you have in play.'
+      text: 'This attack does 30 damage for each [G] Pokémon you have in play.',
     },
     {
       name: 'Jungle Hammer',
       cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 150,
-      text: 'Heal 50 damage from this Pokémon.'
-    }
+      text: 'Heal 50 damage from this Pokémon.',
+    },
   ];
 
   public set: string = 'TEF';
@@ -52,14 +51,13 @@ export class Torterraex extends PokemonCard {
   public fullName: string = 'Torterra ex TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const playerBench = player.bench;
 
       let grassPokemon = 0;
 
-      playerBench.forEach(c => {
+      playerBench.forEach((c) => {
         if (c.getPokemonCard() instanceof PokemonCard) {
           if (c.getPokemonCard()?.cardType == CardType.GRASS) {
             grassPokemon++;
@@ -78,10 +76,7 @@ export class Torterraex extends PokemonCard {
       const healTargetEffect = new HealTargetEffect(effect, 30);
       healTargetEffect.target = player.active;
       state = store.reduceEffect(state, healTargetEffect);
-
     }
     return state;
   }
-
 }
-

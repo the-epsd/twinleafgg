@@ -8,10 +8,14 @@ import { PlayerType, PowerType, StoreLike, State, StateUtils } from '../../../ga
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store/prefabs/prefabs';
+import {
+  IS_ABILITY_BLOCKED,
+  WAS_ATTACK_USED,
+  SWITCH_ACTIVE_WITH_BENCHED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Magnezone extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Magneton';
   public cardType: CardType = L;
@@ -19,20 +23,22 @@ export class Magnezone extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
 
-  public powers = [{
-    name: 'Dual Brains',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'During your turn, you may play 2 Supporter cards.'
-  }];
+  public powers = [
+    {
+      name: 'Dual Brains',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'During your turn, you may play 2 Supporter cards.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Gyro Ball',
       cost: [L, L, C],
       damage: 80,
-      text: 'Switch this Pokémon with 1 of your Benched Pokémon. Then, your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon.'
-    }
+      text: 'Switch this Pokémon with 1 of your Benched Pokémon. Then, your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon.',
+    },
   ];
 
   public set: string = 'PLS';
@@ -46,7 +52,10 @@ export class Magnezone extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Dual Brains (passive - allow 2nd supporter play)
     // Ref: set-unbroken-bonds/lt-surges-strategy.ts (supporterTurn manipulation)
-    if (effect instanceof TrainerEffect && effect.trainerCard.trainerType === TrainerType.SUPPORTER) {
+    if (
+      effect instanceof TrainerEffect &&
+      effect.trainerCard.trainerType === TrainerType.SUPPORTER
+    ) {
       const player = effect.player;
 
       // Check if Magnezone is in play for this player
@@ -84,11 +93,11 @@ export class Magnezone extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (player.bench.some(b => b.cards.length > 0)) {
+      if (player.bench.some((b) => b.cards.length > 0)) {
         SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
       }
 
-      if (opponent.bench.some(b => b.cards.length > 0)) {
+      if (opponent.bench.some((b) => b.cards.length > 0)) {
         SWITCH_ACTIVE_WITH_BENCHED(store, state, opponent);
       }
     }

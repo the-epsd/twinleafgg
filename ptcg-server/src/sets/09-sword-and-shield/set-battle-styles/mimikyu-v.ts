@@ -6,39 +6,46 @@ import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { ConfirmPrompt, GameMessage, PokemonCardList, PowerType, StateUtils } from '../../../game';
-import { AbstractAttackEffect, PutCountersEffect } from '../../../game/store/effects/attack-effects';
+import {
+  AbstractAttackEffect,
+  PutCountersEffect,
+} from '../../../game/store/effects/attack-effects';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class MimikyuV extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
 
   public cardType: CardType = CardType.PSYCHIC;
 
   public hp: number = 160;
 
-  public weakness = [{
-    type: CardType.DARK
-  }];
+  public weakness = [
+    {
+      type: CardType.DARK,
+    },
+  ];
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Dummmy Doll',
-    powerType: PowerType.ABILITY,
-    text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may prevent all damage done to this Mimikyu V by attacks from your opponent\'s Pokémon until the end of your opponent\'s next turn.'
-  }];
+  public powers = [
+    {
+      name: 'Dummmy Doll',
+      powerType: PowerType.ABILITY,
+      text: "When you play this Pokémon from your hand onto your Bench during your turn, you may prevent all damage done to this Mimikyu V by attacks from your opponent's Pokémon until the end of your opponent's next turn.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Jealous Eyes',
       cost: [CardType.PSYCHIC],
       damage: 0,
-      text: 'Put 3 damage counters on your opponent\'s Active Pokémon ' +
-        'for each Prize card your opponent has taken. '
-    }
+      text:
+        "Put 3 damage counters on your opponent's Active Pokémon " +
+        'for each Prize card your opponent has taken. ',
+    },
   ];
 
   public set: string = 'BST';
@@ -57,7 +64,6 @@ export class MimikyuV extends PokemonCard {
   public readonly CLEAR_DUMMY_DOLL_MARKER: string = 'CLEAR_DUMMY_DOLL_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
 
@@ -65,25 +71,33 @@ export class MimikyuV extends PokemonCard {
       if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
-      state = store.prompt(state, new ConfirmPrompt(
-        effect.player.id,
-        GameMessage.WANT_TO_USE_ABILITY,
-      ), wantToUse => {
-        if (wantToUse) {
-          const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
-          cardList.marker.addMarker(this.DUMMY_DOLL_MARKER, this);
-        }
-      });
+      state = store.prompt(
+        state,
+        new ConfirmPrompt(effect.player.id, GameMessage.WANT_TO_USE_ABILITY),
+        (wantToUse) => {
+          if (wantToUse) {
+            const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
+            cardList.marker.addMarker(this.DUMMY_DOLL_MARKER, this);
+          }
+        },
+      );
 
       return state;
     }
 
-    if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this) && effect.target.marker.hasMarker(this.DUMMY_DOLL_MARKER, this)) {
+    if (
+      effect instanceof AbstractAttackEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.marker.hasMarker(this.DUMMY_DOLL_MARKER, this)
+    ) {
       effect.preventDefault = true;
       return state;
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.DUMMY_DOLL_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.DUMMY_DOLL_MARKER, this)
+    ) {
       const player = effect.player;
 
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
@@ -95,7 +109,6 @@ export class MimikyuV extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -110,5 +123,4 @@ export class MimikyuV extends PokemonCard {
 
     return state;
   }
-
 }

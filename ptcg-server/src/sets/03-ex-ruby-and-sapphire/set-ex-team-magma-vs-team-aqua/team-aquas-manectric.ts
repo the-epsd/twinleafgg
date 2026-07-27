@@ -1,15 +1,35 @@
-import { Card, CardTarget, GameError, GameMessage, MoveEnergyPrompt, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../../game';
+import {
+  Card,
+  CardTarget,
+  GameError,
+  GameMessage,
+  MoveEnergyPrompt,
+  PlayerType,
+  PowerType,
+  SlotType,
+  State,
+  StateUtils,
+  StoreLike,
+} from '../../../game';
 import { CardTag, CardType, EnergyType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ABILITY_USED,
+  ADD_MARKER,
+  BLOCK_IF_HAS_SPECIAL_CONDITION,
+  HAS_MARKER,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class TeamAquasManectric extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public evolvesFrom = 'Team Aqua\'s Electrike';
-  public tags = [CardTag.TEAM_AQUA];
+  public evolvesFrom = "Team Aqua's Electrike";
+  protected _tags = [CardTag.TEAM_AQUA];
   public cardType: CardType = L;
   public additionalCardTypes = [D];
   public hp: number = 70;
@@ -17,30 +37,33 @@ export class TeamAquasManectric extends PokemonCard {
   public resistance = [{ type: M, value: -30 }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Power Shift',
-    powerType: PowerType.POKEPOWER,
-    useWhenInPlay: true,
-    text: 'Once during your turn (before your attack), you may move any number of basic Energy cards attached to 1 of your Pokémon with Team Aqua in its name to another of your Pokémon. This power can\'t be used if Team Aqua\'s Manectric is affected by a Special Condition.'
-  }];
+  public powers = [
+    {
+      name: 'Power Shift',
+      powerType: PowerType.POKEPOWER,
+      useWhenInPlay: true,
+      text: "Once during your turn (before your attack), you may move any number of basic Energy cards attached to 1 of your Pokémon with Team Aqua in its name to another of your Pokémon. This power can't be used if Team Aqua's Manectric is affected by a Special Condition.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Thunderspark',
-    cost: [L, C, C],
-    damage: 50,
-    text: 'Does 10 damage to each Benched Pokémon (both yours and your opponent\'s) that has Energy cards attached to it. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-  }];
+  public attacks = [
+    {
+      name: 'Thunderspark',
+      cost: [L, C, C],
+      damage: 50,
+      text: "Does 10 damage to each Benched Pokémon (both yours and your opponent's) that has Energy cards attached to it. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
+  ];
 
   public set: string = 'MA';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '4';
-  public name: string = 'Team Aqua\'s Manectric';
-  public fullName: string = 'Team Aqua\'s Manectric MA';
+  public name: string = "Team Aqua's Manectric";
+  public fullName: string = "Team Aqua's Manectric MA";
 
   public readonly POWER_SHIFT_MARKER = 'POWER_SHIFT_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
@@ -54,25 +77,25 @@ export class TeamAquasManectric extends PokemonCard {
 
       const blockedFrom: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (!cardList.getPokemonCard()?.tags.includes(CardTag.TEAM_AQUA)) {
+        if (!cardList.getPokemonCard()?.hasTag(CardTag.TEAM_AQUA)) {
           blockedFrom.push(target);
         }
       });
 
-      const blockedMap: { source: CardTarget, blocked: number[] }[] = [];
+      const blockedMap: { source: CardTarget; blocked: number[] }[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
         const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, cardList);
         store.reduceEffect(state, checkProvidedEnergy);
 
         const blockedCards: Card[] = [];
-        checkProvidedEnergy.energyMap.forEach(em => {
+        checkProvidedEnergy.energyMap.forEach((em) => {
           if (em.card.energyType !== EnergyType.BASIC) {
             blockedCards.push(em.card);
           }
         });
 
         const blocked: number[] = [];
-        blockedCards.forEach(bc => {
+        blockedCards.forEach((bc) => {
           const index = cardList.cards.indexOf(bc);
           if (index !== -1 && !blocked.includes(index)) {
             blocked.push(index);
@@ -84,24 +107,28 @@ export class TeamAquasManectric extends PokemonCard {
         }
       });
 
-      store.prompt(state, new MoveEnergyPrompt(
-        effect.player.id,
-        GameMessage.MOVE_ENERGY_CARDS,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE],
-        {},
-        { allowCancel: true, blockedMap, blockedFrom }
-      ), transfers => {
-        if (transfers === null) {
-          return;
-        }
+      store.prompt(
+        state,
+        new MoveEnergyPrompt(
+          effect.player.id,
+          GameMessage.MOVE_ENERGY_CARDS,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          {},
+          { allowCancel: true, blockedMap, blockedFrom },
+        ),
+        (transfers) => {
+          if (transfers === null) {
+            return;
+          }
 
-        for (const transfer of transfers) {
-          const source = StateUtils.getTarget(state, player, transfer.from);
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          source.moveCardTo(transfer.card, target);
-        }
-      });
+          for (const transfer of transfers) {
+            const source = StateUtils.getTarget(state, player, transfer.from);
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            source.moveCardTo(transfer.card, target);
+          }
+        },
+      );
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.POWER_SHIFT_MARKER, this);
@@ -111,9 +138,9 @@ export class TeamAquasManectric extends PokemonCard {
       const opponent = effect.opponent;
 
       // Check both players' Pokémon for Poké-Powers/Bodies
-      [player, opponent].forEach(currentPlayer => {
+      [player, opponent].forEach((currentPlayer) => {
         // Check bench Pokémon
-        currentPlayer.bench.forEach(bench => {
+        currentPlayer.bench.forEach((bench) => {
           if (bench) {
             // Check if energy attached
             const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(currentPlayer, bench);

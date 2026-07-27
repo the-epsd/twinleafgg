@@ -21,24 +21,29 @@ export class HolonEnergyGL extends EnergyCard {
   public text =
     'Holon Energy GL provides [C] Energy.' +
     '\n\n' +
-    'If the Pokémon that Holon Energy GL is attached to also has a basic [G] Energy card attached to it, that Pokémon can\'t be affected by any Special Conditions. If the Pokémon that Holon Energy GL is attached to also has a basic[L] Energy card attached to it, damage done by your opponent\'s Pokémon-ex is reduced by 10. Ignore these effects if Holon Energy GL is attached to Pokémon-ex.';
+    "If the Pokémon that Holon Energy GL is attached to also has a basic [G] Energy card attached to it, that Pokémon can't be affected by any Special Conditions. If the Pokémon that Holon Energy GL is attached to also has a basic[L] Energy card attached to it, damage done by your opponent's Pokémon-ex is reduced by 10. Ignore these effects if Holon Energy GL is attached to Pokémon-ex.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof CheckTableStateEffect) {
-      state.players.forEach(player => {
+      state.players.forEach((player) => {
         const active = player.active;
         if (active.specialConditions.length === 0) {
           return;
         }
 
-        if (active.getPokemonCard()?.tags.includes(CardTag.POKEMON_ex)) {
+        if (active.getPokemonCard()?.hasTag(CardTag.POKEMON_ex)) {
           return;
         }
 
-        if (active.cards.includes(this) && !IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, active) && active.energies.cards.some((card: any) => card.energyType === EnergyType.BASIC && card.name === 'Grass Energy')) {
+        if (
+          active.cards.includes(this) &&
+          !IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, active) &&
+          active.energies.cards.some(
+            (card: any) => card.energyType === EnergyType.BASIC && card.name === 'Grass Energy',
+          )
+        ) {
           const conditions = active.specialConditions.slice();
-          conditions.forEach(condition => {
+          conditions.forEach((condition) => {
             active.removeSpecialCondition(condition);
           });
         }
@@ -46,21 +51,24 @@ export class HolonEnergyGL extends EnergyCard {
       return state;
     }
 
-    if (effect instanceof PutDamageEffect && effect.source.getPokemonCard()?.tags.includes(CardTag.POKEMON_ex)) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.source.getPokemonCard()?.hasTag(CardTag.POKEMON_ex)
+    ) {
       const damagedPlayer = StateUtils.findOwner(state, effect.target);
       let isEffectActive = false;
 
-      damagedPlayer.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      damagedPlayer.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         if (isEffectActive || !cardList.cards.includes(this)) {
           return;
         }
 
-        if (cardList.getPokemonCard()?.tags.includes(CardTag.POKEMON_ex)) {
+        if (cardList.getPokemonCard()?.hasTag(CardTag.POKEMON_ex)) {
           return;
         }
 
-        const hasBasicLightning = cardList.energies.cards.some((card: any) =>
-          card.energyType === EnergyType.BASIC && card.name === 'Lightning Energy'
+        const hasBasicLightning = cardList.energies.cards.some(
+          (card: any) => card.energyType === EnergyType.BASIC && card.name === 'Lightning Energy',
         );
         if (!hasBasicLightning) {
           return;
@@ -80,5 +88,4 @@ export class HolonEnergyGL extends EnergyCard {
 
     return state;
   }
-
 }

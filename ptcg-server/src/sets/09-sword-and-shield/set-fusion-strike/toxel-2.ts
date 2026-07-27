@@ -11,7 +11,7 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Toxel2 extends PokemonCard {
-  public tags = [CardTag.FUSION_STRIKE];
+  protected _tags = [CardTag.FUSION_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = L;
   public hp: number = 60;
@@ -23,14 +23,14 @@ export class Toxel2 extends PokemonCard {
       name: 'Growl',
       cost: [C],
       damage: 0,
-      text: 'During your opponent\'s next turn, the Defending Pokémon\'s attacks do 30 less damage (before applying Weakness and Resistance).'
+      text: "During your opponent's next turn, the Defending Pokémon's attacks do 30 less damage (before applying Weakness and Resistance).",
     },
     {
       name: 'Tiny Bolt',
       cost: [L],
       damage: 10,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -53,13 +53,17 @@ export class Toxel2 extends PokemonCard {
       opponent.marker.addMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
     }
 
-    if (effect instanceof DealDamageEffect
-      && effect.target.marker.hasMarker(this.REDUCE_DAMAGE_MARKER, this)) {
+    if (
+      effect instanceof DealDamageEffect &&
+      effect.target.marker.hasMarker(this.REDUCE_DAMAGE_MARKER, this)
+    ) {
       effect.damage = Math.max(0, effect.damage - 30);
     }
 
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {

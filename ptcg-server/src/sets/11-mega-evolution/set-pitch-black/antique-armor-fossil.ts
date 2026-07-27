@@ -38,7 +38,7 @@ export class AntiqueArmorFossil extends TrainerCard {
   public pokemonType = PokemonType.NORMAL;
   public evolvesFrom = '';
   public cardTag = [];
-  public tags = [CardTag.ANTIQUE];
+  protected _tags = [CardTag.ANTIQUE];
   public tools = [];
   public evolvesTo = ['Shieldon'];
   public evolvesToStage = [];

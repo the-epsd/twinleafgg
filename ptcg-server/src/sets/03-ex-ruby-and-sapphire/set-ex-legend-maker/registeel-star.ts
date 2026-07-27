@@ -7,25 +7,27 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class RegisteelStar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.STAR];
+  protected _tags = [CardTag.STAR];
   public cardType: CardType = M;
   public hp: number = 90;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C, C];
 
-  public attacks = [{
-    name: 'Barrier Attack',
-    cost: [M],
-    damage: 10,
-    text: 'During your opponent\'s next turn, any damage done to Registeel Star by attacks is reduced by 10 (after applying Weakness and Resistance).'
-  },
-  {
-    name: 'Final Laser',
-    cost: [M, M, C],
-    damage: 70,
-    text: 'Put 3 damage counters on your opponent\'s Pokémon in any way you like. If your opponent has only 1 Prize card left and Registeel Star is the only Pokémon you have in play, put 6 damage counters instead.'
-  }];
+  public attacks = [
+    {
+      name: 'Barrier Attack',
+      cost: [M],
+      damage: 10,
+      text: "During your opponent's next turn, any damage done to Registeel Star by attacks is reduced by 10 (after applying Weakness and Resistance).",
+    },
+    {
+      name: 'Final Laser',
+      cost: [M, M, C],
+      damage: 70,
+      text: "Put 3 damage counters on your opponent's Pokémon in any way you like. If your opponent has only 1 Prize card left and Registeel Star is the only Pokémon you have in play, put 6 damage counters instead.",
+    },
+  ];
 
   public set: string = 'LM';
   public setNumber: string = '92';
@@ -36,16 +38,16 @@ export class RegisteelStar extends PokemonCard {
   public readonly BARRIER_ATTACK_MARKER = 'BARRIER_ATTACK_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // Flame Screen
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const addMarkerEffect = new AddMarkerEffect(effect, this.BARRIER_ATTACK_MARKER, this);
       return store.reduceEffect(state, addMarkerEffect);
     }
 
-    if (effect instanceof PutDamageEffect
-      && effect.source.marker.hasMarker(this.BARRIER_ATTACK_MARKER, this)) {
-
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.source.marker.hasMarker(this.BARRIER_ATTACK_MARKER, this)
+    ) {
       // It's not an attack
       if (state.phase !== GamePhase.ATTACK) {
         return state;

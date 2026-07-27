@@ -1,6 +1,14 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, BoardEffect } from '../../../game/store/card/card-types';
-import { StoreLike, State, PowerType, StateUtils, GameError, GameMessage, PlayerType } from '../../../game';
+import {
+  StoreLike,
+  State,
+  PowerType,
+  StateUtils,
+  GameError,
+  GameMessage,
+  PlayerType,
+} from '../../../game';
 
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
@@ -8,8 +16,7 @@ import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects
 import { DRAW_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class RaikouV extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
 
   public regulationMark = 'F';
 
@@ -23,13 +30,15 @@ export class RaikouV extends PokemonCard {
 
   public retreat = [CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Fleet-Footed',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, if this Pokémon is in the Active Spot, ' +
-      'you may draw a card.'
-  }];
+  public powers = [
+    {
+      name: 'Fleet-Footed',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text:
+        'Once during your turn, if this Pokémon is in the Active Spot, ' + 'you may draw a card.',
+    },
+  ];
 
   public attacks = [
     {
@@ -37,9 +46,10 @@ export class RaikouV extends PokemonCard {
       cost: [CardType.LIGHTNING, CardType.COLORLESS],
       damage: 20,
       damageCalculation: '+',
-      text: 'This attack does 20 more damage for each Benched ' +
-        'Pokémon (both yours and your opponent\'s).'
-    }
+      text:
+        'This attack does 20 more damage for each Benched ' +
+        "Pokémon (both yours and your opponent's).",
+    },
   ];
 
   public set: string = 'BRS';
@@ -55,19 +65,20 @@ export class RaikouV extends PokemonCard {
   public readonly FLEET_FOOTED_MARKER = 'FLEET_FOOTED_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       player.marker.removeMarker(this.FLEET_FOOTED_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.FLEET_FOOTED_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.FLEET_FOOTED_MARKER, this)
+    ) {
       const player = effect.player;
       player.marker.removeMarker(this.FLEET_FOOTED_MARKER, this);
     }
 
     if (WAS_POWER_USED(effect, 0, this)) {
-
       const player = effect.player;
       //Already used this turn
       if (player.marker.hasMarker(this.FLEET_FOOTED_MARKER, this)) {
@@ -81,21 +92,22 @@ export class RaikouV extends PokemonCard {
       DRAW_CARDS(store, state, player, 1);
       player.marker.addMarker(this.FLEET_FOOTED_MARKER, this);
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         if (cardList.getPokemonCard() === this) {
           cardList.addBoardEffect(BoardEffect.ABILITY_USED);
         }
       });
-
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       //Get number of benched pokemon
       const playerBenched = player.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
-      const opponentBenched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
+      const opponentBenched = opponent.bench.reduce(
+        (left, b) => left + (b.cards.length ? 1 : 0),
+        0,
+      );
 
       const totalBenched = playerBenched + opponentBenched;
 

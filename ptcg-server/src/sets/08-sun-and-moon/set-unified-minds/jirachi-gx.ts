@@ -4,15 +4,32 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { AttachEnergyPrompt, GameMessage, PlayerType, PowerType, SlotType, StoreLike, State, StateUtils } from '../../../game';
+import {
+  AttachEnergyPrompt,
+  GameMessage,
+  PlayerType,
+  PowerType,
+  SlotType,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { AbstractAttackEffect } from '../../../game/store/effects/attack-effects';
-import { CheckPokemonStatsEffect, CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
+import {
+  CheckPokemonStatsEffect,
+  CheckPokemonTypeEffect,
+} from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, BLOCK_IF_GX_ATTACK_USED, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  BLOCK_IF_GX_ATTACK_USED,
+  SHUFFLE_DECK,
+} from '../../../game/store/prefabs/prefabs';
 
 export class JirachiGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 160;
@@ -22,25 +39,27 @@ export class JirachiGx extends PokemonCard {
   public readonly STAR_SHIELD_MARKER = 'JIRACHI_GX_UNM_STAR_SHIELD_MARKER';
   public readonly CLEAR_STAR_SHIELD_MARKER = 'JIRACHI_GX_UNM_CLEAR_STAR_SHIELD_MARKER';
 
-  public powers = [{
-    name: 'Psychic Zone',
-    powerType: PowerType.ABILITY,
-    text: 'Don\'t apply Psychic Weakness when Pokémon (both yours and your opponent\'s) take damage from attacks.'
-  }];
+  public powers = [
+    {
+      name: 'Psychic Zone',
+      powerType: PowerType.ABILITY,
+      text: "Don't apply Psychic Weakness when Pokémon (both yours and your opponent's) take damage from attacks.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Star Search',
       cost: [P],
       damage: 0,
-      text: 'Search your deck for an Energy card and attach it to 1 of your Psychic Pokémon. Then, shuffle your deck.'
+      text: 'Search your deck for an Energy card and attach it to 1 of your Psychic Pokémon. Then, shuffle your deck.',
     },
     {
       name: 'Star Shield-GX',
       cost: [P, P, P],
       damage: 100,
-      text: 'Prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Prevent all effects of attacks, including damage, done to this Pokémon during your opponent's next turn. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'UNM';
@@ -73,7 +92,7 @@ export class JirachiGx extends PokemonCard {
       }
 
       // Remove only Psychic weakness, preserving other weaknesses
-      effect.weakness = effect.weakness.filter(w => w.type !== CardType.PSYCHIC);
+      effect.weakness = effect.weakness.filter((w) => w.type !== CardType.PSYCHIC);
     }
 
     // Attack 1: Star Search
@@ -96,7 +115,7 @@ export class JirachiGx extends PokemonCard {
         }
       }
 
-      player.bench.forEach(b => {
+      player.bench.forEach((b) => {
         if (b.cards.length > 0) {
           const checkType = new CheckPokemonTypeEffect(b);
           store.reduceEffect(state, checkType);
@@ -112,22 +131,26 @@ export class JirachiGx extends PokemonCard {
         return SHUFFLE_DECK(store, state, player);
       }
 
-      store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_CARDS,
-        player.deck,
-        PlayerType.BOTTOM_PLAYER,
-        slots,
-        { superType: SuperType.ENERGY },
-        { allowCancel: false, min: 0, max: 1 }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.deck.moveCardTo(transfer.card, target);
-        }
-        SHUFFLE_DECK(store, state, player);
-      });
+      store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_CARDS,
+          player.deck,
+          PlayerType.BOTTOM_PLAYER,
+          slots,
+          { superType: SuperType.ENERGY },
+          { allowCancel: false, min: 0, max: 1 },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.deck.moveCardTo(transfer.card, target);
+          }
+          SHUFFLE_DECK(store, state, player);
+        },
+      );
     }
 
     // Attack 2: Star Shield-GX
@@ -165,11 +188,13 @@ export class JirachiGx extends PokemonCard {
     }
 
     // Cleanup at end of opponent's turn
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_STAR_SHIELD_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_STAR_SHIELD_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_STAR_SHIELD_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         cardList.marker.removeMarker(this.STAR_SHIELD_MARKER, this);
       });
     }

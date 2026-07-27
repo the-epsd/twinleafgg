@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { UseAttackEffect } from '../../game/store/effects/game-effects';
 
 export class DittoVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Ditto V';
   public cardType: CardType = C;

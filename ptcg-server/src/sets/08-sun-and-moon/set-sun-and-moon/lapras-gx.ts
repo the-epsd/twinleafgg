@@ -6,11 +6,15 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, DRAW_CARDS, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  DRAW_CARDS,
+  BLOCK_IF_GX_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../../game/store/prefabs/attack-effects';
 
 export class LaprasGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 190;
@@ -22,20 +26,20 @@ export class LaprasGx extends PokemonCard {
       name: 'Collect',
       cost: [W],
       damage: 0,
-      text: 'Draw 3 cards.'
+      text: 'Draw 3 cards.',
     },
     {
       name: 'Blizzard Burn',
       cost: [W, W, W],
       damage: 160,
-      text: 'This Pokémon can\'t attack during your next turn.'
+      text: "This Pokémon can't attack during your next turn.",
     },
     {
       name: 'Ice Beam-GX',
       cost: [W, W, C],
       damage: 100,
-      text: 'Your opponent\'s Active Pokémon is now Paralyzed. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Your opponent's Active Pokémon is now Paralyzed. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'SUM';

@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class GalladeV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = F;
   public hp: number = 220;
@@ -22,14 +22,14 @@ export class GalladeV extends PokemonCard {
       cost: [F, C],
       damage: 20,
       damageCalculation: '+',
-      text: 'This attack does 50 more damage for each Prize card you have taken.'
+      text: 'This attack does 50 more damage for each Prize card you have taken.',
     },
     {
       name: 'Buster Swing',
       cost: [F, F, C],
       damage: 130,
-      text: 'This attack\'s damage isn\'t affected by Resistance.'
-    }
+      text: "This attack's damage isn't affected by Resistance.",
+    },
   ];
 
   public regulationMark: string = 'F';

@@ -5,12 +5,13 @@ import { Effect } from '../../../game/store/effects/effect';
 import { UseAttackEffect } from '../../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import {
-  WAS_ATTACK_USED, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND
+  WAS_ATTACK_USED,
+  SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND,
 } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class Cryogonal extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 80;
@@ -22,14 +23,14 @@ export class Cryogonal extends PokemonCard {
       name: 'Call Sign',
       cost: [C],
       damage: 0,
-      text: 'Search your deck for a Water Pokémon, reveal it, and put it into your hand. Shuffle your deck afterward.'
+      text: 'Search your deck for a Water Pokémon, reveal it, and put it into your hand. Shuffle your deck afterward.',
     },
     {
       name: 'Cryofreeze',
       cost: [W],
       damage: 10,
-      text: 'Discard an Energy attached to this Pokémon. The Defending Pokémon can\'t attack during your opponent\'s next turn.'
-    }
+      text: "Discard an Energy attached to this Pokémon. The Defending Pokémon can't attack during your opponent's next turn.",
+    },
   ];
 
   public set: string = 'PLF';
@@ -38,7 +39,8 @@ export class Cryogonal extends PokemonCard {
   public name: string = 'Cryogonal';
   public fullName: string = 'Cryogonal PLF';
 
-  public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'CRYOGONAL_DEFENDING_CANNOT_ATTACK_MARKER';
+  public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER =
+    'CRYOGONAL_DEFENDING_CANNOT_ATTACK_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Call Sign - search deck for a Water Pokemon
@@ -46,7 +48,7 @@ export class Cryogonal extends PokemonCard {
       const player = effect.player;
 
       SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, player, {
-        cardType: CardType.WATER
+        cardType: CardType.WATER,
       });
     }
 
@@ -63,8 +65,10 @@ export class Cryogonal extends PokemonCard {
     }
 
     // Block attacks when marker is present
-    if (effect instanceof UseAttackEffect
-      && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this)) {
+    if (
+      effect instanceof UseAttackEffect &&
+      effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this)
+    ) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 

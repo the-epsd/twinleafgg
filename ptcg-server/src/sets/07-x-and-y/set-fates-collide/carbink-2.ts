@@ -16,19 +16,21 @@ export class Carbink2 extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Safeguard',
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all effects of attacks, including damage, done to this Pokémon by your opponent\'s Pokémon-EX.'
-  }];
+  public powers = [
+    {
+      name: 'Safeguard',
+      powerType: PowerType.ABILITY,
+      text: "Prevent all effects of attacks, including damage, done to this Pokémon by your opponent's Pokémon-EX.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Power Gem',
       cost: [F, C],
       damage: 40,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'FCO';
@@ -57,7 +59,7 @@ export class Carbink2 extends PokemonCard {
         return state;
       }
 
-      if (sourceCard.tags.includes(CardTag.POKEMON_EX)) {
+      if (sourceCard.hasTag(CardTag.POKEMON_EX)) {
         effect.preventDefault = true;
       }
     }

@@ -10,8 +10,7 @@ import { ChooseCardsPrompt, GameLog, GameMessage, ShuffleDeckPrompt } from '../.
 import { ToolEffect } from '../../../game/store/effects/play-card-effects';
 
 export class AmuletofHope extends TrainerCard {
-
-  public tags = [CardTag.ACE_SPEC];
+  protected _tags = [CardTag.ACE_SPEC];
 
   public trainerType: TrainerType = TrainerType.TOOL;
 
@@ -28,7 +27,7 @@ export class AmuletofHope extends TrainerCard {
   public fullName: string = 'Amulet of Hope SSP';
 
   public text: string =
-    'If the Pokémon this card is attached to is Knocked Out by damage from an attack from your opponent\'s Pokémon, search your deck for up to 3 cards and put them into your hand. Then, shuffle your deck.';
+    "If the Pokémon this card is attached to is Knocked Out by damage from an attack from your opponent's Pokémon, search your deck for up to 3 cards and put them into your hand. Then, shuffle your deck.";
 
   public readonly AMULET_OF_HOPE_MARKER = 'AMULET_OF_HOPE_MARKER';
 
@@ -50,14 +49,13 @@ export class AmuletofHope extends TrainerCard {
 
       const target = effect.target;
       const cards = target.getPokemons();
-      cards.forEach(card => {
+      cards.forEach((card) => {
         player.marker.addMarker(this.AMULET_OF_HOPE_MARKER, card);
       });
     }
 
     if (effect instanceof BetweenTurnsEffect) {
-      state.players.forEach(player => {
-
+      state.players.forEach((player) => {
         if (!player.marker.hasMarker(this.AMULET_OF_HOPE_MARKER)) {
           return state;
         }
@@ -66,21 +64,28 @@ export class AmuletofHope extends TrainerCard {
           return state;
         }
 
-        store.log(state, GameLog.LOG_PLAYER_USES_ABILITY, { name: player.name, card: 'Amulet of Hope' });
-
-        let cards: Card[] = [];
-        store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_HAND,
-          player.deck,
-          {},
-          { min: 0, max: 3, allowCancel: false }
-        ), selected => {
-          cards = selected || [];
-          player.deck.moveCardsTo(cards, player.hand);
+        store.log(state, GameLog.LOG_PLAYER_USES_ABILITY, {
+          name: player.name,
+          card: 'Amulet of Hope',
         });
 
-        store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+        let cards: Card[] = [];
+        store.prompt(
+          state,
+          new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_CARD_TO_HAND,
+            player.deck,
+            {},
+            { min: 0, max: 3, allowCancel: false },
+          ),
+          (selected) => {
+            cards = selected || [];
+            player.deck.moveCardsTo(cards, player.hand);
+          },
+        );
+
+        store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
           player.deck.applyOrder(order);
         });
 
@@ -90,5 +95,4 @@ export class AmuletofHope extends TrainerCard {
 
     return state;
   }
-
 }

@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Heracross extends PokemonCard {
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = G;
   public hp: number = 120;
@@ -21,15 +21,15 @@ export class Heracross extends PokemonCard {
       name: 'Horn Attack',
       cost: [C],
       damage: 20,
-      text: ''
+      text: '',
     },
     {
       name: 'Single-Horn Throw',
       cost: [G, C],
       damage: 40,
       damageCalculation: '+',
-      text: 'Flip 2 coins. If both of them are heads, this attack does 160 more damage.'
-    }
+      text: 'Flip 2 coins. If both of them are heads, this attack does 160 more damage.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -44,7 +44,7 @@ export class Heracross extends PokemonCard {
     // Ref: set-plasma-blast/tirtouga.ts (MULTIPLE_COIN_FLIPS_PROMPT - if both heads, extra damage)
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, results => {
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, (results) => {
         if (results[0] && results[1]) {
           effect.damage += 160;
         }

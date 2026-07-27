@@ -6,10 +6,18 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, GameError, GameMessage, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, BLOCK_RETREAT } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  USE_ABILITY_ONCE_PER_TURN,
+  ABILITY_USED,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  BLOCK_RETREAT,
+} from '../../../game/store/prefabs/prefabs';
 import { ADD_POISON_TO_PLAYER_ACTIVE } from '../../../game/store/prefabs/prefabs';
 export class GalarianSlowbroV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = D;
   public hp: number = 210;
@@ -18,20 +26,22 @@ export class GalarianSlowbroV extends PokemonCard {
 
   public readonly RAPID_FIRE_POISON_MARKER = 'GALARIAN_SLOWBRO_V_RAPID_FIRE_POISON_MARKER';
 
-  public powers = [{
-    name: 'Rapid-Fire Poison',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, if this Pokémon is in the Active Spot, you may make your opponent\'s Active Pokémon Poisoned.'
-  }];
+  public powers = [
+    {
+      name: 'Rapid-Fire Poison',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: "Once during your turn, if this Pokémon is in the Active Spot, you may make your opponent's Active Pokémon Poisoned.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Tripping Shot',
       cost: [D, D, C],
       damage: 130,
-      text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
-    }
+      text: "During your opponent's next turn, the Defending Pokémon can't retreat.",
+    },
   ];
 
   public regulationMark: string = 'D';

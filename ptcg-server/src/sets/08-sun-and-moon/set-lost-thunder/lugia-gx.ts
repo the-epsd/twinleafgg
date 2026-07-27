@@ -10,8 +10,7 @@ import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/pr
 
 // CIN Lugia-GX 57 (https://limitlesstcg.com/cards/CIN/57)
 export class LugiaGX extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
 
   public stage: Stage = Stage.BASIC;
 
@@ -26,9 +25,24 @@ export class LugiaGX extends PokemonCard {
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
-    { name: 'Psychic', cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS], damage: 30, text: 'This attack does 30 more damage times the amount of Energy attached to your opponent\'s Active Pokémon. ' },
-    { name: 'Pelagic Blade', cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS], damage: 170, text: 'This Pokémon can\'t attack during your next turn.' },
-    { name: 'Lost Purge-GX', cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS], damage: 0, text: 'Put your opponent\'s Active Pokémon and all cards attached to it in the Lost Zone. (You can\'t use more than 1 GX attack in a game.)' }
+    {
+      name: 'Psychic',
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+      damage: 30,
+      text: "This attack does 30 more damage times the amount of Energy attached to your opponent's Active Pokémon. ",
+    },
+    {
+      name: 'Pelagic Blade',
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+      damage: 170,
+      text: "This Pokémon can't attack during your next turn.",
+    },
+    {
+      name: 'Lost Purge-GX',
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+      damage: 0,
+      text: "Put your opponent's Active Pokémon and all cards attached to it in the Lost Zone. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'LOT';
@@ -53,8 +67,10 @@ export class LugiaGX extends PokemonCard {
 
       const opponentProvidedEnergy = new CheckProvidedEnergyEffect(opponent);
       store.reduceEffect(state, opponentProvidedEnergy);
-      const opponentEnergyCount = opponentProvidedEnergy.energyMap
-        .reduce((left, p) => left + p.provides.length, 0);
+      const opponentEnergyCount = opponentProvidedEnergy.energyMap.reduce(
+        (left, p) => left + p.provides.length,
+        0,
+      );
 
       effect.damage += opponentEnergyCount * 30;
     }

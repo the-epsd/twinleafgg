@@ -1,6 +1,14 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, StateUtils, CoinFlipPrompt, PlayerType, ShuffleDeckPrompt } from '../../../game';
+import {
+  StoreLike,
+  State,
+  GameMessage,
+  StateUtils,
+  CoinFlipPrompt,
+  PlayerType,
+  ShuffleDeckPrompt,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
@@ -8,7 +16,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class TogepiCleffaIgglybuffGX extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
+  protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = Y;
   public hp: number = 240;
@@ -22,15 +30,15 @@ export class TogepiCleffaIgglybuffGX extends PokemonCard {
       cost: [Y, Y, C],
       damage: 120,
       damageCalculation: '+',
-      text: 'Flip a coin until you get tails. This attack does 30 more damage for each heads.'
+      text: 'Flip a coin until you get tails. This attack does 30 more damage for each heads.',
     },
     {
       name: 'Supreme Puff-GX',
       cost: [Y, Y],
       damage: 0,
       gxAttack: true,
-      text: 'Take another turn after this one. (Skip the between-turns step.) If this Pokémon has at least 14 extra [Y] Energy attached to it (in addition to this attack\'s cost), your opponent shuffles all of their Benched Pokémon and all cards attached to them into their deck. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Take another turn after this one. (Skip the between-turns step.) If this Pokémon has at least 14 extra [Y] Energy attached to it (in addition to this attack's cost), your opponent shuffles all of their Benched Pokémon and all cards attached to them into their deck. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'CEC';
@@ -44,13 +52,19 @@ export class TogepiCleffaIgglybuffGX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // turn skipping shenanegains (thanks for dialga-gx)
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.SUPREME_PUFF_MARKER_2, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.SUPREME_PUFF_MARKER_2, this)
+    ) {
       effect.player.marker.removeMarker(this.SUPREME_PUFF_MARKER, this);
       effect.player.marker.removeMarker(this.SUPREME_PUFF_MARKER_2, this);
       effect.player.usedTurnSkip = false;
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.SUPREME_PUFF_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.SUPREME_PUFF_MARKER, this)
+    ) {
       effect.player.marker.addMarker(this.SUPREME_PUFF_MARKER_2, this);
     }
 
@@ -59,15 +73,17 @@ export class TogepiCleffaIgglybuffGX extends PokemonCard {
       const player = effect.player;
 
       const flipCoin = (heads: number = 0): State => {
-        return store.prompt(state, [
-          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-        ], result => {
-          if (result === true) {
-            return flipCoin(heads + 1);
-          }
-          effect.damage += 30 * heads;
-          return state;
-        });
+        return store.prompt(
+          state,
+          [new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)],
+          (result) => {
+            if (result === true) {
+              return flipCoin(heads + 1);
+            }
+            effect.damage += 30 * heads;
+            return state;
+          },
+        );
       };
       return flipCoin();
     }
@@ -85,9 +101,14 @@ export class TogepiCleffaIgglybuffGX extends PokemonCard {
       const extraEffectCost: CardType[] = [Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y];
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       store.reduceEffect(state, checkProvidedEnergy);
-      const meetsExtraEffectCost = StateUtils.checkEnoughEnergy(checkProvidedEnergy.energyMap, extraEffectCost);
+      const meetsExtraEffectCost = StateUtils.checkEnoughEnergy(
+        checkProvidedEnergy.energyMap,
+        extraEffectCost,
+      );
 
-      if (!meetsExtraEffectCost) { return state; }  // If we don't have the extra energy, we just deal damage.
+      if (!meetsExtraEffectCost) {
+        return state;
+      } // If we don't have the extra energy, we just deal damage.
 
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -96,7 +117,7 @@ export class TogepiCleffaIgglybuffGX extends PokemonCard {
           cardList.moveTo(opponent.deck);
         }
       });
-      store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
+      store.prompt(state, new ShuffleDeckPrompt(opponent.id), (order) => {
         opponent.deck.applyOrder(order);
       });
     }

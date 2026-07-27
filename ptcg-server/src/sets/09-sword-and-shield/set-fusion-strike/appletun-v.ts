@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class AppletunV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = G;
   public hp: number = 210;
@@ -22,14 +22,14 @@ export class AppletunV extends PokemonCard {
       name: 'Headbutt',
       cost: [G],
       damage: 30,
-      text: ''
+      text: '',
     },
     {
       name: 'Sweet Impact',
       cost: [G, G, C],
       damage: 100,
-      text: 'Heal 30 damage from this Pokémon.'
-    }
+      text: 'Heal 30 damage from this Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'E';

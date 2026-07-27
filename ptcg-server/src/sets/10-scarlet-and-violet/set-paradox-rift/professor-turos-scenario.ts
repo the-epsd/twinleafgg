@@ -12,15 +12,14 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CardTag } from '../../../game/store/card/card-types';
 
 export class ProfessorTurosScenario extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-  public tags = [CardTag.FUTURE];
+  protected _tags = [CardTag.FUTURE];
   public regulationMark = 'G';
   public set: string = 'PAR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '171';
-  public name: string = 'Professor Turo\'s Scenario';
-  public fullName: string = 'Professor Turo\'s Scenario PAR';
+  public name: string = "Professor Turo's Scenario";
+  public fullName: string = "Professor Turo's Scenario PAR";
 
   public text: string =
     'Put 1 of your Pokémon in play into your hand. (Discard all cards attached to that Pokémon.)';
@@ -32,7 +31,6 @@ export class ProfessorTurosScenario extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
@@ -43,45 +41,50 @@ export class ProfessorTurosScenario extends TrainerCard {
 
       // Move to supporter pile
       state = MOVE_CARDS(store, state, player.hand, player.supporter, {
-        cards: [effect.trainerCard]
+        cards: [effect.trainerCard],
       });
       effect.preventDefault = true;
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { allowCancel: false }
-      ), result => {
-        const cardList = result.length > 0 ? result[0] : null;
-        if (cardList !== null) {
-          const pokemons = cardList.getPokemons();
-          const otherCards = cardList.cards.filter(card =>
-            !(card instanceof PokemonCard) &&
-            !pokemons.includes(card as PokemonCard) &&
-            (!cardList.tools || !cardList.tools.includes(card))
-          );
-          const tools = [...cardList.tools];
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { allowCancel: false },
+        ),
+        (result) => {
+          const cardList = result.length > 0 ? result[0] : null;
+          if (cardList !== null) {
+            const pokemons = cardList.getPokemons();
+            const otherCards = cardList.cards.filter(
+              (card) =>
+                !(card instanceof PokemonCard) &&
+                !pokemons.includes(card as PokemonCard) &&
+                (!cardList.tools || !cardList.tools.includes(card)),
+            );
+            const tools = [...cardList.tools];
 
-          // Move other cards to discard
-          if (otherCards.length > 0) {
-            MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
-          }
+            // Move other cards to discard
+            if (otherCards.length > 0) {
+              MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
+            }
 
-          // Move tools to discard
-          if (tools.length > 0) {
-            for (const tool of tools) {
-              cardList.moveCardTo(tool, player.discard);
+            // Move tools to discard
+            if (tools.length > 0) {
+              for (const tool of tools) {
+                cardList.moveCardTo(tool, player.discard);
+              }
+            }
+
+            // Move Pokémon to hand
+            if (pokemons.length > 0) {
+              MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
             }
           }
-
-          // Move Pokémon to hand
-          if (pokemons.length > 0) {
-            MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
-          }
-        }
-      });
+        },
+      );
     }
     return state;
   }

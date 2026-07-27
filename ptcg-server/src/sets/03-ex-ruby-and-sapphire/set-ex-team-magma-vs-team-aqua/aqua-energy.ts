@@ -1,6 +1,9 @@
 import { CardTag, CardType, EnergyType, SuperType } from '../../../game/store/card/card-types';
 import { EnergyCard } from '../../../game/store/card/energy-card';
-import { CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../../game/store/effects/check-effects';
+import {
+  CheckProvidedEnergyEffect,
+  CheckTableStateEffect,
+} from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttachEnergyEffect, EnergyEffect } from '../../../game/store/effects/play-card-effects';
 import { State } from '../../../game/store/state/state';
@@ -22,20 +25,21 @@ export class AquaEnergy extends EnergyCard {
   public name = 'Aqua Energy';
   public fullName = 'Aqua Energy MA';
 
-  public text = 'Aqua Energy can be attached only to a Pokémon with Team Aqua in its name. Aqua Energy provides [W] and [D] Energy but provides 2 Energy at a time. (Doesn\'t count as a basic Energy card when not in play and has no other effect than providing Energy.) At the end of your turn, discard Aqua Energy.';
+  public text =
+    "Aqua Energy can be attached only to a Pokémon with Team Aqua in its name. Aqua Energy provides [W] and [D] Energy but provides 2 Energy at a time. (Doesn't count as a basic Energy card when not in play and has no other effect than providing Energy.) At the end of your turn, discard Aqua Energy.";
 
   private getExistingEnergy(source: CardList): EnergyMap[] {
     return source.cards
       .filter((card: Card) => card.superType === SuperType.ENERGY && card !== this)
       .map((card: Card) => ({
         card: card as EnergyCard,
-        provides: (card as EnergyCard).provides
+        provides: (card as EnergyCard).provides,
       }));
   }
 
   private countEnergyType(energy: EnergyMap[], type: CardType): number {
     return energy.reduce((count, e) => {
-      return count + e.provides.filter(p => p === type).length;
+      return count + e.provides.filter((p) => p === type).length;
     }, 0);
   }
 
@@ -49,8 +53,8 @@ export class AquaEnergy extends EnergyCard {
 
     const waterCount = this.countEnergyType(existingEnergy, CardType.WATER);
     const darkCount = this.countEnergyType(existingEnergy, CardType.DARK);
-    const requiredWater = attackCost.filter(c => c === CardType.WATER).length;
-    const requiredDark = attackCost.filter(c => c === CardType.DARK).length;
+    const requiredWater = attackCost.filter((c) => c === CardType.WATER).length;
+    const requiredDark = attackCost.filter((c) => c === CardType.DARK).length;
 
     const hasEnoughWater = !needsWater || waterCount >= requiredWater;
     const hasEnoughDark = !needsDark || darkCount >= requiredDark;
@@ -83,21 +87,27 @@ export class AquaEnergy extends EnergyCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Prevent attaching to non Team Rocket's Pokemon
     if (effect instanceof AttachEnergyEffect) {
-      if (effect.energyCard === this && !effect.target.getPokemonCard()?.tags.includes(CardTag.TEAM_AQUA)) {
+      if (
+        effect.energyCard === this &&
+        !effect.target.getPokemonCard()?.hasTag(CardTag.TEAM_AQUA)
+      ) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
     }
 
     // Discard card when not attached to Team Rocket's Pokemon
     if (effect instanceof CheckTableStateEffect) {
-      state.players.forEach(player => {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (!cardList.cards.includes(this) || IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, cardList)) {
+      state.players.forEach((player) => {
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+          if (
+            !cardList.cards.includes(this) ||
+            IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, cardList)
+          ) {
             return;
           }
 
           const pokemonCard = cardList.getPokemonCard();
-          if (pokemonCard && !pokemonCard.tags.includes(CardTag.TEAM_AQUA)) {
+          if (pokemonCard && !pokemonCard.hasTag(CardTag.TEAM_AQUA)) {
             cardList.moveCardTo(this, player.discard);
           }
         });
@@ -134,7 +144,7 @@ export class AquaEnergy extends EnergyCard {
 
       effect.energyMap.push({
         card: this,
-        provides: energyToProvide
+        provides: energyToProvide,
       });
     }
     return state;

@@ -30,15 +30,15 @@ export class Sylveon extends PokemonCard {
       name: 'Moonblast',
       cost: [Y],
       damage: 30,
-      text: 'During your opponent\'s next turn, the Defending Pokémon\'s attacks do 30 less damage (before applying Weakness and Resistance).'
+      text: "During your opponent's next turn, the Defending Pokémon's attacks do 30 less damage (before applying Weakness and Resistance).",
     },
     {
       name: 'Beloved Pulse',
       cost: [Y, C, C],
       damage: 80,
       damageCalculation: '+',
-      text: 'If you played a TAG TEAM Supporter card from your hand during this turn, this attack does 80 more damage.'
-    }
+      text: 'If you played a TAG TEAM Supporter card from your hand during this turn, this attack does 80 more damage.',
+    },
   ];
 
   public set: string = 'CEC';
@@ -49,10 +49,12 @@ export class Sylveon extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Track when a TAG TEAM Supporter is played
-    if (effect instanceof TrainerEffect
-      && effect.trainerCard instanceof TrainerCard
-      && effect.trainerCard.trainerType === TrainerType.SUPPORTER
-      && effect.trainerCard.tags.includes(CardTag.TAG_TEAM)) {
+    if (
+      effect instanceof TrainerEffect &&
+      effect.trainerCard instanceof TrainerCard &&
+      effect.trainerCard.trainerType === TrainerType.SUPPORTER &&
+      effect.trainerCard.hasTag(CardTag.TAG_TEAM)
+    ) {
       effect.player.marker.addMarker(this.TAG_TEAM_SUPPORTER_PLAYED_MARKER, this);
     }
 
@@ -65,13 +67,17 @@ export class Sylveon extends PokemonCard {
       opponent.marker.addMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
     }
 
-    if (effect instanceof DealDamageEffect
-      && effect.target.marker.hasMarker(this.REDUCE_DAMAGE_MARKER, this)) {
+    if (
+      effect instanceof DealDamageEffect &&
+      effect.target.marker.hasMarker(this.REDUCE_DAMAGE_MARKER, this)
+    ) {
       effect.damage = Math.max(0, effect.damage - 30);
     }
 
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {

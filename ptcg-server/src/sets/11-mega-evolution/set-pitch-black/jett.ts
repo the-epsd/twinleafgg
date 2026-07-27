@@ -53,8 +53,8 @@ export class Jett extends TrainerCard {
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, pokemonCard) => {
         if (
           pokemonCard instanceof PokemonCard &&
-          pokemonCard.tags.includes(CardTag.POKEMON_SV_MEGA) &&
-          pokemonCard.tags.includes(CardTag.POKEMON_ex)
+          pokemonCard.hasTag(CardTag.POKEMON_SV_MEGA) &&
+          pokemonCard.hasTag(CardTag.POKEMON_ex)
         ) {
           megaEvolutionExCount++;
         }

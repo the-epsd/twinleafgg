@@ -12,11 +12,11 @@ import {
   WAS_ATTACK_USED,
   BLOCK_RETREAT,
   REPLACE_MARKER_AT_END_OF_TURN,
-  BREAK_RULE
+  BREAK_RULE,
 } from '../../../game/store/prefabs/prefabs';
 
 export class ClawitzerBreak extends PokemonCard {
-  public tags = [CardTag.BREAK];
+  protected _tags = [CardTag.BREAK];
   public stage: Stage = Stage.BREAK;
   public evolvesFrom: string = 'Clawitzer';
   public cardType: CardType = W;
@@ -28,7 +28,7 @@ export class ClawitzerBreak extends PokemonCard {
       name: 'Lock-On',
       cost: [C],
       damage: 0,
-      text: "The Defending Pokémon can't retreat during your opponent's next turn. During your next turn, any damage done to that Pokémon by attacks is increased by 120 (after applying Weakness and Resistance)."
+      text: "The Defending Pokémon can't retreat during your opponent's next turn. During your next turn, any damage done to that Pokémon by attacks is increased by 120 (after applying Weakness and Resistance).",
     },
   ];
 

@@ -12,7 +12,7 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class AlcremieV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 170;
@@ -26,14 +26,14 @@ export class AlcremieV extends PokemonCard {
       name: 'Sugary Sprinkles',
       cost: [P],
       damage: 0,
-      text: 'Heal 30 damage from each of your Benched Pokémon.'
+      text: 'Heal 30 damage from each of your Benched Pokémon.',
     },
     {
       name: 'Sweet Splash',
       cost: [P, C, C],
       damage: 100,
-      text: 'If the Defending Pokémon is a Basic Pokémon, it can\'t attack during your opponent\'s next turn.'
-    }
+      text: "If the Defending Pokémon is a Basic Pokémon, it can't attack during your opponent's next turn.",
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -49,7 +49,7 @@ export class AlcremieV extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      player.bench.forEach(benched => {
+      player.bench.forEach((benched) => {
         if (benched.cards.length > 0 && benched.damage > 0) {
           const healEffect = new HealTargetEffect(effect, 30);
           healEffect.target = benched;
@@ -72,8 +72,10 @@ export class AlcremieV extends PokemonCard {
     }
 
     // Block attacks from marked Pokemon
-    if (effect instanceof AttackEffect
-      && effect.player.active.marker.hasMarker(this.CANT_ATTACK_MARKER, this)) {
+    if (
+      effect instanceof AttackEffect &&
+      effect.player.active.marker.hasMarker(this.CANT_ATTACK_MARKER, this)
+    ) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 

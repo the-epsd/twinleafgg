@@ -7,7 +7,7 @@ import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-e
 import { MEGA_EVOLUTION_END_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class MVenusaurEX extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX, CardTag.MEGA,];
+  protected _tags = [CardTag.POKEMON_EX, CardTag.MEGA];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom = 'Venusaur-EX';
   public cardType: CardType = G;
@@ -15,12 +15,14 @@ export class MVenusaurEX extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C, C, C];
 
-  public attacks = [{
-    name: 'Crisis Vine',
-    cost: [G, G, G, C],
-    damage: 120,
-    text: 'Your opponent\'s Active Pokémon is now Paralyzed and Poisoned.'
-  }];
+  public attacks = [
+    {
+      name: 'Crisis Vine',
+      cost: [G, G, G, C],
+      damage: 120,
+      text: "Your opponent's Active Pokémon is now Paralyzed and Poisoned.",
+    },
+  ];
 
   public set: string = 'XY';
   public name: string = 'M Venusaur-EX';
@@ -32,7 +34,10 @@ export class MVenusaurEX extends PokemonCard {
     MEGA_EVOLUTION_END_TURN(store, state, effect, this);
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED, SpecialCondition.POISONED]);
+      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [
+        SpecialCondition.PARALYZED,
+        SpecialCondition.POISONED,
+      ]);
       store.reduceEffect(state, specialConditionEffect);
     }
     return state;

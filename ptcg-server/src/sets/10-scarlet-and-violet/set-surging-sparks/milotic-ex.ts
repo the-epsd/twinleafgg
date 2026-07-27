@@ -1,5 +1,20 @@
-import { PokemonCard, Stage, CardType, CardTag, PowerType, StoreLike, State, SpecialCondition, GamePhase, StateUtils } from '../../../game';
-import { AbstractAttackEffect, AddSpecialConditionsEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import {
+  PokemonCard,
+  Stage,
+  CardType,
+  CardTag,
+  PowerType,
+  StoreLike,
+  State,
+  SpecialCondition,
+  GamePhase,
+  StateUtils,
+} from '../../../game';
+import {
+  AbstractAttackEffect,
+  AddSpecialConditionsEffect,
+  PutDamageEffect,
+} from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
@@ -12,20 +27,24 @@ export class Miloticex extends PokemonCard {
   public weakness = [{ type: CardType.LIGHTNING }];
   public resistance = [];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
 
-  public powers = [{
-    name: 'Sparkling Scales',
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all damage and effects done to this Pokémon by your opponent\'s Tera Pokémon\'s attacks.'
-  }];
+  public powers = [
+    {
+      name: 'Sparkling Scales',
+      powerType: PowerType.ABILITY,
+      text: "Prevent all damage and effects done to this Pokémon by your opponent's Tera Pokémon's attacks.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Hypno Splash',
-    cost: [CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
-    damage: 160,
-    text: 'Your opponent\'s Active Pokémon is now Asleep.'
-  }];
+  public attacks = [
+    {
+      name: 'Hypno Splash',
+      cost: [CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
+      damage: 160,
+      text: "Your opponent's Active Pokémon is now Asleep.",
+    },
+  ];
 
   public regulationMark = 'H';
   public set: string = 'SSP';
@@ -35,7 +54,6 @@ export class Miloticex extends PokemonCard {
   public fullName: string = 'Milotic ex SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // if (effect instanceof BetweenTurnsEffect) {
     //   const player = effect.player;
     //   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
@@ -67,15 +85,18 @@ export class Miloticex extends PokemonCard {
         return state;
       }
 
-      if (sourceCard.tags.includes(CardTag.POKEMON_TERA)) {
-
+      if (sourceCard.hasTag(CardTag.POKEMON_TERA)) {
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
+          const stub = new PowerEffect(
+            player,
+            {
+              name: 'test',
+              powerType: PowerType.ABILITY,
+              text: '',
+            },
+            this,
+          );
           store.reduceEffect(state, stub);
         } catch {
           return state;
@@ -105,15 +126,18 @@ export class Miloticex extends PokemonCard {
         return state;
       }
 
-      if (sourceCard.tags.includes(CardTag.POKEMON_TERA)) {
-
+      if (sourceCard.hasTag(CardTag.POKEMON_TERA)) {
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
+          const stub = new PowerEffect(
+            player,
+            {
+              name: 'test',
+              powerType: PowerType.ABILITY,
+              text: '',
+            },
+            this,
+          );
           store.reduceEffect(state, stub);
         } catch {
           return state;
@@ -124,7 +148,9 @@ export class Miloticex extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
+      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [
+        SpecialCondition.ASLEEP,
+      ]);
       state = store.reduceEffect(state, specialConditionEffect);
     }
 

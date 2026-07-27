@@ -6,12 +6,11 @@ import { CONFIRMATION_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefab
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class Ampharosex extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_2;
 
   public evolvesFrom = 'Flaaffy';
 
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
 
   public cardType: CardType = CardType.LIGHTNING;
 
@@ -26,15 +25,15 @@ export class Ampharosex extends PokemonCard {
       name: 'Electro Ball',
       cost: [CardType.LIGHTNING],
       damage: 60,
-      text: ''
+      text: '',
     },
     {
       name: 'Thunderstrike Tail',
       cost: [CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS],
       damage: 140,
       damageCalculation: '+',
-      text: 'You may discard 2 Energy from this Pokémon to have this attack do 100 more damage.'
-    }
+      text: 'You may discard 2 Energy from this Pokémon to have this attack do 100 more damage.',
+    },
   ];
 
   public set: string = 'SVP';
@@ -50,18 +49,22 @@ export class Ampharosex extends PokemonCard {
   public fullName: string = 'Ampharos ex SVP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      CONFIRMATION_PROMPT(store, state, player, result => {
-        if (result) {
-          DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 2);
-          effect.damage += 100;
-        }
-      }, GameMessage.WANT_TO_USE_EFFECT_OF_ATTACK);
+      CONFIRMATION_PROMPT(
+        store,
+        state,
+        player,
+        (result) => {
+          if (result) {
+            DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 2);
+            effect.damage += 100;
+          }
+        },
+        GameMessage.WANT_TO_USE_EFFECT_OF_ATTACK,
+      );
     }
     return state;
   }
-
 }

@@ -10,9 +10,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
-
 export class Sigilyph extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.PSYCHIC;
@@ -23,20 +21,24 @@ export class Sigilyph extends PokemonCard {
 
   public retreat = [CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Safeguard',
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all effects of attacks, including damage, done to ' +
-      'this Pokemon by Pokemon-EX.'
-  }];
+  public powers = [
+    {
+      name: 'Safeguard',
+      powerType: PowerType.ABILITY,
+      text:
+        'Prevent all effects of attacks, including damage, done to ' +
+        'this Pokemon by Pokemon-EX.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Psychic',
-    cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
-    damage: 50,
-    text: 'Does 10 more damage for each Energy attached to ' +
-      'the Defending Pokemon.'
-  }];
+  public attacks = [
+    {
+      name: 'Psychic',
+      cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
+      damage: 50,
+      text: 'Does 10 more damage for each Energy attached to ' + 'the Defending Pokemon.',
+    },
+  ];
 
   public set: string = 'DRX';
 
@@ -49,15 +51,16 @@ export class Sigilyph extends PokemonCard {
   public setNumber: string = '52';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(opponent);
       store.reduceEffect(state, checkProvidedEnergyEffect);
-      const energyCount = checkProvidedEnergyEffect.energyMap
-        .reduce((left, p) => left + p.provides.length, 0);
+      const energyCount = checkProvidedEnergyEffect.energyMap.reduce(
+        (left, p) => left + p.provides.length,
+        0,
+      );
 
       effect.damage += energyCount * 10;
     }
@@ -72,16 +75,19 @@ export class Sigilyph extends PokemonCard {
         return state;
       }
 
-      if (sourceCard && sourceCard.tags.includes(CardTag.POKEMON_EX)) {
-
+      if (sourceCard && sourceCard.hasTag(CardTag.POKEMON_EX)) {
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
           const player = StateUtils.findOwner(state, effect.target);
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
+          const stub = new PowerEffect(
+            player,
+            {
+              name: 'test',
+              powerType: PowerType.ABILITY,
+              text: '',
+            },
+            this,
+          );
           store.reduceEffect(state, stub);
         } catch {
           return state;
@@ -93,5 +99,4 @@ export class Sigilyph extends PokemonCard {
 
     return state;
   }
-
 }

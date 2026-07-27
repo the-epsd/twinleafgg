@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../../game/store/prefabs/attack-effects';
 
 export class ArticunoEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX, CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.POKEMON_EX, CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 170;
@@ -25,14 +25,14 @@ export class ArticunoEx extends PokemonCard {
       name: 'Blizzard',
       cost: [W, C, C],
       damage: 60,
-      text: 'Does 10 damage to each of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "Does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Frost Prison',
       cost: [W, W, C, C],
       damage: 80,
-      text: 'If this Pokémon has any Plasma Energy attached to it, the Defending Pokémon is now Paralyzed.'
-    }
+      text: 'If this Pokémon has any Plasma Energy attached to it, the Defending Pokémon is now Paralyzed.',
+    },
   ];
 
   public set: string = 'PLS';
@@ -47,7 +47,7 @@ export class ArticunoEx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
 
-      opponent.bench.forEach(benched => {
+      opponent.bench.forEach((benched) => {
         if (benched.cards.length > 0) {
           const damage = new PutDamageEffect(effect, 10);
           damage.target = benched;
@@ -64,8 +64,8 @@ export class ArticunoEx extends PokemonCard {
       const checkEnergy = new CheckProvidedEnergyEffect(player, player.active);
       store.reduceEffect(state, checkEnergy);
 
-      const hasPlasmaEnergy = checkEnergy.energyMap.some(em =>
-        em.card.superType === SuperType.ENERGY && em.card.name === 'Plasma Energy'
+      const hasPlasmaEnergy = checkEnergy.energyMap.some(
+        (em) => em.card.superType === SuperType.ENERGY && em.card.name === 'Plasma Energy',
       );
 
       if (hasPlasmaEnergy) {

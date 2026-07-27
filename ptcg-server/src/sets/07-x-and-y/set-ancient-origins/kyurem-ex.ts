@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class KyuremEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 180;
@@ -27,14 +27,14 @@ export class KyuremEx extends PokemonCard {
       name: 'Glaciate',
       cost: [W, W, C],
       damage: 0,
-      text: 'This attack does 30 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack does 30 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Icecalibur',
       cost: [W, W, W, C],
       damage: 130,
-      text: 'Discard an Energy attached to this Pokémon. The Defending Pokémon can\'t attack during your opponent\'s next turn.'
-    }
+      text: "Discard an Energy attached to this Pokémon. The Defending Pokémon can't attack during your opponent's next turn.",
+    },
   ];
 
   public set: string = 'AOR';
@@ -56,7 +56,7 @@ export class KyuremEx extends PokemonCard {
       store.reduceEffect(state, dealDamage);
 
       // Damage to bench (PutDamageEffect - no weakness/resistance)
-      opponent.bench.forEach(benched => {
+      opponent.bench.forEach((benched) => {
         if (benched.cards.length > 0) {
           const damage = new PutDamageEffect(effect, 30);
           damage.target = benched;
@@ -75,8 +75,10 @@ export class KyuremEx extends PokemonCard {
     }
 
     // Block attacks when marker is present
-    if (effect instanceof UseAttackEffect
-      && effect.player.active.marker.hasMarker(this.DEFENDING_CANNOT_ATTACK_MARKER, this)) {
+    if (
+      effect instanceof UseAttackEffect &&
+      effect.player.active.marker.hasMarker(this.DEFENDING_CANNOT_ATTACK_MARKER, this)
+    ) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 

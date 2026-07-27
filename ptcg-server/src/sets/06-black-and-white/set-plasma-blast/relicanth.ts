@@ -8,7 +8,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 
 export class Relicanth extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 90;
@@ -20,14 +20,14 @@ export class Relicanth extends PokemonCard {
       name: 'Fossil Hunt',
       cost: [C],
       damage: 0,
-      text: 'Put 2 Item cards that have Fossil in their names from your discard pile into your hand.'
+      text: 'Put 2 Item cards that have Fossil in their names from your discard pile into your hand.',
     },
     {
       name: 'Water Gun',
       cost: [W, C],
       damage: 30,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'PLB';
@@ -42,10 +42,11 @@ export class Relicanth extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Check if there are any Fossil items in discard
-      const fossilItems = player.discard.cards.filter(c =>
-        c instanceof TrainerCard &&
-        c.trainerType === TrainerType.ITEM &&
-        c.name.includes('Fossil')
+      const fossilItems = player.discard.cards.filter(
+        (c) =>
+          c instanceof TrainerCard &&
+          c.trainerType === TrainerType.ITEM &&
+          c.name.includes('Fossil'),
       );
 
       if (fossilItems.length === 0) {
@@ -55,35 +56,41 @@ export class Relicanth extends PokemonCard {
       // Build blocked list for non-Fossil items
       const blocked: number[] = [];
       player.discard.cards.forEach((c, index) => {
-        if (!(c instanceof TrainerCard) ||
+        if (
+          !(c instanceof TrainerCard) ||
           c.trainerType !== TrainerType.ITEM ||
-          !c.name.includes('Fossil')) {
+          !c.name.includes('Fossil')
+        ) {
           blocked.push(index);
         }
       });
 
       const max = Math.min(2, fossilItems.length);
 
-      store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.discard,
-        {},
-        { min: max, max, allowCancel: false, blocked }
-      ), selected => {
-        const cards = selected || [];
-        cards.forEach(card => {
-          player.discard.moveCardTo(card, player.hand);
-        });
+      store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.discard,
+          {},
+          { min: max, max, allowCancel: false, blocked },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          cards.forEach((card) => {
+            player.discard.moveCardTo(card, player.hand);
+          });
 
-        if (cards.length > 0) {
-          store.prompt(state, new ShowCardsPrompt(
-            opponent.id,
-            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-            cards
-          ), () => { });
-        }
-      });
+          if (cards.length > 0) {
+            store.prompt(
+              state,
+              new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+              () => {},
+            );
+          }
+        },
+      );
     }
 
     return state;

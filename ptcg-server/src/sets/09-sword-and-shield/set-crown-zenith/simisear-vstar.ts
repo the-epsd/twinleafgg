@@ -10,7 +10,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class SimisearVstar extends PokemonCard {
-  public tags = [CardTag.POKEMON_VSTAR];
+  protected _tags = [CardTag.POKEMON_VSTAR];
   public stage: Stage = Stage.VSTAR;
   public evolvesFrom: string = 'Simisear V';
   public cardType: CardType = R;
@@ -24,15 +24,15 @@ export class SimisearVstar extends PokemonCard {
       cost: [R, C, C],
       damage: 40,
       damageCalculation: '+',
-      text: 'You may discard up to 5 cards from the top of your deck. This attack does 40 more damage for each card you discarded in this way.'
+      text: 'You may discard up to 5 cards from the top of your deck. This attack does 40 more damage for each card you discarded in this way.',
     },
     {
       name: 'Ember Star',
       cost: [R],
       damage: 30,
       damageCalculation: 'x',
-      text: 'This attack does 30 damage for each Energy card in your discard pile. (You can\'t use more than 1 VSTAR Power in a game.)'
-    }
+      text: "This attack does 30 damage for each Energy card in your discard pile. (You can't use more than 1 VSTAR Power in a game.)",
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -58,20 +58,24 @@ export class SimisearVstar extends PokemonCard {
       player.deck.moveTo(temp, count);
 
       const attackEffect = effect;
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        temp,
-        { superType: undefined as any },
-        { min: 0, max: count, allowCancel: false }
-      ), (selected: Card[] | null) => {
-        const cards = selected || [];
-        cards.forEach(c => temp.moveCardTo(c, player.discard));
-        // Return remaining cards to top of deck
-        const remaining = temp.cards.splice(0);
-        player.deck.cards.unshift(...remaining);
-        attackEffect.damage += 40 * cards.length;
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          temp,
+          { superType: undefined as any },
+          { min: 0, max: count, allowCancel: false },
+        ),
+        (selected: Card[] | null) => {
+          const cards = selected || [];
+          cards.forEach((c) => temp.moveCardTo(c, player.discard));
+          // Return remaining cards to top of deck
+          const remaining = temp.cards.splice(0);
+          player.deck.cards.unshift(...remaining);
+          attackEffect.damage += 40 * cards.length;
+        },
+      );
     }
 
     // Attack 2: Ember Star (VSTAR Power)
@@ -85,7 +89,9 @@ export class SimisearVstar extends PokemonCard {
 
       player.usedVSTAR = true;
 
-      const energyCount = player.discard.cards.filter(c => c.superType === SuperType.ENERGY).length;
+      const energyCount = player.discard.cards.filter(
+        (c) => c.superType === SuperType.ENERGY,
+      ).length;
       effect.damage = 30 * energyCount;
     }
 

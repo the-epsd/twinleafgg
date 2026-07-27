@@ -4,12 +4,24 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { CardList, ChooseCardsPrompt, GameMessage, PlayerType, StoreLike, State } from '../../../game';
+import {
+  CardList,
+  ChooseCardsPrompt,
+  GameMessage,
+  PlayerType,
+  StoreLike,
+  State,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  BLOCK_IF_GX_ATTACK_USED,
+  SHOW_CARDS_TO_PLAYER,
+  SHUFFLE_DECK,
+} from '../../../game/store/prefabs/prefabs';
 
 export class WishiwashiGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 130;
@@ -22,14 +34,14 @@ export class WishiwashiGx extends PokemonCard {
       cost: [W, C],
       damage: 20,
       damageCalculation: 'x',
-      text: 'This attack does 20 damage for each of your Wishiwashi and Wishiwashi-GX in play.'
+      text: 'This attack does 20 damage for each of your Wishiwashi and Wishiwashi-GX in play.',
     },
     {
       name: 'Massive Catch-GX',
       cost: [C],
       damage: 0,
-      text: 'Look at the top 12 cards of your deck and put any number of Basic Pokémon you find there onto your Bench. Shuffle the other cards back into your deck. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Look at the top 12 cards of your deck and put any number of Basic Pokémon you find there onto your Bench. Shuffle the other cards back into your deck. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'CEC';
@@ -46,7 +58,10 @@ export class WishiwashiGx extends PokemonCard {
       let wishiwashiCount = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         const pokemonCard = cardList.getPokemonCard();
-        if (pokemonCard && (pokemonCard.name === 'Wishiwashi' || pokemonCard.name === 'Wishiwashi-GX')) {
+        if (
+          pokemonCard &&
+          (pokemonCard.name === 'Wishiwashi' || pokemonCard.name === 'Wishiwashi-GX')
+        ) {
           wishiwashiCount++;
         }
       });
@@ -71,11 +86,11 @@ export class WishiwashiGx extends PokemonCard {
       SHOW_CARDS_TO_PLAYER(store, state, player, deckTop.cards);
 
       // Count available bench slots
-      const openSlots = player.bench.filter(b => b.cards.length === 0).length;
+      const openSlots = player.bench.filter((b) => b.cards.length === 0).length;
 
       // Count basic Pokemon in the top cards
-      const basicCount = deckTop.cards.filter(c =>
-        c instanceof PokemonCard && c.stage === Stage.BASIC
+      const basicCount = deckTop.cards.filter(
+        (c) => c instanceof PokemonCard && c.stage === Stage.BASIC,
       ).length;
 
       if (basicCount === 0 || openSlots === 0) {
@@ -86,25 +101,29 @@ export class WishiwashiGx extends PokemonCard {
 
       const maxToSelect = Math.min(basicCount, openSlots);
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-        deckTop,
-        { superType: SuperType.POKEMON, stage: Stage.BASIC },
-        { min: 0, max: maxToSelect, allowCancel: false }
-      ), selected => {
-        const cards = selected || [];
-        cards.forEach(card => {
-          const emptySlot = player.bench.find(b => b.cards.length === 0);
-          if (emptySlot) {
-            deckTop.moveCardTo(card, emptySlot);
-            emptySlot.pokemonPlayedTurn = state.turn;
-          }
-        });
-        // Shuffle remaining cards back into deck
-        deckTop.moveTo(player.deck);
-        SHUFFLE_DECK(store, state, player);
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+          deckTop,
+          { superType: SuperType.POKEMON, stage: Stage.BASIC },
+          { min: 0, max: maxToSelect, allowCancel: false },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          cards.forEach((card) => {
+            const emptySlot = player.bench.find((b) => b.cards.length === 0);
+            if (emptySlot) {
+              deckTop.moveCardTo(card, emptySlot);
+              emptySlot.pokemonPlayedTurn = state.turn;
+            }
+          });
+          // Shuffle remaining cards back into deck
+          deckTop.moveTo(player.deck);
+          SHUFFLE_DECK(store, state, player);
+        },
+      );
     }
 
     return state;

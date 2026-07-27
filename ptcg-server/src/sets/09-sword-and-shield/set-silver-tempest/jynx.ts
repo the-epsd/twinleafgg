@@ -17,11 +17,13 @@ export class Jynx extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Selfish Lips',
-    powerType: PowerType.ABILITY,
-    text: 'If this Pokémon is Knocked Out by damage from an attack from your opponent\'s Pokémon V, your opponent can\'t take any Prize cards for it.'
-  }];
+  public powers = [
+    {
+      name: 'Selfish Lips',
+      powerType: PowerType.ABILITY,
+      text: "If this Pokémon is Knocked Out by damage from an attack from your opponent's Pokémon V, your opponent can't take any Prize cards for it.",
+    },
+  ];
 
   public attacks = [
     {
@@ -29,8 +31,8 @@ export class Jynx extends PokemonCard {
       cost: [C, C],
       damage: 10,
       damageCalculation: '+',
-      text: 'This attack does 10 more damage for each damage counter on your opponent\'s Active Pokémon.'
-    }
+      text: "This attack does 10 more damage for each damage counter on your opponent's Active Pokémon.",
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -46,17 +48,23 @@ export class Jynx extends PokemonCard {
     // Ref: set-paldea-evolved/glimmora.ts (IS_ABILITY_BLOCKED on KnockOutEffect passive)
     // If this Pokemon is KO'd by damage from a V Pokemon's attack, opponent takes no prizes
     // effect.player is the player who KO'd the target (the attacker)
-    if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)
-      && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof KnockOutEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const owner = StateUtils.getOpponent(state, effect.player);
-      if (IS_ABILITY_BLOCKED(store, state, owner, this)) { return state; }
+      if (IS_ABILITY_BLOCKED(store, state, owner, this)) {
+        return state;
+      }
       // Check if the attacker's active Pokemon is a Pokemon V
       const attackerCard = effect.player.active.getPokemonCard();
-      if (attackerCard && (
-        attackerCard.tags.includes(CardTag.POKEMON_V) ||
-        attackerCard.tags.includes(CardTag.POKEMON_VMAX) ||
-        attackerCard.tags.includes(CardTag.POKEMON_VSTAR)
-      )) {
+      if (
+        attackerCard &&
+        (attackerCard.hasTag(CardTag.POKEMON_V) ||
+          attackerCard.hasTag(CardTag.POKEMON_VMAX) ||
+          attackerCard.hasTag(CardTag.POKEMON_VSTAR))
+      ) {
         effect.prizeCount = 0;
       }
     }

@@ -10,7 +10,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class MewtwoEx2 extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 170;
@@ -23,14 +23,14 @@ export class MewtwoEx2 extends PokemonCard {
       cost: [P],
       damage: 30,
       damageCalculation: 'x',
-      text: 'This attack does 30 damage times the amount of [P] Energy attached to this Pokémon.'
+      text: 'This attack does 30 damage times the amount of [P] Energy attached to this Pokémon.',
     },
     {
       name: 'Damage Change',
       cost: [P, P, C],
       damage: 0,
-      text: 'Switch all damage counters on this Pokémon with those on your opponent\'s Active Pokémon.'
-    }
+      text: "Switch all damage counters on this Pokémon with those on your opponent's Active Pokémon.",
+    },
   ];
 
   public set: string = 'BKT';
@@ -48,8 +48,8 @@ export class MewtwoEx2 extends PokemonCard {
       store.reduceEffect(state, checkEnergy);
 
       let psychicCount = 0;
-      checkEnergy.energyMap.forEach(em => {
-        psychicCount += em.provides.filter(t => t === CardType.PSYCHIC).length;
+      checkEnergy.energyMap.forEach((em) => {
+        psychicCount += em.provides.filter((t) => t === CardType.PSYCHIC).length;
       });
 
       effect.damage = 30 * psychicCount;

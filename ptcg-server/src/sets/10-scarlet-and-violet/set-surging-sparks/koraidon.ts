@@ -9,8 +9,7 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Koraidon extends PokemonCard {
-
-  public tags = [CardTag.ANCIENT];
+  protected _tags = [CardTag.ANCIENT];
 
   public regulationMark = 'H';
 
@@ -30,14 +29,14 @@ export class Koraidon extends PokemonCard {
       cost: [C, C],
       damage: 30,
       damageCalculator: '+',
-      text: 'If 1 of your other Ancient Pokémon used an attack during your last turn, this attack does 150 more damage.'
+      text: 'If 1 of your other Ancient Pokémon used an attack during your last turn, this attack does 150 more damage.',
     },
     {
       name: 'Hammer In',
       cost: [F, F, C],
       damage: 110,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'SSP';
@@ -54,18 +53,23 @@ export class Koraidon extends PokemonCard {
   public readonly UNRELENTING_ONSLAUGHT_2_MARKER = 'UNRELENTING_ONSLAUGHT_2_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       effect.player.marker.removeMarker(this.UNRELENTING_ONSLAUGHT_MARKER, this);
       effect.player.marker.removeMarker(this.UNRELENTING_ONSLAUGHT_2_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.UNRELENTING_ONSLAUGHT_2_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.UNRELENTING_ONSLAUGHT_2_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.UNRELENTING_ONSLAUGHT_MARKER, this);
       effect.player.marker.removeMarker(this.UNRELENTING_ONSLAUGHT_2_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.UNRELENTING_ONSLAUGHT_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.UNRELENTING_ONSLAUGHT_MARKER, this)
+    ) {
       effect.player.marker.addMarker(this.UNRELENTING_ONSLAUGHT_2_MARKER, this);
     }
 
@@ -74,12 +78,15 @@ export class Koraidon extends PokemonCard {
       const playerLastAttackInfo = state.playerLastAttack?.[player.id];
       const originalCard = playerLastAttackInfo ? playerLastAttackInfo.sourceCard : null;
 
-      if (originalCard && originalCard.tags.includes(CardTag.ANCIENT) && !player.marker.hasMarker(this.UNRELENTING_ONSLAUGHT_MARKER)) {
+      if (
+        originalCard &&
+        originalCard.hasTag(CardTag.ANCIENT) &&
+        !player.marker.hasMarker(this.UNRELENTING_ONSLAUGHT_MARKER)
+      ) {
         effect.damage += 150;
       }
       player.marker.addMarker(this.UNRELENTING_ONSLAUGHT_MARKER, this);
     }
     return state;
   }
-
 }

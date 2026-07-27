@@ -13,7 +13,8 @@ export class WyndonStadium extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wyndon Stadium';
   public fullName: string = 'Wyndon Stadium VIV';
-  public text: string = 'Whenever either player plays a Pokémon VMAX from their hand to evolve a Pokémon V during their turn, heal 100 damage from that Pokémon.';
+  public text: string =
+    'Whenever either player plays a Pokémon VMAX from their hand to evolve a Pokémon V during their turn, heal 100 damage from that Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof EvolveEffect && StateUtils.getStadiumCard(state) === this) {
@@ -24,7 +25,7 @@ export class WyndonStadium extends TrainerCard {
         return state;
       }
 
-      if (!effect.pokemonCard.tags.includes(CardTag.POKEMON_VMAX)) {
+      if (!effect.pokemonCard.hasTag(CardTag.POKEMON_VMAX)) {
         return state;
       }
 

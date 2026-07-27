@@ -24,27 +24,31 @@ import {
 export class Talonflameex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Fletchinder';
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public cardType: CardType = C;
   public hp: number = 280;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [];
 
-  public powers = [{
-    name: 'Excitedive',
-    powerType: PowerType.ABILITY,
-    useFromHand: true,
-    useFromHandToBench: true,
-    text: 'If this Pokémon is in your hand, and you have a [C] Mega Evolution Pokémon in play, you may use this Ability. Put this Pokémon onto your Bench.',
-  }];
+  public powers = [
+    {
+      name: 'Excitedive',
+      powerType: PowerType.ABILITY,
+      useFromHand: true,
+      useFromHandToBench: true,
+      text: 'If this Pokémon is in your hand, and you have a [C] Mega Evolution Pokémon in play, you may use this Ability. Put this Pokémon onto your Bench.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Claw Hunt',
-    cost: [C, C],
-    damage: 150,
-    text: 'You may search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck.',
-  }];
+  public attacks = [
+    {
+      name: 'Claw Hunt',
+      cost: [C, C],
+      damage: 150,
+      text: 'You may search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck.',
+    },
+  ];
 
   public regulationMark: string = 'J';
   public set: string = 'M6';
@@ -57,7 +61,7 @@ export class Talonflameex extends PokemonCard {
     let hasColorlessMega = false;
     player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
       const pokemonCard = cardList.getPokemonCard();
-      if (!pokemonCard || !pokemonCard.tags.includes(CardTag.POKEMON_SV_MEGA)) {
+      if (!pokemonCard || !pokemonCard.hasTag(CardTag.POKEMON_SV_MEGA)) {
         return;
       }
 
@@ -89,7 +93,11 @@ export class Talonflameex extends PokemonCard {
     // Ref: set-evolving-skies/victini.ts (Victory Dive)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this,
+      SEARCH_DECK_FOR_CARDS_TO_HAND(
+        store,
+        state,
+        player,
+        this,
         {},
         { min: 0, max: 2, allowCancel: false },
       );

@@ -8,10 +8,14 @@ import { GamePhase, StoreLike, State, StateUtils, PlayerType } from '../../../ga
 import { Effect } from '../../../game/store/effects/effect';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, REPLACE_MARKER_AT_END_OF_TURN, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  REPLACE_MARKER_AT_END_OF_TURN,
+  SEARCH_DECK_FOR_CARDS_TO_HAND,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Marshadow extends PokemonCard {
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 80;
@@ -24,14 +28,14 @@ export class Marshadow extends PokemonCard {
       name: 'Rapid Hunt',
       cost: [C],
       damage: 0,
-      text: 'Search your deck for up to 2 Rapid Strike cards, reveal them, and put them into your hand. Then, shuffle your deck.'
+      text: 'Search your deck for up to 2 Rapid Strike cards, reveal them, and put them into your hand. Then, shuffle your deck.',
     },
     {
       name: 'Shadow Flicker',
       cost: [C],
       damage: 10,
-      text: 'If the Defending Pokémon is Knocked Out during your next turn, take 1 more Prize card.'
-    }
+      text: 'If the Defending Pokémon is Knocked Out during your next turn, take 1 more Prize card.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -51,14 +55,18 @@ export class Marshadow extends PokemonCard {
       const player = effect.player;
       const blocked: number[] = [];
       player.deck.cards.forEach((card, index: number) => {
-        if (!card.tags.includes(CardTag.RAPID_STRIKE)) {
+        if (!card.hasTag(CardTag.RAPID_STRIKE)) {
           blocked.push(index);
         }
       });
 
-      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this,
+      SEARCH_DECK_FOR_CARDS_TO_HAND(
+        store,
+        state,
+        player,
+        this,
         {},
-        { min: 0, max: 2, allowCancel: true, blocked }
+        { min: 0, max: 2, allowCancel: true, blocked },
       );
     }
 
@@ -72,7 +80,10 @@ export class Marshadow extends PokemonCard {
       player.marker.addMarker(this.SHADOW_FLICKER_MARKER, this);
     }
 
-    if (effect instanceof KnockOutEffect && effect.target.marker.hasMarker(this.SHADOW_FLICKER_MARKER, this)) {
+    if (
+      effect instanceof KnockOutEffect &&
+      effect.target.marker.hasMarker(this.SHADOW_FLICKER_MARKER, this)
+    ) {
       if (state.phase !== GamePhase.ATTACK) {
         return state;
       }
@@ -82,8 +93,10 @@ export class Marshadow extends PokemonCard {
     }
 
     // 2-phase cleanup
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_SHADOW_FLICKER_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_SHADOW_FLICKER_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_SHADOW_FLICKER_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
@@ -91,7 +104,12 @@ export class Marshadow extends PokemonCard {
       });
     }
 
-    REPLACE_MARKER_AT_END_OF_TURN(effect, this.SHADOW_FLICKER_MARKER, this.CLEAR_SHADOW_FLICKER_MARKER, this);
+    REPLACE_MARKER_AT_END_OF_TURN(
+      effect,
+      this.SHADOW_FLICKER_MARKER,
+      this.CLEAR_SHADOW_FLICKER_MARKER,
+      this,
+    );
 
     return state;
   }

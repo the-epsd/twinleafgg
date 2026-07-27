@@ -7,7 +7,7 @@ import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/pr
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class XerneasGX extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = Y;
   public hp: number = 180;
@@ -20,21 +20,21 @@ export class XerneasGX extends PokemonCard {
       name: 'Overrun',
       cost: [C],
       damage: 20,
-      text: 'This attack does 20 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Aurora Horns',
       cost: [Y, Y, C],
       damage: 120,
-      text: ''
+      text: '',
     },
     {
       name: 'Sanctuary-GX',
       cost: [Y, Y, C],
       damage: 0,
       gxAttack: true,
-      text: 'Move all damage counters from each of your Pokémon to your opponent\'s Active Pokémon. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Move all damage counters from each of your Pokémon to your opponent's Active Pokémon. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'FLI';
@@ -64,7 +64,7 @@ export class XerneasGX extends PokemonCard {
       player.usedGX = true;
 
       let damageCounters = 0;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (card) => {
         damageCounters += card.damage;
         card.damage = 0;
       });

@@ -7,10 +7,9 @@ import { StateUtils } from '../../../game';
 import { MEGA_EVOLUTION_END_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class MCharizardEX extends PokemonCard {
-
   public stage: Stage = Stage.MEGA;
 
-  public tags = [CardTag.POKEMON_EX, CardTag.MEGA];
+  protected _tags = [CardTag.POKEMON_EX, CardTag.MEGA];
 
   public evolvesFrom = 'Charizard-EX';
 
@@ -27,8 +26,8 @@ export class MCharizardEX extends PokemonCard {
       name: 'Wild Blaze',
       cost: [CardType.FIRE, CardType.FIRE, CardType.DARK, CardType.COLORLESS, CardType.COLORLESS],
       damage: 300,
-      text: 'Discard the top 5 cards of your deck.'
-    }
+      text: 'Discard the top 5 cards of your deck.',
+    },
   ];
 
   public set: string = 'FLF';
@@ -48,11 +47,9 @@ export class MCharizardEX extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // Discard 2 cards from opponent's deck 
+      // Discard 2 cards from opponent's deck
       opponent.deck.moveTo(opponent.discard, 5);
-
     }
     return state;
   }
-
 }

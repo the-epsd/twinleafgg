@@ -1,13 +1,29 @@
-import { AttachEnergyPrompt, Attack, CardTag, CardTarget, CardType, ChooseCardsPrompt, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike, SuperType, Weakness } from '../../../game';
+import {
+  AttachEnergyPrompt,
+  Attack,
+  CardTag,
+  CardTarget,
+  CardType,
+  ChooseCardsPrompt,
+  GameMessage,
+  PlayerType,
+  PokemonCard,
+  SlotType,
+  Stage,
+  State,
+  StateUtils,
+  StoreLike,
+  SuperType,
+  Weakness,
+} from '../../../game';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class ThundurusEX extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = L;
-  public tags: string[] = [CardTag.POKEMON_EX, CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.POKEMON_EX, CardTag.TEAM_PLASMA];
   public hp: number = 170;
   public weakness: Weakness[] = [{ type: F }];
   public retreat: CardType[] = [C];
@@ -17,12 +33,13 @@ export class ThundurusEX extends PokemonCard {
       name: 'Raiden Knuckle',
       cost: [L],
       damage: 30,
-      text: 'Attach an Energy card from your discard pile to 1 of your Benched Team Plasma Pokémon.'
-    }, {
+      text: 'Attach an Energy card from your discard pile to 1 of your Benched Team Plasma Pokémon.',
+    },
+    {
       name: 'Thunderous Noise',
       cost: [L, L, C, C],
       damage: 90,
-      text: 'If this Pokémon has any Plasma Energy attached to it, discard an Energy attached to the Defending Pokémon.'
+      text: 'If this Pokémon has any Plasma Energy attached to it, discard an Energy attached to the Defending Pokémon.',
     },
   ];
 
@@ -33,12 +50,10 @@ export class ThundurusEX extends PokemonCard {
   public fullName: string = 'Thundurus EX PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       const player = effect.player;
 
-      const hasEnergyInDiscard = player.discard.cards.some(c => c.superType === SuperType.ENERGY);
+      const hasEnergyInDiscard = player.discard.cards.some((c) => c.superType === SuperType.ENERGY);
       let validTargets = false;
       const blockedTo: CardTarget[] = [];
 
@@ -47,13 +62,13 @@ export class ThundurusEX extends PokemonCard {
           return;
         }
         const benchPokemon = bench.getPokemonCard();
-        if (benchPokemon && benchPokemon.tags.includes(CardTag.TEAM_PLASMA)) {
+        if (benchPokemon && benchPokemon.hasTag(CardTag.TEAM_PLASMA)) {
           validTargets = true;
         } else {
           const target: CardTarget = {
             player: PlayerType.BOTTOM_PLAYER,
             slot: SlotType.BENCH,
-            index
+            index,
           };
           blockedTo.push(target);
         }
@@ -63,25 +78,28 @@ export class ThundurusEX extends PokemonCard {
         return state;
       }
 
-      state = store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_TO_BENCH,
-        player.discard,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { superType: SuperType.ENERGY },
-        { allowCancel: true, min: 1, max: 1, blockedTo }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
-        }
-      });
+      state = store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_TO_BENCH,
+          player.discard,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          { superType: SuperType.ENERGY },
+          { allowCancel: true, min: 1, max: 1, blockedTo },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.discard.moveCardTo(transfer.card, target);
+          }
+        },
+      );
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const pokemon = player.active;
@@ -90,8 +108,10 @@ export class ThundurusEX extends PokemonCard {
       store.reduceEffect(state, checkEnergy);
 
       let hasPlasmaEnergy: boolean = false;
-      const defendingPokemonHasEnergy = opponent.active.energies.cards.some(c => c.superType === SuperType.ENERGY);
-      checkEnergy.energyMap.forEach(em => {
+      const defendingPokemonHasEnergy = opponent.active.energies.cards.some(
+        (c) => c.superType === SuperType.ENERGY,
+      );
+      checkEnergy.energyMap.forEach((em) => {
         const energyCard = em.card;
         if (energyCard.superType === SuperType.ENERGY && energyCard.name === 'Plasma Energy') {
           hasPlasmaEnergy = true;
@@ -99,18 +119,22 @@ export class ThundurusEX extends PokemonCard {
       });
 
       if (hasPlasmaEnergy && defendingPokemonHasEnergy) {
-        return store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_DISCARD,
-          opponent.active,
-          { superType: SuperType.ENERGY },
-          { min: 1, max: 1, allowCancel: false }
-        ), selected => {
-          const card = selected[0];
+        return store.prompt(
+          state,
+          new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_CARD_TO_DISCARD,
+            opponent.active,
+            { superType: SuperType.ENERGY },
+            { min: 1, max: 1, allowCancel: false },
+          ),
+          (selected) => {
+            const card = selected[0];
 
-          opponent.active.moveCardTo(card, opponent.discard);
-          return state;
-        });
+            opponent.active.moveCardTo(card, opponent.discard);
+            return state;
+          },
+        );
       }
     }
 

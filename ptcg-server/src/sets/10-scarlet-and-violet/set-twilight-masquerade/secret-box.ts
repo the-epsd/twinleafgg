@@ -12,13 +12,18 @@ import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { CardList, GameError, Player } from '../../../game';
 
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: SecretBox, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: SecretBox,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
 
-  const handCards = player.hand.cards.filter(c => c !== effect.trainerCard);
+  const handCards = player.hand.cards.filter((c) => c !== effect.trainerCard);
   if (handCards.length < 3) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
@@ -53,67 +58,81 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const maxStadiums = Math.min(stadiums, 1);
   const maxSupporters = Math.min(supporters, 1);
 
-  // Total max is sum of max for each 
+  // Total max is sum of max for each
   const count = maxTools + maxItems + maxStadiums + maxSupporters;
 
   // prepare card list without Junk Arm
   const handTemp = new CardList();
-  handTemp.cards = player.hand.cards.filter(c => c !== self);
+  handTemp.cards = player.hand.cards.filter((c) => c !== self);
 
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_DISCARD,
-    handTemp,
-    {},
-    { min: 3, max: 3, allowCancel: false }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_DISCARD,
+      handTemp,
+      {},
+      { min: 3, max: 3, allowCancel: false },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   player.hand.moveCardsTo(cards, player.discard);
 
   // Pass max counts to prompt options
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.deck,
-    {},
-    { min: 0, max: count, allowCancel: false, blocked, maxTools, maxItems, maxStadiums, maxSupporters }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.deck,
+      {},
+      {
+        min: 0,
+        max: count,
+        allowCancel: false,
+        blocked,
+        maxTools,
+        maxItems,
+        maxStadiums,
+        maxSupporters,
+      },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   if (cards.length === 0) {
-
     return state;
   }
 
   player.deck.moveCardsTo(cards, player.hand);
-
 
   cards.forEach((card, index) => {
     store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
   });
 
   if (cards.length > 0) {
-    yield store.prompt(state, new ShowCardsPrompt(
-      opponent.id,
-      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-      cards
-    ), () => next());
+    yield store.prompt(
+      state,
+      new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+      () => next(),
+    );
   }
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);
   });
 }
 
 export class SecretBox extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.ITEM;
-  public tags = [CardTag.ACE_SPEC];
+  protected _tags = [CardTag.ACE_SPEC];
   public regulationMark = 'H';
   public set: string = 'TWM';
   public cardImage: string = 'assets/cardback.png';
@@ -121,21 +140,18 @@ export class SecretBox extends TrainerCard {
   public name: string = 'Secret Box';
   public fullName: string = 'Secret Box TWM';
 
-  public text: string =
-    `You can use this card only if you discard 3 other cards from your hand.
+  public text: string = `You can use this card only if you discard 3 other cards from your hand.
 
 Search your deck for an Item card, a Pokémon Tool card, a Supporter card, and a Stadium card, reveal them, and put them into your hand. Then, shuffle your deck.`;
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
-    if (player.hand.cards.filter(c => c !== this).length < 3) {
+    if (player.hand.cards.filter((c) => c !== this).length < 3) {
       return false;
     }
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
@@ -143,5 +159,4 @@ Search your deck for an Item card, a Pokémon Tool card, a Supporter card, and a
 
     return state;
   }
-
 }

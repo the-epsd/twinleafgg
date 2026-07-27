@@ -1,31 +1,47 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { Stage, CardType, SuperType, CardTag } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameMessage, PlayerType, SlotType, MoveEnergyPrompt, ConfirmPrompt, PokemonCardList } from '../../../game';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  MoveEnergyPrompt,
+  ConfirmPrompt,
+  PokemonCardList,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { StateUtils } from '../../../game/store/state-utils';
 import { CardTarget } from '../../../game';
-import { BLOCK_IF_GX_ATTACK_USED, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  BLOCK_IF_GX_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class TapuKokoGX extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = L;
   public hp: number = 170;
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Aero Trail',
-    powerType: PowerType.ABILITY,
-    text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may move any number of [L] Energy from your other Pokémon to this Pokémon. If you do, switch this Pokémon with your Active Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Aero Trail',
+      powerType: PowerType.ABILITY,
+      text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may move any number of [L] Energy from your other Pokémon to this Pokémon. If you do, switch this Pokémon with your Active Pokémon.',
+    },
+  ];
   public attacks = [
     {
       name: 'Sky-High Claws',
       cost: [L, L, C],
       damage: 130,
-      text: ''
+      text: '',
     },
 
     {
@@ -34,8 +50,8 @@ export class TapuKokoGX extends PokemonCard {
       damage: 50,
       damageCalculation: 'x',
       gxAttack: true,
-      text: 'This attack does 50 damage times the amount of Energy attached to all of your opponent\'s Pokémon. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "This attack does 50 damage times the amount of Energy attached to all of your opponent's Pokémon. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'GRI';
@@ -54,58 +70,66 @@ export class TapuKokoGX extends PokemonCard {
         return state;
       }
 
-      state = store.prompt(state, new ConfirmPrompt(
-        effect.player.id,
-        GameMessage.WANT_TO_USE_ABILITY,
-      ), wantToUse => {
-        if (wantToUse) {
+      state = store.prompt(
+        state,
+        new ConfirmPrompt(effect.player.id, GameMessage.WANT_TO_USE_ABILITY),
+        (wantToUse) => {
+          if (wantToUse) {
+            const blockedFrom: CardTarget[] = [];
+            const blockedTo: CardTarget[] = [];
 
-          const blockedFrom: CardTarget[] = [];
-          const blockedTo: CardTarget[] = [];
-
-          let hasEnergyOnBench = false;
-          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-            if (card === this) {
-              blockedFrom.push(target);
-              return;
-            }
-            blockedTo.push(target);
-            if (cardList.cards.some(c => c.superType === SuperType.ENERGY && c.name === 'Lightning Energy')) {
-              hasEnergyOnBench = true;
-            }
-          });
-
-          if (hasEnergyOnBench === false) {
-            return state;
-          }
-
-          return store.prompt(state, new MoveEnergyPrompt(
-            effect.player.id,
-            GameMessage.MOVE_ENERGY_TO_ACTIVE,
-            PlayerType.BOTTOM_PLAYER,
-            [SlotType.ACTIVE, SlotType.BENCH],
-            { superType: SuperType.ENERGY, name: 'Lightning Energy' },
-            { min: 1, allowCancel: false, blockedFrom, blockedTo }
-          ), result => {
-            const transfers = result || [];
-            transfers.forEach(transfer => {
-              const source = StateUtils.getTarget(state, player, transfer.from);
-              const target = StateUtils.getTarget(state, player, transfer.to);
-              source.moveCardTo(transfer.card, target);
-            });
-
-            let bench: PokemonCardList | undefined;
+            let hasEnergyOnBench = false;
             player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-              if (card === this && target.slot === SlotType.BENCH) {
-                bench = cardList;
+              if (card === this) {
+                blockedFrom.push(target);
+                return;
+              }
+              blockedTo.push(target);
+              if (
+                cardList.cards.some(
+                  (c) => c.superType === SuperType.ENERGY && c.name === 'Lightning Energy',
+                )
+              ) {
+                hasEnergyOnBench = true;
               }
             });
-            if (bench) {
-              player.switchPokemon(bench);
+
+            if (hasEnergyOnBench === false) {
+              return state;
             }
-          });
-        }
-      });
+
+            return store.prompt(
+              state,
+              new MoveEnergyPrompt(
+                effect.player.id,
+                GameMessage.MOVE_ENERGY_TO_ACTIVE,
+                PlayerType.BOTTOM_PLAYER,
+                [SlotType.ACTIVE, SlotType.BENCH],
+                { superType: SuperType.ENERGY, name: 'Lightning Energy' },
+                { min: 1, allowCancel: false, blockedFrom, blockedTo },
+              ),
+              (result) => {
+                const transfers = result || [];
+                transfers.forEach((transfer) => {
+                  const source = StateUtils.getTarget(state, player, transfer.from);
+                  const target = StateUtils.getTarget(state, player, transfer.to);
+                  source.moveCardTo(transfer.card, target);
+                });
+
+                let bench: PokemonCardList | undefined;
+                player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+                  if (card === this && target.slot === SlotType.BENCH) {
+                    bench = cardList;
+                  }
+                });
+                if (bench) {
+                  player.switchPokemon(bench);
+                }
+              },
+            );
+          }
+        },
+      );
     }
 
     // Tapu Thunder-GX
@@ -124,7 +148,7 @@ export class TapuKokoGX extends PokemonCard {
         const opponentEnergy = new CheckProvidedEnergyEffect(opponent, cardList);
         state = store.reduceEffect(state, opponentEnergy);
 
-        opponentEnergy.energyMap.forEach(em => {
+        opponentEnergy.energyMap.forEach((em) => {
           energies++;
         });
       });
@@ -133,4 +157,4 @@ export class TapuKokoGX extends PokemonCard {
     }
     return state;
   }
-} 
+}

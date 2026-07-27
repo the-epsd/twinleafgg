@@ -6,7 +6,7 @@ import { Effect } from '../../../game/store/effects/effect';
 
 export class DragoniteFB extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_SP];
+  protected _tags = [CardTag.POKEMON_SP];
   public cardType: CardType = C;
   public hp: number = 100;
   public weakness = [{ type: C }];
@@ -18,13 +18,13 @@ export class DragoniteFB extends PokemonCard {
       name: 'Mach Blow',
       cost: [C, C, C],
       damage: 20,
-      text: 'If the Defending Pokémon is a Pokémon SP, this attack\'s base damage is 80 instead of 20.'
+      text: "If the Defending Pokémon is a Pokémon SP, this attack's base damage is 80 instead of 20.",
     },
     {
       name: 'Giant Tail',
       cost: [C, C, C, C],
       damage: 100,
-      text: 'Flip a coin. If tails, this attack does nothing.'
+      text: 'Flip a coin. If tails, this attack does nothing.',
     },
   ];
 
@@ -35,15 +35,14 @@ export class DragoniteFB extends PokemonCard {
   public setNumber: string = '56';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      if (effect.opponent.active.getPokemonCard()?.tags.includes(CardTag.POKEMON_SP)) {
+      if (effect.opponent.active.getPokemonCard()?.hasTag(CardTag.POKEMON_SP)) {
         effect.damage = 80;
       }
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (!result) {
           effect.damage = 0;
         }
@@ -52,5 +51,4 @@ export class DragoniteFB extends PokemonCard {
 
     return state;
   }
-
 }

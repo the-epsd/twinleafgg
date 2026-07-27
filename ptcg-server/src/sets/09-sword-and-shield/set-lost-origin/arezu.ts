@@ -69,9 +69,9 @@ function* playCard(
   );
 
   if (cards.length > 0) {
-    // if (cards[0].tags.includes(CardTag.POKEMON_ex) ||
-    //   cards[0].tags.includes(CardTag.POKEMON_GX) ||
-    //   cards[0].tags.includes(CardTag.POKEMON_EX)) {
+    // if (cards[0].hasTag(CardTag.POKEMON_ex) ||
+    //   cards[0].hasTag(CardTag.POKEMON_GX) ||
+    //   cards[0].hasTag(CardTag.POKEMON_EX)) {
     //   throw new GameError(GameMessage.INVALID_TARGET);
     // }
     // else {

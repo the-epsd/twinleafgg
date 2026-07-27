@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefabs/attack-effects';
 
 export class GrapploctV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = F;
   public hp: number = 210;
@@ -26,15 +26,15 @@ export class GrapploctV extends PokemonCard {
       name: 'Tie Up',
       cost: [F],
       damage: 20,
-      text: 'If the Defending Pokémon is a Basic Pokémon, it can\'t attack during your opponent\'s next turn.'
+      text: "If the Defending Pokémon is a Basic Pokémon, it can't attack during your opponent's next turn.",
     },
     {
       name: 'Moonsault Press',
       cost: [F, F, C],
       damage: 120,
       damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 100 more damage.'
-    }
+      text: 'Flip a coin. If heads, this attack does 100 more damage.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -59,8 +59,10 @@ export class GrapploctV extends PokemonCard {
     }
 
     // Block attacks from marked Pokemon
-    if (effect instanceof AttackEffect
-      && effect.player.active.marker.hasMarker(this.CANT_ATTACK_MARKER, this)) {
+    if (
+      effect instanceof AttackEffect &&
+      effect.player.active.marker.hasMarker(this.CANT_ATTACK_MARKER, this)
+    ) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 

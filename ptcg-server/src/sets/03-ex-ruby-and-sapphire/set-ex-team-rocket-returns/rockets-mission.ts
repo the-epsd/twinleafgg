@@ -1,4 +1,11 @@
-import { Card, ChooseCardsPrompt, GameError, GameLog, GameMessage, PokemonCard } from '../../../game';
+import {
+  Card,
+  ChooseCardsPrompt,
+  GameError,
+  GameLog,
+  GameMessage,
+  PokemonCard,
+} from '../../../game';
 import { CardTag, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -12,11 +19,11 @@ export class RocketsMission extends TrainerCard {
   public set: string = 'TRR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '88';
-  public name: string = 'Rocket\'s Mission';
-  public fullName: string = 'Rocket\'s Mission TRR';
+  public name: string = "Rocket's Mission";
+  public fullName: string = "Rocket's Mission TRR";
 
   public text: string =
-    'Discard a card from your hand. Then, draw 3 cards. If you discarded a Pokémon that has Dark or Rocket\'s in its name, draw 4 cards instead.';
+    "Discard a card from your hand. Then, draw 3 cards. If you discarded a Pokémon that has Dark or Rocket's in its name, draw 4 cards instead.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -28,9 +35,9 @@ export class RocketsMission extends TrainerCard {
       }
 
       let cards: Card[] = [];
-      cards = player.hand.cards.filter(c => c !== effect.trainerCard);
+      cards = player.hand.cards.filter((c) => c !== effect.trainerCard);
 
-      const hasCardInHand = player.hand.cards.some(c => {
+      const hasCardInHand = player.hand.cards.some((c) => {
         return c instanceof Card;
       });
       if (!hasCardInHand) {
@@ -44,7 +51,10 @@ export class RocketsMission extends TrainerCard {
         player.hand.moveCardsTo(player.hand.cards, player.discard);
         let cardsToDraw = 3;
 
-        if (cards[0] instanceof PokemonCard && (cards[0].tags.includes(CardTag.ROCKETS) || cards[0].tags.includes(CardTag.DARK))) {
+        if (
+          cards[0] instanceof PokemonCard &&
+          (cards[0].hasTag(CardTag.ROCKETS) || cards[0].hasTag(CardTag.DARK))
+        ) {
           cardsToDraw = 4;
         }
         DRAW_CARDS(store, state, player, cardsToDraw);
@@ -52,30 +62,40 @@ export class RocketsMission extends TrainerCard {
       }
 
       if (cards.length > 1) {
-        state = store.prompt(state, new ChooseCardsPrompt(
-          effect.player,
-          GameMessage.CHOOSE_CARD_TO_DISCARD,
-          player.hand,
-          {},
-          { allowCancel: false, min: 1, max: 1 }
-        ), cards => {
-          cards = cards || [];
-          if (cards.length === 0) {
-            return;
-          }
-          let cardsToDraw = 3;
+        state = store.prompt(
+          state,
+          new ChooseCardsPrompt(
+            effect.player,
+            GameMessage.CHOOSE_CARD_TO_DISCARD,
+            player.hand,
+            {},
+            { allowCancel: false, min: 1, max: 1 },
+          ),
+          (cards) => {
+            cards = cards || [];
+            if (cards.length === 0) {
+              return;
+            }
+            let cardsToDraw = 3;
 
-          if (cards[0] instanceof PokemonCard && (cards[0].tags.includes(CardTag.ROCKETS) || cards[0].tags.includes(CardTag.DARK))) {
-            cardsToDraw = 4;
-          }
+            if (
+              cards[0] instanceof PokemonCard &&
+              (cards[0].hasTag(CardTag.ROCKETS) || cards[0].hasTag(CardTag.DARK))
+            ) {
+              cardsToDraw = 4;
+            }
 
-          player.hand.moveCardsTo(cards, player.discard);
-          cards.forEach((card, index) => {
-            store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
-          });
+            player.hand.moveCardsTo(cards, player.discard);
+            cards.forEach((card, index) => {
+              store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, {
+                name: player.name,
+                card: card.name,
+              });
+            });
 
-          DRAW_CARDS(store, state, player, cardsToDraw);
-        });
+            DRAW_CARDS(store, state, player, cardsToDraw);
+          },
+        );
       }
       return state;
     }

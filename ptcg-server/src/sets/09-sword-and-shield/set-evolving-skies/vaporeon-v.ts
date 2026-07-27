@@ -7,10 +7,14 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, DRAW_CARDS, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  DRAW_CARDS,
+  SWITCH_ACTIVE_WITH_BENCHED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class VaporeonV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V, CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.POKEMON_V, CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 210;
@@ -22,14 +26,14 @@ export class VaporeonV extends PokemonCard {
       name: 'Triple Draw',
       cost: [C],
       damage: 0,
-      text: 'Draw 3 cards.'
+      text: 'Draw 3 cards.',
     },
     {
       name: 'Splash Jump',
       cost: [W, W, C],
       damage: 90,
-      text: 'Switch this Pokémon with 1 of your Benched Pokémon.'
-    }
+      text: 'Switch this Pokémon with 1 of your Benched Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -58,7 +62,7 @@ export class VaporeonV extends PokemonCard {
     if (effect instanceof AfterAttackEffect && this.usedSplashJump) {
       this.usedSplashJump = false;
       const player = effect.player;
-      if (player.bench.some(b => b.cards.length > 0)) {
+      if (player.bench.some((b) => b.cards.length > 0)) {
         SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
       }
     }

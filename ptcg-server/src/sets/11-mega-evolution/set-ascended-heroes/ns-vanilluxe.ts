@@ -8,33 +8,35 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class NsVanilluxe extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
-  public evolvesFrom: string = 'N\'s Vanillish';
-  public tags = [CardTag.NS];
+  public evolvesFrom: string = "N's Vanillish";
+  protected _tags = [CardTag.NS];
   public cardType: CardType = W;
   public hp: number = 150;
   public weakness = [{ type: M }];
   public resistance = [];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Snow Coating',
-    cost: [C, C],
-    damage: 0,
-    text: 'Double the number of damage counters on each of your opponent\'s Pokémon.'
-  },
-  {
-    name: 'Blizzard',
-    cost: [W, C, C],
-    damage: 120,
-    text: 'This attack also does 10 damage to each of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-  }];
+  public attacks = [
+    {
+      name: 'Snow Coating',
+      cost: [C, C],
+      damage: 0,
+      text: "Double the number of damage counters on each of your opponent's Pokémon.",
+    },
+    {
+      name: 'Blizzard',
+      cost: [W, C, C],
+      damage: 120,
+      text: "This attack also does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
+  ];
 
   public regulationMark = 'I';
   public set: string = 'ASC';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '51';
-  public name: string = 'N\'s Vanilluxe';
-  public fullName: string = 'N\'s Vanilluxe M2a';
+  public name: string = "N's Vanilluxe";
+  public fullName: string = "N's Vanilluxe M2a";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Layered Snow - double damage counters on each opponent's Pokémon
@@ -56,9 +58,9 @@ export class NsVanilluxe extends PokemonCard {
     // Blizzard - deal 10 damage to each benched Pokémon
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const opponent = effect.opponent;
-      const benched = opponent.bench.filter(b => b.cards.length > 0);
+      const benched = opponent.bench.filter((b) => b.cards.length > 0);
 
-      benched.forEach(target => {
+      benched.forEach((target) => {
         const damageEffect = new PutDamageEffect(effect, 10);
         damageEffect.target = target;
         store.reduceEffect(state, damageEffect);

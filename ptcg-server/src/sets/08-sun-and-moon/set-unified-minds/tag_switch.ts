@@ -1,25 +1,40 @@
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardTag, SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike, State, PlayerType, GameError, GameMessage, MoveEnergyPrompt, CardTransfer, SlotType, StateUtils, CardTarget } from '../../../game';
+import {
+  StoreLike,
+  State,
+  PlayerType,
+  GameError,
+  GameMessage,
+  MoveEnergyPrompt,
+  CardTransfer,
+  SlotType,
+  StateUtils,
+  CardTarget,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   // Player has no Basic Energy in play
   let hasEnergy = false;
   let tagTeamPokemonCount = 0;
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-    if (card.tags.includes(CardTag.TAG_TEAM)) {
+    if (card.hasTag(CardTag.TAG_TEAM)) {
       tagTeamPokemonCount++;
 
-      const energyAttached = cardList.energies.cards.some(c => {
+      const energyAttached = cardList.energies.cards.some((c) => {
         return c.superType === SuperType.ENERGY;
       });
       hasEnergy = hasEnergy || energyAttached;
     }
-
   });
 
   if (!hasEnergy || tagTeamPokemonCount <= 1) {
@@ -32,27 +47,30 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const blockedFrom: CardTarget[] = [];
 
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-    if (!card.tags.includes(CardTag.TAG_TEAM)) {
+    if (!card.hasTag(CardTag.TAG_TEAM)) {
       blockedFrom.push(target);
       return;
     }
   });
 
   let transfers: CardTransfer[] = [];
-  yield store.prompt(state, new MoveEnergyPrompt(
-    player.id,
-    GameMessage.MOVE_ENERGY_CARDS,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.ACTIVE, SlotType.BENCH],
-    { superType: SuperType.ENERGY },
-    { min: 1, max: 2, allowCancel: false, blockedFrom }
-  ), result => {
-    transfers = result || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new MoveEnergyPrompt(
+      player.id,
+      GameMessage.MOVE_ENERGY_CARDS,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.ACTIVE, SlotType.BENCH],
+      { superType: SuperType.ENERGY },
+      { min: 1, max: 2, allowCancel: false, blockedFrom },
+    ),
+    (result) => {
+      transfers = result || [];
+      next();
+    },
+  );
 
-
-  transfers.forEach(transfer => {
+  transfers.forEach((transfer) => {
     const source = StateUtils.getTarget(state, player, transfer.from);
     const target = StateUtils.getTarget(state, player, transfer.to);
     source.moveCardTo(transfer.card, target);

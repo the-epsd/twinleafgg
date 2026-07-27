@@ -12,7 +12,7 @@ import { AttachEnergyEffect } from '../../../game/store/effects/play-card-effect
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 export class DracozoltV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = L;
   public hp: number = 220;
@@ -27,14 +27,14 @@ export class DracozoltV extends PokemonCard {
       name: 'Primeval Beak',
       cost: [L],
       damage: 30,
-      text: 'During your opponent\'s next turn, Energy cards can\'t be attached from your opponent\'s hand to the Defending Pokémon.'
+      text: "During your opponent's next turn, Energy cards can't be attached from your opponent's hand to the Defending Pokémon.",
     },
     {
       name: 'Mountain Swing',
       cost: [L, L, C],
       damage: 180,
-      text: 'Discard the top 3 cards of your deck.'
-    }
+      text: 'Discard the top 3 cards of your deck.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -56,8 +56,10 @@ export class DracozoltV extends PokemonCard {
     }
 
     // Intercept energy attachment from opponent's hand to their Active (Defending Pokemon)
-    if (effect instanceof AttachEnergyEffect
-      && effect.target.marker.hasMarker(this.PRIMEVAL_BEAK_MARKER, this)) {
+    if (
+      effect instanceof AttachEnergyEffect &&
+      effect.target.marker.hasMarker(this.PRIMEVAL_BEAK_MARKER, this)
+    ) {
       const owner = StateUtils.findOwner(state, effect.target);
       if (owner && owner.hand.cards.includes(effect.energyCard)) {
         effect.preventDefault = true;
@@ -66,8 +68,10 @@ export class DracozoltV extends PokemonCard {
     }
 
     // Cleanup marker after opponent's turn
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_PRIMEVAL_BEAK_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_PRIMEVAL_BEAK_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_PRIMEVAL_BEAK_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.active.marker.removeMarker(this.PRIMEVAL_BEAK_MARKER, this);

@@ -8,10 +8,15 @@ import { PlayerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { MOVED_TO_ACTIVE_THIS_TURN, WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store/prefabs/prefabs';
+import {
+  MOVED_TO_ACTIVE_THIS_TURN,
+  WAS_ATTACK_USED,
+  BLOCK_IF_GX_ATTACK_USED,
+  SWITCH_ACTIVE_WITH_BENCHED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class GolisopodGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Wimpod';
   public cardType: CardType = G;
@@ -30,20 +35,20 @@ export class GolisopodGx extends PokemonCard {
       cost: [G],
       damage: 30,
       damageCalculation: '+',
-      text: 'If this Pokémon was on the Bench and became your Active Pokémon this turn, this attack does 90 more damage.'
+      text: 'If this Pokémon was on the Bench and became your Active Pokémon this turn, this attack does 90 more damage.',
     },
     {
       name: 'Armor Press',
       cost: [G, C, C],
       damage: 100,
-      text: 'During your opponent\'s next turn, this Pokémon takes 20 less damage from attacks (after applying Weakness and Resistance).'
+      text: "During your opponent's next turn, this Pokémon takes 20 less damage from attacks (after applying Weakness and Resistance).",
     },
     {
       name: 'Crossing Cut-GX',
       cost: [G, C, C],
       damage: 150,
-      text: 'Switch this Pokémon with 1 of your Benched Pokémon. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Switch this Pokémon with 1 of your Benched Pokémon. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'BUS';
@@ -82,8 +87,10 @@ export class GolisopodGx extends PokemonCard {
       }
     }
 
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_ARMOR_PRESS_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_ARMOR_PRESS_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_ARMOR_PRESS_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
@@ -103,7 +110,7 @@ export class GolisopodGx extends PokemonCard {
       this.usedCrossingCutGx = false;
       const player = effect.player;
 
-      if (player.bench.some(b => b.cards.length > 0)) {
+      if (player.bench.some((b) => b.cards.length > 0)) {
         SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
       }
     }

@@ -8,24 +8,26 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 export class WhimsicottV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public cardType: CardType = P;
   public hp: number = 190;
   public weakness = [{ type: M }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Fluff Gets in the Way',
-    cost: [P],
-    damage: 20,
-    text: 'If the Defending Pokémon is a Basic Pokémon, it can\'t attack during your opponent\'s next turn.'
-  },
-  {
-    name: 'Cotton Guard',
-    cost: [P, C, C],
-    damage: 90,
-    text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
-  }];
+  public attacks = [
+    {
+      name: 'Fluff Gets in the Way',
+      cost: [P],
+      damage: 20,
+      text: "If the Defending Pokémon is a Basic Pokémon, it can't attack during your opponent's next turn.",
+    },
+    {
+      name: 'Cotton Guard',
+      cost: [P, C, C],
+      damage: 90,
+      text: "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).",
+    },
+  ];
 
   public set: string = 'BRS';
   public cardImage: string = 'assets/cardback.png';
@@ -37,7 +39,6 @@ export class WhimsicottV extends PokemonCard {
   public readonly COTTON_GUARD_MARKER = 'COTTON_GUARD_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const opponent = effect.opponent;
       if (opponent.active.getPokemonCard()?.stage === Stage.BASIC) {
@@ -46,13 +47,19 @@ export class WhimsicottV extends PokemonCard {
       }
     }
 
-    if (effect instanceof AttackEffect && effect.player.active.marker.hasMarker(this.COTTON_GUARD_MARKER, this)) {
+    if (
+      effect instanceof AttackEffect &&
+      effect.player.active.marker.hasMarker(this.COTTON_GUARD_MARKER, this)
+    ) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.COTTON_GUARD_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.COTTON_GUARD_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.COTTON_GUARD_MARKER, this);
-      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         if (cardList.marker.hasMarker(this.COTTON_GUARD_MARKER, this)) {
           cardList.marker.removeMarker(this.COTTON_GUARD_MARKER, this);
         }

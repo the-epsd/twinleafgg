@@ -16,7 +16,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class LugiaVSTAR extends PokemonCard {
-  public tags = [CardTag.POKEMON_VSTAR];
+  protected _tags = [CardTag.POKEMON_VSTAR];
   public regulationMark = 'F';
   public stage: Stage = Stage.VSTAR;
   public evolvesFrom = 'Lugia V';

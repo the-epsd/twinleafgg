@@ -10,25 +10,27 @@ import { AfterAttackEffect } from '../../../game/store/effects/game-phase-effect
 export class Wailordex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Wailmer';
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public cardType: CardType = W;
   public hp: number = 200;
   public weakness = [{ type: G }, { type: L }];
   public retreat = [C, C, C, C, C];
 
-  public attacks = [{
-    name: 'Super Deep Dive',
-    cost: [C],
-    damage: 0,
-    text: 'If you don\'t have any Benched Pokémon, this attack does nothing. Remove 3 damage counters from Wailord ex. Switch Wailord ex with 1 of your Benched Pokémon.'
-  },
-  {
-    name: 'Dwindling Wave',
-    cost: [W, W, W, C],
-    damage: 100,
-    damageCalculation: '-',
-    text: 'Does 100 damage minus 10 damage for each damage counter on Wailord ex.'
-  }];
+  public attacks = [
+    {
+      name: 'Super Deep Dive',
+      cost: [C],
+      damage: 0,
+      text: "If you don't have any Benched Pokémon, this attack does nothing. Remove 3 damage counters from Wailord ex. Switch Wailord ex with 1 of your Benched Pokémon.",
+    },
+    {
+      name: 'Dwindling Wave',
+      cost: [W, W, W, C],
+      damage: 100,
+      damageCalculation: '-',
+      text: 'Does 100 damage minus 10 damage for each damage counter on Wailord ex.',
+    },
+  ];
 
   public set: string = 'SS';
   public cardImage: string = 'assets/cardback.png';
@@ -39,7 +41,6 @@ export class Wailordex extends PokemonCard {
   public usedSuperDeepDive = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const playerBench = player.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);

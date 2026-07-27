@@ -17,7 +17,8 @@ export class FairyCharmPsychic extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fairy Charm Psychic';
   public fullName: string = 'Fairy Charm Psychic LOT';
-  public text: string = 'Prevent all damage done to the Fairy Pokémon this card is attached to by attacks from your opponent\'s Psychic Pokémon-GX and Psychic Pokémon-EX.';
+  public text: string =
+    "Prevent all damage done to the Fairy Pokémon this card is attached to by attacks from your opponent's Psychic Pokémon-GX and Psychic Pokémon-EX.";
 
   // Ref: set-x-and-y/hard-charm.ts (Tool damage intercept), set-dragons-majesty/altaria-gx.ts (GX/EX type check)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -37,7 +38,10 @@ export class FairyCharmPsychic extends TrainerCard {
 
       // Check if attacking Pokemon is Psychic GX or EX
       const sourceCard = effect.source.getPokemonCard();
-      if (sourceCard && (sourceCard.tags.includes(CardTag.POKEMON_GX) || sourceCard.tags.includes(CardTag.POKEMON_EX))) {
+      if (
+        sourceCard &&
+        (sourceCard.hasTag(CardTag.POKEMON_GX) || sourceCard.hasTag(CardTag.POKEMON_EX))
+      ) {
         const checkSourceType = new CheckPokemonTypeEffect(effect.source);
         store.reduceEffect(state, checkSourceType);
         if (checkSourceType.cardTypes.includes(CardType.PSYCHIC)) {

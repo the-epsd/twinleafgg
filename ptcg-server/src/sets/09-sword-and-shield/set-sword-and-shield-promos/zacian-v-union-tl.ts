@@ -1,5 +1,11 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, EnergyType, CardTag } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  SuperType,
+  EnergyType,
+  CardTag,
+} from '../../../game/store/card/card-types';
 import {
   AttachEnergyPrompt,
   Card,
@@ -28,7 +34,7 @@ import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/pre
 
 export class ZacianVUNIONTopLeft extends PokemonCard {
   public stage: Stage = Stage.VUNION;
-  public tags = [CardTag.POKEMON_VUNION];
+  protected _tags = [CardTag.POKEMON_VUNION];
   public cardType: CardType = M;
   public hp: number = 320;
   public weakness = [{ type: R }];

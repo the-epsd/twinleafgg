@@ -10,51 +10,58 @@ import { ChoosePokemonPrompt, PlayerType, SlotType } from '../../../game';
 
 export class VentureBomb extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
-  public tags = [CardTag.ROCKETS_SECRET_MACHINE];
+  protected _tags = [CardTag.ROCKETS_SECRET_MACHINE];
   public set: string = 'TRR';
   public name: string = 'Venture Bomb';
   public fullName: string = 'Venture Bomb TRR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '93';
 
-  public text: string = 'Flip a coin. If heads, put 1 damage counter on 1 of your opponent\'s Pokémon. If tails, put 1 damage counter on 1 of your Pokémon.';
+  public text: string =
+    "Flip a coin. If heads, put 1 damage counter on 1 of your opponent's Pokémon. If tails, put 1 damage counter on 1 of your Pokémon.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
-      COIN_FLIP_PROMPT(store, state, player, result => {
-
+      COIN_FLIP_PROMPT(store, state, player, (result) => {
         if (result) {
-          return store.prompt(state, new ChoosePokemonPrompt(
-            player.id,
-            GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-            PlayerType.TOP_PLAYER,
-            [SlotType.ACTIVE, SlotType.BENCH],
-            { min: 1, max: 1, allowCancel: false },
-          ), selected => {
-            const targets = selected || [];
-            targets.forEach(target => {
-              target.damage += 10;
-            });
-          });
+          return store.prompt(
+            state,
+            new ChoosePokemonPrompt(
+              player.id,
+              GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+              PlayerType.TOP_PLAYER,
+              [SlotType.ACTIVE, SlotType.BENCH],
+              { min: 1, max: 1, allowCancel: false },
+            ),
+            (selected) => {
+              const targets = selected || [];
+              targets.forEach((target) => {
+                target.damage += 10;
+              });
+            },
+          );
         }
 
         if (!result) {
-          return store.prompt(state, new ChoosePokemonPrompt(
-            player.id,
-            GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-            PlayerType.BOTTOM_PLAYER,
-            [SlotType.ACTIVE, SlotType.BENCH],
-            { min: 1, max: 1, allowCancel: false },
-          ), selected => {
-            const targets = selected || [];
-            targets.forEach(target => {
-              target.damage += 10;
-            });
-          });
+          return store.prompt(
+            state,
+            new ChoosePokemonPrompt(
+              player.id,
+              GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+              PlayerType.BOTTOM_PLAYER,
+              [SlotType.ACTIVE, SlotType.BENCH],
+              { min: 1, max: 1, allowCancel: false },
+            ),
+            (selected) => {
+              const targets = selected || [];
+              targets.forEach((target) => {
+                target.damage += 10;
+              });
+            },
+          );
         }
-
       });
 
       player.supporter.moveTo(player.discard);
@@ -64,5 +71,4 @@ export class VentureBomb extends TrainerCard {
 
     return state;
   }
-
 }

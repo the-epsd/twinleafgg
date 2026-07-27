@@ -6,10 +6,13 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+} from '../../../game/store/prefabs/prefabs';
 
 export class MCharizardEx extends PokemonCard {
-  public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
+  protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Charizard-EX';
   public cardType: CardType = R;
@@ -22,8 +25,8 @@ export class MCharizardEx extends PokemonCard {
       name: 'Crimson Dive',
       cost: [R, R, C, C, C],
       damage: 300,
-      text: 'This Pokémon does 50 damage to itself.'
-    }
+      text: 'This Pokémon does 50 damage to itself.',
+    },
   ];
 
   public set: string = 'EVO';

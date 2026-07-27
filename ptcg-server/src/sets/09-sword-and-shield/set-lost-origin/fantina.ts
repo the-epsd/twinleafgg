@@ -18,7 +18,8 @@ export class Fantina extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fantina';
   public fullName: string = 'Fantina LOR 157';
-  public text: string = 'You can use this card only if you have 10 or more cards in the Lost Zone. During your opponent\'s next turn, all of your Pokémon take 120 less damage from attacks from your opponent\'s Pokémon V (after applying Weakness and Resistance). (This includes Pokémon that come into play during that turn.) You may play only 1 Supporter card during your turn.';
+  public text: string =
+    "You can use this card only if you have 10 or more cards in the Lost Zone. During your opponent's next turn, all of your Pokémon take 120 less damage from attacks from your opponent's Pokémon V (after applying Weakness and Resistance). (This includes Pokémon that come into play during that turn.) You may play only 1 Supporter card during your turn.";
 
   public readonly FANTINA_MARKER = 'FANTINA_LOR_MARKER';
   public readonly CLEAR_FANTINA_MARKER = 'FANTINA_LOR_CLEAR_MARKER';
@@ -46,8 +47,6 @@ export class Fantina extends TrainerCard {
       // Use opponent marker to know when to clear (at end of opponent's turn)
       const opponent = StateUtils.getOpponent(state, player);
       opponent.marker.addMarker(this.CLEAR_FANTINA_MARKER, this);
-
-
     }
 
     // During opponent's next turn: reduce damage from V Pokemon by 120
@@ -79,9 +78,10 @@ export class Fantina extends TrainerCard {
         return state;
       }
 
-      const isV = sourceCard.tags.includes(CardTag.POKEMON_V) ||
-        sourceCard.tags.includes(CardTag.POKEMON_VMAX) ||
-        sourceCard.tags.includes(CardTag.POKEMON_VSTAR);
+      const isV =
+        sourceCard.hasTag(CardTag.POKEMON_V) ||
+        sourceCard.hasTag(CardTag.POKEMON_VMAX) ||
+        sourceCard.hasTag(CardTag.POKEMON_VSTAR);
 
       if (isV) {
         effect.reduceDamage(120);

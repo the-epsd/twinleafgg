@@ -7,10 +7,13 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { SlotType } from '../../../game/store/actions/play-card-action';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON,
+} from '../../../game/store/prefabs/prefabs';
 
 export class MagnezoneEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = L;
   public hp: number = 180;
@@ -23,14 +26,14 @@ export class MagnezoneEx extends PokemonCard {
       name: 'Electro Ball',
       cost: [C, C],
       damage: 40,
-      text: ''
+      text: '',
     },
     {
       name: 'Dual Bullet',
       cost: [L, L, L],
       damage: 0,
-      text: 'This attack does 50 damage to 2 of your opponent\'s Pok\u00e9mon. (Don\'t apply Weakness or Resistance for Benched Pok\u00e9mon.)'
-    }
+      text: "This attack does 50 damage to 2 of your opponent's Pok\u00e9mon. (Don't apply Weakness or Resistance for Benched Pok\u00e9mon.)",
+    },
   ];
 
   public set: string = 'FLF';
@@ -42,7 +45,16 @@ export class MagnezoneEx extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-x-and-y/m-blastoise-ex.ts (Hydro Bombard)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON(50, effect, store, state, 2, 2, false, [SlotType.ACTIVE, SlotType.BENCH]);
+      THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON(
+        50,
+        effect,
+        store,
+        state,
+        2,
+        2,
+        false,
+        [SlotType.ACTIVE, SlotType.BENCH],
+      );
     }
 
     return state;

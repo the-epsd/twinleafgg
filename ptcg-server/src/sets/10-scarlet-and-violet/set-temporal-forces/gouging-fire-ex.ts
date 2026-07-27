@@ -6,8 +6,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class GougingFireex extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_ex, CardTag.ANCIENT];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.ANCIENT];
 
   public regulationMark = 'H';
 
@@ -26,14 +25,14 @@ export class GougingFireex extends PokemonCard {
       name: 'Heat Blast',
       cost: [CardType.FIRE, CardType.COLORLESS],
       damage: 60,
-      text: ''
+      text: '',
     },
     {
       name: 'Blaze Blitz',
       cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS],
       damage: 260,
-      text: 'This Pokémon can\'t use Blaze Blitz again until it leaves the Active Spot.'
-    }
+      text: "This Pokémon can't use Blaze Blitz again until it leaves the Active Spot.",
+    },
   ];
 
   public set: string = 'TEF';
@@ -49,9 +48,7 @@ export class GougingFireex extends PokemonCard {
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 1, this)) {
-
       const player = effect.player;
       // Check marker
       if (player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
@@ -67,5 +64,4 @@ export class GougingFireex extends PokemonCard {
 
     return state;
   }
-
 }

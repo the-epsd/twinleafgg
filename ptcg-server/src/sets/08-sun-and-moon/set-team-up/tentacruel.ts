@@ -9,7 +9,10 @@ import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED, YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../../game/store/prefabs/attack-effects';
+import {
+  YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED,
+  YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED,
+} from '../../../game/store/prefabs/attack-effects';
 
 export class Tentacruel extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -27,14 +30,14 @@ export class Tentacruel extends PokemonCard {
       name: 'Void Tentacles',
       cost: [C],
       damage: 0,
-      text: 'Your opponent\'s Active Pokémon is now Confused and Poisoned.'
+      text: "Your opponent's Active Pokémon is now Confused and Poisoned.",
     },
     {
       name: 'Paranormal',
       cost: [P, C, C],
       damage: 70,
-      text: 'During your opponent\'s next turn, prevent all damage done to this Pokémon by attacks from Ultra Beasts.'
-    }
+      text: "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Ultra Beasts.",
+    },
   ];
 
   public set: string = 'TEU';
@@ -61,17 +64,21 @@ export class Tentacruel extends PokemonCard {
     }
 
     // Prevent damage from Ultra Beasts
-    if (effect instanceof DealDamageEffect
-      && effect.target.marker.hasMarker(this.PREVENT_UB_DAMAGE_MARKER, this)) {
+    if (
+      effect instanceof DealDamageEffect &&
+      effect.target.marker.hasMarker(this.PREVENT_UB_DAMAGE_MARKER, this)
+    ) {
       const sourceCard = effect.source.getPokemonCard();
-      if (sourceCard && sourceCard.tags.includes(CardTag.ULTRA_BEAST)) {
+      if (sourceCard && sourceCard.hasTag(CardTag.ULTRA_BEAST)) {
         effect.damage = 0;
       }
     }
 
     // Cleanup at end of opponent's turn
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_PREVENT_UB_DAMAGE_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_PREVENT_UB_DAMAGE_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_PREVENT_UB_DAMAGE_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {

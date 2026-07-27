@@ -7,11 +7,15 @@ import { Stage, CardType, CardTag, SpecialCondition } from '../../../game/store/
 import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED, GUST_OPPONENT_BENCHED_POKEMON } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  BLOCK_IF_GX_ATTACK_USED,
+  GUST_OPPONENT_BENCHED_POKEMON,
+} from '../../../game/store/prefabs/prefabs';
 import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class AlolanMukGx2 extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Alolan Grimer';
   public cardType: CardType = D;
@@ -26,20 +30,20 @@ export class AlolanMukGx2 extends PokemonCard {
       cost: [D, C, C],
       damage: 10,
       damageCalculation: '+',
-      text: 'This attack does 70 more damage for each Special Condition affecting your opponent\'s Active Pokémon.'
+      text: "This attack does 70 more damage for each Special Condition affecting your opponent's Active Pokémon.",
     },
     {
       name: 'Crunch',
       cost: [D, D, C, C],
       damage: 120,
-      text: 'Discard an Energy attached to your opponent\'s Active Pokémon.'
+      text: "Discard an Energy attached to your opponent's Active Pokémon.",
     },
     {
       name: 'Tri Hazard-GX',
       cost: [],
       damage: 0,
-      text: 'Switch 1 of your opponent\'s Benched Pokémon with their Active Pokémon. The new Active Pokémon is now Burned, Paralyzed, and Poisoned. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Switch 1 of your opponent's Benched Pokémon with their Active Pokémon. The new Active Pokémon is now Burned, Paralyzed, and Poisoned. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'BUS';
@@ -73,7 +77,7 @@ export class AlolanMukGx2 extends PokemonCard {
       player.usedGX = true;
 
       const opponent = StateUtils.getOpponent(state, player);
-      if (opponent.bench.some(b => b.cards.length > 0)) {
+      if (opponent.bench.some((b) => b.cards.length > 0)) {
         this.usedTriHazardGx = true;
         GUST_OPPONENT_BENCHED_POKEMON(store, state, player);
       }

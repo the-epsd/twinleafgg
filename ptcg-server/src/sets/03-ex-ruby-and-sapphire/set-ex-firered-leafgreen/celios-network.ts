@@ -8,13 +8,12 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class CeliosNetwork extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'RG';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '88';
-  public name: string = 'Celio\'s Network';
-  public fullName: string = 'Celio\'s Network RG';
+  public name: string = "Celio's Network";
+  public fullName: string = "Celio's Network RG";
 
   public text: string =
     'Search your deck for a Basic Pokémon or Evolution card (excluding Pokémon-ex), show it to your opponent, and put it into your hand. Shuffle your deck afterward.';
@@ -33,12 +32,18 @@ export class CeliosNetwork extends TrainerCard {
 
       const blocked: number[] = [];
       player.deck.cards.forEach((c, index) => {
-        if (c instanceof PokemonCard && c.tags.includes(CardTag.POKEMON_ex)) {
+        if (c instanceof PokemonCard && c.hasTag(CardTag.POKEMON_ex)) {
           blocked.push(index);
         }
       });
 
-      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, player, {}, { min: 0, max: 1, blocked });
+      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(
+        store,
+        state,
+        player,
+        {},
+        { min: 0, max: 1, blocked },
+      );
       return state;
     }
 

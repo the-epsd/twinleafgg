@@ -7,9 +7,8 @@ import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/ga
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefabs/attack-effects';
 
 export class StaraptorFB extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_SP];
+  protected _tags = [CardTag.POKEMON_SP];
   public cardType: CardType = C;
   public hp: number = 80;
   public weakness = [{ type: L }];
@@ -29,7 +28,8 @@ export class StaraptorFB extends PokemonCard {
       cost: [C, C, C],
       damage: 30,
       text: 'Your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon.',
-    }];
+    },
+  ];
 
   public set: string = 'SV';
   public cardImage: string = 'assets/cardback.png';
@@ -40,7 +40,6 @@ export class StaraptorFB extends PokemonCard {
   public usedWhirlwind = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE(store, state, effect, 10);
     }

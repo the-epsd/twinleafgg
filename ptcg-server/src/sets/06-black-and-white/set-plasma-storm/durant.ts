@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Durant extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;
   public hp: number = 70;
@@ -22,15 +22,15 @@ export class Durant extends PokemonCard {
       name: 'Gnaw',
       cost: [C, C],
       damage: 20,
-      text: ''
+      text: '',
     },
     {
       name: 'Hard Crunch',
       cost: [M, C, C],
       damage: 40,
       damageCalculation: '+',
-      text: 'If the Defending Pokémon already has any damage counters on it, this attack does 30 more damage.'
-    }
+      text: 'If the Defending Pokémon already has any damage counters on it, this attack does 30 more damage.',
+    },
   ];
 
   public set: string = 'PLS';

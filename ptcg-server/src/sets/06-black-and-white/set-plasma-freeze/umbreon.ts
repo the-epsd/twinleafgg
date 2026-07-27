@@ -6,7 +6,7 @@ import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
 
 export class Umbreon extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Eevee';
   public cardType: CardType = D;
@@ -15,19 +15,21 @@ export class Umbreon extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Dark Shade',
-    powerType: PowerType.ABILITY,
-    text: 'Each of your Team Plasma Pokémon in play gets +20 HP.'
-  }];
+  public powers = [
+    {
+      name: 'Dark Shade',
+      powerType: PowerType.ABILITY,
+      text: 'Each of your Team Plasma Pokémon in play gets +20 HP.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Darkness Fang',
       cost: [D, C, C],
       damage: 70,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'PLF';
@@ -40,13 +42,13 @@ export class Umbreon extends PokemonCard {
     // Ability: Dark Shade (passive - HP boost)
     if (effect instanceof CheckHpEffect) {
       const targetCard = effect.target.getPokemonCard();
-      if (!targetCard || !targetCard.tags.includes(CardTag.TEAM_PLASMA)) {
+      if (!targetCard || !targetCard.hasTag(CardTag.TEAM_PLASMA)) {
         return state;
       }
 
       // Find the owner of the target
       let targetOwner: any = null;
-      state.players.forEach(p => {
+      state.players.forEach((p) => {
         p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
           if (cardList === effect.target) {
             targetOwner = p;
@@ -72,11 +74,15 @@ export class Umbreon extends PokemonCard {
 
       // Check ability lock
       try {
-        const stub = new PowerEffect(targetOwner, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
+        const stub = new PowerEffect(
+          targetOwner,
+          {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: '',
+          },
+          this,
+        );
         store.reduceEffect(state, stub);
       } catch {
         return state;

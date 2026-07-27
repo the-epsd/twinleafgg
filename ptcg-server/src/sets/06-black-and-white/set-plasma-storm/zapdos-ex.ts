@@ -6,13 +6,17 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PlayerType, StateUtils, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { AddSpecialConditionsEffect, DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import {
+  AddSpecialConditionsEffect,
+  DealDamageEffect,
+  PutDamageEffect,
+} from '../../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlasmaEnergy } from './plasma-energy';
 import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class ZapdosEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX, CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.POKEMON_EX, CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = L;
   public hp: number = 170;
@@ -25,15 +29,15 @@ export class ZapdosEx extends PokemonCard {
       name: 'Agility',
       cost: [L, C],
       damage: 30,
-      text: 'Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn.'
+      text: "Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent's next turn.",
     },
     {
       name: 'Powervolt',
       cost: [L, L, C, C],
       damage: 80,
       damageCalculation: '+',
-      text: 'If this Pokémon has any Plasma Energy attached to it, this attack does 40 more damage.'
-    }
+      text: 'If this Pokémon has any Plasma Energy attached to it, this attack does 40 more damage.',
+    },
   ];
 
   public set: string = 'PLS';
@@ -42,8 +46,10 @@ export class ZapdosEx extends PokemonCard {
   public name: string = 'Zapdos-EX';
   public fullName: string = 'Zapdos-EX PLS';
 
-  private readonly PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN = 'PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN';
-  private readonly CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN = 'CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN';
+  private readonly PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN =
+    'PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN';
+  private readonly CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN =
+    'CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Agility
@@ -51,10 +57,16 @@ export class ZapdosEx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      COIN_FLIP_PROMPT(store, state, player, result => {
+      COIN_FLIP_PROMPT(store, state, player, (result) => {
         if (result) {
-          player.active.marker.addMarker(this.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this);
-          opponent.marker.addMarker(this.CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this);
+          player.active.marker.addMarker(
+            this.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN,
+            this,
+          );
+          opponent.marker.addMarker(
+            this.CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN,
+            this,
+          );
         }
       });
     }
@@ -63,26 +75,45 @@ export class ZapdosEx extends PokemonCard {
     // Ref: set-plasma-storm/plasma-energy.ts (Plasma Energy card reference)
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      const hasPlasmaEnergy = player.active.cards.some(card => card instanceof PlasmaEnergy);
+      const hasPlasmaEnergy = player.active.cards.some((card) => card instanceof PlasmaEnergy);
       if (hasPlasmaEnergy) {
         effect.damage += 40;
       }
     }
 
     // Prevent all effects of attacks, including damage, if Agility marker is present
-    if ((effect instanceof PutDamageEffect || effect instanceof DealDamageEffect || effect instanceof AddSpecialConditionsEffect)
-      && effect.target.cards.includes(this)
-      && effect.target.marker.hasMarker(this.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this)) {
+    if (
+      (effect instanceof PutDamageEffect ||
+        effect instanceof DealDamageEffect ||
+        effect instanceof AddSpecialConditionsEffect) &&
+      effect.target.cards.includes(this) &&
+      effect.target.marker.hasMarker(
+        this.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN,
+        this,
+      )
+    ) {
       effect.preventDefault = true;
       return state;
     }
 
     // Remove marker at end of opponent's turn
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this);
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(
+        this.CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN,
+        this,
+      )
+    ) {
+      effect.player.marker.removeMarker(
+        this.CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN,
+        this,
+      );
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this);
+        cardList.marker.removeMarker(
+          this.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN,
+          this,
+        );
       });
     }
 

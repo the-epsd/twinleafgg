@@ -12,7 +12,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 
 export class Arcanineex extends PokemonCard {
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Growlithe';
   public cardType: CardType = R;
@@ -20,24 +20,28 @@ export class Arcanineex extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Fire Remedy',
-    powerType: PowerType.POKEBODY,
-    text: 'Whenever you attach a [R] Energy from your hand to Arcanine ex, remove 1 damage counter and all Special Conditions from Arcanine ex.'
-  }];
+  public powers = [
+    {
+      name: 'Fire Remedy',
+      powerType: PowerType.POKEBODY,
+      text: 'Whenever you attach a [R] Energy from your hand to Arcanine ex, remove 1 damage counter and all Special Conditions from Arcanine ex.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Overrun',
-    cost: [R, C],
-    damage: 30,
-    text: 'Does 20 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-  },
-  {
-    name: 'Flame Swirl',
-    cost: [R, R, C],
-    damage: 100,
-    text: 'Discard 2 [R] Energy or 1 React Energy card attached to Arcanine ex.'
-  }];
+  public attacks = [
+    {
+      name: 'Overrun',
+      cost: [R, C],
+      damage: 30,
+      text: "Does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
+    {
+      name: 'Flame Swirl',
+      cost: [R, R, C],
+      damage: 100,
+      text: 'Discard 2 [R] Energy or 1 React Energy card attached to Arcanine ex.',
+    },
+  ];
 
   public set: string = 'LM';
   public setNumber: string = '83';
@@ -46,19 +50,21 @@ export class Arcanineex extends PokemonCard {
   public fullName: string = 'Arcanine ex LM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof AttachEnergyEffect && effect.target.getPokemonCard() === this) {
       if (IS_POKEBODY_BLOCKED(store, state, effect.player, this)) {
         return state;
       }
 
-      if (effect.energyCard.energyType === EnergyType.BASIC && effect.energyCard.provides.includes(CardType.FIRE)) {
+      if (
+        effect.energyCard.energyType === EnergyType.BASIC &&
+        effect.energyCard.provides.includes(CardType.FIRE)
+      ) {
         // heal
         const healEffect = new HealEffect(effect.player, effect.target, 10);
         store.reduceEffect(state, healEffect);
         //remove special conditions
         const conditions = effect.target.specialConditions.slice();
-        conditions.forEach(condition => {
+        conditions.forEach((condition) => {
           effect.target.removeSpecialCondition(condition);
         });
       }
@@ -71,16 +77,17 @@ export class Arcanineex extends PokemonCard {
         store.reduceEffect(state, checkFireEnergy);
         effect.target.cards.pop();
 
-        const energyMap = checkFireEnergy.energyMap.find(element => element.card === effect.energyCard);
+        const energyMap = checkFireEnergy.energyMap.find(
+          (element) => element.card === effect.energyCard,
+        );
         const providedEnergy = energyMap?.provides;
-        if (providedEnergy?.includes(CardType.FIRE)
-          || providedEnergy?.includes(CardType.ANY)) {
+        if (providedEnergy?.includes(CardType.FIRE) || providedEnergy?.includes(CardType.ANY)) {
           //heal
           const healEffect = new HealEffect(effect.player, effect.target, 10);
           store.reduceEffect(state, healEffect);
           //remove special conditions
           const conditions = effect.target.specialConditions.slice();
-          conditions.forEach(condition => {
+          conditions.forEach((condition) => {
             effect.target.removeSpecialCondition(condition);
           });
         }
@@ -94,9 +101,11 @@ export class Arcanineex extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       // See if there is holon energy attached
-      const hasReactEnergy = player.active.energies.cards.some(card => card.name === 'React Energy');
+      const hasReactEnergy = player.active.energies.cards.some(
+        (card) => card.name === 'React Energy',
+      );
 
-      const options: { message: GameMessage, action: () => void }[] = [];
+      const options: { message: GameMessage; action: () => void }[] = [];
 
       if (hasReactEnergy) {
         options.push({
@@ -104,49 +113,57 @@ export class Arcanineex extends PokemonCard {
           action: () => {
             const player = effect.player;
             // Prompt the player to choose one 'React Energy' to discard (in case there are multiple)
-            state = store.prompt(state, new ChooseCardsPrompt(
-              player,
-              GameMessage.CHOOSE_CARD_TO_DISCARD,
-              player.active,
-              { name: 'React Energy' },
-              { min: 1, max: 1, allowCancel: false }
-            ), selected => {
-              const cards: Card[] = selected || [];
-              if (cards.length > 0) {
-                const discardEffect = new DiscardCardsEffect(effect, cards);
-                discardEffect.target = player.active;
-                return store.reduceEffect(state, discardEffect);
-              }
-              return state;
-            });
-          }
+            state = store.prompt(
+              state,
+              new ChooseCardsPrompt(
+                player,
+                GameMessage.CHOOSE_CARD_TO_DISCARD,
+                player.active,
+                { name: 'React Energy' },
+                { min: 1, max: 1, allowCancel: false },
+              ),
+              (selected) => {
+                const cards: Card[] = selected || [];
+                if (cards.length > 0) {
+                  const discardEffect = new DiscardCardsEffect(effect, cards);
+                  discardEffect.target = player.active;
+                  return store.reduceEffect(state, discardEffect);
+                }
+                return state;
+              },
+            );
+          },
         });
       }
-
 
       options.push({
         message: GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         action: () => {
           DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 2, CardType.FIRE);
-        }
+        },
       });
 
       if (options.length === 1) {
         options[0].action();
       } else {
-        return store.prompt(state, new SelectOptionPrompt(
-          player.id,
-          GameMessage.CHOOSE_OPTION,
-          [
-            'Discard 1 React Energy attached to Arcanine ex',
-            'Discard 2 Fire Energy attached to Arcanine ex'
-          ],
-          {
-            allowCancel: false,
-          }), choice => {
+        return store.prompt(
+          state,
+          new SelectOptionPrompt(
+            player.id,
+            GameMessage.CHOOSE_OPTION,
+            [
+              'Discard 1 React Energy attached to Arcanine ex',
+              'Discard 2 Fire Energy attached to Arcanine ex',
+            ],
+            {
+              allowCancel: false,
+            },
+          ),
+          (choice) => {
             const option = options[choice];
             option.action();
-          });
+          },
+        );
       }
     }
 

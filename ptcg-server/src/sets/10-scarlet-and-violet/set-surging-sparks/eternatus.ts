@@ -6,7 +6,6 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Eternatus extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = N;
@@ -25,14 +24,14 @@ export class Eternatus extends PokemonCard {
       cost: [D],
       damage: 10,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is a Pokémon ex, this attack does 80 more damage.'
+      text: "If your opponent's Active Pokémon is a Pokémon ex, this attack does 80 more damage.",
     },
     {
-      name: 'World\'s End',
+      name: "World's End",
       cost: [R, D, D],
       damage: 230,
-      text: 'Discard a Stadium in play. If you can\'t, this attack does nothing.'
-    }
+      text: "Discard a Stadium in play. If you can't, this attack does nothing.",
+    },
   ];
 
   public set: string = 'SSP';
@@ -48,12 +47,11 @@ export class Eternatus extends PokemonCard {
   public fullName: string = 'Eternatus SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const opponentActive = opponent.active.getPokemonCard();
-      if (opponentActive && (opponentActive.tags.includes(CardTag.POKEMON_ex))) {
+      if (opponentActive && opponentActive.hasTag(CardTag.POKEMON_ex)) {
         effect.damage += 80;
       }
     }

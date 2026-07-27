@@ -8,7 +8,10 @@ import { StoreLike, State, StateUtils, SlotType, PlayerType } from '../../../gam
 import { Effect } from '../../../game/store/effects/effect';
 import { DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Zamazenta extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -25,14 +28,14 @@ export class Zamazenta extends PokemonCard {
       name: 'Metal Armament',
       cost: [C],
       damage: 30,
-      text: 'Attach a basic Energy card from your discard pile to this Pokémon.'
+      text: 'Attach a basic Energy card from your discard pile to this Pokémon.',
     },
     {
       name: 'Amazing Shield',
       cost: [L, F, M],
       damage: 180,
-      text: 'During your opponent\'s next turn, prevent all damage done to this Pokémon by attacks from Pokémon VMAX.'
-    }
+      text: "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Pokémon VMAX.",
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -47,19 +50,16 @@ export class Zamazenta extends PokemonCard {
     // Ref: set-burning-shadows/turtonator.ts (ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON, active only, basic energy)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON(
-        store, state, player, 1, undefined,
-        {
-          destinationSlots: [SlotType.ACTIVE],
-          energyFilter: { energyType: EnergyType.BASIC },
-          min: 0
-        }
-      );
+      ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON(store, state, player, 1, undefined, {
+        destinationSlots: [SlotType.ACTIVE],
+        energyFilter: { energyType: EnergyType.BASIC },
+        min: 0,
+      });
     }
 
     // Attack 2: Amazing Shield
     // Ref: set-rebel-clash/zamazenta.ts (DealDamageEffect + EndTurnEffect marker cleanup pattern),
-    //      set-shrouded-fable/neutral-center.ts (sourceCard.tags.includes(CardTag.POKEMON_VMAX) prevention)
+    //      set-shrouded-fable/neutral-center.ts (sourceCard.hasTag(CardTag.POKEMON_VMAX) prevention)
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -69,19 +69,23 @@ export class Zamazenta extends PokemonCard {
     }
 
     // Prevent damage from VMAX attacks during opponent's next turn
-    if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect)
-      && effect.target.cards.includes(this)
-      && effect.target.marker.hasMarker(this.AMAZING_SHIELD_MARKER, this)) {
+    if (
+      (effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
+      effect.target.cards.includes(this) &&
+      effect.target.marker.hasMarker(this.AMAZING_SHIELD_MARKER, this)
+    ) {
       const sourceCard = effect.source.getPokemonCard();
-      if (sourceCard && sourceCard.tags.includes(CardTag.POKEMON_VMAX)) {
+      if (sourceCard && sourceCard.hasTag(CardTag.POKEMON_VMAX)) {
         effect.preventDefault = true;
         return state;
       }
     }
 
     // Cleanup markers at end of opponent's turn
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_AMAZING_SHIELD_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_AMAZING_SHIELD_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_AMAZING_SHIELD_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {

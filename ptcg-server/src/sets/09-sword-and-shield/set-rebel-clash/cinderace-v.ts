@@ -10,26 +10,28 @@ import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 import { CheckRetreatCostEffect } from '../../../game/store/effects/check-effects';
 
 export class CinderaceV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = R;
   public hp: number = 210;
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Field Runner',
-    powerType: PowerType.ABILITY,
-    text: 'If a Stadium is in play, this Pokémon has no Retreat Cost.'
-  }];
+  public powers = [
+    {
+      name: 'Field Runner',
+      powerType: PowerType.ABILITY,
+      text: 'If a Stadium is in play, this Pokémon has no Retreat Cost.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Crimson Legs',
       cost: [R, R, C],
       damage: 140,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -42,7 +44,10 @@ export class CinderaceV extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Field Runner (passive - no retreat cost if stadium in play)
     // Ref: set-crimson-invasion/alolan-raichu.ts (Surge Surfer - CheckRetreatCostEffect + getStadiumCard)
-    if (effect instanceof CheckRetreatCostEffect && effect.player.active.getPokemonCard() === this) {
+    if (
+      effect instanceof CheckRetreatCostEffect &&
+      effect.player.active.getPokemonCard() === this
+    ) {
       const player = effect.player;
 
       if (IS_ABILITY_BLOCKED(store, state, player, this)) {

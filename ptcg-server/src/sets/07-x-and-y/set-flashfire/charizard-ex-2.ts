@@ -6,10 +6,13 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN,
+} from '../../../game/store/prefabs/prefabs';
 
 export class CharizardEx2 extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = R;
   public hp: number = 180;
@@ -21,14 +24,14 @@ export class CharizardEx2 extends PokemonCard {
       name: 'Wing Attack',
       cost: [C, C, C],
       damage: 60,
-      text: ''
+      text: '',
     },
     {
       name: 'Combustion Blast',
       cost: [R, R, C, C],
       damage: 150,
-      text: 'This Pokémon can\'t use Combustion Blast during your next turn.'
-    }
+      text: "This Pokémon can't use Combustion Blast during your next turn.",
+    },
   ];
 
   public set: string = 'FLF';

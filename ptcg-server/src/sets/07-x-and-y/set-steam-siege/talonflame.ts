@@ -1,14 +1,25 @@
-import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, CardTag, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt } from '../../../game'; import { Effect } from '../../../game/store/effects/effect';
+import {
+  PokemonCard,
+  Stage,
+  CardType,
+  PowerType,
+  StoreLike,
+  State,
+  CardTag,
+  ChooseCardsPrompt,
+  GameMessage,
+  ShuffleDeckPrompt,
+} from '../../../game';
+import { Effect } from '../../../game/store/effects/effect';
 
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Talonflame extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_2;
 
   public evolvesFrom = 'Fletchinder';
 
-  public tags = [CardTag.PLAY_DURING_SETUP];
+  protected _tags = [CardTag.PLAY_DURING_SETUP];
 
   public cardType: CardType = C;
 
@@ -20,18 +31,22 @@ export class Talonflame extends PokemonCard {
 
   public retreat = [];
 
-  public powers = [{
-    name: 'Gale Wings',
-    powerType: PowerType.ABILITY,
-    text: 'If this Pokémon is in your hand when you are setting up to play, you may put it face down as your Active Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Gale Wings',
+      powerType: PowerType.ABILITY,
+      text: 'If this Pokémon is in your hand when you are setting up to play, you may put it face down as your Active Pokémon.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Aero Blitz',
-    cost: [C],
-    damage: 40,
-    text: 'Search your deck for up to 2 cards and put them into your hand. Shuffle your deck afterward.'
-  }];
+  public attacks = [
+    {
+      name: 'Aero Blitz',
+      cost: [C],
+      damage: 40,
+      text: 'Search your deck for up to 2 cards and put them into your hand. Shuffle your deck afterward.',
+    },
+  ];
 
   public set: string = 'STS';
 
@@ -44,7 +59,6 @@ export class Talonflame extends PokemonCard {
   public fullName: string = 'Talonflame STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
@@ -52,17 +66,21 @@ export class Talonflame extends PokemonCard {
         return state;
       }
 
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        {},
-        { min: 1, max: 2, allowCancel: false }
-      ), selected => {
-        const cards = selected || [];
-        player.deck.moveCardsTo(cards, player.hand);
-      });
-      return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+      state = store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.deck,
+          {},
+          { min: 1, max: 2, allowCancel: false },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          player.deck.moveCardsTo(cards, player.hand);
+        },
+      );
+      return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
         player.deck.applyOrder(order);
       });
     }

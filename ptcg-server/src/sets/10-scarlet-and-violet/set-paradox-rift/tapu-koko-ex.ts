@@ -1,33 +1,40 @@
-
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SpecialCondition } from '../../../game/store/card/card-types';
 import { Card, ChooseEnergyPrompt, GameMessage, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { AddSpecialConditionsEffect, DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
+import {
+  AddSpecialConditionsEffect,
+  DiscardCardsEffect,
+} from '../../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED, WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN,
+} from '../../../game/store/prefabs/prefabs';
 
 export class TapuKokoex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public cardType: CardType = L;
   public hp: number = 210;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Vengeful Shock',
-    cost: [L, C],
-    damage: 30,
-    damageCalculation: '+',
-    text: 'If any of your Pokémon were Knocked Out by damage from an attack during your opponent\'s last turn, this attack does 90 more damage, and your opponent\'s Active Pokémon is now Paralyzed.'
-  },
-  {
-    name: 'Extreme Current',
-    cost: [L, L, C],
-    damage: 180,
-    text: 'Discard an Energy from this Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'Vengeful Shock',
+      cost: [L, C],
+      damage: 30,
+      damageCalculation: '+',
+      text: "If any of your Pokémon were Knocked Out by damage from an attack during your opponent's last turn, this attack does 90 more damage, and your opponent's Active Pokémon is now Paralyzed.",
+    },
+    {
+      name: 'Extreme Current',
+      cost: [L, L, C],
+      damage: 180,
+      text: 'Discard an Energy from this Pokémon.',
+    },
+  ];
 
   public regulationMark = 'G';
   public set: string = 'PAR';
@@ -43,7 +50,9 @@ export class TapuKokoex extends PokemonCard {
 
       if (WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN(player, { byAttackDamage: true })) {
         effect.damage += 90;
-        const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED]);
+        const specialConditionEffect = new AddSpecialConditionsEffect(effect, [
+          SpecialCondition.PARALYZED,
+        ]);
         store.reduceEffect(state, specialConditionEffect);
       }
       return state;
@@ -56,19 +65,23 @@ export class TapuKokoex extends PokemonCard {
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
-      return store.prompt(state, new ChooseEnergyPrompt(
-        player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        checkProvidedEnergy.energyMap,
-        [CardType.COLORLESS],
-        { allowCancel: false }
-      ), energy => {
-        const cards: Card[] = (energy || []).map(e => e.card);
-        const discardEnergy = new DiscardCardsEffect(effect, cards);
-        discardEnergy.target = player.active;
-        store.reduceEffect(state, discardEnergy);
-        return state;
-      });
+      return store.prompt(
+        state,
+        new ChooseEnergyPrompt(
+          player.id,
+          GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+          checkProvidedEnergy.energyMap,
+          [CardType.COLORLESS],
+          { allowCancel: false },
+        ),
+        (energy) => {
+          const cards: Card[] = (energy || []).map((e) => e.card);
+          const discardEnergy = new DiscardCardsEffect(effect, cards);
+          discardEnergy.target = player.active;
+          store.reduceEffect(state, discardEnergy);
+          return state;
+        },
+      );
     }
 
     return state;

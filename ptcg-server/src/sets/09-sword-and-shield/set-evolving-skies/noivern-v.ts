@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 
 export class NoivernV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = N;
   public hp: number = 200;
@@ -21,15 +21,15 @@ export class NoivernV extends PokemonCard {
       name: 'Boomburst',
       cost: [P],
       damage: 0,
-      text: 'This attack does 20 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack does 20 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Synchro Loud',
       cost: [P, D],
       damage: 60,
       damageCalculation: '+',
-      text: 'If you have the same number of cards in your hand as your opponent, this attack does 120 more damage.'
-    }
+      text: 'If you have the same number of cards in your hand as your opponent, this attack does 120 more damage.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -51,7 +51,7 @@ export class NoivernV extends PokemonCard {
       effect.damage = 20;
 
       // 20 damage to each benched Pokemon (no W&R for Benched)
-      opponent.bench.forEach(benched => {
+      opponent.bench.forEach((benched) => {
         if (benched.cards.length > 0) {
           const benchDamage = new PutDamageEffect(effect, 20);
           benchDamage.target = benched;

@@ -39,7 +39,7 @@ export class BraveBangle extends TrainerCard {
       const targetCard = effect.target.getPokemonCard();
       const attack = effect.attack;
       if (sourceCard && !sourceCard.hasRuleBox()) {
-        if (targetCard && targetCard.tags.includes(CardTag.POKEMON_ex)) {
+        if (targetCard && targetCard.hasTag(CardTag.POKEMON_ex)) {
           if (attack && attack.damage > 0 && effect.target === opponent.active) {
             effect.damage += 30;
           }

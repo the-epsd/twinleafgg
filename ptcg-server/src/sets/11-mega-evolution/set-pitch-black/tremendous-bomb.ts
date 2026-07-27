@@ -54,8 +54,7 @@ export class TremendousBomb extends TrainerCard {
     }
 
     const defenderIsMegaEx =
-      defenderCard.tags.includes(CardTag.POKEMON_SV_MEGA) &&
-      defenderCard.tags.includes(CardTag.POKEMON_ex);
+      defenderCard.hasTag(CardTag.POKEMON_SV_MEGA) && defenderCard.hasTag(CardTag.POKEMON_ex);
 
     if (defenderIsMegaEx) {
       return state;
@@ -63,8 +62,7 @@ export class TremendousBomb extends TrainerCard {
 
     const attackerCard = effect.player.active.getPokemonCard();
     const attackerIsMegaEx =
-      attackerCard?.tags.includes(CardTag.POKEMON_SV_MEGA) &&
-      attackerCard?.tags.includes(CardTag.POKEMON_ex);
+      attackerCard?.hasTag(CardTag.POKEMON_SV_MEGA) && attackerCard?.hasTag(CardTag.POKEMON_ex);
 
     if (!attackerIsMegaEx || effect.source !== effect.player.active) {
       return state;

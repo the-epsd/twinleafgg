@@ -4,7 +4,15 @@
 
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardTag, TrainerType } from '../../../game/store/card/card-types';
-import { ChooseCardsPrompt, GameError, GameMessage, ShowCardsPrompt, StoreLike, State, StateUtils } from '../../../game';
+import {
+  ChooseCardsPrompt,
+  GameError,
+  GameMessage,
+  ShowCardsPrompt,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
@@ -16,7 +24,8 @@ export class Lisia extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lisia';
   public fullName: string = 'Lisia CES';
-  public text: string = 'Search your deck for up to 2 ◇ (Prism Star) cards, reveal them, and put them into your hand. Then, shuffle your deck. You may play only 1 Supporter card during your turn (before your attack).';
+  public text: string =
+    'Search your deck for up to 2 ◇ (Prism Star) cards, reveal them, and put them into your hand. Then, shuffle your deck. You may play only 1 Supporter card during your turn (before your attack).';
 
   // Ref: set-celestial-storm/beast-ball.ts (blocked filter by CardTag for ChooseCardsPrompt)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -25,7 +34,7 @@ export class Lisia extends TrainerCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Check if the deck has any Prism Star cards
-      const hasPrismStar = player.deck.cards.some(c => c.tags && c.tags.includes(CardTag.PRISM_STAR));
+      const hasPrismStar = player.deck.cards.some((c) => c.hasTag(CardTag.PRISM_STAR));
       if (player.deck.cards.length === 0 || !hasPrismStar) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
@@ -33,36 +42,40 @@ export class Lisia extends TrainerCard {
       // Block non-Prism Star cards
       const blocked: number[] = [];
       player.deck.cards.forEach((card, index) => {
-        if (!card.tags || !card.tags.includes(CardTag.PRISM_STAR)) {
+        if (!card.hasTag(CardTag.PRISM_STAR)) {
           blocked.push(index);
         }
       });
 
-      store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        {},
-        { min: 1, max: 2, allowCancel: false, blocked }
-      ), selected => {
-        const cards = selected || [];
+      store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.deck,
+          {},
+          { min: 1, max: 2, allowCancel: false, blocked },
+        ),
+        (selected) => {
+          const cards = selected || [];
 
-        if (cards.length > 0) {
-          // Reveal chosen cards to opponent
-          store.prompt(state, new ShowCardsPrompt(
-            opponent.id,
-            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-            cards
-          ), () => { });
+          if (cards.length > 0) {
+            // Reveal chosen cards to opponent
+            store.prompt(
+              state,
+              new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+              () => {},
+            );
 
-          // Move chosen cards to hand
-          cards.forEach(card => {
-            player.deck.moveCardTo(card, player.hand);
-          });
-        }
+            // Move chosen cards to hand
+            cards.forEach((card) => {
+              player.deck.moveCardTo(card, player.hand);
+            });
+          }
 
-        SHUFFLE_DECK(store, state, player);
-      });
+          SHUFFLE_DECK(store, state, player);
+        },
+      );
     }
 
     return state;

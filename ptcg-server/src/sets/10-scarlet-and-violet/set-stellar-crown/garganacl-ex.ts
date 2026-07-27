@@ -10,8 +10,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 // SCR Garganacl ex 89 (https://limitlesstcg.com/cards/SCR/89)
 export class Garganaclex extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
 
   public stage: Stage = Stage.STAGE_2;
 
@@ -25,15 +24,22 @@ export class Garganaclex extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Salty Body',
-    useWhenInPlay: false,
-    powerType: PowerType.ABILITY,
-    text: 'This Pokémon can\'t be affected by any Special Conditions.'
-  }];
+  public powers = [
+    {
+      name: 'Salty Body',
+      useWhenInPlay: false,
+      powerType: PowerType.ABILITY,
+      text: "This Pokémon can't be affected by any Special Conditions.",
+    },
+  ];
 
   public attacks = [
-    { name: 'Block Hammer', cost: [CardType.FIGHTING, CardType.COLORLESS, CardType.COLORLESS], damage: 170, text: 'During your opponent\'s next turn, this Pokémon takes 60 less damage from attacks (after applying Weakness and Resistance).' }
+    {
+      name: 'Block Hammer',
+      cost: [CardType.FIGHTING, CardType.COLORLESS, CardType.COLORLESS],
+      damage: 170,
+      text: "During your opponent's next turn, this Pokémon takes 60 less damage from attacks (after applying Weakness and Resistance).",
+    },
   ];
 
   public regulationMark = 'H';
@@ -52,7 +58,6 @@ export class Garganaclex extends PokemonCard {
   public readonly CLEAR_BLOCK_HAMMER_MARKER = 'CLEAR_BLOCK_HAMMER_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -62,30 +67,36 @@ export class Garganaclex extends PokemonCard {
 
     // Salty Body
     if (effect instanceof CheckTableStateEffect) {
-      state.players.forEach(player => {
+      state.players.forEach((player) => {
         const activeCard = player.active.getPokemonCard();
 
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
+          const stub = new PowerEffect(
+            player,
+            {
+              name: 'test',
+              powerType: PowerType.ABILITY,
+              text: '',
+            },
+            this,
+          );
           store.reduceEffect(state, stub);
         } catch {
           return state;
         }
 
         // checking if the player's active has special conditions or if the active is Garganacl ex with the ability (i swear if they make another garganacl ex with the same ability name but with a different effect)
-        if (player.active.specialConditions.length === 0
-          || (activeCard && activeCard.name !== 'Garganacl ex')
-          || (activeCard && activeCard.powers[0] !== this.powers[0])) {
+        if (
+          player.active.specialConditions.length === 0 ||
+          (activeCard && activeCard.name !== 'Garganacl ex') ||
+          (activeCard && activeCard.powers[0] !== this.powers[0])
+        ) {
           return state;
         }
 
         const conditions = player.active.specialConditions.slice();
-        conditions.forEach(condition => {
+        conditions.forEach((condition) => {
           player.active.removeSpecialCondition(condition);
         });
       });
@@ -93,7 +104,10 @@ export class Garganaclex extends PokemonCard {
     }
 
     // doing end of turn things with the markers
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_BLOCK_HAMMER_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_BLOCK_HAMMER_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_BLOCK_HAMMER_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
@@ -124,5 +138,4 @@ export class Garganaclex extends PokemonCard {
 
     return state;
   }
-
 }

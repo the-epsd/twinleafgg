@@ -12,26 +12,28 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class EiscueV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 210;
   public weakness = [{ type: M }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Cold Absorption',
-    powerType: PowerType.ABILITY,
-    text: 'Whenever you attach a [W] Energy card from your hand to this Pokémon during your turn, heal 30 damage from it.'
-  }];
+  public powers = [
+    {
+      name: 'Cold Absorption',
+      powerType: PowerType.ABILITY,
+      text: 'Whenever you attach a [W] Energy card from your hand to this Pokémon during your turn, heal 30 damage from it.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Blizzard',
       cost: [W, W, C],
       damage: 120,
-      text: 'This attack also does 10 damage to each of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "This attack also does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -84,7 +86,7 @@ export class EiscueV extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      opponent.bench.forEach(benched => {
+      opponent.bench.forEach((benched) => {
         if (benched.cards.length > 0) {
           const damage = new PutDamageEffect(effect, 10);
           damage.target = benched;

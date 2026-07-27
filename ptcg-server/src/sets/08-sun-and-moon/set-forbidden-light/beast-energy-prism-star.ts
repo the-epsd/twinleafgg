@@ -9,7 +9,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { IS_SPECIAL_ENERGY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class BeastEnergyPrismStar extends EnergyCard {
-  public tags = [CardTag.PRISM_STAR];
+  protected _tags = [CardTag.PRISM_STAR];
   public provides: CardType[] = [CardType.COLORLESS];
   public energyType = EnergyType.SPECIAL;
   public set: string = 'FLI';
@@ -26,7 +26,7 @@ export class BeastEnergyPrismStar extends EnergyCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Provide energy when attached to Ultra Beast Pokemon
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-      if (effect.source.getPokemonCard()?.tags.includes(CardTag.ULTRA_BEAST)) {
+      if (effect.source.getPokemonCard()?.hasTag(CardTag.ULTRA_BEAST)) {
         effect.energyMap.push({ card: this, provides: [CardType.ANY] });
       }
     }
@@ -40,7 +40,7 @@ export class BeastEnergyPrismStar extends EnergyCard {
         return state;
       }
 
-      if (!effect.source.getPokemonCard()?.tags.includes(CardTag.ULTRA_BEAST)) {
+      if (!effect.source.getPokemonCard()?.hasTag(CardTag.ULTRA_BEAST)) {
         return state;
       }
 

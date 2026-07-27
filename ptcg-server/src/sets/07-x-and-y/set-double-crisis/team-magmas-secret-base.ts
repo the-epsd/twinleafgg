@@ -10,9 +10,10 @@ export class TeamMagmasSecretBase extends TrainerCard {
   public setNumber: string = '32';
   public trainerType = TrainerType.STADIUM;
   public set = 'DCR';
-  public name = 'Team Magma\'s Secret Base';
-  public fullName = 'Team Magma\'s Secret Base DCR';
-  public text: string = 'Whenever any player puts a Basic Pokémon (except for Team Magma Pokémon) from his or her hand onto his or her Bench, put 2 damage counters on that Pokémon.';
+  public name = "Team Magma's Secret Base";
+  public fullName = "Team Magma's Secret Base DCR";
+  public text: string =
+    'Whenever any player puts a Basic Pokémon (except for Team Magma Pokémon) from his or her hand onto his or her Bench, put 2 damage counters on that Pokémon.';
 
   reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && StateUtils.getStadiumCard(state) === this) {
@@ -22,7 +23,7 @@ export class TeamMagmasSecretBase extends TrainerCard {
         return state;
       }
 
-      if (effect.target.cards.length > 0 || effect.pokemonCard.tags.includes(CardTag.TEAM_MAGMA)) {
+      if (effect.target.cards.length > 0 || effect.pokemonCard.hasTag(CardTag.TEAM_MAGMA)) {
         return state;
       }
 

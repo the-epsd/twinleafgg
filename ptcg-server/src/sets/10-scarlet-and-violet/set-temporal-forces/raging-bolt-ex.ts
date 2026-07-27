@@ -8,10 +8,9 @@ import { DISCARD_UP_TO_X_ENERGY_FROM_YOUR_POKEMON } from '../../../game/store/pr
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class RagingBoltex extends PokemonCard {
-
   public regulationMark = 'H';
 
-  public tags = [CardTag.POKEMON_ex, CardTag.ANCIENT];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.ANCIENT];
 
   public stage: Stage = Stage.BASIC;
 
@@ -28,15 +27,15 @@ export class RagingBoltex extends PokemonCard {
       name: 'Burst Roar',
       cost: [CardType.COLORLESS],
       damage: 0,
-      text: 'Discard your hand and draw 6 cards.'
+      text: 'Discard your hand and draw 6 cards.',
     },
     {
       name: 'Bellowing Thunder',
       cost: [CardType.LIGHTNING, CardType.FIGHTING],
       damage: 70,
       damageCalculation: 'x',
-      text: 'You may discard any amount of Basic Energy from your Pokémon. This attack does 70 damage for each card you discarded in this way.'
-    }
+      text: 'You may discard any amount of Basic Energy from your Pokémon. This attack does 70 damage for each card you discarded in this way.',
+    },
   ];
 
   public set: string = 'TEF';
@@ -51,7 +50,6 @@ export class RagingBoltex extends PokemonCard {
 
   // Implement power
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
@@ -79,9 +77,9 @@ export class RagingBoltex extends PokemonCard {
         { energyType: EnergyType.BASIC },
         0,
         [SlotType.ACTIVE, SlotType.BENCH],
-        transfers => {
+        (transfers) => {
           effect.damage = transfers.length * 70;
-        }
+        },
       );
     }
     return state;

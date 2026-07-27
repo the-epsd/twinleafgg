@@ -20,14 +20,14 @@ export class Haxorus extends PokemonCard {
       cost: [M],
       damage: 40,
       damageCalculation: 'x',
-      text: 'Does 40 damage times the amount of [M] Energy attached to this Pokémon.'
+      text: 'Does 40 damage times the amount of [M] Energy attached to this Pokémon.',
     },
     {
       name: 'Strike of the Champion',
       cost: [F, M],
       damage: 0,
-      text: 'If the Defending Pokémon is a Team Plasma Pokémon, it is Knocked Out. (If the Defending Pokémon is not a Team Plasma Pokémon, this attack does nothing.)'
-    }
+      text: 'If the Defending Pokémon is a Team Plasma Pokémon, it is Knocked Out. (If the Defending Pokémon is not a Team Plasma Pokémon, this attack does nothing.)',
+    },
   ];
 
   public set: string = 'PLB';
@@ -45,8 +45,8 @@ export class Haxorus extends PokemonCard {
       store.reduceEffect(state, checkEnergy);
 
       let metalCount = 0;
-      checkEnergy.energyMap.forEach(em => {
-        metalCount += em.provides.filter(p => p === CardType.METAL || p === CardType.ANY).length;
+      checkEnergy.energyMap.forEach((em) => {
+        metalCount += em.provides.filter((p) => p === CardType.METAL || p === CardType.ANY).length;
       });
 
       effect.damage = 40 * metalCount;
@@ -58,7 +58,7 @@ export class Haxorus extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       const defendingCard = opponent.active.getPokemonCard();
 
-      if (defendingCard && defendingCard.tags.includes(CardTag.TEAM_PLASMA)) {
+      if (defendingCard && defendingCard.hasTag(CardTag.TEAM_PLASMA)) {
         // Ref: set-shrouded-fable/haxorus.ts (direct KO attack effect)
         return KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
       }

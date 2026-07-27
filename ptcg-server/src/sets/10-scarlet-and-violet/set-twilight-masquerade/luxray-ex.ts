@@ -9,12 +9,11 @@ import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Luxrayex extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_2;
 
   public evolvesFrom: string = 'Luxio';
 
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
 
   public regulationMark = 'H';
 
@@ -31,14 +30,14 @@ export class Luxrayex extends PokemonCard {
       name: 'Piercing Gaze',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 120,
-      text: 'Look at your opponent\'s hand and discard 1 card your find there.'
+      text: "Look at your opponent's hand and discard 1 card your find there.",
     },
     {
       name: 'Volt Strike',
       cost: [CardType.LIGHTNING, CardType.LIGHTNING],
       damage: 250,
-      text: 'Discard all Energy from this Pokémon.'
-    }
+      text: 'Discard all Energy from this Pokémon.',
+    },
   ];
 
   public set: string = 'TWM';
@@ -52,9 +51,7 @@ export class Luxrayex extends PokemonCard {
   public fullName: string = 'Luxray ex TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -62,23 +59,26 @@ export class Luxrayex extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DECK,
-        opponent.hand,
-        {},
-        { allowCancel: false, min: 0, max: 1 }
-      ), selectedCard => {
-        const selected = selectedCard || [];
-        if (selectedCard === null || selected.length === 0) {
-          return;
-        }
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DECK,
+          opponent.hand,
+          {},
+          { allowCancel: false, min: 0, max: 1 },
+        ),
+        (selectedCard) => {
+          const selected = selectedCard || [];
+          if (selectedCard === null || selected.length === 0) {
+            return;
+          }
 
-        opponent.hand.moveCardTo(selected[0], opponent.discard);
+          opponent.hand.moveCardTo(selected[0], opponent.discard);
 
-        player.supporter.moveCardTo(this, player.discard);
-
-      });
+          player.supporter.moveCardTo(this, player.discard);
+        },
+      );
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
@@ -87,14 +87,12 @@ export class Luxrayex extends PokemonCard {
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
-      const cards: Card[] = checkProvidedEnergy.energyMap.map(e => e.card);
+      const cards: Card[] = checkProvidedEnergy.energyMap.map((e) => e.card);
       const discardEnergy = new DiscardCardsEffect(effect, cards);
       discardEnergy.target = player.active;
       store.reduceEffect(state, discardEnergy);
-
     }
 
     return state;
   }
-
 }

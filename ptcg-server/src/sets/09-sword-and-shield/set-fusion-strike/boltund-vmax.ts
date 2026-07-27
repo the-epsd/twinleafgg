@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 
 export class BoltundVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Boltund V';
   public cardType: CardType = L;
@@ -24,14 +24,14 @@ export class BoltundVmax extends PokemonCard {
       cost: [L, C],
       damage: 30,
       damageCalculation: '+',
-      text: 'This attack does 30 more damage for each [L] Energy attached to all of your Pokémon.'
+      text: 'This attack does 30 more damage for each [L] Energy attached to all of your Pokémon.',
     },
     {
       name: 'Max Bolt',
       cost: [L, L, C],
       damage: 230,
-      text: 'During your next turn, this Pokémon can\'t use Max Bolt.'
-    }
+      text: "During your next turn, this Pokémon can't use Max Bolt.",
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -51,8 +51,10 @@ export class BoltundVmax extends PokemonCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         const checkEnergy = new CheckProvidedEnergyEffect(player, cardList);
         store.reduceEffect(state, checkEnergy);
-        checkEnergy.energyMap.forEach(em => {
-          lightningCount += em.provides.filter(t => t === CardType.LIGHTNING || t === CardType.ANY).length;
+        checkEnergy.energyMap.forEach((em) => {
+          lightningCount += em.provides.filter(
+            (t) => t === CardType.LIGHTNING || t === CardType.ANY,
+          ).length;
         });
       });
 

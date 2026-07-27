@@ -4,12 +4,15 @@ import { GameError, GameMessage, PlayerType, State, StateUtils, StoreLike } from
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 
-import { ApplyWeaknessEffect, AfterDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import {
+  ApplyWeaknessEffect,
+  AfterDamageEffect,
+  PutDamageEffect,
+} from '../../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class AlolanVulpixVSTAR extends PokemonCard {
-
   public stage = Stage.VSTAR;
 
   public evolvesFrom = 'Alolan Vulpix V';
@@ -18,7 +21,7 @@ export class AlolanVulpixVSTAR extends PokemonCard {
 
   public hp = 240;
 
-  public tags = [CardTag.POKEMON_VSTAR];
+  protected _tags = [CardTag.POKEMON_VSTAR];
 
   public weakness = [{ type: CardType.METAL }];
 
@@ -30,14 +33,14 @@ export class AlolanVulpixVSTAR extends PokemonCard {
       cost: [CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
       damage: 160,
       shredAttack: true,
-      text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon. During your opponent\'s next turn, prevent all damage done to this Pokémon by attacks from Pokémon that have an Ability.'
+      text: "This attack's damage isn't affected by any effects on your opponent's Active Pokémon. During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Pokémon that have an Ability.",
     },
     {
       name: 'Silvery Snow Star',
       cost: [],
       damage: 70,
-      text: 'This attack does 70 damage for each of your opponent\'s Pokémon V in play. This damage isn\'t affected by Weakness or Resistance. (You can\'t use more than 1 VSTAR Power in a game.)'
-    }
+      text: "This attack does 70 damage for each of your opponent's Pokémon V in play. This damage isn't affected by Weakness or Resistance. (You can't use more than 1 VSTAR Power in a game.)",
+    },
   ];
 
   public set = 'SIT';
@@ -52,8 +55,10 @@ export class AlolanVulpixVSTAR extends PokemonCard {
 
   public fullName = 'Alolan Vulpix VSTAR SIT';
 
-  public readonly PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER = 'PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER';
-  public readonly CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER = 'CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER';
+  public readonly PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER =
+    'PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER';
+  public readonly CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER =
+    'CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
@@ -79,15 +84,19 @@ export class AlolanVulpixVSTAR extends PokemonCard {
         const oppActive = opponent.active.getPokemonCard();
 
         if (oppActive && oppActive?.powers.length > 0) {
-
-          player.active.marker.addMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this);
-          opponent.marker.addMarker(this.CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this);
+          player.active.marker.addMarker(
+            this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER,
+            this,
+          );
+          opponent.marker.addMarker(
+            this.CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER,
+            this,
+          );
         }
       }
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -95,10 +104,19 @@ export class AlolanVulpixVSTAR extends PokemonCard {
         throw new GameError(GameMessage.LABEL_VSTAR_USED);
       }
 
-      const benchPokemon = opponent.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined) as PokemonCard[];
-      const vPokemons = benchPokemon.filter(card => card.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX));
+      const benchPokemon = opponent.bench
+        .map((b) => b.getPokemonCard())
+        .filter((card) => card !== undefined) as PokemonCard[];
+      const vPokemons = benchPokemon.filter((card) =>
+        card.hasTag(CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX),
+      );
       const opponentActive = opponent.active.getPokemonCard();
-      if (opponentActive && opponentActive.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX || CardTag.POKEMON_ex)) {
+      if (
+        opponentActive &&
+        opponentActive.hasTag(
+          CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX || CardTag.POKEMON_ex,
+        )
+      ) {
         vPokemons.push(opponentActive);
       }
 
@@ -112,11 +130,15 @@ export class AlolanVulpixVSTAR extends PokemonCard {
       effect.ignoreWeakness = true;
       effect.damage *= vPokes;
       player.usedVSTAR = true;
-
     }
 
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
-      if (effect.target.marker.hasMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this)) {
+      if (
+        effect.target.marker.hasMarker(
+          this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER,
+          this,
+        )
+      ) {
         const source = effect.source.getPokemonCard() as PokemonCard;
         if (!IS_ABILITY_BLOCKED(store, state, effect.player, source)) {
           effect.preventDefault = true;
@@ -125,12 +147,23 @@ export class AlolanVulpixVSTAR extends PokemonCard {
       }
     }
 
-    if (effect instanceof EndTurnEffect
-      && effect.player.active.marker.hasMarker(this.CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this)) {
-      effect.player.active.marker.removeMarker(this.CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this);
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.active.marker.hasMarker(
+        this.CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER,
+        this,
+      )
+    ) {
+      effect.player.active.marker.removeMarker(
+        this.CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER,
+        this,
+      );
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        cardList.marker.removeMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this);
+        cardList.marker.removeMarker(
+          this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER,
+          this,
+        );
       });
     }
 

@@ -2,33 +2,40 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, IS_ABILITY_BLOCKED, ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_POISON_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  IS_ABILITY_BLOCKED,
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
+} from '../../../game/store/prefabs/prefabs';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { PowerType, State, StoreLike } from '../../../game';
 export class Qwilfish extends PokemonCard {
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = D;
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Bursting Needles',
-    powerType: PowerType.ABILITY,
-    text: 'If this Pokémon is in the Active Spot and is Knocked Out by damage from an attack from your opponent\'s Pokémon, put 6 damage counters on the Attacking Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Bursting Needles',
+      powerType: PowerType.ABILITY,
+      text: "If this Pokémon is in the Active Spot and is Knocked Out by damage from an attack from your opponent's Pokémon, put 6 damage counters on the Attacking Pokémon.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Poison Jab',
       cost: [C, C],
       damage: 30,
-      text: 'Your opponent\'s Active Pokémon is now Poisoned.'
-    }
+      text: "Your opponent's Active Pokémon is now Poisoned.",
+    },
   ];
 
   public regulationMark: string = 'E';

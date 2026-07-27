@@ -6,12 +6,17 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  COIN_FLIP_PROMPT,
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+  SWITCH_ACTIVE_WITH_BENCHED,
+} from '../../../game/store/prefabs/prefabs';
 import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 export class BlastoiseEx extends PokemonCard {
   public usedRapidSpin = false;
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 180;
@@ -23,14 +28,14 @@ export class BlastoiseEx extends PokemonCard {
       name: 'Rapid Spin',
       cost: [C, C],
       damage: 30,
-      text: 'Switch this Pokémon with 1 of your Benched Pokémon. Then, your opponent switches his or her Active Pokémon with 1 of his or her Benched Pokémon.'
+      text: 'Switch this Pokémon with 1 of your Benched Pokémon. Then, your opponent switches his or her Active Pokémon with 1 of his or her Benched Pokémon.',
     },
     {
       name: 'Splash Bomb',
       cost: [W, W, W],
       damage: 120,
-      text: 'Flip a coin. If tails, this Pokémon does 30 damage to itself.'
-    }
+      text: 'Flip a coin. If tails, this Pokémon does 30 damage to itself.',
+    },
   ];
 
   public set: string = 'XY';
@@ -50,10 +55,10 @@ export class BlastoiseEx extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (player.bench.some(b => b.cards.length > 0)) {
+      if (player.bench.some((b) => b.cards.length > 0)) {
         SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
       }
-      if (opponent.bench.some(b => b.cards.length > 0)) {
+      if (opponent.bench.some((b) => b.cards.length > 0)) {
         SWITCH_ACTIVE_WITH_BENCHED(store, state, opponent);
       }
     }
@@ -64,7 +69,7 @@ export class BlastoiseEx extends PokemonCard {
 
     // Ref: set-dragons-exalted/mareep.ts (coin flip self-damage on tails)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (!result) {
           THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, 30);
         }

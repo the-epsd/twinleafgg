@@ -3,13 +3,19 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+} from '../../../game/store/card/card-types';
 import { StoreLike, State, PlayerType, SlotType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, ATTACH_ENERGY_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class GlaceonV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 210;
@@ -21,14 +27,14 @@ export class GlaceonV extends PokemonCard {
       name: 'Frost Charge',
       cost: [W],
       damage: 30,
-      text: 'Search your deck for a [W] Energy card and attach it to this Pokémon. Then, shuffle your deck.'
+      text: 'Search your deck for a [W] Energy card and attach it to this Pokémon. Then, shuffle your deck.',
     },
     {
       name: 'Freezing Wind',
       cost: [W, W, C],
       damage: 130,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -52,7 +58,7 @@ export class GlaceonV extends PokemonCard {
         SlotType.DECK,
         [SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
-        { min: 1, max: 1, allowCancel: true }
+        { min: 1, max: 1, allowCancel: true },
       );
     }
 

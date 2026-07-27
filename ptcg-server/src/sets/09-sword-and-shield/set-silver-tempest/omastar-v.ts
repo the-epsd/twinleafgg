@@ -13,7 +13,7 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 
 export class OmastarV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 190;
@@ -27,14 +27,14 @@ export class OmastarV extends PokemonCard {
       name: 'Primal Guidance',
       cost: [C],
       damage: 0,
-      text: 'Search your deck for up to 2 Pokémon that evolve from an Item card that has "Fossil" in its name and put them onto your Bench. Then, shuffle your deck.'
+      text: 'Search your deck for up to 2 Pokémon that evolve from an Item card that has "Fossil" in its name and put them onto your Bench. Then, shuffle your deck.',
     },
     {
       name: 'Tentacle Lock',
       cost: [W, C, C],
       damage: 110,
-      text: 'If the Defending Pokémon is an Evolution Pokémon, it can\'t attack during your opponent\'s next turn.'
-    }
+      text: "If the Defending Pokémon is an Evolution Pokémon, it can't attack during your opponent's next turn.",
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -54,7 +54,7 @@ export class OmastarV extends PokemonCard {
         return state;
       }
 
-      const slots = player.bench.filter(b => b.cards.length === 0);
+      const slots = player.bench.filter((b) => b.cards.length === 0);
       if (slots.length === 0) {
         return state;
       }
@@ -62,9 +62,10 @@ export class OmastarV extends PokemonCard {
       // Build blocked list: only Pokemon that evolve from a Fossil Item
       const blocked: number[] = [];
       player.deck.cards.forEach((c, index) => {
-        const isFossilPokemon = c instanceof PokemonCard
-          && c.evolvesFrom
-          && c.evolvesFrom.toLowerCase().includes('fossil');
+        const isFossilPokemon =
+          c instanceof PokemonCard &&
+          c.evolvesFrom &&
+          c.evolvesFrom.toLowerCase().includes('fossil');
         if (!isFossilPokemon) {
           blocked.push(index);
         }
@@ -72,19 +73,26 @@ export class OmastarV extends PokemonCard {
 
       const maxPick = Math.min(2, slots.length);
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-        player.deck,
-        {},
-        { min: 0, max: maxPick, allowCancel: false, blocked }
-      ), selected => {
-        const cards = selected || [];
-        cards.forEach((card, index) => {
-          store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card as PokemonCard, slots[index]));
-        });
-        SHUFFLE_DECK(store, state, player);
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+          player.deck,
+          {},
+          { min: 0, max: maxPick, allowCancel: false, blocked },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          cards.forEach((card, index) => {
+            store.reduceEffect(
+              state,
+              new PlayPokemonFromDeckEffect(player, card as PokemonCard, slots[index]),
+            );
+          });
+          SHUFFLE_DECK(store, state, player);
+        },
+      );
     }
 
     // Attack 2: Tentacle Lock
@@ -100,12 +108,17 @@ export class OmastarV extends PokemonCard {
       }
     }
 
-    if (effect instanceof AttackEffect && effect.player.active.marker.hasMarker(this.CANT_ATTACK_MARKER, this)) {
+    if (
+      effect instanceof AttackEffect &&
+      effect.player.active.marker.hasMarker(this.CANT_ATTACK_MARKER, this)
+    ) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CANT_ATTACK_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CANT_ATTACK_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CANT_ATTACK_MARKER, this);
       effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList: any) => {
         cardList.marker.removeMarker(this.CANT_ATTACK_MARKER, this);

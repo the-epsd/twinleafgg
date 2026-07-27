@@ -1,12 +1,6 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import {
-  StoreLike,
-  State,
-  StateUtils,
-  GameError,
-  GameMessage,
-} from '../../../game';
+import { StoreLike, State, StateUtils, GameError, GameMessage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
@@ -14,7 +8,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Terapagosex extends PokemonCard {
   public regulationMark = 'H';
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
   public hp: number = 230;
@@ -56,10 +50,7 @@ export class Terapagosex extends PokemonCard {
 
       const player = effect.player;
 
-      const playerBench = player.bench.reduce(
-        (left, b) => left + (b.cards.length ? 1 : 0),
-        0,
-      );
+      const playerBench = player.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
 
       const totalBenched = playerBench;
 
@@ -69,21 +60,13 @@ export class Terapagosex extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      player.active.marker.addMarker(
-        this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER,
-        this,
-      );
-      opponent.marker.addMarker(
-        this.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER,
-        this,
-      );
+      player.active.marker.addMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
+      opponent.marker.addMarker(this.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
     }
 
     if (
       effect instanceof PutDamageEffect &&
-      effect.target.marker.hasMarker(
-        this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER,
-      )
+      effect.target.marker.hasMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER)
     ) {
       const sourceCard = effect.source.getPokemonCard();
       if (
@@ -106,10 +89,7 @@ export class Terapagosex extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Target is not Active
-      if (
-        effect.target === player.active ||
-        effect.target === opponent.active
-      ) {
+      if (effect.target === player.active || effect.target === opponent.active) {
         return state;
       }
 

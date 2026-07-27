@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { BLOCK_RETREAT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../../game/store/prefabs/attack-effects';
 export class GarbodorVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Garbodor V';
   public cardType: CardType = D;
@@ -22,19 +22,21 @@ export class GarbodorVmax extends PokemonCard {
   // Ref: set-evolving-skies/play-trainer-effect.ts (tools.length >= pokemonCard.maxTools check)
   public maxTools: number = 2;
 
-  public powers = [{
-    name: 'Rubbish Collecting',
-    powerType: PowerType.ABILITY,
-    text: 'This Pokémon may have up to 2 Pokémon Tools attached to it. If it loses this Ability, discard Pokémon Tools from it until only 1 remains.'
-  }];
+  public powers = [
+    {
+      name: 'Rubbish Collecting',
+      powerType: PowerType.ABILITY,
+      text: 'This Pokémon may have up to 2 Pokémon Tools attached to it. If it loses this Ability, discard Pokémon Tools from it until only 1 remains.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'G-Max Malodor',
       cost: [D, C],
       damage: 120,
-      text: 'Your opponent\'s Active Pokémon is now Poisoned. During your opponent\'s next turn, that Pokémon can\'t retreat.'
-    }
+      text: "Your opponent's Active Pokémon is now Poisoned. During your opponent's next turn, that Pokémon can't retreat.",
+    },
   ];
 
   public regulationMark: string = 'E';

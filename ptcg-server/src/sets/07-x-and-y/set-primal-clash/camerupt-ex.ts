@@ -11,7 +11,7 @@ import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefa
 import { DISCARD_UP_TO_X_TYPE_ENERGY_FROM_YOUR_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class CameruptEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = R;
   public hp: number = 180;
@@ -24,15 +24,15 @@ export class CameruptEx extends PokemonCard {
       cost: [R, C],
       damage: 30,
       damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 30 more damage.'
+      text: 'Flip a coin. If heads, this attack does 30 more damage.',
     },
     {
       name: 'Explosive Jet',
       cost: [R, R, C, C],
       damage: 50,
       damageCalculation: 'x',
-      text: 'Discard as many [R] Energy attached to your Pokémon as you like. This attack does 50 damage times the number of Energy cards you discarded.'
-    }
+      text: 'Discard as many [R] Energy attached to your Pokémon as you like. This attack does 50 damage times the number of Energy cards you discarded.',
+    },
   ];
 
   public set: string = 'PRC';
@@ -61,9 +61,9 @@ export class CameruptEx extends PokemonCard {
         CardType.FIRE,
         0,
         [SlotType.ACTIVE, SlotType.BENCH],
-        transfers => {
+        (transfers) => {
           effect.damage = transfers.length * 50;
-        }
+        },
       );
     }
 

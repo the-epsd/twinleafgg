@@ -8,10 +8,13 @@ import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+} from '../../../game/store/prefabs/prefabs';
 
 export class DodrioV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V, CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.POKEMON_V, CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
   public hp: number = 200;
@@ -24,14 +27,14 @@ export class DodrioV extends PokemonCard {
       name: 'No Reprieve',
       cost: [C],
       damage: 20,
-      text: 'During your next turn, this Pokémon\'s attacks do 80 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).'
+      text: "During your next turn, this Pokémon's attacks do 80 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).",
     },
     {
       name: 'Rampage Drill',
       cost: [C, C, C],
       damage: 160,
-      text: 'This Pokémon also does 30 damage to itself.'
-    }
+      text: 'This Pokémon also does 30 damage to itself.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -52,10 +55,12 @@ export class DodrioV extends PokemonCard {
     }
 
     // Apply bonus to any attack from this Pokemon when marker is set
-    if (effect instanceof AttackEffect
-      && effect.source.getPokemonCard() === this
-      && (effect.attack === this.attacks[0] || effect.attack === this.attacks[1])
-      && effect.source.marker.hasMarker(this.ATTACK_BONUS_MARKER, this)) {
+    if (
+      effect instanceof AttackEffect &&
+      effect.source.getPokemonCard() === this &&
+      (effect.attack === this.attacks[0] || effect.attack === this.attacks[1]) &&
+      effect.source.marker.hasMarker(this.ATTACK_BONUS_MARKER, this)
+    ) {
       effect.damage += 80;
     }
 

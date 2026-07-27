@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Galvantulaex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public evolvesFrom = 'Joltik';
   public cardType: CardType = CardType.LIGHTNING;
   public hp: number = 260;
@@ -24,13 +24,13 @@ export class Galvantulaex extends PokemonCard {
       cost: [CardType.LIGHTNING, CardType.COLORLESS],
       damage: 110,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is a Pokémon ex or Pokémon V, this attack does 110 more damage.',
+      text: "If your opponent's Active Pokémon is a Pokémon ex or Pokémon V, this attack does 110 more damage.",
     },
     {
       name: 'Fulgurite',
       cost: [CardType.GRASS, CardType.LIGHTNING, CardType.FIGHTING],
       damage: 180,
-      text: 'Discard all Energy from this Pokémon. During your opponent\'s next turn, they can\'t play any Item cards from their hand.'
+      text: "Discard all Energy from this Pokémon. During your opponent's next turn, they can't play any Item cards from their hand.",
     },
   ];
 
@@ -49,12 +49,16 @@ export class Galvantulaex extends PokemonCard {
   public readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const opponentActive = opponent.active.getPokemonCard();
-      if (opponentActive && opponentActive.tags.includes(CardTag.POKEMON_V) || opponentActive && opponentActive.tags.includes(CardTag.POKEMON_VSTAR) || opponentActive && opponentActive.tags.includes(CardTag.POKEMON_VMAX) || opponentActive && opponentActive.tags.includes(CardTag.POKEMON_ex)) {
+      if (
+        (opponentActive && opponentActive.hasTag(CardTag.POKEMON_V)) ||
+        (opponentActive && opponentActive.hasTag(CardTag.POKEMON_VSTAR)) ||
+        (opponentActive && opponentActive.hasTag(CardTag.POKEMON_VMAX)) ||
+        (opponentActive && opponentActive.hasTag(CardTag.POKEMON_ex))
+      ) {
         effect.damage += 110;
       }
     }
@@ -66,7 +70,7 @@ export class Galvantulaex extends PokemonCard {
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
-      const cards: Card[] = checkProvidedEnergy.energyMap.map(e => e.card);
+      const cards: Card[] = checkProvidedEnergy.energyMap.map((e) => e.card);
       const discardEnergy = new DiscardCardsEffect(effect, cards);
       discardEnergy.target = player.active;
       store.reduceEffect(state, discardEnergy);
@@ -86,7 +90,11 @@ export class Galvantulaex extends PokemonCard {
       player.marker.removeMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this);
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

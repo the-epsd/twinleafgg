@@ -5,7 +5,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { MEGA_EVOLUTION_END_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class MGardevoirEx2 extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX, CardTag.MEGA];
+  protected _tags = [CardTag.POKEMON_EX, CardTag.MEGA];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom = 'Gardevoir-EX';
   public cardType: CardType = Y;
@@ -14,13 +14,15 @@ export class MGardevoirEx2 extends PokemonCard {
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Brilliant Arrow',
-    cost: [Y, C, C],
-    damage: 30,
-    damageCalculation: 'x',
-    text: 'This attack does 30 damage times the amount of [Y] Energy attached to all of your Pokémon.',
-  }];
+  public attacks = [
+    {
+      name: 'Brilliant Arrow',
+      cost: [Y, C, C],
+      damage: 30,
+      damageCalculation: 'x',
+      text: 'This attack does 30 damage times the amount of [Y] Energy attached to all of your Pokémon.',
+    },
+  ];
 
   public set: string = 'PRC';
   public name: string = 'M Gardevoir-EX';

@@ -1,12 +1,28 @@
-import { PokemonCard, CardTag, Stage, CardType, Attack, State, StoreLike, SpecialCondition, Card, CardList, StateUtils } from '../../../game';
-import { AddSpecialConditionsEffect, DiscardCardsEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import {
+  PokemonCard,
+  CardTag,
+  Stage,
+  CardType,
+  Attack,
+  State,
+  StoreLike,
+  SpecialCondition,
+  Card,
+  CardList,
+  StateUtils,
+} from '../../../game';
+import {
+  AddSpecialConditionsEffect,
+  DiscardCardsEffect,
+  PutDamageEffect,
+} from '../../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { TAKE_X_PRIZES, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Umbreonex extends PokemonCard {
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Eevee';
   public cardType: CardType = D;
@@ -19,14 +35,14 @@ export class Umbreonex extends PokemonCard {
       name: 'Moon Mirage',
       cost: [D, C, C],
       damage: 160,
-      text: 'Your opponent\'s Active Pokémon is now Confused.',
+      text: "Your opponent's Active Pokémon is now Confused.",
     },
     {
       name: 'Onyx',
       cost: [L, P, D],
       damage: 0,
       text: 'Discard all Energy from this Pokémon, and take a Prize card.',
-    }
+    },
   ];
 
   public regulationMark: string = 'H';
@@ -37,9 +53,10 @@ export class Umbreonex extends PokemonCard {
   public fullName: string = 'Umbreon ex PRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED]);
+      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [
+        SpecialCondition.CONFUSED,
+      ]);
       store.reduceEffect(state, specialConditionEffect);
     }
 
@@ -49,7 +66,7 @@ export class Umbreonex extends PokemonCard {
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
-      const cards: Card[] = checkProvidedEnergy.energyMap.map(e => e.card);
+      const cards: Card[] = checkProvidedEnergy.energyMap.map((e) => e.card);
       const discardEnergy = new DiscardCardsEffect(effect, cards);
       discardEnergy.target = player.active;
       store.reduceEffect(state, discardEnergy);
@@ -57,7 +74,11 @@ export class Umbreonex extends PokemonCard {
       return TAKE_X_PRIZES(store, state, player, 1);
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -72,8 +93,7 @@ export class Umbreonex extends PokemonCard {
   }
 
   shuffleFaceDownPrizeCards(array: CardList[]): CardList[] {
-
-    const faceDownPrizeCards = array.filter(p => p.isSecret && p.cards.length > 0);
+    const faceDownPrizeCards = array.filter((p) => p.isSecret && p.cards.length > 0);
 
     for (let i = faceDownPrizeCards.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));

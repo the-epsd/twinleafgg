@@ -11,13 +11,15 @@ export class DittoPrismStar extends PokemonCard {
   public hp: number = 40;
   public weakness = [{ type: CardType.FIGHTING }];
   public retreat = [CardType.COLORLESS];
-  public tags = [CardTag.PRISM_STAR];
+  protected _tags = [CardTag.PRISM_STAR];
 
-  public powers = [{
-    name: 'Almighty Evolution',
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), you may put any Stage 1 card from your hand onto this Pokémon to evolve it. You can\'t use this Ability during your first turn or the turn this Pokémon was put into play.'
-  }];
+  public powers = [
+    {
+      name: 'Almighty Evolution',
+      powerType: PowerType.ABILITY,
+      text: "Once during your turn (before your attack), you may put any Stage 1 card from your hand onto this Pokémon to evolve it. You can't use this Ability during your first turn or the turn this Pokémon was put into play.",
+    },
+  ];
 
   public cardImage: string = 'assets/cardback.png';
   public set: string = 'LOT';
@@ -49,11 +51,15 @@ export class DittoPrismStar extends PokemonCard {
 
       // Try to reduce PowerEffect to check if something blocks our ability
       try {
-        const stub = new PowerEffect(owner, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
+        const stub = new PowerEffect(
+          owner,
+          {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: '',
+          },
+          this,
+        );
         store.reduceEffect(state, stub);
         this.evolvesToStage = [Stage.STAGE_1];
       } catch {

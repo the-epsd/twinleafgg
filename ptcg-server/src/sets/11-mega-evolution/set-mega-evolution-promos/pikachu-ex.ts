@@ -12,24 +12,26 @@ import {
 
 export class Pikachuex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public hp: number = 190;
   public cardType: CardType = L;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Pika Pika Parade',
-    cost: [C],
-    damage: 0,
-    text: 'Search your deck for as many Basic Pokémon as you like and put them onto your Bench. Then, shuffle your deck.'
-  },
-  {
-    name: 'Thunderbolt',
-    cost: [L, L, C],
-    damage: 200,
-    text: 'Discard all Energy attached to this Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'Pika Pika Parade',
+      cost: [C],
+      damage: 0,
+      text: 'Search your deck for as many Basic Pokémon as you like and put them onto your Bench. Then, shuffle your deck.',
+    },
+    {
+      name: 'Thunderbolt',
+      cost: [L, L, C],
+      damage: 200,
+      text: 'Discard all Energy attached to this Pokémon.',
+    },
+  ];
 
   public regulationMark: string = 'J';
   public set: string = 'MEP';
@@ -49,7 +51,13 @@ export class Pikachuex extends PokemonCard {
       if (slots.length === 0) {
         return SHUFFLE_DECK(store, state, player);
       }
-      return SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, player, { stage: Stage.BASIC }, { min: 0, max: slots.length });
+      return SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(
+        store,
+        state,
+        player,
+        { stage: Stage.BASIC },
+        { min: 0, max: slots.length },
+      );
     }
     // Ref: set-evolving-skies/raichu.ts (Thunderbolt — discard all Energy)
     if (WAS_ATTACK_USED(effect, 1, this)) {

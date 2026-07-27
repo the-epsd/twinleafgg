@@ -7,28 +7,31 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { AfterDamageEffect, ApplyWeaknessEffect } from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
-
 export class GreatTuskex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex, CardTag.ANCIENT];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.ANCIENT];
   public cardType: CardType = F;
   public hp: number = 250;
   public weakness = [{ type: P }];
   public retreat = [C, C, C, C];
 
-  public powers = [{
-    name: 'Quaking Demolition',
-    powerType: PowerType.ABILITY,
-    text: 'Once at the end of your turn (after your attack), if this Pokémon is in the Active Spot, you must discard the top 5 cards of your deck.'
-  }];
+  public powers = [
+    {
+      name: 'Quaking Demolition',
+      powerType: PowerType.ABILITY,
+      text: 'Once at the end of your turn (after your attack), if this Pokémon is in the Active Spot, you must discard the top 5 cards of your deck.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Great Bash',
-    cost: [F, C, C, C],
-    damage: 260,
-    shredAttack: true,
-    text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'Great Bash',
+      cost: [F, C, C, C],
+      damage: 260,
+      shredAttack: true,
+      text: "This attack's damage isn't affected by any effects on your opponent's Active Pokémon.",
+    },
+  ];
 
   public set: string = 'PAF';
   public regulationMark = 'G';

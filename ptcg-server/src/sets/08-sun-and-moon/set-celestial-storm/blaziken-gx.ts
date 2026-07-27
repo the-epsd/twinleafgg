@@ -4,7 +4,15 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, DiscardEnergyPrompt } from '../../../game';
+import {
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  DiscardEnergyPrompt,
+} from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
@@ -12,7 +20,7 @@ import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/pr
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class BlazikenGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Combusken';
   public cardType: CardType = R;
@@ -25,21 +33,21 @@ export class BlazikenGx extends PokemonCard {
       name: 'Slash',
       cost: [C, C],
       damage: 60,
-      text: ''
+      text: '',
     },
     {
       name: 'Explosive Kick',
       cost: [R, R, C],
       damage: 210,
-      text: 'Discard 2 [R] Energy from this Pokémon.'
+      text: 'Discard 2 [R] Energy from this Pokémon.',
     },
     {
       name: 'Blaze Out-GX',
       cost: [R],
       damage: 0,
       gxAttack: true,
-      text: 'Discard 2 Energy from your opponent\'s Pokémon. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Discard 2 Energy from your opponent's Pokémon. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'CES';
@@ -67,7 +75,7 @@ export class BlazikenGx extends PokemonCard {
       // Count total energy on opponent's Pokemon
       let totalEnergy = 0;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        totalEnergy += cardList.cards.filter(c => c instanceof EnergyCard).length;
+        totalEnergy += cardList.cards.filter((c) => c instanceof EnergyCard).length;
       });
 
       if (totalEnergy === 0) {
@@ -76,25 +84,29 @@ export class BlazikenGx extends PokemonCard {
 
       const maxDiscard = Math.min(2, totalEnergy);
 
-      return store.prompt(state, new DiscardEnergyPrompt(
-        player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY },
-        { allowCancel: false, min: maxDiscard, max: maxDiscard }
-      ), transfers => {
-        if (transfers === null || transfers.length === 0) {
-          return state;
-        }
+      return store.prompt(
+        state,
+        new DiscardEnergyPrompt(
+          player.id,
+          GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+          PlayerType.TOP_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { superType: SuperType.ENERGY },
+          { allowCancel: false, min: maxDiscard, max: maxDiscard },
+        ),
+        (transfers) => {
+          if (transfers === null || transfers.length === 0) {
+            return state;
+          }
 
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, opponent, transfer.from);
-          const discardEffect = new DiscardCardsEffect(effect, [transfer.card]);
-          discardEffect.target = target;
-          store.reduceEffect(state, discardEffect);
-        }
-      });
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, opponent, transfer.from);
+            const discardEffect = new DiscardCardsEffect(effect, [transfer.card]);
+            discardEffect.target = target;
+            store.reduceEffect(state, discardEffect);
+          }
+        },
+      );
     }
 
     return state;

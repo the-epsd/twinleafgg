@@ -10,25 +10,29 @@ import { IS_ABILITY_BLOCKED, NEXT_TURN_ATTACK_BONUS } from '../../../game/store/
 
 export class Meloettaex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public cardType = P;
   public hp: number = 200;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Live Debut',
-    powerType: PowerType.ABILITY,
-    text: 'If you go first, this Pokémon can attack on your first turn.'
-  }];
+  public powers = [
+    {
+      name: 'Live Debut',
+      powerType: PowerType.ABILITY,
+      text: 'If you go first, this Pokémon can attack on your first turn.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Echoed Voice',
-    cost: [P],
-    damage: 30,
-    text: 'During your next turn, this Pokémon\'s Echoed Voice attack does 80 more damage (before applying Weakness and Resistance).'
-  }];
+  public attacks = [
+    {
+      name: 'Echoed Voice',
+      cost: [P],
+      damage: 30,
+      text: "During your next turn, this Pokémon's Echoed Voice attack does 80 more damage (before applying Weakness and Resistance).",
+    },
+  ];
 
   public regulationMark = 'I';
   public set: string = 'BLK';
@@ -41,7 +45,11 @@ export class Meloettaex extends PokemonCard {
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof UseAttackEffect && effect.player.active.cards.includes(this) && state.turn === 1) {
+    if (
+      effect instanceof UseAttackEffect &&
+      effect.player.active.cards.includes(this) &&
+      state.turn === 1
+    ) {
       if (IS_ABILITY_BLOCKED(store, state, effect.player, this)) {
         return state;
       }
@@ -54,7 +62,7 @@ export class Meloettaex extends PokemonCard {
       source: this,
       bonusDamage: 80,
       bonusMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER,
-      clearMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER_2
+      clearMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER_2,
     });
     return state;
   }

@@ -10,27 +10,29 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class SandacondaV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = F;
   public hp: number = 220;
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Wall of Sand',
-    useWhenInPlay: false,
-    powerType: PowerType.ABILITY,
-    text: 'This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: 'Wall of Sand',
+      useWhenInPlay: false,
+      powerType: PowerType.ABILITY,
+      text: 'This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Land Crush',
       cost: [F, F, C],
       damage: 140,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'E';

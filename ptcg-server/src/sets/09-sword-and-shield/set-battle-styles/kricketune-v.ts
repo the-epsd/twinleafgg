@@ -14,8 +14,7 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class KricketuneV extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
 
   public regulationMark = 'E';
 
@@ -29,24 +28,27 @@ export class KricketuneV extends PokemonCard {
 
   public retreat = [CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Exciting Stage',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may draw cards until you have ' +
-      '3 cards in your hand. If this Pokémon is in the Active Spot, ' +
-      'you may draw cards until you have 4 cards in your hand ' +
-      'instead. You can\'t use more than 1 Exciting Stage Ability ' +
-      'each turn.'
-  }];
+  public powers = [
+    {
+      name: 'Exciting Stage',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text:
+        'Once during your turn, you may draw cards until you have ' +
+        '3 cards in your hand. If this Pokémon is in the Active Spot, ' +
+        'you may draw cards until you have 4 cards in your hand ' +
+        "instead. You can't use more than 1 Exciting Stage Ability " +
+        'each turn.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'X-Scissor',
       cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 80,
-      text: 'Flip a coin. If heads, this attack does 80 more damage.'
-    }
+      text: 'Flip a coin. If heads, this attack does 80 more damage.',
+    },
   ];
 
   public set: string = 'BST';
@@ -67,7 +69,10 @@ export class KricketuneV extends PokemonCard {
       player.marker.removeMarker(this.EXCITING_STAGE_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.EXCITING_STAGE_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.EXCITING_STAGE_MARKER, this)
+    ) {
       const player = effect.player;
       player.marker.removeMarker(this.EXCITING_STAGE_MARKER, this);
     }
@@ -100,14 +105,18 @@ export class KricketuneV extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], (results: boolean[]) => {
-        let heads: number = 0;
-        results.forEach(r => { heads += r ? 1 : 0; });
-        effect.damage += 80 * heads;
-        return state;
-      });
+      return store.prompt(
+        state,
+        [new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)],
+        (results: boolean[]) => {
+          let heads: number = 0;
+          results.forEach((r) => {
+            heads += r ? 1 : 0;
+          });
+          effect.damage += 80 * heads;
+          return state;
+        },
+      );
     }
 
     return state;

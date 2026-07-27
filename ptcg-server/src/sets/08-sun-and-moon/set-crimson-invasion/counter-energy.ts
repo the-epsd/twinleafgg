@@ -8,7 +8,6 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class CounterEnergy extends EnergyCard {
-
   public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
@@ -26,7 +25,7 @@ export class CounterEnergy extends EnergyCard {
   public text =
     'This card provides [C] Energy.' +
     '\n\n' +
-    'If you have more Prize cards remaining than your opponent, and if this card is attached to a Pokémon that isn\'t a Pokémon-GX or Pokémon-EX, this card provides every type of Energy but provides only 2 Energy at a time.';
+    "If you have more Prize cards remaining than your opponent, and if this card is attached to a Pokémon that isn't a Pokémon-GX or Pokémon-EX, this card provides every type of Energy but provides only 2 Energy at a time.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
@@ -34,11 +33,18 @@ export class CounterEnergy extends EnergyCard {
       const opponent = StateUtils.getOpponent(state, player);
       const attachedTo = effect.source;
 
-      const attachedToExOrGx = attachedTo.cards.some(card => {
-        return card instanceof PokemonCard && (card.tags.includes(CardTag.POKEMON_EX) || card.tags.includes(CardTag.POKEMON_GX));
+      const attachedToExOrGx = attachedTo.cards.some((card) => {
+        return (
+          card instanceof PokemonCard &&
+          (card.hasTag(CardTag.POKEMON_EX) || card.hasTag(CardTag.POKEMON_GX))
+        );
       });
 
-      if (!!attachedTo.getPokemonCard() && player.getPrizeLeft() > opponent.getPrizeLeft() && !attachedToExOrGx) {
+      if (
+        !!attachedTo.getPokemonCard() &&
+        player.getPrizeLeft() > opponent.getPrizeLeft() &&
+        !attachedToExOrGx
+      ) {
         effect.energyMap.push({ card: this, provides: [CardType.ANY, CardType.ANY] });
       } else {
         effect.energyMap.push({ card: this, provides: [CardType.COLORLESS] });
@@ -47,5 +53,4 @@ export class CounterEnergy extends EnergyCard {
 
     return state;
   }
-
 }

@@ -17,11 +17,13 @@ export class Golisopod extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Armor',
-    powerType: PowerType.ABILITY,
-    text: 'This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: 'Armor',
+      powerType: PowerType.ABILITY,
+      text: 'This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).',
+    },
+  ];
 
   public attacks = [
     {
@@ -29,8 +31,8 @@ export class Golisopod extends PokemonCard {
       cost: [G, C, C],
       damage: 80,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is a Pokémon-GX or a Pokémon-EX, this attack does 70 more damage (before applying Weakness and Resistance).'
-    }
+      text: "If your opponent's Active Pokémon is a Pokémon-GX or a Pokémon-EX, this attack does 70 more damage (before applying Weakness and Resistance).",
+    },
   ];
 
   public set: string = 'GRI';
@@ -59,7 +61,10 @@ export class Golisopod extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const defendingPokemon = opponent.active.getPokemonCard();
-      if (defendingPokemon && (defendingPokemon.tags.includes(CardTag.POKEMON_GX) || defendingPokemon.tags.includes(CardTag.POKEMON_EX))) {
+      if (
+        defendingPokemon &&
+        (defendingPokemon.hasTag(CardTag.POKEMON_GX) || defendingPokemon.hasTag(CardTag.POKEMON_EX))
+      ) {
         effect.damage += 70;
       }
     }
