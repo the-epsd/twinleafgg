@@ -1,19 +1,50 @@
-import { Component, EventEmitter, Input, Output, OnInit, OnDestroy, ElementRef, HostBinding } from '@angular/core';
-import { Card, CardList, PokemonCardList, Power, BoardEffect, SpecialCondition, StadiumDirection, SuperType, EnergyCard, CardType, PlayerType, SlotType, CardTag, Stage, PokemonCard } from 'ptcg-server';
-import { BoardInteractionService, AttackEffectEvent } from '../../../shared/services/board-interaction.service';
-import { Subscription } from 'rxjs';
-import { BoardCardAnimationHelper, AnimationState } from './board-card-animations.helper';
-import { CardsBaseService } from '../../../shared/cards/cards-base.service';
-import { getCustomEnergyIconPath } from '../../../shared/cards/energy-icons.utils';
-import { resolveDualStadiumDisplayHalves } from '../../../shared/cards/dual-stadium.utils';
-import { getBreakDisplayCards } from '../../../shared/cards/break-card-display.utils';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  OnInit,
+  OnDestroy,
+  ElementRef,
+  HostBinding,
+} from "@angular/core";
+import {
+  Card,
+  CardList,
+  PokemonCardList,
+  Power,
+  BoardEffect,
+  SpecialCondition,
+  StadiumDirection,
+  SuperType,
+  EnergyCard,
+  CardType,
+  PlayerType,
+  SlotType,
+  CardTag,
+  Stage,
+  PokemonCard,
+} from "ptcg-server";
+import {
+  BoardInteractionService,
+  AttackEffectEvent,
+} from "../../../shared/services/board-interaction.service";
+import { Subscription } from "rxjs";
+import {
+  BoardCardAnimationHelper,
+  AnimationState,
+} from "./board-card-animations.helper";
+import { CardsBaseService } from "../../../shared/cards/cards-base.service";
+import { getCustomEnergyIconPath } from "../../../shared/cards/energy-icons.utils";
+import { resolveDualStadiumDisplayHalves } from "../../../shared/cards/dual-stadium.utils";
+import { getBreakDisplayCards } from "../../../shared/cards/break-card-display.utils";
 
 const MAX_ENERGY_CARDS = 8;
 
 @Component({
-  selector: 'ptcg-board-card',
-  templateUrl: './board-card.component.html',
-  styleUrls: ['./board-card.component.scss']
+  selector: "ptcg-board-card",
+  templateUrl: "./board-card.component.html",
+  styleUrls: ["./board-card.component.scss"],
 })
 export class BoardCardComponent implements OnInit, OnDestroy {
   // ==================== INPUT/OUTPUT PROPERTIES ====================
@@ -119,7 +150,7 @@ export class BoardCardComponent implements OnInit, OnDestroy {
   private isPublic = false;
   private isOwner = false;
   private subscriptions: Subscription[] = [];
-  private cardTarget: { player: PlayerType, slot: SlotType, index: number };
+  private cardTarget: { player: PlayerType; slot: SlotType; index: number };
 
   @Input() set player(value: PlayerType) {
     if (value !== undefined) {
@@ -154,17 +185,17 @@ export class BoardCardComponent implements OnInit, OnDestroy {
   constructor(
     private boardInteractionService: BoardInteractionService,
     private elementRef: ElementRef,
-    private cardsBaseService: CardsBaseService
+    private cardsBaseService: CardsBaseService,
   ) {
     this.cardTarget = { player: undefined, slot: undefined, index: 0 };
   }
 
-  @HostBinding('style.--cardback-url')
+  @HostBinding("style.--cardback-url")
   get cardbackCssVar(): string | null {
     return this.cardbackUrl ? `url(${this.cardbackUrl})` : null;
   }
 
-  @HostBinding('class.dual-stadium-layout')
+  @HostBinding("class.dual-stadium-layout")
   get isDualStadiumLayout(): boolean {
     return !!(this.dualStadiumLeftCard && this.dualStadiumRightCard);
   }
@@ -180,9 +211,11 @@ export class BoardCardComponent implements OnInit, OnDestroy {
 
   public resolveArtUrlFor(card: Card | undefined): string | undefined {
     if (!card || !this._cardList) return undefined;
-    
+
     // Check artworksMap for deck-selected artworks
-    const map = (this._cardList as any).artworksMap as { [code: string]: { imageUrl: string } } | undefined;
+    const map = (this._cardList as any).artworksMap as
+      | { [code: string]: { imageUrl: string } }
+      | undefined;
     if (!map) return undefined;
     const entry = map[card.fullName];
     return entry?.imageUrl;
@@ -203,7 +236,10 @@ export class BoardCardComponent implements OnInit, OnDestroy {
   private createAnimationHandlers() {
     this.animationEndHandler = (event: AnimationEvent) => {
       if (this.animationElement) {
-        BoardCardAnimationHelper.removeAnimationEndListener(this.animationElement, this.animationEndHandler);
+        BoardCardAnimationHelper.removeAnimationEndListener(
+          this.animationElement,
+          this.animationEndHandler,
+        );
         this.showEvolutionAnimation = false;
         this.hasPlayedEvolutionAnimation = true;
         this.animationElement = null;
@@ -215,7 +251,10 @@ export class BoardCardComponent implements OnInit, OnDestroy {
 
     this.basicAnimationEndHandler = (event: AnimationEvent) => {
       if (this.animationElement) {
-        BoardCardAnimationHelper.removeAnimationEndListener(this.animationElement, this.basicAnimationEndHandler);
+        BoardCardAnimationHelper.removeAnimationEndListener(
+          this.animationElement,
+          this.basicAnimationEndHandler,
+        );
         this.showBasicAnimation = false;
         this.hasPlayedBasicAnimation = true;
         this.animationElement = null;
@@ -231,13 +270,13 @@ export class BoardCardComponent implements OnInit, OnDestroy {
       BoardCardAnimationHelper.cleanupAnimationHandlers(
         this.animationElement,
         this.animationEndHandler,
-        this.basicAnimationEndHandler
+        this.basicAnimationEndHandler,
       );
     }
   }
 
-  private animationEndHandler = (event: AnimationEvent) => { };
-  private basicAnimationEndHandler = (event: AnimationEvent) => { };
+  private animationEndHandler = (event: AnimationEvent) => {};
+  private basicAnimationEndHandler = (event: AnimationEvent) => {};
 
   private triggerEvolutionAnimation(cardList: PokemonCardList) {
     const animationState: AnimationState = {
@@ -247,17 +286,28 @@ export class BoardCardComponent implements OnInit, OnDestroy {
       showBasicAnimation: this.showBasicAnimation,
       showAttackAnimation: this.showAttackAnimation,
       isInPrompt: this.isInPrompt,
-      currentCardId: this.currentCardId
+      currentCardId: this.currentCardId,
     };
 
-    if (BoardCardAnimationHelper.shouldTriggerEvolutionAnimation(this.mainCard, cardList, animationState)) {
+    if (
+      BoardCardAnimationHelper.shouldTriggerEvolutionAnimation(
+        this.mainCard,
+        cardList,
+        animationState,
+      )
+    ) {
       this.hasPlayedEvolutionAnimation = true;
       this.showEvolutionAnimation = true;
 
       setTimeout(() => {
-        this.animationElement = BoardCardAnimationHelper.getAnimationElement('.evolution-animation');
+        this.animationElement = BoardCardAnimationHelper.getAnimationElement(
+          ".evolution-animation",
+        );
         if (this.animationElement) {
-          BoardCardAnimationHelper.addAnimationEndListener(this.animationElement, this.animationEndHandler);
+          BoardCardAnimationHelper.addAnimationEndListener(
+            this.animationElement,
+            this.animationEndHandler,
+          );
         }
       });
     }
@@ -271,17 +321,28 @@ export class BoardCardComponent implements OnInit, OnDestroy {
       showBasicAnimation: this.showBasicAnimation,
       showAttackAnimation: this.showAttackAnimation,
       isInPrompt: this.isInPrompt,
-      currentCardId: this.currentCardId
+      currentCardId: this.currentCardId,
     };
 
-    if (BoardCardAnimationHelper.shouldTriggerBasicPokemonAnimation(this.mainCard, cardList, animationState)) {
+    if (
+      BoardCardAnimationHelper.shouldTriggerBasicPokemonAnimation(
+        this.mainCard,
+        cardList,
+        animationState,
+      )
+    ) {
       this.hasPlayedBasicAnimation = true;
       this.showBasicAnimation = true;
 
       setTimeout(() => {
-        this.animationElement = BoardCardAnimationHelper.getAnimationElement('.play-basic-animation');
+        this.animationElement = BoardCardAnimationHelper.getAnimationElement(
+          ".play-basic-animation",
+        );
         if (this.animationElement) {
-          BoardCardAnimationHelper.addAnimationEndListener(this.animationElement, this.basicAnimationEndHandler);
+          BoardCardAnimationHelper.addAnimationEndListener(
+            this.animationElement,
+            this.basicAnimationEndHandler,
+          );
         }
       });
     }
@@ -295,10 +356,16 @@ export class BoardCardComponent implements OnInit, OnDestroy {
       showBasicAnimation: this.showBasicAnimation,
       showAttackAnimation: this.showAttackAnimation,
       isInPrompt: this.isInPrompt,
-      currentCardId: this.currentCardId
+      currentCardId: this.currentCardId,
     };
 
-    if (BoardCardAnimationHelper.shouldTriggerAttackAnimation(this.mainCard, cardList, animationState)) {
+    if (
+      BoardCardAnimationHelper.shouldTriggerAttackAnimation(
+        this.mainCard,
+        cardList,
+        animationState,
+      )
+    ) {
       this.showAttackAnimation = true;
       setTimeout(() => {
         this.showAttackAnimation = false;
@@ -316,14 +383,20 @@ export class BoardCardComponent implements OnInit, OnDestroy {
       showBasicAnimation: this.showBasicAnimation,
       showAttackAnimation: this.showAttackAnimation,
       isInPrompt: this.isInPrompt,
-      currentCardId: this.currentCardId
+      currentCardId: this.currentCardId,
     };
 
-    if (BoardCardAnimationHelper.isNewCardInstance(this.mainCard, animationState)) {
+    if (
+      BoardCardAnimationHelper.isNewCardInstance(this.mainCard, animationState)
+    ) {
       const newCardId = this.mainCard?.id;
-      BoardCardAnimationHelper.resetAnimationStateForNewCard(animationState, newCardId);
+      BoardCardAnimationHelper.resetAnimationStateForNewCard(
+        animationState,
+        newCardId,
+      );
       this.currentCardId = newCardId;
-      this.hasPlayedEvolutionAnimation = animationState.hasPlayedEvolutionAnimation;
+      this.hasPlayedEvolutionAnimation =
+        animationState.hasPlayedEvolutionAnimation;
       this.showEvolutionAnimation = animationState.showEvolutionAnimation;
       this.hasPlayedBasicAnimation = animationState.hasPlayedBasicAnimation;
       this.showBasicAnimation = animationState.showBasicAnimation;
@@ -388,9 +461,8 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     }
 
     // Check if this is an active card
-    const isActiveCard = 
-      this.cardTarget.slot === SlotType.ACTIVE && 
-      this.cardTarget.index === 0;
+    const isActiveCard =
+      this.cardTarget.slot === SlotType.ACTIVE && this.cardTarget.index === 0;
 
     if (!isActiveCard) {
       return;
@@ -405,17 +477,17 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     } else {
       // Fallback: exclude the attacking player's card if attack came from active slot
       // This works for two-player games where there's only one opponent active card
-      if (event.slot === 'active' && event.index === 0) {
+      if (event.slot === "active" && event.index === 0) {
         // Attack came from active slot - we can't determine which card is the opponent's
         // without PlayerType, so we show on any active card (works for two-player games)
       }
     }
-    
+
     // Show effect on this opponent's active card
 
     // Create unique attack effect ID to prevent replay
     const attackEffectId = `${event.playerId}-${event.cardId}-${event.cardType}`;
-    
+
     // Only show effect if it's a new attack (prevent replay)
     if (this.lastAttackEffectId === attackEffectId) {
       return;
@@ -475,47 +547,47 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.boardInteractionService.selectionMode$.subscribe(() => {
         this.updateSelectionState();
-      })
+      }),
     );
 
     // Selected targets changes
     this.subscriptions.push(
       this.boardInteractionService.selectedTargets$.subscribe(() => {
         this.updateSelectionState();
-      })
+      }),
     );
 
     // Evolution animation events
     this.subscriptions.push(
-      this.boardInteractionService.evolutionAnimation$.subscribe(event => {
+      this.boardInteractionService.evolutionAnimation$.subscribe((event) => {
         this.handleEvolutionAnimationEvent(event);
-      })
+      }),
     );
 
     // Basic animation events
     this.subscriptions.push(
-      this.boardInteractionService.basicAnimation$.subscribe(event => {
+      this.boardInteractionService.basicAnimation$.subscribe((event) => {
         this.handleBasicAnimationEvent(event);
-      })
+      }),
     );
 
     // Attack animation events
     this.subscriptions.push(
-      this.boardInteractionService.attackAnimation$.subscribe(event => {
+      this.boardInteractionService.attackAnimation$.subscribe((event) => {
         this.handleAttackAnimationEvent(event);
-      })
+      }),
     );
 
     // Attack effect events (for visual effects on opponent's card)
     this.subscriptions.push(
-      this.boardInteractionService.attackEffect$.subscribe(event => {
+      this.boardInteractionService.attackEffect$.subscribe((event) => {
         this.handleAttackEffectEvent(event);
-      })
+      }),
     );
   }
 
   private cleanupSubscriptions() {
-    this.subscriptions.forEach(sub => sub.unsubscribe());
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   // ==================== SELECTION STATE MANAGEMENT ====================
@@ -527,9 +599,11 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     }
 
     let isSelectionMode = false;
-    this.boardInteractionService.selectionMode$.subscribe(mode => {
-      isSelectionMode = mode;
-    }).unsubscribe();
+    this.boardInteractionService.selectionMode$
+      .subscribe((mode) => {
+        isSelectionMode = mode;
+      })
+      .unsubscribe();
 
     if (!isSelectionMode) {
       this.isSelectable = false;
@@ -537,9 +611,14 @@ export class BoardCardComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const hasCards = this._cardList && this._cardList.cards && this._cardList.cards.length > 0;
-    this.isSelectable = hasCards && this.boardInteractionService.isTargetEligible(this.cardTarget);
-    this.isSelected = this.boardInteractionService.isTargetSelected(this.cardTarget);
+    const hasCards =
+      this._cardList && this._cardList.cards && this._cardList.cards.length > 0;
+    this.isSelectable =
+      hasCards &&
+      this.boardInteractionService.isTargetEligible(this.cardTarget);
+    this.isSelected = this.boardInteractionService.isTargetSelected(
+      this.cardTarget,
+    );
   }
 
   // ==================== CARD STATE MANAGEMENT ====================
@@ -555,7 +634,8 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     this.specialConditions = [];
     this.isFaceDown = false;
     this.boardEffect = [];
-    this.isUpsideDown = this._cardList?.stadiumDirection === StadiumDirection.DOWN;
+    this.isUpsideDown =
+      this._cardList?.stadiumDirection === StadiumDirection.DOWN;
     this.showEvolutionAnimation = false;
     this.showBasicAnimation = false;
     this.showEvolutionAnimation = false;
@@ -568,7 +648,7 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     this.damage = cardList.damage;
     this.specialConditions = cardList.specialConditions;
     this.boardEffect = cardList.boardEffect;
-    this.hasImprisonMarker = cardList.marker.hasMarker('IMPRISON_MARKER');
+    this.hasImprisonMarker = cardList.marker.hasMarker("IMPRISON_MARKER");
 
     this.setupPokemonCards(cardList);
     this.setupEnergyCards(cardList);
@@ -584,7 +664,7 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     this.breakCard = breakDisplay.breakCard;
 
     // Handle Legend cards
-    if (pokemonCard?.tags?.includes(CardTag.LEGEND)) {
+    if (pokemonCard?.tags.includes(CardTag.LEGEND)) {
       this.setupLegendCards(cardList);
     } else {
       this.legendTopCard = undefined;
@@ -592,7 +672,7 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     }
 
     // Handle V-Union cards
-    if (pokemonCard?.tags?.includes(CardTag.POKEMON_VUNION)) {
+    if (pokemonCard?.tags.includes(CardTag.POKEMON_VUNION)) {
       this.setupVUnionCards(cardList);
     } else {
       this.vunionTopLeftCard = undefined;
@@ -605,40 +685,46 @@ export class BoardCardComponent implements OnInit, OnDestroy {
   }
 
   private setupLegendCards(cardList: PokemonCardList) {
-    const topCard = cardList.cards.find(card =>
-      card.superType === SuperType.POKEMON &&
-      card.tags?.includes(CardTag.LEGEND) &&
-      card.fullName.includes('(Top)')
+    const topCard = cardList.cards.find(
+      (card) =>
+        card.superType === SuperType.POKEMON &&
+        card.tags.includes(CardTag.LEGEND) &&
+        card.fullName.includes("(Top)"),
     );
-    const bottomCard = cardList.cards.find(card =>
-      card.superType === SuperType.POKEMON &&
-      card.tags?.includes(CardTag.LEGEND) &&
-      card.fullName.includes('(Bottom)')
+    const bottomCard = cardList.cards.find(
+      (card) =>
+        card.superType === SuperType.POKEMON &&
+        card.tags.includes(CardTag.LEGEND) &&
+        card.fullName.includes("(Bottom)"),
     );
     this.legendTopCard = topCard;
     this.legendBottomCard = bottomCard;
   }
 
   private setupVUnionCards(cardList: PokemonCardList) {
-    const topLeftCard = cardList.cards.find(card =>
-      card.superType === SuperType.POKEMON &&
-      card.tags?.includes(CardTag.POKEMON_VUNION) &&
-      card.fullName.includes('(Top Left)')
+    const topLeftCard = cardList.cards.find(
+      (card) =>
+        card.superType === SuperType.POKEMON &&
+        card.tags.includes(CardTag.POKEMON_VUNION) &&
+        card.fullName.includes("(Top Left)"),
     );
-    const topRightCard = cardList.cards.find(card =>
-      card.superType === SuperType.POKEMON &&
-      card.tags?.includes(CardTag.POKEMON_VUNION) &&
-      card.fullName.includes('(Top Right)')
+    const topRightCard = cardList.cards.find(
+      (card) =>
+        card.superType === SuperType.POKEMON &&
+        card.tags.includes(CardTag.POKEMON_VUNION) &&
+        card.fullName.includes("(Top Right)"),
     );
-    const bottomLeftCard = cardList.cards.find(card =>
-      card.superType === SuperType.POKEMON &&
-      card.tags?.includes(CardTag.POKEMON_VUNION) &&
-      card.fullName.includes('(Bottom Left)')
+    const bottomLeftCard = cardList.cards.find(
+      (card) =>
+        card.superType === SuperType.POKEMON &&
+        card.tags.includes(CardTag.POKEMON_VUNION) &&
+        card.fullName.includes("(Bottom Left)"),
     );
-    const bottomRightCard = cardList.cards.find(card =>
-      card.superType === SuperType.POKEMON &&
-      card.tags?.includes(CardTag.POKEMON_VUNION) &&
-      card.fullName.includes('(Bottom Right)')
+    const bottomRightCard = cardList.cards.find(
+      (card) =>
+        card.superType === SuperType.POKEMON &&
+        card.tags.includes(CardTag.POKEMON_VUNION) &&
+        card.fullName.includes("(Bottom Right)"),
     );
     this.vunionTopLeftCard = topLeftCard;
     this.vunionTopRightCard = topRightCard;
@@ -659,13 +745,13 @@ export class BoardCardComponent implements OnInit, OnDestroy {
   // ==================== CUSTOM IMAGE HELPERS ====================
   getCustomEnergyIcon(card: Card, isAttachedAsEnergy: boolean = false): string {
     const iconPath = getCustomEnergyIconPath(card, isAttachedAsEnergy);
-    return iconPath || '';
+    return iconPath || "";
   }
 
   getCustomToolIcon(card: Card): string {
     const customToolIcon = {
-      'Vitality Band': 'assets/tools/vitality-band.png',
-      'Bravery Charm': 'assets/tools/bravery-charm.png',
+      "Vitality Band": "assets/tools/vitality-band.png",
+      "Bravery Charm": "assets/tools/bravery-charm.png",
     };
 
     if (
@@ -675,7 +761,7 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     ) {
       return customToolIcon[card.name];
     }
-    return '';
+    return "";
   }
 
   // ==================== EVENT HANDLERS ====================
@@ -686,15 +772,15 @@ export class BoardCardComponent implements OnInit, OnDestroy {
   // ==================== UTILITY METHODS ====================
   public getRotationClass(): string {
     if (this.specialConditions.includes(SpecialCondition.ASLEEP)) {
-      return 'asleep-position';
+      return "asleep-position";
     }
     if (this.specialConditions.includes(SpecialCondition.CONFUSED)) {
-      return 'confused-position';
+      return "confused-position";
     }
     if (this.specialConditions.includes(SpecialCondition.PARALYZED)) {
-      return 'paralyzed-position';
+      return "paralyzed-position";
     }
-    return '';
+    return "";
   }
 
   // Expose _cardList for template use (for tools display)
@@ -702,4 +788,3 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     return this._cardList;
   }
 }
-

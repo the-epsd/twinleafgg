@@ -59,14 +59,14 @@ function getBreakDisplay(cardList: PokemonCardList): { mainCard?: Card; breakCar
   if (!pokemon) {
     return {};
   }
-  if (pokemon.tags?.includes(CardTag.BREAK)) {
+  if (pokemon.tags.includes(CardTag.BREAK)) {
     const prior = [...cardList.cards]
       .reverse()
       .find(
         (c) =>
           c.superType === SuperType.POKEMON &&
           c !== pokemon &&
-          !(c as { tags?: CardTag[] }).tags?.includes(CardTag.BREAK),
+          !(c as { tags?: CardTag[] }).tags.includes(CardTag.BREAK),
       );
     return { mainCard: prior ?? pokemon, breakCard: pokemon };
   }
@@ -109,7 +109,7 @@ export function buildBoard2dCardModel(
     let vunionTopRightCard: Card | undefined;
     let vunionBottomLeftCard: Card | undefined;
     let vunionBottomRightCard: Card | undefined;
-    if (pokemonCard?.tags?.includes(CardTag.POKEMON_VUNION)) {
+    if (pokemonCard?.tags.includes(CardTag.POKEMON_VUNION)) {
       vunionTopLeftCard = cardList.cards.find((c) => c.fullName.includes('(Top Left)'));
       vunionTopRightCard = cardList.cards.find((c) => c.fullName.includes('(Top Right)'));
       vunionBottomLeftCard = cardList.cards.find((c) => c.fullName.includes('(Bottom Left)'));
