@@ -200,10 +200,21 @@ export function TablePage() {
       const socket = getSocketManager();
       const raw = socket.raw;
 
-      const onState = (data: { stateData: string; playerStats?: import('ptcg-server').PlayerStats[] }) => {
+      const onState = (data: {
+        stateData: string;
+        playerStats?: import('ptcg-server').PlayerStats[];
+        isDiff?: boolean;
+        viewKey?: string;
+      }) => {
         setLocalGame((g) => {
           if (!g || g.gameId !== gameId) return g;
-          const next = mergeStateChange(g, data.stateData, data.playerStats);
+          const next = mergeStateChange(
+            g,
+            data.stateData,
+            data.playerStats,
+            data.isDiff,
+            data.viewKey,
+          );
           if (shouldCancelCoinFlipAnimation(g, next)) {
             boardInteraction.cancelCoinFlipAnimation();
           }
