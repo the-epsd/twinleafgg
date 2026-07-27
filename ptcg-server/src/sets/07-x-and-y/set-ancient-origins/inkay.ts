@@ -4,12 +4,10 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { PlayerType, StoreLike, State, StateUtils } from '../../../game';
+import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { UseAttackEffect } from '../../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
 
+import { WAS_ATTACK_USED, DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK } from '../../../game/store/prefabs/prefabs';
 export class Inkay extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = D;
@@ -33,52 +31,10 @@ export class Inkay extends PokemonCard {
   public name: string = 'Inkay';
   public fullName: string = 'Inkay AOR';
 
-  public readonly INK_SPIT_MARKER = 'INKAY_AOR_INK_SPIT_MARKER';
-  public readonly CLEAR_INK_SPIT_MARKER = 'INKAY_AOR_CLEAR_INK_SPIT_MARKER';
-  public readonly INK_SPIT_USED_MARKER = 'INKAY_AOR_INK_SPIT_USED_MARKER';
-
-  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 1: Ink Spit
-    // Ref: set-roaring-skies/binacle.ts (Sand Attack)
+    public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Ref: DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK (Smokescreen)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      ADD_MARKER(this.INK_SPIT_MARKER, opponent.active, this);
-      ADD_MARKER(this.CLEAR_INK_SPIT_MARKER, opponent, this);
-    }
-
-    if (effect instanceof UseAttackEffect && HAS_MARKER(this.INK_SPIT_MARKER, effect.player.active, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      if (HAS_MARKER(this.INK_SPIT_USED_MARKER, opponent, this)) {
-        return state;
-      }
-
-      effect.preventDefault = true;
-      ADD_MARKER(this.INK_SPIT_USED_MARKER, opponent, this);
-
-      COIN_FLIP_PROMPT(store, state, player, result => {
-        if (result) {
-          const useAttackEffect = new UseAttackEffect(player, effect.attack);
-          store.reduceEffect(state, useAttackEffect);
-        } else {
-          const endTurnEffect = new EndTurnEffect(player);
-          store.reduceEffect(state, endTurnEffect);
-        }
-      });
-    }
-
-    REMOVE_MARKER_AT_END_OF_TURN(effect, this.INK_SPIT_USED_MARKER, this);
-
-    if (effect instanceof EndTurnEffect) {
-      if (HAS_MARKER(this.CLEAR_INK_SPIT_MARKER, effect.player, this)) {
-        effect.player.marker.removeMarker(this.CLEAR_INK_SPIT_MARKER, this);
-        const opponent = StateUtils.getOpponent(state, effect.player);
-        opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
-          cardList.marker.removeMarker(this.INK_SPIT_MARKER, this);
-        });
-      }
+      return DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK(store, state, effect, this);
     }
 
     return state;

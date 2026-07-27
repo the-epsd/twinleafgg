@@ -92,7 +92,7 @@ import {
 } from '../effects/game-effects';
 import { AfterAttackEffect, BeforeDoingDamageEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
-import { preventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect, defendingPokemonWeaknessIsNowEffect, PreventDamageOptions, shouldPreventAttackEffects } from '../effects/effect-of-attack-effects';
+import { preventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, coinFlipCancelAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect, defendingPokemonWeaknessIsNowEffect, PreventDamageOptions, shouldPreventAttackEffects } from '../effects/effect-of-attack-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
 
 /**
@@ -4147,6 +4147,22 @@ export function DEFENDING_POKEMON_CANNOT_ATTACK(
 ): State {
   const attackEffect = preventAttackEffect(effect, source);
   return store.reduceEffect(state, attackEffect);
+}
+
+/**
+ * During your opponent's next turn, if the Defending Pokémon tries to attack,
+ * they flip `coinFlips` coins (default 1). If any is tails, that attack does nothing.
+ * Covers Smokescreen, Sand-Attack, Ink Spit, Sticky Smokescreen (2 flips), etc.
+ */
+export function DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+  coinFlips: number = 1,
+): State {
+  const cancelEffect = coinFlipCancelAttackEffect(effect, source, coinFlips);
+  return store.reduceEffect(state, cancelEffect);
 }
 
 /**

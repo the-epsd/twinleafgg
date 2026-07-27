@@ -4,12 +4,10 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { PlayerType, StoreLike, State, StateUtils } from '../../../game';
+import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { UseAttackEffect } from '../../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, ADD_MARKER, HAS_MARKER } from '../../../game/store/prefabs/prefabs';
 
+import { WAS_ATTACK_USED, DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK } from '../../../game/store/prefabs/prefabs';
 export class Lanturn extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Chinchou';
@@ -17,10 +15,6 @@ export class Lanturn extends PokemonCard {
   public hp: number = 120;
   public weakness = [{ type: F }];
   public retreat = [C, C];
-
-  public readonly BLINDING_BEAM_MARKER = 'LANTURN_EVS_BLINDING_BEAM_MARKER';
-  public readonly CLEAR_BLINDING_BEAM_MARKER = 'LANTURN_EVS_CLEAR_BLINDING_BEAM_MARKER';
-  public readonly BLINDING_BEAM_USED_MARKER = 'LANTURN_EVS_BLINDING_BEAM_USED_MARKER';
 
   public attacks = [
     {
@@ -44,58 +38,10 @@ export class Lanturn extends PokemonCard {
   public name: string = 'Lanturn';
   public fullName: string = 'Lanturn EVS';
 
-  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 1: Blinding Beam
-    // During your opponent's next turn, if the Defending Pokémon tries to attack,
-    // your opponent flips a coin. If tails, that attack doesn't happen.
-    // Ref: set-phantom-forces/diancie.ts (Sparkle - UseAttackEffect + coin flip)
+    public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Ref: DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK (Smokescreen)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      ADD_MARKER(this.BLINDING_BEAM_MARKER, opponent.active, this);
-      ADD_MARKER(this.CLEAR_BLINDING_BEAM_MARKER, opponent, this);
-    }
-
-    // When opponent's active tries to attack, flip coin
-    if (effect instanceof UseAttackEffect
-      && HAS_MARKER(this.BLINDING_BEAM_MARKER, effect.player.active, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // Only intercept once per attack attempt
-      if (HAS_MARKER(this.BLINDING_BEAM_USED_MARKER, opponent, this)) {
-        return state;
-      }
-
-      effect.preventDefault = true;
-      ADD_MARKER(this.BLINDING_BEAM_USED_MARKER, opponent, this);
-
-      COIN_FLIP_PROMPT(store, state, player, result => {
-        if (result) {
-          // Heads - attack proceeds
-          const useAttackEffect = new UseAttackEffect(player, effect.attack);
-          store.reduceEffect(state, useAttackEffect);
-        } else {
-          // Tails - attack doesn't happen, end turn
-          const endTurnEffect = new EndTurnEffect(player);
-          store.reduceEffect(state, endTurnEffect);
-        }
-      });
-    }
-
-    // Clean up used marker
-    if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.BLINDING_BEAM_USED_MARKER, this);
-    }
-
-    // Cleanup markers at end of opponent's turn
-    if (effect instanceof EndTurnEffect
-      && HAS_MARKER(this.CLEAR_BLINDING_BEAM_MARKER, effect.player, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_BLINDING_BEAM_MARKER, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
-        cardList.marker.removeMarker(this.BLINDING_BEAM_MARKER, this);
-      });
+      return DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK(store, state, effect, this);
     }
 
     return state;

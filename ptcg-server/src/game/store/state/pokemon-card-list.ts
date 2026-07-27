@@ -52,15 +52,19 @@ export class PokemonCardList extends CardList {
   public defendingPokemonExtraDamageAttackerId: number | undefined = undefined;
   public defendingPokemonExtraDamagePending: boolean = false;
   public defendingPokemonExtraDamageRearmAfterAttack: boolean = false;
-  /** Attack-set Weakness override (e.g. Overwriting Bolt). Active immediately; cleared after attacker's next turn. */
   public weaknessOverrideType: CardType | undefined = undefined;
   public weaknessOverrideAttackerId: number | undefined = undefined;
-  /** After the attacker's first EndTurn, armed to clear on their following EndTurn. */
   public weaknessOverrideClearArmed: boolean = false;
   public cannotAttackNextTurn: boolean = false;
   public cannotAttackNextTurnPending: boolean = false;
   public cannotUseAttacksNextTurn: string[] = [];
   public cannotUseAttacksNextTurnPending: string[] = [];
+  /**
+   * Smokescreen / Sand-Attack style: when this Pokémon tries to attack, its owner
+   * flips this many coins. If any is tails, that attack does nothing.
+   * `0` = inactive. Set on the Defending Pokémon for the opponent's next turn.
+   */
+  public coinFlipCancelAttackNextTurn: number = 0;
   public cannotRetreatNextTurn: boolean = false;
   public cannotRetreatNextTurnPending: boolean = false;
   public pendingEnergyAttachDamageCounters: PendingEnergyAttachDamageCounters | null = null;
@@ -213,6 +217,7 @@ export class PokemonCardList extends CardList {
     this.cannotAttackNextTurnPending = false;
     this.cannotUseAttacksNextTurn = [];
     this.cannotUseAttacksNextTurnPending = [];
+    this.coinFlipCancelAttackNextTurn = 0;
     this.cannotRetreatNextTurn = false;
     this.cannotRetreatNextTurnPending = false;
     this.pendingEnergyAttachDamageCounters = null;
@@ -275,6 +280,7 @@ export class PokemonCardList extends CardList {
     this.cannotAttackNextTurnPending = false;
     this.cannotUseAttacksNextTurn = [];
     this.cannotUseAttacksNextTurnPending = [];
+    this.coinFlipCancelAttackNextTurn = 0;
     this.cannotRetreatNextTurn = false;
     this.cannotRetreatNextTurnPending = false;
     this.pendingEnergyAttachDamageCounters = null;

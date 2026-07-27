@@ -4,11 +4,10 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils } from '../../../game';
+import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { UseAttackEffect } from '../../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
+
+import { WAS_ATTACK_USED, DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK } from '../../../game/store/prefabs/prefabs';
 
 export class Silicobra extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -33,44 +32,10 @@ export class Silicobra extends PokemonCard {
   public name: string = 'Silicobra';
   public fullName: string = 'Silicobra SSH';
 
-  public readonly SAND_ATTACK_MARKER = 'SILICOBRA_SSH_SAND_ATTACK_MARKER';
-  public readonly SAND_ATTACK_USED_MARKER = 'SILICOBRA_SSH_SAND_ATTACK_USED_MARKER';
-
-  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 1: Sand Attack
-    // Ref: set-dragons-exalted/gible-2.ts (Sand-Attack)
+    public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Ref: DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK (Smokescreen)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      ADD_MARKER(this.SAND_ATTACK_MARKER, opponent.active, this);
-    }
-
-    if (effect instanceof UseAttackEffect && HAS_MARKER(this.SAND_ATTACK_MARKER, effect.player.active, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      if (HAS_MARKER(this.SAND_ATTACK_USED_MARKER, opponent, this)) {
-        return state;
-      }
-
-      effect.preventDefault = true;
-      ADD_MARKER(this.SAND_ATTACK_USED_MARKER, opponent, this);
-
-      COIN_FLIP_PROMPT(store, state, player, result => {
-        if (result) {
-          const useAttackEffect = new UseAttackEffect(player, effect.attack);
-          store.reduceEffect(state, useAttackEffect);
-        } else {
-          const endTurnEffect = new EndTurnEffect(player);
-          store.reduceEffect(state, endTurnEffect);
-        }
-      });
-    }
-
-    REMOVE_MARKER_AT_END_OF_TURN(effect, this.SAND_ATTACK_USED_MARKER, this);
-
-    if (effect instanceof EndTurnEffect
-      && effect.player.active.marker.hasMarker(this.SAND_ATTACK_MARKER, this)) {
-      effect.player.active.marker.removeMarker(this.SAND_ATTACK_MARKER, this);
+      return DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK(store, state, effect, this);
     }
 
     return state;

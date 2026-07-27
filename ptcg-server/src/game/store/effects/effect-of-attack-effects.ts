@@ -215,6 +215,22 @@ export class PreventAttackEffect extends EffectOfAttackEffect {
 }
 
 /**
+ * During the opponent's next turn, if the Defending Pokémon tries to attack,
+ * they flip coin(s). If any is tails, that attack does nothing (Smokescreen / Sand-Attack).
+ */
+export class CoinFlipCancelAttackEffect extends EffectOfAttackEffect {
+  readonly type: string = 'COIN_FLIP_CANCEL_ATTACK_EFFECT';
+
+  constructor(base: AttackEffect, public coinFlips: number = 1) {
+    super(base);
+  }
+
+  applyEffect(): void {
+    this.opponent.active.coinFlipCancelAttackNextTurn = Math.max(1, this.coinFlips);
+  }
+}
+
+/**
  * Effect that prevents the defending Pokemon from using a specific attack during the opponent's next turn.
  */
 export class OpponentPokemonCannotUseAttackEffect extends EffectOfAttackEffect {
@@ -275,6 +291,16 @@ export function preventEffectsOfAttacksEffect(
 
 export function preventAttackEffect(attackEffect: AttackEffect, source: Card): PreventAttackEffect {
   const effect = new PreventAttackEffect(attackEffect);
+  effect.markerSource = source;
+  return effect;
+}
+
+export function coinFlipCancelAttackEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  coinFlips: number = 1,
+): CoinFlipCancelAttackEffect {
+  const effect = new CoinFlipCancelAttackEffect(attackEffect, coinFlips);
   effect.markerSource = source;
   return effect;
 }

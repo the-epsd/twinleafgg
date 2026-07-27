@@ -4,13 +4,10 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { PlayerType, StoreLike, State, StateUtils } from '../../../game';
+import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { UseAttackEffect } from '../../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, ADD_MARKER, HAS_MARKER } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
-
+import { WAS_ATTACK_USED, DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK } from '../../../game/store/prefabs/prefabs';
 export class Magmortar extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Magmar';
@@ -18,9 +15,6 @@ export class Magmortar extends PokemonCard {
   public hp: number = 130;
   public weakness = [{ type: W }];
   public retreat = [C, C, C];
-
-  public readonly SMOKESCREEN_MARKER = 'MAGMORTAR_UNM_SMOKESCREEN_MARKER';
-  public readonly CLEAR_SMOKESCREEN_MARKER = 'MAGMORTAR_UNM_CLEAR_SMOKESCREEN_MARKER';
 
   public attacks = [
     {
@@ -44,35 +38,9 @@ export class Magmortar extends PokemonCard {
   public fullName: string = 'Magmortar UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 1: Smoke Bomb
-    // Ref: set-lost-thunder/cyndaquil.ts (Smokescreen)
+    // Ref: DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK (Smokescreen)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      ADD_MARKER(this.SMOKESCREEN_MARKER, opponent.active, this);
-      ADD_MARKER(this.CLEAR_SMOKESCREEN_MARKER, opponent, this);
-    }
-
-    if (effect instanceof UseAttackEffect && HAS_MARKER(this.SMOKESCREEN_MARKER, effect.player.active, this)) {
-      const player = effect.player;
-
-      COIN_FLIP_PROMPT(store, state, player, result => {
-        if (!result) {
-          effect.preventDefault = true;
-          const endTurnEffect = new EndTurnEffect(player);
-          store.reduceEffect(state, endTurnEffect);
-        }
-      });
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      if (HAS_MARKER(this.CLEAR_SMOKESCREEN_MARKER, effect.player, this)) {
-        effect.player.marker.removeMarker(this.CLEAR_SMOKESCREEN_MARKER, this);
-        const opponent = StateUtils.getOpponent(state, effect.player);
-        opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
-          cardList.marker.removeMarker(this.SMOKESCREEN_MARKER, this);
-        });
-      }
+      return DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK(store, state, effect, this);
     }
 
     // Attack 2: Flamethrower

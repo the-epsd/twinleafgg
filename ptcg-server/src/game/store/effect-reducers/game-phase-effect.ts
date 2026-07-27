@@ -300,6 +300,10 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
         cardList.cannotUseAttacksNextTurnPending = [];
       }
 
+      if (cardList.coinFlipCancelAttackNextTurn > 0) {
+        cardList.coinFlipCancelAttackNextTurn = 0;
+      }
+
       if (cardList.cannotRetreatNextTurn) {
         cardList.cannotRetreatNextTurn = false;
       }

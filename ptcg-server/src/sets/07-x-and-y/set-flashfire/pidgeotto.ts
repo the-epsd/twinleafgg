@@ -4,17 +4,11 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PlayerType } from '../../../game';
+import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { UseAttackEffect } from '../../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefabs/attack-effects';
-
+import { WAS_ATTACK_USED, DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK } from '../../../game/store/prefabs/prefabs';
 export class Pidgeotto extends PokemonCard {
-  public readonly SAND_ATTACK_MARKER = 'PIDGEOTTO_SAND_ATTACK_MARKER';
-  public readonly CLEAR_SAND_ATTACK_MARKER = 'PIDGEOTTO_CLEAR_SAND_ATTACK_MARKER';
-  public readonly SAND_ATTACK_USED_MARKER = 'PIDGEOTTO_SAND_ATTACK_USED_MARKER';
 
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Pidgey';
@@ -47,46 +41,9 @@ export class Pidgeotto extends PokemonCard {
   public fullName: string = 'Pidgeotto FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-x-and-y/malamar-2.ts (Mental Panic - coin-gated attack block)
+    // Ref: DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK (Smokescreen)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      ADD_MARKER(this.SAND_ATTACK_MARKER, opponent.active, this);
-      ADD_MARKER(this.CLEAR_SAND_ATTACK_MARKER, opponent, this);
-    }
-
-    if (effect instanceof UseAttackEffect && HAS_MARKER(this.SAND_ATTACK_MARKER, effect.player.active, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      if (HAS_MARKER(this.SAND_ATTACK_USED_MARKER, opponent, this)) {
-        return state;
-      }
-
-      effect.preventDefault = true;
-      ADD_MARKER(this.SAND_ATTACK_USED_MARKER, opponent, this);
-
-      COIN_FLIP_PROMPT(store, state, player, result => {
-        if (result) {
-          const useAttackEffect = new UseAttackEffect(player, effect.attack);
-          store.reduceEffect(state, useAttackEffect);
-        } else {
-          const endTurnEffect = new EndTurnEffect(player);
-          store.reduceEffect(state, endTurnEffect);
-        }
-      });
-    }
-
-    REMOVE_MARKER_AT_END_OF_TURN(effect, this.SAND_ATTACK_USED_MARKER, this);
-
-    if (effect instanceof EndTurnEffect) {
-      if (HAS_MARKER(this.CLEAR_SAND_ATTACK_MARKER, effect.player, this)) {
-        effect.player.marker.removeMarker(this.CLEAR_SAND_ATTACK_MARKER, this);
-        const opponent = StateUtils.getOpponent(state, effect.player);
-        opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
-          cardList.marker.removeMarker(this.SAND_ATTACK_MARKER, this);
-        });
-      }
+      return DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK(store, state, effect, this);
     }
 
     // Ref: set-x-and-y/taillow.ts (Ambush - coin flip more damage)

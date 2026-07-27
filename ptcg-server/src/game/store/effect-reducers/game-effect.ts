@@ -35,7 +35,7 @@ import { StoreLike } from '../store-like';
 import { MoveCardsEffect } from '../effects/game-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
 import { PokemonCardList } from '../state/pokemon-card-list';
-import { MOVE_CARDS } from '../prefabs/prefabs';
+import { MOVE_CARDS, COIN_FLIP_PROMPT } from '../prefabs/prefabs';
 import { STAMP_ABILITY_LOCK_ACTIVATION } from '../prefabs/ability-lock';
 import { RESOLVE_COIN_FLIP_EFFECT, RUN_COIN_FLIP_SEQUENCE } from '../prefabs/attack-coin-reflip';
 import { CardList } from '../state/card-list';
@@ -154,6 +154,30 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   // Check if a specific attack was disabled by an opponent's effect
   if (attackingPokemon.blockedAttackNameNextTurn === attack.name) {
     throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+  }
+
+  // Smokescreen / Sand-Attack: flip coin(s); any tails cancels the attack
+  if (attackingPokemon.coinFlipCancelAttackNextTurn > 0) {
+    const flips = attackingPokemon.coinFlipCancelAttackNextTurn;
+    let anyTails = false;
+
+    for (let i = 0; i < flips; i++) {
+      let heads = false;
+      state = COIN_FLIP_PROMPT(store, state, player, result => {
+        heads = result;
+      });
+      if (store.hasPrompts()) {
+        yield store.waitPrompt(state, () => next());
+      }
+      if (!heads) {
+        anyTails = true;
+      }
+    }
+
+    if (anyTails) {
+      state = store.reduceEffect(state, new EndTurnEffect(player));
+      return state;
+    }
   }
 
   // Get the actual PokemonCard for power checks
