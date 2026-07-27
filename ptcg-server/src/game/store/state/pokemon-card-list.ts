@@ -65,6 +65,12 @@ export class PokemonCardList extends CardList {
    * `0` = inactive. Set on the Defending Pokémon for the opponent's next turn.
    */
   public coinFlipCancelAttackNextTurn: number = 0;
+  /**
+   * Growl / Daunt style: this Pokémon's attacks do this many less damage
+   * (before Weakness and Resistance). `0` = inactive.
+   * Set on the Defending Pokémon for the opponent's next turn.
+   */
+  public attackDamageReductionNextTurn: number = 0;
   public cannotRetreatNextTurn: boolean = false;
   public cannotRetreatNextTurnPending: boolean = false;
   public pendingEnergyAttachDamageCounters: PendingEnergyAttachDamageCounters | null = null;
@@ -218,6 +224,7 @@ export class PokemonCardList extends CardList {
     this.cannotUseAttacksNextTurn = [];
     this.cannotUseAttacksNextTurnPending = [];
     this.coinFlipCancelAttackNextTurn = 0;
+    this.attackDamageReductionNextTurn = 0;
     this.cannotRetreatNextTurn = false;
     this.cannotRetreatNextTurnPending = false;
     this.pendingEnergyAttachDamageCounters = null;
@@ -281,6 +288,7 @@ export class PokemonCardList extends CardList {
     this.cannotUseAttacksNextTurn = [];
     this.cannotUseAttacksNextTurnPending = [];
     this.coinFlipCancelAttackNextTurn = 0;
+    this.attackDamageReductionNextTurn = 0;
     this.cannotRetreatNextTurn = false;
     this.cannotRetreatNextTurnPending = false;
     this.pendingEnergyAttachDamageCounters = null;

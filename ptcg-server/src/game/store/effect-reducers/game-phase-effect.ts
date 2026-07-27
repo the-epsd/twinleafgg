@@ -304,6 +304,10 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
         cardList.coinFlipCancelAttackNextTurn = 0;
       }
 
+      if (cardList.attackDamageReductionNextTurn > 0) {
+        cardList.attackDamageReductionNextTurn = 0;
+      }
+
       if (cardList.cannotRetreatNextTurn) {
         cardList.cannotRetreatNextTurn = false;
       }

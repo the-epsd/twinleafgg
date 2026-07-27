@@ -52,6 +52,12 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
       return state;
     }
 
+    // Defending Pokémon's attacks do N less (before W/R). Only for direct PutDamage
+    // paths — DealDamageEffect already applied this before weakness.
+    if (!effect.weaknessApplied && effect.source.attackDamageReductionNextTurn > 0) {
+      effect.damage = Math.max(0, effect.damage - effect.source.attackDamageReductionNextTurn);
+    }
+
     const opponent = StateUtils.getOpponent(state, effect.player);
 
     if (effect.attackEffect && target === opponent.active && !effect.weaknessApplied) {
@@ -146,6 +152,11 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
 
   if (effect instanceof DealDamageEffect) {
     const base = effect.attackEffect;
+
+    // Defending Pokémon's attacks do N less — before Weakness and Resistance
+    if (effect.source.attackDamageReductionNextTurn > 0) {
+      effect.damage = Math.max(0, effect.damage - effect.source.attackDamageReductionNextTurn);
+    }
 
     const applyWeakness = new ApplyWeaknessEffect(base, effect.damage);
     applyWeakness.target = effect.target;

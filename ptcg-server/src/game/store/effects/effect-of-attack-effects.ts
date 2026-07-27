@@ -12,7 +12,6 @@ import { Attack, PowerType } from '../card/pokemon-types';
 import { Card } from '../card/card';
 import { CardType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
-import { MarkerConstants } from '../markers/marker-constants';
 import { PokemonCardList, PreventDamageFilter } from '../state/pokemon-card-list';
 
 function sourceMatchesPreventFilter(
@@ -246,17 +245,19 @@ export class OpponentPokemonCannotUseAttackEffect extends EffectOfAttackEffect {
 }
 
 /**
- * Effect that adds a damage reduction marker
+ * During the opponent's next turn, the Defending Pokémon's attacks do
+ * `reduction` less damage (before applying Weakness and Resistance).
+ * Effect lives on the Defending Pokémon — switching/benching clears it.
  */
 export class ReduceDamageEffect extends EffectOfAttackEffect {
   readonly type: string = 'REDUCE_DAMAGE_EFFECT';
 
-  constructor(base: AttackEffect) {
+  constructor(base: AttackEffect, public reduction: number) {
     super(base);
   }
 
   applyEffect(): void {
-    this.opponent.active.marker.addMarker(MarkerConstants.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this.markerSource, 'attack', 'pokemon');
+    this.opponent.active.attackDamageReductionNextTurn = Math.max(0, this.reduction);
   }
 }
 
@@ -315,8 +316,12 @@ export function opponentPokemonCannotUseAttackEffect(
   return effect;
 }
 
-export function reduceDamageEffect(attackEffect: AttackEffect, source: Card): ReduceDamageEffect {
-  const effect = new ReduceDamageEffect(attackEffect);
+export function reduceDamageEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  reduction: number,
+): ReduceDamageEffect {
+  const effect = new ReduceDamageEffect(attackEffect, reduction);
   effect.markerSource = source;
   return effect;
 }

@@ -92,7 +92,7 @@ import {
 } from '../effects/game-effects';
 import { AfterAttackEffect, BeforeDoingDamageEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
-import { preventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, coinFlipCancelAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect, defendingPokemonWeaknessIsNowEffect, PreventDamageOptions, shouldPreventAttackEffects } from '../effects/effect-of-attack-effects';
+import { preventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, coinFlipCancelAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect, defendingPokemonWeaknessIsNowEffect, reduceDamageEffect, PreventDamageOptions, shouldPreventAttackEffects } from '../effects/effect-of-attack-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
 
 /**
@@ -4163,6 +4163,22 @@ export function DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK(
 ): State {
   const cancelEffect = coinFlipCancelAttackEffect(effect, source, coinFlips);
   return store.reduceEffect(state, cancelEffect);
+}
+
+/**
+ * During your opponent's next turn, the Defending Pokémon's attacks do
+ * `reduction` less damage (before applying Weakness and Resistance).
+ * Effect is placed on the Defending Pokémon — switching clears it.
+ */
+export function DEFENDING_POKEMON_DOES_LESS_DAMAGE(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+  reduction: number,
+): State {
+  const reduceEffect = reduceDamageEffect(effect, source, reduction);
+  return store.reduceEffect(state, reduceEffect);
 }
 
 /**

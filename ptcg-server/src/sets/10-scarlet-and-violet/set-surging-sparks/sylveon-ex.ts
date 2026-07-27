@@ -1,70 +1,44 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../../..';
-
+import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, DEFENDING_POKEMON_DOES_LESS_DAMAGE } from '../../../game/store/prefabs/prefabs';
 
 export class Sylveonex extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Eevee';
-
   public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
-
-  public cardType: CardType = CardType.PSYCHIC;
-
+  public cardType: CardType = P;
   public hp: number = 270;
-
-  public weakness = [{ type: CardType.METAL }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
-
-  public attacks = [
-    {
-      name: 'Magical Charm',
-      cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
-      damage: 160,
-      text: 'During your opponent\'s next turn, the Defending Pokemon\'s attacks do 100 less damage (before applying Weakness and Resistance).'
-    },
-    {
-      name: 'Angelite',
-      cost: [CardType.WATER, CardType.LIGHTNING, CardType.PSYCHIC],
-      damage: 0,
-      text: 'Choose 2 of your opponent\'s Benched Pokémon. They shuffle those Pokémon and all attached cards into their deck. If 1 of your Pokémon used Angelite during your last turn, this attack can\'t be used.'
-    }
-  ];
-
-  public set: string = 'SSP';
-
-  public regulationMark = 'H';
-
-  public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '86';
-
-  public name: string = 'Sylveon ex';
-
-  public fullName: string = 'Sylveon ex SSP';
-
-  public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
-  public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
+  public weakness = [{ type: M }];
+  public retreat = [C, C];
 
   public readonly ANGELITE_MARKER = 'ANGELITE_MARKER';
   public readonly CLEAR_ANGELITE_MARKER = 'CLEAR_ANGELITE_MARKER';
 
+  public attacks = [{
+    name: 'Magical Charm',
+    cost: [P, C, C],
+    damage: 160,
+    text: 'During your opponent\'s next turn, the Defending Pokemon\'s attacks do 100 less damage (before applying Weakness and Resistance).'
+  },
+  {
+    name: 'Angelite',
+    cost: [W, L, P],
+    damage: 0,
+    text: 'Choose 2 of your opponent\'s Benched Pokémon. They shuffle those Pokémon and all attached cards into their deck. If 1 of your Pokémon used Angelite during your last turn, this attack can\'t be used.'
+  }];
+
+  public regulationMark = 'H';
+  public set: string = 'SSP';
+  public setNumber: string = '86';
+  public cardImage: string = 'assets/cardback.png';
+  public name: string = 'Sylveon ex';
+  public fullName: string = 'Sylveon ex SSP';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.active.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-    }
-
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_ANGELITE_MARKER, this)) {
       effect.player.marker.removeMarker(this.ANGELITE_MARKER, this);
       effect.player.marker.removeMarker(this.CLEAR_ANGELITE_MARKER, this);
@@ -74,19 +48,12 @@ export class Sylveonex extends PokemonCard {
       effect.player.marker.addMarker(this.CLEAR_ANGELITE_MARKER, this);
     }
 
+    // Magical Charm
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      opponent.active.marker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+      return DEFENDING_POKEMON_DOES_LESS_DAMAGE(store, state, effect, this, 100);
     }
 
-    if (effect instanceof DealDamageEffect && effect.source.marker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
-      effect.damage -= 100;
-      return state;
-    }
-
+    // Angelite
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -127,15 +94,13 @@ export class Sylveonex extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // Target is not Active
       if (effect.target === player.active || effect.target === opponent.active) {
         return state;
       }
 
       effect.preventDefault = true;
     }
+
     return state;
   }
-
 }
-
