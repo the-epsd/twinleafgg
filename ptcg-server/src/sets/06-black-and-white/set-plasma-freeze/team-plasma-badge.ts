@@ -20,7 +20,9 @@ export class TeamPlasmaBadge extends TrainerCard {
   private injectedTeamPlasmaTags: { [id: number]: PokemonCard } = {};
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    const shouldSync = effect instanceof CheckTableStateEffect || (effect instanceof TrainerEffect && effect.trainerCard === this);
+    const shouldSync =
+      effect instanceof CheckTableStateEffect ||
+      (effect instanceof TrainerEffect && effect.trainerCard === this);
 
     if (!shouldSync) {
       return state;
@@ -28,7 +30,7 @@ export class TeamPlasmaBadge extends TrainerCard {
 
     const activeBadgeTargets = new Set<number>();
 
-    state.players.forEach(player => {
+    state.players.forEach((player) => {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard) => {
         if (!cardList.tools.includes(this) || IS_TOOL_BLOCKED(store, state, player, this)) {
           return;
@@ -37,13 +39,14 @@ export class TeamPlasmaBadge extends TrainerCard {
         const idx = pokemonCard.tags.indexOf(CardTag.TEAM_PLASMA);
         if (idx !== -1) {
           pokemonCard.tags.splice(idx, 1);
+        }
         activeBadgeTargets.add(pokemonCard.id);
 
-        if (!pokemonCard.tags.includes(CardTag.TEAM_PLASMA)) {
-          pokemonCard.tags.push(CardTag.TEAM_PLASMA);
+        if (!pokemonCard.hasTag(CardTag.TEAM_PLASMA)) {
+          pokemonCard.addRuntimeTag(CardTag.TEAM_PLASMA);
           this.injectedTeamPlasmaTags[pokemonCard.id] = pokemonCard;
         }
-        this.injectedTeamPlasmaTags.delete(id);
+        delete this.injectedTeamPlasmaTags[pokemonCard.id];
       });
     });
 
@@ -55,7 +58,7 @@ export class TeamPlasmaBadge extends TrainerCard {
       const pokemonCard = this.injectedTeamPlasmaTags[id];
       const idx = pokemonCard.tags.indexOf(CardTag.TEAM_PLASMA);
       if (idx !== -1) {
-        pokemonCard.tags.splice(idx, 1);
+        pokemonCard.removeRuntimeTag(CardTag.TEAM_PLASMA);
       }
       delete this.injectedTeamPlasmaTags[id];
     }
