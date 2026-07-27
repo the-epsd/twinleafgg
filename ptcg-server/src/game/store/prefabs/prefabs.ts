@@ -3468,7 +3468,7 @@ export function WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN(
     return false;
   }
 
-  if (filter?.tags.length) {
+  if (filter?.tags?.length) {
     return player.pokemonKnockedOutLastTurnEntries.some((entry) =>
       filter.tags!.every((tag) => entry.includes(tag)),
     );
