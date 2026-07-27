@@ -92,7 +92,7 @@ import {
 } from '../effects/game-effects';
 import { AfterAttackEffect, BeforeDoingDamageEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
-import { preventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect, PreventDamageOptions, shouldPreventAttackEffects } from '../effects/effect-of-attack-effects';
+import { preventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect, defendingPokemonWeaknessIsNowEffect, PreventDamageOptions, shouldPreventAttackEffects } from '../effects/effect-of-attack-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
 
 /**
@@ -4120,6 +4120,20 @@ export function DEFENDING_POKEMON_TAKES_DAMAGE_ON_ENERGY_ATTACH_FROM_HAND_NEXT_T
 ): State {
   const attachEffect = defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect(effect, source, damage);
   return store.reduceEffect(state, attachEffect);
+}
+
+/**
+ * The Defending Pokémon's Weakness is now the given type until the end of your next turn (×2).
+ */
+export function DEFENDING_POKEMON_WEAKNESS_IS_NOW(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+  weaknessType: CardType,
+): State {
+  const weaknessEffect = defendingPokemonWeaknessIsNowEffect(effect, source, weaknessType);
+  return store.reduceEffect(state, weaknessEffect);
 }
 
 /**

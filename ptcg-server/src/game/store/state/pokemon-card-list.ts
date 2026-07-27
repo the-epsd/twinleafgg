@@ -52,6 +52,11 @@ export class PokemonCardList extends CardList {
   public defendingPokemonExtraDamageAttackerId: number | undefined = undefined;
   public defendingPokemonExtraDamagePending: boolean = false;
   public defendingPokemonExtraDamageRearmAfterAttack: boolean = false;
+  /** Attack-set Weakness override (e.g. Overwriting Bolt). Active immediately; cleared after attacker's next turn. */
+  public weaknessOverrideType: CardType | undefined = undefined;
+  public weaknessOverrideAttackerId: number | undefined = undefined;
+  /** After the attacker's first EndTurn, armed to clear on their following EndTurn. */
+  public weaknessOverrideClearArmed: boolean = false;
   public cannotAttackNextTurn: boolean = false;
   public cannotAttackNextTurnPending: boolean = false;
   public cannotUseAttacksNextTurn: string[] = [];
@@ -222,6 +227,9 @@ export class PokemonCardList extends CardList {
     this.defendingPokemonExtraDamageAttackerId = undefined;
     this.defendingPokemonExtraDamagePending = false;
     this.defendingPokemonExtraDamageRearmAfterAttack = false;
+    this.weaknessOverrideType = undefined;
+    this.weaknessOverrideAttackerId = undefined;
+    this.weaknessOverrideClearArmed = false;
   }
 
   clearEffects(): void {
@@ -260,6 +268,9 @@ export class PokemonCardList extends CardList {
     this.defendingPokemonExtraDamageAttackerId = undefined;
     this.defendingPokemonExtraDamagePending = false;
     this.defendingPokemonExtraDamageRearmAfterAttack = false;
+    this.weaknessOverrideType = undefined;
+    this.weaknessOverrideAttackerId = undefined;
+    this.weaknessOverrideClearArmed = false;
     this.cannotAttackNextTurn = false;
     this.cannotAttackNextTurnPending = false;
     this.cannotUseAttacksNextTurn = [];

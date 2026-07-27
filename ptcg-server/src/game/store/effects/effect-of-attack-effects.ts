@@ -10,6 +10,7 @@ import { State } from '../state/state';
 import { StateUtils } from '../state-utils';
 import { Attack, PowerType } from '../card/pokemon-types';
 import { Card } from '../card/card';
+import { CardType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { MarkerConstants } from '../markers/marker-constants';
 import { PokemonCardList, PreventDamageFilter } from '../state/pokemon-card-list';
@@ -362,6 +363,35 @@ export function defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect(
   damage: number,
 ): DefendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect {
   const effect = new DefendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect(attackEffect, damage);
+  effect.markerSource = source;
+  return effect;
+}
+
+/**
+ * The Defending Pokémon's Weakness is now the given type until the end of the
+ * attacking player's next turn. Applied as ×2 (no Weakness amount).
+ */
+export class DefendingPokemonWeaknessIsNowEffect extends EffectOfAttackEffect {
+  readonly type: string = 'DEFENDING_POKEMON_WEAKNESS_IS_NOW_EFFECT';
+
+  constructor(base: AttackEffect, public weaknessType: CardType) {
+    super(base);
+  }
+
+  applyEffect(): void {
+    const target = this.opponent.active;
+    target.weaknessOverrideType = this.weaknessType;
+    target.weaknessOverrideAttackerId = this.player.id;
+    target.weaknessOverrideClearArmed = false;
+  }
+}
+
+export function defendingPokemonWeaknessIsNowEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  weaknessType: CardType,
+): DefendingPokemonWeaknessIsNowEffect {
+  const effect = new DefendingPokemonWeaknessIsNowEffect(attackEffect, weaknessType);
   effect.markerSource = source;
   return effect;
 }

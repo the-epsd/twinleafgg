@@ -263,6 +263,23 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
       });
     });
 
+    // Weakness override lasting until end of attacker's next turn (2 EndTurns of the attacker)
+    [player, opponent].forEach(p => {
+      p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+        if (cardList.weaknessOverrideAttackerId !== player.id
+          || cardList.weaknessOverrideType === undefined) {
+          return;
+        }
+        if (cardList.weaknessOverrideClearArmed) {
+          cardList.weaknessOverrideType = undefined;
+          cardList.weaknessOverrideAttackerId = undefined;
+          cardList.weaknessOverrideClearArmed = false;
+        } else {
+          cardList.weaknessOverrideClearArmed = true;
+        }
+      });
+    });
+
     // Handle "cannot attack next turn" restrictions with two-stage cleanup
     player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
       // First, clear active restrictions (they blocked this turn, now clear them)

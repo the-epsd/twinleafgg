@@ -488,6 +488,13 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
     }
   }
 
+  if (effect instanceof CheckPokemonStatsEffect) {
+    if (effect.target.weaknessOverrideType !== undefined) {
+      effect.weakness = [{ type: effect.target.weaknessOverrideType }];
+    }
+    return state;
+  }
+
   if (effect instanceof ApplyWeaknessEffect) {
     const checkPokemonType = new CheckPokemonTypeEffect(effect.source);
     state = store.reduceEffect(state, checkPokemonType);
