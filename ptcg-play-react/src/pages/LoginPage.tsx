@@ -3,8 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { Link, Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
-import { SUPPORTED_LANGUAGE_CODES, type SupportedLanguageCode } from '../i18n/languages';
+import { SUPPORTED_LANGUAGE_CODES } from '../i18n/languages';
 import { ApiError } from '../api/apiError';
+import { DropdownMenu } from '../components/ui/DropdownMenu';
 import { TwinleafCtaButton } from '../components/ui/TwinleafCtaButton';
 import styles from './auth/AuthShell.module.css';
 
@@ -22,6 +23,13 @@ export function LoginPage() {
   const [rememberUsername, setRememberUsername] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const languageItems = SUPPORTED_LANGUAGE_CODES.map((code) => ({
+    id: code,
+    label: labels[code],
+    onSelect: () => setLanguage(code),
+  }));
+  const selectedLanguageLabel = labels[language];
+  const selectedLanguageIndex = SUPPORTED_LANGUAGE_CODES.indexOf(language);
 
   useEffect(() => {
     const saved = localStorage.getItem(SAVED_USERNAME_KEY);
@@ -105,28 +113,27 @@ export function LoginPage() {
 
             {error ? <p className={styles.error}>{error}</p> : null}
 
-            <TwinleafCtaButton type="submit" fullWidth disabled={loading}>
+            <TwinleafCtaButton type="submit" fullWidth disabled={loading} className={styles.signInButton}>
               {loading ? t('REACT_SIGNING_IN') : t('LOGIN_SIGN_IN')}
             </TwinleafCtaButton>
           </form>
 
-          <p className={styles.footer}>
+          <p className={`${styles.footer} ${styles.loginFooter}`}>
             <Link to="/register">{t('LOGIN_CREATE_ACCOUNT')}</Link>
           </p>
 
           <div className={styles.langRow}>
-            <select
-              className={styles.langSelect}
-              value={language}
-              onChange={(e) => setLanguage(e.target.value as SupportedLanguageCode)}
-              aria-label={t('LABEL_LANGUAGE')}
-            >
-              {SUPPORTED_LANGUAGE_CODES.map((code) => (
-                <option key={code} value={code}>
-                  {labels[code]}
-                </option>
-              ))}
-            </select>
+            <div className={styles.langSelector}>
+              <DropdownMenu
+                trigger={<span className={styles.langTriggerValue}>{selectedLanguageLabel}</span>}
+                triggerClassName={styles.langTrigger}
+                panelClassName={styles.langPanel}
+                items={languageItems}
+                defaultActiveIndex={selectedLanguageIndex >= 0 ? selectedLanguageIndex : 0}
+                aria-label={t('LABEL_LANGUAGE')}
+                placement="top-end"
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -54,6 +54,13 @@ export type { FormAlertProps } from './ui/FormAlert';
 export { TwinleafCtaButton, twinleafCtaLabelStyles } from './ui/TwinleafCtaButton';
 export type { TwinleafCtaButtonProps, TwinleafCtaVariant } from './ui/TwinleafCtaButton';
 
+export { DropdownMenu } from './ui/DropdownMenu';
+export type {
+  DropdownMenuProps,
+  DropdownMenuItem,
+  DropdownMenuPlacement,
+} from './ui/DropdownMenu';
+
 export { CardFace } from './cards/CardFace';
 export type { CardFaceProps } from './cards/CardFace';
 

@@ -4,6 +4,7 @@ import {
   Avatar,
   BattleStatusBadge,
   DeckValidityBadge,
+  DropdownMenu,
   EmptyBattlefield,
   FormatTabButton,
   FriendActionButton,
@@ -108,10 +109,22 @@ export function UiShowcasePage() {
   const [playLoading, setPlayLoading] = useState(false);
   const [inQueue, setInQueue] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
+  const [partyMenuOpen, setPartyMenuOpen] = useState(true);
 
   const loginFields = useMemo(() => SHOWCASE_LOGIN_FIELDS, []);
   const futuristicFields = useMemo(() => SHOWCASE_FUTURISTIC_FIELDS, []);
   const minimalFields = useMemo(() => SHOWCASE_MINIMAL_FIELDS, []);
+  const partyMenuItems = useMemo(
+    () => [
+      { id: 'summary', label: 'Check summary', onSelect: () => showSnackbar('Check summary') },
+      { id: 'heal', label: 'Restore health', onSelect: () => showSnackbar('Restore health') },
+      { id: 'moves', label: 'Change moves', onSelect: () => showSnackbar('Change moves') },
+      { id: 'swap', label: 'Swap Pokémon', onSelect: () => showSnackbar('Swap Pokémon') },
+      { id: 'item', label: 'Give an item to hold', onSelect: () => showSnackbar('Give an item to hold') },
+      { id: 'cancel', label: 'Cancel' },
+    ],
+    [showSnackbar],
+  );
 
   function onDemoClick(label: string) {
     showSnackbar(`${label} clicked`);
@@ -544,7 +557,38 @@ export function UiShowcasePage() {
             <h2 id="showcase-interactive" className={styles.sectionTitle}>
               Interactive elements
             </h2>
-            <p className={styles.sectionDesc}>Archetype sprites, energy icons, and card faces.</p>
+            <p className={styles.sectionDesc}>Archetype sprites, energy icons, menus, and card faces.</p>
+
+            <div className={styles.group}>
+              <h3 className={styles.groupTitle}>DropdownMenu</h3>
+              <p className={styles.groupDesc}>
+                Proprietary action menu — navy panel, white highlight row, lime caret. Arrow keys, Enter, Escape,
+                and outside click.
+              </p>
+              <div className={styles.row} style={{ alignItems: 'flex-start', gap: 32 }}>
+                <DropdownMenu
+                  trigger="Party options"
+                  items={partyMenuItems}
+                  onSelect={(item) => {
+                    if (item.id === 'cancel') {
+                      showSnackbar('Cancelled');
+                    }
+                  }}
+                />
+                <DropdownMenu
+                  open={partyMenuOpen}
+                  onOpenChange={setPartyMenuOpen}
+                  closeOnSelect={false}
+                  items={partyMenuItems}
+                  aria-label="Party options panel"
+                />
+                {!partyMenuOpen ? (
+                  <ShellButton variant="secondary" onClick={() => setPartyMenuOpen(true)}>
+                    Reopen panel
+                  </ShellButton>
+                ) : null}
+              </div>
+            </div>
 
             <div className={styles.group}>
               <h3 className={styles.groupTitle}>ArchetypeIcon</h3>

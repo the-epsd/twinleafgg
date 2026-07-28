@@ -56,7 +56,9 @@
   background-position:
     0 0,
     5px 5px;
-  opacity: 0.5;
+  opacity: 0.7;
+  filter: blur(1.5px);
+  transform: scale(1.03);
   pointer-events: none;
   z-index: 0;
 }
@@ -122,14 +124,12 @@
   width: 220%;
   aspect-ratio: 1;
   translate: -50% -50%;
-  background: repeating-conic-gradient(
-    from 0deg at 50% 50%,
-    rgba(100, 180, 255, 0.07) 0deg 8deg,
-    transparent 8deg 16deg
-  );
+  background: repeating-conic-gradient(from 0deg at 50% 50%,
+      rgba(100, 180, 255, 0.07) 0deg 8deg,
+      transparent 8deg 16deg);
   border-radius: 50%;
-  opacity: 0.7;
-  animation: sunSpin 80s linear infinite;
+  opacity: 0.35;
+  animation: sunSpin 200s linear infinite;
   pointer-events: none;
 }
 
@@ -276,6 +276,16 @@
   color: var(--auth-text-muted);
 }
 
+.loginFooter {
+  /* Center the Sign In button between password field and the footer link. */
+  margin-top: 4px;
+}
+
+.signInButton {
+  /* Push the button down a bit relative to the password field. */
+  margin-top: 6px;
+}
+
 .footer a {
   color: var(--auth-gold);
   font-weight: 700;
@@ -289,19 +299,58 @@
 .langRow {
   display: flex;
   justify-content: center;
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
-.langSelect {
-  appearance: none;
-  background: rgba(4, 10, 20, 0.7)
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%23a0a1a5'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E")
-    no-repeat right 10px center;
-  border: 1px solid rgba(62, 199, 201, 0.25);
-  border-radius: 999px;
-  padding: 6px 28px 6px 12px;
-  font-size: 0.75rem;
-  color: #c8d0dc;
+.langSelector {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  width: fit-content;
+}
+
+.langLabel {
+  padding-left: 2px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--auth-text-muted);
+}
+
+.langTrigger {
+  width: fit-content;
+  min-width: 132px !important;
+  justify-content: center !important;
+  padding: 7px 12px !important;
+  border-radius: 8px;
+  border-color: rgba(62, 199, 201, 0.22);
+  background: rgba(10, 20, 36, 0.82);
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.langTrigger:hover,
+.langTrigger[data-open='true'] {
+  border-color: rgba(62, 199, 201, 0.42);
+  background: rgba(12, 26, 46, 0.9);
+}
+
+.langTriggerValue {
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-align: center;
+}
+
+.langPanel {
+  min-width: 132px !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%);
 }
 
 @keyframes authRise {
@@ -309,6 +358,7 @@
     opacity: 0;
     transform: translateY(16px) scale(0.98);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
