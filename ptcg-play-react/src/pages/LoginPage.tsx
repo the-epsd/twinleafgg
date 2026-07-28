@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import { SUPPORTED_LANGUAGE_CODES, type SupportedLanguageCode } from '../i18n/languages';
 import { ApiError } from '../api/apiError';
+import { TwinleafCtaButton } from '../components/ui/TwinleafCtaButton';
 import styles from './auth/AuthShell.module.css';
 
 const SAVED_USERNAME_KEY = 'ptcg_login_saved_username';
@@ -104,9 +105,9 @@ export function LoginPage() {
 
             {error ? <p className={styles.error}>{error}</p> : null}
 
-            <button type="submit" className={styles.submit} disabled={loading}>
+            <TwinleafCtaButton type="submit" fullWidth disabled={loading}>
               {loading ? t('REACT_SIGNING_IN') : t('LOGIN_SIGN_IN')}
-            </button>
+            </TwinleafCtaButton>
           </form>
 
           <p className={styles.footer}>

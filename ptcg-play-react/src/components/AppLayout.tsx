@@ -29,6 +29,10 @@ function isMyGamesPath(pathname: string): boolean {
   return pathname === '/my-games' || pathname.startsWith('/my-games/');
 }
 
+function isGamesPath(pathname: string): boolean {
+  return pathname === '/games' || pathname.startsWith('/games/');
+}
+
 export function AppLayout() {
   const { t } = useTranslation();
   const { pathname } = useLocation();
@@ -39,7 +43,8 @@ export function AppLayout() {
   const tableFullBleed = isTablePath(pathname);
   const parentMap = isParentMapPath(pathname);
   const myGamesBleed = isMyGamesPath(pathname);
-  const mainBleed = deckEditorFullBleed || tableFullBleed || myGamesBleed;
+  const gamesBleed = isGamesPath(pathname);
+  const mainBleed = deckEditorFullBleed || tableFullBleed || myGamesBleed || gamesBleed;
 
   const incomingInviteCount = useMemo(() => {
     const { incoming } = partitionMyGames(games, clientId, user?.userId ?? 0);

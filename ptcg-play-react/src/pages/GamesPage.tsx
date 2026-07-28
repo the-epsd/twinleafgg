@@ -11,6 +11,9 @@ export function GamesPage() {
 
   return (
     <div className={styles.page}>
+      <div className={styles.cornerTL} aria-hidden />
+      <div className={styles.cornerBR} aria-hidden />
+      <div className={styles.dots} aria-hidden />
       <div className={styles.alerts}>
         {!connected && (
           <p className={styles.alert}>
@@ -21,9 +24,7 @@ export function GamesPage() {
       </div>
 
       <div className={styles.surface}>
-        <div className={styles.lobbyCenter}>
-          <MatchmakingLobby onError={setToast} />
-        </div>
+        <MatchmakingLobby onError={setToast} />
       </div>
     </div>
   );

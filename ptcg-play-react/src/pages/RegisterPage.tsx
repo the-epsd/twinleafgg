@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { fetchLoginInfo } from '../api/authApi';
 import { ApiError, formatRegisterError } from '../api/apiError';
+import { TwinleafCtaButton } from '../components/ui/TwinleafCtaButton';
 import styles from './auth/AuthShell.module.css';
 
 export function RegisterPage() {
@@ -127,13 +128,9 @@ export function RegisterPage() {
 
             {error ? <p className={styles.error}>{error}</p> : null}
 
-            <button
-              type="submit"
-              className={`${styles.submit} ${styles.submitSecondary}`}
-              disabled={loading}
-            >
+            <TwinleafCtaButton type="submit" variant="gold" fullWidth disabled={loading}>
               {loading ? t('REACT_SUBMITTING') : t('REGISTER_BUTTON')}
-            </button>
+            </TwinleafCtaButton>
           </form>
 
           <p className={styles.footer}>

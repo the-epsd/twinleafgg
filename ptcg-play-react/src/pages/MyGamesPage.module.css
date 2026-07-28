@@ -4,14 +4,18 @@
   --mg-cyan: #3ec7c9;
   --mg-border: rgba(62, 199, 201, 0.22);
   --mg-frame-gradient: linear-gradient(145deg, #e8d5a3, #8a6a2e 40%, #3ec7c9 70%, #a8843a);
-  --mg-green: #459058;
   --mg-gold: #fbbf24;
   --mg-text-muted: #a0a1a5;
   --mg-halftone:
     radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.04) 1.2px, transparent 1.2px),
     radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.03) 1.2px, transparent 1.2px);
-  --mg-play: linear-gradient(180deg, #9ae06a 0%, #6fc243 35%, #459058 78%, #2f6b3e 100%);
-  --mg-play-glow: 0 0 28px rgba(111, 194, 67, 0.45), 0 8px 24px rgba(0, 0, 0, 0.4);
+  --mg-play: #548c5c;
+  --mg-play-border: #6db578;
+  --mg-play-shadow:
+    0 0 0 1px rgba(15, 26, 12, 0.35),
+    0 8px 20px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.18);
 
   position: relative;
   flex: 1;
@@ -392,8 +396,7 @@ a.challengeName:hover {
 }
 
 .btnGhost,
-.btnPlay,
-.btnGold {
+.btnPlay {
   flex: 1;
   min-width: 110px;
   padding: 12px 14px;
@@ -406,13 +409,13 @@ a.challengeName:hover {
   cursor: pointer;
   transition:
     transform 0.15s ease,
-    filter 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease,
     box-shadow 0.15s ease;
 }
 
 .btnGhost:disabled,
-.btnPlay:disabled,
-.btnGold:disabled {
+.btnPlay:disabled {
   opacity: 0.55;
   cursor: not-allowed;
 }
@@ -431,31 +434,23 @@ a.challengeName:hover {
 }
 
 .btnPlay {
-  clip-path: polygon(0 0, 100% 0, 100% 70%, 94% 100%, 0 100%);
-  border-radius: 0;
-  color: #0f1a0c;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+  border-radius: 4px 14px 4px 14px;
+  border: 2px solid var(--mg-play-border);
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
   background: var(--mg-play);
-  box-shadow: var(--mg-play-glow);
+  box-shadow: var(--mg-play-shadow);
 }
 
 .btnPlay:hover:not(:disabled) {
-  filter: brightness(1.08);
+  background: #5f9b68;
+  border-color: #86c790;
   transform: translateY(-2px);
-}
-
-.btnGold {
-  clip-path: polygon(0 0, 100% 0, 100% 70%, 94% 100%, 0 100%);
-  color: #1a1203;
-  background: linear-gradient(180deg, #ffe082 0%, #fbbf24 40%, #d4a017 100%);
   box-shadow:
-    0 0 24px rgba(251, 191, 36, 0.35),
-    0 8px 20px rgba(0, 0, 0, 0.35);
-}
-
-.btnGold:hover:not(:disabled) {
-  filter: brightness(1.06);
-  transform: translateY(-2px);
+    0 0 0 1px rgba(15, 26, 12, 0.3),
+    0 10px 22px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.16);
 }
 
 .emptyPanel {
@@ -546,20 +541,23 @@ a.challengeName:hover {
   margin-top: 8px;
   display: inline-block;
   padding: 12px 22px;
-  clip-path: polygon(0 0, 100% 0, 100% 70%, 94% 100%, 0 100%);
+  border-radius: 4px 14px 4px 14px;
+  border: 2px solid var(--mg-play-border);
   font-family: var(--mg-font-display);
   font-weight: 800;
   font-size: 0.82rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   text-decoration: none;
-  color: #0f1a0c;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
   background: var(--mg-play);
-  box-shadow: var(--mg-play-glow);
+  box-shadow: var(--mg-play-shadow);
 }
 
 .emptyCta:hover {
-  filter: brightness(1.08);
+  background: #5f9b68;
+  border-color: #86c790;
 }
 
 .playersMount {

@@ -17,6 +17,7 @@ import {
   TwinleafNextButton,
   TwinleafPlayButton,
   TwinleafPreviousButton,
+  TwinleafCtaButton,
   type TwinleafFormField,
 } from '../../components';
 import { CardFace } from '../../components/cards/CardFace';
@@ -96,7 +97,6 @@ const FORMAT_CARD_STYLE = {
   width: 200,
   maxWidth: 200,
   flex: '0 0 200px',
-  '--format-card-w': '200px',
 } as CSSProperties;
 
 export function UiShowcasePage() {
@@ -163,8 +163,23 @@ export function UiShowcasePage() {
             </p>
 
             <div className={`${styles.group} ${styles.darkPanel}`}>
+              <h3 className={styles.groupTitle}>TwinleafCtaButton</h3>
+              <p className={styles.groupDesc}>Shared matchmaking / auth CTA (solid brand fill, low glow).</p>
+              <div className={styles.row}>
+                <TwinleafCtaButton onClick={() => onDemoClick('CTA primary')}>Begin Matchmaking</TwinleafCtaButton>
+                <TwinleafCtaButton variant="muted" onClick={() => onDemoClick('CTA muted')}>
+                  Leave queue
+                </TwinleafCtaButton>
+                <TwinleafCtaButton variant="gold" onClick={() => onDemoClick('CTA gold')}>
+                  Register
+                </TwinleafCtaButton>
+                <TwinleafCtaButton disabled>Disabled</TwinleafCtaButton>
+              </div>
+            </div>
+
+            <div className={`${styles.group} ${styles.darkPanel}`}>
               <h3 className={styles.groupTitle}>TwinleafPlayButton</h3>
-              <p className={styles.groupDesc}>Matchmaking primary CTA with clip-path styling.</p>
+              <p className={styles.groupDesc}>Legacy matchmaking CTA with loading / cooldown helpers.</p>
               <div className={styles.row}>
                 <TwinleafPlayButton
                   loading={playLoading}
@@ -358,7 +373,7 @@ export function UiShowcasePage() {
                 {MOCK_SHOWCASE_FORMATS.map((format) => (
                   <div
                     key={format.label}
-                    className={`${lobbyStyles.formatBox} ${styles.formatCardFixed}`}
+                    className={`${lobbyStyles.largeCard} ${styles.formatCardFixed}`}
                     style={FORMAT_CARD_STYLE}
                     role="button"
                     tabIndex={0}
@@ -374,14 +389,14 @@ export function UiShowcasePage() {
                         {format.queueCount} players in queue
                       </QueueOverlayBanner>
                     ) : null}
-                    <div className={lobbyStyles.artwork}>
-                      <div className={lobbyStyles.artworkInner}>
+                    <div className={lobbyStyles.largeArt}>
+                      <div className={lobbyStyles.largeArtInner}>
                         <ArchetypeIcon archetypes={format.archetype} scale={2.5} />
                       </div>
                     </div>
-                    <div className={lobbyStyles.info}>
-                      <div className={lobbyStyles.formatName}>{format.label}</div>
-                      <div className={lobbyStyles.deckName}>{format.deckName}</div>
+                    <div className={lobbyStyles.largeMeta}>
+                      <div className={lobbyStyles.largeTitle}>{format.label}</div>
+                      <div className={lobbyStyles.largeSubtitle}>{format.deckName}</div>
                     </div>
                   </div>
                 ))}

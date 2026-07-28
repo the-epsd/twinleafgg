@@ -51,6 +51,9 @@ export type { CheckboxFieldProps } from './ui/CheckboxField';
 export { FormAlert } from './ui/FormAlert';
 export type { FormAlertProps } from './ui/FormAlert';
 
+export { TwinleafCtaButton, twinleafCtaLabelStyles } from './ui/TwinleafCtaButton';
+export type { TwinleafCtaButtonProps, TwinleafCtaVariant } from './ui/TwinleafCtaButton';
+
 export { CardFace } from './cards/CardFace';
 export type { CardFaceProps } from './cards/CardFace';
 
