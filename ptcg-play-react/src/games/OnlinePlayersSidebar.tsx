@@ -16,7 +16,7 @@ import styles from './OnlinePlayersSidebar.module.css';
 const MAX_ROWS = 20;
 
 export interface OnlinePlayersSidebarProps {
-  appearance?: 'light' | 'sandbox';
+  appearance?: 'light' | 'sandbox' | 'arena';
 }
 
 function otherFriendUserId(f: { user: UserInfo; friend: UserInfo }, myUserId: number): number {
@@ -171,17 +171,26 @@ export function OnlinePlayersSidebar({ appearance = 'light' }: OnlinePlayersSide
     [showSnackbar, t],
   );
 
-  const asideClass =
-    appearance === 'sandbox' ? `${styles.aside} ${styles.asideSandbox}` : styles.aside;
+  const isDark = appearance === 'sandbox' || appearance === 'arena';
+  const isArena = appearance === 'arena';
 
-  const menuClass =
-    appearance === 'sandbox' ? `${styles.playerMenu} ${styles.playerMenuSandbox}` : styles.playerMenu;
+  const asideClass = isArena
+    ? `${styles.aside} ${styles.asideArena}`
+    : appearance === 'sandbox'
+      ? `${styles.aside} ${styles.asideSandbox}`
+      : styles.aside;
 
-  const headerClass =
-    appearance === 'sandbox' ? `${styles.header} ${styles.headerSandbox}` : styles.header;
+  const menuClass = isDark
+    ? `${styles.playerMenu} ${styles.playerMenuSandbox}`
+    : styles.playerMenu;
 
-  const emptyClass =
-    appearance === 'sandbox' ? `${styles.empty} ${styles.emptySandbox}` : styles.empty;
+  const headerClass = isArena
+    ? `${styles.header} ${styles.headerArena}`
+    : appearance === 'sandbox'
+      ? `${styles.header} ${styles.headerSandbox}`
+      : styles.header;
+
+  const emptyClass = isDark ? `${styles.empty} ${styles.emptySandbox}` : styles.empty;
 
   const resolveFriendOnlineClientId = useCallback(
     (userId: number): number | null => {
@@ -299,7 +308,7 @@ export function OnlinePlayersSidebar({ appearance = 'light' }: OnlinePlayersSide
 type FriendPlayerRowProps = {
   user: UserInfo;
   onlineClientId: number | null;
-  appearance: 'light' | 'sandbox';
+  appearance: 'light' | 'sandbox' | 'arena';
   myClientId: number;
   menuOpen: boolean;
   menuKey: string;
@@ -333,9 +342,13 @@ function FriendPlayerRow({
   const panelId = useId();
 
   const src = resolveAvatarUrl(u.avatarFile, serverConfig);
-  const rowClass = `${styles.rowButton}${appearance === 'sandbox' ? ` ${styles.rowSandbox}` : ''}`;
-  const avatarClass =
-    appearance === 'sandbox' ? `${styles.avatar} ${styles.avatarSandbox}` : styles.avatar;
+  const isDark = appearance === 'sandbox' || appearance === 'arena';
+  const rowClass = `${styles.rowButton}${isDark ? ` ${styles.rowSandbox}` : ''}${
+    appearance === 'arena' ? ` ${styles.rowArena}` : ''
+  }`;
+  const avatarClass = isDark
+    ? `${styles.avatar} ${styles.avatarSandbox}${appearance === 'arena' ? ` ${styles.avatarArena}` : ''}`
+    : styles.avatar;
 
   const showInvite = onlineClientId != null && onlineClientId !== myClientId;
 
@@ -358,10 +371,10 @@ function FriendPlayerRow({
           {onlineClientId != null ? <span className={styles.dot} aria-hidden /> : null}
         </div>
         <div className={styles.meta}>
-          <span className={appearance === 'sandbox' ? `${styles.name} ${styles.nameSandbox}` : styles.name}>
+          <span className={isDark ? `${styles.name} ${styles.nameSandbox}` : styles.name}>
             {u.name}
           </span>
-          <span className={appearance === 'sandbox' ? `${styles.rank} ${styles.rankSandbox}` : styles.rank}>
+          <span className={isDark ? `${styles.rank} ${styles.rankSandbox}` : styles.rank}>
             {t('REACT_ONLINE_PLAYERS_RANK', { rank: u.ranking })}
           </span>
         </div>
@@ -428,7 +441,7 @@ function FriendPlayerRow({
 
 type OnlinePlayerRowProps = {
   row: { clientId: number; user: UserInfo };
-  appearance: 'light' | 'sandbox';
+  appearance: 'light' | 'sandbox' | 'arena';
   isSelf: boolean;
   myClientId: number;
   menuOpen: boolean;
@@ -474,9 +487,13 @@ function OnlinePlayerRow({
 
   const u = row.user;
   const src = resolveAvatarUrl(u.avatarFile, serverConfig);
-  const rowClass = `${styles.rowButton}${appearance === 'sandbox' ? ` ${styles.rowSandbox}` : ''}${isSelf ? ` ${styles.rowSelf}` : ''}`;
-  const avatarClass =
-    appearance === 'sandbox' ? `${styles.avatar} ${styles.avatarSandbox}` : styles.avatar;
+  const isDark = appearance === 'sandbox' || appearance === 'arena';
+  const rowClass = `${styles.rowButton}${isDark ? ` ${styles.rowSandbox}` : ''}${
+    appearance === 'arena' ? ` ${styles.rowArena}` : ''
+  }${isSelf ? ` ${styles.rowSelf}` : ''}`;
+  const avatarClass = isDark
+    ? `${styles.avatar} ${styles.avatarSandbox}${appearance === 'arena' ? ` ${styles.avatarArena}` : ''}`
+    : styles.avatar;
 
   const isFriend = friendUserIds.has(u.userId);
   const requestPending = pendingSentUserIds.has(u.userId);
@@ -501,15 +518,15 @@ function OnlinePlayerRow({
           <span className={styles.dot} aria-hidden />
         </div>
         <div className={styles.meta}>
-          <span className={appearance === 'sandbox' ? `${styles.name} ${styles.nameSandbox}` : styles.name}>
+          <span className={isDark ? `${styles.name} ${styles.nameSandbox}` : styles.name}>
             {u.name}
             {isSelf ? (
-              <span className={appearance === 'sandbox' ? `${styles.you} ${styles.youSandbox}` : styles.you}>
+              <span className={isDark ? `${styles.you} ${styles.youSandbox}` : styles.you}>
                 {t('REACT_ONLINE_PLAYERS_YOU')}
               </span>
             ) : null}
           </span>
-          <span className={appearance === 'sandbox' ? `${styles.rank} ${styles.rankSandbox}` : styles.rank}>
+          <span className={isDark ? `${styles.rank} ${styles.rankSandbox}` : styles.rank}>
             {t('REACT_ONLINE_PLAYERS_RANK', { rank: u.ranking })}
           </span>
         </div>

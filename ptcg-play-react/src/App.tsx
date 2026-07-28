@@ -21,6 +21,7 @@ import { TablePage } from './pages/TablePage';
 import { SpectatePage } from './pages/SpectatePage';
 import { ReplaysPage } from './pages/ReplaysPage';
 import { FriendsPage } from './pages/FriendsPage';
+import { MyGamesPage } from './pages/MyGamesPage';
 import { ParentPage } from './pages/ParentPage';
 import { UiShowcasePage } from './pages/ui-showcase/UiShowcasePage';
 import { AbilityLockPage } from './pages/ability-lock/AbilityLockPage';
@@ -54,6 +55,7 @@ export default function App() {
             <Route element={<ProtectedRoute />}>
               <Route element={<AppLayout />}>
                 <Route path="/games" element={<GamesPage />} />
+                <Route path="/my-games" element={<MyGamesPage />} />
                 <Route path="/spectate" element={<SpectatePage />} />
                 <Route path="/table/replay/:matchId" element={<TablePage />} />
                 <Route path="/table/saved-replay/:replayId" element={<TablePage />} />

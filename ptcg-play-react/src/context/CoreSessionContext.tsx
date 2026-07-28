@@ -4,6 +4,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from 'react';
@@ -16,6 +17,8 @@ import { appConfig } from '../env/config';
 import { ApiError } from '../api/apiError';
 import type { ClientUserData } from './coreTypes';
 import { ConnectionStatusSnackbar } from '../components/ConnectionStatusSnackbar';
+import { InviteAwareness } from '../components/InviteAwareness';
+import { isPlayerInGame } from '../games/myGamesClassify';
 
 export type ConnectionBanner =
   | { type: 'reconnecting'; attempt: number }
@@ -82,20 +85,53 @@ function mergeUsers(list: UserInfo[]): Record<number, UserInfo> {
 }
 
 export function CoreSessionProvider({ children }: { children: ReactNode }) {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const [core, setCore] = useState<CoreSessionState>(initialCore);
+  const loggedUserIdRef = useRef(user?.userId ?? 0);
+  const clientIdRef = useRef(0);
+  const autoJoinedRef = useRef<Set<number>>(new Set());
+
+  useEffect(() => {
+    loggedUserIdRef.current = user?.userId ?? 0;
+  }, [user?.userId]);
 
   useEffect(() => {
     const authToken = getStoredToken();
     if (!isAuthenticated || !authToken) {
       getSocketManager().disable();
       setCore(initialCore);
+      autoJoinedRef.current.clear();
+      clientIdRef.current = 0;
       return;
     }
 
     const socket = getSocketManager();
     let cancelled = false;
     let sessionReady = false;
+
+    const autoJoinGame = (game: GameInfo, sessionClientId: number) => {
+      if (autoJoinedRef.current.has(game.gameId)) {
+        return;
+      }
+      const userId = loggedUserIdRef.current;
+      const isPlayerByClientId = game.players.some((p) => p.clientId === sessionClientId);
+      const isPlayerByUserId = isPlayerInGame(game, sessionClientId, userId);
+      if (!isPlayerByClientId && !isPlayerByUserId) {
+        return;
+      }
+      autoJoinedRef.current.add(game.gameId);
+      if (isPlayerByClientId) {
+        void socket.emit('game:join', game.gameId).catch(() => {
+          autoJoinedRef.current.delete(game.gameId);
+        });
+      } else {
+        void socket
+          .emit<{ gameId: number }, GameState>('game:rejoin', { gameId: game.gameId })
+          .catch(() => {
+            autoJoinedRef.current.delete(game.gameId);
+          });
+      }
+    };
 
     const onJoin = (data: ClientUserData) => {
       setCore((c) => {
@@ -115,6 +151,7 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
     const onGameInfo = (game: GameInfo) => {
       setCore((c) => {
         if (!isActiveListGameInfo(game)) {
+          autoJoinedRef.current.delete(game.gameId);
           return { ...c, games: c.games.filter((g) => g.gameId !== game.gameId) };
         }
         const games = c.games.slice();
@@ -126,6 +163,9 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
         }
         return { ...c, games };
       });
+      if (sessionReady) {
+        autoJoinGame(game, clientIdRef.current);
+      }
     };
 
     const onUsersInfo = (infos: UserInfo[]) => {
@@ -145,9 +185,13 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
         }
         return { ...c, games: [...c.games, game] };
       });
+      if (sessionReady && isActiveListGameInfo(game)) {
+        autoJoinGame(game, clientIdRef.current);
+      }
     };
 
     const onDeleteGame = (gameId: number) => {
+      autoJoinedRef.current.delete(gameId);
       setCore((c) => ({
         ...c,
         games: c.games.filter((g) => g.gameId !== gameId),
@@ -177,15 +221,20 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
       if (cancelled) {
         return;
       }
+      clientIdRef.current = info.clientId;
+      const activeGames = info.games.filter(isActiveListGameInfo);
       setCore({
         clientId: info.clientId,
         clients: info.clients,
         usersById: mergeUsers(info.users),
-        games: info.games.filter(isActiveListGameInfo),
+        games: activeGames,
         connected: true,
         error: null,
         connectionBanner: null,
       });
+      for (const game of activeGames) {
+        autoJoinGame(game, info.clientId);
+      }
     }
 
     const onDisconnect = (reason: string) => {
@@ -420,6 +469,7 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
     <CoreSessionContext.Provider value={value}>
       {children}
       <ConnectionStatusSnackbar />
+      <InviteAwareness />
     </CoreSessionContext.Provider>
   );
 }

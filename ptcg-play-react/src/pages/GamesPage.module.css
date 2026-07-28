@@ -19,8 +19,7 @@
   width: 100%;
   min-width: 0;
   display: flex;
-  flex-direction: row;
-  align-items: stretch;
+  flex-direction: column;
 }
 
 .lobbyCenter {
@@ -30,14 +29,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
-
-.playersDock {
-  flex-shrink: 0;
-  display: flex;
-  align-items: stretch;
-  position: relative;
-  z-index: 10;
 }
 
 .alert {
