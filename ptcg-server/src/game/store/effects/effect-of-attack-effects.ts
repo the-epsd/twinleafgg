@@ -353,6 +353,61 @@ export function reduceDamageEffect(
 }
 
 /**
+ * During the opponent's next turn (or longer), prevent the target player(s)
+ * from playing certain card types from hand. Locks live on the Player.
+ */
+export interface PlayLockOptions {
+  item?: boolean;
+  supporter?: boolean;
+  stadium?: boolean;
+  tool?: boolean;
+  specialEnergy?: boolean;
+  /** EndTurns of the locked player until clear. Default 1 (opponent's next turn). */
+  turnsRemaining?: number;
+  /** Also lock the attacking player (e.g. Vanilluxe Frigid Breath). */
+  bothPlayers?: boolean;
+  /** EndTurns for the attacker when bothPlayers. Default 2 (until end of your next turn). */
+  attackerTurnsRemaining?: number;
+}
+
+export class PlayLockEffect extends EffectOfAttackEffect {
+  readonly type: string = 'PLAY_LOCK_EFFECT';
+
+  constructor(base: AttackEffect, public readonly options: PlayLockOptions) {
+    super(base);
+    // Player-level lock — not an effect done to the Defending Pokémon.
+    // Using the defender as target lets Mist Energy / similar incorrectly block it.
+    this.target = base.source;
+  }
+
+  applyEffect(): void {
+    const locks = {
+      item: this.options.item === true,
+      supporter: this.options.supporter === true,
+      stadium: this.options.stadium === true,
+      tool: this.options.tool === true,
+      specialEnergy: this.options.specialEnergy === true,
+    };
+    const opponentTurns = this.options.turnsRemaining ?? 1;
+    this.opponent.applyPlayLocks(locks, opponentTurns);
+
+    if (this.options.bothPlayers) {
+      this.player.applyPlayLocks(locks, this.options.attackerTurnsRemaining ?? 2);
+    }
+  }
+}
+
+export function playLockEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  options: PlayLockOptions,
+): PlayLockEffect {
+  const effect = new PlayLockEffect(attackEffect, options);
+  effect.markerSource = source;
+  return effect;
+}
+
+/**
  * Effect that causes the defending Pokemon to take more damage from attacks
  * during the attacking player's next turn (after applying Weakness and Resistance).
  */

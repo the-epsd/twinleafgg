@@ -92,7 +92,7 @@ import {
 } from '../effects/game-effects';
 import { AfterAttackEffect, BeforeDoingDamageEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
-import { preventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, coinFlipCancelAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect, defendingPokemonWeaknessIsNowEffect, reduceDamageEffect, PreventDamageOptions, shouldPreventAttackEffects } from '../effects/effect-of-attack-effects';
+import { preventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, coinFlipCancelAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect, defendingPokemonWeaknessIsNowEffect, reduceDamageEffect, playLockEffect, PlayLockOptions, PreventDamageOptions, shouldPreventAttackEffects } from '../effects/effect-of-attack-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
 
 /**
@@ -3781,7 +3781,7 @@ export function CAN_PLAY_TRAINER_CARD(
 
     // Check for Item/Tool blocking effects directly (no cloning needed)
     if (trainerCard.trainerType === TrainerType.ITEM) {
-      // Check for marker-based blocks (Budew, etc.)
+      // Check for marker-based blocks (legacy cards not yet migrated)
       if (player.marker.hasMarker('OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER')) {
         return false;
       }
@@ -3796,8 +3796,8 @@ export function CAN_PLAY_TRAINER_CARD(
         }
       }
 
-      // Check for ATTACK_EFFECT_ITEM_LOCK marker
-      if (player.marker.hasMarker(player.ATTACK_EFFECT_ITEM_LOCK)) {
+      if (player.cannotPlayItemCards
+        || player.marker.hasMarker(player.ATTACK_EFFECT_ITEM_LOCK)) {
         return false;
       }
     }
@@ -3813,8 +3813,22 @@ export function CAN_PLAY_TRAINER_CARD(
         }
       }
 
-      // Check for ATTACK_EFFECT_TOOL_LOCK marker
-      if (player.marker.hasMarker(player.ATTACK_EFFECT_TOOL_LOCK)) {
+      if (player.cannotPlayToolCards
+        || player.marker.hasMarker(player.ATTACK_EFFECT_TOOL_LOCK)) {
+        return false;
+      }
+    }
+
+    if (trainerCard.trainerType === TrainerType.SUPPORTER) {
+      if (player.cannotPlaySupporterCards
+        || player.marker.hasMarker(player.ATTACK_EFFECT_SUPPORTER_LOCK)) {
+        return false;
+      }
+    }
+
+    if (trainerCard.trainerType === TrainerType.STADIUM) {
+      if (player.cannotPlayStadiumCards
+        || player.marker.hasMarker(player.ATTACK_EFFECT_STADIUM_LOCK)) {
         return false;
       }
     }
@@ -4179,6 +4193,42 @@ export function DEFENDING_POKEMON_DOES_LESS_DAMAGE(
 ): State {
   const reduceEffect = reduceDamageEffect(effect, source, reduction);
   return store.reduceEffect(state, reduceEffect);
+}
+
+/**
+ * During your opponent's next turn, they can't play certain card types from hand.
+ * Locks live on the Player (not a Pokemon). Cleared after that player's EndTurn(s).
+ *
+ * @example OPPONENT_CANNOT_PLAY_CARDS(store, state, effect, this, { item: true })
+ * @example OPPONENT_CANNOT_PLAY_CARDS(store, state, effect, this, { tool: true, specialEnergy: true })
+ * @example OPPONENT_CANNOT_PLAY_CARDS(store, state, effect, this, { supporter: true, stadium: true, bothPlayers: true })
+ */
+export function OPPONENT_CANNOT_PLAY_CARDS(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+  options: PlayLockOptions,
+): State {
+  return store.reduceEffect(state, playLockEffect(effect, source, options));
+}
+
+export function OPPONENT_CANNOT_PLAY_ITEM_CARDS(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+): State {
+  return OPPONENT_CANNOT_PLAY_CARDS(store, state, effect, source, { item: true });
+}
+
+export function OPPONENT_CANNOT_PLAY_SUPPORTER_CARDS(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+): State {
+  return OPPONENT_CANNOT_PLAY_CARDS(store, state, effect, source, { supporter: true });
 }
 
 /**

@@ -1,11 +1,9 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { CardTag, CardType, EnergyType, Stage } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, GameError, PlayerType, PokemonCardList } from '../../../game';
+import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
+import { StoreLike, State, StateUtils, GameMessage, GameError, PokemonCardList } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { AttachEnergyEffect, AttachPokemonToolEffect } from '../../../game/store/effects/play-card-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, OPPONENT_CANNOT_PLAY_CARDS } from '../../../game/store/prefabs/prefabs';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class WhimsicottVSTAR extends PokemonCard {
@@ -37,59 +35,26 @@ export class WhimsicottVSTAR extends PokemonCard {
   public name: string = 'Whimsicott VSTAR';
   public fullName: string = 'Whimsicott VSTAR BRS';
 
-  public readonly DOMINATING_ECHO_MARKER = 'DOMINATING_ECHO_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Trick Wind
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      opponent.marker.addMarker(this.DOMINATING_ECHO_MARKER, this);
-    }
-
-    if (effect instanceof AttachPokemonToolEffect) {
-      const player = effect.player;
-      if (player.marker.hasMarker(this.DOMINATING_ECHO_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-    }
-
-    if (effect instanceof AttachEnergyEffect && effect.energyCard.energyType === EnergyType.SPECIAL) {
-      const player = effect.player;
-      if (player.marker.hasMarker(this.DOMINATING_ECHO_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      if (effect.player.marker.hasMarker(this.DOMINATING_ECHO_MARKER, this)) {
-        effect.player.marker.removeMarker(this.DOMINATING_ECHO_MARKER, this);
-        const opponent = StateUtils.getOpponent(state, effect.player);
-        opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-          cardList.marker.removeMarker(this.DOMINATING_ECHO_MARKER, this);
-        });
-      }
+      return OPPONENT_CANNOT_PLAY_CARDS(store, state, effect, this, { tool: true, specialEnergy: true });
     }
 
     // Fluffball Star
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
-
       if (player.usedVSTAR) {
         throw new GameError(GameMessage.LABEL_VSTAR_USED);
       }
-
       player.usedVSTAR = true;
-
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, cardList);
       store.reduceEffect(state, checkProvidedEnergyEffect);
-
       let energies: number = 0;
-      checkProvidedEnergyEffect.energyMap.forEach(energy => { energy.provides.forEach(e => { energies++; }); });
+      checkProvidedEnergyEffect.energyMap.forEach(energy => { energy.provides.forEach(() => { energies++; }); });
       THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON(60 * energies, effect, store, state);
     }
-
     return state;
   }
 }

@@ -1,11 +1,9 @@
-import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, State, StoreLike } from '../../../game';
-import { CardTag, CardType, Stage, TrainerType } from '../../../game/store/card/card-types';
+import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, State, StoreLike } from '../../../game';
+import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { ADD_MARKER, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, OPPONENT_CANNOT_PLAY_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Crobat extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -36,35 +34,19 @@ export class Crobat extends PokemonCard {
   public name: string = 'Crobat';
   public fullName: string = 'Crobat DS';
 
-  public readonly OPPONENT_CANNOT_PLAY_TRAINER_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_TRAINER_CARDS_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Radar Jam
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const opponent = effect.opponent;
-
-      ADD_MARKER(this.OPPONENT_CANNOT_PLAY_TRAINER_CARDS_MARKER, opponent, this);
+      return OPPONENT_CANNOT_PLAY_CARDS(store, state, effect, this, { item: true, tool: true, stadium: true });
     }
 
-    if (effect instanceof TrainerEffect && effect.trainerCard.trainerType !== TrainerType.SUPPORTER) {
-      const player = effect.player;
-      if (player.marker.hasMarker(this.OPPONENT_CANNOT_PLAY_TRAINER_CARDS_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.OPPONENT_CANNOT_PLAY_TRAINER_CARDS_MARKER, this);
-    }
-
+    // Target Attack
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = effect.opponent;
-
       const targets = opponent.getPokemonInPlay();
       if (targets.length === 0)
         return state;
-
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
@@ -83,7 +65,6 @@ export class Crobat extends PokemonCard {
         store.reduceEffect(state, damageEffect);
       });
     }
-
     return state;
   }
 }

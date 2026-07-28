@@ -324,6 +324,9 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
       }
     });
 
+    // Clear attack-sourced play locks after the locked player's turn(s)
+    player.tickPlayLocksAtEndOfTurn();
+
     player.supporterTurn = 0;
     player.active.attacksThisTurn = 0;
 

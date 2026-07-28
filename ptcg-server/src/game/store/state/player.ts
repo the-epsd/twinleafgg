@@ -98,8 +98,67 @@ export class Player {
   public readonly ATTACK_EFFECT_STADIUM_LOCK = 'ATTACK_EFFECT_STADIUM_LOCK';
   public readonly ATTACK_EFFECT_SPECIAL_ENERGY_LOCK = 'ATTACK_EFFECT_SPECIAL_ENERGY_LOCK';
 
+  /**
+   * Attack-sourced hand play locks (Item / Supporter / Stadium / Tool / Special Energy).
+   * Live on the player — not cleared by Pokemon switch. Cleared after
+   * {@link playLocksTurnsRemaining} of this player's EndTurns (default 1 =
+   * "during opponent's next turn").
+   */
+  public cannotPlayItemCards = false;
+  public cannotPlaySupporterCards = false;
+  public cannotPlayStadiumCards = false;
+  public cannotPlayToolCards = false;
+  public cannotPlaySpecialEnergyCards = false;
+  public playLocksTurnsRemaining = 0;
+
   public readonly UNRELENTING_ONSLAUGHT_MARKER = 'UNRELENTING_ONSLAUGHT_MARKER';
   public readonly UNRELENTING_ONSLAUGHT_2_MARKER = 'UNRELENTING_ONSLAUGHT_2_MARKER';
+
+  /** Apply attack-sourced play locks for this player's upcoming turn(s). */
+  public applyPlayLocks(locks: {
+    item?: boolean;
+    supporter?: boolean;
+    stadium?: boolean;
+    tool?: boolean;
+    specialEnergy?: boolean;
+  }, turnsRemaining: number = 1): void {
+    if (locks.item) {
+      this.cannotPlayItemCards = true;
+    }
+    if (locks.supporter) {
+      this.cannotPlaySupporterCards = true;
+    }
+    if (locks.stadium) {
+      this.cannotPlayStadiumCards = true;
+    }
+    if (locks.tool) {
+      this.cannotPlayToolCards = true;
+    }
+    if (locks.specialEnergy) {
+      this.cannotPlaySpecialEnergyCards = true;
+    }
+    this.playLocksTurnsRemaining = Math.max(this.playLocksTurnsRemaining, Math.max(1, turnsRemaining));
+  }
+
+  public clearPlayLocks(): void {
+    this.cannotPlayItemCards = false;
+    this.cannotPlaySupporterCards = false;
+    this.cannotPlayStadiumCards = false;
+    this.cannotPlayToolCards = false;
+    this.cannotPlaySpecialEnergyCards = false;
+    this.playLocksTurnsRemaining = 0;
+  }
+
+  /** Decrement play-lock duration; clear flags when the countdown hits 0. */
+  public tickPlayLocksAtEndOfTurn(): void {
+    if (this.playLocksTurnsRemaining <= 0) {
+      return;
+    }
+    this.playLocksTurnsRemaining -= 1;
+    if (this.playLocksTurnsRemaining <= 0) {
+      this.clearPlayLocks();
+    }
+  }
 
   // Track Pokemon cards that moved from Bench to Active this turn
   public movedToActiveThisTurn: number[] = [];
