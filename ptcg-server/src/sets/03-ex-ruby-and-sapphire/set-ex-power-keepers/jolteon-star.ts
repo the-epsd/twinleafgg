@@ -2,10 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, PowerType, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { PutCountersEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { ADD_MARKER, COIN_FLIP_PROMPT, CONFIRMATION_PROMPT, HAS_MARKER, IS_POKEPOWER_BLOCKED, REMOVE_MARKER, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { CONFIRMATION_PROMPT, FLIP_COIN_TO_PREVENT_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, IS_POKEPOWER_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { EffectOfAbilityEffect, PowerEffect } from '../../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 
 export class JolteonStar extends PokemonCard {
@@ -36,8 +34,6 @@ export class JolteonStar extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '101';
 
-  public readonly YELLOW_RAY_MARKER = 'YELLOW_RAY_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this && !IS_POKEPOWER_BLOCKED(store, state, effect.player, this)) {
@@ -60,23 +56,7 @@ export class JolteonStar extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
-        if (result) {
-          this.marker.addMarker(this.YELLOW_RAY_MARKER, this);
-          ADD_MARKER(this.YELLOW_RAY_MARKER, effect.opponent, this);
-        }
-      });
-    }
-
-    if ((effect instanceof PutDamageEffect || effect instanceof PutCountersEffect) && effect.target.getPokemonCard() === this) {
-      if (this.marker.hasMarker(this.YELLOW_RAY_MARKER, this)) {
-        effect.preventDefault = true;
-      }
-    }
-
-    if (effect instanceof EndTurnEffect && HAS_MARKER(this.YELLOW_RAY_MARKER, effect.player, this)) {
-      REMOVE_MARKER(this.YELLOW_RAY_MARKER, effect.player, this);
-      this.marker.removeMarker(this.YELLOW_RAY_MARKER, this);
+      return FLIP_COIN_TO_PREVENT_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN(store, state, effect, this);
     }
 
     return state;

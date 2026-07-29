@@ -4386,6 +4386,66 @@ export function PREVENT_EFFECTS_OF_ATTACKS(
 }
 
 /**
+ * Flip a coin. If heads, prevent all damage to this Pokémon during the opponent's next turn.
+ * (Any other effects of attacks still happen.) — Stiffen / Harden style.
+ * Arming is an EffectOfAttack ({@link PreventDamageEffect}).
+ */
+export function FLIP_COIN_TO_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+  options?: PreventDamageOptions,
+): State {
+  return COIN_FLIP_PROMPT(store, state, effect.player, result => {
+    if (result) {
+      PREVENT_DAMAGE(store, state, effect, source, options);
+    }
+  });
+}
+
+/**
+ * Flip a coin. If heads, prevent all effects of attacks, including damage,
+ * done to this Pokémon during the opponent's next turn. — Agility / Detect style.
+ * Arming uses {@link PreventDamageEffect} + {@link PreventEffectsOfAttacksEffect}.
+ */
+export function FLIP_COIN_TO_PREVENT_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+  options?: PreventDamageOptions,
+): State {
+  return COIN_FLIP_PROMPT(store, state, effect.player, result => {
+    if (result) {
+      PREVENT_DAMAGE(store, state, effect, source, options);
+      PREVENT_EFFECTS_OF_ATTACKS(store, state, effect, source, options);
+    }
+  });
+}
+
+/**
+ * Fly style: Flip a coin. If tails, this attack does nothing.
+ * If heads, prevent all effects of attacks, including damage, during the opponent's next turn.
+ */
+export function FLIP_COIN_FOR_FLY(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+  options?: PreventDamageOptions,
+): State {
+  return COIN_FLIP_PROMPT(store, state, effect.player, result => {
+    if (!result) {
+      effect.damage = 0;
+      return;
+    }
+    PREVENT_DAMAGE(store, state, effect, source, options);
+    PREVENT_EFFECTS_OF_ATTACKS(store, state, effect, source, options);
+  });
+}
+
+/**
  * Blocks non-damage attack effects on a Pokémon that has
  * {@link PokemonCardList.preventEffectsOfAttacksNextTurn} active.
  * Ref: set-temporal-forces/mist-energy.ts

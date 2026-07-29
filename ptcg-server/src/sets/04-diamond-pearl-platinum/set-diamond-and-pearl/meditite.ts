@@ -1,10 +1,11 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { Effect } from '../../../game/store/effects/effect';
-
-import { CoinFlipPrompt, GameMessage, StoreLike, State, StateUtils } from '../../../game';
-import { AbstractAttackEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { StoreLike, State, StateUtils } from '../../../game';
+import {
+  FLIP_COIN_TO_PREVENT_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Meditite extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -34,26 +35,10 @@ export class Meditite extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
-        if (result === true) {
-          if (effect instanceof PutDamageEffect) {
-            effect.preventDefault = true;
-          }
-          if (effect instanceof AbstractAttackEffect) {
-            effect.preventDefault = true;
-          }
-        }
-      }
-      );
+      return FLIP_COIN_TO_PREVENT_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN(store, state, effect, this);
     }
     if (WAS_ATTACK_USED(effect, 1, this)) {
-
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
+      const opponent = StateUtils.getOpponent(state, effect.player);
       effect.damage += opponent.active.damage;
       return state;
     }

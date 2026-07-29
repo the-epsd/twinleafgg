@@ -299,6 +299,8 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
           cardList.knockOutIfDamagedNextTurn = false;
           cardList.knockOutIfDamagedNextTurnAttackerId = undefined;
           cardList.knockOutIfDamagedNextTurnFilter = null;
+          cardList.knockOutIfDamagedNextTurnAttack = undefined;
+          cardList.knockOutIfDamagedNextTurnSourceCard = undefined;
         }
 
         if (cardList.extraPrizesIfKnockedOutNextTurnAttackerId === player.id
@@ -391,6 +393,9 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
         cardList.denyPrizesIfKnockedOutNextTurnPending = false;
         cardList.discardAttackerEnergyIfKnockedOutNextTurn = false;
         cardList.discardAttackerEnergyIfKnockedOutNextTurnPending = false;
+        cardList.discardAttackerEnergyIfKnockedOutNextTurnAttack = undefined;
+        cardList.discardAttackerEnergyIfKnockedOutNextTurnSourceCard = undefined;
+        cardList.discardAttackerEnergyIfKnockedOutNextTurnAttackerId = undefined;
       });
 
       if (state.phase === GamePhase.FINISHED) {

@@ -195,14 +195,6 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
   if (effect instanceof DealDamageEffect) {
     const base = effect.attackEffect;
 
-    // Hangman / ticking KO — force lethal damage before Weakness
-    if (effect.damage > 0 && shouldKnockOutIfDamaged(effect.target, effect.source)) {
-      const targetOwner = StateUtils.findOwner(state, effect.target);
-      const checkHp = new CheckHpEffect(targetOwner, effect.target);
-      state = store.reduceEffect(state, checkHp);
-      effect.damage = checkHp.hp;
-    }
-
     // Defending Pokémon's attacks do N less — before Weakness and Resistance
     if (effect.source.attackDamageReductionNextTurn > 0) {
       effect.damage = Math.max(0, effect.damage - effect.source.attackDamageReductionNextTurn);
@@ -218,6 +210,37 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
     dealDamage.target = effect.target;
     dealDamage.weaknessApplied = true;
     state = store.reduceEffect(state, dealDamage);
+
+    // Hangman KO — Mist-blockable EffectOfAttack (auto-KO), not boosted damage
+    if (dealDamage.damage > 0
+      && !dealDamage.preventDefault
+      && shouldKnockOutIfDamaged(effect.target, effect.source)
+      && effect.target.knockOutIfDamagedNextTurnAttack
+      && effect.target.knockOutIfDamagedNextTurnSourceCard
+      && effect.target.knockOutIfDamagedNextTurnAttackerId !== undefined) {
+      const hangmanOwner = state.players.find(
+        p => p.id === effect.target.knockOutIfDamagedNextTurnAttackerId,
+      );
+      if (hangmanOwner) {
+        let sourceList = hangmanOwner.active;
+        const sourceCard = effect.target.knockOutIfDamagedNextTurnSourceCard;
+        hangmanOwner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+          if (card === sourceCard) {
+            sourceList = cardList;
+          }
+        });
+        const targetOwner = StateUtils.findOwner(state, effect.target);
+        const hangmanBase = new AttackEffect(
+          hangmanOwner,
+          targetOwner,
+          effect.target.knockOutIfDamagedNextTurnAttack,
+        );
+        hangmanBase.source = sourceList;
+        const ko = new KnockOutOpponentEffect(hangmanBase);
+        ko.target = effect.target;
+        state = store.reduceEffect(state, ko);
+      }
+    }
 
     return state;
   }

@@ -91,7 +91,7 @@ export class Wobbuffet extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      PUT_DAMAGE_COUNTERS_ON_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(effect, this, 70);
+      PUT_DAMAGE_COUNTERS_ON_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(store, state, effect, this, 70);
     }
 
     return state;

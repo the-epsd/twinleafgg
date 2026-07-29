@@ -3,7 +3,7 @@ import { GameLog, GameMessage } from '../../game-message';
 import { BoardEffect, CardTag, CardType, SpecialCondition, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { Power, Resistance, Weakness } from '../card/pokemon-types';
-import { ApplyWeaknessEffect, DealDamageEffect } from '../effects/attack-effects';
+import { ApplyWeaknessEffect, DealDamageEffect, DiscardCardsEffect } from '../effects/attack-effects';
 import { Player } from '../state/player';
 import {
   AddSpecialConditionsPowerEffect,
@@ -450,13 +450,43 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
         effect.prizeCount += effect.target.extraPrizesIfKnockedOutNextTurn;
       }
 
-      // Little Grudge: discard Energy from Attacking Pokémon (board energy picker)
+      // Little Grudge: Mist-blockable DiscardCardsEffect attributed to the arming attack
       if (effect.target.discardAttackerEnergyIfKnockedOutNextTurn
         && !effect.target.discardAttackerEnergyIfKnockedOutNextTurnPending
-        && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
+        && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)
+        && effect.target.discardAttackerEnergyIfKnockedOutNextTurnAttack
+        && effect.target.discardAttackerEnergyIfKnockedOutNextTurnSourceCard
+        && effect.target.discardAttackerEnergyIfKnockedOutNextTurnAttackerId !== undefined) {
         const prizeTaker = StateUtils.getOpponent(state, effect.player);
         const attackerEnergy = prizeTaker.active.cards.filter(c => c.superType === SuperType.ENERGY);
-        if (attackerEnergy.length > 0) {
+        const grudgeAttack = effect.target.discardAttackerEnergyIfKnockedOutNextTurnAttack;
+        const grudgeSourceCard = effect.target.discardAttackerEnergyIfKnockedOutNextTurnSourceCard;
+        const grudgeAttackerId = effect.target.discardAttackerEnergyIfKnockedOutNextTurnAttackerId;
+
+        const discardSelected = (cards: Card[]) => {
+          if (cards.length === 0) {
+            return;
+          }
+          const grudgeOwner = state.players.find(p => p.id === grudgeAttackerId);
+          if (!grudgeOwner) {
+            return;
+          }
+          let sourceList = grudgeOwner.active;
+          grudgeOwner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+            if (card === grudgeSourceCard) {
+              sourceList = cardList;
+            }
+          });
+          const base = new AttackEffect(grudgeOwner, prizeTaker, grudgeAttack);
+          base.source = sourceList;
+          const discard = new DiscardCardsEffect(base, cards);
+          discard.target = prizeTaker.active;
+          store.reduceEffect(state, discard);
+        };
+
+        if (attackerEnergy.length === 1) {
+          discardSelected(attackerEnergy);
+        } else if (attackerEnergy.length > 1) {
           state = store.prompt(state, new DiscardEnergyPrompt(
             effect.player.id,
             GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
@@ -468,10 +498,7 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
             if (!transfers || transfers.length === 0) {
               return;
             }
-            for (const transfer of transfers) {
-              const source = StateUtils.getTarget(state, effect.player, transfer.from);
-              source.moveCardTo(transfer.card, prizeTaker.discard);
-            }
+            discardSelected(transfers.map(t => t.card));
           });
         }
       }

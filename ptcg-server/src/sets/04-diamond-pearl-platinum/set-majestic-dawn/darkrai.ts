@@ -60,7 +60,7 @@ export class Darkrai extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       APPLY_SPECIAL_CONDITION_TO_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(
-        effect, this, SpecialCondition.ASLEEP,
+        store, state, effect, this, SpecialCondition.ASLEEP,
       );
     }
 

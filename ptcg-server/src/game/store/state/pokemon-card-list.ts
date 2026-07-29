@@ -87,6 +87,9 @@ export class PokemonCardList extends CardList {
   public knockOutIfDamagedNextTurnPending: boolean = false;
   public knockOutIfDamagedNextTurnAttackerId: number | undefined = undefined;
   public knockOutIfDamagedNextTurnFilter: PreventDamageFilter | null = null;
+  /** Attack attribution for Mist-blockable hangman KO application. */
+  public knockOutIfDamagedNextTurnAttack: Attack | undefined = undefined;
+  public knockOutIfDamagedNextTurnSourceCard: PokemonCard | undefined = undefined;
 
   /** Survive at 10 HP during opponent's next turn (Endure / Bide / Gritty Claws). */
   public surviveOnTenHpNextTurn: SurviveOnTenHpOptions | null = null;
@@ -111,6 +114,9 @@ export class PokemonCardList extends CardList {
   /** If this Pokémon is Knocked Out during opponent's next turn, discard Energy from attacker. */
   public discardAttackerEnergyIfKnockedOutNextTurn: boolean = false;
   public discardAttackerEnergyIfKnockedOutNextTurnPending: boolean = false;
+  public discardAttackerEnergyIfKnockedOutNextTurnAttack: Attack | undefined = undefined;
+  public discardAttackerEnergyIfKnockedOutNextTurnSourceCard: PokemonCard | undefined = undefined;
+  public discardAttackerEnergyIfKnockedOutNextTurnAttackerId: number | undefined = undefined;
 
   public cannotAttackNextTurn: boolean = false;
   public cannotAttackNextTurnPending: boolean = false;
@@ -304,6 +310,8 @@ export class PokemonCardList extends CardList {
     this.knockOutIfDamagedNextTurnPending = false;
     this.knockOutIfDamagedNextTurnAttackerId = undefined;
     this.knockOutIfDamagedNextTurnFilter = null;
+    this.knockOutIfDamagedNextTurnAttack = undefined;
+    this.knockOutIfDamagedNextTurnSourceCard = undefined;
     this.surviveOnTenHpNextTurn = null;
     this.surviveOnTenHpNextTurnPending = null;
     this.retaliateOnDamageNextTurn = null;
@@ -315,6 +323,9 @@ export class PokemonCardList extends CardList {
     this.denyPrizesIfKnockedOutNextTurnPending = false;
     this.discardAttackerEnergyIfKnockedOutNextTurn = false;
     this.discardAttackerEnergyIfKnockedOutNextTurnPending = false;
+    this.discardAttackerEnergyIfKnockedOutNextTurnAttack = undefined;
+    this.discardAttackerEnergyIfKnockedOutNextTurnSourceCard = undefined;
+    this.discardAttackerEnergyIfKnockedOutNextTurnAttackerId = undefined;
   }
 
   clearEffects(): void {
@@ -361,6 +372,8 @@ export class PokemonCardList extends CardList {
     this.knockOutIfDamagedNextTurnPending = false;
     this.knockOutIfDamagedNextTurnAttackerId = undefined;
     this.knockOutIfDamagedNextTurnFilter = null;
+    this.knockOutIfDamagedNextTurnAttack = undefined;
+    this.knockOutIfDamagedNextTurnSourceCard = undefined;
     this.surviveOnTenHpNextTurn = null;
     this.surviveOnTenHpNextTurnPending = null;
     this.retaliateOnDamageNextTurn = null;
@@ -372,6 +385,9 @@ export class PokemonCardList extends CardList {
     this.denyPrizesIfKnockedOutNextTurnPending = false;
     this.discardAttackerEnergyIfKnockedOutNextTurn = false;
     this.discardAttackerEnergyIfKnockedOutNextTurnPending = false;
+    this.discardAttackerEnergyIfKnockedOutNextTurnAttack = undefined;
+    this.discardAttackerEnergyIfKnockedOutNextTurnSourceCard = undefined;
+    this.discardAttackerEnergyIfKnockedOutNextTurnAttackerId = undefined;
     this.cannotAttackNextTurn = false;
     this.cannotAttackNextTurnPending = false;
     this.cannotUseAttacksNextTurn = [];

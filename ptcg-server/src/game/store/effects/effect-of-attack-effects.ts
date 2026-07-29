@@ -10,9 +10,10 @@ import { State } from '../state/state';
 import { StateUtils } from '../state-utils';
 import { Attack, PowerType } from '../card/pokemon-types';
 import { Card } from '../card/card';
-import { CardType, Stage } from '../card/card-types';
+import { CardType, SpecialCondition, Stage } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { PokemonCardList, PreventDamageFilter, SurviveOnTenHpOptions, RetaliateOnDamageOptions, StoredRetaliateOnDamage } from '../state/pokemon-card-list';
+import { PendingEndOfTurnEffect } from '../state/pending-end-of-turn-effects';
 
 function sourceMatchesPreventFilter(
   sourceCard: PokemonCard,
@@ -565,6 +566,8 @@ export class KnockOutIfDamagedDuringAttackerNextTurnEffect extends EffectOfAttac
     target.knockOutIfDamagedNextTurnPending = true;
     target.knockOutIfDamagedNextTurnAttackerId = this.player.id;
     target.knockOutIfDamagedNextTurnFilter = this.options.filter ?? null;
+    target.knockOutIfDamagedNextTurnAttack = this.attack;
+    target.knockOutIfDamagedNextTurnSourceCard = this.markerSource as PokemonCard;
   }
 }
 
@@ -734,6 +737,9 @@ export class DiscardAttackerEnergyIfKnockedOutDuringOpponentsNextTurnEffect exte
   applyEffect(): void {
     this.player.active.discardAttackerEnergyIfKnockedOutNextTurn = true;
     this.player.active.discardAttackerEnergyIfKnockedOutNextTurnPending = true;
+    this.player.active.discardAttackerEnergyIfKnockedOutNextTurnAttack = this.attack;
+    this.player.active.discardAttackerEnergyIfKnockedOutNextTurnSourceCard = this.markerSource as PokemonCard;
+    this.player.active.discardAttackerEnergyIfKnockedOutNextTurnAttackerId = this.player.id;
   }
 }
 
@@ -743,5 +749,50 @@ export function discardAttackerEnergyIfKnockedOutDuringOpponentsNextTurnEffect(
 ): DiscardAttackerEnergyIfKnockedOutDuringOpponentsNextTurnEffect {
   const effect = new DiscardAttackerEnergyIfKnockedOutDuringOpponentsNextTurnEffect(attackEffect);
   effect.markerSource = source;
+  return effect;
+}
+
+export type ScheduleEndOfTurnPending =
+  | { type: 'knock_out' }
+  | { type: 'discard' }
+  | { type: 'damage_counters'; damage: number }
+  | { type: 'special_condition'; specialCondition: SpecialCondition };
+
+/**
+ * Schedules a delayed effect on the Defending Pokémon for the end of their next turn.
+ * Mist Energy / prevent-effects-of-attacks can block this arming EffectOfAttack.
+ */
+export class ScheduleDefendingPokemonEndOfTurnEffect extends EffectOfAttackEffect {
+  readonly type: string = 'SCHEDULE_DEFENDING_POKEMON_END_OF_TURN_EFFECT';
+
+  constructor(
+    base: AttackEffect,
+    public readonly pending: ScheduleEndOfTurnPending,
+  ) {
+    super(base);
+  }
+
+  applyEffect(): void {
+    this.opponent.pendingEndOfTurnEffects.push({
+      target: this.target,
+      attack: this.attack,
+      sourceCard: this.markerSource as PokemonCard,
+      attackerPlayerId: this.player.id,
+      ...this.pending,
+    } as PendingEndOfTurnEffect);
+  }
+}
+
+export function scheduleDefendingPokemonEndOfTurnEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  pending: ScheduleEndOfTurnPending,
+  target?: PokemonCardList,
+): ScheduleDefendingPokemonEndOfTurnEffect {
+  const effect = new ScheduleDefendingPokemonEndOfTurnEffect(attackEffect, pending);
+  effect.markerSource = source;
+  if (target) {
+    effect.target = target;
+  }
   return effect;
 }

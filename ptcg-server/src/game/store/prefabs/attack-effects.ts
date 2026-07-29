@@ -13,6 +13,7 @@ import { PendingEndOfTurnEffect, PendingEndOfTurnEffectBase } from '../state/pen
 import { Player } from '../state/player';
 import { FLIP_UNTIL_TAILS_AND_COUNT_HEADS, MOVE_CARDS } from './prefabs';
 import { CoinFlipEffect } from '../effects/play-card-effects';
+import { scheduleDefendingPokemonEndOfTurnEffect } from '../effects/effect-of-attack-effects';
 
 
 /**
@@ -102,13 +103,19 @@ export function DISCARD_OPPONENTS_ACTIVE_POKEMON(
 /**
  * "At the end of your opponent's next turn, the Defending Pokémon will be Knocked Out."
  * Schedules a blockable KnockOutOpponentEffect to resolve when that turn ends.
+ * Arming is an EffectOfAttack (Mist Energy can prevent it).
  */
 export function KNOCK_OUT_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(
+  store: StoreLike,
+  state: State,
   effect: AttackEffect,
   source: PokemonCard,
   target?: PokemonCardList,
-): void {
-  scheduleDefendingPokemonEffectAtEndOfOpponentsNextTurn(effect, source, { type: 'knock_out' }, target);
+): State {
+  return store.reduceEffect(
+    state,
+    scheduleDefendingPokemonEndOfTurnEffect(effect, source, { type: 'knock_out' }, target),
+  );
 }
 
 /**
@@ -116,11 +123,16 @@ export function KNOCK_OUT_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(
  * Not a KO — no prizes are taken.
  */
 export function DISCARD_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(
+  store: StoreLike,
+  state: State,
   effect: AttackEffect,
   source: PokemonCard,
   target?: PokemonCardList,
-): void {
-  scheduleDefendingPokemonEffectAtEndOfOpponentsNextTurn(effect, source, { type: 'discard' }, target);
+): State {
+  return store.reduceEffect(
+    state,
+    scheduleDefendingPokemonEndOfTurnEffect(effect, source, { type: 'discard' }, target),
+  );
 }
 
 /**
@@ -128,13 +140,18 @@ export function DISCARD_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(
  * Damage is specified in counter units (10 per counter).
  */
 export function PUT_DAMAGE_COUNTERS_ON_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(
+  store: StoreLike,
+  state: State,
   effect: AttackEffect,
   source: PokemonCard,
   damage: number,
   target?: PokemonCardList,
-): void {
-  scheduleDefendingPokemonEffectAtEndOfOpponentsNextTurn(
-    effect, source, { type: 'damage_counters', damage }, target,
+): State {
+  return store.reduceEffect(
+    state,
+    scheduleDefendingPokemonEndOfTurnEffect(
+      effect, source, { type: 'damage_counters', damage }, target,
+    ),
   );
 }
 
@@ -142,34 +159,19 @@ export function PUT_DAMAGE_COUNTERS_ON_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEX
  * "At the end of your opponent's next turn, the Defending Pokémon is now [condition]."
  */
 export function APPLY_SPECIAL_CONDITION_TO_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(
+  store: StoreLike,
+  state: State,
   effect: AttackEffect,
   source: PokemonCard,
   specialCondition: SpecialCondition,
   target?: PokemonCardList,
-): void {
-  scheduleDefendingPokemonEffectAtEndOfOpponentsNextTurn(
-    effect, source, { type: 'special_condition', specialCondition }, target,
+): State {
+  return store.reduceEffect(
+    state,
+    scheduleDefendingPokemonEndOfTurnEffect(
+      effect, source, { type: 'special_condition', specialCondition }, target,
+    ),
   );
-}
-
-function scheduleDefendingPokemonEffectAtEndOfOpponentsNextTurn(
-  effect: AttackEffect,
-  source: PokemonCard,
-  pending: Pick<PendingEndOfTurnEffect, 'type'> & (
-    | { type: 'knock_out' }
-    | { type: 'discard' }
-    | { type: 'damage_counters'; damage: number }
-    | { type: 'special_condition'; specialCondition: SpecialCondition }
-  ),
-  target?: PokemonCardList,
-): void {
-  effect.opponent.pendingEndOfTurnEffects.push({
-    target: target ?? effect.opponent.active,
-    attack: effect.attack,
-    sourceCard: source,
-    attackerPlayerId: effect.player.id,
-    ...pending,
-  } as PendingEndOfTurnEffect);
 }
 
 function buildAttackEffectFromSource(

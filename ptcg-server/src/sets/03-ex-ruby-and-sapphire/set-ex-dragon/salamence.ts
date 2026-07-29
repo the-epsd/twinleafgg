@@ -9,9 +9,7 @@ import {
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, COIN_FLIP_PROMPT, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
-import { PutCountersEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
+import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, FLIP_COIN_TO_PREVENT_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Salamence extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -49,7 +47,6 @@ export class Salamence extends PokemonCard {
   public fullName: string = 'Salamence DR';
 
   public readonly DRAGON_WIND_MARKER = 'DRAGON_WIND_MARKER';
-  public readonly AGILITY_MARKER = 'AGILITY_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -95,23 +92,7 @@ export class Salamence extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
-        if (result) {
-          this.marker.addMarker(this.AGILITY_MARKER, this);
-          ADD_MARKER(this.AGILITY_MARKER, effect.opponent, this);
-        }
-      });
-    }
-
-    if ((effect instanceof PutDamageEffect || effect instanceof PutCountersEffect) && effect.target.getPokemonCard() === this) {
-      if (this.marker.hasMarker(this.AGILITY_MARKER, this)) {
-        effect.preventDefault = true;
-      }
-    }
-
-    if (effect instanceof EndTurnEffect && HAS_MARKER(this.AGILITY_MARKER, effect.player, this)) {
-      REMOVE_MARKER(this.AGILITY_MARKER, effect.player, this);
-      this.marker.removeMarker(this.AGILITY_MARKER, this);
+      return FLIP_COIN_TO_PREVENT_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN(store, state, effect, this);
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.DRAGON_WIND_MARKER, this);
