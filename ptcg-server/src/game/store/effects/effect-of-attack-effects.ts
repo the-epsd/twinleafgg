@@ -12,7 +12,7 @@ import { Attack, PowerType } from '../card/pokemon-types';
 import { Card } from '../card/card';
 import { CardType, Stage } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
-import { PokemonCardList, PreventDamageFilter } from '../state/pokemon-card-list';
+import { PokemonCardList, PreventDamageFilter, SurviveOnTenHpOptions, RetaliateOnDamageOptions, StoredRetaliateOnDamage } from '../state/pokemon-card-list';
 
 function sourceMatchesPreventFilter(
   sourceCard: PokemonCard,
@@ -159,6 +159,42 @@ export function shouldPreventAttackEffects(state: State, effect: Effect): boolea
   }
 
   return sourceMatchesPreventFilter(sourceCard, filter);
+}
+
+export function shouldKnockOutIfDamaged(
+  target: PokemonCardList,
+  source: PokemonCardList,
+): boolean {
+  if (!target.knockOutIfDamagedNextTurn || target.knockOutIfDamagedNextTurnPending) {
+    return false;
+  }
+  const filter = target.knockOutIfDamagedNextTurnFilter;
+  if (!filter) {
+    return true;
+  }
+  const sourceCard = source.getPokemonCard();
+  if (!sourceCard) {
+    return false;
+  }
+  return sourceMatchesPreventFilter(sourceCard, filter);
+}
+
+export function getActiveSurviveOnTenHpOptions(
+  target: PokemonCardList,
+): SurviveOnTenHpOptions | null {
+  if (target.surviveOnTenHpNextTurnPending !== null) {
+    return null;
+  }
+  return target.surviveOnTenHpNextTurn;
+}
+
+export function getActiveRetaliateOnDamage(
+  target: PokemonCardList,
+): StoredRetaliateOnDamage | null {
+  if (target.retaliateOnDamageNextTurnPending !== null) {
+    return null;
+  }
+  return target.retaliateOnDamageNextTurn;
 }
 
 /**
@@ -504,6 +540,208 @@ export function defendingPokemonWeaknessIsNowEffect(
   weaknessType: CardType,
 ): DefendingPokemonWeaknessIsNowEffect {
   const effect = new DefendingPokemonWeaknessIsNowEffect(attackEffect, weaknessType);
+  effect.markerSource = source;
+  return effect;
+}
+
+export interface KnockOutIfDamagedOptions {
+  /** Optional source filter (e.g. Rapid Strike only). */
+  filter?: PreventDamageFilter;
+}
+
+/**
+ * During your next turn, if the Defending Pokémon is damaged by an attack, it is Knocked Out.
+ */
+export class KnockOutIfDamagedDuringAttackerNextTurnEffect extends EffectOfAttackEffect {
+  readonly type: string = 'KNOCK_OUT_IF_DAMAGED_DURING_ATTACKER_NEXT_TURN_EFFECT';
+
+  constructor(base: AttackEffect, public readonly options: KnockOutIfDamagedOptions = {}) {
+    super(base);
+  }
+
+  applyEffect(): void {
+    const target = this.opponent.active;
+    target.knockOutIfDamagedNextTurn = true;
+    target.knockOutIfDamagedNextTurnPending = true;
+    target.knockOutIfDamagedNextTurnAttackerId = this.player.id;
+    target.knockOutIfDamagedNextTurnFilter = this.options.filter ?? null;
+  }
+}
+
+export function knockOutIfDamagedDuringAttackerNextTurnEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  options: KnockOutIfDamagedOptions = {},
+): KnockOutIfDamagedDuringAttackerNextTurnEffect {
+  const effect = new KnockOutIfDamagedDuringAttackerNextTurnEffect(attackEffect, options);
+  effect.markerSource = source;
+  return effect;
+}
+
+/**
+ * During the opponent's next turn, if this Pokémon would be Knocked Out by damage
+ * from an attack, it is not Knocked Out and its remaining HP becomes 10.
+ */
+export class SurviveOnTenHpDuringOpponentsNextTurnEffect extends EffectOfAttackEffect {
+  readonly type: string = 'SURVIVE_ON_TEN_HP_DURING_OPPONENTS_NEXT_TURN_EFFECT';
+
+  constructor(base: AttackEffect, public readonly options: SurviveOnTenHpOptions = {}) {
+    super(base);
+    this.target = base.source;
+  }
+
+  applyEffect(): void {
+    this.player.active.surviveOnTenHpNextTurnPending = { ...this.options };
+  }
+}
+
+export function surviveOnTenHpDuringOpponentsNextTurnEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  options: SurviveOnTenHpOptions = {},
+): SurviveOnTenHpDuringOpponentsNextTurnEffect {
+  const effect = new SurviveOnTenHpDuringOpponentsNextTurnEffect(attackEffect, options);
+  effect.markerSource = source;
+  return effect;
+}
+
+/**
+ * During the opponent's next turn, if this Pokémon is damaged by an attack
+ * (even if Knocked Out), put damage counters on / reflect damage to the attacker.
+ */
+export class RetaliateOnDamageDuringOpponentsNextTurnEffect extends EffectOfAttackEffect {
+  readonly type: string = 'RETALIATE_ON_DAMAGE_DURING_OPPONENTS_NEXT_TURN_EFFECT';
+
+  constructor(base: AttackEffect, public readonly options: RetaliateOnDamageOptions) {
+    super(base);
+    this.target = base.source;
+  }
+
+  applyEffect(): void {
+    this.player.active.retaliateOnDamageNextTurnPending = {
+      ...this.options,
+      attack: this.attack,
+      sourceCard: this.markerSource as PokemonCard,
+      attackerPlayerId: this.player.id,
+    };
+  }
+}
+
+/**
+ * Places revenge-trap damage counters on the Attacking Pokémon.
+ * Attributed to the Pokémon that used the revenge attack so Mist Energy / other
+ * "prevent effects of attacks" effects can block it.
+ */
+export class RetaliateDamageEffect extends EffectOfAttackEffect {
+  readonly type: string = 'RETALIATE_DAMAGE_EFFECT';
+
+  constructor(base: AttackEffect, public readonly damage: number) {
+    super(base);
+  }
+
+  applyEffect(): void {
+    if (this.damage > 0) {
+      this.target.damage += this.damage;
+    }
+  }
+}
+
+export function retaliateOnDamageDuringOpponentsNextTurnEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  options: RetaliateOnDamageOptions,
+): RetaliateOnDamageDuringOpponentsNextTurnEffect {
+  const effect = new RetaliateOnDamageDuringOpponentsNextTurnEffect(attackEffect, options);
+  effect.markerSource = source;
+  return effect;
+}
+
+export function retaliateDamageEffect(
+  attackEffect: AttackEffect,
+  damage: number,
+  target: PokemonCardList,
+): RetaliateDamageEffect {
+  const effect = new RetaliateDamageEffect(attackEffect, damage);
+  effect.target = target;
+  return effect;
+}
+
+/**
+ * If the Defending Pokémon is Knocked Out during your next turn, take N more Prize cards.
+ */
+export class ExtraPrizesIfKnockedOutDuringAttackerNextTurnEffect extends EffectOfAttackEffect {
+  readonly type: string = 'EXTRA_PRIZES_IF_KNOCKED_OUT_DURING_ATTACKER_NEXT_TURN_EFFECT';
+
+  constructor(base: AttackEffect, public readonly extraPrizes: number) {
+    super(base);
+  }
+
+  applyEffect(): void {
+    const target = this.opponent.active;
+    target.extraPrizesIfKnockedOutNextTurn = this.extraPrizes;
+    target.extraPrizesIfKnockedOutNextTurnPending = true;
+    target.extraPrizesIfKnockedOutNextTurnAttackerId = this.player.id;
+  }
+}
+
+export function extraPrizesIfKnockedOutDuringAttackerNextTurnEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  extraPrizes: number,
+): ExtraPrizesIfKnockedOutDuringAttackerNextTurnEffect {
+  const effect = new ExtraPrizesIfKnockedOutDuringAttackerNextTurnEffect(attackEffect, extraPrizes);
+  effect.markerSource = source;
+  return effect;
+}
+
+/**
+ * During the opponent's next turn, if this Pokémon is Knocked Out, deny Prize cards.
+ */
+export class DenyPrizesIfKnockedOutDuringOpponentsNextTurnEffect extends EffectOfAttackEffect {
+  readonly type: string = 'DENY_PRIZES_IF_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_EFFECT';
+
+  constructor(base: AttackEffect) {
+    super(base);
+    this.target = base.source;
+  }
+
+  applyEffect(): void {
+    this.player.active.denyPrizesIfKnockedOutNextTurnPending = true;
+  }
+}
+
+export function denyPrizesIfKnockedOutDuringOpponentsNextTurnEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+): DenyPrizesIfKnockedOutDuringOpponentsNextTurnEffect {
+  const effect = new DenyPrizesIfKnockedOutDuringOpponentsNextTurnEffect(attackEffect);
+  effect.markerSource = source;
+  return effect;
+}
+
+/**
+ * During the opponent's next turn, if this Pokémon is Knocked Out by damage from an
+ * attack, discard an Energy attached to the Attacking Pokémon.
+ */
+export class DiscardAttackerEnergyIfKnockedOutDuringOpponentsNextTurnEffect extends EffectOfAttackEffect {
+  readonly type: string = 'DISCARD_ATTACKER_ENERGY_IF_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_EFFECT';
+
+  constructor(base: AttackEffect) {
+    super(base);
+    this.target = base.source;
+  }
+
+  applyEffect(): void {
+    this.player.active.discardAttackerEnergyIfKnockedOutNextTurn = true;
+    this.player.active.discardAttackerEnergyIfKnockedOutNextTurnPending = true;
+  }
+}
+
+export function discardAttackerEnergyIfKnockedOutDuringOpponentsNextTurnEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+): DiscardAttackerEnergyIfKnockedOutDuringOpponentsNextTurnEffect {
+  const effect = new DiscardAttackerEnergyIfKnockedOutDuringOpponentsNextTurnEffect(attackEffect);
   effect.markerSource = source;
   return effect;
 }

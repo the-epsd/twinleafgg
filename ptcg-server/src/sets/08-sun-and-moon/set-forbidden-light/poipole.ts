@@ -1,11 +1,14 @@
-import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { KnockOutEffect } from '../../../game/store/effects/game-effects';
-import { BeginTurnEffect } from '../../../game/store/effects/game-phase-effects';
-
+import {
+  ADD_POISON_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  WAS_ATTACK_USED,
+  DENY_PRIZES_IF_THIS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN,
+} from '../../../game/store/prefabs/prefabs';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { PlayerType, State, StoreLike } from '../../../game';
+import { State, StoreLike } from '../../../game';
+
 export class Poipole extends PokemonCard {
   public tags = [CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
@@ -35,31 +38,13 @@ export class Poipole extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '55';
 
-  public readonly ATTACK_EFFECT_KNOCKOUT_REVIVER_MARKER = 'ATTACK_EFFECT_KNOCKOUT_REVIVER_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    // Spit Poison
     if (AFTER_ATTACK(effect, 0, this)) {
       ADD_POISON_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
-    // Knockout Reviver
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      console.log('adding knockout reviver marker');
-      effect.source.marker.addMarker(this.ATTACK_EFFECT_KNOCKOUT_REVIVER_MARKER, this);
-    }
-
-    if (effect instanceof BeginTurnEffect) {
-      const player = effect.player;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.ATTACK_EFFECT_KNOCKOUT_REVIVER_MARKER);
-      });
-    }
-
-    if (effect instanceof KnockOutEffect && effect.target.marker.hasMarker(this.ATTACK_EFFECT_KNOCKOUT_REVIVER_MARKER)) {
-      console.log('knockout reviver activated');
-      effect.prizeCount = 0;
+      return DENY_PRIZES_IF_THIS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN(store, state, effect, this);
     }
 
     return state;

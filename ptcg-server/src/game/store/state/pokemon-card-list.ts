@@ -18,6 +18,25 @@ export interface PreventDamageFilter {
   sourceHasAbility?: boolean;
 }
 
+/** Survive-at-10 during opponent's next turn (Endure / Bide / Gritty Claws). */
+export interface SurviveOnTenHpOptions {
+  requireFullHp?: boolean;
+  /** Flip a coin when this Pokémon would be KO'd; only survive on heads (Strong-Willed). */
+  coinFlipOnWouldKo?: boolean;
+}
+
+/** Revenge trap: fixed HP damage or reflect damage taken. */
+export type RetaliateOnDamageOptions =
+  | { damage: number }
+  | { reflect: true };
+
+/** Armed revenge trap with attack attribution (so Mist Energy / effects-of-attacks can block). */
+export type StoredRetaliateOnDamage = RetaliateOnDamageOptions & {
+  attack: Attack;
+  sourceCard: PokemonCard;
+  attackerPlayerId: number;
+};
+
 export class PokemonCardList extends CardList {
   public damage: number = 0;
   public hp: number = 0;
@@ -59,6 +78,40 @@ export class PokemonCardList extends CardList {
   public weaknessOverrideType: CardType | undefined = undefined;
   public weaknessOverrideAttackerId: number | undefined = undefined;
   public weaknessOverrideClearArmed: boolean = false;
+
+  /**
+   * Hangman / ticking KO: during the attacker's next turn, if this Pokémon is
+   * damaged by an attack (optionally filtered), it is Knocked Out.
+   */
+  public knockOutIfDamagedNextTurn: boolean = false;
+  public knockOutIfDamagedNextTurnPending: boolean = false;
+  public knockOutIfDamagedNextTurnAttackerId: number | undefined = undefined;
+  public knockOutIfDamagedNextTurnFilter: PreventDamageFilter | null = null;
+
+  /** Survive at 10 HP during opponent's next turn (Endure / Bide / Gritty Claws). */
+  public surviveOnTenHpNextTurn: SurviveOnTenHpOptions | null = null;
+  public surviveOnTenHpNextTurnPending: SurviveOnTenHpOptions | null = null;
+
+  /** Revenge trap during opponent's next turn (Shell Trap / Counter Press). */
+  public retaliateOnDamageNextTurn: StoredRetaliateOnDamage | null = null;
+  public retaliateOnDamageNextTurnPending: StoredRetaliateOnDamage | null = null;
+
+  /**
+   * Extra prizes if this (Defending) Pokémon is Knocked Out during the
+   * attacker's next turn.
+   */
+  public extraPrizesIfKnockedOutNextTurn: number = 0;
+  public extraPrizesIfKnockedOutNextTurnPending: boolean = false;
+  public extraPrizesIfKnockedOutNextTurnAttackerId: number | undefined = undefined;
+
+  /** If this Pokémon is Knocked Out during opponent's next turn, deny prizes. */
+  public denyPrizesIfKnockedOutNextTurn: boolean = false;
+  public denyPrizesIfKnockedOutNextTurnPending: boolean = false;
+
+  /** If this Pokémon is Knocked Out during opponent's next turn, discard Energy from attacker. */
+  public discardAttackerEnergyIfKnockedOutNextTurn: boolean = false;
+  public discardAttackerEnergyIfKnockedOutNextTurnPending: boolean = false;
+
   public cannotAttackNextTurn: boolean = false;
   public cannotAttackNextTurnPending: boolean = false;
   public cannotUseAttacksNextTurn: string[] = [];
@@ -247,6 +300,21 @@ export class PokemonCardList extends CardList {
     this.weaknessOverrideType = undefined;
     this.weaknessOverrideAttackerId = undefined;
     this.weaknessOverrideClearArmed = false;
+    this.knockOutIfDamagedNextTurn = false;
+    this.knockOutIfDamagedNextTurnPending = false;
+    this.knockOutIfDamagedNextTurnAttackerId = undefined;
+    this.knockOutIfDamagedNextTurnFilter = null;
+    this.surviveOnTenHpNextTurn = null;
+    this.surviveOnTenHpNextTurnPending = null;
+    this.retaliateOnDamageNextTurn = null;
+    this.retaliateOnDamageNextTurnPending = null;
+    this.extraPrizesIfKnockedOutNextTurn = 0;
+    this.extraPrizesIfKnockedOutNextTurnPending = false;
+    this.extraPrizesIfKnockedOutNextTurnAttackerId = undefined;
+    this.denyPrizesIfKnockedOutNextTurn = false;
+    this.denyPrizesIfKnockedOutNextTurnPending = false;
+    this.discardAttackerEnergyIfKnockedOutNextTurn = false;
+    this.discardAttackerEnergyIfKnockedOutNextTurnPending = false;
   }
 
   clearEffects(): void {
@@ -289,6 +357,21 @@ export class PokemonCardList extends CardList {
     this.weaknessOverrideType = undefined;
     this.weaknessOverrideAttackerId = undefined;
     this.weaknessOverrideClearArmed = false;
+    this.knockOutIfDamagedNextTurn = false;
+    this.knockOutIfDamagedNextTurnPending = false;
+    this.knockOutIfDamagedNextTurnAttackerId = undefined;
+    this.knockOutIfDamagedNextTurnFilter = null;
+    this.surviveOnTenHpNextTurn = null;
+    this.surviveOnTenHpNextTurnPending = null;
+    this.retaliateOnDamageNextTurn = null;
+    this.retaliateOnDamageNextTurnPending = null;
+    this.extraPrizesIfKnockedOutNextTurn = 0;
+    this.extraPrizesIfKnockedOutNextTurnPending = false;
+    this.extraPrizesIfKnockedOutNextTurnAttackerId = undefined;
+    this.denyPrizesIfKnockedOutNextTurn = false;
+    this.denyPrizesIfKnockedOutNextTurnPending = false;
+    this.discardAttackerEnergyIfKnockedOutNextTurn = false;
+    this.discardAttackerEnergyIfKnockedOutNextTurnPending = false;
     this.cannotAttackNextTurn = false;
     this.cannotAttackNextTurnPending = false;
     this.cannotUseAttacksNextTurn = [];

@@ -218,7 +218,9 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
       player.pokemonKnockedOutLastTurnEntries = [];
     }
 
-    // Clear damage reduction effects on opponent's Pokémon when their turn ends
+    // Clear damage reduction / self-protect / revenge effects on the opponent when
+    // this player ends their turn (those effects were active during this player's turn).
+    // denyPrizes / discardAttackerEnergy-on-KO clear after checkState (KO resolution).
     opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
       cardList.damageReductionNextTurn = 0;
       cardList.damageReductionNextTurnFilter = null;
@@ -226,9 +228,12 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
       cardList.preventDamageNextTurnPending = null;
       cardList.preventEffectsOfAttacksNextTurn = null;
       cardList.preventEffectsOfAttacksNextTurnPending = null;
+      cardList.surviveOnTenHpNextTurn = null;
+      cardList.retaliateOnDamageNextTurn = null;
     });
 
-    // Activate pending prevent-damage on this player's Pokémon
+    // Activate pending prevent-damage / revenge / survive on this player's Pokémon
+    // (armed last turn → active during opponent's upcoming turn).
     player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
       if (cardList.preventDamageNextTurnPending !== null) {
         cardList.preventDamageNextTurn = cardList.preventDamageNextTurnPending;
@@ -237,6 +242,22 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
       if (cardList.preventEffectsOfAttacksNextTurnPending !== null) {
         cardList.preventEffectsOfAttacksNextTurn = cardList.preventEffectsOfAttacksNextTurnPending;
         cardList.preventEffectsOfAttacksNextTurnPending = null;
+      }
+      if (cardList.surviveOnTenHpNextTurnPending !== null) {
+        cardList.surviveOnTenHpNextTurn = cardList.surviveOnTenHpNextTurnPending;
+        cardList.surviveOnTenHpNextTurnPending = null;
+      }
+      if (cardList.retaliateOnDamageNextTurnPending !== null) {
+        cardList.retaliateOnDamageNextTurn = cardList.retaliateOnDamageNextTurnPending;
+        cardList.retaliateOnDamageNextTurnPending = null;
+      }
+      if (cardList.denyPrizesIfKnockedOutNextTurnPending) {
+        cardList.denyPrizesIfKnockedOutNextTurn = true;
+        cardList.denyPrizesIfKnockedOutNextTurnPending = false;
+      }
+      if (cardList.discardAttackerEnergyIfKnockedOutNextTurnPending) {
+        cardList.discardAttackerEnergyIfKnockedOutNextTurn = true;
+        cardList.discardAttackerEnergyIfKnockedOutNextTurnPending = false;
       }
     });
 
@@ -249,6 +270,16 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
           && cardList.defendingPokemonExtraDamageAttackerId !== player.id) {
           cardList.defendingPokemonExtraDamagePending = false;
         }
+
+        // Hangman KO / extra prizes: same "your next turn" arming as extra damage
+        if (cardList.knockOutIfDamagedNextTurnPending
+          && cardList.knockOutIfDamagedNextTurnAttackerId !== player.id) {
+          cardList.knockOutIfDamagedNextTurnPending = false;
+        }
+        if (cardList.extraPrizesIfKnockedOutNextTurnPending
+          && cardList.extraPrizesIfKnockedOutNextTurnAttackerId !== player.id) {
+          cardList.extraPrizesIfKnockedOutNextTurnPending = false;
+        }
       });
     });
 
@@ -260,6 +291,21 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
           && cardList.defendingPokemonExtraDamageNextTurn > 0) {
           cardList.defendingPokemonExtraDamageNextTurn = 0;
           cardList.defendingPokemonExtraDamageAttackerId = undefined;
+        }
+
+        if (cardList.knockOutIfDamagedNextTurnAttackerId === player.id
+          && !cardList.knockOutIfDamagedNextTurnPending
+          && cardList.knockOutIfDamagedNextTurn) {
+          cardList.knockOutIfDamagedNextTurn = false;
+          cardList.knockOutIfDamagedNextTurnAttackerId = undefined;
+          cardList.knockOutIfDamagedNextTurnFilter = null;
+        }
+
+        if (cardList.extraPrizesIfKnockedOutNextTurnAttackerId === player.id
+          && !cardList.extraPrizesIfKnockedOutNextTurnPending
+          && cardList.extraPrizesIfKnockedOutNextTurn > 0) {
+          cardList.extraPrizesIfKnockedOutNextTurn = 0;
+          cardList.extraPrizesIfKnockedOutNextTurnAttackerId = undefined;
         }
       });
     });
@@ -339,6 +385,14 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
     }
 
     state = checkState(store, state, () => {
+      // Expire KO-time effects after KO resolution for this turn.
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+        cardList.denyPrizesIfKnockedOutNextTurn = false;
+        cardList.denyPrizesIfKnockedOutNextTurnPending = false;
+        cardList.discardAttackerEnergyIfKnockedOutNextTurn = false;
+        cardList.discardAttackerEnergyIfKnockedOutNextTurnPending = false;
+      });
+
       if (state.phase === GamePhase.FINISHED) {
         return;
       }

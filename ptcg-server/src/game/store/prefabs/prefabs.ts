@@ -92,7 +92,8 @@ import {
 } from '../effects/game-effects';
 import { AfterAttackEffect, BeforeDoingDamageEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
-import { preventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, coinFlipCancelAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect, defendingPokemonWeaknessIsNowEffect, reduceDamageEffect, playLockEffect, PlayLockOptions, PreventDamageOptions, shouldPreventAttackEffects } from '../effects/effect-of-attack-effects';
+import { preventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, coinFlipCancelAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect, defendingPokemonWeaknessIsNowEffect, reduceDamageEffect, playLockEffect, PlayLockOptions, PreventDamageOptions, shouldPreventAttackEffects, knockOutIfDamagedDuringAttackerNextTurnEffect, KnockOutIfDamagedOptions, surviveOnTenHpDuringOpponentsNextTurnEffect, retaliateOnDamageDuringOpponentsNextTurnEffect, extraPrizesIfKnockedOutDuringAttackerNextTurnEffect, denyPrizesIfKnockedOutDuringOpponentsNextTurnEffect, discardAttackerEnergyIfKnockedOutDuringOpponentsNextTurnEffect } from '../effects/effect-of-attack-effects';
+import { SurviveOnTenHpOptions, RetaliateOnDamageOptions } from '../state/pokemon-card-list';
 import { GameStatsTracker } from '../game-stats-tracker';
 
 /**
@@ -4229,6 +4230,85 @@ export function OPPONENT_CANNOT_PLAY_SUPPORTER_CARDS(
   source: Card,
 ): State {
   return OPPONENT_CANNOT_PLAY_CARDS(store, state, effect, source, { supporter: true });
+}
+
+/**
+ * During your next turn, if the Defending Pokémon is damaged by an attack, it is Knocked Out.
+ */
+export function DEFENDING_POKEMON_KNOCKED_OUT_IF_DAMAGED_DURING_YOUR_NEXT_TURN(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+  options: KnockOutIfDamagedOptions = {},
+): State {
+  return store.reduceEffect(state, knockOutIfDamagedDuringAttackerNextTurnEffect(effect, source, options));
+}
+
+/**
+ * During your opponent's next turn, if this Pokémon would be Knocked Out by damage
+ * from an attack, it survives with 10 HP.
+ */
+export function THIS_POKEMON_SURVIVES_ON_TEN_HP_DURING_OPPONENTS_NEXT_TURN(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+  options: SurviveOnTenHpOptions = {},
+): State {
+  return store.reduceEffect(state, surviveOnTenHpDuringOpponentsNextTurnEffect(effect, source, options));
+}
+
+/**
+ * During your opponent's next turn, if this Pokémon is damaged by an attack
+ * (even if Knocked Out), put damage on / reflect to the Attacking Pokémon.
+ */
+export function THIS_POKEMON_RETALIATES_ON_DAMAGE_DURING_OPPONENTS_NEXT_TURN(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+  options: RetaliateOnDamageOptions,
+): State {
+  return store.reduceEffect(state, retaliateOnDamageDuringOpponentsNextTurnEffect(effect, source, options));
+}
+
+/**
+ * If the Defending Pokémon is Knocked Out during your next turn, take N more Prize cards.
+ */
+export function TAKE_MORE_PRIZES_IF_DEFENDING_KNOCKED_OUT_DURING_YOUR_NEXT_TURN(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+  extraPrizes: number,
+): State {
+  return store.reduceEffect(state, extraPrizesIfKnockedOutDuringAttackerNextTurnEffect(effect, source, extraPrizes));
+}
+
+/**
+ * During your opponent's next turn, if this Pokémon is Knocked Out, deny Prize cards.
+ */
+export function DENY_PRIZES_IF_THIS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+): State {
+  return store.reduceEffect(state, denyPrizesIfKnockedOutDuringOpponentsNextTurnEffect(effect, source));
+}
+
+/**
+ * During your opponent's next turn, if this Pokémon is Knocked Out by damage from an
+ * attack, discard an Energy from the Attacking Pokémon.
+ */
+export function DISCARD_ATTACKER_ENERGY_IF_THIS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+): State {
+  return store.reduceEffect(state, discardAttackerEnergyIfKnockedOutDuringOpponentsNextTurnEffect(effect, source));
 }
 
 /**

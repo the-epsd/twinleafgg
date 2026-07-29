@@ -28,7 +28,7 @@ import {
 } from '../effects/game-effects';
 import { AfterAttackEffect, BeforeDoingDamageEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
-import { SlotType } from '../actions/play-card-action';
+import { PlayerType, SlotType } from '../actions/play-card-action';
 import { StateUtils } from '../state-utils';
 import { GamePhase, State } from '../state/state';
 import { StoreLike } from '../store-like';
@@ -42,6 +42,7 @@ import { CardList } from '../state/card-list';
 import { ConfirmPrompt } from '../prompts/confirm-prompt';
 import { checkState } from './check-effect';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
+import { DiscardEnergyPrompt } from '../prompts/discard-energy-prompt';
 import { Card } from '../card/card';
 import { Attack } from '../card/pokemon-types';
 import { WaitPrompt } from '../prompts/wait-prompt';
@@ -434,6 +435,45 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
 
       if (card.tags.includes(CardTag.POKEMON_VMAX) || card.tags.includes(CardTag.POKEMON_VUNION)) {
         effect.prizeCount += 2;
+      }
+
+      // Attack-armed prize denial / extra prizes (slot fields)
+      if (effect.target.denyPrizesIfKnockedOutNextTurn
+        && !effect.target.denyPrizesIfKnockedOutNextTurnPending) {
+        effect.prizeCount = 0;
+      } else if (
+        effect.target.extraPrizesIfKnockedOutNextTurn > 0
+        && !effect.target.extraPrizesIfKnockedOutNextTurnPending
+        && state.phase === GamePhase.ATTACK
+        && effect.prizeCount > 0
+      ) {
+        effect.prizeCount += effect.target.extraPrizesIfKnockedOutNextTurn;
+      }
+
+      // Little Grudge: discard Energy from Attacking Pokémon (board energy picker)
+      if (effect.target.discardAttackerEnergyIfKnockedOutNextTurn
+        && !effect.target.discardAttackerEnergyIfKnockedOutNextTurnPending
+        && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
+        const prizeTaker = StateUtils.getOpponent(state, effect.player);
+        const attackerEnergy = prizeTaker.active.cards.filter(c => c.superType === SuperType.ENERGY);
+        if (attackerEnergy.length > 0) {
+          state = store.prompt(state, new DiscardEnergyPrompt(
+            effect.player.id,
+            GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+            PlayerType.TOP_PLAYER,
+            [SlotType.ACTIVE],
+            { superType: SuperType.ENERGY },
+            { allowCancel: false, min: 1, max: 1 }
+          ), transfers => {
+            if (!transfers || transfers.length === 0) {
+              return;
+            }
+            for (const transfer of transfers) {
+              const source = StateUtils.getTarget(state, effect.player, transfer.from);
+              source.moveCardTo(transfer.card, prizeTaker.discard);
+            }
+          });
+        }
       }
 
       store.log(state, GameLog.LOG_POKEMON_KO, { name: card.name });
