@@ -2,8 +2,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/attack-effects';
+import { BLOCK_SELF_RETREAT, HEAL_X_DAMAGE_FROM_THIS_POKEMON, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Ducklett extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -35,8 +34,8 @@ export class Ducklett extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Roost
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      HEAL_X_DAMAGE_FROM_THIS_POKEMON(40, effect, store, state);
-      effect.player.active.cannotRetreatNextTurnPending = true;
+      HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect, store, state, 40);
+      BLOCK_SELF_RETREAT(store, state, effect, this);
     }
 
     return state;

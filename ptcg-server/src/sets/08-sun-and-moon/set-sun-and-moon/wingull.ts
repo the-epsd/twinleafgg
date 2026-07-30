@@ -1,6 +1,6 @@
 import { CardType, PokemonCard, Stage, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { HEAL_X_DAMAGE_FROM_THIS_POKEMON, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_SELF_RETREAT, HEAL_X_DAMAGE_FROM_THIS_POKEMON, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Wingull extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -27,7 +27,7 @@ export class Wingull extends PokemonCard {
     // Roost — self can't retreat (not defending); BLOCK_RETREAT targets opponent
     if (WAS_ATTACK_USED(effect, 0, this)) {
       HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect, store, state, 30);
-      effect.player.active.cannotRetreatNextTurnPending = true;
+      BLOCK_SELF_RETREAT(store, state, effect, this);
     }
 
     return state;

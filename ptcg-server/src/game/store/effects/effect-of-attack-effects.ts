@@ -81,6 +81,22 @@ export class PreventRetreatEffect extends EffectOfAttackEffect {
 }
 
 /**
+ * Effect that prevents the attacking Pokemon from retreating during its own next turn.
+ * Used for self-retreat-lock effects like "This Pokemon can't retreat during your next turn."
+ */
+export class SelfPreventRetreatEffect extends EffectOfAttackEffect {
+  readonly type: string = 'SELF_PREVENT_RETREAT_EFFECT';
+
+  constructor(base: AttackEffect) {
+    super(base);
+  }
+
+  applyEffect(): void {
+    this.player.active.cannotRetreatNextTurnPending = true;
+  }
+}
+
+/**
  * Optional filters for {@link PreventDamageEffect}.
  * An empty object prevents all attack damage during the opponent's next turn.
  */
@@ -329,6 +345,12 @@ export class ReduceDamageEffect extends EffectOfAttackEffect {
  */
 export function preventRetreatEffect(attackEffect: AttackEffect, source: Card): PreventRetreatEffect {
   const effect = new PreventRetreatEffect(attackEffect);
+  effect.markerSource = source;
+  return effect;
+}
+
+export function selfPreventRetreatEffect(attackEffect: AttackEffect, source: Card): SelfPreventRetreatEffect {
+  const effect = new SelfPreventRetreatEffect(attackEffect);
   effect.markerSource = source;
   return effect;
 }
