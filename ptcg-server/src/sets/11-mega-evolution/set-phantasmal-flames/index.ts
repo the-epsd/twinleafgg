@@ -1,3 +1,5 @@
+import { Gligar } from './gligar';
+import { Gliscor } from './gliscor';
 import { Ludicolo2PFL, Zacian2PFL, Toxtricity2PFL, Wigglytuff2PFL, MegaCharizardXex2PFL, Oricorioex2PFL, Rotomex2PFL, MegaSharpedoex2PFL, MegaLopunnyex2PFL, BattleColosseum2PFL, Dawn2PFL, Firebreather2PFL, GrimsleysGambit2PFL, SacredCharm2PFL, SwitchPFL, IgnitionEnergyPFL, MegaCharizardXex3PFL, Rotomex3PFL, MegaSharpedoex3PFL, MegaLopunnyex3PFL, Dawn3PFL, Blowtorch2PFL, MegaCharizardXex4PFL, FlygonIR, AmbipomIR } from './other-prints';
 import { Card } from '../../../game';
 import { Ambipom } from './ambipom';
@@ -73,6 +75,8 @@ export const setPhantasmalFlames: Card[] = [
   new Flygon(),
   new Gastly(),
   new Genesect(),
+  new Gligar(),
+  new Gliscor(),
   new GrimsleysGambit(),
   new Haunter(),
   new Jigglypuff(),
