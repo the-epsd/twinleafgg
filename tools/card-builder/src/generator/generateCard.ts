@@ -32,6 +32,25 @@ function escapeString(s: string): string {
   return s.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
 }
 
+function mergeNamedImports(lines: string[]): string[] {
+  const named = new Map<string, Set<string>>();
+  const other: string[] = [];
+  for (const line of lines) {
+    const match = line.match(/^import \{ ([^}]+) \} from '([^']+)';$/);
+    if (!match) {
+      other.push(line);
+      continue;
+    }
+    const names = named.get(match[2]) ?? new Set<string>();
+    match[1].split(',').map(name => name.trim()).filter(Boolean).forEach(name => names.add(name));
+    named.set(match[2], names);
+  }
+  return [
+    ...[...named.entries()].map(([from, names]) => `import { ${[...names].sort().join(', ')} } from '${from}';`),
+    ...other,
+  ];
+}
+
 function fullNameFor(draft: CardDraft): string {
   const name = draft.name.trim();
   const set = draft.set.trim();
@@ -49,9 +68,10 @@ function collectImports(
   attacks: AttackDraft[],
   powers: PowerDraft[],
   hasPowers: boolean,
-  hasAttacks: boolean
+  hasAttacks: boolean,
+  hasEffects: boolean
 ): { fromGame: Set<string>; lines: string[]; markers: Set<string>; flags: Set<string> } {
-  const fromGame = new Set<string>(['StoreLike', 'State']);
+  const fromGame = new Set<string>(hasEffects ? ['StoreLike', 'State'] : []);
   const prefabImports = new Map<string, Set<string>>();
   const extraImportLines = new Set<string>();
   const markers = new Set<string>();
@@ -169,8 +189,8 @@ function generateReduceEffect(
     if (power.selectedPrefabs.length === 0) return;
     body.push(`    // ${power.name || `Power ${index + 1}`}`);
     body.push(`    if (WAS_POWER_USED(effect, ${index}, this)) {`);
-    body.push(`      const player = effect.player;`);
     let returns = false;
+    const generatedLines: string[] = [];
     for (const sel of power.selectedPrefabs) {
       const prefab = getPrefabById(sel.prefabId);
       if (!prefab) continue;
@@ -180,13 +200,17 @@ function generateReduceEffect(
         powerName: power.name,
       });
       for (const line of result.lines) {
-        body.push(`      ${line}`);
+        generatedLines.push(line);
       }
       if (result.returns) returns = true;
       if (prefab.generateCompanions) {
         companions.push(...prefab.generateCompanions(sel.params, { kind: 'power', index, powerName: power.name }));
       }
     }
+    if (generatedLines.some(line => /\bplayer\b/.test(line))) {
+      body.push(`      const player = effect.player;`);
+    }
+    body.push(...generatedLines.map(line => `      ${line}`));
     if (!returns) {
       body.push(`      return state;`);
     }
@@ -205,8 +229,8 @@ function generateReduceEffect(
       body.push('');
       return;
     }
-    body.push(`      const player = effect.player;`);
     let returns = false;
+    const generatedLines: string[] = [];
     for (const sel of attack.selectedPrefabs) {
       const prefab = getPrefabById(sel.prefabId);
       if (!prefab) continue;
@@ -216,13 +240,17 @@ function generateReduceEffect(
         attackName: attack.name,
       });
       for (const line of result.lines) {
-        body.push(`      ${line}`);
+        generatedLines.push(line);
       }
       if (result.returns) returns = true;
       if (prefab.generateCompanions) {
         companions.push(...prefab.generateCompanions(sel.params, { kind: 'attack', index, attackName: attack.name }));
       }
     }
+    if (generatedLines.some(line => /\bplayer\b/.test(line))) {
+      body.push(`      const player = effect.player;`);
+    }
+    body.push(...generatedLines.map(line => `      ${line}`));
     if (!returns) {
       // no-op — fall through
     }
@@ -243,14 +271,15 @@ function generateReduceEffect(
   if (body.length === 0 && !prefix) {
     return {
       imports: [...serverImports],
-      source: `  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {\n    return state;\n  }`,
+      source: '',
     };
   }
 
   return {
     imports: [...serverImports],
     source: `${prefixBlock}  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-${body.join('\n')}    return state;
+${body.join('\n')}
+    return state;
   }`,
   };
 }
@@ -334,11 +363,15 @@ export async function generateCardSource(draft: CardDraft): Promise<string> {
 }
 
 function generatePokemon(draft: CardDraft, className: string, fullName: string): string {
+  const hasEffects =
+    (draft.hasPowers && draft.powers.some(power => power.selectedPrefabs.length > 0)) ||
+    (draft.hasAttacks && draft.attacks.some(attack => attack.selectedPrefabs.length > 0 || Boolean(attack.serverEffect)));
   const { fromGame, lines: prefabLines, markers, flags } = collectImports(
     draft.attacks,
     draft.powers,
     draft.hasPowers,
-    draft.hasAttacks
+    draft.hasAttacks,
+    hasEffects
   );
 
   const imports: string[] = [];
@@ -348,12 +381,14 @@ function generatePokemon(draft: CardDraft, className: string, fullName: string):
   if (draft.hasPowers) {
     // PowerType comes from pokemon-types via game barrel or card
   }
-  imports.push(`import { ${gameImports.join(', ')} } from '../../game';`);
-  imports.push(`import { Effect } from '../../game/store/effects/effect';`);
+  if (hasEffects) {
+    imports.push(`import { ${gameImports.join(', ')} } from '../../game';`);
+    imports.push(`import { Effect } from '../../game/store/effects/effect';`);
+  }
   imports.push(...prefabLines);
 
   // Deduplicate import lines
-  const uniqueImports = [...new Set(imports)];
+  const uniqueImports = mergeNamedImports([...new Set(imports)]);
 
   const props: string[] = [];
   props.push(`  public stage: Stage = Stage.${draft.stage};`);
@@ -394,21 +429,27 @@ function generatePokemon(draft: CardDraft, className: string, fullName: string):
   props.push(`  public retreat = ${formatEnergyArray(parseEnergyCost(draft.retreat))};`);
 
   if (draft.hasAttacks && draft.attacks.length > 0) {
+    props.push('');
     const attackBodies = draft.attacks.map(formatAttack);
     if (attackBodies.length === 1) {
       props.push(`  public attacks = [${attackBodies[0]}];`);
     } else {
       props.push(`  public attacks = [${attackBodies[0]},\n${attackBodies.slice(1).join(',\n')}];`);
     }
+    props.push('');
   }
 
   if (draft.hasPowers && draft.powers.length > 0) {
+    if (!(draft.hasAttacks && draft.attacks.length > 0)) {
+      props.push('');
+    }
     const powerBodies = draft.powers.map(formatPower);
     if (powerBodies.length === 1) {
       props.push(`  public powers = [${powerBodies[0]}];`);
     } else {
       props.push(`  public powers = [${powerBodies[0]},\n${powerBodies.slice(1).join(',\n')}];`);
     }
+    props.push('');
   }
 
   if (draft.regulationMark.trim()) {
@@ -429,11 +470,13 @@ function generatePokemon(draft: CardDraft, className: string, fullName: string):
     importBlock += `\nimport { PowerType } from '../../game/store/card/pokemon-types';`;
   }
 
+  const propertyBlock = reduce.source ? props.join('\n') : props.join('\n').replace(/\n+$/, '');
+  const reduceBlock = reduce.source ? `\n\n${reduce.source}` : '';
+
   return `${importBlock}
 
 export class ${className} extends PokemonCard {
-${props.join('\n')}
-${reduce.source}
+${propertyBlock}${reduceBlock}
 }
 `;
 }

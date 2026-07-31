@@ -386,6 +386,7 @@ function render() {
          <button type="button" data-action="reload-browse">Reload catalog</button>`
       : `<button type="button" data-action="show-browse">← Browse cards</button>
          <button type="button" class="primary" data-action="generate">Generate card</button>
+         <button type="button" data-action="save" ${outputCode ? '' : 'disabled'}>Save to ptcg-server</button>
          <button type="button" data-action="copy" ${outputCode ? '' : 'disabled'}>Copy output</button>
          <button type="button" data-action="reset">Reset form</button>`;
 
@@ -853,6 +854,38 @@ async function handleAction(action: string | null, btn: HTMLButtonElement) {
         });
       }
       break;
+    case 'save': {
+      if (!outputCode) return;
+      const save = async (overwrite: boolean) => {
+        const response = await fetch('/save-card', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            set: draft.set,
+            className: draft.className || draft.name.replace(/[^a-zA-Z0-9 ]/g, ' ').split(/\s+/).filter(Boolean).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(''),
+            source: outputCode,
+            overwrite,
+          }),
+        });
+        const result = (await response.json()) as { message?: string; error?: string };
+        if (response.status === 409 && !overwrite) {
+          if (window.confirm('That card file already exists. Overwrite it?')) {
+            await save(true);
+          }
+          return;
+        }
+        if (!response.ok) throw new Error(result.error || `Save failed (${response.status})`);
+        statusMessage = result.message || 'Saved to ptcg-server.';
+        outputError = '';
+        render();
+      };
+      void save(false).catch(err => {
+        outputError = err instanceof Error ? err.message : String(err);
+        statusMessage = '';
+        render();
+      });
+      break;
+    }
     case 'reset':
       draft = defaultDraft();
       sourceMeta = null;
