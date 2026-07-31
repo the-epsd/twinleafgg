@@ -254,6 +254,9 @@ function buildServerEffects(): ServerEffect[] {
           return names.length > 0 ? line.replace(importMatch[1], names.join(', ')) : '';
         })
         .filter(Boolean);
+      if (!imports.some(line => line.includes('WAS_ATTACK_USED'))) {
+        imports.push(`import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';`);
+      }
       results.push({
         source: file.replace(`${serverSetsRoot}/`, ''),
         attackText: attackTexts[index],
