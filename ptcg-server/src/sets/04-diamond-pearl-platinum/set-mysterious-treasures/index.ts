@@ -8,6 +8,8 @@ import { Gabite } from './gabite';
 import { Garchomp } from './garchomp';
 import { Mesprit } from './mesprit';
 import { Nidorina } from './nidorina';
+import { Quilava } from './quilava';
+import { Typhlosion } from './typhlosion';
 import { UnownE } from './unown-e';
 import { TeamGalacticsWager } from './team-galactics-wager';
 import { TimeSpaceDistortion } from './time-space-distortion';
@@ -28,6 +30,8 @@ export const setMysteriousTreasures: Card[] = [
   new Garchomp(),
   new Mesprit(),
   new Nidorina(),
+  new Quilava(),
+  new Typhlosion(),
   new UnownE(),
   new TeamGalacticsWager(),
   new TimeSpaceDistortion(),

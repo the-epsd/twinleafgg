@@ -10,7 +10,8 @@
   },
   "scripts": {
     "card-builder": "npm --prefix tools/card-builder run dev",
-    "card-builder:sync": "npm --prefix tools/card-builder run sync-data"
+    "card-builder:sync": "npm --prefix tools/card-builder run sync-data",
+    "generate:implemented-ids": "node ptcg-server/generate-implemented-card-ids-json.js"
   },
   "devDependencies": {
     "@types/node": "^24.0.3"

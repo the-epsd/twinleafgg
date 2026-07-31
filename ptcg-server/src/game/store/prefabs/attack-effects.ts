@@ -687,12 +687,24 @@ export function DISCARD_CARDS_FROM_OPPONENTS_ACTIVE_POKEMON(
 export function DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(
   store: StoreLike,
   state: State,
-  effect: AttackEffect
+  effect: AttackEffect,
+  allowedEnergyTypes?: CardType[],
 ) {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
-  const energyCards = opponent.active.cards.filter(c => c.superType === SuperType.ENERGY);
+  const blocked: number[] = [];
+  const energyCards = opponent.active.cards.filter((card, index) => {
+    if (card.superType !== SuperType.ENERGY) {
+      if (allowedEnergyTypes) blocked.push(index);
+      return false;
+    }
+    if (!allowedEnergyTypes) return true;
+    const energy = card as EnergyCard;
+    const allowed = allowedEnergyTypes.some(type => energy.provides.includes(type));
+    if (!allowed) blocked.push(index);
+    return allowed;
+  });
   if (energyCards.length === 0) {
     return state;
   }
@@ -702,7 +714,7 @@ export function DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     opponent.active,
     { superType: SuperType.ENERGY },
-    { min: 1, max: 1, allowCancel: false }
+    { min: 1, max: 1, allowCancel: false, blocked }
   ), selected => {
     const cards = selected || [];
     if (cards.length > 0) {
