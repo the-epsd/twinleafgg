@@ -15,7 +15,8 @@
     "test:sets:catalog": "ts-node src/sets/tests/run-assigned-tests.ts",
     "postcompile": "cp -r src/storage/battle-pass-seasons dist/storage/ && cp -r src/storage/battle-pass-seasons output/storage/ && npm run copy:avatars && npm run copy:sleeves",
     "copy:avatars": "node -e \"require('fs').cpSync('./avatars', './dist/avatars', {recursive: true});\"",
-    "copy:sleeves": "node -e \"require('fs').cpSync('./sleeves', './dist/sleeves', {recursive: true});\""
+    "copy:sleeves": "node -e \"require('fs').cpSync('./sleeves', './dist/sleeves', {recursive: true});\"",
+    "generate:implemented-ids": "node generate-implemented-card-ids-json.js"
   },
   "author": "",
   "license": "MIT",
