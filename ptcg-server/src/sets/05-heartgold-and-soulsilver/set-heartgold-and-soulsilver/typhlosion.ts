@@ -8,12 +8,12 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-prompt';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
+import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 function* useFlareDestroy(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
-  const opponent = StateUtils.getOpponent(state, player);
 
   const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
   state = store.reduceEffect(state, checkProvidedEnergy);
@@ -34,21 +34,7 @@ function* useFlareDestroy(next: Function, store: StoreLike, state: State,
     });
   }
 
-  // Defending Pokemon has no energy cards attached
-  if (opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
-    yield store.prompt(state, new ChooseCardsPrompt(
-      player,
-      GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-      opponent.active,
-      { superType: SuperType.ENERGY },
-      { min: 1, max: 1, allowCancel: false }
-    ), selected => {
-      const cards = selected || [];
-      const discardEnergy = new DiscardCardsEffect(effect, cards);
-      return store.reduceEffect(state, discardEnergy);
-      next();
-    });
-  }
+  DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
 
   return state;
 }

@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType } from '../../../game';
+import { Stage, CardType } from '../../../game/store/card/card-types';
+import { StoreLike, State, GameMessage, PlayerType, SlotType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
-import { PutDamageEffect, DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
+import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 
 export class Luxray extends PokemonCard {
@@ -14,20 +15,18 @@ export class Luxray extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Flash Impact',
-      cost: [L],
-      damage: 60,
-      text: 'Does 20 damage to 1 of your Benched Pokémon.'
-    },
-    {
-      name: 'Crunch',
-      cost: [L, L, C],
-      damage: 80,
-      text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Flash Impact',
+    cost: [L],
+    damage: 60,
+    text: 'Does 20 damage to 1 of your Benched Pokémon.'
+  },
+  {
+    name: 'Crunch',
+    cost: [L, L, C],
+    damage: 80,
+    text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokémon.'
+  }];
 
   public set: string = 'NXD';
   public setNumber: string = '46';
@@ -36,7 +35,7 @@ export class Luxray extends PokemonCard {
   public fullName: string = 'Luxray NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Flash Impact - 60 damage to active, 20 to own benched
+    // Flash Impact
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const myBenched = player.bench.filter(b => b.cards.length > 0);
@@ -58,20 +57,12 @@ export class Luxray extends PokemonCard {
       }
     }
 
-    // Crunch - flip for energy discard
+    // Crunch
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
       return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
-          const opponentActive = opponent.active;
-          const energyCards = opponentActive.cards.filter(c => c.superType === SuperType.ENERGY);
-          if (energyCards.length > 0) {
-            const discardEffect = new DiscardCardsEffect(effect, energyCards.slice(0, 1));
-            discardEffect.target = opponentActive;
-            store.reduceEffect(state, discardEffect);
-          }
+          DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
         }
       });
     }

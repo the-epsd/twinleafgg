@@ -689,9 +689,14 @@ export function DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(
   state: State,
   effect: AttackEffect,
   allowedEnergyTypes?: CardType[],
+  count = 1,
 ) {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
+
+  if (count <= 0) {
+    return state;
+  }
 
   const blocked: number[] = [];
   const energyCards = opponent.active.cards.filter((card, index) => {
@@ -709,12 +714,13 @@ export function DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(
     return state;
   }
 
+  const cardsToDiscard = Math.min(count, energyCards.length);
   return store.prompt(state, new ChooseCardsPrompt(
     player,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     opponent.active,
     { superType: SuperType.ENERGY },
-    { min: 1, max: 1, allowCancel: false, blocked }
+    { min: cardsToDiscard, max: cardsToDiscard, allowCancel: false, blocked }
   ), selected => {
     const cards = selected || [];
     if (cards.length > 0) {

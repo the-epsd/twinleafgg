@@ -1,8 +1,9 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType } from '../../../game/store/card/card-types';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { StoreLike, State, ChooseCardsPrompt, GameMessage } from '../../../game';
+import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
+import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class Kirlia extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -35,23 +36,10 @@ export class Kirlia extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      const opponent = effect.opponent;
 
       COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
-          store.prompt(state, new ChooseCardsPrompt(
-            player,
-            GameMessage.CHOOSE_CARD_TO_DISCARD,
-            opponent.active,
-            { superType: SuperType.ENERGY },
-            { min: 0, max: 1, allowCancel: false }
-          ), selected => {
-            const card = selected[0];
-            if (!card) {
-              return;
-            }
-            opponent.active.moveCardTo(card, opponent.discard);
-          });
+          DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
         }
       });
     }
@@ -59,4 +47,3 @@ export class Kirlia extends PokemonCard {
     return state;
   }
 }
-

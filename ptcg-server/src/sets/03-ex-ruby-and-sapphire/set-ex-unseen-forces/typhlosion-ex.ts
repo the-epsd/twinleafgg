@@ -1,10 +1,11 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
-import { AttachEnergyPrompt, Card, CardTarget, ChooseCardsPrompt, ChooseEnergyPrompt, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, State, StateUtils, StoreLike } from '../../../game';
+import { AttachEnergyPrompt, Card, CardTarget, ChooseEnergyPrompt, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { ABILITY_USED, CONFIRMATION_PROMPT, IS_POKEPOWER_BLOCKED, JUST_EVOLVED, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
+import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class Typhlosionex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -80,7 +81,6 @@ export class Typhlosionex extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
       // Discard energy from Typhlosion ex
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
@@ -101,31 +101,7 @@ export class Typhlosionex extends PokemonCard {
       });
 
       // Discard energy from opponent's active Pokémon
-      const activeCardList = opponent.active;
-      const activePokemonCard = activeCardList.getPokemonCard();
-
-      let hasPokemonWithEnergy = false;
-
-      if (activePokemonCard && activeCardList.cards.some(c => c.superType === SuperType.ENERGY)) {
-        hasPokemonWithEnergy = true;
-      }
-
-      if (!hasPokemonWithEnergy) {
-        return state;
-      }
-
-      let cards: Card[] = [];
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        opponent.active,
-        { superType: SuperType.ENERGY },
-        { min: 1, max: 1, allowCancel: false },
-      ), selected => {
-        cards = selected || [];
-      });
-      const discardEnergy = new DiscardCardsEffect(effect, cards);
-      return store.reduceEffect(state, discardEnergy);
+      return DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
     }
 
     return state;

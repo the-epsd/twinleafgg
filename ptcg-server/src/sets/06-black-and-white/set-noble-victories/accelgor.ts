@@ -1,11 +1,13 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, SpecialCondition } from '../../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, GameMessage } from '../../../game';
+import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card-types';
+import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, AFTER_ATTACK } from '../../../game/store/prefabs/prefabs';
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
-import { SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK } from '../../../game/store/prefabs/attack-effects';
-import { StateUtils } from '../../../game/store/state-utils';
+import {
+  DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON,
+  SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK
+} from '../../../game/store/prefabs/attack-effects';
 
 export class Accelgor extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -15,20 +17,18 @@ export class Accelgor extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Acid Spray',
-      cost: [G],
-      damage: 20,
-      text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokémon.'
-    },
-    {
-      name: 'Deck and Cover',
-      cost: [C, C],
-      damage: 50,
-      text: 'The Defending Pokémon is now Paralyzed and Poisoned. Shuffle this Pokémon and all cards attached to it into your deck.'
-    }
-  ];
+  public attacks = [{
+    name: 'Acid Spray',
+    cost: [G],
+    damage: 20,
+    text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokémon.'
+  },
+  {
+    name: 'Deck and Cover',
+    cost: [C, C],
+    damage: 50,
+    text: 'The Defending Pokémon is now Paralyzed and Poisoned. Shuffle this Pokémon and all cards attached to it into your deck.'
+  }];
 
   public set: string = 'NVI';
   public setNumber: string = '12';
@@ -37,39 +37,18 @@ export class Accelgor extends PokemonCard {
   public fullName: string = 'Accelgor NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Acid Spray - flip to discard opponent's energy
+    // Acid Spray
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
       return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
-          const oppEnergy = opponent.active.cards.filter(c => c.superType === SuperType.ENERGY);
-          if (oppEnergy.length === 0) {
-            return;
-          }
-
-          if (oppEnergy.length === 1) {
-            opponent.active.moveCardTo(oppEnergy[0], opponent.discard);
-            return;
-          }
-
-          store.prompt(state, new ChooseCardsPrompt(
-            player,
-            GameMessage.CHOOSE_CARD_TO_DISCARD,
-            opponent.active,
-            { superType: SuperType.ENERGY },
-            { min: 1, max: 1, allowCancel: false }
-          ), selected => {
-            if (selected && selected.length > 0) {
-              opponent.active.moveCardTo(selected[0], opponent.discard);
-            }
-          });
+          DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
         }
       });
     }
 
-    // Deck and Cover - paralyze, poison, shuffle self into deck
+    // Deck and Cover
     if (WAS_ATTACK_USED(effect, 1, this)) {
       // Apply special conditions
       const addSpecialCondition = new AddSpecialConditionsEffect(effect, [
