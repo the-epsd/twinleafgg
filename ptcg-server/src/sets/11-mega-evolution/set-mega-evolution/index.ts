@@ -1,51 +1,4 @@
-import {
-  BossOrdersMEG,
-  EnergySwitchPKMEG,
-  RareCandyMEG,
-  RepelMEG,
-  SwitchMEG,
-  UltraBallMEG,
-  Bulbasaur2MEG,
-  Ivysaur2MEG,
-  Ninjask2MEG,
-  Snover2MEG,
-  Clawitizer2MEG,
-  Inteleon2MEG,
-  Houndstone2MEG,
-  Garganacl2MEG,
-  Steelix2MEG,
-  Gumshoos2MEG,
-  MegaVenusaurEx2MEG,
-  MegaCameruptEx2MEG,
-  MegaAbomasnowEx2MEG,
-  MegaManectricEx2MEG,
-  MegaGardevoirex2MEG,
-  MegaLucarioex2MEG,
-  MegaAbsolex2MEG,
-  MegaMawileEx2MEG,
-  MegaLatiasex2MEG,
-  MegaKangaskhanex2MEG,
-  AirBalloonMEG,
-  BuddyBuddyPoffinMEG,
-  FightingGong2MEG,
-  LilliesDetermination2MEG,
-  MegaSignal2MEG,
-  MysteryGarden2MEG,
-  NightlyStretcherMEG,
-  PowerProtein2MEG,
-  RareCandy2MEG,
-  WallysCompassion2MEG,
-  MegaVenusaurEx3MEG,
-  MegaGardevoirex3MEG,
-  MegaLucarioex3MEG,
-  MegaAbsolex3MEG,
-  MegaLatiasex3MEG,
-  MegaKangaskhanex3MEG,
-  LilliesDetermination3MEG,
-  WallysCompassion3MEG,
-  MegaGardevoirex4MEG,
-  MegaLucarioex4MEG,
-} from './other-prints';
+
 import { Card } from '../../../game/store/card/card';
 import { Abra } from './abra';
 import { AcerolasMischief } from './acerolas-mischief';
@@ -118,6 +71,9 @@ import { Xerneas } from './xerneas';
 import { Yungoos } from './yungoos';
 import { Yveltal } from './yveltal';
 import { IronDefender } from './iron-defender';
+import { RepelMEG, BossOrdersMEG, EnergySwitchPKMEG, RareCandyMEG, SwitchMEG, UltraBallMEG, Bulbasaur2MEG, Ivysaur2MEG, Ninjask2MEG, Snover2MEG, Clawitizer2MEG, Inteleon2MEG, Houndstone2MEG, Garganacl2MEG, Steelix2MEG, Gumshoos2MEG, MegaVenusaurEx2MEG, MegaCameruptEx2MEG, MegaAbomasnowEx2MEG, MegaManectricEx2MEG, MegaGardevoirex2MEG, MegaLucarioex2MEG, MegaAbsolex2MEG, MegaMawileEx2MEG, MegaLatiasex2MEG, MegaKangaskhanex2MEG, AirBalloonMEG, BuddyBuddyPoffinMEG, FightingGong2MEG, LilliesDetermination2MEG, MegaSignal2MEG, MysteryGarden2MEG, NightlyStretcherMEG, PowerProtein2MEG, RareCandy2MEG, WallysCompassion2MEG, MegaVenusaurEx3MEG, MegaGardevoirex3MEG, MegaLucarioex3MEG, MegaAbsolex3MEG, MegaLatiasex3MEG, MegaKangaskhanex3MEG, LilliesDetermination3MEG, WallysCompassion3MEG, MegaGardevoirex4MEG, MegaLucarioex4MEG } from './other-prints';
+import { Tangela } from './tangela';
+import { Tangrowth } from './tangrowth';
 
 export const setMegaEvolution: Card[] = [
   new Abra(),
@@ -188,6 +144,8 @@ export const setMegaEvolution: Card[] = [
   new Steelix(),
   new StrangeTimepiece(),
   new SurfingBeach(),
+  new Tangela(),
+  new Tangrowth(),
   new WallysCompassion(),
   new Xerneas(),
   new Yungoos(),
