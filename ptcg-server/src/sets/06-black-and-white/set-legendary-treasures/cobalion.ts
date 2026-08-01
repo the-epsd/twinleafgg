@@ -2,62 +2,42 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
-import { Effect } from '../../../game/store/effects/effect';
-import { UseAttackEffect } from '../../../game/store/effects/game-effects';
 import { StateUtils } from '../../../game/store/state-utils';
-import { GameError } from '../../../game/game-error';
-import { GameMessage } from '../../../game/game-message';
+import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { DEFENDING_POKEMON_CANNOT_ATTACK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Cobalion extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.METAL;
-
+  public cardType: CardType = M;
   public hp: number = 120;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public resistance = [{ type: P, value: -20 }];
+  public retreat = [C, C];
 
   public attacks = [{
     name: 'Energy Press',
-    cost: [CardType.METAL, CardType.COLORLESS],
+    cost: [M, C],
     damage: 20,
-    text: 'Does 20 more damage for each Energy attached to ' +
-      'the Defending Pokemon.'
-  }, {
+    text: 'Does 20 more damage for each Energy attached to the Defending Pokemon.'
+  },
+  {
     name: 'Iron Breaker',
-    cost: [CardType.METAL, CardType.METAL, CardType.COLORLESS],
+    cost: [M, M, C],
     damage: 80,
-    text: 'The Defending Pokemon can\'t attack during your opponent\'s ' +
-      'next turn.'
+    text: 'The Defending Pokemon can\'t attack during your opponent\'s next turn.'
   }];
 
   public set: string = 'LTR';
-
   public name: string = 'Cobalion';
-
   public fullName: string = 'Cobalion LTR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '91';
 
-  public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // Energy Press
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
+      const opponent = StateUtils.getOpponent(state, effect.player);
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(opponent);
       store.reduceEffect(state, checkProvidedEnergyEffect);
       const energyCount = checkProvidedEnergyEffect.energyMap.reduce((left, p) => left + p.provides.length, 0);
@@ -66,20 +46,9 @@ export class Cobalion extends PokemonCard {
 
     // Iron Breaker
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      opponent.active.marker.addMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this);
-    }
-
-    if (effect instanceof UseAttackEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this)) {
-      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      effect.player.active.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this);
+      return DEFENDING_POKEMON_CANNOT_ATTACK(store, state, effect, this);
     }
 
     return state;
   }
-
 }

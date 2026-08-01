@@ -1,11 +1,9 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, GameError } from '../../../game';
+import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { PlayItemEffect } from '../../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { OPPONENT_CANNOT_PLAY_ITEM_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Luxio extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -29,27 +27,12 @@ export class Luxio extends PokemonCard {
   public name: string = 'Luxio';
   public fullName: string = 'Luxio UPR';
 
-  public readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Disconnect
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      opponent.marker.addMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this);
+      return OPPONENT_CANNOT_PLAY_ITEM_CARDS(store, state, effect, this);
     }
 
-    if (effect instanceof PlayItemEffect) {
-      const player = effect.player;
-      if (player.marker.hasMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this);
-    }
     return state;
   }
 }

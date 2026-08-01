@@ -1,9 +1,7 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../../game/store/card/card-types';
-import { PokemonCardList, StoreLike, State, GameMessage, ConfirmPrompt, EnergyCard } from '../../../game';
+import { StoreLike, State, GameMessage, ConfirmPrompt, EnergyCard } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { AttackEffect } from '../../../game/store/effects/game-effects';
-import { CoinFlipEffect } from '../../../game/store/effects/play-card-effects';
 import { WAS_ATTACK_USED, DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK } from '../../../game/store/prefabs/prefabs';
 export class Flareon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -40,18 +38,6 @@ export class Flareon extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       return DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK(store, state, effect, this);
     }
-
-    // Block attacks if marked - coin flip
-    if (effect instanceof AttackEffect && effect.player.active.marker.hasMarker(PokemonCardList.PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN, this)) {
-      const coinFlipEffect = new CoinFlipEffect(effect.player, (result: boolean) => {
-        if (result === false) {
-          effect.preventDefault = true;
-        }
-      });
-      return store.reduceEffect(state, coinFlipEffect);
-    }
-
-    // Clear marker at end of turn
 
     // Fire Slash - may discard Fire energy for +30
     if (WAS_ATTACK_USED(effect, 1, this)) {
