@@ -331,6 +331,23 @@ export class OpponentPokemonCannotUseAttackEffect extends EffectOfAttackEffect {
   }
 }
 
+export class PreventAttackUntilLeavesActiveEffect extends EffectOfAttackEffect {
+  constructor(base: AttackEffect, public attackName: string) {
+    super(base);
+  }
+
+  applyEffect(): void {
+    this.source.blockedAttackNameUntilLeavesActive = this.attackName;
+  }
+}
+
+export function preventAttackUntilLeavesActiveEffect(
+  attackEffect: AttackEffect,
+  attackName: string,
+): PreventAttackUntilLeavesActiveEffect {
+  return new PreventAttackUntilLeavesActiveEffect(attackEffect, attackName);
+}
+
 /**
  * During the opponent's next turn, the Defending Pokémon's attacks do
  * `reduction` less damage (before applying Weakness and Resistance).
@@ -475,6 +492,7 @@ export interface PlayLockOptions {
   stadium?: boolean;
   tool?: boolean;
   specialEnergy?: boolean;
+  pokemonWithAbilities?: boolean;
   /** EndTurns of the locked player until clear. Default 1 (opponent's next turn). */
   turnsRemaining?: number;
   /** Also lock the attacking player (e.g. Vanilluxe Frigid Breath). */
@@ -500,6 +518,7 @@ export class PlayLockEffect extends EffectOfAttackEffect {
       stadium: this.options.stadium === true,
       tool: this.options.tool === true,
       specialEnergy: this.options.specialEnergy === true,
+      pokemonWithAbilities: this.options.pokemonWithAbilities === true,
     };
     const opponentTurns = this.options.turnsRemaining ?? 1;
     this.opponent.applyPlayLocks(locks, opponentTurns);
@@ -518,6 +537,32 @@ export function playLockEffect(
   const effect = new PlayLockEffect(attackEffect, options);
   effect.markerSource = source;
   return effect;
+}
+
+export class IncreaseDefendingPokemonAttackCostNextTurnEffect extends EffectOfAttackEffect {
+  applyEffect(): void {
+    this.opponent.active.attackCostIncreaseNextTurnPending = 1;
+    this.opponent.active.attackCostIncreaseNextTurnAttackerId = this.player.id;
+  }
+}
+
+export class IncreaseDefendingPokemonRetreatCostNextTurnEffect extends EffectOfAttackEffect {
+  applyEffect(): void {
+    this.opponent.active.retreatCostIncreaseNextTurnPending = 1;
+    this.opponent.active.retreatCostIncreaseNextTurnAttackerId = this.player.id;
+  }
+}
+
+export function increaseDefendingPokemonAttackCostNextTurnEffect(
+  attackEffect: AttackEffect,
+): IncreaseDefendingPokemonAttackCostNextTurnEffect {
+  return new IncreaseDefendingPokemonAttackCostNextTurnEffect(attackEffect);
+}
+
+export function increaseDefendingPokemonRetreatCostNextTurnEffect(
+  attackEffect: AttackEffect,
+): IncreaseDefendingPokemonRetreatCostNextTurnEffect {
+  return new IncreaseDefendingPokemonRetreatCostNextTurnEffect(attackEffect);
 }
 
 /**

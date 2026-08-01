@@ -3,7 +3,7 @@ import { AfterAttackEffect, EndTurnEffect, BetweenTurnsEffect, BeginTurnEffect, 
 import { GameError } from '../../game-error';
 import { GameMessage, GameLog } from '../../game-message';
 import { Player } from '../state/player';
-import { BoardEffect, SpecialCondition } from '../card/card-types';
+import { BoardEffect, CardTag, SpecialCondition } from '../card/card-types';
 import { State, GamePhase, GameWinner } from '../state/state';
 import { StoreLike } from '../store-like';
 import { checkState, endGame } from './check-effect';
@@ -199,6 +199,8 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
   if (effect instanceof EndTurnEffect) {
     const player = effect.player;
     const opponent = StateUtils.getOpponent(state, player);
+    const lastAttack = state.playerLastAttack?.[player.id];
+    player.ancientPokemonAttackedLastTurn = lastAttack?.sourceCard.tags.includes(CardTag.ANCIENT) ?? false;
 
     state = RESOLVE_PENDING_END_OF_OPPONENTS_NEXT_TURN_EFFECTS(store, state, effect);
 
@@ -266,6 +268,16 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
     // that opponent finishes their next turn, before the attacker's following turn.
     [player, opponent].forEach(p => {
       p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+        if (cardList.attackCostIncreaseNextTurnPending
+          && cardList.attackCostIncreaseNextTurnAttackerId !== player.id) {
+          cardList.attackCostIncreaseNextTurn = cardList.attackCostIncreaseNextTurnPending;
+          cardList.attackCostIncreaseNextTurnPending = 0;
+        }
+        if (cardList.retreatCostIncreaseNextTurnPending
+          && cardList.retreatCostIncreaseNextTurnAttackerId !== player.id) {
+          cardList.retreatCostIncreaseNextTurn = cardList.retreatCostIncreaseNextTurnPending;
+          cardList.retreatCostIncreaseNextTurnPending = 0;
+        }
         if (cardList.defendingPokemonExtraDamagePending
           && cardList.defendingPokemonExtraDamageAttackerId !== player.id) {
           cardList.defendingPokemonExtraDamagePending = false;
@@ -279,6 +291,25 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
         if (cardList.extraPrizesIfKnockedOutNextTurnPending
           && cardList.extraPrizesIfKnockedOutNextTurnAttackerId !== player.id) {
           cardList.extraPrizesIfKnockedOutNextTurnPending = false;
+        }
+      });
+    });
+
+    [player, opponent].forEach(p => {
+      p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+        if (cardList.attackCostIncreaseNextTurnAttackerId === player.id
+          && !cardList.attackCostIncreaseNextTurnPending
+          && cardList.attackCostIncreaseNextTurn > 0
+          ) {
+          cardList.attackCostIncreaseNextTurn = 0;
+          cardList.attackCostIncreaseNextTurnAttackerId = undefined;
+        }
+        if (cardList.retreatCostIncreaseNextTurnAttackerId === player.id
+          && !cardList.retreatCostIncreaseNextTurnPending
+          && cardList.retreatCostIncreaseNextTurn > 0
+          ) {
+          cardList.retreatCostIncreaseNextTurn = 0;
+          cardList.retreatCostIncreaseNextTurnAttackerId = undefined;
         }
       });
     });

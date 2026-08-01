@@ -92,7 +92,7 @@ import {
 } from '../effects/game-effects';
 import { AfterAttackEffect, BeforeDoingDamageEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
-import { preventRetreatEffect, selfPreventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, coinFlipCancelAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect, defendingPokemonWeaknessIsNowEffect, reduceDamageEffect, playLockEffect, PlayLockOptions, PreventDamageOptions, shouldPreventAttackEffects, knockOutIfDamagedDuringAttackerNextTurnEffect, KnockOutIfDamagedOptions, surviveOnTenHpDuringOpponentsNextTurnEffect, retaliateOnDamageDuringOpponentsNextTurnEffect, extraPrizesIfKnockedOutDuringAttackerNextTurnEffect, denyPrizesIfKnockedOutDuringOpponentsNextTurnEffect, discardAttackerEnergyIfKnockedOutDuringOpponentsNextTurnEffect, nextTurnAttackDamageBonusEffect } from '../effects/effect-of-attack-effects';
+import { preventRetreatEffect, selfPreventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, coinFlipCancelAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect, defendingPokemonWeaknessIsNowEffect, reduceDamageEffect, playLockEffect, PlayLockOptions, PreventDamageOptions, shouldPreventAttackEffects, knockOutIfDamagedDuringAttackerNextTurnEffect, KnockOutIfDamagedOptions, surviveOnTenHpDuringOpponentsNextTurnEffect, retaliateOnDamageDuringOpponentsNextTurnEffect, extraPrizesIfKnockedOutDuringAttackerNextTurnEffect, denyPrizesIfKnockedOutDuringOpponentsNextTurnEffect, discardAttackerEnergyIfKnockedOutDuringOpponentsNextTurnEffect, nextTurnAttackDamageBonusEffect, increaseDefendingPokemonAttackCostNextTurnEffect, increaseDefendingPokemonRetreatCostNextTurnEffect, preventAttackUntilLeavesActiveEffect } from '../effects/effect-of-attack-effects';
 import { SurviveOnTenHpOptions, RetaliateOnDamageOptions } from '../state/pokemon-card-list';
 import { GameStatsTracker } from '../game-stats-tracker';
 
@@ -4215,6 +4215,60 @@ export function OPPONENT_CANNOT_PLAY_CARDS(
   options: PlayLockOptions,
 ): State {
   return store.reduceEffect(state, playLockEffect(effect, source, options));
+}
+
+export function OPPONENT_CANNOT_PLAY_POKEMON_WITH_ABILITIES(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+): State {
+  return OPPONENT_CANNOT_PLAY_CARDS(store, state, effect, source, { pokemonWithAbilities: true });
+}
+
+export function PREVENT_THIS_ATTACK_UNTIL_LEAVES_ACTIVE(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  attackName: string,
+): State {
+  return store.reduceEffect(state, preventAttackUntilLeavesActiveEffect(effect, attackName));
+}
+
+export function BOOST_IF_OTHER_ANCIENT_ATTACKED_LAST_TURN(
+  state: State,
+  effect: AttackEffect,
+  source: PokemonCard,
+  bonusDamage: number,
+): void {
+  const lastAttack = state.playerLastAttack?.[effect.player.id];
+  if (effect.player.ancientPokemonAttackedLastTurn
+    && lastAttack?.sourceCard !== source
+    && lastAttack?.sourceCard.tags.includes(CardTag.ANCIENT)) {
+    effect.damage += bonusDamage;
+  }
+}
+
+export function DEFENDING_POKEMON_ATTACKS_COST_MORE(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  amount: number = 1,
+): State {
+  const costEffect = increaseDefendingPokemonAttackCostNextTurnEffect(effect);
+  costEffect.opponent.active.attackCostIncreaseNextTurnPending = amount;
+  return store.reduceEffect(state, costEffect);
+}
+
+export function DEFENDING_POKEMON_RETREAT_COSTS_MORE(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  amount: number = 1,
+): State {
+  const costEffect = increaseDefendingPokemonRetreatCostNextTurnEffect(effect);
+  costEffect.opponent.active.retreatCostIncreaseNextTurnPending = amount;
+  return store.reduceEffect(state, costEffect);
 }
 
 export function OPPONENT_CANNOT_PLAY_ITEM_CARDS(

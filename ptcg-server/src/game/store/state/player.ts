@@ -109,7 +109,9 @@ export class Player {
   public cannotPlayStadiumCards = false;
   public cannotPlayToolCards = false;
   public cannotPlaySpecialEnergyCards = false;
+  public cannotPlayPokemonWithAbilities = false;
   public playLocksTurnsRemaining = 0;
+  public ancientPokemonAttackedLastTurn = false;
 
   public readonly UNRELENTING_ONSLAUGHT_MARKER = 'UNRELENTING_ONSLAUGHT_MARKER';
   public readonly UNRELENTING_ONSLAUGHT_2_MARKER = 'UNRELENTING_ONSLAUGHT_2_MARKER';
@@ -121,6 +123,7 @@ export class Player {
     stadium?: boolean;
     tool?: boolean;
     specialEnergy?: boolean;
+    pokemonWithAbilities?: boolean;
   }, turnsRemaining: number = 1): void {
     if (locks.item) {
       this.cannotPlayItemCards = true;
@@ -137,6 +140,9 @@ export class Player {
     if (locks.specialEnergy) {
       this.cannotPlaySpecialEnergyCards = true;
     }
+    if (locks.pokemonWithAbilities) {
+      this.cannotPlayPokemonWithAbilities = true;
+    }
     this.playLocksTurnsRemaining = Math.max(this.playLocksTurnsRemaining, Math.max(1, turnsRemaining));
   }
 
@@ -146,6 +152,7 @@ export class Player {
     this.cannotPlayStadiumCards = false;
     this.cannotPlayToolCards = false;
     this.cannotPlaySpecialEnergyCards = false;
+    this.cannotPlayPokemonWithAbilities = false;
     this.playLocksTurnsRemaining = 0;
   }
 

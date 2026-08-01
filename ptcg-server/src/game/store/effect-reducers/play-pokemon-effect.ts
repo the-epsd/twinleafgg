@@ -7,6 +7,7 @@ import { State } from '../state/state';
 import { StoreLike } from '../store-like';
 import { CheckPokemonPlayedTurnEffect, CheckSpecialConditionRemovalEffect } from '../effects/check-effects';
 import { EvolveEffect } from '../effects/game-effects';
+import { PowerType } from '../card/pokemon-types';
 
 /**
  * Helper function to emit animation events
@@ -34,6 +35,10 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
 
   /* Play pokemon card */
   if (effect instanceof PlayPokemonEffect) {
+    if (effect.player.cannotPlayPokemonWithAbilities
+      && effect.pokemonCard.powers.some(power => power.powerType === PowerType.ABILITY)) {
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    }
     const stage = effect.pokemonCard.stage;
     const sandboxAllBasic = Boolean(state.gameSettings?.sandboxMode && state.gameSettings?.sandboxAllPokemonBasic);
     const isBasic = stage === Stage.BASIC || sandboxAllBasic;

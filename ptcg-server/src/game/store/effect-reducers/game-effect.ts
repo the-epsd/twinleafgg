@@ -2,7 +2,7 @@ import { GameError } from '../../game-error';
 import { GameLog, GameMessage } from '../../game-message';
 import { BoardEffect, CardTag, CardType, SpecialCondition, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
-import { Power, Resistance, Weakness } from '../card/pokemon-types';
+import { Power, PowerType, Resistance, Weakness } from '../card/pokemon-types';
 import { ApplyWeaknessEffect, DealDamageEffect, DiscardCardsEffect } from '../effects/attack-effects';
 import { Player } from '../state/player';
 import {
@@ -155,6 +155,9 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   // Check if a specific attack was disabled by an opponent's effect
   if (attackingPokemon.blockedAttackNameNextTurn === attack.name) {
     throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+  }
+  if (attackingPokemon.blockedAttackNameUntilLeavesActive === attack.name) {
+    throw new GameError(GameMessage.CANNOT_USE_ATTACK);
   }
 
   // Smokescreen / Sand-Attack: flip coin(s); any tails cancels the attack
@@ -715,6 +718,10 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
   }
 
   if (effect instanceof EvolveEffect) {
+    if (effect.player.cannotPlayPokemonWithAbilities
+      && effect.pokemonCard.powers.some(power => power.powerType === PowerType.ABILITY)) {
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    }
     const pokemonCard = effect.target.getPokemonCard();
 
     if (pokemonCard === undefined) {
@@ -856,4 +863,3 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
 
   return state;
 }
-

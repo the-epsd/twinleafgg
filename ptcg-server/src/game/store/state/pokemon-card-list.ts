@@ -83,6 +83,12 @@ export class PokemonCardList extends CardList {
   public defendingPokemonExtraDamageAttackerId: number | undefined = undefined;
   public defendingPokemonExtraDamagePending: boolean = false;
   public defendingPokemonExtraDamageRearmAfterAttack: boolean = false;
+  public attackCostIncreaseNextTurn = 0;
+  public attackCostIncreaseNextTurnPending = 0;
+  public attackCostIncreaseNextTurnAttackerId: number | undefined;
+  public retreatCostIncreaseNextTurn = 0;
+  public retreatCostIncreaseNextTurnPending = 0;
+  public retreatCostIncreaseNextTurnAttackerId: number | undefined;
   public nextTurnAttackDamageBonus: NextTurnAttackDamageBonus | null = null;
   public nextTurnAttackDamageBonusPending: NextTurnAttackDamageBonus | null = null;
   public weaknessOverrideType: CardType | undefined = undefined;
@@ -149,6 +155,7 @@ export class PokemonCardList extends CardList {
   public pendingEnergyAttachDamageCounters: PendingEnergyAttachDamageCounters | null = null;
   public pendingEnergyReturnToHand: Card[] = [];
   public blockedAttackNameNextTurn: string | undefined = undefined;
+  public blockedAttackNameUntilLeavesActive: string | undefined = undefined;
   public _preservedConditionsDuringEvolution?: SpecialCondition[];
 
   public static readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
@@ -303,6 +310,7 @@ export class PokemonCardList extends CardList {
     this.pendingEnergyAttachDamageCounters = null;
     this.pendingEnergyReturnToHand = [];
     this.blockedAttackNameNextTurn = undefined;
+    this.blockedAttackNameUntilLeavesActive = undefined;
     this.damageReductionNextTurn = 0;
     this.damageReductionNextTurnFilter = null;
     this.preventDamageNextTurn = null;
@@ -313,6 +321,12 @@ export class PokemonCardList extends CardList {
     this.defendingPokemonExtraDamageAttackerId = undefined;
     this.defendingPokemonExtraDamagePending = false;
     this.defendingPokemonExtraDamageRearmAfterAttack = false;
+    this.attackCostIncreaseNextTurn = 0;
+    this.attackCostIncreaseNextTurnPending = 0;
+    this.attackCostIncreaseNextTurnAttackerId = undefined;
+    this.retreatCostIncreaseNextTurn = 0;
+    this.retreatCostIncreaseNextTurnPending = 0;
+    this.retreatCostIncreaseNextTurnAttackerId = undefined;
     this.nextTurnAttackDamageBonus = null;
     this.nextTurnAttackDamageBonusPending = null;
     this.weaknessOverrideType = undefined;
@@ -411,6 +425,7 @@ export class PokemonCardList extends CardList {
     this.pendingEnergyAttachDamageCounters = null;
     this.pendingEnergyReturnToHand = [];
     this.blockedAttackNameNextTurn = undefined;
+    this.blockedAttackNameUntilLeavesActive = undefined;
     // if (this.cards.length === 0) {
     //   this.damage = 0;
     // }
