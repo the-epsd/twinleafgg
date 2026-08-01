@@ -1,14 +1,8 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import {
-  StoreLike, State, StateUtils,
-  PlayerType,
-  GamePhase
-} from '../../../game';
+import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import { DEFENDING_POKEMON_DOES_LESS_DAMAGE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Pidgey extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -37,35 +31,12 @@ export class Pidgey extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '99';
 
-  public readonly DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_DEALS_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_DEALS_LESS_DAMAGE_MARKER';
-  public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_DEALS_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_DEALS_LESS_DAMAGE_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      opponent.active.marker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_DEALS_LESS_DAMAGE_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_DEALS_LESS_DAMAGE_MARKER, this);
-    }
-
-    if (effect instanceof PutDamageEffect && state.phase === GamePhase.ATTACK) {
-      if (effect.source.marker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_DEALS_LESS_DAMAGE_MARKER, this)) {
-        effect.damage -= 20;
-        return state;
-      }
-    }
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_DEALS_LESS_DAMAGE_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_DEALS_LESS_DAMAGE_MARKER, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_DEALS_LESS_DAMAGE_MARKER, this);
-      });
+      DEFENDING_POKEMON_DOES_LESS_DAMAGE(store, state, effect, this, 20);
     }
 
     return state;
   }
-
 }

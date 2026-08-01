@@ -105,6 +105,7 @@ export type PreventDamageOptions = PreventDamageFilter;
 export function shouldPreventAttackDamage(
   target: PokemonCardList,
   source: PokemonCardList,
+  damage?: number,
 ): boolean {
   const filter = target.preventDamageNextTurn;
   if (!filter) {
@@ -113,6 +114,10 @@ export function shouldPreventAttackDamage(
 
   const sourceCard = source.getPokemonCard();
   if (!sourceCard) {
+    return false;
+  }
+
+  if (filter.maxDamage !== undefined && (damage === undefined || damage > filter.maxDamage)) {
     return false;
   }
 
@@ -230,6 +235,9 @@ export class PreventDamageEffect extends EffectOfAttackEffect {
 
   applyEffect(): void {
     const filter: PreventDamageFilter = {};
+    if (this.options.maxDamage !== undefined) {
+      filter.maxDamage = this.options.maxDamage;
+    }
     if (this.options.sourceStage !== undefined) {
       filter.sourceStage = this.options.sourceStage;
     }

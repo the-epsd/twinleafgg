@@ -1,66 +1,42 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { GameError, GameMessage, PlayerType, State, StateUtils, StoreLike } from '../../../game';
+import { Stage, CardTag } from '../../../game/store/card/card-types';
+import { GameError, GameMessage, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-
-import { ApplyWeaknessEffect, AfterDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { ApplyWeaknessEffect, AfterDamageEffect } from '../../../game/store/effects/attack-effects';
+import { PREVENT_DAMAGE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class AlolanVulpixVSTAR extends PokemonCard {
-
   public stage = Stage.VSTAR;
-
   public evolvesFrom = 'Alolan Vulpix V';
-
-  public cardType = CardType.WATER;
-
+  public cardType = W;
   public hp = 240;
-
   public tags = [CardTag.POKEMON_VSTAR];
+  public weakness = [{ type: M }];
+  public retreat = [C];
 
-  public weakness = [{ type: CardType.METAL }];
-
-  public retreat = [CardType.COLORLESS];
-
-  public attacks = [
-    {
-      name: 'Snow Mirage',
-      cost: [CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
-      damage: 160,
-      shredAttack: true,
-      text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon. During your opponent\'s next turn, prevent all damage done to this Pokémon by attacks from Pokémon that have an Ability.'
-    },
-    {
-      name: 'Silvery Snow Star',
-      cost: [],
-      damage: 70,
-      text: 'This attack does 70 damage for each of your opponent\'s Pokémon V in play. This damage isn\'t affected by Weakness or Resistance. (You can\'t use more than 1 VSTAR Power in a game.)'
-    }
-  ];
-
-  public set = 'SIT';
+  public attacks = [{
+    name: 'Snow Mirage',
+    cost: [W, C, C],
+    damage: 160,
+    shredAttack: true,
+    text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon. During your opponent\'s next turn, prevent all damage done to this Pokémon by attacks from Pokémon that have an Ability.'
+  },
+  {
+    name: 'Silvery Snow Star',
+    cost: [],
+    damage: 70,
+    text: 'This attack does 70 damage for each of your opponent\'s Pokémon V in play. This damage isn\'t affected by Weakness or Resistance. (You can\'t use more than 1 VSTAR Power in a game.)'
+  }];
 
   public regulationMark = 'F';
-
+  public set = 'SIT';
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber = '34';
-
   public name = 'Alolan Vulpix VSTAR';
-
   public fullName = 'Alolan Vulpix VSTAR SIT';
 
-  public readonly PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER = 'PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER';
-  public readonly CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER = 'CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      player.marker.removeMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this);
-    }
-
+    // Snow Mirage
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -76,16 +52,11 @@ export class AlolanVulpixVSTAR extends PokemonCard {
         const afterDamage = new AfterDamageEffect(effect, damage);
         state = store.reduceEffect(state, afterDamage);
 
-        const oppActive = opponent.active.getPokemonCard();
-
-        if (oppActive && oppActive?.powers.length > 0) {
-
-          player.active.marker.addMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this);
-          opponent.marker.addMarker(this.CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this);
-        }
+        PREVENT_DAMAGE(store, state, effect, this, { sourceHasAbility: true });
       }
     }
 
+    // Silvery Snow Star
     if (WAS_ATTACK_USED(effect, 1, this)) {
 
       const player = effect.player;
@@ -112,26 +83,6 @@ export class AlolanVulpixVSTAR extends PokemonCard {
       effect.ignoreWeakness = true;
       effect.damage *= vPokes;
       player.usedVSTAR = true;
-
-    }
-
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
-      if (effect.target.marker.hasMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this)) {
-        const source = effect.source.getPokemonCard() as PokemonCard;
-        if (!IS_ABILITY_BLOCKED(store, state, effect.player, source)) {
-          effect.preventDefault = true;
-          return state;
-        }
-      }
-    }
-
-    if (effect instanceof EndTurnEffect
-      && effect.player.active.marker.hasMarker(this.CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this)) {
-      effect.player.active.marker.removeMarker(this.CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        cardList.marker.removeMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this);
-      });
     }
 
     return state;

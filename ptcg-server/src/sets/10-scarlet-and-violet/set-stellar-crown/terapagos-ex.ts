@@ -1,120 +1,68 @@
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import {
-  StoreLike,
-  State,
-  StateUtils,
-  GameError,
-  GameMessage,
-} from '../../../game';
-import { Effect } from '../../../game/store/effects/effect';
-
-import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { CardTag, CardType, GameError, GameMessage, PokemonCard, Stage, State, StoreLike } from "../../../game";
+import { Effect } from "../../../game/store/effects/effect";
+import { WAS_ATTACK_USED, PREVENT_DAMAGE, TERA_RULE } from "../../../game/store/prefabs/prefabs";
 
 export class Terapagosex extends PokemonCard {
-  public regulationMark = 'H';
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public stage: Stage = Stage.BASIC;
+  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public cardType: CardType = C;
   public hp: number = 230;
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Unified Beatdown',
-      cost: [C, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: "If you go second, you can't use this attack during your first turn. This attack does 30 damage for each of your Benched Pokémon.",
-    },
-    {
-      name: 'Crown Opal',
-      cost: [G, W, L],
-      damage: 180,
-      text: "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Basic non-[C] Pokémon.",
-    },
-  ];
+  public attacks = [{
+    name: 'Unified Beatdown',
+    cost: [C, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: "If you go second, you can't use this attack during your first turn. This attack does 30 damage for each of your Benched Pokémon.",
+  },
+  {
+    name: 'Crown Opal',
+    cost: [G, W, L],
+    damage: 180,
+    text: "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Basic non-[C] Pokémon.",
+  }];
 
+  public regulationMark = 'H';
   public set: string = 'SCR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '128';
   public name: string = 'Terapagos ex';
   public fullName: string = 'Terapagos ex SCR';
 
-  public readonly PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER =
-    'PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
-  public readonly CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER =
-    'CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Unified Beatdown
     if (WAS_ATTACK_USED(effect, 0, this)) {
+      const player = effect.player;
+      const playerBench = player.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
+
       if (state.turn <= 2) {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);
       }
-
-      const player = effect.player;
-
-      const playerBench = player.bench.reduce(
-        (left, b) => left + (b.cards.length ? 1 : 0),
-        0,
-      );
-
-      const totalBenched = playerBench;
-
-      effect.damage = totalBenched * 30;
+      effect.damage = playerBench * 30;
     }
-
+    // Crown Opal
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      player.active.marker.addMarker(
-        this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER,
-        this,
-      );
-      opponent.marker.addMarker(
-        this.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER,
-        this,
-      );
+      PREVENT_DAMAGE(store, state, effect, this, {
+        sourceStage: Stage.BASIC,
+        sourceCardTypes: [
+          CardType.GRASS,
+          CardType.FIRE,
+          CardType.WATER,
+          CardType.LIGHTNING,
+          CardType.PSYCHIC,
+          CardType.FIGHTING,
+          CardType.DARK,
+          CardType.METAL,
+          CardType.FAIRY,
+          CardType.DRAGON,
+        ],
+      });
     }
 
-    if (
-      effect instanceof PutDamageEffect &&
-      effect.target.marker.hasMarker(
-        this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER,
-      )
-    ) {
-      const sourceCard = effect.source.getPokemonCard();
-      if (
-        sourceCard &&
-        sourceCard.stage === Stage.BASIC &&
-        sourceCard.cardType !== CardType.COLORLESS
-      ) {
-        effect.preventDefault = true;
-        return state;
-      }
-      return state;
-    }
+    TERA_RULE(effect, state, this);
 
-    if (
-      effect instanceof PutDamageEffect &&
-      effect.target.cards.includes(this) &&
-      effect.target.getPokemonCard() === this
-    ) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // Target is not Active
-      if (
-        effect.target === player.active ||
-        effect.target === opponent.active
-      ) {
-        return state;
-      }
-
-      effect.preventDefault = true;
-    }
     return state;
   }
 }

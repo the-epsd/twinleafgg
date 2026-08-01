@@ -10,6 +10,8 @@ import { StateUtils } from '../state-utils';
 
 /** Filters for {@link PokemonCardList.preventDamageNextTurn} attack damage prevention. */
 export interface PreventDamageFilter {
+  /** Only prevent damage at or below this amount after Weakness/Resistance. */
+  maxDamage?: number;
   sourceStage?: Stage;
   /** When true, only Evolution Pokémon (stage !== BASIC) match. */
   sourceIsEvolution?: boolean;

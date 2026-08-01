@@ -115,10 +115,6 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
       throw new GameError(GameMessage.ILLEGAL_ACTION);
     }
 
-    if (state.phase === GamePhase.ATTACK && shouldPreventAttackDamage(target, effect.source)) {
-      return state;
-    }
-
     // Defending Pokémon's attacks do N less (before W/R). Only for direct PutDamage
     // paths — DealDamageEffect already applied this before weakness.
     if (!effect.weaknessApplied && effect.source.attackDamageReductionNextTurn > 0) {
@@ -139,6 +135,10 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
 
       const targetOwner = StateUtils.findOwner(state, target);
       targetOwner.marker.addMarkerToState(targetOwner.DAMAGE_DEALT_MARKER);
+    }
+
+    if (state.phase === GamePhase.ATTACK && shouldPreventAttackDamage(target, effect.source, effect.damage)) {
+      return state;
     }
 
     // Apply damage reduction (or increase via negative values) for "during opponent's next turn" effects
