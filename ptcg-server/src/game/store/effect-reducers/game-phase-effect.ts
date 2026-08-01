@@ -283,6 +283,12 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
       });
     });
 
+    // Replace the previous bonus with one armed during this turn, or clear it.
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+      cardList.nextTurnAttackDamageBonus = cardList.nextTurnAttackDamageBonusPending;
+      cardList.nextTurnAttackDamageBonusPending = null;
+    });
+
     // Clear active defending Pokemon extra damage at end of the attacking player's turn
     [player, opponent].forEach(p => {
       p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {

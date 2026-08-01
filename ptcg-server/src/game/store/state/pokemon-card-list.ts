@@ -20,6 +20,12 @@ export interface PreventDamageFilter {
   sourceHasAbility?: boolean;
 }
 
+export interface NextTurnAttackDamageBonus {
+  attackName: string;
+  bonusDamage: number;
+  sourceCardName: string;
+}
+
 /** Survive-at-10 during opponent's next turn (Endure / Bide / Gritty Claws). */
 export interface SurviveOnTenHpOptions {
   requireFullHp?: boolean;
@@ -77,6 +83,8 @@ export class PokemonCardList extends CardList {
   public defendingPokemonExtraDamageAttackerId: number | undefined = undefined;
   public defendingPokemonExtraDamagePending: boolean = false;
   public defendingPokemonExtraDamageRearmAfterAttack: boolean = false;
+  public nextTurnAttackDamageBonus: NextTurnAttackDamageBonus | null = null;
+  public nextTurnAttackDamageBonusPending: NextTurnAttackDamageBonus | null = null;
   public weaknessOverrideType: CardType | undefined = undefined;
   public weaknessOverrideAttackerId: number | undefined = undefined;
   public weaknessOverrideClearArmed: boolean = false;
@@ -305,6 +313,8 @@ export class PokemonCardList extends CardList {
     this.defendingPokemonExtraDamageAttackerId = undefined;
     this.defendingPokemonExtraDamagePending = false;
     this.defendingPokemonExtraDamageRearmAfterAttack = false;
+    this.nextTurnAttackDamageBonus = null;
+    this.nextTurnAttackDamageBonusPending = null;
     this.weaknessOverrideType = undefined;
     this.weaknessOverrideAttackerId = undefined;
     this.weaknessOverrideClearArmed = false;
