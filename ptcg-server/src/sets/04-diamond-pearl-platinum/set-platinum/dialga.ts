@@ -20,22 +20,18 @@ export class Dialga extends PokemonCard {
     text: 'Once during your turn, when you put Dialga from your hand onto your Bench, you may search your discard pile for up to 3 in any combination of Pokémon (excluding Pokémon LV.X) and basic Energy cards. Show them to your opponent and put them on top of your deck in any order.'
   }];
 
-  public attacks = [
-    {
-      name: 'Time-Space Traveling',
-      cost: [M, C, C],
-      damage: 50,
-      text: 'Draw cards until you have 7 cards in your hand.'
-    }
-  ];
+  public attacks = [{
+    name: 'Time-Space Traveling',
+    cost: [M, C, C],
+    damage: 50,
+    text: 'Draw cards until you have 7 cards in your hand.'
+  }];
 
   public set: string = 'PL';
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dialga';
   public fullName: string = 'Dialga PL';
-
-  public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

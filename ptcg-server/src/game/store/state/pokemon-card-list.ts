@@ -26,6 +26,13 @@ export interface NextTurnAttackDamageBonus {
   sourceCardName: string;
 }
 
+export interface NextTurnAttackBaseDamage {
+  setupAttackName: string;
+  attackName: string;
+  baseDamage: number;
+  sourceCardName: string;
+}
+
 /** Survive-at-10 during opponent's next turn (Endure / Bide / Gritty Claws). */
 export interface SurviveOnTenHpOptions {
   requireFullHp?: boolean;
@@ -91,6 +98,8 @@ export class PokemonCardList extends CardList {
   public retreatCostIncreaseNextTurnAttackerId: number | undefined;
   public nextTurnAttackDamageBonus: NextTurnAttackDamageBonus | null = null;
   public nextTurnAttackDamageBonusPending: NextTurnAttackDamageBonus | null = null;
+  public nextTurnAttackBaseDamage: NextTurnAttackBaseDamage | null = null;
+  public nextTurnAttackBaseDamagePending: NextTurnAttackBaseDamage | null = null;
   public weaknessOverrideType: CardType | undefined = undefined;
   public weaknessOverrideAttackerId: number | undefined = undefined;
   public weaknessOverrideClearArmed: boolean = false;
@@ -158,54 +167,8 @@ export class PokemonCardList extends CardList {
   public blockedAttackNameUntilLeavesActive: string | undefined = undefined;
   public _preservedConditionsDuringEvolution?: SpecialCondition[];
 
-  public static readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public static readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
   public static readonly CLEAR_KNOCKOUT_MARKER = 'CLEAR_KNOCKOUT_MARKER';
-  public static readonly CLEAR_KNOCKOUT_MARKER_2 = 'CLEAR_KNOCKOUT_MARKER_2';
   public static readonly KNOCKOUT_MARKER = 'KNOCKOUT_MARKER';
-  public static readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'NEXT_TURN_MORE_DAMAGE_MARKER';
-  public static readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';
-  public static readonly PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN =
-    'PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN';
-  public static readonly CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN =
-    'CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN';
-  public static readonly PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN =
-    'PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN';
-  public static readonly CLEAR_PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN =
-    'CLEAR_PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN';
-  public static readonly OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER =
-    'OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER';
-  public static readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER =
-    'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
-  public static readonly PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER =
-    'PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
-  public static readonly CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER =
-    'CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
-  public static readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER =
-    'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
-  public static readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER =
-    'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
-  public static readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER =
-    'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
-  public static readonly DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER =
-    'DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER';
-  public static readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER =
-    'CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER';
-  public static readonly PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER: string =
-    'PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER';
-  public static readonly CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER: string =
-    'CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER';
-  public static readonly PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER =
-    'PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER';
-  public static readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER =
-    'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
-  public static readonly PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER =
-    'PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER';
-  public static readonly CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER =
-    'CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER';
-
-  public static readonly UNRELENTING_ONSLAUGHT_MARKER = 'UNRELENTING_ONSLAUGHT_MARKER';
-  public static readonly UNRELENTING_ONSLAUGHT_2_MARKER = 'UNRELENTING_ONSLAUGHT_2_MARKER';
 
   public getPokemons(): PokemonCard[] {
     const result: PokemonCard[] = [];
@@ -329,6 +292,8 @@ export class PokemonCardList extends CardList {
     this.retreatCostIncreaseNextTurnAttackerId = undefined;
     this.nextTurnAttackDamageBonus = null;
     this.nextTurnAttackDamageBonusPending = null;
+    this.nextTurnAttackBaseDamage = null;
+    this.nextTurnAttackBaseDamagePending = null;
     this.weaknessOverrideType = undefined;
     this.weaknessOverrideAttackerId = undefined;
     this.weaknessOverrideClearArmed = false;

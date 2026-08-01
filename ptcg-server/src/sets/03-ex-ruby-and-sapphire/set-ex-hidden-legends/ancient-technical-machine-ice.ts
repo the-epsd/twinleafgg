@@ -1,18 +1,11 @@
-import { Attack, CardTarget, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, StateUtils } from '../../../game';
-import { CardTag, CardType, TrainerType } from '../../../game/store/card/card-types';
-import { ColorlessCostReducer } from '../../../game/store/card/pokemon-interface';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { CheckAttackCostEffect, CheckPokemonAttacksEffect, CheckTableStateEffect } from '../../../game/store/effects/check-effects';
-import { Effect } from '../../../game/store/effects/effect';
-
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
-import { AttackEffect } from '../../../game/store/effects/game-effects';
-import { CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN, MOVE_CARDS, PREVENT_DAMAGE } from '../../../game/store/prefabs/prefabs';
-import { MarkerConstants } from '../../../game/store/markers/marker-constants';
-import { AbstractAttackEffect } from '../../../game/store/effects/attack-effects';
+import { Attack, CardTag, CardTarget, CardType, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike, TrainerCard, TrainerType } from "../../../game";
+import { ColorlessCostReducer } from "../../../game/store/card/pokemon-interface";
+import { CheckTableStateEffect, CheckAttackCostEffect, CheckPokemonAttacksEffect } from "../../../game/store/effects/check-effects";
+import { Effect } from "../../../game/store/effects/effect";
+import { AttackEffect } from "../../../game/store/effects/game-effects";
+import { EndTurnEffect } from "../../../game/store/effects/game-phase-effects";
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS, MOVE_CARDS } from "../../../game/store/prefabs/prefabs";
+import { WAS_TRAINER_USED } from "../../../game/store/prefabs/trainer-prefabs";
 
 export class AncientTechnicalMachineIce extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -30,11 +23,9 @@ export class AncientTechnicalMachineIce extends TrainerCard {
     text: 'Discard all of your opponent\'s Trainer cards in play. If you do, prevent all effects, including damage, done to the Pokémon using this attack during your opponent\'s next turn.'
   }];
 
-  public text: string =
-    'Attach this card to 1 of your Evolved Pokémon (excluding Pokémon-ex and Pokémon that has an owner in its name) in play. That Pokémon may use this card\'s attack instead of its own. At the end of your turn, discard Ancient Technical Machine [Ice].';
+  public text: string = 'Attach this card to 1 of your Evolved Pokémon (excluding Pokémon-ex and Pokémon that has an owner in its name) in play. That Pokémon may use this card\'s attack instead of its own. At the end of your turn, discard Ancient Technical Machine [Ice].';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
@@ -115,6 +106,7 @@ export class AncientTechnicalMachineIce extends TrainerCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       PREVENT_DAMAGE(store, state, effect, this);
+      PREVENT_EFFECTS_OF_ATTACKS(store, state, effect, this);
 
       // Discard stadium if it is opponent's
       if (opponent.stadium.cards.length > 0) {
@@ -149,22 +141,10 @@ export class AncientTechnicalMachineIce extends TrainerCard {
           if (pokemonsInStack.some(pokemon => (pokemon as unknown as TrainerCard) === card)) {
             continue;
           }
-
           MOVE_CARDS(store, state, cardList, opponent.discard, { cards: [card] });
         }
       });
     }
-
-    if (effect instanceof AbstractAttackEffect) {
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      const sourceCard = effect.source.getPokemonCard();
-
-      if (sourceCard && opponent.active.marker.hasMarker(MarkerConstants.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this)) {
-        effect.preventDefault = true;
-      }
-    }
-
-    CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(state, effect, MarkerConstants.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, MarkerConstants.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
 
     return state;
   }

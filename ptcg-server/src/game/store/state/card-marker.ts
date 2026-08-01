@@ -1,5 +1,5 @@
 import { Card } from '../card/card';
-import { KNOWN_ATTACK_EFFECT_MARKERS, KNOWN_POKEMON_SCOPED_PLAYER_MARKERS } from '../prefabs/clear-effect-markers';
+import { KNOWN_POKEMON_SCOPED_PLAYER_MARKERS } from '../prefabs/clear-effect-markers';
 
 /** What kind of game mechanic created this marker. */
 export type MarkerSourceType = 'attack' | 'ability' | 'trainer' | 'energy' | 'stadium';
@@ -52,15 +52,10 @@ export class Marker {
     this.markers.push({ name });
   }
 
-  /**
-   * Remove all markers that were created by attacks.
-   * Uses both the `sourceType` metadata (for migrated markers) and
-   * the `KNOWN_ATTACK_EFFECT_MARKERS` whitelist (for unmigrated markers).
-   */
+  /** Remove all markers that were created by attacks. */
   removeAttackEffects(): void {
     this.markers = this.markers.filter(m => {
       if (m.sourceType === 'attack') return false;
-      if (KNOWN_ATTACK_EFFECT_MARKERS.has(m.name)) return false;
       return true;
     });
   }

@@ -92,7 +92,7 @@ import {
 } from '../effects/game-effects';
 import { AfterAttackEffect, BeforeDoingDamageEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
-import { preventRetreatEffect, selfPreventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, coinFlipCancelAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect, defendingPokemonWeaknessIsNowEffect, reduceDamageEffect, playLockEffect, PlayLockOptions, PreventDamageOptions, shouldPreventAttackEffects, knockOutIfDamagedDuringAttackerNextTurnEffect, KnockOutIfDamagedOptions, surviveOnTenHpDuringOpponentsNextTurnEffect, retaliateOnDamageDuringOpponentsNextTurnEffect, extraPrizesIfKnockedOutDuringAttackerNextTurnEffect, denyPrizesIfKnockedOutDuringOpponentsNextTurnEffect, discardAttackerEnergyIfKnockedOutDuringOpponentsNextTurnEffect, nextTurnAttackDamageBonusEffect, increaseDefendingPokemonAttackCostNextTurnEffect, increaseDefendingPokemonRetreatCostNextTurnEffect, preventAttackUntilLeavesActiveEffect } from '../effects/effect-of-attack-effects';
+import { preventRetreatEffect, selfPreventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, coinFlipCancelAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect, defendingPokemonWeaknessIsNowEffect, reduceDamageEffect, playLockEffect, PlayLockOptions, PreventDamageOptions, shouldPreventAttackEffects, knockOutIfDamagedDuringAttackerNextTurnEffect, KnockOutIfDamagedOptions, surviveOnTenHpDuringOpponentsNextTurnEffect, retaliateOnDamageDuringOpponentsNextTurnEffect, extraPrizesIfKnockedOutDuringAttackerNextTurnEffect, denyPrizesIfKnockedOutDuringOpponentsNextTurnEffect, discardAttackerEnergyIfKnockedOutDuringOpponentsNextTurnEffect, nextTurnAttackDamageBonusEffect, nextTurnAttackBaseDamageEffect, increaseDefendingPokemonAttackCostNextTurnEffect, increaseDefendingPokemonRetreatCostNextTurnEffect, preventAttackUntilLeavesActiveEffect } from '../effects/effect-of-attack-effects';
 import { SurviveOnTenHpOptions, RetaliateOnDamageOptions } from '../state/pokemon-card-list';
 import { GameStatsTracker } from '../game-stats-tracker';
 
@@ -375,6 +375,24 @@ export function NEXT_TURN_ATTACK_BASE_DAMAGE(
       ADD_MARKER(clearMarker, effect.player, source);
     }
   }
+}
+
+export function NEXT_TURN_ATTACK_BASE_DAMAGE_EFFECT(
+  effect: Effect,
+  options: {
+    setupAttack: Attack;
+    boostedAttack: Attack;
+    source: Card;
+    baseDamage: number;
+  },
+): void {
+  nextTurnAttackBaseDamageEffect(
+    effect,
+    options.setupAttack.name,
+    options.boostedAttack.name,
+    options.baseDamage,
+    options.source instanceof PokemonCard ? options.source.fullName : undefined,
+  );
 }
 
 export interface CopyBenchAttackOptions {
@@ -3765,11 +3783,6 @@ export function CAN_PLAY_TRAINER_CARD(
 
     // Check for Item/Tool blocking effects directly (no cloning needed)
     if (trainerCard.trainerType === TrainerType.ITEM) {
-      // Check for marker-based blocks (legacy cards not yet migrated)
-      if (player.marker.hasMarker('OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER')) {
-        return false;
-      }
-
       // Check for ability-based blocks (Jellicent ex, etc.)
       const opponent = StateUtils.getOpponent(state, player);
       const opponentActive = opponent.active.getPokemonCard();
@@ -3780,8 +3793,7 @@ export function CAN_PLAY_TRAINER_CARD(
         }
       }
 
-      if (player.cannotPlayItemCards
-        || player.marker.hasMarker(player.ATTACK_EFFECT_ITEM_LOCK)) {
+      if (player.cannotPlayItemCards) {
         return false;
       }
     }
@@ -3797,22 +3809,19 @@ export function CAN_PLAY_TRAINER_CARD(
         }
       }
 
-      if (player.cannotPlayToolCards
-        || player.marker.hasMarker(player.ATTACK_EFFECT_TOOL_LOCK)) {
+      if (player.cannotPlayToolCards) {
         return false;
       }
     }
 
     if (trainerCard.trainerType === TrainerType.SUPPORTER) {
-      if (player.cannotPlaySupporterCards
-        || player.marker.hasMarker(player.ATTACK_EFFECT_SUPPORTER_LOCK)) {
+      if (player.cannotPlaySupporterCards) {
         return false;
       }
     }
 
     if (trainerCard.trainerType === TrainerType.STADIUM) {
-      if (player.cannotPlayStadiumCards
-        || player.marker.hasMarker(player.ATTACK_EFFECT_STADIUM_LOCK)) {
+      if (player.cannotPlayStadiumCards) {
         return false;
       }
     }

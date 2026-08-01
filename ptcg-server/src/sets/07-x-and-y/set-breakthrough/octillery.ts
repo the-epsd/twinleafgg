@@ -1,28 +1,22 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, BoardEffect } from '../../../game/store/card/card-types';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { PowerType } from '../../../game/store/card/pokemon-types';
-import { GameError, GameMessage, PlayerType } from '../../../game';
+import { GameError, GameMessage } from '../../../game';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED, BLOCK_RETREAT, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, BLOCK_RETREAT, WAS_POWER_USED, ABILITY_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Octillery extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Remoraid';
-
-  public cardType: CardType = CardType.WATER;
-
+  public cardType: CardType = W;
   public hp: number = 90;
-
-  public weakness = [{ type: CardType.GRASS }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: G }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Abyssal Hand',
@@ -33,24 +27,18 @@ export class Octillery extends PokemonCard {
 
   public attacks = [{
     name: 'Hug',
-    cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
+    cost: [W, W, C],
     damage: 40,
     text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
   }];
 
   public set: string = 'BKT';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '33';
-
   public name: string = 'Octillery';
-
   public fullName: string = 'Octillery BKT';
 
   public readonly ABYSSAL_HAND_MARKER = 'ABYSSAL_HAND_MARKER';
-
-  public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -84,20 +72,14 @@ export class Octillery extends PokemonCard {
         }
         player.deck.moveTo(player.hand, 1);
       }
-
       player.marker.addMarker(this.ABYSSAL_HAND_MARKER, this);
-
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-        if (cardList.getPokemonCard() === this) {
-          cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-        }
-      });
-
+      ABILITY_USED(player, this);
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       return BLOCK_RETREAT(store, state, effect, this);
     }
+
     return state;
   }
 }

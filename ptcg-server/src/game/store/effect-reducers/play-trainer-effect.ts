@@ -62,8 +62,7 @@ export function playTrainerReducer(store: StoreLike, state: State, effect: Effec
   if (effect instanceof PlaySupporterEffect) {
     const player = effect.player;
 
-    if (player.cannotPlaySupporterCards
-      || player.marker.hasMarker(player.ATTACK_EFFECT_SUPPORTER_LOCK)) {
+    if (player.cannotPlaySupporterCards) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
@@ -93,8 +92,7 @@ export function playTrainerReducer(store: StoreLike, state: State, effect: Effec
     const opponent = StateUtils.getOpponent(state, player);
     const stadiumCard = StateUtils.getStadiumCard(state);
 
-    if (player.cannotPlayStadiumCards
-      || player.marker.hasMarker(player.ATTACK_EFFECT_STADIUM_LOCK)) {
+    if (player.cannotPlayStadiumCards) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
@@ -143,8 +141,7 @@ export function playTrainerReducer(store: StoreLike, state: State, effect: Effec
     if (effect.target.tools.length >= pokemonCard.maxTools) {
       throw new GameError(GameMessage.POKEMON_TOOL_ALREADY_ATTACHED);
     }
-    if (player.cannotPlayToolCards
-      || player.marker.hasMarker(effect.player.ATTACK_EFFECT_TOOL_LOCK)) {
+    if (player.cannotPlayToolCards) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
@@ -170,9 +167,7 @@ export function playTrainerReducer(store: StoreLike, state: State, effect: Effec
   // Play item card
   if (effect instanceof PlayItemEffect) {
     const player = effect.player;
-    if (player.cannotPlayItemCards
-      || player.marker.hasMarker(player.ATTACK_EFFECT_ITEM_LOCK)
-      || player.marker.hasMarker('OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER')) {
+    if (player.cannotPlayItemCards) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 

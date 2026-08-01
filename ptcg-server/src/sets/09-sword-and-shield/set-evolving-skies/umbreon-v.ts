@@ -17,15 +17,13 @@ export class UmbreonV extends PokemonCard {
     name: 'Mean Look',
     cost: [D],
     damage: 30,
-    text: 'During your opponent\'s next turn, the Defending Pokémon ' +
-      'can\'t retreat.'
+    text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
   },
   {
     name: 'Moonlight Blade',
     cost: [D, C, C],
     damage: 80,
-    text: 'If this Pokémon has any damage counters on it, this attack ' +
-      'does 80 more damage.'
+    text: 'If this Pokémon has any damage counters on it, this attack does 80 more damage.'
   }];
 
   public regulationMark = 'E';
@@ -36,12 +34,12 @@ export class UmbreonV extends PokemonCard {
   public fullName: string = 'Umbreon V EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Mean Look
     if (WAS_ATTACK_USED(effect, 0, this)) {
       return BLOCK_RETREAT(store, state, effect, this);
     }
+    // Moonlight Blade
     if (WAS_ATTACK_USED(effect, 1, this)) {
-
       const player = effect.player;
       const source = player.active;
 
@@ -50,10 +48,9 @@ export class UmbreonV extends PokemonCard {
       if (damage > 0) {
         effect.damage += 80;
       }
-
       return state;
-
     }
+
     return state;
   }
 }

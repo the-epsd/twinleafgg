@@ -318,6 +318,8 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
     player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
       cardList.nextTurnAttackDamageBonus = cardList.nextTurnAttackDamageBonusPending;
       cardList.nextTurnAttackDamageBonusPending = null;
+      cardList.nextTurnAttackBaseDamage = cardList.nextTurnAttackBaseDamagePending;
+      cardList.nextTurnAttackBaseDamagePending = null;
     });
 
     // Clear active defending Pokemon extra damage at end of the attacking player's turn
