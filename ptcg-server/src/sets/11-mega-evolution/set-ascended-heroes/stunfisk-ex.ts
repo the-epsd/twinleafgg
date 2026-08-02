@@ -2,7 +2,7 @@ import { PokemonCard, Stage, CardTag, CardType, StoreLike, State } from "../../.
 import { Effect } from "../../../game/store/effects/effect";
 import { WAS_ATTACK_USED, BLOCK_RETREAT } from "../../../game/store/prefabs/prefabs";
 
-export class StunfiskEx extends PokemonCard {
+export class Stunfiskex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public tags = [CardTag.POKEMON_ex];
   public hp: number = 210;

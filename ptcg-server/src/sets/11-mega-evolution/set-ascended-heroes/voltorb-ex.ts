@@ -5,7 +5,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_MORE_DAMAGE_PER_HEADS } from '../../../game/store/prefabs/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
-export class VoltorbEx extends PokemonCard {
+export class Voltorbex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public tags = [CardTag.POKEMON_ex];
   public hp: number = 170;
