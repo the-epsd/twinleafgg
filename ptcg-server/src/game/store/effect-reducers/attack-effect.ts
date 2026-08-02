@@ -97,6 +97,10 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
       effect.damage = Math.max(0, effect.damage - effect.source.attackDamageReductionNextTurn);
     }
 
+    if (!effect.weaknessApplied && effect.target.damageReductionBeforeWeaknessNextTurn > 0) {
+      effect.damage = Math.max(0, effect.damage - effect.target.damageReductionBeforeWeaknessNextTurn);
+    }
+
     const opponent = StateUtils.getOpponent(state, effect.player);
 
     if (effect.attackEffect && target === opponent.active && !effect.weaknessApplied) {
@@ -120,6 +124,10 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
     // Apply damage reduction (or increase via negative values) for "during opponent's next turn" effects
     if (shouldApplyDamageReduction(target, effect.source)) {
       effect.damage = Math.max(0, effect.damage - target.damageReductionNextTurn);
+    }
+
+    if (effect.source.attackDamageReductionAfterWeaknessNextTurn > 0) {
+      effect.damage = Math.max(0, effect.damage - effect.source.attackDamageReductionAfterWeaknessNextTurn);
     }
 
     // Apply extra damage for "during your next turn, the Defending Pokemon takes more damage" effects
@@ -174,6 +182,10 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
     // Defending Pokémon's attacks do N less — before Weakness and Resistance
     if (effect.source.attackDamageReductionNextTurn > 0) {
       effect.damage = Math.max(0, effect.damage - effect.source.attackDamageReductionNextTurn);
+    }
+
+    if (effect.target.damageReductionBeforeWeaknessNextTurn > 0) {
+      effect.damage = Math.max(0, effect.damage - effect.target.damageReductionBeforeWeaknessNextTurn);
     }
 
     const applyWeakness = new ApplyWeaknessEffect(base, effect.damage);

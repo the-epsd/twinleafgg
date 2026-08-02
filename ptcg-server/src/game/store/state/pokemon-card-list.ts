@@ -82,6 +82,7 @@ export class PokemonCardList extends CardList {
   public damageReductionNextTurn: number = 0;
   /** Optional source filter for {@link damageReductionNextTurn} (e.g. Evolution-only). */
   public damageReductionNextTurnFilter: PreventDamageFilter | null = null;
+  public damageReductionBeforeWeaknessNextTurn: number = 0;
   public preventDamageNextTurn: PreventDamageFilter | null = null;
   public preventDamageNextTurnPending: PreventDamageFilter | null = null;
   public preventEffectsOfAttacksNextTurn: PreventDamageFilter | null = null;
@@ -163,6 +164,12 @@ export class PokemonCardList extends CardList {
    * Set on the Defending Pokémon for the opponent's next turn.
    */
   public attackDamageReductionNextTurn: number = 0;
+  /**
+   * Snarl style: this Pokémon's attacks do this many less damage
+   * after Weakness and Resistance. `0` = inactive.
+   * Set on the Defending Pokémon for the opponent's next turn.
+   */
+  public attackDamageReductionAfterWeaknessNextTurn: number = 0;
   public cannotRetreatNextTurn: boolean = false;
   public cannotRetreatNextTurnPending: boolean = false;
   public pendingEnergyAttachDamageCounters: PendingEnergyAttachDamageCounters | null = null;
@@ -272,6 +279,7 @@ export class PokemonCardList extends CardList {
     this.cannotUseAttacksNextTurnPending = [];
     this.coinFlipCancelAttackNextTurn = 0;
     this.attackDamageReductionNextTurn = 0;
+    this.attackDamageReductionAfterWeaknessNextTurn = 0;
     this.cannotRetreatNextTurn = false;
     this.cannotRetreatNextTurnPending = false;
     this.pendingEnergyAttachDamageCounters = null;
@@ -280,6 +288,7 @@ export class PokemonCardList extends CardList {
     this.blockedAttackNameUntilLeavesActive = undefined;
     this.damageReductionNextTurn = 0;
     this.damageReductionNextTurnFilter = null;
+    this.damageReductionBeforeWeaknessNextTurn = 0;
     this.preventDamageNextTurn = null;
     this.preventDamageNextTurnPending = null;
     this.preventEffectsOfAttacksNextTurn = null;
@@ -356,6 +365,8 @@ export class PokemonCardList extends CardList {
     this.confusionDamage = 30;
     this.damageReductionNextTurn = 0;
     this.damageReductionNextTurnFilter = null;
+    this.damageReductionBeforeWeaknessNextTurn = 0;
+    this.attackDamageReductionAfterWeaknessNextTurn = 0;
     this.preventDamageNextTurn = null;
     this.preventDamageNextTurnPending = null;
     this.preventEffectsOfAttacksNextTurn = null;

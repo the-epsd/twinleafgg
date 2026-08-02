@@ -365,6 +365,23 @@ export class ReduceDamageEffect extends EffectOfAttackEffect {
   }
 }
 
+/**
+ * During the opponent's next turn, the Defending Pokémon's attacks do
+ * `reduction` less damage after Weakness and Resistance.
+ * Effect lives on the Defending Pokémon — switching/benching clears it.
+ */
+export class ReduceDamageAfterWeaknessEffect extends EffectOfAttackEffect {
+  readonly type: string = 'REDUCE_DAMAGE_AFTER_WEAKNESS_EFFECT';
+
+  constructor(base: AttackEffect, public reduction: number) {
+    super(base);
+  }
+
+  applyEffect(): void {
+    this.opponent.active.attackDamageReductionAfterWeaknessNextTurn = Math.max(0, this.reduction);
+  }
+}
+
 export class NextTurnAttackDamageBonusEffect extends EffectOfAttackEffect {
   constructor(
     base: AttackEffect,
@@ -547,6 +564,16 @@ export function reduceDamageEffect(
   reduction: number,
 ): ReduceDamageEffect {
   const effect = new ReduceDamageEffect(attackEffect, reduction);
+  effect.markerSource = source;
+  return effect;
+}
+
+export function reduceDamageAfterWeaknessEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  reduction: number,
+): ReduceDamageAfterWeaknessEffect {
+  const effect = new ReduceDamageAfterWeaknessEffect(attackEffect, reduction);
   effect.markerSource = source;
   return effect;
 }

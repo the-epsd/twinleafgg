@@ -1,27 +1,7 @@
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, CardTag } from '../../../game/store/card/card-types';
-import {
-  StoreLike, State, StateUtils, GameMessage,
-  PowerType,
-  PokemonCardList,
-  GameError,
-  ChooseCardsPrompt,
-  GameLog,
-  GamePhase
-} from '../../../game';
-import { Effect } from '../../../game/store/effects/effect';
-import {
-  ABILITY_USED,
-  ADD_MARKER,
-  HAS_MARKER,
-  IS_POKEPOWER_BLOCKED,
-  REMOVE_MARKER,
-  SHUFFLE_DECK,
-  WAS_ATTACK_USED,
-  WAS_POWER_USED
-} from '../../../game/store/prefabs/prefabs';
-import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
+import { PokemonCard, Stage, CardTag, CardType, PowerType, StoreLike, State, StateUtils, PokemonCardList, GameError, GameMessage, ChooseCardsPrompt, SuperType, GameLog } from "../../../game";
+import { Effect } from "../../../game/store/effects/effect";
+import { EndTurnEffect } from "../../../game/store/effects/game-phase-effects";
+import { HAS_MARKER, REMOVE_MARKER, WAS_POWER_USED, IS_POKEPOWER_BLOCKED, SHUFFLE_DECK, ADD_MARKER, ABILITY_USED, WAS_ATTACK_USED, THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN_BEFORE_WEAKNESS_AND_RESISTANCE } from "../../../game/store/prefabs/prefabs";
 
 export class Deoxys extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -52,17 +32,14 @@ export class Deoxys extends PokemonCard {
   public fullName: string = 'Deoxys HP';
 
   public readonly FORME_CHANGE_MARKER = 'FORME_CHANGE_MARKER';
-  public readonly DELTA_REDUCTION_MARKER = 'DELTA_REDUCTION_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    // Shared across all Form Change Poké-Powers; clear by name so a Form Change
-    // swap (new card instance) still cleans up the marker.
+    // Form Change
     if (effect instanceof EndTurnEffect && HAS_MARKER(this.FORME_CHANGE_MARKER, effect.player)) {
       REMOVE_MARKER(this.FORME_CHANGE_MARKER, effect.player);
     }
 
-    // Ref: set-pop-series-4/deoxys-ex.ts (Form Change)
+    // Form Change
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const targetCardList = StateUtils.findCardList(state, this);
@@ -115,25 +92,9 @@ export class Deoxys extends PokemonCard {
         ABILITY_USED(player, this);
       });
     }
-
-    // Refs: set-ex-unseen-forces/teddiursa.ts (opponent-next-turn marker),
-    // set-ex-dragon-frontiers/meganium.ts (Delta Reduction / before W&R)
+    // Delta Reduction
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      effect.opponent.marker.addMarker(this.DELTA_REDUCTION_MARKER, this);
-    }
-
-    if (effect instanceof DealDamageEffect
-      && effect.player.marker.hasMarker(this.DELTA_REDUCTION_MARKER, this)
-      && effect.target.getPokemonCard() === this) {
-      if (state.phase !== GamePhase.ATTACK) {
-        return state;
-      }
-      effect.damage -= 30;
-    }
-
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.DELTA_REDUCTION_MARKER, this)) {
-      effect.player.marker.removeMarker(this.DELTA_REDUCTION_MARKER, this);
+      return THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN_BEFORE_WEAKNESS_AND_RESISTANCE(store, state, effect, 30);
     }
 
     return state;

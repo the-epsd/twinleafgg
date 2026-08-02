@@ -226,6 +226,7 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
     opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
       cardList.damageReductionNextTurn = 0;
       cardList.damageReductionNextTurnFilter = null;
+      cardList.damageReductionBeforeWeaknessNextTurn = 0;
       cardList.preventDamageNextTurn = null;
       cardList.preventDamageNextTurnPending = null;
       cardList.preventEffectsOfAttacksNextTurn = null;
@@ -394,6 +395,10 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
 
       if (cardList.attackDamageReductionNextTurn > 0) {
         cardList.attackDamageReductionNextTurn = 0;
+      }
+
+      if (cardList.attackDamageReductionAfterWeaknessNextTurn > 0) {
+        cardList.attackDamageReductionAfterWeaknessNextTurn = 0;
       }
 
       if (cardList.cannotRetreatNextTurn) {
