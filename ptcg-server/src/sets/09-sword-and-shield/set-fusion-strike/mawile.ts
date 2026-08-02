@@ -2,8 +2,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { increaseDefendingPokemonAttackCostNextTurnEffect, increaseDefendingPokemonRetreatCostNextTurnEffect } from '../../../game/store/effects/effect-of-attack-effects';
+import { DEFENDING_POKEMON_ATTACKS_COST_MORE, DEFENDING_POKEMON_RETREAT_COSTS_MORE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Mawile extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -30,8 +29,8 @@ export class Mawile extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Chomp Chomp Hold
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      state = store.reduceEffect(state, increaseDefendingPokemonAttackCostNextTurnEffect(effect));
-      state = store.reduceEffect(state, increaseDefendingPokemonRetreatCostNextTurnEffect(effect));
+      state = DEFENDING_POKEMON_ATTACKS_COST_MORE(store, state, effect, 1);
+      state = DEFENDING_POKEMON_RETREAT_COSTS_MORE(store, state, effect, 1);
     }
 
     return state;

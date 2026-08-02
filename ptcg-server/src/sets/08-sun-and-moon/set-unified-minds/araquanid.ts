@@ -2,8 +2,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, GUST_OPPONENT_BENCHED_POKEMON } from '../../../game/store/prefabs/prefabs';
-import { increaseDefendingPokemonAttackCostNextTurnEffect, increaseDefendingPokemonRetreatCostNextTurnEffect } from '../../../game/store/effects/effect-of-attack-effects';
+import { WAS_ATTACK_USED, GUST_OPPONENT_BENCHED_POKEMON, DEFENDING_POKEMON_ATTACKS_COST_MORE, DEFENDING_POKEMON_RETREAT_COSTS_MORE } from '../../../game/store/prefabs/prefabs';
 
 export class Araquanid extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -41,8 +40,8 @@ export class Araquanid extends PokemonCard {
 
     // Sticky Web
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      state = store.reduceEffect(state, increaseDefendingPokemonAttackCostNextTurnEffect(effect));
-      state = store.reduceEffect(state, increaseDefendingPokemonRetreatCostNextTurnEffect(effect));
+      state = DEFENDING_POKEMON_ATTACKS_COST_MORE(store, state, effect, 1);
+      state = DEFENDING_POKEMON_RETREAT_COSTS_MORE(store, state, effect, 1);
     }
 
     return state;
