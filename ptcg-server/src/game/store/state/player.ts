@@ -54,6 +54,8 @@ export class Player {
 
   playedCanari: boolean = false;
 
+  playedPiers: boolean = false;
+
   retreatedTurn: number = 0;
 
   energyPlayedTurn: number = 0;

@@ -301,6 +301,21 @@ export class PreventAttackEffect extends EffectOfAttackEffect {
 }
 
 /**
+ * During the opponent's next turn, the Defending Pokémon can't be healed.
+ */
+export class PreventHealOnDefendingDuringOpponentsNextTurnEffect extends EffectOfAttackEffect {
+  readonly type: string = 'PREVENT_HEAL_ON_DEFENDING_DURING_OPPONENTS_NEXT_TURN_EFFECT';
+
+  constructor(base: AttackEffect) {
+    super(base);
+  }
+
+  applyEffect(): void {
+    this.opponent.active.cannotBeHealedNextTurn = true;
+  }
+}
+
+/**
  * During the opponent's next turn, if the Defending Pokémon tries to attack,
  * they flip coin(s). If any is tails, that attack does nothing (Smokescreen / Sand-Attack).
  */
@@ -534,6 +549,15 @@ export function preventEffectsOfAttacksEffect(
 
 export function preventAttackEffect(attackEffect: AttackEffect, source: Card): PreventAttackEffect {
   const effect = new PreventAttackEffect(attackEffect);
+  effect.markerSource = source;
+  return effect;
+}
+
+export function preventHealOnDefendingDuringOpponentsNextTurnEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+): PreventHealOnDefendingDuringOpponentsNextTurnEffect {
+  const effect = new PreventHealOnDefendingDuringOpponentsNextTurnEffect(attackEffect);
   effect.markerSource = source;
   return effect;
 }

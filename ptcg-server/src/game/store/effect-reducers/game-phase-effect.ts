@@ -301,14 +301,14 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
         if (cardList.attackCostIncreaseNextTurnAttackerId === player.id
           && !cardList.attackCostIncreaseNextTurnPending
           && cardList.attackCostIncreaseNextTurn > 0
-          ) {
+        ) {
           cardList.attackCostIncreaseNextTurn = 0;
           cardList.attackCostIncreaseNextTurnAttackerId = undefined;
         }
         if (cardList.retreatCostIncreaseNextTurnAttackerId === player.id
           && !cardList.retreatCostIncreaseNextTurnPending
           && cardList.retreatCostIncreaseNextTurn > 0
-          ) {
+        ) {
           cardList.retreatCostIncreaseNextTurn = 0;
           cardList.retreatCostIncreaseNextTurnAttackerId = undefined;
         }
@@ -413,6 +413,9 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
       }
       if (cardList.blockedAttackNameNextTurn !== undefined) {
         cardList.blockedAttackNameNextTurn = undefined;
+      }
+      if (cardList.cannotBeHealedNextTurn) {
+        cardList.cannotBeHealedNextTurn = false;
       }
     });
 

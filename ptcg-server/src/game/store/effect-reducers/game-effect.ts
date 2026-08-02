@@ -659,6 +659,10 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
   // }
 
   if (effect instanceof HealEffect) {
+    if (effect.preventDefault || effect.target.cannotBeHealedNextTurn) {
+      effect.preventDefault = true;
+      return state;
+    }
     effect.target.damage = Math.max(0, effect.target.damage - effect.damage);
     return state;
   }
