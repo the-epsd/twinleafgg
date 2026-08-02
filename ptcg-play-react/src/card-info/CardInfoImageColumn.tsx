@@ -21,6 +21,7 @@ export type CardInfoImageColumnProps = {
   getScanUrl: (card: Card) => string;
   isInGame: boolean;
   onSwapClick: () => void;
+  hideSwapButton?: boolean;
 };
 
 export function CardInfoImageColumn({
@@ -30,6 +31,7 @@ export function CardInfoImageColumn({
   getScanUrl,
   isInGame,
   onSwapClick,
+  hideSwapButton = false,
 }: CardInfoImageColumnProps) {
   const { t } = useTranslation();
   const alternatives = useMemo(() => getCardsWithSameName(catalog, card), [catalog, card]);
@@ -47,7 +49,7 @@ export function CardInfoImageColumn({
           style={{ width: '100%' }}
         />
       </div>
-      {!isInGame && !facedown && (
+      {!hideSwapButton && !isInGame && !facedown && (
         <div className={styles.swapButtonContainer}>
           <button
             type="button"

@@ -1,8 +1,9 @@
-import { PokemonCard, Stage } from '../../../game';
+import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Gible extends PokemonCard {
-  public stage = Stage.BASIC;
-  public cardType = N;
+  public stage: Stage = Stage.BASIC;
+  public cardType: CardType = N;
   public hp: number = 70;
   public retreat = [C];
 
@@ -13,10 +14,10 @@ export class Gible extends PokemonCard {
     text: ''
   }];
 
-  public regulationMark: string = 'F';
+  public regulationMark = 'F';
   public set: string = 'BRS';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '107';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gible';
   public fullName: string = 'Gible BRS';
 }

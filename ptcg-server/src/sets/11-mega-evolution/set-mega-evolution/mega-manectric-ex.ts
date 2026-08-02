@@ -1,10 +1,14 @@
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
-import { GamePhase, State } from '../../../game/store/state/state';
+import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { GameMessage, PokemonCard, StateUtils } from '../../../game';
-import { CONFIRMATION_PROMPT, DISCARD_ALL_ENERGY_FROM_POKEMON, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import { GameMessage, PokemonCard } from '../../../game';
+import {
+  CONFIRMATION_PROMPT,
+  DISCARD_ALL_ENERGY_FROM_POKEMON,
+  PREVENT_DAMAGE,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class MegaManectricEx extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -36,27 +40,14 @@ export class MegaManectricEx extends PokemonCard {
   public fullName: string = 'Mega Manectric ex M1S';
   public regulationMark: string = 'I';
 
-  public readonly PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
-  public readonly CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Flash Ray
+    // Ref: set-delta-reign/ariados.ts (Covert Needle)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      player.active.marker.addMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
+      PREVENT_DAMAGE(store, state, effect, this, { sourceStage: Stage.BASIC });
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.marker.hasMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER) && state.phase === GamePhase.ATTACK) {
-      const sourceCard = effect.source.getPokemonCard();
-      if (sourceCard && sourceCard.stage === Stage.BASIC) {
-        effect.preventDefault = true;
-        return state;
-      }
-      return state;
-    }
-
+    // Riotous Blasting
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
@@ -70,6 +61,4 @@ export class MegaManectricEx extends PokemonCard {
 
     return state;
   }
-
-
 }

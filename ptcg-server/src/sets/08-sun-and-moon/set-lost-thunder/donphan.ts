@@ -5,7 +5,6 @@ import { Effect } from '../../../game/store/effects/effect';
 import { NEXT_TURN_ATTACK_BONUS, SURVIVE_ON_TEN_IF_FULL_HP } from '../../../game/store/prefabs/prefabs';
 
 export class Donphan extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Phanpy';
   public cardType: CardType = F;
@@ -32,22 +31,17 @@ export class Donphan extends PokemonCard {
   public name: string = 'Donphan';
   public fullName: string = 'Donphan LOT';
 
-  public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'NEXT_TURN_MORE_DAMAGE_MARKER';
-  public readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Sturdy
     SURVIVE_ON_TEN_IF_FULL_HP(store, state, effect, {
       source: this,
       reason: this.powers[0].name
     });
-
+    // Rolling Spin
     NEXT_TURN_ATTACK_BONUS(effect, {
       attack: this.attacks[0],
       source: this,
-      bonusDamage: 70,
-      bonusMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER,
-      clearMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER_2
+      bonusDamage: 70
     });
 
     return state;

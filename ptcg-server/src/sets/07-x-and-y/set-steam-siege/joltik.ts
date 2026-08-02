@@ -17,8 +17,8 @@ export class Joltik extends PokemonCard {
   }];
 
   public set: string = 'STS';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '41';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Joltik';
   public fullName: string = 'Joltik STS';
 }

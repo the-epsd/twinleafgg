@@ -1,38 +1,24 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 
-
 export class Staryu extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.WATER;
-
+  public cardType: CardType = W;
   public hp: number = 40;
-
-  public weakness = [{ type: CardType.METAL }];
-
+  public weakness = [{ type: M }];
   public resistance = [];
-
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Smack',
-      cost: [CardType.WATER],
-      damage: 20,
-      text: ''
-    },
-  ];
+  public attacks = [{
+    name: 'Smack',
+    cost: [W],
+    damage: 20,
+    text: ''
+  }];
 
   public set: string = 'BKP';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '25';
-
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Staryu';
-
   public fullName: string = 'Staryu BKP';
-
 }

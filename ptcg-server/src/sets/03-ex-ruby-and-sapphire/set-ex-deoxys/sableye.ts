@@ -1,8 +1,9 @@
-import { CardType, GameError, GameMessage, PokemonCard, PowerType, Stage, State, StateUtils, StoreLike } from '../../../game';
+import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { CardType, Stage } from '../../../game/store/card/card-types';
+import { GameError, GameMessage, PowerType, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { PlayPokemonEffect, PlaySupporterEffect } from '../../../game/store/effects/play-card-effects';
-import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SHOW_CARDS_TO_PLAYER, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
+import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SHOW_CARDS_TO_PLAYER, WAS_ATTACK_USED, WAS_POWER_USED, OPPONENT_CANNOT_PLAY_SUPPORTER_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Sableye extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -38,13 +39,10 @@ export class Sableye extends PokemonCard {
   public fullName = 'Sableye DX';
 
   public readonly NIGHT_VISION_MARKER = 'NIGHT_VISION_MARKER';
-  public readonly OPPONENT_CANNOT_PLAY_SUPPORTER_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_SUPPORTER_CARDS_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      REMOVE_MARKER(this.NIGHT_VISION_MARKER, player, this);
+      REMOVE_MARKER(this.NIGHT_VISION_MARKER, effect.player, this);
       return state;
     }
 
@@ -53,41 +51,22 @@ export class Sableye extends PokemonCard {
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-
       if (HAS_MARKER(this.NIGHT_VISION_MARKER, player, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-
       if (player.active.cards[0] !== this) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-
       BLOCK_IF_HAS_SPECIAL_CONDITION(player, this);
-
       SHOW_CARDS_TO_PLAYER(store, state, player, opponent.hand.cards);
-
       ADD_MARKER(this.NIGHT_VISION_MARKER, player, this);
       ABILITY_USED(player, this);
     }
 
+    // Limitation
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      ADD_MARKER(this.OPPONENT_CANNOT_PLAY_SUPPORTER_CARDS_MARKER, opponent, this);
+      return OPPONENT_CANNOT_PLAY_SUPPORTER_CARDS(store, state, effect, this);
     }
-
-    if (effect instanceof PlaySupporterEffect) {
-      const player = effect.player;
-      if (HAS_MARKER(this.OPPONENT_CANNOT_PLAY_SUPPORTER_CARDS_MARKER, player, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      REMOVE_MARKER(this.OPPONENT_CANNOT_PLAY_SUPPORTER_CARDS_MARKER, effect.player, this);
-    }
-
     return state;
   }
 }

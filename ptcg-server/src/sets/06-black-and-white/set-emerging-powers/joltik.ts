@@ -8,18 +8,16 @@ export class Joltik extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Gnaw',
-      cost: [C],
-      damage: 10,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Gnaw',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }];
 
   public set: string = 'EPO';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '33';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Joltik';
   public fullName: string = 'Joltik EPO';
 }

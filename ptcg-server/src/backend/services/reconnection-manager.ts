@@ -63,8 +63,8 @@ export class ReconnectionManager {
     // Listen for configuration changes
     this.configManager.on('configUpdated', this.handleConfigUpdate.bind(this));
 
-    // Start cleanup interval (legacy - now handled by cleanup service)
-    this.startCleanupInterval();
+    // Timeout warnings only; expired-session cleanup runs in ReconnectionCleanupService
+    this.startTimeoutWarningInterval();
 
     // Start resource metrics collection
     this.startResourceMetricsCollection();
@@ -614,17 +614,16 @@ export class ReconnectionManager {
   }
 
   /**
-   * Start the cleanup interval
+   * Warn when preserved sessions are about to expire (cleanup itself is in ReconnectionCleanupService).
    */
-  private startCleanupInterval(): void {
+  private startTimeoutWarningInterval(): void {
     this.cleanupInterval = setInterval(
       async () => {
-        await this.cleanupExpiredSessions();
         await this.checkTimeoutWarnings();
       },
       this.getCurrentConfig().cleanupIntervalMs
     );
-    logger.log(`[ReconnectionManager] Started cleanup interval (${this.getCurrentConfig().cleanupIntervalMs}ms)`);
+    logger.log(`[ReconnectionManager] Started timeout warning interval (${this.getCurrentConfig().cleanupIntervalMs}ms)`);
   }
 
   /**
@@ -648,9 +647,9 @@ export class ReconnectionManager {
       maxPreservedSessionsPerUser: event.newConfig.maxPreservedSessionsPerUser
     });
 
-    // Restart cleanup interval if the interval changed
     if (event.oldConfig.cleanupIntervalMs !== event.newConfig.cleanupIntervalMs) {
-      this.restartCleanupInterval();
+      this.cleanupService.updateConfig({ cleanupIntervalMs: event.newConfig.cleanupIntervalMs });
+      this.restartTimeoutWarningInterval();
     }
   }
 
@@ -720,11 +719,11 @@ export class ReconnectionManager {
   /**
    * Restart cleanup interval with new configuration
    */
-  private restartCleanupInterval(): void {
+  private restartTimeoutWarningInterval(): void {
     if (this.cleanupInterval) {
       clearInterval(this.cleanupInterval);
     }
-    this.startCleanupInterval();
+    this.startTimeoutWarningInterval();
   }
 
   /**

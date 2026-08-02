@@ -1,22 +1,13 @@
-import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
-import { Effect } from '../../../game/store/effects/effect';
-import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import {
-  PlayerType, SlotType, CardTarget, GameError, GameMessage,
-  PokemonCardList,
-  Player
-} from '../../../game';
-import { HealEffect } from '../../../game/store/effects/game-effects';
+import { CardTarget, ChoosePokemonPrompt, GameError, GameMessage, Player, PlayerType, PokemonCardList, SlotType, State, StoreLike, TrainerCard, TrainerType } from "../../../game";
+import { Effect } from "../../../game/store/effects/effect";
+import { HealEffect } from "../../../game/store/effects/game-effects";
+import { TrainerEffect } from "../../../game/store/effects/play-card-effects";
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
-
   const blocked: CardTarget[] = [];
   let hasPokemonWithDamage: boolean = false;
+
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
     if (cardList.damage === 0) {
       blocked.push(target);
@@ -49,7 +40,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   targets.forEach(target => {
-    // Heal Pokemon
     const healEffect = new HealEffect(player, target, 30);
     store.reduceEffect(state, healEffect);
   });
@@ -58,23 +48,14 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 }
 
 export class Potion extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public regulationMark = 'G';
-
   public set: string = 'SVI';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '188';
-
   public name: string = 'Potion';
-
   public fullName: string = 'Potion SVI';
-
-  public text: string =
-    'Heal 30 damage from 1 of your Pokemon.';
+  public text: string = 'Heal 30 damage from 1 of your Pokemon.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     let hasPokemonWithDamage: boolean = false;
@@ -83,7 +64,6 @@ export class Potion extends TrainerCard {
         hasPokemonWithDamage = true;
       }
     });
-
     if (hasPokemonWithDamage === false) {
       return false;
     }
@@ -95,7 +75,7 @@ export class Potion extends TrainerCard {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
+
     return state;
   }
-
 }

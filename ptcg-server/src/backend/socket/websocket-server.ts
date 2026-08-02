@@ -5,24 +5,19 @@ import { SocketClient } from './socket-client';
 import { User } from '../../storage';
 import { authMiddleware } from './auth-middleware';
 import { config } from '../../config';
-import { ReconnectionManager } from '../services/reconnection-manager';
 import { logger } from '../../utils/logger';
 
 export type Middleware = (socket: Socket, next: (err?: any) => void) => void;
 
 export class WebSocketServer {
   public server: Server | undefined;
-  private reconnectionManager: ReconnectionManager;
 
   constructor(private core: Core) {
-    this.reconnectionManager = new ReconnectionManager(config.reconnection);
   }
 
   public async listen(httpServer: http.Server): Promise<void> {
     const opts: Partial<ServerOptions> = {
-      // Prefer stable websocket transport and avoid long-polling fallbacks
       transports: ['websocket'],
-      // Make the server more tolerant to background tab throttling / flaky networks
       pingInterval: 30000,   // default 25000
       pingTimeout: 120000    // default 20000 → allow up to 2 minutes without pong
     };
@@ -72,17 +67,8 @@ export class WebSocketServer {
     });
   }
 
-
-
-
-
-
-
-  /**
-   * Get the reconnection manager instance
-   */
-  public getReconnectionManager(): ReconnectionManager {
-    return this.reconnectionManager;
+  public getReconnectionManager() {
+    return this.core.getReconnectionManager();
   }
 
   private findReconnectionTarget(userId: number): { gameId: number; playerId: number } | undefined {
@@ -92,17 +78,10 @@ export class WebSocketServer {
         return { gameId: game.id, playerId };
       }
     }
-
     return undefined;
   }
 
-  /**
-   * Dispose of the WebSocketServer and cleanup resources
-   */
   public dispose(): void {
-    if (this.reconnectionManager) {
-      this.reconnectionManager.dispose();
-    }
     if (this.server) {
       this.server.close();
     }

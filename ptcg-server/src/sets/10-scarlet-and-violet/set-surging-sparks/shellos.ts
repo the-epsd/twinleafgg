@@ -1,5 +1,5 @@
-import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Shellos extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -15,10 +15,10 @@ export class Shellos extends PokemonCard {
     text: ''
   }];
 
-  public set: string = 'SSP';
-  public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '46';
   public regulationMark = 'H';
+  public set: string = 'SSP';
+  public setNumber: string = '46';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shellos';
   public fullName: string = 'Shellos SSP';
 }

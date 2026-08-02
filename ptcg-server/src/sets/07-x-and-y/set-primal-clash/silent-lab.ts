@@ -8,25 +8,17 @@ import { TrainerType, Stage } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
 import { HANDLE_ABILITY_LOCK } from '../../../game/store/prefabs/ability-lock';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
 
 export class SilentLab extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.STADIUM;
-
   public set: string = 'PRC';
-
   public name: string = 'Silent Lab';
-
   public fullName: string = 'Silent Lab PRC';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '140';
-
-  public text: string =
-    'Each Basic Pokemon in play, in each player\'s hand, ' +
-    'and in each player\'s discard pile has no Abilities.';
+  public text: string = 'Each Basic Pokemon in play, in each player\'s hand, and in each player\'s discard pile has no Abilities.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -37,6 +29,10 @@ export class SilentLab extends TrainerCard {
       try {
         const cardList = StateUtils.findCardList(state, card);
         if (cardList instanceof PokemonCardList) {
+          const owner = StateUtils.findOwner(state, cardList);
+          if (IS_STADIUM_EFFECT_BLOCKED(store, state, owner, cardList)) {
+            return false;
+          }
           return cardList.isStage(Stage.BASIC);
         }
       } catch {
@@ -51,5 +47,4 @@ export class SilentLab extends TrainerCard {
 
     return state;
   }
-
 }

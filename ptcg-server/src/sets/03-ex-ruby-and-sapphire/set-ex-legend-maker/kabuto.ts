@@ -1,11 +1,7 @@
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, PowerType, StateUtils, PlayerType, GamePhase } from '../../../game';
-import { Effect } from '../../../game/store/effects/effect';
-import { ADD_MARKER, HAS_MARKER, IS_POKEBODY_BLOCKED, REMOVE_MARKER, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { CheckPokemonStatsEffect } from '../../../game/store/effects/check-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, PlayerType } from "../../../game";
+import { CheckPokemonStatsEffect } from "../../../game/store/effects/check-effects";
+import { Effect } from "../../../game/store/effects/effect";
+import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED, THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN } from "../../../game/store/prefabs/prefabs";
 
 export class Kabuto extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -34,10 +30,7 @@ export class Kabuto extends PokemonCard {
   public name: string = 'Kabuto';
   public fullName: string = 'Kabuto LM';
 
-  public readonly GRANITE_HEAD_MARKER = 'GRANITE_HEAD_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // Shield Veil
     if (effect instanceof CheckPokemonStatsEffect) {
       const player = StateUtils.findOwner(state, effect.target);
@@ -68,22 +61,7 @@ export class Kabuto extends PokemonCard {
 
     // Granite Head
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      ADD_MARKER(this.GRANITE_HEAD_MARKER, effect.player, this);
-    }
-
-    if (effect instanceof PutDamageEffect
-      && HAS_MARKER(this.GRANITE_HEAD_MARKER, StateUtils.getOpponent(state, effect.player), this)
-      && effect.target.getPokemonCard() === this) {
-
-      if (state.phase !== GamePhase.ATTACK) {
-        return state;
-      }
-
-      effect.damage -= 10;
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player !== StateUtils.findOwner(state, StateUtils.findCardList(state, this))) {
-      REMOVE_MARKER(this.GRANITE_HEAD_MARKER, StateUtils.getOpponent(state, effect.player), this);
+      return THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN(store, state, effect, 10);
     }
 
     return state;

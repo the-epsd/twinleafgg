@@ -2,10 +2,18 @@ import { Effect } from '../../../game/store/effects/effect';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { PowerType, StoreLike, State, StateUtils, GameError } from '../../../game';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { CoinFlipEffect, PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { GameLog, GameMessage } from '../../../game/game-message';
-import { AttackEffect } from '../../../game/store/effects/game-effects';
-import { ABILITY_USED, ADD_MARKER, ADD_POISON_TO_PLAYER_ACTIVE, HAS_MARKER, REMOVE_MARKER, SIMULATE_COIN_FLIP, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
+import { GameMessage } from '../../../game/game-message';
+import {
+  ABILITY_USED,
+  ADD_MARKER,
+  ADD_POISON_TO_PLAYER_ACTIVE,
+  DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK,
+  HAS_MARKER,
+  REMOVE_MARKER,
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 export class SkuntankG extends PokemonCard {
@@ -48,10 +56,7 @@ export class SkuntankG extends PokemonCard {
 
   public readonly POISON_STRUCTURE_MARKER = 'POISON_STRUCTURE_MARKER';
 
-  public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    //Poke-Power
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -93,39 +98,14 @@ export class SkuntankG extends PokemonCard {
       REMOVE_MARKER(this.POISON_STRUCTURE_MARKER, player, this);
     }
 
-    //Attack
+    // Ref: DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK (Smokescreen)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      ADD_MARKER(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, opponent.active, this);
+      return DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK(store, state, effect, this);
     }
 
-    if (effect instanceof AttackEffect && HAS_MARKER(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, effect.player.active, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      try {
-        const coinFlip = new CoinFlipEffect(player);
-        store.reduceEffect(state, coinFlip);
-      } catch {
-        return state;
-      }
-
-      const coinFlipResult = SIMULATE_COIN_FLIP(store, state, player);
-
-      if (!coinFlipResult) {
-        effect.damage = 0;
-        store.log(state, GameLog.LOG_ABILITY_BLOCKS_DAMAGE, { name: opponent.name, pokemon: this.name });
-      }
-    }
-
-    //Marker remover
     if (effect instanceof EndTurnEffect) {
       if (HAS_MARKER(this.POISON_STRUCTURE_MARKER, effect.player, this)) {
         REMOVE_MARKER(this.POISON_STRUCTURE_MARKER, effect.player, this);
-      }
-      if (HAS_MARKER(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, effect.player.active, this)) {
-        REMOVE_MARKER(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, effect.player.active, this);
       }
     }
 

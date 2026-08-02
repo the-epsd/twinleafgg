@@ -7,6 +7,7 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { GameError, GameMessage } from '../../../game';
 import { HANDLE_ABILITY_LOCK } from '../../../game/store/prefabs/ability-lock';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 
 export class PathToThePeak extends TrainerCard {
   public trainerType = TrainerType.STADIUM;
@@ -16,12 +17,9 @@ export class PathToThePeak extends TrainerCard {
   public regulationMark = 'E';
   public name = 'Path to the Peak';
   public fullName = 'Path to the Peak CRE';
-
-  public text =
-    "Pokémon with a Rule Box in play (both yours and your opponent's) have no Abilities. (Pokémon V, Pokémon-GX, etc. have Rule Boxes.)";
+  public text = 'Pokémon with a Rule Box in play (both yours and your opponent\'s) have no Abilities. (Pokémon V, Pokémon-GX, etc. have Rule Boxes.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // In-play only — hand/discard abilities (useFromHand / useFromDiscard) remain usable.
     HANDLE_ABILITY_LOCK(effect, ({ card }) => {
       if (StateUtils.getStadiumCard(state) !== this) {
         return false;
@@ -29,8 +27,15 @@ export class PathToThePeak extends TrainerCard {
       if (!card.hasRuleBox()) {
         return false;
       }
-      // Prefer slot lookup over instanceof — more reliable for "in play" than CardList checks.
-      return StateUtils.findPokemonSlot(state, card) !== undefined;
+      const slot = StateUtils.findPokemonSlot(state, card);
+      if (slot === undefined) {
+        return false;
+      }
+      const owner = StateUtils.findOwner(state, slot);
+      if (IS_STADIUM_EFFECT_BLOCKED(store, state, owner, slot)) {
+        return false;
+      }
+      return true;
     }, {
       allowUseFromHand: true,
       allowUseFromDiscard: true
@@ -39,6 +44,7 @@ export class PathToThePeak extends TrainerCard {
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
       throw new GameError(GameMessage.CANNOT_USE_STADIUM);
     }
+
     return state;
   }
 }

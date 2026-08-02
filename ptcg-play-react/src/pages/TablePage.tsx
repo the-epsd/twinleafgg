@@ -11,7 +11,7 @@ import { getSocketManager } from '../socket/socketManager';
 import { ApiError, formatUnknownError } from '../api/apiError';
 import { useSnackbar } from '../context/SnackbarContext';
 import { translateGameSocketError } from '../i18n/translateGameSocketError';
-import { buildLocalGameFromMatchReplay } from '../api/replayApi';
+import { buildLocalGameFromMatchReplay, buildLocalGameFromSavedReplay } from '../api/replayApi';
 import type { LocalGameState } from '../table/types/localGameState';
 import { shouldCancelCoinFlipAnimation } from '../table/coin-flip-animation';
 import { gameStateToLocal, mergeStateChange } from '../table/gameSessionUtils';
@@ -64,9 +64,10 @@ type TableView = {
 export function TablePage() {
   const { t } = useTranslation();
   const { showSnackbar } = useSnackbar();
-  const { gameId: gameIdParam, matchId: matchIdParam } = useParams<{
+  const { gameId: gameIdParam, matchId: matchIdParam, replayId: replayIdParam } = useParams<{
     gameId?: string;
     matchId?: string;
+    replayId?: string;
   }>();
   const navigate = useNavigate();
   const { cardsInfo, serverConfig, user } = useAuth();
@@ -75,10 +76,13 @@ export function TablePage() {
   const { clientId, connected: coreConnected } = useCoreSession();
   const { use3dBoardDefault } = useSettings();
 
-  const hasReplayParam = matchIdParam != null && matchIdParam !== '';
-  const replayMatchId = hasReplayParam ? Number(matchIdParam) : NaN;
+  const isMatchReplayRoute = matchIdParam != null && matchIdParam !== '';
+  const isSavedReplayRoute = replayIdParam != null && replayIdParam !== '';
+  const replayMatchId = isMatchReplayRoute ? Number(matchIdParam) : NaN;
+  const savedReplayId = isSavedReplayRoute ? Number(replayIdParam) : NaN;
   const serverGameId = gameIdParam != null && gameIdParam !== '' ? Number(gameIdParam) : NaN;
-  const isReplayRoute = hasReplayParam;
+  const isReplayRoute = isMatchReplayRoute || isSavedReplayRoute;
+  const replayExitPath = isSavedReplayRoute ? '/replays' : '/spectate';
   const isLiveRoute = Number.isFinite(serverGameId);
   const [localGame, setLocalGame] = useState<LocalGameState | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -196,10 +200,21 @@ export function TablePage() {
       const socket = getSocketManager();
       const raw = socket.raw;
 
-      const onState = (data: { stateData: string; playerStats?: import('ptcg-server').PlayerStats[] }) => {
+      const onState = (data: {
+        stateData: string;
+        playerStats?: import('ptcg-server').PlayerStats[];
+        isDiff?: boolean;
+        viewKey?: string;
+      }) => {
         setLocalGame((g) => {
           if (!g || g.gameId !== gameId) return g;
-          const next = mergeStateChange(g, data.stateData, data.playerStats);
+          const next = mergeStateChange(
+            g,
+            data.stateData,
+            data.playerStats,
+            data.isDiff,
+            data.viewKey,
+          );
           if (shouldCancelCoinFlipAnimation(g, next)) {
             boardInteraction.cancelCoinFlipAnimation();
           }
@@ -328,7 +343,8 @@ export function TablePage() {
     if (!isReplayRoute) {
       return;
     }
-    if (!Number.isFinite(replayMatchId)) {
+    const loadId = isSavedReplayRoute ? savedReplayId : replayMatchId;
+    if (!Number.isFinite(loadId)) {
       setError(t('REACT_INVALID_GAME', 'Invalid game'));
       return;
     }
@@ -339,7 +355,9 @@ export function TablePage() {
     let cancelled = false;
     void (async () => {
       try {
-        const local = await buildLocalGameFromMatchReplay(replayMatchId);
+        const local = isSavedReplayRoute
+          ? await buildLocalGameFromSavedReplay(loadId)
+          : await buildLocalGameFromMatchReplay(loadId);
         if (!cancelled) {
           setLocalGame(local);
           boardInteraction.updateGameLogs(local.logs);
@@ -356,7 +374,15 @@ export function TablePage() {
       cancelled = true;
       boardInteraction.endBoardSelection();
     };
-  }, [isReplayRoute, replayMatchId, cardsInfo, boardInteraction, t]);
+  }, [
+    isReplayRoute,
+    isSavedReplayRoute,
+    replayMatchId,
+    savedReplayId,
+    cardsInfo,
+    boardInteraction,
+    t,
+  ]);
 
   useEffect(() => {
     if (!localGame || localGame.replay || !clientId) {
@@ -374,7 +400,7 @@ export function TablePage() {
   useEffect(() => {
     setEndFlowStage(null);
     setLeaveConfirmKind(null);
-  }, [isReplayRoute, replayMatchId, serverGameId]);
+  }, [isReplayRoute, replayMatchId, savedReplayId, serverGameId]);
 
   useEffect(() => {
     if (!localGame) {
@@ -490,7 +516,7 @@ export function TablePage() {
       return;
     }
     if (kind === 'replay') {
-      navigate('/spectate');
+      navigate(replayExitPath);
       return;
     }
     if (localGame?.deleted) {
@@ -503,7 +529,14 @@ export function TablePage() {
     void getSocketManager()
       .emit('game:concede', { gameId: serverGameId })
       .catch(onGameSocketError);
-  }, [leaveConfirmKind, localGame?.deleted, navigate, onGameSocketError, serverGameId]);
+  }, [
+    leaveConfirmKind,
+    localGame?.deleted,
+    navigate,
+    onGameSocketError,
+    replayExitPath,
+    serverGameId,
+  ]);
 
   const onSendChat = useCallback(
     (message: string) => {
@@ -527,11 +560,11 @@ export function TablePage() {
 
   const onGameOverConfirm = useCallback(() => {
     clearPersistedGameId();
-    navigate(localGame?.replay != null ? '/spectate' : '/games');
-  }, [localGame?.replay, navigate]);
+    navigate(localGame?.replay != null ? replayExitPath : '/games');
+  }, [localGame?.replay, navigate, replayExitPath]);
 
   if (error) {
-    const backTarget = isReplayRoute ? '/spectate' : '/games';
+    const backTarget = isReplayRoute ? replayExitPath : '/games';
     return (
       <div style={{ padding: 24 }}>
         <p>{error}</p>

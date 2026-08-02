@@ -234,20 +234,13 @@ export class KnockOutEffect implements Effect {
   }
 }
 
-// how many prizes when target Pokemon is KO
-export class KnockOutAttackEffect implements Effect {
-  readonly type: string = GameEffects.KNOCK_OUT_EFFECT;
-  public preventDefault = false;
-  public player: Player;
-  public target: PokemonCardList;
+// how many prizes when target Pokemon is KO by an attack
+export class KnockOutAttackEffect extends KnockOutEffect {
   public attack: Attack;
-  public prizeCount: number;
 
   constructor(player: Player, target: PokemonCardList, attack: Attack) {
-    this.player = player;
-    this.target = target;
+    super(player, target);
     this.attack = attack;
-    this.prizeCount = 1;
   }
 }
 

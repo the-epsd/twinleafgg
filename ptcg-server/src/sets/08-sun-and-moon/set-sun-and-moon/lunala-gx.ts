@@ -7,11 +7,8 @@ import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/ca
 import { PowerType, StoreLike, State, StateUtils, GameMessage, GameError, PlayerType, SlotType, Card, CardTarget, MoveEnergyPrompt, ChoosePokemonPrompt } from '../../../game';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { HealEffect } from '../../../game/store/effects/game-effects';
-import { HealTargetEffect } from '../../../game/store/effects/attack-effects';
 import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, BLOCK_IF_GX_ATTACK_USED, BLOCK_HEALING_ON_DEFENDING_POKEMON_DURING_OPPONENTS_NEXT_TURN } from '../../../game/store/prefabs/prefabs';
 
 function* usePsychicTransfer(next: Function, store: StoreLike, state: State, effect: import('../../../game/store/effects/game-effects').PowerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -99,9 +96,6 @@ export class LunalaGx extends PokemonCard {
   public name: string = 'Lunala-GX';
   public fullName: string = 'Lunala-GX SUM';
 
-  public readonly CANT_HEAL_MARKER = 'LUNALA_GX_CANT_HEAL_MARKER';
-  public readonly CLEAR_CANT_HEAL_MARKER = 'LUNALA_GX_CLEAR_CANT_HEAL_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Psychic Transfer
     // Ref: set-battle-styles/bronzong.ts (Metal Transfer)
@@ -117,35 +111,9 @@ export class LunalaGx extends PokemonCard {
     }
 
     // Attack 1: Moongeist Beam
-    // Ref: set-next-destinies/bronzong.ts (Heal Block), AGENTS-patterns.md (marker cleanup)
+    // Ref: effect-of-attack pattern (Mist Energy-blockable)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      opponent.active.marker.addMarker(this.CANT_HEAL_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_CANT_HEAL_MARKER, this);
-    }
-
-    // Intercept healing on marked Pokemon
-    if (effect instanceof HealEffect
-      && effect.target.marker.hasMarker(this.CANT_HEAL_MARKER, this)) {
-      effect.preventDefault = true;
-      return state;
-    }
-    if (effect instanceof HealTargetEffect
-      && effect.target.marker.hasMarker(this.CANT_HEAL_MARKER, this)) {
-      effect.preventDefault = true;
-      return state;
-    }
-
-    // Cleanup at end of opponent's turn
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_CANT_HEAL_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_CANT_HEAL_MARKER, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.CANT_HEAL_MARKER, this);
-      });
+      return BLOCK_HEALING_ON_DEFENDING_POKEMON_DURING_OPPONENTS_NEXT_TURN(store, state, effect, this);
     }
 
     // Attack 2: Lunar Fall-GX

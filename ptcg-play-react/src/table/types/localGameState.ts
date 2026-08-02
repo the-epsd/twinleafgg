@@ -14,4 +14,8 @@ export interface LocalGameState extends Omit<GameState, 'playerStats'> {
   replay?: Replay;
   playerStats?: PlayerStats[];
   enhancedPlayerStats?: PlayerGameStats[];
+  /** Last full serialized state for applying live diffs. */
+  serializedBase?: string;
+  /** Sanitized view key from the server (`p123`, `spec`, …). */
+  viewKey?: string;
 }

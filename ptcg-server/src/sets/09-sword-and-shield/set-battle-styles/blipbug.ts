@@ -8,19 +8,16 @@ export class Blipbug extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Stampede',
-      cost: [P],
-      damage: 10,
-      text: ''
-    },
-  ];
+  public attacks = [{
+    name: 'Stampede',
+    cost: [P],
+    damage: 10,
+    text: ''
+  }];
 
   public set: string = 'BST';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '17';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Blipbug';
   public fullName: string = 'Blipbug BST';
-
 }

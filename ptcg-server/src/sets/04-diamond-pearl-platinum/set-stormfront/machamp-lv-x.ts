@@ -16,15 +16,10 @@ import {
   CheckTableStateEffect,
 } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import {
-  ADD_MARKER,
-  COIN_FLIP_PROMPT,
-  HAS_MARKER,
   IS_POKEBODY_BLOCKED,
-  REMOVE_MARKER,
-  REMOVE_MARKER_AT_END_OF_TURN,
+  THIS_POKEMON_SURVIVES_ON_TEN_HP_DURING_OPPONENTS_NEXT_TURN,
   WAS_ATTACK_USED,
 } from '../../../game/store/prefabs/prefabs';
 
@@ -59,11 +54,6 @@ export class MachampLVX extends PokemonCard {
   public setNumber: string = '98';
   public name: string = 'Machamp';
   public fullName: string = 'Machamp LV.X SF';
-
-  public readonly PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER =
-    'PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER';
-  public readonly CLEAR_PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER =
-    'CLEAR_PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // No Guard: dealing damage
@@ -111,50 +101,12 @@ export class MachampLVX extends PokemonCard {
       effect.damage += 60;
     }
 
-    // Strong-Willed
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
-        if (!result) return;
-        ADD_MARKER(
-          this.PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER,
-          effect.player.active,
-          this,
-        );
-        ADD_MARKER(
-          this.CLEAR_PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER,
-          opponent,
-          this,
-        );
-      });
-      return state;
-    }
-
-    //Strong-Willed in effect
-    if (
-      effect instanceof PutDamageEffect &&
-      effect.target.cards.includes(this) &&
-      HAS_MARKER(this.PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, effect.target, this)
-    ) {
-      effect.surviveOnTenHPReason = this.attacks[0].name;
-      return state;
-    }
-
-    REMOVE_MARKER_AT_END_OF_TURN(
-      effect,
-      this.CLEAR_PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER,
-      this,
-    );
-
-    if (effect instanceof EndTurnEffect) {
-      //Remove the marker at the end of the opponent's turn.
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        REMOVE_MARKER(this.PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, cardList, this);
+      return THIS_POKEMON_SURVIVES_ON_TEN_HP_DURING_OPPONENTS_NEXT_TURN(store, state, effect, this, {
+        coinFlipOnWouldKo: true,
       });
     }
 
-    //Lv. X Stuff
     // making sure it gets put on the active pokemon
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       if (effect.target !== effect.player.active) {

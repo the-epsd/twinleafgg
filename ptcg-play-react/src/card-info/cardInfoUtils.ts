@@ -709,18 +709,48 @@ export function getCardRuleText(card: Card): string {
   return typeof t === 'string' ? t : '';
 }
 
-export function getDisplayTagLabels(card: Card, showTags: boolean): string[] {
-  if (!showTags || card.superType !== SuperType.POKEMON) {
+export function getDisplayTagLabels(
+  card: Card,
+  showTags: boolean,
+  cardList?: CardList,
+): string[] {
+  if (!showTags || !card) {
     return [];
   }
-  const pokemon = card as PokemonCard;
-  if (pokemon.cardTag?.length) {
-    return pokemon.cardTag.map(String);
-  }
+
+  const labels = new Set<string>();
+
+  // Prefer canonical Card.tags; fall back to deprecated PokemonCard.cardTag.
   if (card.tags?.length) {
-    return card.tags;
+    for (const tag of card.tags) {
+      labels.add(String(tag));
+    }
+  } else if (card.superType === SuperType.POKEMON) {
+    const pokemon = card as PokemonCard;
+    if (pokemon.cardTag?.length) {
+      for (const tag of pokemon.cardTag) {
+        labels.add(String(tag));
+      }
+    }
   }
-  return [];
+
+  // Team Plasma Badge grants TEAM_PLASMA to the Pokémon it is attached to.
+  // Derive it from the in-play tool list so the pane updates even if runtime tag
+  // mutations have not been applied/serialized yet.
+  if (
+    card.superType === SuperType.POKEMON &&
+    cardList &&
+    !isToolCardInList(card, cardList)
+  ) {
+    const hasPlasmaBadge = pokemonCardListTools(cardList).some(
+      (tool) => tool.name === 'Team Plasma Badge',
+    );
+    if (hasPlasmaBadge) {
+      labels.add(CardTag.TEAM_PLASMA);
+    }
+  }
+
+  return [...labels];
 }
 
 export type DebugMarkerDisplay = {

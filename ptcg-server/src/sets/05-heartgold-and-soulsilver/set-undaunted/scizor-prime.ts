@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, CardTag, SuperType } from '../../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { GamePhase, State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
@@ -59,28 +59,18 @@ export class Scizor extends PokemonCard {
 
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && state.phase === GamePhase.ATTACK) {
       const player = StateUtils.findOwner(state, effect.target);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      const opponentPokemon = opponent.active;
-
-      const checkEnergy = new CheckProvidedEnergyEffect(opponent, opponentPokemon);
-      store.reduceEffect(state, checkEnergy);
 
       if (IS_POKEBODY_BLOCKED(store, state, player, this)) {
         return state;
       }
 
-      checkEnergy.energyMap.forEach(em => {
-        const energyCard = em.card;
-        if (energyCard.superType === SuperType.ENERGY &&
-          (energyCard as EnergyCard).energyType === EnergyType.SPECIAL) {
+      const hasSpecialEnergy = effect.source.cards.some(c =>
+        c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL
+      );
 
-          if (effect instanceof PutDamageEffect
-            && opponent.active.cards.includes(energyCard)) {
-            effect.damage = 0;
-            return state;
-          }
-        }
-      });
+      if (hasSpecialEnergy) {
+        effect.preventDefault = true;
+      }
     }
     return state;
   }

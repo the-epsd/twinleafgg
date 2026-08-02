@@ -1,9 +1,7 @@
-import { CardTag, CardType, GamePhase, PokemonCard, Stage, State, StoreLike } from '../../../game';
-import { AddMarkerEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { Effect } from '../../../game/store/effects/effect';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE } from '../../../game/store/prefabs/attack-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PokemonCard, Stage, CardTag, CardType, StoreLike, State } from "../../../game";
+import { Effect } from "../../../game/store/effects/effect";
+import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE } from "../../../game/store/prefabs/attack-effects";
+import { WAS_ATTACK_USED, THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN } from "../../../game/store/prefabs/prefabs";
 
 export class RegisteelStar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -33,30 +31,10 @@ export class RegisteelStar extends PokemonCard {
   public name: string = 'Registeel Star';
   public fullName: string = 'Registeel Star LM';
 
-  public readonly BARRIER_ATTACK_MARKER = 'BARRIER_ATTACK_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // Flame Screen
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const addMarkerEffect = new AddMarkerEffect(effect, this.BARRIER_ATTACK_MARKER, this);
-      return store.reduceEffect(state, addMarkerEffect);
-    }
-
-    if (effect instanceof PutDamageEffect
-      && effect.source.marker.hasMarker(this.BARRIER_ATTACK_MARKER, this)) {
-
-      // It's not an attack
-      if (state.phase !== GamePhase.ATTACK) {
-        return state;
-      }
-
-      effect.damage -= 10;
-      return state;
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      effect.player.active.marker.removeMarker(this.BARRIER_ATTACK_MARKER, this);
+      return THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN(store, state, effect, 10);
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
@@ -68,7 +46,6 @@ export class RegisteelStar extends PokemonCard {
       if (playerBench === 0 && opponent.getPrizeLeft() === 1) {
         counters = 6;
       }
-
       PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE(counters, store, state, effect);
     }
 

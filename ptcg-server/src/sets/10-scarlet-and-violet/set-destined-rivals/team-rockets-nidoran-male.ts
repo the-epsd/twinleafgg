@@ -9,20 +9,18 @@ export class TeamRocketsNidoranMale extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Pierce',
-      cost: [D],
-      damage: 10,
-      text: '',
-    },
-    {
-      name: 'Hammer In',
-      cost: [D, D],
-      damage: 30,
-      text: '',
-    },
-  ];
+  public attacks = [{
+    name: 'Pierce',
+    cost: [D],
+    damage: 10,
+    text: ''
+  },
+  {
+    name: 'Hammer In',
+    cost: [D, D],
+    damage: 30,
+    text: ''
+  }];
 
   public regulationMark = 'I';
   public set: string = 'DRI';

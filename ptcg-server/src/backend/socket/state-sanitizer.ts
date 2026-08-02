@@ -9,6 +9,17 @@ import { State } from '../../game/store/state/state';
 import { SuperType } from '../../game/store/card/card-types';
 import { deepClone } from '../../utils';
 
+export interface SanitizeViewer {
+  playerId: number;
+  roleId: number;
+}
+
+export interface SanitizeOptions {
+  trimLogs?: boolean;
+  lastLogId?: number;
+  onLogsTrimmed?: (lastLogId: number) => void;
+}
+
 export class StateSanitizer {
 
   constructor(
@@ -16,122 +27,125 @@ export class StateSanitizer {
     private cache: SocketCache
   ) { }
 
-  /**
-   * Clear sensitive data, resolved prompts and old logs.
-   * @param viewingAsPlayerId When set (self-play), sanitize as this seat instead of socket client id.
-   */
   public sanitize(state: State, gameId: number, viewingAsPlayerId?: number): State {
     const pid = viewingAsPlayerId !== undefined ? viewingAsPlayerId : this.client.id;
-    state = deepClone(state, [Card]);
-    state = this.filterPrompts(state, pid);
-    state = this.removeLogs(state, gameId);
-    state = this.hideSecretCards(state, pid);
-    return state;
+    return StateSanitizer.sanitizeForViewer(state, {
+      playerId: pid,
+      roleId: this.client.user.roleId,
+    }, {
+      trimLogs: true,
+      lastLogId: this.cache.lastLogIdCache[gameId] || 0,
+      onLogsTrimmed: (lastLogId) => {
+        this.cache.lastLogIdCache[gameId] = lastLogId;
+      },
+    });
   }
 
-  private hideSecretCards(state: State, viewerPlayerId: number) {
-    if (state.cardNames.length === 0) {
-      return state;
+  public static sanitizeForViewer(
+    state: State,
+    viewer: SanitizeViewer,
+    options: SanitizeOptions = {}
+  ): State {
+    let next = deepClone(state, [Card]);
+    next = filterPrompts(next, viewer.playerId);
+    if (options.trimLogs) {
+      next = removeLogs(next, options.lastLogId || 0, options.onLogsTrimmed);
     }
-    this.getSecretCardLists(state, viewerPlayerId).forEach(cardList => {
-      cardList.cards = cardList.cards.map((c, i) => this.createUnknownCard(i));
-    });
+    next = hideSecretCards(next, viewer);
+    return next;
+  }
+}
+
+function hideSecretCards(state: State, viewer: SanitizeViewer): State {
+  if (state.cardNames.length === 0) {
     return state;
   }
+  getSecretCardLists(state, viewer).forEach(cardList => {
+    cardList.cards = cardList.cards.map((c, i) => createUnknownCard(i));
+  });
+  return state;
+}
 
-  private createUnknownCard(index: number): Card {
-    return {
-      superType: SuperType.NONE,
-      fullName: 'Unknown',
-      name: 'Unknown',
-      id: index,
-      cardImage: '',  // Explicitly set to empty to prevent image URL generation
-      set: '',       // Explicitly set to empty to prevent image URL generation
-      setNumber: ''  // Explicitly set to empty to prevent image URL generation
-    } as any;
-  }
+function createUnknownCard(index: number): Card {
+  return {
+    superType: SuperType.NONE,
+    fullName: 'Unknown',
+    name: 'Unknown',
+    id: index,
+    cardImage: '',
+    set: '',
+    setNumber: ''
+  } as any;
+}
 
-  private getSecretCardLists(state: State, viewerPlayerId: number): CardList[] {
-    const sandboxRevealDecks =
-      state.gameSettings?.sandboxMode === true && this.client.user.roleId === 4;
-    const players = state.players.filter(p => p.id === viewerPlayerId);
-    const cardLists: CardList[] = [];
-    players.forEach(player => {
-      if (player.deck.isSecret && !sandboxRevealDecks) {
-        cardLists.push(player.deck);
-      }
-      player.prizes.forEach(prize => {
-        if (prize.isSecret) {
-          cardLists.push(prize);
-        }
-      });
-    });
-
-    const opponents = state.players.filter(p => p.id !== viewerPlayerId);
-    const isPlaying = state.players.some(p => p.id === viewerPlayerId);
-    const isObserver = !isPlaying;
-
-    opponents.forEach(opponent => {
-      // Show hands for admins and TOs only when they are observers
-      if (!opponent.hand.isPublic && (!isObserver || (this.client.user.roleId !== 4 && this.client.user.roleId !== 5))) {
-        cardLists.push(opponent.hand);
-      }
-      if (!opponent.deck.isPublic && !sandboxRevealDecks) {
-        cardLists.push(opponent.deck);
-      }
-      const adminObserver = isObserver && this.client.user.roleId === 4;
-      opponent.prizes.forEach(prize => {
-        if (!prize.isPublic && !adminObserver) {
-          cardLists.push(prize);
-        }
-      });
-    });
-
-    state.prompts.forEach(prompt => {
-      if (prompt instanceof ChooseCardsPrompt && prompt.options.isSecret) {
-        cardLists.push(prompt.cards);
-      }
-    });
-
-    return cardLists;
-  }
-
-  private filterPrompts(state: State, viewerPlayerId: number): State {
-    // Filter resolved prompts, not needed anymore
-
-    state.prompts = state.prompts.filter(prompt => {
-      return prompt.result === undefined;
-    });
-
-    // state.prompts = state.prompts.filter(prompt => {
-    //   return prompt.type === 'Coin flip' || prompt.playerId === this.client.id;
-    // });
-
-    // Hide opponent's prompts. They may contain sensitive data.
-    state.prompts = state.prompts.map(prompt => {
-      if (prompt.playerId !== viewerPlayerId) {
-        return new AlertPrompt(prompt.playerId, GameMessage.NOT_YOUR_TURN);
-      }
-      return prompt;
-    });
-
-    // Cards in the prompt are known, in the game cards are secret,
-    // For example, serching for the cards from deck.
-    // The method hideSecretCards would hide cards from prompt as well.
-    state.prompts = deepClone(state.prompts, [Card]);
-    return state;
-  }
-
-  private removeLogs(state: State, gameId: number): State {
-    // Remove logs, which were already send to client.
-    const lastLogId = this.cache.lastLogIdCache[gameId];
-
-    state.logs = state.logs.filter(log => log.id > lastLogId);
-    if (state.logs.length > 0) {
-      this.cache.lastLogIdCache[gameId] = state.logs[state.logs.length - 1].id;
+function getSecretCardLists(state: State, viewer: SanitizeViewer): CardList[] {
+  const sandboxRevealDecks =
+    state.gameSettings?.sandboxMode === true && viewer.roleId === 4;
+  const players = state.players.filter(p => p.id === viewer.playerId);
+  const cardLists: CardList[] = [];
+  players.forEach(player => {
+    if (player.deck.isSecret && !sandboxRevealDecks) {
+      cardLists.push(player.deck);
     }
+    player.prizes.forEach(prize => {
+      if (prize.isSecret) {
+        cardLists.push(prize);
+      }
+    });
+  });
 
-    return state;
+  const opponents = state.players.filter(p => p.id !== viewer.playerId);
+  const isPlaying = state.players.some(p => p.id === viewer.playerId);
+  const isObserver = !isPlaying;
+
+  opponents.forEach(opponent => {
+    if (!opponent.hand.isPublic && (!isObserver || (viewer.roleId !== 4 && viewer.roleId !== 5))) {
+      cardLists.push(opponent.hand);
+    }
+    if (!opponent.deck.isPublic && !sandboxRevealDecks) {
+      cardLists.push(opponent.deck);
+    }
+    const adminObserver = isObserver && viewer.roleId === 4;
+    opponent.prizes.forEach(prize => {
+      if (!prize.isPublic && !adminObserver) {
+        cardLists.push(prize);
+      }
+    });
+  });
+
+  state.prompts.forEach(prompt => {
+    if (prompt instanceof ChooseCardsPrompt && prompt.options.isSecret) {
+      cardLists.push(prompt.cards);
+    }
+  });
+
+  return cardLists;
+}
+
+function filterPrompts(state: State, viewerPlayerId: number): State {
+  state.prompts = state.prompts.filter(prompt => {
+    return prompt.result === undefined;
+  });
+
+  state.prompts = state.prompts.map(prompt => {
+    if (prompt.playerId !== viewerPlayerId) {
+      return new AlertPrompt(prompt.playerId, GameMessage.NOT_YOUR_TURN);
+    }
+    return prompt;
+  });
+
+  state.prompts = deepClone(state.prompts, [Card]);
+  return state;
+}
+
+function removeLogs(
+  state: State,
+  lastLogId: number,
+  onLogsTrimmed?: (lastLogId: number) => void
+): State {
+  state.logs = state.logs.filter(log => log.id > lastLogId);
+  if (state.logs.length > 0 && onLogsTrimmed) {
+    onLogsTrimmed(state.logs[state.logs.length - 1].id);
   }
-
+  return state;
 }

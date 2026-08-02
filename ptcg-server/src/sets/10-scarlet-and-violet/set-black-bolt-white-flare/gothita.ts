@@ -1,5 +1,5 @@
-import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Gothita extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -17,8 +17,8 @@ export class Gothita extends PokemonCard {
   }];
 
   public set: string = 'WHT';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '41';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gothita';
   public fullName: string = 'Gothita WHT';
 }

@@ -37,14 +37,13 @@ export class Scovillainex extends PokemonCard {
   public name: string = 'Scovillain ex';
   public fullName: string = 'Scovillain ex TEF';
 
-  public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Chili Snapper Bind
     if (WAS_ATTACK_USED(effect, 0, this)) {
       YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED(store, state, effect);
       return BLOCK_RETREAT(store, state, effect, this);
     }
+    // Two-Headed Crushing
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -54,9 +53,9 @@ export class Scovillainex extends PokemonCard {
         const randomCard = opponent.hand.cards[randomIndex];
         opponent.hand.moveCardTo(randomCard, opponent.discard);
       }
-
       MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: 1, sourceCard: this, sourceEffect: this.attacks[1] });
     }
+
     return state;
   }
 }

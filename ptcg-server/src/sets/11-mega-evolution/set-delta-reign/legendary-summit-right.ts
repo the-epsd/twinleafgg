@@ -13,8 +13,7 @@ export class LegendarySummitRight extends TrainerCard {
   public setNumber: string = '74';
   public name: string = 'Legendary Summit';
   public fullName: string = 'Legendary Summit (Right) M6';
-  public text: string =
-    'You can only put this card into play from your hand with the other half of Legendary Summit, and it counts as one Stadium card while in play.\n\n' +
+  public text: string = 'You can only put this card into play from your hand with the other half of Legendary Summit, and it counts as one Stadium card while in play.\n\n' +
     'When Knocked Out by damage from an opponent\'s attack, both player\'s [C] Pokémon give up one less Prize card.';
   public powers = [{
     name: 'Stadium Assembly',

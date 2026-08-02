@@ -1,5 +1,5 @@
-import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Nacli extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -15,10 +15,10 @@ export class Nacli extends PokemonCard {
     text: ''
   }];
 
+  public regulationMark = 'I';
   public set: string = 'MEG';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '82';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nacli';
   public fullName: string = 'Nacli M1L';
-  public regulationMark = 'I';
 }

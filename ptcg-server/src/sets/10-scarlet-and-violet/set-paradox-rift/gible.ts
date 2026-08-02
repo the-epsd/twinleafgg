@@ -2,34 +2,23 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Gible extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public regulationMark = 'G';
-
-  public cardType: CardType = CardType.FIGHTING;
-
+  public cardType: CardType = F;
   public hp: number = 70;
-
-  public weakness = [{ type: CardType.GRASS }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: G }];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Bite',
-    cost: [CardType.FIGHTING],
+    cost: [F],
     damage: 20,
     text: ''
-  }
-  ];
+  }];
 
+  public regulationMark = 'G';
   public set: string = 'PAR';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '94';
-
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gible';
-
   public fullName: string = 'Gible PAR';
 }

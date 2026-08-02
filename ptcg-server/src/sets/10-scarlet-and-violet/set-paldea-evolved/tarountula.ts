@@ -1,10 +1,10 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage } from '../../../game/store/card/card-types';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Tarountula extends PokemonCard {
-  public stage = Stage.BASIC;
-  public cardType = G;
-  public hp = 60;
+  public stage: Stage = Stage.BASIC;
+  public cardType: CardType = G;
+  public hp: number = 60;
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
@@ -15,10 +15,10 @@ export class Tarountula extends PokemonCard {
     text: ''
   }];
 
-  public set: string = 'PAL';
   public regulationMark = 'G';
-  public cardImage: string = 'assets/cardback.png';
+  public set: string = 'PAL';
   public setNumber: string = '17';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tarountula';
   public fullName: string = 'Tarountula PAL';
 }

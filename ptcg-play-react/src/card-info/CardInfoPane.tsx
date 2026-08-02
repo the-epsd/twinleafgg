@@ -103,6 +103,8 @@ export function CardInfoPane({
   const { t } = useTranslation();
   const settings = useOptionalSettings();
   const debugMarkersEnabled = settings?.debugMarkersEnabled ?? false;
+  const showTagsEnabled = settings?.showTags ?? showTags;
+  const kerningPx = settings?.cardTextKerning ?? cardTextKerning;
   const [localSwapOpen, setLocalSwapOpen] = useState(false);
   const swapOpen = omitScanColumn ? (swapOpenProp ?? false) : localSwapOpen;
   const setSwapOpen = omitScanColumn
@@ -126,7 +128,7 @@ export function CardInfoPane({
     }
   }
 
-  const kerningStyle = { letterSpacing: `${cardTextKerning}px` } as const;
+  const kerningStyle = { letterSpacing: `${kerningPx}px` } as const;
   const formattedText = (text: string) => formatCardText(text, CARD_INFO_ENERGY_ICON_SIZE);
 
   const displayPowers = useMemo(() => getDisplayPowers(card, cardList), [card, cardList]);
@@ -171,7 +173,21 @@ export function CardInfoPane({
   const trainer = card as TrainerCard;
   const energy = card as EnergyCard;
 
-  const tagLabels = getDisplayTagLabels(card, showTags);
+  const tagLabels = getDisplayTagLabels(card, showTagsEnabled, cardList);
+
+  const subtitleTagPills =
+    tagLabels.length > 0 ? (
+      <>
+        <div className={styles.subtitleTags}>
+          {tagLabels.map((tag) => (
+            <span key={tag} className={styles.tag}>
+              {tag}
+            </span>
+          ))}
+        </div>
+        <div className={styles.spacer} />
+      </>
+    ) : null;
   const debugMarkers = useMemo(
     () => getDisplayDebugMarkers(card, cardList, players, debugMarkersEnabled),
     [card, cardList, players, debugMarkersEnabled],
@@ -256,18 +272,7 @@ export function CardInfoPane({
           <div className={styles.subtitle}>
             <div className={styles.subtitleStage}>{stageLabel(pokemon)}</div>
             <div className={styles.spacer} />
-            {tagLabels.length > 0 && (
-              <>
-                <div className={styles.subtitleTags}>
-                  {tagLabels.map((tag) => (
-                    <span key={tag} className={styles.tag}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <div className={styles.spacer} />
-              </>
-            )}
+            {subtitleTagPills}
             {pokemon.evolvesFrom ? (
               <div className={styles.subtitleEvolvesFrom}>{t('CARDS_EVOLVES_FROM', { name: pokemon.evolvesFrom })}</div>
             ) : null}
@@ -466,6 +471,7 @@ export function CardInfoPane({
               {energy.energyType === EnergyType.BASIC ? t('CARDS_BASIC_ENERGY') : t('CARDS_SPECIAL_ENERGY')}
             </div>
             <div className={styles.spacer} />
+            {subtitleTagPills}
             <div className={styles.subtitleCardType}>
               <TrainerTypeStrip className={styles.trainerStripCompact} />
             </div>
@@ -547,6 +553,7 @@ export function CardInfoPane({
           <div className={styles.subtitle}>
             <div className={styles.subtitleStage}>{trainerSubtitle(trainer.trainerType)}</div>
             <div className={styles.spacer} />
+            {subtitleTagPills}
             <div className={styles.subtitleCardType}>
               <TrainerTypeStrip type={trainer.trainerType} className={styles.trainerStripCompact} />
             </div>

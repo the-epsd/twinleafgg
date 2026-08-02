@@ -15,11 +15,11 @@ export class LilliesFullForce extends TrainerCard {
   public setNumber: string = '196';
   public name: string = 'Lillie\'s Full Force';
   public fullName: string = 'Lillie\'s Full Force CEC';
-  public readonly LILLIES_FORCE_MARKER = 'LILLIES_FORCE_MARKER';
-
   public text: string = `Draw 4 cards.
 
 At the end of this turn, if you have 3 or more cards in your hand, shuffle cards from your hand into your deck until you have 2 cards in your hand. `;
+
+  public readonly LILLIES_FORCE_MARKER = 'LILLIES_FORCE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -29,14 +29,14 @@ At the end of this turn, if you have 3 or more cards in your hand, shuffle cards
 
     if (effect instanceof EndTurnEffect && HAS_MARKER(this.LILLIES_FORCE_MARKER, effect.player, this)) {
       if (effect.player.hand.cards.length >= 3) {
-        const discardAmount = effect.player.hand.cards.length - 3;
+        const shuffleAmount = effect.player.hand.cards.length - 2;
 
-        return store.prompt(state, new ChooseCardsPrompt(
+        state = store.prompt(state, new ChooseCardsPrompt(
           effect.player,
-          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          GameMessage.CHOOSE_CARD_TO_SHUFFLE,
           effect.player.hand,
           {},
-          { min: discardAmount, max: discardAmount, allowCancel: false }
+          { min: shuffleAmount, max: shuffleAmount, allowCancel: false }
         ), selected => {
           const cards = selected || [];
 

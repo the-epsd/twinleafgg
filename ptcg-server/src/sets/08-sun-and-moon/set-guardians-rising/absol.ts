@@ -104,7 +104,7 @@ export class Absol extends PokemonCard {
         player.active.moveCardTo(c, player.hand);
       });
 
-      KNOCK_OUT_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(effect, this);
+      KNOCK_OUT_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(store, state, effect, this);
     }
 
     return state;

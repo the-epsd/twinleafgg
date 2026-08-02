@@ -1,35 +1,23 @@
-import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../game/store/card/card-types';
 
 export class Growlithe extends PokemonCard {
-  
-  public set = 'BS';
-  
-  public fullName = 'Growlithe BS';
+  public stage: Stage = Stage.BASIC;
+  public cardType: CardType = R;
+  public hp: number = 60;
+  public weakness = [{ type: W }];
+  public retreat = [C];
 
-  public name = 'Growlithe';
+  public attacks = [{
+    name: 'Flare',
+    cost: [R, C],
+    damage: 20,
+    text: ''
+  }];
 
-  public stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.FIRE;  
-
-  public cardImage: string = 'assets/cardback.png';
-
+  public set: string = 'BS';
   public setNumber: string = '28';
-
-  public hp = 60;
-
-  public weakness = [{ type: CardType.WATER }];
-  
-  public retreat = [CardType.COLORLESS];
-
-  public attacks = [
-    {
-      name: 'Flare',
-      cost: [CardType.FIRE, CardType.COLORLESS],
-      damage: 20,
-      text: ''
-    }
-  ];
-
+  public cardImage: string = 'assets/cardback.png';
+  public name: string = 'Growlithe';
+  public fullName: string = 'Growlithe BS';
 }

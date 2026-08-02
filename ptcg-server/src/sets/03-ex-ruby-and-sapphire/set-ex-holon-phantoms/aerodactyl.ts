@@ -1,10 +1,6 @@
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, PowerType, StateUtils, GamePhase, GameError, GameMessage } from '../../../game';
-import { Effect } from '../../../game/store/effects/effect';
-import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, HAS_MARKER, REMOVE_MARKER, SEARCH_DECK_FOR_CARDS_TO_HAND, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import { PokemonCard, Stage, CardTag, CardType, PowerType, StoreLike, State, GameError, GameMessage, SuperType, EnergyType } from "../../../game";
+import { Effect } from "../../../game/store/effects/effect";
+import { WAS_POWER_USED, HAS_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, ADD_MARKER, ABILITY_USED, SEARCH_DECK_FOR_CARDS_TO_HAND, WAS_ATTACK_USED, THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN } from "../../../game/store/prefabs/prefabs";
 
 export class Aerodactyl extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -36,7 +32,6 @@ export class Aerodactyl extends PokemonCard {
   public name: string = 'Aerodactyl';
   public fullName: string = 'Aerodactyl HP';
 
-  public readonly GRANITE_HEAD_MARKER = 'GRANITE_HEAD_MARKER';
   public readonly PRIMAL_LIGHT_MARKER = 'PRIMAL_LIGHT_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -57,22 +52,7 @@ export class Aerodactyl extends PokemonCard {
 
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      ADD_MARKER(this.GRANITE_HEAD_MARKER, effect.player, this);
-    }
-
-    if (effect instanceof PutDamageEffect
-      && HAS_MARKER(this.GRANITE_HEAD_MARKER, StateUtils.getOpponent(state, effect.player), this)
-      && effect.target.getPokemonCard() === this) {
-
-      if (state.phase !== GamePhase.ATTACK) {
-        return state;
-      }
-
-      effect.damage -= 10;
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player !== StateUtils.findOwner(state, StateUtils.findCardList(state, this))) {
-      REMOVE_MARKER(this.GRANITE_HEAD_MARKER, StateUtils.getOpponent(state, effect.player), this);
+      return THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN(store, state, effect, 10);
     }
 
     return state;

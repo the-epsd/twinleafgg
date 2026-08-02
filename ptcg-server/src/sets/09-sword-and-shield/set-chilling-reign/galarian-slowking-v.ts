@@ -62,7 +62,7 @@ export class GalarianSlowkingV extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      KNOCK_OUT_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(effect, this);
+      KNOCK_OUT_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(store, state, effect, this);
     }
 
     return state;

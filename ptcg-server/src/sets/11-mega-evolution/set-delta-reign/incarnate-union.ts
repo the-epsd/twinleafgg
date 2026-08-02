@@ -1,4 +1,4 @@
-import { CardType, Player, PlayerType, PokemonCard, State, StateUtils, StoreLike } from '../../../game';
+import { Player, PlayerType, PokemonCard, State, StateUtils, StoreLike } from '../../../game';
 import { CheckAttackCostEffect } from '../../../game/store/effects/check-effects';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
@@ -38,6 +38,6 @@ export function reduceIncarnateUnionEffect(
     return state;
   }
 
-  effect.cost = effect.cost.filter(c => c !== CardType.COLORLESS);
+  effect.cost = effect.cost.filter(c => c !== C);
   return state;
 }

@@ -1,13 +1,10 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CardTag, CardType, Stage, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, GameError, ChooseEnergyPrompt, Card } from '../../../game';
+import { StoreLike, State, GameMessage, ChooseEnergyPrompt, Card } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { PlayItemEffect } from '../../../game/store/effects/play-card-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, OPPONENT_CANNOT_PLAY_ITEM_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class VikavoltV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -37,44 +34,25 @@ export class VikavoltV extends PokemonCard {
   public name: string = 'Vikavolt V';
   public fullName: string = 'Vikavolt V DAA';
 
-  public readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Paralyzing Bolt
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      opponent.marker.addMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this);
-    }
-
-    if (effect instanceof PlayItemEffect) {
-      const player = effect.player;
-      if (player.marker.hasMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this)) {
-      effect.player.marker.removeMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this);
+      return OPPONENT_CANNOT_PLAY_ITEM_CARDS(store, state, effect, this);
     }
 
     // Super Zap Cannon
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-
       if (!player.active.cards.some(c => c.superType === SuperType.ENERGY)) {
         return state;
       }
-
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
-
       state = store.prompt(state, new ChooseEnergyPrompt(
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         checkProvidedEnergy.energyMap,
-        [CardType.COLORLESS, CardType.COLORLESS],
+        [C, C],
         { allowCancel: false }
       ), energy => {
         const cards: Card[] = (energy || []).map(e => e.card);
@@ -83,7 +61,6 @@ export class VikavoltV extends PokemonCard {
         store.reduceEffect(state, discardEnergy);
       });
     }
-
     return state;
   }
 }

@@ -39,13 +39,8 @@ export class Orthwormex extends PokemonCard {
   public name: string = 'Orthworm ex';
   public fullName: string = 'Orthworm ex SCR';
 
-  public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      return BLOCK_RETREAT(store, state, effect, this);
-    }
+    // Pummeling Payback
     if (effect instanceof PutDamageEffect || effect instanceof DealDamageEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -84,6 +79,11 @@ export class Orthwormex extends PokemonCard {
 
       const oppActive = player.active;
       oppActive.damage += energyCount * 10;
+    }
+
+    // Rock Tomb
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      return BLOCK_RETREAT(store, state, effect, this);
     }
 
     return state;

@@ -9,24 +9,22 @@ export class Snivy extends PokemonCard {
   public resistance = [{ type: W, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Tackle',
-      cost: [G],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Vine Whip',
-      cost: [G, C],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Tackle',
+    cost: [G],
+    damage: 10,
+    text: ''
+  },
+  {
+    name: 'Vine Whip',
+    cost: [G, C],
+    damage: 20,
+    text: ''
+  }];
 
   public set: string = 'BLW';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '1';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Snivy';
   public fullName: string = 'Snivy BLW 1';
 }

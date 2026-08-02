@@ -9,14 +9,12 @@ export class CynthiasRoselia extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Spike Sting',
-      cost: [C],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Spike Sting',
+    cost: [C],
+    damage: 20,
+    text: ''
+  }];
 
   public regulationMark = 'I';
   public set: string = 'DRI';

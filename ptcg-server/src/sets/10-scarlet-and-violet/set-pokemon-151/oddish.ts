@@ -1,34 +1,24 @@
-import { PokemonCard, Stage, CardType } from '../../../game';
+import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Oddish extends PokemonCard {
-
-  public stage = Stage.BASIC;
-
-  public cardType = CardType.GRASS;
-
-  public hp = 60;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public retreat = [CardType.COLORLESS];
+  public stage: Stage = Stage.BASIC;
+  public cardType: CardType = G;
+  public hp: number = 60;
+  public weakness = [{ type: R }];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Razor Leaf',
-    cost: [CardType.COLORLESS, CardType.COLORLESS],
+    cost: [C, C],
     damage: 20,
     text: ''
   }];
 
-  public set: string = 'MEW';
-
   public regulationMark = 'G';
-
-  public cardImage: string = 'assets/cardback.png';
-
+  public set: string = 'MEW';
   public setNumber: string = '43';
-
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Oddish';
-
   public fullName: string = 'Oddish MEW';
-
 }

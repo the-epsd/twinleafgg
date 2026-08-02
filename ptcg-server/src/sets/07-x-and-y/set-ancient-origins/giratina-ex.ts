@@ -1,13 +1,11 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils } from '../../../game';
+import { PowerType, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { OPPONENT_CANNOT_PLAY_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { AbstractAttackEffect, ApplyWeaknessEffect } from '../../../game/store/effects/attack-effects';
 
 export class GiratinaEX extends PokemonCard {
-
   public tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = N;
@@ -35,7 +33,6 @@ export class GiratinaEX extends PokemonCard {
   public fullName: string = 'Giratina EX AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // Renegade Pulse
     if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
       const sourceCard = effect.source.getPokemonCard();
@@ -51,20 +48,11 @@ export class GiratinaEX extends PokemonCard {
 
     // Chaos Wheel
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      opponent.marker.addMarker(opponent.ATTACK_EFFECT_TOOL_LOCK, this, 'attack', 'player');
-      opponent.marker.addMarker(opponent.ATTACK_EFFECT_SPECIAL_ENERGY_LOCK, this, 'attack', 'player');
-      opponent.marker.addMarker(opponent.ATTACK_EFFECT_STADIUM_LOCK, this, 'attack', 'player');
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      const player = effect.player;
-
-      player.marker.removeMarker(player.ATTACK_EFFECT_TOOL_LOCK, this);
-      player.marker.removeMarker(player.ATTACK_EFFECT_SPECIAL_ENERGY_LOCK, this);
-      player.marker.removeMarker(player.ATTACK_EFFECT_STADIUM_LOCK, this);
+      return OPPONENT_CANNOT_PLAY_CARDS(store, state, effect, this, {
+        tool: true,
+        specialEnergy: true,
+        stadium: true,
+      });
     }
 
     return state;

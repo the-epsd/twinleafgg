@@ -1,15 +1,9 @@
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { PowerType } from '../../../game/store/card/pokemon-types';
-import { StoreLike, State, GameMessage, StateUtils, PlayerType, ChooseCardsPrompt } from '../../../game';
-import { Effect } from '../../../game/store/effects/effect';
-import { COIN_FLIP_PROMPT, IS_POKEBODY_BLOCKED, MOVE_CARDS, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
-import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
-import {
-  HANDLE_ABILITY_BLOCK,
-  POKEPOWER_TYPES,
-} from '../../../game/store/prefabs/ability-lock';
+import { CardTag, CardType, GameMessage, PlayerType, PokemonCard, PokemonCardList, PowerType, Stage, State, StateUtils, StoreLike } from "../../../game";
+import { CheckPokemonTypeEffect } from "../../../game/store/effects/check-effects";
+import { Effect } from "../../../game/store/effects/effect";
+import { HANDLE_ABILITY_BLOCK, POKEPOWER_TYPES } from "../../../game/store/prefabs/ability-lock";
+import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from "../../../game/store/prefabs/attack-effects";
+import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH, COIN_FLIP_PROMPT } from "../../../game/store/prefabs/prefabs";
 
 export class Solrock extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -24,20 +18,18 @@ export class Solrock extends PokemonCard {
     text: 'As long as you have Lunatone in play, each player\'s [C] Pokémon (excluding Pokémon-ex) can\'t use any Poké-Powers.'
   }];
 
-  public attacks = [
-    {
-      name: 'Call for Family',
-      cost: [C],
-      damage: 0,
-      text: 'Search your deck for a Lunatone and put it onto your Bench. Shuffle your deck afterward.'
-    },
-    {
-      name: 'Hyper Beam',
-      cost: [F],
-      damage: 0,
-      text: 'Flip a coin. If heads, discard an Energy card attached to the Defending Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Call for Family',
+    cost: [C],
+    damage: 0,
+    text: 'Search your deck for a Lunatone and put it onto your Bench. Shuffle your deck afterward.'
+  },
+  {
+    name: 'Hyper Beam',
+    cost: [F],
+    damage: 0,
+    text: 'Flip a coin. If heads, discard an Energy card attached to the Defending Pokémon.'
+  }];
 
   public set: string = 'LM';
   public name: string = 'Solrock';
@@ -108,21 +100,9 @@ export class Solrock extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
       COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
-          store.prompt(state, new ChooseCardsPrompt(
-            player,
-            GameMessage.CHOOSE_CARD_TO_DISCARD,
-            opponent.active,
-            { superType: SuperType.ENERGY },
-            { min: 1, max: 1, allowCancel: false }
-          ), selected => {
-            const card = selected[0];
-
-            MOVE_CARDS(store, state, opponent.active, opponent.discard, { cards: [card], sourceCard: this, sourceEffect: this.attacks[1] });
-            return state;
-          });
+          DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
         }
       });
     }

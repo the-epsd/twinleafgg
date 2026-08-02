@@ -1,12 +1,8 @@
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { PowerType } from '../../../game/store/card/pokemon-types';
-import { StoreLike, State, StateUtils, GamePhase } from '../../../game';
-import { Effect } from '../../../game/store/effects/effect';
-import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { AddMarkerEffect, DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { CheckHpEffect } from '../../../game/store/effects/check-effects';
+import { PokemonCard, Stage, CardTag, CardType, PowerType, StoreLike, State, StateUtils } from "../../../game";
+import { DealDamageEffect } from "../../../game/store/effects/attack-effects";
+import { CheckHpEffect } from "../../../game/store/effects/check-effects";
+import { Effect } from "../../../game/store/effects/effect";
+import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED, THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN } from "../../../game/store/prefabs/prefabs";
 
 export class Scizorex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -44,8 +40,6 @@ export class Scizorex extends PokemonCard {
   public name: string = 'Scizor ex';
   public fullName: string = 'Scizor ex UF';
 
-  public readonly STEEL_WING_MARKER = 'STEEL_WING_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof DealDamageEffect && effect.source.getPokemonCard() === this) {
@@ -65,25 +59,7 @@ export class Scizorex extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const addMarkerEffect = new AddMarkerEffect(effect, this.STEEL_WING_MARKER, this);
-      return store.reduceEffect(state, addMarkerEffect);
-    }
-
-    // Reduce damage by 20
-    if (effect instanceof PutDamageEffect
-      && effect.source.marker.hasMarker(this.STEEL_WING_MARKER, this)) {
-
-      // It's not an attack
-      if (state.phase !== GamePhase.ATTACK) {
-        return state;
-      }
-
-      effect.damage -= 20;
-      return state;
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      effect.player.active.marker.removeMarker(this.STEEL_WING_MARKER, this);
+      return THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN(store, state, effect, 20);
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

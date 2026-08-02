@@ -1,15 +1,28 @@
-import { BudewASC, TeamRocketsTarountulaASC, TeamRocketsSpidopsASC, EthansSlugmaASC, EthansMagcargoASC, EthansHoOhexASC, NsDarumakaASC, NsDarmanitanASC, SalanditASC, SalazzleASC, ScorbunnyASC, RabootASC, CinderaceexASC, PsyduckASC, GolduckASC, SneaselASC, WeavileASC, PikachuexASC, TynamoASC, EelektrikASC, CharjabugASC, IonosTadbulbASC, IonosBelliboltexASC, IonosWattrelASC, IonosKilowattrelASC, ClefairyASC, ClefableASC, LilliesClefairyexASC, TeamRocketsMewtwoexASC, TogepiASC, TogeticASC, TogekissASC, RaltsASC, KirliaASC, MegaGardevoirexASC, ShuppetASC, BanetteASC, TeamRocketsMimikyuASC, MunkidoriASC, LunatoneASC, SolrockASC, RegirockexASC, CynthiasGibleASC, CynthiasGabiteASC, CynthiasGarchompexASC, RioluASC, MegaLucarioexASC, GastlyASC, HaunterASC, MegaGengarexASC, TeamRocketsMurkrowASC, CynthiasSpiritombASC, NsZoruaASC, NsZoroarkexASC, FezandipitiexASC, NsReshiramASC, DreepyASC, DrakloakASC, DragapultexASC, TeamRocketsMeowthASC, FanRotomASC, HopsCramorantASC, TerapagosASC, TerapagosexASC, AirBalloonASC, BuddyBuddyPoffinASC, CounterGainASC, LushForestASC, GlassTrumpetASC, IrisFightingSpiritASC, LilliesDeterminationASC, MegaSignalASC, MysteryGardenASC, NsPPUpASC, NightlyStretcherASC, PowerProteinASC, SurferASC, TeamRocketsArcherASC, TeamRocketsArianaASC, TeamRocketsFactoryASC, TeamRocketsGiovanniASC, TeamRocketsGreatBallASC, TeamRocketsPetrelASC, TeamRocketsProtonASC, TeamRocketsTransceiverASC, TeamRocketsWatchtowerASC, ToolScrapperASC, UltraBallASC, PrismEnergyASC, TeamRocketsEnergyASC, ErikasTangela2ASC, Beautifly2ASC, Dustox2ASC, Budew2ASC, EthansMagcargo2ASC, Numel2ASC, Salazzle2ASC, Scorbunny2ASC, Psyduck2ASC, Snorunt2ASC, Weavile2ASC, IonosWattrel2ASC, Marill2ASC, Misdreavus2ASC, Banette2ASC, Togekiss2ASC, TeamRocketsMimikyu2ASC, CynthiasSpiritomb2ASC, Dreepy2ASC, Drakloak2ASC, LarrysStaraptor2ASC, FanRotom2ASC, MegaAudinoex2ASC, BlackBeltsTrainingASC, BossOrders2ASC, Canari2ASC, CherenASC, CounterGain2ASC, GlassTrumpet2ASC, JammingTowerASC, NsPPUp2ASC, TeamRocketsTransceiver2ASC, UltraBall2ASC, MegaFroslassex2ASC, MegaEelektrossex2ASC, MegaDiancieexASC, MegaHawluchaex2ASC, MegaGengarex2ASC, MegaScraftyex2ASC, MegaDragoniteex2ASC, MegaMeganiumex2ASC, MegaEmboarex2ASC, MegaFeraligatrex2ASC, MegaFroslassex3ASC, Pikachuex3ASC, MegaEelektrossex3ASC, IonosBelliboltex2ASC, LilliesClefairyex2ASC, TeamRocketsMewtwoex2ASC, MegaDiancieex2ASC, MegaHawluchaex3ASC, MegaGengarex3ASC, MegaScraftyex3ASC, NsZoroarkex2ASC, MarniesGrimmsnarlexASC, Fezandipitiex2ASC, StevensMetagrossexASC, MegaDragoniteex3ASC, Canari3ASC, IrisFightingSpirit2ASC, Surfer2ASC, MegaCharizardYex2ASC, MegaDragoniteex4ASC, JudgeMC, PokeGear30MC, CrushingHammerMC, EnergySearchMC, PokemonCatcherMC, PotionMC, SuperPotionMC } from './other-prints';
+import { BudewASC, TeamRocketsTarountulaASC, TeamRocketsSpidopsASC, EthansSlugmaASC, EthansMagcargoASC, EthansHoOhexASC, NsDarumakaASC, NsDarmanitanASC, SalanditASC, SalazzleASC, ScorbunnyASC, RabootASC, CinderaceexASC, PsyduckASC, GolduckASC, SneaselASC, WeavileASC, PikachuexASC, TynamoASC, EelektrikASC, CharjabugASC, IonosTadbulbASC, IonosBelliboltexASC, IonosWattrelASC, IonosKilowattrelASC, ClefairyASC, ClefableASC, LilliesClefairyexASC, TeamRocketsMewtwoexASC, TogepiASC, TogeticASC, TogekissASC, RaltsASC, KirliaASC, MegaGardevoirexASC, ShuppetASC, BanetteASC, TeamRocketsMimikyuASC, MunkidoriASC, LunatoneASC, SolrockASC, RegirockexASC, CynthiasGibleASC, CynthiasGabiteASC, CynthiasGarchompexASC, RioluASC, MegaLucarioexASC, GastlyASC, HaunterASC, MegaGengarexASC, TeamRocketsMurkrowASC, CynthiasSpiritombASC, NsZoruaASC, NsZoroarkexASC, FezandipitiexASC, NsReshiramASC, DreepyASC, DrakloakASC, DragapultexASC, TeamRocketsMeowthASC, FanRotomASC, HopsCramorantASC, TerapagosASC, TerapagosexASC, AirBalloonASC, BuddyBuddyPoffinASC, CounterGainASC, LushForestASC, GlassTrumpetASC, IrisFightingSpiritASC, LilliesDeterminationASC, MegaSignalASC, MysteryGardenASC, NsPPUpASC, NightlyStretcherASC, PowerProteinASC, SurferASC, TeamRocketsArcherASC, TeamRocketsArianaASC, TeamRocketsFactoryASC, TeamRocketsGiovanniASC, TeamRocketsGreatBallASC, TeamRocketsPetrelASC, TeamRocketsProtonASC, TeamRocketsTransceiverASC, TeamRocketsWatchtowerASC, ToolScrapperASC, UltraBallASC, PrismEnergyASC, TeamRocketsEnergyASC, ErikasTangela2ASC, Beautifly2ASC, Dustox2ASC, Budew2ASC, EthansMagcargo2ASC, Numel2ASC, Salazzle2ASC, Scorbunny2ASC, Psyduck2ASC, Snorunt2ASC, Weavile2ASC, IonosWattrel2ASC, Marill2ASC, Misdreavus2ASC, Banette2ASC, Togekiss2ASC, TeamRocketsMimikyu2ASC, CynthiasSpiritomb2ASC, Dreepy2ASC, Drakloak2ASC, LarrysStaraptor2ASC, FanRotom2ASC, MegaAudinoex2ASC, BlackBeltsTrainingASC, BossOrders2ASC, Canari2ASC, CherenASC, CounterGain2ASC, GlassTrumpet2ASC, JammingTowerASC, NsPPUp2ASC, TeamRocketsTransceiver2ASC, UltraBall2ASC, MegaFroslassex2ASC, MegaEelektrossex2ASC, MegaDiancieexASC, MegaHawluchaex2ASC, MegaGengarex2ASC, MegaScraftyex2ASC, MegaDragoniteex2ASC, MegaMeganiumex2ASC, MegaEmboarex2ASC, MegaFeraligatrex2ASC, MegaFroslassex3ASC, Pikachuex3ASC, MegaEelektrossex3ASC, IonosBelliboltex2ASC, LilliesClefairyex2ASC, TeamRocketsMewtwoex2ASC, MegaDiancieex2ASC, MegaHawluchaex3ASC, MegaGengarex3ASC, MegaScraftyex3ASC, NsZoroarkex2ASC, MarniesGrimmsnarlexASC, Fezandipitiex2ASC, StevensMetagrossexASC, MegaDragoniteex3ASC, Canari3ASC, IrisFightingSpirit2ASC, Surfer2ASC, MegaCharizardYex2ASC, MegaDragoniteex4ASC, JudgeMC, PokeGear30MC, CrushingHammerMC, EnergySearchMC, PokemonCatcherMC, PotionMC, SuperPotionMC, PikachuexSIR } from './other-prints';
 import { Card } from '../../../game/store/card/card';
 import { AntheaAndConcordia } from './anthea-and-concordia';
 import { Beautifly } from './beautifly';
+import { Carkol } from './carkol';
 import { Cascoon } from './cascoon';
 import { Camerupt } from './camerupt';
 import { Canari } from './canari';
+import { Coalossal } from './coalossal';
 import { Delcatty } from './delcatty';
 import { Dragonair } from './dragonair';
 import { Dratini } from './dratini';
 import { Dustox } from './dustox';
+import { Entei } from './entei';
 import { Frosmoth } from './frosmoth';
+import { Glastrier } from './glastrier';
+import { Groudon } from './groudon';
+import { Grubbin } from './grubbin';
+import { Heliolisk } from './heliolisk';
+import { Helioptile } from './helioptile';
+import { Hitmontop } from './hitmontop';
+import { Hoopa } from './hoopa';
+import { Mawile } from './mawile';
+import { Medicham } from './medicham';
+import { Meditite } from './meditite';
 import { MegaCharizardYex } from './mega-charizard-y-ex';
 import { MegaDragoniteex } from './mega-dragonite-ex';
 import { MegaEelektrossex } from './mega-eelektross-ex';
@@ -25,17 +38,26 @@ import { Numel } from './numel';
 import { NsZekrom } from './ns-zekrom';
 import { NsVanilluxe } from './ns-vanilluxe';
 import { LightBall } from './light-ball';
+import { Pancham } from './pancham';
+import { Pikachu } from './pikachu';
 import { PokePad } from './poke-pad';
+import { Raichu } from './raichu';
 import { Rayquaza } from './rayquaza';
+import { Rolycoly } from './rolycoly';
 import { Rotom } from './rotom';
 import { Scraggy } from './scraggy';
+import { Slurpuff } from './slurpuff';
 import { Snom } from './snom';
 import { Snorunt } from './snorunt';
 import { Spectrier } from './spectrier';
 import { Stunfisk } from './stunfisk';
+import { Stunfiskex } from './stunfisk-ex';
+import { Swirlix } from './swirlix';
 import { TapuKoko } from './tapu-koko';
 import { TeamRocketsHonchkrow } from './team-rockets-honchkrow';
 import { TeamRocketsKangaskhanex } from './team-rockets-kangaskhan-ex';
+import { Vikavolt } from './vikavolt';
+import { Voltorbex } from './voltorb-ex';
 import { Wurmple } from './wurmple';
 import { Silcoon } from './silcoon';
 // Start Deck 100
@@ -78,6 +100,25 @@ import { NsVanillish } from './ns-vanillish';
 
 export const setAscendedHeroes: Card[] = [
   //Start Deck 100 Reprints
+  new Carkol(),
+  new Coalossal(),
+  new Entei(),
+  new Glastrier(),
+  new Groudon(),
+  new Grubbin(),
+  new Heliolisk(),
+  new Helioptile(),
+  new Hitmontop(),
+  new Hoopa(),
+  new Mawile(),
+  new Medicham(),
+  new Meditite(),
+  new Pancham(),
+  new Pikachu(),
+  new Raichu(),
+  new Rolycoly(),
+  new Slurpuff(),
+  new Stunfiskex(),
   new SuperPotionMC(),
   new EnergySearchMC(),
   new CrushingHammerMC(),
@@ -85,7 +126,6 @@ export const setAscendedHeroes: Card[] = [
   new PokeGear30MC(),
   new PokemonCatcherMC(),
   new JudgeMC(),
-
   new AntheaAndConcordia(),
   new Beautifly(),
   new BossOrdersASC(),
@@ -123,9 +163,12 @@ export const setAscendedHeroes: Card[] = [
   new Snorunt(),
   new Spectrier(),
   new Stunfisk(),
+  new Swirlix(),
   new TapuKoko(),
   new TeamRocketsHonchkrow(),
   new TeamRocketsKangaskhanex(),
+  new Vikavolt(),
+  new Voltorbex(),
   new Wurmple(),
   // Start Deck 100
   new ErikasOddish(),
@@ -295,6 +338,7 @@ export const setAscendedHeroes: Card[] = [
   new MegaEmboarex2ASC(),
   new MegaFeraligatrex2ASC(),
   new MegaFroslassex3ASC(),
+  new PikachuexSIR(),
   new Pikachuex3ASC(),
   new MegaEelektrossex3ASC(),
   new IonosBelliboltex2ASC(),

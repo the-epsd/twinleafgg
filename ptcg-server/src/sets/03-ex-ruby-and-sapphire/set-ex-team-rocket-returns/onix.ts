@@ -1,8 +1,6 @@
-import { CardType, GamePhase, PokemonCard, Stage, State, StoreLike } from '../../../game';
-import { AddMarkerEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { Effect } from '../../../game/store/effects/effect';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PokemonCard, Stage, CardType, StoreLike, State } from "../../../game";
+import { Effect } from "../../../game/store/effects/effect";
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN } from "../../../game/store/prefabs/prefabs";
 
 export class Onix extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -30,8 +28,6 @@ export class Onix extends PokemonCard {
   public name: string = 'Onix';
   public fullName: string = 'Onix TRR';
 
-  public readonly BARRIER_ATTACK_MARKER = 'BARRIER_ATTACK_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
@@ -44,24 +40,7 @@ export class Onix extends PokemonCard {
 
     // Granite Head
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const addMarkerEffect = new AddMarkerEffect(effect, this.BARRIER_ATTACK_MARKER, this);
-      return store.reduceEffect(state, addMarkerEffect);
-    }
-
-    if (effect instanceof PutDamageEffect
-      && effect.source.marker.hasMarker(this.BARRIER_ATTACK_MARKER, this)) {
-
-      // It's not an attack
-      if (state.phase !== GamePhase.ATTACK) {
-        return state;
-      }
-
-      effect.damage -= 10;
-      return state;
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      effect.player.active.marker.removeMarker(this.BARRIER_ATTACK_MARKER, this);
+      return THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN(store, state, effect, 10);
     }
 
     return state;

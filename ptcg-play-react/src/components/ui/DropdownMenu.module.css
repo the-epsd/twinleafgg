@@ -1,0 +1,132 @@
+.root {
+  --dropdown-bg: rgba(12, 26, 46, 0.96);
+  --dropdown-border: rgba(62, 199, 201, 0.4);
+  --dropdown-text: #fafafa;
+  --dropdown-text-active: #ffffff;
+  --dropdown-active-bg: #1a3a5c;
+  --dropdown-caret: #b6e03a;
+  --dropdown-radius: 12px;
+  --dropdown-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  font-family: Urbanist, 'Segoe UI', sans-serif;
+}
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid var(--dropdown-border);
+  border-radius: 10px;
+  background: var(--dropdown-bg);
+  color: var(--dropdown-text);
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.92rem;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease;
+}
+
+.trigger:hover {
+  border-color: rgba(62, 199, 201, 0.65);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+.trigger:focus-visible {
+  outline: 2px solid #3ec7c9;
+  outline-offset: 2px;
+}
+
+.triggerOpen {
+  border-color: rgba(62, 199, 201, 0.75);
+}
+
+.panel {
+  z-index: 40;
+  min-width: 220px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--dropdown-border);
+  border-radius: var(--dropdown-radius);
+  background: var(--dropdown-bg);
+  box-shadow: var(--dropdown-shadow);
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+}
+
+.panelAnchored {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+}
+
+.panelAnchoredEnd {
+  left: auto;
+  right: 0;
+}
+
+.panelAnchoredTop {
+  top: auto;
+  bottom: calc(100% + 6px);
+}
+
+.panelStandalone {
+  position: relative;
+}
+
+.item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 11px 18px;
+  border: 0;
+  background: transparent;
+  color: var(--dropdown-text);
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.98rem;
+  letter-spacing: 0.01em;
+  line-height: 1.25;
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background 0.08s ease,
+    color 0.08s ease;
+}
+
+.item:focus {
+  outline: none;
+}
+
+.item:focus-visible {
+  outline: 2px solid #3ec7c9;
+  outline-offset: -2px;
+}
+
+.itemActive {
+  background: var(--dropdown-active-bg);
+  color: var(--dropdown-text-active);
+}
+
+.itemDisabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.itemLabel {
+  flex: 1;
+  min-width: 0;
+}

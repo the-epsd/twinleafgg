@@ -14,8 +14,7 @@ export class LegendaryLavaLakeRight extends TrainerCard {
   public setNumber: string = '76';
   public name: string = 'Legendary Lava Lake';
   public fullName: string = 'Legendary Lava Lake (Right) M6';
-  public text: string =
-    'You can only put this card into play from your hand with the other half of Legendary Lava Lake, and it counts as one Stadium card while in play.\n\n' +
+  public text: string = 'You can only put this card into play from your hand with the other half of Legendary Lava Lake, and it counts as one Stadium card while in play.\n\n' +
     'Evolution Pokemon in play (both yours and your opponent\'s) have no Abilities.';
   public powers = [{
     name: 'Stadium Assembly',

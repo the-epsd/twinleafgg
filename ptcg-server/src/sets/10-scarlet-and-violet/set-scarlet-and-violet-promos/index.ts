@@ -9,6 +9,7 @@ import { Pecharunt } from './pecharunt';
 import { Scrafty } from './scrafty';
 import { Tinkatonex } from './tinkaton-ex';
 import { Toxtricityex } from './toxtricity-ex';
+import { Pikachuex } from './pikachu-ex';
 
 
 export const setScarletAndVioletPromos: Card[] = [
@@ -17,6 +18,7 @@ export const setScarletAndVioletPromos: Card[] = [
   new Charmander(),
   new Mimikyuex(),
   new Pecharunt(),
+  new Pikachuex(),
   new Tinkatonex(),
   new Toxtricityex(),
   new Scrafty(),

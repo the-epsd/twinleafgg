@@ -16,8 +16,8 @@ export class Squirtle extends PokemonCard {
   }];
 
   public set: string = 'TR';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '68';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Squirtle';
   public fullName: string = 'Squirtle TR';
 }

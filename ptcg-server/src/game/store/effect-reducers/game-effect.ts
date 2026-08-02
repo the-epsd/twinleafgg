@@ -2,8 +2,8 @@ import { GameError } from '../../game-error';
 import { GameLog, GameMessage } from '../../game-message';
 import { BoardEffect, CardTag, CardType, SpecialCondition, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
-import { Power, Resistance, Weakness } from '../card/pokemon-types';
-import { ApplyWeaknessEffect, DealDamageEffect } from '../effects/attack-effects';
+import { Power, PowerType, Resistance, Weakness } from '../card/pokemon-types';
+import { ApplyWeaknessEffect, DealDamageEffect, DiscardCardsEffect } from '../effects/attack-effects';
 import { Player } from '../state/player';
 import {
   AddSpecialConditionsPowerEffect,
@@ -28,20 +28,21 @@ import {
 } from '../effects/game-effects';
 import { AfterAttackEffect, BeforeDoingDamageEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
-import { SlotType } from '../actions/play-card-action';
+import { PlayerType, SlotType } from '../actions/play-card-action';
 import { StateUtils } from '../state-utils';
 import { GamePhase, State } from '../state/state';
 import { StoreLike } from '../store-like';
 import { MoveCardsEffect } from '../effects/game-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
 import { PokemonCardList } from '../state/pokemon-card-list';
-import { MOVE_CARDS } from '../prefabs/prefabs';
+import { MOVE_CARDS, COIN_FLIP_PROMPT } from '../prefabs/prefabs';
 import { STAMP_ABILITY_LOCK_ACTIVATION } from '../prefabs/ability-lock';
 import { RESOLVE_COIN_FLIP_EFFECT, RUN_COIN_FLIP_SEQUENCE } from '../prefabs/attack-coin-reflip';
 import { CardList } from '../state/card-list';
 import { ConfirmPrompt } from '../prompts/confirm-prompt';
 import { checkState } from './check-effect';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
+import { DiscardEnergyPrompt } from '../prompts/discard-energy-prompt';
 import { Card } from '../card/card';
 import { Attack } from '../card/pokemon-types';
 import { WaitPrompt } from '../prompts/wait-prompt';
@@ -155,6 +156,33 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   if (attackingPokemon.blockedAttackNameNextTurn === attack.name) {
     throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
   }
+  if (attackingPokemon.blockedAttackNameUntilLeavesActive === attack.name) {
+    throw new GameError(GameMessage.CANNOT_USE_ATTACK);
+  }
+
+  // Smokescreen / Sand-Attack: flip coin(s); any tails cancels the attack
+  if (attackingPokemon.coinFlipCancelAttackNextTurn > 0) {
+    const flips = attackingPokemon.coinFlipCancelAttackNextTurn;
+    let anyTails = false;
+
+    for (let i = 0; i < flips; i++) {
+      let heads = false;
+      state = COIN_FLIP_PROMPT(store, state, player, result => {
+        heads = result;
+      });
+      if (store.hasPrompts()) {
+        yield store.waitPrompt(state, () => next());
+      }
+      if (!heads) {
+        anyTails = true;
+      }
+    }
+
+    if (anyTails) {
+      state = store.reduceEffect(state, new EndTurnEffect(player));
+      return state;
+    }
+  }
 
   // Get the actual PokemonCard for power checks
   const attackingPokemonCard = attackingPokemon.getPokemonCard();
@@ -259,6 +287,10 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   if (attackEffect.damage > 0) {
     const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
     state = store.reduceEffect(state, dealDamage);
+
+    if (store.hasPrompts()) {
+      yield store.waitPrompt(state, () => next());
+    }
   }
 
   const afterAttackEffect = new AfterAttackEffect(effect.player, opponent, attack);
@@ -412,6 +444,72 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
         effect.prizeCount += 2;
       }
 
+      // Attack-armed prize denial / extra prizes (slot fields)
+      if (effect.target.denyPrizesIfKnockedOutNextTurn
+        && !effect.target.denyPrizesIfKnockedOutNextTurnPending) {
+        effect.prizeCount = 0;
+      } else if (
+        effect.target.extraPrizesIfKnockedOutNextTurn > 0
+        && !effect.target.extraPrizesIfKnockedOutNextTurnPending
+        && state.phase === GamePhase.ATTACK
+        && effect.prizeCount > 0
+      ) {
+        effect.prizeCount += effect.target.extraPrizesIfKnockedOutNextTurn;
+      }
+
+      // Little Grudge: Mist-blockable DiscardCardsEffect attributed to the arming attack
+      if (effect.target.discardAttackerEnergyIfKnockedOutNextTurn
+        && !effect.target.discardAttackerEnergyIfKnockedOutNextTurnPending
+        && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)
+        && effect.target.discardAttackerEnergyIfKnockedOutNextTurnAttack
+        && effect.target.discardAttackerEnergyIfKnockedOutNextTurnSourceCard
+        && effect.target.discardAttackerEnergyIfKnockedOutNextTurnAttackerId !== undefined) {
+        const prizeTaker = StateUtils.getOpponent(state, effect.player);
+        const attackerEnergy = prizeTaker.active.cards.filter(c => c.superType === SuperType.ENERGY);
+        const grudgeAttack = effect.target.discardAttackerEnergyIfKnockedOutNextTurnAttack;
+        const grudgeSourceCard = effect.target.discardAttackerEnergyIfKnockedOutNextTurnSourceCard;
+        const grudgeAttackerId = effect.target.discardAttackerEnergyIfKnockedOutNextTurnAttackerId;
+
+        const discardSelected = (cards: Card[]) => {
+          if (cards.length === 0) {
+            return;
+          }
+          const grudgeOwner = state.players.find(p => p.id === grudgeAttackerId);
+          if (!grudgeOwner) {
+            return;
+          }
+          let sourceList = grudgeOwner.active;
+          grudgeOwner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+            if (card === grudgeSourceCard) {
+              sourceList = cardList;
+            }
+          });
+          const base = new AttackEffect(grudgeOwner, prizeTaker, grudgeAttack);
+          base.source = sourceList;
+          const discard = new DiscardCardsEffect(base, cards);
+          discard.target = prizeTaker.active;
+          store.reduceEffect(state, discard);
+        };
+
+        if (attackerEnergy.length === 1) {
+          discardSelected(attackerEnergy);
+        } else if (attackerEnergy.length > 1) {
+          state = store.prompt(state, new DiscardEnergyPrompt(
+            effect.player.id,
+            GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+            PlayerType.TOP_PLAYER,
+            [SlotType.ACTIVE],
+            { superType: SuperType.ENERGY },
+            { allowCancel: false, min: 1, max: 1 }
+          ), transfers => {
+            if (!transfers || transfers.length === 0) {
+              return;
+            }
+            discardSelected(transfers.map(t => t.card));
+          });
+        }
+      }
+
       store.log(state, GameLog.LOG_POKEMON_KO, { name: card.name });
 
       const knockedOutOwner = effect.player;
@@ -488,6 +586,13 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
     }
   }
 
+  if (effect instanceof CheckPokemonStatsEffect) {
+    if (effect.target.weaknessOverrideType !== undefined) {
+      effect.weakness = [{ type: effect.target.weaknessOverrideType }];
+    }
+    return state;
+  }
+
   if (effect instanceof ApplyWeaknessEffect) {
     const checkPokemonType = new CheckPokemonTypeEffect(effect.source);
     state = store.reduceEffect(state, checkPokemonType);
@@ -554,6 +659,10 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
   // }
 
   if (effect instanceof HealEffect) {
+    if (effect.preventDefault || effect.target.cannotBeHealedNextTurn) {
+      effect.preventDefault = true;
+      return state;
+    }
     effect.target.damage = Math.max(0, effect.target.damage - effect.damage);
     return state;
   }
@@ -617,6 +726,10 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
   }
 
   if (effect instanceof EvolveEffect) {
+    if (effect.player.cannotPlayPokemonWithAbilities
+      && effect.pokemonCard.powers.some(power => power.powerType === PowerType.ABILITY)) {
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    }
     const pokemonCard = effect.target.getPokemonCard();
 
     if (pokemonCard === undefined) {
@@ -758,4 +871,3 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
 
   return state;
 }
-

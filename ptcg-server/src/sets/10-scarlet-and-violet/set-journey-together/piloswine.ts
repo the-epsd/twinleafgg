@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType } from '../../../game';
+import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Piloswine extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Swinub';
   public cardType: CardType = F;
@@ -9,25 +9,23 @@ export class Piloswine extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Strength',
-      cost: [C],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Piercing Fangs',
-      cost: [F, F],
-      damage: 50,
-      text: ''
-    },
-  ];
+  public attacks = [{
+    name: 'Strength',
+    cost: [C],
+    damage: 20,
+    text: ''
+  },
+  {
+    name: 'Piercing Fangs',
+    cost: [F, F],
+    damage: 50,
+    text: ''
+  }];
 
   public regulationMark = 'I';
   public set: string = 'JTG';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '78';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Piloswine';
   public fullName: string = 'Piloswine JTG';
 }

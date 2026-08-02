@@ -5,14 +5,14 @@ import {
 import { Observable } from 'rxjs';
 
 export class Session {
-  authToken: string;
-  config: ServerConfig;
-  loggedUserId: number;
-  clientId: number;
+  authToken!: string;
+  config!: ServerConfig;
+  loggedUserId!: number;
+  clientId!: number;
   games: GameInfo[] = [];
   clients: ClientInfo[] = [];
   users: UserInfoMap = {};
-  lastGameId: number;
+  lastGameId!: number;
   gameStates: LocalGameState[] = [];
   conversations: ConversationInfo[] = [];
 }
@@ -43,6 +43,10 @@ export interface LocalGameState extends GameState {
   replayPosition: number;
   replay?: Replay;
   enhancedPlayerStats?: PlayerGameStats[];
+  /** Last full serialized state for applying live diffs. */
+  serializedBase?: string;
+  /** Sanitized view key from the server (`p123`, `spec`, …). */
+  viewKey?: string;
 }
 
 export interface UserInfoMap {

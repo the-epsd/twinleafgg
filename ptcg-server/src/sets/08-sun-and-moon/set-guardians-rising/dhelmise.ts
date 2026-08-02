@@ -33,10 +33,8 @@ export class Dhelmise extends PokemonCard {
   public name: string = 'Dhelmise';
   public fullName: string = 'Dhelmise GRI';
 
-  public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER: string = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Steelworker
     if (effect instanceof DealDamageEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -63,7 +61,7 @@ export class Dhelmise extends PokemonCard {
         effect.damage += 10 * numberOfDhelmiseInPlay;
       }
     }
-
+    // Anchor Shot
     if (WAS_ATTACK_USED(effect, 0, this)) {
       return BLOCK_RETREAT(store, state, effect, this);
     }

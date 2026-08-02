@@ -1,21 +1,17 @@
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, TrainerType, SuperType, BoardEffect } from '../../../game/store/card/card-types';
-import { Card, CardList, ChooseCardsPrompt, CoinFlipPrompt, GameError, GameMessage, PlayerType, PowerType, ShowCardsPrompt, State, StateUtils, StoreLike, TrainerCard } from '../../../game';
+import { BoardEffect, Card, CardList, CardType, ChooseCardsPrompt, CoinFlipPrompt, GameError, GameMessage, PlayerType, PokemonCard, PowerType, ShowCardsPrompt, Stage, State, StateUtils, StoreLike, SuperType, TrainerCard, TrainerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
-
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { TrainerToDeckEffect } from '../../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Florges extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
+  public evolvesFrom: string = 'Floette';
   public cardType: CardType = Y;
   public hp: number = 120;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C, C];
-  public evolvesFrom = 'Floette';
 
   public powers = [{
     name: 'Wondrous Gift',
@@ -32,17 +28,14 @@ export class Florges extends PokemonCard {
   }];
 
   public set: string = 'FLI';
+  public setNumber: string = '86';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Florges';
   public fullName: string = 'Florges FLI';
-  public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '86';
 
-  public readonly MIST_GUARD_MARKER = 'MIST_GUARD_MARKER';
-  public readonly CLEAR_MIST_GUARD_MARKER = 'CLEAR_MIST_GUARD_MARKER';
   public readonly WONDROUS_GIFT_MARKER = 'WONDROUS_GIFT_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -60,7 +53,6 @@ export class Florges extends PokemonCard {
       store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
       ], results => {
-
         player.marker.addMarker(this.WONDROUS_GIFT_MARKER, this);
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
@@ -117,34 +109,9 @@ export class Florges extends PokemonCard {
       });
     }
 
+    // Mist Guard
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      player.active.marker.addMarker(this.MIST_GUARD_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_MIST_GUARD_MARKER, this);
-      return state;
-    }
-
-    if (effect instanceof PutDamageEffect
-      && effect.target.marker.hasMarker(this.MIST_GUARD_MARKER)) {
-      const card = effect.source.getPokemonCard();
-      const dragonPokemon = card && card.cardType == N;
-
-      if (dragonPokemon) {
-        effect.preventDefault = true;
-      }
-
-      return state;
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      if (effect.player.marker.hasMarker(this.CLEAR_MIST_GUARD_MARKER, this)) {
-        effect.player.marker.removeMarker(this.CLEAR_MIST_GUARD_MARKER, this);
-        const opponent = StateUtils.getOpponent(state, effect.player);
-        opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-          cardList.marker.removeMarker(this.MIST_GUARD_MARKER, this);
-        });
-      }
+      PREVENT_DAMAGE(store, state, effect, this, { sourceCardTypes: [CardType.DRAGON] });
     }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.WONDROUS_GIFT_MARKER, this)) {

@@ -1,10 +1,8 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { CardTag, CardType, Stage, TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, GameError, StateUtils, PokemonCardList, Card } from '../../../game';
+import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
+import { StoreLike, State, StateUtils, PokemonCardList, Card, GameError, GameMessage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { ADD_MARKER, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, OPPONENT_CANNOT_PLAY_CARDS } from '../../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../../game/store/prefabs/attack-effects';
@@ -38,50 +36,28 @@ export class Manectricex extends PokemonCard {
   public name: string = 'Manectric ex';
   public fullName: string = 'Manectric ex DX';
 
-  public readonly OPPONENT_CANNOT_PLAY_TRAINER_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_TRAINER_CARDS_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Disconnect
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const opponent = effect.opponent;
-
-      ADD_MARKER(this.OPPONENT_CANNOT_PLAY_TRAINER_CARDS_MARKER, opponent, this);
+      return OPPONENT_CANNOT_PLAY_CARDS(store, state, effect, this, { item: true, tool: true, stadium: true });
     }
 
-    if (effect instanceof TrainerEffect && effect.trainerCard.trainerType !== TrainerType.SUPPORTER) {
-      const player = effect.player;
-      if (player.marker.hasMarker(this.OPPONENT_CANNOT_PLAY_TRAINER_CARDS_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.OPPONENT_CANNOT_PLAY_TRAINER_CARDS_MARKER, this);
-    }
-
+    // Mega Shot
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Discard all [L]
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
       if (!(cardList instanceof PokemonCardList))
         throw new GameError(GameMessage.INVALID_TARGET);
-
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
-
-      // Only discard cards that provide LIGHTNING or ANY energy
       const cards: Card[] = checkProvidedEnergy.energyMap
-        .filter(e => e.provides.includes(CardType.LIGHTNING) || e.provides.includes(CardType.ANY))
+        .filter(e => e.provides.includes(L) || e.provides.includes(CardType.ANY))
         .map(e => e.card);
-
       const discardEnergy = new DiscardCardsEffect(effect, cards);
       discardEnergy.target = cardList;
       store.reduceEffect(state, discardEnergy);
-
-      // Deal damage to opponent's Pokémon
       THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON(80, effect, store, state);
     }
-
     return state;
   }
 }

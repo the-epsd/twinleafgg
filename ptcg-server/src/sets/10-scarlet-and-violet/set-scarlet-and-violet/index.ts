@@ -23,6 +23,7 @@ import { EnergySwitch } from './energy-switch';
 import { ExpShare } from './exp-share';
 import { Flittle } from './flittle';
 import { ArmarougeIR, ArvenFA, ArvenSIR, FightingEnergyHR, LightningEnergyHR, GardevoirexFA, GardevoirexSIR, JacqFA, JacqSIR, KatyFA, KoraidonexFA, KoraidonexSIR, KoraidonexHR, MagnezoneexFA, MiraidonexFA, MiraidonexSIR, MiraidonexHR, MiriamFA, MiriamSIR, NestBallHR, PennyFA, PennySIR, ProfessorsResearchFA1, ProfessorsResearchFA2, RaltsIR, RareCandyHR, SkwovetIR, TeamStarGruntFA, KirliaIR, PawmotIR, SlowpokeIR } from './full-art';
+import { Floragato } from './floragato';
 import { Gardevoirex } from './gardevoir-ex';
 import { Greedent } from './greedent';
 import { Growlithe } from './growlithe';
@@ -76,6 +77,7 @@ import { Skwovet } from './skwovet';
 import { Smoliv } from './smoliv';
 import { Spewpa } from './spewpa';
 import { Spidopsex } from './spidops-ex';
+import { Sprigatito } from './sprigatito';
 import { Switch } from './switch';
 import { TeamStarGrunt } from './team-star-grunt';
 import { Toedscool } from './toedscool';
@@ -116,6 +118,7 @@ export const setScarletAndViolet: Card[] = [
   new EnergySwitch(),
   new ExpShare(),
   new Flittle(),
+  new Floragato(),
   new Gardevoirex(),
   new Greedent(),
   new Growlithe(),
@@ -169,6 +172,7 @@ export const setScarletAndViolet: Card[] = [
   new Skwovet(),
   new Slowpoke(),
   //new Slowbro(),
+  new Sprigatito(),
   new Switch(),
   new TeamStarGrunt(),
   new Torkoal(),

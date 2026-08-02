@@ -8,18 +8,16 @@ export class Cubchoo2 extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Icicle Punch',
-      cost: [W, W],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Icicle Punch',
+    cost: [W, W],
+    damage: 30,
+    text: ''
+  }];
 
   public set: string = 'EPO';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '29';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cubchoo';
   public fullName: string = 'Cubchoo EPO 29';
 }

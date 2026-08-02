@@ -5,11 +5,12 @@ import {
   useRef,
   useState,
   type CSSProperties,
+  type KeyboardEvent,
   type MouseEvent,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Format } from 'ptcg-server';
+import { Format, type Archetype } from 'ptcg-server';
 import { formatOptionLabel } from '../deck-editor/formatLabelI18n';
 import { useCoreSession } from '../context/CoreSessionContext';
 import { useSettings } from '../context/SettingsContext';
@@ -17,11 +18,16 @@ import { getDeck, getDeckList } from '../api/deckApi';
 import type { DeckListEntry } from '../types/responses';
 import { ApiError } from '../api/apiError';
 import { getSocketManager } from '../socket/socketManager';
+import { LoadingSpinner } from '../components/LoadingSpinner';
+import { TwinleafCtaButton, twinleafCtaLabelStyles } from '../components/ui/TwinleafCtaButton';
 import { ArchetypeIcon } from './ArchetypeIcon';
+import { archetypeToSlug, gen9SpriteUrl } from './archetypeSlug';
 import { deckArchetypeForDisplay } from './deckArchetypeDisplay';
 import { MATCH_FORMAT_VALUES } from './matchFormats';
 import { pickDefaultDeckIdForFormat } from './deckDefaultPreferences';
 import styles from './MatchmakingLobby.module.css';
+
+const SMALL_PAGE_SIZE = 3;
 
 function decksForFormat(all: DeckListEntry[], format: Format): DeckListEntry[] {
   return all.filter((d) => Array.isArray(d.format) && d.format.includes(format));
@@ -40,6 +46,42 @@ function computeDefaultSelections(
     }
   }
   return next;
+}
+
+function archetypeSpriteUrls(value: Archetype | Archetype[]): string[] {
+  const list = Array.isArray(value) ? value : [value];
+  return [...new Set(list.map((a) => gen9SpriteUrl(archetypeToSlug(a))))];
+}
+
+function preloadImage(url: string): Promise<void> {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve();
+    img.onerror = () => resolve();
+    img.src = url;
+  });
+}
+
+async function preloadFormatSprites(
+  decks: DeckListEntry[],
+  selections: Partial<Record<Format, number>>,
+  formats: Format[],
+): Promise<void> {
+  const urls = new Set<string>();
+  for (const f of formats) {
+    const id = selections[f];
+    if (id == null) {
+      continue;
+    }
+    const deck = decksForFormat(decks, f).find((d) => d.id === id);
+    if (!deck) {
+      continue;
+    }
+    for (const url of archetypeSpriteUrls(deckArchetypeForDisplay(deck))) {
+      urls.add(url);
+    }
+  }
+  await Promise.all([...urls].map(preloadImage));
 }
 
 export interface MatchmakingLobbyProps {
@@ -62,59 +104,43 @@ export function MatchmakingLobby({ onError }: MatchmakingLobbyProps) {
   const [selectedDeckByFormat, setSelectedDeckByFormat] = useState<Partial<Record<Format, number>>>({});
   const [selectedFormat, setSelectedFormat] = useState<Format | null>(null);
   const [editingFormat, setEditingFormat] = useState<Format | null>(null);
-  const [visibleFormatCount, setVisibleFormatCount] = useState(4);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [smallPage, setSmallPage] = useState(0);
   const [formatCounts, setFormatCounts] = useState<Record<number, number>>({});
   const [inQueue, setInQueue] = useState(false);
+  const [ready, setReady] = useState(false);
   const matchActionLockRef = useRef(false);
+  const selectedDeckByFormatRef = useRef(selectedDeckByFormat);
+  selectedDeckByFormatRef.current = selectedDeckByFormat;
 
   const loadDeckSummaries = useCallback(async () => {
+    setReady(false);
     try {
       const res = await getDeckList({ summary: true });
-      setAllDecks(res.decks);
-      setSelectedDeckByFormat((prev) => {
-        const computed = computeDefaultSelections(res.decks, visibleMatchFormats);
-        const merged: Partial<Record<Format, number>> = { ...computed };
-        for (const f of visibleMatchFormats) {
-          const list = decksForFormat(res.decks, f);
-          if (list.length && prev[f] != null && list.some((d) => d.id === prev[f])) {
-            merged[f] = prev[f]!;
-          }
+      const computed = computeDefaultSelections(res.decks, visibleMatchFormats);
+      const merged: Partial<Record<Format, number>> = { ...computed };
+      const prev = selectedDeckByFormatRef.current;
+      for (const f of visibleMatchFormats) {
+        const list = decksForFormat(res.decks, f);
+        if (list.length && prev[f] != null && list.some((d) => d.id === prev[f])) {
+          merged[f] = prev[f]!;
         }
-        return merged;
-      });
+      }
+      const initialFormat =
+        visibleMatchFormats.find((f) => decksForFormat(res.decks, f).length > 0) ?? null;
+      setAllDecks(res.decks);
+      setSelectedDeckByFormat(merged);
+      setSelectedFormat(initialFormat);
+      await preloadFormatSprites(res.decks, merged, visibleMatchFormats);
     } catch (e) {
       onErrorRef.current(e instanceof ApiError ? e.message : t('REACT_ERROR_LOAD_DECKS'));
+    } finally {
+      setReady(true);
     }
   }, [t, visibleMatchFormats]);
 
   useEffect(() => {
     void loadDeckSummaries();
   }, [loadDeckSummaries]);
-
-  useEffect(() => {
-    const updateCount = () => {
-      const w = window.innerWidth;
-      if (w <= 767) {
-        setVisibleFormatCount(1);
-      } else if (w <= 1079) {
-        setVisibleFormatCount(2);
-      } else if (w <= 1439) {
-        setVisibleFormatCount(3);
-      } else {
-        setVisibleFormatCount(4);
-      }
-    };
-    updateCount();
-    window.addEventListener('resize', updateCount);
-    return () => window.removeEventListener('resize', updateCount);
-  }, []);
-
-  const maxPage = Math.max(0, Math.ceil(visibleMatchFormats.length / visibleFormatCount) - 1);
-
-  useEffect(() => {
-    setCurrentPage((p) => Math.min(p, maxPage));
-  }, [maxPage, visibleFormatCount]);
 
   useEffect(() => {
     if (!connected) {
@@ -150,7 +176,7 @@ export function MatchmakingLobby({ onError }: MatchmakingLobbyProps) {
           setFormatCounts(d.formatCounts);
         }
       })
-      .catch(() => { });
+      .catch(() => {});
 
     return () => {
       socket.off('matchmaking:queueUpdate', handler);
@@ -158,7 +184,7 @@ export function MatchmakingLobby({ onError }: MatchmakingLobbyProps) {
   }, [connected]);
 
   useEffect(() => {
-    if (allDecks.length === 0) {
+    if (!ready || allDecks.length === 0) {
       return;
     }
     setSelectedFormat((prev) => {
@@ -169,24 +195,22 @@ export function MatchmakingLobby({ onError }: MatchmakingLobbyProps) {
       ) {
         return prev;
       }
-      return (
-        visibleMatchFormats.find((f) => decksForFormat(allDecks, f).length > 0) ?? null
-      );
+      return visibleMatchFormats.find((f) => decksForFormat(allDecks, f).length > 0) ?? null;
     });
-  }, [allDecks, visibleMatchFormats]);
+  }, [allDecks, ready, visibleMatchFormats]);
 
-  const visibleFormats = useMemo(() => {
-    const start = currentPage * visibleFormatCount;
-    return visibleMatchFormats.slice(start, start + visibleFormatCount);
-  }, [currentPage, visibleFormatCount, visibleMatchFormats]);
+  const largeFormats = useMemo(() => visibleMatchFormats.slice(0, 2), [visibleMatchFormats]);
+  const smallFormatsAll = useMemo(() => visibleMatchFormats.slice(2), [visibleMatchFormats]);
+  const smallMaxPage = Math.max(0, Math.ceil(smallFormatsAll.length / SMALL_PAGE_SIZE) - 1);
 
-  const formatRowStyle = useMemo((): CSSProperties => {
-    const slots = Math.max(1, visibleFormatCount);
-    const gaps = Math.max(0, slots - 1);
-    return {
-      ['--format-card-w']: `calc((100% - ${gaps} * var(--format-gap)) / ${slots})`,
-    } as CSSProperties;
-  }, [visibleFormatCount]);
+  useEffect(() => {
+    setSmallPage((p) => Math.min(p, smallMaxPage));
+  }, [smallMaxPage]);
+
+  const smallFormats = useMemo(() => {
+    const start = smallPage * SMALL_PAGE_SIZE;
+    return smallFormatsAll.slice(start, start + SMALL_PAGE_SIZE);
+  }, [smallFormatsAll, smallPage]);
 
   const getDeckEntry = (f: Format): DeckListEntry | undefined => {
     const id = selectedDeckByFormat[f];
@@ -207,6 +231,13 @@ export function MatchmakingLobby({ onError }: MatchmakingLobbyProps) {
     }
     setSelectedFormat(f);
     setEditingFormat(null);
+  };
+
+  const onCardKeyDown = (f: Format, e: KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      pickFormat(f);
+    }
   };
 
   const toggleDeckPicker = (f: Format, e: MouseEvent) => {
@@ -258,89 +289,170 @@ export function MatchmakingLobby({ onError }: MatchmakingLobbyProps) {
     }
   }
 
-  const canPrev = currentPage > 0 && !inQueue;
-  const canNext = currentPage < maxPage && !inQueue;
   const selectedDeck = selectedFormat != null ? getDeckEntry(selectedFormat) : undefined;
   const canStartMatch = connected && selectedFormat != null && selectedDeck != null;
   const playLabelIdle =
-    !selectedFormat || !selectedDeck ? t('LABEL_SELECT_FORMAT') : t('BUTTON_FIND_MATCH');
-  const playAriaLabel = inQueue ? t('GAMES_LEAVE_QUEUE') : playLabelIdle;
+    !selectedFormat || !selectedDeck
+      ? t('REACT_GAMES_LOBBY_CTA_SELECT')
+      : t('REACT_GAMES_LOBBY_CTA_FIND');
+  const playAriaLabel = inQueue ? t('REACT_GAMES_LOBBY_CTA_LEAVE') : playLabelIdle;
+
+  const focusBlurb = useMemo(() => {
+    if (inQueue && selectedFormat != null) {
+      return t('REACT_GAMES_LOBBY_FOOTER_QUEUED', {
+        format: formatOptionLabel(t, selectedFormat),
+      });
+    }
+    if (selectedFormat == null) {
+      return t('REACT_GAMES_LOBBY_FOOTER_PICK');
+    }
+    if (!selectedDeck) {
+      return t('REACT_GAMES_LOBBY_FOOTER_NO_DECK', {
+        format: formatOptionLabel(t, selectedFormat),
+      });
+    }
+    const q = formatCounts[selectedFormat] ?? 0;
+    const queue =
+      q === 1 ? t('REACT_QUEUE_PLAYER', { count: q }) : t('REACT_QUEUE_PLAYERS', { count: q });
+    return t('REACT_GAMES_LOBBY_FOOTER_READY', {
+      format: formatOptionLabel(t, selectedFormat),
+      deck: selectedDeck.name,
+      queue,
+    });
+  }, [formatCounts, inQueue, selectedDeck, selectedFormat, t]);
+
+  const canSmallPrev = smallPage > 0 && !inQueue;
+  const canSmallNext = smallPage < smallMaxPage && !inQueue;
+
+  const renderLargeCard = (f: Format, revealDelayMs: number) => {
+    const deck = getDeckEntry(f);
+    const q = formatCounts[f] ?? 0;
+    const isSelected = selectedFormat === f;
+    const disabled = !hasValidDeck(f);
+    const dimWhileQueued = inQueue && !isSelected;
+    return (
+      <div
+        key={f}
+        role="button"
+        tabIndex={disabled || inQueue ? -1 : 0}
+        className={`${styles.largeCard} ${isSelected ? styles.selected : ''} ${disabled ? styles.disabled : ''} ${dimWhileQueued ? styles.locked : ''}`}
+        style={{ '--lp-delay': `${revealDelayMs}ms` } as CSSProperties}
+        onClick={() => pickFormat(f)}
+        onKeyDown={(e) => onCardKeyDown(f, e)}
+      >
+        {isSelected ? <span className={styles.selectedCaret} aria-hidden /> : null}
+        <div className={styles.largeArt}>
+          {q > 0 ? (
+            <div className={styles.queueBadge} role="status">
+              {queueLabel(q)}
+            </div>
+          ) : null}
+          {isSelected && !inQueue ? (
+            <button type="button" className={styles.changeDeckBtn} onClick={(e) => toggleDeckPicker(f, e)}>
+              {t('MATCHMAKING_CHANGE_DECK')}
+            </button>
+          ) : null}
+          <div className={styles.largeArtInner}>
+            <ArchetypeIcon archetypes={deck ? deckArchetypeForDisplay(deck) : undefined} scale={4.2} />
+          </div>
+        </div>
+        <div className={styles.largeMeta}>
+          <div className={styles.largeTitle}>{formatOptionLabel(t, f)}</div>
+          <div className={styles.largeSubtitle}>{deck?.name ?? t('NO_DECK')}</div>
+        </div>
+      </div>
+    );
+  };
+
+  const renderSmallCard = (f: Format, revealDelayMs: number) => {
+    const deck = getDeckEntry(f);
+    const q = formatCounts[f] ?? 0;
+    const isSelected = selectedFormat === f;
+    const disabled = !hasValidDeck(f);
+    const dimWhileQueued = inQueue && !isSelected;
+    return (
+      <div
+        key={f}
+        role="button"
+        tabIndex={disabled || inQueue ? -1 : 0}
+        className={`${styles.smallCard} ${isSelected ? styles.selected : ''} ${disabled ? styles.disabled : ''} ${dimWhileQueued ? styles.locked : ''}`}
+        style={{ '--lp-delay': `${revealDelayMs}ms` } as CSSProperties}
+        onClick={() => pickFormat(f)}
+        onKeyDown={(e) => onCardKeyDown(f, e)}
+      >
+        {isSelected ? <span className={styles.selectedCaret} aria-hidden /> : null}
+        <div className={styles.smallCopy}>
+          <div className={styles.smallTitle}>{formatOptionLabel(t, f)}</div>
+          <div className={styles.smallSubtitle}>
+            {deck?.name ?? t('NO_DECK')}
+            {q > 0 ? ` · ${queueLabel(q)}` : ''}
+          </div>
+        </div>
+        <div className={styles.smallArt}>
+          <ArchetypeIcon archetypes={deck ? deckArchetypeForDisplay(deck) : undefined} scale={1.6} />
+        </div>
+      </div>
+    );
+  };
+
+  if (!ready) {
+    return (
+      <section className={styles.section} aria-busy="true" aria-label={t('DECK_LIST_LOADING')}>
+        <div className={styles.loading}>
+          <LoadingSpinner size={48} className={styles.loadingSpinner} />
+        </div>
+      </section>
+    );
+  }
+
+  const smallRevealStart = largeFormats.length * 70 + 40;
+  const smallRevealStep = 110;
+  const footerRevealDelay =
+    smallRevealStart +
+    (smallFormats.length > 0 ? (smallFormats.length - 1) * smallRevealStep + 120 : 40);
 
   return (
-    <section className={styles.section}>
-      <div className={styles.nav}>
-        <button
-          type="button"
-          className={styles.navBtn}
-          disabled={!canPrev}
-          onClick={() => canPrev && setCurrentPage((p) => p - 1)}
-          aria-label={t('REACT_MATCHMAKING_PREV_FORMATS')}
-        >
-          ‹
-        </button>
-
-        <div className={styles.formatRow} style={formatRowStyle}>
-          {visibleFormats.map((f) => {
-            const deck = getDeckEntry(f);
-            const q = formatCounts[f] ?? 0;
-            const isSelected = selectedFormat === f;
-            const disabled = !hasValidDeck(f);
-            const dimWhileQueued = inQueue && !isSelected;
-            return (
-              <div
-                key={f}
-                role="button"
-                tabIndex={disabled || inQueue ? -1 : 0}
-                className={`${styles.formatBox} ${isSelected ? styles.selected : ''} ${disabled ? styles.disabled : ''} ${dimWhileQueued ? styles.locked : ''}`}
-                onClick={() => pickFormat(f)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    pickFormat(f);
-                  }
-                }}
-              >
-                <div className={styles.artwork}>
-                  {q > 0 ? (
-                    <div className={styles.queueOverlay} role="status">
-                      {queueLabel(q)}
-                    </div>
-                  ) : null}
-                  {isSelected && !inQueue ? (
-                    <button
-                      type="button"
-                      className={styles.changeDeckBtn}
-                      onClick={(e) => toggleDeckPicker(f, e)}
-                    >
-                      {t('MATCHMAKING_CHANGE_DECK')}
-                    </button>
-                  ) : null}
-                  <div className={styles.artworkInner}>
-                    {deck ? (
-                      <ArchetypeIcon archetypes={deckArchetypeForDisplay(deck)} scale={3} />
-                    ) : (
-                      <ArchetypeIcon archetypes={undefined} scale={3} />
-                    )}
-                  </div>
-                </div>
-                <div className={styles.info}>
-                  <div className={styles.formatName}>{formatOptionLabel(t, f)}</div>
-                  <div className={styles.deckName}>{deck?.name ?? t('NO_DECK')}</div>
-                </div>
-              </div>
-            );
-          })}
+    <section className={`${styles.section} ${styles.reveal}`}>
+      <div className={styles.grid}>
+        <div className={styles.largeColumn}>
+          {largeFormats.map((f, i) => renderLargeCard(f, i * 70))}
+          {largeFormats.length === 0 ? (
+            <p className={styles.emptyHint}>{t('REACT_GAMES_LOBBY_NO_FORMATS')}</p>
+          ) : null}
         </div>
 
-        <button
-          type="button"
-          className={styles.navBtn}
-          disabled={!canNext}
-          onClick={() => canNext && setCurrentPage((p) => p + 1)}
-          aria-label={t('REACT_MATCHMAKING_NEXT_FORMATS')}
-        >
-          ›
-        </button>
+        {smallFormatsAll.length > 0 ? (
+          <div className={styles.smallColumn}>
+            <div className={styles.smallStack}>
+              {smallFormats.map((f, i) => renderSmallCard(f, smallRevealStart + i * smallRevealStep))}
+            </div>
+            {smallMaxPage > 0 ? (
+              <div className={styles.smallPager}>
+                <button
+                  type="button"
+                  className={styles.pagerBtn}
+                  disabled={!canSmallPrev}
+                  onClick={() => canSmallPrev && setSmallPage((p) => p - 1)}
+                  aria-label={t('REACT_MATCHMAKING_PREV_FORMATS')}
+                >
+                  ‹
+                </button>
+                <span className={styles.pagerLabel}>
+                  {smallPage + 1}/{smallMaxPage + 1}
+                </span>
+                <button
+                  type="button"
+                  className={styles.pagerBtn}
+                  disabled={!canSmallNext}
+                  onClick={() => canSmallNext && setSmallPage((p) => p + 1)}
+                  aria-label={t('REACT_MATCHMAKING_NEXT_FORMATS')}
+                >
+                  ›
+                </button>
+              </div>
+            ) : null}
+          </div>
+        ) : null}
       </div>
 
       {editingFormat != null && !inQueue ? (
@@ -367,28 +479,32 @@ export function MatchmakingLobby({ onError }: MatchmakingLobbyProps) {
         </div>
       ) : null}
 
-      <div className={styles.actions}>
-        <button
+      <footer
+        className={styles.footer}
+        style={{ '--lp-delay': `${footerRevealDelay}ms` } as CSSProperties}
+      >
+        <p className={styles.footerBlurb}>{focusBlurb}</p>
+        <TwinleafCtaButton
           type="button"
-          className={styles.playBtn}
+          variant={inQueue ? 'muted' : 'primary'}
           disabled={!connected || (!inQueue && !canStartMatch)}
           aria-label={playAriaLabel}
           onClick={() => (inQueue ? void leaveQueueFn() : void joinQueue())}
         >
           <span
-            className={`${styles.playBtnLabel} ${inQueue ? styles.playBtnLabelHidden : ''}`}
+            className={`${twinleafCtaLabelStyles.label} ${inQueue ? twinleafCtaLabelStyles.labelHidden : ''}`}
             aria-hidden={inQueue}
           >
             {playLabelIdle}
           </span>
           <span
-            className={`${styles.playBtnLabel} ${inQueue ? '' : styles.playBtnLabelHidden}`}
+            className={`${twinleafCtaLabelStyles.label} ${inQueue ? '' : twinleafCtaLabelStyles.labelHidden}`}
             aria-hidden={!inQueue}
           >
-            {t('GAMES_LEAVE_QUEUE')}
+            {t('REACT_GAMES_LOBBY_CTA_LEAVE')}
           </span>
-        </button>
-      </div>
+        </TwinleafCtaButton>
+      </footer>
     </section>
   );
 }

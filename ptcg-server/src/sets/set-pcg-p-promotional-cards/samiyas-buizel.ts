@@ -1,10 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, ChooseCardsPrompt, GameMessage, Card } from '../../game';
+import { Stage, CardType } from '../../game/store/card/card-types';
+import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { COIN_FLIP_PROMPT, IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect, CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
-import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
+import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
 
 export class SamiyasBuizel extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -33,7 +33,7 @@ export class SamiyasBuizel extends PokemonCard {
   public fullName: string = 'Samiya\'s Buizel PCGP 138';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Aqua Lift
     if (effect instanceof CheckRetreatCostEffect && effect.player.active.cards.includes(this)) {
       const player = effect.player;
       const pokemonCard = player.active.getPokemonCard();
@@ -58,28 +58,11 @@ export class SamiyasBuizel extends PokemonCard {
         effect.cost = [];
       }
     }
-
+    // Whirlpool
     if (WAS_ATTACK_USED(effect, 1, this)) {
       COIN_FLIP_PROMPT(store, state, effect.player, (result: boolean) => {
         if (result) {
-          const player = effect.player;
-          const opponent = effect.opponent;
-          // If defending Pokemon has no energy cards attached, return early
-          if (!opponent.active.energies.cards.some(c => c.superType === SuperType.ENERGY)) {
-            return state;
-          }
-
-          let card: Card;
-          return store.prompt(state, new ChooseCardsPrompt(
-            player,
-            GameMessage.CHOOSE_CARD_TO_DISCARD,
-            opponent.active,
-            { superType: SuperType.ENERGY },
-            { min: 1, max: 1, allowCancel: false }
-          ), selected => {
-            card = selected[0];
-            return store.reduceEffect(state, new DiscardCardsEffect(effect, [card]));
-          });
+          return DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
         }
       });
     }

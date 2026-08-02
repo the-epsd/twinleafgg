@@ -5,8 +5,7 @@ import { StoreLike, State, GameMessage, AttachEnergyPrompt, CardList, EnergyCard
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, COIN_FLIP_PROMPT, HAS_MARKER, REMOVE_MARKER, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
-import { UseAttackEffect } from '../../../game/store/effects/game-effects';
+import { BLOCK_IF_HAS_SPECIAL_CONDITION, WAS_POWER_USED, WAS_ATTACK_USED, COIN_FLIP_PROMPT, DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/prefabs';
 
 export class Walrein extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -31,16 +30,14 @@ export class Walrein extends PokemonCard {
   }];
 
   public set: string = 'HL';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '15';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Walrein';
   public fullName: string = 'Walrein HL';
 
   public readonly CRUSH_DRAW_MARKER = 'CRUSH_DRAW_MARKER';
-  public readonly SHEER_COLD_MARKER = 'SHEER_COLD_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       player.marker.removeMarker(this.CRUSH_DRAW_MARKER, this);
@@ -49,10 +46,6 @@ export class Walrein extends PokemonCard {
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.marker.removeMarker(this.CRUSH_DRAW_MARKER, this);
-    }
-
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-
     }
 
     if (WAS_POWER_USED(effect, 0, this)) {
@@ -70,12 +63,10 @@ export class Walrein extends PokemonCard {
 
       player.deck.moveTo(temp, 1);
 
-      // Check if any cards drawn are basic energy
       const energyCardsDrawn = temp.cards.filter(card => {
         return card instanceof EnergyCard && card.energyType === EnergyType.BASIC;
       });
 
-      // If no energy cards were drawn, move all cards to discard
       if (energyCardsDrawn.length == 0) {
         player.marker.addMarker(this.CRUSH_DRAW_MARKER, this);
 
@@ -86,7 +77,6 @@ export class Walrein extends PokemonCard {
         });
 
         temp.cards.slice(0, 1).forEach(card => {
-
           store.prompt(state, [new ShowCardsPrompt(
             player.id,
             GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
@@ -96,18 +86,15 @@ export class Walrein extends PokemonCard {
           });
         });
       } else {
-
-        // Prompt to attach energy if any were drawn
         return store.prompt(state, new AttachEnergyPrompt(
           player.id,
           GameMessage.ATTACH_ENERGY_CARDS,
-          temp, // Only show drawn energies
+          temp,
           PlayerType.BOTTOM_PLAYER,
           [SlotType.BENCH, SlotType.ACTIVE],
           { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
           { min: 0, max: energyCardsDrawn.length, allowCancel: false }
         ), transfers => {
-
           player.marker.addMarker(this.CRUSH_DRAW_MARKER, this);
 
           player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
@@ -116,38 +103,25 @@ export class Walrein extends PokemonCard {
             }
           });
 
-          // Attach energy based on prompt selection
           if (transfers) {
             for (const transfer of transfers) {
               const target = StateUtils.getTarget(state, player, transfer.to);
-              temp.moveCardTo(transfer.card, target); // Move card to target
+              temp.moveCardTo(transfer.card, target);
             }
             temp.cards.forEach(card => {
-              temp.moveCardTo(card, player.hand); // Move card to hand
-
+              temp.moveCardTo(card, player.hand);
             });
           }
-
         });
       }
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = effect.opponent;
-      COIN_FLIP_PROMPT(store, state, player, result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {
-          ADD_MARKER(this.SHEER_COLD_MARKER, opponent.active, this);
+          DEFENDING_POKEMON_CANNOT_ATTACK(store, state, effect, this);
         }
       });
-    }
-
-    if (effect instanceof UseAttackEffect && HAS_MARKER(this.SHEER_COLD_MARKER, effect.player.active, this)) {
-      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      REMOVE_MARKER(this.SHEER_COLD_MARKER, effect.player.active, this);
     }
 
     return state;

@@ -1,11 +1,8 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType } from '../../../game/store/card/card-types';
-import { StoreLike, State, AttachEnergyPrompt, GameMessage, PlayerType, SlotType, StateUtils, ShuffleDeckPrompt, GameError, CoinFlipPrompt, PokemonCardList } from '../../../game';
+import { StoreLike, State, AttachEnergyPrompt, GameMessage, PlayerType, SlotType, StateUtils, ShuffleDeckPrompt, GameError } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-
-import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, PREVENT_DAMAGE, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Altaria extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -37,14 +34,14 @@ export class Altaria extends PokemonCard {
   public fullName: string = 'Altaria SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Humming Charge
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-      //attach lightning energy prompt
+
       return store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
@@ -55,7 +52,6 @@ export class Altaria extends PokemonCard {
         { allowCancel: false, min: 0, max: 2 },
       ), transfers => {
         transfers = transfers || [];
-        // cancelled by user
         if (transfers.length === 0) {
           SHUFFLE_DECK(store, state, player);
           return state;
@@ -65,45 +61,22 @@ export class Altaria extends PokemonCard {
           player.deck.moveCardTo(transfer.card, target);
         }
 
-        // Shuffles deck after attaching both types of energies
         state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
         });
       });
     }
 
+    // Cotton Wing
+    // Ref: set-astral-radiance/hisuian-growlithe.ts (Defensive Posture)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      return store.prompt(state, new CoinFlipPrompt(
-        player.id, GameMessage.COIN_FLIP
-      ), flipResult => {
-        if (flipResult) {
-          player.active.marker.addMarker(PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-          opponent.marker.addMarker(PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        if (result) {
+          PREVENT_DAMAGE(store, state, effect, this);
         }
-      });
-    }
-
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
-      if (effect.target.marker.hasMarker(PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
-        effect.preventDefault = true;
-        return state;
-      }
-    }
-
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
-
-      effect.player.marker.removeMarker(PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
       });
     }
 
     return state;
   }
-
 }

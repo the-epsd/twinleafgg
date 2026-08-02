@@ -13,6 +13,7 @@ import { PendingEndOfTurnEffect, PendingEndOfTurnEffectBase } from '../state/pen
 import { Player } from '../state/player';
 import { FLIP_UNTIL_TAILS_AND_COUNT_HEADS, MOVE_CARDS } from './prefabs';
 import { CoinFlipEffect } from '../effects/play-card-effects';
+import { scheduleDefendingPokemonEndOfTurnEffect } from '../effects/effect-of-attack-effects';
 
 
 /**
@@ -102,13 +103,19 @@ export function DISCARD_OPPONENTS_ACTIVE_POKEMON(
 /**
  * "At the end of your opponent's next turn, the Defending Pokémon will be Knocked Out."
  * Schedules a blockable KnockOutOpponentEffect to resolve when that turn ends.
+ * Arming is an EffectOfAttack (Mist Energy can prevent it).
  */
 export function KNOCK_OUT_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(
+  store: StoreLike,
+  state: State,
   effect: AttackEffect,
   source: PokemonCard,
   target?: PokemonCardList,
-): void {
-  scheduleDefendingPokemonEffectAtEndOfOpponentsNextTurn(effect, source, { type: 'knock_out' }, target);
+): State {
+  return store.reduceEffect(
+    state,
+    scheduleDefendingPokemonEndOfTurnEffect(effect, source, { type: 'knock_out' }, target),
+  );
 }
 
 /**
@@ -116,11 +123,16 @@ export function KNOCK_OUT_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(
  * Not a KO — no prizes are taken.
  */
 export function DISCARD_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(
+  store: StoreLike,
+  state: State,
   effect: AttackEffect,
   source: PokemonCard,
   target?: PokemonCardList,
-): void {
-  scheduleDefendingPokemonEffectAtEndOfOpponentsNextTurn(effect, source, { type: 'discard' }, target);
+): State {
+  return store.reduceEffect(
+    state,
+    scheduleDefendingPokemonEndOfTurnEffect(effect, source, { type: 'discard' }, target),
+  );
 }
 
 /**
@@ -128,13 +140,18 @@ export function DISCARD_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(
  * Damage is specified in counter units (10 per counter).
  */
 export function PUT_DAMAGE_COUNTERS_ON_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(
+  store: StoreLike,
+  state: State,
   effect: AttackEffect,
   source: PokemonCard,
   damage: number,
   target?: PokemonCardList,
-): void {
-  scheduleDefendingPokemonEffectAtEndOfOpponentsNextTurn(
-    effect, source, { type: 'damage_counters', damage }, target,
+): State {
+  return store.reduceEffect(
+    state,
+    scheduleDefendingPokemonEndOfTurnEffect(
+      effect, source, { type: 'damage_counters', damage }, target,
+    ),
   );
 }
 
@@ -142,34 +159,19 @@ export function PUT_DAMAGE_COUNTERS_ON_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEX
  * "At the end of your opponent's next turn, the Defending Pokémon is now [condition]."
  */
 export function APPLY_SPECIAL_CONDITION_TO_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(
+  store: StoreLike,
+  state: State,
   effect: AttackEffect,
   source: PokemonCard,
   specialCondition: SpecialCondition,
   target?: PokemonCardList,
-): void {
-  scheduleDefendingPokemonEffectAtEndOfOpponentsNextTurn(
-    effect, source, { type: 'special_condition', specialCondition }, target,
+): State {
+  return store.reduceEffect(
+    state,
+    scheduleDefendingPokemonEndOfTurnEffect(
+      effect, source, { type: 'special_condition', specialCondition }, target,
+    ),
   );
-}
-
-function scheduleDefendingPokemonEffectAtEndOfOpponentsNextTurn(
-  effect: AttackEffect,
-  source: PokemonCard,
-  pending: Pick<PendingEndOfTurnEffect, 'type'> & (
-    | { type: 'knock_out' }
-    | { type: 'discard' }
-    | { type: 'damage_counters'; damage: number }
-    | { type: 'special_condition'; specialCondition: SpecialCondition }
-  ),
-  target?: PokemonCardList,
-): void {
-  effect.opponent.pendingEndOfTurnEffects.push({
-    target: target ?? effect.opponent.active,
-    attack: effect.attack,
-    sourceCard: source,
-    attackerPlayerId: effect.player.id,
-    ...pending,
-  } as PendingEndOfTurnEffect);
 }
 
 function buildAttackEffectFromSource(
@@ -685,22 +687,40 @@ export function DISCARD_CARDS_FROM_OPPONENTS_ACTIVE_POKEMON(
 export function DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(
   store: StoreLike,
   state: State,
-  effect: AttackEffect
+  effect: AttackEffect,
+  allowedEnergyTypes?: CardType[],
+  count = 1,
 ) {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
-  const energyCards = opponent.active.cards.filter(c => c.superType === SuperType.ENERGY);
+  if (count <= 0) {
+    return state;
+  }
+
+  const blocked: number[] = [];
+  const energyCards = opponent.active.cards.filter((card, index) => {
+    if (card.superType !== SuperType.ENERGY) {
+      if (allowedEnergyTypes) blocked.push(index);
+      return false;
+    }
+    if (!allowedEnergyTypes) return true;
+    const energy = card as EnergyCard;
+    const allowed = allowedEnergyTypes.some(type => energy.provides.includes(type));
+    if (!allowed) blocked.push(index);
+    return allowed;
+  });
   if (energyCards.length === 0) {
     return state;
   }
 
+  const cardsToDiscard = Math.min(count, energyCards.length);
   return store.prompt(state, new ChooseCardsPrompt(
     player,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     opponent.active,
     { superType: SuperType.ENERGY },
-    { min: 1, max: 1, allowCancel: false }
+    { min: cardsToDiscard, max: cardsToDiscard, allowCancel: false, blocked }
   ), selected => {
     const cards = selected || [];
     if (cards.length > 0) {

@@ -16,8 +16,8 @@ export class Pineco extends PokemonCard {
   }];
 
   public set: string = 'UF';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '66';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pineco';
   public fullName: string = 'Pineco UF';
 }

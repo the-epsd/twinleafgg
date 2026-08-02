@@ -3,24 +3,23 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Wingull extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public regulationMark: string = 'G';
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType = C;
   public hp: number = 70;
-  public weakness = [{ type: CardType.LIGHTNING }];
-  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: L }];
+  public resistance = [{ type: F, value: -30 }];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Gust',
-    cost: [CardType.COLORLESS, CardType.COLORLESS],
+    cost: [C, C],
     damage: 30,
     text: ''
   }];
 
+  public regulationMark = 'G';
   public set: string = 'PAL';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '158';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wingull';
   public fullName: string = 'Wingull PAL';
-
 }

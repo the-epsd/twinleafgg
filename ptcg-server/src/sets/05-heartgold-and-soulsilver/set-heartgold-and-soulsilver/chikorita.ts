@@ -1,5 +1,5 @@
-import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Chikorita extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -23,8 +23,8 @@ export class Chikorita extends PokemonCard {
   }];
 
   public set: string = 'HS';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '59';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chikorita';
   public fullName: string = 'Chikorita HS';
 }

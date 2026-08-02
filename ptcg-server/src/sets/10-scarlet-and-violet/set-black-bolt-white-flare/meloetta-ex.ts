@@ -37,10 +37,8 @@ export class Meloettaex extends PokemonCard {
   public name: string = 'Meloetta ex';
   public fullName: string = 'Meloetta ex SV11B';
 
-  public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'NEXT_TURN_MORE_DAMAGE_MARKER';
-  public readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Live Debut
     if (effect instanceof UseAttackEffect && effect.player.active.cards.includes(this) && state.turn === 1) {
       if (IS_ABILITY_BLOCKED(store, state, effect.player, this)) {
         return state;
@@ -48,14 +46,13 @@ export class Meloettaex extends PokemonCard {
       effect.attack.canUseOnFirstTurn = true;
     }
 
-    // Refs: set-boundaries-crossed/meloetta.ts (Echoed Voice), prefabs/prefabs.ts (NEXT_TURN_ATTACK_BONUS)
+    // Echoed Voice
     NEXT_TURN_ATTACK_BONUS(effect, {
       attack: this.attacks[0],
       source: this,
-      bonusDamage: 80,
-      bonusMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER,
-      clearMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER_2
+      bonusDamage: 80
     });
+
     return state;
   }
 }

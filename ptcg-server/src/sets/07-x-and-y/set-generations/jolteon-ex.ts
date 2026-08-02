@@ -2,9 +2,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
+import { PREVENT_DAMAGE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../../game/store/prefabs/attack-effects';
 
 export class JolteonEX extends PokemonCard {
@@ -36,28 +34,15 @@ export class JolteonEX extends PokemonCard {
   public name: string = 'Jolteon-EX';
   public fullName: string = 'Jolteon-EX GEN';
 
-  public readonly FLASH_RAY_MARKER = 'FLASH_RAY_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Swift
     if (WAS_ATTACK_USED(effect, 0, this)) {
       THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS(store, state, effect, 30);
     }
 
+    // Flash Ray
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      this.marker.addMarker(this.FLASH_RAY_MARKER, this);
-      ADD_MARKER(this.FLASH_RAY_MARKER, effect.opponent, this);
-    }
-
-    if ((effect instanceof PutDamageEffect) && effect.target.getPokemonCard() === this && effect.source.getPokemonCard()?.stage === Stage.BASIC) {
-      if (this.marker.hasMarker(this.FLASH_RAY_MARKER, this)) {
-        effect.preventDefault = true;
-      }
-    }
-
-    if (effect instanceof EndTurnEffect && HAS_MARKER(this.FLASH_RAY_MARKER, effect.player, this)) {
-      REMOVE_MARKER(this.FLASH_RAY_MARKER, effect.player, this);
-      this.marker.removeMarker(this.FLASH_RAY_MARKER, this);
+      PREVENT_DAMAGE(store, state, effect, this, { sourceStage: Stage.BASIC });
     }
 
     return state;

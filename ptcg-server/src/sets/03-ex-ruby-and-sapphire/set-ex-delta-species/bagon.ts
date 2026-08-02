@@ -10,18 +10,16 @@ export class Bagon extends PokemonCard {
   public resistance = [{ type: R, value: -30 }, { type: F, value: -30 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Bite',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-  ];
+  public attacks = [{
+    name: 'Bite',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }];
 
   public set: string = 'DS';
-  public name: string = 'Bagon';
-  public fullName: string = 'Bagon DS 57';
   public setNumber: string = '57';
   public cardImage: string = 'assets/cardback.png';
+  public name: string = 'Bagon';
+  public fullName: string = 'Bagon DS 57';
 }

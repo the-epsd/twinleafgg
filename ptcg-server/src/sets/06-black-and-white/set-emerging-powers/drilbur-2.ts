@@ -9,18 +9,16 @@ export class Drilbur2 extends PokemonCard {
   public resistance = [{ type: L, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Mud-Slap',
-      cost: [F, F, C],
-      damage: 40,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Mud-Slap',
+    cost: [F, F, C],
+    damage: 40,
+    text: ''
+  }];
 
   public set: string = 'EPO';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '55';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Drilbur';
   public fullName: string = 'Drilbur EPO 55';
 }

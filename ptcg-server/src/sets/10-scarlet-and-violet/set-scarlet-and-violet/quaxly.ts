@@ -1,4 +1,5 @@
-import { PokemonCard, Stage, CardType } from '../../../game';
+import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Quaxly extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -7,21 +8,18 @@ export class Quaxly extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Pound',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Kick',
-      cost: [W, C],
-      damage: 20,
-      text: ''
-    },
-
-  ];
+  public attacks = [{
+    name: 'Pound',
+    cost: [C],
+    damage: 10,
+    text: ''
+  },
+  {
+    name: 'Kick',
+    cost: [W, C],
+    damage: 20,
+    text: ''
+  }];
 
   public regulationMark = 'G';
   public set: string = 'SVI';

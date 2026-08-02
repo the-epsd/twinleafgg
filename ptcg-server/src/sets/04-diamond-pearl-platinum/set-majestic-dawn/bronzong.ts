@@ -1,11 +1,9 @@
-import { GamePhase, PlayerType, PowerType, State, StateUtils, StoreLike } from '../../../game';
-import { CardType, Stage } from '../../../game/store/card/card-types';
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { PutCountersEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { Effect } from '../../../game/store/effects/effect';
-import { CheckPokemonPowersEffect } from '../../../game/store/effects/check-effects';
-import { BetweenTurnsEffect, EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { ADD_MARKER, HAS_MARKER, IS_POKEBODY_BLOCKED, REMOVE_MARKER, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, PlayerType } from "../../../game";
+import { PutCountersEffect } from "../../../game/store/effects/attack-effects";
+import { CheckPokemonPowersEffect } from "../../../game/store/effects/check-effects";
+import { Effect } from "../../../game/store/effects/effect";
+import { BetweenTurnsEffect } from "../../../game/store/effects/game-phase-effects";
+import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED, THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN } from "../../../game/store/prefabs/prefabs";
 
 export class Bronzong extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -40,8 +38,6 @@ export class Bronzong extends PokemonCard {
   public setNumber: string = '16';
   public name: string = 'Bronzong';
   public fullName: string = 'Bronzong MD';
-
-  public readonly COATING_MARKER = 'COATING_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -81,22 +77,7 @@ export class Bronzong extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      ADD_MARKER(this.COATING_MARKER, effect.player, this);
-    }
-
-    if (effect instanceof PutDamageEffect
-      && HAS_MARKER(this.COATING_MARKER, StateUtils.getOpponent(state, effect.player), this)
-      && effect.target.getPokemonCard() === this) {
-
-      if (state.phase !== GamePhase.ATTACK) {
-        return state;
-      }
-
-      effect.damage -= 20;
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player !== StateUtils.findOwner(state, StateUtils.findCardList(state, this))) {
-      REMOVE_MARKER(this.COATING_MARKER, StateUtils.getOpponent(state, effect.player), this);
+      return THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN(store, state, effect, 20);
     }
 
     return state;

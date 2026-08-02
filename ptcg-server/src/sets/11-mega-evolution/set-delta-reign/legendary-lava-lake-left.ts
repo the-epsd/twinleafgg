@@ -5,6 +5,7 @@ import { assembleDualStadiumFromHand } from '../../../game/store/dual-stadium-ut
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerPowerEffect } from '../../../game/store/effects/game-effects';
 import { HANDLE_ABILITY_LOCK } from '../../../game/store/prefabs/ability-lock';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
 
 export class LegendaryLavaLakeLeft extends TrainerCard {
@@ -16,9 +17,7 @@ export class LegendaryLavaLakeLeft extends TrainerCard {
   public setNumber: string = '75';
   public name: string = 'Legendary Lava Lake';
   public fullName: string = 'Legendary Lava Lake (Left) M6';
-  public text: string =
-    'You can only put this card into play from your hand with the other half of Legendary Lava Lake, and it counts as one Stadium card while in play.\n\n' +
-    'Evolution Pokemon in play (both yours and your opponent\'s) have no Abilities.';
+  public text: string = 'You can only put this card into play from your hand with the other half of Legendary Lava Lake, and it counts as one Stadium card while in play.\n\nEvolution Pokemon in play (both yours and your opponent\'s) have no Abilities.';
   public powers = [{
     name: 'Stadium Assembly',
     text: 'Put this card from your hand into play only with the other half of Legendary Lava Lake.',
@@ -40,7 +39,15 @@ export class LegendaryLavaLakeLeft extends TrainerCard {
         return false;
       }
       try {
-        return StateUtils.findCardList(state, card) instanceof PokemonCardList;
+        const cardList = StateUtils.findCardList(state, card);
+        if (!(cardList instanceof PokemonCardList)) {
+          return false;
+        }
+        const owner = StateUtils.findOwner(state, cardList);
+        if (IS_STADIUM_EFFECT_BLOCKED(store, state, owner, cardList)) {
+          return false;
+        }
+        return true;
       } catch {
         return false;
       }

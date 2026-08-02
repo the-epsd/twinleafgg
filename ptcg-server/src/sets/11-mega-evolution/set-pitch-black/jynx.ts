@@ -40,7 +40,7 @@ export class Jynx extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      DISCARD_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(effect, this);
+      DISCARD_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(store, state, effect, this);
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

@@ -2,6 +2,7 @@ import { Card } from '../../../game/store/card/card';
 import { Barbaracle } from './barbaracle';
 import { Binacle } from './binacle';
 import { CoreMemory } from './core-memory';
+import { HoleDiggingShovel } from './hole-digging-shovel';
 import { LumioiseCity } from './lumioise-city';
 import { MegaSkarmoryex } from './mega-skarmory-ex';
 import { MegaZygardeex } from './mega-zygarde-ex';
@@ -85,6 +86,7 @@ export const setPerfectOrder: Card[] = [
   new Barbaracle(),
   new Binacle,
   new CoreMemory(),
+  new HoleDiggingShovel(),
   new LumioiseCity(),
   new MegaSkarmoryex(),
   new MegaZygardeex(),

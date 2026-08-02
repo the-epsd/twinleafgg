@@ -8,19 +8,17 @@ export class Larvitar extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Headbutt',
-      cost: [C],
-      damage: 10,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Headbutt',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }];
 
-  public set: string = 'PRE';
   public regulationMark = 'H';
-  public cardImage: string = 'assets/cardback.png';
+  public set: string = 'PRE';
   public setNumber: string = '47';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Larvitar';
   public fullName: string = 'Larvitar PRE';
 }

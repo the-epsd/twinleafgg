@@ -1,5 +1,5 @@
-import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../game/store/card/card-types';
 
 export class AncientMew extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -16,8 +16,8 @@ export class AncientMew extends PokemonCard {
   }];
 
   public set: string = 'UP';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = 'Ancient Mew';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ancient Mew';
   public fullName: string = 'Ancient Mew UP';
 }

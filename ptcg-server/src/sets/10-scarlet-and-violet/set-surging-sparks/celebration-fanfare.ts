@@ -1,14 +1,12 @@
-import { HealEffect } from '../../../game/store/effects/game-effects';
+import { PlayerType, State, StateUtils, StoreLike } from '../../../game';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
-import { PlayerType } from '../../../game/store/actions/play-card-action';
+import { Effect } from '../../../game/store/effects/effect';
+import { HealEffect, UseStadiumEffect } from '../../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 
 export class CelebrationFanfare extends TrainerCard {
-
   public trainerType = TrainerType.STADIUM;
   public set = 'SVP';
   public regulationMark = 'H';
@@ -16,20 +14,21 @@ export class CelebrationFanfare extends TrainerCard {
   public setNumber: string = '174';
   public name = 'Celebration Fanfare';
   public fullName = 'Celebration Fanfare SVP';
-
   public text = 'Once during each player\'s turn, that player may heal 10 damage from each of their Pokémon. If they do, that player\'s turn ends.';
 
-  useStadium(store: StoreLike, state: State, effect: UseStadiumEffect): State {
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
+      const player = effect.player;
 
-    const player = effect.player;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (IS_STADIUM_EFFECT_BLOCKED(store, state, player, cardList, this)) {
+          return;
+        }
+        store.reduceEffect(state, new HealEffect(player, cardList, 10));
+      });
 
-    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-      const healEffect = new HealEffect(player, cardList, 10);
-      state = store.reduceEffect(state, healEffect);
-      const endTurnEffect = new EndTurnEffect(player);
-      store.reduceEffect(state, endTurnEffect);
-      return state;
-    });
+      store.reduceEffect(state, new EndTurnEffect(player));
+    }
 
     return state;
   }

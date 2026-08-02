@@ -1,4 +1,5 @@
-import { PokemonCard, Stage, CardType } from '../../../game';
+import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Quaxwell extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -8,21 +9,18 @@ export class Quaxwell extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Rain Splash',
-      cost: [W],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Spiral Kick',
-      cost: [W, C, C],
-      damage: 70,
-      text: ''
-    },
-
-  ];
+  public attacks = [{
+    name: 'Rain Splash',
+    cost: [W],
+    damage: 20,
+    text: ''
+  },
+  {
+    name: 'Spiral Kick',
+    cost: [W, C, C],
+    damage: 70,
+    text: ''
+  }];
 
   public regulationMark = 'G';
   public set: string = 'SVI';

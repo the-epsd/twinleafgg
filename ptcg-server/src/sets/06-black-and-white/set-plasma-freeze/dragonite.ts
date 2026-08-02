@@ -1,81 +1,48 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, GameError } from '../../../game';
+import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { HealEffect } from '../../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { PlayItemEffect } from '../../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/attack-effects';
+import { OPPONENT_CANNOT_PLAY_ITEM_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Dragonite extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom = 'Dragonair';
-
-  public cardType: CardType = CardType.DRAGON;
-
+  public cardType: CardType = N;
   public hp: number = 150;
+  public weakness = [{ type: N }];
+  public retreat = [C, C, C];
 
-  public weakness = [{ type: CardType.DRAGON }];
+  public attacks = [{
+    name: 'Deafen',
+    cost: [C, C, C],
+    damage: 60,
+    text: 'Your opponent can\'t play any Item cards from his or her hand during his or her next turn.',
+  },
+  {
+    name: 'Healwing',
+    cost: [G, L, C, C],
+    damage: 90,
+    text: 'Heal 30 damage from this Pokémon.',
+  }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
-
-  public attacks = [
-    {
-      name: 'Deafen',
-      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
-      damage: 60,
-      text: 'Your opponent can\'t play any Item cards from his or her hand during his or her next turn.',
-    },
-    {
-      name: 'Healwing',
-      cost: [CardType.GRASS, CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS],
-      damage: 90,
-      text: 'Heal 30 damage from this Pokémon.',
-    },
-
-  ];
   public set: string = 'PLF';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '83';
-
   public name: string = 'Dragonite';
-
   public fullName: string = 'Dragonite PLF';
 
-  public readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Attack Deafen
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      opponent.marker.addMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this);
+      return OPPONENT_CANNOT_PLAY_ITEM_CARDS(store, state, effect, this);
     }
 
-    if (effect instanceof PlayItemEffect) {
-      const player = effect.player;
-      if (player.marker.hasMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-    }
-
+    // Attack Healwing
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
-      const target = player.active;
-      const healEffect = new HealEffect(player, target, 30);
-      state = store.reduceEffect(state, healEffect);
-      return state;
+      HEAL_X_DAMAGE_FROM_THIS_POKEMON(30, effect, store, state);
     }
 
-    if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this);
-    }
     return state;
   }
 }
-

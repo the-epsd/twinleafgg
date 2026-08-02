@@ -1,21 +1,6 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType, CardTag } from '../../../game/store/card/card-types';
-import {
-  AttachEnergyPrompt,
-  Card,
-  CardTarget,
-  ChooseEnergyPrompt,
-  EnergyCard,
-  GameError,
-  GameMessage,
-  PlayerType,
-  PokemonCardList,
-  PowerType,
-  SlotType,
-  State,
-  StateUtils,
-  StoreLike,
-} from '../../../game';
+import { AttachEnergyPrompt, Card, CardTarget, ChooseEnergyPrompt, EnergyCard, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { ZacianVUNIONTopRight } from './zacian-v-union-tr';
@@ -23,8 +8,7 @@ import { ZacianVUNIONBottomLeft } from './zacian-v-union-bl';
 import { ZacianVUNIONBottomRight } from './zacian-v-union-br';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED, DEFENDING_POKEMON_DOES_LESS_DAMAGE } from '../../../game/store/prefabs/prefabs';
 
 export class ZacianVUNIONTopLeft extends PokemonCard {
   public stage: Stage = Stage.VUNION;
@@ -35,54 +19,48 @@ export class ZacianVUNIONTopLeft extends PokemonCard {
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C];
 
-  public powers = [
-    {
-      name: 'Zacian V-UNION Assembly',
-      text: 'Once per game during your turn, combine 4 different Zacian V-UNION from your discard pile and put them onto your bench.',
-      useFromDiscard: true,
-      exemptFromAbilityLock: true,
-      powerType: PowerType.VUNION_ASSEMBLY,
-    },
-  ];
+  public powers = [{
+    name: 'Zacian V-UNION Assembly',
+    text: 'Once per game during your turn, combine 4 different Zacian V-UNION from your discard pile and put them onto your bench.',
+    useFromDiscard: true,
+    exemptFromAbilityLock: true,
+    powerType: PowerType.VUNION_ASSEMBLY,
+  }];
 
-  public attacks = [
-    {
-      name: 'Union Gain',
-      cost: [C],
-      damage: 0,
-      text: 'Attach up to 2 [M] Energy cards from your discard pile to this Pokémon.',
-    },
-    {
-      name: 'Dance of the Crowned Sword',
-      cost: [M, M, C],
-      damage: 150,
-      text: "During your opponent's next turn, the Defending Pokémon's attacks do 150 less damage (before applying Weakness and Resistance).",
-    },
-    {
-      name: 'Steel Cut',
-      cost: [M, M, C],
-      damage: 200,
-      text: '',
-    },
-    {
-      name: 'Master Blade',
-      cost: [M, M, M, C],
-      damage: 340,
-      text: 'Discard 3 Energy from this Pokémon.',
-    },
-  ];
+  public attacks = [{
+    name: 'Union Gain',
+    cost: [C],
+    damage: 0,
+    text: 'Attach up to 2 [M] Energy cards from your discard pile to this Pokémon.'
+  },
+  {
+    name: 'Dance of the Crowned Sword',
+    cost: [M, M, C],
+    damage: 150,
+    text: 'During your opponent\'s next turn, the Defending Pokémon\'s attacks do 150 less damage (before applying Weakness and Resistance).'
+  },
+  {
+    name: 'Steel Cut',
+    cost: [M, M, C],
+    damage: 200,
+    text: ''
+  },
+  {
+    name: 'Master Blade',
+    cost: [M, M, M, C],
+    damage: 340,
+    text: 'Discard 3 Energy from this Pokémon.'
+  }];
 
-  public set: string = 'SWSH';
   public regulationMark = 'E';
-  public cardImage: string = 'assets/cardback.png';
+  public set: string = 'SWSH';
   public setNumber: string = '163';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zacian V-UNION';
   public fullName: string = 'Zacian V-UNION (Top Left) SWSH';
 
-  public readonly DANCE_REDUCED_DAMAGE_MARKER = 'DANCE_REDUCED_DAMAGE_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // assemblin the v-union
+    // Zacian V-UNION Assembly
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const slots: PokemonCardList[] = player.bench.filter((b) => b.cards.length === 0);
@@ -130,7 +108,6 @@ export class ZacianVUNIONTopLeft extends PokemonCard {
               player.discard.moveCardTo(card, slots[0]);
             }
           });
-          // gotta make sure the actual mon ends up on top
           player.discard.cards.forEach((card) => {
             if (card instanceof ZacianVUNIONTopLeft) {
               player.discard.moveCardTo(card, slots[0]);
@@ -149,7 +126,6 @@ export class ZacianVUNIONTopLeft extends PokemonCard {
       const player = effect.player;
 
       let metalsInDiscard = 0;
-      // checking for energies in the discard
       player.discard.cards.forEach((card) => {
         if (
           card instanceof EnergyCard &&
@@ -181,7 +157,6 @@ export class ZacianVUNIONTopLeft extends PokemonCard {
           ),
           (transfers) => {
             transfers = transfers || [];
-            // cancelled by user
             if (transfers.length === 0) {
               return;
             }
@@ -196,29 +171,7 @@ export class ZacianVUNIONTopLeft extends PokemonCard {
 
     // Dance of the Crowned Sword
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const opponent = effect.opponent;
-
-      opponent.active.marker.addMarker(this.DANCE_REDUCED_DAMAGE_MARKER, this);
-      opponent.marker.addMarker(this.DANCE_REDUCED_DAMAGE_MARKER, this);
-    }
-
-    if (effect instanceof AttackEffect) {
-      if (effect.source.marker.hasMarker(this.DANCE_REDUCED_DAMAGE_MARKER, this)) {
-        effect.damage -= 150;
-      }
-    }
-
-    if (
-      effect instanceof EndTurnEffect &&
-      effect.player.marker.hasMarker(this.DANCE_REDUCED_DAMAGE_MARKER, this)
-    ) {
-      effect.player.marker.removeMarker(this.DANCE_REDUCED_DAMAGE_MARKER, this);
-
-      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        if (cardList.marker.hasMarker(this.DANCE_REDUCED_DAMAGE_MARKER, this)) {
-          cardList.marker.removeMarker(this.DANCE_REDUCED_DAMAGE_MARKER, this);
-        }
-      });
+      return DEFENDING_POKEMON_DOES_LESS_DAMAGE(store, state, effect, this, 150);
     }
 
     // Master Blade

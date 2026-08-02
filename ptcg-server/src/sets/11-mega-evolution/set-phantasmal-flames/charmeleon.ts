@@ -13,13 +13,13 @@ export class Charmeleon extends PokemonCard {
     name: 'Steady Firebreathing',
     cost: [R],
     damage: 40,
-    text: '',
+    text: ''
   }];
 
-  public set: string = 'PFL';
   public regulationMark = 'I';
-  public cardImage: string = 'assets/cardback.png';
+  public set: string = 'PFL';
   public setNumber: string = '12';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Charmeleon';
   public fullName: string = 'Charmeleon M2';
 }

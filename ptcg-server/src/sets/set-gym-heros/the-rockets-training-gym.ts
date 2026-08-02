@@ -5,6 +5,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType, CardType } from '../../game/store/card/card-types';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 import { StateUtils } from '../../game/store/state-utils';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../game/store/prefabs/stadium-effect';
 
 export class TheRocketsTrainingGym extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
@@ -13,15 +14,16 @@ export class TheRocketsTrainingGym extends TrainerCard {
   public setNumber: string = '104';
   public name: string = 'The Rocket\'s Training Gym';
   public fullName: string = 'The Rocket\'s Training Gym G1';
-
-  public text: string =
-    'Each player pays [C] more to retreat his or her Active Pokémon.';
+  public text: string = 'Each player pays [C] more to retreat his or her Active Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof CheckRetreatCostEffect && StateUtils.getStadiumCard(state) === this) {
       const player = effect.player;
       const pokemonCard = player.active.getPokemonCard();
+
+      if (IS_STADIUM_EFFECT_BLOCKED(store, state, effect.player, effect.player.active)) {
+        return state;
+      }
 
       if (pokemonCard) {
         effect.cost.push(CardType.COLORLESS);
@@ -31,4 +33,3 @@ export class TheRocketsTrainingGym extends TrainerCard {
     return state;
   }
 }
-

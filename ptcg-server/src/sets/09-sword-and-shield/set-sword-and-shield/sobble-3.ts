@@ -8,16 +8,14 @@ export class Sobble3 extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Water Gun',
-      cost: [W],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Water Gun',
+    cost: [W],
+    damage: 20,
+    text: ''
+  }];
 
-  public regulationMark: string = 'D';
+  public regulationMark = 'D';
   public set: string = 'SSH';
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';

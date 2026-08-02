@@ -1,73 +1,37 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, CoinFlipPrompt, GameError } from '../../../game';
+import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { PlayItemEffect } from '../../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, OPPONENT_CANNOT_PLAY_ITEM_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Shuppet extends PokemonCard {
-
   public regulationMark = 'G';
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.PSYCHIC;
-
+  public cardType: CardType = P;
   public hp: number = 60;
+  public weakness = [{ type: D }];
+  public resistance = [{ type: F, value: -30 }];
+  public retreat = [C];
 
-  public weakness = [{ type: CardType.DARK }];
+  public attacks = [{
+    name: 'Enveloping Shadow',
+    cost: [P],
+    damage: 10,
+    text: 'Flip a coin. If heads, during your opponent\'s next turn, they can\'t play any Item cards from their hand.',
+  }];
 
-  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
-
-  public retreat = [CardType.COLORLESS];
-
-  public attacks = [
-    {
-      name: 'Enveloping Shadow',
-      cost: [CardType.PSYCHIC],
-      damage: 10,
-      text: 'Flip a coin. If heads, during your opponent\'s next turn, they can\'t play any Item cards from their hand.',
-    }
-  ];
   public set: string = 'SVI';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '87';
-
   public name: string = 'Shuppet';
-
   public fullName: string = 'Shuppet SVI';
 
-  public readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof PlayItemEffect) {
-      const player = effect.player;
-      if (player.marker.hasMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this);
-    }
-
+    // Enveloping Shadow
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
-        if (result === true) {
-          opponent.marker.addMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this);
-          effect.damage = 10;
-        } else {
-          effect.damage = 10;
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        if (result) {
+          OPPONENT_CANNOT_PLAY_ITEM_CARDS(store, state, effect, this);
         }
       });
     }

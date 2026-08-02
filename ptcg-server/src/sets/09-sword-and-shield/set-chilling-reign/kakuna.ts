@@ -1,13 +1,8 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import {
-  StoreLike, State, StateUtils,
-  GamePhase
-} from '../../../game';
+import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Kakuna extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -32,28 +27,12 @@ export class Kakuna extends PokemonCard {
   public setNumber: string = '2';
   public regulationMark: string = 'E';
 
-  public readonly STIFFEN_MARKER = 'STIFFEN_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Stiffen
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      ADD_MARKER(this.STIFFEN_MARKER, effect.player, this);
-    }
-
-    if (effect instanceof PutDamageEffect && HAS_MARKER(this.STIFFEN_MARKER, StateUtils.getOpponent(state, effect.player), this) && effect.target.getPokemonCard() === this) {
-
-      if (state.phase !== GamePhase.ATTACK) {
-        return state;
-      }
-
-      effect.damage -= 40;
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player !== StateUtils.findOwner(state, StateUtils.findCardList(state, this))) {
-      REMOVE_MARKER(this.STIFFEN_MARKER, StateUtils.getOpponent(state, effect.player), this);
+      effect.player.active.damageReductionNextTurn = 40;
     }
 
     return state;
   }
-
 }

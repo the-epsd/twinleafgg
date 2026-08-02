@@ -33,8 +33,6 @@ export class Seismitoad extends PokemonCard {
   public name: string = 'Seismitoad';
   public fullName: string = 'Seismitoad DRX';
 
-  public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'NEXT_TURN_MORE_DAMAGE_MARKER';
-  public readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Echoed Voice - next turn bonus
@@ -42,8 +40,6 @@ export class Seismitoad extends PokemonCard {
       attack: this.attacks[0],
       source: this,
       bonusDamage: 50,
-      bonusMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER,
-      clearMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER_2
     });
 
     // Drain Punch - heal 20

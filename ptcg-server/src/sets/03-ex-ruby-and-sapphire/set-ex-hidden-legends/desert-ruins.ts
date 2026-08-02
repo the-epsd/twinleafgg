@@ -8,18 +8,16 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { BetweenTurnsEffect } from '../../../game/store/effects/game-phase-effects';
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
+import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 
 export class DesertRuins extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.STADIUM;
   public set: string = 'HL';
   public setNumber = '88';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Desert Ruins';
   public fullName: string = 'Desert Ruins HL';
-
-  public text: string =
-    'At any time between turns, each player puts 1 damage counter on his or her Pokémon-ex with maximum HP of at least 100.';
+  public text: string = 'At any time between turns, each player puts 1 damage counter on his or her Pokémon-ex with maximum HP of at least 100.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof BetweenTurnsEffect && StateUtils.getStadiumCard(state) === this) {
@@ -27,6 +25,11 @@ export class DesertRuins extends TrainerCard {
 
       // idk why this hits both player's pokemon, it might be getting confused as to what the player specified is so it defaults to both, but hey, it works, so i don't care.
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+        const owner = StateUtils.findOwner(state, cardList);
+        if (IS_STADIUM_EFFECT_BLOCKED(store, state, owner, cardList)) {
+          return;
+        }
+
         const pokemon = cardList.getPokemonCard();
         if (pokemon && (pokemon.tags.includes(CardTag.POKEMON_ex)) && pokemon.hp >= 100) {
           cardList.damage += 10;
@@ -36,10 +39,8 @@ export class DesertRuins extends TrainerCard {
       if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
         throw new GameError(GameMessage.CANNOT_USE_STADIUM);
       }
-
     }
 
     return state;
   }
-
 }

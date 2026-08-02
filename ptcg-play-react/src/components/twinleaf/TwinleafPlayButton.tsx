@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react';
+import { useTranslation } from 'react-i18next';
 import { cn } from '../../utils/cn';
 import { TwinleafSpinner } from './TwinleafSpinner';
 import styles from './TwinleafPlayButton.module.css';
@@ -19,7 +20,7 @@ export type TwinleafPlayButtonProps = {
 };
 
 export function TwinleafPlayButton({
-  text = 'FIND MATCH',
+  text,
   inQueue = false,
   loading = false,
   disabled = false,
@@ -32,13 +33,14 @@ export function TwinleafPlayButton({
   className,
   onClick,
 }: TwinleafPlayButtonProps) {
+  const { t } = useTranslation();
   const isDisabled = disabled || loading || connectionError || onCooldown;
 
-  let buttonText = text;
+  let buttonText = text ?? t('BUTTON_FIND_MATCH');
   if (inQueue) {
-    buttonText = 'LEAVE QUEUE';
+    buttonText = t('BUTTON_LEAVE_QUEUE');
   } else if (onCooldown) {
-    buttonText = `COOLDOWN (${cooldownSeconds})`;
+    buttonText = `${t('BUTTON_MATCHMAKING_COOLDOWN')} (${cooldownSeconds})`;
   }
 
   const style: CSSProperties = { width, height, fontSize };
@@ -49,7 +51,6 @@ export function TwinleafPlayButton({
       className={cn(
         styles.button,
         inQueue && styles.inQueue,
-        connectionError && styles.error,
         className,
       )}
       style={style}

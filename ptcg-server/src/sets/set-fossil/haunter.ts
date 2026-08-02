@@ -3,25 +3,18 @@ import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-ty
 import { StoreLike } from '../../game/store/store-like';
 import { GamePhase, State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { GameLog, PowerType, StateUtils } from '../../game';
+import { PowerType } from '../../game';
 import { AddSpecialConditionsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
-import { IS_POKEMON_POWER_BLOCKED, SIMULATE_COIN_FLIP, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { IS_POKEMON_POWER_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Haunter extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Gastly';
-
   public cardType: CardType = P;
-
   public hp: number = 50;
-
   public weakness = [];
-
   public resistance = [{ type: F, value: -30 }];
-
   public retreat = [];
 
   public powers = [{
@@ -38,24 +31,18 @@ export class Haunter extends PokemonCard {
   }];
 
   public set: string = 'FO';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '6';
-
   public name: string = 'Haunter';
-
   public fullName: string = 'Haunter FO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Transparency
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
       const pokemonCard = effect.target.getPokemonCard();
-      const sourceCard = effect.source.getPokemonCard();
 
-      if (pokemonCard !== this || sourceCard === undefined || state.phase !== GamePhase.ATTACK) {
+      if (pokemonCard !== this || state.phase !== GamePhase.ATTACK) {
         return state;
       }
 
@@ -69,23 +56,21 @@ export class Haunter extends PokemonCard {
         return state;
       }
 
-      try {
-        const coinFlip = new CoinFlipEffect(player);
-        store.reduceEffect(state, coinFlip);
-      } catch {
+      if (effect.damage <= 0) {
         return state;
       }
 
-      const coinFlipResult = SIMULATE_COIN_FLIP(store, state, player);
+      const coinFlip = new CoinFlipEffect(player);
+      store.reduceEffect(state, coinFlip);
 
-      if (coinFlipResult) {
-        effect.damage = 0;
-        store.log(state, GameLog.LOG_ABILITY_BLOCKS_DAMAGE, { name: opponent.name, pokemon: this.name });
+      if (coinFlip.result === false) {
+        return state;
       }
 
+      effect.preventDefault = true;
       return state;
     }
-
+    // Nightmare
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const sleepEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
       store.reduceEffect(state, sleepEffect);

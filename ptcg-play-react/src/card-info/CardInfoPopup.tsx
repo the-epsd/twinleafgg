@@ -25,7 +25,34 @@ export type CardInfoPopupProps = {
   cardTextKerning?: number;
   /** When set (in-game), ability/attack/trainer clicks invoke this then typically close. Return false to keep open. */
   onTableAction?: (action: CardInfoTableAction) => void | boolean;
+  /** Browse previous card in the parent list (←). */
+  onNavigatePrev?: () => void;
+  /** Browse next card in the parent list (→). */
+  onNavigateNext?: () => void;
+  /** Optional “tested” checkbox in the footer (next to browse hint). */
+  tested?: boolean;
+  onToggleTested?: () => void;
+  testedLabel?: string;
+  /** Optional “flag” checkbox in the footer. */
+  flagged?: boolean;
+  onToggleFlagged?: () => void;
+  flaggedLabel?: string;
+  /** Hide the alternative-printing swap control on the card image. */
+  hideSwapButton?: boolean;
 };
+
+function isEditableKeyTarget(target: EventTarget | null): boolean {
+  if (!(target instanceof HTMLElement)) {
+    return false;
+  }
+  const tag = target.tagName;
+  return (
+    tag === 'INPUT' ||
+    tag === 'TEXTAREA' ||
+    tag === 'SELECT' ||
+    target.isContentEditable
+  );
+}
 
 export function CardInfoPopup({
   card,
@@ -41,6 +68,15 @@ export function CardInfoPopup({
   showTags,
   cardTextKerning,
   onTableAction,
+  onNavigatePrev,
+  onNavigateNext,
+  tested,
+  onToggleTested,
+  testedLabel = 'Mark as tested & working',
+  flagged,
+  onToggleFlagged,
+  flaggedLabel = 'Flag this card',
+  hideSwapButton = false,
 }: CardInfoPopupProps) {
   const { t } = useTranslation();
   const [swapOpen, setSwapOpen] = useState(false);
@@ -52,11 +88,26 @@ export function CardInfoPopup({
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         onClose();
+        return;
+      }
+      if (swapOpen || isEditableKeyTarget(e.target)) {
+        return;
+      }
+      if (e.key === 'ArrowLeft' && onNavigatePrev) {
+        e.preventDefault();
+        onNavigatePrev();
+        return;
+      }
+      if (e.key === 'ArrowRight' && onNavigateNext) {
+        e.preventDefault();
+        onNavigateNext();
       }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [onClose]);
+  }, [onClose, onNavigatePrev, onNavigateNext, swapOpen]);
+
+  const canNavigate = Boolean(onNavigatePrev || onNavigateNext);
 
   return createPortal(
     <div
@@ -84,6 +135,7 @@ export function CardInfoPopup({
               getScanUrl={getScanUrl}
               isInGame={isInGame}
               onSwapClick={() => setSwapOpen(true)}
+              hideSwapButton={hideSwapButton}
             />
             <CardInfoPane
               key={card.fullName}
@@ -115,6 +167,41 @@ export function CardInfoPopup({
           </div>
         </div>
         <div className={styles.footer}>
+          {(canNavigate || onToggleTested || onToggleFlagged) && (
+            <div className={styles.footerLeft}>
+              {canNavigate && (
+                <span className={styles.navHint}>← → browse</span>
+              )}
+              {onToggleTested && (
+                <label
+                  className={styles.footerCheck}
+                  title={tested ? 'Mark as not tested' : testedLabel}
+                >
+                  <input
+                    type="checkbox"
+                    checked={Boolean(tested)}
+                    onChange={() => onToggleTested()}
+                    aria-label={testedLabel}
+                  />
+                  <span>Tested</span>
+                </label>
+              )}
+              {onToggleFlagged && (
+                <label
+                  className={`${styles.footerCheck} ${styles.flagCheck}`}
+                  title={flagged ? 'Remove flag' : flaggedLabel}
+                >
+                  <input
+                    type="checkbox"
+                    checked={Boolean(flagged)}
+                    onChange={() => onToggleFlagged()}
+                    aria-label={flaggedLabel}
+                  />
+                  <span>Flag</span>
+                </label>
+              )}
+            </div>
+          )}
           <span className={styles.spacer} />
           <button type="button" className={styles.closeBtn} onClick={() => onClose()}>
             {t('BUTTON_CLOSE')}

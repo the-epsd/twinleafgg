@@ -7,6 +7,7 @@ import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
+
 export class Watchog extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Patrat';
@@ -15,44 +16,35 @@ export class Watchog extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Hypnoblast',
-      cost: [C],
-      damage: 20,
-      text: 'The Defending Pokémon is now Asleep.'
-    },
-    {
-      name: 'Psych Up',
-      cost: [C, C],
-      damage: 30,
-      text: 'During your next turn, this Pokémon\'s Psych Up attack does 30 more damage (before applying Weakness and Resistance).'
-    }
-  ];
+  public attacks = [{
+    name: 'Hypnoblast',
+    cost: [C],
+    damage: 20,
+    text: 'The Defending Pokémon is now Asleep.'
+  },
+  {
+    name: 'Psych Up',
+    cost: [C, C],
+    damage: 30,
+    text: 'During your next turn, this Pokémon\'s Psych Up attack does 30 more damage (before applying Weakness and Resistance).'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '119';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Watchog';
   public fullName: string = 'Watchog BCR';
-  public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'NEXT_TURN_MORE_DAMAGE_MARKER';
-  public readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 1: Hypnoblast
-    // Ref: set-noble-victories/cryogonal.ts (Frozen Whirlpool)
+    // Hypnoblast
     if (AFTER_ATTACK(effect, 0, this)) {
       ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
-
-    // Attack 2: Psych Up
-    // Refs: set-jungle/scyther.ts (Swords Dance), set-lost-thunder/donphan.ts (Rolling Spin), prefabs/prefabs.ts (NEXT_TURN_ATTACK_BONUS)
+    // Psych Up
     NEXT_TURN_ATTACK_BONUS(effect, {
       attack: this.attacks[1],
       source: this,
       bonusDamage: 30,
-      bonusMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER,
-      clearMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER_2
     });
 
     return state;

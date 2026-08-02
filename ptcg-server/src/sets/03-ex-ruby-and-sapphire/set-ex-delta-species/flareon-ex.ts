@@ -1,8 +1,6 @@
-import { CardTag, CardType, GamePhase, PokemonCard, Power, PowerType, Stage, State, StateUtils, StoreLike } from '../../../game';
-import { AddMarkerEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { Effect } from '../../../game/store/effects/effect';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { ADD_BURN_TO_PLAYER_ACTIVE, ADD_CONFUSION_TO_PLAYER_ACTIVE, CONFIRMATION_PROMPT, IS_POKEPOWER_BLOCKED, JUST_EVOLVED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PokemonCard, Stage, CardTag, CardType, Power, PowerType, StoreLike, State, StateUtils } from "../../../game";
+import { Effect } from "../../../game/store/effects/effect";
+import { JUST_EVOLVED, IS_POKEPOWER_BLOCKED, CONFIRMATION_PROMPT, ADD_BURN_TO_PLAYER_ACTIVE, ADD_CONFUSION_TO_PLAYER_ACTIVE, WAS_ATTACK_USED, THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from "../../../game/store/prefabs/prefabs";
 
 export class Flareonex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -38,14 +36,10 @@ export class Flareonex extends PokemonCard {
   public name: string = 'Flareon ex';
   public fullName: string = 'Flareon ex DS';
 
-  public readonly FLAME_SCREEN_MARKER = 'FLAME_SCREEN_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    // Devo Flash
+    // Evolutionary Flame
     if (JUST_EVOLVED(effect, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      const opponent = StateUtils.getOpponent(state, effect.player);
 
       if (IS_POKEPOWER_BLOCKED(store, state, effect.player, this)) {
         return state;
@@ -58,29 +52,11 @@ export class Flareonex extends PokemonCard {
         }
       });
     }
-
     // Flame Screen
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const addMarkerEffect = new AddMarkerEffect(effect, this.FLAME_SCREEN_MARKER, this);
-      return store.reduceEffect(state, addMarkerEffect);
+      return THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN(store, state, effect, 20);
     }
-
-    if (effect instanceof PutDamageEffect
-      && effect.source.marker.hasMarker(this.FLAME_SCREEN_MARKER, this)) {
-
-      // It's not an attack
-      if (state.phase !== GamePhase.ATTACK) {
-        return state;
-      }
-
-      effect.damage -= 20;
-      return state;
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      effect.player.active.marker.removeMarker(this.FLAME_SCREEN_MARKER, this);
-    }
-
+    // Heat Tackle
     if (WAS_ATTACK_USED(effect, 1, this)) {
       THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, 10);
     }

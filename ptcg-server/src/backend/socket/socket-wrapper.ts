@@ -2,7 +2,6 @@ import { Server, Socket } from 'socket.io';
 import { ApiErrorEnum } from '../common/errors';
 
 export type Response<R = void> = (message: string, data?: R | ApiErrorEnum) => void;
-
 export type Handler<T, R> = (data: T, response: Response<R>) => void;
 
 interface Listener<T = any, R = any> {
@@ -12,10 +11,10 @@ interface Listener<T = any, R = any> {
 }
 
 export class SocketWrapper {
-
   public io: Server;
   public socket: Socket;
   private listeners: Listener<any, any>[] = [];
+  private meta = new Map<string, unknown>();
 
   constructor(io: Server, socket: Socket) {
     this.io = io;
@@ -56,4 +55,23 @@ export class SocketWrapper {
     return this.socket.emit(event, ...args);
   }
 
+  public join(room: string): void {
+    this.socket.join(room);
+  }
+
+  public leave(room: string): void {
+    this.socket.leave(room);
+  }
+
+  public setMeta(key: string, value: unknown): void {
+    this.meta.set(key, value);
+  }
+
+  public getMeta<T>(key: string): T | undefined {
+    return this.meta.get(key) as T | undefined;
+  }
+
+  public deleteMeta(key: string): void {
+    this.meta.delete(key);
+  }
 }

@@ -29,8 +29,6 @@ export class Trapinch extends PokemonCard {
   public name: string = 'Trapinch';
   public fullName: string = 'Trapinch SS';
 
-  public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER: string = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {

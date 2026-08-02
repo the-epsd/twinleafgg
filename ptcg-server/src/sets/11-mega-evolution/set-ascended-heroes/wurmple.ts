@@ -18,8 +18,8 @@ export class Wurmple extends PokemonCard {
 
   public regulationMark = 'I';
   public set: string = 'ASC';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '11';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wurmple';
   public fullName: string = 'Wurmple M2a';
 }
