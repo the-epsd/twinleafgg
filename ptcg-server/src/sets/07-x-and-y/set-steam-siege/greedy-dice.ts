@@ -5,26 +5,18 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { DrawPrizesEffect } from '../../../game/store/effects/game-effects';
 import { CoinFlipEffect, TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { CONFIRMATION_PROMPT, SIMULATE_COIN_FLIP, TAKE_SPECIFIC_PRIZES, TAKE_X_PRIZES } from '../../../game/store/prefabs/prefabs';
+import { CONFIRMATION_PROMPT, TAKE_SPECIFIC_PRIZES, TAKE_X_PRIZES } from '../../../game/store/prefabs/prefabs';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class GreedyDice extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'STS';
-
   public setNumber: string = '102';
-
   public cardImage: string = 'assets/cardback.png';
-
   public name: string = 'Greedy Dice';
-
   public fullName: string = 'Greedy Dice STS';
-
-  public text: string =
-    'You can play this card only if you took it as a face-down Prize card, before you put it into your hand.' +
+  public text: string = 'You can play this card only if you took it as a face-down Prize card, before you put it into your hand.' +
     `
     ` +
     'Flip a coin. If heads, take 1 more Prize card.';
@@ -102,17 +94,10 @@ export class GreedyDice extends TrainerCard {
       }
     }
 
-    // Handle coin flip
-    try {
-      const coinFlip = new CoinFlipEffect(player);
-      store.reduceEffect(state, coinFlip);
-    } catch {
-      return state;
-    }
+    const coinFlip = new CoinFlipEffect(player);
+    store.reduceEffect(state, coinFlip);
 
-    const coinResult = SIMULATE_COIN_FLIP(store, state, player);
-
-    if (!coinResult) {
+    if (coinFlip.result === false) {
       return state;
     }
 

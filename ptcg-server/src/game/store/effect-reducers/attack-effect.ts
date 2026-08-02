@@ -1,49 +1,25 @@
-import { GameError } from '../../game-error';
-import { GameLog, GameMessage } from '../../game-message';
-import { Effect } from '../effects/effect';
-import { StoreLike } from '../store-like';
-import {
-  PutDamageEffect, DealDamageEffect, DiscardCardsEffect,
-  DiscardCardsFromOpponentsActivePokemonEffect,
-  AddMarkerEffect, HealTargetEffect, AddSpecialConditionsEffect,
-  RemoveSpecialConditionsEffect, ApplyWeaknessEffect, AfterDamageEffect,
-  PutCountersEffect, CardsToHandEffect,
-  MoveOpponentEnergyEffect,
-  KnockOutOpponentEffect,
-  KnockOutPlayerEffect,
-  DiscardDefendingPokemonEffect,
-  KOEffect,
-  LostZoneCardsEffect,
-  AfterWeaknessAndResistanceEffect,
-  GustOpponentBenchEffect,
-  SwitchOutOpponentsActiveEffect,
-} from '../effects/attack-effects';
-import { AttackEffect, HealEffect, KnockOutEffect } from '../effects/game-effects';
-import { StateUtils } from '../state-utils';
-import { PokemonCard } from '../card/pokemon-card';
-import { getCardTarget } from '../../../simple-bot/simple-tactics/simple-tactics';
-import {
-  EffectOfAttackEffect,
-  shouldPreventAttackDamage,
-  shouldPreventAttackEffects,
-  shouldApplyDamageReduction,
-  shouldKnockOutIfDamaged,
-  getActiveSurviveOnTenHpOptions,
-  getActiveRetaliateOnDamage,
-  RetaliateDamageEffect,
-  retaliateDamageEffect,
-} from '../effects/effect-of-attack-effects';
-import { PlayerType } from '../actions/play-card-action';
-import { GameStatsTracker } from '../game-stats-tracker';
-import { CheckHpEffect } from '../effects/check-effects';
-import { MOVE_CARDS, TAKE_X_PRIZES } from '../prefabs/prefabs';
-import { GamePhase, State } from '../state/state';
-import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
+import { getCardTarget } from "../../../simple-bot/simple-tactics/simple-tactics";
+import { GameError } from "../../game-error";
+import { GameMessage, GameLog } from "../../game-message";
+import { PlayerType } from "../actions/play-card-action";
+import { PokemonCard } from "../card/pokemon-card";
+import { PutDamageEffect, AfterDamageEffect, ApplyWeaknessEffect, AfterWeaknessAndResistanceEffect, DealDamageEffect, KnockOutOpponentEffect, KOEffect, KnockOutPlayerEffect, PutCountersEffect, DiscardCardsEffect, DiscardCardsFromOpponentsActivePokemonEffect, DiscardDefendingPokemonEffect, LostZoneCardsEffect, CardsToHandEffect, MoveOpponentEnergyEffect, GustOpponentBenchEffect, SwitchOutOpponentsActiveEffect, AddMarkerEffect, HealTargetEffect, AddSpecialConditionsEffect, RemoveSpecialConditionsEffect } from "../effects/attack-effects";
+import { CheckHpEffect } from "../effects/check-effects";
+import { Effect } from "../effects/effect";
+import { shouldPreventAttackEffects, shouldPreventAttackDamage, shouldApplyDamageReduction, getActiveSurviveOnTenHpOptions, shouldKnockOutIfDamaged, getActiveRetaliateOnDamage, retaliateDamageEffect, RetaliateDamageEffect, EffectOfAttackEffect } from "../effects/effect-of-attack-effects";
+import { AttackEffect, KnockOutAttackEffect, HealEffect } from "../effects/game-effects";
+import { GameStatsTracker } from "../game-stats-tracker";
+import { TAKE_X_PRIZES, MOVE_CARDS } from "../prefabs/prefabs";
+import { CoinFlipPrompt } from "../prompts/coin-flip-prompt";
+import { StateUtils } from "../state-utils";
+import { State, GamePhase } from "../state/state";
+import { StoreLike } from "../store-like";
 
 function applyPutDamage(store: StoreLike, state: State, effect: PutDamageEffect): State {
   const target = effect.target;
   const sourceOwner = StateUtils.findOwner(state, effect.source);
   const targetCard = target.getPokemonCard();
+
   if (targetCard === undefined) {
     throw new GameError(GameMessage.ILLEGAL_ACTION);
   }
@@ -241,7 +217,6 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
         state = store.reduceEffect(state, ko);
       }
     }
-
     return state;
   }
 
@@ -292,7 +267,7 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
     }
 
     const targetOwner = StateUtils.findOwner(state, target);
-    const knockOutEffect = new KnockOutEffect(targetOwner, target);
+    const knockOutEffect = new KnockOutAttackEffect(targetOwner, target, effect.attack);
     state = store.reduceEffect(state, knockOutEffect);
 
     if (!knockOutEffect.preventDefault) {
@@ -316,7 +291,7 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
     }
 
     const targetOwner = StateUtils.findOwner(state, target);
-    const knockOutEffect = new KnockOutEffect(targetOwner, target);
+    const knockOutEffect = new KnockOutAttackEffect(targetOwner, target, effect.attack);
     state = store.reduceEffect(state, knockOutEffect);
 
     if (!knockOutEffect.preventDefault) {

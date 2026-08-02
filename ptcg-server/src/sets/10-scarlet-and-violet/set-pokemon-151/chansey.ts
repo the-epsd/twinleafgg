@@ -4,7 +4,7 @@ import { StoreLike, State, GameMessage, PowerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { DrawPrizesEffect } from '../../../game/store/effects/game-effects';
 import { CoinFlipEffect } from '../../../game/store/effects/play-card-effects';
-import { CONFIRMATION_PROMPT, GET_PLAYER_BENCH_SLOTS, IS_ABILITY_BLOCKED, SIMULATE_COIN_FLIP, TAKE_SPECIFIC_PRIZES, TAKE_X_PRIZES } from '../../../game/store/prefabs/prefabs';
+import { CONFIRMATION_PROMPT, GET_PLAYER_BENCH_SLOTS, IS_ABILITY_BLOCKED, TAKE_SPECIFIC_PRIZES, TAKE_X_PRIZES } from '../../../game/store/prefabs/prefabs';
 
 export class Chansey extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -12,6 +12,7 @@ export class Chansey extends PokemonCard {
   public hp: number = 110;
   public weakness = [{ type: F }];
   public retreat = [C, C];
+
   public powers = [{
     name: 'Lucky Bonus',
     powerType: PowerType.ABILITY,
@@ -20,12 +21,14 @@ export class Chansey extends PokemonCard {
       'before you put it into your hand, you may put it onto your Bench. If you put this Pokémon onto your ' +
       'Bench in this way, flip a coin. If heads, take 1 more Prize card.'
   }];
+
   public attacks = [{
     name: 'Gentle Slap',
     cost: [C, C, C],
     damage: 70,
     text: ''
   }];
+
   public set: string = 'MEW';
   public setNumber: string = '113';
   public cardImage: string = 'assets/cardback.png';
@@ -119,16 +122,10 @@ export class Chansey extends PokemonCard {
     }
 
     // Handle coin flip
-    try {
-      const coinFlip = new CoinFlipEffect(player);
-      store.reduceEffect(state, coinFlip);
-    } catch {
-      return state;
-    }
+    const coinFlip = new CoinFlipEffect(player);
+    store.reduceEffect(state, coinFlip);
 
-    const coinResult = SIMULATE_COIN_FLIP(store, state, player);
-
-    if (!coinResult) {
+    if (coinFlip.result === false) {
       return state;
     }
 

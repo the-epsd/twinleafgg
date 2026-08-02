@@ -287,6 +287,10 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   if (attackEffect.damage > 0) {
     const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
     state = store.reduceEffect(state, dealDamage);
+
+    if (store.hasPrompts()) {
+      yield store.waitPrompt(state, () => next());
+    }
   }
 
   const afterAttackEffect = new AfterAttackEffect(effect.player, opponent, attack);

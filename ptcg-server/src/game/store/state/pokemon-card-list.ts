@@ -93,9 +93,13 @@ export class PokemonCardList extends CardList {
   public attackCostIncreaseNextTurn = 0;
   public attackCostIncreaseNextTurnPending = 0;
   public attackCostIncreaseNextTurnAttackerId: number | undefined;
+  public attackCostIncreaseWhileActive: number = 0;
+  public attackCostIncreaseWhileActiveSourceCard: PokemonCard | undefined;
   public retreatCostIncreaseNextTurn = 0;
   public retreatCostIncreaseNextTurnPending = 0;
   public retreatCostIncreaseNextTurnAttackerId: number | undefined;
+  public cannotRetreatWhileActive: boolean = false;
+  public cannotRetreatWhileActiveSourceCard: PokemonCard | undefined;
   public nextTurnAttackDamageBonus: NextTurnAttackDamageBonus | null = null;
   public nextTurnAttackDamageBonusPending: NextTurnAttackDamageBonus | null = null;
   public nextTurnAttackBaseDamage: NextTurnAttackBaseDamage | null = null;
@@ -287,9 +291,13 @@ export class PokemonCardList extends CardList {
     this.attackCostIncreaseNextTurn = 0;
     this.attackCostIncreaseNextTurnPending = 0;
     this.attackCostIncreaseNextTurnAttackerId = undefined;
+    this.attackCostIncreaseWhileActive = 0;
+    this.attackCostIncreaseWhileActiveSourceCard = undefined;
     this.retreatCostIncreaseNextTurn = 0;
     this.retreatCostIncreaseNextTurnPending = 0;
     this.retreatCostIncreaseNextTurnAttackerId = undefined;
+    this.cannotRetreatWhileActive = false;
+    this.cannotRetreatWhileActiveSourceCard = undefined;
     this.nextTurnAttackDamageBonus = null;
     this.nextTurnAttackDamageBonusPending = null;
     this.nextTurnAttackBaseDamage = null;

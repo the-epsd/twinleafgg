@@ -92,7 +92,7 @@ import {
 } from '../effects/game-effects';
 import { AfterAttackEffect, BeforeDoingDamageEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
-import { preventRetreatEffect, selfPreventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, coinFlipCancelAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect, defendingPokemonWeaknessIsNowEffect, reduceDamageEffect, playLockEffect, PlayLockOptions, PreventDamageOptions, shouldPreventAttackEffects, knockOutIfDamagedDuringAttackerNextTurnEffect, KnockOutIfDamagedOptions, surviveOnTenHpDuringOpponentsNextTurnEffect, retaliateOnDamageDuringOpponentsNextTurnEffect, extraPrizesIfKnockedOutDuringAttackerNextTurnEffect, denyPrizesIfKnockedOutDuringOpponentsNextTurnEffect, discardAttackerEnergyIfKnockedOutDuringOpponentsNextTurnEffect, nextTurnAttackDamageBonusEffect, nextTurnAttackBaseDamageEffect, increaseDefendingPokemonAttackCostNextTurnEffect, increaseDefendingPokemonRetreatCostNextTurnEffect, preventAttackUntilLeavesActiveEffect } from '../effects/effect-of-attack-effects';
+import { preventRetreatEffect, selfPreventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, coinFlipCancelAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect, defendingPokemonWeaknessIsNowEffect, reduceDamageEffect, playLockEffect, PlayLockOptions, PreventDamageOptions, shouldPreventAttackEffects, knockOutIfDamagedDuringAttackerNextTurnEffect, KnockOutIfDamagedOptions, surviveOnTenHpDuringOpponentsNextTurnEffect, retaliateOnDamageDuringOpponentsNextTurnEffect, extraPrizesIfKnockedOutDuringAttackerNextTurnEffect, denyPrizesIfKnockedOutDuringOpponentsNextTurnEffect, discardAttackerEnergyIfKnockedOutDuringOpponentsNextTurnEffect, nextTurnAttackDamageBonusEffect, armNextTurnAttackDamageBonus, nextTurnAttackBaseDamageEffect, increaseDefendingPokemonAttackCostNextTurnEffect, increaseDefendingPokemonRetreatCostNextTurnEffect, preventAttackUntilLeavesActiveEffect, increaseDefendingPokemonAttackCostWhileActiveEffect, preventRetreatWhileActiveEffect } from '../effects/effect-of-attack-effects';
 import { SurviveOnTenHpOptions, RetaliateOnDamageOptions } from '../state/pokemon-card-list';
 import { GameStatsTracker } from '../game-stats-tracker';
 
@@ -327,6 +327,26 @@ export function NEXT_TURN_ATTACK_BONUS(effect: Effect, options: NextTurnAttackBo
     options.bonusDamage,
     options.source instanceof PokemonCard ? options.source.fullName : undefined,
   );
+}
+
+export function NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS(
+  effect: Effect,
+  options: { source: Card; bonusDamage: number },
+): void {
+  nextTurnAttackDamageBonusEffect(
+    effect,
+    '*',
+    options.bonusDamage,
+    options.source instanceof PokemonCard ? options.source.fullName : undefined,
+  );
+}
+
+export function ARM_NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS(
+  source: PokemonCardList,
+  sourceCard: PokemonCard,
+  bonusDamage: number,
+): void {
+  armNextTurnAttackDamageBonus(source, '*', bonusDamage, sourceCard.fullName);
 }
 
 export interface NextTurnAttackBaseDamageOptions {
@@ -3143,13 +3163,6 @@ export function FLIP_UNTIL_TAILS_AND_COUNT_HEADS(
   return store.reduceEffect(state, sequenceEffect);
 }
 
-export function SIMULATE_COIN_FLIP(store: StoreLike, state: State, player: Player): boolean {
-  const result = Math.random() < 0.5;
-  const gameMessage = result ? GameLog.LOG_PLAYER_FLIPS_HEADS : GameLog.LOG_PLAYER_FLIPS_TAILS;
-  store.log(state, gameMessage, { name: player.name });
-  return result;
-}
-
 export function GET_FIRST_PLAYER_BENCH_SLOT(player: Player): PokemonCardList {
   const slots = GET_PLAYER_BENCH_SLOTS(player);
   BLOCK_IF_NO_SLOTS(slots);
@@ -4269,6 +4282,16 @@ export function DEFENDING_POKEMON_ATTACKS_COST_MORE(
   return store.reduceEffect(state, costEffect);
 }
 
+export function DEFENDING_POKEMON_ATTACKS_COST_MORE_UNTIL_LEAVES_ACTIVE(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  amount: number = 2,
+): State {
+  const costEffect = increaseDefendingPokemonAttackCostWhileActiveEffect(effect, amount);
+  return store.reduceEffect(state, costEffect);
+}
+
 export function DEFENDING_POKEMON_RETREAT_COSTS_MORE(
   store: StoreLike,
   state: State,
@@ -4278,6 +4301,14 @@ export function DEFENDING_POKEMON_RETREAT_COSTS_MORE(
   const costEffect = increaseDefendingPokemonRetreatCostNextTurnEffect(effect);
   costEffect.opponent.active.retreatCostIncreaseNextTurnPending = amount;
   return store.reduceEffect(state, costEffect);
+}
+
+export function OPPONENT_CANNOT_RETREAT_UNTIL_LEAVES_ACTIVE(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+): State {
+  return store.reduceEffect(state, preventRetreatWhileActiveEffect(effect));
 }
 
 export function OPPONENT_CANNOT_PLAY_ITEM_CARDS(

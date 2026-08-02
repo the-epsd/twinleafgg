@@ -378,7 +378,7 @@ export class NextTurnAttackDamageBonusEffect extends EffectOfAttackEffect {
   applyEffect(): void {
     const sourceCard = this.source.getPokemonCard();
     if (!sourceCard
-      || this.attack.name !== this.attackName
+      || (this.attackName !== '*' && this.attack.name !== this.attackName)
       || (this.sourceCardName !== undefined && sourceCard.fullName !== this.sourceCardName)) {
       return;
     }
@@ -447,6 +447,19 @@ export function nextTurnAttackDamageBonusEffect(
     new NextTurnAttackDamageBonusEffect(effect, attackName, bonusDamage, sourceCardName).applyEffect();
   }
 
+}
+
+export function armNextTurnAttackDamageBonus(
+  source: PokemonCardList,
+  attackName: string,
+  bonusDamage: number,
+  sourceCardName: string,
+): void {
+  source.nextTurnAttackDamageBonusPending = {
+    attackName,
+    bonusDamage,
+    sourceCardName,
+  };
 }
 
 export function nextTurnAttackBaseDamageEffect(
@@ -609,6 +622,32 @@ export class IncreaseDefendingPokemonRetreatCostNextTurnEffect extends EffectOfA
   }
 }
 
+export class IncreaseDefendingPokemonAttackCostWhileActiveEffect extends EffectOfAttackEffect {
+  readonly type = 'INCREASE_DEFENDING_POKEMON_ATTACK_COST_WHILE_ACTIVE_EFFECT';
+
+  constructor(base: AttackEffect, public readonly amount: number) {
+    super(base);
+  }
+
+  applyEffect(): void {
+    this.opponent.active.attackCostIncreaseWhileActive = Math.max(this.opponent.active.attackCostIncreaseWhileActive, this.amount);
+    this.opponent.active.attackCostIncreaseWhileActiveSourceCard = this.source.getPokemonCard();
+  }
+}
+
+export class PreventRetreatWhileActiveEffect extends EffectOfAttackEffect {
+  readonly type = 'PREVENT_RETREAT_WHILE_ACTIVE_EFFECT';
+
+  constructor(base: AttackEffect) {
+    super(base);
+  }
+
+  applyEffect(): void {
+    this.opponent.active.cannotRetreatWhileActive = true;
+    this.opponent.active.cannotRetreatWhileActiveSourceCard = this.source.getPokemonCard();
+  }
+}
+
 export function increaseDefendingPokemonAttackCostNextTurnEffect(
   attackEffect: AttackEffect,
 ): IncreaseDefendingPokemonAttackCostNextTurnEffect {
@@ -619,6 +658,19 @@ export function increaseDefendingPokemonRetreatCostNextTurnEffect(
   attackEffect: AttackEffect,
 ): IncreaseDefendingPokemonRetreatCostNextTurnEffect {
   return new IncreaseDefendingPokemonRetreatCostNextTurnEffect(attackEffect);
+}
+
+export function increaseDefendingPokemonAttackCostWhileActiveEffect(
+  attackEffect: AttackEffect,
+  amount: number = 1,
+): IncreaseDefendingPokemonAttackCostWhileActiveEffect {
+  return new IncreaseDefendingPokemonAttackCostWhileActiveEffect(attackEffect, amount);
+}
+
+export function preventRetreatWhileActiveEffect(
+  attackEffect: AttackEffect,
+): PreventRetreatWhileActiveEffect {
+  return new PreventRetreatWhileActiveEffect(attackEffect);
 }
 
 /**
