@@ -52,6 +52,8 @@ export class Player {
 
   playedKogasTrap: boolean = false;
 
+  playedCanari: boolean = false;
+
   retreatedTurn: number = 0;
 
   energyPlayedTurn: number = 0;

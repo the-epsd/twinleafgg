@@ -2,14 +2,27 @@ import { BudewASC, TeamRocketsTarountulaASC, TeamRocketsSpidopsASC, EthansSlugma
 import { Card } from '../../../game/store/card/card';
 import { AntheaAndConcordia } from './anthea-and-concordia';
 import { Beautifly } from './beautifly';
+import { Carkol } from './carkol';
 import { Cascoon } from './cascoon';
 import { Camerupt } from './camerupt';
 import { Canari } from './canari';
+import { Coalossal } from './coalossal';
 import { Delcatty } from './delcatty';
 import { Dragonair } from './dragonair';
 import { Dratini } from './dratini';
 import { Dustox } from './dustox';
+import { Entei } from './entei';
 import { Frosmoth } from './frosmoth';
+import { Glastrier } from './glastrier';
+import { Groudon } from './groudon';
+import { Grubbin } from './grubbin';
+import { Heliolisk } from './heliolisk';
+import { Helioptile } from './helioptile';
+import { Hitmontop } from './hitmontop';
+import { Hoopa } from './hoopa';
+import { Mawile } from './mawile';
+import { Medicham } from './medicham';
+import { Meditite } from './meditite';
 import { MegaCharizardYex } from './mega-charizard-y-ex';
 import { MegaDragoniteex } from './mega-dragonite-ex';
 import { MegaEelektrossex } from './mega-eelektross-ex';
@@ -25,17 +38,26 @@ import { Numel } from './numel';
 import { NsZekrom } from './ns-zekrom';
 import { NsVanilluxe } from './ns-vanilluxe';
 import { LightBall } from './light-ball';
+import { Pancham } from './pancham';
+import { Pikachu } from './pikachu';
 import { PokePad } from './poke-pad';
+import { Raichu } from './raichu';
 import { Rayquaza } from './rayquaza';
+import { Rolycoly } from './rolycoly';
 import { Rotom } from './rotom';
 import { Scraggy } from './scraggy';
+import { Slurpuff } from './slurpuff';
 import { Snom } from './snom';
 import { Snorunt } from './snorunt';
 import { Spectrier } from './spectrier';
 import { Stunfisk } from './stunfisk';
+import { StunfiskEx } from './stunfisk-ex';
+import { Swirlix } from './swirlix';
 import { TapuKoko } from './tapu-koko';
 import { TeamRocketsHonchkrow } from './team-rockets-honchkrow';
 import { TeamRocketsKangaskhanex } from './team-rockets-kangaskhan-ex';
+import { Vikavolt } from './vikavolt';
+import { VoltorbEx } from './voltorb-ex';
 import { Wurmple } from './wurmple';
 import { Silcoon } from './silcoon';
 // Start Deck 100
@@ -78,6 +100,25 @@ import { NsVanillish } from './ns-vanillish';
 
 export const setAscendedHeroes: Card[] = [
   //Start Deck 100 Reprints
+  new Carkol(),
+  new Coalossal(),
+  new Entei(),
+  new Glastrier(),
+  new Groudon(),
+  new Grubbin(),
+  new Heliolisk(),
+  new Helioptile(),
+  new Hitmontop(),
+  new Hoopa(),
+  new Mawile(),
+  new Medicham(),
+  new Meditite(),
+  new Pancham(),
+  new Pikachu(),
+  new Raichu(),
+  new Rolycoly(),
+  new Slurpuff(),
+  new StunfiskEx(),
   new SuperPotionMC(),
   new EnergySearchMC(),
   new CrushingHammerMC(),
@@ -123,9 +164,12 @@ export const setAscendedHeroes: Card[] = [
   new Snorunt(),
   new Spectrier(),
   new Stunfisk(),
+  new Swirlix(),
   new TapuKoko(),
   new TeamRocketsHonchkrow(),
   new TeamRocketsKangaskhanex(),
+  new Vikavolt(),
+  new VoltorbEx(),
   new Wurmple(),
   // Start Deck 100
   new ErikasOddish(),
