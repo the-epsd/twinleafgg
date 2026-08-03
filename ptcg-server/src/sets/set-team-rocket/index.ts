@@ -1,10 +1,16 @@
 import { Card } from '../../game';
 import { Challenge } from './challenge';
+import { DarkAlakazam } from './dark-alakazam';
+import { DarkAlakazamTR18 } from './other-prints';
+import { DarkBlastoise } from './dark-blastoise';
+import { DarkBlastoiseTR20 } from './other-prints';
 import { DarkDragonair } from './dark-dragonair';
 import { DarkDragonite } from './dark-dragonite';
+import { DarkDragoniteTR22 } from './other-prints';
 import { DarkGloom } from './dark-gloom';
 import { DarkGolduck } from './dark-golduck';
 import { DarkVileplume } from './dark-vileplume';
+import { DarkVileplumeTR30 } from './other-prints';
 import { Digger } from './digger';
 import { Drowzee } from './drowzee';
 import { FullHealEnergy } from './full-heal-energy';
@@ -27,11 +33,17 @@ import { RainbowEnergyTR } from './other-prints';
 
 export const setTeamRocket: Card[] = [
   new Challenge(),
+  new DarkAlakazam(),
+  new DarkAlakazamTR18(),
+  new DarkBlastoise(),
+  new DarkBlastoiseTR20(),
   new DarkDragonair(),
   new DarkDragonite(),
+  new DarkDragoniteTR22(),
   new DarkGloom(),
   new DarkGolduck(),
   new DarkVileplume(),
+  new DarkVileplumeTR30(),
   new Digger(),
   new Drowzee(),
   new FullHealEnergy(),
