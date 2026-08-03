@@ -461,7 +461,8 @@ button.danger {
   color: #c7e6c5;
 }
 
-.output pre {
+.output pre,
+.output .generated-code {
   margin: 0;
   padding: 0.75rem;
   background: #030710;
@@ -469,6 +470,17 @@ button.danger {
   border: 1px solid var(--border);
   overflow: auto;
   max-height: 55vh;
+}
+
+.output .generated-code {
+  display: block;
+  width: 100%;
+  min-height: min(620px, 55vh);
+  resize: vertical;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  white-space: pre;
 }
 
 .output code {
@@ -492,6 +504,116 @@ button.danger {
 
 .catalog-help li {
   margin-bottom: 0.35rem;
+}
+
+.reprint-section {
+  margin-top: 1rem;
+  padding: 0.85rem;
+  border: 1px solid rgba(62, 199, 201, 0.22);
+  border-radius: 4px 14px 4px 14px;
+  background: rgba(8, 14, 24, 0.58);
+}
+
+.reprint-section .block-head {
+  margin-bottom: 0.45rem;
+}
+
+.reprint-options {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0.75rem 0;
+}
+
+.reprint-option {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+  padding: 0.45rem;
+  border: 1px solid rgba(62, 199, 201, 0.14);
+  border-radius: 6px 12px 6px 12px;
+}
+
+.reprint-option.is-selected {
+  border-color: var(--accent);
+  background: rgba(62, 199, 201, 0.08);
+}
+
+.reprint-option input[type='radio'] {
+  width: 1rem;
+  min-width: 1rem;
+  min-height: 1rem;
+  margin: 0;
+  accent-color: var(--accent);
+  appearance: auto;
+  -webkit-appearance: radio;
+}
+
+.reprint-option > div:last-child {
+  display: grid;
+  min-width: 0;
+  gap: 0.15rem;
+}
+
+.reprint-option strong,
+.reprint-option small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reprint-option small {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+}
+
+.reprint-image-button {
+  width: 42px;
+  height: 58px;
+  flex-shrink: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  cursor: zoom-in;
+  line-height: 0;
+}
+
+.reprint-image-button img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.reprint-image-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.reprint-image-missing {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 58px;
+  flex-shrink: 0;
+  border: 1px dashed var(--border);
+  border-radius: 4px;
+  color: var(--muted);
+  font-size: 0.6rem;
+  text-align: center;
+}
+
+.reprint-toggle {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--text);
+}
+
+.reprint-toggle input[type='checkbox'] {
+  flex-shrink: 0;
 }
 
 code {
@@ -727,6 +849,76 @@ button.linkish,
   flex-shrink: 0;
 }
 
+.source-image-button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  line-height: 0;
+  cursor: zoom-in;
+  flex-shrink: 0;
+}
+
+.source-image-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
 .source-banner .muted {
   margin: 0.25rem 0 0;
+}
+
+.image-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background: rgba(1, 4, 12, 0.86);
+  backdrop-filter: blur(6px);
+}
+
+.image-modal {
+  position: relative;
+  max-width: min(92vw, 560px);
+  max-height: 92vh;
+  padding: 0.65rem;
+  border: 1px solid var(--accent);
+  border-radius: 8px 22px 8px 22px;
+  background: var(--panel);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.65);
+}
+
+.image-modal img {
+  display: block;
+  max-width: min(86vw, 520px);
+  max-height: calc(92vh - 3rem);
+  width: auto;
+  height: auto;
+  border-radius: 4px 16px 4px 16px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.35rem;
+  right: 0.35rem;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: rgba(3, 7, 16, 0.82);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.modal-close:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }

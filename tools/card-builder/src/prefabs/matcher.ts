@@ -1,5 +1,5 @@
 import { PREFAB_CATALOG, getPrefabById, prefabsForScope } from './catalog';
-import type { MatchedPrefab, PrefabDefinition, PrefabScope, SelectedPrefab } from '../types';
+import type { EffectKind, MatchedPrefab, PrefabDefinition, PrefabScope, SelectedPrefab } from '../types';
 
 export class MissingPrefabError extends Error {
   constructor(text: string) {
@@ -68,7 +68,7 @@ function tryMatchPrefab(
   return null;
 }
 
-function catalogForScope(scope: 'attack' | 'power'): PrefabDefinition[] {
+function catalogForScope(scope: EffectKind): PrefabDefinition[] {
   return prefabsForScope(scope);
 }
 
@@ -79,7 +79,7 @@ function catalogForScope(scope: 'attack' | 'power'): PrefabDefinition[] {
  */
 export function matchEffectText(
   text: string,
-  scope: 'attack' | 'power'
+  scope: EffectKind
 ): MatchedPrefab[] {
   let normalized = normalizeEffectText(text);
   if (!normalized) {

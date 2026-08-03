@@ -5,6 +5,7 @@ import type {
   AttackDraft,
   CardDraft,
   EnergyShort,
+  EffectKind,
   PowerDraft,
   SelectedPrefab,
 } from '../types';
@@ -19,13 +20,33 @@ function toPascalClassName(name: string): string {
 }
 
 export function parseEnergyCost(input: string): EnergyShort[] {
-  const cleaned = input.toUpperCase().replace(/[^GRWLPFDMYNC]/g, '');
+  const cleaned = input.toUpperCase().replace(/ANY/g, 'A').replace(/[^GRWLPFDMYNCA]/g, '');
   return cleaned.split('') as EnergyShort[];
+}
+
+function formatEnergyType(type: EnergyShort): string {
+  // The card codebase exposes these short aliases globally from card-types.ts.
+  // Keep generated cards consistent with the established [L, C, F] style.
+  const aliases: Record<EnergyShort, string> = {
+    G: 'G',
+    R: 'R',
+    W: 'W',
+    L: 'L',
+    P: 'P',
+    F: 'F',
+    D: 'D',
+    M: 'M',
+    Y: 'Y',
+    N: 'N',
+    C: 'C',
+    A: 'CardType.ANY',
+  };
+  return aliases[type];
 }
 
 function formatEnergyArray(types: EnergyShort[]): string {
   if (types.length === 0) return '[]';
-  return `[${types.join(', ')}]`;
+  return `[${types.map(formatEnergyType).join(', ')}]`;
 }
 
 function escapeString(s: string): string {
@@ -69,7 +90,8 @@ function collectImports(
   powers: PowerDraft[],
   hasPowers: boolean,
   hasAttacks: boolean,
-  hasEffects: boolean
+  hasEffects: boolean,
+  trainerPrefabs: SelectedPrefab[] = []
 ): { fromGame: Set<string>; lines: string[]; markers: Set<string>; flags: Set<string> } {
   const fromGame = new Set<string>(hasEffects ? ['StoreLike', 'State'] : []);
   const prefabImports = new Map<string, Set<string>>();
@@ -77,7 +99,7 @@ function collectImports(
   const markers = new Set<string>();
   const flags = new Set<string>();
 
-  const addSelected = (selected: SelectedPrefab[], kind: 'attack' | 'power', index: number) => {
+  const addSelected = (selected: SelectedPrefab[], kind: EffectKind, index: number) => {
     for (const sel of selected) {
       const prefab = getPrefabById(sel.prefabId);
       if (!prefab) continue;
@@ -105,6 +127,11 @@ function collectImports(
         set.add('WAS_POWER_USED');
         prefabImports.set('../../game/store/prefabs/prefabs', set);
       }
+      if (kind === 'trainer') {
+        const set = prefabImports.get('../../game/store/prefabs/trainer-prefabs') ?? new Set();
+        set.add('WAS_TRAINER_USED');
+        prefabImports.set('../../game/store/prefabs/trainer-prefabs', set);
+      }
     }
   };
 
@@ -114,6 +141,7 @@ function collectImports(
   if (hasPowers) {
     powers.forEach((p, i) => addSelected(p.selectedPrefabs, 'power', i));
   }
+  addSelected(trainerPrefabs, 'trainer', 0);
 
   if (hasPowers) {
     fromGame.add('PowerType');
@@ -177,18 +205,29 @@ function generateReduceEffect(
   draft: CardDraft,
   markers: Set<string>,
   flags: Set<string>
-): { source: string; imports: string[] } {
+): { source: string; imports: string[]; helpers: string[] } {
   const attacks = draft.hasAttacks ? draft.attacks : [];
   const powers = draft.hasPowers ? draft.powers : [];
+  const trainerPrefabs = draft.extends === 'TrainerCard' ? draft.trainerPrefabs : [];
+  const trainerServerEffect = draft.extends === 'TrainerCard' ? draft.trainerServerEffect : undefined;
 
   const body: string[] = [];
   const companions: string[] = [];
   const serverImports = new Set<string>();
+  const helpers = new Set<string>();
 
   powers.forEach((power, index) => {
-    if (power.selectedPrefabs.length === 0) return;
+    if (power.selectedPrefabs.length === 0 && !power.serverEffect) return;
     body.push(`    // ${power.name || `Power ${index + 1}`}`);
     body.push(`    if (WAS_POWER_USED(effect, ${index}, this)) {`);
+    if (power.serverEffect) {
+      for (const line of power.serverEffect.imports) serverImports.add(line);
+      for (const helper of power.serverEffect.helpers ?? []) helpers.add(helper);
+      body.push(...power.serverEffect.body.map(line => `      ${line}`));
+      body.push(`    }`);
+      body.push('');
+      return;
+    }
     let returns = false;
     const generatedLines: string[] = [];
     for (const sel of power.selectedPrefabs) {
@@ -224,6 +263,7 @@ function generateReduceEffect(
     body.push(`    if (WAS_ATTACK_USED(effect, ${index}, this)) {`);
     if (attack.serverEffect) {
       for (const line of attack.serverEffect.imports) serverImports.add(line);
+      for (const helper of attack.serverEffect.helpers ?? []) helpers.add(helper);
       body.push(...attack.serverEffect.body.map(line => `      ${line}`));
       body.push(`    }`);
       body.push('');
@@ -258,6 +298,39 @@ function generateReduceEffect(
     body.push('');
   });
 
+  if (trainerPrefabs.length > 0 || trainerServerEffect) {
+    body.push(`    if (WAS_TRAINER_USED(effect, this)) {`);
+    if (trainerServerEffect) {
+      for (const line of trainerServerEffect.imports) serverImports.add(line);
+      for (const helper of trainerServerEffect.helpers ?? []) helpers.add(helper);
+      body.push(...trainerServerEffect.body.map(line => `      ${line}`));
+    } else {
+      let returns = false;
+      const generatedLines: string[] = [];
+      for (const sel of trainerPrefabs) {
+        const prefab = getPrefabById(sel.prefabId);
+        if (!prefab) continue;
+        const result = prefab.generateCall(sel.params, {
+          kind: 'trainer',
+          index: 0,
+          powerName: draft.name,
+        });
+        generatedLines.push(...result.lines);
+        if (result.returns) returns = true;
+        if (prefab.generateCompanions) {
+          companions.push(...prefab.generateCompanions(sel.params, { kind: 'trainer', index: 0, powerName: draft.name }));
+        }
+      }
+      if (generatedLines.some(line => /\bplayer\b/.test(line))) {
+        body.push(`      const player = effect.player;`);
+      }
+      body.push(...generatedLines.map(line => `      ${line}`));
+      if (!returns) body.push(`      return state;`);
+    }
+    body.push(`    }`);
+    body.push('');
+  }
+
   for (const companion of companions) {
     body.push(`    ${companion}`);
   }
@@ -272,6 +345,7 @@ function generateReduceEffect(
     return {
       imports: [...serverImports],
       source: '',
+      helpers: [...helpers],
     };
   }
 
@@ -281,6 +355,7 @@ function generateReduceEffect(
 ${body.join('\n')}
     return state;
   }`,
+    helpers: [...helpers],
   };
 }
 
@@ -301,6 +376,7 @@ export async function resolvePrefabs(draft: CardDraft): Promise<CardDraft> {
       }
       if (attack.selectedPrefabs.length > 0) {
         attack.matchError = undefined;
+        attack.serverEffect = undefined;
         continue;
       }
       try {
@@ -311,7 +387,7 @@ export async function resolvePrefabs(draft: CardDraft): Promise<CardDraft> {
         if (e instanceof MissingPrefabError) {
           attack.selectedPrefabs = [];
           attack.matchError = undefined;
-          attack.serverEffect = await findServerEffect(text);
+          attack.serverEffect = await findServerEffect(text, 'attack');
           continue;
         }
         throw e;
@@ -328,6 +404,7 @@ export async function resolvePrefabs(draft: CardDraft): Promise<CardDraft> {
       }
       if (power.selectedPrefabs.length > 0) {
         power.matchError = undefined;
+        power.serverEffect = undefined;
         continue;
       }
       try {
@@ -338,11 +415,32 @@ export async function resolvePrefabs(draft: CardDraft): Promise<CardDraft> {
         if (e instanceof MissingPrefabError) {
           power.selectedPrefabs = [];
           power.matchError = undefined;
+          power.serverEffect = await findServerEffect(text, 'power');
           continue;
         }
         throw e;
       }
     }
+  }
+
+  if (next.extends === 'TrainerCard') {
+    const text = next.trainerText.trim();
+    if (next.trainerPrefabs.length > 0) {
+      next.trainerServerEffect = undefined;
+    }
+    if (text && next.trainerPrefabs.length === 0) {
+      try {
+        const matched = matchEffectText(text, 'trainer');
+        next.trainerPrefabs = matchedToSelected(matched);
+      } catch (e) {
+        if (!(e instanceof MissingPrefabError)) throw e;
+        next.trainerServerEffect = await findServerEffect(text, 'trainer');
+      }
+    }
+  }
+
+  if (next.extends === 'EnergyCard' && next.energyText.trim()) {
+    next.energyServerEffect = await findServerEffect(next.energyText.trim(), 'energy');
   }
 
   return next;
@@ -364,7 +462,7 @@ export async function generateCardSource(draft: CardDraft): Promise<string> {
 
 function generatePokemon(draft: CardDraft, className: string, fullName: string): string {
   const hasEffects =
-    (draft.hasPowers && draft.powers.some(power => power.selectedPrefabs.length > 0)) ||
+    (draft.hasPowers && draft.powers.some(power => power.selectedPrefabs.length > 0 || Boolean(power.serverEffect))) ||
     (draft.hasAttacks && draft.attacks.some(attack => attack.selectedPrefabs.length > 0 || Boolean(attack.serverEffect)));
   const { fromGame, lines: prefabLines, markers, flags } = collectImports(
     draft.attacks,
@@ -408,14 +506,14 @@ function generatePokemon(draft: CardDraft, className: string, fullName: string):
     props.push(`  public evolvesFrom: string = '${escapeString(draft.evolvesFrom.trim())}';`);
   }
   props.push(`  public hp: number = ${Number(draft.hp) || 0};`);
-  props.push(`  public cardType: CardType = ${draft.cardType};`);
+  props.push(`  public cardType: CardType = ${formatEnergyType(draft.cardType)};`);
 
   if (draft.weaknessType) {
     if (draft.weaknessValue === 'x2') {
-      props.push(`  public weakness = [{ type: ${draft.weaknessType} }];`);
+      props.push(`  public weakness = [{ type: ${formatEnergyType(draft.weaknessType)} }];`);
     } else {
       const value = draft.weaknessValue === '+20' ? 20 : 30;
-      props.push(`  public weakness = [{ type: ${draft.weaknessType}, value: ${value} }];`);
+      props.push(`  public weakness = [{ type: ${formatEnergyType(draft.weaknessType)}, value: ${value} }];`);
     }
   } else {
     props.push(`  public weakness = [];`);
@@ -423,7 +521,7 @@ function generatePokemon(draft: CardDraft, className: string, fullName: string):
 
   if (draft.resistanceType) {
     const value = Number(draft.resistanceValue) || -20;
-    props.push(`  public resistance = [{ type: ${draft.resistanceType}, value: ${value} }];`);
+    props.push(`  public resistance = [{ type: ${formatEnergyType(draft.resistanceType)}, value: ${value} }];`);
   }
 
   props.push(`  public retreat = ${formatEnergyArray(parseEnergyCost(draft.retreat))};`);
@@ -472,8 +570,9 @@ function generatePokemon(draft: CardDraft, className: string, fullName: string):
 
   const propertyBlock = reduce.source ? props.join('\n') : props.join('\n').replace(/\n+$/, '');
   const reduceBlock = reduce.source ? `\n\n${reduce.source}` : '';
+  const helperBlock = reduce.helpers.length > 0 ? `\n\n${reduce.helpers.join('\n\n')}` : '';
 
-  return `${importBlock}
+  return `${importBlock}${helperBlock}
 
 export class ${className} extends PokemonCard {
 ${propertyBlock}${reduceBlock}
@@ -482,41 +581,104 @@ ${propertyBlock}${reduceBlock}
 }
 
 function generateTrainer(draft: CardDraft, className: string, fullName: string): string {
-  return `import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
-import { Effect } from '../../game/store/effects/effect';
+  const hasEffects = draft.trainerPrefabs.length > 0 || Boolean(draft.trainerServerEffect);
+  const collected = collectImports([], [], false, false, hasEffects, draft.trainerPrefabs);
+  const reduce = generateReduceEffect(draft, collected.markers, collected.flags);
+  const imports: string[] = [
+    `import { TrainerCard } from '../../game/store/card/trainer-card';`,
+    `import { TrainerType, CardTag } from '../../game/store/card/card-types';`,
+  ];
+  if (hasEffects) {
+    imports.push(`import { StoreLike, State } from '../../game';`);
+    imports.push(`import { Effect } from '../../game/store/effects/effect';`);
+  }
+  imports.push(...collected.lines, ...reduce.imports);
+
+  const props = [
+    `  public trainerType: TrainerType = TrainerType.${draft.trainerType};`,
+  ];
+  if (draft.tags.trim()) {
+    props.push(`  public tags = [${formatTags(draft.tags)}];`);
+  }
+  props.push(
+    `  public set: string = '${escapeString(draft.set.trim())}';`,
+    `  public cardImage: string = 'assets/cardback.png';`,
+    `  public setNumber: string = '${escapeString(draft.setNumber.trim())}';`,
+    `  public name: string = '${escapeString(draft.name.trim())}';`,
+    `  public fullName: string = '${escapeString(fullName)}';`,
+    `  public text: string = '${escapeString(draft.trainerText)}';`,
+  );
+  if (draft.regulationMark.trim()) {
+    props.push(`  public regulationMark = '${escapeString(draft.regulationMark.trim())}';`);
+  }
+
+  const importBlock = mergeNamedImports([...new Set(imports)]).join('\n');
+  const reduceBlock = reduce.source
+    ? `\n\n${reduce.source}`
+    : '';
+  const helperBlock = reduce.helpers.length > 0 ? `\n\n${reduce.helpers.join('\n\n')}` : '';
+  return `${importBlock}${helperBlock}
 
 export class ${className} extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.${draft.trainerType};
-  public set: string = '${escapeString(draft.set.trim())}';
-  public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '${escapeString(draft.setNumber.trim())}';
-  public name: string = '${escapeString(draft.name.trim())}';
-  public fullName: string = '${escapeString(fullName)}';
-  public text: string = '${escapeString(draft.trainerText)}';
-
-  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    return state;
-  }
+${props.join('\n')}${reduceBlock}
 }
 `;
 }
 
 function generateEnergy(draft: CardDraft, className: string, fullName: string): string {
   const provides = formatEnergyArray(parseEnergyCost(draft.provides));
-  return `import { EnergyCard } from '../../game/store/card/energy-card';
-import { EnergyType, CardType } from '../../game/store/card/card-types';
+  const blended = formatEnergyArray(parseEnergyCost(draft.blendedEnergies));
+  const effect = draft.energyServerEffect;
+  const imports: string[] = [
+    `import { EnergyCard } from '../../game/store/card/energy-card';`,
+    `import { EnergyType, CardType, CardTag } from '../../game/store/card/card-types';`,
+  ];
+  if (effect) {
+    imports.push(`import { StoreLike, State } from '../../game';`);
+    imports.push(`import { Effect } from '../../game/store/effects/effect';`);
+    imports.push(...effect.imports);
+  }
+  const props = [
+    `  public provides: CardType[] = ${provides};`,
+    `  public energyType = EnergyType.${draft.energyType};`,
+  ];
+  if (blended !== '[]') {
+    props.push(`  public blendedEnergies: CardType[] = ${blended};`);
+    props.push(`  public blendedEnergyCount = ${Math.max(1, Number(draft.blendedEnergyCount) || 1)};`);
+  }
+  if (draft.tags.trim()) {
+    props.push(`  public tags = [${formatTags(draft.tags)}];`);
+  }
+  props.push(
+    `  public set: string = '${escapeString(draft.set.trim())}';`,
+    `  public cardImage: string = 'assets/cardback.png';`,
+    `  public setNumber: string = '${escapeString(draft.setNumber.trim())}';`,
+    `  public name: string = '${escapeString(draft.name.trim())}';`,
+    `  public fullName: string = '${escapeString(fullName)}';`,
+    `  public text: string = '${escapeString(draft.energyText)}';`,
+  );
+  if (draft.regulationMark.trim()) {
+    props.push(`  public regulationMark = '${escapeString(draft.regulationMark.trim())}';`);
+  }
+  const effectBlock = effect
+    ? `\n\n  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {\n${effect.body
+        .map(line => `    ${line}`)
+        .join('\n')}\n    return state;\n  }`
+    : '';
+  const helperBlock = effect?.helpers && effect.helpers.length > 0 ? `\n\n${effect.helpers.join('\n\n')}` : '';
+  return `${mergeNamedImports([...new Set(imports)]).join('\n')}${helperBlock}
 
 export class ${className} extends EnergyCard {
-  public provides: CardType[] = ${provides};
-  public energyType = EnergyType.${draft.energyType};
-  public set: string = '${escapeString(draft.set.trim())}';
-  public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '${escapeString(draft.setNumber.trim())}';
-  public name: string = '${escapeString(draft.name.trim())}';
-  public fullName: string = '${escapeString(fullName)}';
-  public text: string = '${escapeString(draft.energyText)}';
+${props.join('\n')}${effectBlock}
 }
 `;
+}
+
+function formatTags(tags: string): string {
+  return tags
+    .split(',')
+    .map(tag => tag.trim())
+    .filter(Boolean)
+    .map(tag => (tag.startsWith('CardTag.') ? tag : `CardTag.${tag}`))
+    .join(', ');
 }

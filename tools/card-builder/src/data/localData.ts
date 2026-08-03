@@ -303,6 +303,31 @@ export async function searchCardsByName(name: string): Promise<TcgDexCardResume[
   return results;
 }
 
+export async function findCardsByNameAndSet(name: string, setCode: string): Promise<TcgDexCardResume[]> {
+  const normalizedName = name.trim().toLowerCase();
+  const normalizedSet = setCode.trim().toUpperCase();
+  if (!normalizedName || !normalizedSet) return [];
+
+  const sets = await loadAllSets();
+  const matchingSets = sets.filter(
+    set => set.id.toUpperCase() === normalizedSet || set.ptcgoCode?.toUpperCase() === normalizedSet
+  );
+  const results: TcgDexCardResume[] = [];
+  for (const set of matchingSets) {
+    const cards = await loadSetCards(set.id);
+    for (const card of cards) {
+      if (card.name.trim().toLowerCase() !== normalizedName) continue;
+      results.push({
+        id: card.id,
+        localId: card.number,
+        name: card.name,
+        image: card.images?.small || card.images?.large,
+      });
+    }
+  }
+  return results;
+}
+
 export function clearLocalCache(): void {
   cachedSets = null;
   cardFileCache.clear();

@@ -10,7 +10,7 @@ function num(params: Record<string, string>, key: string, fallback = '0'): strin
   return String(Number(raw));
 }
 
-/** Catalog of attack/ability effect prefabs that the builder is allowed to emit. */
+/** Catalog of reusable effect prefabs that the builder is allowed to emit. */
 export const PREFAB_CATALOG: PrefabDefinition[] = [
   // ── Drawing ──────────────────────────────────────────────────────────────
   {
@@ -935,6 +935,6 @@ export function getPrefabById(id: string): PrefabDefinition | undefined {
   return PREFAB_CATALOG.find(p => p.id === id);
 }
 
-export function prefabsForScope(scope: 'attack' | 'power'): PrefabDefinition[] {
+export function prefabsForScope(scope: 'attack' | 'power' | 'trainer' | 'energy'): PrefabDefinition[] {
   return PREFAB_CATALOG.filter(p => p.scope === scope || p.scope === 'both');
 }
