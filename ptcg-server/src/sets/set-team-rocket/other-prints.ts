@@ -13,24 +13,24 @@ export class RainbowEnergyTR extends RainbowEnergy {
 
 export class DarkAlakazamTR18 extends DarkAlakazam {
   public setNumber = '18';
-  public fullName = 'Dark Alakazam TR';
+  public fullName = 'Dark Alakazam TR18';
   public set = 'TR';
 }
 
 export class DarkBlastoiseTR20 extends DarkBlastoise {
   public setNumber = '20';
-  public fullName = 'Dark Blastoise TR';
+  public fullName = 'Dark Blastoise TR20';
   public set = 'TR';
 }
 
 export class DarkDragoniteTR22 extends DarkDragonite {
   public setNumber = '22';
-  public fullName = 'Dark Dragonite TR';
+  public fullName = 'Dark Dragonite TR22';
   public set = 'TR';
 }
 
 export class DarkVileplumeTR30 extends DarkVileplume {
   public setNumber = '30';
-  public fullName = 'Dark Vileplume TR';
+  public fullName = 'Dark Vileplume TR30';
   public set = 'TR';
 }

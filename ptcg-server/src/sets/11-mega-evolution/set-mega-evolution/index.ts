@@ -4,6 +4,7 @@ import { Abra } from './abra';
 import { AcerolasMischief } from './acerolas-mischief';
 import { Alakazam } from './alakazam';
 import { Bayleef } from './bayleef';
+import { Bewear } from './bewear';
 import { Bulbasaur } from './bulbasaur';
 import { Celebi } from './celebi';
 import { Chikorita } from './chikorita';
@@ -66,6 +67,9 @@ import { Solrock } from './solrock';
 import { Steelix } from './steelix';
 import { StrangeTimepiece } from './strange-timepiece';
 import { SurfingBeach } from './surfing-beach';
+import { Tinkatink } from './tinkatink';
+import { Tinkaton } from './tinkaton';
+import { Tinkatuff } from './tinkatuff';
 import { WallysCompassion } from './wallys-compassion';
 import { Xerneas } from './xerneas';
 import { Yungoos } from './yungoos';
@@ -80,6 +84,7 @@ export const setMegaEvolution: Card[] = [
   new AcerolasMischief(),
   new Alakazam(),
   new Bayleef(),
+  new Bewear(),
   new Bulbasaur(),
   new Celebi(),
   new Chikorita(),
@@ -146,6 +151,9 @@ export const setMegaEvolution: Card[] = [
   new SurfingBeach(),
   new Tangela(),
   new Tangrowth(),
+  new Tinkatink(),
+  new Tinkaton(),
+  new Tinkatuff(),
   new WallysCompassion(),
   new Xerneas(),
   new Yungoos(),

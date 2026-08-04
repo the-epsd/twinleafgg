@@ -30,12 +30,10 @@ import { Hypno } from './hypno';
 import { HypnoFO23 } from './other-prints';
 import { Kabutops } from './kabutops';
 import { KabutopsFO24 } from './other-prints';
-import { KabutopsFO242 } from './other-prints';
 import { Kingler } from './kingler';
 import { Krabby } from './krabby';
 import { Lapras } from './lapras';
 import { LaprasFO25 } from './other-prints';
-import { LaprasFO252 } from './other-prints';
 import { Magmar } from './magmar';
 import { Magneton } from './magneton';
 import { MagnetonFO26 } from './other-prints';
@@ -95,12 +93,10 @@ export const setFossil: Card[] = [
   new HypnoFO23(),
   new Kabutops(),
   new KabutopsFO24(),
-  new KabutopsFO242(),
   new Kingler(),
   new Krabby(),
   new Lapras(),
   new LaprasFO25(),
-  new LaprasFO252(),
   new Magmar(),
   new Magneton(),
   new MagnetonFO26(),

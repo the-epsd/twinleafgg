@@ -33,7 +33,7 @@ export class HoOhV extends PokemonCard {
   public name: string = 'Ho-Oh V';
   public fullName: string = 'Ho-Oh V SIT';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '001';
+  public setNumber: string = '140';
 
   public readonly NETHERWORLD_GATE_MARKER = 'NETHERWORLD_GATE_MARKER';
 

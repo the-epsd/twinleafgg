@@ -9,6 +9,7 @@ import { BrocksScouting } from './brocks-scouting';
 import { Combusken } from './combusken';
 import { Dudunsparceex } from './dudunsparce-ex';
 import { Dunsparce } from './dunsparce';
+import { Magearna } from './magearna';
 import { RedeemableTicket } from './exchange-ticket';
 import { Floragato } from './floragato';
 import { HopsBag } from './hops-bag';
@@ -87,6 +88,7 @@ import { Butterfree } from './butterfree';
 import { Rockruff } from './rockruff';
 export const setJourneyTogether: Card[] = [
 
+  new Magearna(),
   new Torchic(),
   new Combusken(),
   new Blazikenex(),

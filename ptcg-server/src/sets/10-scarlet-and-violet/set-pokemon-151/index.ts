@@ -55,6 +55,7 @@ import { Pidgeotto } from './pidgeotto';
 import { Pidgey } from './pidgey';
 import { Ponyta } from './ponyta';
 import { ProtectiveGoggles } from './protective-goggles';
+import { Raichu } from './raichu';
 import { RigidBand } from './rigid-band';
 import { Sandshrew } from './sandshrew';
 import { Scyther } from './scyther';
@@ -129,6 +130,7 @@ export const setPokemon151: Card[] = [
   new Pidgey(),
   new Ponyta(),
   new ProtectiveGoggles(),
+  new Raichu(),
   new RigidBand(),
   new Sandshrew(),
   new Scyther(),

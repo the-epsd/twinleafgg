@@ -9,6 +9,7 @@ import { Croconaw } from './croconaw';
 import { Dragoniteex } from './dragonite-ex';
 import { Electabuzz } from './electabuzz';
 import { Elekid } from './elekid';
+import { Feebas } from './feebas';
 import { Feraligatr } from './feraligatr';
 import { Flygonex } from './flygon-ex';
 import { Gardevoirex } from './gardevoir-ex';
@@ -24,6 +25,7 @@ import { Lickitung } from './lickitung';
 import { Mantine } from './mantine';
 import { Meganium } from './meganium';
 import { MewStar } from './mew-star';
+import { Milotic } from './milotic';
 import { MrStonesProject } from './mr-stones-project';
 import { Nidoqueen } from './nidoqueen';
 import { ProfessorOaksResearch } from './professor-oaks-research';
@@ -62,6 +64,7 @@ export const setEXDragonFrontiers: Card[] = [
   new Dragoniteex(),
   new Electabuzz(),
   new Elekid(),
+  new Feebas(),
   new Feraligatr(),
   new Flygonex(),
   new Gardevoirex(),
@@ -77,6 +80,7 @@ export const setEXDragonFrontiers: Card[] = [
   new Mantine(),
   new Meganium(),
   new MewStar(),
+  new Milotic(),
   new MrStonesProject(),
   new Nidoqueen(),
   new ProfessorOaksResearch(),

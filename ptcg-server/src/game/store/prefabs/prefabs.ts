@@ -1802,6 +1802,33 @@ export function COUNT_MATCHING_CARDS_IN_ZONE(
 }
 
 /**
+ * Checks whether the player has at least one card in their discard pile matching the given filter and/or predicate.
+ *
+ * The `filter` is a partial card match (e.g. `{ superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' }`
+ * for a basic Fire Energy, or `{ superType: SuperType.POKEMON }` for any Pokémon, or `{ superType: SuperType.TRAINER }` for any Trainer).
+ * A custom `predicate` can be supplied for more complex matching that the partial filter can't express.
+ *
+ * @param player The player whose discard pile to check.
+ * @param filter A partial card filter to match against.
+ * @param predicate An optional custom predicate for additional matching logic.
+ * @returns `true` if at least one matching card exists in the discard pile, `false` otherwise.
+ */
+export function HAS_CARD_IN_DISCARD(
+  player: Player,
+  filter: Partial<Card> = {},
+  predicate: (card: Card) => boolean = () => true,
+): boolean {
+  return player.discard.cards.some(card => {
+    for (const key in filter) {
+      if ((card as any)[key] !== (filter as any)[key]) {
+        return false;
+      }
+    }
+    return predicate(card);
+  });
+}
+
+/**
  * Checks whether a Pokémon has any Energy card attached.
  */
 export function THIS_POKEMON_HAS_ANY_ENERGY_ATTACHED(target: PokemonCardList): boolean {

@@ -51,6 +51,7 @@ import { Yveltal } from './yveltal';
 import { Zoroark } from './zoroark';
 import { Zorua } from './zorua';
 
+import { Zubat } from './zubat';
 export const setShroudedFable: Card[] = [
   new Absol(),
   new Axew(),
@@ -136,5 +137,6 @@ export const setShroudedFable: Card[] = [
   new EarthenVesselUR(),
   new PowerglassUR(),
   new DarknessEnergyUR(),
-  new MetalEnergyUR()
+  new MetalEnergyUR(),
+  new Zubat(),
 ];

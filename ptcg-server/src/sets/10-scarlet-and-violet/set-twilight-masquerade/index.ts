@@ -98,6 +98,7 @@ import { Thwackey } from './thwackey';
 import { Timburr } from './timburr';
 import { TingLu } from './ting-lu';
 import { UnfairStamp } from './unfair-stamp';
+import { Varoom } from './varoom';
 import { WalkingWake } from './walking-wake';
 import { WellspringMaskOgerponex } from './wellspring-mask-ogerpon-ex';
 import { Zapdos } from './zapdos';
@@ -145,6 +146,7 @@ export const setTwilightMasquerade: Card[] = [
   new ScoopUpCyclone(),
   new Tatsugiri(),
   new Timburr(),
+  new Varoom(),
   new WellspringMaskOgerponex(),
   new Kieran(),
   new BloodmoonUrsalunaex(),
