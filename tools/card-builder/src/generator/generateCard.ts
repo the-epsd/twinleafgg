@@ -526,26 +526,26 @@ function generatePokemon(draft: CardDraft, className: string, fullName: string):
 
   props.push(`  public retreat = ${formatEnergyArray(parseEnergyCost(draft.retreat))};`);
 
-  if (draft.hasAttacks && draft.attacks.length > 0) {
-    props.push('');
-    const attackBodies = draft.attacks.map(formatAttack);
-    if (attackBodies.length === 1) {
-      props.push(`  public attacks = [${attackBodies[0]}];`);
-    } else {
-      props.push(`  public attacks = [${attackBodies[0]},\n${attackBodies.slice(1).join(',\n')}];`);
-    }
-    props.push('');
-  }
-
   if (draft.hasPowers && draft.powers.length > 0) {
-    if (!(draft.hasAttacks && draft.attacks.length > 0)) {
-      props.push('');
-    }
+    props.push('');
     const powerBodies = draft.powers.map(formatPower);
     if (powerBodies.length === 1) {
       props.push(`  public powers = [${powerBodies[0]}];`);
     } else {
       props.push(`  public powers = [${powerBodies[0]},\n${powerBodies.slice(1).join(',\n')}];`);
+    }
+    props.push('');
+  }
+
+  if (draft.hasAttacks && draft.attacks.length > 0) {
+    if (!(draft.hasPowers && draft.powers.length > 0)) {
+      props.push('');
+    }
+    const attackBodies = draft.attacks.map(formatAttack);
+    if (attackBodies.length === 1) {
+      props.push(`  public attacks = [${attackBodies[0]}];`);
+    } else {
+      props.push(`  public attacks = [${attackBodies[0]},\n${attackBodies.slice(1).join(',\n')}];`);
     }
     props.push('');
   }

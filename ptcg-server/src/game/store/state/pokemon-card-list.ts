@@ -505,6 +505,10 @@ export class PokemonCardList extends CardList {
     return this.cards.some((c) => c.tags.includes(CardTag.POKEMON_ex));
   }
 
+  EXPokemon(): boolean {
+    return this.cards.some((c) => c.tags.includes(CardTag.POKEMON_EX));
+  }
+
   isTera(): boolean {
     return this.cards.some((c) => c.tags.includes(CardTag.POKEMON_TERA));
   }

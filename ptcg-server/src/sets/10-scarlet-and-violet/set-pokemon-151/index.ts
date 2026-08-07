@@ -24,10 +24,12 @@ import { EnergySticker } from './energy-sticker';
 import { EreikasInvitation } from './erikas-invitation';
 import { Fearow } from './fearow';
 import { BulbasaurIR, IvysaurIR, CharmanderIR, CharmeleonIR, SquirtleIR, NidokingIR, VenusaurexFA, CharizardexFA, BlastoiseexFA, ArbokexFA, KangaskhanexFA, ZapdosexFA, MewexFA, ErikasInvitationFA, GiovannisCharismaFA, VenusaurexSIR, CharizardexSIR, BlastoiseexSIR, ZapdosexSIR, ErikasInvitationSIR, GiovannisCharismaSIR, MewexHR, SwitchHR, BasicPsychicEnergyHR, WartortleIR } from './full-art';
+import { Gastly } from './gastly';
 import { GiovannisCharisma } from './giovannis-charisma';
 import { Gloom } from './gloom';
 import { Golbat } from './golbat';
 import { Grabber } from './grabber';
+import { Haunter } from './haunter';
 import { Hitmonchan } from './hitmonchan';
 import { Hitmonlee } from './hitmonlee';
 import { Ivysaur } from './ivysaur';
@@ -100,10 +102,12 @@ export const setPokemon151: Card[] = [
   new EnergySticker(),
   new EreikasInvitation(),
   new Fearow(),
+  new Gastly(),
   new GiovannisCharisma(),
   new Gloom(),
   new Golbat(),
   new Grabber(),
+  new Haunter(),
   new Hitmonchan(),
   new Hitmonlee(),
   new Ivysaur(),

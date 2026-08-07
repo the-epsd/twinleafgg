@@ -9,8 +9,10 @@ import { DarkDragonite } from './dark-dragonite';
 import { DarkDragoniteTR22 } from './other-prints';
 import { DarkGloom } from './dark-gloom';
 import { DarkGolduck } from './dark-golduck';
+import { DarkKadabra } from './dark-kadabra';
 import { DarkVileplume } from './dark-vileplume';
 import { DarkVileplumeTR30 } from './other-prints';
+import { DarkWartortle } from './dark-wartortle';
 import { Digger } from './digger';
 import { Drowzee } from './drowzee';
 import { FullHealEnergy } from './full-heal-energy';
@@ -42,8 +44,10 @@ export const setTeamRocket: Card[] = [
   new DarkDragoniteTR22(),
   new DarkGloom(),
   new DarkGolduck(),
+  new DarkKadabra(),
   new DarkVileplume(),
   new DarkVileplumeTR30(),
+  new DarkWartortle(),
   new Digger(),
   new Drowzee(),
   new FullHealEnergy(),
