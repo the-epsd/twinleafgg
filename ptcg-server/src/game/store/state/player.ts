@@ -321,6 +321,7 @@ export class Player {
 
       // Remove attack effects from the Pokemon leaving active
       this.active.removeAttackEffects();
+      this.active.clearEffects();
 
       // remove all special conditions
       this.active.specialConditions = [];
