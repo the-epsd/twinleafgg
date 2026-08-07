@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
+import { SelfPlayGameDialog } from '../games/SelfPlayGameDialog';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Format, type GameInfo, type UserInfo } from 'ptcg-server';
@@ -139,6 +140,7 @@ export function MyGamesPage() {
   );
 
   const [busyGameId, setBusyGameId] = useState<number | null>(null);
+  const [selfPlayOpen, setSelfPlayOpen] = useState(false);
 
   const onDecline = useCallback(
     async (gameId: number) => {
@@ -253,12 +255,19 @@ export function MyGamesPage() {
                   </span>
                   <span>{t('REACT_MY_GAMES_PLAYERS_MENU')}</span>
                 </div>
-                <OnlinePlayersSidebar appearance="arena" />
+                <OnlinePlayersSidebar
+                  appearance="arena"
+                  selfPlayOpen={selfPlayOpen}
+                  onSelfPlayOpenChange={setSelfPlayOpen}
+                />
               </div>
             </div>
           </div>
         </aside>
       </div>
+      {selfPlayOpen ? (
+        <SelfPlayGameDialog open onClose={() => setSelfPlayOpen(false)} />
+      ) : null}
     </div>
   );
 }
