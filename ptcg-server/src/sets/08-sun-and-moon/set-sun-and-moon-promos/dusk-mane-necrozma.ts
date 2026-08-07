@@ -1,7 +1,6 @@
-import { CardType, PokemonCard, Stage, State, StateUtils, StoreLike } from "../../../game";
+import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, CardTag, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, CardTarget } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
-import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from "../../../game/store/prefabs/attack-effects";
-import { WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
+import { DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
 
 export class DuskManeNecrozma extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -34,7 +33,43 @@ export class DuskManeNecrozma extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Dusk Shot
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON(60, effect, store, state);
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      effect.ignoreWeakness = true;
+      effect.ignoreResistance = true;
+
+      // Check if opponent has any GX/EX Pokemon
+      const hasGxExPokemon = (() => {
+        let found = false;
+        opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+          if (card.tags.includes(CardTag.POKEMON_GX) || card.tags.includes(CardTag.POKEMON_EX)) {
+            found = true;
+          }
+        });
+        return found;
+      })();
+
+      if (!hasGxExPokemon) {
+        return state;
+      }
+
+      const blocked: CardTarget[] = [];
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+        if (!card.tags.includes(CardTag.POKEMON_GX) || !card.tags.includes(CardTag.POKEMON_EX)) {
+          blocked.push(target);
+        }
+      });
+
+      store.prompt(state, new ChoosePokemonPrompt(
+        player.id,
+        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+        PlayerType.TOP_PLAYER,
+        [SlotType.ACTIVE, SlotType.BENCH],
+        { min: 1, max: 1, allowCancel: false, blocked }
+      ), selected => {
+        const targets = selected || [];
+        DAMAGE_OPPONENT_POKEMON(store, state, effect, 60, targets);
+      });
     }
 
     // Rusty Claws
