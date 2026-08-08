@@ -1,22 +1,8 @@
-import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
-import { PowerType } from '../../../game/store/card/pokemon-types';
-import { GameError, GameMessage, StoreLike, State, StateUtils } from '../../../game';
-import { Effect } from '../../../game/store/effects/effect';
-import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
-import { AttackEffect } from '../../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import {
-  WAS_ATTACK_USED,
-  WAS_POWER_USED,
-  COIN_FLIP_PROMPT,
-  IS_ABILITY_BLOCKED,
-  ABILITY_USED,
-  USE_ABILITY_ONCE_PER_TURN,
-  REMOVE_MARKER_AT_END_OF_TURN,
-  REPLACE_MARKER_AT_END_OF_TURN,
-} from '../../../game/store/prefabs/prefabs';
-import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { PokemonCard, Stage, CardTag, CardType, PowerType, StoreLike, State, StateUtils, GameError, GameMessage } from "../../../game";
+import { Effect } from "../../../game/store/effects/effect";
+import { AttackEffect } from "../../../game/store/effects/game-effects";
+import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from "../../../game/store/prefabs/attack-effects";
+import { WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, COIN_FLIP_PROMPT, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS } from "../../../game/store/prefabs/prefabs";
 
 export class Rampardosex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -41,18 +27,14 @@ export class Rampardosex extends PokemonCard {
     text: "During your next turn, attacks used by this Pokémon do 150 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).",
   }];
 
+  public regulationMark: string = 'J';
   public set: string = 'PBL';
   public setNumber: string = '45';
-
-  public regulationMark: string = 'J';
-
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rampardos ex';
   public fullName: string = 'Rampardos ex M5';
 
   public readonly DESTRUCTIVE_HEADBUTT_MARKER = 'RAMPARDOS_EX_DESTRUCTIVE_HEADBUTT_MARKER';
-  public readonly RAMPAGING_HAMMER_MARKER = 'RAMPARDOS_EX_RAMPAGING_HAMMER_MARKER';
-  public readonly CLEAR_RAMPAGING_HAMMER_MARKER = 'RAMPARDOS_EX_CLEAR_RAMPAGING_HAMMER_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_POWER_USED(effect, 0, this)) {
@@ -75,34 +57,12 @@ export class Rampardosex extends PokemonCard {
     }
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.DESTRUCTIVE_HEADBUTT_MARKER, this);
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      effect.player.marker.addMarker(this.RAMPAGING_HAMMER_MARKER, this);
-    }
-
-    // Ref: set-cosmic-eclipse/herdier.ts (Work Up)
-    if (effect instanceof DealDamageEffect && effect.source) {
-      const attacker = effect.player;
-      const opp = StateUtils.getOpponent(state, attacker);
-      if (
-        (attacker.marker.hasMarker(this.RAMPAGING_HAMMER_MARKER, this) ||
-          attacker.marker.hasMarker(this.CLEAR_RAMPAGING_HAMMER_MARKER, this)) &&
-        effect.source.cards.includes(this) &&
-        effect.source.getPokemonCard() === this &&
-        effect.target === opp.active
-      ) {
-        effect.damage += 150;
-      }
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      REMOVE_MARKER_AT_END_OF_TURN(effect, this.CLEAR_RAMPAGING_HAMMER_MARKER, this);
-      REPLACE_MARKER_AT_END_OF_TURN(
-        effect,
-        this.RAMPAGING_HAMMER_MARKER,
-        this.CLEAR_RAMPAGING_HAMMER_MARKER,
-        this,
-      );
-    }
+    // Ref: set-fates-collide/serperior.ts (Coil - NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS)
+    NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS(effect, {
+      source: this,
+      bonusDamage: 150,
+      setupAttack: this.attacks[0],
+    });
 
     return state;
   }

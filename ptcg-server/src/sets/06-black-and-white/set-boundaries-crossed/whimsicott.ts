@@ -12,6 +12,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayerType, SlotType, State, StoreLike } from '../../../game';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
+
 export class Whimsicott extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Cottonee';
@@ -43,8 +44,8 @@ export class Whimsicott extends PokemonCard {
   public readonly CLEAR_FLUFFY_TAG_MARKER = 'CLEAR_FLUFFY_TAG_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 1: Fluffy Tag
-    // Refs: set-boundaries-crossed/celebi-ex.ts (switch flow), set-dark-explorers/dark-claw.ts (Active-only damage boost)
+    // Fluffy Tag puts the bonus on a different Pokémon, so markers stay here
+    // rather than nextTurnAttackDamageBonus (which is applied by that Pokémon's own prefabs).
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -88,7 +89,6 @@ export class Whimsicott extends PokemonCard {
     }
 
     // Attack 2: Stun Spore
-    // Ref: set-boundaries-crossed/rattata.ts (Paralyzing Gaze)
     if (AFTER_ATTACK(effect, 1, this)) {
       COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {

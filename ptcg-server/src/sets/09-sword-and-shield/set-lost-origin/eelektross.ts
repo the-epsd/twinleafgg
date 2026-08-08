@@ -35,9 +35,11 @@ export class Eelektross extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Coil
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS(effect, { source: this, bonusDamage: 120 });
-    }
+    NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS(effect, {
+      source: this,
+      bonusDamage: 120,
+      setupAttack: this.attacks[0],
+    });
 
     // Extreme Current
     if (WAS_ATTACK_USED(effect, 1, this)) {

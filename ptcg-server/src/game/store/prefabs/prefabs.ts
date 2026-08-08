@@ -307,9 +307,15 @@ export function THIS_ATTACK_DOES_X_MORE_DAMAGE(
 }
 
 export interface NextTurnAttackBonusOptions {
+  /** Attack that receives the bonus next turn. */
   attack: Attack;
   source: Card;
   bonusDamage: number;
+  /**
+   * Attack that arms the bonus. Defaults to `attack` (Echoed Voice style).
+   * Use a different setup attack for Hone Claws → Slash patterns.
+   */
+  setupAttack?: Attack;
   bonusMarker?: string;
   clearMarker?: string;
 }
@@ -318,26 +324,49 @@ export interface NextTurnAttackBonusOptions {
  * Standard lifecycle for:
  * "During your next turn, this Pokemon's [Attack Name] attack does [N] more damage."
  *
- * Applies the bonus only to the named attack from the same Pokemon and clears after that next turn.
+ * Call unconditionally from reduceEffect. Applies any active bonus for `attack`,
+ * and arms on `setupAttack` (or `attack` when omitted).
  */
 export function NEXT_TURN_ATTACK_BONUS(effect: Effect, options: NextTurnAttackBonusOptions): void {
+  if (!(effect instanceof AttackEffect)) {
+    return;
+  }
+  // Guard against other copies of the same card in either deck applying the bonus.
+  if (options.source instanceof PokemonCard && effect.source.getPokemonCard() !== options.source) {
+    return;
+  }
+
   nextTurnAttackDamageBonusEffect(
     effect,
     options.attack.name,
     options.bonusDamage,
     options.source instanceof PokemonCard ? options.source.fullName : undefined,
+    options.setupAttack?.name,
   );
 }
 
+/**
+ * "During your next turn, this Pokemon's attacks do [N] more damage."
+ * Call unconditionally from reduceEffect with the setup attack that arms the bonus.
+ */
 export function NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS(
   effect: Effect,
-  options: { source: Card; bonusDamage: number },
+  options: { source: Card; bonusDamage: number; setupAttack: Attack },
 ): void {
+  if (!(effect instanceof AttackEffect)) {
+    return;
+  }
+  // Guard against other copies of the same card in either deck applying the bonus.
+  if (options.source instanceof PokemonCard && effect.source.getPokemonCard() !== options.source) {
+    return;
+  }
+
   nextTurnAttackDamageBonusEffect(
     effect,
     '*',
     options.bonusDamage,
     options.source instanceof PokemonCard ? options.source.fullName : undefined,
+    options.setupAttack.name,
   );
 }
 

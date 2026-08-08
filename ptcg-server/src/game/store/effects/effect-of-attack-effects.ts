@@ -12,7 +12,7 @@ import { Attack, PowerType } from '../card/pokemon-types';
 import { Card } from '../card/card';
 import { CardType, SpecialCondition, Stage } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
-import { PokemonCardList, PreventDamageFilter, SurviveOnTenHpOptions, RetaliateOnDamageOptions, StoredRetaliateOnDamage, NextTurnAttackDamageBonus, NextTurnAttackBaseDamage } from '../state/pokemon-card-list';
+import { PokemonCardList, PreventDamageFilter, SurviveOnTenHpOptions, RetaliateOnDamageOptions, StoredRetaliateOnDamage, NextTurnAttackBaseDamage } from '../state/pokemon-card-list';
 import { PendingEndOfTurnEffect } from '../state/pending-end-of-turn-effects';
 
 function sourceMatchesPreventFilter(
@@ -409,6 +409,8 @@ export class NextTurnAttackDamageBonusEffect extends EffectOfAttackEffect {
     public attackName: string,
     public bonusDamage: number,
     public sourceCardName?: string,
+    /** When set, only this attack arms the bonus (e.g. Hone Claws → Slash). Defaults to attackName. */
+    public setupAttackName?: string,
   ) {
     super(base);
   }
@@ -416,7 +418,6 @@ export class NextTurnAttackDamageBonusEffect extends EffectOfAttackEffect {
   applyEffect(): void {
     const sourceCard = this.source.getPokemonCard();
     if (!sourceCard
-      || (this.attackName !== '*' && this.attack.name !== this.attackName)
       || (this.sourceCardName !== undefined && sourceCard.fullName !== this.sourceCardName)) {
       return;
     }
@@ -424,17 +425,21 @@ export class NextTurnAttackDamageBonusEffect extends EffectOfAttackEffect {
     const cardList = this.source;
     const activeBonus = cardList.nextTurnAttackDamageBonus;
     if (activeBonus
-      && activeBonus.attackName === this.attack.name
-      && activeBonus.sourceCardName === sourceCard.fullName) {
+      && activeBonus.sourceCardName === sourceCard.fullName
+      && (activeBonus.attackName === '*' || activeBonus.attackName === this.attack.name)) {
       this.attackEffect.damage += activeBonus.bonusDamage;
     }
 
-    const bonus: NextTurnAttackDamageBonus = {
+    const setupName = this.setupAttackName ?? this.attackName;
+    if (this.attack.name !== setupName) {
+      return;
+    }
+
+    cardList.nextTurnAttackDamageBonusPending = {
       attackName: this.attackName,
       bonusDamage: this.bonusDamage,
       sourceCardName: sourceCard.fullName,
     };
-    cardList.nextTurnAttackDamageBonusPending = bonus;
   }
 }
 
@@ -480,11 +485,17 @@ export function nextTurnAttackDamageBonusEffect(
   attackName: string,
   bonusDamage: number,
   sourceCardName?: string,
+  setupAttackName?: string,
 ): void {
   if (effect instanceof AttackEffect) {
-    new NextTurnAttackDamageBonusEffect(effect, attackName, bonusDamage, sourceCardName).applyEffect();
+    new NextTurnAttackDamageBonusEffect(
+      effect,
+      attackName,
+      bonusDamage,
+      sourceCardName,
+      setupAttackName,
+    ).applyEffect();
   }
-
 }
 
 export function armNextTurnAttackDamageBonus(

@@ -33,9 +33,11 @@ export class Serperior extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Coil
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS(effect, { source: this, bonusDamage: 60 });
-    }
+    NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS(effect, {
+      source: this,
+      bonusDamage: 60,
+      setupAttack: this.attacks[0],
+    });
 
     // Slashing Strike
     if (WAS_ATTACK_USED(effect, 1, this)) {
