@@ -14,6 +14,7 @@ import { CardType, SpecialCondition, Stage } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { PokemonCardList, PreventDamageFilter, SurviveOnTenHpOptions, RetaliateOnDamageOptions, StoredRetaliateOnDamage, NextTurnAttackBaseDamage } from '../state/pokemon-card-list';
 import { PendingEndOfTurnEffect } from '../state/pending-end-of-turn-effects';
+import { PlayerType } from '../actions/play-card-action';
 
 function sourceMatchesPreventFilter(
   sourceCard: PokemonCard,
@@ -1208,5 +1209,185 @@ export function scheduleDefendingPokemonEndOfTurnEffect(
   if (target) {
     effect.target = target;
   }
+  return effect;
+}
+
+/**
+ * During the opponent's next turn, this Pokémon has no Weakness.
+ */
+export class ThisPokemonHasNoWeaknessDuringOpponentsNextTurnEffect extends EffectOfAttackEffect {
+  readonly type: string = 'THIS_POKEMON_HAS_NO_WEAKNESS_DURING_OPPONENTS_NEXT_TURN_EFFECT';
+
+  constructor(base: AttackEffect) {
+    super(base);
+    this.target = base.source;
+  }
+
+  applyEffect(): void {
+    this.player.active.noWeaknessNextTurnPending = true;
+  }
+}
+
+export function thisPokemonHasNoWeaknessDuringOpponentsNextTurnEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+): ThisPokemonHasNoWeaknessDuringOpponentsNextTurnEffect {
+  const effect = new ThisPokemonHasNoWeaknessDuringOpponentsNextTurnEffect(attackEffect);
+  effect.markerSource = source;
+  return effect;
+}
+
+/**
+ * Your opponent can't draw a card at the beginning of their next turn.
+ * Player-level — not Mist-blockable (target is the attacker).
+ */
+export class OpponentCannotDrawAtStartOfNextTurnEffect extends EffectOfAttackEffect {
+  readonly type: string = 'OPPONENT_CANNOT_DRAW_AT_START_OF_NEXT_TURN_EFFECT';
+
+  constructor(base: AttackEffect) {
+    super(base);
+    this.target = base.source;
+  }
+
+  applyEffect(): void {
+    this.opponent.cannotDrawAtStartOfTurn = true;
+  }
+}
+
+export function opponentCannotDrawAtStartOfNextTurnEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+): OpponentCannotDrawAtStartOfNextTurnEffect {
+  const effect = new OpponentCannotDrawAtStartOfNextTurnEffect(attackEffect);
+  effect.markerSource = source;
+  return effect;
+}
+
+/**
+ * During your next turn, this Pokémon has no Retreat Cost.
+ */
+export class ThisPokemonHasNoRetreatCostDuringYourNextTurnEffect extends EffectOfAttackEffect {
+  readonly type: string = 'THIS_POKEMON_HAS_NO_RETREAT_COST_DURING_YOUR_NEXT_TURN_EFFECT';
+
+  constructor(base: AttackEffect) {
+    super(base);
+    this.target = base.source;
+  }
+
+  applyEffect(): void {
+    this.player.active.zeroRetreatCostNextTurnPending = true;
+  }
+}
+
+export function thisPokemonHasNoRetreatCostDuringYourNextTurnEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+): ThisPokemonHasNoRetreatCostDuringYourNextTurnEffect {
+  const effect = new ThisPokemonHasNoRetreatCostDuringYourNextTurnEffect(attackEffect);
+  effect.markerSource = source;
+  return effect;
+}
+
+/**
+ * During your next turn, your Pokémon can't attack (including ones that come into play).
+ * Player-level — not Mist-blockable.
+ */
+export class YourPokemonCannotAttackDuringYourNextTurnEffect extends EffectOfAttackEffect {
+  readonly type: string = 'YOUR_POKEMON_CANNOT_ATTACK_DURING_YOUR_NEXT_TURN_EFFECT';
+
+  constructor(base: AttackEffect) {
+    super(base);
+    this.target = base.source;
+  }
+
+  applyEffect(): void {
+    this.player.cannotAttackTurnsRemaining = Math.max(this.player.cannotAttackTurnsRemaining, 2);
+  }
+}
+
+export function yourPokemonCannotAttackDuringYourNextTurnEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+): YourPokemonCannotAttackDuringYourNextTurnEffect {
+  const effect = new YourPokemonCannotAttackDuringYourNextTurnEffect(attackEffect);
+  effect.markerSource = source;
+  return effect;
+}
+
+/**
+ * During your next turn, ignore all Energy in the attack costs of Pokémon of the given types.
+ * Player-level — not Mist-blockable.
+ */
+export class IgnoreAttackCostsForTypesDuringYourNextTurnEffect extends EffectOfAttackEffect {
+  readonly type: string = 'IGNORE_ATTACK_COSTS_FOR_TYPES_DURING_YOUR_NEXT_TURN_EFFECT';
+
+  constructor(base: AttackEffect, public readonly cardTypes: CardType[]) {
+    super(base);
+    this.target = base.source;
+  }
+
+  applyEffect(): void {
+    this.player.ignoreAttackCostCardTypes = [...this.cardTypes];
+    this.player.ignoreAttackCostTurnsRemaining = Math.max(this.player.ignoreAttackCostTurnsRemaining, 2);
+  }
+}
+
+export function ignoreAttackCostsForTypesDuringYourNextTurnEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  cardTypes: CardType[],
+): IgnoreAttackCostsForTypesDuringYourNextTurnEffect {
+  const effect = new IgnoreAttackCostsForTypesDuringYourNextTurnEffect(attackEffect, cardTypes);
+  effect.markerSource = source;
+  return effect;
+}
+
+/**
+ * Prevent all damage and effects of attacks done to each of your Pokémon
+ * during your opponent's next turn. Self-protection — not Mist-blockable.
+ */
+export class PreventDamageAndEffectsToAllYourPokemonEffect extends EffectOfAttackEffect {
+  readonly type: string = 'PREVENT_DAMAGE_AND_EFFECTS_TO_ALL_YOUR_POKEMON_EFFECT';
+
+  constructor(base: AttackEffect, public readonly options: PreventDamageOptions = {}) {
+    super(base);
+    this.target = base.source;
+  }
+
+  applyEffect(): void {
+    const filter: PreventDamageFilter = {};
+    if (this.options.sourceStage !== undefined) {
+      filter.sourceStage = this.options.sourceStage;
+    }
+    if (this.options.sourceIsEvolution !== undefined) {
+      filter.sourceIsEvolution = this.options.sourceIsEvolution;
+    }
+    if (this.options.sourceTags !== undefined) {
+      filter.sourceTags = this.options.sourceTags;
+    }
+    if (this.options.sourceCardTypes !== undefined) {
+      filter.sourceCardTypes = this.options.sourceCardTypes;
+    }
+    if (this.options.sourceHasAbility !== undefined) {
+      filter.sourceHasAbility = this.options.sourceHasAbility;
+    }
+    if (this.options.maxDamage !== undefined) {
+      filter.maxDamage = this.options.maxDamage;
+    }
+
+    this.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      cardList.preventDamageNextTurnPending = { ...filter };
+      cardList.preventEffectsOfAttacksNextTurnPending = { ...filter };
+    });
+  }
+}
+
+export function preventDamageAndEffectsToAllYourPokemonEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  options: PreventDamageOptions = {},
+): PreventDamageAndEffectsToAllYourPokemonEffect {
+  const effect = new PreventDamageAndEffectsToAllYourPokemonEffect(attackEffect, options);
+  effect.markerSource = source;
   return effect;
 }

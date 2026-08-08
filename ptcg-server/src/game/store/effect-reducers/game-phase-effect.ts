@@ -85,6 +85,10 @@ export function initNextTurn(store: StoreLike, state: State): State {
   let drawCardForTurn: DrawCardForTurnEffect;
   try {
     drawCardForTurn = new DrawCardForTurnEffect(player);
+    if (player.cannotDrawAtStartOfTurn) {
+      player.cannotDrawAtStartOfTurn = false;
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    }
     store.reduceEffect(state, drawCardForTurn);
   } catch {
     return state;
@@ -208,6 +212,7 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
 
     player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
       cardList.removeBoardEffect(BoardEffect.ABILITY_USED);
+      cardList.healedThisTurn = false;
       if (card.damageTakenLastTurn !== undefined) {
         card.damageTakenLastTurn = 0;
       }
@@ -233,6 +238,7 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
       cardList.preventEffectsOfAttacksNextTurnPending = null;
       cardList.surviveOnTenHpNextTurn = null;
       cardList.retaliateOnDamageNextTurn = null;
+      cardList.noWeaknessNextTurn = false;
     });
 
     // Activate pending prevent-damage / revenge / survive on this player's Pokémon
@@ -253,6 +259,10 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
       if (cardList.retaliateOnDamageNextTurnPending !== null) {
         cardList.retaliateOnDamageNextTurn = cardList.retaliateOnDamageNextTurnPending;
         cardList.retaliateOnDamageNextTurnPending = null;
+      }
+      if (cardList.noWeaknessNextTurnPending) {
+        cardList.noWeaknessNextTurn = true;
+        cardList.noWeaknessNextTurnPending = false;
       }
       if (cardList.denyPrizesIfKnockedOutNextTurnPending) {
         cardList.denyPrizesIfKnockedOutNextTurn = true;
@@ -407,6 +417,13 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
       if (cardList.cannotRetreatNextTurnPending) {
         cardList.cannotRetreatNextTurn = true;
         cardList.cannotRetreatNextTurnPending = false;
+      }
+      if (cardList.zeroRetreatCostNextTurn) {
+        cardList.zeroRetreatCostNextTurn = false;
+      }
+      if (cardList.zeroRetreatCostNextTurnPending) {
+        cardList.zeroRetreatCostNextTurn = true;
+        cardList.zeroRetreatCostNextTurnPending = false;
       }
       if (cardList.pendingEnergyAttachDamageCounters) {
         cardList.pendingEnergyAttachDamageCounters = null;

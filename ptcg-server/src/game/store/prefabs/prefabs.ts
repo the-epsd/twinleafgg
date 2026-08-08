@@ -92,7 +92,7 @@ import {
 } from '../effects/game-effects';
 import { AfterAttackEffect, BeforeDoingDamageEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
-import { preventRetreatEffect, selfPreventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, coinFlipCancelAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect, cannotAttachEnergyFromHandToDefendingNextTurnEffect, energyAttachFromHandConsequenceNextTurnEffect, defendingPokemonWeaknessIsNowEffect, reduceDamageEffect, reduceDamageAfterWeaknessEffect, playLockEffect, PlayLockOptions, PreventDamageOptions, shouldPreventAttackEffects, knockOutIfDamagedDuringAttackerNextTurnEffect, KnockOutIfDamagedOptions, surviveOnTenHpDuringOpponentsNextTurnEffect, retaliateOnDamageDuringOpponentsNextTurnEffect, extraPrizesIfKnockedOutDuringAttackerNextTurnEffect, denyPrizesIfKnockedOutDuringOpponentsNextTurnEffect, discardAttackerEnergyIfKnockedOutDuringOpponentsNextTurnEffect, nextTurnAttackDamageBonusEffect, armNextTurnAttackDamageBonus, nextTurnAttackBaseDamageEffect, increaseDefendingPokemonAttackCostNextTurnEffect, increaseDefendingPokemonRetreatCostNextTurnEffect, preventAttackUntilLeavesActiveEffect, increaseDefendingPokemonAttackCostWhileActiveEffect, preventRetreatWhileActiveEffect, preventHealOnDefendingDuringOpponentsNextTurnEffect, stadiumAndToolHaveNoEffectEffect, coinFlipCancelTrainerPlayEffect } from '../effects/effect-of-attack-effects';
+import { preventRetreatEffect, selfPreventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, coinFlipCancelAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect, cannotAttachEnergyFromHandToDefendingNextTurnEffect, energyAttachFromHandConsequenceNextTurnEffect, defendingPokemonWeaknessIsNowEffect, reduceDamageEffect, reduceDamageAfterWeaknessEffect, playLockEffect, PlayLockOptions, PreventDamageOptions, shouldPreventAttackEffects, knockOutIfDamagedDuringAttackerNextTurnEffect, KnockOutIfDamagedOptions, surviveOnTenHpDuringOpponentsNextTurnEffect, retaliateOnDamageDuringOpponentsNextTurnEffect, extraPrizesIfKnockedOutDuringAttackerNextTurnEffect, denyPrizesIfKnockedOutDuringOpponentsNextTurnEffect, discardAttackerEnergyIfKnockedOutDuringOpponentsNextTurnEffect, nextTurnAttackDamageBonusEffect, armNextTurnAttackDamageBonus, nextTurnAttackBaseDamageEffect, increaseDefendingPokemonAttackCostNextTurnEffect, increaseDefendingPokemonRetreatCostNextTurnEffect, preventAttackUntilLeavesActiveEffect, increaseDefendingPokemonAttackCostWhileActiveEffect, preventRetreatWhileActiveEffect, preventHealOnDefendingDuringOpponentsNextTurnEffect, stadiumAndToolHaveNoEffectEffect, coinFlipCancelTrainerPlayEffect, thisPokemonHasNoWeaknessDuringOpponentsNextTurnEffect, opponentCannotDrawAtStartOfNextTurnEffect, thisPokemonHasNoRetreatCostDuringYourNextTurnEffect, yourPokemonCannotAttackDuringYourNextTurnEffect, ignoreAttackCostsForTypesDuringYourNextTurnEffect, preventDamageAndEffectsToAllYourPokemonEffect } from '../effects/effect-of-attack-effects';
 import { SurviveOnTenHpOptions, RetaliateOnDamageOptions } from '../state/pokemon-card-list';
 import { GameStatsTracker } from '../game-stats-tracker';
 
@@ -4305,6 +4305,97 @@ export function DEFENDING_POKEMON_WEAKNESS_IS_NOW(
 ): State {
   const weaknessEffect = defendingPokemonWeaknessIsNowEffect(effect, source, weaknessType);
   return store.reduceEffect(state, weaknessEffect);
+}
+
+/**
+ * During your opponent's next turn, this Pokémon has no Weakness.
+ */
+export function THIS_POKEMON_HAS_NO_WEAKNESS_DURING_OPPONENTS_NEXT_TURN(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+): State {
+  return store.reduceEffect(state, thisPokemonHasNoWeaknessDuringOpponentsNextTurnEffect(effect, source));
+}
+
+/**
+ * Flip a coin. If heads, your opponent can't draw a card at the beginning of their next turn.
+ */
+export function FLIP_COIN_OPPONENT_CANNOT_DRAW_AT_START_OF_NEXT_TURN(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+): State {
+  return COIN_FLIP_PROMPT(store, state, effect.player, result => {
+    if (result) {
+      store.reduceEffect(state, opponentCannotDrawAtStartOfNextTurnEffect(effect, source));
+    }
+  });
+}
+
+/**
+ * Your opponent can't draw a card at the beginning of their next turn.
+ */
+export function OPPONENT_CANNOT_DRAW_AT_START_OF_NEXT_TURN(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+): State {
+  return store.reduceEffect(state, opponentCannotDrawAtStartOfNextTurnEffect(effect, source));
+}
+
+/**
+ * During your next turn, this Pokémon has no Retreat Cost.
+ */
+export function THIS_POKEMON_HAS_NO_RETREAT_COST_DURING_YOUR_NEXT_TURN(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+): State {
+  return store.reduceEffect(state, thisPokemonHasNoRetreatCostDuringYourNextTurnEffect(effect, source));
+}
+
+/**
+ * During your next turn, your Pokémon can't attack (including Pokémon that come into play).
+ */
+export function YOUR_POKEMON_CANNOT_ATTACK_DURING_YOUR_NEXT_TURN(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+): State {
+  return store.reduceEffect(state, yourPokemonCannotAttackDuringYourNextTurnEffect(effect, source));
+}
+
+/**
+ * During your next turn, ignore all Energy in the attack costs of Pokémon of the given types.
+ */
+export function IGNORE_ATTACK_COSTS_FOR_TYPES_DURING_YOUR_NEXT_TURN(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+  cardTypes: CardType[],
+): State {
+  return store.reduceEffect(state, ignoreAttackCostsForTypesDuringYourNextTurnEffect(effect, source, cardTypes));
+}
+
+/**
+ * Prevent all effects of attacks, including damage, done to each of your Pokémon
+ * during your opponent's next turn.
+ */
+export function PREVENT_DAMAGE_AND_EFFECTS_TO_ALL_YOUR_POKEMON(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+  options?: PreventDamageOptions,
+): State {
+  return store.reduceEffect(state, preventDamageAndEffectsToAllYourPokemonEffect(effect, source, options));
 }
 
 /**

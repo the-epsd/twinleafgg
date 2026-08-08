@@ -4,7 +4,7 @@ import { PlayerType, SlotType } from '../actions/play-card-action';
 import { EnergyCard } from '../card/energy-card';
 import { CardType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
-import { CheckHpEffect, CheckAttackCostEffect, CheckProvidedEnergyEffect, CheckTableStateEffect } from '../effects/check-effects';
+import { CheckHpEffect, CheckAttackCostEffect, CheckProvidedEnergyEffect, CheckTableStateEffect, CheckRetreatCostEffect, CheckPokemonTypeEffect } from '../effects/check-effects';
 import { Effect } from '../effects/effect';
 import { KnockOutEffect, MovedToActiveEffect } from '../effects/game-effects';
 import { TAKE_SPECIFIC_PRIZES, MOVE_CARDS } from '../prefabs/prefabs';
@@ -562,6 +562,22 @@ export function checkStateReducer(store: StoreLike, state: State, effect: Effect
     } else {
       active.attackCostIncreaseWhileActive = 0;
       active.attackCostIncreaseWhileActiveSourceCard = undefined;
+    }
+
+    const ignoreTypes = effect.player.ignoreAttackCostCardTypes;
+    if (ignoreTypes !== null && effect.player.ignoreAttackCostTurnsRemaining > 0) {
+      const checkType = new CheckPokemonTypeEffect(active);
+      store.reduceEffect(state, checkType);
+      if (ignoreTypes.some(t => checkType.cardTypes.includes(t))) {
+        effect.cost = [];
+      }
+    }
+    return state;
+  }
+
+  if (effect instanceof CheckRetreatCostEffect) {
+    if (effect.player.active.zeroRetreatCostNextTurn) {
+      effect.cost = [];
     }
     return state;
   }

@@ -23,10 +23,6 @@ export class ClawitzerBreak extends PokemonCard {
   public name: string = 'Clawitzer BREAK';
   public fullName: string = 'Clawitzer BREAK STS';
 
-  public readonly LOCK_ON_TARGET_MARKER = 'LOCK_ON_TARGET_MARKER';
-  public readonly LOCK_ON_PHASE1_MARKER = 'LOCK_ON_PHASE1_MARKER';
-  public readonly LOCK_ON_CLEAR_MARKER = 'LOCK_ON_CLEAR_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Lock-On
     if (WAS_ATTACK_USED(effect, 0, this)) {

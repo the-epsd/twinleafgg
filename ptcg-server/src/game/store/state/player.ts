@@ -1,7 +1,7 @@
 import { GameError } from '../../game-error';
 import { GameMessage } from '../../game-message';
 import { CardTarget, PlayerType, SlotType } from '../actions/play-card-action';
-import { CardTag } from '../card/card-types';
+import { CardTag, CardType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { MovedFromActiveToBenchEffect, MovedToActiveEffect } from '../effects/game-effects';
 import { CardList } from './card-list';
@@ -108,6 +108,22 @@ export class Player {
    * coin; on tails the card has no effect (still discarded).
    */
   public coinFlipCancelTrainerPlayTurnsRemaining = 0;
+  /**
+   * Opponent can't draw at the beginning of their next turn (Luvdisc Heart Wink).
+   * Cleared when the draw is blocked or at EndTurn.
+   */
+  public cannotDrawAtStartOfTurn = false;
+  /**
+   * Player-wide attack lock (Steelix Gigaton Shake). Counts this player's
+   * EndTurns until clear. Set to 2 for "during your next turn".
+   */
+  public cannotAttackTurnsRemaining = 0;
+  /**
+   * Ignore Energy in attack costs for Pokémon of these types (Sunflora Solar Power).
+   * Counts this player's EndTurns until clear. Set to 2 for "during your next turn".
+   */
+  public ignoreAttackCostCardTypes: CardType[] | null = null;
+  public ignoreAttackCostTurnsRemaining = 0;
   public ancientPokemonAttackedLastTurn = false;
 
   /** Apply attack-sourced play locks for this player's upcoming turn(s). */
@@ -175,6 +191,16 @@ export class Player {
     if (this.coinFlipCancelTrainerPlayTurnsRemaining > 0) {
       this.coinFlipCancelTrainerPlayTurnsRemaining -= 1;
     }
+    if (this.cannotAttackTurnsRemaining > 0) {
+      this.cannotAttackTurnsRemaining -= 1;
+    }
+    if (this.ignoreAttackCostTurnsRemaining > 0) {
+      this.ignoreAttackCostTurnsRemaining -= 1;
+      if (this.ignoreAttackCostTurnsRemaining <= 0) {
+        this.ignoreAttackCostCardTypes = null;
+      }
+    }
+    this.cannotDrawAtStartOfTurn = false;
   }
 
   // Track Pokemon cards that moved from Bench to Active this turn

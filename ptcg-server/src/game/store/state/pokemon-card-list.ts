@@ -88,6 +88,14 @@ export class PokemonCardList extends CardList {
   public preventEffectsOfAttacksNextTurn: PreventDamageFilter | null = null;
   public preventEffectsOfAttacksNextTurnPending: PreventDamageFilter | null = null;
   public cannotBeHealedNextTurn: boolean = false;
+  /** True if this Pokémon had damage counters removed by a HealEffect this turn. */
+  public healedThisTurn: boolean = false;
+  /** During the opponent's next turn, this Pokémon has no Weakness. */
+  public noWeaknessNextTurn: boolean = false;
+  public noWeaknessNextTurnPending: boolean = false;
+  /** During the owner's next turn, this Pokémon has no Retreat Cost. */
+  public zeroRetreatCostNextTurn: boolean = false;
+  public zeroRetreatCostNextTurnPending: boolean = false;
   public defendingPokemonExtraDamageNextTurn: number = 0;
   public defendingPokemonExtraDamageAttackerId: number | undefined = undefined;
   public defendingPokemonExtraDamagePending: boolean = false;
@@ -304,6 +312,11 @@ export class PokemonCardList extends CardList {
     this.preventEffectsOfAttacksNextTurn = null;
     this.preventEffectsOfAttacksNextTurnPending = null;
     this.cannotBeHealedNextTurn = false;
+    this.healedThisTurn = false;
+    this.noWeaknessNextTurn = false;
+    this.noWeaknessNextTurnPending = false;
+    this.zeroRetreatCostNextTurn = false;
+    this.zeroRetreatCostNextTurnPending = false;
     this.defendingPokemonExtraDamageNextTurn = 0;
     this.defendingPokemonExtraDamageAttackerId = undefined;
     this.defendingPokemonExtraDamagePending = false;
@@ -383,6 +396,11 @@ export class PokemonCardList extends CardList {
     this.preventEffectsOfAttacksNextTurn = null;
     this.preventEffectsOfAttacksNextTurnPending = null;
     this.cannotBeHealedNextTurn = false;
+    this.healedThisTurn = false;
+    this.noWeaknessNextTurn = false;
+    this.noWeaknessNextTurnPending = false;
+    this.zeroRetreatCostNextTurn = false;
+    this.zeroRetreatCostNextTurnPending = false;
     this.defendingPokemonExtraDamageNextTurn = 0;
     this.defendingPokemonExtraDamageAttackerId = undefined;
     this.defendingPokemonExtraDamagePending = false;

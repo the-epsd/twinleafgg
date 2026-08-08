@@ -147,6 +147,11 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
   }
 
+  // Player-wide attack lock (e.g. Steelix Gigaton Shake)
+  if (player.cannotAttackTurnsRemaining > 0) {
+    throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+  }
+
   // Check if specific attack cannot be used next turn
   if (attackingPokemon.cannotUseAttacksNextTurn.includes(attack.name)) {
     throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
@@ -587,7 +592,9 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
   }
 
   if (effect instanceof CheckPokemonStatsEffect) {
-    if (effect.target.weaknessOverrideType !== undefined) {
+    if (effect.target.noWeaknessNextTurn) {
+      effect.weakness = [];
+    } else if (effect.target.weaknessOverrideType !== undefined) {
       effect.weakness = [{ type: effect.target.weaknessOverrideType }];
     }
     return state;
@@ -665,6 +672,9 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
     if (effect.preventDefault || effect.target.cannotBeHealedNextTurn) {
       effect.preventDefault = true;
       return state;
+    }
+    if (effect.damage > 0 && effect.target.damage > 0) {
+      effect.target.healedThisTurn = true;
     }
     effect.target.damage = Math.max(0, effect.target.damage - effect.damage);
     return state;

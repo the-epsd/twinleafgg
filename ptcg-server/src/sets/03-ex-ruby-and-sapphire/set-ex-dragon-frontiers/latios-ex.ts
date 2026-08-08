@@ -1,11 +1,7 @@
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, PowerType, StateUtils, PlayerType } from '../../../game';
-import { Effect } from '../../../game/store/effects/effect';
-import { CheckRetreatCostEffect } from '../../../game/store/effects/check-effects';
-import { ADD_MARKER, HAS_MARKER, IS_POKEBODY_BLOCKED, REMOVE_MARKER, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { PutCountersEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
+import { PokemonCard, Stage, CardTag, CardType, PowerType, StoreLike, State, StateUtils, PlayerType } from "../../../game";
+import { CheckRetreatCostEffect } from "../../../game/store/effects/check-effects";
+import { Effect } from "../../../game/store/effects/effect";
+import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED, PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from "../../../game/store/prefabs/prefabs";
 
 export class Latiosex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -40,10 +36,8 @@ export class Latiosex extends PokemonCard {
   public name: string = 'Latios ex';
   public fullName: string = 'Latios ex DF';
 
-  public readonly ICE_BARRIER_MARKER = 'ICE_BARRIER_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Link Wing
     if (effect instanceof CheckRetreatCostEffect) {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
@@ -69,21 +63,11 @@ export class Latiosex extends PokemonCard {
         effect.cost = [];
       }
     }
-
+    // Ice Barrier
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      this.marker.addMarker(this.ICE_BARRIER_MARKER, this);
-      ADD_MARKER(this.ICE_BARRIER_MARKER, effect.opponent, this);
-    }
-
-    if ((effect instanceof PutDamageEffect || effect instanceof PutCountersEffect) && effect.target.getPokemonCard() === this && effect.source.getPokemonCard()?.tags.includes(CardTag.POKEMON_ex)) {
-      if (this.marker.hasMarker(this.ICE_BARRIER_MARKER, this)) {
-        effect.preventDefault = true;
-      }
-    }
-
-    if (effect instanceof EndTurnEffect && HAS_MARKER(this.ICE_BARRIER_MARKER, effect.player, this)) {
-      REMOVE_MARKER(this.ICE_BARRIER_MARKER, effect.player, this);
-      this.marker.removeMarker(this.ICE_BARRIER_MARKER, this);
+      const options = { sourceTags: [CardTag.POKEMON_ex] };
+      PREVENT_DAMAGE(store, state, effect, this, options);
+      PREVENT_EFFECTS_OF_ATTACKS(store, state, effect, this, options);
     }
 
     return state;

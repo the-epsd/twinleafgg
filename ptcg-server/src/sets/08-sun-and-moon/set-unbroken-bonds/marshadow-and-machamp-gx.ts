@@ -1,8 +1,6 @@
-import { CardTag, CardType, PokemonCard, Stage, State, StateUtils, StoreLike } from '../../../game';
+import { CardTag, CardType, PokemonCard, Stage, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { CheckHpEffect, CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED, WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, HAS_EXTRA_ENERGY_BEYOND_ATTACK_COST, THIS_POKEMON_SURVIVES_ON_TEN_HP_DURING_OPPONENTS_NEXT_TURN, WAS_ATTACK_USED, WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN } from '../../../game/store/prefabs/prefabs';
 
 export class MarshadowMachampGX extends PokemonCard {
   public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
@@ -39,8 +37,6 @@ export class MarshadowMachampGX extends PokemonCard {
   public name = 'Marshadow & Machamp-GX';
   public fullName = 'Marshadow & Machamp-GX UNB';
 
-  public readonly ACME_OF_HEROSIM_MARKER = 'ACME_OF_HEROSIM_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Revenge
     if (WAS_ATTACK_USED(effect, 0, this)) {
@@ -54,24 +50,8 @@ export class MarshadowMachampGX extends PokemonCard {
       BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
 
-      const extraEffectCost: CardType[] = [F, F, C, C];
-      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
-      store.reduceEffect(state, checkProvidedEnergy);
-      const meetsExtraEffectCost = StateUtils.checkEnoughEnergy(checkProvidedEnergy.energyMap, extraEffectCost);
-
-      if (meetsExtraEffectCost) {
-        player.active.marker.addMarker(this.ACME_OF_HEROSIM_MARKER, this);
-      }
-    }
-
-    if (effect instanceof PutDamageEffect && effect.target.getPokemonCard() === this && effect.target.marker.hasMarker(this.ACME_OF_HEROSIM_MARKER, this)) {
-      const player = StateUtils.findOwner(state, effect.target);
-      const checkHpEffect = new CheckHpEffect(player, effect.target);
-      store.reduceEffect(state, checkHpEffect);
-
-      if (effect.damage >= checkHpEffect.hp) {
-        effect.preventDefault = true;
-        effect.target.damage = checkHpEffect.hp - 10;
+      if (HAS_EXTRA_ENERGY_BEYOND_ATTACK_COST(store, state, player, effect.attack, 1)) {
+        return THIS_POKEMON_SURVIVES_ON_TEN_HP_DURING_OPPONENTS_NEXT_TURN(store, state, effect, this);
       }
     }
 
