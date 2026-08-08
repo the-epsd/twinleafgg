@@ -37,6 +37,9 @@ export function playEnergyReducer(store: StoreLike, state: State, effect: Effect
     if (pokemonCard === undefined) {
       throw new GameError(GameMessage.INVALID_TARGET);
     }
+    if (effect.player.cannotPlayEnergyCards) {
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    }
     if (effect.energyCard.energyType === EnergyType.SPECIAL
       && effect.player.cannotPlaySpecialEnergyCards) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);

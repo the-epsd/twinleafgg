@@ -35,6 +35,9 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
 
   /* Play pokemon card */
   if (effect instanceof PlayPokemonEffect) {
+    if (effect.player.cannotPlayPokemonCards) {
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    }
     if (effect.player.cannotPlayPokemonWithAbilities
       && effect.pokemonCard.powers.some(power => power.powerType === PowerType.ABILITY)) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);

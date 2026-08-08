@@ -612,6 +612,10 @@ export interface PlayLockOptions {
   stadium?: boolean;
   tool?: boolean;
   specialEnergy?: boolean;
+  /** Block playing any Energy from hand (Basic + Special). */
+  energy?: boolean;
+  /** Block playing any Pokémon from hand (including evolution). */
+  pokemon?: boolean;
   pokemonWithAbilities?: boolean;
   /** EndTurns of the locked player until clear. Default 1 (opponent's next turn). */
   turnsRemaining?: number;
@@ -638,6 +642,8 @@ export class PlayLockEffect extends EffectOfAttackEffect {
       stadium: this.options.stadium === true,
       tool: this.options.tool === true,
       specialEnergy: this.options.specialEnergy === true,
+      energy: this.options.energy === true,
+      pokemon: this.options.pokemon === true,
       pokemonWithAbilities: this.options.pokemonWithAbilities === true,
     };
     const opponentTurns = this.options.turnsRemaining ?? 1;
@@ -655,6 +661,64 @@ export function playLockEffect(
   options: PlayLockOptions,
 ): PlayLockEffect {
   const effect = new PlayLockEffect(attackEffect, options);
+  effect.markerSource = source;
+  return effect;
+}
+
+/**
+ * Until the end of the opponent's next turn, Stadium and Pokémon Tool cards
+ * in play have no effect. Flag lives on the opponent and is checked globally.
+ */
+export class StadiumAndToolHaveNoEffectEffect extends EffectOfAttackEffect {
+  readonly type: string = 'STADIUM_AND_TOOL_HAVE_NO_EFFECT_EFFECT';
+
+  constructor(base: AttackEffect) {
+    super(base);
+    this.target = base.source;
+  }
+
+  applyEffect(): void {
+    this.opponent.stadiumAndToolHaveNoEffectTurnsRemaining = Math.max(
+      this.opponent.stadiumAndToolHaveNoEffectTurnsRemaining,
+      1,
+    );
+  }
+}
+
+export function stadiumAndToolHaveNoEffectEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+): StadiumAndToolHaveNoEffectEffect {
+  const effect = new StadiumAndToolHaveNoEffectEffect(attackEffect);
+  effect.markerSource = source;
+  return effect;
+}
+
+/**
+ * During the opponent's next turn, whenever they play a Trainer from hand,
+ * they flip a coin; on tails that card has no effect (still discarded).
+ */
+export class CoinFlipCancelTrainerPlayEffect extends EffectOfAttackEffect {
+  readonly type: string = 'COIN_FLIP_CANCEL_TRAINER_PLAY_EFFECT';
+
+  constructor(base: AttackEffect) {
+    super(base);
+    this.target = base.source;
+  }
+
+  applyEffect(): void {
+    this.opponent.coinFlipCancelTrainerPlayTurnsRemaining = Math.max(
+      this.opponent.coinFlipCancelTrainerPlayTurnsRemaining,
+      1,
+    );
+  }
+}
+
+export function coinFlipCancelTrainerPlayEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+): CoinFlipCancelTrainerPlayEffect {
+  const effect = new CoinFlipCancelTrainerPlayEffect(attackEffect);
   effect.markerSource = source;
   return effect;
 }

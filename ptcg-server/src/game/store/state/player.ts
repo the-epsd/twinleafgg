@@ -84,7 +84,7 @@ export class Player {
   public readonly CLEAR_KNOCKOUT_MARKER = 'CLEAR_KNOCKOUT_MARKER';
   public readonly KNOCKOUT_MARKER = 'KNOCKOUT_MARKER';
   /**
-   * Attack-sourced hand play locks (Item / Supporter / Stadium / Tool / Special Energy).
+   * Attack-sourced hand play locks (Item / Supporter / Stadium / Tool / Energy / Pokemon).
    * Live on the player — not cleared by Pokemon switch. Cleared after
    * {@link playLocksTurnsRemaining} of this player's EndTurns (default 1 =
    * "during opponent's next turn").
@@ -94,8 +94,20 @@ export class Player {
   public cannotPlayStadiumCards = false;
   public cannotPlayToolCards = false;
   public cannotPlaySpecialEnergyCards = false;
+  public cannotPlayEnergyCards = false;
+  public cannotPlayPokemonCards = false;
   public cannotPlayPokemonWithAbilities = false;
   public playLocksTurnsRemaining = 0;
+  /**
+   * Until end of this player's next turn countdown: Stadium/Tool cards in play
+   * have no effect (checked globally via any player still holding the flag).
+   */
+  public stadiumAndToolHaveNoEffectTurnsRemaining = 0;
+  /**
+   * During this player's next turn: when they play a Trainer from hand, flip a
+   * coin; on tails the card has no effect (still discarded).
+   */
+  public coinFlipCancelTrainerPlayTurnsRemaining = 0;
   public ancientPokemonAttackedLastTurn = false;
 
   /** Apply attack-sourced play locks for this player's upcoming turn(s). */
@@ -105,6 +117,8 @@ export class Player {
     stadium?: boolean;
     tool?: boolean;
     specialEnergy?: boolean;
+    energy?: boolean;
+    pokemon?: boolean;
     pokemonWithAbilities?: boolean;
   }, turnsRemaining: number = 1): void {
     if (locks.item) {
@@ -122,6 +136,13 @@ export class Player {
     if (locks.specialEnergy) {
       this.cannotPlaySpecialEnergyCards = true;
     }
+    if (locks.energy) {
+      this.cannotPlayEnergyCards = true;
+      this.cannotPlaySpecialEnergyCards = true;
+    }
+    if (locks.pokemon) {
+      this.cannotPlayPokemonCards = true;
+    }
     if (locks.pokemonWithAbilities) {
       this.cannotPlayPokemonWithAbilities = true;
     }
@@ -134,18 +155,25 @@ export class Player {
     this.cannotPlayStadiumCards = false;
     this.cannotPlayToolCards = false;
     this.cannotPlaySpecialEnergyCards = false;
+    this.cannotPlayEnergyCards = false;
+    this.cannotPlayPokemonCards = false;
     this.cannotPlayPokemonWithAbilities = false;
     this.playLocksTurnsRemaining = 0;
   }
 
   /** Decrement play-lock duration; clear flags when the countdown hits 0. */
   public tickPlayLocksAtEndOfTurn(): void {
-    if (this.playLocksTurnsRemaining <= 0) {
-      return;
+    if (this.playLocksTurnsRemaining > 0) {
+      this.playLocksTurnsRemaining -= 1;
+      if (this.playLocksTurnsRemaining <= 0) {
+        this.clearPlayLocks();
+      }
     }
-    this.playLocksTurnsRemaining -= 1;
-    if (this.playLocksTurnsRemaining <= 0) {
-      this.clearPlayLocks();
+    if (this.stadiumAndToolHaveNoEffectTurnsRemaining > 0) {
+      this.stadiumAndToolHaveNoEffectTurnsRemaining -= 1;
+    }
+    if (this.coinFlipCancelTrainerPlayTurnsRemaining > 0) {
+      this.coinFlipCancelTrainerPlayTurnsRemaining -= 1;
     }
   }
 

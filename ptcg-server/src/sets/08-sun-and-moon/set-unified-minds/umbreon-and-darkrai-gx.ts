@@ -1,12 +1,9 @@
-import { CardTag, CardTarget, CardType, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike } from '../../../game';
+import { CardTag, CardTarget, CardType, ChoosePokemonPrompt, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
-import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { AttachPokemonToolEffect, PlayItemEffect, PlayStadiumEffect, PlaySupporterEffect } from '../../../game/store/effects/play-card-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-
+import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED, OPPONENT_CANNOT_PLAY_TRAINER_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class UmbreonDarkraiGX extends PokemonCard {
   public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
@@ -36,8 +33,6 @@ export class UmbreonDarkraiGX extends PokemonCard {
   public cardImage = 'assets/cardback.png';
   public name = 'Umbreon & Darkrai-GX';
   public fullName = 'Umbreon & Darkrai-GX UNM';
-
-  public readonly DARK_MOON_MARKER = 'DARK_MOON_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Black Lance
@@ -96,12 +91,11 @@ export class UmbreonDarkraiGX extends PokemonCard {
     // Dark Moon-GX
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      const opponent = effect.opponent;
 
       BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
 
-      opponent.marker.addMarker(this.DARK_MOON_MARKER, this);
+      OPPONENT_CANNOT_PLAY_TRAINER_CARDS(store, state, effect, this);
 
       const extraEffectCost: CardType[] = [D, D, D, D, D, C];
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
@@ -109,23 +103,12 @@ export class UmbreonDarkraiGX extends PokemonCard {
       const meetsExtraEffectCost = StateUtils.checkEnoughEnergy(checkProvidedEnergy.energyMap, extraEffectCost);
 
       if (meetsExtraEffectCost) {
-        const activePokemon = opponent.active.getPokemonCard();
+        const activePokemon = effect.opponent.active.getPokemonCard();
 
         if (activePokemon) {
           KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
         }
       }
-    }
-
-    if ((effect instanceof PlayItemEffect
-      || effect instanceof PlaySupporterEffect
-      || effect instanceof PlayStadiumEffect
-      || effect instanceof AttachPokemonToolEffect) && effect.player.marker.hasMarker(this.DARK_MOON_MARKER, this)) {
-      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.DARK_MOON_MARKER, this)) {
-      effect.player.marker.removeMarker(this.DARK_MOON_MARKER, this);
     }
 
     return state;

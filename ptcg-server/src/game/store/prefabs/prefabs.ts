@@ -92,7 +92,7 @@ import {
 } from '../effects/game-effects';
 import { AfterAttackEffect, BeforeDoingDamageEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
-import { preventRetreatEffect, selfPreventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, coinFlipCancelAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect, cannotAttachEnergyFromHandToDefendingNextTurnEffect, energyAttachFromHandConsequenceNextTurnEffect, defendingPokemonWeaknessIsNowEffect, reduceDamageEffect, reduceDamageAfterWeaknessEffect, playLockEffect, PlayLockOptions, PreventDamageOptions, shouldPreventAttackEffects, knockOutIfDamagedDuringAttackerNextTurnEffect, KnockOutIfDamagedOptions, surviveOnTenHpDuringOpponentsNextTurnEffect, retaliateOnDamageDuringOpponentsNextTurnEffect, extraPrizesIfKnockedOutDuringAttackerNextTurnEffect, denyPrizesIfKnockedOutDuringOpponentsNextTurnEffect, discardAttackerEnergyIfKnockedOutDuringOpponentsNextTurnEffect, nextTurnAttackDamageBonusEffect, armNextTurnAttackDamageBonus, nextTurnAttackBaseDamageEffect, increaseDefendingPokemonAttackCostNextTurnEffect, increaseDefendingPokemonRetreatCostNextTurnEffect, preventAttackUntilLeavesActiveEffect, increaseDefendingPokemonAttackCostWhileActiveEffect, preventRetreatWhileActiveEffect, preventHealOnDefendingDuringOpponentsNextTurnEffect } from '../effects/effect-of-attack-effects';
+import { preventRetreatEffect, selfPreventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, coinFlipCancelAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect, cannotAttachEnergyFromHandToDefendingNextTurnEffect, energyAttachFromHandConsequenceNextTurnEffect, defendingPokemonWeaknessIsNowEffect, reduceDamageEffect, reduceDamageAfterWeaknessEffect, playLockEffect, PlayLockOptions, PreventDamageOptions, shouldPreventAttackEffects, knockOutIfDamagedDuringAttackerNextTurnEffect, KnockOutIfDamagedOptions, surviveOnTenHpDuringOpponentsNextTurnEffect, retaliateOnDamageDuringOpponentsNextTurnEffect, extraPrizesIfKnockedOutDuringAttackerNextTurnEffect, denyPrizesIfKnockedOutDuringOpponentsNextTurnEffect, discardAttackerEnergyIfKnockedOutDuringOpponentsNextTurnEffect, nextTurnAttackDamageBonusEffect, armNextTurnAttackDamageBonus, nextTurnAttackBaseDamageEffect, increaseDefendingPokemonAttackCostNextTurnEffect, increaseDefendingPokemonRetreatCostNextTurnEffect, preventAttackUntilLeavesActiveEffect, increaseDefendingPokemonAttackCostWhileActiveEffect, preventRetreatWhileActiveEffect, preventHealOnDefendingDuringOpponentsNextTurnEffect, stadiumAndToolHaveNoEffectEffect, coinFlipCancelTrainerPlayEffect } from '../effects/effect-of-attack-effects';
 import { SurviveOnTenHpOptions, RetaliateOnDamageOptions } from '../state/pokemon-card-list';
 import { GameStatsTracker } from '../game-stats-tracker';
 
@@ -2310,6 +2310,9 @@ export function IS_TOOL_BLOCKED(
   player: Player,
   card: TrainerCard,
 ): boolean {
+  if (STADIUM_AND_TOOL_HAVE_NO_EFFECT(state)) {
+    return true;
+  }
   // Try to reduce ToolEffect, to check if something is blocking the tool from working
   try {
     const stub = new ToolEffect(player, card);
@@ -3915,6 +3918,13 @@ export function CAN_PLAY_ENERGY_CARD(
       return false;
     }
 
+    if (player.cannotPlayEnergyCards) {
+      return false;
+    }
+    if (energyCard.energyType === EnergyType.SPECIAL && player.cannotPlaySpecialEnergyCards) {
+      return false;
+    }
+
     // Check if player has any Pokemon in play to attach energy to
     const hasActivePokemon = player.active.cards.length > 0;
     const hasBenchPokemon = player.bench.some((bench) => bench.cards.length > 0);
@@ -4011,6 +4021,14 @@ export function CAN_PLAY_POKEMON_CARD(
       state.phase !== GamePhase.PLAYER_TURN ||
       state.players[state.activePlayer].id !== player.id
     ) {
+      return false;
+    }
+
+    if (player.cannotPlayPokemonCards) {
+      return false;
+    }
+    if (player.cannotPlayPokemonWithAbilities
+      && pokemonCard.powers.some(power => power.powerType === PowerType.ABILITY)) {
       return false;
     }
 
@@ -4442,6 +4460,67 @@ export function OPPONENT_CANNOT_PLAY_SUPPORTER_CARDS(
   source: Card,
 ): State {
   return OPPONENT_CANNOT_PLAY_CARDS(store, state, effect, source, { supporter: true });
+}
+
+export function OPPONENT_CANNOT_PLAY_TRAINER_CARDS(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+): State {
+  return OPPONENT_CANNOT_PLAY_CARDS(store, state, effect, source, {
+    item: true,
+    supporter: true,
+    tool: true,
+    stadium: true,
+  });
+}
+
+export function OPPONENT_CANNOT_PLAY_ANY_CARDS(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+): State {
+  return OPPONENT_CANNOT_PLAY_CARDS(store, state, effect, source, {
+    item: true,
+    supporter: true,
+    tool: true,
+    stadium: true,
+    energy: true,
+    pokemon: true,
+  });
+}
+
+/** True while Wicked Wind-style Stadium/Tool nullification is active. */
+export function STADIUM_AND_TOOL_HAVE_NO_EFFECT(state: State): boolean {
+  return state.players.some(p => p.stadiumAndToolHaveNoEffectTurnsRemaining > 0);
+}
+
+/**
+ * Until the end of your opponent's next turn, each Stadium or Pokémon Tool card
+ * in play has no effect.
+ */
+export function STADIUM_AND_TOOL_CARDS_HAVE_NO_EFFECT(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+): State {
+  return store.reduceEffect(state, stadiumAndToolHaveNoEffectEffect(effect, source));
+}
+
+/**
+ * Whenever your opponent plays a Trainer card from their hand during their next
+ * turn, they flip a coin. If tails, that card has no effect (still discarded).
+ */
+export function OPPONENT_COIN_FLIP_CANCEL_TRAINER_CARDS(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+): State {
+  return store.reduceEffect(state, coinFlipCancelTrainerPlayEffect(effect, source));
 }
 
 /**

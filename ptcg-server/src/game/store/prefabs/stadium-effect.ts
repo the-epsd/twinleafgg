@@ -20,6 +20,10 @@ export function IS_STADIUM_EFFECT_BLOCKED(
   target: PokemonCardList,
   stadium?: TrainerCard,
 ): boolean {
+  if (state.players.some(p => p.stadiumAndToolHaveNoEffectTurnsRemaining > 0)) {
+    return true;
+  }
+
   // Nested probe (e.g. Silent Lab → IS_STADIUM_EFFECT_BLOCKED → Lunatone →
   // IS_ABILITY_BLOCKED → Silent Lab → IS_STADIUM_EFFECT_BLOCKED again).
   // New Moon takes priority over stadium ability locks: re-dispatch with
