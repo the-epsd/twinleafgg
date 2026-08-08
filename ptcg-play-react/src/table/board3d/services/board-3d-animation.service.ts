@@ -1081,6 +1081,7 @@ export class Board3dAnimationService {
     const iconPlane = new Mesh(new PlaneGeometry(2.5, 3.5), iconMat);
     iconPlane.position.set(0, 0, 0.015);
     iconPlane.renderOrder = 11;
+    iconPlane.userData.energyAttachMorphOverlay = true;
     cardMesh.add(iconPlane);
 
     // Reparent immediately so motion goes straight into the icon slot (no hover beat).
@@ -1092,10 +1093,12 @@ export class Board3dAnimationService {
           iconPlane.geometry.dispose();
           iconMat.dispose();
           iconTex.dispose();
+          delete cardGroup.userData.energyAttachTimeline;
           this.removeAnimation(timeline);
           resolve();
         },
       });
+      cardGroup.userData.energyAttachTimeline = timeline;
 
       timeline
         .to(cardGroup.position, {
@@ -1134,6 +1137,54 @@ export class Board3dAnimationService {
       this.activeAnimations.push(timeline);
       this.updateAnimationState();
     });
+  }
+
+  /**
+   * Undo mid-flight energy→icon morph so the card can animate back to hand.
+   */
+  scrubFailedEnergyAttachVisuals(flyingCard: Board3dCard): void {
+    const cardGroup = flyingCard.getGroup();
+    const timeline = cardGroup.userData.energyAttachTimeline as gsap.core.Timeline | undefined;
+    if (timeline) {
+      timeline.kill();
+      this.removeAnimation(timeline);
+      delete cardGroup.userData.energyAttachTimeline;
+    }
+
+    gsap.killTweensOf(cardGroup.position);
+    gsap.killTweensOf(cardGroup.rotation);
+    gsap.killTweensOf(cardGroup.scale);
+
+    const disposeMorphOverlay = (obj: Object3D): void => {
+      if (!obj.userData?.energyAttachMorphOverlay) {
+        return;
+      }
+      obj.removeFromParent();
+      if (obj instanceof Mesh) {
+        obj.geometry.dispose();
+        const mat = obj.material;
+        if (Array.isArray(mat)) {
+          mat.forEach((m) => {
+            const map = (m as MeshBasicMaterial).map;
+            map?.dispose();
+            m.dispose();
+          });
+        } else if (mat) {
+          const map = (mat as MeshBasicMaterial).map;
+          map?.dispose();
+          mat.dispose();
+        }
+      }
+    };
+
+    const cardMesh = flyingCard.getMesh();
+    for (const child of [...cardMesh.children]) {
+      disposeMorphOverlay(child);
+    }
+    for (const child of [...cardGroup.children]) {
+      disposeMorphOverlay(child);
+    }
+    cardMesh.visible = true;
   }
 
   /**

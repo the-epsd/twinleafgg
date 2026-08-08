@@ -634,11 +634,101 @@ export class Board3dHandService {
     attachRoot.attach(cardGroup);
     cardGroup.userData.isHandCard = false;
     cardGroup.userData.playingToBoard = true;
-    delete cardGroup.userData.handIndex;
+    // Keep original server hand index for failed-play return / playCardAction.
+    cardGroup.userData.handIndex = index;
+    cardGroup.userData.detachedFromHandIndex = index;
 
     this.handCards.delete(index);
     this.repositionRemainingCards();
     return board3d;
+  }
+
+  /**
+   * Smoothly return a card detached via {@link detachCardForBoardPlay} after the server rejects the play.
+   * Restores server hand indices (undoes the visual reindex from detach).
+   */
+  returnDetachedCardToHand(
+    board3dCard: Board3dCard,
+    handIndex: number,
+    options?: { isPlayable?: boolean },
+  ): Promise<void> {
+    const cardGroup = board3dCard.getGroup();
+    gsap.killTweensOf(cardGroup.position);
+    gsap.killTweensOf(cardGroup.rotation);
+    gsap.killTweensOf(cardGroup.scale);
+
+    delete cardGroup.userData.playingToBoard;
+    delete cardGroup.userData.detachedFromHandIndex;
+    cardGroup.userData.isHandCard = true;
+    cardGroup.userData.handIndex = handIndex;
+
+    const remapped = new Map<number, Board3dCard>();
+    for (const [visualIdx, card] of this.handCards.entries()) {
+      const serverIdx = visualIdx < handIndex ? visualIdx : visualIdx + 1;
+      remapped.set(serverIdx, card);
+      card.getGroup().userData.handIndex = serverIdx;
+    }
+    remapped.set(handIndex, board3dCard);
+    this.handCards = remapped;
+
+    const total = this.handCards.size;
+    const handScale = 1.1;
+
+    // Preserve world transform while re-parenting into the hand fan.
+    this.handGroup.attach(cardGroup);
+
+    if (options?.isPlayable) {
+      board3dCard.setOutline(true, 0x4ade80);
+    } else {
+      board3dCard.setOutline(false);
+    }
+
+    const cardData = cardGroup.userData.cardData as Card | undefined;
+    if (cardData) {
+      void apply3dCardHolo(this.assetLoader, board3dCard, cardData, false);
+    }
+
+    const animations: Promise<void>[] = [];
+    for (const [idx, card] of this.handCards.entries()) {
+      const group = card.getGroup();
+      if (group.parent !== this.handGroup) {
+        continue;
+      }
+      gsap.killTweensOf(group.position);
+      const target = this.calculateCardPosition(idx, total);
+      const isReturning = idx === handIndex;
+      const duration = isReturning ? 0.4 : 0.25;
+      animations.push(
+        new Promise<void>((resolve) => {
+          gsap.to(group.position, {
+            x: target.x,
+            y: target.y,
+            z: target.z,
+            duration,
+            ease: 'power2.out',
+            onComplete: () => resolve(),
+          });
+        }),
+      );
+      if (isReturning) {
+        gsap.to(group.rotation, {
+          x: 0,
+          y: 0,
+          z: 0,
+          duration,
+          ease: 'power2.out',
+        });
+        gsap.to(group.scale, {
+          x: handScale,
+          y: handScale,
+          z: handScale,
+          duration,
+          ease: 'power2.out',
+        });
+      }
+    }
+
+    return Promise.all(animations).then(() => undefined);
   }
 
   /**

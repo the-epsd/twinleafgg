@@ -1215,6 +1215,7 @@ export class Board3dStateSyncService {
     player: Player,
     prompt: ChooseCardsPrompt,
     handIndices: number[],
+    skipHandIndices?: ReadonlySet<number>,
   ): Promise<void> {
     const neededIds = new Set<string>();
     const updates: Promise<void>[] = [];
@@ -1229,6 +1230,16 @@ export class Board3dStateSyncService {
       }
 
       const meshId = setupPreviewMeshId(player.id, slotTarget.slot, slotTarget.index);
+
+      // In-flight picks keep animating; don't spawn a static duplicate. Preserve pick-order
+      // for later indices by not compacting the handIndices list in the caller.
+      if (skipHandIndices?.has(handIndex)) {
+        if (this.cardsMap.has(meshId)) {
+          neededIds.add(meshId);
+        }
+        continue;
+      }
+
       neededIds.add(meshId);
 
       if (this.cardsMap.has(meshId)) {
@@ -1318,6 +1329,8 @@ export class Board3dStateSyncService {
     delete group.userData.setupPlacementInFlight;
     delete group.userData.playingToBoard;
     delete group.userData.isHandCard;
+    // Hand selection sync may have hidden the mesh before lift — keep preview visible.
+    group.visible = true;
 
     board3dCard.setPosition(landing.position);
     board3dCard.setRotation(landing.rotationY);

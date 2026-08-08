@@ -142,6 +142,8 @@ export function TablePage() {
         .then(() => undefined)
         .catch((e: unknown) => {
           onGameSocketError(e);
+          // Re-throw so board optimistic flights can animate the card back to hand.
+          return Promise.reject(e);
         });
     return {
       playCardAction: (gameId, handIndex, target) =>

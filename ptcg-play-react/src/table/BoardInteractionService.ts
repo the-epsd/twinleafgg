@@ -319,6 +319,23 @@ export class BoardInteractionService {
     }
   }
 
+  /**
+   * Undo a setup hand pick that failed before the preview landed (e.g. no slot / missing card).
+   * Placed Basics remain locked via {@link removeChooseHandCardByHandIndex}.
+   */
+  public revokeChooseHandCardForSetup(handIndex: number): void {
+    if (!this.isChooseStartingPokemonsSelectionActive()) {
+      return;
+    }
+    const currentTargets = this.selectedTargetsSubject.value;
+    const newTargets = currentTargets.filter(
+      t => !(t.slot === SlotType.HAND && t.index === handIndex),
+    );
+    if (newTargets.length !== currentTargets.length) {
+      this.selectedTargetsSubject.next(newTargets);
+    }
+  }
+
   /** Initial setup: Active is chosen and cannot be changed. */
   public isSetupActivePhaseSkipped(): boolean {
     const prompt = this.chooseCardsPrompt;
