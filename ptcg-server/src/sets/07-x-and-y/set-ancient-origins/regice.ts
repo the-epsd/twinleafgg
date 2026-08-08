@@ -23,8 +23,7 @@ export class Regice extends PokemonCard {
     cost: [W, C],
     damage: 30,
     text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-  },
-  {
+  }, {
     name: 'Resistance Blizzard',
     cost: [W, C, C],
     damage: 70,

@@ -21,15 +21,13 @@ export class PorygonZ extends PokemonCard {
     text: 'As often as you like during your turn (before your attack), you may move a Plasma Energy attached to 1 of your Pokémon to another of your Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Tri Attack',
-      cost: [C, C, C],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 50 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tri Attack',
+    cost: [C, C, C],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 50 damage times the number of heads.'
+  }];
 
   public set: string = 'PLB';
   public setNumber: string = '74';

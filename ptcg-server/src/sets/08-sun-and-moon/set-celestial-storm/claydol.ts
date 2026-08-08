@@ -15,21 +15,18 @@ export class Claydol extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Psy Bolt',
-      cost: [C],
-      damage: 20,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Miraculous Spin',
-      cost: [F, C, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'This attack does 40 damage for each Steven\'s Resolve card in your discard pile.'
-    }
-  ];
+  public attacks = [{
+    name: 'Psy Bolt',
+    cost: [C],
+    damage: 20,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Miraculous Spin',
+    cost: [F, C, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'This attack does 40 damage for each Steven\'s Resolve card in your discard pile.'
+  }];
 
   public set: string = 'CES';
   public setNumber: string = '79';

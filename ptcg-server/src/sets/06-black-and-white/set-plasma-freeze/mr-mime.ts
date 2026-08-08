@@ -7,22 +7,16 @@ import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { PlayerType } from '../../../game/store/actions/play-card-action';
-import { GameMessage } from '../../../game/game-message';
-import { CoinFlipPrompt } from '../../../game/store/prompts/coin-flip-prompt';
+
 import { PutDamageEffect, AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class MrMime extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.PSYCHIC;
-
+  public cardType: CardType = P;
   public hp: number = 70;
-
-  public weakness = [{ type: CardType.PSYCHIC }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: P }];
+  public retreat = [C];
 
   public powers = [{
     name: 'Bench Barrier',
@@ -32,19 +26,15 @@ export class MrMime extends PokemonCard {
 
   public attacks = [{
     name: 'Psy Bolt',
-    cost: [CardType.PSYCHIC, CardType.COLORLESS],
+    cost: [P, C],
     damage: 20,
     text: 'Flip a coin. If heads, the Defending Pokemon is now Paralyzed.'
   }];
 
   public set: string = 'PLF';
-
   public name: string = 'Mr. Mime';
-
   public fullName: string = 'Mr. Mime PLF';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '47';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -52,9 +42,7 @@ export class MrMime extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
           const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED]);
           store.reduceEffect(state, specialConditionEffect);

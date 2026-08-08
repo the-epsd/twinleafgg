@@ -22,8 +22,7 @@ export class Muk extends PokemonCard {
     cost: [P, C, C],
     damage: 60,
     text: 'If the Defending Pokémon is Poisoned, heal 60 damage from this Pokémon.'
-  },
-  {
+  }, {
     name: 'Sludge Crash',
     cost: [P, P, C, C],
     damage: 80,

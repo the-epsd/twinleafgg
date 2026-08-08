@@ -22,8 +22,7 @@ export class Accelgor extends PokemonCard {
     cost: [G],
     damage: 20,
     text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokémon.'
-  },
-  {
+  }, {
     name: 'Deck and Cover',
     cost: [C, C],
     damage: 50,

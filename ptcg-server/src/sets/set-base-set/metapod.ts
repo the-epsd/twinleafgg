@@ -1,50 +1,35 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage } from '../../game/store/card/card-types';
 import { Attack } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { StateUtils } from '../../game';
-import {
-  ADD_PARALYZED_TO_PLAYER_ACTIVE,
-  AFTER_ATTACK,
-  COIN_FLIP_PROMPT,
-  FLIP_COIN_TO_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN,
-  WAS_ATTACK_USED,
-} from '../../game/store/prefabs/prefabs';
+import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, FLIP_COIN_TO_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Metapod extends PokemonCard {
-
   public name = 'Metapod';
-
   public setNumber = '54';
-
   public set = 'BS';
-
   public fullName = 'Metapod BS';
 
-  public cardType = CardType.GRASS;
-
+  public cardType = G;
   public stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Caterpie';
-
   public hp = 70;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public retreat = [C, C];
 
   public attacks: Attack[] = [
     {
       name: 'Stiffen',
-      cost: [CardType.COLORLESS, CardType.COLORLESS],
+      cost: [C, C],
       text: 'Flip a coin. If heads, prevent all damage done to Metapod during your opponent\'s next turn. (Any other effects of attacks still happen.)',
       damage: 0
     },
     {
       name: 'Stun Spore',
-      cost: [CardType.GRASS, CardType.GRASS],
+      cost: [G, G],
       damage: 20,
       text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
     }

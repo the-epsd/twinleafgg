@@ -16,20 +16,17 @@ export class Vigoroth extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Scratch',
-      cost: [C],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Reckless Charge',
-      cost: [C, C, C],
-      damage: 70,
-      text: 'Flip a coin. If tails, this Pok\u00e9mon does 20 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Scratch',
+    cost: [C],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Reckless Charge',
+    cost: [C, C, C],
+    damage: 70,
+    text: 'Flip a coin. If tails, this Pok\u00e9mon does 20 damage to itself.'
+  }];
 
   public set: string = 'FFI';
   public setNumber: string = '82';

@@ -15,26 +15,24 @@ export class Elgyem2 extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Reflect',
-      cost: [C],
-      damage: 0,
-      text: 'During your opponent\'s next turn, any damage done to this Pokémon by attacks is reduced by 20 (after applying Weakness and Resistance).'
-    },
-    {
-      name: 'Smash Punch',
-      cost: [P, C],
-      damage: 30,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Reflect',
+    cost: [C],
+    damage: 0,
+    text: 'During your opponent\'s next turn, any damage done to this Pokémon by attacks is reduced by 20 (after applying Weakness and Resistance).'
+  }, {
+    name: 'Smash Punch',
+    cost: [P, C],
+    damage: 30,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '69';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Elgyem';
   public fullName: string = 'Elgyem PLS 69';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Reflect
     // Ref: set-team-up/pawniard.ts (Rigidify - damage reduction marker)

@@ -9,24 +9,15 @@ import { ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt } from '../../../game
 import { IS_ABILITY_BLOCKED, MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
-
 export class RadiantJirachi extends PokemonCard {
-
   public tags = [CardTag.RADIANT];
-
   public regulationMark = 'F';
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.METAL;
-
+  public cardType: CardType = M;
   public hp: number = 90;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public resistance = [{ type: CardType.GRASS, value: -30 }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public resistance = [{ type: G, value: -30 }];
+  public retreat = [C];
 
   public powers = [{
     name: 'Entrusted Wishes',
@@ -36,19 +27,15 @@ export class RadiantJirachi extends PokemonCard {
 
   public attacks = [{
     name: 'Astral Misfortune',
-    cost: [CardType.COLORLESS, CardType.COLORLESS],
+    cost: [C, C],
     damage: 0,
     text: 'Flip 2 coins. If both of them are heads, your opponent\'s Active Pokémon is Knocked Out.'
   }];
 
   public set: string = 'SIT';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '120';
-
   public name: string = 'Radiant Jirachi';
-
   public fullName: string = 'Radiant Jirachi SIT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -16,8 +16,7 @@ export class ShiningVolcanion extends PokemonCard {
     cost: [W, W, W],
     damage: 0,
     text: 'This attack does 50 damage to 2 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-  },
-  {
+  }, {
     name: 'Quad Smash',
     cost: [C, C, C, C],
     damage: 50,

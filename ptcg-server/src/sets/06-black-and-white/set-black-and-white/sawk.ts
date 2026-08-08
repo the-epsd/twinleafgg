@@ -12,21 +12,18 @@ export class Sawk extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Low Kick',
-      cost: [F],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Double Kick',
-      cost: [F, C, C],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 50 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Low Kick',
+    cost: [F],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Double Kick',
+    cost: [F, C, C],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 50 damage times the number of heads.'
+  }];
 
   public set: string = 'BLW';
   public cardImage: string = 'assets/cardback.png';

@@ -20,8 +20,7 @@ export class AlolanSandslash extends PokemonCard {
     cost: [],
     damage: 30,
     text: 'Flip a coin. If heads, prevent all damage done to this Pokémon by attacks during your opponent\'s next turn.'
-  },
-  {
+  }, {
     name: 'Reinforced Needle',
     cost: [M, C, C],
     damage: 60,

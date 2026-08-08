@@ -16,20 +16,17 @@ export class Spritzee extends PokemonCard {
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Fairy Wind',
-      cost: [Y],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Fickle Attack',
-      cost: [Y, C],
-      damage: 30,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fairy Wind',
+    cost: [Y],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Fickle Attack',
+    cost: [Y, C],
+    damage: 30,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'FLF';
   public setNumber: string = '67';

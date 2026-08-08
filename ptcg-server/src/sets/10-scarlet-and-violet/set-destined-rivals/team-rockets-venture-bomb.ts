@@ -10,9 +10,13 @@ import { ChoosePokemonPrompt, Player, PlayerType, SlotType } from '../../../game
 
 export class TeamRocketsVentureBomb extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
+
   public tags = [CardTag.TEAM_ROCKET];
+
   public set: string = 'DRI';
+
   public regulationMark = 'I';
+
   public name: string = 'Team Rocket\'s Venture Bomb';
   public fullName: string = 'Team Rocket\'s Venture Bomb DRI';
   public cardImage: string = 'assets/cardback.png';
@@ -22,7 +26,6 @@ export class TeamRocketsVentureBomb extends TrainerCard {
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {    return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

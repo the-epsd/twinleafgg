@@ -14,14 +14,12 @@ export class Ralts2 extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Mind Bend',
-      cost: [P, C],
-      damage: 10,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Mind Bend',
+    cost: [P, C],
+    damage: 10,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
+  }];
 
   public set: string = 'LTR';
   public setNumber: string = '59';

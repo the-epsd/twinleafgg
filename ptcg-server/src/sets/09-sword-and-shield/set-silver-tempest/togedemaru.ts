@@ -16,16 +16,15 @@ export class Togedemaru extends PokemonCard {
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Toge Dash',
-      cost: [L],
-      damage: 10,
-      text: 'Flip a coin. If heads, during your opponent\'s next turn, if this Pokémon is Knocked Out, your opponent can\'t take any Prize cards for it.'
-    }
-  ];
+  public attacks = [{
+    name: 'Toge Dash',
+    cost: [L],
+    damage: 10,
+    text: 'Flip a coin. If heads, during your opponent\'s next turn, if this Pokémon is Knocked Out, your opponent can\'t take any Prize cards for it.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'SIT';
   public setNumber: string = '127';
   public cardImage: string = 'assets/cardback.png';

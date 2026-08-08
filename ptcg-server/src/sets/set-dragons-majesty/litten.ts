@@ -15,15 +15,13 @@ export class Litten extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Fury Swipes',
-      cost: [R],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 10 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fury Swipes',
+    cost: [R],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 10 damage for each heads.'
+  }];
 
   public set: string = 'DRM';
   public setNumber: string = '12';

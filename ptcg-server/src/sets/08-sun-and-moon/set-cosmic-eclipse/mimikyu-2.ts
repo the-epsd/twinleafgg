@@ -27,14 +27,12 @@ export class Mimikyu2 extends PokemonCard {
     text: 'Pokémon-GX that have any damage counters on them (both yours and your opponent\'s) have no Abilities.'
   }];
 
-  public attacks = [
-    {
-      name: 'Tail Trickery',
-      cost: [C, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tail Trickery',
+    cost: [C, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Confused.'
+  }];
 
   public set: string = 'CEC';
   public setNumber: string = '97';

@@ -12,20 +12,17 @@ export class Pinsir extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Power Pinch',
-      cost: [C, C],
-      damage: 0,
-      text: 'Flip 2 coins. For each heads, discard an Energy attached to the Defending Pokémon.'
-    },
-    {
-      name: 'Grip and Squeeze',
-      cost: [G, G, C],
-      damage: 70,
-      text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
-    }
-  ];
+  public attacks = [{
+    name: 'Power Pinch',
+    cost: [C, C],
+    damage: 0,
+    text: 'Flip 2 coins. For each heads, discard an Energy attached to the Defending Pokémon.'
+  }, {
+    name: 'Grip and Squeeze',
+    cost: [G, G, C],
+    damage: 70,
+    text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
+  }];
 
   public set: string = 'NXD';
   public setNumber: string = '1';

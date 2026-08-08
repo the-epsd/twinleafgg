@@ -25,14 +25,12 @@ export class Aggron extends PokemonCard {
     text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon, you may discard the top 3 cards of your opponent\'s deck.'
   }];
 
-  public attacks = [
-    {
-      name: 'Giga Horn',
-      cost: [M, M, C],
-      damage: 90,
-      text: 'Flip 2 coins. If both of them are tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Giga Horn',
+    cost: [M, M, C],
+    damage: 90,
+    text: 'Flip 2 coins. If both of them are tails, this attack does nothing.'
+  }];
 
   public set: string = 'DRX';
   public setNumber: string = '80';

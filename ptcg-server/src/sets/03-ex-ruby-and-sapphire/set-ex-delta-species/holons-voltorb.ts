@@ -34,13 +34,19 @@ export class HolonsVoltorb extends PokemonCard implements EnergyCard {
   public name: string = 'Holon\'s Voltorb';
   public fullName: string = 'Holon\'s Voltorb DS';
 
-  public provides: CardType[] = [CardType.COLORLESS];
+  public provides: CardType[] = [C];
+
   public energyType = EnergyType.SPECIAL;
   // EnergyCard interface properties
+
   public text: string = '';
+
   public isBlocked = false;
+
   public blendedEnergies: CardType[] = [];
+
   public blendedEnergyCount = 1;
+
   public energyEffect: any = undefined;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -89,11 +95,11 @@ export class HolonsVoltorb extends PokemonCard implements EnergyCard {
 
     // Thundershock
     if (AFTER_ATTACK(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, (result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {
           ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
         }
-      }));
+      });
     }
 
     return state;

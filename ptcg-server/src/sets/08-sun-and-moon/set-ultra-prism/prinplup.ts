@@ -15,20 +15,17 @@ export class Prinplup extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Bubble Beam',
-      cost: [W],
-      damage: 20,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Wave Splash',
-      cost: [W, C],
-      damage: 40,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Bubble Beam',
+    cost: [W],
+    damage: 20,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Wave Splash',
+    cost: [W, C],
+    damage: 40,
+    text: ''
+  }];
 
   public set: string = 'UPR';
   public setNumber: string = '33';

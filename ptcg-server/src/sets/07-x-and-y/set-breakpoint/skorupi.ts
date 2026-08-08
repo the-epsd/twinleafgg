@@ -15,15 +15,13 @@ export class Skorupi extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Pin Missile',
-      cost: [P, C],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 10 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Pin Missile',
+    cost: [P, C],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 10 damage times the number of heads.'
+  }];
 
   public set: string = 'BKP';
   public setNumber: string = '53';

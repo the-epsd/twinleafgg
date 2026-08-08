@@ -1,49 +1,37 @@
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, CoinFlipPrompt, ChooseEnergyPrompt, Card } from '../../../game';
+import { StoreLike, State, ChooseEnergyPrompt, Card } from '../../../game';
 
 import { Effect } from '../../../game/store/effects/effect';
 import { GameMessage } from '../../../game/game-message';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class ZekromEx extends PokemonCard {
-
   public tags = [CardTag.POKEMON_EX];
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.LIGHTNING;
-
+  public cardType: CardType = L;
   public hp: number = 180;
+  public weakness = [{ type: F }];
+  public retreat = [C, C, C];
 
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
-
-  public attacks = [
-    {
-      name: 'Glinting Claw',
-      cost: [CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS],
-      damage: 50,
-      text: 'Flip a coin. If heads, this attack does 30 more damage.'
-    }, {
-      name: 'Strong Volt',
-      cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS],
-      damage: 150,
-      text: 'Discard 2 Energy attached to this Pokemon.'
-    },
-  ];
+  public attacks = [{
+    name: 'Glinting Claw',
+    cost: [L, C, C],
+    damage: 50,
+    text: 'Flip a coin. If heads, this attack does 30 more damage.'
+  }, {
+    name: 'Strong Volt',
+    cost: [L, L, C, C],
+    damage: 150,
+    text: 'Discard 2 Energy attached to this Pokemon.'
+  }];
 
   public set: string = 'NXD';
-
   public name: string = 'Zekrom-EX';
-
   public fullName: string = 'Zekrom EX NXD';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '51';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -51,9 +39,7 @@ export class ZekromEx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
           effect.damage += 30;
         }

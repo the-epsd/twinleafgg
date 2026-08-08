@@ -17,20 +17,17 @@ export class Altaria extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Draco Melody',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, search your deck for a Dragon Pokémon and put it onto your Bench. Then, shuffle your deck.'
-    },
-    {
-      name: 'Cotton Guard',
-      cost: [C],
-      damage: 30,
-      text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
-    }
-  ];
+  public attacks = [{
+    name: 'Draco Melody',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, search your deck for a Dragon Pokémon and put it onto your Bench. Then, shuffle your deck.'
+  }, {
+    name: 'Cotton Guard',
+    cost: [C],
+    damage: 30,
+    text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
+  }];
 
   public set: string = 'CIN';
   public setNumber: string = '80';

@@ -4,24 +4,19 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect, TrainerToDeckEffect } from '../../../game/store/effects/play-card-effects';
-import { StateUtils, GameError, GameMessage, CoinFlipPrompt, ChooseCardsPrompt, Card, CardList, OrderCardsPrompt, ShowCardsPrompt } from '../../../game';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { StateUtils, GameError, GameMessage, ChooseCardsPrompt, Card, CardList, OrderCardsPrompt, ShowCardsPrompt } from '../../../game';
+import { MOVE_CARDS, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 import { MoveCardsEffect } from '../../../game/store/effects/game-effects';
 
 export class Cyllene extends TrainerCard {
-
   public regulationMark = 'F';
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'ASR';
-
   public setNumber: string = '138';
-
   public cardImage: string = 'assets/cardback.png';
-
   public name: string = 'Cyllene';
-
   public fullName: string = 'Cyllene ASR';
 
   public text: string =
@@ -50,10 +45,7 @@ export class Cyllene extends TrainerCard {
       effect.preventDefault = true;
 
       let heads: number = 0;
-      store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, results => {
         results.forEach(r => { heads += r ? 1 : 0; });
 
         if (heads === 0) {

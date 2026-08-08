@@ -18,21 +18,18 @@ export class TogekissEx extends PokemonCard {
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Mighty Wind',
-      cost: [Y],
-      damage: 20,
-      text: 'You may attach an Energy card from your hand to 1 of your Benched Pokémon.'
-    },
-    {
-      name: 'Hurricane Wing',
-      cost: [Y, C, C, C],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 50 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Mighty Wind',
+    cost: [Y],
+    damage: 20,
+    text: 'You may attach an Energy card from your hand to 1 of your Benched Pokémon.'
+  }, {
+    name: 'Hurricane Wing',
+    cost: [Y, C, C, C],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 50 damage times the number of heads.'
+  }];
 
   public set: string = 'BKP';
   public setNumber: string = '83';

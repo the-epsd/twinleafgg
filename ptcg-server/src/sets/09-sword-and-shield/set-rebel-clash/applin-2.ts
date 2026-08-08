@@ -19,6 +19,7 @@ export class Applin2 extends PokemonCard {
   }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'RCL';
   public setNumber: string = '21';
   public cardImage: string = 'assets/cardback.png';

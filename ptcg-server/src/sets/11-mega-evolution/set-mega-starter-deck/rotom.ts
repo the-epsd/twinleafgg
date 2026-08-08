@@ -5,7 +5,6 @@ import { Effect } from '../../../game/store/effects/effect';
 import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Rotom extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = L;
   public hp: number = 80;
@@ -20,6 +19,7 @@ export class Rotom extends PokemonCard {
   }];
 
   public regulationMark = 'J';
+
   public set: string = 'MEE';
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';

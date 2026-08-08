@@ -17,20 +17,17 @@ export class Trubbish extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Pile Up',
-      cost: [P],
-      damage: 0,
-      text: 'Flip a coin. If heads, search your deck for a Pokémon Tool card, reveal it, and put it into your hand. Shuffle your deck afterward.'
-    },
-    {
-      name: 'Sludge Toss',
-      cost: [C, C],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Pile Up',
+    cost: [P],
+    damage: 0,
+    text: 'Flip a coin. If heads, search your deck for a Pokémon Tool card, reveal it, and put it into your hand. Shuffle your deck afterward.'
+  }, {
+    name: 'Sludge Toss',
+    cost: [C, C],
+    damage: 20,
+    text: ''
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '63';

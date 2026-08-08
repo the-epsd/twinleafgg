@@ -17,20 +17,17 @@ export class Chansey extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Bind Wound',
-      cost: [C, C],
-      damage: 0,
-      text: 'Flip a coin. If heads, heal 30 damage from 1 of your Pokémon.'
-    },
-    {
-      name: 'Hammer In',
-      cost: [C, C, C, C],
-      damage: 80,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Bind Wound',
+    cost: [C, C],
+    damage: 0,
+    text: 'Flip a coin. If heads, heal 30 damage from 1 of your Pokémon.'
+  }, {
+    name: 'Hammer In',
+    cost: [C, C, C, C],
+    damage: 80,
+    text: ''
+  }];
 
   public set: string = 'GRI';
   public setNumber: string = '101';

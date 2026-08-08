@@ -5,7 +5,9 @@ import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
-import { CoinFlipPrompt, GameMessage, Player } from '../../../game';
+import { Player } from '../../../game';
+
+import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Drasna, effect: TrainerEffect): IterableIterator<State> {
@@ -23,9 +25,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   // Flip coin and draw cards based on the result.
-  yield store.prompt(state, [
-    new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-  ], result => {
+  yield COIN_FLIP_PROMPT(store, state, player, result => {
     player.deck.moveTo(player.hand, result ? 8 : 3);
     next();
   });
@@ -34,19 +34,15 @@ function* playCard(next: Function, store: StoreLike, state: State,
 }
 
 export class Drasna extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'SSP';
-
   public setNumber = '173';
-
   public cardImage = 'assets/cardback.png';
 
   public regulationMark: string = 'H';
 
   public name: string = 'Drasna';
-
   public fullName: string = 'Drasna SSP';
 
   public text: string =
@@ -58,7 +54,6 @@ export class Drasna extends TrainerCard {
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

@@ -16,23 +16,21 @@ export class Heracross extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Horn Attack',
-      cost: [C],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Single-Horn Throw',
-      cost: [G, C],
-      damage: 40,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. If both of them are heads, this attack does 160 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Horn Attack',
+    cost: [C],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Single-Horn Throw',
+    cost: [G, C],
+    damage: 40,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. If both of them are heads, this attack does 160 more damage.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'CRE';
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';

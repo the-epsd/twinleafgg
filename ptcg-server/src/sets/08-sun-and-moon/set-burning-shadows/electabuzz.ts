@@ -22,20 +22,17 @@ export class Electabuzz extends PokemonCard {
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Punch',
-      cost: [C, C],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Thunder Shock',
-      cost: [L, C, C],
-      damage: 40,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Punch',
+    cost: [C, C],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Thunder Shock',
+    cost: [L, C, C],
+    damage: 40,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'BUS';
   public setNumber: string = '42';

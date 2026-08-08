@@ -17,8 +17,7 @@ export class TeamAquasCacnea extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-  },
-  {
+  }, {
     name: 'Pin Missile',
     cost: [C, C],
     damage: 10,

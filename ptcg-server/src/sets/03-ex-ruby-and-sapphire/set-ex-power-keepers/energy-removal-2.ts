@@ -5,10 +5,9 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import {
-  PlayerType, SlotType, CoinFlipPrompt, StateUtils, CardTarget,
-  GameError, GameMessage, PokemonCardList, ChooseCardsPrompt, Card
-} from '../../../game';
+import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+
+import { PlayerType, SlotType, StateUtils, CardTarget, GameError, GameMessage, PokemonCardList, ChooseCardsPrompt, Card } from '../../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -32,7 +31,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   effect.preventDefault = true;
 
   let coinResult: boolean = false;
-  yield store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), result => {
+  yield COIN_FLIP_PROMPT(store, state, player, result => {
     coinResult = result;
     next();
   });
@@ -74,18 +73,18 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   target.moveCardsTo(cards, opponent.discard);
 
-
   return state;
 }
 
-
 export class EnergyRemoval2 extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
+
   public set: string = 'PK';
   public name: string = 'Energy Removal 2';
   public fullName: string = 'Energy Removal 2 PK';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '74';
+
   public text = 'Flip a coin. If heads, choose 1 Energy card attached to 1 of your opponent\'s Pokémon and discard it.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

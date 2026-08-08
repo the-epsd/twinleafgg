@@ -17,23 +17,21 @@ export class GalarianPerrserker extends PokemonCard {
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Slash',
-      cost: [M, C],
-      damage: 50,
-      text: ''
-    },
-    {
-      name: 'Claw Dagger',
-      cost: [M, M, C],
-      damage: 80,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 80 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Slash',
+    cost: [M, C],
+    damage: 50,
+    text: ''
+  }, {
+    name: 'Claw Dagger',
+    cost: [M, M, C],
+    damage: 80,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 80 damage for each heads.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'RCL';
   public setNumber: string = '127';
   public cardImage: string = 'assets/cardback.png';

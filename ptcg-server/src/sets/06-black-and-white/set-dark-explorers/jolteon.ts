@@ -12,22 +12,19 @@ export class Jolteon extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Electrigun',
-      cost: [C],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'You may discard a [L] Energy attached to this Pokémon. If you do, this attack does 40 more damage.'
-    },
-    {
-      name: 'Pin Missile',
-      cost: [L, C, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 40 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Electrigun',
+    cost: [C],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'You may discard a [L] Energy attached to this Pokémon. If you do, this attack does 40 more damage.'
+  }, {
+    name: 'Pin Missile',
+    cost: [L, C, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 40 damage times the number of heads.'
+  }];
 
   public set: string = 'DEX';
   public setNumber: string = '37';

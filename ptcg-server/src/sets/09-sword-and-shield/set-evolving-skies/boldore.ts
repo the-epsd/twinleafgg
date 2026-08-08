@@ -22,8 +22,7 @@ export class Boldore extends PokemonCard {
     cost: [F],
     damage: 0,
     text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage from and effects of attacks done to this Pokémon.'
-  },
-  {
+  }, {
     name: 'Boulder Crush',
     cost: [F, C, C],
     damage: 60,
@@ -31,6 +30,7 @@ export class Boldore extends PokemonCard {
   }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'EVS';
   public setNumber: string = '87';
   public cardImage: string = 'assets/cardback.png';

@@ -12,22 +12,19 @@ export class Audino extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Do the Wave',
-      cost: [C, C],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Does 20 damage times the number of your Benched Pokémon.'
-    },
-    {
-      name: 'Hip Bump',
-      cost: [C, C, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 30 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Do the Wave',
+    cost: [C, C],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Does 20 damage times the number of your Benched Pokémon.'
+  }, {
+    name: 'Hip Bump',
+    cost: [C, C, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 30 damage times the number of heads.'
+  }];
 
   public set: string = 'BLW';
   public cardImage: string = 'assets/cardback.png';

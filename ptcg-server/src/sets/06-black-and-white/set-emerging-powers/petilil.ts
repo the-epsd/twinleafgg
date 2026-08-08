@@ -11,20 +11,17 @@ export class Petilil extends PokemonCard {
   public resistance = [{ type: W, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Stun Spore',
-      cost: [G],
-      damage: 0,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Cut',
-      cost: [G, C],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Stun Spore',
+    cost: [G],
+    damage: 0,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Cut',
+    cost: [G, C],
+    damage: 20,
+    text: ''
+  }];
 
   public set: string = 'EPO';
   public cardImage: string = 'assets/cardback.png';

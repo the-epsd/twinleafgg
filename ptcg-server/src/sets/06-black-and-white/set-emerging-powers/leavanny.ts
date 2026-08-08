@@ -15,21 +15,18 @@ export class Leavanny extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Nurturing',
-      cost: [C],
-      damage: 0,
-      text: 'Choose 1 of your Pokémon. Search your deck for a card that evolves from that Pokémon and put it onto that Pokémon. (This counts as evolving that Pokémon.) Shuffle your deck afterward.'
-    },
-    {
-      name: 'X-Scissor',
-      cost: [G, C],
-      damage: 30,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 50 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Nurturing',
+    cost: [C],
+    damage: 0,
+    text: 'Choose 1 of your Pokémon. Search your deck for a card that evolves from that Pokémon and put it onto that Pokémon. (This counts as evolving that Pokémon.) Shuffle your deck afterward.'
+  }, {
+    name: 'X-Scissor',
+    cost: [G, C],
+    damage: 30,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 50 more damage.'
+  }];
 
   public set: string = 'EPO';
   public cardImage: string = 'assets/cardback.png';

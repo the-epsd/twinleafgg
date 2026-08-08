@@ -18,20 +18,17 @@ export class Luvdisc extends PokemonCard {
 
   public readonly BLOCK_DRAW_MARKER = 'LUVDISC_BLOCK_DRAW_MARKER';
 
-  public attacks = [
-    {
-      name: 'Heart Wink',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent can\'t draw a card at the beginning of his or her next turn.'
-    },
-    {
-      name: 'Spike Draw',
-      cost: [W, C],
-      damage: 20,
-      text: 'Draw a card.'
-    }
-  ];
+  public attacks = [{
+    name: 'Heart Wink',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent can\'t draw a card at the beginning of his or her next turn.'
+  }, {
+    name: 'Spike Draw',
+    cost: [W, C],
+    damage: 20,
+    text: 'Draw a card.'
+  }];
 
   public set: string = 'FLF';
   public setNumber: string = '27';

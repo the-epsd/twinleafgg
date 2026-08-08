@@ -16,21 +16,18 @@ export class Tentacruel extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Poison Sting',
-      cost: [C, C],
-      damage: 30,
-      text: 'Your opponent\'s Active Pokémon is now Poisoned.'
-    },
-    {
-      name: 'Seething Tentacles',
-      cost: [C, C, C],
-      damage: 40,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 40 more damage. If tails, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Poison Sting',
+    cost: [C, C],
+    damage: 30,
+    text: 'Your opponent\'s Active Pokémon is now Poisoned.'
+  }, {
+    name: 'Seething Tentacles',
+    cost: [C, C, C],
+    damage: 40,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 40 more damage. If tails, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'GRI';
   public setNumber: string = '24';

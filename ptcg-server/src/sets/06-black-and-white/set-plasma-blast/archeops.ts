@@ -12,21 +12,18 @@ export class Archeops extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Acrobatics',
-      cost: [F],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
-    },
-    {
-      name: 'Swift Dive',
-      cost: [F, F],
-      damage: 100,
-      text: 'If this Pok\u00e9mon\'s remaining HP is 50 or less, this attack\'s base damage is 50.'
-    }
-  ];
+  public attacks = [{
+    name: 'Acrobatics',
+    cost: [F],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
+  }, {
+    name: 'Swift Dive',
+    cost: [F, F],
+    damage: 100,
+    text: 'If this Pok\u00e9mon\'s remaining HP is 50 or less, this attack\'s base damage is 50.'
+  }];
 
   public set: string = 'PLB';
   public setNumber: string = '54';

@@ -18,8 +18,7 @@ export class Krokorok extends PokemonCard {
     cost: [C],
     damage: 20,
     text: ''
-  },
-  {
+  }, {
     name: 'Crunch',
     cost: [F, C, C],
     damage: 40,

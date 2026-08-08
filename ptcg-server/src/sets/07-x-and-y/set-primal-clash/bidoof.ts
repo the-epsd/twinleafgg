@@ -16,8 +16,7 @@ export class Bidoof extends PokemonCard {
     cost: [C],
     damage: 10,
     text: ''
-  },
-  {
+  }, {
     name: 'Scrunch',
     cost: [C, C],
     damage: 0,

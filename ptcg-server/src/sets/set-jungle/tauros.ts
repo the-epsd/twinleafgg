@@ -18,8 +18,7 @@ export class Tauros extends PokemonCard {
     damage: 20,
     damageCalculation: '+',
     text: 'Flip a coin. If heads, this attack does 20 damage plus 10 more damage; if tails, this attack does 20 damage.'
-  },
-  {
+  }, {
     name: 'Rampage',
     cost: [C, C, C],
     damage: 20,

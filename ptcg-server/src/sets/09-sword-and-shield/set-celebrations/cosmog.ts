@@ -20,6 +20,7 @@ export class Cosmog extends PokemonCard {
   }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'CEL';
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';

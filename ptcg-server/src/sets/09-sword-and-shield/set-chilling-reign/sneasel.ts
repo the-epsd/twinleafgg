@@ -1,26 +1,20 @@
-import { PokemonCard, Stage, CardTag, CardType, Card, ChooseCardsPrompt, CoinFlipPrompt, GameMessage, State, StateUtils, StoreLike } from '../../../game';
+import { PokemonCard, Stage, CardTag, Card, ChooseCardsPrompt, GameMessage, State, StateUtils, StoreLike } from '../../../game';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Sneasel extends PokemonCard {
-
   public stage = Stage.BASIC;
-
   public tags = [CardTag.RAPID_STRIKE];
-
-  public cardType = CardType.WATER;
-
+  public cardType = W;
   public hp = 70;
-
-  public weakness = [{ type: CardType.METAL }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: M }];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Cut Down',
-    cost: [CardType.COLORLESS],
+    cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
   }];
@@ -30,11 +24,8 @@ export class Sneasel extends PokemonCard {
   public regulationMark = 'E';
 
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '30';
-
   public name: string = 'Sneasel';
-
   public fullName: string = 'Sneasel CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -43,9 +34,7 @@ export class Sneasel extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
 
           // Defending Pokemon has no energy cards attached

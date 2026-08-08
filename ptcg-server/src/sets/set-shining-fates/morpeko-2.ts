@@ -21,22 +21,20 @@ export class Morpeko2 extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Famished',
-      cost: [C],
-      damage: 0,
-      text: 'Draw a card.'
-    },
-    {
-      name: 'Thunder Shock',
-      cost: [L, C],
-      damage: 40,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Famished',
+    cost: [C],
+    damage: 0,
+    text: 'Draw a card.'
+  }, {
+    name: 'Thunder Shock',
+    cost: [L, C],
+    damage: 40,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'SHF';
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';

@@ -17,21 +17,18 @@ export class Wigglytuff extends PokemonCard {
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Expand',
-      cost: [C, C],
-      damage: 30,
-      text: 'During your opponent\'s next turn, any damage done to this Pokémon by attacks is reduced by 30 (after applying Weakness and Resistance).'
-    },
-    {
-      name: 'Double Slap',
-      cost: [C, C, C],
-      damage: 60,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 60 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Expand',
+    cost: [C, C],
+    damage: 30,
+    text: 'During your opponent\'s next turn, any damage done to this Pokémon by attacks is reduced by 30 (after applying Weakness and Resistance).'
+  }, {
+    name: 'Double Slap',
+    cost: [C, C, C],
+    damage: 60,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 60 damage times the number of heads.'
+  }];
 
   public set: string = 'FCO';
   public setNumber: string = '66';

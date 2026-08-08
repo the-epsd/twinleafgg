@@ -11,14 +11,12 @@ export class Tynamo2 extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Charge Beam',
-      cost: [C],
-      damage: 10,
-      text: 'Flip a coin. If heads, attach an Energy card from your discard pile to this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Charge Beam',
+    cost: [C],
+    damage: 10,
+    text: 'Flip a coin. If heads, attach an Energy card from your discard pile to this Pokémon.'
+  }];
 
   public set: string = 'DEX';
   public setNumber: string = '44';

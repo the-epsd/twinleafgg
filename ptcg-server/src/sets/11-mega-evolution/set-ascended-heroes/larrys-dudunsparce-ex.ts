@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardTag, CardType, StoreLike, State, SuperType, CoinFlipPrompt, GameMessage } from '../../../game';
+import { PokemonCard, Stage, CardTag, CardType, StoreLike, State, SuperType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class LarrysDudunsparceex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -22,6 +22,7 @@ export class LarrysDudunsparceex extends PokemonCard {
   }];
 
   public regulationMark: string = 'I';
+
   public set: string = 'ASC';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '164';
@@ -35,14 +36,9 @@ export class LarrysDudunsparceex extends PokemonCard {
         card.superType === SuperType.ENERGY
       ).length;
 
-      const coinFlips: CoinFlipPrompt[] = [];
-      for (let i = 0; i < energyCount; i++) {
-        coinFlips.push(new CoinFlipPrompt(player.id, GameMessage.FLIP_COIN));
-      }
-
-      if (coinFlips.length > 0) {
-        return store.prompt(state, coinFlips, results => {
-          const headsCount = Array.isArray(results) ? results.filter(r => r === true).length : (results === true ? 1 : 0);
+      if (energyCount > 0) {
+        return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, energyCount, results => {
+          const headsCount = results.filter(r => r === true).length;
           effect.damage = 80 * headsCount;
         });
       } else {

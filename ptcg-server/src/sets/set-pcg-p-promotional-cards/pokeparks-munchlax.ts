@@ -16,8 +16,7 @@ export class PokeParksMunchlax extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, prevent all damage done to this Pokémon during your opponent\'s next turn.'
-  },
-  {
+  }, {
     name: 'Body Slam',
     cost: [C, C, C],
     damage: 30,

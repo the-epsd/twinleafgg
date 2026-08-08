@@ -14,21 +14,18 @@ export class Lilligant extends PokemonCard {
   public resistance = [{ type: W, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Petal Dance',
-      cost: [G],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 30 damage times the number of heads. This Pokémon is now Confused.'
-    },
-    {
-      name: 'Leaf Storm',
-      cost: [G, C],
-      damage: 30,
-      text: 'Heal 20 damage from each of your Grass Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Petal Dance',
+    cost: [G],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 30 damage times the number of heads. This Pokémon is now Confused.'
+  }, {
+    name: 'Leaf Storm',
+    cost: [G, C],
+    damage: 30,
+    text: 'Heal 20 damage from each of your Grass Pokémon.'
+  }];
 
   public set: string = 'BLW';
   public cardImage: string = 'assets/cardback.png';

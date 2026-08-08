@@ -21,26 +21,24 @@ export class Whimsicott extends PokemonCard {
   public resistance = [{ type: W, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Fluffy Tag',
-      cost: [C],
-      damage: 0,
-      text: 'Switch this Pokémon with 1 of your Benched Pokémon. During your next turn, the attacks of that Pokémon do 40 more damage to the Active Pokémon (before applying Weakness and Resistance).'
-    },
-    {
-      name: 'Stun Spore',
-      cost: [G],
-      damage: 20,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fluffy Tag',
+    cost: [C],
+    damage: 0,
+    text: 'Switch this Pokémon with 1 of your Benched Pokémon. During your next turn, the attacks of that Pokémon do 40 more damage to the Active Pokémon (before applying Weakness and Resistance).'
+  }, {
+    name: 'Stun Spore',
+    cost: [G],
+    damage: 20,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Whimsicott';
   public fullName: string = 'Whimsicott BCR';
+
   public readonly FLUFFY_TAG_MARKER = 'FLUFFY_TAG_MARKER';
   public readonly CLEAR_FLUFFY_TAG_MARKER = 'CLEAR_FLUFFY_TAG_MARKER';
 

@@ -15,8 +15,7 @@ export class Hariyama extends PokemonCard {
     cost: [F, C],
     damage: 30,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-  },
-  {
+  }, {
     name: 'Pivot Throw',
     cost: [F, F, C],
     damage: 90,

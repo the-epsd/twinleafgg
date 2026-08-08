@@ -15,16 +15,15 @@ export class GalarianDarumaka extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Reckless Charge',
-      cost: [W],
-      damage: 20,
-      text: 'Flip a coin. If tails, this Pokémon also does 10 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Reckless Charge',
+    cost: [W],
+    damage: 20,
+    text: 'Flip a coin. If tails, this Pokémon also does 10 damage to itself.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'FST';
   public setNumber: string = '71';
   public cardImage: string = 'assets/cardback.png';

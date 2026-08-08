@@ -15,22 +15,20 @@ export class Growlithe extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Odor Sleuth',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, put a card from your discard pile into your hand.'
-    },
-    {
-      name: 'Fire Claws',
-      cost: [R, R, C],
-      damage: 60,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Odor Sleuth',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, put a card from your discard pile into your hand.'
+  }, {
+    name: 'Fire Claws',
+    cost: [R, R, C],
+    damage: 60,
+    text: ''
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'RCL';
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';

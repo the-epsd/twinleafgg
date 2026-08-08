@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, CoinFlipPrompt, GameMessage } from '../../../game';
+import { StoreLike, State } from '../../../game';
 
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class NsKlink extends PokemonCard {
   public tags = [CardTag.NS];
@@ -13,18 +13,18 @@ export class NsKlink extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Double Spin',
-      cost: [C],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 10 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Double Spin',
+    cost: [C],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 10 damage for each heads.'
+  }];
 
   public set: string = 'JTG';
+
   public regulationMark = 'I';
+
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '103';
   public name: string = 'N\'s Klink';
@@ -34,10 +34,7 @@ export class NsKlink extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-      ], results => {
+      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, results => {
         let heads: number = 0;
         results.forEach(r => { heads += r ? 1 : 0; });
         effect.damage += 10 * heads;

@@ -11,6 +11,7 @@ import { PokemonCard } from '../../../game';
 
 export class TeamAquaBall extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
+
   public set: string = 'MA';
   public name: string = 'Team Aqua Ball';
   public fullName: string = 'Team Aqua Ball MA';

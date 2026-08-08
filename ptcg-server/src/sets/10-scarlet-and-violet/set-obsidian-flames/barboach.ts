@@ -21,8 +21,7 @@ export class Barboach extends PokemonCard {
     cost: [F],
     damage: 0,
     text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage from and effects of attacks done to this Pokémon.'
-  },
-  {
+  }, {
     name: 'Mud-Slap',
     cost: [F, C],
     damage: 20,
@@ -30,6 +29,7 @@ export class Barboach extends PokemonCard {
   }];
 
   public regulationMark = 'G';
+
   public set: string = 'OBF';
   public setNumber: string = '108';
   public cardImage: string = 'assets/cardback.png';

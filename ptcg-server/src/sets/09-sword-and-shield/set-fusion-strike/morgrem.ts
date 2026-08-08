@@ -18,22 +18,20 @@ export class Morgrem extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Bite',
-      cost: [D],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Crushing Blow',
-      cost: [D, D],
-      damage: 40,
-      text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Bite',
+    cost: [D],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Crushing Blow',
+    cost: [D, D],
+    damage: 40,
+    text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'FST';
   public setNumber: string = '177';
   public cardImage: string = 'assets/cardback.png';

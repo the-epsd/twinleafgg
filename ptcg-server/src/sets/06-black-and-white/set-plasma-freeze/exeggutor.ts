@@ -1,30 +1,29 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameError, GameMessage, CoinFlipPrompt } from '../../../game';
+import { StoreLike, State, StateUtils, GameError, GameMessage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { PlaySupporterEffect } from '../../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Exeggutor extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Exeggcute';
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType = G;
   public hp: number = 100;
-  public weakness = [{ type: CardType.FIRE }];
-  public resistance = [{ type: CardType.WATER, value: -20 }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public resistance = [{ type: W, value: -20 }];
+  public retreat = [C, C];
 
   public attacks = [{
     name: 'Blockade',
-    cost: [CardType.COLORLESS],
+    cost: [C],
     damage: 10,
     text: 'Your opponent can\'t play any Supporter cards from his or her hand during his or her next turn.'
-  },
-  {
+  }, {
     name: 'Stomp',
-    cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
+    cost: [G, C, C],
     damage: 60,
     text: 'Flip a coin. If heads, this attack does 30 more damage. '
   }];
@@ -49,9 +48,7 @@ export class Exeggutor extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
           effect.damage += 30;
         }

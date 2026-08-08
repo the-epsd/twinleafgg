@@ -17,21 +17,18 @@ export class Electrode extends PokemonCard {
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Lightning Ball',
-      cost: [L],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Electroblast',
-      cost: [L, C, C],
-      damage: 60,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 30 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Lightning Ball',
+    cost: [L],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Electroblast',
+    cost: [L, C, C],
+    damage: 60,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 30 more damage for each heads.'
+  }];
 
   public set: string = 'HIF';
   public setNumber: string = '22';

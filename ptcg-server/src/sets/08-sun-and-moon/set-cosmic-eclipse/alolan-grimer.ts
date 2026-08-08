@@ -15,20 +15,17 @@ export class AlolanGrimer extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Melt',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Nasty Goo',
-      cost: [D, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Melt',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Nasty Goo',
+    cost: [D, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'CEC';
   public setNumber: string = '130';

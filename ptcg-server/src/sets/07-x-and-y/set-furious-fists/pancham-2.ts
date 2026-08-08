@@ -15,15 +15,13 @@ export class Pancham2 extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Comet Punch',
-      cost: [C, C],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 10 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Comet Punch',
+    cost: [C, C],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 10 damage times the number of heads.'
+  }];
 
   public set: string = 'FFI';
   public setNumber: string = '60';

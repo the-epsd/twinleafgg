@@ -18,8 +18,7 @@ export class Magmortar extends PokemonCard {
     cost: [R],
     damage: 0,
     text: 'For each [R] Energy attached to Magmortar, discard the top card from your opponent\'s deck. Then, flip a coin. If tails, discard all [R] Energy attached to Magmortar.'
-  },
-  {
+  }, {
     name: 'Burst Punch',
     cost: [R, R, C],
     damage: 60,

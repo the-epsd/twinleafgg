@@ -19,8 +19,7 @@ export class Riolu extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn.'
-  },
-  {
+  }, {
     name: 'Jab',
     cost: [F],
     damage: 10,

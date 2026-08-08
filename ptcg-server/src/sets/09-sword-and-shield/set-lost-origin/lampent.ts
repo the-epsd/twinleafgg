@@ -17,16 +17,15 @@ export class Lampent extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Flickering Glow',
-      cost: [R],
-      damage: 20,
-      text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Flickering Glow',
+    cost: [R],
+    damage: 20,
+    text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'LOR';
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';

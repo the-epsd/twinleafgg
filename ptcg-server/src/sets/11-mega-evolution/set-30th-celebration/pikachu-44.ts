@@ -9,13 +9,16 @@ export class Pikachu44 extends PokemonCard {
   public cardType: CardType = L;
   public weakness = [{ type: F }];
   public retreat = [C];
+
   public attacks = [{
     name: 'Agility',
     cost: [C],
     damage: 10,
     text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage from and effects of attacks done to this Pokémon.'
   }];
+
   public regulationMark: string = 'J';
+
   public set: string = '30C';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '44';

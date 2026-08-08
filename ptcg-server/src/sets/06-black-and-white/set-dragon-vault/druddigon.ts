@@ -10,21 +10,18 @@ export class Druddigon extends PokemonCard {
   public weakness = [{ type: N }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Tight Jaw',
-      cost: [C, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, the Defending Pok\u00e9mon is now Paralyzed.'
-    },
-    {
-      name: 'Dragon Tail',
-      cost: [R, W, C],
-      damage: 80,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 80 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tight Jaw',
+    cost: [C, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, the Defending Pok\u00e9mon is now Paralyzed.'
+  }, {
+    name: 'Dragon Tail',
+    cost: [R, W, C],
+    damage: 80,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 80 damage times the number of heads.'
+  }];
 
   public set: string = 'DRV';
   public setNumber: string = '17';

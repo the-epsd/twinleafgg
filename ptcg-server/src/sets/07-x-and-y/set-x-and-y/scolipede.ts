@@ -16,21 +16,18 @@ export class Scolipede extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Random Peck',
-      cost: [P],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
-    },
-    {
-      name: 'Poison Ring',
-      cost: [P, C, C, C],
-      damage: 70,
-      text: 'Your opponent\'s Active Pokémon is now Poisoned. That Pokémon can\'t retreat during your opponent\'s next turn.'
-    }
-  ];
+  public attacks = [{
+    name: 'Random Peck',
+    cost: [P],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
+  }, {
+    name: 'Poison Ring',
+    cost: [P, C, C, C],
+    damage: 70,
+    text: 'Your opponent\'s Active Pokémon is now Poisoned. That Pokémon can\'t retreat during your opponent\'s next turn.'
+  }];
 
   public set: string = 'XY';
   public setNumber: string = '53';

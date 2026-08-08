@@ -17,23 +17,21 @@ export class Floette extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Fairy Wind',
-      cost: [P],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Double Spin',
-      cost: [P, C, C],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 50 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fairy Wind',
+    cost: [P],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Double Spin',
+    cost: [P, C, C],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 50 damage for each heads.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'EVS';
   public setNumber: string = '72';
   public cardImage: string = 'assets/cardback.png';

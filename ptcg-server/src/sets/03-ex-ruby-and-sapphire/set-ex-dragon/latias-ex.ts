@@ -23,8 +23,7 @@ export class Latiasex extends PokemonCard {
     cost: [C],
     damage: 10,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Asleep.'
-  },
-  {
+  }, {
     name: 'Mist Ball',
     cost: [R, W, C],
     damage: 100,

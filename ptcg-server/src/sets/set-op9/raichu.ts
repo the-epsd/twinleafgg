@@ -1,57 +1,42 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PokemonCardList, CoinFlipPrompt } from '../../game';
+import { StoreLike, State, StateUtils, PokemonCardList } from '../../game';
 
 import { Effect } from '../../game/store/effects/effect';
-import { GameMessage } from '../../game/game-message';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Raichu extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Pikachu';
-
-  public cardType: CardType = CardType.LIGHTNING;
-
+  public cardType: CardType = L;
   public hp: number = 90;
+  public weakness = [{ type: F, value: 20 }];
+  public resistance = [{ type: M, value: -20 }];
+  public retreat = [C];
 
-  public weakness = [{ type: CardType.FIGHTING, value: 20 }];
-
-  public resistance = [{ type: CardType.METAL, value: -20 }];
-
-  public retreat = [CardType.COLORLESS];
-
-  public attacks = [
-    {
-      name: 'Slam',
-      cost: [CardType.COLORLESS, CardType.COLORLESS],
-      damage: 30,
-      text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
-    },
-    {
-      name: 'High Voltage',
-      cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.LIGHTNING],
-      damage: 60,
-      text: 'If Raichu evolved from Pikachu this turn, this attack\'s base ' +
-        'damage is 100 instead of 60.'
-    }
-  ];
+  public attacks = [{
+    name: 'Slam',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
+  }, {
+    name: 'High Voltage',
+    cost: [L, L, L],
+    damage: 60,
+    text: 'If Raichu evolved from Pikachu this turn, this attack\'s base ' +
+    'damage is 100 instead of 60.'
+  }];
 
   public set: string = 'OP9';
-
   public name: string = 'Raichu';
-
   public fullName: string = 'Raichu OP9';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-      ], results => {
+      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, results => {
         let heads: number = 0;
         results.forEach(r => { heads += r ? 1 : 0; });
         effect.damage = 30 * heads;

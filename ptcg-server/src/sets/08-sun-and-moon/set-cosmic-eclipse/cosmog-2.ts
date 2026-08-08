@@ -22,14 +22,12 @@ export class Cosmog2 extends PokemonCard {
     text: 'Prevent all effects of your opponent\'s attacks, except damage, done to this Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Surprise Attack',
-      cost: [C],
-      damage: 10,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Surprise Attack',
+    cost: [C],
+    damage: 10,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'CEC';
   public setNumber: string = '100';

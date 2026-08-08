@@ -18,8 +18,7 @@ export class Lapras extends PokemonCard {
     cost: [C, C],
     damage: 0,
     text: 'Search your deck for a Supporter card, show it to your opponent, and put it into your hand. Shuffle your deck afterward.'
-  },
-  {
+  }, {
     name: 'Hypnoblast',
     cost: [W, W, C],
     damage: 30,

@@ -3,11 +3,9 @@ import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { CoinFlipPrompt } from '../../../game/store/prompts/coin-flip-prompt';
-import { GameMessage } from '../../../game/game-message';
-import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
+import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Marill extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -34,10 +32,7 @@ export class Marill extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
+      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, results => {
         let heads: number = 0;
         results.forEach(r => { heads += r ? 1 : 0; });
 

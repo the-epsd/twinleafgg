@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
+
 import { GameMessage } from '../../game/game-message';
 import { DiscardCardsEffect, AbstractAttackEffect } from '../../game/store/effects/attack-effects';
 import { StateUtils } from '../../game/store/state-utils';
@@ -12,7 +12,7 @@ import { Card } from '../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { PlayerType } from '../../game/store/actions/play-card-action';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 function* useWhirlpool(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -26,9 +26,7 @@ function* useWhirlpool(next: Function, store: StoreLike, state: State,
   }
 
   let flipResult = false;
-  yield store.prompt(state, new CoinFlipPrompt(
-    player.id, GameMessage.COIN_FLIP
-  ), result => {
+  yield COIN_FLIP_PROMPT(store, state, player, result => {
     flipResult = result;
     next();
   });
@@ -53,45 +51,36 @@ function* useWhirlpool(next: Function, store: StoreLike, state: State,
   return store.reduceEffect(state, discardEnergy);
 }
 
-
 export class Buizel extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.WATER;
-
+  public cardType: CardType = W;
   public hp: number = 60;
-
   public weakness = [{
-    type: CardType.LIGHTNING,
+    type: L,
     value: 10
   }];
-
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Whirlpool',
-    cost: [CardType.WATER],
+    cost: [W],
     damage: 0,
     text: 'Flip a coin. If heads, discard an Energy attached to ' +
-      'the Defending Pokemon.'
+    'the Defending Pokemon.'
   }, {
     name: 'Super Fast',
-    cost: [CardType.WATER, CardType.WATER],
+    cost: [W, W],
     damage: 30,
     text: 'If you have Pachirisu in play, flip a coin. If heads, prevent all ' +
-      'effects of an attack, including damage, done to Buizel during your ' +
-      'opponent\'s next turn.'
+    'effects of an attack, including damage, done to Buizel during your ' +
+    'opponent\'s next turn.'
   }];
 
   public set: string = 'OP9';
-
   public name: string = 'Buizel';
-
   public fullName: string = 'Buizel OP9';
 
   public readonly CLEAR_SUPER_FAST_MARKER = 'CLEAR_SUPER_FAST_MARKER';
-
   public readonly SUPER_FAST_MARKER = 'SUPER_FAST_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -113,9 +102,7 @@ export class Buizel extends PokemonCard {
 
       if (isPachirisuInPlay) {
         const opponent = StateUtils.getOpponent(state, player);
-        state = store.prompt(state, new CoinFlipPrompt(
-          player.id, GameMessage.COIN_FLIP
-        ), flipResult => {
+        state = COIN_FLIP_PROMPT(store, state, player, flipResult => {
           if (flipResult) {
             player.active.marker.addMarker(this.SUPER_FAST_MARKER, this);
             opponent.marker.addMarker(this.CLEAR_SUPER_FAST_MARKER, this);

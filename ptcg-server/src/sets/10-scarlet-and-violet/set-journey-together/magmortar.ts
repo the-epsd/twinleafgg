@@ -1,19 +1,19 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card-types';
-import { StoreLike, State, PowerType, GameMessage, PlayerType, StateUtils, CoinFlipPrompt } from '../../../game';
+import { StoreLike, State, PowerType, PlayerType, StateUtils } from '../../../game';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { BetweenTurnsEffect } from '../../../game/store/effects/game-phase-effects';
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Magmortar extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Magmar';
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType = R;
   public hp: number = 130;
-  public weakness = [{ type: CardType.WATER }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: W }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Magma Surge',
@@ -21,17 +21,17 @@ export class Magmortar extends PokemonCard {
     text: 'During Pokémon Checkup, put 3 more damage counters on your opponent\'s Burned Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Searing Flame',
-      cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS],
-      damage: 90,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Burned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Searing Flame',
+    cost: [R, R, C],
+    damage: 90,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Burned.'
+  }];
 
   public set: string = 'JTG';
+
   public regulationMark = 'I';
+
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '21';
   public name: string = 'Magmortar';
@@ -79,9 +79,7 @@ export class Magmortar extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
           const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.BURNED]);
           return store.reduceEffect(state, specialCondition);

@@ -13,21 +13,18 @@ export class Scolipede extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Megahorn',
-      cost: [P, C, C],
-      damage: 70,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    },
-    {
-      name: 'Venoshock',
-      cost: [P, P, C, C],
-      damage: 50,
-      damageCalculation: '+',
-      text: 'If the Defending Pokémon is Poisoned, this attack does 60 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Megahorn',
+    cost: [P, C, C],
+    damage: 70,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }, {
+    name: 'Venoshock',
+    cost: [P, P, C, C],
+    damage: 50,
+    damageCalculation: '+',
+    text: 'If the Defending Pokémon is Poisoned, this attack does 60 more damage.'
+  }];
 
   public set: string = 'BLW';
   public cardImage: string = 'assets/cardback.png';

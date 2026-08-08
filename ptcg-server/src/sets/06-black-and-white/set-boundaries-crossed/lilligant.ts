@@ -17,21 +17,18 @@ export class Lilligant extends PokemonCard {
   public resistance = [{ type: W, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Return',
-      cost: [C],
-      damage: 20,
-      text: 'Draw cards until you have 6 cards in your hand.'
-    },
-    {
-      name: 'Magical Leaf',
-      cost: [G, C, C],
-      damage: 50,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 30 more damage and heal 30 damage from this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Return',
+    cost: [C],
+    damage: 20,
+    text: 'Draw cards until you have 6 cards in your hand.'
+  }, {
+    name: 'Magical Leaf',
+    cost: [G, C, C],
+    damage: 50,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 30 more damage and heal 30 damage from this Pokémon.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '17';

@@ -19,6 +19,7 @@ export class Fletchling extends PokemonCard {
   }];
 
   public regulationMark: string = 'J';
+
   public set: string = 'M6';
   public setNumber: string = '60';
   public cardImage: string = 'assets/cardback.png';

@@ -16,20 +16,17 @@ export class Pikachu extends PokemonCard {
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Gnaw',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Thunder Jolt',
-      cost: [L, C],
-      damage: 30,
-      text: 'Flip a coin. If tails, this Pokémon does 10 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Gnaw',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Thunder Jolt',
+    cost: [L, C],
+    damage: 30,
+    text: 'Flip a coin. If tails, this Pokémon does 10 damage to itself.'
+  }];
 
   public set: string = 'EVO';
   public setNumber: string = '35';

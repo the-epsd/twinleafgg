@@ -18,20 +18,17 @@ export class Camerupt extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Fire Shard',
-      cost: [R, C, C],
-      damage: 60,
-      text: 'The Defending Pokémon is now Burned. Flip a coin. If heads, the Defending Pokémon is also Paralyzed.'
-    },
-    {
-      name: 'Flamethrower',
-      cost: [R, R, C, C],
-      damage: 80,
-      text: 'Discard an Energy attached to this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fire Shard',
+    cost: [R, C, C],
+    damage: 60,
+    text: 'The Defending Pokémon is now Burned. Flip a coin. If heads, the Defending Pokémon is also Paralyzed.'
+  }, {
+    name: 'Flamethrower',
+    cost: [R, R, C, C],
+    damage: 80,
+    text: 'Discard an Energy attached to this Pokémon.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '22';

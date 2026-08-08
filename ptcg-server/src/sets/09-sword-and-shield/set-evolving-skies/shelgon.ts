@@ -24,6 +24,7 @@ export class Shelgon extends PokemonCard {
   }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'EVS';
   public setNumber: string = '108';
   public cardImage: string = 'assets/cardback.png';

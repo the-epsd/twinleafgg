@@ -19,27 +19,23 @@ export class AlolanRaticateGx extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Chuck Away',
-      cost: [],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Discard up to 2 cards from your hand. This attack does 40 damage for each card you discarded in this way.'
-    },
-    {
-      name: 'Hyper Fang',
-      cost: [D, C, C],
-      damage: 150,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    },
-    {
-      name: 'Item Maniac-GX',
-      cost: [],
-      damage: 0,
-      text: 'Search your deck for up to 6 Item cards, reveal them, and put them into your hand. Then, shuffle your deck. (You can\'t use more than 1 GX attack in a game.)'
-    }
-  ];
+  public attacks = [{
+    name: 'Chuck Away',
+    cost: [],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Discard up to 2 cards from your hand. This attack does 40 damage for each card you discarded in this way.'
+  }, {
+    name: 'Hyper Fang',
+    cost: [D, C, C],
+    damage: 150,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }, {
+    name: 'Item Maniac-GX',
+    cost: [],
+    damage: 0,
+    text: 'Search your deck for up to 6 Item cards, reveal them, and put them into your hand. Then, shuffle your deck. (You can\'t use more than 1 GX attack in a game.)'
+  }];
 
   public set: string = 'CES';
   public setNumber: string = '85';

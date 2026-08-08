@@ -19,8 +19,7 @@ export class TeamAquasChinchou extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
-  },
-  {
+  }, {
     name: 'Wave Splash',
     cost: [L, C],
     damage: 20,

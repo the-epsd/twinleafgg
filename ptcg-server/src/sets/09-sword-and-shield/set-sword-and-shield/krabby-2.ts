@@ -15,16 +15,15 @@ export class Krabby2 extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Super Slice',
-      cost: [C, C],
-      damage: 120,
-      text: 'Flip 2 coins. If either of them is tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Super Slice',
+    cost: [C, C],
+    damage: 120,
+    text: 'Flip 2 coins. If either of them is tails, this attack does nothing.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'SSH';
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';

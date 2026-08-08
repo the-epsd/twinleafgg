@@ -19,8 +19,7 @@ export class Shuppet extends PokemonCard {
     cost: [C],
     damage: 10,
     text: 'Flip a coin. If heads, choose 1 of the Defending Pokémon\'s attacks. That Pokémon can\'t use that attack during your opponent\'s next turn.'
-  },
-  {
+  }, {
     name: 'Haunt',
     cost: [P],
     damage: 0,

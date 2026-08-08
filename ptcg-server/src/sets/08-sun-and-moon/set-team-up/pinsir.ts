@@ -15,20 +15,17 @@ export class Pinsir extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Grip and Squeeze',
-      cost: [C, C],
-      damage: 30,
-      text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
-    },
-    {
-      name: 'Guillotine Hug',
-      cost: [G, C, C],
-      damage: 0,
-      text: 'Flip 2 coins. If both of them are heads, your opponent\'s Active Pokémon is Knocked Out.'
-    }
-  ];
+  public attacks = [{
+    name: 'Grip and Squeeze',
+    cost: [C, C],
+    damage: 30,
+    text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
+  }, {
+    name: 'Guillotine Hug',
+    cost: [G, C, C],
+    damage: 0,
+    text: 'Flip 2 coins. If both of them are heads, your opponent\'s Active Pokémon is Knocked Out.'
+  }];
 
   public set: string = 'TEU';
   public setNumber: string = '9';

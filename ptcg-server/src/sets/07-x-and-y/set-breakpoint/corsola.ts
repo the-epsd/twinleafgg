@@ -15,21 +15,18 @@ export class Corsola extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Spike Cannon',
-      cost: [C, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
-    },
-    {
-      name: 'Power Gem',
-      cost: [C, C, C],
-      damage: 50,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Spike Cannon',
+    cost: [C, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
+  }, {
+    name: 'Power Gem',
+    cost: [C, C, C],
+    damage: 50,
+    text: ''
+  }];
 
   public set: string = 'BKP';
   public setNumber: string = '29';

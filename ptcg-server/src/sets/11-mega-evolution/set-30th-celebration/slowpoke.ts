@@ -21,8 +21,7 @@ export class Slowpoke extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage from and effects of attacks done to this Pokémon.'
-  },
-  {
+  }, {
     name: 'Water Gun',
     cost: [W, C],
     damage: 20,
@@ -30,6 +29,7 @@ export class Slowpoke extends PokemonCard {
   }];
 
   public regulationMark: string = 'J';
+
   public set: string = '30C';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '16';

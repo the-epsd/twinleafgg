@@ -12,21 +12,18 @@ export class Jigglypuff extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Sing',
-      cost: [C],
-      damage: 0,
-      text: 'The Defending Pokémon is now Asleep.'
-    },
-    {
-      name: 'Double Slap',
-      cost: [C, C],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Sing',
+    cost: [C],
+    damage: 0,
+    text: 'The Defending Pokémon is now Asleep.'
+  }, {
+    name: 'Double Slap',
+    cost: [C, C],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
+  }];
 
   public set: string = 'NXD';
   public setNumber: string = '78';

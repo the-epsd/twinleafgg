@@ -15,8 +15,7 @@ export class AlolanGeodude extends PokemonCard {
     cost: [],
     damage: 0,
     text: 'Flip a coin. If heads, prevent all damage done to this Pokémon by attacks during your opponent\'s next turn.'
-  },
-  {
+  }, {
     name: 'Tackle',
     cost: [C, C],
     damage: 20,

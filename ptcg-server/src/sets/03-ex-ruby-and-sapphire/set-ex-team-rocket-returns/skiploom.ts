@@ -2,7 +2,7 @@ import { CardType, PokemonCard, Stage, PowerType, State, StateUtils, StoreLike, 
 import { Effect } from '../../../game/store/effects/effect';
 import { AddSpecialConditionsEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
-import { CoinFlipPrompt, GameMessage } from '../../../game';
+import { GameMessage } from '../../../game';
 import { COIN_FLIP_PROMPT, IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Skiploom extends PokemonCard {
@@ -50,10 +50,7 @@ export class Skiploom extends PokemonCard {
 
       if (effect.damage >= checkHpEffect.hp) {
         // Flip a coin to see if we survive
-        return store.prompt(state, new CoinFlipPrompt(
-          player.id,
-          GameMessage.COIN_FLIP
-        ), result => {
+        return COIN_FLIP_PROMPT(store, state, player, result => {
           if (result === true) {
             // If heads, prevent knockout and set HP to 10
             effect.surviveOnTenHPReason = this.powers[0].name;

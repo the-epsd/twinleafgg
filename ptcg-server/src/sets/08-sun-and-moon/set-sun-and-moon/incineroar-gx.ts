@@ -19,28 +19,24 @@ export class IncineroarGx extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Hustling Strike',
-      cost: [R],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'This attack does 20 more damage for each of your Benched Fire Pokémon.'
-    },
-    {
-      name: 'Tiger Swing',
-      cost: [R, R, C],
-      damage: 80,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 50 more damage for each heads.'
-    },
-    {
-      name: 'Burning Slam-GX',
-      cost: [R, R, C],
-      damage: 200,
-      text: 'Your opponent\'s Active Pokémon is now Burned. (You can\'t use more than 1 GX attack in a game.)'
-    }
-  ];
+  public attacks = [{
+    name: 'Hustling Strike',
+    cost: [R],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'This attack does 20 more damage for each of your Benched Fire Pokémon.'
+  }, {
+    name: 'Tiger Swing',
+    cost: [R, R, C],
+    damage: 80,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 50 more damage for each heads.'
+  }, {
+    name: 'Burning Slam-GX',
+    cost: [R, R, C],
+    damage: 200,
+    text: 'Your opponent\'s Active Pokémon is now Burned. (You can\'t use more than 1 GX attack in a game.)'
+  }];
 
   public set: string = 'SUM';
   public setNumber: string = '27';

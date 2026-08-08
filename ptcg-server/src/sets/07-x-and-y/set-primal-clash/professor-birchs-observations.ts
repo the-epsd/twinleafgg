@@ -4,10 +4,12 @@
 
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { CoinFlipPrompt, GameMessage, StoreLike, State } from '../../../game';
+import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
+
+import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: ProfessorBirchsObservations, effect: TrainerEffect): IterableIterator<State> {
@@ -25,9 +27,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   // Flip coin: heads = draw 7, tails = draw 4
-  yield store.prompt(state, [
-    new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-  ], result => {
+  yield COIN_FLIP_PROMPT(store, state, player, result => {
     player.deck.moveTo(player.hand, result ? 7 : 4);
     next();
   });
@@ -37,11 +37,13 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
 export class ProfessorBirchsObservations extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
+
   public set: string = 'PRC';
   public setNumber: string = '134';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Professor Birch\'s Observations';
   public fullName: string = 'Professor Birch\'s Observations PRC';
+
   public text: string = 'Shuffle your hand into your deck and flip a coin. If heads, draw 7 cards. If tails, draw 4 cards. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

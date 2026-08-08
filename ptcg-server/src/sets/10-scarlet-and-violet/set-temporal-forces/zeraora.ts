@@ -8,30 +8,28 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../../game/store/prefabs/attack-effects';
 
 export class Zeraora extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = L;
   public hp: number = 120;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Shocking Knuckle',
-      cost: [C],
-      damage: 20,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Strong Volt',
-      cost: [L, L, C],
-      damage: 120,
-      text: 'Discard an Energy from this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Shocking Knuckle',
+    cost: [C],
+    damage: 20,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Strong Volt',
+    cost: [L, L, C],
+    damage: 120,
+    text: 'Discard an Energy from this Pokémon.'
+  }];
 
   public set: string = 'TEF';
+
   public regulationMark = 'H';
+
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '57';
   public name: string = 'Zeraora';

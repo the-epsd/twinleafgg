@@ -22,16 +22,15 @@ export class PincurchinV extends PokemonCard {
     text: 'If this Pokémon is in the Active Spot and is damaged by an opponent\'s attack (even if it is Knocked Out), flip 3 coins. For each heads, put 3 damage counters on the Attacking Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Sparking Strike',
-      cost: [L, L, C],
-      damage: 120,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Sparking Strike',
+    cost: [L, L, C],
+    damage: 120,
+    text: ''
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'RCL';
   public setNumber: string = '72';
   public cardImage: string = 'assets/cardback.png';

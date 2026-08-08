@@ -21,8 +21,7 @@ export class Swampertex extends PokemonCard {
     damage: 20,
     damageCalculation: '+',
     text: 'Does 20 damage plus 20 more damage for each basic Energy attached to Swampert ex but not used to pay for this attack\'s Energy cost. You can\'t add more than 80 damage in this way.'
-  },
-  {
+  }, {
     name: 'Crushing Wave',
     cost: [W, C, C],
     damage: 0,

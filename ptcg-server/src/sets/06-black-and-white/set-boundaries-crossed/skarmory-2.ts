@@ -15,20 +15,17 @@ export class Skarmory2 extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Metal Sound',
-      cost: [M],
-      damage: 0,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
-    },
-    {
-      name: 'Swift',
-      cost: [C, C, C],
-      damage: 70,
-      text: 'This attack\'s damage isn\'t affected by Weakness, Resistance, or any other effects on the Defending Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Metal Sound',
+    cost: [M],
+    damage: 0,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
+  }, {
+    name: 'Swift',
+    cost: [C, C, C],
+    damage: 70,
+    text: 'This attack\'s damage isn\'t affected by Weakness, Resistance, or any other effects on the Defending Pokémon.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '96';

@@ -18,20 +18,17 @@ export class GyaradosEx extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Stormy Seas',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin until you get tails. For each heads, search your deck for a [W] Energy card and attach it to this Pokémon. Shuffle your deck afterward.'
-    },
-    {
-      name: 'Splash Burn',
-      cost: [W, W, C, C],
-      damage: 130,
-      text: 'This attack does 10 damage to each of your Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
-  ];
+  public attacks = [{
+    name: 'Stormy Seas',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin until you get tails. For each heads, search your deck for a [W] Energy card and attach it to this Pokémon. Shuffle your deck afterward.'
+  }, {
+    name: 'Splash Burn',
+    cost: [W, W, C, C],
+    damage: 130,
+    text: 'This attack does 10 damage to each of your Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }];
 
   public set: string = 'BKP';
   public setNumber: string = '26';

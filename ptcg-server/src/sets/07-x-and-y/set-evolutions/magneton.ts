@@ -16,20 +16,17 @@ export class Magneton extends PokemonCard {
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Thunder Wave',
-      cost: [L, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pok\u00e9mon is now Paralyzed.'
-    },
-    {
-      name: 'Self-Destruct',
-      cost: [L, C, C],
-      damage: 80,
-      text: 'This Pok\u00e9mon does 80 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Thunder Wave',
+    cost: [L, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pok\u00e9mon is now Paralyzed.'
+  }, {
+    name: 'Self-Destruct',
+    cost: [L, C, C],
+    damage: 80,
+    text: 'This Pok\u00e9mon does 80 damage to itself.'
+  }];
 
   public set: string = 'EVO';
   public setNumber: string = '38';

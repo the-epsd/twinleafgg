@@ -12,7 +12,9 @@ import { COIN_FLIP_PROMPT, SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND } from '../../.
 export class BurnedTower extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '71';
+
   public trainerType = TrainerType.STADIUM;
+
   public set = 'UD';
   public name = 'Burned Tower';
   public fullName = 'Burned Tower UD';

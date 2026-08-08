@@ -19,8 +19,7 @@ export class Rowlet extends PokemonCard {
     cost: [G],
     damage: 0,
     text: 'Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn.'
-  },
-  {
+  }, {
     name: 'Tackle',
     cost: [C, C],
     damage: 30,

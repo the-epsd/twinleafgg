@@ -3,26 +3,22 @@ import { Effect } from '../../../game/store/effects/effect';
 import { COIN_FLIP_PROMPT, MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Onix extends PokemonCard {
-
   public cardType = F;
   public hp = 110;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Dig Deep',
-      cost: [C],
-      damage: 0,
-      text: 'Put an Energy card from your discard pile into your hand.'
-    },
-    {
-      name: 'Tail Smash',
-      cost: [C, C, C],
-      damage: 100,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Dig Deep',
+    cost: [C],
+    damage: 0,
+    text: 'Put an Energy card from your discard pile into your hand.'
+  }, {
+    name: 'Tail Smash',
+    cost: [C, C, C],
+    damage: 100,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set = 'CEC';
   public setNumber = '105';

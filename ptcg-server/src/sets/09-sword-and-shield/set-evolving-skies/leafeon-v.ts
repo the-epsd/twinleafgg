@@ -1,21 +1,15 @@
-import { PokemonCard, Stage, CardType, CardTag, PowerType, StoreLike, State, GameMessage, PlayerType, SlotType, ShuffleDeckPrompt, EnergyType, SuperType, AttachEnergyPrompt, StateUtils, CoinFlipPrompt } from '../../../game';
+import { PokemonCard, Stage, CardType, CardTag, PowerType, StoreLike, State, GameMessage, PlayerType, SlotType, ShuffleDeckPrompt, EnergyType, SuperType, AttachEnergyPrompt, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { SHUFFLE_DECK, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { SHUFFLE_DECK, WAS_ATTACK_USED, WAS_POWER_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class LeafeonV extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.GRASS;
-
+  public cardType: CardType = G;
   public hp: number = 200;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public retreat = [CardType.COLORLESS];
-
+  public weakness = [{ type: R }];
+  public retreat = [C];
   public tags = [CardTag.POKEMON_V];
 
   public powers = [{
@@ -27,7 +21,7 @@ export class LeafeonV extends PokemonCard {
 
   public attacks = [{
     name: 'Leaf Blade',
-    cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
+    cost: [G, C, C],
     damage: 90,
     text: 'Flip a coin. If heads, this attack does 60 more damage.'
   }];
@@ -37,11 +31,8 @@ export class LeafeonV extends PokemonCard {
   public regulationMark = 'E';
 
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '7';
-
   public name: string = 'Leafeon V';
-
   public fullName: string = 'Leafeon V EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -80,9 +71,7 @@ export class LeafeonV extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
           effect.damage += 60;
         }

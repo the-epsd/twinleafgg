@@ -16,21 +16,18 @@ export class Delcatty extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Gather Energy',
-      cost: [C],
-      damage: 30,
-      text: 'Search your deck for a basic Energy card and attach it to 1 of your Pokémon. Shuffle your deck afterward.'
-    },
-    {
-      name: 'Double Slap',
-      cost: [C, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Gather Energy',
+    cost: [C],
+    damage: 30,
+    text: 'Search your deck for a basic Energy card and attach it to 1 of your Pokémon. Shuffle your deck afterward.'
+  }, {
+    name: 'Double Slap',
+    cost: [C, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '114';

@@ -16,8 +16,7 @@ export class Onix extends PokemonCard {
     cost: [C, C],
     damage: 10,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-  },
-  {
+  }, {
     name: 'Rage',
     cost: [F, C, C],
     damage: 10,

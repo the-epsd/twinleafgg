@@ -17,20 +17,17 @@ export class Torracat extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Swagger',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
-    },
-    {
-      name: 'Fire Claws',
-      cost: [R, C],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Swagger',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
+  }, {
+    name: 'Fire Claws',
+    cost: [R, C],
+    damage: 30,
+    text: ''
+  }];
 
   public set: string = 'SLG';
   public setNumber: string = '16';

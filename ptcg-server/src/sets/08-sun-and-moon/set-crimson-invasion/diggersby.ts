@@ -21,8 +21,7 @@ export class Diggersby extends PokemonCard {
     cost: [C, C, C],
     damage: 60,
     text: 'Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn.'
-  },
-  {
+  }, {
     name: 'Hammer Arm',
     cost: [C, C, C, C],
     damage: 90,

@@ -21,8 +21,7 @@ export class Chinchou2 extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all effects of attacks, including damage, done to Chinchou.'
-  },
-  {
+  }, {
     name: 'Headbutt',
     cost: [C, C],
     damage: 20,

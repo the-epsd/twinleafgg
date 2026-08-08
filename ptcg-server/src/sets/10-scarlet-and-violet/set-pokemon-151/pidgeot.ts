@@ -23,8 +23,7 @@ export class Pidgeot extends PokemonCard {
     cost: [C],
     damage: 40,
     text: '',
-  },
-  {
+  }, {
     name: 'Fly',
     cost: [C, C, C],
     damage: 150,

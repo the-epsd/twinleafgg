@@ -13,21 +13,18 @@ export class Swadloon extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Gnaw',
-      cost: [C],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Double Razor Leaf',
-      cost: [G, C, C],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 50 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Gnaw',
+    cost: [C],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Double Razor Leaf',
+    cost: [G, C, C],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 50 damage times the number of heads.'
+  }];
 
   public set: string = 'EPO';
   public cardImage: string = 'assets/cardback.png';

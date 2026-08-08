@@ -14,22 +14,19 @@ export class Mandibuzz extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Bone Rush',
-      cost: [D],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip a coin until you get tails. This attack does 30 damage times the number of heads.'
-    },
-    {
-      name: 'Dark Pulse',
-      cost: [C, C],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'Does 10 more damage for each [D] Energy attached to all of your Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Bone Rush',
+    cost: [D],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip a coin until you get tails. This attack does 30 damage times the number of heads.'
+  }, {
+    name: 'Dark Pulse',
+    cost: [C, C],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Does 10 more damage for each [D] Energy attached to all of your Pokémon.'
+  }];
 
   public set: string = 'EPO';
   public cardImage: string = 'assets/cardback.png';

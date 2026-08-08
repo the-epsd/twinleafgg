@@ -14,8 +14,7 @@ export class AlolanSandshrew extends PokemonCard {
     cost: [],
     damage: 0,
     text: 'Flip a coin. If heads, prevent all damage done to this Pokémon by attacks during your opponent\'s next turn.'
-  },
-  {
+  }, {
     name: 'Ice Ball',
     cost: [W, C, C],
     damage: 30,

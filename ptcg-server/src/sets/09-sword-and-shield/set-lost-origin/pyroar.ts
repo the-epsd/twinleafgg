@@ -25,16 +25,15 @@ export class Pyroar extends PokemonCard {
     text: 'During Pokémon Checkup, put 4 damage counters on your opponent\'s Burned Pokémon instead of 2.'
   }];
 
-  public attacks = [
-    {
-      name: 'Fire Fang',
-      cost: [R, C, C],
-      damage: 90,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Burned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fire Fang',
+    cost: [R, C, C],
+    damage: 90,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Burned.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'LOR';
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';

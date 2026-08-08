@@ -15,21 +15,18 @@ export class Skitty extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Tackle',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Double Slap',
-      cost: [C, C],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tackle',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Double Slap',
+    cost: [C, C],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '113';

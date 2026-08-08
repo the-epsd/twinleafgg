@@ -17,8 +17,7 @@ export class Pikachu extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'If the Defending Pokémon attacks Pikachu during your opponent\'s next turn, any damage done by the attack is reduced by 10 (after applying Weakness and Resistance). (Benching either Pokémon ends this effect.)'
-  },
-  {
+  }, {
     name: 'Thundershock',
     cost: [L, L],
     damage: 20,

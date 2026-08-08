@@ -14,20 +14,17 @@ export class Scrafty extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Spit Acid',
-      cost: [D],
-      damage: 20,
-      text: 'The Defending Pokémon is now Burned. Flip a coin. If heads, the Defending Pokémon is also Paralyzed.'
-    },
-    {
-      name: 'High Jump Kick',
-      cost: [D, D, C],
-      damage: 70,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Spit Acid',
+    cost: [D],
+    damage: 20,
+    text: 'The Defending Pokémon is now Burned. Flip a coin. If heads, the Defending Pokémon is also Paralyzed.'
+  }, {
+    name: 'High Jump Kick',
+    cost: [D, D, C],
+    damage: 70,
+    text: ''
+  }];
 
   public set: string = 'BLW';
   public setNumber: string = '69';

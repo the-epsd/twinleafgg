@@ -17,20 +17,17 @@ export class Xatu extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Fortunate Draw',
-      cost: [P],
-      damage: 0,
-      text: 'You and your opponent play Rock-Paper-Scissors. The player who wins draws 3 cards. The player who loses discards the top 3 cards of his or her deck.'
-    },
-    {
-      name: 'Miracle Wing',
-      cost: [P, C, C],
-      damage: 60,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fortunate Draw',
+    cost: [P],
+    damage: 0,
+    text: 'You and your opponent play Rock-Paper-Scissors. The player who wins draws 3 cards. The player who loses discards the top 3 cards of his or her deck.'
+  }, {
+    name: 'Miracle Wing',
+    cost: [P, C, C],
+    damage: 60,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
+  }];
 
   public set: string = 'LTR';
   public setNumber: string = '56';

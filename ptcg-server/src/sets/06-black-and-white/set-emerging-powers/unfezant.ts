@@ -21,8 +21,7 @@ export class Unfezant extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Attach an Energy from your hand to 1 of your Pokémon.'
-  },
-  {
+  }, {
     name: 'Feather Strike',
     cost: [C, C, C],
     damage: 40,

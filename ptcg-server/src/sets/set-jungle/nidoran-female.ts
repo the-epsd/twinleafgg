@@ -1,20 +1,14 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, SuperType } from '../../game/store/card/card-types';
 import { Attack } from '../../game/store/card/pokemon-types';
-import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
+
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonFromDeckEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import {
-  Card,
-  ChooseCardsPrompt,
-  GameMessage,
-  PokemonCardList,
-  ShuffleDeckPrompt,
-} from '../../game';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { Card, ChooseCardsPrompt, GameMessage, PokemonCardList, ShuffleDeckPrompt } from '../../game';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/prefabs/prefabs';
 
 function* useCallForFamilyNidoran(
   next: Function,
@@ -102,14 +96,7 @@ export class NidoranFemale extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      return store.prompt(
-        state,
-        [
-          new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP),
-          new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP),
-          new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP),
-        ],
-        (results) => {
+      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 3, results => {
           const heads = results.filter((r) => !!r).length;
           effect.damage = heads * 10;
         },

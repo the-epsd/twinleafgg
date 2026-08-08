@@ -19,8 +19,7 @@ export class TeamMagmasBaltoy3 extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip 2 coins. For each heads, choose 1 of you opponent\'s Pokémon and put 1 damage counter on that Pokémon.'
-  },
-  {
+  }, {
     name: 'Pain Amplifier',
     cost: [P, C],
     damage: 0,

@@ -84,7 +84,7 @@ export class Blastoiseex extends PokemonCard {
       }
 
       // Legacy implementation:
-      // - Recursively prompted CoinFlipPrompt until tails and tracked head count.
+      // - Recursively flipped coins until tails and tracked head count.
       // - Then prompted exact Energy discard from Defending based on that count.
       //
       // Converted to prefab version (FLIP_UNTIL_TAILS_AND_COUNT_HEADS).

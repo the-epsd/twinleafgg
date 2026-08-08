@@ -20,8 +20,7 @@ export class Phanpy extends PokemonCard {
     cost: [C],
     damage: 10,
     text: ''
-  },
-  {
+  }, {
     name: 'Endure',
     cost: [F],
     damage: 0,

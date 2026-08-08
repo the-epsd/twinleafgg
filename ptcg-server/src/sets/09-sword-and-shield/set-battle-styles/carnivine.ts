@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, CoinFlipPrompt } from '../../../game';
+import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { WAS_ATTACK_USED, BLOCK_RETREAT } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, BLOCK_RETREAT, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Carnivine extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -18,8 +18,7 @@ export class Carnivine extends PokemonCard {
     cost: [C, C],
     damage: 30,
     text: ' During your opponent\'s next turn, the Defending Pokémon can\'t retreat. '
-  },
-  {
+  }, {
     name: 'Triple Whip',
     cost: [G, C, C],
     damage: 60,
@@ -27,7 +26,9 @@ export class Carnivine extends PokemonCard {
   }];
 
   public set: string = 'BST';
+
   public regulationMark = 'E';
+
   public cardImage: string = 'assets/cardback.png';
   public fullName: string = 'Carnivine BST';
   public name: string = 'Carnivine';
@@ -40,11 +41,7 @@ export class Carnivine extends PokemonCard {
     }
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      state = store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
+      state = MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 3, results => {
         let heads: number = 0;
         results.forEach(r => { heads += r ? 1 : 0; });
         effect.damage = 60 * heads;

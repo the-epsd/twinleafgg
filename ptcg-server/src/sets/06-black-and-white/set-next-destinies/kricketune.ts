@@ -13,21 +13,18 @@ export class Kricketune extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'White Noise',
-      cost: [C],
-      damage: 20,
-      text: 'The Defending Pokémon is now Asleep.'
-    },
-    {
-      name: 'Draining Cut',
-      cost: [G, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 40 damage times the number of heads. Heal from this Pokémon the same amount of damage you did to the Defending Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'White Noise',
+    cost: [C],
+    damage: 20,
+    text: 'The Defending Pokémon is now Asleep.'
+  }, {
+    name: 'Draining Cut',
+    cost: [G, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 40 damage times the number of heads. Heal from this Pokémon the same amount of damage you did to the Defending Pokémon.'
+  }];
 
   public set: string = 'NXD';
   public setNumber: string = '4';

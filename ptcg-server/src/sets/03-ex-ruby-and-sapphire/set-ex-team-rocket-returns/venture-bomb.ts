@@ -10,7 +10,9 @@ import { ChoosePokemonPrompt, PlayerType, SlotType } from '../../../game';
 
 export class VentureBomb extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
+
   public tags = [CardTag.ROCKETS_SECRET_MACHINE];
+
   public set: string = 'TRR';
   public name: string = 'Venture Bomb';
   public fullName: string = 'Venture Bomb TRR';

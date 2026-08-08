@@ -19,6 +19,7 @@ export class Shelmet extends PokemonCard {
   }];
 
   public regulationMark: string = 'I';
+
   public set: string = 'JTG';
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';

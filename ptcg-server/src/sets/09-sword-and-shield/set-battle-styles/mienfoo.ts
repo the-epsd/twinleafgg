@@ -16,17 +16,16 @@ export class Mienfoo extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Double Stab',
-      cost: [F, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 30 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Double Stab',
+    cost: [F, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 30 damage for each heads.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'BST';
   public setNumber: string = '76';
   public cardImage: string = 'assets/cardback.png';

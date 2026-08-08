@@ -17,22 +17,20 @@ export class MawileV extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Pouty Slap',
-      cost: [P],
-      damage: 30,
-      text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
-    },
-    {
-      name: 'Chomp Down',
-      cost: [C, C, C],
-      damage: 100,
-      text: 'Discard a random card from your opponent\'s hand.'
-    }
-  ];
+  public attacks = [{
+    name: 'Pouty Slap',
+    cost: [P],
+    damage: 30,
+    text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
+  }, {
+    name: 'Chomp Down',
+    cost: [C, C, C],
+    damage: 100,
+    text: 'Discard a random card from your opponent\'s hand.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'SIT';
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';

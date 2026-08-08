@@ -18,8 +18,7 @@ export class Arcanine extends PokemonCard {
     cost: [R, C],
     damage: 30,
     text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokémon.'
-  },
-  {
+  }, {
     name: 'Heat Blast',
     cost: [R, C, C],
     damage: 70,

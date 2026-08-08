@@ -19,20 +19,17 @@ export class Forretress extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Thorny Eruption',
-      cost: [M],
-      damage: 0,
-      text: 'Flip 3 coins. This attack does 10 damage for each heads to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    },
-    {
-      name: 'Lost Blast',
-      cost: [M, M, C],
-      damage: 190,
-      text: 'Put this Pokémon and all cards attached to it in the Lost Zone.'
-    }
-  ];
+  public attacks = [{
+    name: 'Thorny Eruption',
+    cost: [M],
+    damage: 0,
+    text: 'Flip 3 coins. This attack does 10 damage for each heads to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }, {
+    name: 'Lost Blast',
+    cost: [M, M, C],
+    damage: 190,
+    text: 'Put this Pokémon and all cards attached to it in the Lost Zone.'
+  }];
 
   public set: string = 'LOT';
   public setNumber: string = '124';

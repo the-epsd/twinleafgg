@@ -17,8 +17,7 @@ export class MegaAudinoex extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip 3 coins. For each heads, search your deck for up to 2 Basic Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck.'
-  },
-  {
+  }, {
     name: 'Ear Force',
     cost: [C, C, C],
     damage: 20,
@@ -27,6 +26,7 @@ export class MegaAudinoex extends PokemonCard {
   }];
 
   public regulationMark: string = 'I';
+
   public set: string = 'ASC';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '172';

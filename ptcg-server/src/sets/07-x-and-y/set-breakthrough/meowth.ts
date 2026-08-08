@@ -15,14 +15,12 @@ export class Meowth extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Exhausted Tackle',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, this attack does 30 damage to your opponent\'s Active Pokémon. If tails, this Pokémon does 30 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Exhausted Tackle',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, this attack does 30 damage to your opponent\'s Active Pokémon. If tails, this Pokémon does 30 damage to itself.'
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '114';

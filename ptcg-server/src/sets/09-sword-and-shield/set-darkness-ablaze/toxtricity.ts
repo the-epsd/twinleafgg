@@ -16,22 +16,20 @@ export class Toxtricity extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Risk Taker',
-      cost: [C, C],
-      damage: 0,
-      text: 'Flip a coin. If heads, discard the top 5 cards of your opponent\'s deck. If tails, discard the top 5 cards of your deck.'
-    },
-    {
-      name: 'Thunder Jolt',
-      cost: [L, L, C],
-      damage: 160,
-      text: 'This Pokémon also does 30 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Risk Taker',
+    cost: [C, C],
+    damage: 0,
+    text: 'Flip a coin. If heads, discard the top 5 cards of your opponent\'s deck. If tails, discard the top 5 cards of your deck.'
+  }, {
+    name: 'Thunder Jolt',
+    cost: [L, L, C],
+    damage: 160,
+    text: 'This Pokémon also does 30 damage to itself.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'DAA';
   public setNumber: string = '63';
   public cardImage: string = 'assets/cardback.png';

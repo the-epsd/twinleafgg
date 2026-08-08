@@ -16,14 +16,12 @@ export class Froakie extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Bounce',
-      cost: [W],
-      damage: 10,
-      text: 'Flip a coin. If heads, switch this Pokémon with 1 of your Benched Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Bounce',
+    cost: [W],
+    damage: 10,
+    text: 'Flip a coin. If heads, switch this Pokémon with 1 of your Benched Pokémon.'
+  }];
 
   public set: string = 'XY';
   public setNumber: string = '39';

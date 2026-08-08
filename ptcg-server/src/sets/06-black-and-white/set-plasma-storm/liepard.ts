@@ -27,20 +27,17 @@ export class Liepard extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Silent Claw',
-      cost: [C],
-      damage: 0,
-      text: 'Your opponent reveal his or her hand. Discard a Supporter card you find there. Use the effect of that card as the effect of this attack.'
-    },
-    {
-      name: 'Fake Out',
-      cost: [D, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Silent Claw',
+    cost: [C],
+    damage: 0,
+    text: 'Your opponent reveal his or her hand. Discard a Supporter card you find there. Use the effect of that card as the effect of this attack.'
+  }, {
+    name: 'Fake Out',
+    cost: [D, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '84';

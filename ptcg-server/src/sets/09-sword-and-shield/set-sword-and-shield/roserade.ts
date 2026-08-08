@@ -21,22 +21,20 @@ export class Roserade extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Paralyze Poison',
-      cost: [G],
-      damage: 30,
-      text: 'Your opponent\'s Active Pokémon is now Poisoned. Flip a coin. If heads, your opponent\'s Active Pokémon is also Paralyzed.'
-    },
-    {
-      name: 'Mega Drain',
-      cost: [G, C, C],
-      damage: 90,
-      text: 'Heal 30 damage from this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Paralyze Poison',
+    cost: [G],
+    damage: 30,
+    text: 'Your opponent\'s Active Pokémon is now Poisoned. Flip a coin. If heads, your opponent\'s Active Pokémon is also Paralyzed.'
+  }, {
+    name: 'Mega Drain',
+    cost: [G, C, C],
+    damage: 90,
+    text: 'Heal 30 damage from this Pokémon.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'SSH';
   public setNumber: string = '4';
   public cardImage: string = 'assets/cardback.png';

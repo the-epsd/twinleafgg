@@ -19,8 +19,7 @@ export class Kirlia2 extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, each Defending Pokémon is now Confused.'
-  },
-  {
+  }, {
     name: 'Life Drain',
     cost: [P],
     damage: 0,

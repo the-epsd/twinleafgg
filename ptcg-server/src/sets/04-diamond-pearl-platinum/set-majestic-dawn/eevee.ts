@@ -16,8 +16,7 @@ export class Eevee extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Search your deck for as many Eevee as you like and put them onto your Bench. Shuffle your deck afterward.'
-  },
-  {
+  }, {
     name: 'Lunge',
     cost: [C],
     damage: 20,

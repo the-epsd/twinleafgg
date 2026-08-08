@@ -15,17 +15,16 @@ export class Binacle extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Dual Chop',
-      cost: [F, C, C],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 50 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Dual Chop',
+    cost: [F, C, C],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 50 damage for each heads.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'RCL';
   public setNumber: string = '103';
   public cardImage: string = 'assets/cardback.png';

@@ -15,22 +15,20 @@ export class Eevee extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Signs of Evolution',
-      cost: [C],
-      damage: 0,
-      text: 'Search your deck for a card that evolves from Eevee, reveal it, and put it into your hand. Then, shuffle your deck.'
-    },
-    {
-      name: 'Wild Kick',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Signs of Evolution',
+    cost: [C],
+    damage: 0,
+    text: 'Search your deck for a card that evolves from Eevee, reveal it, and put it into your hand. Then, shuffle your deck.'
+  }, {
+    name: 'Wild Kick',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'SHF';
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';

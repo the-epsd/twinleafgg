@@ -17,8 +17,7 @@ export class Omanyte extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Search your deck for Omanyte, Kabuto, or any Basic Pokémon and put as many of them as you like onto your Bench. Shuffle your deck afterward. Treat the new Benched Pokémon as Basic Pokémon.'
-  },
-  {
+  }, {
     name: 'Bind',
     cost: [C, C],
     damage: 20,

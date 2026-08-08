@@ -16,8 +16,7 @@ export class Raikouex extends PokemonCard {
     damage: 0,
     canUseOnFirstTurn: true,
     text: 'If you go first, you can use this attack during your first turn. Search your deck for a [L] Energy card and attach it to this Pokemon. Then, shuffle your deck.'
-  },
-  {
+  }, {
     name: 'Power Rush',
     cost: [L, L, C],
     damage: 200,
@@ -25,6 +24,7 @@ export class Raikouex extends PokemonCard {
   }];
 
   public regulationMark: string = 'J';
+
   public set: string = 'M6';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '24';

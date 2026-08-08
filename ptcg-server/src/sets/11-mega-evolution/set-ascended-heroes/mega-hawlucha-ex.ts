@@ -2,8 +2,8 @@ import { CardTag, CardType, PokemonCard, Stage, PowerType, State, StateUtils, St
 import { Effect } from '../../../game/store/effects/effect';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
-import { CoinFlipPrompt, GameMessage } from '../../../game';
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class MegaHawluchaex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -29,6 +29,7 @@ export class MegaHawluchaex extends PokemonCard {
   }];
 
   public regulationMark: string = 'I';
+
   public set: string = 'ASC';
   public setNumber: string = '116';
   public cardImage: string = 'assets/cardback.png';
@@ -52,10 +53,7 @@ export class MegaHawluchaex extends PokemonCard {
 
       if (effect.damage >= checkHpEffect.hp) {
         // Flip a coin to see if we survive
-        return store.prompt(state, new CoinFlipPrompt(
-          player.id,
-          GameMessage.COIN_FLIP
-        ), result => {
+        return COIN_FLIP_PROMPT(store, state, player, result => {
           if (result === true) {
             // If heads, prevent knockout and set HP to 10
             effect.surviveOnTenHPReason = this.powers[0].name;

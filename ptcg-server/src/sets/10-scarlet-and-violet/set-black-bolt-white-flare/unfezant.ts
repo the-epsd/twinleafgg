@@ -24,8 +24,7 @@ export class Unfezant extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Draw 4 cards.'
-  },
-  {
+  }, {
     name: 'Swift Flight',
     cost: [C, C],
     damage: 120,
@@ -33,6 +32,7 @@ export class Unfezant extends PokemonCard {
   }];
 
   public regulationMark = 'I';
+
   public set: string = 'BLK';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '73';

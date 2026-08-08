@@ -21,14 +21,12 @@ export class Drowzee extends PokemonCard {
     text: 'Once during your turn (before your attack), you may flip a coin. If heads, the Defending Pokémon is now Asleep; if tails, your Active Pokémon is now Asleep. The power can\'t be used if Drowzee is Asleep, Confused, or Paralyzed.'
   }];
 
-  public attacks = [
-    {
-      name: 'Nightmare',
-      cost: [P, C],
-      damage: 10,
-      text: 'The Defending Pokémon is now Asleep.'
-    }
-  ];
+  public attacks = [{
+    name: 'Nightmare',
+    cost: [P, C],
+    damage: 10,
+    text: 'The Defending Pokémon is now Asleep.'
+  }];
 
   public set: string = 'TR';
   public name: string = 'Drowzee';

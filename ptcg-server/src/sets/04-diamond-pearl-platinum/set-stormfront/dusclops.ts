@@ -18,8 +18,7 @@ export class Dusclops extends PokemonCard {
     cost: [P, C],
     damage: 20,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
-  },
-  {
+  }, {
     name: 'Trick Room',
     cost: [P, C, C],
     damage: 40,

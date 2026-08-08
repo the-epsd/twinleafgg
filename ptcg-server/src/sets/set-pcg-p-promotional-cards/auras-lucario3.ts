@@ -24,8 +24,7 @@ export class AurasLucario3 extends PokemonCard {
     cost: [F],
     damage: 0,
     text: 'Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn.'
-  },
-  {
+  }, {
     name: 'Quick Attack',
     cost: [M, C, C],
     damage: 30,

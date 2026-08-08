@@ -16,23 +16,21 @@ export class Mienshao extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Pound',
-      cost: [F],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Double Smash',
-      cost: [F, C],
-      damage: 70,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 70 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Pound',
+    cost: [F],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Double Smash',
+    cost: [F, C],
+    damage: 70,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 70 damage for each heads.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'LOR';
   public setNumber: string = '104';
   public cardImage: string = 'assets/cardback.png';

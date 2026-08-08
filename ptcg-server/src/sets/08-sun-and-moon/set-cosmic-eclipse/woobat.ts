@@ -11,21 +11,17 @@ export class Woobat extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Nasal Suction',
-      cost: [C],
-      damage: 0,
-      text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
-    },
-    {
-      name: 'Air Cutter',
-      cost: [P],
-      damage: 30,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    },
-
-  ];
+  public attacks = [{
+    name: 'Nasal Suction',
+    cost: [C],
+    damage: 0,
+    text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
+  }, {
+    name: 'Air Cutter',
+    cost: [P],
+    damage: 30,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'CEC';
   public cardImage: string = 'assets/cardback.png';

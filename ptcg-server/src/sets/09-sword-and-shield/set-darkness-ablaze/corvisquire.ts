@@ -17,23 +17,21 @@ export class Corvisquire extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Peck',
-      cost: [C],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Fury Attack',
-      cost: [C, C, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 40 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Peck',
+    cost: [C],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Fury Attack',
+    cost: [C, C, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 40 damage for each heads.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'DAA';
   public setNumber: string = '155';
   public cardImage: string = 'assets/cardback.png';

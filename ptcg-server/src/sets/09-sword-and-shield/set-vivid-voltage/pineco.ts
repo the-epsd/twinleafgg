@@ -11,22 +11,20 @@ export class Pineco extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Ram',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Iron Defense',
-      cost: [C, C],
-      damage: 0,
-      text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage done to this Pokémon by attacks.'
-    }
-  ];
+  public attacks = [{
+    name: 'Ram',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Iron Defense',
+    cost: [C, C],
+    damage: 0,
+    text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage done to this Pokémon by attacks.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'VIV';
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';

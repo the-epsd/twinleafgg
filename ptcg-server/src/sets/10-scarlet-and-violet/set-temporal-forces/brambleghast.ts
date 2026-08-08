@@ -1,17 +1,17 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { CoinFlipPrompt, GameMessage, PowerType, State, StateUtils, StoreLike } from '../../../game';
+import { PowerType, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckHpEffect, CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Brambleghast extends PokemonCard {
   public regulationMark = 'H';
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType = G;
   public hp: number = 100;
-  public weakness = [{ type: CardType.FIRE }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public retreat = [C, C, C];
   public evolvesFrom: string = 'Bramblin';
 
   public powers = [{
@@ -22,7 +22,7 @@ export class Brambleghast extends PokemonCard {
 
   public attacks = [{
     name: 'Powerful Needles',
-    cost: [CardType.GRASS, CardType.GRASS, CardType.COLORLESS],
+    cost: [G, G, C],
     damage: 80,
     damageCalculation: 'x',
     text: ' Flip a coin for each Energy attached to this Pokémon. This attack does 80 damage for each heads. '
@@ -64,16 +64,13 @@ export class Brambleghast extends PokemonCard {
         return sum + energy.provides.length;
       }, 0);
 
-      for (let i = 0; i < totalEnergy; i++) {
-        store.prompt(state, [
-          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-        ], result => {
-          if (result === true) {
-            effect.damage += 80;
-          }
+      if (totalEnergy > 0) {
+        MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, totalEnergy, results => {
+          effect.damage = results.filter(r => r).length * 80;
         });
+      } else {
+        effect.damage = 0;
       }
-      effect.damage -= 80;
     }
 
     return state;

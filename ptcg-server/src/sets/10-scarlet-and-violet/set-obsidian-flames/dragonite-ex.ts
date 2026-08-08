@@ -3,12 +3,10 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { CoinFlipPrompt } from '../../../game/store/prompts/coin-flip-prompt';
-import { GameMessage } from '../../../game/game-message';
+
 import { StateUtils } from '../../../game';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Dragoniteex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -24,17 +22,17 @@ export class Dragoniteex extends PokemonCard {
     cost: [C],
     damage: 70,
     text: ''
-  },
-  {
+  }, {
     name: 'Mighty Meteor',
     cost: [W, L],
     damage: 140,
     damageCalculation: '+',
     text: 'Flip a coin. If heads, this attack does 140 more damage.' +
-      'If tails, during your next turn, this Pokémon can\'t attack.'
+    'If tails, during your next turn, this Pokémon can\'t attack.'
   }];
 
   public regulationMark = 'G';
+
   public set: string = 'OBF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '159';
@@ -47,9 +45,7 @@ export class Dragoniteex extends PokemonCard {
 
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
 
         if (!result) {
           player.active.cannotAttackNextTurnPending = true;

@@ -18,20 +18,17 @@ export class Avalugg extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Crunch',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pok\u00e9mon.'
-    },
-    {
-      name: 'Melting Floe',
-      cost: [W, W, W],
-      damage: 0,
-      text: 'Discard the top 3 cards of your deck. For each [W] Energy card you discarded in this way, discard the top 3 cards of your opponent\'s deck.'
-    }
-  ];
+  public attacks = [{
+    name: 'Crunch',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pok\u00e9mon.'
+  }, {
+    name: 'Melting Floe',
+    cost: [W, W, W],
+    damage: 0,
+    text: 'Discard the top 3 cards of your deck. For each [W] Energy card you discarded in this way, discard the top 3 cards of your opponent\'s deck.'
+  }];
 
   public set: string = 'STS';
   public setNumber: string = '37';

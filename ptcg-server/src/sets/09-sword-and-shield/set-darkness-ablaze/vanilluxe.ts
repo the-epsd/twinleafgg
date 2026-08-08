@@ -23,16 +23,15 @@ export class Vanilluxe extends PokemonCard {
     text: 'Once during your turn, if this Pokémon is in the Active Spot, you may flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
   }];
 
-  public attacks = [
-    {
-      name: 'Frost Smash',
-      cost: [W, C],
-      damage: 90,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Frost Smash',
+    cost: [W, C],
+    damage: 90,
+    text: ''
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'DAA';
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';

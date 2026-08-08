@@ -15,20 +15,17 @@ export class Meditite extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Bide',
-      cost: [F],
-      damage: 0,
-      text: 'Flip a coin. If heads, if this Pokémon would be Knocked Out by damage from an attack during your opponent\'s next turn, it is not Knocked Out, and its remaining HP becomes 10.'
-    },
-    {
-      name: 'Kick',
-      cost: [F, F],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Bide',
+    cost: [F],
+    damage: 0,
+    text: 'Flip a coin. If heads, if this Pokémon would be Knocked Out by damage from an attack during your opponent\'s next turn, it is not Knocked Out, and its remaining HP becomes 10.'
+  }, {
+    name: 'Kick',
+    cost: [F, F],
+    damage: 30,
+    text: ''
+  }];
 
   public set: string = 'CES';
   public setNumber: string = '76';

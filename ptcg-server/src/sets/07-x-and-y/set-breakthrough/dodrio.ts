@@ -24,15 +24,13 @@ export class Dodrio extends PokemonCard {
     text: 'As long as this Pokémon is on your Bench, your Active Pokémon\'s Retreat Cost is ColorlessColorless less.'
   }];
 
-  public attacks = [
-    {
-      name: 'Fury Attack',
-      cost: [C, C, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 40 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fury Attack',
+    cost: [C, C, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 40 damage times the number of heads.'
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '117';

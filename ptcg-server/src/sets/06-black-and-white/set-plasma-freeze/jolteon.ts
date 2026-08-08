@@ -19,8 +19,7 @@ export class Jolteon extends PokemonCard {
     damage: 20,
     damageCalculation: 'x',
     text: 'Flip 4 coins. This attack does 20 damage times the number of heads.'
-  },
-  {
+  }, {
     name: 'Electri-Defuse',
     cost: [L, C],
     damage: 40,

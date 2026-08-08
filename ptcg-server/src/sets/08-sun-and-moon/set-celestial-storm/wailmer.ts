@@ -16,14 +16,12 @@ export class Wailmer extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Wave Swallower',
-      cost: [W, W, W],
-      damage: 50,
-      text: 'Flip a coin until you get tails. For each heads, heal 50 damage from this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Wave Swallower',
+    cost: [W, W, W],
+    damage: 50,
+    text: 'Flip a coin until you get tails. For each heads, heal 50 damage from this Pokémon.'
+  }];
 
   public set: string = 'CES';
   public setNumber: string = '39';

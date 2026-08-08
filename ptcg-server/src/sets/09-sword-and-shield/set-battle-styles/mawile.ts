@@ -24,22 +24,20 @@ export class Mawile extends PokemonCard {
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Powerful Vise',
-      cost: [M],
-      damage: 20,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Piercing Strike',
-      cost: [C, C, C],
-      damage: 100,
-      text: 'This attack\'s damage isn\'t affected by Weakness or Resistance, or by any effects on your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Powerful Vise',
+    cost: [M],
+    damage: 20,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Piercing Strike',
+    cost: [C, C, C],
+    damage: 100,
+    text: 'This attack\'s damage isn\'t affected by Weakness or Resistance, or by any effects on your opponent\'s Active Pokémon.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'BST';
   public setNumber: string = '100';
   public cardImage: string = 'assets/cardback.png';

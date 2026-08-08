@@ -16,20 +16,17 @@ export class Klinklang extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Charge Beam',
-      cost: [M],
-      damage: 30,
-      text: 'Attach an Energy card from your discard pile to this Pokémon.'
-    },
-    {
-      name: 'Zap Cannon',
-      cost: [M, C, C],
-      damage: 80,
-      text: 'Flip a coin. If tails, this Pokémon can\'t use Zap Cannon during your next turn.'
-    }
-  ];
+  public attacks = [{
+    name: 'Charge Beam',
+    cost: [M],
+    damage: 30,
+    text: 'Attach an Energy card from your discard pile to this Pokémon.'
+  }, {
+    name: 'Zap Cannon',
+    cost: [M, C, C],
+    damage: 80,
+    text: 'Flip a coin. If tails, this Pokémon can\'t use Zap Cannon during your next turn.'
+  }];
 
   public set: string = 'EPO';
   public cardImage: string = 'assets/cardback.png';

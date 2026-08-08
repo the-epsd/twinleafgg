@@ -13,20 +13,17 @@ export class Treecko2 extends PokemonCard {
   public resistance = [{ type: W, value: -30 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Pound',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Shining Claws',
-      cost: [P],
-      damage: 30,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Pound',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Shining Claws',
+    cost: [P],
+    damage: 30,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
+  }];
 
   public set: string = 'CG';
   public setNumber: string = '68';

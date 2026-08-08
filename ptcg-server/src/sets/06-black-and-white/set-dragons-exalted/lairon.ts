@@ -13,20 +13,17 @@ export class Lairon extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Metal Claw',
-      cost: [M, C],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Wreak Havoc',
-      cost: [M, M, C],
-      damage: 60,
-      text: 'Flip a coin until you get tails. For each heads, discard the top card of your opponent\'s deck.'
-    }
-  ];
+  public attacks = [{
+    name: 'Metal Claw',
+    cost: [M, C],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Wreak Havoc',
+    cost: [M, M, C],
+    damage: 60,
+    text: 'Flip a coin until you get tails. For each heads, discard the top card of your opponent\'s deck.'
+  }];
 
   public set: string = 'DRX';
   public setNumber: string = '79';

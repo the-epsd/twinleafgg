@@ -20,15 +20,13 @@ export class Tirtouga extends PokemonCard {
     text: 'Once during your turn (before your attack), if this Pokémon is in your discard pile, you may put this Pokémon on the bottom of your deck.'
   }];
 
-  public attacks = [
-    {
-      name: 'Slam',
-      cost: [W, C, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Slam',
+    cost: [W, C, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
+  }];
 
   public set: string = 'PLB';
   public setNumber: string = '27';

@@ -14,14 +14,12 @@ export class Vulpix extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Confuse Ray',
-      cost: [R, R],
-      damage: 20,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Confuse Ray',
+    cost: [R, R],
+    damage: 20,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Confused.'
+  }];
 
   public set: string = 'EVO';
   public setNumber: string = '14';

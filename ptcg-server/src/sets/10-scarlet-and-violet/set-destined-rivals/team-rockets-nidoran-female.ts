@@ -12,16 +12,15 @@ export class TeamRocketsNidoranFemale extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Suprise Attack',
-      cost: [D],
-      damage: 30,
-      text: 'Flip a coin. If tails, this attack does nothing.',
-    },
-  ];
+  public attacks = [{
+    name: 'Suprise Attack',
+    cost: [D],
+    damage: 30,
+    text: 'Flip a coin. If tails, this attack does nothing.',
+  }];
 
   public regulationMark = 'I';
+
   public set: string = 'DRI';
   public setNumber: string = '114';
   public cardImage: string = 'assets/cardback.png';

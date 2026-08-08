@@ -17,20 +17,17 @@ export class Spinda extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Staggering Steps',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Confused. If tails, this Pokémon is now Confused.'
-    },
-    {
-      name: 'Uproar',
-      cost: [C],
-      damage: 0,
-      text: 'This attack does 10 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
-  ];
+  public attacks = [{
+    name: 'Staggering Steps',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Confused. If tails, this Pokémon is now Confused.'
+  }, {
+    name: 'Uproar',
+    cost: [C],
+    damage: 0,
+    text: 'This attack does 10 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }];
 
   public set: string = 'PRC';
   public setNumber: string = '115';

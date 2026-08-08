@@ -1,9 +1,8 @@
-import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, CoinFlipPrompt, GameMessage, PlayerType, ConfirmPrompt } from '../../../game';
+import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, GameMessage, PlayerType, ConfirmPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 import { BetweenTurnsEffect } from '../../../game/store/effects/game-phase-effects';
-import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-
+import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Lombre extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -58,32 +57,13 @@ export class Lombre extends PokemonCard {
       return state;
     }
 
-
     // Handle Double Scratch attack
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      let heads = 0;
 
-      // First coin flip
-      state = store.prompt(state, new CoinFlipPrompt(
-        player.id,
-        GameMessage.FLIP_COIN
-      ), result => {
-        if (result) {
-          heads++;
-        }
-      });
-
-      // Second coin flip
-      state = store.prompt(state, new CoinFlipPrompt(
-        player.id,
-        GameMessage.FLIP_COIN
-      ), result => {
-        if (result) {
-          heads++;
-        }
+      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, results => {
+        const heads = results.filter(r => r).length;
         effect.damage = 30 * heads;
-        return state;
       });
     }
 

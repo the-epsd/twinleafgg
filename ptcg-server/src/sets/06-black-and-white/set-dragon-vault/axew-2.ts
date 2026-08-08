@@ -11,14 +11,12 @@ export class Axew2 extends PokemonCard {
   public weakness = [{ type: N }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Lunge',
-      cost: [F, M],
-      damage: 30,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Lunge',
+    cost: [F, M],
+    damage: 30,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'DRV';
   public setNumber: string = '13';

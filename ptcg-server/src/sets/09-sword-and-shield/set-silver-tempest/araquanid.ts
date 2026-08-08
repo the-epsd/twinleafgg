@@ -17,22 +17,20 @@ export class Araquanid extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Drowning Ball',
-      cost: [W],
-      damage: 20,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed, and discard an Energy from that Pokémon.'
-    },
-    {
-      name: 'Headbutt Bounce',
-      cost: [W, C],
-      damage: 60,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Drowning Ball',
+    cost: [W],
+    damage: 20,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed, and discard an Energy from that Pokémon.'
+  }, {
+    name: 'Headbutt Bounce',
+    cost: [W, C],
+    damage: 60,
+    text: ''
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'SIT';
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';

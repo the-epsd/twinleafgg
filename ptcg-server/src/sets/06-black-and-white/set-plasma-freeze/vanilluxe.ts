@@ -13,21 +13,18 @@ export class Vanilluxe extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'ChillMAX',
-      cost: [C],
-      damage: 60,
-      damageCalculation: 'x',
-      text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 60 damage for each heads.'
-    },
-    {
-      name: 'Cold Breath',
-      cost: [W, C],
-      damage: 40,
-      text: 'The Defending Pokémon is now Asleep.'
-    }
-  ];
+  public attacks = [{
+    name: 'ChillMAX',
+    cost: [C],
+    damage: 60,
+    damageCalculation: 'x',
+    text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 60 damage for each heads.'
+  }, {
+    name: 'Cold Breath',
+    cost: [W, C],
+    damage: 40,
+    text: 'The Defending Pokémon is now Asleep.'
+  }];
 
   public set: string = 'PLF';
   public setNumber: string = '29';

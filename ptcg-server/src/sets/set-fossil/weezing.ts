@@ -1,26 +1,25 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { StoreLike, State, PlayerType, StateUtils, CoinFlipPrompt, GameMessage } from '../../game';
+import { StoreLike, State, PlayerType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AddSpecialConditionsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Weezing extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Koffing';
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType = G;
   public hp: number = 60;
-  public weakness = [{ type: CardType.PSYCHIC }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: P }];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Smog',
     cost: [G, G],
     damage: 20,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Poisoned.'
-  },
-  {
+  }, {
     name: 'Selfdestruct',
     cost: [G, G, C],
     damage: 60,
@@ -38,10 +37,7 @@ export class Weezing extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(
-        state,
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        flipResult => {
+      return COIN_FLIP_PROMPT(store, state, player, flipResult => {
           if (flipResult) {
             const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.POISONED]);
             store.reduceEffect(state, specialConditionEffect);

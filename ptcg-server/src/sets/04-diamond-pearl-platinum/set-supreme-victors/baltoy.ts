@@ -16,8 +16,7 @@ export class Baltoy extends PokemonCard {
     cost: [C],
     damage: 10,
     text: ''
-  },
-  {
+  }, {
     name: 'Spinning Attack',
     cost: [C, C],
     damage: 20,

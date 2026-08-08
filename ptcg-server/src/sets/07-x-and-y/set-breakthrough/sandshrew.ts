@@ -14,21 +14,18 @@ export class Sandshrew extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Double Scratch',
-      cost: [F],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
-    },
-    {
-      name: 'Sand Tomb',
-      cost: [F, C],
-      damage: 20,
-      text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
-    }
-  ];
+  public attacks = [{
+    name: 'Double Scratch',
+    cost: [F],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
+  }, {
+    name: 'Sand Tomb',
+    cost: [F, C],
+    damage: 20,
+    text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '75';

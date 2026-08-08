@@ -13,21 +13,17 @@ export class Dunsparce extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Strike and Run',
-      cost: [C],
-      damage: 0,
-      text: 'Search your deck for up to 3 Basic Pokémon and put them onto your Bench. Then, shuffle your deck. If you put any Pokémon onto your Bench in this way, you may switch this Pokémon with 1 of your Benched Pokémon.'
-    },
-    {
-      name: 'Sudden Flash',
-      cost: [C],
-      damage: 10,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
-
+  public attacks = [{
+    name: 'Strike and Run',
+    cost: [C],
+    damage: 0,
+    text: 'Search your deck for up to 3 Basic Pokémon and put them onto your Bench. Then, shuffle your deck. If you put any Pokémon onto your Bench in this way, you may switch this Pokémon with 1 of your Benched Pokémon.'
+  }, {
+    name: 'Sudden Flash',
+    cost: [C],
+    damage: 10,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'SS';
   public cardImage: string = 'assets/cardback.png';

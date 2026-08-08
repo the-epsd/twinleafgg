@@ -18,8 +18,7 @@ export class Gloom extends PokemonCard {
     cost: [G, C],
     damage: 20,
     text: 'After your attack, remove from Gloom the number of damage counters equal to the damage you did to the Defending Pokémon. If Gloom has fewer damage counters than that, remove all of them.'
-  },
-  {
+  }, {
     name: 'Double Razor Leaf',
     cost: [G, C, C],
     damage: 40,

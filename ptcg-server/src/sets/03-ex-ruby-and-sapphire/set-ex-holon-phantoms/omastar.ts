@@ -18,8 +18,7 @@ export class Omastar extends PokemonCard {
     cost: [P, C],
     damage: 30,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-  },
-  {
+  }, {
     name: 'Vengeful Spikes',
     cost: [P, C, C],
     damage: 30,

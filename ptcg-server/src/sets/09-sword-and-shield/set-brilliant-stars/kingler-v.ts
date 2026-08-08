@@ -16,22 +16,20 @@ export class KinglerV extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Falling Bubbles',
-      cost: [W],
-      damage: 0,
-      text: 'Flip a coin. If heads, search your deck for up to 5 [W] Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck.'
-    },
-    {
-      name: 'Raging Pincer',
-      cost: [W, W, C],
-      damage: 200,
-      text: 'This Pokémon also does 30 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Falling Bubbles',
+    cost: [W],
+    damage: 0,
+    text: 'Flip a coin. If heads, search your deck for up to 5 [W] Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck.'
+  }, {
+    name: 'Raging Pincer',
+    cost: [W, W, C],
+    damage: 200,
+    text: 'This Pokémon also does 30 damage to itself.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'BRS';
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';

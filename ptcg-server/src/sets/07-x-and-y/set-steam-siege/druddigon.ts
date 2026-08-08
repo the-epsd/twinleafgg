@@ -15,21 +15,18 @@ export class Druddigon extends PokemonCard {
   public weakness = [{ type: Y }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Proud Fang',
-      cost: [C, C],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'If your opponent has any Pokémon BREAK in play, this attack does 60 more damage.'
-    },
-    {
-      name: 'Giga Claw',
-      cost: [R, W, C],
-      damage: 100,
-      text: 'Flip 2 coins. If both of them are tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Proud Fang',
+    cost: [C, C],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'If your opponent has any Pokémon BREAK in play, this attack does 60 more damage.'
+  }, {
+    name: 'Giga Claw',
+    cost: [R, W, C],
+    damage: 100,
+    text: 'Flip 2 coins. If both of them are tails, this attack does nothing.'
+  }];
 
   public set: string = 'STS';
   public setNumber: string = '83';

@@ -13,20 +13,17 @@ export class Hydreigon2 extends PokemonCard {
   public weakness = [{ type: N }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Consume',
-      cost: [D, C, C],
-      damage: 40,
-      text: 'Heal from this Pokemon the same amount of damage you did to the Defending Pokemon.'
-    },
-    {
-      name: 'Destructor Beam',
-      cost: [P, D, C, C],
-      damage: 90,
-      text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokemon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Consume',
+    cost: [D, C, C],
+    damage: 40,
+    text: 'Heal from this Pokemon the same amount of damage you did to the Defending Pokemon.'
+  }, {
+    name: 'Destructor Beam',
+    cost: [P, D, C, C],
+    damage: 90,
+    text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokemon.'
+  }];
 
   public set: string = 'DRX';
   public setNumber: string = '98';

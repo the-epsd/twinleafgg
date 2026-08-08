@@ -24,6 +24,7 @@ export class Poliwag extends PokemonCard {
   }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'LOR';
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';

@@ -30,14 +30,12 @@ export class Ludicolo extends PokemonCard {
     text: 'Once during your turn (before your attack), you may flip a coin. If heads, switch 1 of your opponent\'s Benched Pokémon with his or her Active Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Solar Ray',
-      cost: [G, C, C],
-      damage: 80,
-      text: 'Heal 20 damage from each of your Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Solar Ray',
+    cost: [G, C, C],
+    damage: 80,
+    text: 'Heal 20 damage from each of your Pokémon.'
+  }];
 
   public set: string = 'PRC';
   public setNumber: string = '12';

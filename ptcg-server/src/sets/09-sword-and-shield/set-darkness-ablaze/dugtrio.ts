@@ -22,8 +22,7 @@ export class Dugtrio extends PokemonCard {
     cost: [F],
     damage: 30,
     text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage from and effects of attacks done to this Pokémon.'
-  },
-  {
+  }, {
     name: 'Mud Bomb',
     cost: [F, C],
     damage: 70,
@@ -31,6 +30,7 @@ export class Dugtrio extends PokemonCard {
   }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'DAA';
   public setNumber: string = '85';
   public cardImage: string = 'assets/cardback.png';

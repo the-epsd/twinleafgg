@@ -18,21 +18,18 @@ export class ThundurusEx extends PokemonCard {
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Headlock',
-      cost: [L, C],
-      damage: 30,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 30 more damage. If tails, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Voltage Rush',
-      cost: [L, L, L],
-      damage: 150,
-      text: 'This Pokémon does 50 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Headlock',
+    cost: [L, C],
+    damage: 30,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 30 more damage. If tails, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Voltage Rush',
+    cost: [L, L, L],
+    damage: 150,
+    text: 'This Pokémon does 50 damage to itself.'
+  }];
 
   public set: string = 'ROS';
   public setNumber: string = '26';

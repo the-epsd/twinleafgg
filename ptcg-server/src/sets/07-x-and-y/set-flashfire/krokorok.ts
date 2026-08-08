@@ -16,21 +16,18 @@ export class Krokorok extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Dark Clamp',
-      cost: [D],
-      damage: 10,
-      text: 'The Defending Pok\u00e9mon can\'t retreat during your opponent\'s next turn.'
-    },
-    {
-      name: 'Double Swing',
-      cost: [D, C, C],
-      damage: 60,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 60 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Dark Clamp',
+    cost: [D],
+    damage: 10,
+    text: 'The Defending Pok\u00e9mon can\'t retreat during your opponent\'s next turn.'
+  }, {
+    name: 'Double Swing',
+    cost: [D, C, C],
+    damage: 60,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 60 damage times the number of heads.'
+  }];
 
   public set: string = 'FLF';
   public setNumber: string = '57';

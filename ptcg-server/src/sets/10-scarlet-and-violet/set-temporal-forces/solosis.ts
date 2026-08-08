@@ -3,27 +3,20 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { CoinFlipPrompt, GameMessage } from '../../../game';
 
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Solosis extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.PSYCHIC;
-
+  public cardType: CardType = P;
   public hp: number = 40;
-
-  public weakness = [{ type: CardType.DARK }];
-
-  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: D }];
+  public resistance = [{ type: F, value: -30 }];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Surprise Attack',
-    cost: [CardType.COLORLESS],
+    cost: [C],
     damage: 30,
     text: 'Flip a coin. If tails, this attack does nothing.'
   }];
@@ -33,11 +26,8 @@ export class Solosis extends PokemonCard {
   public regulationMark = 'H';
 
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '70';
-
   public name: string = 'Solosis';
-
   public fullName: string = 'Solosis TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -45,9 +35,7 @@ export class Solosis extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === false) {
           effect.damage = 0;
         }

@@ -11,21 +11,18 @@ export class Haxorus extends PokemonCard {
   public hp: number = 140;
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Dual Chop',
-      cost: [C, C],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 50 damage times the number of heads.'
-    },
-    {
-      name: 'Giga Impact',
-      cost: [C, C, C],
-      damage: 120,
-      text: 'This Pokémon can\'t attack during your next turn.'
-    }
-  ];
+  public attacks = [{
+    name: 'Dual Chop',
+    cost: [C, C],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 50 damage times the number of heads.'
+  }, {
+    name: 'Giga Impact',
+    cost: [C, C, C],
+    damage: 120,
+    text: 'This Pokémon can\'t attack during your next turn.'
+  }];
 
   public set: string = 'NVI';
   public setNumber: string = '88';

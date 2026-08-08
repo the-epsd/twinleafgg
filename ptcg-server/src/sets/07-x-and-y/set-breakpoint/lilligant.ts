@@ -18,21 +18,18 @@ export class Lilligant extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Boo-Hoo',
-      cost: [G],
-      damage: 20,
-      text: 'If your opponent attaches an Energy card from his or her hand to the Defending Pokémon during his or her next turn, that Pokémon will be Asleep.'
-    },
-    {
-      name: 'Leaf Slice',
-      cost: [C, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Boo-Hoo',
+    cost: [G],
+    damage: 20,
+    text: 'If your opponent attaches an Energy card from his or her hand to the Defending Pokémon during his or her next turn, that Pokémon will be Asleep.'
+  }, {
+    name: 'Leaf Slice',
+    cost: [C, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
+  }];
 
   public set: string = 'BKP';
   public setNumber: string = '8';

@@ -22,8 +22,7 @@ export class Pikachu extends PokemonCard {
     cost: [L],
     damage: 10,
     text: ''
-  },
-  {
+  }, {
     name: 'Agility',
     cost: [C, C],
     damage: 10,

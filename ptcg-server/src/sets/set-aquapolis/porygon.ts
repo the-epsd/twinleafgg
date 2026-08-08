@@ -16,8 +16,7 @@ export class Porygon extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, choose a Trainer card from your discard pile, show it to your opponent, and then shuffle it into your deck.'
-  },
-  {
+  }, {
     name: 'Peck',
     cost: [C],
     damage: 10,

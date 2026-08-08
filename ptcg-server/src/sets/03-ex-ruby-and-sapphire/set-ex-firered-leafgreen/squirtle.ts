@@ -17,8 +17,7 @@ export class Squirtle extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-  },
-  {
+  }, {
     name: 'Smash Turn',
     cost: [W, C],
     damage: 20,

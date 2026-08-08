@@ -18,8 +18,7 @@ export class Flaaffy extends PokemonCard {
     cost: [C],
     damage: 10,
     text: 'Search your deck for a [L] Energy card and attach it to 1 of your Pokémon. Shuffle your deck afterward.'
-  },
-  {
+  }, {
     name: 'Electromagnetic Kick',
     cost: [L, L, C],
     damage: 60,

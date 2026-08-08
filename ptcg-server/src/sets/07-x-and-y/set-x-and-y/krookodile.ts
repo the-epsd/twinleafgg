@@ -12,7 +12,9 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, SWITCH_ACTIVE_WITH_BENCHED } from '.
 
 export class Krookodile extends PokemonCard {
   public readonly SUPPORTER_LOCK_MARKER = 'KROOKODILE_SUPPORTER_LOCK_MARKER';
+
   public usedKnockBack = false;
+
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Krokorok';
   public cardType: CardType = D;
@@ -21,20 +23,17 @@ export class Krookodile extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Bother',
-      cost: [D, C, C],
-      damage: 50,
-      text: 'Flip a coin. If heads, your opponent can\'t play any Supporter cards from his or her hand during his or her next turn.'
-    },
-    {
-      name: 'Knock Back',
-      cost: [D, D, C, C],
-      damage: 80,
-      text: 'Your opponent switches his or her Active Pokémon with 1 of his or her Benched Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Bother',
+    cost: [D, C, C],
+    damage: 50,
+    text: 'Flip a coin. If heads, your opponent can\'t play any Supporter cards from his or her hand during his or her next turn.'
+  }, {
+    name: 'Knock Back',
+    cost: [D, D, C, C],
+    damage: 80,
+    text: 'Your opponent switches his or her Active Pokémon with 1 of his or her Benched Pokémon.'
+  }];
 
   public set: string = 'XY';
   public setNumber: string = '71';

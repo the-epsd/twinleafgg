@@ -17,21 +17,18 @@ export class Volcarona2 extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Burning Scales',
-      cost: [R],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
-    },
-    {
-      name: 'Wind Wheel',
-      cost: [R, C, C],
-      damage: 80,
-      text: 'Your opponent switches his or her Active Pokémon with 1 of his or her Benched Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Burning Scales',
+    cost: [R],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
+  }, {
+    name: 'Wind Wheel',
+    cost: [R, C, C],
+    damage: 80,
+    text: 'Your opponent switches his or her Active Pokémon with 1 of his or her Benched Pokémon.'
+  }];
 
   public set: string = 'AOR';
   public setNumber: string = '18';

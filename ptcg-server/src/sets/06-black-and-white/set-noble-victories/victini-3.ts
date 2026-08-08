@@ -11,14 +11,12 @@ export class Victini3 extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'V-blast',
-      cost: [P],
-      damage: 120,
-      text: 'Flip 2 coins. If either of them is tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'V-blast',
+    cost: [P],
+    damage: 120,
+    text: 'Flip 2 coins. If either of them is tails, this attack does nothing.'
+  }];
 
   public set: string = 'NVI';
   public setNumber: string = '43';

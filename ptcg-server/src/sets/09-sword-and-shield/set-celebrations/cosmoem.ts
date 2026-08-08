@@ -21,6 +21,7 @@ export class Cosmoem extends PokemonCard {
   }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'CEL';
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';

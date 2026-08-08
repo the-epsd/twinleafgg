@@ -24,6 +24,7 @@ export class Hoppip extends PokemonCard {
   }];
 
   public regulationMark = 'G';
+
   public set = 'PAL';
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';

@@ -25,6 +25,7 @@ export class Diglett extends PokemonCard {
   }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'CRE';
   public setNumber: string = '76';
   public cardImage: string = 'assets/cardback.png';

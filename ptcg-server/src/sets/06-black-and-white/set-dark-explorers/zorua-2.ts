@@ -12,20 +12,17 @@ export class Zorua2 extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Paralyzing Gaze',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Shadow Bind',
-      cost: [D, C],
-      damage: 20,
-      text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
-    }
-  ];
+  public attacks = [{
+    name: 'Paralyzing Gaze',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Shadow Bind',
+    cost: [D, C],
+    damage: 20,
+    text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
+  }];
 
   public set: string = 'DEX';
   public setNumber: string = '70';

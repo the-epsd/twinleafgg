@@ -16,23 +16,21 @@ export class GreninjaV extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Water Drip',
-      cost: [W, C],
-      damage: 40,
-      text: ''
-    },
-    {
-      name: 'Dancing Shuriken',
-      cost: [W, W, C],
-      damage: 80,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 80 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Water Drip',
+    cost: [W, C],
+    damage: 40,
+    text: ''
+  }, {
+    name: 'Dancing Shuriken',
+    cost: [W, W, C],
+    damage: 80,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 80 damage for each heads.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'FST';
   public setNumber: string = '73';
   public cardImage: string = 'assets/cardback.png';

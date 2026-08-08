@@ -3,9 +3,8 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED, FLIP_UNTIL_TAILS_AND_COUNT_HEADS } from '../../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { CoinFlipPrompt, GameMessage } from '../../../game';
 
 export class Infernape extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -21,8 +20,7 @@ export class Infernape extends PokemonCard {
     damage: 30,
     damageCalculation: 'x',
     text: 'Flip a coin until you get tails. This attack does 30 damage times the number of heads.'
-  },
-  {
+  }, {
     name: 'Flare Blitz',
     cost: [R, R],
     damage: 90,
@@ -40,18 +38,9 @@ export class Infernape extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const flipCoin = (heads: number = 0): State => {
-        return store.prompt(state, [
-          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-        ], result => {
-          if (result === true) {
-            return flipCoin(heads + 1);
-          }
-          effect.damage = 30 * heads;
-          return state;
-        });
-      };
-      return flipCoin();
+      return FLIP_UNTIL_TAILS_AND_COUNT_HEADS(store, state, player, heads => {
+      effect.damage = 30 * heads;
+    });
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

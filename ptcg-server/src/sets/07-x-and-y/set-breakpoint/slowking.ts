@@ -26,14 +26,12 @@ export class Slowking extends PokemonCard {
     text: 'Once during your turn (before your attack), you may flip a coin. If heads, move an Energy from your opponent\'s Active Pokémon to 1 of his or her Benched Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Psych Up',
-      cost: [W, C],
-      damage: 40,
-      text: 'During your next turn, this Pokémon\'s Psych Up attack does 40 more damage (before applying Weakness and Resistance).'
-    }
-  ];
+  public attacks = [{
+    name: 'Psych Up',
+    cost: [W, C],
+    damage: 40,
+    text: 'During your next turn, this Pokémon\'s Psych Up attack does 40 more damage (before applying Weakness and Resistance).'
+  }];
 
   public set: string = 'BKP';
   public setNumber: string = '21';

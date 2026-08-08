@@ -12,22 +12,19 @@ export class Ambipom extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Double Hit',
-      cost: [C],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
-    },
-    {
-      name: 'Hand Fling',
-      cost: [C, C],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Does 10 damage times the number of cards in your hand.'
-    }
-  ];
+  public attacks = [{
+    name: 'Double Hit',
+    cost: [C],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
+  }, {
+    name: 'Hand Fling',
+    cost: [C, C],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Does 10 damage times the number of cards in your hand.'
+  }];
 
   public set: string = 'DRX';
   public setNumber: string = '100';

@@ -22,8 +22,7 @@ export class Blazikenex extends PokemonCard {
     damage: 30,
     damageCalculation: '+',
     text: 'Flip a coin. If heads, this attack does 30 damage plus 20 more damage. If tails, this attack does 30 damage and the Defending Pokémon is now Burned.'
-  },
-  {
+  }, {
     name: 'Volcanic Ash',
     cost: [R, R, C, C],
     damage: 0,

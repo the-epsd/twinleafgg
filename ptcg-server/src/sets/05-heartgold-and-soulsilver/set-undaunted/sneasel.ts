@@ -18,8 +18,7 @@ export class Sneasel extends PokemonCard {
     damage: 10,
     damageCalculation: 'x',
     text: 'Flip 3 coins. This attack does 10 damage times the number of heads.'
-  },
-  {
+  }, {
     name: 'Beat Up',
     cost: [D, D],
     damage: 20,

@@ -23,8 +23,7 @@ export class AurasLucario extends PokemonCard {
     cost: [M],
     damage: 0,
     text: 'Flip a coin. If heads, prevent all effects of attacks, including damage, done to Aura\'s Lucario during your opponent\'s next turn.'
-  },
-  {
+  }, {
     name: 'Low Kick',
     cost: [F, C, C],
     damage: 40,

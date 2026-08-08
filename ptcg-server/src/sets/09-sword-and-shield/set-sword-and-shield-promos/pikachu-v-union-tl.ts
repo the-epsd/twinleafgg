@@ -29,20 +29,17 @@ export class PikachuVUNIONTopLeft extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Attach up to 2 [L] Energy cards from your discard pile to this Pokémon.'
-  },
-  {
+  }, {
     name: 'Shocking Shock',
     cost: [L, C],
     damage: 120,
     text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-  },
-  {
+  }, {
     name: 'Disconnect',
     cost: [L, L, C],
     damage: 150,
     text: 'During your opponent\'s next turn, they can\'t play any Item cards from their hand.'
-  },
-  {
+  }, {
     name: 'Electro Ball Together',
     cost: [L, L, C],
     damage: 250,
@@ -50,7 +47,9 @@ export class PikachuVUNIONTopLeft extends PokemonCard {
   }];
 
   public set: string = 'SWSH';
+
   public regulationMark = 'E';
+
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '139';
   public name: string = 'Pikachu V-UNION';

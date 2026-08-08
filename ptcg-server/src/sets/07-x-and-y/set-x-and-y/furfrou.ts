@@ -24,14 +24,12 @@ export class Furfrou extends PokemonCard {
     text: 'Any damage done to this Pokémon by attacks is reduced by 20 (after applying Weakness and Resistance).'
   }];
 
-  public attacks = [
-    {
-      name: 'Energy Cutoff',
-      cost: [C, C, C],
-      damage: 80,
-      text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Energy Cutoff',
+    cost: [C, C, C],
+    damage: 80,
+    text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
+  }];
 
   public set: string = 'XY';
   public setNumber: string = '114';

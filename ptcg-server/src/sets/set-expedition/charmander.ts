@@ -16,8 +16,7 @@ export class Charmander extends PokemonCard {
     cost: [C],
     damage: 10,
     text: ''
-  },
-  {
+  }, {
     name: 'Searing Flame',
     cost: [R, C],
     damage: 10,

@@ -17,22 +17,19 @@ export class Dodrio extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Rage',
-      cost: [C],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
-    },
-    {
-      name: 'Endeavor',
-      cost: [C, C, C],
-      damage: 50,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Rage',
+    cost: [C],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
+  }, {
+    name: 'Endeavor',
+    cost: [C, C, C],
+    damage: 50,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
+  }];
 
   public set: string = 'XY';
   public setNumber: string = '99';

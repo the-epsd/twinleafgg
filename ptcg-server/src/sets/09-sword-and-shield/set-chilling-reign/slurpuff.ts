@@ -17,22 +17,20 @@ export class Slurpuff extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Follow the Scent',
-      cost: [C, C],
-      damage: 0,
-      text: 'Flip 3 coins. Put a number of cards up to the number of heads from your discard pile into your hand.'
-    },
-    {
-      name: 'Fairy Wind',
-      cost: [C, C, C],
-      damage: 80,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Follow the Scent',
+    cost: [C, C],
+    damage: 0,
+    text: 'Flip 3 coins. Put a number of cards up to the number of heads from your discard pile into your hand.'
+  }, {
+    name: 'Fairy Wind',
+    cost: [C, C, C],
+    damage: 80,
+    text: ''
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'CRE';
   public setNumber: string = '68';
   public cardImage: string = 'assets/cardback.png';

@@ -17,14 +17,12 @@ export class Flabebe extends PokemonCard {
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Wish',
-      cost: [Y],
-      damage: 0,
-      text: 'Flip a coin. If heads, search your deck for a card and put it into your hand. Shuffle your deck afterward.'
-    }
-  ];
+  public attacks = [{
+    name: 'Wish',
+    cost: [Y],
+    damage: 0,
+    text: 'Flip a coin. If heads, search your deck for a card and put it into your hand. Shuffle your deck afterward.'
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '101';

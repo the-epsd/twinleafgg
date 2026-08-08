@@ -16,21 +16,18 @@ export class Leafeon extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Soothing Scent',
-      cost: [G],
-      damage: 30,
-      text: 'Your opponent\'s Active Pokémon is now Asleep.'
-    },
-    {
-      name: 'Magical Leaf',
-      cost: [G, C, C],
-      damage: 50,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 30 more damage and heal 30 damage from this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Soothing Scent',
+    cost: [G],
+    damage: 30,
+    text: 'Your opponent\'s Active Pokémon is now Asleep.'
+  }, {
+    name: 'Magical Leaf',
+    cost: [G, C, C],
+    damage: 50,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 30 more damage and heal 30 damage from this Pokémon.'
+  }];
 
   public set: string = 'FFI';
   public setNumber: string = '7';

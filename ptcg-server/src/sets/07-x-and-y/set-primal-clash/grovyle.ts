@@ -22,8 +22,7 @@ export class Grovyle extends PokemonCard {
     cost: [G],
     damage: 20,
     text: ''
-  },
-  {
+  }, {
     name: 'Agility',
     cost: [G, C, C],
     damage: 40,

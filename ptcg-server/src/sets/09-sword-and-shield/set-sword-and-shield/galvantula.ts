@@ -22,16 +22,15 @@ export class Galvantula extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Volt Wave',
-      cost: [L, C],
-      damage: 50,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Volt Wave',
+    cost: [L, C],
+    damage: 50,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'SSH';
   public setNumber: string = '63';
   public cardImage: string = 'assets/cardback.png';

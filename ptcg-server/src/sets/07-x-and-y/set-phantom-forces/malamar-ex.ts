@@ -26,15 +26,13 @@ export class MalamarEx extends PokemonCard {
     text: 'When you attach an Energy from your hand to this Pokémon, you may use this Ability. Your opponent\'s Active Pokémon is now Asleep.'
   }];
 
-  public attacks = [
-    {
-      name: 'MAXamar',
-      cost: [D, C],
-      damage: 60,
-      damageCalculation: 'x',
-      text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 60 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'MAXamar',
+    cost: [D, C],
+    damage: 60,
+    damageCalculation: 'x',
+    text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 60 damage times the number of heads.'
+  }];
 
   public set: string = 'PHF';
   public setNumber: string = '58';

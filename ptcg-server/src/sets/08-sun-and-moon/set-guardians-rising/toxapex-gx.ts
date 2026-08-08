@@ -24,14 +24,12 @@ export class ToxapexGx extends PokemonCard {
     damage: 30,
     damageCalculation: 'x',
     text: 'Flip 4 coins. This attack does 30 damage for each heads.'
-  },
-  {
+  }, {
     name: 'Super Intense Poison',
     cost: [P, P, P],
     damage: 0,
     text: 'Your opponent\'s Active Pokémon is now Poisoned. Put 10 damage counters instead of 1 on that Pokémon between turns.'
-  },
-  {
+  }, {
     name: 'Total Shelter-GX',
     cost: [P, P, P],
     damage: 150,

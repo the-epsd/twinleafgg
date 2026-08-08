@@ -12,20 +12,17 @@ export class DialgaEx extends PokemonCard {
   public weakness = [{ type: N }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Reverse Edge',
-      cost: [P, M, C],
-      damage: 50,
-      text: 'Flip a coin. If heads, put a card from your discard pile into your hand.'
-    },
-    {
-      name: 'Fast Forward',
-      cost: [C, C, C, C],
-      damage: 90,
-      text: 'For each Plasma Energy attached to this Pok\u00e9mon, discard the top card of your opponent\'s deck.'
-    }
-  ];
+  public attacks = [{
+    name: 'Reverse Edge',
+    cost: [P, M, C],
+    damage: 50,
+    text: 'Flip a coin. If heads, put a card from your discard pile into your hand.'
+  }, {
+    name: 'Fast Forward',
+    cost: [C, C, C, C],
+    damage: 90,
+    text: 'For each Plasma Energy attached to this Pok\u00e9mon, discard the top card of your opponent\'s deck.'
+  }];
 
   public set: string = 'PLB';
   public setNumber: string = '65';

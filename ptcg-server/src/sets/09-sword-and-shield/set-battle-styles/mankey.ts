@@ -16,16 +16,15 @@ export class Mankey extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Focus Fist',
-      cost: [F, C],
-      damage: 50,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Focus Fist',
+    cost: [F, C],
+    damage: 50,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'BST';
   public setNumber: string = '66';
   public cardImage: string = 'assets/cardback.png';

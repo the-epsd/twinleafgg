@@ -25,14 +25,12 @@ export class Chandelure extends PokemonCard {
     text: 'If this Pokémon is Knocked Out by damage from an opponent\'s attack, flip a coin. If heads, the Attacking Pokémon is Knocked Out.'
   }];
 
-  public attacks = [
-    {
-      name: 'Cursed Drop',
-      cost: [P, C, C],
-      damage: 0,
-      text: 'Put 6 damage counters on your opponent\'s Pokémon in any way you like.'
-    }
-  ];
+  public attacks = [{
+    name: 'Cursed Drop',
+    cost: [P, C, C],
+    damage: 0,
+    text: 'Put 6 damage counters on your opponent\'s Pokémon in any way you like.'
+  }];
 
   public set: string = 'PHF';
   public setNumber: string = '43';

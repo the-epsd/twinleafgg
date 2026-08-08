@@ -15,14 +15,12 @@ export class Seedot extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Bide',
-      cost: [G],
-      damage: 0,
-      text: 'Flip a coin. If heads, if this Pok\u00e9mon would be Knocked Out by damage from an attack during your opponent\'s next turn, it is not Knocked Out and its remaining HP becomes 10 instead.'
-    }
-  ];
+  public attacks = [{
+    name: 'Bide',
+    cost: [G],
+    damage: 0,
+    text: 'Flip a coin. If heads, if this Pok\u00e9mon would be Knocked Out by damage from an attack during your opponent\'s next turn, it is not Knocked Out and its remaining HP becomes 10 instead.'
+  }];
 
   public set: string = 'STS';
   public setNumber: string = '9';

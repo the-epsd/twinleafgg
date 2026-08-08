@@ -21,20 +21,17 @@ export class Spiritomb extends PokemonCard {
   public readonly BLOCK_EVOLVE_MARKER = 'SPIRITOMB_PHF_BLOCK_EVOLVE_MARKER';
   public readonly CLEAR_BLOCK_EVOLVE_MARKER = 'SPIRITOMB_PHF_CLEAR_BLOCK_EVOLVE_MARKER';
 
-  public attacks = [
-    {
-      name: 'B Cancel',
-      cost: [C],
-      damage: 10,
-      text: 'Your opponent can\'t play any Pokémon from his or her hand to evolve the Defending Pokémon during his or her next turn.'
-    },
-    {
-      name: 'Confuse Ray',
-      cost: [D, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'B Cancel',
+    cost: [C],
+    damage: 10,
+    text: 'Your opponent can\'t play any Pokémon from his or her hand to evolve the Defending Pokémon during his or her next turn.'
+  }, {
+    name: 'Confuse Ray',
+    cost: [D, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Confused.'
+  }];
 
   public set: string = 'PHF';
   public setNumber: string = '55';

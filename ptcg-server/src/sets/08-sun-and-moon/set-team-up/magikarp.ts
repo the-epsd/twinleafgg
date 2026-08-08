@@ -15,14 +15,12 @@ export class Magikarp extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Enter the Dragon',
-      cost: [W],
-      damage: 0,
-      text: 'Flip a coin. If heads, put a card that evolves from this Pokémon from your discard pile onto this Pokémon to evolve it.'
-    }
-  ];
+  public attacks = [{
+    name: 'Enter the Dragon',
+    cost: [W],
+    damage: 0,
+    text: 'Flip a coin. If heads, put a card that evolves from this Pokémon from your discard pile onto this Pokémon to evolve it.'
+  }];
 
   public set: string = 'TEU';
   public setNumber: string = '29';

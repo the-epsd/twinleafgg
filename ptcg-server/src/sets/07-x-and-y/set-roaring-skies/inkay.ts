@@ -16,20 +16,17 @@ export class Inkay extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Rip Off',
-      cost: [D],
-      damage: 0,
-      text: 'Choose a random card from your opponent\'s hand. Your opponent reveals that card and shuffles it into his or her deck.'
-    },
-    {
-      name: 'Psybeam',
-      cost: [D, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Rip Off',
+    cost: [D],
+    damage: 0,
+    text: 'Choose a random card from your opponent\'s hand. Your opponent reveals that card and shuffles it into his or her deck.'
+  }, {
+    name: 'Psybeam',
+    cost: [D, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Confused.'
+  }];
 
   public set: string = 'ROS';
   public setNumber: string = '41';

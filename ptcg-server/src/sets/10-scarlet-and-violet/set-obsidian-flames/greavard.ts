@@ -13,17 +13,16 @@ export class Greavard extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Play Rough',
-      cost: [C, C, C],
-      damage: 30,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 30 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Play Rough',
+    cost: [C, C, C],
+    damage: 30,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 30 more damage.'
+  }];
 
   public regulationMark = 'G';
+
   public set: string = 'OBF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '100';

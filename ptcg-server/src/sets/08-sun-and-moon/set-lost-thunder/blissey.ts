@@ -24,15 +24,13 @@ export class Blissey extends PokemonCard {
     text: 'Once during your turn (before your attack), you may remove a Special Condition from your Active Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Powerful Slap',
-      cost: [C, C, C],
-      damage: 80,
-      damageCalculation: 'x',
-      text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 80 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Powerful Slap',
+    cost: [C, C, C],
+    damage: 80,
+    damageCalculation: 'x',
+    text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 80 damage for each heads.'
+  }];
 
   public set: string = 'LOT';
   public setNumber: string = '153';

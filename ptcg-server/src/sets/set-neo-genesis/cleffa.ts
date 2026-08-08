@@ -12,6 +12,7 @@ export class Cleffa extends PokemonCard {
   public cardType: CardType = C;
   public hp: number = 30;
   public retreat = [];
+
   public evolvesTo = ['Clefairy'];
 
   public powers = [{

@@ -1,9 +1,9 @@
-import { PokemonCard, CardTag, Stage, CardType, StoreLike, State, StateUtils, CoinFlipPrompt, GameMessage, ChoosePokemonPrompt, PlayerType, SlotType, CardTarget, AttachEnergyPrompt, EnergyCard, EnergyType, SuperType } from '../../../game';
+import { PokemonCard, CardTag, Stage, CardType, StoreLike, State, StateUtils, GameMessage, ChoosePokemonPrompt, PlayerType, SlotType, CardTarget, AttachEnergyPrompt, EnergyCard, EnergyType, SuperType } from '../../../game';
 import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { AttachEnergyEffect } from '../../../game/store/effects/play-card-effects';
-import { TERA_RULE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { TERA_RULE, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class AlolanExeggutorex extends PokemonCard {
   public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
@@ -18,8 +18,7 @@ export class AlolanExeggutorex extends PokemonCard {
     cost: [G, W],
     damage: 150,
     text: 'Choose any number of Basic Energy cards from your hand and attach them to your Pokemon in any way you like.'
-  },
-  {
+  }, {
     name: 'Swinging Sphene',
     cost: [G, W, F],
     damage: 0,
@@ -27,6 +26,7 @@ export class AlolanExeggutorex extends PokemonCard {
   }];
 
   public regulationMark = 'H';
+
   public set: string = 'SSP';
   public setNumber: string = '133';
   public cardImage: string = 'assets/cardback.png';
@@ -79,9 +79,7 @@ export class AlolanExeggutorex extends PokemonCard {
         }
       });
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
           if (opponentActive && opponentActive.stage !== Stage.BASIC) {
             return state;

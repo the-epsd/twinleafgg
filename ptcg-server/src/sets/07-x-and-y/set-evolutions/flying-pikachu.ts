@@ -11,20 +11,17 @@ export class FlyingPikachu extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Thunder Shock',
-      cost: [L],
-      damage: 10,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Fly',
-      cost: [C, C, C],
-      damage: 30,
-      text: 'Flip a coin. If tails, this attack does nothing. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn.'
-    }
-  ];
+  public attacks = [{
+    name: 'Thunder Shock',
+    cost: [L],
+    damage: 10,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Fly',
+    cost: [C, C, C],
+    damage: 30,
+    text: 'Flip a coin. If tails, this attack does nothing. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn.'
+  }];
 
   public set: string = 'EVO';
   public setNumber: string = '110';

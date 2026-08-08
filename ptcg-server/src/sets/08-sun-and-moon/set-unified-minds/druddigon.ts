@@ -21,21 +21,18 @@ export class Druddigon extends PokemonCard {
 
   public usedDragOff = false;
 
-  public attacks = [
-    {
-      name: 'Drag Off',
-      cost: [C, C],
-      damage: 0,
-      text: 'Switch 1 of your opponent\'s Benched Pokémon with their Active Pokémon. This attack does 30 damage to the new Active Pokémon.'
-    },
-    {
-      name: 'Dragon Tail',
-      cost: [R, W, C],
-      damage: 100,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 100 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Drag Off',
+    cost: [C, C],
+    damage: 0,
+    text: 'Switch 1 of your opponent\'s Benched Pokémon with their Active Pokémon. This attack does 30 damage to the new Active Pokémon.'
+  }, {
+    name: 'Dragon Tail',
+    cost: [R, W, C],
+    damage: 100,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 100 damage for each heads.'
+  }];
 
   public set: string = 'UNM';
   public setNumber: string = '157';

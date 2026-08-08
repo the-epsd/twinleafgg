@@ -17,20 +17,17 @@ export class Gothorita extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Psypunch',
-      cost: [C, C],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Destructive Beam',
-      cost: [P, C, C],
-      damage: 50,
-      text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Psypunch',
+    cost: [C, C],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Destructive Beam',
+    cost: [P, C, C],
+    damage: 50,
+    text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokémon.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '76';

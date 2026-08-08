@@ -25,17 +25,16 @@ export class Klinklang extends PokemonCard {
     text: 'Your Basic Pokémon take 20 less damage from attacks from your opponent\'s Pokémon (after applying Weakness and Resistance).'
   }];
 
-  public attacks = [
-    {
-      name: 'Tumbling Attack',
-      cost: [M, C, C],
-      damage: 90,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 90 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tumbling Attack',
+    cost: [M, C, C],
+    damage: 90,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 90 more damage.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'BRS';
   public setNumber: string = '104';
   public cardImage: string = 'assets/cardback.png';

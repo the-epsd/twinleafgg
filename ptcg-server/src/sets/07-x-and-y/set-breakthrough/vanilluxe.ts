@@ -18,8 +18,7 @@ export class Vanilluxe extends PokemonCard {
     cost: [W, C],
     damage: 30,
     text: 'Until the end of your next turn, each player can\'t play any Supporter or Stadium cards from his or her hand.'
-  },
-  {
+  }, {
     name: 'Deep Freeze',
     cost: [W, C, C],
     damage: 70,

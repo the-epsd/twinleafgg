@@ -18,22 +18,19 @@ export class Garbodor2 extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Ensnarl',
-      cost: [C, C],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Does 20 damage times the number of Colorless in the Defending Pokémon\'s Retreat Cost.'
-    },
-    {
-      name: 'Double Ducts',
-      cost: [P, C, C, C],
-      damage: 80,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 80 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Ensnarl',
+    cost: [C, C],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Does 20 damage times the number of Colorless in the Defending Pokémon\'s Retreat Cost.'
+  }, {
+    name: 'Double Ducts',
+    cost: [P, C, C, C],
+    damage: 80,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 80 damage times the number of heads.'
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '67';

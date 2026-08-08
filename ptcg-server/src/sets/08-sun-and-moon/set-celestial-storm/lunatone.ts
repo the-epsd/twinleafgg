@@ -29,14 +29,12 @@ export class Lunatone extends PokemonCard {
     text: 'If you have Solrock in play, Fire Pokémon in play (both yours and your opponent\'s) have no Abilities, except Pokémon-GX and Pokémon-EX.'
   }];
 
-  public attacks = [
-    {
-      name: 'Psyshock',
-      cost: [P],
-      damage: 10,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Psyshock',
+    cost: [P],
+    damage: 10,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'CES';
   public setNumber: string = '61';

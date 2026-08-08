@@ -21,20 +21,17 @@ export class Skuntank extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Push Down',
-      cost: [D, C],
-      damage: 30,
-      text: 'Your opponent switches his or her Active Pokémon with 1 of his or her Benched Pokémon.'
-    },
-    {
-      name: 'Acid Spray',
-      cost: [D, C, C],
-      damage: 70,
-      text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Push Down',
+    cost: [D, C],
+    damage: 30,
+    text: 'Your opponent switches his or her Active Pokémon with 1 of his or her Benched Pokémon.'
+  }, {
+    name: 'Acid Spray',
+    cost: [D, C, C],
+    damage: 70,
+    text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
+  }];
 
   public set: string = 'FLF';
   public setNumber: string = '55';

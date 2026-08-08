@@ -15,14 +15,12 @@ export class Darumaka extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Reckless Charge',
-      cost: [R, C],
-      damage: 30,
-      text: 'Flip a coin. If tails, this Pokémon does 10 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Reckless Charge',
+    cost: [R, C],
+    damage: 30,
+    text: 'Flip a coin. If tails, this Pokémon does 10 damage to itself.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '27';

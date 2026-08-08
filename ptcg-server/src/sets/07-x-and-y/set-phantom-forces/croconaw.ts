@@ -17,20 +17,17 @@ export class Croconaw extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Wave Splash',
-      cost: [W, C],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Crunch',
-      cost: [W, C, C],
-      damage: 40,
-      text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Wave Splash',
+    cost: [W, C],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Crunch',
+    cost: [W, C, C],
+    damage: 40,
+    text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
+  }];
 
   public set: string = 'PHF';
   public setNumber: string = '16';

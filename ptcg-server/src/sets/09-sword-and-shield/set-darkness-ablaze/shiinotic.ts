@@ -30,6 +30,7 @@ export class Shiinotic extends PokemonCard {
   }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'DAA';
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';

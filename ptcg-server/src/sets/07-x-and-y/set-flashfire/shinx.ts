@@ -15,20 +15,17 @@ export class Shinx extends PokemonCard {
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Paralyzing Gaze',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Static Shock',
-      cost: [L, L],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Paralyzing Gaze',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Static Shock',
+    cost: [L, L],
+    damage: 30,
+    text: ''
+  }];
 
   public set: string = 'FLF';
   public setNumber: string = '32';

@@ -23,8 +23,7 @@ export class Carbink extends PokemonCard {
     cost: [Y],
     damage: 0,
     text: 'Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn.'
-  },
-  {
+  }, {
     name: 'Wonder Blast',
     cost: [C, C, C],
     damage: 40,

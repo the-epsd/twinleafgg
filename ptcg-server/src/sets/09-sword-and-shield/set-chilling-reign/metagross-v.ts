@@ -18,24 +18,22 @@ export class MetagrossV extends PokemonCard {
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Bullet Punch',
-      cost: [M],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
-    },
-    {
-      name: 'Synchro Hammer',
-      cost: [M, C],
-      damage: 60,
-      damageCalculation: '+',
-      text: 'If this Pokémon and your opponent\'s Active Pokémon have the same amount of Energy attached, this attack does 90 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Bullet Punch',
+    cost: [M],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
+  }, {
+    name: 'Synchro Hammer',
+    cost: [M, C],
+    damage: 60,
+    damageCalculation: '+',
+    text: 'If this Pokémon and your opponent\'s Active Pokémon have the same amount of Energy attached, this attack does 90 more damage.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'CRE';
   public setNumber: string = '112';
   public cardImage: string = 'assets/cardback.png';

@@ -17,8 +17,7 @@ export class Eevee extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, the Defending Pokémon can\'t attack Eevee during your opponent\'s next turn. (Benching either Pokémon ends this effect.)'
-  },
-  {
+  }, {
     name: 'Quick Attack',
     cost: [C, C],
     damage: 10,

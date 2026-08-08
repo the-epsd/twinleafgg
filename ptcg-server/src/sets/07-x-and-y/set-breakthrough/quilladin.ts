@@ -16,21 +16,18 @@ export class Quilladin extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Tackle',
-      cost: [G, C],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Pin Missile',
-      cost: [G, G, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 40 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tackle',
+    cost: [G, C],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Pin Missile',
+    cost: [G, G, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 40 damage times the number of heads.'
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '10';

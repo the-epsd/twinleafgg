@@ -18,8 +18,7 @@ export class Dratini extends PokemonCard {
     cost: [C],
     damage: 10,
     text: ''
-  },
-  {
+  }, {
     name: 'Thunder Jolt',
     cost: [L, C],
     damage: 30,

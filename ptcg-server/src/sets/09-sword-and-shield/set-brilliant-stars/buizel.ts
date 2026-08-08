@@ -24,6 +24,7 @@ export class Buizel extends PokemonCard {
   }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'BRS';
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';

@@ -9,7 +9,6 @@ import {
 import { GameMessage } from '../../../game/game-message';
 import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
-
 export class RaikouEx extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public tags = [CardTag.POKEMON_EX];
@@ -18,19 +17,17 @@ export class RaikouEx extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Thunder Fang',
-      cost: [L, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    }, {
-      name: 'Volt Bolt',
-      cost: [L, L, C],
-      damage: 0,
-      text: 'Discard all [L] Energy attached to this Pokémon. This attack does 100 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    },
-  ];
+  public attacks = [{
+    name: 'Thunder Fang',
+    cost: [L, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Volt Bolt',
+    cost: [L, L, C],
+    damage: 0,
+    text: 'Discard all [L] Energy attached to this Pokémon. This attack does 100 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }];
 
   public set: string = 'DEX';
   public setNumber: string = '38';

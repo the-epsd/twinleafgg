@@ -11,17 +11,17 @@ export class TeamRocketsFlaaffy extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Thunder Shock',
-      cost: [L, C],
-      damage: 50,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Thunder Shock',
+    cost: [L, C],
+    damage: 50,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'DRI';
+
   public regulationMark = 'I';
+
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '73';
   public name: string = 'Team Rocket\'s Flaaffy';

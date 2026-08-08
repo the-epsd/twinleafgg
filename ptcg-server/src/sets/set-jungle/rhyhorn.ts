@@ -17,8 +17,7 @@ export class Rhyhorn extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, the Defending Pokémon can\'t attack Rhyhorn during your opponent\'s next turn. (Benching either Pokémon ends this effect.)'
-  },
-  {
+  }, {
     name: 'Horn Attack',
     cost: [F, C, C],
     damage: 30,

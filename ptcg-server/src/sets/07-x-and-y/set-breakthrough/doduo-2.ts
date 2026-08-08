@@ -16,21 +16,18 @@ export class Doduo2 extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Double Stab',
-      cost: [C],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
-    },
-    {
-      name: 'Doduo Delivery',
-      cost: [C, C],
-      damage: 0,
-      text: 'Draw 2 cards.'
-    }
-  ];
+  public attacks = [{
+    name: 'Double Stab',
+    cost: [C],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
+  }, {
+    name: 'Doduo Delivery',
+    cost: [C, C],
+    damage: 0,
+    text: 'Draw 2 cards.'
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '116';

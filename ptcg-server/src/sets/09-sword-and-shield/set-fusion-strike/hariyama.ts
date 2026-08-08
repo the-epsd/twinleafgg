@@ -25,16 +25,15 @@ export class Hariyama extends PokemonCard {
     text: 'If this Pokémon would be Knocked Out by damage from an attack, flip a coin. If heads, this Pokémon is not Knocked Out, and its remaining HP becomes 10.'
   }];
 
-  public attacks = [
-    {
-      name: 'Hammer In',
-      cost: [F, C, C],
-      damage: 100,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Hammer In',
+    cost: [F, C, C],
+    damage: 100,
+    text: ''
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'FST';
   public setNumber: string = '143';
   public cardImage: string = 'assets/cardback.png';

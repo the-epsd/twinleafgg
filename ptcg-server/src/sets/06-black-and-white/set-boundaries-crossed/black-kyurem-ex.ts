@@ -15,20 +15,17 @@ export class BlackKyuremEx extends PokemonCard {
   public weakness = [{ type: N }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Dragon Fang',
-      cost: [L, C, C],
-      damage: 60,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Freeze Shock',
-      cost: [W, L, L, C],
-      damage: 150,
-      text: 'This Pokémon can\'t attack during your next turn.'
-    }
-  ];
+  public attacks = [{
+    name: 'Dragon Fang',
+    cost: [L, C, C],
+    damage: 60,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Freeze Shock',
+    cost: [W, L, L, C],
+    damage: 150,
+    text: 'This Pokémon can\'t attack during your next turn.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '101';

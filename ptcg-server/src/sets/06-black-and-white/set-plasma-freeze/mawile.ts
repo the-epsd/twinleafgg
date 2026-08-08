@@ -6,7 +6,6 @@ import {
   WAS_ATTACK_USED, COIN_FLIP_PROMPT, BLOCK_RETREAT,
   HEAL_X_DAMAGE_FROM_THIS_POKEMON, SHUFFLE_DECK, SHOW_CARDS_TO_PLAYER
 } from '../../../game/store/prefabs/prefabs';
-import { } from '../../../game/store/prefabs/prefabs';
 export class Mawile extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;
@@ -15,20 +14,17 @@ export class Mawile extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Astonish',
-      cost: [M],
-      damage: 0,
-      text: 'Flip a coin. If heads, choose a random card from your opponent\'s hand. Your opponent reveals that card and shuffles it into his or her deck.'
-    },
-    {
-      name: 'Big Ol\' Bite',
-      cost: [M, C, C],
-      damage: 30,
-      text: 'Heal 30 damage from this Pokémon. The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
-    }
-  ];
+  public attacks = [{
+    name: 'Astonish',
+    cost: [M],
+    damage: 0,
+    text: 'Flip a coin. If heads, choose a random card from your opponent\'s hand. Your opponent reveals that card and shuffles it into his or her deck.'
+  }, {
+    name: 'Big Ol\' Bite',
+    cost: [M, C, C],
+    damage: 30,
+    text: 'Heal 30 damage from this Pokémon. The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
+  }];
 
   public set: string = 'PLF';
   public setNumber: string = '80';

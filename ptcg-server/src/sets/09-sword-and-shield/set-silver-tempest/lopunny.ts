@@ -16,23 +16,21 @@ export class Lopunny extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Smash Kick',
-      cost: [C],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Double Kick',
-      cost: [C, C, C],
-      damage: 100,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 100 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Smash Kick',
+    cost: [C],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Double Kick',
+    cost: [C, C, C],
+    damage: 100,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 100 damage for each heads.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'SIT';
   public setNumber: string = '145';
   public cardImage: string = 'assets/cardback.png';

@@ -20,6 +20,7 @@ export class Lillipup extends PokemonCard {
   }];
 
   public regulationMark = 'I';
+
   public set: string = 'WHT';
   public setNumber: string = '74';
   public cardImage: string = 'assets/cardback.png';

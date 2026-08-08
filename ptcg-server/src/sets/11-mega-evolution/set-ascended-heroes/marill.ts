@@ -20,8 +20,7 @@ export class Marill extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage from and effects of attacks done to this Pokémon.'
-  },
-  {
+  }, {
     name: 'Flop',
     cost: [P, C],
     damage: 20,
@@ -29,6 +28,7 @@ export class Marill extends PokemonCard {
   }];
 
   public regulationMark = 'I';
+
   public set: string = 'ASC';
   public setNumber: string = '83';
   public cardImage: string = 'assets/cardback.png';

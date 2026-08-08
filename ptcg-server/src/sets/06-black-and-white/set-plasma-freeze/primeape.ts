@@ -16,22 +16,19 @@ export class Primeape extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Fury Swipes',
-      cost: [C, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 30 damage times the number of heads.'
-    },
-    {
-      name: 'Karate Chop',
-      cost: [F, F],
-      damage: 80,
-      damageCalculation: '-',
-      text: 'Does 80 damage minus 10 damage for each damage counter on this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fury Swipes',
+    cost: [C, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 30 damage times the number of heads.'
+  }, {
+    name: 'Karate Chop',
+    cost: [F, F],
+    damage: 80,
+    damageCalculation: '-',
+    text: 'Does 80 damage minus 10 damage for each damage counter on this Pokémon.'
+  }];
 
   public set: string = 'PLF';
   public setNumber: string = '60';

@@ -1,6 +1,6 @@
-import { Attack, CardType, ChooseCardsPrompt, CoinFlipPrompt, GameMessage, PokemonCard, Stage, State, StoreLike, SuperType, Weakness } from '../../../game';
+import { Attack, CardType, ChooseCardsPrompt, GameMessage, PokemonCard, Stage, State, StoreLike, SuperType, Weakness } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED, FLIP_UNTIL_TAILS_AND_COUNT_HEADS } from '../../../game/store/prefabs/prefabs';
 
 export class Steelix extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -68,18 +68,9 @@ export class Steelix extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      const flipCoin = (heads: number = 0): State => {
-        return store.prompt(state, [
-          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-        ], result => {
-          if (result === true) {
-            return flipCoin(heads + 1);
-          }
-          effect.damage = 100 * heads;
-          return state;
-        });
-      };
-      return flipCoin();
+      return FLIP_UNTIL_TAILS_AND_COUNT_HEADS(store, state, player, heads => {
+      effect.damage = 100 * heads;
+    });
     }
 
     return state;

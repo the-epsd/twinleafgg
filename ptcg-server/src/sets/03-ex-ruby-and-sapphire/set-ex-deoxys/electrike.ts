@@ -19,8 +19,7 @@ export class Electrike extends PokemonCard {
     cost: [L],
     damage: 0,
     text: 'Flip a coin. If heads, your opponent can\'t play Trainer cards from his or her hand during his or her next turn.',
-  },
-  {
+  }, {
     name: 'Gnaw',
     cost: [C, C],
     damage: 20,

@@ -16,8 +16,7 @@ export class Exeggcute extends PokemonCard {
     cost: [P],
     damage: 10,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
-  },
-  {
+  }, {
     name: 'Double Spin',
     cost: [C, C],
     damage: 20,

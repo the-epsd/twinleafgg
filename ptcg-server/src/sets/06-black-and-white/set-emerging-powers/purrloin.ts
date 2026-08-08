@@ -12,14 +12,12 @@ export class Purrloin extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Knock Off',
-      cost: [D, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, discard a random card from your opponent\'s hand.'
-    }
-  ];
+  public attacks = [{
+    name: 'Knock Off',
+    cost: [D, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, discard a random card from your opponent\'s hand.'
+  }];
 
   public set: string = 'EPO';
   public cardImage: string = 'assets/cardback.png';

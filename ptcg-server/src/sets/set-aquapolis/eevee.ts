@@ -18,8 +18,7 @@ export class Eevee extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, search your deck for an Energy card and attach it to Eevee. Shuffle your deck afterward.'
-  },
-  {
+  }, {
     name: 'Lunge',
     cost: [C],
     damage: 20,

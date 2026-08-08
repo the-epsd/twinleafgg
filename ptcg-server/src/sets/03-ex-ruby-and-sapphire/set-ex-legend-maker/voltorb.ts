@@ -12,20 +12,17 @@ export class Voltorb extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Thunderwave',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Bouncing Ball',
-      cost: [L, C],
-      damage: 30,
-      text: 'Voltorb does 10 damage to itself.'
-    },
-  ];
+  public attacks = [{
+    name: 'Thunderwave',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Bouncing Ball',
+    cost: [L, C],
+    damage: 30,
+    text: 'Voltorb does 10 damage to itself.'
+  }];
 
   public set: string = 'LM';
   public name: string = 'Voltorb';

@@ -23,16 +23,15 @@ export class Tauros extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Target Together',
-      cost: [C, C],
-      damage: 0,
-      text: 'Choose 1 of your opponent\'s Pokémon and flip a coin for each of your Pokémon in play that has "Tauros" in its name. This attack does 50 damage to the chosen Pokémon for each heads. (Don\'t apply Weakness and Resistance for Benched Pokémon.)',
-    },
-  ];
+  public attacks = [{
+    name: 'Target Together',
+    cost: [C, C],
+    damage: 0,
+    text: 'Choose 1 of your opponent\'s Pokémon and flip a coin for each of your Pokémon in play that has "Tauros" in its name. This attack does 50 damage to the chosen Pokémon for each heads. (Don\'t apply Weakness and Resistance for Benched Pokémon.)',
+  }];
 
   public regulationMark = 'J';
+
   public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '69';

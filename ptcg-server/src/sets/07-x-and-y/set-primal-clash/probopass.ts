@@ -18,22 +18,19 @@ export class Probopass extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Triple Smash',
-      cost: [M],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 30 damage times the number of heads.'
-    },
-    {
-      name: 'Reinforced Nose',
-      cost: [M, M, C],
-      damage: 50,
-      damageCalculation: '+',
-      text: 'If this Pokémon has a Pokémon Tool card attached to it, this attack does 50 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Triple Smash',
+    cost: [M],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 30 damage times the number of heads.'
+  }, {
+    name: 'Reinforced Nose',
+    cost: [M, M, C],
+    damage: 50,
+    damageCalculation: '+',
+    text: 'If this Pokémon has a Pokémon Tool card attached to it, this attack does 50 more damage.'
+  }];
 
   public set: string = 'PRC';
   public setNumber: string = '95';

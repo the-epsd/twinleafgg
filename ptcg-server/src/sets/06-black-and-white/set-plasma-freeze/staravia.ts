@@ -17,14 +17,12 @@ export class Staravia extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Take Down',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip a coin. If tails, this Pokémon does 10 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Take Down',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip a coin. If tails, this Pokémon does 10 damage to itself.'
+  }];
 
   public set: string = 'PLF';
   public setNumber: string = '96';

@@ -21,20 +21,17 @@ export class Volcarona extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Shimmering Scales',
-      cost: [G],
-      damage: 20,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Confused. If tails, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Power Hurricane',
-      cost: [C, C, C],
-      damage: 120,
-      text: 'Discard all Energy attached to this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Shimmering Scales',
+    cost: [G],
+    damage: 20,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Confused. If tails, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Power Hurricane',
+    cost: [C, C, C],
+    damage: 120,
+    text: 'Discard all Energy attached to this Pokémon.'
+  }];
 
   public set: string = 'STS';
   public setNumber: string = '15';

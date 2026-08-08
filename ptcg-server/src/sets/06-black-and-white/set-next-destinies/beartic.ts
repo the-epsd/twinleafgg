@@ -17,8 +17,7 @@ export class Beartic extends PokemonCard {
     cost: [C, C],
     damage: 40,
     text: 'During your opponent\'s next turn, any damage done by attack from the Defending Pokémon is reduced by 20 (before applying Weakness and Resistance).'
-  },
-  {
+  }, {
     name: 'Ambush',
     cost: [W, C, C],
     damage: 60,

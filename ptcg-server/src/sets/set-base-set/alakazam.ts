@@ -10,9 +10,9 @@ import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
 import { MoveDamagePrompt, DamageMap } from '../../game/store/prompts/move-damage-prompt';
 import { GameMessage } from '../../game/game-message';
-import { CoinFlipPrompt } from '../..';
+
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { BLOCK_IF_ASLEEP_CONFUSED_PARALYZED, WAS_POWER_USED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_ASLEEP_CONFUSED_PARALYZED, WAS_POWER_USED, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 function* useDamageSwap(next: Function, store: StoreLike, state: State, effect: PowerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -49,13 +49,12 @@ function* useDamageSwap(next: Function, store: StoreLike, state: State, effect: 
 }
 
 export class Alakazam extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Kadabra';
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType = P;
   public hp: number = 80;
-  public weakness = [{ type: CardType.PSYCHIC }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: P }];
+  public retreat = [C, C, C];
 
   public powers = [{
     name: 'Damage Swap',
@@ -66,7 +65,7 @@ export class Alakazam extends PokemonCard {
 
   public attacks = [{
     name: 'Shadow Punch',
-    cost: [CardType.PSYCHIC, CardType.PSYCHIC, CardType.PSYCHIC],
+    cost: [P, P, P],
     damage: 30,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
   }];
@@ -87,9 +86,7 @@ export class Alakazam extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
           const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED]);
           store.reduceEffect(state, specialConditionEffect);

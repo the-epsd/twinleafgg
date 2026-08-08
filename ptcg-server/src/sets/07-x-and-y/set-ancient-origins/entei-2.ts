@@ -20,8 +20,7 @@ export class Entei2 extends PokemonCard {
     cost: [R, C],
     damage: 30,
     text: 'During your opponent\'s next turn, any damage done to this Pokémon by attacks is reduced by 30 (after applying Weakness and Resistance).'
-  },
-  {
+  }, {
     name: 'Heat Tackle',
     cost: [R, R, C, C],
     damage: 130,

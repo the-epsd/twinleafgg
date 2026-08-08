@@ -24,8 +24,7 @@ export class ZapdosEx extends PokemonCard {
     cost: [L, C],
     damage: 30,
     text: 'Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn.'
-  },
-  {
+  }, {
     name: 'Powervolt',
     cost: [L, L, C, C],
     damage: 80,

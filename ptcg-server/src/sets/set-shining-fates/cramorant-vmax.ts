@@ -4,9 +4,9 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { CoinFlipPrompt, GameMessage, StoreLike, State } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class CramorantVmax extends PokemonCard {
@@ -19,17 +19,16 @@ export class CramorantVmax extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Max Jet',
-      cost: [C, C, C],
-      damage: 80,
-      damageCalculation: 'x',
-      text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 80 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Max Jet',
+    cost: [C, C, C],
+    damage: 80,
+    damageCalculation: 'x',
+    text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 80 damage for each heads.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'SHF';
   public setNumber: string = '55';
   public cardImage: string = 'assets/cardback.png';
@@ -49,16 +48,12 @@ export class CramorantVmax extends PokemonCard {
         return sum + energy.provides.length;
       }, 0);
 
-      effect.damage = 0;
-
-      for (let i = 0; i < energyCount; i++) {
-        store.prompt(state, [
-          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-        ], result => {
-          if (result === true) {
-            effect.damage += 80;
-          }
+      if (energyCount > 0) {
+        MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, energyCount, results => {
+          effect.damage = results.filter(r => r).length * 80;
         });
+      } else {
+        effect.damage = 0;
       }
     }
 

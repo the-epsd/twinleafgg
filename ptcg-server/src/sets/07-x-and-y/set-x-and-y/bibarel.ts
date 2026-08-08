@@ -16,22 +16,19 @@ export class Bibarel extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Double Headbutt',
-      cost: [C, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 30 damage for each heads.'
-    },
-    {
-      name: 'Hypno Headbutt',
-      cost: [C, C, C],
-      damage: 60,
-      damageCalculation: '+',
-      text: 'You may do 30 more damage. If you do, this Pokémon is now Asleep.'
-    }
-  ];
+  public attacks = [{
+    name: 'Double Headbutt',
+    cost: [C, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 30 damage for each heads.'
+  }, {
+    name: 'Hypno Headbutt',
+    cost: [C, C, C],
+    damage: 60,
+    damageCalculation: '+',
+    text: 'You may do 30 more damage. If you do, this Pokémon is now Asleep.'
+  }];
 
   public set: string = 'XY';
   public setNumber: string = '107';

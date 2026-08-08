@@ -19,8 +19,7 @@ export class Tangrowth extends PokemonCard {
     damage: 10,
     damageCalculation: '+',
     text: 'This attack does 30 more damage for each [C] in your opponent\'s Active Pokémon\'s Retreat Cost.'
-  },
-  {
+  }, {
     name: 'Slam',
     cost: [G, C, C],
     damage: 80,

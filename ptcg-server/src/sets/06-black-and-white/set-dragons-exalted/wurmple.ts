@@ -16,14 +16,12 @@ export class Wurmple extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Sleep Poison',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Asleep and Poisoned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Sleep Poison',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Asleep and Poisoned.'
+  }];
 
   public set: string = 'DRX';
   public setNumber: string = '6';

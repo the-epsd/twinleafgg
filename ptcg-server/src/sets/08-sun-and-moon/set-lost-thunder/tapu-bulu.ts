@@ -15,21 +15,18 @@ export class TapuBulu extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Heavy Punch',
-      cost: [G, C],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'This attack does 20 damage for each of your opponent\'s Benched Pokémon.'
-    },
-    {
-      name: 'Wild Tackle',
-      cost: [G, G, C],
-      damage: 120,
-      text: 'Flip a coin. If tails, this Pokémon does 30 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Heavy Punch',
+    cost: [G, C],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'This attack does 20 damage for each of your opponent\'s Benched Pokémon.'
+  }, {
+    name: 'Wild Tackle',
+    cost: [G, G, C],
+    damage: 120,
+    text: 'Flip a coin. If tails, this Pokémon does 30 damage to itself.'
+  }];
 
   public set: string = 'LOT';
   public setNumber: string = '37';

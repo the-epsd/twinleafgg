@@ -18,8 +18,7 @@ export class Yanmega extends PokemonCard {
     cost: [C, C],
     damage: 30,
     text: 'Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokemon during your opponent\'s next turn.'
-  },
-  {
+  }, {
     name: 'Cutting Wind',
     cost: [C, C, C],
     damage: 70,

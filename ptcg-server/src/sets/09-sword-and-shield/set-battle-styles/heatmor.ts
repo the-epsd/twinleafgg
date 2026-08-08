@@ -16,22 +16,20 @@ export class Heatmor extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Flare',
-      cost: [R],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Burning Licks',
-      cost: [C, C, C],
-      damage: 70,
-      text: 'Flip 2 coins. For each heads, discard an Energy from your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Flare',
+    cost: [R],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Burning Licks',
+    cost: [C, C, C],
+    damage: 70,
+    text: 'Flip 2 coins. For each heads, discard an Energy from your opponent\'s Active Pokémon.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'BST';
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';

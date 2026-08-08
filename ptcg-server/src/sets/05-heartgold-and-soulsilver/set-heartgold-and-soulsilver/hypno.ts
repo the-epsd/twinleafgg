@@ -1,55 +1,43 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType, PokemonCardList, GameError, CoinFlipPrompt } from '../../../game';
+import { PowerType, StoreLike, State, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType, PokemonCardList, GameError } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { GameMessage } from '../../../game/game-message';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Hypno extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Drowzee';
-
-  public cardType: CardType = CardType.PSYCHIC;
-
+  public cardType: CardType = P;
   public hp: number = 90;
-
-  public weakness = [{ type: CardType.PSYCHIC }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: P }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Sleep Pendulum',
     useWhenInPlay: true,
     powerType: PowerType.POKEPOWER,
     text: 'Once during your turn (before your attack), you may flip a coin. ' +
-      'If heads, the Defending Pokemon is now Asleep. This power can\'t be ' +
-      'used if Hypno is affected by a Special Condition.'
+    'If heads, the Defending Pokemon is now Asleep. This power can\'t be ' +
+    'used if Hypno is affected by a Special Condition.'
   }];
 
-  public attacks = [
-    {
-      name: 'Psychic Shot',
-      cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
-      damage: 30,
-      text: 'Does 10 damage to 1 of your opponent\'s Benched Pokemon. ' +
-        '(Don\'t apply Weakness and Resistance for Benched Pokemon.)'
-    }
-  ];
+  public attacks = [{
+    name: 'Psychic Shot',
+    cost: [P, C, C],
+    damage: 30,
+    text: 'Does 10 damage to 1 of your opponent\'s Benched Pokemon. ' +
+    '(Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+  }];
 
   public set: string = 'HS';
-
   public name: string = 'Hypno';
-
   public fullName: string = 'Hypno HS';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '23';
 
   public readonly SLEEP_PENDULUM_MAREKER = 'SLEEP_PENDULUM_MAREKER';
@@ -77,10 +65,7 @@ export class Hypno extends PokemonCard {
         return state;
       }
 
-      state = store.prompt(state, new CoinFlipPrompt(
-        player.id,
-        GameMessage.COIN_FLIP
-      ), result => {
+      state = COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
           opponent.active.addSpecialCondition(SpecialCondition.ASLEEP);
         }

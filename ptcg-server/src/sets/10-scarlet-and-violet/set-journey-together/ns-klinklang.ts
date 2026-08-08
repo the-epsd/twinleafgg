@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, CoinFlipPrompt, GameMessage } from '../../../game';
+import { StoreLike, State } from '../../../game';
 
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class NsKlinklang extends PokemonCard {
   public tags = [CardTag.NS];
@@ -14,19 +14,20 @@ export class NsKlinklang extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    { name: 'Magnetic Blast', cost: [C], damage: 50, text: '' },
-    {
-      name: 'Triple Smash',
-      cost: [M, M, C],
-      damage: 120,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 120 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Magnetic Blast', cost: [C], damage: 50, text: ''
+  }, {
+    name: 'Triple Smash',
+    cost: [M, M, C],
+    damage: 120,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 120 damage for each heads.'
+  }];
 
   public set: string = 'JTG';
+
   public regulationMark = 'I';
+
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '105';
   public name: string = 'N\'s Klinklang';
@@ -36,11 +37,7 @@ export class NsKlinklang extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-      ], results => {
+      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 3, results => {
         let heads: number = 0;
         results.forEach(r => { heads += r ? 1 : 0; });
         effect.damage += 120 * heads;

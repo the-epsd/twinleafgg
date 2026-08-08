@@ -8,23 +8,17 @@ import { PowerType } from '../../../game/store/card/pokemon-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
-import { CoinFlipPrompt } from '../../../game/store/prompts/coin-flip-prompt';
+
 import { PlayItemEffect } from '../../../game/store/effects/play-card-effects';
-import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Vileplume extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom = 'Gloom';
-
-  public cardType: CardType = CardType.GRASS;
-
+  public cardType: CardType = G;
   public hp: number = 120;
-
-  public weakness = [{ type: CardType.PSYCHIC }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: P }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Allergy Flower',
@@ -34,29 +28,23 @@ export class Vileplume extends PokemonCard {
 
   public attacks = [{
     name: 'Dazzling Pollen',
-    cost: [CardType.GRASS, CardType.GRASS, CardType.COLORLESS],
+    cost: [G, G, C],
     damage: 50,
     text: 'Flip a coin. If heads, this attack does 50 damage plus 20 more ' +
-      'damage. If tails, the Defending Pokemon is now Confused.'
+    'damage. If tails, the Defending Pokemon is now Confused.'
   }];
 
   public set: string = 'UD';
-
   public name: string = 'Vileplume';
-
   public fullName: string = 'Vileplume UD';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '24';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
           effect.damage += 20;
         } else {

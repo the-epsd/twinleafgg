@@ -17,20 +17,17 @@ export class Rotom extends PokemonCard {
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Electro Ball',
-      cost: [L],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Electric Mischief',
-      cost: [C, C],
-      damage: 0,
-      text: 'Flip 3 coins. For each heads, choose a random card from your opponent\'s hand. Your opponent reveals that card and shuffles it into his or her deck.'
-    }
-  ];
+  public attacks = [{
+    name: 'Electro Ball',
+    cost: [L],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Electric Mischief',
+    cost: [C, C],
+    damage: 0,
+    text: 'Flip 3 coins. For each heads, choose a random card from your opponent\'s hand. Your opponent reveals that card and shuffles it into his or her deck.'
+  }];
 
   public set: string = 'AOR';
   public setNumber: string = '29';

@@ -17,20 +17,17 @@ export class Helioptile extends PokemonCard {
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Pound',
-      cost: [L],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Destructive Beam',
-      cost: [L, C],
-      damage: 0,
-      text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Pound',
+    cost: [L],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Destructive Beam',
+    cost: [L, C],
+    damage: 0,
+    text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
+  }];
 
   public set: string = 'FLF';
   public setNumber: string = '36';

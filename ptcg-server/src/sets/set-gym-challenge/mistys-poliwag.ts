@@ -17,8 +17,7 @@ export class MistysPoliwag extends PokemonCard {
     cost: [W],
     damage: 20,
     text: 'Flip a coin. If tails, you can\'t use this attack during your next turn.'
-  },
-  {
+  }, {
     name: 'Amnesia',
     cost: [W, W],
     damage: 0,

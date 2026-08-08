@@ -5,7 +5,6 @@ import { Effect } from '../../../game/store/effects/effect';
 import { COIN_FLIP_PROMPT, DRAW_CARDS, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Eeveeex extends PokemonCard {
-
   public tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
@@ -13,22 +12,20 @@ export class Eeveeex extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Collect',
-      cost: [C],
-      damage: 0,
-      text: 'Draw 3 cards.'
-    },
-    {
-      name: 'Brave Dash',
-      cost: [C, C, C],
-      damage: 200,
-      text: 'Flip a coin. If tails, this Pokémon does 30 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Collect',
+    cost: [C],
+    damage: 0,
+    text: 'Draw 3 cards.'
+  }, {
+    name: 'Brave Dash',
+    cost: [C, C, C],
+    damage: 200,
+    text: 'Flip a coin. If tails, this Pokémon does 30 damage to itself.'
+  }];
 
   public regulationMark = 'J';
+
   public set: string = 'MEE';
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';

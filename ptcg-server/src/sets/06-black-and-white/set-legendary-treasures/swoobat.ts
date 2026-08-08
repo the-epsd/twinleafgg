@@ -17,20 +17,17 @@ export class Swoobat extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Energy Gift',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, search your deck for 2 [P] Energy cards and attach them to your Pokémon in any way you like. Shuffle your deck afterward.'
-    },
-    {
-      name: 'Heart Stamp',
-      cost: [P],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Energy Gift',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, search your deck for 2 [P] Energy cards and attach them to your Pokémon in any way you like. Shuffle your deck afterward.'
+  }, {
+    name: 'Heart Stamp',
+    cost: [P],
+    damage: 30,
+    text: ''
+  }];
 
   public set: string = 'LTR';
   public setNumber: string = '65';

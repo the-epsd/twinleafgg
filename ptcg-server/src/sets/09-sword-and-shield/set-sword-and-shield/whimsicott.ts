@@ -16,22 +16,20 @@ export class Whimsicott extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Cotton Ride',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent shuffles their Active Pokémon and all attached cards into their deck.'
-    },
-    {
-      name: 'Leaf Step',
-      cost: [G],
-      damage: 50,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Cotton Ride',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent shuffles their Active Pokémon and all attached cards into their deck.'
+  }, {
+    name: 'Leaf Step',
+    cost: [G],
+    damage: 50,
+    text: ''
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'SSH';
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';

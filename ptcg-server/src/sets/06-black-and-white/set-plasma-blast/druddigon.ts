@@ -12,20 +12,17 @@ export class Druddigon extends PokemonCard {
   public weakness = [{ type: N }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Big Swing',
-      cost: [R],
-      damage: 40,
-      text: 'Flip 2 coins. If either of them is tails, this attack does nothing.'
-    },
-    {
-      name: 'Shred',
-      cost: [W, C, C],
-      damage: 60,
-      text: 'This attack\'s damage isn\'t affected by any effects on the Defending Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Big Swing',
+    cost: [R],
+    damage: 40,
+    text: 'Flip 2 coins. If either of them is tails, this attack does nothing.'
+  }, {
+    name: 'Shred',
+    cost: [W, C, C],
+    damage: 60,
+    text: 'This attack\'s damage isn\'t affected by any effects on the Defending Pokémon.'
+  }];
 
   public set: string = 'PLB';
   public setNumber: string = '70';

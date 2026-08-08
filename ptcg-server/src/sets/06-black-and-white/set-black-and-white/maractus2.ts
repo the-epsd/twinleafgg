@@ -15,20 +15,17 @@ export class Maractus2 extends PokemonCard {
   public resistance = [{ type: W, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Constant Rattle',
-      cost: [G],
-      damage: 0,
-      text: 'Flip 3 coins. If 1 of them is heads, this attack does 10 damage. If 2 of them are heads, this attack does 30 damage. If all of them are heads, this attack does 60 damage.'
-    },
-    {
-      name: 'Giga Drain',
-      cost: [G, G, G],
-      damage: 50,
-      text: 'Heal from this Pokémon the same amount of damage you did to the Defending Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Constant Rattle',
+    cost: [G],
+    damage: 0,
+    text: 'Flip 3 coins. If 1 of them is heads, this attack does 10 damage. If 2 of them are heads, this attack does 30 damage. If all of them are heads, this attack does 60 damage.'
+  }, {
+    name: 'Giga Drain',
+    cost: [G, G, G],
+    damage: 50,
+    text: 'Heal from this Pokémon the same amount of damage you did to the Defending Pokémon.'
+  }];
 
   public set: string = 'BLW';
   public cardImage: string = 'assets/cardback.png';

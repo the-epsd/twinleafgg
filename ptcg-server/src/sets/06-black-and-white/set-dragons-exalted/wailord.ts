@@ -17,21 +17,18 @@ export class Wailord extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Water Cannon',
-      cost: [W],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip a coin. If heads, this attack does 30 damage times the amount of [W] Energy attached to this Pokémon.'
-    },
-    {
-      name: 'Giant Wave',
-      cost: [W, C, C, C],
-      damage: 80,
-      text: 'This Pokémon can\'t use Giant Wave during your next turn.'
-    }
-  ];
+  public attacks = [{
+    name: 'Water Cannon',
+    cost: [W],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip a coin. If heads, this attack does 30 damage times the amount of [W] Energy attached to this Pokémon.'
+  }, {
+    name: 'Giant Wave',
+    cost: [W, C, C, C],
+    damage: 80,
+    text: 'This Pokémon can\'t use Giant Wave during your next turn.'
+  }];
 
   public set: string = 'DRX';
   public setNumber: string = '26';

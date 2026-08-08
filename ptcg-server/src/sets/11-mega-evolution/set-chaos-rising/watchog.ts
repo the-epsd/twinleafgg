@@ -17,22 +17,20 @@ export class Watchog extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Snap Inspection',
-      cost: [C],
-      damage: 0,
-      text: "Flip 3 coins. For each heads, look at your opponent's hand and choose a card there. Your opponent shuffles those cards into their deck. This attack does 50 damage to 1 of your opponent's Pokémon. (Apply Weakness and Resistance for Benched Pokémon.)",
-    },
-    {
-      name: 'Low Kick',
-      cost: [C, C],
-      damage: 50,
-      text: '',
-    },
-  ];
+  public attacks = [{
+    name: 'Snap Inspection',
+    cost: [C],
+    damage: 0,
+    text: "Flip 3 coins. For each heads, look at your opponent's hand and choose a card there. Your opponent shuffles those cards into their deck. This attack does 50 damage to 1 of your opponent's Pokémon. (Apply Weakness and Resistance for Benched Pokémon.)",
+  }, {
+    name: 'Low Kick',
+    cost: [C, C],
+    damage: 50,
+    text: '',
+  }];
 
   public regulationMark = 'J';
+
   public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '71';

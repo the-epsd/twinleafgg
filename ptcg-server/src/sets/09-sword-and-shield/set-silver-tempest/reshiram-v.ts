@@ -16,22 +16,20 @@ export class ReshiramV extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Sparkling Wing',
-      cost: [R],
-      damage: 0,
-      text: 'Search your deck for up to 2 basic Energy cards and attach them to 1 of your Pokémon. Then, shuffle your deck.'
-    },
-    {
-      name: 'White Blaze',
-      cost: [R, R, C],
-      damage: 200,
-      text: 'Flip a coin. If tails, during your next turn, this Pokémon can\'t attack.'
-    }
-  ];
+  public attacks = [{
+    name: 'Sparkling Wing',
+    cost: [R],
+    damage: 0,
+    text: 'Search your deck for up to 2 basic Energy cards and attach them to 1 of your Pokémon. Then, shuffle your deck.'
+  }, {
+    name: 'White Blaze',
+    cost: [R, R, C],
+    damage: 200,
+    text: 'Flip a coin. If tails, during your next turn, this Pokémon can\'t attack.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'SIT';
   public setNumber: string = '24';
   public cardImage: string = 'assets/cardback.png';

@@ -18,8 +18,7 @@ export class Victreebel extends PokemonCard {
     cost: [G],
     damage: 0,
     text: 'If your opponent has any Benched Pokémon, choose 1 of them and switch it with his or her Active Pokémon.'
-  },
-  {
+  }, {
     name: 'Acid',
     cost: [G, G],
     damage: 20,

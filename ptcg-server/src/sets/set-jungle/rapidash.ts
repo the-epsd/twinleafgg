@@ -1,30 +1,24 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, CoinFlipPrompt, GameMessage } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import {
-  COIN_FLIP_PROMPT,
-  PREVENT_DAMAGE,
-  PREVENT_EFFECTS_OF_ATTACKS,
-  WAS_ATTACK_USED,
-} from '../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Rapidash extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Ponyta';
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType = R;
   public hp: number = 70;
-  public weakness = [{ type: CardType.WATER }];
+  public weakness = [{ type: W }];
 
   public attacks = [{
     name: 'Stomp',
-    cost: [CardType.COLORLESS, CardType.COLORLESS],
+    cost: [C, C],
     damage: 20,
     text: 'Flip a coin. If heads, this attack does 20 damage plus 10 more damage; if tails, this attack does 20 damage.'
-  },
-  {
+  }, {
     name: 'Agility',
-    cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS],
+    cost: [R, R, C],
     damage: 30,
     text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all effects of attacks, including damage, done to Rapidash.'
   }];
@@ -40,9 +34,7 @@ export class Rapidash extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
           effect.damage += 10;
         }

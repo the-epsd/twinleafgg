@@ -14,20 +14,17 @@ export class Shelgon extends PokemonCard {
   public resistance = [{ type: R, value: -30 }, { type: F, value: -30 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Tight Jaw',
-      cost: [R],
-      damage: 10,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Combustion',
-      cost: [R, C, C],
-      damage: 40,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Tight Jaw',
+    cost: [R],
+    damage: 10,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Combustion',
+    cost: [R, C, C],
+    damage: 40,
+    text: ''
+  }];
 
   public set: string = 'DS';
   public name: string = 'Shelgon';

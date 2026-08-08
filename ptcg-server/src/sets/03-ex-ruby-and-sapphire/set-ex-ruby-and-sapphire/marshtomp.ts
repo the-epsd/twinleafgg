@@ -16,8 +16,7 @@ export class Marshtomp extends PokemonCard {
     cost: [W],
     damage: 10,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-  },
-  {
+  }, {
     name: 'Slash',
     cost: [C, C, C],
     damage: 40,

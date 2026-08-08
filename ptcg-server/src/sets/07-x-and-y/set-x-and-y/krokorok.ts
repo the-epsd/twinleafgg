@@ -18,20 +18,17 @@ export class Krokorok extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Crunch',
-      cost: [C, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
-    },
-    {
-      name: 'Darkness Fang',
-      cost: [D, D, C],
-      damage: 60,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Crunch',
+    cost: [C, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
+  }, {
+    name: 'Darkness Fang',
+    cost: [D, D, C],
+    damage: 60,
+    text: ''
+  }];
 
   public set: string = 'XY';
   public setNumber: string = '70';

@@ -14,8 +14,7 @@ export class Onix extends PokemonCard {
     cost: [C],
     damage: 10,
     text: 'Flip a coin. If tails, this attack does nothing.'
-  },
-  {
+  }, {
     name: 'Granite Head',
     cost: [F, C],
     damage: 20,

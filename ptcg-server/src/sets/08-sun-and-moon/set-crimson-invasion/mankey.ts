@@ -15,15 +15,13 @@ export class Mankey extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Three-Step Strike',
-      cost: [F],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 10 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Three-Step Strike',
+    cost: [F],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 10 damage for each heads.'
+  }];
 
   public set: string = 'CIN';
   public setNumber: string = '50';

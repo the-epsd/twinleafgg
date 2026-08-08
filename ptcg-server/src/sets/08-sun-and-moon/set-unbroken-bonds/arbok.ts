@@ -15,21 +15,18 @@ export class Arbok extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Wrap',
-      cost: [C],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Heavy Choke',
-      cost: [P, C],
-      damage: 50,
-      damageCalculation: '+',
-      text: 'If this Pokémon used Wrap during your last turn, this attack does 120 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Wrap',
+    cost: [C],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Heavy Choke',
+    cost: [P, C],
+    damage: 50,
+    damageCalculation: '+',
+    text: 'If this Pokémon used Wrap during your last turn, this attack does 120 more damage.'
+  }];
 
   public set: string = 'UNB';
   public setNumber: string = '63';

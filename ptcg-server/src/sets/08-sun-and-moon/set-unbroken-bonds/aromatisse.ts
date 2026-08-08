@@ -21,20 +21,17 @@ export class Aromatisse extends PokemonCard {
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Pungent Aroma',
-      cost: [Y],
-      damage: 0,
-      text: 'Flip 2 coins. If either of them is heads, your opponent reveals their hand. For each heads, choose a card you find there. Your opponent shuffles those cards into their deck.'
-    },
-    {
-      name: 'Miraculous Cologne',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, choose a Special Condition. Your opponent\'s Active Pokémon is now affected by that Special Condition.'
-    }
-  ];
+  public attacks = [{
+    name: 'Pungent Aroma',
+    cost: [Y],
+    damage: 0,
+    text: 'Flip 2 coins. If either of them is heads, your opponent reveals their hand. For each heads, choose a card you find there. Your opponent shuffles those cards into their deck.'
+  }, {
+    name: 'Miraculous Cologne',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, choose a Special Condition. Your opponent\'s Active Pokémon is now affected by that Special Condition.'
+  }];
 
   public set: string = 'UNB';
   public setNumber: string = '142';

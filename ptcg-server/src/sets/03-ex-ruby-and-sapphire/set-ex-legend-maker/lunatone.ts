@@ -24,20 +24,17 @@ export class Lunatone extends PokemonCard {
     text: 'As long as you have Solrock in play, each player\'s [R] Pokémon (excluding Pokémon-ex) can\'t use any Poké-Powers.'
   }];
 
-  public attacks = [
-    {
-      name: 'Moon Guidance',
-      cost: [C],
-      damage: 0,
-      text: 'Search your deck for a Trainer card (excluding Supporter cards), show it to your opponent, and put it into your hand. Shuffle your deck afterward.'
-    },
-    {
-      name: 'Psyshock',
-      cost: [P],
-      damage: 10,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Moon Guidance',
+    cost: [C],
+    damage: 0,
+    text: 'Search your deck for a Trainer card (excluding Supporter cards), show it to your opponent, and put it into your hand. Shuffle your deck afterward.'
+  }, {
+    name: 'Psyshock',
+    cost: [P],
+    damage: 10,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'LM';
   public name: string = 'Lunatone';

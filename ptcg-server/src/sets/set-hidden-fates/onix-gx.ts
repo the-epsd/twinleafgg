@@ -15,26 +15,22 @@ export class OnixGx extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Bind',
-      cost: [F],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Heavy Impact',
-      cost: [F, C, C, C, C],
-      damage: 150,
-      text: ''
-    },
-    {
-      name: 'Rocky Avalanche-GX',
-      cost: [F, C, C, C, C],
-      damage: 200,
-      text: 'During your opponent\'s next turn, this Pokémon takes 100 less damage from attacks (after applying Weakness and Resistance). (You can\'t use more than 1 GX attack in a game.)'
-    }
-  ];
+  public attacks = [{
+    name: 'Bind',
+    cost: [F],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Heavy Impact',
+    cost: [F, C, C, C, C],
+    damage: 150,
+    text: ''
+  }, {
+    name: 'Rocky Avalanche-GX',
+    cost: [F, C, C, C, C],
+    damage: 200,
+    text: 'During your opponent\'s next turn, this Pokémon takes 100 less damage from attacks (after applying Weakness and Resistance). (You can\'t use more than 1 GX attack in a game.)'
+  }];
 
   public set: string = 'HIF';
   public setNumber: string = '36';

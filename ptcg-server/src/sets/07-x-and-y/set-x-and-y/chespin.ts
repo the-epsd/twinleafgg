@@ -15,15 +15,13 @@ export class Chespin extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Pin Missile',
-      cost: [G],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 10 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Pin Missile',
+    cost: [G],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 10 damage times the number of heads.'
+  }];
 
   public set: string = 'XY';
   public setNumber: string = '12';

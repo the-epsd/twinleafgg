@@ -17,8 +17,7 @@ export class Loudred extends PokemonCard {
     cost: [C],
     damage: 10,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-  },
-  {
+  }, {
     name: 'Double-edge',
     cost: [C, C, C],
     damage: 50,

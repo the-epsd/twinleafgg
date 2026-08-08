@@ -25,6 +25,7 @@ export class Flittle extends PokemonCard {
   }];
 
   public regulationMark = 'H';
+
   public set = 'SSP';
   public setNumber: string = '94';
   public cardImage: string = 'assets/cardback.png';

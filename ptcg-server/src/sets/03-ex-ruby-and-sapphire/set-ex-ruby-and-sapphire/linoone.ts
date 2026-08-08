@@ -17,8 +17,7 @@ export class Linoone extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Search your deck for up to 2 cards and put them into your hand. Shuffle your deck afterward.'
-  },
-  {
+  }, {
     name: 'Continuous Headbutt',
     cost: [C, C],
     damage: 40,

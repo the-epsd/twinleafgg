@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, PlayerType, CoinFlipPrompt, GameMessage } from '../../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, PlayerType } from '../../../game';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/game-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Greninja extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -11,20 +11,17 @@ export class Greninja extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Aqua Shower',
-      cost: [W],
-      damage: 20,
-      text: 'This attack does 20 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)',
-    },
-    {
-      name: 'Dual Cut',
-      cost: [W, C],
-      damage: 60,
-      text: 'Flip 2 coins. This attack does 60 damage times the number of heads.',
-    }
-  ];
+  public attacks = [{
+    name: 'Aqua Shower',
+    cost: [W],
+    damage: 20,
+    text: 'This attack does 20 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)',
+  }, {
+    name: 'Dual Cut',
+    cost: [W, C],
+    damage: 60,
+    text: 'Flip 2 coins. This attack does 60 damage times the number of heads.',
+  }];
 
   public set: string = 'XYP';
   public setNumber: string = '162';
@@ -51,8 +48,8 @@ export class Greninja extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      return store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), result => {
-        return store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), result2 => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
+        return COIN_FLIP_PROMPT(store, state, player, result2 => {
           const headsCount = (result ? 1 : 0) + (result2 ? 1 : 0);
           effect.damage = headsCount * 60;
         });

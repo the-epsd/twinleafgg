@@ -26,6 +26,7 @@ export class GalarianCursola extends PokemonCard {
   }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'RCL';
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';

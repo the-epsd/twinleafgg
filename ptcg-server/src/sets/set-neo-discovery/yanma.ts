@@ -14,21 +14,18 @@ export class Yanma extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Shockwave',
-      cost: [G],
-      damage: 0,
-      text: 'Flip a coin. If heads, this attack does 10 damage to each of your opponent\'s Pokémon. Don\'t apply Weakness and Resistance. Then, if your opponent has any Benched Pokémon, he or she chooses 1 of them and switches it with the Defending Pokémon.'
-    },
-    {
-      name: 'Swift',
-      cost: [G, G, G],
-      damage: 30,
-      shredAttack: true,
-      text: 'This attack\'s damage isn\'t affected by Weakness, Resistance, Pokémon Powers, or any other effects on the Defending Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Shockwave',
+    cost: [G],
+    damage: 0,
+    text: 'Flip a coin. If heads, this attack does 10 damage to each of your opponent\'s Pokémon. Don\'t apply Weakness and Resistance. Then, if your opponent has any Benched Pokémon, he or she chooses 1 of them and switches it with the Defending Pokémon.'
+  }, {
+    name: 'Swift',
+    cost: [G, G, G],
+    damage: 30,
+    shredAttack: true,
+    text: 'This attack\'s damage isn\'t affected by Weakness, Resistance, Pokémon Powers, or any other effects on the Defending Pokémon.'
+  }];
 
   public set: string = 'N2';
   public cardImage: string = 'assets/cardback.png';

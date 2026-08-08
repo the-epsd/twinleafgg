@@ -18,20 +18,17 @@ export class Diggersby extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Smithereen Smash',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
-    },
-    {
-      name: 'Earthquake',
-      cost: [C, C, C],
-      damage: 80,
-      text: 'This attack does 10 damage to each of your Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
-  ];
+  public attacks = [{
+    name: 'Smithereen Smash',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
+  }, {
+    name: 'Earthquake',
+    cost: [C, C, C],
+    damage: 80,
+    text: 'This attack does 10 damage to each of your Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }];
 
   public set: string = 'PHF';
   public setNumber: string = '88';

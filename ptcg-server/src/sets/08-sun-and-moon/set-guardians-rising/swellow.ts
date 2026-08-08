@@ -23,8 +23,7 @@ export class Swellow extends PokemonCard {
     cost: [C],
     damage: 20,
     text: 'Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn.'
-  },
-  {
+  }, {
     name: 'Swallow Dive',
     cost: [C],
     damage: 40,

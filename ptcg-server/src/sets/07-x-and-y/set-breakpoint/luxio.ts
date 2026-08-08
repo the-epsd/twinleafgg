@@ -16,20 +16,17 @@ export class Luxio extends PokemonCard {
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Bite',
-      cost: [C],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Thunder Fang',
-      cost: [L, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Bite',
+    cost: [C],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Thunder Fang',
+    cost: [L, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'BKP';
   public setNumber: string = '45';

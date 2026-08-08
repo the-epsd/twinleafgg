@@ -6,43 +6,30 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class Combusken extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Torchic';
-
   public cardType: CardType = R;
-
   public hp: number = 80;
-
   public weakness = [{ type: W }];
-
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Double Kick',
-      cost: [C],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
-    },
-    {
-      name: 'Flamethrower',
-      cost: [R, R, C],
-      damage: 70,
-      text: 'Discard an Energy attached to this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Double Kick',
+    cost: [C],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
+  }, {
+    name: 'Flamethrower',
+    cost: [R, R, C],
+    damage: 70,
+    text: 'Discard an Energy attached to this Pokémon.'
+  }];
 
   public set: string = 'DEX';
-
   public setNumber: string = '16';
-
   public cardImage: string = 'assets/cardback.png';
-
   public name: string = 'Combusken';
-
   public fullName: string = 'Combusken DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

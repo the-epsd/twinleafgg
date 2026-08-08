@@ -17,20 +17,17 @@ export class Tyrunt extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Crunch',
-      cost: [F],
-      damage: 20,
-      text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
-    },
-    {
-      name: 'Hammer In',
-      cost: [F, C],
-      damage: 40,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Crunch',
+    cost: [F],
+    damage: 20,
+    text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
+  }, {
+    name: 'Hammer In',
+    cost: [F, C],
+    damage: 40,
+    text: ''
+  }];
 
   public set: string = 'FLI';
   public setNumber: string = '68';

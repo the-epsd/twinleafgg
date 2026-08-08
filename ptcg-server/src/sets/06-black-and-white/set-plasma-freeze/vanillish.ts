@@ -12,15 +12,13 @@ export class Vanillish extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Surefire Spin',
-      cost: [C, C],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. If both of them are heads, this attack does 40 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Surefire Spin',
+    cost: [C, C],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. If both of them are heads, this attack does 40 more damage.'
+  }];
 
   public set: string = 'PLF';
   public setNumber: string = '28';

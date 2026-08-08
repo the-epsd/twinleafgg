@@ -19,8 +19,7 @@ export class SamiyasBuizel2 extends PokemonCard {
     cost: [C],
     damage: 20,
     text: 'Flip a coin. If tails, this attack does nothing.'
-  },
-  {
+  }, {
     name: 'Smash Turn',
     cost: [W, C],
     damage: 20,

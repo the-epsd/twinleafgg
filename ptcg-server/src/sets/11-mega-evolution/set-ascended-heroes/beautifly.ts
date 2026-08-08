@@ -17,23 +17,21 @@ export class Beautifly extends PokemonCard {
   public resistance = [];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Stun Spore',
-      cost: [G],
-      damage: 40,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Energy Straw',
-      cost: [G],
-      damage: 80,
-      damageCalculation: 'x',
-      text: 'Your opponent reveals their hand, and this attack does 80 damage for each Energy card you find there.'
-    }
-  ];
+  public attacks = [{
+    name: 'Stun Spore',
+    cost: [G],
+    damage: 40,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Energy Straw',
+    cost: [G],
+    damage: 80,
+    damageCalculation: 'x',
+    text: 'Your opponent reveals their hand, and this attack does 80 damage for each Energy card you find there.'
+  }];
 
   public regulationMark = 'I';
+
   public set: string = 'ASC';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '13';

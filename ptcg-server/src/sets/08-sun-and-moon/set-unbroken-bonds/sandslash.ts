@@ -15,21 +15,18 @@ export class Sandslash extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Continuous Scratch',
-      cost: [C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 30 damage for each heads.'
-    },
-    {
-      name: 'Sand Tomb',
-      cost: [F, C, C],
-      damage: 90,
-      text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
-    }
-  ];
+  public attacks = [{
+    name: 'Continuous Scratch',
+    cost: [C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 30 damage for each heads.'
+  }, {
+    name: 'Sand Tomb',
+    cost: [F, C, C],
+    damage: 90,
+    text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
+  }];
 
   public set: string = 'UNB';
   public setNumber: string = '84';

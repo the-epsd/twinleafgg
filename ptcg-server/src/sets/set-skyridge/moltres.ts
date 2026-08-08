@@ -25,8 +25,7 @@ export class Moltres extends PokemonCard {
     cost: [C],
     damage: 10,
     text: 'If there are any [R] Energy cards in your discard pile, flip a coin. If heads, attach 1 of them to Moltres.'
-  },
-  {
+  }, {
     name: 'Burning Tail',
     cost: [R, R, C, C],
     damage: 60,

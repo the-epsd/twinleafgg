@@ -23,14 +23,12 @@ export class Toxicroak extends PokemonCard {
     text: 'Prevent all damage done to this Pok\u00e9mon by attacks from your opponent\'s Poisoned Pok\u00e9mon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Poison Jab',
-      cost: [F, C],
-      damage: 50,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pok\u00e9mon is now Poisoned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Poison Jab',
+    cost: [F, C],
+    damage: 50,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pok\u00e9mon is now Poisoned.'
+  }];
 
   public set: string = 'STS';
   public setNumber: string = '59';

@@ -14,21 +14,18 @@ export class Klang extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Vice Grip',
-      cost: [C, C],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Gear Grind',
-      cost: [M, M, C],
-      damage: 80,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 80 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Vice Grip',
+    cost: [C, C],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Gear Grind',
+    cost: [M, M, C],
+    damage: 80,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 80 damage times the number of heads.'
+  }];
 
   public set: string = 'BLW';
   public cardImage: string = 'assets/cardback.png';

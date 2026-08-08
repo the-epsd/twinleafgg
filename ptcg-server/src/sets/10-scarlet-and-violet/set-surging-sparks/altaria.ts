@@ -7,27 +7,26 @@ import { COIN_FLIP_PROMPT, PREVENT_DAMAGE, SHUFFLE_DECK, WAS_ATTACK_USED } from 
 export class Altaria extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Swablu';
-  public cardType: CardType = CardType.DRAGON;
+  public cardType: CardType = N;
   public hp: number = 120;
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Humming Charge',
-      cost: [CardType.WATER],
-      damage: 0,
-      text: 'Search your deck for up to 2 Basic Energy cards and attach them to your Pokémon in any way you like. Shuffle your deck afterwards.'
-    },
-    {
-      name: 'Cotton Wing',
-      cost: [CardType.WATER, CardType.METAL],
-      damage: 100,
-      text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage done to this Pokémon.'
-    },
-  ];
+  public attacks = [{
+    name: 'Humming Charge',
+    cost: [W],
+    damage: 0,
+    text: 'Search your deck for up to 2 Basic Energy cards and attach them to your Pokémon in any way you like. Shuffle your deck afterwards.'
+  }, {
+    name: 'Cotton Wing',
+    cost: [W, M],
+    damage: 100,
+    text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage done to this Pokémon.'
+  }];
 
   public set: string = 'SSP';
+
   public regulationMark: string = 'H';
+
   public setNumber: string = '134';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Altaria';

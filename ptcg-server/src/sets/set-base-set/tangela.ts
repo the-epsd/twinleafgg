@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage } from '../../game/store/card/card-types';
 import { Attack } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
@@ -8,39 +8,31 @@ import { StateUtils } from '../../game';
 import { ADD_PARALYZED_TO_PLAYER_ACTIVE, ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Tangela extends PokemonCard {
-
   public name = 'Tangela';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber = '66';
-
   public set = 'BS';
-
   public fullName = 'Tangela';
 
-  public cardType = CardType.GRASS;
-
+  public cardType = G;
   public stage = Stage.BASIC;
 
   public evolvesInto = 'Tangrowth';
 
   public hp = 50;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public retreat = [C, C];
 
   public attacks: Attack[] = [
     {
       name: 'Bind',
-      cost: [CardType.GRASS, CardType.COLORLESS],
+      cost: [G, C],
       damage: 20,
       text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
     },
     {
       name: 'Poisonpowder',
-      cost: [CardType.GRASS, CardType.GRASS, CardType.GRASS],
+      cost: [G, G, G],
       damage: 20,
       text: 'The Defending Pokémon is now Poisoned.'
     }

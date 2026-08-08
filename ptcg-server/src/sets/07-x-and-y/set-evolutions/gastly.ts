@@ -21,8 +21,7 @@ export class Gastly extends PokemonCard {
     cost: [P],
     damage: 0,
     text: 'During your opponent\'s next turn, if this Pokémon is Knocked Out by damage from an attack, discard an Energy attached to the Attacking Pokémon.'
-  },
-  {
+  }, {
     name: 'Nightmare',
     cost: [P, C],
     damage: 20,

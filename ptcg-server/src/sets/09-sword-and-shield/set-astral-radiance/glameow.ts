@@ -14,16 +14,15 @@ export class Glameow extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Fake Out',
-      cost: [C, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fake Out',
+    cost: [C, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'ASR';
   public setNumber: string = '127';
   public cardImage: string = 'assets/cardback.png';

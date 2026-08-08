@@ -13,14 +13,12 @@ export class Porygon2 extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Destructive Beam',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Destructive Beam',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokémon.'
+  }];
 
   public set: string = 'PLB';
   public setNumber: string = '73';

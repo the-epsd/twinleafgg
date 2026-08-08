@@ -13,15 +13,13 @@ export class Ferroseed extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Pin Missile',
-      cost: [M, C],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 10 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Pin Missile',
+    cost: [M, C],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 10 damage times the number of heads.'
+  }];
 
   public set: string = 'EPO';
   public cardImage: string = 'assets/cardback.png';

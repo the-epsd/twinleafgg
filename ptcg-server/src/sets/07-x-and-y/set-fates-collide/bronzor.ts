@@ -17,20 +17,17 @@ export class Bronzor extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Iron Defense',
-      cost: [M],
-      damage: 0,
-      text: 'Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn.'
-    },
-    {
-      name: 'Hammer In',
-      cost: [M, C],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Iron Defense',
+    cost: [M],
+    damage: 0,
+    text: 'Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn.'
+  }, {
+    name: 'Hammer In',
+    cost: [M, C],
+    damage: 20,
+    text: ''
+  }];
 
   public set: string = 'FCO';
   public setNumber: string = '60';

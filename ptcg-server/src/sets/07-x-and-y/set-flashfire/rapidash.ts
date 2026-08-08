@@ -24,8 +24,7 @@ export class Rapidash extends PokemonCard {
     cost: [R],
     damage: 20,
     text: 'Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn. '
-  },
-  {
+  }, {
     name: 'Overrun',
     cost: [C, C],
     damage: 40,

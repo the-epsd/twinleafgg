@@ -7,7 +7,8 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { StateUtils } from '../../../game/store/state-utils';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
-import { CoinFlipPrompt } from '../../../game/store/prompts/coin-flip-prompt';
+
+import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -25,9 +26,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   active.addSpecialCondition(SpecialCondition.POISONED);
 
   let coinResult: boolean = false;
-  yield store.prompt(state, [
-    new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-  ], result => {
+  yield COIN_FLIP_PROMPT(store, state, player, result => {
     coinResult = result;
     next();
   });
@@ -42,19 +41,14 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 }
 
 export class HypnotoxicLaser extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.ITEM;
 
   public tags: string[] = [CardTag.TEAM_PLASMA];
 
   public set: string = 'PLS';
-
   public name: string = 'Hypnotoxic Laser';
-
   public fullName: string = 'Hypnotoxic Laser PLS';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '123';
 
   public text: string =

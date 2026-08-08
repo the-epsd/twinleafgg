@@ -21,20 +21,17 @@ export class AlolanVulpix extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Powder Snow',
-      cost: [],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Asleep.'
-    },
-    {
-      name: 'Icy Snow',
-      cost: [W, W],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Powder Snow',
+    cost: [],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Asleep.'
+  }, {
+    name: 'Icy Snow',
+    cost: [W, W],
+    damage: 30,
+    text: ''
+  }];
 
   public set: string = 'BUS';
   public setNumber: string = '27';

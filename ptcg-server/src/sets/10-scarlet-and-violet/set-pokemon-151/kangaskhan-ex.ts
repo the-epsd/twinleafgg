@@ -4,48 +4,34 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { CoinFlipPrompt, GameMessage } from '../../../game';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Kangaskhanex extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
   public regulationMark = 'G';
-
   public tags = [CardTag.POKEMON_ex];
-
-  public cardType: CardType = CardType.COLORLESS;
-
+  public cardType: CardType = C;
   public hp: number = 230;
-
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public retreat = [C, C];
 
   public attacks = [{
     name: 'Triple Draw',
-    cost: [CardType.COLORLESS],
+    cost: [C],
     damage: 0,
     text: 'Draw 3 cards.'
-  },
-  {
+  }, {
     name: 'Incessant Punching',
-    cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+    cost: [C, C, C],
     damage: 100,
     damageCalculator: 'x',
     text: 'Flip 4 coins. This attack does 100 damage for each heads.'
-  }
-  ];
+  }];
 
   public set: string = 'MEW';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '115';
-
   public name: string = 'Kangaskhan ex';
-
   public fullName: string = 'Kangaskhan ex MEW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -58,12 +44,7 @@ export class Kangaskhanex extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
+      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 4, results => {
         let heads: number = 0;
         results.forEach(r => { heads += r ? 1 : 0; });
         effect.damage = 100 * heads;

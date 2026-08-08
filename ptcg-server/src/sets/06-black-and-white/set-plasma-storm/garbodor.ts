@@ -18,20 +18,17 @@ export class Garbodor extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Biosmog',
-      cost: [C],
-      damage: 20,
-      text: 'The Defending Pokémon is now Poisoned. Flip a coin. If heads, discard an Energy attached to that Pokémon.'
-    },
-    {
-      name: 'Sludge Bomb',
-      cost: [P, P, C],
-      damage: 70,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Biosmog',
+    cost: [C],
+    damage: 20,
+    text: 'The Defending Pokémon is now Poisoned. Flip a coin. If heads, discard an Energy attached to that Pokémon.'
+  }, {
+    name: 'Sludge Bomb',
+    cost: [P, P, C],
+    damage: 70,
+    text: ''
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '66';

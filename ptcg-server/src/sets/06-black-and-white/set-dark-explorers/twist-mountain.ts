@@ -11,7 +11,8 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { Card } from '../../../game/store/card/card';
 import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { CoinFlipPrompt } from '../../../game/store/prompts/coin-flip-prompt';
+
+import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 function* useStadium(next: Function, store: StoreLike, state: State, effect: UseStadiumEffect): IterableIterator<State> {
   const player = effect.player;
@@ -25,9 +26,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
   }
 
   let flipResult = false;
-  yield store.prompt(state, new CoinFlipPrompt(
-    player.id, GameMessage.COIN_FLIP
-  ), result => {
+  yield COIN_FLIP_PROMPT(store, state, player, result => {
     flipResult = result;
     next();
   });
@@ -61,17 +60,12 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
 }
 
 export class TwistMountain extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.STADIUM;
 
   public set: string = 'DEX';
-
   public name: string = 'Twist Mountain';
-
   public fullName: string = 'Twist Mountain DEX';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '101';
 
   public text: string =

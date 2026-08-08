@@ -27,14 +27,12 @@ export class Caterpie extends PokemonCard {
     text: 'Once during your turn (before your attack), you may flip a coin. If heads, search your deck for a card that evolves from this Pokémon and put it onto this Pokémon to evolve it. Then, shuffle your deck.'
   }];
 
-  public attacks = [
-    {
-      name: 'Hook',
-      cost: [C, C],
-      damage: 10,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Hook',
+    cost: [C, C],
+    damage: 10,
+    text: ''
+  }];
 
   public set: string = 'UNB';
   public setNumber: string = '2';

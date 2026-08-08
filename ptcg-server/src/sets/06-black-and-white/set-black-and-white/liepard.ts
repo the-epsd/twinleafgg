@@ -13,22 +13,19 @@ export class Liepard extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Assist',
-      cost: [D],
-      damage: 0,
-      copycatAttack: true,
-      text: 'Choose 1 of your Benched Pokémon\'s attacks and use it as this attack.'
-    },
-    {
-      name: 'Fury Swipes',
-      cost: [D, D, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 40 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Assist',
+    cost: [D],
+    damage: 0,
+    copycatAttack: true,
+    text: 'Choose 1 of your Benched Pokémon\'s attacks and use it as this attack.'
+  }, {
+    name: 'Fury Swipes',
+    cost: [D, D, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 40 damage times the number of heads.'
+  }];
 
   public set: string = 'BLW';
   public cardImage: string = 'assets/cardback.png';

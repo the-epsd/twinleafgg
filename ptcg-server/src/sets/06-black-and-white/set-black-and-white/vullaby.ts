@@ -13,20 +13,17 @@ export class Vullaby extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Ram',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Gust',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Ram',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Gust',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'BLW';
   public cardImage: string = 'assets/cardback.png';

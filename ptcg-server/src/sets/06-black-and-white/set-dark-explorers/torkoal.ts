@@ -11,20 +11,17 @@ export class Torkoal extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Flame Cloak',
-      cost: [C],
-      damage: 10,
-      text: 'Flip a coin. If heads, attach a [R] Energy card from your discard pile to this Pokémon.'
-    },
-    {
-      name: 'Heat Blast',
-      cost: [R, C, C],
-      damage: 60,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Flame Cloak',
+    cost: [C],
+    damage: 10,
+    text: 'Flip a coin. If heads, attach a [R] Energy card from your discard pile to this Pokémon.'
+  }, {
+    name: 'Heat Blast',
+    cost: [R, C, C],
+    damage: 60,
+    text: ''
+  }];
 
   public set: string = 'DEX';
   public setNumber: string = '18';

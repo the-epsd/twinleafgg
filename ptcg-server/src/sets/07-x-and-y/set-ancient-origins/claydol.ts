@@ -17,20 +17,17 @@ export class Claydol extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Rewind',
-      cost: [P],
-      damage: 0,
-      text: 'Devolve each of your opponent\'s evolved Pokémon and put the highest Stage Evolution card on it into your opponent\'s hand.'
-    },
-    {
-      name: 'Hyper Beam',
-      cost: [P, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Rewind',
+    cost: [P],
+    damage: 0,
+    text: 'Devolve each of your opponent\'s evolved Pokémon and put the highest Stage Evolution card on it into your opponent\'s hand.'
+  }, {
+    name: 'Hyper Beam',
+    cost: [P, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
+  }];
 
   public set: string = 'AOR';
   public setNumber: string = '33';

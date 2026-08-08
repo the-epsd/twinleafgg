@@ -17,21 +17,18 @@ export class Braviary extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Wing Attack',
-      cost: [C, C],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Dual Cut',
-      cost: [C, C, C, C],
-      damage: 80,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 80 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Wing Attack',
+    cost: [C, C],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Dual Cut',
+    cost: [C, C, C, C],
+    damage: 80,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 80 damage times the number of heads.'
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '130';

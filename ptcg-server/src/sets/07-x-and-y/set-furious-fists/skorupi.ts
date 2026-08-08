@@ -14,20 +14,17 @@ export class Skorupi extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Poison Sting',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Poisoned.'
-    },
-    {
-      name: 'Pierce',
-      cost: [P, C, C],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Poison Sting',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Poisoned.'
+  }, {
+    name: 'Pierce',
+    cost: [P, C, C],
+    damage: 30,
+    text: ''
+  }];
 
   public set: string = 'FFI';
   public setNumber: string = '38';

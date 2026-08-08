@@ -5,7 +5,6 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Slowking extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Slowpoke';
   public cardType: CardType = P;
@@ -13,21 +12,18 @@ export class Slowking extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Psy Bolt',
-      cost: [P],
-      damage: 20,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Hand Press',
-      cost: [P, C, C],
-      damage: 50,
-      damageCalculation: '+',
-      text: 'If you have more cards in your hand than your opponent, this attack does 30 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Psy Bolt',
+    cost: [P],
+    damage: 20,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Hand Press',
+    cost: [P, C, C],
+    damage: 50,
+    damageCalculation: '+',
+    text: 'If you have more cards in your hand than your opponent, this attack does 30 more damage.'
+  }];
 
   public set: string = 'DEX';
   public setNumber: string = '49';

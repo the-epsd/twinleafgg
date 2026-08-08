@@ -20,6 +20,7 @@ export class Golett extends PokemonCard {
   }];
 
   public regulationMark = 'I';
+
   public set: string = 'BLK';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '42';

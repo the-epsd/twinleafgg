@@ -17,15 +17,13 @@ export class Skiploom extends PokemonCard {
   public resistance = [{ type: W, value: -20 }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Bullet Seed',
-      cost: [G],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 10 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Bullet Seed',
+    cost: [G],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 10 damage times the number of heads.'
+  }];
 
   public set: string = 'DRX';
   public setNumber: string = '2';

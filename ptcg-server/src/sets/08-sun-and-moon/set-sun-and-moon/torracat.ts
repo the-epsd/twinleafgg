@@ -17,21 +17,18 @@ export class Torracat extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Fury Swipes',
-      cost: [R],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 20 damage for each heads.'
-    },
-    {
-      name: 'Flamethrower',
-      cost: [R, R, C],
-      damage: 90,
-      text: 'Discard an Energy from this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fury Swipes',
+    cost: [R],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 20 damage for each heads.'
+  }, {
+    name: 'Flamethrower',
+    cost: [R, R, C],
+    damage: 90,
+    text: 'Discard an Energy from this Pokémon.'
+  }];
 
   public set: string = 'SUM';
   public setNumber: string = '25';

@@ -20,8 +20,7 @@ export class Scyther extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Search your deck for up to 2 Scyther and put them onto your Bench. Then, shuffle your deck.'
-  },
-  {
+  }, {
     name: 'Agility',
     cost: [C, C],
     damage: 20,

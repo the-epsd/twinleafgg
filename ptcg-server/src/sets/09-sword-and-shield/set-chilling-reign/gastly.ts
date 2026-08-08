@@ -22,16 +22,15 @@ export class Gastly extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Sleep Pulse',
-      cost: [P],
-      damage: 10,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Asleep.'
-    }
-  ];
+  public attacks = [{
+    name: 'Sleep Pulse',
+    cost: [P],
+    damage: 10,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Asleep.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'CRE';
   public setNumber: string = '55';
   public cardImage: string = 'assets/cardback.png';

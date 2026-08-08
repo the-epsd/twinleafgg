@@ -16,15 +16,13 @@ export class Zweilous extends PokemonCard {
   public weakness = [{ type: Y }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Slam',
-      cost: [P, D],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Slam',
+    cost: [P, D],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
+  }];
 
   public set: string = 'PHF';
   public setNumber: string = '73';

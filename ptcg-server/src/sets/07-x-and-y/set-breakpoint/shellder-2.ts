@@ -16,14 +16,12 @@ export class Shellder2 extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Clamp',
-      cost: [W, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Clamp',
+    cost: [W, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'BKP';
   public setNumber: string = '23';

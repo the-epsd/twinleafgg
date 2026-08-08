@@ -16,15 +16,13 @@ export class Fletchling extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Acrobatics',
-      cost: [C],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 10 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Acrobatics',
+    cost: [C],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 10 more damage for each heads.'
+  }];
 
   public set: string = 'ROS';
   public setNumber: string = '82';

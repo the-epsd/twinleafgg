@@ -21,8 +21,7 @@ export class Dunsparce extends PokemonCard {
     cost: [C],
     damage: 10,
     text: ''
-  },
-  {
+  }, {
     name: 'Dig',
     cost: [C, C],
     damage: 30,
@@ -30,6 +29,7 @@ export class Dunsparce extends PokemonCard {
   }];
 
   public regulationMark = 'H';
+
   public set: string = 'TEF';
   public setNumber: string = '128';
   public cardImage: string = 'assets/cardback.png';

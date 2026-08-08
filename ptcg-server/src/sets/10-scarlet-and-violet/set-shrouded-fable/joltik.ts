@@ -24,6 +24,7 @@ export class Joltik extends PokemonCard {
   }];
 
   public regulationMark = 'H';
+
   public set = 'SFA';
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';

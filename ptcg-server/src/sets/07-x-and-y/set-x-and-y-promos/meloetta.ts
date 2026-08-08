@@ -1,27 +1,26 @@
-import { CoinFlipPrompt, GameMessage, PlayerType, State, StateUtils, StoreLike } from '../../../game';
+import { PlayerType, State, StateUtils, StoreLike } from '../../../game';
 import { CardType, SpecialCondition, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { AddSpecialConditionsEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Meloetta extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType = P;
   public hp: number = 80;
-  public weakness = [{ type: CardType.PSYCHIC }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: P }];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Soprano Wave',
-    cost: [CardType.PSYCHIC],
+    cost: [P],
     damage: 0,
     text: 'Flip 3 coins. This attack does 10 damage times the number of heads to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-  },
-  {
+  }, {
     name: 'Entrancing Melody',
-    cost: [CardType.PSYCHIC, CardType.PSYCHIC],
+    cost: [P, P],
     damage: 30,
     text: 'Your opponent\'s Active Pokémon is now Confused.'
   }];
@@ -39,11 +38,7 @@ export class Meloetta extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       let heads: number = 0;
-      store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 3, results => {
         results.forEach(r => { heads += r ? 1 : 0; });
 
         if (heads === 0) {

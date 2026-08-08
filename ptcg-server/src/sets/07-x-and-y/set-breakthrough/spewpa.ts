@@ -17,20 +17,17 @@ export class Spewpa extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Protect',
-      cost: [G],
-      damage: 0,
-      text: 'Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn.'
-    },
-    {
-      name: 'Tackle',
-      cost: [G, C],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Protect',
+    cost: [G],
+    damage: 0,
+    text: 'Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn.'
+  }, {
+    name: 'Tackle',
+    cost: [G, C],
+    damage: 30,
+    text: ''
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '14';

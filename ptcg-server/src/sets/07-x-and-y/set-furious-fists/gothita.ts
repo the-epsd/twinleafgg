@@ -14,20 +14,17 @@ export class Gothita extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Slap',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Psy Bolt',
-      cost: [P, C],
-      damage: 10,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Slap',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Psy Bolt',
+    cost: [P, C],
+    damage: 10,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'FFI';
   public setNumber: string = '39';

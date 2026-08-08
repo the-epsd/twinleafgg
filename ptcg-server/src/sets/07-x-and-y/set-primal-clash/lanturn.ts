@@ -24,8 +24,7 @@ export class Lanturn extends PokemonCard {
     cost: [W, C],
     damage: 40,
     text: 'Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn.'
-  },
-  {
+  }, {
     name: 'Take Down',
     cost: [W, C, C],
     damage: 80,

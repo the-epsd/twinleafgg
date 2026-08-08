@@ -5,7 +5,9 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { PlayerType, SlotType, CoinFlipPrompt, StateUtils, GameError, GameMessage, Player } from '../../../game';
+import { PlayerType, SlotType, StateUtils, GameError, GameMessage, Player } from '../../../game';
+
+import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, self: PokemonCatcher, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -20,7 +22,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Pokemon
   effect.preventDefault = true;
 
   let coinResult: boolean = false;
-  yield store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), result => {
+  yield COIN_FLIP_PROMPT(store, state, player, result => {
     coinResult = result;
     next();
   });
@@ -42,23 +44,17 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Pokemon
 
   });
 
-
 }
 
 export class PokemonCatcher extends TrainerCard {
-
   public regulationMark = 'G';
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'SVI';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '187';
-
   public name: string = 'Pokémon Catcher';
-
   public fullName: string = 'Pokemon Catcher SVI';
 
   public text: string =

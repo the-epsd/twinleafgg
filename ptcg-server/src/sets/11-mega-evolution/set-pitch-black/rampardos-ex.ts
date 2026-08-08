@@ -27,27 +27,25 @@ export class Rampardosex extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public powers = [
-    {
-      name: 'Destructive Headbutting',
-      powerType: PowerType.ABILITY,
-      useWhenInPlay: true,
-      text: "Once during your turn, if this Pokémon is in the Active Spot, you may use this Ability. Flip a coin. If heads, discard an Energy from your opponent's Active Pokémon.",
-    },
-  ];
+  public powers = [{
+    name: 'Destructive Headbutting',
+    powerType: PowerType.ABILITY,
+    useWhenInPlay: true,
+    text: "Once during your turn, if this Pokémon is in the Active Spot, you may use this Ability. Flip a coin. If heads, discard an Energy from your opponent's Active Pokémon.",
+  }];
 
-  public attacks = [
-    {
-      name: 'Rowdy Hammer',
-      cost: [F, F],
-      damage: 150,
-      text: "During your next turn, attacks used by this Pokémon do 150 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).",
-    },
-  ];
+  public attacks = [{
+    name: 'Rowdy Hammer',
+    cost: [F, F],
+    damage: 150,
+    text: "During your next turn, attacks used by this Pokémon do 150 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).",
+  }];
 
   public set: string = 'PBL';
   public setNumber: string = '45';
+
   public regulationMark: string = 'J';
+
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rampardos ex';
   public fullName: string = 'Rampardos ex M5';

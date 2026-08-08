@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, CoinFlipPrompt, GameMessage, CardList, GameLog, PowerType } from '../../../game';
+import { StoreLike, State, StateUtils, CardList, GameLog, PowerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckHpEffect, CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Tyrantrum extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -28,6 +28,7 @@ export class Tyrantrum extends PokemonCard {
   }];
 
   public regulationMark = 'J';
+
   public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '45';
@@ -65,7 +66,7 @@ export class Tyrantrum extends PokemonCard {
           return s;
         }
 
-        return store.prompt(s, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), result => {
+        return COIN_FLIP_PROMPT(store, s, player, result => {
           if (result === true) {
             // Heads - discard top card
             const deckTop = new CardList();
@@ -75,10 +76,8 @@ export class Tyrantrum extends PokemonCard {
               deckTop.moveTo(opponent.discard);
             }
             // Continue flipping
-            return flipCoins(s);
+            flipCoins(s);
           }
-          // Tails - stop flipping
-          return s;
         });
       };
 

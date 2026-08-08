@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { ChooseCardsPrompt, CoinFlipPrompt, GameMessage, State, StateUtils, StoreLike } from '../../../game';
+import { ChooseCardsPrompt, GameMessage, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Wimpod extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -12,23 +12,22 @@ export class Wimpod extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Sneaky Snacking',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, discard a random card from your opponent\'s hand.'
-    },
-    {
-      name: 'Ram',
-      cost: [W, C, C],
-      damage: 30,
-      text: ''
-    },
-  ];
+  public attacks = [{
+    name: 'Sneaky Snacking',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, discard a random card from your opponent\'s hand.'
+  }, {
+    name: 'Ram',
+    cost: [W, C, C],
+    damage: 30,
+    text: ''
+  }];
 
   public set: string = 'PAR';
+
   public regulationMark = 'G';
+
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '48';
   public name: string = 'Wimpod';
@@ -44,9 +43,7 @@ export class Wimpod extends PokemonCard {
         return state;
       }
 
-      store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === false) {
           return state;
         }

@@ -11,21 +11,18 @@ export class Kangaskhan extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Call for Family',
-      cost: [C],
-      damage: 0,
-      text: 'Search your deck for 2 Basic Pokémon and put them onto your Bench. Shuffle your deck afterward.'
-    },
-    {
-      name: 'Comet Punch',
-      cost: [C, C],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 20 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Call for Family',
+    cost: [C],
+    damage: 0,
+    text: 'Search your deck for 2 Basic Pokémon and put them onto your Bench. Shuffle your deck afterward.'
+  }, {
+    name: 'Comet Punch',
+    cost: [C, C],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 20 damage times the number of heads.'
+  }];
 
   public set: string = 'PLB';
   public setNumber: string = '71';

@@ -20,8 +20,7 @@ export class DarkBlastoise extends PokemonCard {
     damage: 30,
     damageCalculation: '+',
     text: 'Does 30 damage plus 20 more damage for each Water Energy attached to Dark Blastoise but not used to pay for this attack. You can\'t add more than 40 damage in this way.'
-  },
-  {
+  }, {
     name: 'Rocket Tackle',
     cost: [W, C, C],
     damage: 40,

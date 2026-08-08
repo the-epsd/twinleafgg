@@ -33,15 +33,13 @@ export class Ampharos extends PokemonCard {
     text: 'Once during your turn (before your attack), you may put 3 damage counters on 1 of your opponent\'s Pokémon-EX.'
   }];
 
-  public attacks = [
-    {
-      name: 'Gigavolt',
-      cost: [L, L, C],
-      damage: 80,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 40 more damage. If tails, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Gigavolt',
+    cost: [L, L, C],
+    damage: 80,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 40 more damage. If tails, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'STS';
   public setNumber: string = '40';

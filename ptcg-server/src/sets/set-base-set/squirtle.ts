@@ -14,19 +14,19 @@ import {
 
 export class Squirtle extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType = W;
   public hp: number = 40;
-  public weakness = [{ type: CardType.LIGHTNING }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: L }];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Bubble',
-    cost: [CardType.WATER],
+    cost: [W],
     damage: 10,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
   }, {
     name: 'Withdraw',
-    cost: [CardType.WATER, CardType.COLORLESS],
+    cost: [W, C],
     damage: 0,
     text: 'Flip a coin. If heads, prevent all damage done to Squirtle during your opponent\'s next turn. (Any other effects of attacks still happen.)'
   }];

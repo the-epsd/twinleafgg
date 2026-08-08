@@ -17,8 +17,7 @@ export class Poliwhirl extends PokemonCard {
     cost: [W, W],
     damage: 30,
     text: 'Choose 1 of your opponent\'s Active Pokémon\'s attacks. That Pokémon can\'t use that attack during your opponent\'s next turn.'
-  },
-  {
+  }, {
     name: 'Double Slap',
     cost: [W, W, C],
     damage: 50,

@@ -10,6 +10,7 @@ import { COIN_FLIP_PROMPT, DRAW_CARDS } from '../../../game/store/prefabs/prefab
 
 export class RollerSkates extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
+
   public set: string = 'XY';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '125';
@@ -27,12 +28,12 @@ export class RollerSkates extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      COIN_FLIP_PROMPT(store, state, effect.player, (result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {
           const player = effect.player;
           DRAW_CARDS(store, state, player, 3);
         }
-      }));
+      });
 
 
     }

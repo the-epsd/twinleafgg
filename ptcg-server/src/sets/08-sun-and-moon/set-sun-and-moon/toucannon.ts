@@ -19,20 +19,17 @@ export class Toucannon extends PokemonCard {
   public readonly ECHOED_VOICE_MARKER = 'TOUCANNON_ECHOED_VOICE_MARKER';
   public readonly ECHOED_VOICE_CLEAR_MARKER = 'TOUCANNON_ECHOED_VOICE_CLEAR_MARKER';
 
-  public attacks = [
-    {
-      name: 'Echoed Voice',
-      cost: [C, C],
-      damage: 60,
-      text: 'During your next turn, this Pokémon\'s Echoed Voice attack does 60 more damage (before applying Weakness and Resistance).'
-    },
-    {
-      name: 'Beak Blast',
-      cost: [C, C, C],
-      damage: 100,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Burned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Echoed Voice',
+    cost: [C, C],
+    damage: 60,
+    text: 'During your next turn, this Pokémon\'s Echoed Voice attack does 60 more damage (before applying Weakness and Resistance).'
+  }, {
+    name: 'Beak Blast',
+    cost: [C, C, C],
+    damage: 100,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Burned.'
+  }];
 
   public set: string = 'SUM';
   public setNumber: string = '108';

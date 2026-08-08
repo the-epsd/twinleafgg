@@ -21,8 +21,7 @@ export class Rapidash extends PokemonCard {
     cost: [R],
     damage: 20,
     text: 'Your opponent\'s Active Pokémon is now Burned.'
-  },
-  {
+  }, {
     name: 'Agility',
     cost: [R, R],
     damage: 60,

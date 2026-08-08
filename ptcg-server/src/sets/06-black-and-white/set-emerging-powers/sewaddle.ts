@@ -10,20 +10,17 @@ export class Sewaddle extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Tackle',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'String Shot',
-      cost: [G],
-      damage: 0,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tackle',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'String Shot',
+    cost: [G],
+    damage: 0,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'EPO';
   public cardImage: string = 'assets/cardback.png';

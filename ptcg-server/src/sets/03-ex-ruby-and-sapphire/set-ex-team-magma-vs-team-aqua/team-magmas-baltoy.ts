@@ -17,8 +17,7 @@ export class TeamMagmasBaltoy extends PokemonCard {
     cost: [C],
     damage: 10,
     text: ''
-  },
-  {
+  }, {
     name: 'Double Spin',
     cost: [F, C],
     damage: 20,

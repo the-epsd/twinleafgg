@@ -23,14 +23,12 @@ export class Solrock extends PokemonCard {
     text: 'The maximum HP of each of your Lunatone in play is 130.'
   }];
 
-  public attacks = [
-    {
-      name: 'Scorching Light',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed. If tails, your opponent\'s Active Pokémon is now Burned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Scorching Light',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed. If tails, your opponent\'s Active Pokémon is now Burned.'
+  }];
 
   public set: string = 'CES';
   public setNumber: string = '62';

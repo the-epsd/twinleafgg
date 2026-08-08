@@ -16,8 +16,7 @@ export class Dunsparce extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Draw 2 cards.'
-  },
-  {
+  }, {
     name: 'Dig',
     cost: [C],
     damage: 10,

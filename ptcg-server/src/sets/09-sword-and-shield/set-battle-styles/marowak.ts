@@ -24,17 +24,16 @@ export class Marowak extends PokemonCard {
     text: 'This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
   }];
 
-  public attacks = [
-    {
-      name: 'Bonemerang',
-      cost: [F, C],
-      damage: 90,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 90 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Bonemerang',
+    cost: [F, C],
+    damage: 90,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 90 damage for each heads.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'BST';
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';

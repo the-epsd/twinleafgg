@@ -17,23 +17,21 @@ export class Steelix extends PokemonCard {
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Steel Swing',
-      cost: [C, C, C],
-      damage: 80,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 80 damage for each heads.'
-    },
-    {
-      name: 'Heavy Impact',
-      cost: [M, M, M, C, C],
-      damage: 200,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Steel Swing',
+    cost: [C, C, C],
+    damage: 80,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 80 damage for each heads.'
+  }, {
+    name: 'Heavy Impact',
+    cost: [M, M, M, C, C],
+    damage: 200,
+    text: ''
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'BST';
   public setNumber: string = '99';
   public cardImage: string = 'assets/cardback.png';

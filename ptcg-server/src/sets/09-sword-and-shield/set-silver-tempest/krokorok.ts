@@ -17,16 +17,15 @@ export class Krokorok extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Crunch',
-      cost: [D, C, C],
-      damage: 60,
-      text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Crunch',
+    cost: [D, C, C],
+    damage: 60,
+    text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'SIT';
   public setNumber: string = '112';
   public cardImage: string = 'assets/cardback.png';

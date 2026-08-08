@@ -13,20 +13,17 @@ export class Klang extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Charge Beam',
-      cost: [C, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, attach an Energy card from your discard pile to this Pokémon.'
-    },
-    {
-      name: 'Vice Grip',
-      cost: [M, C, C],
-      damage: 50,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Charge Beam',
+    cost: [C, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, attach an Energy card from your discard pile to this Pokémon.'
+  }, {
+    name: 'Vice Grip',
+    cost: [M, C, C],
+    damage: 50,
+    text: ''
+  }];
 
   public set: string = 'DEX';
   public setNumber: string = '76';

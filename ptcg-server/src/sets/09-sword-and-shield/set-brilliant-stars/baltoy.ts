@@ -16,17 +16,16 @@ export class Baltoy extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Triple Spin',
-      cost: [C, C],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 20 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Triple Spin',
+    cost: [C, C],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 20 damage for each heads.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'BRS';
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';

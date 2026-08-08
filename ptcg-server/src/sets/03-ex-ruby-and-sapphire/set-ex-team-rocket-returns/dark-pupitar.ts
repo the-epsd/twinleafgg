@@ -13,20 +13,17 @@ export class DarkPupitar extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Dark Streak',
-      cost: [C, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, each Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Rock Tumble',
-      cost: [F, C, C],
-      damage: 40,
-      text: 'This attack\'s damage is not affected by Resistance.'
-    }
-  ];
+  public attacks = [{
+    name: 'Dark Streak',
+    cost: [C, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, each Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Rock Tumble',
+    cost: [F, C, C],
+    damage: 40,
+    text: 'This attack\'s damage is not affected by Resistance.'
+  }];
 
   public set: string = 'TRR';
   public setNumber: string = '41';

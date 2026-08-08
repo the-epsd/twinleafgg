@@ -18,20 +18,17 @@ export class Swoobat extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Wave Amplification',
-      cost: [C],
-      damage: 0,
-      text: 'During your next turn, this Pokémon\'s Returning Echo attack does 60 more damage (before applying Weakness and Resistance).'
-    },
-    {
-      name: 'Returning Echo',
-      cost: [P],
-      damage: 60,
-      text: 'Flip a coin. If tails, return this Pokémon and all cards attached to it to your hand.'
-    }
-  ];
+  public attacks = [{
+    name: 'Wave Amplification',
+    cost: [C],
+    damage: 0,
+    text: 'During your next turn, this Pokémon\'s Returning Echo attack does 60 more damage (before applying Weakness and Resistance).'
+  }, {
+    name: 'Returning Echo',
+    cost: [P],
+    damage: 60,
+    text: 'Flip a coin. If tails, return this Pokémon and all cards attached to it to your hand.'
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '72';
@@ -40,6 +37,7 @@ export class Swoobat extends PokemonCard {
   public fullName: string = 'Swoobat BKT';
 
   public readonly WAVE_AMP_MARKER = 'SWOOBAT_BKT_WAVE_AMP_MARKER';
+
   public readonly WAVE_AMP_MARKER_2 = 'SWOOBAT_BKT_WAVE_AMP_MARKER_2';
 
   private returnToHand = false;

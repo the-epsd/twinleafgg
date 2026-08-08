@@ -15,20 +15,17 @@ export class Bisharp2 extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Cut Down',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokémon.'
-    },
-    {
-      name: 'Slicing Blade',
-      cost: [D, C, C],
-      damage: 70,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Cut Down',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokémon.'
+  }, {
+    name: 'Slicing Blade',
+    cost: [D, C, C],
+    damage: 70,
+    text: ''
+  }];
 
   public set: string = 'PLF';
   public setNumber: string = '74';

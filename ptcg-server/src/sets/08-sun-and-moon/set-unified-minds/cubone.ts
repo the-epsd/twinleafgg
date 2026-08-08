@@ -16,8 +16,7 @@ export class Cubone extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'During your opponent\'s next turn, the Defending Pokémon\'s attacks do 20 less damage (before applying Weakness and Resistance).'
-  },
-  {
+  }, {
     name: 'Bonemerang',
     cost: [C, C],
     damage: 20,

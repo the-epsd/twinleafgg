@@ -14,21 +14,18 @@ export class Simisage extends PokemonCard {
   public resistance = [{ type: W, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Seed Bomb',
-      cost: [G],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Fury Swipes',
-      cost: [C, C, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 40 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Seed Bomb',
+    cost: [G],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Fury Swipes',
+    cost: [C, C, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 40 damage times the number of heads.'
+  }];
 
   public set: string = 'BLW';
   public cardImage: string = 'assets/cardback.png';

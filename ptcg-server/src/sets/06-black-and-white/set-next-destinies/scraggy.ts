@@ -13,20 +13,17 @@ export class Scraggy extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Shed Skin',
-      cost: [C],
-      damage: 0,
-      text: 'Heal 40 damage from this Pokémon.'
-    },
-    {
-      name: 'Lunge',
-      cost: [D, D],
-      damage: 40,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Shed Skin',
+    cost: [C],
+    damage: 0,
+    text: 'Heal 40 damage from this Pokémon.'
+  }, {
+    name: 'Lunge',
+    cost: [D, D],
+    damage: 40,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'NXD';
   public setNumber: string = '73';

@@ -17,20 +17,17 @@ export class Kingdra extends PokemonCard {
   public weakness = [{ type: Y }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Shred',
-      cost: [W],
-      damage: 30,
-      text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
-    },
-    {
-      name: 'Twister',
-      cost: [W, L],
-      damage: 70,
-      text: 'Flip 2 coins. For each heads, discard an Energy attached to your opponent\'s Active Pokémon. If both of them are tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Shred',
+    cost: [W],
+    damage: 30,
+    text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
+  }, {
+    name: 'Twister',
+    cost: [W, L],
+    damage: 70,
+    text: 'Flip 2 coins. For each heads, discard an Energy attached to your opponent\'s Active Pokémon. If both of them are tails, this attack does nothing.'
+  }];
 
   public set: string = 'PRC';
   public setNumber: string = '107';

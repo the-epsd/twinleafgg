@@ -15,20 +15,17 @@ export class Spewpa extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Bug Bite',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Stun Spore',
-      cost: [G, C, C],
-      damage: 40,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Bug Bite',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Stun Spore',
+    cost: [G, C, C],
+    damage: 40,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'XY';
   public setNumber: string = '16';

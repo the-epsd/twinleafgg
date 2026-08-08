@@ -19,8 +19,7 @@ export class Excadrill2 extends PokemonCard {
     cost: [F, C],
     damage: 30,
     text: 'Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn.'
-  },
-  {
+  }, {
     name: 'Earthquake',
     cost: [F, C, C],
     damage: 70,

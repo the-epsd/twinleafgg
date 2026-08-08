@@ -13,20 +13,17 @@ export class Octillery extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Sharpshooting',
-      cost: [W],
-      damage: 0,
-      text: 'This attack does 30 damage to 1 of your opponent\'s Pok\u00e9mon. (Don\'t apply Weakness and Resistance for Benched Pok\u00e9mon.)'
-    },
-    {
-      name: 'Bubble Beam',
-      cost: [W, W],
-      damage: 40,
-      text: 'Flip a coin. If heads, the Defending Pok\u00e9mon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Sharpshooting',
+    cost: [W],
+    damage: 0,
+    text: 'This attack does 30 damage to 1 of your opponent\'s Pok\u00e9mon. (Don\'t apply Weakness and Resistance for Benched Pok\u00e9mon.)'
+  }, {
+    name: 'Bubble Beam',
+    cost: [W, W],
+    damage: 40,
+    text: 'Flip a coin. If heads, the Defending Pok\u00e9mon is now Paralyzed.'
+  }];
 
   public set: string = 'PLB';
   public setNumber: string = '19';

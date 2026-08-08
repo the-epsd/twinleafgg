@@ -15,21 +15,18 @@ export class Piloswine extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Ice Beam',
-      cost: [W, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Quintuple Headbutt',
-      cost: [W, W, C, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 5 coins. This attack does 40 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Ice Beam',
+    cost: [W, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Quintuple Headbutt',
+    cost: [W, W, C, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 5 coins. This attack does 40 damage times the number of heads.'
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '27';

@@ -26,15 +26,13 @@ export class TeamAquasKyogre extends PokemonCard {
     cost: [W, C],
     damage: 10,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Confused. If tails, the Defending Pokémon is now Asleep.'
-  },
-  {
+  }, {
     name: 'Aqua Smash',
     cost: [W, W, C],
     damage: 50,
     damageCalculation: '+',
     text: 'If the Defending Pokémon is affected by a Special Condition, this attack does 50 damage plus 20 more damage.'
   }];
-
 
   public set: string = 'MA';
   public cardImage: string = 'assets/cardback.png';

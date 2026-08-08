@@ -3,7 +3,7 @@ import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Seadra extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -18,8 +18,7 @@ export class Seadra extends PokemonCard {
     cost: [W],
     damage: 20,
     text: ''
-  },
-  {
+  }, {
     name: 'Water Bullet',
     cost: [C, C, C],
     damage: 30,
@@ -49,11 +48,9 @@ export class Seadra extends PokemonCard {
         }
       });
 
-      for (let i = 0; i < waterEnergyCount; i++) {
-        COIN_FLIP_PROMPT(store, state, player, result => {
-          if (result) {
-            effect.damage += 10;
-          }
+      if (waterEnergyCount > 0) {
+        MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, waterEnergyCount, results => {
+          effect.damage += results.filter(r => r).length * 10;
         });
       }
     }

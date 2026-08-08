@@ -16,21 +16,18 @@ export class Lopunny extends PokemonCard {
 
   public wantsToShuffle: boolean = false;
 
-  public attacks = [
-    {
-      name: 'Stompy Stomp',
-      cost: [C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 40 damage for each heads.'
-    },
-    {
-      name: 'Happy Turn',
-      cost: [C, C],
-      damage: 60,
-      text: 'You may shuffle this Pokémon and all cards attached to it into your deck.'
-    }
-  ];
+  public attacks = [{
+    name: 'Stompy Stomp',
+    cost: [C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 40 damage for each heads.'
+  }, {
+    name: 'Happy Turn',
+    cost: [C, C],
+    damage: 60,
+    text: 'You may shuffle this Pokémon and all cards attached to it into your deck.'
+  }];
 
   public set: string = 'UPR';
   public setNumber: string = '107';

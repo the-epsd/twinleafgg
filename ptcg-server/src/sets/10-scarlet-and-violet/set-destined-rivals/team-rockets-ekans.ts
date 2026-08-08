@@ -12,22 +12,20 @@ export class TeamRocketsEkans extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Hold Back',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Gnaw',
-      cost: [D],
-      damage: 10,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Hold Back',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Gnaw',
+    cost: [D],
+    damage: 10,
+    text: ''
+  }];
 
   public regulationMark = 'I';
+
   public set: string = 'DRI';
   public setNumber: string = '112';
   public cardImage: string = 'assets/cardback.png';

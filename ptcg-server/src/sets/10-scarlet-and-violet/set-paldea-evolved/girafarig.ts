@@ -11,23 +11,22 @@ export class Girafarig extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Psy Bolt',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Headbang',
-      cost: [C, C, C],
-      damage: 70,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Psy Bolt',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Headbang',
+    cost: [C, C, C],
+    damage: 70,
+    text: ''
+  }];
 
   public set: string = 'PAL';
+
   public regulationMark: string = 'G';
+
   public setNumber: string = '154';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Girafarig';

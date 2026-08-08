@@ -22,6 +22,7 @@ export class MegaTatsugiriex extends PokemonCard {
   }];
 
   public regulationMark = 'J';
+
   public set: string = 'M-P';
   public setNumber: string = '139';
   public cardImage: string = 'assets/cardback.png';

@@ -15,21 +15,18 @@ export class Clefairy extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Pound',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Double Slap',
-      cost: [C, C],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Pound',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Double Slap',
+    cost: [C, C],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '97';

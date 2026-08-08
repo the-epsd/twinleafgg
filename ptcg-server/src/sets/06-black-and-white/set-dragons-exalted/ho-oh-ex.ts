@@ -1,11 +1,10 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, PowerType, EnergyCard, GameError, GameMessage, CoinFlipPrompt, PokemonCardList, ChooseCardsPrompt } from '../../../game';
+import { StoreLike, State, PowerType, EnergyCard, GameError, GameMessage, PokemonCardList, ChooseCardsPrompt } from '../../../game';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
-
+import { WAS_ATTACK_USED, WAS_POWER_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 function* useRebirth(next: Function, store: StoreLike, state: State,
   self: HoOhEx, effect: PowerEffect): IterableIterator<State> {
@@ -29,9 +28,7 @@ function* useRebirth(next: Function, store: StoreLike, state: State,
   player.marker.addMarker(self.REBIRTH_MAREKER, self);
 
   let flipResult = false;
-  yield store.prompt(state, [
-    new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-  ], result => {
+  yield COIN_FLIP_PROMPT(store, state, player, result => {
     flipResult = result;
     next();
   });
@@ -72,49 +69,36 @@ function* useRebirth(next: Function, store: StoreLike, state: State,
 }
 
 export class HoOhEx extends PokemonCard {
-
   public tags = [CardTag.POKEMON_EX];
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.FIRE;
-
+  public cardType: CardType = R;
   public hp: number = 160;
-
-  public weakness = [{ type: CardType.WATER }];
-
-  public resistance = [{ type: CardType.FIGHTING, value: -20 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: W }];
+  public resistance = [{ type: F, value: -20 }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Rebirth',
     useFromDiscard: true,
     powerType: PowerType.ABILITY,
     text: 'Once during your turn (before your attack), if this Pokemon is ' +
-      'in your discard pile, you may flip a coin. If heads, put this Pokemon ' +
-      'onto your Bench and attach 3 different types of basic Energy cards ' +
-      'from your discard pile to this Pokemon.'
+    'in your discard pile, you may flip a coin. If heads, put this Pokemon ' +
+    'onto your Bench and attach 3 different types of basic Energy cards ' +
+    'from your discard pile to this Pokemon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Rainbow Burn',
-      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
-      damage: 20,
-      text: 'Does 20 more damage for each different type of basic Energy ' +
-        'attached to this Pokemon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Rainbow Burn',
+    cost: [C, C, C],
+    damage: 20,
+    text: 'Does 20 more damage for each different type of basic Energy ' +
+    'attached to this Pokemon.'
+  }];
 
   public set: string = 'DRX';
-
   public name: string = 'Ho-Oh-EX';
-
   public fullName: string = 'Ho-Oh EX DRX';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '22';
 
   public readonly REBIRTH_MAREKER = 'REBIRTH_MAREKER';

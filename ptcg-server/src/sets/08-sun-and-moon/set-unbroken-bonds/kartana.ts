@@ -1,27 +1,26 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, CoinFlipPrompt, GameMessage } from '../../../game';
+import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Kartana extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType = G;
   public hp: number = 70;
-  public weakness = [{ type: CardType.FIRE }];
+  public weakness = [{ type: R }];
 
   public attacks = [{
     name: 'Big Cut',
-    cost: [CardType.GRASS],
+    cost: [G],
     damage: 10,
     text: 'If you have exactly 4 Prize cards remaining, this attack does 120 more damage.'
-  },
-  {
+  }, {
     name: 'False Swipe',
-    cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
+    cost: [G, C, C],
     damage: 0,
     text: ' Flip a coin. If heads, put damage counters on your opponent\'s Active Pokémon until its remaining HP is 10. '
   }];
@@ -46,9 +45,7 @@ export class Kartana extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
           const checkHpEffect = new CheckHpEffect(effect.player, opponent.active);
           store.reduceEffect(state, checkHpEffect);

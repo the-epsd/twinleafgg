@@ -17,21 +17,18 @@ export class Glalie extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Crunch',
-      cost: [W, W],
-      damage: 40,
-      text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
-    },
-    {
-      name: 'Raging Floe',
-      cost: [W, W, W],
-      damage: 70,
-      damageCalculation: '+',
-      text: 'If this Pokémon has any damage counters on it, this attack does 80 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Crunch',
+    cost: [W, W],
+    damage: 40,
+    text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
+  }, {
+    name: 'Raging Floe',
+    cost: [W, W, W],
+    damage: 70,
+    damageCalculation: '+',
+    text: 'If this Pokémon has any damage counters on it, this attack does 80 more damage.'
+  }];
 
   public set: string = 'GRI';
   public setNumber: string = '32';

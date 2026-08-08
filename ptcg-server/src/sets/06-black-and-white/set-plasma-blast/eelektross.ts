@@ -13,22 +13,19 @@ export class Eelektross extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Crush and Burn',
-      cost: [L, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Discard as many Energy attached to your Pok\u00e9mon as you like. This attack does 30 damage times the number of Energy cards you discarded.'
-    },
-    {
-      name: 'Thunder Tempest',
-      cost: [L, C, C, C],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 50 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Crush and Burn',
+    cost: [L, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Discard as many Energy attached to your Pok\u00e9mon as you like. This attack does 30 damage times the number of Energy cards you discarded.'
+  }, {
+    name: 'Thunder Tempest',
+    cost: [L, C, C, C],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 50 damage times the number of heads.'
+  }];
 
   public set: string = 'PLB';
   public setNumber: string = '33';

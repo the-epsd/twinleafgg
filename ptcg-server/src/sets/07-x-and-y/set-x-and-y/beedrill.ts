@@ -24,8 +24,7 @@ export class Beedrill extends PokemonCard {
     cost: [G],
     damage: 20,
     text: 'Your opponent\'s Active Pokémon is now Poisoned.'
-  },
-  {
+  }, {
     name: 'Flash Needle',
     cost: [G, G],
     damage: 40,

@@ -24,17 +24,16 @@ export class Parasect extends PokemonCard {
     text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may make both Active Pokémon Asleep and Poisoned.'
   }];
 
-  public attacks = [
-    {
-      name: 'X-Scissor',
-      cost: [G, C],
-      damage: 50,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 50 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'X-Scissor',
+    cost: [G, C],
+    damage: 50,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 50 more damage.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'LOR';
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';

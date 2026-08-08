@@ -13,21 +13,17 @@ export class GreedentV extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Body Slam',
-      cost: [C, C],
-      damage: 40,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Nom-Nom-Nom Incisors',
-      cost: [C, C, C],
-      damage: 120,
-      text: 'Draw 3 cards.'
-    },
-
-  ];
+  public attacks = [{
+    name: 'Body Slam',
+    cost: [C, C],
+    damage: 40,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Nom-Nom-Nom Incisors',
+    cost: [C, C, C],
+    damage: 120,
+    text: 'Draw 3 cards.'
+  }];
 
   public set: string = 'FST';
   public cardImage: string = 'assets/cardback.png';
@@ -38,11 +34,11 @@ export class GreedentV extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Body Slam
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, (result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {
           YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
         }
-      }));
+      });
     }
 
     // Nom-Nom-Nom Incisors

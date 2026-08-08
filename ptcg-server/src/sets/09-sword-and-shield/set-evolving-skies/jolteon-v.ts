@@ -17,23 +17,21 @@ export class JolteonV extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Thunder Spear',
-      cost: [C],
-      damage: 0,
-      text: 'This attack does 20 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    },
-    {
-      name: 'Pin Missile',
-      cost: [L, C, C],
-      damage: 60,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 60 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Thunder Spear',
+    cost: [C],
+    damage: 0,
+    text: 'This attack does 20 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }, {
+    name: 'Pin Missile',
+    cost: [L, C, C],
+    damage: 60,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 60 damage for each heads.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'EVS';
   public setNumber: string = '177';
   public cardImage: string = 'assets/cardback.png';

@@ -2,8 +2,7 @@ import { CardTag, CardType, ChooseCardsPrompt, GameMessage, PokemonCard, Stage, 
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
-import { BLOCK_IF_GX_ATTACK_USED, COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-
+import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class SlowpokePsyduckGX extends PokemonCard {
   public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
@@ -13,23 +12,20 @@ export class SlowpokePsyduckGX extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Ditch and Splash',
-      cost: [W, W],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Discard any number of Supporter cards from your hand. This attack does 40 damage for each card you discarded in this way.'
-    },
-    {
-      name: 'Thrilling Times-GX',
-      cost: [W, W],
-      damage: 10,
-      damageCalculation: '+',
-      gxAttack: true,
-      text: 'Flip a coin. If heads, this attack does 100 more damage. If this Pokémon has at least 6 extra [W] Energy attached to it (in addition to this attack\'s cost), flip 10 coins instead, and this attack does 100 more damage for each heads. (You can\'t use more than 1 GX attack in a game.)'
-    },
-  ];
+  public attacks = [{
+    name: 'Ditch and Splash',
+    cost: [W, W],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Discard any number of Supporter cards from your hand. This attack does 40 damage for each card you discarded in this way.'
+  }, {
+    name: 'Thrilling Times-GX',
+    cost: [W, W],
+    damage: 10,
+    damageCalculation: '+',
+    gxAttack: true,
+    text: 'Flip a coin. If heads, this attack does 100 more damage. If this Pokémon has at least 6 extra [W] Energy attached to it (in addition to this attack\'s cost), flip 10 coins instead, and this attack does 100 more damage for each heads. (You can\'t use more than 1 GX attack in a game.)'
+  }];
 
   public set = 'UNM';
   public setNumber = '35';
@@ -81,15 +77,10 @@ export class SlowpokePsyduckGX extends PokemonCard {
       if (meetsExtraEffectCost) {
         coinFlips = 10;
       }
-      let heads = 0;
-
-      for (let i = 0; i < coinFlips; i++) {
-        COIN_FLIP_PROMPT(store, state, player, result => {
-          if (result) { heads++; }
-        });
-      }
-
-      effect.damage = heads * 100;
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, coinFlips, results => {
+        const heads = results.filter(r => r).length;
+        effect.damage = heads * 100;
+      });
     }
 
     return state;

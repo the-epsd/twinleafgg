@@ -23,8 +23,7 @@ export class Diggersby extends PokemonCard {
     cost: [C, C],
     damage: 0,
     text: 'Put 2 Item cards from your discard pile into your hand.'
-  },
-  {
+  }, {
     name: 'Dig',
     cost: [C, C, C],
     damage: 50,

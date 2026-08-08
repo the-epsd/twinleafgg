@@ -16,14 +16,12 @@ export class Ekans extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Wrap',
-      cost: [P],
-      damage: 10,
-      text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Wrap',
+    cost: [P],
+    damage: 10,
+    text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
+  }];
 
   public set: string = 'HIF';
   public setNumber: string = '25';

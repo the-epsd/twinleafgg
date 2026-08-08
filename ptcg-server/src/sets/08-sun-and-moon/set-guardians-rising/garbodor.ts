@@ -1,52 +1,37 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, ChooseCardsPrompt, Card, SuperType, CoinFlipPrompt, GameMessage, TrainerCard } from '../../../game';
+import { StoreLike, State, StateUtils, ChooseCardsPrompt, Card, SuperType, GameMessage, TrainerCard } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 // GRI Garbodor 51 (https://limitlesstcg.com/cards/GRI/51)
 export class Garbodor extends PokemonCard {
-
   public tags = [];
-
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Trubbish';
-
-  public cardType: CardType = CardType.PSYCHIC;
-
+  public cardType: CardType = P;
   public hp: number = 120;
+  public weakness = [{ type: P }];
+  public retreat = [C, C, C];
 
-  public weakness = [{ type: CardType.PSYCHIC }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
-
-  public attacks = [
-    {
-      name: 'Trashalanche',
-      cost: [CardType.PSYCHIC],
-      damage: 20,
-      text: 'This attack does 20 damage for each Item card in your opponent\'s discard pile.'
-    },
-
-    {
-      name: 'Acid Spray',
-      cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
-      damage: 70,
-      text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Trashalanche',
+    cost: [P],
+    damage: 20,
+    text: 'This attack does 20 damage for each Item card in your opponent\'s discard pile.'
+  }, {
+    name: 'Acid Spray',
+    cost: [P, C, C],
+    damage: 70,
+    text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
+  }];
 
   public set: string = 'GRI';
-
   public setNumber = '51';
-
   public cardImage = 'assets/cardback.png';
-
   public name: string = 'Garbodor';
-
   public fullName: string = 'Garbodor GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -71,9 +56,7 @@ export class Garbodor extends PokemonCard {
         const player = effect.player;
         const opponent = StateUtils.getOpponent(state, player);
 
-        return store.prompt(state, new CoinFlipPrompt(
-          player.id, GameMessage.COIN_FLIP
-        ), flipResult => {
+        return COIN_FLIP_PROMPT(store, state, player, flipResult => {
           if (flipResult) {
             // Defending Pokemon has no energy cards attached
             if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {

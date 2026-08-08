@@ -16,21 +16,18 @@ export class Lickilicky extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Eat Up',
-      cost: [C, C],
-      damage: 40,
-      text: 'Before doing damage, discard all Pokémon Tool cards from your opponent\'s Active Pokémon. If you discarded a Pokémon Tool card in this way, heal all damage from this Pokémon.'
-    },
-    {
-      name: 'Tonguenado',
-      cost: [C, C, C],
-      damage: 60,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 60 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Eat Up',
+    cost: [C, C],
+    damage: 40,
+    text: 'Before doing damage, discard all Pokémon Tool cards from your opponent\'s Active Pokémon. If you discarded a Pokémon Tool card in this way, heal all damage from this Pokémon.'
+  }, {
+    name: 'Tonguenado',
+    cost: [C, C, C],
+    damage: 60,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 60 damage for each heads.'
+  }];
 
   public set: string = 'UNB';
   public setNumber: string = '153';

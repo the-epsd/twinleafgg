@@ -16,23 +16,21 @@ export class WailordV extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Draw Up',
-      cost: [W],
-      damage: 0,
-      text: 'Attach up to 3 [W] Energy cards from your discard pile to this Pokémon.'
-    },
-    {
-      name: 'Ocean Waves',
-      cost: [W, W, W, W],
-      damage: 120,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 120 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Draw Up',
+    cost: [W],
+    damage: 0,
+    text: 'Attach up to 3 [W] Energy cards from your discard pile to this Pokémon.'
+  }, {
+    name: 'Ocean Waves',
+    cost: [W, W, W, W],
+    damage: 120,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 120 damage for each heads.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'CPA';
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';

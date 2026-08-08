@@ -16,8 +16,7 @@ export class Onix extends PokemonCard {
     damage: 20,
     damageCalculation: 'x',
     text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
-  },
-  {
+  }, {
     name: 'Body Slam',
     cost: [F, F, F, F],
     damage: 40,

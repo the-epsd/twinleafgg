@@ -16,21 +16,18 @@ export class Vibrava extends PokemonCard {
   public weakness = [{ type: N }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Quick Turn',
-      cost: [G],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
-    },
-    {
-      name: 'Sand Pulse',
-      cost: [F, C, C],
-      damage: 50,
-      text: 'Does 10 damage to each of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
-  ];
+  public attacks = [{
+    name: 'Quick Turn',
+    cost: [G],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
+  }, {
+    name: 'Sand Pulse',
+    cost: [F, C, C],
+    damage: 50,
+    text: 'Does 10 damage to each of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '98';

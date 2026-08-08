@@ -24,21 +24,18 @@ export class Raichu extends PokemonCard {
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Nuzzle',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Powerful Spark',
-      cost: [L],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'This attack does 20 damage times the amount of [L] Energy attached to all of your Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Nuzzle',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Powerful Spark',
+    cost: [L],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'This attack does 20 damage times the amount of [L] Energy attached to all of your Pokémon.'
+  }];
 
   public set: string = 'CEC';
   public setNumber: string = '67';

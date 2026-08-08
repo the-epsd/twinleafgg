@@ -19,8 +19,7 @@ export class BlainesRapidash extends PokemonCard {
     cost: [R],
     damage: 20,
     text: ''
-  },
-  {
+  }, {
     name: 'Stamp',
     cost: [R, C, C],
     damage: 30,

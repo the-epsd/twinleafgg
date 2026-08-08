@@ -12,20 +12,17 @@ export class Pikachu extends PokemonCard {
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Tail Whip',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, the Defending Pok\u00e9mon can\'t attack during your opponent\'s next turn.'
-    },
-    {
-      name: 'Electro Ball',
-      cost: [L, C],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Tail Whip',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, the Defending Pok\u00e9mon can\'t attack during your opponent\'s next turn.'
+  }, {
+    name: 'Electro Ball',
+    cost: [L, C],
+    damage: 30,
+    text: ''
+  }];
 
   public set: string = 'ROS';
   public setNumber: string = '20';

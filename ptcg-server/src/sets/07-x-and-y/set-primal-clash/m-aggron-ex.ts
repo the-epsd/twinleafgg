@@ -19,15 +19,13 @@ export class MAggronEx extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Megaton Slam',
-      cost: [M, M, C, C],
-      damage: 120,
-      damageCalculation: '+',
-      text: 'You may flip a coin. If heads, this attack does 120 more damage. If tails, this attack does 20 damage to each of your Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
-  ];
+  public attacks = [{
+    name: 'Megaton Slam',
+    cost: [M, M, C, C],
+    damage: 120,
+    damageCalculation: '+',
+    text: 'You may flip a coin. If heads, this attack does 120 more damage. If tails, this attack does 20 damage to each of your Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }];
 
   public set: string = 'PRC';
   public setNumber: string = '94';

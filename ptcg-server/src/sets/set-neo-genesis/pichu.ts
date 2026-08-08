@@ -13,6 +13,7 @@ export class Pichu extends PokemonCard {
   public cardType: CardType = L;
   public hp: number = 30;
   public retreat = [];
+
   public evolvesTo = ['Pikachu'];
 
   public powers = [{

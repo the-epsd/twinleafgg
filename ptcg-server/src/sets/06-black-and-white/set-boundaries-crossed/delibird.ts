@@ -14,20 +14,17 @@ export class Delibird extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Present',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, search your deck for a card and put it into your hand. Shuffle your deck afterward.'
-    },
-    {
-      name: 'Icy Wind',
-      cost: [W, C],
-      damage: 30,
-      text: 'The Defending Pokémon is now Asleep.'
-    }
-  ];
+  public attacks = [{
+    name: 'Present',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, search your deck for a card and put it into your hand. Shuffle your deck afterward.'
+  }, {
+    name: 'Icy Wind',
+    cost: [W, C],
+    damage: 30,
+    text: 'The Defending Pokémon is now Asleep.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '38';

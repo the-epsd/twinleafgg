@@ -15,20 +15,17 @@ export class Shaymin extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Call for Family',
-      cost: [C],
-      damage: 0,
-      text: 'Search your deck for 2 Basic Pokémon and put them onto your Bench. Shuffle your deck afterward.'
-    },
-    {
-      name: 'Leaf Drain',
-      cost: [G, G],
-      damage: 30,
-      text: 'Flip a coin. If heads, heal 30 damage from this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Call for Family',
+    cost: [C],
+    damage: 0,
+    text: 'Search your deck for 2 Basic Pokémon and put them onto your Bench. Shuffle your deck afterward.'
+  }, {
+    name: 'Leaf Drain',
+    cost: [G, G],
+    damage: 30,
+    text: 'Flip a coin. If heads, heal 30 damage from this Pokémon.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '10';

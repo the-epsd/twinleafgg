@@ -16,23 +16,21 @@ export class Hippowdon extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Triple Smash',
-      cost: [F, F, C],
-      damage: 80,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 80 damage for each heads.'
-    },
-    {
-      name: 'Land Crush',
-      cost: [F, F, F, C],
-      damage: 150,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Triple Smash',
+    cost: [F, F, C],
+    damage: 80,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 80 damage for each heads.'
+  }, {
+    name: 'Land Crush',
+    cost: [F, F, F, C],
+    damage: 150,
+    text: ''
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'DAA';
   public setNumber: string = '94';
   public cardImage: string = 'assets/cardback.png';

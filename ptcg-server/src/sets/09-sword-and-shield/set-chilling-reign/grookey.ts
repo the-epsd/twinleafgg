@@ -16,17 +16,16 @@ export class Grookey extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Hit Twice',
-      cost: [G, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 30 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Hit Twice',
+    cost: [G, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 30 damage for each heads.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'CRE';
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';

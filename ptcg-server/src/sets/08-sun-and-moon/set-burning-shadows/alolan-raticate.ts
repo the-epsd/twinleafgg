@@ -17,21 +17,18 @@ export class AlolanRaticate extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Enhanced Fang',
-      cost: [],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'If this Pokémon has a Pokémon Tool card attached to it, this attack does 50 more damage.'
-    },
-    {
-      name: 'Hyper Fang',
-      cost: [D],
-      damage: 60,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Enhanced Fang',
+    cost: [],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'If this Pokémon has a Pokémon Tool card attached to it, this attack does 50 more damage.'
+  }, {
+    name: 'Hyper Fang',
+    cost: [D],
+    damage: 60,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'BUS';
   public setNumber: string = '82';

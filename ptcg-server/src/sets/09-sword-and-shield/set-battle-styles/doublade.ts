@@ -18,16 +18,15 @@ export class Doublade extends PokemonCard {
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Cut Down',
-      cost: [M, C],
-      damage: 40,
-      text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Cut Down',
+    cost: [M, C],
+    damage: 40,
+    text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'BST';
   public setNumber: string = '106';
   public cardImage: string = 'assets/cardback.png';

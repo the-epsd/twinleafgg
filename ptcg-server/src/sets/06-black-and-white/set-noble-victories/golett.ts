@@ -14,21 +14,18 @@ export class Golett extends PokemonCard {
   public resistance = [{ type: L, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Pound',
-      cost: [F],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Mega Punch',
-      cost: [P, C],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 more damage and the Defending Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Pound',
+    cost: [F],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Mega Punch',
+    cost: [P, C],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 20 more damage and the Defending Pokémon is now Confused.'
+  }];
 
   public set: string = 'NVI';
   public cardImage: string = 'assets/cardback.png';

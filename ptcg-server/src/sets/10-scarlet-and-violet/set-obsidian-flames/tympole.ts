@@ -1,42 +1,30 @@
-import { Card, ChooseCardsPrompt, CoinFlipPrompt, GameMessage, State, StateUtils, StoreLike } from '../../../game';
+import { Card, ChooseCardsPrompt, GameMessage, State, StateUtils, StoreLike } from '../../../game';
 import { CardType, Stage, SuperType } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Tympole extends PokemonCard {
-
   public regulationMark = 'G';
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.WATER;
-
+  public cardType: CardType = W;
   public hp: number = 70;
+  public weakness = [{ type: L }];
+  public retreat = [C];
 
-  public weakness = [{ type: CardType.LIGHTNING }];
-
-  public retreat = [CardType.COLORLESS];
-
-  public attacks = [
-    {
-      name: 'Screw Tail',
-      cost: [CardType.WATER],
-      damage: 10,
-      text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Screw Tail',
+    cost: [W],
+    damage: 10,
+    text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
+  }];
 
   public set: string = 'OBF';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '50';
-
   public name: string = 'Tympole';
-
   public fullName: string = 'Tympole OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -51,9 +39,7 @@ export class Tympole extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
 
           let card: Card;

@@ -21,8 +21,7 @@ export class Floatzel extends PokemonCard {
     cost: [W],
     damage: 30,
     text: 'Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn.'
-  },
-  {
+  }, {
     name: 'Aqua Blast',
     cost: [W, C],
     damage: 80,

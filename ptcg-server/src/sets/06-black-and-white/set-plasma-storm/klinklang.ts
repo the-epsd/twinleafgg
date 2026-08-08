@@ -28,14 +28,12 @@ export class Klinklang extends PokemonCard {
     text: 'Prevent all damage done to your Metal Pokémon by attacks from your opponent\'s Pokémon-EX.'
   }];
 
-  public attacks = [
-    {
-      name: 'Heavy Bullet',
-      cost: [M, M, C],
-      damage: 70,
-      text: 'Flip a coin. If heads, this attack does 20 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
-  ];
+  public attacks = [{
+    name: 'Heavy Bullet',
+    cost: [M, M, C],
+    damage: 70,
+    text: 'Flip a coin. If heads, this attack does 20 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '90';

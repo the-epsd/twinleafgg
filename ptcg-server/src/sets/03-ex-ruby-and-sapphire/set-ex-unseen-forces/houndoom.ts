@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card-types';
 import { PowerType } from '../../../game/store/card/pokemon-types';
-import { StoreLike, State, CoinFlipPrompt, GameMessage, GameError, StateUtils } from '../../../game';
+import { StoreLike, State, GameMessage, GameError, StateUtils } from '../../../game';
 
 import { Effect } from '../../../game/store/effects/effect';
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
@@ -10,7 +10,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 import { ChooseEnergyPrompt } from '../../../game/store/prompts/choose-energy-prompt';
 import { Card } from '../../../game';
 import { PlayItemEffect, AttachPokemonToolEffect, PlayStadiumEffect } from '../../../game/store/effects/play-card-effects';
-import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Houndoom extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -19,25 +19,25 @@ export class Houndoom extends PokemonCard {
   public hp: number = 70;
   public retreat = [C];
   public weakness = [{ type: W }];
+
   public powers = [{
     name: 'Lonesome',
     powerType: PowerType.POKEBODY,
     text: 'As long as you have less Pokémon in play than your opponent, your opponent can\'t play any Trainer cards (except for Supporter cards) from his or her hand.'
   }];
-  public attacks = [
-    {
-      name: 'Tight Jaw',
-      cost: [C, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Flamethrower',
-      cost: [R, R, C],
-      damage: 70,
-      text: 'Discard a [R] Energy attached to Houndoom.'
-    }
-  ];
+
+  public attacks = [{
+    name: 'Tight Jaw',
+    cost: [C, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Flamethrower',
+    cost: [R, R, C],
+    damage: 70,
+    text: 'Discard a [R] Energy attached to Houndoom.'
+  }];
+
   public set: string = 'UF';
   public name: string = 'Houndoom';
   public fullName: string = 'Houndoom UF';
@@ -71,9 +71,7 @@ export class Houndoom extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
           const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED]);
           store.reduceEffect(state, specialConditionEffect);

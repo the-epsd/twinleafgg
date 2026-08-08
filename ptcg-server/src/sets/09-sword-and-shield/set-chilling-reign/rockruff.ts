@@ -17,16 +17,15 @@ export class Rockruff extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Crunch',
-      cost: [F, F],
-      damage: 30,
-      text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Crunch',
+    cost: [F, F],
+    damage: 30,
+    text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'CRE';
   public setNumber: string = '86';
   public cardImage: string = 'assets/cardback.png';

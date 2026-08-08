@@ -18,8 +18,7 @@ export class Vileplume extends PokemonCard {
     cost: [G, C],
     damage: 50,
     text: 'Heal 30 damage from this Pokémon.'
-  },
-  {
+  }, {
     name: 'Allergy Storm',
     cost: [G, C, C],
     damage: 90,
@@ -27,6 +26,7 @@ export class Vileplume extends PokemonCard {
   }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'LOR';
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';

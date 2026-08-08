@@ -19,21 +19,18 @@ export class MoltresEx extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Destructive Flame',
-      cost: [R, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokémon.'
-    },
-    {
-      name: 'Power Flame',
-      cost: [R, R, C, C],
-      damage: 80,
-      damageCalculation: '+',
-      text: 'If this Pokémon has any Plasma Energy attached to it, this attack does 40 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Destructive Flame',
+    cost: [R, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokémon.'
+  }, {
+    name: 'Power Flame',
+    cost: [R, R, C, C],
+    damage: 80,
+    damageCalculation: '+',
+    text: 'If this Pokémon has any Plasma Energy attached to it, this attack does 40 more damage.'
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '14';

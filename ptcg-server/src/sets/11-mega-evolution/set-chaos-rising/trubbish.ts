@@ -11,16 +11,15 @@ export class Trubbish extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Acid Spray',
-      cost: [D],
-      damage: 10,
-      text: "Flip a coin. If heads, discard an Energy attached to your opponent's Active Pokémon.",
-    },
-  ];
+  public attacks = [{
+    name: 'Acid Spray',
+    cost: [D],
+    damage: 10,
+    text: "Flip a coin. If heads, discard an Energy attached to your opponent's Active Pokémon.",
+  }];
 
   public regulationMark = 'J';
+
   public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '56';

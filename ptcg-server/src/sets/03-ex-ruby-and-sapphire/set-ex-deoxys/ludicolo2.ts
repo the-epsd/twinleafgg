@@ -1,10 +1,10 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, CoinFlipPrompt, GameError, PowerType, PlayerType } from '../../../game';
+import { StoreLike, State, GameMessage, GameError, PowerType, PlayerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Ludicolo2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -69,19 +69,10 @@ export class Ludicolo2 extends PokemonCard {
       });
 
       // Flip coins equal to Water energy count
-      let heads = 0;
-      for (let i = 0; i < waterEnergyCount; i++) {
-        state = store.prompt(state, new CoinFlipPrompt(
-          player.id,
-          GameMessage.FLIP_COIN
-        ), result => {
-          if (result) {
-            heads++;
-          }
-          if (i === waterEnergyCount - 1) {
-            effect.damage = 40 + (20 * heads);
-          }
-          return state;
+      if (waterEnergyCount > 0) {
+        return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, waterEnergyCount, results => {
+          const heads = results.filter(r => r).length;
+          effect.damage = 40 + (20 * heads);
         });
       }
     }

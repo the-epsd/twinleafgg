@@ -25,14 +25,12 @@ export class DarkGyarados extends PokemonCard {
     text: 'When Dark Gyarados is Knocked Out by an attack, flip a coin. If heads, this power does 20 damage for each [W] Energy attached to Dark Gyarados to the Pokémon that Knocked Out Dark Gyarados. Apply Weakness and Resistance. This power doesn\'t work if Dark Gyarados is Asleep, Confused, or Paralyzed.'
   }];
 
-  public attacks = [
-    {
-      name: 'Ice Beam',
-      cost: [W, W, W],
-      damage: 30,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Ice Beam',
+    cost: [W, W, W],
+    damage: 30,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'CEL';
   public setNumber: string = '8A';

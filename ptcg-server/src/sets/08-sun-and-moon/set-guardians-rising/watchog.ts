@@ -16,21 +16,18 @@ export class Watchog extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Scrutinize',
-      cost: [C],
-      damage: 0,
-      text: 'Look at the top 2 cards of your opponent\'s deck, discard 1 of them, and put the other card back.'
-    },
-    {
-      name: 'Slam',
-      cost: [C, C, C],
-      damage: 60,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 60 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Scrutinize',
+    cost: [C],
+    damage: 0,
+    text: 'Look at the top 2 cards of your opponent\'s deck, discard 1 of them, and put the other card back.'
+  }, {
+    name: 'Slam',
+    cost: [C, C, C],
+    damage: 60,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 60 damage for each heads.'
+  }];
 
   public set: string = 'GRI';
   public setNumber: string = '108';

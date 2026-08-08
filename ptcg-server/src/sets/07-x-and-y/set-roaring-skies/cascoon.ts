@@ -23,8 +23,7 @@ export class Cascoon extends PokemonCard {
     cost: [G],
     damage: 0,
     text: 'Your opponent\'s Active Pokémon is now Poisoned.'
-  },
-  {
+  }, {
     name: 'Iron Defense',
     cost: [C, C],
     damage: 0,

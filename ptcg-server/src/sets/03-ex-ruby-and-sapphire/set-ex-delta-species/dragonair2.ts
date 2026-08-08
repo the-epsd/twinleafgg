@@ -20,8 +20,7 @@ export class Dragonair2 extends PokemonCard {
     damage: 20,
     damageCalculation: 'x',
     text: 'Flip 2 coin. This attack does 20 damage times the number of heads.'
-  },
-  {
+  }, {
     name: 'Dragon Rage',
     cost: [L, C, C],
     damage: 40,

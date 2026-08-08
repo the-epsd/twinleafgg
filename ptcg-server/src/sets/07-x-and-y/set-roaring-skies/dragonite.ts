@@ -27,14 +27,12 @@ export class Dragonite extends PokemonCard {
     text: 'When you play this Pok\u00e9mon from your hand to evolve 1 of your Pok\u00e9mon, you may heal all damage from 1 of your Pok\u00e9mon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Mach Press',
-      cost: [G, L, C],
-      damage: 80,
-      text: 'Flip 2 coins. If both of them are heads, your opponent\'s Active Pok\u00e9mon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Mach Press',
+    cost: [G, L, C],
+    damage: 80,
+    text: 'Flip 2 coins. If both of them are heads, your opponent\'s Active Pok\u00e9mon is now Paralyzed.'
+  }];
 
   public set: string = 'ROS';
   public setNumber: string = '51';

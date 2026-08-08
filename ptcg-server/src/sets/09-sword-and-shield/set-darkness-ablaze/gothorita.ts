@@ -17,23 +17,21 @@ export class Gothorita extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Whiny Voice',
-      cost: [P],
-      damage: 0,
-      text: 'Choose a random card from your opponent\'s hand. Your opponent reveals that card and shuffles it into their deck.'
-    },
-    {
-      name: 'Double Spin',
-      cost: [P, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 30 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Whiny Voice',
+    cost: [P],
+    damage: 0,
+    text: 'Choose a random card from your opponent\'s hand. Your opponent reveals that card and shuffles it into their deck.'
+  }, {
+    name: 'Double Spin',
+    cost: [P, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 30 damage for each heads.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'DAA';
   public setNumber: string = '74';
   public cardImage: string = 'assets/cardback.png';

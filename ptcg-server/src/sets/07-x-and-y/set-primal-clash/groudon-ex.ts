@@ -12,19 +12,17 @@ export class GroudonEx extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Rip Claw',
-      cost: [F, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
-    }, {
-      name: 'Massive Rend',
-      cost: [F, F, F, C],
-      damage: 130,
-      text: ''
-    },
-  ];
+  public attacks = [{
+    name: 'Rip Claw',
+    cost: [F, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
+  }, {
+    name: 'Massive Rend',
+    cost: [F, F, F, C],
+    damage: 130,
+    text: ''
+  }];
 
   public set: string = 'PRC';
   public name: string = 'Groudon-EX';

@@ -4,7 +4,6 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { Attack, State, StoreLike, Weakness } from '../../../game';
 export class Poliwhirl extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Poliwag';
   public cardType: CardType = W;
@@ -29,7 +28,9 @@ export class Poliwhirl extends PokemonCard {
   ];
 
   public set: string = 'TWM';
+
   public regulationMark: string = 'H';
+
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '42';
   public name: string = 'Poliwhirl';

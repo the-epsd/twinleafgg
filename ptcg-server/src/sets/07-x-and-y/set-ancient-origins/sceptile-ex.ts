@@ -18,21 +18,18 @@ export class SceptileEx extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Sleep Poison',
-      cost: [G],
-      damage: 10,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Asleep and Poisoned.'
-    },
-    {
-      name: 'Unseen Claw',
-      cost: [G, C],
-      damage: 60,
-      damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is affected by a Special Condition, this attack does 70 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Sleep Poison',
+    cost: [G],
+    damage: 10,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Asleep and Poisoned.'
+  }, {
+    name: 'Unseen Claw',
+    cost: [G, C],
+    damage: 60,
+    damageCalculation: '+',
+    text: 'If your opponent\'s Active Pokémon is affected by a Special Condition, this attack does 70 more damage.'
+  }];
 
   public set: string = 'AOR';
   public setNumber: string = '7';

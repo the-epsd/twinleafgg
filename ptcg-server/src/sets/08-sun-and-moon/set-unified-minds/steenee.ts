@@ -12,21 +12,18 @@ export class Steenee extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Double Slap',
-      cost: [C, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 30 damage for each heads.'
-    },
-    {
-      name: 'Leaf Step',
-      cost: [G, C, C],
-      damage: 60,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Double Slap',
+    cost: [C, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 30 damage for each heads.'
+  }, {
+    name: 'Leaf Step',
+    cost: [G, C, C],
+    damage: 60,
+    text: ''
+  }];
 
   public set: string = 'UNM';
   public setNumber: string = '18';

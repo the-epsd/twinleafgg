@@ -1,7 +1,7 @@
-import { CardTag, CardType, CoinFlipPrompt, GameMessage, PlayerType, PokemonCard, Stage, State, StoreLike } from '../../../game';
+import { CardTag, CardType, PlayerType, PokemonCard, Stage, State, StoreLike } from '../../../game';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { DISCARD_ALL_ENERGY_FROM_POKEMON, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { DISCARD_ALL_ENERGY_FROM_POKEMON, WAS_ATTACK_USED, FLIP_UNTIL_TAILS_AND_COUNT_HEADS } from '../../../game/store/prefabs/prefabs';
 
 export class RayquazaStar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -18,8 +18,7 @@ export class RayquazaStar extends PokemonCard {
     damage: 30,
     damageCalculation: 'x',
     text: 'Flip a coin until you get tails. This attack does 30 damage times the number of heads.'
-  },
-  {
+  }, {
     name: 'Holy Star',
     cost: [R, R, L, L],
     damage: 0,
@@ -37,18 +36,9 @@ export class RayquazaStar extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const flipCoin = (heads: number = 0): State => {
-        return store.prompt(state, [
-          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-        ], result => {
-          if (result === true) {
-            return flipCoin(heads + 1);
-          }
-          effect.damage = 30 * heads;
-          return state;
-        });
-      };
-      return flipCoin();
+      return FLIP_UNTIL_TAILS_AND_COUNT_HEADS(store, state, player, heads => {
+      effect.damage = 30 * heads;
+    });
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

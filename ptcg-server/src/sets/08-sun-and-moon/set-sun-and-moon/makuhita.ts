@@ -15,20 +15,17 @@ export class Makuhita extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Surprise Attack',
-      cost: [F],
-      damage: 20,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    },
-    {
-      name: 'Strength',
-      cost: [F, C],
-      damage: 40,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Surprise Attack',
+    cost: [F],
+    damage: 20,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }, {
+    name: 'Strength',
+    cost: [F, C],
+    damage: 40,
+    text: ''
+  }];
 
   public set: string = 'SUM';
   public setNumber: string = '67';

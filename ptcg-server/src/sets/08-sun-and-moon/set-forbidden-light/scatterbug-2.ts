@@ -17,14 +17,12 @@ export class Scatterbug2 extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Ultra Evolution',
-      cost: [G],
-      damage: 0,
-      text: 'Flip a coin. If heads, search your deck for Vivillon and put it onto this Scatterbug to evolve it. Then, shuffle your deck.'
-    }
-  ];
+  public attacks = [{
+    name: 'Ultra Evolution',
+    cost: [G],
+    damage: 0,
+    text: 'Flip a coin. If heads, search your deck for Vivillon and put it onto this Scatterbug to evolve it. Then, shuffle your deck.'
+  }];
 
   public set: string = 'FLI';
   public setNumber: string = '6';

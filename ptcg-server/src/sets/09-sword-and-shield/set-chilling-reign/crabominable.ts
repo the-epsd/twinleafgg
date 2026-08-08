@@ -16,23 +16,21 @@ export class Crabominable extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Double Lariat',
-      cost: [F, C, C],
-      damage: 90,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 90 damage for each heads.'
-    },
-    {
-      name: 'Crabhammer',
-      cost: [F, C, C, C],
-      damage: 130,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Double Lariat',
+    cost: [F, C, C],
+    damage: 90,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 90 damage for each heads.'
+  }, {
+    name: 'Crabhammer',
+    cost: [F, C, C, C],
+    damage: 130,
+    text: ''
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'CRE';
   public setNumber: string = '85';
   public cardImage: string = 'assets/cardback.png';

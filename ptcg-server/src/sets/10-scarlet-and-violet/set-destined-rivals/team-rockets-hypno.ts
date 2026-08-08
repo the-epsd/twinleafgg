@@ -14,23 +14,21 @@ export class TeamRocketsHypno extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Psyshot',
-      cost: [P],
-      damage: 40,
-      text: ''
-    },
-    {
-      name: 'Bench Manipulation',
-      cost: [P, P, P],
-      damage: 80,
-      damageCalculation: 'x',
-      text: 'Your opponent flips a coin for each of their Benched Pokemon. This attack does 80 damage for each tails. Don\'t apply Weakness and Resistance for this attack\'s damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Psyshot',
+    cost: [P],
+    damage: 40,
+    text: ''
+  }, {
+    name: 'Bench Manipulation',
+    cost: [P, P, P],
+    damage: 80,
+    damageCalculation: 'x',
+    text: 'Your opponent flips a coin for each of their Benched Pokemon. This attack does 80 damage for each tails. Don\'t apply Weakness and Resistance for this attack\'s damage.'
+  }];
 
   public regulationMark = 'I';
+
   public set: string = 'DRI';
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';

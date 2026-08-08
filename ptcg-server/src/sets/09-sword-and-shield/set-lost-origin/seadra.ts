@@ -32,6 +32,7 @@ export class Seadra extends PokemonCard {
   }];
 
   public regulationMark = 'F';
+
   public set: string = 'LOR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '36';

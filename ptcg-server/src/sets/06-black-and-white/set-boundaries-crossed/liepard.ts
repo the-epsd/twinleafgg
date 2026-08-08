@@ -17,21 +17,18 @@ export class Liepard extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Tail Trickery',
-      cost: [D],
-      damage: 0,
-      text: 'The Defending Pokémon is now Confused.'
-    },
-    {
-      name: 'Assist',
-      cost: [D, C, C],
-      damage: 0,
-      copycatAttack: true,
-      text: 'Flip a coin. If heads, choose 1 of your Benched Pokémon\'s attacks and use it as this attack.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tail Trickery',
+    cost: [D],
+    damage: 0,
+    text: 'The Defending Pokémon is now Confused.'
+  }, {
+    name: 'Assist',
+    cost: [D, C, C],
+    damage: 0,
+    copycatAttack: true,
+    text: 'Flip a coin. If heads, choose 1 of your Benched Pokémon\'s attacks and use it as this attack.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '91';

@@ -21,20 +21,17 @@ export class Venomoth extends PokemonCard {
 
   public readonly DIZZYING_WIND_MARKER = 'VENOMOTH_PHF_DIZZYING_WIND_MARKER';
 
-  public attacks = [
-    {
-      name: 'Dizzying Wind',
-      cost: [G],
-      damage: 0,
-      text: 'Whenever your opponent plays a Trainer card from his or her hand during his or her next turn, your opponent flips a coin. If tails, that card has no effect. (Your opponent still discards that card.)'
-    },
-    {
-      name: 'Noxious Scales',
-      cost: [G, C, C],
-      damage: 50,
-      text: 'Your opponent\'s Active Pokémon is now Confused and Poisoned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Dizzying Wind',
+    cost: [G],
+    damage: 0,
+    text: 'Whenever your opponent plays a Trainer card from his or her hand during his or her next turn, your opponent flips a coin. If tails, that card has no effect. (Your opponent still discards that card.)'
+  }, {
+    name: 'Noxious Scales',
+    cost: [G, C, C],
+    damage: 50,
+    text: 'Your opponent\'s Active Pokémon is now Confused and Poisoned.'
+  }];
 
   public set: string = 'PHF';
   public setNumber: string = '2';

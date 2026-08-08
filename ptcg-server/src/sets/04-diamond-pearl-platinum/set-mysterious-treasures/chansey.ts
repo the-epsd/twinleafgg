@@ -16,8 +16,7 @@ export class Chansey extends PokemonCard {
     cost: [C, C],
     damage: 0,
     text: 'Flip a coin. If heads, prevent all damage done to Chansey by attacks during your opponent\'s next turn.'
-  },
-  {
+  }, {
     name: 'Double-edge',
     cost: [C, C, C, C],
     damage: 80,

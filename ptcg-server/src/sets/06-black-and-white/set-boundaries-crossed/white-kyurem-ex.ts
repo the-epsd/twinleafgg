@@ -18,20 +18,17 @@ export class WhiteKyuremEx extends PokemonCard {
   public weakness = [{ type: N }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Dragon Stream',
-      cost: [R, C, C],
-      damage: 60,
-      text: 'Flip a coin. If heads, attach a basic Energy card from your discard pile to this Pokémon.'
-    },
-    {
-      name: 'Ice Burn',
-      cost: [R, R, W, C],
-      damage: 150,
-      text: 'Discard 2 [R] Energy attached to this Pokémon. The Defending Pokémon is now Burned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Dragon Stream',
+    cost: [R, C, C],
+    damage: 60,
+    text: 'Flip a coin. If heads, attach a basic Energy card from your discard pile to this Pokémon.'
+  }, {
+    name: 'Ice Burn',
+    cost: [R, R, W, C],
+    damage: 150,
+    text: 'Discard 2 [R] Energy attached to this Pokémon. The Defending Pokémon is now Burned.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '103';

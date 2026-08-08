@@ -34,6 +34,7 @@ export class Dustox extends PokemonCard {
   }];
 
   public regulationMark: string = 'I';
+
   public set: string = 'ASC';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '15';

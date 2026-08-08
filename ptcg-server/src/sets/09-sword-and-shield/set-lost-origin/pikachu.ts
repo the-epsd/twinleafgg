@@ -30,7 +30,9 @@ export class Pikachu extends PokemonCard {
   public set: string = 'LOR';
   public name: string = 'Pikachu';
   public fullName: string = 'Pikachu LOR';
+
   public regulationMark = 'F';
+
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '52';
 

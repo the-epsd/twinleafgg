@@ -23,20 +23,17 @@ export class Gliscor extends PokemonCard {
   public readonly BLOCK_ATTACH_MARKER = 'GLISCOR_PHF_BLOCK_ATTACH_MARKER';
   public readonly CLEAR_BLOCK_ATTACH_MARKER = 'GLISCOR_PHF_CLEAR_BLOCK_ATTACH_MARKER';
 
-  public attacks = [
-    {
-      name: 'Submission Hold',
-      cost: [F],
-      damage: 20,
-      text: 'Your opponent can\'t attach Energy from his or her hand to the Defending Pokémon during his or her next turn.'
-    },
-    {
-      name: 'Poison Jab',
-      cost: [F, C, C],
-      damage: 60,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Poisoned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Submission Hold',
+    cost: [F],
+    damage: 20,
+    text: 'Your opponent can\'t attach Energy from his or her hand to the Defending Pokémon during his or her next turn.'
+  }, {
+    name: 'Poison Jab',
+    cost: [F, C, C],
+    damage: 60,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Poisoned.'
+  }];
 
   public set: string = 'PHF';
   public setNumber: string = '47';

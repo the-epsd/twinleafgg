@@ -16,22 +16,20 @@ export class Furret extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Feelin\' Fine',
-      cost: [C],
-      damage: 0,
-      text: 'Draw 3 cards.'
-    },
-    {
-      name: 'Tail Smash',
-      cost: [C],
-      damage: 90,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Feelin\' Fine',
+    cost: [C],
+    damage: 0,
+    text: 'Draw 3 cards.'
+  }, {
+    name: 'Tail Smash',
+    cost: [C],
+    damage: 90,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'DAA';
   public setNumber: string = '136';
   public cardImage: string = 'assets/cardback.png';

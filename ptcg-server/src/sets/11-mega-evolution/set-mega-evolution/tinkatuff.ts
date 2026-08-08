@@ -28,6 +28,7 @@ export class Tinkatuff extends PokemonCard {
   }];
 
   public regulationMark = 'I';
+
   public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '97';

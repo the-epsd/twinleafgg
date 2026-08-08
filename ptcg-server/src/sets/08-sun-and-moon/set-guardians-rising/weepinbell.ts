@@ -17,14 +17,12 @@ export class Weepinbell extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Muddy Acid',
-      cost: [G, C],
-      damage: 40,
-      text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Muddy Acid',
+    cost: [G, C],
+    damage: 40,
+    text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
+  }];
 
   public set: string = 'GRI';
   public setNumber: string = '2';

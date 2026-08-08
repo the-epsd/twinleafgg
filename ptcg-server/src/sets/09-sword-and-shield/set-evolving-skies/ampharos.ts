@@ -22,23 +22,21 @@ export class Ampharos extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Thunder Shock',
-      cost: [L],
-      damage: 40,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Electron Crush',
-      cost: [L, L, L, C],
-      damage: 100,
-      damageCalculation: '+',
-      text: 'You may discard 3 [L] Energy from this Pokémon. If you do, this attack does 120 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Thunder Shock',
+    cost: [L],
+    damage: 40,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Electron Crush',
+    cost: [L, L, L, C],
+    damage: 100,
+    damageCalculation: '+',
+    text: 'You may discard 3 [L] Energy from this Pokémon. If you do, this attack does 120 more damage.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'EVS';
   public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';

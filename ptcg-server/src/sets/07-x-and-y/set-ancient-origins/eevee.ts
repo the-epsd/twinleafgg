@@ -6,26 +6,23 @@ import { Effect } from '../../../game/store/effects/effect';
 import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Eevee extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
   public hp: number = 60;
   public weakness = [{ type: F }];
   public retreat = [C];
-  public attacks = [
-    {
-      name: 'Tackle',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Lunge',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+
+  public attacks = [{
+    name: 'Tackle',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Lunge',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'AOR';
   public cardImage: string = 'assets/cardback.png';

@@ -17,23 +17,21 @@ export class Seaking extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Swim Freely',
-      cost: [W],
-      damage: 10,
-      text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage from and effects of attacks done to this Pokémon.'
-    },
-    {
-      name: 'Aqua Horn',
-      cost: [C, C, C],
-      damage: 60,
-      damageCalculation: '+',
-      text: 'This attack does 30 more damage for each [W] Energy attached to this Pokémon.'
-    },
-  ];
+  public attacks = [{
+    name: 'Swim Freely',
+    cost: [W],
+    damage: 10,
+    text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage from and effects of attacks done to this Pokémon.'
+  }, {
+    name: 'Aqua Horn',
+    cost: [C, C, C],
+    damage: 60,
+    damageCalculation: '+',
+    text: 'This attack does 30 more damage for each [W] Energy attached to this Pokémon.'
+  }];
 
   public regulationMark = 'H';
+
   public set: string = 'MEW';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '119';

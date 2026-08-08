@@ -15,23 +15,21 @@ export class Crabrawler extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Light Punch',
-      cost: [F],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Double Lariat',
-      cost: [F, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 40 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Light Punch',
+    cost: [F],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Double Lariat',
+    cost: [F, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 40 damage for each heads.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'CRE';
   public setNumber: string = '84';
   public cardImage: string = 'assets/cardback.png';

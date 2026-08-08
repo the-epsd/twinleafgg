@@ -18,8 +18,7 @@ export class Hitmontop extends PokemonCard {
     cost: [F],
     damage: 30,
     text: 'Switch this Pokémon with 1 of your Benched Pokémon. If you do, your opponent switches their Active Pokémon with 1 of their Benched Pokémon.'
-  },
-  {
+  }, {
     name: 'Triple Kick',
     cost: [C, C, C],
     damage: 40,

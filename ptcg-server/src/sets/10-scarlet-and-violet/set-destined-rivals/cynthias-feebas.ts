@@ -25,6 +25,7 @@ export class CynthiasFeebas extends PokemonCard {
   }];
 
   public regulationMark = 'I';
+
   public set: string = 'DRI';
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';

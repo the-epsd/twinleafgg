@@ -17,20 +17,17 @@ export class Sandile extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Gnaw',
-      cost: [C, C],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Crunch',
-      cost: [D, D, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Gnaw',
+    cost: [C, C],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Crunch',
+    cost: [D, D, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
+  }];
 
   public set: string = 'SUM';
   public setNumber: string = '83';

@@ -13,21 +13,18 @@ export class Luxio2 extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Quick Turn',
-      cost: [L],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
-    },
-    {
-      name: 'Bite',
-      cost: [C, C],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Quick Turn',
+    cost: [L],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
+  }, {
+    name: 'Bite',
+    cost: [C, C],
+    damage: 30,
+    text: ''
+  }];
 
   public set: string = 'NXD';
   public setNumber: string = '45';

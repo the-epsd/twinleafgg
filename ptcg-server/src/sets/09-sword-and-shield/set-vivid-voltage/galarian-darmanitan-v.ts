@@ -15,22 +15,20 @@ export class GalarianDarmanitanV extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Freezing Headbutt',
-      cost: [W, C],
-      damage: 50,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Frozen Slice',
-      cost: [W, W, C],
-      damage: 190,
-      text: 'This Pokémon also does 30 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Freezing Headbutt',
+    cost: [W, C],
+    damage: 50,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Frozen Slice',
+    cost: [W, W, C],
+    damage: 190,
+    text: 'This Pokémon also does 30 damage to itself.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'VIV';
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';

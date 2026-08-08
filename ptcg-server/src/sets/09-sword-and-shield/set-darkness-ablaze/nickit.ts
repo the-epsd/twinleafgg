@@ -23,6 +23,7 @@ export class Nickit extends PokemonCard {
   }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'DAA';
   public setNumber: string = '112';
   public cardImage: string = 'assets/cardback.png';

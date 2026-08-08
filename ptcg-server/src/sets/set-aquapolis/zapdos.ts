@@ -24,8 +24,7 @@ export class Zapdos extends PokemonCard {
     cost: [C],
     damage: 10,
     text: 'If there are any [L] Energy cards in your discard pile, flip a coin. If heads, attach 1 of them to Zapdos.'
-  },
-  {
+  }, {
     name: 'Burning Tail',
     cost: [L, L, C, C],
     damage: 60,

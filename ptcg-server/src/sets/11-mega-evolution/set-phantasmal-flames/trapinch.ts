@@ -20,6 +20,7 @@ export class Trapinch extends PokemonCard {
   }];
 
   public regulationMark: string = 'I';
+
   public set: string = 'PFL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '51';

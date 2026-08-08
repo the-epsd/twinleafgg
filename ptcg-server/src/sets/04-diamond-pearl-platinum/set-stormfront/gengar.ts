@@ -22,21 +22,18 @@ export class Gengar extends PokemonCard {
     text: 'Once during your opponent\'s turn, if Gengar would be Knocked Out by damage from an attack, you may flip a coin. If heads, the Defending Pokémon is Knocked Out.'
   }];
 
-  public attacks = [
-    {
-      name: 'Shadow Room',
-      cost: [P],
-      damage: 0,
-      text: 'Put 3 damage counters on 1 of your opponent\'s Pokémon. If that Pokémon has any Poké-Powers, put 6 damage counters on that Pokémon instead.'
-    },
-    {
-      name: 'Poltergeist',
-      cost: [P, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Look at your opponent\'s hand. This attack does 30 damage times the number of Trainer, Supporter, and Stadium cards in your opponent\'s hand.'
-    }
-  ];
+  public attacks = [{
+    name: 'Shadow Room',
+    cost: [P],
+    damage: 0,
+    text: 'Put 3 damage counters on 1 of your opponent\'s Pokémon. If that Pokémon has any Poké-Powers, put 6 damage counters on that Pokémon instead.'
+  }, {
+    name: 'Poltergeist',
+    cost: [P, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Look at your opponent\'s hand. This attack does 30 damage times the number of Trainer, Supporter, and Stadium cards in your opponent\'s hand.'
+  }];
 
   public set: string = 'SF';
   public setNumber: string = '18';

@@ -22,8 +22,7 @@ export class Quilladin extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, prevent all damage done to this Pokémon by attacks during your opponent\'s next turn.'
-  },
-  {
+  }, {
     name: 'Wood Hammer',
     cost: [G, G, C],
     damage: 70,

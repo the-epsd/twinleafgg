@@ -1,5 +1,5 @@
 import { StateUtils } from '../../game';
-import { CardType, Stage } from '../../game/store/card/card-types';
+import { Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Attack } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
@@ -8,33 +8,25 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
 export class Vulpix extends PokemonCard {
-
   public name = 'Vulpix';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber = '68';
-
   public set = 'BS';
-
   public fullName = 'Vulpix BS';
 
-  public cardType = CardType.FIRE;
-
+  public cardType = R;
   public stage = Stage.BASIC;
 
   public evolvesInto = ['Ninetales', 'Ninetales ex', 'Light Ninetales'];
 
   public hp = 50;
-
-  public weakness = [{ type: CardType.WATER }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: W }];
+  public retreat = [C];
 
   public attacks: Attack[] = [
     {
       name: 'Confuse Ray',
-      cost: [CardType.FIRE, CardType.FIRE],
+      cost: [R, R],
       damage: 10,
       text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
     }

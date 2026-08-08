@@ -17,23 +17,21 @@ export class Escavalier extends PokemonCard {
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Fury Cutter',
-      cost: [M],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'Flip 3 coins. If 1 of them is heads, this attack does 20 more damage. If 2 of them are heads, this attack does 70 more damage. If all of them are heads, this attack does 140 more damage.'
-    },
-    {
-      name: 'Seashell Attack',
-      cost: [M, C],
-      damage: 60,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Fury Cutter',
+    cost: [M],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'Flip 3 coins. If 1 of them is heads, this attack does 20 more damage. If 2 of them are heads, this attack does 70 more damage. If all of them are heads, this attack does 140 more damage.'
+  }, {
+    name: 'Seashell Attack',
+    cost: [M, C],
+    damage: 60,
+    text: ''
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'DAA';
   public setNumber: string = '124';
   public cardImage: string = 'assets/cardback.png';

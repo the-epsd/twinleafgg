@@ -1,8 +1,8 @@
-import { Card, CardManager, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, CoinFlipPrompt, GameError, GameMessage, PlayerType, PokemonCardList, ShuffleDeckPrompt, SlotType, State, StoreLike } from '../../game';
+import { Card, CardManager, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, ShuffleDeckPrompt, SlotType, State, StoreLike } from '../../game';
 import { CardTag, CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
@@ -34,9 +34,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Attac
   }
 
   let flipResult = false;
-  yield store.prompt(state, new CoinFlipPrompt(
-    player.id, GameMessage.COIN_FLIP
-  ), result => {
+  yield COIN_FLIP_PROMPT(store, state, player, result => {
     flipResult = result;
     next();
   });
@@ -127,8 +125,7 @@ export class ErikasClefairy extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, search your deck for a card that evolves from 1 of your Benched Pokémon and put that card on that Pokémon. (This counts as evolving that Pokémon.) Shuffle your deck afterward.'
-  },
-  {
+  }, {
     name: 'Moon Kick',
     cost: [C, C],
     damage: 20,

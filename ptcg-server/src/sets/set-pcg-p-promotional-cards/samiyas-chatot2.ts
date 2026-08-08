@@ -19,14 +19,12 @@ export class SamiyasChatot2 extends PokemonCard {
     text: 'Any damage done to Samiya\'s Chatot by attacks from your opponent\'s Evolved Pokémon is reduced by 20 (after applying Weakness and Resistance).'
   }];
 
-  public attacks = [
-    {
-      name: 'Claw',
-      cost: [C],
-      damage: 20,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Claw',
+    cost: [C],
+    damage: 20,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'PCGP';
   public cardImage: string = 'assets/cardback.png';

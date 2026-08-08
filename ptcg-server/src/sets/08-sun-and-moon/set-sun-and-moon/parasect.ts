@@ -17,21 +17,18 @@ export class Parasect extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Fury Cutter',
-      cost: [C, C],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'Flip 3 coins. If 1 of them is heads, this attack does 20 more damage. If 2 of them are heads, this attack does 60 more damage. If all of them are heads, this attack does 120 damage.'
-    },
-    {
-      name: 'Mushroom Drain',
-      cost: [G, G, C],
-      damage: 70,
-      text: 'Heal 30 damage from this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fury Cutter',
+    cost: [C, C],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'Flip 3 coins. If 1 of them is heads, this attack does 20 more damage. If 2 of them are heads, this attack does 60 more damage. If all of them are heads, this attack does 120 damage.'
+  }, {
+    name: 'Mushroom Drain',
+    cost: [G, G, C],
+    damage: 70,
+    text: 'Heal 30 damage from this Pokémon.'
+  }];
 
   public set: string = 'SUM';
   public setNumber: string = '5';

@@ -18,21 +18,18 @@ export class Tyranitar extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Slam',
-      cost: [C, C, C],
-      damage: 60,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 60 damage for each heads.'
-    },
-    {
-      name: 'Trample',
-      cost: [D, D, C, C],
-      damage: 120,
-      text: 'For each Benched Pokémon (both yours and your opponent\'s), flip a coin. If heads, this attack does 60 damage to that Pokémon. This attack\'s damage isn\'t affected by Weakness or Resistance.'
-    }
-  ];
+  public attacks = [{
+    name: 'Slam',
+    cost: [C, C, C],
+    damage: 60,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 60 damage for each heads.'
+  }, {
+    name: 'Trample',
+    cost: [D, D, C, C],
+    damage: 120,
+    text: 'For each Benched Pokémon (both yours and your opponent\'s), flip a coin. If heads, this attack does 60 damage to that Pokémon. This attack\'s damage isn\'t affected by Weakness or Resistance.'
+  }];
 
   public set: string = 'CES';
   public setNumber: string = '87';

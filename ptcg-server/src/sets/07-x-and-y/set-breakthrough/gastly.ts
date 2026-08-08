@@ -17,14 +17,12 @@ export class Gastly extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Sleep Poison',
-      cost: [P],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Asleep and Poisoned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Sleep Poison',
+    cost: [P],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Asleep and Poisoned.'
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '58';

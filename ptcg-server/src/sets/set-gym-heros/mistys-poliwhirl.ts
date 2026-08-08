@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-types';
-import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/prefabs/prefabs';
 import { StoreLike, State, ChooseCardsPrompt, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
@@ -19,8 +19,7 @@ export class MistysPoliwhirl extends PokemonCard {
     cost: [W, C],
     damage: 20,
     text: 'If the Defending Pokémon has any Energy cards attached to it, flip a coin. If heads, choose 1 of those Energy cards and discard it.'
-  },
-  {
+  }, {
     name: 'Water Punch',
     cost: [C, C, C],
     damage: 30,
@@ -73,11 +72,9 @@ export class MistysPoliwhirl extends PokemonCard {
         }
       });
 
-      for (let i = 0; i < waterEnergyCount; i++) {
-        COIN_FLIP_PROMPT(store, state, player, result => {
-          if (result) {
-            effect.damage += 10;
-          }
+      if (waterEnergyCount > 0) {
+        MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, waterEnergyCount, results => {
+          effect.damage += results.filter(r => r).length * 10;
         });
       }
     }

@@ -17,20 +17,17 @@ export class Ponyta extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Agility',
-      cost: [R],
-      damage: 10,
-      text: 'Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn. '
-    },
-    {
-      name: 'Flame Tail',
-      cost: [C, C],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Agility',
+    cost: [R],
+    damage: 10,
+    text: 'Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn. '
+  }, {
+    name: 'Flame Tail',
+    cost: [C, C],
+    damage: 20,
+    text: ''
+  }];
 
   public set: string = 'FLF';
   public setNumber: string = '14';

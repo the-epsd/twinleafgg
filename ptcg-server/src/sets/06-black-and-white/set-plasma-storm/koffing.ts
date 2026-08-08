@@ -15,21 +15,18 @@ export class Koffing extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Tackle',
-      cost: [P],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Double Spin',
-      cost: [C, C],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tackle',
+    cost: [P],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Double Spin',
+    cost: [C, C],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '56';

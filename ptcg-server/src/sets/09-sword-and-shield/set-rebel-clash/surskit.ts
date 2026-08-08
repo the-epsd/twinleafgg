@@ -24,6 +24,7 @@ export class Surskit extends PokemonCard {
   }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'RCL';
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';

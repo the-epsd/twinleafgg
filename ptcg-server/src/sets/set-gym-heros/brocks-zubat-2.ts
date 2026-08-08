@@ -18,8 +18,7 @@ export class BrocksZubat2 extends PokemonCard {
     cost: [C],
     damage: 10,
     text: ''
-  },
-  {
+  }, {
     name: 'Poison Fang',
     cost: [G, C],
     damage: 20,

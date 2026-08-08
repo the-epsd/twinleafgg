@@ -17,22 +17,19 @@ export class Mamoswine extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Frost Stone',
-      cost: [W, C, C],
-      damage: 50,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 more damage and the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Continuous Headbutt',
-      cost: [W, W, C, C],
-      damage: 90,
-      damageCalculation: 'x',
-      text: 'Flip a coin until you get tails. This attack does 90 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Frost Stone',
+    cost: [W, C, C],
+    damage: 50,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 20 more damage and the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Continuous Headbutt',
+    cost: [W, W, C, C],
+    damage: 90,
+    damageCalculation: 'x',
+    text: 'Flip a coin until you get tails. This attack does 90 damage times the number of heads.'
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '28';

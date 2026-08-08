@@ -17,20 +17,17 @@ export class CharizardEx extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Stoke',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, search your deck for up to 3 basic Energy cards and attach them to this Pokémon. Shuffle your deck afterward.'
-    },
-    {
-      name: 'Fire Blast',
-      cost: [R, C, C, C],
-      damage: 120,
-      text: 'Discard an Energy attached to this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Stoke',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, search your deck for up to 3 basic Energy cards and attach them to this Pokémon. Shuffle your deck afterward.'
+  }, {
+    name: 'Fire Blast',
+    cost: [R, C, C, C],
+    damage: 120,
+    text: 'Discard an Energy attached to this Pokémon.'
+  }];
 
   public set: string = 'FLF';
   public setNumber: string = '11';

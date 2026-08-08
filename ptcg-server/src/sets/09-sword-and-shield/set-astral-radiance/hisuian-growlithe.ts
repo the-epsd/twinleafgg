@@ -14,8 +14,7 @@ export class HisuianGrowlithe extends PokemonCard {
     cost: [],
     damage: 0,
     text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage done to this Pokémon by attacks.'
-  },
-  {
+  }, {
     name: 'Bite',
     cost: [F, C],
     damage: 30,
@@ -23,6 +22,7 @@ export class HisuianGrowlithe extends PokemonCard {
   }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'ASR';
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';

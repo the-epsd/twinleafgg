@@ -17,8 +17,7 @@ export class Croagunk extends PokemonCard {
     cost: [C],
     damage: 10,
     text: ''
-  },
-  {
+  }, {
     name: 'Poison Sting',
     cost: [P],
     damage: 0,

@@ -18,8 +18,7 @@ export class Helioptile extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, the Defending Pokémon can\'t attack during your opponent\'s next turn.'
-  },
-  {
+  }, {
     name: 'Rear Kick',
     cost: [C, C, C],
     damage: 30,

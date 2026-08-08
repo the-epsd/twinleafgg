@@ -16,22 +16,20 @@ export class Fletchling extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Tailwind Draw',
-      cost: [C],
-      damage: 0,
-      text: 'Draw a card. If you go second and it\'s your first turn, draw 3 more cards.'
-    },
-    {
-      name: 'Surprise Attack',
-      cost: [C],
-      damage: 20,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tailwind Draw',
+    cost: [C],
+    damage: 0,
+    text: 'Draw a card. If you go second and it\'s your first turn, draw 3 more cards.'
+  }, {
+    name: 'Surprise Attack',
+    cost: [C],
+    damage: 20,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'EVS';
   public setNumber: string = '138';
   public cardImage: string = 'assets/cardback.png';

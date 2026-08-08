@@ -15,21 +15,18 @@ export class Dunsparce extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Glare',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Second Bite',
-      cost: [C, C],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'Does 10 more damage for each damage counter on your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Glare',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Second Bite',
+    cost: [C, C],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'Does 10 more damage for each damage counter on your opponent\'s Active Pokémon.'
+  }];
 
   public set: string = 'XY';
   public setNumber: string = '101';

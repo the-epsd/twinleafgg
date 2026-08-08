@@ -16,23 +16,21 @@ export class Gliscor extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Acrobatics',
-      cost: [C, C],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 40 more damage for each heads.'
-    },
-    {
-      name: 'Guillotine',
-      cost: [F, C, C],
-      damage: 90,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Acrobatics',
+    cost: [C, C],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 40 more damage for each heads.'
+  }, {
+    name: 'Guillotine',
+    cost: [F, C, C],
+    damage: 90,
+    text: ''
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'BST';
   public setNumber: string = '72';
   public cardImage: string = 'assets/cardback.png';

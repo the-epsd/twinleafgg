@@ -13,20 +13,17 @@ export class DragoniteFB extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Mach Blow',
-      cost: [C, C, C],
-      damage: 20,
-      text: 'If the Defending Pokémon is a Pokémon SP, this attack\'s base damage is 80 instead of 20.'
-    },
-    {
-      name: 'Giant Tail',
-      cost: [C, C, C, C],
-      damage: 100,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    },
-  ];
+  public attacks = [{
+    name: 'Mach Blow',
+    cost: [C, C, C],
+    damage: 20,
+    text: 'If the Defending Pokémon is a Pokémon SP, this attack\'s base damage is 80 instead of 20.'
+  }, {
+    name: 'Giant Tail',
+    cost: [C, C, C, C],
+    damage: 100,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'SV';
   public name: string = 'Dragonite FB';

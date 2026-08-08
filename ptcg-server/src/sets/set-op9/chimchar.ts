@@ -4,56 +4,42 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 
-import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
-import { GameMessage } from '../../game/game-message';
 import { PlayerType } from '../../game/store/actions/play-card-action';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Chimchar extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.FIRE;
-
+  public cardType: CardType = R;
   public hp: number = 40;
-
   public weakness = [{
-    type: CardType.WATER,
+    type: W,
     value: 10
   }];
-
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Serial Swipes',
-    cost: [CardType.FIRE],
+    cost: [R],
     damage: 10,
     text: 'Flip 4 coins. This attack does 10 damage times the number of heads.'
   }, {
     name: 'Sleepy',
-    cost: [CardType.FIRE, CardType.COLORLESS, CardType.COLORLESS],
+    cost: [R, C, C],
     damage: 40,
     text: 'If you have Piplup in play, this attack does 40 damage plus 20 ' +
-      'more damage and the Defending Pokemon is now Asleep.'
+    'more damage and the Defending Pokemon is now Asleep.'
   }];
 
   public set: string = 'OP9';
-
   public name: string = 'Chimchar';
-
   public fullName: string = 'Chimchar OP9';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
+      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 4, results => {
         let heads: number = 0;
         results.forEach(r => { heads += r ? 1 : 0; });
         effect.damage = 10 * heads;

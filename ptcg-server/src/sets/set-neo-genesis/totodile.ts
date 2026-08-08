@@ -17,8 +17,7 @@ export class Totodile extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, the Defending Pokémon can\'t attack Totodile during your opponent\'s next turn. (Benching or evolving either Pokémon ends this effect.)'
-  },
-  {
+  }, {
     name: 'Fury Swipes',
     cost: [W],
     damage: 10,

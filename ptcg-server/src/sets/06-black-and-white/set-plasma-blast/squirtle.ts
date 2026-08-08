@@ -11,20 +11,17 @@ export class Squirtle extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Bubble',
-      cost: [W],
-      damage: 0,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Water Gun',
-      cost: [W, C],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Bubble',
+    cost: [W],
+    damage: 0,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Water Gun',
+    cost: [W, C],
+    damage: 20,
+    text: ''
+  }];
 
   public set: string = 'PLB';
   public setNumber: string = '14';

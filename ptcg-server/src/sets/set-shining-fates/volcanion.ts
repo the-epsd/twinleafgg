@@ -15,23 +15,21 @@ export class Volcanion extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Hammer In',
-      cost: [W, C],
-      damage: 50,
-      text: ''
-    },
-    {
-      name: 'Dynamite Steam',
-      cost: [W, W, W, C],
-      damage: 120,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 120 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Hammer In',
+    cost: [W, C],
+    damage: 50,
+    text: ''
+  }, {
+    name: 'Dynamite Steam',
+    cost: [W, W, W, C],
+    damage: 120,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 120 damage for each heads.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'SHF';
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';

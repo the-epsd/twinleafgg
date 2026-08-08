@@ -32,6 +32,7 @@ export class Cramorant extends PokemonCard {
   }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'RCL';
   public setNumber: string = '51';
   public cardImage: string = 'assets/cardback.png';

@@ -7,7 +7,6 @@ import { ADD_MARKER, HAS_MARKER, IS_ABILITY_BLOCKED, MULTIPLE_COIN_FLIPS_PROMPT,
 import { CheckPokemonPowersEffect, CheckPokemonStatsEffect } from '../../../game/store/effects/check-effects';
 
 export class UnownVSTAR extends PokemonCard {
-
   public tags = [CardTag.POKEMON_VSTAR];
   public regulationMark = 'F';
   public stage: Stage = Stage.VSTAR;
@@ -18,21 +17,18 @@ export class UnownVSTAR extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Tri Power',
-      cost: [P],
-      damage: 70,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 70 damage for each heads.'
-    },
-    {
-      name: 'Star Cipher',
-      cost: [C, C, C],
-      damage: 0,
-      text: 'Until this Pokémon leaves play, it gains an Ability that has the effect "The Weakness of each of your opponent\'s Pokémon in play is now [P]. (The amount of Weakness doesn\'t change.)" (You can\'t use more than 1 VSTAR Power in a game.)'
-    },
-  ];
+  public attacks = [{
+    name: 'Tri Power',
+    cost: [P],
+    damage: 70,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 70 damage for each heads.'
+  }, {
+    name: 'Star Cipher',
+    cost: [C, C, C],
+    damage: 0,
+    text: 'Until this Pokémon leaves play, it gains an Ability that has the effect "The Weakness of each of your opponent\'s Pokémon in play is now [P]. (The amount of Weakness doesn\'t change.)" (You can\'t use more than 1 VSTAR Power in a game.)'
+  }];
 
   public set: string = 'SIT';
   public cardImage: string = 'assets/cardback.png';

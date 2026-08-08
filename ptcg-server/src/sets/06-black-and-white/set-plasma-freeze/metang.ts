@@ -11,20 +11,17 @@ export class Metang extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Psy Bolt',
-      cost: [P],
-      damage: 10,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Psypunch',
-      cost: [P, C, C],
-      damage: 50,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Psy Bolt',
+    cost: [P],
+    damage: 10,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Psypunch',
+    cost: [P, C, C],
+    damage: 50,
+    text: ''
+  }];
 
   public set: string = 'PLF';
   public setNumber: string = '51';

@@ -16,22 +16,20 @@ export class Psyduck extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Spacing Out',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, heal 10 damage from this Pokémon.'
-    },
-    {
-      name: 'Ram',
-      cost: [W, C],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Spacing Out',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, heal 10 damage from this Pokémon.'
+  }, {
+    name: 'Ram',
+    cost: [W, C],
+    damage: 20,
+    text: ''
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'ASR';
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';

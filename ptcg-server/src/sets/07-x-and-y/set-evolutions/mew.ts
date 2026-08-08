@@ -22,14 +22,12 @@ export class Mew extends PokemonCard {
     text: 'Prevent all effects of attacks, including damage, done to this Pokémon by your opponent\'s Evolution Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Psy Bolt',
-      cost: [P, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Psy Bolt',
+    cost: [P, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'EVO';
   public setNumber: string = '53';

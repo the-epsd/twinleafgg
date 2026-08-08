@@ -17,21 +17,18 @@ export class Kirlia extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Beckon',
-      cost: [P],
-      damage: 0,
-      text: 'Put a Supporter card from your discard pile into your hand.'
-    },
-    {
-      name: 'Quick Turn',
-      cost: [C, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Beckon',
+    cost: [P],
+    damage: 0,
+    text: 'Put a Supporter card from your discard pile into your hand.'
+  }, {
+    name: 'Quick Turn',
+    cost: [C, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '69';

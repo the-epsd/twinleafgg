@@ -5,10 +5,12 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { CoinFlipPrompt } from '../../../game/store/prompts/coin-flip-prompt';
+
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+
+import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -22,7 +24,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
   let coin1Result = false;
-  yield store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), (result: boolean) => {
+  yield COIN_FLIP_PROMPT(store, state, player, result => {
     coin1Result = result;
     next();
   });
@@ -45,8 +47,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     return state;
   }
 
-
-
   const opponent = StateUtils.getOpponent(state, player);
 
   yield store.prompt(state, new ShowCardsPrompt(
@@ -62,19 +62,15 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 }
 
 export class Xtransceiver extends TrainerCard {
-
   public trainerType = TrainerType.ITEM;
 
   public set: string = 'NVI';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '96';
 
   public regulationMark = 'E';
 
   public name: string = 'Xtransceiver';
-
   public fullName: string = 'Xtransceiver NVI';
 
   public text: string = 'Flip a coin. If heads, search your deck for a Supporter card, reveal it, and put it into your hand. Shuffle your deck afterward.';

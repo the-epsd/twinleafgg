@@ -14,20 +14,17 @@ export class Goomy extends PokemonCard {
   public weakness = [{ type: Y }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Bubble',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If head, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Tackle',
-      cost: [W, Y],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Bubble',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If head, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Tackle',
+    cost: [W, Y],
+    damage: 20,
+    text: ''
+  }];
 
   public set: string = 'GRI';
   public setNumber: string = '94';

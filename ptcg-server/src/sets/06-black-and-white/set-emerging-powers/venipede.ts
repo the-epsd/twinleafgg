@@ -10,20 +10,17 @@ export class Venipede extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Poison Sting',
-      cost: [P],
-      damage: 0,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Poisoned.'
-    },
-    {
-      name: 'Tackle',
-      cost: [C, C],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Poison Sting',
+    cost: [P],
+    damage: 0,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Poisoned.'
+  }, {
+    name: 'Tackle',
+    cost: [C, C],
+    damage: 20,
+    text: ''
+  }];
 
   public set: string = 'EPO';
   public cardImage: string = 'assets/cardback.png';

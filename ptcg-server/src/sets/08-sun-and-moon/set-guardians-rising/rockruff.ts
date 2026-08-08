@@ -14,20 +14,17 @@ export class Rockruff extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Corner',
-      cost: [F],
-      damage: 0,
-      text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
-    },
-    {
-      name: 'Wild Kick',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Corner',
+    cost: [F],
+    damage: 0,
+    text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
+  }, {
+    name: 'Wild Kick',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'GRI';
   public setNumber: string = '73';

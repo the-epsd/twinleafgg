@@ -14,20 +14,17 @@ export class Conkeldurr extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Stone Edge',
-      cost: [F, F, C],
-      damage: 80,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    },
-    {
-      name: 'Swing Around',
-      cost: [F, F, C, C],
-      damage: 100,
-      text: 'Does 40 damage to each Benched Pokémon (both yours and your opponent\'s). (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
-  ];
+  public attacks = [{
+    name: 'Stone Edge',
+    cost: [F, F, C],
+    damage: 80,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }, {
+    name: 'Swing Around',
+    cost: [F, F, C, C],
+    damage: 100,
+    text: 'Does 40 damage to each Benched Pokémon (both yours and your opponent\'s). (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }];
 
   public set: string = 'BLW';
   public cardImage: string = 'assets/cardback.png';

@@ -17,8 +17,7 @@ export class Croconaw extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, the Defending Pokémon can\'t attack or retreat during your opponent\'s next turn.'
-  },
-  {
+  }, {
     name: 'Slash',
     cost: [L, C, C],
     damage: 50,

@@ -16,20 +16,17 @@ export class Zapdos extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Hurricane Call',
-      cost: [C, C],
-      damage: 0,
-      text: 'Flip 4 coins. For each heads, search your deck for a [L] Energy card and attach it to 1 of your Pokémon-GX or Pokémon-EX. Then, shuffle your deck.'
-    },
-    {
-      name: 'Sky-High Claws',
-      cost: [L, L, C],
-      damage: 100,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Hurricane Call',
+    cost: [C, C],
+    damage: 0,
+    text: 'Flip 4 coins. For each heads, search your deck for a [L] Energy card and attach it to 1 of your Pokémon-GX or Pokémon-EX. Then, shuffle your deck.'
+  }, {
+    name: 'Sky-High Claws',
+    cost: [L, L, C],
+    damage: 100,
+    text: ''
+  }];
 
   public set: string = 'HIF';
   public setNumber: string = '24';

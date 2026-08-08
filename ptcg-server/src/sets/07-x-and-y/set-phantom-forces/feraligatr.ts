@@ -17,21 +17,18 @@ export class Feraligatr extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Hyper Whirlpool',
-      cost: [W, C, C],
-      damage: 60,
-      text: 'Flip a coin until you get tails. For each heads, discard an Energy attached to your opponent\'s Active Pokémon.'
-    },
-    {
-      name: 'Second Strike',
-      cost: [W, W, C, C],
-      damage: 80,
-      damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 80 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Hyper Whirlpool',
+    cost: [W, C, C],
+    damage: 60,
+    text: 'Flip a coin until you get tails. For each heads, discard an Energy attached to your opponent\'s Active Pokémon.'
+  }, {
+    name: 'Second Strike',
+    cost: [W, W, C, C],
+    damage: 80,
+    damageCalculation: '+',
+    text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 80 more damage.'
+  }];
 
   public set: string = 'PHF';
   public setNumber: string = '17';

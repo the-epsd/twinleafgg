@@ -18,21 +18,18 @@ export class Rhyperior extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Rock Shower',
-      cost: [F, F, C],
-      damage: 0,
-      text: 'Flip 3 coins. This attack does 20 damage times the number of heads to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    },
-    {
-      name: 'Stone Edge',
-      cost: [F, F, C, C],
-      damage: 80,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 40 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Rock Shower',
+    cost: [F, F, C],
+    damage: 0,
+    text: 'Flip 3 coins. This attack does 20 damage times the number of heads to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }, {
+    name: 'Stone Edge',
+    cost: [F, F, C, C],
+    damage: 80,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 40 more damage.'
+  }];
 
   public set: string = 'PRC';
   public setNumber: string = '76';

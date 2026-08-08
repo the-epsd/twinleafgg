@@ -17,22 +17,20 @@ export class GreedentV extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Crunch',
-      cost: [C, C],
-      damage: 40,
-      text: 'Discard an Energy from your opponent\'s Active Pokémon.'
-    },
-    {
-      name: 'Stumbling Press',
-      cost: [C, C, C],
-      damage: 180,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Crunch',
+    cost: [C, C],
+    damage: 40,
+    text: 'Discard an Energy from your opponent\'s Active Pokémon.'
+  }, {
+    name: 'Stumbling Press',
+    cost: [C, C, C],
+    damage: 180,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'SHF';
   public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';

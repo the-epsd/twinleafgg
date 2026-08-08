@@ -14,21 +14,18 @@ export class Cofagrigus2 extends PokemonCard {
   public weakness = [{ type: D }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Elongating Arms',
-      cost: [C],
-      damage: 0,
-      text: 'This attack does 30 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    },
-    {
-      name: 'Crazy Slap',
-      cost: [P, C, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 40 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Elongating Arms',
+    cost: [C],
+    damage: 0,
+    text: 'This attack does 30 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }, {
+    name: 'Crazy Slap',
+    cost: [P, C, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 40 damage times the number of heads.'
+  }];
 
   public set: string = 'PLF';
   public setNumber: string = '57';

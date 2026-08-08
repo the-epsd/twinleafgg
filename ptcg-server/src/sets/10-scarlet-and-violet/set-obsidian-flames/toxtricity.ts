@@ -20,8 +20,7 @@ export class Toxtricity extends PokemonCard {
     cost: [L],
     damage: 0,
     text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-  },
-  {
+  }, {
     name: 'Loud Mix',
     cost: [L, C],
     damage: 50,
@@ -38,11 +37,11 @@ export class Toxtricity extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, (result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {
           YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
         }
-      }));
+      });
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

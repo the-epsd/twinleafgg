@@ -18,23 +18,21 @@ export class BeedrillV extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Twineedle',
-      cost: [G],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 40 damage for each heads.'
-    },
-    {
-      name: 'Swarming Sting',
-      cost: [G, G, C],
-      damage: 0,
-      text: 'This attack does 50 damage to 1 of your opponent\'s Pokémon for each of your Beedrill V in play. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
-  ];
+  public attacks = [{
+    name: 'Twineedle',
+    cost: [G],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 40 damage for each heads.'
+  }, {
+    name: 'Swarming Sting',
+    cost: [G, G, C],
+    damage: 0,
+    text: 'This attack does 50 damage to 1 of your opponent\'s Pokémon for each of your Beedrill V in play. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'ASR';
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';

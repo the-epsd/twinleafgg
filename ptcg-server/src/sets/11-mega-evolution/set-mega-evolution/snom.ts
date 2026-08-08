@@ -23,6 +23,7 @@ export class Snom extends PokemonCard {
   public setNumber: string = '42';
   public name = 'Snom';
   public fullName = 'Snom MEG';
+
   public regulationMark = 'I';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

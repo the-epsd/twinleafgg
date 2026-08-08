@@ -12,15 +12,13 @@ export class Sawk extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Five Fierce Chops',
-      cost: [F, C],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Flip 5 coins. This attack does 20 damage times the number of heads. This Pokémon can\'t attack during your next turn.'
-    }
-  ];
+  public attacks = [{
+    name: 'Five Fierce Chops',
+    cost: [F, C],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Flip 5 coins. This attack does 20 damage times the number of heads. This Pokémon can\'t attack during your next turn.'
+  }];
 
   public set: string = 'EPO';
   public cardImage: string = 'assets/cardback.png';

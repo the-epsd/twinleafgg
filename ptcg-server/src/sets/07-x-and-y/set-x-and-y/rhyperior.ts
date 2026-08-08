@@ -17,21 +17,18 @@ export class Rhyperior extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Rock Black',
-      cost: [F],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'Flip a coin for each [F] Energy attached to this Pokémon. This attack does 50 damage times the number of heads.'
-    },
-    {
-      name: 'Rock Wrecker',
-      cost: [F, F, C, C],
-      damage: 130,
-      text: 'This attack\'s damage isn\'t affected by Weakness or Resistance. This Pokémon can\'t attack during your next turn.'
-    }
-  ];
+  public attacks = [{
+    name: 'Rock Black',
+    cost: [F],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'Flip a coin for each [F] Energy attached to this Pokémon. This attack does 50 damage times the number of heads.'
+  }, {
+    name: 'Rock Wrecker',
+    cost: [F, F, C, C],
+    damage: 130,
+    text: 'This attack\'s damage isn\'t affected by Weakness or Resistance. This Pokémon can\'t attack during your next turn.'
+  }];
 
   public set: string = 'XY';
   public setNumber: string = '62';

@@ -36,6 +36,7 @@ export class Dewgong extends PokemonCard {
   }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'LOR';
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';

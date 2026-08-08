@@ -19,20 +19,17 @@ export class Doublade extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'False Swipe',
-      cost: [C, C],
-      damage: 0,
-      text: 'Flip a coin. If heads, put damage counters on your opponent\'s Active Pokémon until its remaining HP is 10.'
-    },
-    {
-      name: 'Slash',
-      cost: [M, M, C],
-      damage: 60,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'False Swipe',
+    cost: [C, C],
+    damage: 0,
+    text: 'Flip a coin. If heads, put damage counters on your opponent\'s Active Pokémon until its remaining HP is 10.'
+  }, {
+    name: 'Slash',
+    cost: [M, M, C],
+    damage: 60,
+    text: ''
+  }];
 
   public set: string = 'PRC';
   public setNumber: string = '99';

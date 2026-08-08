@@ -21,8 +21,7 @@ export class Shieldon extends PokemonCard {
     cost: [M, C],
     damage: 30,
     text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage from and effects of attacks done to this Pokémon.'
-  },
-  {
+  }, {
     name: 'Confront',
     cost: [M, M, C],
     damage: 100,
@@ -30,6 +29,7 @@ export class Shieldon extends PokemonCard {
   }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'ASR';
   public setNumber: string = '109';
   public cardImage: string = 'assets/cardback.png';

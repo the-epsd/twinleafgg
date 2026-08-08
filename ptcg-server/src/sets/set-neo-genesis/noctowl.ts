@@ -24,7 +24,7 @@ export class Noctowl extends PokemonCard {
     cost: [C, C, C],
     damage: 30,
     text: ''
-  },];
+  }];
 
   public set = 'N1';
   public setNumber: string = '42';

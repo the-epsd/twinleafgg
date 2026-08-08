@@ -13,20 +13,17 @@ export class Articuno extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Ice Beam',
-      cost: [W, C, C],
-      damage: 50,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Ice Wing',
-      cost: [W, C, C, C],
-      damage: 80,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Ice Beam',
+    cost: [W, C, C],
+    damage: 50,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Ice Wing',
+    cost: [W, C, C, C],
+    damage: 80,
+    text: ''
+  }];
 
   public set: string = 'NXD';
   public setNumber: string = '27';

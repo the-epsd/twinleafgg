@@ -23,8 +23,7 @@ export class Solrock extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Search your deck for a Lunatone and put it onto your Bench. Shuffle your deck afterward.'
-  },
-  {
+  }, {
     name: 'Hyper Beam',
     cost: [F],
     damage: 0,

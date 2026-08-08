@@ -1,4 +1,4 @@
-import { CoinFlipPrompt, GameMessage } from '../../../game';
+
 import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
@@ -6,23 +6,23 @@ import { Effect } from '../../../game/store/effects/effect';
 
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Torkoal extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType = R;
   public hp: number = 130;
-  public weakness = [{ type: CardType.WATER }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: W }];
+  public retreat = [C, C, C];
 
   public attacks = [{
     name: 'Stampede',
-    cost: [CardType.COLORLESS, CardType.COLORLESS],
+    cost: [C, C],
     damage: 30,
     text: ''
   }, {
     name: 'Concentrated Fire',
-    cost: [CardType.FIRE, CardType.COLORLESS, CardType.COLORLESS],
+    cost: [R, C, C],
     damage: 80,
     damageCalculation: 'x',
     text: 'Flip a coin for each [R] Energy attached to this Pokémon. This attack does 80 damage for each heads.'
@@ -33,6 +33,7 @@ export class Torkoal extends PokemonCard {
   public fullName: string = 'Torkoal SVI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '35';
+
   public regulationMark: string = 'G';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -48,16 +49,12 @@ export class Torkoal extends PokemonCard {
         return sum + energy.provides.filter(p => p === CardType.FIRE || p === CardType.ANY || p === CardType.GRW || p === CardType.GRPD).length;
       }, 0);
 
-      effect.damage = 0;
-
-      for (let i = 0; i < totalEnergy; i++) {
-        store.prompt(state, [
-          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-        ], result => {
-          if (result === true) {
-            effect.damage += 80;
-          }
+      if (totalEnergy > 0) {
+        MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, totalEnergy, results => {
+          effect.damage = results.filter(r => r).length * 80;
         });
+      } else {
+        effect.damage = 0;
       }
     }
 

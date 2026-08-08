@@ -19,20 +19,17 @@ export class Shiftry extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Roll Up',
-      cost: [D, C],
-      damage: 0,
-      text: 'Flip 3 coins. If any of them are heads, your opponent reveals his or her hand. Then, for each heads, discard a card from your opponent\'s hand.'
-    },
-    {
-      name: 'Otherworldly Return',
-      cost: [D, C, C],
-      damage: 60,
-      text: 'Put a Trainer card from your discard pile into your hand.'
-    }
-  ];
+  public attacks = [{
+    name: 'Roll Up',
+    cost: [D, C],
+    damage: 0,
+    text: 'Flip 3 coins. If any of them are heads, your opponent reveals his or her hand. Then, for each heads, discard a card from your opponent\'s hand.'
+  }, {
+    name: 'Otherworldly Return',
+    cost: [D, C, C],
+    damage: 60,
+    text: 'Put a Trainer card from your discard pile into your hand.'
+  }];
 
   public set: string = 'BKP';
   public setNumber: string = '73';

@@ -4,7 +4,6 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP, YOUR_OPPPONENTS_ACTIVE_PO
 import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class MeloettaEX extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
   public tags: string[] = [CardTag.POKEMON_EX];
   public cardType: CardType = P;

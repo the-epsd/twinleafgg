@@ -15,21 +15,18 @@ export class GlalieEx extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Ice Breath',
-      cost: [W],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Instant Freeze',
-      cost: [W, C, C],
-      damage: 50,
-      damageCalculation: '+',
-      text: 'If you have the same number of cards in your hand as your opponent, this attack does 100 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Ice Breath',
+    cost: [W],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Instant Freeze',
+    cost: [W, C, C],
+    damage: 50,
+    damageCalculation: '+',
+    text: 'If you have the same number of cards in your hand as your opponent, this attack does 100 more damage.'
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '34';

@@ -21,8 +21,7 @@ export class Silcoon extends PokemonCard {
     cost: [G],
     damage: 0,
     text: 'Flip a coin. If heads, during your opponent\'s next turn, the Defending Pokémon can\'t attack.'
-  },
-  {
+  }, {
     name: 'Ram',
     cost: [G, C],
     damage: 20,
@@ -30,6 +29,7 @@ export class Silcoon extends PokemonCard {
   }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'LOR';
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';

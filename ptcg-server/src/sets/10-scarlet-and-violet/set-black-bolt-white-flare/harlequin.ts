@@ -5,8 +5,8 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { CoinFlipPrompt, GameError, GameMessage, Player } from '../../../game';
-import { DRAW_CARDS, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { GameError, GameMessage, Player } from '../../../game';
+import { DRAW_CARDS, SHUFFLE_DECK, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 import { MoveCardsEffect } from '../../../game/store/effects/game-effects';
 
 function* playCard(next: Function, store: StoreLike, state: State,
@@ -28,7 +28,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   effect.preventDefault = true;
 
   let coinResult = false;
-  yield store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), (result: boolean) => {
+  yield COIN_FLIP_PROMPT(store, state, player, result => {
     coinResult = result;
     next();
   });
@@ -52,10 +52,13 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
 export class Harlequin extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
+
   public set: string = 'WHT';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '83';
+
   public regulationMark = 'I';
+
   public name: string = 'Harlequin';
   public fullName: string = 'Harlequin WHT';
 

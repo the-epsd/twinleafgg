@@ -18,8 +18,7 @@ export class DarkWartortle extends PokemonCard {
     damage: 10,
     damageCalculation: 'x',
     text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
-  },
-  {
+  }, {
     name: 'Mirror Shell',
     cost: [W, C],
     damage: 0,

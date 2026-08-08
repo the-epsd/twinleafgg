@@ -15,23 +15,21 @@ export class Wigglytuff extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Sleep Pulse',
-      cost: [P],
-      damage: 30,
-      text: 'Your opponent\'s Active Pokémon is now Asleep.'
-    },
-    {
-      name: 'Double Smash',
-      cost: [C, C, C],
-      damage: 90,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 90 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Sleep Pulse',
+    cost: [P],
+    damage: 30,
+    text: 'Your opponent\'s Active Pokémon is now Asleep.'
+  }, {
+    name: 'Double Smash',
+    cost: [C, C, C],
+    damage: 90,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 90 damage for each heads.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'DAA';
   public setNumber: string = '68';
   public cardImage: string = 'assets/cardback.png';

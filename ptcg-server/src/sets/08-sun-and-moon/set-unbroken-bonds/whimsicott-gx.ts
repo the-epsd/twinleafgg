@@ -26,21 +26,18 @@ export class WhimsicottGx extends PokemonCard {
     text: 'If any damage is done to this Pokémon by attacks, flip a coin. If heads, prevent that damage.'
   }];
 
-  public attacks = [
-    {
-      name: 'Energy Blow',
-      cost: [Y],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'This attack does 30 more damage times the amount of Energy attached to this Pokémon.'
-    },
-    {
-      name: 'Toy Box-GX',
-      cost: [Y],
-      damage: 0,
-      text: 'Search your deck for up to 5 cards and put them into your hand. Then, shuffle your deck. (You can\'t use more than 1 GX attack in a game.)'
-    }
-  ];
+  public attacks = [{
+    name: 'Energy Blow',
+    cost: [Y],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'This attack does 30 more damage times the amount of Energy attached to this Pokémon.'
+  }, {
+    name: 'Toy Box-GX',
+    cost: [Y],
+    damage: 0,
+    text: 'Search your deck for up to 5 cards and put them into your hand. Then, shuffle your deck. (You can\'t use more than 1 GX attack in a game.)'
+  }];
 
   public set: string = 'UNB';
   public setNumber: string = '140';

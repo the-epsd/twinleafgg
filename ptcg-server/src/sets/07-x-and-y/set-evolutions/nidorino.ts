@@ -16,21 +16,18 @@ export class Nidorino extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Horn Attack',
-      cost: [P],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Fury Attack',
-      cost: [C, C, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 30 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Horn Attack',
+    cost: [P],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Fury Attack',
+    cost: [C, C, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 30 damage times the number of heads.'
+  }];
 
   public set: string = 'EVO';
   public setNumber: string = '44';

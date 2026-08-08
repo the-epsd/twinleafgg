@@ -9,6 +9,7 @@ import { COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Digger extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
+
   public set: string = 'TR';
   public setNumber: string = '75';
   public cardImage: string = 'assets/cardback.png';

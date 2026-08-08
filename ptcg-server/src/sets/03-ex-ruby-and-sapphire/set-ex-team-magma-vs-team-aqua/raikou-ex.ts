@@ -16,8 +16,7 @@ export class Raikouex extends PokemonCard {
     cost: [L],
     damage: 10,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
-  },
-  {
+  }, {
     name: 'Lightning Tackle',
     cost: [L, L, C],
     damage: 70,
