@@ -177,6 +177,26 @@ export function HANDLE_ABILITY_LOCK(
 }
 
 /**
+ * Enforce attack-sourced ability locks stored on PokemonCardList / Player
+ * (Gastro Acid, Shadow Stitching). Call from the store before card handlers.
+ */
+export function APPLY_ATTACK_EFFECT_ABILITY_LOCKS(state: State, effect: Effect): void {
+  HANDLE_ABILITY_LOCK(effect, ({ player, card }) => {
+    if (player.abilitiesSuppressedTurnsRemaining > 0) {
+      return true;
+    }
+    try {
+      const cardList = StateUtils.findCardList(state, card);
+      return cardList instanceof PokemonCardList && cardList.noAbilities;
+    } catch {
+      return false;
+    }
+  }, {
+    error: GameMessage.BLOCKED_BY_EFFECT,
+  });
+}
+
+/**
  * "Can't use" suppressor (Mesprit Psychic Bind, Gardevoir Psychic Lock, etc.).
  *
  * Powers remain discoverable in `CheckPokemonPowersEffect`; activation throws on

@@ -192,6 +192,21 @@ export class PokemonCardList extends CardList {
   public pendingEnergyReturnToHand: Card[] = [];
   public blockedAttackNameNextTurn: string | undefined = undefined;
   public blockedAttackNameUntilLeavesActive: string | undefined = undefined;
+  /**
+   * Encore: during the owner's next turn, this Pokémon can only use this attack.
+   */
+  public onlyAllowedAttackNameNextTurn: string | undefined = undefined;
+  /**
+   * During the owner's next turn, Pokémon can't be played from hand to evolve this Pokémon.
+   */
+  public cannotEvolveNextTurn: boolean = false;
+  /**
+   * The Defending Pokémon has no Abilities until the end of the attacker's next turn
+   * (Gastro Acid). Cleared with a two-phase arm on the attacker's EndTurns.
+   */
+  public noAbilities: boolean = false;
+  public noAbilitiesAttackerId: number | undefined = undefined;
+  public noAbilitiesClearArmed: boolean = false;
   public _preservedConditionsDuringEvolution?: SpecialCondition[];
 
   public static readonly CLEAR_KNOCKOUT_MARKER = 'CLEAR_KNOCKOUT_MARKER';
@@ -304,6 +319,11 @@ export class PokemonCardList extends CardList {
     this.pendingEnergyReturnToHand = [];
     this.blockedAttackNameNextTurn = undefined;
     this.blockedAttackNameUntilLeavesActive = undefined;
+    this.onlyAllowedAttackNameNextTurn = undefined;
+    this.cannotEvolveNextTurn = false;
+    this.noAbilities = false;
+    this.noAbilitiesAttackerId = undefined;
+    this.noAbilitiesClearArmed = false;
     this.damageReductionNextTurn = 0;
     this.damageReductionNextTurnFilter = null;
     this.damageReductionBeforeWeaknessNextTurn = 0;
@@ -442,6 +462,11 @@ export class PokemonCardList extends CardList {
     this.pendingEnergyReturnToHand = [];
     this.blockedAttackNameNextTurn = undefined;
     this.blockedAttackNameUntilLeavesActive = undefined;
+    this.onlyAllowedAttackNameNextTurn = undefined;
+    this.cannotEvolveNextTurn = false;
+    this.noAbilities = false;
+    this.noAbilitiesAttackerId = undefined;
+    this.noAbilitiesClearArmed = false;
     // if (this.cards.length === 0) {
     //   this.damage = 0;
     // }

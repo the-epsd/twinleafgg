@@ -13,6 +13,7 @@ import { MovedFromActiveToBenchEffect, MovedToActiveEffect, PowerEffect } from '
 import {
   CLEAR_ABILITY_LOCK_ACTIVATION,
   STAMP_ABILITY_LOCK_ACTIVATION,
+  APPLY_ATTACK_EFFECT_ABILITY_LOCKS,
 } from './prefabs/ability-lock';
 import { GameError } from '../game-error';
 import { GameMessage, GameLog } from '../game-message';
@@ -136,6 +137,8 @@ export class Store implements StoreLike {
     } else if (effect instanceof MovedFromActiveToBenchEffect) {
       CLEAR_ABILITY_LOCK_ACTIVATION(state, effect.pokemonCard);
     }
+
+    APPLY_ATTACK_EFFECT_ABILITY_LOCKS(state, effect);
 
     state = this.propagateEffect(state, effect);
 

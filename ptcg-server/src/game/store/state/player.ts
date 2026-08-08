@@ -97,7 +97,14 @@ export class Player {
   public cannotPlayEnergyCards = false;
   public cannotPlayPokemonCards = false;
   public cannotPlayPokemonWithAbilities = false;
+  /** Block playing Pokémon from hand only to evolve (basics still allowed). */
+  public cannotEvolvePokemonCards = false;
   public playLocksTurnsRemaining = 0;
+  /**
+   * Until end of this player's next turn countdown: their Pokémon in play,
+   * hand, and discard have no Abilities (Greninja Shadow Stitching).
+   */
+  public abilitiesSuppressedTurnsRemaining = 0;
   /**
    * Until end of this player's next turn countdown: Stadium/Tool cards in play
    * have no effect (checked globally via any player still holding the flag).
@@ -136,6 +143,7 @@ export class Player {
     energy?: boolean;
     pokemon?: boolean;
     pokemonWithAbilities?: boolean;
+    evolve?: boolean;
   }, turnsRemaining: number = 1): void {
     if (locks.item) {
       this.cannotPlayItemCards = true;
@@ -162,6 +170,9 @@ export class Player {
     if (locks.pokemonWithAbilities) {
       this.cannotPlayPokemonWithAbilities = true;
     }
+    if (locks.evolve) {
+      this.cannotEvolvePokemonCards = true;
+    }
     this.playLocksTurnsRemaining = Math.max(this.playLocksTurnsRemaining, Math.max(1, turnsRemaining));
   }
 
@@ -174,6 +185,7 @@ export class Player {
     this.cannotPlayEnergyCards = false;
     this.cannotPlayPokemonCards = false;
     this.cannotPlayPokemonWithAbilities = false;
+    this.cannotEvolvePokemonCards = false;
     this.playLocksTurnsRemaining = 0;
   }
 
@@ -193,6 +205,9 @@ export class Player {
     }
     if (this.cannotAttackTurnsRemaining > 0) {
       this.cannotAttackTurnsRemaining -= 1;
+    }
+    if (this.abilitiesSuppressedTurnsRemaining > 0) {
+      this.abilitiesSuppressedTurnsRemaining -= 1;
     }
     if (this.ignoreAttackCostTurnsRemaining > 0) {
       this.ignoreAttackCostTurnsRemaining -= 1;

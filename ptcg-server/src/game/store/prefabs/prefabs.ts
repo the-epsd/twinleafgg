@@ -92,7 +92,7 @@ import {
 } from '../effects/game-effects';
 import { AfterAttackEffect, BeforeDoingDamageEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
-import { preventRetreatEffect, selfPreventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, coinFlipCancelAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect, cannotAttachEnergyFromHandToDefendingNextTurnEffect, energyAttachFromHandConsequenceNextTurnEffect, defendingPokemonWeaknessIsNowEffect, reduceDamageEffect, reduceDamageAfterWeaknessEffect, playLockEffect, PlayLockOptions, PreventDamageOptions, shouldPreventAttackEffects, knockOutIfDamagedDuringAttackerNextTurnEffect, KnockOutIfDamagedOptions, surviveOnTenHpDuringOpponentsNextTurnEffect, retaliateOnDamageDuringOpponentsNextTurnEffect, extraPrizesIfKnockedOutDuringAttackerNextTurnEffect, denyPrizesIfKnockedOutDuringOpponentsNextTurnEffect, discardAttackerEnergyIfKnockedOutDuringOpponentsNextTurnEffect, nextTurnAttackDamageBonusEffect, armNextTurnAttackDamageBonus, nextTurnAttackBaseDamageEffect, increaseDefendingPokemonAttackCostNextTurnEffect, increaseDefendingPokemonRetreatCostNextTurnEffect, preventAttackUntilLeavesActiveEffect, increaseDefendingPokemonAttackCostWhileActiveEffect, preventRetreatWhileActiveEffect, preventHealOnDefendingDuringOpponentsNextTurnEffect, stadiumAndToolHaveNoEffectEffect, coinFlipCancelTrainerPlayEffect, thisPokemonHasNoWeaknessDuringOpponentsNextTurnEffect, opponentCannotDrawAtStartOfNextTurnEffect, thisPokemonHasNoRetreatCostDuringYourNextTurnEffect, yourPokemonCannotAttackDuringYourNextTurnEffect, ignoreAttackCostsForTypesDuringYourNextTurnEffect, preventDamageAndEffectsToAllYourPokemonEffect } from '../effects/effect-of-attack-effects';
+import { preventRetreatEffect, selfPreventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, coinFlipCancelAttackEffect, opponentPokemonCannotUseAttackEffect, opponentPokemonCanOnlyUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect, cannotAttachEnergyFromHandToDefendingNextTurnEffect, energyAttachFromHandConsequenceNextTurnEffect, defendingPokemonWeaknessIsNowEffect, reduceDamageEffect, reduceDamageAfterWeaknessEffect, playLockEffect, PlayLockOptions, PreventDamageOptions, shouldPreventAttackEffects, knockOutIfDamagedDuringAttackerNextTurnEffect, KnockOutIfDamagedOptions, surviveOnTenHpDuringOpponentsNextTurnEffect, retaliateOnDamageDuringOpponentsNextTurnEffect, extraPrizesIfKnockedOutDuringAttackerNextTurnEffect, denyPrizesIfKnockedOutDuringOpponentsNextTurnEffect, discardAttackerEnergyIfKnockedOutDuringOpponentsNextTurnEffect, nextTurnAttackDamageBonusEffect, armNextTurnAttackDamageBonus, nextTurnAttackBaseDamageEffect, increaseDefendingPokemonAttackCostNextTurnEffect, increaseDefendingPokemonRetreatCostNextTurnEffect, preventAttackUntilLeavesActiveEffect, increaseDefendingPokemonAttackCostWhileActiveEffect, preventRetreatWhileActiveEffect, preventHealOnDefendingDuringOpponentsNextTurnEffect, stadiumAndToolHaveNoEffectEffect, coinFlipCancelTrainerPlayEffect, thisPokemonHasNoWeaknessDuringOpponentsNextTurnEffect, opponentCannotDrawAtStartOfNextTurnEffect, thisPokemonHasNoRetreatCostDuringYourNextTurnEffect, yourPokemonCannotAttackDuringYourNextTurnEffect, ignoreAttackCostsForTypesDuringYourNextTurnEffect, preventDamageAndEffectsToAllYourPokemonEffect, cannotEvolveDefendingNextTurnEffect, defendingPokemonHasNoAbilitiesUntilEndOfAttackerNextTurnEffect, opponentPokemonHaveNoAbilitiesEffect } from '../effects/effect-of-attack-effects';
 import { SurviveOnTenHpOptions, RetaliateOnDamageOptions } from '../state/pokemon-card-list';
 import { GameStatsTracker } from '../game-stats-tracker';
 
@@ -4757,6 +4757,110 @@ export function OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK(
 
     const disableEffect = opponentPokemonCannotUseAttackEffect(effect, source, result);
     return store.reduceEffect(state, disableEffect);
+  });
+}
+
+/**
+ * Prompts the player to choose one of the Defending Pokémon's attacks.
+ * During the opponent's next turn, that Pokémon can only use that attack (Encore).
+ */
+export function OPPONENTS_POKEMON_CAN_ONLY_USE_THAT_ATTACK(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+): State {
+  const player = effect.player;
+  const opponent = effect.opponent;
+  const pokemonCard = opponent.active.getPokemonCard();
+
+  if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
+    return state;
+  }
+
+  return store.prompt(state, new ChooseAttackPrompt(
+    player.id,
+    GameMessage.CHOOSE_ATTACK_TO_COPY,
+    [pokemonCard],
+    { allowCancel: false }
+  ), result => {
+    if (!result) {
+      return state;
+    }
+
+    const encoreEffect = opponentPokemonCanOnlyUseAttackEffect(effect, source, result);
+    return store.reduceEffect(state, encoreEffect);
+  });
+}
+
+/**
+ * During your opponent's next turn, Pokémon can't be played from hand to evolve
+ * the Defending Pokémon. Mist Energy can block this.
+ */
+export function DEFENDING_POKEMON_CANNOT_EVOLVE_NEXT_TURN(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+): State {
+  return store.reduceEffect(state, cannotEvolveDefendingNextTurnEffect(effect, source));
+}
+
+/**
+ * During your opponent's next turn, they can't play Pokémon from hand to evolve
+ * any of their Pokémon. Player-level — not Mist-blockable.
+ */
+export function OPPONENT_CANNOT_EVOLVE_POKEMON(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+): State {
+  return OPPONENT_CANNOT_PLAY_CARDS(store, state, effect, source, { evolve: true });
+}
+
+/**
+ * The Defending Pokémon has no Abilities until the end of your next turn.
+ * Mist Energy can block this.
+ */
+export function DEFENDING_POKEMON_HAS_NO_ABILITIES_UNTIL_END_OF_YOUR_NEXT_TURN(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+): State {
+  return store.reduceEffect(
+    state,
+    defendingPokemonHasNoAbilitiesUntilEndOfAttackerNextTurnEffect(effect, source),
+  );
+}
+
+/**
+ * Until the end of your opponent's next turn, each of their Pokémon in play, hand,
+ * and discard has no Abilities. Player-level — not Mist-blockable.
+ */
+export function OPPONENT_POKEMON_HAVE_NO_ABILITIES(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+): State {
+  return store.reduceEffect(state, opponentPokemonHaveNoAbilitiesEffect(effect, source));
+}
+
+/**
+ * Flip a coin. If heads, the Defending Pokémon can't attack during your opponent's next turn.
+ */
+export function FLIP_COIN_IF_HEADS_DEFENDING_POKEMON_CANNOT_ATTACK(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+): State {
+  return COIN_FLIP_PROMPT(store, state, effect.player, result => {
+    if (result) {
+      DEFENDING_POKEMON_CANNOT_ATTACK(store, state, effect, source);
+    }
   });
 }
 

@@ -161,6 +161,10 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   if (attackingPokemon.blockedAttackNameNextTurn === attack.name) {
     throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
   }
+  if (attackingPokemon.onlyAllowedAttackNameNextTurn !== undefined
+    && attackingPokemon.onlyAllowedAttackNameNextTurn !== attack.name) {
+    throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+  }
   if (attackingPokemon.blockedAttackNameUntilLeavesActive === attack.name) {
     throw new GameError(GameMessage.CANNOT_USE_ATTACK);
   }
@@ -740,6 +744,12 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
 
   if (effect instanceof EvolveEffect) {
     if (effect.player.cannotPlayPokemonCards) {
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    }
+    if (effect.player.cannotEvolvePokemonCards) {
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    }
+    if (effect.target.cannotEvolveNextTurn) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
     if (effect.player.cannotPlayPokemonWithAbilities

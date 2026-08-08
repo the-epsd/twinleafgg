@@ -353,6 +353,21 @@ export class OpponentPokemonCannotUseAttackEffect extends EffectOfAttackEffect {
   }
 }
 
+/**
+ * During the opponent's next turn, the Defending Pokémon can only use the chosen attack (Encore).
+ */
+export class OpponentPokemonCanOnlyUseAttackEffect extends EffectOfAttackEffect {
+  readonly type: string = 'OPPONENT_POKEMON_CAN_ONLY_USE_ATTACK_EFFECT';
+
+  constructor(base: AttackEffect, public allowedAttack: Attack) {
+    super(base);
+  }
+
+  applyEffect(): void {
+    this.opponent.active.onlyAllowedAttackNameNextTurn = this.allowedAttack.name;
+  }
+}
+
 export class PreventAttackUntilLeavesActiveEffect extends EffectOfAttackEffect {
   constructor(base: AttackEffect, public attackName: string) {
     super(base);
@@ -600,6 +615,16 @@ export function opponentPokemonCannotUseAttackEffect(
   return effect;
 }
 
+export function opponentPokemonCanOnlyUseAttackEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  allowedAttack: Attack,
+): OpponentPokemonCanOnlyUseAttackEffect {
+  const effect = new OpponentPokemonCanOnlyUseAttackEffect(attackEffect, allowedAttack);
+  effect.markerSource = source;
+  return effect;
+}
+
 export function reduceDamageEffect(
   attackEffect: AttackEffect,
   source: Card,
@@ -635,6 +660,8 @@ export interface PlayLockOptions {
   /** Block playing any Pokémon from hand (including evolution). */
   pokemon?: boolean;
   pokemonWithAbilities?: boolean;
+  /** Block playing Pokémon from hand only to evolve (basics still allowed). */
+  evolve?: boolean;
   /** EndTurns of the locked player until clear. Default 1 (opponent's next turn). */
   turnsRemaining?: number;
   /** Also lock the attacking player (e.g. Vanilluxe Frigid Breath). */
@@ -663,6 +690,7 @@ export class PlayLockEffect extends EffectOfAttackEffect {
       energy: this.options.energy === true,
       pokemon: this.options.pokemon === true,
       pokemonWithAbilities: this.options.pokemonWithAbilities === true,
+      evolve: this.options.evolve === true,
     };
     const opponentTurns = this.options.turnsRemaining ?? 1;
     this.opponent.applyPlayLocks(locks, opponentTurns);
@@ -1338,6 +1366,88 @@ export function ignoreAttackCostsForTypesDuringYourNextTurnEffect(
   cardTypes: CardType[],
 ): IgnoreAttackCostsForTypesDuringYourNextTurnEffect {
   const effect = new IgnoreAttackCostsForTypesDuringYourNextTurnEffect(attackEffect, cardTypes);
+  effect.markerSource = source;
+  return effect;
+}
+
+/**
+ * During the opponent's next turn, Pokémon can't be played from hand to evolve
+ * the Defending Pokémon. Mist Energy can block this (targets the Defending Pokémon).
+ */
+export class CannotEvolveDefendingNextTurnEffect extends EffectOfAttackEffect {
+  readonly type: string = 'CANNOT_EVOLVE_DEFENDING_NEXT_TURN_EFFECT';
+
+  constructor(base: AttackEffect) {
+    super(base);
+  }
+
+  applyEffect(): void {
+    this.opponent.active.cannotEvolveNextTurn = true;
+  }
+}
+
+export function cannotEvolveDefendingNextTurnEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+): CannotEvolveDefendingNextTurnEffect {
+  const effect = new CannotEvolveDefendingNextTurnEffect(attackEffect);
+  effect.markerSource = source;
+  return effect;
+}
+
+/**
+ * The Defending Pokémon has no Abilities until the end of your next turn (Gastro Acid).
+ * Mist Energy can block this.
+ */
+export class DefendingPokemonHasNoAbilitiesUntilEndOfAttackerNextTurnEffect extends EffectOfAttackEffect {
+  readonly type: string = 'DEFENDING_POKEMON_HAS_NO_ABILITIES_UNTIL_END_OF_ATTACKER_NEXT_TURN_EFFECT';
+
+  constructor(base: AttackEffect) {
+    super(base);
+  }
+
+  applyEffect(): void {
+    const target = this.opponent.active;
+    target.noAbilities = true;
+    target.noAbilitiesAttackerId = this.player.id;
+    target.noAbilitiesClearArmed = false;
+  }
+}
+
+export function defendingPokemonHasNoAbilitiesUntilEndOfAttackerNextTurnEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+): DefendingPokemonHasNoAbilitiesUntilEndOfAttackerNextTurnEffect {
+  const effect = new DefendingPokemonHasNoAbilitiesUntilEndOfAttackerNextTurnEffect(attackEffect);
+  effect.markerSource = source;
+  return effect;
+}
+
+/**
+ * Until the end of the opponent's next turn, each of their Pokémon in play, hand,
+ * and discard has no Abilities (Greninja Shadow Stitching). Player-level — not Mist-blockable.
+ */
+export class OpponentPokemonHaveNoAbilitiesEffect extends EffectOfAttackEffect {
+  readonly type: string = 'OPPONENT_POKEMON_HAVE_NO_ABILITIES_EFFECT';
+
+  constructor(base: AttackEffect) {
+    super(base);
+    this.target = base.source;
+  }
+
+  applyEffect(): void {
+    this.opponent.abilitiesSuppressedTurnsRemaining = Math.max(
+      this.opponent.abilitiesSuppressedTurnsRemaining,
+      1,
+    );
+  }
+}
+
+export function opponentPokemonHaveNoAbilitiesEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+): OpponentPokemonHaveNoAbilitiesEffect {
+  const effect = new OpponentPokemonHaveNoAbilitiesEffect(attackEffect);
   effect.markerSource = source;
   return effect;
 }

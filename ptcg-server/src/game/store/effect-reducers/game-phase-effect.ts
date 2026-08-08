@@ -437,9 +437,31 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
       if (cardList.blockedAttackNameNextTurn !== undefined) {
         cardList.blockedAttackNameNextTurn = undefined;
       }
+      if (cardList.onlyAllowedAttackNameNextTurn !== undefined) {
+        cardList.onlyAllowedAttackNameNextTurn = undefined;
+      }
+      if (cardList.cannotEvolveNextTurn) {
+        cardList.cannotEvolveNextTurn = false;
+      }
       if (cardList.cannotBeHealedNextTurn) {
         cardList.cannotBeHealedNextTurn = false;
       }
+    });
+
+    // Gastro Acid: no Abilities until end of attacker's next turn (2 EndTurns of attacker)
+    [player, opponent].forEach(p => {
+      p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+        if (cardList.noAbilitiesAttackerId !== player.id || !cardList.noAbilities) {
+          return;
+        }
+        if (cardList.noAbilitiesClearArmed) {
+          cardList.noAbilities = false;
+          cardList.noAbilitiesAttackerId = undefined;
+          cardList.noAbilitiesClearArmed = false;
+        } else {
+          cardList.noAbilitiesClearArmed = true;
+        }
+      });
     });
 
     // Clear attack-sourced play locks after the locked player's turn(s)
