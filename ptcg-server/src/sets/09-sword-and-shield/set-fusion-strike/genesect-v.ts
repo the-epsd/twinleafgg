@@ -1,20 +1,11 @@
-/* eslint-disable indent */
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, BoardEffect } from '../../../game/store/card/card-types';
-import { GameError, PlayerType, PowerType } from '../../../game';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
-import { Effect } from '../../../game/store/effects/effect';
-import { GameMessage } from '../../../game';
-
-import { CardTag } from '../../../game/store/card/card-types';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { PokemonCard, CardTag, Stage, CardType, PowerType, StoreLike, State, GameError, GameMessage, PlayerType, BoardEffect } from "../../../game";
+import { Effect } from "../../../game/store/effects/effect";
+import { EndTurnEffect } from "../../../game/store/effects/game-phase-effects";
+import { PlayPokemonEffect } from "../../../game/store/effects/play-card-effects";
+import { WAS_ATTACK_USED, THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN, WAS_POWER_USED } from "../../../game/store/prefabs/prefabs";
 
 export class GenesectV extends PokemonCard {
   public tags = [CardTag.POKEMON_V, CardTag.FUSION_STRIKE];
-  public regulationMark = 'E';
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;
   public hp: number = 190;
@@ -37,14 +28,11 @@ export class GenesectV extends PokemonCard {
     text: 'During your next turn, this Pokémon can\'t attack.'
   }];
 
+  public regulationMark = 'E';
   public set: string = 'FST';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '185';
-
   public name: string = 'Genesect V';
-
   public fullName: string = 'Genesect V FST';
 
   public readonly FUSION_STRIKE_SYSTEM_MARKER = 'FUSION_STRIKE_SYSTEM_MARKER';
@@ -53,8 +41,7 @@ export class GenesectV extends PokemonCard {
 
     // Techno Blast
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      player.active.cannotAttackNextTurnPending = true;
+      THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN(effect.player);
     }
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {

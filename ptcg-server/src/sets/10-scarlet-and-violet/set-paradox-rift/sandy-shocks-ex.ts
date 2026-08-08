@@ -6,10 +6,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { AttachEnergyPrompt, EnergyCard, GameError, GameMessage, PlayerType, PowerType, SlotType, StateUtils } from '../../../game';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class SandyShocksex extends PokemonCard {
-
   public stage = Stage.BASIC;
   public tags = [CardTag.POKEMON_ex, CardTag.ANCIENT];
   public cardType = F;
@@ -54,8 +53,7 @@ export class SandyShocksex extends PokemonCard {
 
     // Earthen Spike
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      player.active.cannotAttackNextTurnPending = true;
+      THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN(effect.player);
     }
 
     if (WAS_POWER_USED(effect, 0, this)) {

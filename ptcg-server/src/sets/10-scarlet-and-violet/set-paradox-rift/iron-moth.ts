@@ -1,7 +1,7 @@
 import { BoardEffect, CardTag, CardTarget, CardType, EnergyType, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCard, PowerType, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { MovedToActiveEffect, PowerEffect } from '../../../game/store/effects/game-effects';
-import { MOVED_TO_ACTIVE_THIS_TURN, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { MOVED_TO_ACTIVE_THIS_TURN, REMOVE_MARKER_AT_END_OF_TURN, THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class IronMoth extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -107,10 +107,7 @@ export class IronMoth extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      if (!player.active.cannotUseAttacksNextTurnPending.includes('Heat Ray')) {
-        player.active.cannotUseAttacksNextTurnPending.push('Heat Ray');
-      }
+      THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN(effect.player, this.attacks[0]);
     }
 
     return state;

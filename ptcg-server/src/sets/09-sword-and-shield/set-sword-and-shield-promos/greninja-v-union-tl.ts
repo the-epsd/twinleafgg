@@ -19,67 +19,62 @@ export class GreninjaVUNIONTopLeft extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C, C];
 
-  public powers = [
-    {
-      name: 'Greninja V-UNION Assembly',
-      text: 'Once per game during your turn, combine 4 different Greninja V-UNION from your discard pile and put them onto your bench.',
-      useFromDiscard: true,
-      exemptFromAbilityLock: true,
-      powerType: PowerType.VUNION_ASSEMBLY
-    },
-    {
-      name: 'Ninja Body',
-      text: 'Whenever your opponent plays an Item card from their hand, prevent all effects of that card done to this Pokémon.',
-      powerType: PowerType.ABILITY
-    },
-    {
-      name: 'Antidote Jutsu',
-      text: 'This Pokémon can\'t be Poisoned.',
-      powerType: PowerType.ABILITY
-    },
-    {
-      name: 'Feel the Way',
-      text: 'Once during your turn, you may have your opponent reveal their hand.',
-      useWhenInPlay: true,
-      powerType: PowerType.ABILITY
-    }
-  ];
+  public powers = [{
+    name: 'Greninja V-UNION Assembly',
+    text: 'Once per game during your turn, combine 4 different Greninja V-UNION from your discard pile and put them onto your bench.',
+    useFromDiscard: true,
+    exemptFromAbilityLock: true,
+    powerType: PowerType.VUNION_ASSEMBLY
+  },
+  {
+    name: 'Ninja Body',
+    text: 'Whenever your opponent plays an Item card from their hand, prevent all effects of that card done to this Pokémon.',
+    powerType: PowerType.ABILITY
+  },
+  {
+    name: 'Antidote Jutsu',
+    text: 'This Pokémon can\'t be Poisoned.',
+    powerType: PowerType.ABILITY
+  },
+  {
+    name: 'Feel the Way',
+    text: 'Once during your turn, you may have your opponent reveal their hand.',
+    useWhenInPlay: true,
+    powerType: PowerType.ABILITY
+  }];
 
-  public attacks = [
-    {
-      name: 'Union Gain',
-      cost: [C],
-      damage: 0,
-      text: 'Attach up to 2 [W] Energy cards from your discard pile to this Pokémon.'
-    },
-    {
-      name: 'Aqua Edge',
-      cost: [W],
-      damage: 130,
-      text: ''
-    },
-    {
-      name: 'Twister Shuriken',
-      cost: [W, W, C],
-      damage: 0,
-      text: 'This attack does 100 damage to each of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    },
-    {
-      name: 'Waterfall Bind',
-      cost: [W, W, C],
-      damage: 180,
-      text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
-    }
-  ];
+  public attacks = [{
+    name: 'Union Gain',
+    cost: [C],
+    damage: 0,
+    text: 'Attach up to 2 [W] Energy cards from your discard pile to this Pokémon.'
+  },
+  {
+    name: 'Aqua Edge',
+    cost: [W],
+    damage: 130,
+    text: ''
+  },
+  {
+    name: 'Twister Shuriken',
+    cost: [W, W, C],
+    damage: 0,
+    text: 'This attack does 100 damage to each of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  },
+  {
+    name: 'Waterfall Bind',
+    cost: [W, W, C],
+    damage: 180,
+    text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
+  }];
 
-  public set: string = 'SWSH';
   public regulationMark = 'E';
+  public set: string = 'SWSH';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '155';
   public name: string = 'Greninja V-UNION';
   public fullName: string = 'Greninja V-UNION (Top Left) SWSH';
 
-  public readonly WATERFALL_BIND_MARKER = 'WATERFALL_BIND_MARKER';
   public readonly FEEL_THE_WAY_MARKER = 'FEEL_THE_WAY_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

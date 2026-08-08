@@ -1,11 +1,10 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, GameError } from '../../../game';
+import { StoreLike, State, GameMessage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN } from '../../../game/store/prefabs/prefabs';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 export class Klinklang extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -34,8 +33,6 @@ export class Klinklang extends PokemonCard {
   public name: string = 'Klinklang';
   public fullName: string = 'Klinklang EPO';
 
-  public readonly ZAP_CANNON_MARKER = 'ZAP_CANNON_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
@@ -60,21 +57,11 @@ export class Klinklang extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      if (player.active.marker.hasMarker(this.ZAP_CANNON_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-
       COIN_FLIP_PROMPT(store, state, player, result => {
         if (!result) {
-          player.active.marker.addMarker(this.ZAP_CANNON_MARKER, this);
+          THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN(player, this.attacks[1]);
         }
       });
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      opponent.active.marker.removeMarker(this.ZAP_CANNON_MARKER, this);
     }
 
     return state;

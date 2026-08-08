@@ -1,11 +1,8 @@
-import { GameError, PlayerType, PowerType, State, StateUtils, StoreLike } from '../../../game';
-import { GameMessage } from '../../../game/game-message';
-import { BoardEffect, CardTag, CardType, Stage } from '../../../game/store/card/card-types';
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Effect } from '../../../game/store/effects/effect';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { ADD_POISON_TO_PLAYER_ACTIVE, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { PokemonCard, Stage, CardTag, CardType, PowerType, StoreLike, State, StateUtils, PlayerType, GameError, GameMessage, BoardEffect } from "../../../game";
+import { Effect } from "../../../game/store/effects/effect";
+import { EndTurnEffect } from "../../../game/store/effects/game-phase-effects";
+import { PlayPokemonEffect } from "../../../game/store/effects/play-card-effects";
+import { WAS_POWER_USED, ADD_POISON_TO_PLAYER_ACTIVE, WAS_ATTACK_USED, THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN } from "../../../game/store/prefabs/prefabs";
 
 export class BruteBonnet extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -84,8 +81,7 @@ export class BruteBonnet extends PokemonCard {
 
     // Rampaging Hammer
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      player.active.cannotAttackNextTurnPending = true;
+      THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN(effect.player);
     }
 
     return state;

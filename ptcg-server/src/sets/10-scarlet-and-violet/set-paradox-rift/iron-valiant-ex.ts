@@ -4,7 +4,7 @@ import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, PowerType,
 import { Effect } from '../../../game/store/effects/effect';
 import { GameMessage } from '../../../game/game-message';
 import { EffectOfAbilityEffect, MovedToActiveEffect, PowerEffect } from '../../../game/store/effects/game-effects';
-import { MOVED_TO_ACTIVE_THIS_TURN, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { MOVED_TO_ACTIVE_THIS_TURN, REMOVE_MARKER_AT_END_OF_TURN, THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class IronValiantex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -99,8 +99,7 @@ export class IronValiantex extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      player.active.cannotAttackNextTurnPending = true;
+      THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN(effect.player);
     }
 
     return state;

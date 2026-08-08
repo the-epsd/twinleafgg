@@ -241,6 +241,9 @@ export class PreventDamageEffect extends EffectOfAttackEffect {
     if (this.options.sourceStage !== undefined) {
       filter.sourceStage = this.options.sourceStage;
     }
+    if (this.options.sourceIsEvolution !== undefined) {
+      filter.sourceIsEvolution = this.options.sourceIsEvolution;
+    }
     if (this.options.sourceTags !== undefined) {
       filter.sourceTags = this.options.sourceTags;
     }
@@ -271,6 +274,9 @@ export class PreventEffectsOfAttacksEffect extends EffectOfAttackEffect {
     const filter: PreventDamageFilter = {};
     if (this.options.sourceStage !== undefined) {
       filter.sourceStage = this.options.sourceStage;
+    }
+    if (this.options.sourceIsEvolution !== undefined) {
+      filter.sourceIsEvolution = this.options.sourceIsEvolution;
     }
     if (this.options.sourceTags !== undefined) {
       filter.sourceTags = this.options.sourceTags;

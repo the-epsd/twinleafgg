@@ -1,10 +1,9 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameError, GameMessage } from '../../../game';
+import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Terrakion extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -34,23 +33,9 @@ export class Terrakion extends PokemonCard {
   public name: string = 'Terrakion';
   public fullName: string = 'Terrakion EPO';
 
-  public readonly SACRED_SWORD_MARKER = 'TERRAKION_SACRED_SWORD_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
-
-      if (player.active.marker.hasMarker(this.SACRED_SWORD_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-
-      player.active.marker.addMarker(this.SACRED_SWORD_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      opponent.active.marker.removeMarker(this.SACRED_SWORD_MARKER, this);
+      THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN(effect.player, this.attacks[1]);
     }
 
     return state;

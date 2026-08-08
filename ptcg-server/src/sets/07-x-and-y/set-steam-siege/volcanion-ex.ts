@@ -2,7 +2,7 @@ import { PokemonCard, Stage, PowerType, CardType, ChooseCardsPrompt, EnergyCard,
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class VolcanionEX extends PokemonCard {
   public cardType = R;
@@ -38,8 +38,7 @@ export class VolcanionEX extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Volcanic Heat
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      player.active.cannotAttackNextTurnPending = true;
+      THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN(effect.player);
     }
 
     if (WAS_POWER_USED(effect, 0, this)) {

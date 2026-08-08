@@ -4,25 +4,17 @@ import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, Player
 import { Effect } from '../../../game/store/effects/effect';
 import { EvolveEffect } from '../../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class MetagrossGX extends PokemonCard {
-
   public tags = [CardTag.POKEMON_GX];
-
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom = 'Metang';
-
-  public cardType: CardType = CardType.METAL;
-
+  public cardType: CardType = M;
   public hp: number = 250;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public resistance = [{ type: P, value: -20 }];
+  public retreat = [C, C, C];
 
   public powers = [{
     name: 'Geotech System',
@@ -31,37 +23,28 @@ export class MetagrossGX extends PokemonCard {
     text: 'Once during your turn (before your attack), you may attach a [P] or [M] Energy card from your discard pile to your Active Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Giga Hammer',
-      cost: [CardType.METAL, CardType.METAL, CardType.COLORLESS],
-      damage: 150,
-      text: 'This Pokémon can\'t use Giga Hammer during your next turn.'
-    },
+  public attacks = [{
+    name: 'Giga Hammer',
+    cost: [M, M, C],
+    damage: 150,
+    text: 'This Pokémon can\'t use Giga Hammer during your next turn.'
+  },
 
-    {
-      name: 'Algorithm-GX',
-      cost: [CardType.COLORLESS],
-      damage: 0,
-      gxAttack: true,
-      text: 'Search your deck for up to 5 cards and put them into your hand. Then, shuffle your deck. (You can\'t use more than 1 GX attack in a game.)'
-    }
-  ];
+  {
+    name: 'Algorithm-GX',
+    cost: [C],
+    damage: 0,
+    gxAttack: true,
+    text: 'Search your deck for up to 5 cards and put them into your hand. Then, shuffle your deck. (You can\'t use more than 1 GX attack in a game.)'
+  }];
 
   public set: string = 'GRI';
-
   public name: string = 'Metagross-GX';
-
   public fullName: string = 'Metagross-GX GRI';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '85';
 
   public readonly GEOTECH_MARKER = 'GEOTECH_MARKER';
-
-  public readonly HAMMER_MARKER_1 = 'HAMMER_MARKER_1';
-  public readonly HAMMER_MARKER_2 = 'HAMMER_MARKER_2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof EvolveEffect && effect.pokemonCard === this) {
@@ -113,13 +96,7 @@ export class MetagrossGX extends PokemonCard {
 
     // Giga Hammer
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      // Check marker
-      if (effect.player.marker.hasMarker(this.HAMMER_MARKER_1, this)) {
-        console.log('attack blocked');
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-      effect.player.marker.addMarker(this.HAMMER_MARKER_1, this);
-      console.log('marker added');
+      THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN(effect.player, this.attacks[0]);
     }
 
     // Algorithm-GX
@@ -154,18 +131,6 @@ export class MetagrossGX extends PokemonCard {
 
     if (effect instanceof EndTurnEffect) {
       effect.player.marker.removeMarker(this.GEOTECH_MARKER, this);
-
-      // removing the markers for preventing the pokemon from attacking
-      if (effect.player.marker.hasMarker(this.HAMMER_MARKER_2, this)) {
-        effect.player.marker.removeMarker(this.HAMMER_MARKER_1, this);
-        effect.player.marker.removeMarker(this.HAMMER_MARKER_2, this);
-        console.log('marker cleared');
-      }
-
-      if (effect.player.marker.hasMarker(this.HAMMER_MARKER_1, this)) {
-        effect.player.marker.addMarker(this.HAMMER_MARKER_2, this);
-        console.log('second marker added');
-      }
     }
     return state;
   }

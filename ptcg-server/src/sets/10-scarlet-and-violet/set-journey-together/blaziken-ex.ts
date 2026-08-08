@@ -1,8 +1,7 @@
-import { PokemonCard, CardTag, Stage, CardType, PowerType, StoreLike, State, GameError, GameMessage, AttachEnergyPrompt, EnergyType, PlayerType, SlotType, StateUtils, SuperType, BoardEffect } from '../../../game';
-import { Effect } from '../../../game/store/effects/effect';
-
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { PokemonCard, CardTag, Stage, CardType, PowerType, StoreLike, State, SuperType, EnergyType, GameError, GameMessage, AttachEnergyPrompt, PlayerType, SlotType, BoardEffect, StateUtils } from "../../../game";
+import { Effect } from "../../../game/store/effects/effect";
+import { EndTurnEffect } from "../../../game/store/effects/game-phase-effects";
+import { WAS_POWER_USED, WAS_ATTACK_USED, THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN } from "../../../game/store/prefabs/prefabs";
 
 export class Blazikenex extends PokemonCard {
   public tags = [CardTag.POKEMON_ex];
@@ -91,8 +90,7 @@ export class Blazikenex extends PokemonCard {
 
     // Burning Assault
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      player.active.cannotAttackNextTurnPending = true;
+      THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN(effect.player);
     }
 
     return state;

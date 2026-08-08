@@ -1,14 +1,8 @@
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, BoardEffect } from '../../../game/store/card/card-types';
-import {
-  PowerType, StoreLike, State,
-  GameMessage, Card, ChooseCardsPrompt, ShuffleDeckPrompt, PokemonCardList, PlayerType,
-  GameError
-} from '../../../game';
-import { Effect } from '../../../game/store/effects/effect';
-import { PlayPokemonFromDeckEffect } from '../../../game/store/effects/play-card-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { PokemonCard, Stage, CardTag, CardType, PowerType, StoreLike, State, GameError, GameMessage, PokemonCardList, PlayerType, BoardEffect, Card, ChooseCardsPrompt, SuperType, ShuffleDeckPrompt } from "../../../game";
+import { Effect } from "../../../game/store/effects/effect";
+import { EndTurnEffect } from "../../../game/store/effects/game-phase-effects";
+import { PlayPokemonFromDeckEffect } from "../../../game/store/effects/play-card-effects";
+import { WAS_ATTACK_USED, THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN, WAS_POWER_USED } from "../../../game/store/prefabs/prefabs";
 
 export class Miraidonex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -52,8 +46,7 @@ export class Miraidonex extends PokemonCard {
 
     // Photon Blaster
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      player.active.cannotAttackNextTurnPending = true;
+      THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN(effect.player);
     }
 
     if (WAS_POWER_USED(effect, 0, this)) {
