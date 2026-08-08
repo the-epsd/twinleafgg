@@ -797,6 +797,59 @@ export function defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect(
 }
 
 /**
+ * During the opponent's next turn, Energy can't be attached from their hand to the Defending Pokémon.
+ */
+export class CannotAttachEnergyFromHandToDefendingNextTurnEffect extends EffectOfAttackEffect {
+  readonly type: string = 'CANNOT_ATTACH_ENERGY_FROM_HAND_TO_DEFENDING_NEXT_TURN_EFFECT';
+
+  applyEffect(): void {
+    this.opponent.active.cannotAttachEnergyFromHandNextTurn = true;
+  }
+}
+
+export function cannotAttachEnergyFromHandToDefendingNextTurnEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+): CannotAttachEnergyFromHandToDefendingNextTurnEffect {
+  const effect = new CannotAttachEnergyFromHandToDefendingNextTurnEffect(attackEffect);
+  effect.markerSource = source;
+  return effect;
+}
+
+/**
+ * During the opponent's next turn, if they attach Energy from hand to the Defending Pokémon,
+ * apply consequences (Asleep and/or end their turn).
+ */
+export class EnergyAttachFromHandConsequenceNextTurnEffect extends EffectOfAttackEffect {
+  readonly type: string = 'ENERGY_ATTACH_FROM_HAND_CONSEQUENCE_NEXT_TURN_EFFECT';
+
+  constructor(
+    base: AttackEffect,
+    public readonly consequence: { asleep?: boolean; endTurn?: boolean },
+  ) {
+    super(base);
+  }
+
+  applyEffect(): void {
+    const existing = this.opponent.active.pendingEnergyAttachFromHandConsequence ?? {};
+    this.opponent.active.pendingEnergyAttachFromHandConsequence = {
+      asleep: existing.asleep === true || this.consequence.asleep === true,
+      endTurn: existing.endTurn === true || this.consequence.endTurn === true,
+    };
+  }
+}
+
+export function energyAttachFromHandConsequenceNextTurnEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  consequence: { asleep?: boolean; endTurn?: boolean },
+): EnergyAttachFromHandConsequenceNextTurnEffect {
+  const effect = new EnergyAttachFromHandConsequenceNextTurnEffect(attackEffect, consequence);
+  effect.markerSource = source;
+  return effect;
+}
+
+/**
  * The Defending Pokémon's Weakness is now the given type until the end of the
  * attacking player's next turn. Applied as ×2 (no Weakness amount).
  */

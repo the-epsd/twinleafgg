@@ -10,9 +10,6 @@ export class Gastrodon extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public readonly STICKY_SHOT_MARKER = 'GASTRODON_STS_STICKY_SHOT_MARKER';
-  public readonly CLEAR_STICKY_SHOT_MARKER = 'GASTRODON_STS_CLEAR_STICKY_SHOT_MARKER';
-
   public attacks = [{
     name: 'Sticky Shot',
     cost: [W],
@@ -39,7 +36,6 @@ export class Gastrodon extends PokemonCard {
       state = DEFENDING_POKEMON_RETREAT_COSTS_MORE(store, state, effect, 1);
       return state;
     }
-
     // Water Pulse
     if (AFTER_ATTACK(effect, 1, this)) {
       ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);

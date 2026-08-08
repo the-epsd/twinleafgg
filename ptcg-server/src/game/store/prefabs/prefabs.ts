@@ -92,7 +92,7 @@ import {
 } from '../effects/game-effects';
 import { AfterAttackEffect, BeforeDoingDamageEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
-import { preventRetreatEffect, selfPreventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, coinFlipCancelAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect, defendingPokemonWeaknessIsNowEffect, reduceDamageEffect, reduceDamageAfterWeaknessEffect, playLockEffect, PlayLockOptions, PreventDamageOptions, shouldPreventAttackEffects, knockOutIfDamagedDuringAttackerNextTurnEffect, KnockOutIfDamagedOptions, surviveOnTenHpDuringOpponentsNextTurnEffect, retaliateOnDamageDuringOpponentsNextTurnEffect, extraPrizesIfKnockedOutDuringAttackerNextTurnEffect, denyPrizesIfKnockedOutDuringOpponentsNextTurnEffect, discardAttackerEnergyIfKnockedOutDuringOpponentsNextTurnEffect, nextTurnAttackDamageBonusEffect, armNextTurnAttackDamageBonus, nextTurnAttackBaseDamageEffect, increaseDefendingPokemonAttackCostNextTurnEffect, increaseDefendingPokemonRetreatCostNextTurnEffect, preventAttackUntilLeavesActiveEffect, increaseDefendingPokemonAttackCostWhileActiveEffect, preventRetreatWhileActiveEffect, preventHealOnDefendingDuringOpponentsNextTurnEffect } from '../effects/effect-of-attack-effects';
+import { preventRetreatEffect, selfPreventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, coinFlipCancelAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect, cannotAttachEnergyFromHandToDefendingNextTurnEffect, energyAttachFromHandConsequenceNextTurnEffect, defendingPokemonWeaknessIsNowEffect, reduceDamageEffect, reduceDamageAfterWeaknessEffect, playLockEffect, PlayLockOptions, PreventDamageOptions, shouldPreventAttackEffects, knockOutIfDamagedDuringAttackerNextTurnEffect, KnockOutIfDamagedOptions, surviveOnTenHpDuringOpponentsNextTurnEffect, retaliateOnDamageDuringOpponentsNextTurnEffect, extraPrizesIfKnockedOutDuringAttackerNextTurnEffect, denyPrizesIfKnockedOutDuringOpponentsNextTurnEffect, discardAttackerEnergyIfKnockedOutDuringOpponentsNextTurnEffect, nextTurnAttackDamageBonusEffect, armNextTurnAttackDamageBonus, nextTurnAttackBaseDamageEffect, increaseDefendingPokemonAttackCostNextTurnEffect, increaseDefendingPokemonRetreatCostNextTurnEffect, preventAttackUntilLeavesActiveEffect, increaseDefendingPokemonAttackCostWhileActiveEffect, preventRetreatWhileActiveEffect, preventHealOnDefendingDuringOpponentsNextTurnEffect } from '../effects/effect-of-attack-effects';
 import { SurviveOnTenHpOptions, RetaliateOnDamageOptions } from '../state/pokemon-card-list';
 import { GameStatsTracker } from '../game-stats-tracker';
 
@@ -4200,6 +4200,50 @@ export function DEFENDING_POKEMON_TAKES_DAMAGE_ON_ENERGY_ATTACH_FROM_HAND_NEXT_T
 ): State {
   const attachEffect = defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect(effect, source, damage);
   return store.reduceEffect(state, attachEffect);
+}
+
+/**
+ * During your opponent's next turn, Energy can't be attached from their hand to the Defending Pokémon.
+ */
+export function YOUR_OPPONENT_CANNOT_ATTACH_ENERGY_FROM_HAND_TO_DEFENDING_POKEMON(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+): State {
+  return store.reduceEffect(state, cannotAttachEnergyFromHandToDefendingNextTurnEffect(effect, source));
+}
+
+/**
+ * During your opponent's next turn, if they attach Energy from hand to the Defending Pokémon,
+ * that Pokémon will be Asleep.
+ */
+export function DEFENDING_POKEMON_ASLEEP_ON_ENERGY_ATTACH_FROM_HAND_NEXT_TURN(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+): State {
+  return store.reduceEffect(
+    state,
+    energyAttachFromHandConsequenceNextTurnEffect(effect, source, { asleep: true }),
+  );
+}
+
+/**
+ * During your opponent's next turn, if they attach Energy from hand to the Defending Pokémon,
+ * their turn ends.
+ */
+export function OPPONENT_TURN_ENDS_ON_ENERGY_ATTACH_FROM_HAND_TO_DEFENDING_NEXT_TURN(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+): State {
+  return store.reduceEffect(
+    state,
+    energyAttachFromHandConsequenceNextTurnEffect(effect, source, { endTurn: true }),
+  );
 }
 
 /**

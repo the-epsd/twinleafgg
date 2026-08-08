@@ -4,7 +4,7 @@ import { PokemonCard } from '../card/pokemon-card';
 import { Power, Attack } from '../card/pokemon-types';
 import { CardList } from './card-list';
 import { Marker } from './card-marker';
-import { PendingEnergyAttachDamageCounters } from './pending-energy-attach-effects';
+import { PendingEnergyAttachDamageCounters, PendingEnergyAttachFromHandConsequence } from './pending-energy-attach-effects';
 import { State } from './state';
 import { StateUtils } from '../state-utils';
 
@@ -173,7 +173,14 @@ export class PokemonCardList extends CardList {
   public attackDamageReductionAfterWeaknessNextTurn: number = 0;
   public cannotRetreatNextTurn: boolean = false;
   public cannotRetreatNextTurnPending: boolean = false;
+  /**
+   * During the owner's next turn, Energy can't be attached from their hand to this Pokémon.
+   * Set on the Defending Pokémon by Sand Tomb / Spit Glue / etc.
+   */
+  public cannotAttachEnergyFromHandNextTurn: boolean = false;
   public pendingEnergyAttachDamageCounters: PendingEnergyAttachDamageCounters | null = null;
+  /** Asleep / end-turn consequences when Energy is attached from hand (Boo-Hoo / Lazy Howl). */
+  public pendingEnergyAttachFromHandConsequence: PendingEnergyAttachFromHandConsequence | null = null;
   public pendingEnergyReturnToHand: Card[] = [];
   public blockedAttackNameNextTurn: string | undefined = undefined;
   public blockedAttackNameUntilLeavesActive: string | undefined = undefined;
@@ -283,7 +290,9 @@ export class PokemonCardList extends CardList {
     this.attackDamageReductionAfterWeaknessNextTurn = 0;
     this.cannotRetreatNextTurn = false;
     this.cannotRetreatNextTurnPending = false;
+    this.cannotAttachEnergyFromHandNextTurn = false;
     this.pendingEnergyAttachDamageCounters = null;
+    this.pendingEnergyAttachFromHandConsequence = null;
     this.pendingEnergyReturnToHand = [];
     this.blockedAttackNameNextTurn = undefined;
     this.blockedAttackNameUntilLeavesActive = undefined;
@@ -409,7 +418,9 @@ export class PokemonCardList extends CardList {
     this.attackDamageReductionNextTurn = 0;
     this.cannotRetreatNextTurn = false;
     this.cannotRetreatNextTurnPending = false;
+    this.cannotAttachEnergyFromHandNextTurn = false;
     this.pendingEnergyAttachDamageCounters = null;
+    this.pendingEnergyAttachFromHandConsequence = null;
     this.pendingEnergyReturnToHand = [];
     this.blockedAttackNameNextTurn = undefined;
     this.blockedAttackNameUntilLeavesActive = undefined;

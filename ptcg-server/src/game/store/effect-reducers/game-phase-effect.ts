@@ -411,6 +411,12 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
       if (cardList.pendingEnergyAttachDamageCounters) {
         cardList.pendingEnergyAttachDamageCounters = null;
       }
+      if (cardList.cannotAttachEnergyFromHandNextTurn) {
+        cardList.cannotAttachEnergyFromHandNextTurn = false;
+      }
+      if (cardList.pendingEnergyAttachFromHandConsequence) {
+        cardList.pendingEnergyAttachFromHandConsequence = null;
+      }
       if (cardList.blockedAttackNameNextTurn !== undefined) {
         cardList.blockedAttackNameNextTurn = undefined;
       }
