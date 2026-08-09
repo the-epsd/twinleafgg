@@ -14,6 +14,10 @@ import { State } from '../state/state';
 import { StoreLike } from '../store-like';
 import { PlayerType } from '../actions/play-card-action';
 
+// =============================================================================
+// Types & options
+// =============================================================================
+
 /**
  * How a suppressor interacts with power discovery.
  *
@@ -75,6 +79,25 @@ export interface AbilityLockContext {
   powerEffect?: PowerEffect;
 }
 
+// =============================================================================
+// Power-type constants
+// =============================================================================
+
+/** Common power-type sets for older-era locks. */
+export const POKEPOWER_TYPES = [PowerType.POKEPOWER];
+
+export const POKEBODY_TYPES = [PowerType.POKEBODY];
+
+export const POKEPOWER_AND_BODY_TYPES = [PowerType.POKEPOWER, PowerType.POKEBODY];
+
+export const POKEMON_POWER_TYPES = [PowerType.POKEMON_POWER];
+
+export const ABILITY_TYPES = [PowerType.ABILITY];
+
+// =============================================================================
+// Shared internals
+// =============================================================================
+
 const DEFAULT_POWER_TYPES = [PowerType.ABILITY];
 
 function resolveOptions(options?: AbilityLockOptions): Required<AbilityLockOptions> {
@@ -90,6 +113,10 @@ function resolveOptions(options?: AbilityLockOptions): Required<AbilityLockOptio
     error: options?.error ?? GameMessage.CANNOT_USE_POWER,
   };
 }
+
+// =============================================================================
+// Subjectivity / filter / block primitives
+// =============================================================================
 
 /**
  * Returns whether a power should be stripped/blocked when an ability lock is active.
@@ -162,53 +189,9 @@ export function BLOCK_IF_ABILITY_LOCKED(
   throw new GameError(resolveOptions(options).error);
 }
 
-/**
- * "Have no Abilities" suppressor (Path to the Peak, Hex Maniac, Silent Lab, etc.).
- *
- * Strips matching powers from `CheckPokemonPowersEffect` and throws on `PowerEffect`.
- * For "can't use" wording, use {@link HANDLE_ABILITY_BLOCK} instead.
- */
-export function HANDLE_ABILITY_LOCK(
-  effect: Effect,
-  isLocked: (ctx: AbilityLockContext) => boolean,
-  options?: AbilityLockOptions,
-): void {
-  HANDLE_ABILITY_SUPPRESSION(effect, isLocked, { ...options, mode: options?.mode ?? 'remove' });
-}
-
-/**
- * Enforce attack-sourced ability locks stored on PokemonCardList / Player
- * (Gastro Acid, Shadow Stitching). Call from the store before card handlers.
- */
-export function APPLY_ATTACK_EFFECT_ABILITY_LOCKS(state: State, effect: Effect): void {
-  HANDLE_ABILITY_LOCK(effect, ({ player, card }) => {
-    if (player.abilitiesSuppressedTurnsRemaining > 0) {
-      return true;
-    }
-    try {
-      const cardList = StateUtils.findCardList(state, card);
-      return cardList instanceof PokemonCardList && cardList.noAbilities;
-    } catch {
-      return false;
-    }
-  }, {
-    error: GameMessage.BLOCKED_BY_EFFECT,
-  });
-}
-
-/**
- * "Can't use" suppressor (Mesprit Psychic Bind, Gardevoir Psychic Lock, etc.).
- *
- * Powers remain discoverable in `CheckPokemonPowersEffect`; activation throws on
- * `PowerEffect` (typically `CANNOT_USE_POWER`).
- */
-export function HANDLE_ABILITY_BLOCK(
-  effect: Effect,
-  isLocked: (ctx: AbilityLockContext) => boolean,
-  options?: Omit<AbilityLockOptions, 'mode'>,
-): void {
-  HANDLE_ABILITY_SUPPRESSION(effect, isLocked, { ...options, mode: 'block' });
-}
+// =============================================================================
+// Suppression handlers
+// =============================================================================
 
 function HANDLE_ABILITY_SUPPRESSION(
   effect: Effect,
@@ -240,6 +223,58 @@ function HANDLE_ABILITY_SUPPRESSION(
     options,
   );
 }
+
+/**
+ * "Have no Abilities" suppressor (Path to the Peak, Hex Maniac, Silent Lab, etc.).
+ *
+ * Strips matching powers from `CheckPokemonPowersEffect` and throws on `PowerEffect`.
+ * For "can't use" wording, use {@link HANDLE_ABILITY_BLOCK} instead.
+ */
+export function HANDLE_ABILITY_LOCK(
+  effect: Effect,
+  isLocked: (ctx: AbilityLockContext) => boolean,
+  options?: AbilityLockOptions,
+): void {
+  HANDLE_ABILITY_SUPPRESSION(effect, isLocked, { ...options, mode: options?.mode ?? 'remove' });
+}
+
+/**
+ * "Can't use" suppressor (Mesprit Psychic Bind, Gardevoir Psychic Lock, etc.).
+ *
+ * Powers remain discoverable in `CheckPokemonPowersEffect`; activation throws on
+ * `PowerEffect` (typically `CANNOT_USE_POWER`).
+ */
+export function HANDLE_ABILITY_BLOCK(
+  effect: Effect,
+  isLocked: (ctx: AbilityLockContext) => boolean,
+  options?: Omit<AbilityLockOptions, 'mode'>,
+): void {
+  HANDLE_ABILITY_SUPPRESSION(effect, isLocked, { ...options, mode: 'block' });
+}
+
+/**
+ * Enforce attack-sourced ability locks stored on PokemonCardList / Player
+ * (Gastro Acid, Shadow Stitching). Call from the store before card handlers.
+ */
+export function APPLY_ATTACK_EFFECT_ABILITY_LOCKS(state: State, effect: Effect): void {
+  HANDLE_ABILITY_LOCK(effect, ({ player, card }) => {
+    if (player.abilitiesSuppressedTurnsRemaining > 0) {
+      return true;
+    }
+    try {
+      const cardList = StateUtils.findCardList(state, card);
+      return cardList instanceof PokemonCardList && cardList.noAbilities;
+    } catch {
+      return false;
+    }
+  }, {
+    error: GameMessage.BLOCKED_BY_EFFECT,
+  });
+}
+
+// =============================================================================
+// Markers
+// =============================================================================
 
 /**
  * Place an ability-lock marker on one or more players (Hex Maniac / Cologne style).
@@ -328,6 +363,10 @@ export function HAS_ABILITY_LOCK_MARKER(
   return player.marker.hasMarker(marker, source) || opponent.marker.hasMarker(marker, source);
 }
 
+// =============================================================================
+// Locker presence
+// =============================================================================
+
 /**
  * Returns true if `lockerCard` is currently in play for either player.
  */
@@ -363,6 +402,10 @@ export function IS_ABILITY_LOCKER_ACTIVE(
   return player.active.getPokemonCard() === lockerCard
     || opponent.active.getPokemonCard() === lockerCard;
 }
+
+// =============================================================================
+// Activation order
+// =============================================================================
 
 function getAbilityLockActivationOrder(state: State, card: PokemonCard): number {
   try {
@@ -430,6 +473,10 @@ export function STAMP_STARTING_ABILITY_LOCKS(state: State): void {
     }
   }
 }
+
+// =============================================================================
+// Apply probes
+// =============================================================================
 
 /**
  * Whether `suppressor` may shut off `target`'s ability-lock Ability.
@@ -529,9 +576,3 @@ export function CAN_APPLY_LOCK_TO_TARGET(
   }
 }
 
-/** Common power-type sets for older-era locks. */
-export const POKEPOWER_TYPES = [PowerType.POKEPOWER];
-export const POKEBODY_TYPES = [PowerType.POKEBODY];
-export const POKEPOWER_AND_BODY_TYPES = [PowerType.POKEPOWER, PowerType.POKEBODY];
-export const POKEMON_POWER_TYPES = [PowerType.POKEMON_POWER];
-export const ABILITY_TYPES = [PowerType.ABILITY];

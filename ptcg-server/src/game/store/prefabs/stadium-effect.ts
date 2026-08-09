@@ -5,8 +5,16 @@ import { StoreLike } from '../store-like';
 import { TrainerCard } from '../card/trainer-card';
 import { StadiumEffect } from '../effects/play-card-effects';
 
+// =============================================================================
+// Internal probe state
+// =============================================================================
+
 /** True while an outer StadiumEffect probe is in flight. */
 let probingStadiumEffect = false;
+
+// =============================================================================
+// Stadium effect blocked check
+// =============================================================================
 
 /**
  * Checks if stadium effects done to the given Pokémon are being prevented
@@ -51,3 +59,4 @@ export function IS_STADIUM_EFFECT_BLOCKED(
   }
   return false;
 }
+

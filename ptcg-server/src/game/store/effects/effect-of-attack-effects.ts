@@ -1,20 +1,19 @@
-import { Effect } from './effect';
-import {
-  AbstractAttackEffect,
-  ApplyWeaknessEffect,
-  DealDamageEffect,
-  PutDamageEffect,
-} from './attack-effects';
-import { AttackEffect } from './game-effects';
-import { State } from '../state/state';
-import { StateUtils } from '../state-utils';
-import { Attack, PowerType } from '../card/pokemon-types';
-import { Card } from '../card/card';
-import { CardType, SpecialCondition, Stage } from '../card/card-types';
-import { PokemonCard } from '../card/pokemon-card';
-import { PokemonCardList, PreventDamageFilter, SurviveOnTenHpOptions, RetaliateOnDamageOptions, StoredRetaliateOnDamage, NextTurnAttackBaseDamage } from '../state/pokemon-card-list';
-import { PendingEndOfTurnEffect } from '../state/pending-end-of-turn-effects';
-import { PlayerType } from '../actions/play-card-action';
+import { PlayerType } from "../actions/play-card-action";
+import { Card } from "../card/card";
+import { Stage, CardType, SpecialCondition } from "../card/card-types";
+import { PokemonCard } from "../card/pokemon-card";
+import { PowerType, Attack } from "../card/pokemon-types";
+import { StateUtils } from "../state-utils";
+import { PendingEndOfTurnEffect } from "../state/pending-end-of-turn-effects";
+import { PreventDamageFilter, PokemonCardList, SurviveOnTenHpOptions, StoredRetaliateOnDamage, NextTurnAttackBaseDamage, RetaliateOnDamageOptions } from "../state/pokemon-card-list";
+import { State } from "../state/state";
+import { AbstractAttackEffect, ApplyWeaknessEffect, PutDamageEffect, DealDamageEffect } from "./attack-effects";
+import { Effect } from "./effect";
+import { AttackEffect } from "./game-effects";
+
+// =============================================================================
+// Shared helpers
+// =============================================================================
 
 function sourceMatchesPreventFilter(
   sourceCard: PokemonCard,
@@ -44,57 +43,6 @@ function sourceMatchesPreventFilter(
   }
 
   return true;
-}
-
-/**
- * Base class for effects that are caused by attacks
- * These can be prevented by abilities like Skeledirge's "Unaware"
- */
-export abstract class EffectOfAttackEffect extends AbstractAttackEffect implements Effect {
-  readonly type: string = 'EFFECT_OF_ATTACK_EFFECT';
-  public preventDefault = false;
-  public markerSource!: Card;
-
-  constructor(base: AttackEffect) {
-    super(base);
-  }
-
-  /**
-   * Apply the effect to the target
-   * Override this in subclasses
-   */
-  abstract applyEffect(): void;
-}
-
-/**
- * Effect that prevents the defending Pokemon from retreating during the opponent's next turn.
- */
-export class PreventRetreatEffect extends EffectOfAttackEffect {
-  readonly type: string = 'PREVENT_RETREAT_EFFECT';
-
-  constructor(base: AttackEffect) {
-    super(base);
-  }
-
-  applyEffect(): void {
-    this.opponent.active.cannotRetreatNextTurn = true;
-  }
-}
-
-/**
- * Effect that prevents the attacking Pokemon from retreating during its own next turn.
- * Used for self-retreat-lock effects like "This Pokemon can't retreat during your next turn."
- */
-export class SelfPreventRetreatEffect extends EffectOfAttackEffect {
-  readonly type: string = 'SELF_PREVENT_RETREAT_EFFECT';
-
-  constructor(base: AttackEffect) {
-    super(base);
-  }
-
-  applyEffect(): void {
-    this.player.active.cannotRetreatNextTurnPending = true;
-  }
 }
 
 /**
@@ -220,6 +168,100 @@ export function getActiveRetaliateOnDamage(
   return target.retaliateOnDamageNextTurn;
 }
 
+// =============================================================================
+// Base
+// =============================================================================
+
+/**
+ * Base class for effects that are caused by attacks
+ * These can be prevented by abilities like Skeledirge's "Unaware"
+ */
+export abstract class EffectOfAttackEffect extends AbstractAttackEffect implements Effect {
+  readonly type: string = 'EFFECT_OF_ATTACK_EFFECT';
+  public preventDefault = false;
+  public markerSource!: Card;
+
+  constructor(base: AttackEffect) {
+    super(base);
+  }
+
+  /**
+   * Apply the effect to the target
+   * Override this in subclasses
+   */
+  abstract applyEffect(): void;
+}
+
+// =============================================================================
+// Retreat locks
+// =============================================================================
+
+/**
+ * Effect that prevents the defending Pokemon from retreating during the opponent's next turn.
+ */
+export class PreventRetreatEffect extends EffectOfAttackEffect {
+  readonly type: string = 'PREVENT_RETREAT_EFFECT';
+
+  constructor(base: AttackEffect) {
+    super(base);
+  }
+
+  applyEffect(): void {
+    this.opponent.active.cannotRetreatNextTurn = true;
+  }
+}
+
+export function preventRetreatEffect(attackEffect: AttackEffect, source: Card): PreventRetreatEffect {
+  const effect = new PreventRetreatEffect(attackEffect);
+  effect.markerSource = source;
+  return effect;
+}
+
+/**
+ * Effect that prevents the attacking Pokemon from retreating during its own next turn.
+ * Used for self-retreat-lock effects like "This Pokemon can't retreat during your next turn."
+ */
+export class SelfPreventRetreatEffect extends EffectOfAttackEffect {
+  readonly type: string = 'SELF_PREVENT_RETREAT_EFFECT';
+
+  constructor(base: AttackEffect) {
+    super(base);
+  }
+
+  applyEffect(): void {
+    this.player.active.cannotRetreatNextTurnPending = true;
+  }
+}
+
+export function selfPreventRetreatEffect(attackEffect: AttackEffect, source: Card): SelfPreventRetreatEffect {
+  const effect = new SelfPreventRetreatEffect(attackEffect);
+  effect.markerSource = source;
+  return effect;
+}
+
+export class PreventRetreatWhileActiveEffect extends EffectOfAttackEffect {
+  readonly type = 'PREVENT_RETREAT_WHILE_ACTIVE_EFFECT';
+
+  constructor(base: AttackEffect) {
+    super(base);
+  }
+
+  applyEffect(): void {
+    this.opponent.active.cannotRetreatWhileActive = true;
+    this.opponent.active.cannotRetreatWhileActiveSourceCard = this.source.getPokemonCard();
+  }
+}
+
+export function preventRetreatWhileActiveEffect(
+  attackEffect: AttackEffect,
+): PreventRetreatWhileActiveEffect {
+  return new PreventRetreatWhileActiveEffect(attackEffect);
+}
+
+// =============================================================================
+// Damage & effect prevention
+// =============================================================================
+
 /**
  * During the opponent's next turn, prevents attack damage to this Pokémon.
  * Use {@link PreventDamageOptions} to restrict which attackers are blocked.
@@ -258,6 +300,16 @@ export class PreventDamageEffect extends EffectOfAttackEffect {
   }
 }
 
+export function preventDamageEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  options: PreventDamageOptions = {},
+): PreventDamageEffect {
+  const effect = new PreventDamageEffect(attackEffect, options);
+  effect.markerSource = source;
+  return effect;
+}
+
 /**
  * During the opponent's next turn, prevents effects of attacks done to this Pokémon.
  * Damage is not an effect and is handled separately (e.g. {@link PreventDamageEffect}).
@@ -292,6 +344,70 @@ export class PreventEffectsOfAttacksEffect extends EffectOfAttackEffect {
   }
 }
 
+export function preventEffectsOfAttacksEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  options: PreventDamageOptions = {},
+): PreventEffectsOfAttacksEffect {
+  const effect = new PreventEffectsOfAttacksEffect(attackEffect, options);
+  effect.markerSource = source;
+  return effect;
+}
+
+/**
+ * Prevent all damage and effects of attacks done to each of your Pokémon
+ * during your opponent's next turn. Self-protection — not Mist-blockable.
+ */
+export class PreventDamageAndEffectsToAllYourPokemonEffect extends EffectOfAttackEffect {
+  readonly type: string = 'PREVENT_DAMAGE_AND_EFFECTS_TO_ALL_YOUR_POKEMON_EFFECT';
+
+  constructor(base: AttackEffect, public readonly options: PreventDamageOptions = {}) {
+    super(base);
+    this.target = base.source;
+  }
+
+  applyEffect(): void {
+    const filter: PreventDamageFilter = {};
+    if (this.options.sourceStage !== undefined) {
+      filter.sourceStage = this.options.sourceStage;
+    }
+    if (this.options.sourceIsEvolution !== undefined) {
+      filter.sourceIsEvolution = this.options.sourceIsEvolution;
+    }
+    if (this.options.sourceTags !== undefined) {
+      filter.sourceTags = this.options.sourceTags;
+    }
+    if (this.options.sourceCardTypes !== undefined) {
+      filter.sourceCardTypes = this.options.sourceCardTypes;
+    }
+    if (this.options.sourceHasAbility !== undefined) {
+      filter.sourceHasAbility = this.options.sourceHasAbility;
+    }
+    if (this.options.maxDamage !== undefined) {
+      filter.maxDamage = this.options.maxDamage;
+    }
+
+    this.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      cardList.preventDamageNextTurnPending = { ...filter };
+      cardList.preventEffectsOfAttacksNextTurnPending = { ...filter };
+    });
+  }
+}
+
+export function preventDamageAndEffectsToAllYourPokemonEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  options: PreventDamageOptions = {},
+): PreventDamageAndEffectsToAllYourPokemonEffect {
+  const effect = new PreventDamageAndEffectsToAllYourPokemonEffect(attackEffect, options);
+  effect.markerSource = source;
+  return effect;
+}
+
+// =============================================================================
+// Attack restrictions
+// =============================================================================
+
 /**
  * During the opponent's next turn, the Defending Pokémon can't use attacks.
  */
@@ -307,6 +423,12 @@ export class PreventAttackEffect extends EffectOfAttackEffect {
   }
 }
 
+export function preventAttackEffect(attackEffect: AttackEffect, source: Card): PreventAttackEffect {
+  const effect = new PreventAttackEffect(attackEffect);
+  effect.markerSource = source;
+  return effect;
+}
+
 /**
  * During the opponent's next turn, the Defending Pokémon can't be healed.
  */
@@ -320,6 +442,15 @@ export class PreventHealOnDefendingDuringOpponentsNextTurnEffect extends EffectO
   applyEffect(): void {
     this.opponent.active.cannotBeHealedNextTurn = true;
   }
+}
+
+export function preventHealOnDefendingDuringOpponentsNextTurnEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+): PreventHealOnDefendingDuringOpponentsNextTurnEffect {
+  const effect = new PreventHealOnDefendingDuringOpponentsNextTurnEffect(attackEffect);
+  effect.markerSource = source;
+  return effect;
 }
 
 /**
@@ -338,6 +469,16 @@ export class CoinFlipCancelAttackEffect extends EffectOfAttackEffect {
   }
 }
 
+export function coinFlipCancelAttackEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  coinFlips: number = 1,
+): CoinFlipCancelAttackEffect {
+  const effect = new CoinFlipCancelAttackEffect(attackEffect, coinFlips);
+  effect.markerSource = source;
+  return effect;
+}
+
 /**
  * Effect that prevents the defending Pokemon from using a specific attack during the opponent's next turn.
  */
@@ -353,6 +494,16 @@ export class OpponentPokemonCannotUseAttackEffect extends EffectOfAttackEffect {
   }
 }
 
+export function opponentPokemonCannotUseAttackEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  blockedAttack: Attack,
+): OpponentPokemonCannotUseAttackEffect {
+  const effect = new OpponentPokemonCannotUseAttackEffect(attackEffect, blockedAttack);
+  effect.markerSource = source;
+  return effect;
+}
+
 /**
  * During the opponent's next turn, the Defending Pokémon can only use the chosen attack (Encore).
  */
@@ -366,6 +517,16 @@ export class OpponentPokemonCanOnlyUseAttackEffect extends EffectOfAttackEffect 
   applyEffect(): void {
     this.opponent.active.onlyAllowedAttackNameNextTurn = this.allowedAttack.name;
   }
+}
+
+export function opponentPokemonCanOnlyUseAttackEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  allowedAttack: Attack,
+): OpponentPokemonCanOnlyUseAttackEffect {
+  const effect = new OpponentPokemonCanOnlyUseAttackEffect(attackEffect, allowedAttack);
+  effect.markerSource = source;
+  return effect;
 }
 
 export class PreventAttackUntilLeavesActiveEffect extends EffectOfAttackEffect {
@@ -385,6 +546,10 @@ export function preventAttackUntilLeavesActiveEffect(
   return new PreventAttackUntilLeavesActiveEffect(attackEffect, attackName);
 }
 
+// =============================================================================
+// Damage reduction / next-turn attack setup
+// =============================================================================
+
 /**
  * During the opponent's next turn, the Defending Pokémon's attacks do
  * `reduction` less damage (before applying Weakness and Resistance).
@@ -402,6 +567,16 @@ export class ReduceDamageEffect extends EffectOfAttackEffect {
   }
 }
 
+export function reduceDamageEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  reduction: number,
+): ReduceDamageEffect {
+  const effect = new ReduceDamageEffect(attackEffect, reduction);
+  effect.markerSource = source;
+  return effect;
+}
+
 /**
  * During the opponent's next turn, the Defending Pokémon's attacks do
  * `reduction` less damage after Weakness and Resistance.
@@ -417,6 +592,16 @@ export class ReduceDamageAfterWeaknessEffect extends EffectOfAttackEffect {
   applyEffect(): void {
     this.opponent.active.attackDamageReductionAfterWeaknessNextTurn = Math.max(0, this.reduction);
   }
+}
+
+export function reduceDamageAfterWeaknessEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  reduction: number,
+): ReduceDamageAfterWeaknessEffect {
+  const effect = new ReduceDamageAfterWeaknessEffect(attackEffect, reduction);
+  effect.markerSource = source;
+  return effect;
 }
 
 export class NextTurnAttackDamageBonusEffect extends EffectOfAttackEffect {
@@ -459,6 +644,37 @@ export class NextTurnAttackDamageBonusEffect extends EffectOfAttackEffect {
   }
 }
 
+export function nextTurnAttackDamageBonusEffect(
+  effect: Effect,
+  attackName: string,
+  bonusDamage: number,
+  sourceCardName?: string,
+  setupAttackName?: string,
+): void {
+  if (effect instanceof AttackEffect) {
+    new NextTurnAttackDamageBonusEffect(
+      effect,
+      attackName,
+      bonusDamage,
+      sourceCardName,
+      setupAttackName,
+    ).applyEffect();
+  }
+}
+
+export function armNextTurnAttackDamageBonus(
+  source: PokemonCardList,
+  attackName: string,
+  bonusDamage: number,
+  sourceCardName: string,
+): void {
+  source.nextTurnAttackDamageBonusPending = {
+    attackName,
+    bonusDamage,
+    sourceCardName,
+  };
+}
+
 export class NextTurnAttackBaseDamageEffect extends EffectOfAttackEffect {
   constructor(
     base: AttackEffect,
@@ -496,37 +712,6 @@ export class NextTurnAttackBaseDamageEffect extends EffectOfAttackEffect {
   }
 }
 
-export function nextTurnAttackDamageBonusEffect(
-  effect: Effect,
-  attackName: string,
-  bonusDamage: number,
-  sourceCardName?: string,
-  setupAttackName?: string,
-): void {
-  if (effect instanceof AttackEffect) {
-    new NextTurnAttackDamageBonusEffect(
-      effect,
-      attackName,
-      bonusDamage,
-      sourceCardName,
-      setupAttackName,
-    ).applyEffect();
-  }
-}
-
-export function armNextTurnAttackDamageBonus(
-  source: PokemonCardList,
-  attackName: string,
-  bonusDamage: number,
-  sourceCardName: string,
-): void {
-  source.nextTurnAttackDamageBonusPending = {
-    attackName,
-    bonusDamage,
-    sourceCardName,
-  };
-}
-
 export function nextTurnAttackBaseDamageEffect(
   effect: Effect,
   setupAttackName: string,
@@ -545,105 +730,9 @@ export function nextTurnAttackBaseDamageEffect(
   }
 }
 
-/**
- * Helper functions for creating common effect-of-attack effects
- */
-export function preventRetreatEffect(attackEffect: AttackEffect, source: Card): PreventRetreatEffect {
-  const effect = new PreventRetreatEffect(attackEffect);
-  effect.markerSource = source;
-  return effect;
-}
-
-export function selfPreventRetreatEffect(attackEffect: AttackEffect, source: Card): SelfPreventRetreatEffect {
-  const effect = new SelfPreventRetreatEffect(attackEffect);
-  effect.markerSource = source;
-  return effect;
-}
-
-export function preventDamageEffect(
-  attackEffect: AttackEffect,
-  source: Card,
-  options: PreventDamageOptions = {},
-): PreventDamageEffect {
-  const effect = new PreventDamageEffect(attackEffect, options);
-  effect.markerSource = source;
-  return effect;
-}
-
-export function preventEffectsOfAttacksEffect(
-  attackEffect: AttackEffect,
-  source: Card,
-  options: PreventDamageOptions = {},
-): PreventEffectsOfAttacksEffect {
-  const effect = new PreventEffectsOfAttacksEffect(attackEffect, options);
-  effect.markerSource = source;
-  return effect;
-}
-
-export function preventAttackEffect(attackEffect: AttackEffect, source: Card): PreventAttackEffect {
-  const effect = new PreventAttackEffect(attackEffect);
-  effect.markerSource = source;
-  return effect;
-}
-
-export function preventHealOnDefendingDuringOpponentsNextTurnEffect(
-  attackEffect: AttackEffect,
-  source: Card,
-): PreventHealOnDefendingDuringOpponentsNextTurnEffect {
-  const effect = new PreventHealOnDefendingDuringOpponentsNextTurnEffect(attackEffect);
-  effect.markerSource = source;
-  return effect;
-}
-
-export function coinFlipCancelAttackEffect(
-  attackEffect: AttackEffect,
-  source: Card,
-  coinFlips: number = 1,
-): CoinFlipCancelAttackEffect {
-  const effect = new CoinFlipCancelAttackEffect(attackEffect, coinFlips);
-  effect.markerSource = source;
-  return effect;
-}
-
-export function opponentPokemonCannotUseAttackEffect(
-  attackEffect: AttackEffect,
-  source: Card,
-  blockedAttack: Attack,
-): OpponentPokemonCannotUseAttackEffect {
-  const effect = new OpponentPokemonCannotUseAttackEffect(attackEffect, blockedAttack);
-  effect.markerSource = source;
-  return effect;
-}
-
-export function opponentPokemonCanOnlyUseAttackEffect(
-  attackEffect: AttackEffect,
-  source: Card,
-  allowedAttack: Attack,
-): OpponentPokemonCanOnlyUseAttackEffect {
-  const effect = new OpponentPokemonCanOnlyUseAttackEffect(attackEffect, allowedAttack);
-  effect.markerSource = source;
-  return effect;
-}
-
-export function reduceDamageEffect(
-  attackEffect: AttackEffect,
-  source: Card,
-  reduction: number,
-): ReduceDamageEffect {
-  const effect = new ReduceDamageEffect(attackEffect, reduction);
-  effect.markerSource = source;
-  return effect;
-}
-
-export function reduceDamageAfterWeaknessEffect(
-  attackEffect: AttackEffect,
-  source: Card,
-  reduction: number,
-): ReduceDamageAfterWeaknessEffect {
-  const effect = new ReduceDamageAfterWeaknessEffect(attackEffect, reduction);
-  effect.markerSource = source;
-  return effect;
-}
+// =============================================================================
+// Play / trainer / stadium locks
+// =============================================================================
 
 /**
  * During the opponent's next turn (or longer), prevent the target player(s)
@@ -769,6 +858,10 @@ export function coinFlipCancelTrainerPlayEffect(
   return effect;
 }
 
+// =============================================================================
+// Cost modifiers
+// =============================================================================
+
 export class IncreaseDefendingPokemonAttackCostNextTurnEffect extends EffectOfAttackEffect {
   applyEffect(): void {
     this.opponent.active.attackCostIncreaseNextTurnPending = 1;
@@ -776,11 +869,23 @@ export class IncreaseDefendingPokemonAttackCostNextTurnEffect extends EffectOfAt
   }
 }
 
+export function increaseDefendingPokemonAttackCostNextTurnEffect(
+  attackEffect: AttackEffect,
+): IncreaseDefendingPokemonAttackCostNextTurnEffect {
+  return new IncreaseDefendingPokemonAttackCostNextTurnEffect(attackEffect);
+}
+
 export class IncreaseDefendingPokemonRetreatCostNextTurnEffect extends EffectOfAttackEffect {
   applyEffect(): void {
     this.opponent.active.retreatCostIncreaseNextTurnPending = 1;
     this.opponent.active.retreatCostIncreaseNextTurnAttackerId = this.player.id;
   }
+}
+
+export function increaseDefendingPokemonRetreatCostNextTurnEffect(
+  attackEffect: AttackEffect,
+): IncreaseDefendingPokemonRetreatCostNextTurnEffect {
+  return new IncreaseDefendingPokemonRetreatCostNextTurnEffect(attackEffect);
 }
 
 export class IncreaseDefendingPokemonAttackCostWhileActiveEffect extends EffectOfAttackEffect {
@@ -796,31 +901,6 @@ export class IncreaseDefendingPokemonAttackCostWhileActiveEffect extends EffectO
   }
 }
 
-export class PreventRetreatWhileActiveEffect extends EffectOfAttackEffect {
-  readonly type = 'PREVENT_RETREAT_WHILE_ACTIVE_EFFECT';
-
-  constructor(base: AttackEffect) {
-    super(base);
-  }
-
-  applyEffect(): void {
-    this.opponent.active.cannotRetreatWhileActive = true;
-    this.opponent.active.cannotRetreatWhileActiveSourceCard = this.source.getPokemonCard();
-  }
-}
-
-export function increaseDefendingPokemonAttackCostNextTurnEffect(
-  attackEffect: AttackEffect,
-): IncreaseDefendingPokemonAttackCostNextTurnEffect {
-  return new IncreaseDefendingPokemonAttackCostNextTurnEffect(attackEffect);
-}
-
-export function increaseDefendingPokemonRetreatCostNextTurnEffect(
-  attackEffect: AttackEffect,
-): IncreaseDefendingPokemonRetreatCostNextTurnEffect {
-  return new IncreaseDefendingPokemonRetreatCostNextTurnEffect(attackEffect);
-}
-
 export function increaseDefendingPokemonAttackCostWhileActiveEffect(
   attackEffect: AttackEffect,
   amount: number = 1,
@@ -828,11 +908,9 @@ export function increaseDefendingPokemonAttackCostWhileActiveEffect(
   return new IncreaseDefendingPokemonAttackCostWhileActiveEffect(attackEffect, amount);
 }
 
-export function preventRetreatWhileActiveEffect(
-  attackEffect: AttackEffect,
-): PreventRetreatWhileActiveEffect {
-  return new PreventRetreatWhileActiveEffect(attackEffect);
-}
+// =============================================================================
+// Defending damage / energy attach traps
+// =============================================================================
 
 /**
  * Effect that causes the defending Pokemon to take more damage from attacks
@@ -959,6 +1037,10 @@ export function energyAttachFromHandConsequenceNextTurnEffect(
   return effect;
 }
 
+// =============================================================================
+// Weakness / retreat cost / self buffs
+// =============================================================================
+
 /**
  * The Defending Pokémon's Weakness is now the given type until the end of the
  * attacking player's next turn. Applied as ×2 (no Weakness amount).
@@ -987,6 +1069,60 @@ export function defendingPokemonWeaknessIsNowEffect(
   effect.markerSource = source;
   return effect;
 }
+
+/**
+ * During the opponent's next turn, this Pokémon has no Weakness.
+ */
+export class ThisPokemonHasNoWeaknessDuringOpponentsNextTurnEffect extends EffectOfAttackEffect {
+  readonly type: string = 'THIS_POKEMON_HAS_NO_WEAKNESS_DURING_OPPONENTS_NEXT_TURN_EFFECT';
+
+  constructor(base: AttackEffect) {
+    super(base);
+    this.target = base.source;
+  }
+
+  applyEffect(): void {
+    this.player.active.noWeaknessNextTurnPending = true;
+  }
+}
+
+export function thisPokemonHasNoWeaknessDuringOpponentsNextTurnEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+): ThisPokemonHasNoWeaknessDuringOpponentsNextTurnEffect {
+  const effect = new ThisPokemonHasNoWeaknessDuringOpponentsNextTurnEffect(attackEffect);
+  effect.markerSource = source;
+  return effect;
+}
+
+/**
+ * During your next turn, this Pokémon has no Retreat Cost.
+ */
+export class ThisPokemonHasNoRetreatCostDuringYourNextTurnEffect extends EffectOfAttackEffect {
+  readonly type: string = 'THIS_POKEMON_HAS_NO_RETREAT_COST_DURING_YOUR_NEXT_TURN_EFFECT';
+
+  constructor(base: AttackEffect) {
+    super(base);
+    this.target = base.source;
+  }
+
+  applyEffect(): void {
+    this.player.active.zeroRetreatCostNextTurnPending = true;
+  }
+}
+
+export function thisPokemonHasNoRetreatCostDuringYourNextTurnEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+): ThisPokemonHasNoRetreatCostDuringYourNextTurnEffect {
+  const effect = new ThisPokemonHasNoRetreatCostDuringYourNextTurnEffect(attackEffect);
+  effect.markerSource = source;
+  return effect;
+}
+
+// =============================================================================
+// KO / survival / retaliate / prizes
+// =============================================================================
 
 export interface KnockOutIfDamagedOptions {
   /** Optional source filter (e.g. Rapid Strike only). */
@@ -1073,6 +1209,16 @@ export class RetaliateOnDamageDuringOpponentsNextTurnEffect extends EffectOfAtta
   }
 }
 
+export function retaliateOnDamageDuringOpponentsNextTurnEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  options: RetaliateOnDamageOptions,
+): RetaliateOnDamageDuringOpponentsNextTurnEffect {
+  const effect = new RetaliateOnDamageDuringOpponentsNextTurnEffect(attackEffect, options);
+  effect.markerSource = source;
+  return effect;
+}
+
 /**
  * Places revenge-trap damage counters on the Attacking Pokémon.
  * Attributed to the Pokémon that used the revenge attack so Mist Energy / other
@@ -1090,16 +1236,6 @@ export class RetaliateDamageEffect extends EffectOfAttackEffect {
       this.target.damage += this.damage;
     }
   }
-}
-
-export function retaliateOnDamageDuringOpponentsNextTurnEffect(
-  attackEffect: AttackEffect,
-  source: Card,
-  options: RetaliateOnDamageOptions,
-): RetaliateOnDamageDuringOpponentsNextTurnEffect {
-  const effect = new RetaliateOnDamageDuringOpponentsNextTurnEffect(attackEffect, options);
-  effect.markerSource = source;
-  return effect;
 }
 
 export function retaliateDamageEffect(
@@ -1195,6 +1331,10 @@ export function discardAttackerEnergyIfKnockedOutDuringOpponentsNextTurnEffect(
   return effect;
 }
 
+// =============================================================================
+// End-of-turn schedules
+// =============================================================================
+
 export type ScheduleEndOfTurnPending =
   | { type: 'knock_out' }
   | { type: 'discard' }
@@ -1240,30 +1380,9 @@ export function scheduleDefendingPokemonEndOfTurnEffect(
   return effect;
 }
 
-/**
- * During the opponent's next turn, this Pokémon has no Weakness.
- */
-export class ThisPokemonHasNoWeaknessDuringOpponentsNextTurnEffect extends EffectOfAttackEffect {
-  readonly type: string = 'THIS_POKEMON_HAS_NO_WEAKNESS_DURING_OPPONENTS_NEXT_TURN_EFFECT';
-
-  constructor(base: AttackEffect) {
-    super(base);
-    this.target = base.source;
-  }
-
-  applyEffect(): void {
-    this.player.active.noWeaknessNextTurnPending = true;
-  }
-}
-
-export function thisPokemonHasNoWeaknessDuringOpponentsNextTurnEffect(
-  attackEffect: AttackEffect,
-  source: Card,
-): ThisPokemonHasNoWeaknessDuringOpponentsNextTurnEffect {
-  const effect = new ThisPokemonHasNoWeaknessDuringOpponentsNextTurnEffect(attackEffect);
-  effect.markerSource = source;
-  return effect;
-}
+// =============================================================================
+// Player-level turn restrictions
+// =============================================================================
 
 /**
  * Your opponent can't draw a card at the beginning of their next turn.
@@ -1287,31 +1406,6 @@ export function opponentCannotDrawAtStartOfNextTurnEffect(
   source: Card,
 ): OpponentCannotDrawAtStartOfNextTurnEffect {
   const effect = new OpponentCannotDrawAtStartOfNextTurnEffect(attackEffect);
-  effect.markerSource = source;
-  return effect;
-}
-
-/**
- * During your next turn, this Pokémon has no Retreat Cost.
- */
-export class ThisPokemonHasNoRetreatCostDuringYourNextTurnEffect extends EffectOfAttackEffect {
-  readonly type: string = 'THIS_POKEMON_HAS_NO_RETREAT_COST_DURING_YOUR_NEXT_TURN_EFFECT';
-
-  constructor(base: AttackEffect) {
-    super(base);
-    this.target = base.source;
-  }
-
-  applyEffect(): void {
-    this.player.active.zeroRetreatCostNextTurnPending = true;
-  }
-}
-
-export function thisPokemonHasNoRetreatCostDuringYourNextTurnEffect(
-  attackEffect: AttackEffect,
-  source: Card,
-): ThisPokemonHasNoRetreatCostDuringYourNextTurnEffect {
-  const effect = new ThisPokemonHasNoRetreatCostDuringYourNextTurnEffect(attackEffect);
   effect.markerSource = source;
   return effect;
 }
@@ -1369,6 +1463,10 @@ export function ignoreAttackCostsForTypesDuringYourNextTurnEffect(
   effect.markerSource = source;
   return effect;
 }
+
+// =============================================================================
+// Evolve / abilities locks
+// =============================================================================
 
 /**
  * During the opponent's next turn, Pokémon can't be played from hand to evolve
@@ -1452,52 +1550,3 @@ export function opponentPokemonHaveNoAbilitiesEffect(
   return effect;
 }
 
-/**
- * Prevent all damage and effects of attacks done to each of your Pokémon
- * during your opponent's next turn. Self-protection — not Mist-blockable.
- */
-export class PreventDamageAndEffectsToAllYourPokemonEffect extends EffectOfAttackEffect {
-  readonly type: string = 'PREVENT_DAMAGE_AND_EFFECTS_TO_ALL_YOUR_POKEMON_EFFECT';
-
-  constructor(base: AttackEffect, public readonly options: PreventDamageOptions = {}) {
-    super(base);
-    this.target = base.source;
-  }
-
-  applyEffect(): void {
-    const filter: PreventDamageFilter = {};
-    if (this.options.sourceStage !== undefined) {
-      filter.sourceStage = this.options.sourceStage;
-    }
-    if (this.options.sourceIsEvolution !== undefined) {
-      filter.sourceIsEvolution = this.options.sourceIsEvolution;
-    }
-    if (this.options.sourceTags !== undefined) {
-      filter.sourceTags = this.options.sourceTags;
-    }
-    if (this.options.sourceCardTypes !== undefined) {
-      filter.sourceCardTypes = this.options.sourceCardTypes;
-    }
-    if (this.options.sourceHasAbility !== undefined) {
-      filter.sourceHasAbility = this.options.sourceHasAbility;
-    }
-    if (this.options.maxDamage !== undefined) {
-      filter.maxDamage = this.options.maxDamage;
-    }
-
-    this.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-      cardList.preventDamageNextTurnPending = { ...filter };
-      cardList.preventEffectsOfAttacksNextTurnPending = { ...filter };
-    });
-  }
-}
-
-export function preventDamageAndEffectsToAllYourPokemonEffect(
-  attackEffect: AttackEffect,
-  source: Card,
-  options: PreventDamageOptions = {},
-): PreventDamageAndEffectsToAllYourPokemonEffect {
-  const effect = new PreventDamageAndEffectsToAllYourPokemonEffect(attackEffect, options);
-  effect.markerSource = source;
-  return effect;
-}

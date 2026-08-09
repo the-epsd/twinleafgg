@@ -15,6 +15,9 @@ import { FLIP_UNTIL_TAILS_AND_COUNT_HEADS, MOVE_CARDS } from './prefabs';
 import { CoinFlipEffect } from '../effects/play-card-effects';
 import { scheduleDefendingPokemonEndOfTurnEffect } from '../effects/effect-of-attack-effects';
 
+// =============================================================================
+// Draw / heal / stadium
+// =============================================================================
 
 /**
  * These prefabs are for general attack effects.
@@ -59,6 +62,42 @@ export function HEAL_X_DAMAGE_FROM_THIS_POKEMON(
   state = store.reduceEffect(state, healTargetEffect);
 }
 
+export function PUT_X_CARDS_FROM_YOUR_DISCARD_PILE_INTO_YOUR_HAND(
+  x: number,
+  filterFn: (card: Card) => boolean = () => true,
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect
+) {
+  const player = effect.player;
+
+  const cardCount = player.discard.cards.filter(filterFn).length;
+
+  if (cardCount === 0) {
+    return state;
+  }
+
+  const max = Math.min(x, cardCount);
+  const min = max;
+
+  return store.prompt(state, [
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      // TODO: Make this work for more than just Items!
+      player.discard,
+      { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
+      { min, max, allowCancel: false }
+    )], selected => {
+      const cards = selected || [];
+      player.discard.moveCardsTo(cards, player.hand);
+    });
+}
+
+// =============================================================================
+// Knock out / discard Pokémon
+// =============================================================================
+
 export function KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(
   store: StoreLike,
   state: State,
@@ -99,6 +138,10 @@ export function DISCARD_OPPONENTS_ACTIVE_POKEMON(
   discardEffect.target = target ?? effect.opponent.active;
   return store.reduceEffect(state, discardEffect);
 }
+
+// =============================================================================
+// End-of-turn schedules
+// =============================================================================
 
 /**
  * "At the end of your opponent's next turn, the Defending Pokémon will be Knocked Out."
@@ -173,6 +216,10 @@ export function APPLY_SPECIAL_CONDITION_TO_DEFENDING_POKEMON_AT_END_OF_OPPONENTS
     ),
   );
 }
+
+// =============================================================================
+// Pending effect resolvers
+// =============================================================================
 
 function buildAttackEffectFromSource(
   state: State,
@@ -289,37 +336,9 @@ export function RESOLVE_PENDING_END_OF_OPPONENTS_NEXT_TURN_EFFECTS(
 export const RESOLVE_PENDING_END_OF_OPPONENTS_NEXT_TURN_KNOCK_OUTS =
   RESOLVE_PENDING_END_OF_OPPONENTS_NEXT_TURN_EFFECTS;
 
-export function PUT_X_CARDS_FROM_YOUR_DISCARD_PILE_INTO_YOUR_HAND(
-  x: number,
-  filterFn: (card: Card) => boolean = () => true,
-  store: StoreLike,
-  state: State,
-  effect: AttackEffect
-) {
-  const player = effect.player;
-
-  const cardCount = player.discard.cards.filter(filterFn).length;
-
-  if (cardCount === 0) {
-    return state;
-  }
-
-  const max = Math.min(x, cardCount);
-  const min = max;
-
-  return store.prompt(state, [
-    new ChooseCardsPrompt(
-      player,
-      GameMessage.CHOOSE_CARD_TO_HAND,
-      // TODO: Make this work for more than just Items!
-      player.discard,
-      { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
-      { min, max, allowCancel: false }
-    )], selected => {
-      const cards = selected || [];
-      player.discard.moveCardsTo(cards, player.hand);
-    });
-}
+// =============================================================================
+// Damage counters
+// =============================================================================
 
 export function PUT_X_DAMAGE_COUNTERS_ON_ALL_YOUR_OPPONENTS_POKEMON(
   x: number,
@@ -395,6 +414,10 @@ export function PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE(
     }
   });
 }
+
+// =============================================================================
+// Return Pokémon to deck / hand
+// =============================================================================
 
 export function SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK(
   store: StoreLike,
@@ -476,6 +499,10 @@ export function PUT_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_HAND(
   }
 }
 
+// =============================================================================
+// Coin flip damage
+// =============================================================================
+
 export function FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE(
   store: StoreLike,
   state: State,
@@ -511,6 +538,10 @@ export function FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_MORE_DAMAGE_PER_HEADS(
     effect.damage += damagePerHeads * heads;
   });
 }
+
+// =============================================================================
+// Damage calculation & targeting
+// =============================================================================
 
 export function THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS(
   store: StoreLike,
@@ -610,6 +641,10 @@ export function THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON
   });
 }
 
+// =============================================================================
+// Special conditions
+// =============================================================================
+
 export function YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(
   store: StoreLike,
   state: State,
@@ -669,6 +704,10 @@ export function YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED(
   store.reduceEffect(state, specialConditionEffect);
 
 }
+
+// =============================================================================
+// Opponent energy discard / move
+// =============================================================================
 
 export function DISCARD_CARDS_FROM_OPPONENTS_ACTIVE_POKEMON(
   store: StoreLike,
@@ -835,3 +874,4 @@ export function MOVE_AN_ENERGY_FROM_OPPONENTS_POKEMON_TO_ANOTHER(
     });
   });
 }
+

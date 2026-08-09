@@ -3,6 +3,10 @@ import { State } from '../..';
 import { Effect } from '../effects/effect';
 import { AttackEffect, KnockOutEffect } from '../effects/game-effects';
 
+// =============================================================================
+// Knock out / damage predicates
+// =============================================================================
+
 /**
  * These prefabs are for "boolean" card effects. Boolean card effects oftentimes start with 
  * an "if"; the function names here omit the "if" as they return booleans, and almost always
@@ -29,3 +33,4 @@ export function THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT(effect: AttackEffect,
   const damage = source.damage;
   return damage > 0;
 }
+

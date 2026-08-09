@@ -86,7 +86,6 @@ export class UsePowerEffect implements Effect {
   public power: Power;
   public card: PokemonCard;
   public target: CardTarget;
-  /** When playing from hand onto a chosen Bench slot, the open bench to receive the Pokémon. */
   public benchTarget?: PokemonCardList;
 
   constructor(
@@ -234,7 +233,6 @@ export class KnockOutEffect implements Effect {
   }
 }
 
-// how many prizes when target Pokemon is KO by an attack
 export class KnockOutAttackEffect extends KnockOutEffect {
   public attack: Attack;
 

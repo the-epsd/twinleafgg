@@ -1,3 +1,9 @@
+
+
+// =============================================================================
+// Pokemon-scoped player markers
+// =============================================================================
+
 /**
  * Player-level markers that are scoped to the active Pokemon — they should be
  * removed when a Pokemon leaves active (switching). These are distinct from
@@ -10,3 +16,4 @@ export const KNOWN_POKEMON_SCOPED_PLAYER_MARKERS = new Set([
   'KNOCKOUT_MARKER',
   'CLEAR_KNOCKOUT_MARKER',
 ]);
+

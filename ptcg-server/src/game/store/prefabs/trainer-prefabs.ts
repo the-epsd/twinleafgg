@@ -13,9 +13,17 @@ import { Store } from '../store';
 import { StoreLike } from '../store-like';
 import { MOVE_CARDS } from './prefabs';
 
+// =============================================================================
+// Type guards
+// =============================================================================
+
 export function WAS_TRAINER_USED(effect: Effect, card: TrainerCard): effect is TrainerEffect {
   return effect instanceof TrainerEffect && effect.trainerCard === card;
 }
+
+// =============================================================================
+// Hand discard
+// =============================================================================
 
 export function DISCARD_X_CARDS_FROM_YOUR_HAND(effect: TrainerEffect, store: StoreLike, state: State, minAmount: number, maxAmount: number) {
 
@@ -55,6 +63,10 @@ export function DISCARD_X_CARDS_FROM_YOUR_HAND(effect: TrainerEffect, store: Sto
   }
 }
 
+// =============================================================================
+// Reveal & shuffle
+// =============================================================================
+
 export function TRAINER_SHOW_OPPONENT_CARDS(effect: TrainerEffect, store: Store, state: State) {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
@@ -74,3 +86,4 @@ export function SHUFFLE_DECK(effect: TrainerEffect, store: Store, state: State) 
     player.deck.applyOrder(order);
   });
 }
+
