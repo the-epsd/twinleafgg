@@ -274,16 +274,20 @@ export class BattlePass extends Controller {
   @Post('/debug/add-exp')
   @AuthToken()
   @Validate({
-    exp: check().isNumber().required()
+    exp: check().isNumber().required(),
+    seasonId: check().optional().isString()
   })
   public async onAddDebugExp(req: Request, res: Response) {
     try {
       const userId: number = req.body.userId;
       const exp: number = req.body.exp;
+      const seasonIdParam: string | undefined = req.body.seasonId;
 
-      const currentSeason = await getNewestSeason();
-      if (!currentSeason) {
-        return res.status(404).send({ error: 'No active battle pass season' });
+      const season = seasonIdParam
+        ? await BattlePassSeason.findOne({ where: { seasonId: seasonIdParam } })
+        : await getNewestSeason();
+      if (!season) {
+        return res.status(404).send({ error: seasonIdParam ? 'Season not found' : 'No active battle pass season' });
       }
 
       // Get user and ensure they are an admin
@@ -296,7 +300,7 @@ export class BattlePass extends Controller {
       let progress = await UserBattlePass.findOne({
         where: {
           userId,
-          seasonId: currentSeason.seasonId
+          seasonId: season.seasonId
         },
         relations: ['season']
       });
@@ -304,11 +308,11 @@ export class BattlePass extends Controller {
       if (!progress) {
         progress = new UserBattlePass();
         progress.userId = userId;
-        progress.seasonId = currentSeason.seasonId;
+        progress.seasonId = season.seasonId;
         progress.exp = 0;
         progress.level = 1;
         progress.claimedRewards = [];
-        progress.season = currentSeason;
+        progress.season = season;
       }
 
       // Add experience and save

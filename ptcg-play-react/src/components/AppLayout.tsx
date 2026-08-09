@@ -43,6 +43,14 @@ function isGamesPath(pathname: string): boolean {
   return pathname === '/games' || pathname.startsWith('/games/');
 }
 
+function isBattlePassPath(pathname: string): boolean {
+  return pathname === '/battle-pass' || pathname.startsWith('/battle-pass/');
+}
+
+function isMessagesPath(pathname: string): boolean {
+  return pathname === '/message' || pathname.startsWith('/message/');
+}
+
 export function AppLayout() {
   const { t } = useTranslation();
   const { pathname } = useLocation();
@@ -54,7 +62,10 @@ export function AppLayout() {
   const parentMap = isParentMapPath(pathname);
   const myGamesBleed = isMyGamesPath(pathname);
   const gamesBleed = isGamesPath(pathname);
-  const mainBleed = deckEditorFullBleed || tableFullBleed || myGamesBleed || gamesBleed;
+  const battlePassBleed = isBattlePassPath(pathname);
+  const messagesBleed = isMessagesPath(pathname);
+  const mainBleed =
+    deckEditorFullBleed || tableFullBleed || myGamesBleed || gamesBleed || battlePassBleed || messagesBleed;
 
   const incomingInviteCount = useMemo(() => {
     const { incoming } = partitionMyGames(games, clientId, user?.userId ?? 0);
@@ -126,7 +137,12 @@ export function AppLayout() {
           flex: 1,
           minHeight: 0,
           overflowX: parentMap ? 'auto' : 'hidden',
-          overflowY: tableFullBleed || myGamesBleed ? 'hidden' : parentMap ? 'hidden' : 'auto',
+          overflowY:
+            tableFullBleed || myGamesBleed || battlePassBleed || messagesBleed
+              ? 'hidden'
+              : parentMap
+                ? 'hidden'
+                : 'auto',
           display: 'flex',
           flexDirection: 'column',
         }}

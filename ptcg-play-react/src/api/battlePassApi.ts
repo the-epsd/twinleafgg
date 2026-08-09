@@ -41,6 +41,6 @@ export function claimBattlePassReward(level: number, seasonId: string): Promise<
   return apiPost<void>('/v1/battlepass/claim', { level, seasonId });
 }
 
-export function addBattlePassDebugExp(exp: number): Promise<void> {
-  return apiPost<void>('/v1/battlepass/debug/add-exp', { exp });
+export function addBattlePassDebugExp(exp: number, seasonId?: string): Promise<void> {
+  return apiPost<void>('/v1/battlepass/debug/add-exp', { exp, ...(seasonId ? { seasonId } : {}) });
 }
