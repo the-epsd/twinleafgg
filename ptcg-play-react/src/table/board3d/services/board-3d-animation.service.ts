@@ -616,7 +616,7 @@ export class Board3dAnimationService {
               card.quaternion.copy(qFlipScratch);
               if (!revealApplied && flipOnce.t >= 0.5) {
                 revealApplied = true;
-                playSfx('cardreveal');
+                playSfx('carddraw');
                 onRevealFace?.();
               }
             }
