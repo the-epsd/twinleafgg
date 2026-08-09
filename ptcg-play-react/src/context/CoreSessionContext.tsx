@@ -19,6 +19,7 @@ import type { ClientUserData } from './coreTypes';
 import { ConnectionStatusSnackbar } from '../components/ConnectionStatusSnackbar';
 import { InviteAwareness } from '../components/InviteAwareness';
 import { isPlayerInGame } from '../games/myGamesClassify';
+import { LoadingSessionScreen } from '../pages/auth/LoadingSessionScreen';
 
 export type ConnectionBanner =
   | { type: 'reconnecting'; attempt: number }
@@ -465,9 +466,14 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
     [core, createGame, createSelfPlayGame, joinMatchmaking, leaveMatchmaking]
   );
 
+  // Keep the auth-style loading screen up through the first socket connect so
+  // pages never flash a brief "Connecting…" alert between auth-ready and online.
+  const awaitingInitialConnect =
+    !core.connected && core.error == null && core.connectionBanner == null;
+
   return (
     <CoreSessionContext.Provider value={value}>
-      {children}
+      {awaitingInitialConnect ? <LoadingSessionScreen /> : children}
       <ConnectionStatusSnackbar />
       <InviteAwareness />
     </CoreSessionContext.Provider>

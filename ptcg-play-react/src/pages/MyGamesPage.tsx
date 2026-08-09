@@ -130,7 +130,7 @@ export function MyGamesPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { games, clientId, connected, error: socketError } = useCoreSession();
+  const { games, clientId, error: socketError } = useCoreSession();
   const { showSnackbar } = useSnackbar();
 
   const myUserId = user?.userId ?? 0;
@@ -171,12 +171,8 @@ export function MyGamesPage() {
         <div className={styles.main}>
           <header className={styles.hero}>
             <h1 className={styles.title}>{t('MAIN_MY_GAMES')}</h1>
-            {!connected ? (
-              <p className={styles.alert}>
-                {socketError
-                  ? t('REACT_SOCKET_PREFIX', { message: socketError })
-                  : t('REACT_CONNECTING')}
-              </p>
+            {socketError ? (
+              <p className={styles.alert}>{t('REACT_SOCKET_PREFIX', { message: socketError })}</p>
             ) : null}
           </header>
 
