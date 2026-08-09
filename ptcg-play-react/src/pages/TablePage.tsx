@@ -307,6 +307,20 @@ export function TablePage() {
     [boardInteraction],
   );
 
+  // Clear reconnect tracking only when leaving this game route (not on transient disconnect).
+  useEffect(() => {
+    if (isReplayRoute || !Number.isFinite(serverGameId)) {
+      return;
+    }
+    return () => {
+      clearPersistedGameId();
+    };
+  }, [isReplayRoute, serverGameId]);
+
+  // Initial attach only — do not re-run on coreConnected or the table remounts mid-game
+  // and a failed rejoin/join replaces the board with ERROR_UNKNOWN.
+  // Always use game:join here: game:rejoin is for seat restore after a drop and rejects
+  // (or mis-handles) self-play / already-seated clients, which surfaces ERROR_UNKNOWN.
   useEffect(() => {
     if (isReplayRoute) {
       return;
@@ -330,6 +344,7 @@ export function TablePage() {
         if (cancelled) return;
         const local = gameStateToLocal(gs);
         setLocalGame(local);
+        setError(null);
         boardInteraction.updateGameLogs(local.logs);
         const isPlayer = local.state.players.some((p) => p.id === clientIdRef.current);
         if (isPlayer) {
@@ -348,9 +363,81 @@ export function TablePage() {
       cancelled = true;
       unregister?.();
       boardInteraction.endBoardSelection();
-      clearPersistedGameId();
     };
   }, [isReplayRoute, serverGameId, cardsInfo, boardInteraction, registerGameSocket, t]);
+
+  // Soft restore after socket drop: keep the board mounted; never flip to the error screen
+  // if we already have local game state. CoreSession also rejoins seats; this reapplies
+  // a full snapshot when listeners may have missed the server push.
+  const prevCoreConnectedRef = useRef<boolean | null>(null);
+  const localGameRef = useRef(localGame);
+  localGameRef.current = localGame;
+
+  useEffect(() => {
+    if (isReplayRoute || !Number.isFinite(serverGameId) || !cardsInfo) {
+      return;
+    }
+
+    const prevConnected = prevCoreConnectedRef.current;
+    prevCoreConnectedRef.current = coreConnected;
+
+    // Skip first run and any non-reconnect transition.
+    if (prevConnected === null || prevConnected !== false || coreConnected !== true) {
+      return;
+    }
+
+    const existing = localGameRef.current;
+    if (!existing || existing.gameId !== serverGameId) {
+      return;
+    }
+
+    // Self-play aborts on disconnect — don't try to rejoin a dead game into an error path.
+    if (existing.state.gameSettings?.selfPlay === true) {
+      return;
+    }
+
+    let cancelled = false;
+    void (async () => {
+      try {
+        const socket = getSocketManager();
+        let gs: import('ptcg-server').GameState;
+        try {
+          gs = await socket.emit<{ gameId: number }, import('ptcg-server').GameState>('game:rejoin', {
+            gameId: serverGameId,
+          });
+        } catch {
+          gs = await socket.emit<number, import('ptcg-server').GameState>('game:join', serverGameId);
+        }
+        if (cancelled) {
+          return;
+        }
+        const local = gameStateToLocal(gs);
+        setLocalGame((prev) => {
+          if (!prev || prev.gameId !== serverGameId) {
+            return local;
+          }
+          return {
+            ...local,
+            localId: prev.localId,
+            switchSide: prev.switchSide,
+            promptMinimized: prev.promptMinimized,
+          };
+        });
+        setError(null);
+        boardInteraction.updateGameLogs(local.logs);
+        const isPlayer = local.state.players.some((p) => p.id === clientIdRef.current);
+        if (isPlayer) {
+          persistGameId(serverGameId);
+        }
+      } catch {
+        // Keep the existing board; connection snackbar already covers the drop.
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isReplayRoute, serverGameId, cardsInfo, coreConnected, boardInteraction]);
 
   useEffect(() => {
     if (!isReplayRoute) {
