@@ -142,7 +142,7 @@ function stripRange(bulkLen: number, cycleIndex: number): { start: number; end: 
  * Deck shuffle animation: Indian (Hindu) strip — pull a middle packet out, down, then onto the top.
  * Runs {@link CYCLE_COUNT} quick cycles, then restores rest poses (visual only).
  */
-export function playDeckShuffleAnimation(opts: PlayDeckShuffleAnimationOpts): gsap.core.Timeline | null {
+export function playDeckShuffleAnimation(opts: PlayDeckShuffleAnimationOpts): Promise<void> {
   const anchor = opts.stackService.getDeckAnchor(opts.stackId);
   const bulkGroups = opts.stackService.getDeckBulkGroups(opts.stackId);
   const topId = `${opts.stackId}_top`;
@@ -150,8 +150,13 @@ export function playDeckShuffleAnimation(opts: PlayDeckShuffleAnimationOpts): gs
   const topGroup = topBridge?.getGroup();
 
   if (!anchor || !topGroup) {
-    return null;
+    return Promise.resolve();
   }
+
+  let resolveComplete!: () => void;
+  const done = new Promise<void>((resolve) => {
+    resolveComplete = resolve;
+  });
 
   const prevTl = anchor.userData[UD_TL] as gsap.core.Timeline | undefined;
   if (prevTl) {
@@ -233,6 +238,7 @@ export function playDeckShuffleAnimation(opts: PlayDeckShuffleAnimationOpts): gs
       restoreTopAndBulk(topGroup, restorePack, bulkGroups);
       delete anchor.userData[UD_TL];
       delete anchor.userData[UD_RESTORE];
+      resolveComplete();
     },
   });
 
@@ -245,7 +251,7 @@ export function playDeckShuffleAnimation(opts: PlayDeckShuffleAnimationOpts): gs
     onUpdate: apply,
   });
 
-  return tl;
+  return done;
 }
 
 /** @deprecated Prefer {@link playDeckShuffleAnimation}. */

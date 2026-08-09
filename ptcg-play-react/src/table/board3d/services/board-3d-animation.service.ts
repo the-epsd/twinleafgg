@@ -71,21 +71,21 @@ export function getMultiDrawBatchStageLayout(
 }
 
 /** Deck→stage: travel + flip (faster motion; dwell unchanged via {@link DRAW_DECK_TO_STAGE_PHASE_DURATION}). */
-const DRAW_DECK_TO_STAGE_TRAVEL_DURATION = 0.13;
+const DRAW_DECK_TO_STAGE_TRAVEL_DURATION = 0.1;
 /** Stage “pop” scale — same duration so visible time on the board stays consistent. */
-const DRAW_DECK_TO_STAGE_SCALE_DURATION = 0.3;
+const DRAW_DECK_TO_STAGE_SCALE_DURATION = 0.22;
 /** Total deck→stage phase before stage→hand (padding keeps dwell when travel is shorter than scale). */
-const DRAW_DECK_TO_STAGE_PHASE_DURATION = 0.70;
+const DRAW_DECK_TO_STAGE_PHASE_DURATION = 0.49;
 
-const DRAW_STAGE_TO_HAND_TRAVEL_DURATION = 0.16;
-const DRAW_STAGE_TO_HAND_SCALE_DURATION = 0.14;
+const DRAW_STAGE_TO_HAND_TRAVEL_DURATION = 0.19;
+const DRAW_STAGE_TO_HAND_SCALE_DURATION = 0.16;
 
 /** Stage→hand when all staged cards move together (short, snappy). */
-const DRAW_STAGE_TO_HAND_BURST_TRAVEL_DURATION = 0.1;
-const DRAW_STAGE_TO_HAND_BURST_SCALE_DURATION = 0.08;
+const DRAW_STAGE_TO_HAND_BURST_TRAVEL_DURATION = 0.12;
+const DRAW_STAGE_TO_HAND_BURST_SCALE_DURATION = 0.09;
 
 /** After every multi-draw card has reached the stage, hold before the shared hand flight. */
-export const MULTI_DRAW_SHARED_STAGED_HOLD_SEC = 0.55;
+export const MULTI_DRAW_SHARED_STAGED_HOLD_SEC = 0.37;
 
 /** Pause after hand→discard flights before a follow-up draw animation (e.g. Prism Tower). */
 export const HAND_DISCARD_TO_DRAW_HOLD_SEC = 0.35;
@@ -96,14 +96,20 @@ export const HAND_DISCARD_TO_TRAINER_HOLD_SEC = 0.35;
 /** Delay between starting each card’s stage→hand flight in a multi-draw burst (subtle cascade). */
 export const MULTI_DRAW_STAGE_TO_HAND_STAGGER_SEC = 0.04;
 
+/** Hand → deck travel for shuffle-hand-into-deck effects. */
+const HAND_TO_DECK_TRAVEL_DURATION_SEC = 0.28;
+
+/** Stagger between starting each hand → deck flight (overlapping cascade). */
+export const HAND_TO_DECK_STAGGER_SEC = 0.06;
+
 /** KO: whole Pokémon + attachments fly as one unit to discard. */
 const KO_DISCARD_TRAVEL_DURATION_SEC = 0.48;
 
 /** Shorter hold during setup mulligan redraws (full row on stage). */
-const MULTI_DRAW_SHARED_STAGED_HOLD_SEC_MULLIGAN = 0.22;
+const MULTI_DRAW_SHARED_STAGED_HOLD_SEC_MULLIGAN = 0.15;
 
 /** Slightly longer row hold for start-of-turn multi-draws vs mid-game. */
-const MULTI_DRAW_SHARED_STAGED_HOLD_SEC_TURN_BEGIN = 0.58;
+const MULTI_DRAW_SHARED_STAGED_HOLD_SEC_TURN_BEGIN = 0.39;
 
 /**
  * Visual style for deck→hand flights so setup mulligans feel distinct from in-game draws.
@@ -129,13 +135,13 @@ function deckToStageTiming(preset: DrawFlightVisualPreset | undefined): {
   phaseTotal: number;
 } {
   if (preset === 'setupMulligan') {
-    return { travel: 0.12, scale: 0.24, phaseTotal: 0.38 };
+    return { travel: 0.09, scale: 0.18, phaseTotal: 0.27 };
   }
   if (preset === 'turnBegin') {
     return {
       travel: DRAW_DECK_TO_STAGE_TRAVEL_DURATION,
       scale: DRAW_DECK_TO_STAGE_SCALE_DURATION,
-      phaseTotal: 0.88
+      phaseTotal: 0.61
     };
   }
   return {
@@ -151,12 +157,12 @@ function stageToHandTiming(
 ): { pos: number; scale: number } {
   if (preset === 'setupMulligan') {
     return {
-      pos: burst ? DRAW_STAGE_TO_HAND_BURST_TRAVEL_DURATION : 0.12,
-      scale: burst ? DRAW_STAGE_TO_HAND_BURST_SCALE_DURATION : 0.1
+      pos: burst ? DRAW_STAGE_TO_HAND_BURST_TRAVEL_DURATION : 0.14,
+      scale: burst ? DRAW_STAGE_TO_HAND_BURST_SCALE_DURATION : 0.12
     };
   }
   if (preset === 'turnBegin' && !burst) {
-    return { pos: 0.2, scale: 0.18 };
+    return { pos: 0.23, scale: 0.21 };
   }
   return {
     pos: burst ? DRAW_STAGE_TO_HAND_BURST_TRAVEL_DURATION : DRAW_STAGE_TO_HAND_TRAVEL_DURATION,
@@ -1208,6 +1214,43 @@ export class Board3dAnimationService {
         duration: DRAW_STAGE_TO_HAND_TRAVEL_DURATION,
         ease: 'power2.inOut'
       });
+
+      this.activeAnimations.push(timeline);
+      this.updateAnimationState();
+    });
+  }
+
+  /**
+   * Hand card returning to deck (shuffle-hand-into-deck effects).
+   */
+  playHandToDeck(card: Object3D, targetWorld: Vector3): Promise<void> {
+    return new Promise(resolve => {
+      const timeline = gsap.timeline({
+        onComplete: () => {
+          this.removeAnimation(timeline);
+          resolve();
+        }
+      });
+
+      timeline
+        .to(card.position, {
+          x: targetWorld.x,
+          y: targetWorld.y,
+          z: targetWorld.z,
+          duration: HAND_TO_DECK_TRAVEL_DURATION_SEC,
+          ease: 'power2.inOut',
+        })
+        .to(
+          card.scale,
+          {
+            x: 1,
+            y: 1,
+            z: 1,
+            duration: HAND_TO_DECK_TRAVEL_DURATION_SEC * 0.85,
+            ease: 'power2.in',
+          },
+          0,
+        );
 
       this.activeAnimations.push(timeline);
       this.updateAnimationState();

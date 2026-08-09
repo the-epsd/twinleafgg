@@ -52,6 +52,11 @@ import { scanBlockedOwnZeroDamageFromState } from './pokemonPromptRows';
 import { BOARD3D_ATTACK_ANIMATION_DURATION_SEC, BOARD3D_ABILITY_ANIMATION_DURATION_SEC } from '../board3d/services/board-3d-animation.service';
 import { COIN_FLIP_SERVER_WAIT_MS } from '../coin-flip-animation';
 import {
+  BOARD_DECK_SHUFFLE_SERVER_WAIT_MS,
+  BOARD_DRAW_WAIT_FALLBACK_MS,
+  BOARD_HAND_TO_DECK_WAIT_FALLBACK_MS,
+} from '../animationTiming';
+import {
   autoTakeChoosePrizeIndices,
   shouldAutoTakeChoosePrize,
 } from './choosePrizeAutoTake';
@@ -147,6 +152,30 @@ function isCoinFlipAnimationWaitPrompt(wp: WaitPrompt): boolean {
   return String(m).toLowerCase().includes('coin flip animation');
 }
 
+function isHandToDeckAnimationWaitPrompt(wp: WaitPrompt): boolean {
+  const m = wp.message;
+  if (m === undefined || m === null) {
+    return false;
+  }
+  return String(m).toLowerCase().includes('hand to deck animation');
+}
+
+function isDeckShuffleAnimationWaitPrompt(wp: WaitPrompt): boolean {
+  const m = wp.message;
+  if (m === undefined || m === null) {
+    return false;
+  }
+  return String(m).toLowerCase().includes('deck shuffle animation');
+}
+
+function isDrawAnimationWaitPrompt(wp: WaitPrompt): boolean {
+  const m = wp.message;
+  if (m === undefined || m === null) {
+    return false;
+  }
+  return String(m).toLowerCase().includes('draw animation');
+}
+
 function SilentWaitPrompt(props: {
   promptId: number;
   durationMs: number;
@@ -176,6 +205,166 @@ function CoinFlipAnimationWaitPrompt(props: {
     <SilentWaitPrompt
       promptId={promptId}
       durationMs={durationMs > 0 ? durationMs : COIN_FLIP_SERVER_WAIT_MS}
+      resolve={resolve}
+    />
+  );
+}
+
+/**
+ * Await a pending board animation promise (poll briefly), then fall back to duration.
+ * Shared by hand→deck / shuffle / draw silent WaitPrompts.
+ */
+function PendingBoardAnimationWaitPrompt(props: {
+  promptId: number;
+  fallbackMs: number;
+  pollMs?: number;
+  /** How far before mount an animation start still counts (trainer prompt delay can be ~2.5s). */
+  startedAtSkewMs?: number;
+  kind: 'handToDeck' | 'shuffle' | 'draw';
+  boardInteraction: BoardInteractionService;
+  resolve: (id: number, result: unknown) => void | Promise<void>;
+}) {
+  const {
+    promptId,
+    fallbackMs,
+    pollMs = 900,
+    startedAtSkewMs = 200,
+    kind,
+    boardInteraction,
+    resolve,
+  } = props;
+  useEffect(() => {
+    let cancelled = false;
+    const finish = () => {
+      if (cancelled) return;
+      cancelled = true;
+      void resolve(promptId, null);
+    };
+
+    const sleep = (ms: number) => new Promise<void>((r) => window.setTimeout(r, ms));
+
+    const getPromise = (): Promise<void> | null => {
+      if (kind === 'handToDeck') {
+        return boardInteraction.getPendingHandToDeckAnimationPromise();
+      }
+      if (kind === 'shuffle') {
+        return boardInteraction.getPendingDeckShuffleAnimationPromise();
+      }
+      return boardInteraction.getPendingDrawAnimationPromise();
+    };
+
+    const getStartedAt = (): number => {
+      if (kind === 'handToDeck') {
+        return boardInteraction.getHandToDeckAnimationStartedAt();
+      }
+      if (kind === 'shuffle') {
+        return boardInteraction.getDeckShuffleAnimationStartedAt();
+      }
+      return boardInteraction.getDrawAnimationStartedAt();
+    };
+
+    void (async () => {
+      const mountTime = Date.now();
+      const pollUntil = mountTime + pollMs;
+      let p: Promise<void> | null = null;
+      while (Date.now() < pollUntil && !cancelled) {
+        const startedAt = getStartedAt();
+        // Accept animations that began before this WaitPrompt mounted (common when the
+        // trainer-play prompt delay deferred mounting until after the motion started).
+        if (startedAt > 0 && startedAt >= mountTime - startedAtSkewMs) {
+          p = getPromise();
+          if (p) {
+            break;
+          }
+        }
+        await sleep(16);
+      }
+      if (cancelled) {
+        return;
+      }
+      if (p) {
+        await p;
+        finish();
+        return;
+      }
+      // Animation already finished before mount: resolve immediately if it was recent.
+      const startedAt = getStartedAt();
+      const existing = getPromise();
+      if (existing && startedAt > 0 && mountTime - startedAt < startedAtSkewMs) {
+        await existing;
+        finish();
+        return;
+      }
+      const remaining = fallbackMs - (Date.now() - mountTime);
+      if (remaining > 0) {
+        await sleep(remaining);
+      }
+      finish();
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [promptId, fallbackMs, pollMs, startedAtSkewMs, kind, boardInteraction, resolve]);
+
+  return null;
+}
+
+function HandToDeckAnimationWaitPrompt(props: {
+  promptId: number;
+  durationMs: number;
+  boardInteraction: BoardInteractionService;
+  resolve: (id: number, result: unknown) => void | Promise<void>;
+}) {
+  const { promptId, durationMs, boardInteraction, resolve } = props;
+  const fallback = durationMs > 0 ? Math.min(durationMs, BOARD_HAND_TO_DECK_WAIT_FALLBACK_MS) : BOARD_HAND_TO_DECK_WAIT_FALLBACK_MS;
+  return (
+    <PendingBoardAnimationWaitPrompt
+      promptId={promptId}
+      fallbackMs={fallback}
+      pollMs={2000}
+      startedAtSkewMs={5000}
+      kind="handToDeck"
+      boardInteraction={boardInteraction}
+      resolve={resolve}
+    />
+  );
+}
+
+function DeckShuffleAnimationWaitPrompt(props: {
+  promptId: number;
+  durationMs: number;
+  boardInteraction: BoardInteractionService;
+  resolve: (id: number, result: unknown) => void | Promise<void>;
+}) {
+  const { promptId, durationMs, boardInteraction, resolve } = props;
+  const fallback = durationMs > 0 ? durationMs : BOARD_DECK_SHUFFLE_SERVER_WAIT_MS;
+  return (
+    <PendingBoardAnimationWaitPrompt
+      promptId={promptId}
+      fallbackMs={fallback}
+      kind="shuffle"
+      boardInteraction={boardInteraction}
+      resolve={resolve}
+    />
+  );
+}
+
+function DrawAnimationWaitPrompt(props: {
+  promptId: number;
+  durationMs: number;
+  boardInteraction: BoardInteractionService;
+  resolve: (id: number, result: unknown) => void | Promise<void>;
+}) {
+  const { promptId, durationMs, boardInteraction, resolve } = props;
+  const fallback = durationMs > 0 ? Math.min(durationMs, BOARD_DRAW_WAIT_FALLBACK_MS) : BOARD_DRAW_WAIT_FALLBACK_MS;
+  return (
+    <PendingBoardAnimationWaitPrompt
+      promptId={promptId}
+      fallbackMs={fallback}
+      pollMs={1200}
+      kind="draw"
+      boardInteraction={boardInteraction}
       resolve={resolve}
     />
   );
@@ -784,7 +973,20 @@ export function TablePromptLayer({
   }
 
   if (suppressTrainerEffectPrompts) {
-    if (
+    // Silent / animation WaitPrompts must still resolve — otherwise hand→deck / shuffle
+    // gates sit until the trainer play delay ends (~2.5s) after the motion already finished.
+    if (activePrompt.type === 'WaitPrompt') {
+      const wp = activePrompt as WaitPrompt;
+      const isAnimationGate =
+        wp.showVisual === false ||
+        isHandToDeckAnimationWaitPrompt(wp) ||
+        isDeckShuffleAnimationWaitPrompt(wp) ||
+        isDrawAnimationWaitPrompt(wp);
+      if (!isAnimationGate) {
+        return null;
+      }
+      // Fall through to WaitPrompt rendering below.
+    } else if (
       activePrompt.type === 'Choose cards' &&
       shouldUseBoardHandForChooseCards(activePrompt as ChooseCardsPrompt, clientId)
     ) {
@@ -797,8 +999,9 @@ export function TablePromptLayer({
           allowCancel={ccp.options.allowCancel}
         />
       );
+    } else {
+      return null;
     }
-    return null;
   }
 
   const p = activePrompt;
@@ -880,6 +1083,39 @@ export function TablePromptLayer({
 
   if (p.type === 'WaitPrompt') {
     const wp = p as WaitPrompt;
+    if (isHandToDeckAnimationWaitPrompt(wp)) {
+      return (
+        <HandToDeckAnimationWaitPrompt
+          key={wp.id}
+          promptId={wp.id}
+          durationMs={wp.duration}
+          boardInteraction={boardInteraction}
+          resolve={resolve}
+        />
+      );
+    }
+    if (isDeckShuffleAnimationWaitPrompt(wp)) {
+      return (
+        <DeckShuffleAnimationWaitPrompt
+          key={wp.id}
+          promptId={wp.id}
+          durationMs={wp.duration}
+          boardInteraction={boardInteraction}
+          resolve={resolve}
+        />
+      );
+    }
+    if (isDrawAnimationWaitPrompt(wp)) {
+      return (
+        <DrawAnimationWaitPrompt
+          key={wp.id}
+          promptId={wp.id}
+          durationMs={wp.duration}
+          boardInteraction={boardInteraction}
+          resolve={resolve}
+        />
+      );
+    }
     if (wp.showVisual === false) {
       return (
         <SilentWaitPrompt

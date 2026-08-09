@@ -4,46 +4,9 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { GameError, GameMessage, Player } from '../../../game';
-
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: Katy, effect: TrainerEffect): IterableIterator<State> {
-
-  const player = effect.player;
-  const cards = player.hand.cards.filter(c => c !== self);
-
-  const supporterTurn = player.supporterTurn;
-
-  if (supporterTurn > 0) {
-    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
-  }
-
-  if (player.hand.cards.length === 0 && player.deck.cards.length === 0) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
-
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
-  // We will discard this card after prompt confirmation
-  effect.preventDefault = true;
-
-  if (cards.length > 0) {
-    player.hand.moveCardsTo(cards, player.deck);
-
-    yield store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-      player.deck.applyOrder(order);
-      next();
-    });
-  }
-
-  player.deck.moveTo(player.hand, 8);
-
-
-  const endTurnEffect = new EndTurnEffect(player);
-  store.reduceEffect(state, endTurnEffect);
-  return state;
-}
+import { SHUFFLE_HAND_INTO_DECK_THEN_DRAW } from '../../../game/store/prefabs/prefabs';
 
 export class Katy extends TrainerCard {
 
@@ -65,9 +28,7 @@ export class Katy extends TrainerCard {
     'Shuffle your hand into your deck. Then, draw 8 cards. Your turn ends.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
-    const supporterTurn = player.supporterTurn;
-
-    if (supporterTurn > 0) {
+    if (player.supporterTurn > 0) {
       return false;
     }
 
@@ -80,8 +41,23 @@ export class Katy extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, this, effect);
-      return generator.next().value;
+      const player = effect.player;
+
+      if (player.supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      if (player.hand.cards.length === 0 && player.deck.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
+      return SHUFFLE_HAND_INTO_DECK_THEN_DRAW(store, state, player, {
+        excludeCard: this,
+        drawCount: 8,
+        afterDraw: (store, state, player) => {
+          store.reduceEffect(state, new EndTurnEffect(player));
+        },
+      });
     }
 
     return state;

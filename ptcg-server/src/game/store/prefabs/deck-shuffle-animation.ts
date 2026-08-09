@@ -4,6 +4,12 @@ import { StoreLike } from '../store-like';
 export const DECK_SHUFFLE_ANIMATION_WAIT_MS = 650;
 
 /**
+ * Safety ceiling for silent animation WaitPrompts that the client resolves when
+ * the real board animation finishes (hand→deck, etc.). Not an animation duration.
+ */
+export const BOARD_ANIMATION_GATE_TIMEOUT_MS = 8000;
+
+/**
  * Notify clients to play the 3D deck shuffle animation for {@link playerId}.
  * Mirrors {@link emitCoinFlipAnimation} socket pattern.
  */

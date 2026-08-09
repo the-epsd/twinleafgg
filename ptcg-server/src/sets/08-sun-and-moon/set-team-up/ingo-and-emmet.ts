@@ -57,16 +57,18 @@ export class IngoAndEmmet extends TrainerCard {
           defaultValue: 0
         }
       ), choice => {
+        const cards = player.hand.cards.filter(c => c !== this);
         if (choice === 0) {
-          // Option 1
-          MOVE_CARDS(store, state, player.hand, player.discard);
+          if (cards.length > 0) {
+            MOVE_CARDS(store, state, player.hand, player.discard, { cards });
+          }
           DRAW_CARDS(store, state, player, 5);
-
         } else if (choice === 1) {
-          // Option 2
-          MOVE_CARDS(store, state, player.hand, player.discard);
+          if (cards.length > 0) {
+            MOVE_CARDS(store, state, player.hand, player.discard, { cards });
+          }
           const bottomCards = player.deck.cards.slice(-5);
-          player.deck.moveCardsTo(bottomCards, player.hand);
+          MOVE_CARDS(store, state, player.deck, player.hand, { cards: bottomCards });
         }
       });
     }

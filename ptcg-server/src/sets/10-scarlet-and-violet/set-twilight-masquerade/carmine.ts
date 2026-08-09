@@ -7,6 +7,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { Player } from '../../../game/store/state/player';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
+import { DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Carmine extends TrainerCard {
 
@@ -35,29 +36,23 @@ Discard your hand and draw 5 cards.`;
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
-      const supporterTurn = player.supporterTurn;
-
-      if (supporterTurn > 0) {
+      if (player.supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
-      // We will discard this card after prompt confirmation
-      effect.preventDefault = true;
 
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
       const cards = player.hand.cards.filter(c => c !== this);
-      player.hand.moveCardsTo(cards, player.discard);
-      player.deck.moveTo(player.hand, 5);
-
-
+      if (cards.length > 0) {
+        state = MOVE_CARDS(store, state, player.hand, player.discard, { cards });
+      }
+      state = DRAW_CARDS(store, state, player, 5);
     }
 
     return state;

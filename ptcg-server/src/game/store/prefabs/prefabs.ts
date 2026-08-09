@@ -32,7 +32,10 @@ import { Player } from '../state/player';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { State, GamePhase } from '../state/state';
 import { StoreLike } from '../store-like';
-import { DECK_SHUFFLE_ANIMATION_WAIT_MS } from './deck-shuffle-animation';
+import {
+  BOARD_ANIMATION_GATE_TIMEOUT_MS,
+  DECK_SHUFFLE_ANIMATION_WAIT_MS,
+} from './deck-shuffle-animation';
 import { CAN_PLAY_TRAINER_CARD } from './trainer-prefabs';
 
 // =============================================================================
@@ -1489,6 +1492,128 @@ export function SHUFFLE_DECK(store: StoreLike, state: State, player: Player): St
       () => {},
     );
   });
+}
+
+/**
+ * Shuffle hand into deck, then draw. Uses MOVE_CARDS / DRAW_CARDS so the board
+ * animation framework sees normal hand diffs. Sequencing WaitPrompts live here
+ * (not on individual cards); clients resolve hand→deck / shuffle waits when
+ * animations finish (server duration is a safety timeout except shuffle).
+ */
+export function SHUFFLE_HAND_INTO_DECK_THEN_DRAW(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  options: {
+    excludeCard?: Card;
+    /** Override which cards leave the hand (default: all except excludeCard). */
+    cards?: Card[];
+    sourceCard?: Card;
+    drawCount?: number;
+    /** Custom draw step after shuffle (e.g. coin flip). Overrides drawCount. */
+    resolveDraw?: (store: StoreLike, state: State, player: Player) => void;
+    /** Runs after the draw (e.g. end turn / next player's sequence). */
+    afterDraw?: (store: StoreLike, state: State, player: Player) => void;
+  },
+): State {
+  const exclude = options.excludeCard;
+  const cards = options.cards ?? player.hand.cards.filter((c) => c !== exclude);
+
+  const shuffleThenDraw = (): void => {
+    store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+      player.deck.applyOrder(order);
+      store.prompt(
+        state,
+        new WaitPrompt(player.id, DECK_SHUFFLE_ANIMATION_WAIT_MS, 'Deck shuffle animation', false),
+        () => {
+          if (options.resolveDraw) {
+            options.resolveDraw(store, state, player);
+          } else {
+            DRAW_CARDS(store, state, player, options.drawCount ?? 0);
+            options.afterDraw?.(store, state, player);
+          }
+        },
+      );
+    });
+  };
+
+  if (cards.length > 0) {
+    const moveEffect = new MoveCardsEffect(player.hand, player.deck, {
+      cards,
+      sourceCard: options.sourceCard,
+    });
+    state = store.reduceEffect(state, moveEffect);
+    if (moveEffect.preventDefault) {
+      return state;
+    }
+    return store.prompt(
+      state,
+      new WaitPrompt(
+        player.id,
+        BOARD_ANIMATION_GATE_TIMEOUT_MS,
+        'Hand to deck animation',
+        false,
+      ),
+      () => shuffleThenDraw(),
+    );
+  }
+
+  shuffleThenDraw();
+  return state;
+}
+
+/**
+ * Put hand cards onto the deck (append = bottom), wait for hand→deck animation,
+ * then draw. No deck shuffle — Iono / Marnie style.
+ */
+export function MOVE_HAND_TO_DECK_THEN_DRAW(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  options: {
+    cards: Card[];
+    drawCount: number;
+    sourceCard?: Card;
+    /** If the hand move is prevented, skip draw (and afterDraw). Default true. */
+    skipDrawIfMovePrevented?: boolean;
+    afterDraw?: (store: StoreLike, state: State, player: Player) => void;
+    /** Called when the hand move is prevented (e.g. still draw the other player). */
+    onMovePrevented?: (store: StoreLike, state: State, player: Player) => void;
+  },
+): State {
+  const doDraw = (): void => {
+    DRAW_CARDS(store, state, player, options.drawCount);
+    options.afterDraw?.(store, state, player);
+  };
+
+  if (options.cards.length > 0) {
+    const moveEffect = new MoveCardsEffect(player.hand, player.deck, {
+      cards: options.cards,
+      sourceCard: options.sourceCard,
+    });
+    state = store.reduceEffect(state, moveEffect);
+    if (moveEffect.preventDefault) {
+      if (options.skipDrawIfMovePrevented === false) {
+        doDraw();
+      } else {
+        options.onMovePrevented?.(store, state, player);
+      }
+      return state;
+    }
+    return store.prompt(
+      state,
+      new WaitPrompt(
+        player.id,
+        BOARD_ANIMATION_GATE_TIMEOUT_MS,
+        'Hand to deck animation',
+        false,
+      ),
+      () => doDraw(),
+    );
+  }
+
+  doDraw();
+  return state;
 }
 
 /**

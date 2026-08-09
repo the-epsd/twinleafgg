@@ -26,3 +26,15 @@ export const BOARD_COIN_FLIP_SERVER_WAIT_MS = 2000;
 
 /** Deck shuffle animation — keep in sync with server DECK_SHUFFLE_ANIMATION_WAIT_MS. */
 export const BOARD_DECK_SHUFFLE_SERVER_WAIT_MS = 650;
+
+/**
+ * Client-only safety fallback when a hand→deck WaitPrompt arrives before the
+ * board animation promise is registered (server uses BOARD_ANIMATION_GATE_TIMEOUT_MS).
+ */
+export const BOARD_HAND_TO_DECK_WAIT_FALLBACK_MS = 2500;
+
+/**
+ * Client-only safety fallback for draw WaitPrompts (e.g. Jellicent).
+ * Multi-draw length is owned by the 3D hand sync, not the server card.
+ */
+export const BOARD_DRAW_WAIT_FALLBACK_MS = 3500;

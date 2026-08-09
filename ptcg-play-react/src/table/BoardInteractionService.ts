@@ -1062,6 +1062,63 @@ export class BoardInteractionService {
     return this.pendingAttackAnimationPromise;
   }
 
+  /** Latest hand → deck flight batch (shuffle-hand-into-deck). */
+  private pendingHandToDeckAnimationPromise: Promise<void> | null = null;
+  private handToDeckAnimationStartedAt = 0;
+
+  public setPendingHandToDeckAnimationPromise(p: Promise<void> | null): void {
+    this.pendingHandToDeckAnimationPromise = p;
+    if (p) {
+      this.handToDeckAnimationStartedAt = Date.now();
+    }
+  }
+
+  public getPendingHandToDeckAnimationPromise(): Promise<void> | null {
+    return this.pendingHandToDeckAnimationPromise;
+  }
+
+  public getHandToDeckAnimationStartedAt(): number {
+    return this.handToDeckAnimationStartedAt;
+  }
+
+  /** Latest deck shuffle GSAP promise. */
+  private pendingDeckShuffleAnimationPromise: Promise<void> | null = null;
+  private deckShuffleAnimationStartedAt = 0;
+
+  public setPendingDeckShuffleAnimationPromise(p: Promise<void> | null): void {
+    this.pendingDeckShuffleAnimationPromise = p;
+    if (p) {
+      this.deckShuffleAnimationStartedAt = Date.now();
+    }
+  }
+
+  public getPendingDeckShuffleAnimationPromise(): Promise<void> | null {
+    return this.pendingDeckShuffleAnimationPromise;
+  }
+
+  public getDeckShuffleAnimationStartedAt(): number {
+    return this.deckShuffleAnimationStartedAt;
+  }
+
+  /** Latest hand draw flight batch (multi-draw / single draw sync). */
+  private pendingDrawAnimationPromise: Promise<void> | null = null;
+  private drawAnimationStartedAt = 0;
+
+  public setPendingDrawAnimationPromise(p: Promise<void> | null): void {
+    this.pendingDrawAnimationPromise = p;
+    if (p) {
+      this.drawAnimationStartedAt = Date.now();
+    }
+  }
+
+  public getPendingDrawAnimationPromise(): Promise<void> | null {
+    return this.pendingDrawAnimationPromise;
+  }
+
+  public getDrawAnimationStartedAt(): number {
+    return this.drawAnimationStartedAt;
+  }
+
   public triggerCoinFlipAnimation(result: boolean, playerId: number) {
     this.coinFlipAnimationSubject.next({ result, playerId });
   }

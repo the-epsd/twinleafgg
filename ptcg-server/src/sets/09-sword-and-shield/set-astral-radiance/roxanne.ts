@@ -6,51 +6,14 @@ import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { GameError, GameMessage } from '../../../game';
-import { DRAW_CARDS, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { MoveCardsEffect } from '../../../game/store/effects/game-effects';
-
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: Roxanne, effect: TrainerEffect): IterableIterator<State> {
-  const player = effect.player;
-  const opponent = StateUtils.getOpponent(state, player);
-
-  const oppPrizes = opponent.getPrizeLeft();
-
-  const supporterTurn = player.supporterTurn;
-
-  if (supporterTurn > 0) {
-    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
-  }
-
-  if (oppPrizes > 3) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
-
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
-
-  const cards = player.hand.cards.filter(c => c !== self);
-
-  // We will discard this card after prompt confirmation
-  effect.preventDefault = true;
-
-  const playerMoveEffect = new MoveCardsEffect(player.hand, player.deck, { cards, sourceCard: effect.trainerCard });
-  state = store.reduceEffect(state, playerMoveEffect);
-
-  const opponentMoveEffect = new MoveCardsEffect(opponent.hand, opponent.deck, { sourceCard: effect.trainerCard });
-  state = store.reduceEffect(state, opponentMoveEffect);
-
-  // opponent shuffle and draw
-  if (!opponentMoveEffect.preventDefault) {
-    SHUFFLE_DECK(store, state, opponent);
-    DRAW_CARDS(store, state, opponent, 2);
-  }
-
-  // player shuffle and draw
-  SHUFFLE_DECK(store, state, player);
-  DRAW_CARDS(store, state, player, 6);
-
-  return state;
-}
+import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
+import { WaitPrompt } from '../../../game/store/prompts/wait-prompt';
+import {
+  BOARD_ANIMATION_GATE_TIMEOUT_MS,
+  DECK_SHUFFLE_ANIMATION_WAIT_MS,
+} from '../../../game/store/prefabs/deck-shuffle-animation';
 
 export class Roxanne extends TrainerCard {
 
@@ -74,10 +37,92 @@ export class Roxanne extends TrainerCard {
 Each player shuffles their hand into their deck. Then, you draw 6 cards, and your opponent draws 2 cards.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, this, effect);
-      return generator.next().value;
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      if (player.supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      if (opponent.getPrizeLeft() > 3) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
+      const playerCards = player.hand.cards.filter(c => c !== this);
+      const opponentCards = [...opponent.hand.cards];
+
+      if (playerCards.length > 0) {
+        state = MOVE_CARDS(store, state, player.hand, player.deck, {
+          cards: playerCards,
+          sourceCard: this,
+        });
+      }
+
+      let opponentMovePrevented = false;
+      if (opponentCards.length > 0) {
+        const opponentMoveEffect = new MoveCardsEffect(opponent.hand, opponent.deck, {
+          cards: opponentCards,
+          sourceCard: this,
+        });
+        state = store.reduceEffect(state, opponentMoveEffect);
+        opponentMovePrevented = !!opponentMoveEffect.preventDefault;
+      }
+
+      const drawCards = (): void => {
+        DRAW_CARDS(store, state, player, 6);
+        if (!opponentMovePrevented) {
+          DRAW_CARDS(store, state, opponent, 2);
+        }
+      };
+
+      const shufflePlayer = (then: () => void): void => {
+        store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+          store.prompt(
+            state,
+            new WaitPrompt(player.id, DECK_SHUFFLE_ANIMATION_WAIT_MS, 'Deck shuffle animation', false),
+            () => then(),
+          );
+        });
+      };
+
+      const shuffleOpponent = (then: () => void): void => {
+        store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
+          opponent.deck.applyOrder(order);
+          store.prompt(
+            state,
+            new WaitPrompt(opponent.id, DECK_SHUFFLE_ANIMATION_WAIT_MS, 'Deck shuffle animation', false),
+            () => then(),
+          );
+        });
+      };
+
+      const afterHandMoves = (): void => {
+        shufflePlayer(() => {
+          if (!opponentMovePrevented) {
+            shuffleOpponent(() => drawCards());
+          } else {
+            drawCards();
+          }
+        });
+      };
+
+      if (playerCards.length > 0 || opponentCards.length > 0) {
+        return store.prompt(
+          state,
+          new WaitPrompt(
+            player.id,
+            BOARD_ANIMATION_GATE_TIMEOUT_MS,
+            'Hand to deck animation',
+            false,
+          ),
+          () => afterHandMoves(),
+        );
+      }
+
+      afterHandMoves();
+      return state;
     }
 
     return state;
