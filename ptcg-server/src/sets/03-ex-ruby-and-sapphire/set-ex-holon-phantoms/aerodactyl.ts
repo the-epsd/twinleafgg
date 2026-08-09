@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardTag, CardType, PowerType, StoreLike, State, GameError, GameMessage, SuperType, EnergyType } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
-import { WAS_POWER_USED, HAS_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, ADD_MARKER, ABILITY_USED, SEARCH_DECK_FOR_CARDS_TO_HAND, WAS_ATTACK_USED, THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN } from "../../../game/store/prefabs/prefabs";
+import { WAS_POWER_USED, HAS_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, ADD_MARKER, ABILITY_USED, SEARCH_DECK_FOR_CARDS_TO_HAND, WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
+import { THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class Aerodactyl extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

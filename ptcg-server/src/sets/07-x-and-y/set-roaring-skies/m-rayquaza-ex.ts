@@ -8,7 +8,8 @@ import { PowerType } from '../../../game/store/card/pokemon-types';
 import { Card, ChooseEnergyPrompt, GameMessage } from '../../../game';
 import { DiscardCardsEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect, CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
-import { MEGA_EVOLUTION_END_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { MEGA_EVOLUTION_END_TURN } from '../../../game/store/prefabs/tool-prefabs';
 
 export class MRayquazaEX extends PokemonCard {
   public stage: Stage = Stage.MEGA;

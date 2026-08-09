@@ -8,7 +8,8 @@ import { PowerType } from '../../../game/store/card/pokemon-types';
 import { GameError, GameMessage, PlayerType } from '../../../game';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { COPY_OPPONENT_ACTIVE_ATTACK, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { COPY_OPPONENT_ACTIVE_ATTACK } from '../../../game/store/prefabs/attack-effects';
 
 export class Mewex extends PokemonCard {
 

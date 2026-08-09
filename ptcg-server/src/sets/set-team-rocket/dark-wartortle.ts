@@ -2,7 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { MULTIPLE_COIN_FLIPS_PROMPT, THIS_POKEMON_RETALIATES_ON_DAMAGE_DURING_OPPONENTS_NEXT_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { THIS_POKEMON_RETALIATES_ON_DAMAGE_DURING_OPPONENTS_NEXT_TURN } from '../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class DarkWartortle extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

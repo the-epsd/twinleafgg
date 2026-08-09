@@ -3,7 +3,8 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, PowerType, ChooseCardsPrompt, GameMessage, Card, PokemonCardList, GameError } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { BLOCK_RETREAT, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 export class CarracostaGX extends PokemonCard {
   public tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;

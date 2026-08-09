@@ -1,7 +1,8 @@
 import { PokemonCard, Stage, CardTag, CardType, StoreLike, State } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
 import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE } from "../../../game/store/prefabs/attack-effects";
-import { WAS_ATTACK_USED, THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN } from "../../../game/store/prefabs/prefabs";
+import { WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
+import { THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class RegisteelStar extends PokemonCard {
   public stage: Stage = Stage.BASIC;

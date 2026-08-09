@@ -2,7 +2,8 @@ import { State, StoreLike } from '../../../game';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class ArceusMetal extends PokemonCard {
   public stage: Stage = Stage.BASIC;

@@ -2,7 +2,8 @@ import { BoardEffect, Card, CardList, CardType, ChooseCardsPrompt, GameError, Ga
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { TrainerToDeckEffect } from '../../../game/store/effects/play-card-effects';
-import { PREVENT_DAMAGE, WAS_ATTACK_USED, WAS_POWER_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Florges extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;

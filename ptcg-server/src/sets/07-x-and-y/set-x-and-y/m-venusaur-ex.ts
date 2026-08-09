@@ -4,7 +4,8 @@ import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
 
-import { MEGA_EVOLUTION_END_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { MEGA_EVOLUTION_END_TURN } from '../../../game/store/prefabs/tool-prefabs';
 
 export class MVenusaurEX extends PokemonCard {
   public tags = [CardTag.POKEMON_EX, CardTag.MEGA,];

@@ -2,11 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType } from '../../../game/store/card/card-types';
 import { StoreLike, State, SlotType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import {
-  ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON,
-  PREVENT_DAMAGE,
-  WAS_ATTACK_USED,
-} from '../../../game/store/prefabs/prefabs';
+import { ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Zamazenta extends PokemonCard {
   public stage: Stage = Stage.BASIC;

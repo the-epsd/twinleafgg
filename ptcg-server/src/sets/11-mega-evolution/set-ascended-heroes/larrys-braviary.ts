@@ -1,7 +1,8 @@
 import { PokemonCard, Stage, CardTag, CardType, StoreLike, State } from '../../../game';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { BLOCK_RETREAT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class LarrysBraviary extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

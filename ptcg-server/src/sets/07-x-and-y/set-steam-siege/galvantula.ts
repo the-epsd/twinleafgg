@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { BLOCK_RETREAT, THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Galvantula extends PokemonCard {
   public stage = Stage.STAGE_1;

@@ -2,7 +2,8 @@ import { State, StoreLike } from '../../../game';
 import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { PREVENT_DAMAGE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Archaludon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

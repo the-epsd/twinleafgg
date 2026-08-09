@@ -1,6 +1,7 @@
 import { CardTag, CardType, PokemonCard, Stage, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { BLOCK_IF_GX_ATTACK_USED, HAS_EXTRA_ENERGY_BEYOND_ATTACK_COST, THIS_POKEMON_SURVIVES_ON_TEN_HP_DURING_OPPONENTS_NEXT_TURN, WAS_ATTACK_USED, WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, HAS_EXTRA_ENERGY_BEYOND_ATTACK_COST, WAS_ATTACK_USED, WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN } from '../../../game/store/prefabs/prefabs';
+import { THIS_POKEMON_SURVIVES_ON_TEN_HP_DURING_OPPONENTS_NEXT_TURN } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class MarshadowMachampGX extends PokemonCard {
   public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];

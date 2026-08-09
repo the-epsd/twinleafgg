@@ -3,7 +3,8 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { OPPONENT_CANNOT_PLAY_POKEMON_WITH_ABILITIES, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { OPPONENT_CANNOT_PLAY_POKEMON_WITH_ABILITIES } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Chimecho extends PokemonCard {
   public stage: Stage = Stage.BASIC;

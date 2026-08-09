@@ -3,7 +3,8 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, ShuffleDeckPrompt, PokemonCardList } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, BLOCK_IF_GX_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED, DEFENDING_POKEMON_DOES_LESS_DAMAGE } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, BLOCK_IF_GX_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store/prefabs/prefabs';
+import { DEFENDING_POKEMON_DOES_LESS_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class SuicuneGx extends PokemonCard {
   public tags = [CardTag.POKEMON_GX];

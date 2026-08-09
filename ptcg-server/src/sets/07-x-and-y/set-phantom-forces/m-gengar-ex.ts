@@ -4,7 +4,8 @@ import { StoreLike, State, StateUtils, ChooseAttackPrompt } from '../../../game'
 import { Effect } from '../../../game/store/effects/effect';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { GameLog, GameMessage } from '../../../game/game-message';
-import { MEGA_EVOLUTION_END_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { MEGA_EVOLUTION_END_TURN } from '../../../game/store/prefabs/tool-prefabs';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 
 function* usePhantomGate(

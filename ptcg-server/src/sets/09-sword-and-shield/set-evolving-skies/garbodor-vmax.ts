@@ -6,7 +6,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { BLOCK_RETREAT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../../game/store/prefabs/attack-effects';
 export class GarbodorVmax extends PokemonCard {
   public tags = [CardTag.POKEMON_VMAX];

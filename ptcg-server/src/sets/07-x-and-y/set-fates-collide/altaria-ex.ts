@@ -1,6 +1,7 @@
 import { PokemonCard, CardTag, Stage, CardType, StoreLike, State } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
-import { WAS_ATTACK_USED, HEAL_X_DAMAGE_FROM_THIS_POKEMON, THIS_POKEMON_HAS_NO_WEAKNESS_DURING_OPPONENTS_NEXT_TURN } from "../../../game/store/prefabs/prefabs";
+import { WAS_ATTACK_USED, HEAL_X_DAMAGE_FROM_THIS_POKEMON } from "../../../game/store/prefabs/prefabs";
+import { THIS_POKEMON_HAS_NO_WEAKNESS_DURING_OPPONENTS_NEXT_TURN } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class AltariaEx extends PokemonCard {
   public tags = [CardTag.POKEMON_EX];

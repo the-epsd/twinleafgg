@@ -3,13 +3,8 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { RetreatEffect, EffectOfAbilityEffect } from '../../../game/store/effects/game-effects';
-import {
-  WAS_ATTACK_USED,
-  IS_ABILITY_BLOCKED,
-  DISCARD_A_STADIUM_CARD_IN_PLAY,
-  PREVENT_DAMAGE,
-  PREVENT_EFFECTS_OF_ATTACKS,
-} from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, DISCARD_A_STADIUM_CARD_IN_PLAY } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Flygon extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;

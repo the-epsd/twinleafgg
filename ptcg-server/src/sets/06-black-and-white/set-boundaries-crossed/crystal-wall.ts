@@ -6,7 +6,7 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { TOOL_SET_HP_IF } from '../../../game/store/prefabs/prefabs';
+import { TOOL_SET_HP_IF } from '../../../game/store/prefabs/tool-prefabs';
 
 export class CrystalWall extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;

@@ -4,12 +4,8 @@ import { StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType } from 
 import { Effect } from '../../../game/store/effects/effect';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
-import {
-  WAS_ATTACK_USED,
-  COIN_FLIP_PROMPT,
-  PREVENT_DAMAGE,
-  PREVENT_EFFECTS_OF_ATTACKS,
-} from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Rapidash extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

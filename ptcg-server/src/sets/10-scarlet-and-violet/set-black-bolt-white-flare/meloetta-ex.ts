@@ -5,7 +5,8 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { UseAttackEffect } from '../../../game/store/effects/game-effects';
-import { IS_ABILITY_BLOCKED, NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/attack-effects';
 // Energy type constants (P, C, D, F) are assumed to be globally available as in other SV11B cards
 
 export class Meloettaex extends PokemonCard {

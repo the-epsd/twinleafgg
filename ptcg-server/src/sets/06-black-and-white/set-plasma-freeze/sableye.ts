@@ -2,7 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, BLOCK_RETREAT } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { } from '../../../game/store/prefabs/prefabs';
 export class Sableye extends PokemonCard {
   public tags = [CardTag.TEAM_PLASMA];

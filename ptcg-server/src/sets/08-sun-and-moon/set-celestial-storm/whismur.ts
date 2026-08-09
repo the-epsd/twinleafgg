@@ -1,7 +1,8 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { StoreLike, State, GameError, GameMessage, CardType, Stage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, OPPONENT_CANNOT_PLAY_TRAINER_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { OPPONENT_CANNOT_PLAY_TRAINER_CARDS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Whismur extends PokemonCard {
   public stage: Stage = Stage.BASIC;

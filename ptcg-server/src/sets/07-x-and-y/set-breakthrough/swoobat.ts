@@ -7,7 +7,8 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/attack-effects';
 
 export class Swoobat extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

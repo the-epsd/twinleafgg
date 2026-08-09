@@ -5,7 +5,8 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { StateUtils } from '../../../game/store/state-utils';
-import { WAS_ATTACK_USED, FLIP_COIN_FOR_FLY, AFTER_ATTACK, ADD_PARALYZED_TO_PLAYER_ACTIVE, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, AFTER_ATTACK, ADD_PARALYZED_TO_PLAYER_ACTIVE, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { FLIP_COIN_FOR_FLY } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class FlyingPikachuV extends PokemonCard {
   public stage: Stage = Stage.BASIC;

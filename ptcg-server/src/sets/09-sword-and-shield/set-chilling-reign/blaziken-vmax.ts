@@ -1,7 +1,8 @@
 import { PokemonCard, Stage, CardType, CardTag, State, StoreLike, GameMessage, StateUtils, AttachEnergyPrompt, CardTarget, ChoosePokemonPrompt, EnergyCard, EnergyType, PlayerType, SlotType, SuperType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { WAS_ATTACK_USED, BLOCK_RETREAT } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class BlazikenVMAX extends PokemonCard {
   public stage: Stage = Stage.VMAX;

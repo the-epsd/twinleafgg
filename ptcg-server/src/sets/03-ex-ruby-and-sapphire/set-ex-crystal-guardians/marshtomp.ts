@@ -2,7 +2,8 @@ import { Effect } from '../../../game/store/effects/effect';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { StoreLike, State } from '../../../game';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { BLOCK_RETREAT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 export class Marshtomp extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Mudkip';

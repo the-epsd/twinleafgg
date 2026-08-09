@@ -2,7 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CardType, Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { ChooseCardsPrompt, GameError, GameMessage, PowerType, State, StateUtils, StoreLike, TrainerCard } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { ABILITY_USED, ADD_MARKER, CAN_PLAY_SUPPORTER_CARD, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { ABILITY_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { CAN_PLAY_SUPPORTER_CARD } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class Milotic extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

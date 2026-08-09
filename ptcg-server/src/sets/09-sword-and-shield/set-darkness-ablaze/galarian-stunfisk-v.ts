@@ -3,7 +3,8 @@ import { Stage, CardType, CardTag, EnergyType } from '../../../game/store/card/c
 import { PowerType, StoreLike, State, EnergyCard } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, THIS_POKEMON_RETALIATES_ON_DAMAGE_DURING_OPPONENTS_NEXT_TURN } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { THIS_POKEMON_RETALIATES_ON_DAMAGE_DURING_OPPONENTS_NEXT_TURN } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class GalarianStunfiskV extends PokemonCard {
   public tags = [CardTag.POKEMON_V];

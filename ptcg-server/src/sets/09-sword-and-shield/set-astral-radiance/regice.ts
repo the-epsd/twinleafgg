@@ -3,7 +3,8 @@ import { Stage, SuperType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, PokemonCardList, Card, ChooseCardsPrompt, GameMessage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
-import { DEFENDING_POKEMON_CANNOT_ATTACK, MOVE_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 function* useRegiGate(next: Function, store: StoreLike, state: State,
   effect: AttackEffect, self: Card): IterableIterator<State> {

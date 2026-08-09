@@ -2,7 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, GameLog, TrainerCard, ChooseCardsPrompt, Card, SelectPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { MOVE_CARDS, OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class RocketsWobbuffet extends PokemonCard {
   public stage: Stage = Stage.BASIC;

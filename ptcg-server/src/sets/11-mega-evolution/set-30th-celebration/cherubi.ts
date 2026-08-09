@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardType, StoreLike, State } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
-import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from "../../../game/store/prefabs/prefabs";
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from "../../../game/store/prefabs/prefabs";
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class Cherubi extends PokemonCard {
   public stage: Stage = Stage.BASIC;

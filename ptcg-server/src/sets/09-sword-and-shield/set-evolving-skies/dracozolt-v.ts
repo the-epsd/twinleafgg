@@ -1,6 +1,7 @@
 import { PokemonCard, CardTag, Stage, CardType, StoreLike, State } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
-import { WAS_ATTACK_USED, YOUR_OPPONENT_CANNOT_ATTACH_ENERGY_FROM_HAND_TO_DEFENDING_POKEMON, DISCARD_TOP_X_CARDS_FROM_YOUR_DECK } from "../../../game/store/prefabs/prefabs";
+import { WAS_ATTACK_USED, DISCARD_TOP_X_CARDS_FROM_YOUR_DECK } from "../../../game/store/prefabs/prefabs";
+import { YOUR_OPPONENT_CANNOT_ATTACH_ENERGY_FROM_HAND_TO_DEFENDING_POKEMON } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class DracozoltV extends PokemonCard {
   public tags = [CardTag.POKEMON_V];

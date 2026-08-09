@@ -5,7 +5,8 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { GameMessage } from '../../../game/game-message';
-import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, BLOCK_RETREAT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import {
   CAN_APPLY_LOCKER_ABILITY,
   HANDLE_ABILITY_BLOCK,

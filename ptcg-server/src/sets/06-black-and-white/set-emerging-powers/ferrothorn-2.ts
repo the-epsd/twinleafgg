@@ -2,7 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, PlayerType, SlotType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { COIN_FLIP_PROMPT, PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 

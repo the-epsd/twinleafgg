@@ -4,7 +4,8 @@ import {
   YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED,
   YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED,
 } from '../../../game/store/prefabs/attack-effects';
-import { PREVENT_DAMAGE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Tentacruel extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

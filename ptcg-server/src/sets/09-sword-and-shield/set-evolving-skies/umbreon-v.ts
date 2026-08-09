@@ -3,7 +3,8 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { BLOCK_RETREAT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class UmbreonV extends PokemonCard {
   public tags = [CardTag.POKEMON_V, CardTag.SINGLE_STRIKE];

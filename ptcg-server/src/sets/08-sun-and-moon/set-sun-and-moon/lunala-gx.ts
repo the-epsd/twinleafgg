@@ -8,7 +8,8 @@ import { PowerType, StoreLike, State, StateUtils, GameMessage, GameError, Player
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, BLOCK_IF_GX_ATTACK_USED, BLOCK_HEALING_ON_DEFENDING_POKEMON_DURING_OPPONENTS_NEXT_TURN } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_HEALING_ON_DEFENDING_POKEMON_DURING_OPPONENTS_NEXT_TURN } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 function* usePsychicTransfer(next: Function, store: StoreLike, state: State, effect: import('../../../game/store/effects/game-effects').PowerEffect): IterableIterator<State> {
   const player = effect.player;

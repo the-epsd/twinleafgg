@@ -2,12 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import {
-  COIN_FLIP_PROMPT,
-  PREVENT_DAMAGE,
-  PREVENT_EFFECTS_OF_ATTACKS,
-  WAS_ATTACK_USED,
-} from '../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../game/store/prefabs/effect-of-attack-prefabs';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../game/store/prefabs/attack-effects';
 
 export class AurasLucario3 extends PokemonCard {

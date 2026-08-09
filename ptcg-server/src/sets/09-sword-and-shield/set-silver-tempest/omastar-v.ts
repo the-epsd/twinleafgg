@@ -4,11 +4,8 @@ import { StoreLike, State, GameMessage } from '../../../game';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonFromDeckEffect } from '../../../game/store/effects/play-card-effects';
-import {
-  WAS_ATTACK_USED,
-  SHUFFLE_DECK,
-  DEFENDING_POKEMON_CANNOT_ATTACK,
-} from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class OmastarV extends PokemonCard {
   public tags = [CardTag.POKEMON_V];

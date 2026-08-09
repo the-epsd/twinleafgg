@@ -1,7 +1,8 @@
 import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, PlayerType } from "../../../game";
 import { CheckAttackCostEffect } from "../../../game/store/effects/check-effects";
 import { Effect } from "../../../game/store/effects/effect";
-import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED, OPPONENT_CANNOT_PLAY_CARDS } from "../../../game/store/prefabs/prefabs";
+import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
+import { OPPONENT_CANNOT_PLAY_CARDS } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class Azelf extends PokemonCard {
   public stage: Stage = Stage.BASIC;

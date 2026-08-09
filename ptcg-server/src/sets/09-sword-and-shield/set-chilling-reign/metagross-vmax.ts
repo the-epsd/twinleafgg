@@ -2,7 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, SEARCH_DECK_FOR_CARDS_TO_HAND, NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../../game/store/prefabs/prefabs';
+import { NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/attack-effects';
 
 export class MetagrossVmax extends PokemonCard {
   public tags = [CardTag.POKEMON_VMAX, CardTag.RAPID_STRIKE];

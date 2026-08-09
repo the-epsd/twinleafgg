@@ -4,7 +4,8 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChooseCardsPrompt, GameError, GameMessage, PowerType } from '../../../game';
-import { ABILITY_USED, ADD_MARKER, BLOCK_RETREAT, HAS_MARKER, MOVE_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { ABILITY_USED, ADD_MARKER, HAS_MARKER, MOVE_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 export class Pidgeot extends PokemonCard {

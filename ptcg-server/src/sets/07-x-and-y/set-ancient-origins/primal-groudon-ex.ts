@@ -6,7 +6,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, DISCARD_A_STADIUM_CARD_IN_PLAY, MEGA_EVOLUTION_END_TURN } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, DISCARD_A_STADIUM_CARD_IN_PLAY } from '../../../game/store/prefabs/prefabs';
+import { MEGA_EVOLUTION_END_TURN } from '../../../game/store/prefabs/tool-prefabs';
 
 export class PrimalGroudonEx extends PokemonCard {
   public tags = [CardTag.POKEMON_EX, CardTag.MEGA, CardTag.PRIMAL];

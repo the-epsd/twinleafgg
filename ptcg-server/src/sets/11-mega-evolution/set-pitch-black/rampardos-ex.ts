@@ -2,7 +2,8 @@ import { PokemonCard, Stage, CardTag, CardType, PowerType, StoreLike, State, Sta
 import { Effect } from "../../../game/store/effects/effect";
 import { AttackEffect } from "../../../game/store/effects/game-effects";
 import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from "../../../game/store/prefabs/attack-effects";
-import { WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, COIN_FLIP_PROMPT, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS } from "../../../game/store/prefabs/prefabs";
+import { WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, COIN_FLIP_PROMPT, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN } from "../../../game/store/prefabs/prefabs";
+import { NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS } from "../../../game/store/prefabs/attack-effects";
 
 export class Rampardosex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;

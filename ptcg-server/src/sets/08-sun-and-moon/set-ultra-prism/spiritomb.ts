@@ -13,11 +13,8 @@ import {
   TrainerType,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import {
-  DEFENDING_POKEMON_CANNOT_ATTACK,
-  SHOW_CARDS_TO_PLAYER,
-  WAS_ATTACK_USED,
-} from '../../../game/store/prefabs/prefabs';
+import { SHOW_CARDS_TO_PLAYER, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Spiritomb extends PokemonCard {
   public stage: Stage = Stage.BASIC;

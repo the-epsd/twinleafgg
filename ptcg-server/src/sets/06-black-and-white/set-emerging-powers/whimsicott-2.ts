@@ -2,7 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, PlayerType, SlotType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { OPPONENTS_POKEMON_CAN_ONLY_USE_THAT_ATTACK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { OPPONENTS_POKEMON_CAN_ONLY_USE_THAT_ATTACK } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 
 export class Whimsicott2 extends PokemonCard {

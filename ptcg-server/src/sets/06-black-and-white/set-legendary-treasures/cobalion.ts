@@ -5,7 +5,8 @@ import { State } from '../../../game/store/state/state';
 import { StateUtils } from '../../../game/store/state-utils';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { DEFENDING_POKEMON_CANNOT_ATTACK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Cobalion extends PokemonCard {
   public stage: Stage = Stage.BASIC;

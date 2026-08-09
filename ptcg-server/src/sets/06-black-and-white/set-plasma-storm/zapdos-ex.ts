@@ -3,12 +3,8 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlasmaEnergy } from './plasma-energy';
-import {
-  COIN_FLIP_PROMPT,
-  PREVENT_DAMAGE,
-  PREVENT_EFFECTS_OF_ATTACKS,
-  WAS_ATTACK_USED,
-} from '../../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class ZapdosEx extends PokemonCard {
   public stage: Stage = Stage.BASIC;

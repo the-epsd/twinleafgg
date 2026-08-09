@@ -1,6 +1,7 @@
 import { CardTag, CardType, GameError, GameMessage, PokemonCard, Stage, State, StoreLike } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
-import { WAS_ATTACK_USED, PREVENT_DAMAGE, TERA_RULE } from "../../../game/store/prefabs/prefabs";
+import { WAS_ATTACK_USED, TERA_RULE } from "../../../game/store/prefabs/prefabs";
+import { PREVENT_DAMAGE } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class Terapagosex extends PokemonCard {
   public stage: Stage = Stage.BASIC;

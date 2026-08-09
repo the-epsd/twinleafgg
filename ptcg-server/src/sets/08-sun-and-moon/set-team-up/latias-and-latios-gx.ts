@@ -17,12 +17,8 @@ import {
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
-import {
-  BLOCK_IF_GX_ATTACK_USED,
-  PREVENT_DAMAGE,
-  PREVENT_EFFECTS_OF_ATTACKS,
-  WAS_ATTACK_USED,
-} from '../../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class LatiasAndLatiosGx extends PokemonCard {
   public tags = [CardTag.TAG_TEAM, CardTag.POKEMON_GX];

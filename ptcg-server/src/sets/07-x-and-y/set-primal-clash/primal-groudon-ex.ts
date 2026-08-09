@@ -2,7 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, PowerType, PlayerType, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { DISCARD_A_STADIUM_CARD_IN_PLAY, MEGA_EVOLUTION_END_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { DISCARD_A_STADIUM_CARD_IN_PLAY, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { MEGA_EVOLUTION_END_TURN } from '../../../game/store/prefabs/tool-prefabs';
 import { TrainerTargetEffect } from '../../../game/store/effects/play-card-effects';
 
 export class PrimalGroudonEx extends PokemonCard {

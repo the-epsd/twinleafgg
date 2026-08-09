@@ -3,7 +3,8 @@ import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage, GameError, PokemonCardList } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED, OPPONENT_CANNOT_PLAY_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { OPPONENT_CANNOT_PLAY_CARDS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class WhimsicottVSTAR extends PokemonCard {

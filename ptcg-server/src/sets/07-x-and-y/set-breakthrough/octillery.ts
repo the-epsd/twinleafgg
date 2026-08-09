@@ -8,7 +8,8 @@ import { PowerType } from '../../../game/store/card/pokemon-types';
 import { GameError, GameMessage } from '../../../game';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED, BLOCK_RETREAT, WAS_POWER_USED, ABILITY_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED, ABILITY_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Octillery extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

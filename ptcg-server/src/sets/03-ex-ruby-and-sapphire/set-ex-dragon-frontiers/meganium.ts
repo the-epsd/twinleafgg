@@ -2,7 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { GameMessage, PowerType, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { CONFIRMATION_PROMPT, DEFENDING_POKEMON_DOES_LESS_DAMAGE, IS_POKEPOWER_BLOCKED, JUST_EVOLVED, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { CONFIRMATION_PROMPT, IS_POKEPOWER_BLOCKED, JUST_EVOLVED, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { DEFENDING_POKEMON_DOES_LESS_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Meganium extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;

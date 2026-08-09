@@ -3,12 +3,8 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { GameMessage, PokemonCard } from '../../../game';
-import {
-  CONFIRMATION_PROMPT,
-  DISCARD_ALL_ENERGY_FROM_POKEMON,
-  PREVENT_DAMAGE,
-  WAS_ATTACK_USED,
-} from '../../../game/store/prefabs/prefabs';
+import { CONFIRMATION_PROMPT, DISCARD_ALL_ENERGY_FROM_POKEMON, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class MegaManectricEx extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

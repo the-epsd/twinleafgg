@@ -2,7 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { StoreLike, State, PlayerType, PokemonCardList } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { BLOCK_IF_GX_ATTACK_USED, DAMAGE_OPPONENT_POKEMON, OPPONENT_CANNOT_PLAY_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { OPPONENT_CANNOT_PLAY_CARDS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class NoivernGX extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

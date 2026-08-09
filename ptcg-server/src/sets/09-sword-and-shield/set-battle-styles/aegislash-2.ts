@@ -1,6 +1,7 @@
 import { CardTag, CardType, ChooseCardsPrompt, GameError, GameMessage, PlayerType, PokemonCard, PowerType, Stage, State, StoreLike, SuperType } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
-import { WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, PREVENT_DAMAGE } from "../../../game/store/prefabs/prefabs";
+import { WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
+import { PREVENT_DAMAGE } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class Aegislash2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;

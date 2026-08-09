@@ -2,7 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED, PREVENT_DAMAGE } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE } from '../../game/store/prefabs/effect-of-attack-prefabs';
 import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS, YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from '../../game/store/prefabs/attack-effects';
 import { HealTargetEffect } from '../../game/store/effects/attack-effects';
 

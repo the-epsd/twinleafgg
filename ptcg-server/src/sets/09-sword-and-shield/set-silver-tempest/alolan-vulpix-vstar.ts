@@ -3,7 +3,8 @@ import { Stage, CardTag } from '../../../game/store/card/card-types';
 import { GameError, GameMessage, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { ApplyWeaknessEffect, AfterDamageEffect } from '../../../game/store/effects/attack-effects';
-import { PREVENT_DAMAGE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class AlolanVulpixVSTAR extends PokemonCard {
   public stage = Stage.VSTAR;

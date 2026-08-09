@@ -1,13 +1,8 @@
 import { CardTag, CardType, PokemonCard, Stage, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../../game/store/prefabs/attack-effects';
-import {
-  BLOCK_IF_GX_ATTACK_USED,
-  MULTIPLE_COIN_FLIPS_PROMPT,
-  PREVENT_DAMAGE,
-  PREVENT_EFFECTS_OF_ATTACKS,
-  WAS_ATTACK_USED,
-} from '../../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class ToxapexGx extends PokemonCard {
   public tags = [CardTag.POKEMON_GX];

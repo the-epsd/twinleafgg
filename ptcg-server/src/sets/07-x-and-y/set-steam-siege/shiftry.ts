@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
-import { WAS_ATTACK_USED, STADIUM_AND_TOOL_CARDS_HAVE_NO_EFFECT } from "../../../game/store/prefabs/prefabs";
+import { WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
+import { STADIUM_AND_TOOL_CARDS_HAVE_NO_EFFECT } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class Shiftry extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;

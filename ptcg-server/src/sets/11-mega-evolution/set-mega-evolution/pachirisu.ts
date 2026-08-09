@@ -1,7 +1,8 @@
 import { PokemonCard, State, StoreLike } from '../../../game';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { Effect } from '../../../game/store/effects/effect';
-import { DEFENDING_POKEMON_TAKES_DAMAGE_ON_ENERGY_ATTACH_FROM_HAND_NEXT_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { DEFENDING_POKEMON_TAKES_DAMAGE_ON_ENERGY_ATTACH_FROM_HAND_NEXT_TURN } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Pachirisu extends PokemonCard {
   public stage: Stage = Stage.BASIC;

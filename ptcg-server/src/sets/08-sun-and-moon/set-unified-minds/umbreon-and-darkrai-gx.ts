@@ -3,7 +3,8 @@ import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
-import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED, OPPONENT_CANNOT_PLAY_TRAINER_CARDS } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { OPPONENT_CANNOT_PLAY_TRAINER_CARDS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class UmbreonDarkraiGX extends PokemonCard {
   public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];

@@ -1,7 +1,8 @@
 import { CardType, PokemonCard, Stage, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../../game/store/prefabs/attack-effects';
-import { PREVENT_DAMAGE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Sawk extends PokemonCard {
   public stage: Stage = Stage.BASIC;

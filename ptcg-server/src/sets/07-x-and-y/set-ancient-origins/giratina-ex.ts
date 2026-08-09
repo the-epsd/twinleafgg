@@ -2,7 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { OPPONENT_CANNOT_PLAY_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { OPPONENT_CANNOT_PLAY_CARDS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { AbstractAttackEffect, ApplyWeaknessEffect } from '../../../game/store/effects/attack-effects';
 
 export class GiratinaEX extends PokemonCard {

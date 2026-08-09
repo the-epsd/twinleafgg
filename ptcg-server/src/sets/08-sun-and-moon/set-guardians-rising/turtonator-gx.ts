@@ -3,7 +3,8 @@ import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../../game/s
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { StoreLike, State, StateUtils, PlayerType, SlotType, GameMessage, AttachEnergyPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED, THIS_POKEMON_RETALIATES_ON_DAMAGE_DURING_OPPONENTS_NEXT_TURN } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { THIS_POKEMON_RETALIATES_ON_DAMAGE_DURING_OPPONENTS_NEXT_TURN } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class TurtonatorGx extends PokemonCard {

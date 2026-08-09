@@ -8,7 +8,8 @@ import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
 import { GamePhase } from '../../../game/store/state/state';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, BLOCK_RETREAT } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 export class GalarianStunfisk extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;

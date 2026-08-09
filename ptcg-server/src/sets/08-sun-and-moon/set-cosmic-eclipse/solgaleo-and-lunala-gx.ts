@@ -2,7 +2,8 @@ import { CardTag, CardType, PokemonCard, Stage, State, StoreLike } from '../../.
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlaySupporterEffect } from '../../../game/store/effects/play-card-effects';
-import { BLOCK_IF_GX_ATTACK_USED, PREVENT_DAMAGE_AND_EFFECTS_TO_ALL_YOUR_POKEMON, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE_AND_EFFECTS_TO_ALL_YOUR_POKEMON } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class SolgaleoLunalaGX extends PokemonCard {
   public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];

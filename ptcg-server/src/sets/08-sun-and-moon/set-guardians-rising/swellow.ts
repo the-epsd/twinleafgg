@@ -1,6 +1,8 @@
 import { PokemonCard, Stage, CardType, StoreLike, State } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
-import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS, NEXT_TURN_ATTACK_BONUS } from "../../../game/store/prefabs/prefabs";
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from "../../../game/store/prefabs/prefabs";
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from "../../../game/store/prefabs/effect-of-attack-prefabs";
+import { NEXT_TURN_ATTACK_BONUS } from "../../../game/store/prefabs/attack-effects";
 
 export class Swellow extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

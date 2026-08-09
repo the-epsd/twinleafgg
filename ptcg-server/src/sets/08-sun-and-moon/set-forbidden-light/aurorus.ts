@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardType, StoreLike, State } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
-import { WAS_ATTACK_USED, THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN, PREVENT_DAMAGE } from "../../../game/store/prefabs/prefabs";
+import { WAS_ATTACK_USED, THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN } from "../../../game/store/prefabs/prefabs";
+import { PREVENT_DAMAGE } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class Aurorus extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;

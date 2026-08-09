@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardType, StoreLike, State } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
-import { WAS_ATTACK_USED, FLIP_COIN_OPPONENT_CANNOT_DRAW_AT_START_OF_NEXT_TURN, DRAW_CARDS } from "../../../game/store/prefabs/prefabs";
+import { WAS_ATTACK_USED, DRAW_CARDS } from "../../../game/store/prefabs/prefabs";
+import { FLIP_COIN_OPPONENT_CANNOT_DRAW_AT_START_OF_NEXT_TURN } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class Luvdisc extends PokemonCard {
   public stage: Stage = Stage.BASIC;

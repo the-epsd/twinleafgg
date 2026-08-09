@@ -1,7 +1,8 @@
 import { PokemonCard, Stage, CardTag, CardType, PowerType, StoreLike, State, StateUtils, PlayerType } from "../../../game";
 import { CheckRetreatCostEffect } from "../../../game/store/effects/check-effects";
 import { Effect } from "../../../game/store/effects/effect";
-import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED, PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from "../../../game/store/prefabs/prefabs";
+import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class Latiosex extends PokemonCard {
   public stage: Stage = Stage.BASIC;

@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardType, StoreLike, State } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
-import { WAS_ATTACK_USED, YOUR_OPPONENT_CANNOT_ATTACH_ENERGY_FROM_HAND_TO_DEFENDING_POKEMON } from "../../../game/store/prefabs/prefabs";
+import { WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
+import { YOUR_OPPONENT_CANNOT_ATTACH_ENERGY_FROM_HAND_TO_DEFENDING_POKEMON } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class Araquanid extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

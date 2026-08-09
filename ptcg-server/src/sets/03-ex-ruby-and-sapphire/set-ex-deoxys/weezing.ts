@@ -4,13 +4,8 @@ import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
-import {
-  ADD_POISON_TO_PLAYER_ACTIVE,
-  AFTER_ATTACK,
-  DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK,
-  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
-  WAS_ATTACK_USED,
-} from '../../../game/store/prefabs/prefabs';
+import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Weezing extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

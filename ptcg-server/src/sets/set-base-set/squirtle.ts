@@ -4,13 +4,8 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
-import {
-  ADD_PARALYZED_TO_PLAYER_ACTIVE,
-  AFTER_ATTACK,
-  COIN_FLIP_PROMPT,
-  PREVENT_DAMAGE,
-  WAS_ATTACK_USED,
-} from '../../game/store/prefabs/prefabs';
+import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE } from '../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Squirtle extends PokemonCard {
   public stage: Stage = Stage.BASIC;

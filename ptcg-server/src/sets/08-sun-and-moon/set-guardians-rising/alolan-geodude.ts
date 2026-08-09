@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardType, StoreLike, State } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
-import { WAS_ATTACK_USED, THIS_POKEMON_HAS_NO_RETREAT_COST_DURING_YOUR_NEXT_TURN } from "../../../game/store/prefabs/prefabs";
+import { WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
+import { THIS_POKEMON_HAS_NO_RETREAT_COST_DURING_YOUR_NEXT_TURN } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class AlolanGeodude extends PokemonCard {
   public stage: Stage = Stage.BASIC;

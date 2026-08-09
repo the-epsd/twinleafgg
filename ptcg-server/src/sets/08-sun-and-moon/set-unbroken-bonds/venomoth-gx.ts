@@ -1,6 +1,7 @@
 import { CardTag, CardType, PokemonCard, Stage, State, StoreLike } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
-import { WAS_ATTACK_USED, PREVENT_DAMAGE, BLOCK_IF_GX_ATTACK_USED, SHUFFLE_DECK, DRAW_CARDS } from "../../../game/store/prefabs/prefabs";
+import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED, SHUFFLE_DECK, DRAW_CARDS } from "../../../game/store/prefabs/prefabs";
+import { PREVENT_DAMAGE } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class VenomothGx extends PokemonCard {
   public tags = [CardTag.POKEMON_GX];

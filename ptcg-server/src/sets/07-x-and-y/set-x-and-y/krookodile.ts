@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
-import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, OPPONENT_CANNOT_PLAY_SUPPORTER_CARDS, SWITCH_ACTIVE_WITH_BENCHED, AFTER_ATTACK } from "../../../game/store/prefabs/prefabs";
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, SWITCH_ACTIVE_WITH_BENCHED, AFTER_ATTACK } from "../../../game/store/prefabs/prefabs";
+import { OPPONENT_CANNOT_PLAY_SUPPORTER_CARDS } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class Krookodile extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;

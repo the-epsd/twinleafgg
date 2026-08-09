@@ -2,7 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS, THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN } from '../../../game/store/prefabs/prefabs';
+import { NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS } from '../../../game/store/prefabs/attack-effects';
 
 export class Serperior extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;

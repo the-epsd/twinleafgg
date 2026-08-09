@@ -14,14 +14,8 @@ import {
   CardTarget,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import {
-  WAS_ATTACK_USED,
-  WAS_POWER_USED,
-  IS_ABILITY_BLOCKED,
-  USE_ABILITY_ONCE_PER_TURN,
-  REMOVE_MARKER_AT_END_OF_TURN,
-  PREVENT_DAMAGE,
-} from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, REMOVE_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Latias extends PokemonCard {
   public tags = [CardTag.FUSION_STRIKE];

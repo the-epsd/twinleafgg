@@ -3,7 +3,7 @@ import { TrainerType, CardType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { TOOL_ACTIVE_DAMAGE_BONUS } from '../../../game/store/prefabs/prefabs';
+import { TOOL_ACTIVE_DAMAGE_BONUS } from '../../../game/store/prefabs/tool-prefabs';
 
 
 export class DarkClaw extends TrainerCard {

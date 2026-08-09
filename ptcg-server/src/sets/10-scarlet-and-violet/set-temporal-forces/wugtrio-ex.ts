@@ -3,7 +3,8 @@ import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/ca
 import { StoreLike, State, GameMessage, ChooseCardsPrompt, ChoosePokemonPrompt, PlayerType, SlotType } from '../../../game';
 
 import { Effect } from '../../../game/store/effects/effect';
-import { BLOCK_RETREAT, DAMAGE_OPPONENT_POKEMON, TERA_RULE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { DAMAGE_OPPONENT_POKEMON, TERA_RULE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 export class Wugtrioex extends PokemonCard {
   public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public stage: Stage = Stage.STAGE_1;

@@ -19,11 +19,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import {
-  CLEAN_UP_SUPPORTER,
-  SHUFFLE_DECK,
-  WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN,
-} from '../../../game/store/prefabs/prefabs';
+import { SHUFFLE_DECK, WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN } from '../../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER } from '../../../game/store/prefabs/trainer-prefabs';
 
 function isMegaEvolutionEx(card: PokemonCard): boolean {
   return card.tags.includes(CardTag.POKEMON_SV_MEGA) && card.tags.includes(CardTag.POKEMON_ex);

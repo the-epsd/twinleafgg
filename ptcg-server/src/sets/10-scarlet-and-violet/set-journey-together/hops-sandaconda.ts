@@ -3,7 +3,8 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PlayerType, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED, BLOCK_RETREAT } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class HopsSandaconda extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

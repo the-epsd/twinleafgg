@@ -1,6 +1,7 @@
 import { PokemonCard, CardTag, Stage, CardType, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { DEFENDING_POKEMON_CANNOT_ATTACK, THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class ArctovishV extends PokemonCard {
   public tags = [CardTag.POKEMON_V];

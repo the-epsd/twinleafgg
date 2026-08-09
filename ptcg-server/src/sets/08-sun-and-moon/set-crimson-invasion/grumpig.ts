@@ -8,7 +8,8 @@ import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
 import { AddSpecialConditionsPowerEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { IS_ABILITY_BLOCKED, NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/attack-effects';
 
 export class Grumpig extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

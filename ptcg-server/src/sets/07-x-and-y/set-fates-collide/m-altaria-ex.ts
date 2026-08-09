@@ -8,7 +8,8 @@ import { PlayerType, StoreLike, State } from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { HealEffect } from '../../../game/store/effects/game-effects';
-import { MEGA_EVOLUTION_END_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { MEGA_EVOLUTION_END_TURN } from '../../../game/store/prefabs/tool-prefabs';
 
 export class MAltariaEx extends PokemonCard {
   public tags = [CardTag.MEGA, CardTag.POKEMON_EX];

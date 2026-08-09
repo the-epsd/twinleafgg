@@ -1,7 +1,8 @@
 import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, PlayerType } from "../../../game";
 import { CheckPokemonStatsEffect } from "../../../game/store/effects/check-effects";
 import { Effect } from "../../../game/store/effects/effect";
-import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED, THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN } from "../../../game/store/prefabs/prefabs";
+import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
+import { THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class Kabuto extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

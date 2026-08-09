@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardTag, CardType, Power, PowerType, StoreLike, State, StateUtils } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
-import { JUST_EVOLVED, IS_POKEPOWER_BLOCKED, CONFIRMATION_PROMPT, ADD_BURN_TO_PLAYER_ACTIVE, ADD_CONFUSION_TO_PLAYER_ACTIVE, WAS_ATTACK_USED, THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from "../../../game/store/prefabs/prefabs";
+import { JUST_EVOLVED, IS_POKEPOWER_BLOCKED, CONFIRMATION_PROMPT, ADD_BURN_TO_PLAYER_ACTIVE, ADD_CONFUSION_TO_PLAYER_ACTIVE, WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from "../../../game/store/prefabs/prefabs";
+import { THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class Flareonex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

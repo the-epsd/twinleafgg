@@ -5,7 +5,7 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
-import { PREVENT_DAMAGE_TO_YOUR_BENCHED_POKEMON_FROM_OPPONENT_ATTACKS } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE_TO_YOUR_BENCHED_POKEMON_FROM_OPPONENT_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Manaphy extends PokemonCard {
 

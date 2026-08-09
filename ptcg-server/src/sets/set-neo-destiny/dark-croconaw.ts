@@ -2,11 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import {
-  BLOCK_RETREAT,
-  DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK,
-  WAS_ATTACK_USED,
-} from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT, DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK } from '../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class DarkCroconaw extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

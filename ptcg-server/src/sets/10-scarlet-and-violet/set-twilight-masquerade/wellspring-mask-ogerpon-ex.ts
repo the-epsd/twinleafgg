@@ -6,7 +6,8 @@ import { Card, ChooseEnergyPrompt, ChoosePokemonPrompt, ConfirmPrompt, GameMessa
 
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED, BLOCK_RETREAT, TERA_RULE } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, TERA_RULE } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class WellspringMaskOgerponex extends PokemonCard {
   public stage: Stage = Stage.BASIC;

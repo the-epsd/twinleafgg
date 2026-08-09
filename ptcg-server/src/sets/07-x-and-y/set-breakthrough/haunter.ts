@@ -5,7 +5,8 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { StateUtils } from '../../../game';
-import { ADD_CONFUSION_TO_PLAYER_ACTIVE, BLOCK_RETREAT, CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED, JUST_EVOLVED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { ADD_CONFUSION_TO_PLAYER_ACTIVE, CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED, JUST_EVOLVED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../../game/store/prefabs/attack-effects';
 export class Haunter extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardType, StoreLike, State } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
-import { WAS_ATTACK_USED, OPPONENT_TURN_ENDS_ON_ENERGY_ATTACH_FROM_HAND_TO_DEFENDING_NEXT_TURN } from "../../../game/store/prefabs/prefabs";
+import { WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
+import { OPPONENT_TURN_ENDS_ON_ENERGY_ATTACH_FROM_HAND_TO_DEFENDING_NEXT_TURN } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class Slakoth extends PokemonCard {
   public stage: Stage = Stage.BASIC;

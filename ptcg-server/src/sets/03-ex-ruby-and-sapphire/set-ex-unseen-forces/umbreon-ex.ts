@@ -1,6 +1,7 @@
 import { CardTag, CardType, ChoosePokemonPrompt, GameMessage, PlayerType, PokemonCard, PowerType, SlotType, Stage, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { ADD_MARKER, BLOCK_RETREAT, HAS_MARKER, IS_POKEPOWER_BLOCKED, JUST_EVOLVED, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { ADD_MARKER, HAS_MARKER, IS_POKEPOWER_BLOCKED, JUST_EVOLVED, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import {
   HANDLE_ABILITY_BLOCK,
   POKEPOWER_TYPES,

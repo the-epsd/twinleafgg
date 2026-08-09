@@ -2,7 +2,8 @@ import { State, StoreLike } from '../../../game';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, OPPONENT_CANNOT_PLAY_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { OPPONENT_CANNOT_PLAY_CARDS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class DialgaG extends PokemonCard {
   public stage: Stage = Stage.BASIC;

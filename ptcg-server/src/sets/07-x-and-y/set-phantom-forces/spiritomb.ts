@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardType, StoreLike, State } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
-import { WAS_ATTACK_USED, DEFENDING_POKEMON_CANNOT_EVOLVE_NEXT_TURN, AFTER_ATTACK, COIN_FLIP_PROMPT, ADD_CONFUSION_TO_PLAYER_ACTIVE } from "../../../game/store/prefabs/prefabs";
+import { WAS_ATTACK_USED, AFTER_ATTACK, COIN_FLIP_PROMPT, ADD_CONFUSION_TO_PLAYER_ACTIVE } from "../../../game/store/prefabs/prefabs";
+import { DEFENDING_POKEMON_CANNOT_EVOLVE_NEXT_TURN } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class Spiritomb extends PokemonCard {
   public stage: Stage = Stage.BASIC;

@@ -4,7 +4,8 @@ import { CheckTableStateEffect, CheckAttackCostEffect, CheckPokemonAttacksEffect
 import { Effect } from "../../../game/store/effects/effect";
 import { AttackEffect } from "../../../game/store/effects/game-effects";
 import { EndTurnEffect } from "../../../game/store/effects/game-phase-effects";
-import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS, MOVE_CARDS } from "../../../game/store/prefabs/prefabs";
+import { MOVE_CARDS } from "../../../game/store/prefabs/prefabs";
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 import { WAS_TRAINER_USED } from "../../../game/store/prefabs/trainer-prefabs";
 
 export class AncientTechnicalMachineIce extends TrainerCard {

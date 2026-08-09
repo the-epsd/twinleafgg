@@ -3,12 +3,8 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PlayerType, PowerType, StoreLike, State, GameError, GameMessage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
-import {
-  WAS_ATTACK_USED,
-  IS_ABILITY_BLOCKED,
-  BLOCK_IF_GX_ATTACK_USED,
-  PREVENT_DAMAGE,
-} from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class LatiosGx extends PokemonCard {
   public tags = [CardTag.POKEMON_GX];

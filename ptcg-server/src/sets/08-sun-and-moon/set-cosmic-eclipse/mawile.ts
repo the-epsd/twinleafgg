@@ -6,7 +6,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, Card, ChooseCardsPrompt, GameMessage, StateUtils, ShowCardsPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, BLOCK_IF_DECK_EMPTY, SHUFFLE_DECK, BLOCK_RETREAT } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, BLOCK_IF_DECK_EMPTY, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 export class Mawile extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;

@@ -6,7 +6,8 @@ import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-e
 import { PikachuVUNIONTopRight } from './pikachu-v-union-tr';
 import { PikachuVUNIONBottomLeft } from './pikachu-v-union-bl';
 import { PikachuVUNIONBottomRight } from './pikachu-v-union-br';
-import { WAS_ATTACK_USED, WAS_POWER_USED, COIN_FLIP_PROMPT, OPPONENT_CANNOT_PLAY_ITEM_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { OPPONENT_CANNOT_PLAY_ITEM_CARDS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class PikachuVUNIONTopLeft extends PokemonCard {
   public stage: Stage = Stage.VUNION;

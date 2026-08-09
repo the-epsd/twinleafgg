@@ -7,7 +7,8 @@ import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/s
 import { AttachEnergyPrompt, GameMessage, PlayerType, SlotType, StoreLike, State, StateUtils } from '../../../game';
 import { CardTarget } from '../../../game/store/actions/play-card-action';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, BLOCK_RETREAT } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 

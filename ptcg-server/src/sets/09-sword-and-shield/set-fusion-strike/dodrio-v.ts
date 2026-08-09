@@ -1,6 +1,7 @@
 import { PokemonCard, CardTag, Stage, CardType, StoreLike, State } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
-import { NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS, WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from "../../../game/store/prefabs/prefabs";
+import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from "../../../game/store/prefabs/prefabs";
+import { NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS } from "../../../game/store/prefabs/attack-effects";
 
 export class DodrioV extends PokemonCard {
   public tags = [CardTag.POKEMON_V, CardTag.RAPID_STRIKE];

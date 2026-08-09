@@ -3,7 +3,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { PowerType, StoreLike, State, ConfirmPrompt, GameMessage, CardList, ChooseCardsPrompt, ShowCardsPrompt, StateUtils } from '../../../game';
-import { BLOCK_RETREAT, IS_POKEPOWER_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { IS_POKEPOWER_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
 
 export class Azelf extends PokemonCard {

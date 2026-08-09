@@ -1,6 +1,7 @@
 import { PokemonCard, CardTag, Stage, CardType, StoreLike, State } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
-import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, BLOCK_IF_GX_ATTACK_USED, OPPONENT_CANNOT_PLAY_ANY_CARDS } from "../../../game/store/prefabs/prefabs";
+import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, BLOCK_IF_GX_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
+import { OPPONENT_CANNOT_PLAY_ANY_CARDS } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class AlolanGolemGx extends PokemonCard {
   public tags = [CardTag.POKEMON_GX];

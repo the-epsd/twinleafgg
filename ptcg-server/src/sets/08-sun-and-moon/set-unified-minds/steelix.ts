@@ -2,7 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../../game/store/card/card-types';
 import { PlayerType, SlotType, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, ATTACH_ENERGY_PROMPT, YOUR_POKEMON_CANNOT_ATTACK_DURING_YOUR_NEXT_TURN } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, ATTACH_ENERGY_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { YOUR_POKEMON_CANNOT_ATTACK_DURING_YOUR_NEXT_TURN } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Steelix extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

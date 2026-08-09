@@ -6,7 +6,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, ADD_CONFUSION_TO_PLAYER_ACTIVE, NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, ADD_CONFUSION_TO_PLAYER_ACTIVE } from '../../../game/store/prefabs/prefabs';
+import { NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/attack-effects';
 
 export class MSlowbroEx extends PokemonCard {
   public tags = [CardTag.MEGA, CardTag.POKEMON_EX];

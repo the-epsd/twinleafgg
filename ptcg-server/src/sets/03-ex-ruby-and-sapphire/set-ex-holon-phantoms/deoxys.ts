@@ -1,7 +1,8 @@
 import { PokemonCard, Stage, CardTag, CardType, PowerType, StoreLike, State, StateUtils, PokemonCardList, GameError, GameMessage, ChooseCardsPrompt, SuperType, GameLog } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
 import { EndTurnEffect } from "../../../game/store/effects/game-phase-effects";
-import { HAS_MARKER, REMOVE_MARKER, WAS_POWER_USED, IS_POKEPOWER_BLOCKED, SHUFFLE_DECK, ADD_MARKER, ABILITY_USED, WAS_ATTACK_USED, THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN_BEFORE_WEAKNESS_AND_RESISTANCE } from "../../../game/store/prefabs/prefabs";
+import { HAS_MARKER, REMOVE_MARKER, WAS_POWER_USED, IS_POKEPOWER_BLOCKED, SHUFFLE_DECK, ADD_MARKER, ABILITY_USED, WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
+import { THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN_BEFORE_WEAKNESS_AND_RESISTANCE } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class Deoxys extends PokemonCard {
   public stage: Stage = Stage.BASIC;

@@ -7,7 +7,8 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, BLOCK_RETREAT } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 export class DrednawV extends PokemonCard {
   public tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;

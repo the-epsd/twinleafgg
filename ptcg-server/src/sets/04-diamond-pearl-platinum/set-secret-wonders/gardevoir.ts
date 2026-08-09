@@ -2,7 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CardType, Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike, State, PowerType, StateUtils, TrainerCard, ChooseCardsPrompt, GameMessage, GameError } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { ABILITY_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED, CAN_PLAY_SUPPORTER_CARD } from '../../../game/store/prefabs/prefabs';
+import { ABILITY_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { CAN_PLAY_SUPPORTER_CARD } from '../../../game/store/prefabs/trainer-prefabs';
 import {
   HANDLE_ABILITY_BLOCK,
   POKEPOWER_TYPES,

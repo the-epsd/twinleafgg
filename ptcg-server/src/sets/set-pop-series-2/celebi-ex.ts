@@ -2,16 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, StateUtils, CardList, ChooseCardsPrompt, GameMessage, GameLog } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import {
-  ABILITY_USED,
-  CONFIRMATION_PROMPT,
-  IS_POKEPOWER_BLOCKED,
-  MOVE_CARD_TO,
-  PREVENT_DAMAGE,
-  PREVENT_EFFECTS_OF_ATTACKS,
-  SHOW_CARDS_TO_PLAYER,
-  WAS_ATTACK_USED,
-} from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, CONFIRMATION_PROMPT, IS_POKEPOWER_BLOCKED, MOVE_CARD_TO, SHOW_CARDS_TO_PLAYER, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../game/store/prefabs/effect-of-attack-prefabs';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 

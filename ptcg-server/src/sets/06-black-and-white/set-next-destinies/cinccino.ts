@@ -4,7 +4,8 @@ import { StoreLike, State, StateUtils } from '../../../game';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { Effect } from '../../../game/store/effects/effect';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
-import { IS_ABILITY_BLOCKED, COIN_FLIP_PROMPT, NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/attack-effects';
 
 export class Cinccino extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

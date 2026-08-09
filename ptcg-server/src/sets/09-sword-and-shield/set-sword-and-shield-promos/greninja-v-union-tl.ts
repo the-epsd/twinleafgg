@@ -9,7 +9,8 @@ import { GreninjaVUNIONBottomLeft } from './greninja-v-union-bl';
 import { GreninjaVUNIONBottomRight } from './greninja-v-union-br';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlayItemEffect } from '../../../game/store/effects/play-card-effects';
-import { BLOCK_RETREAT, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class GreninjaVUNIONTopLeft extends PokemonCard {
   public stage: Stage = Stage.VUNION;

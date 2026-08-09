@@ -3,7 +3,8 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PlayerType, StoreLike, State } from '../../../game';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Sandslash extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

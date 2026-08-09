@@ -1,6 +1,7 @@
 import { CardType, PokemonCard, Stage, State, StoreLike } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
-import { WAS_ATTACK_USED, YOUR_OPPONENT_CANNOT_ATTACH_ENERGY_FROM_HAND_TO_DEFENDING_POKEMON, AFTER_ATTACK, COIN_FLIP_PROMPT, ADD_POISON_TO_PLAYER_ACTIVE } from "../../../game/store/prefabs/prefabs";
+import { WAS_ATTACK_USED, AFTER_ATTACK, COIN_FLIP_PROMPT, ADD_POISON_TO_PLAYER_ACTIVE } from "../../../game/store/prefabs/prefabs";
+import { YOUR_OPPONENT_CANNOT_ATTACH_ENERGY_FROM_HAND_TO_DEFENDING_POKEMON } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class Gliscor extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

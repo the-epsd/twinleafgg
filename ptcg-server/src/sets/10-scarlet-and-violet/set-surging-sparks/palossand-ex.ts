@@ -6,7 +6,8 @@ import { Effect } from '../../../game/store/effects/effect';
 import { PlayerType } from '../../../game';
 
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED, BLOCK_RETREAT } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Palossandex extends PokemonCard {
   public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];

@@ -1,6 +1,7 @@
 import { CardTag, CardType, PokemonCard, Stage, State, StoreLike } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
-import { WAS_ATTACK_USED, BOOST_IF_OTHER_ANCIENT_ATTACKED_LAST_TURN } from "../../../game/store/prefabs/prefabs";
+import { WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
+import { BOOST_IF_OTHER_ANCIENT_ATTACKED_LAST_TURN } from "../../../game/store/prefabs/attack-effects";
 
 export class Koraidon extends PokemonCard {
   public tags = [CardTag.ANCIENT];

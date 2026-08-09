@@ -1,7 +1,8 @@
 import { PokemonCard, Stage, CardType, StoreLike, State } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from "../../../game/store/prefabs/attack-effects";
-import { WAS_ATTACK_USED, ADD_SLEEP_TO_PLAYER_ACTIVE, NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS } from "../../../game/store/prefabs/prefabs";
+import { WAS_ATTACK_USED, ADD_SLEEP_TO_PLAYER_ACTIVE } from "../../../game/store/prefabs/prefabs";
+import { NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS } from "../../../game/store/prefabs/attack-effects";
 
 export class Musharna extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

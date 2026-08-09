@@ -7,7 +7,8 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { CardList, PowerType, StoreLike, State, StateUtils, ConfirmPrompt, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED, BLOCK_RETREAT, ADD_CONFUSION_TO_PLAYER_ACTIVE, ADD_POISON_TO_PLAYER_ACTIVE, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED, ADD_CONFUSION_TO_PLAYER_ACTIVE, ADD_POISON_TO_PLAYER_ACTIVE, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../game/store/prefabs/effect-of-attack-prefabs';
 export class NihilegoGx extends PokemonCard {
   public tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;

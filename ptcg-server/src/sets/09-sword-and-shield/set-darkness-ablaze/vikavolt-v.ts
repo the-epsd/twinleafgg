@@ -4,7 +4,8 @@ import { StoreLike, State, GameMessage, ChooseEnergyPrompt, Card } from '../../.
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED, OPPONENT_CANNOT_PLAY_ITEM_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { OPPONENT_CANNOT_PLAY_ITEM_CARDS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class VikavoltV extends PokemonCard {
   public stage: Stage = Stage.BASIC;

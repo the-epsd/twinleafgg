@@ -3,7 +3,8 @@ import { CardType, EnergyType, Stage, SuperType } from '../../../game/store/card
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { WAS_ATTACK_USED, BLOCK_RETREAT } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { StateUtils } from '../../../game/store/state-utils';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';

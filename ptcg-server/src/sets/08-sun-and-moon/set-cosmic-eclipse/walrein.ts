@@ -2,7 +2,8 @@ import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, PlayerType 
 import { PutDamageEffect } from "../../../game/store/effects/attack-effects";
 import { Effect } from "../../../game/store/effects/effect";
 import { AttackEffect } from "../../../game/store/effects/game-effects";
-import { WAS_ATTACK_USED, OPPONENT_CANNOT_PLAY_TRAINER_CARDS } from "../../../game/store/prefabs/prefabs";
+import { WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
+import { OPPONENT_CANNOT_PLAY_TRAINER_CARDS } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class Walrein extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;

@@ -3,7 +3,8 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, PowerType, PlayerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { IS_ABILITY_BLOCKED, NEXT_TURN_ATTACK_BASE_DAMAGE } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { NEXT_TURN_ATTACK_BASE_DAMAGE } from '../../../game/store/prefabs/attack-effects';
 import { AbstractAttackEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
 
 export class MagearnaEX extends PokemonCard {

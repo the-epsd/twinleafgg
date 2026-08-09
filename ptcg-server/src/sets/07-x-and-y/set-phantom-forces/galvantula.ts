@@ -7,11 +7,8 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import {
-  WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED,
-  BLOCK_RETREAT,
-  ADD_CONFUSION_TO_PLAYER_ACTIVE
-} from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED, ADD_CONFUSION_TO_PLAYER_ACTIVE } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 export class Galvantula extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Joltik';

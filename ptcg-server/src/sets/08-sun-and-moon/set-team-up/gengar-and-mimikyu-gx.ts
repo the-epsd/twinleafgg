@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardType, CardTag, SuperType, StoreLike, State, StateUtils, TrainerCard, EnergyCard } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { BLOCK_IF_GX_ATTACK_USED, DRAW_CARDS_UNTIL_CARDS_IN_HAND, WAS_ATTACK_USED, OPPONENT_CANNOT_PLAY_ANY_CARDS } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, DRAW_CARDS_UNTIL_CARDS_IN_HAND, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { OPPONENT_CANNOT_PLAY_ANY_CARDS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class GengarMimikyuGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;

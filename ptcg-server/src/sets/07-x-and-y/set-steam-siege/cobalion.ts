@@ -2,11 +2,8 @@ import { State, StoreLike } from '../../../game';
 import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
-import {
-  DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN,
-  PREVENT_DAMAGE,
-  WAS_ATTACK_USED,
-} from '../../../game/store/prefabs/prefabs';
+import { DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Cobalion extends PokemonCard {
   public stage: Stage = Stage.BASIC;

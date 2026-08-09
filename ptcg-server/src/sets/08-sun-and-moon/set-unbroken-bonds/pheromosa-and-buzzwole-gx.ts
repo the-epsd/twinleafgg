@@ -1,7 +1,8 @@
 import { CardTag, CardType, ChoosePokemonPrompt, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { BLOCK_IF_GX_ATTACK_USED, HAS_EXTRA_ENERGY_BEYOND_ATTACK_COST, IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES, NEXT_TURN_ATTACK_BASE_DAMAGE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, HAS_EXTRA_ENERGY_BEYOND_ATTACK_COST, IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { NEXT_TURN_ATTACK_BASE_DAMAGE } from '../../../game/store/prefabs/attack-effects';
 
 
 export class PheromosaAndBuzzwoleGX extends PokemonCard {

@@ -2,7 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { COIN_FLIP_PROMPT, OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK } from '../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class MistysPoliwag extends PokemonCard {
   public stage: Stage = Stage.BASIC;
