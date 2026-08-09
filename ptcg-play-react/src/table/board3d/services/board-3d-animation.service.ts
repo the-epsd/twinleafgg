@@ -31,6 +31,7 @@ import {
   createCoinFlipSceneGraph,
   type CoinFlipSceneGraph,
 } from '../board-3d-coin-flip';
+import { playSfx } from '../../../sfx';
 
 /** World Z: flip in the plane of the hand / table (not Y, which tumbles the card edge-on). */
 const DRAW_FLIP_AXIS_Z = new Vector3(0, 0, 1);
@@ -609,6 +610,7 @@ export class Board3dAnimationService {
               card.quaternion.copy(qFlipScratch);
               if (!revealApplied && flipOnce.t >= 0.5) {
                 revealApplied = true;
+                playSfx('cardreveal');
                 onRevealFace?.();
               }
             }

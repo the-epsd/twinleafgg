@@ -16,6 +16,7 @@ import { useAuth } from '../context/AuthContext';
 import { useSnackbar } from '../context/SnackbarContext';
 import { appConfig } from '../env/config';
 import { FormAlert } from '../components/ui/FormAlert';
+import { Modal } from '../components/ui/Modal';
 import { ShellButton } from '../components/ui/ShellButton';
 import styles from './ReplaysPage.module.css';
 
@@ -184,10 +185,8 @@ function ImportReplayDialog({ open, onClose, onImported }: ImportDialogProps) {
       role="presentation"
       onMouseDown={(e) => e.target === e.currentTarget && !loading && onClose()}
     >
-      <div
+      <Modal
         className={styles.dialog}
-        role="dialog"
-        aria-modal="true"
         aria-labelledby="import-replay-title"
         onMouseDown={(e) => e.stopPropagation()}
       >
@@ -298,7 +297,7 @@ function ImportReplayDialog({ open, onClose, onImported }: ImportDialogProps) {
             {t('BUTTON_IMPORT')}
           </ShellButton>
         </div>
-      </div>
+      </Modal>
     </div>
   );
 }

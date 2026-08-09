@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ShellButton } from '../components/ui/ShellButton';
+import { Modal } from '../components/ui/Modal';
 import styles from './DeckQuantityDialog.module.css';
 
 export type DeckQuantityDialogProps = {
@@ -78,7 +79,7 @@ export function DeckQuantityDialog({
         }
       }}
     >
-      <div className={styles.panel} role="dialog" aria-modal="true" aria-labelledby="deck-quantity-dialog-title">
+      <Modal className={styles.panel} aria-labelledby="deck-quantity-dialog-title">
         <h2 id="deck-quantity-dialog-title" className={styles.title}>
           {t('DECK_EDIT_HOW_MANY_CARDS')}
         </h2>
@@ -108,7 +109,7 @@ export function DeckQuantityDialog({
             {t('BUTTON_OK')}
           </ShellButton>
         </div>
-      </div>
+      </Modal>
     </div>
   );
 }

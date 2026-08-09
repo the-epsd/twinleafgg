@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Archetype } from 'ptcg-server';
 import { ShellButton } from '../components/ui/ShellButton';
+import { Modal } from '../components/ui/Modal';
 import { ArchetypeIcon } from './ArchetypeIcon';
 import { ARCHETYPE_SELECT_OPTIONS } from './archetypeSelectOptions';
 import styles from './ArchetypeSelectDialog.module.css';
@@ -81,10 +82,8 @@ export function ArchetypeSelectDialog({
       role="presentation"
       onMouseDown={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div
+      <Modal
         className={styles.panel}
-        role="dialog"
-        aria-modal="true"
         aria-labelledby="archetype-select-title"
         onMouseDown={(e) => e.stopPropagation()}
       >
@@ -195,7 +194,7 @@ export function ArchetypeSelectDialog({
             {t('BUTTON_SAVE')}
           </ShellButton>
         </div>
-      </div>
+      </Modal>
     </div>
   );
 }

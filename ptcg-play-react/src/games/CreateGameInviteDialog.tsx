@@ -11,6 +11,9 @@ import type { DeckListEntry } from '../types/responses';
 import { formatOptionLabel } from '../deck-editor/formatLabelI18n';
 import { CREATE_GAME_FORMAT_VALUES } from './matchFormats';
 import { pickDefaultDeckIdForFormat, validDecksForFormat } from './deckDefaultPreferences';
+import { CheckboxField } from '../components/ui/CheckboxField';
+import { Modal } from '../components/ui/Modal';
+import { SelectField } from '../components/ui/SelectField';
 import { toGameSettingsPayload } from '../game/gameSettingsPayload';
 import styles from './CreateGameInviteDialog.module.css';
 
@@ -202,10 +205,8 @@ export function CreateGameInviteDialog({ open, onClose, invitedClientId }: Creat
       role="presentation"
       onMouseDown={(e) => e.target === e.currentTarget && !submitting && onClose()}
     >
-      <div
+      <Modal
         className={styles.panel}
-        role="dialog"
-        aria-modal="true"
         aria-labelledby="create-game-invite-title"
         onMouseDown={(e) => e.stopPropagation()}
       >
@@ -215,7 +216,7 @@ export function CreateGameInviteDialog({ open, onClose, invitedClientId }: Creat
 
         <div className={styles.field}>
           <label htmlFor="invite-format">{t('LABEL_FORMAT_SHORT')}</label>
-          <select
+          <SelectField
             id="invite-format"
             className={styles.select}
             value={format}
@@ -227,12 +228,12 @@ export function CreateGameInviteDialog({ open, onClose, invitedClientId }: Creat
                 {formatOptionLabel(t, f)}
               </option>
             ))}
-          </select>
+          </SelectField>
         </div>
 
         <div className={styles.field}>
           <label htmlFor="invite-deck">{t('LABEL_DECK_SHORT')}</label>
-          <select
+          <SelectField
             id="invite-deck"
             className={styles.select}
             value={deckId ?? ''}
@@ -248,12 +249,12 @@ export function CreateGameInviteDialog({ open, onClose, invitedClientId }: Creat
                 </option>
               ))
             )}
-          </select>
+          </SelectField>
         </div>
 
         <div className={styles.field}>
           <label htmlFor="invite-time">{t('REACT_CREATE_GAME_TIME_LIMIT')}</label>
-          <select
+          <SelectField
             id="invite-time"
             className={styles.select}
             value={timeLimit}
@@ -265,61 +266,61 @@ export function CreateGameInviteDialog({ open, onClose, invitedClientId }: Creat
                 {t(o.labelKey)}
               </option>
             ))}
-          </select>
+          </SelectField>
         </div>
 
         <div className={styles.field}>
-          <label className={styles.checkboxRow}>
-            <input
-              type="checkbox"
-              checked={recordingEnabled}
-              disabled={submitting}
-              onChange={(e) => setRecordingEnabled(e.target.checked)}
-            />
+          <CheckboxField
+            plain
+            className={styles.checkboxRow}
+            checked={recordingEnabled}
+            disabled={submitting}
+            onChange={(e) => setRecordingEnabled(e.target.checked)}
+          >
             {t('REACT_CREATE_GAME_RECORDING')}
-          </label>
+          </CheckboxField>
         </div>
 
         {isAdmin ? (
           <div className={styles.field}>
-            <label className={styles.checkboxRow}>
-              <input
-                type="checkbox"
-                checked={sandboxMode}
-                disabled={submitting}
-                onChange={(e) => setSandboxMode(e.target.checked)}
-              />
+            <CheckboxField
+              plain
+              className={styles.checkboxRow}
+              checked={sandboxMode}
+              disabled={submitting}
+              onChange={(e) => setSandboxMode(e.target.checked)}
+            >
               {t('GAMES_SANDBOX_MODE')}
-            </label>
+            </CheckboxField>
             {sandboxMode ? (
               <div className={styles.sandboxOptions}>
-                <label className={styles.checkboxRow}>
-                  <input
-                    type="checkbox"
-                    checked={sandboxAllPokemonBasic}
-                    disabled={submitting}
-                    onChange={(e) => setSandboxAllPokemonBasic(e.target.checked)}
-                  />
+                <CheckboxField
+                  plain
+                  className={styles.checkboxRow}
+                  checked={sandboxAllPokemonBasic}
+                  disabled={submitting}
+                  onChange={(e) => setSandboxAllPokemonBasic(e.target.checked)}
+                >
                   {t('GAMES_SANDBOX_ALL_POKEMON_BASIC')}
-                </label>
-                <label className={styles.checkboxRow}>
-                  <input
-                    type="checkbox"
-                    checked={sandboxAttacksCostNoEnergy}
-                    disabled={submitting}
-                    onChange={(e) => setSandboxAttacksCostNoEnergy(e.target.checked)}
-                  />
+                </CheckboxField>
+                <CheckboxField
+                  plain
+                  className={styles.checkboxRow}
+                  checked={sandboxAttacksCostNoEnergy}
+                  disabled={submitting}
+                  onChange={(e) => setSandboxAttacksCostNoEnergy(e.target.checked)}
+                >
                   {t('GAMES_SANDBOX_ATTACKS_NO_ENERGY')}
-                </label>
-                <label className={styles.checkboxRow}>
-                  <input
-                    type="checkbox"
-                    checked={sandboxRetreatCostsNoEnergy}
-                    disabled={submitting}
-                    onChange={(e) => setSandboxRetreatCostsNoEnergy(e.target.checked)}
-                  />
+                </CheckboxField>
+                <CheckboxField
+                  plain
+                  className={styles.checkboxRow}
+                  checked={sandboxRetreatCostsNoEnergy}
+                  disabled={submitting}
+                  onChange={(e) => setSandboxRetreatCostsNoEnergy(e.target.checked)}
+                >
                   {t('GAMES_SANDBOX_RETREAT_NO_ENERGY')}
-                </label>
+                </CheckboxField>
               </div>
             ) : null}
           </div>
@@ -339,7 +340,7 @@ export function CreateGameInviteDialog({ open, onClose, invitedClientId }: Creat
             {submitting ? t('REACT_SUBMITTING') : t('BUTTON_INVITE')}
           </button>
         </div>
-      </div>
+      </Modal>
     </div>
   );
 }

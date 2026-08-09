@@ -12,6 +12,7 @@ import {
   setBattlePassActiveSeason,
 } from '../api/battlePassApi';
 import { useAuth } from '../context/AuthContext';
+import { SelectField } from '../components/ui/SelectField';
 import { ApiError } from '../api/apiError';
 
 interface BattlePassLevelRow {
@@ -234,7 +235,7 @@ export function BattlePassPage() {
       {seasons.length > 0 && (
         <label style={{ display: 'block', marginBottom: 16 }}>
           {t('BATTLE_PASS_SEASON_LABEL')}{' '}
-          <select
+          <SelectField
             value={selectedSeasonId}
             onChange={(e) => void onSeasonChange(e.target.value)}
             disabled={switchingSeason}
@@ -244,7 +245,7 @@ export function BattlePassPage() {
                 {s.name} ({s.startDate})
               </option>
             ))}
-          </select>
+          </SelectField>
         </label>
       )}
 

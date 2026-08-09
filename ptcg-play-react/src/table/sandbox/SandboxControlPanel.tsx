@@ -5,6 +5,8 @@ import { GamePhase } from 'ptcg-server';
 import { getSocketManager } from '../../socket/socketManager';
 import { ApiError, formatUnknownError } from '../../api/apiError';
 import { useSnackbar } from '../../context/SnackbarContext';
+import { CheckboxField } from '../../components/ui/CheckboxField';
+import { SelectField } from '../../components/ui/SelectField';
 import { translateGameSocketError } from '../../i18n/translateGameSocketError';
 import styles from './SandboxControlPanel.module.css';
 
@@ -533,7 +535,7 @@ export function SandboxControlPanel({ gameId, gameState, players }: SandboxContr
               <div className={styles.tabContent}>
                 <div className={styles.formGroup}>
                   <label>{t('SANDBOX_SELECT_PLAYER')}</label>
-                  <select
+                  <SelectField
                     className={styles.select}
                     value={selectedPlayerIndex}
                     onChange={(e) => {
@@ -546,7 +548,7 @@ export function SandboxControlPanel({ gameId, gameState, players }: SandboxContr
                         {p.name} (ID: {p.id})
                       </option>
                     ))}
-                  </select>
+                  </SelectField>
                 </div>
                 {(
                   [
@@ -572,24 +574,22 @@ export function SandboxControlPanel({ gameId, gameState, players }: SandboxContr
                   </div>
                 ))}
                 <div className={styles.formGroup}>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={playerMods.usedVSTAR}
-                      onChange={(e) => setPlayerMods((m) => ({ ...m, usedVSTAR: e.target.checked }))}
-                    />{' '}
+                  <CheckboxField
+                    plain
+                    checked={playerMods.usedVSTAR}
+                    onChange={(e) => setPlayerMods((m) => ({ ...m, usedVSTAR: e.target.checked }))}
+                  >
                     {t('SANDBOX_USED_VSTAR')}
-                  </label>
+                  </CheckboxField>
                 </div>
                 <div className={styles.formGroup}>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={playerMods.usedGX}
-                      onChange={(e) => setPlayerMods((m) => ({ ...m, usedGX: e.target.checked }))}
-                    />{' '}
+                  <CheckboxField
+                    plain
+                    checked={playerMods.usedGX}
+                    onChange={(e) => setPlayerMods((m) => ({ ...m, usedGX: e.target.checked }))}
+                  >
                     {t('SANDBOX_USED_GX')}
-                  </label>
+                  </CheckboxField>
                 </div>
                 <button type="button" className={styles.btn} onClick={() => void applyPlayerModifications()}>
                   {t('SANDBOX_APPLY_PLAYER')}
@@ -617,7 +617,7 @@ export function SandboxControlPanel({ gameId, gameState, players }: SandboxContr
                 </div>
                 <div className={styles.formGroup}>
                   <label>{t('SANDBOX_PHASE')}</label>
-                  <select
+                  <SelectField
                     className={styles.select}
                     value={gameStateMods.phase == null ? '' : String(gameStateMods.phase)}
                     onChange={(e) => {
@@ -631,7 +631,7 @@ export function SandboxControlPanel({ gameId, gameState, players }: SandboxContr
                         {t(ph.label)}
                       </option>
                     ))}
-                  </select>
+                  </SelectField>
                 </div>
                 <div className={styles.formGroup}>
                   <label>{t('SANDBOX_ACTIVE_PLAYER_INDEX')}</label>
@@ -650,26 +650,24 @@ export function SandboxControlPanel({ gameId, gameState, players }: SandboxContr
                   />
                 </div>
                 <div className={styles.formGroup}>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={gameStateMods.skipOpponentTurn}
-                      onChange={(e) =>
-                        setGameStateMods((m) => ({ ...m, skipOpponentTurn: e.target.checked }))
-                      }
-                    />{' '}
+                  <CheckboxField
+                    plain
+                    checked={gameStateMods.skipOpponentTurn}
+                    onChange={(e) =>
+                      setGameStateMods((m) => ({ ...m, skipOpponentTurn: e.target.checked }))
+                    }
+                  >
                     {t('SANDBOX_SKIP_OPPONENT_TURN')}
-                  </label>
+                  </CheckboxField>
                 </div>
                 <div className={styles.formGroup}>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={gameStateMods.isSuddenDeath}
-                      onChange={(e) => setGameStateMods((m) => ({ ...m, isSuddenDeath: e.target.checked }))}
-                    />{' '}
+                  <CheckboxField
+                    plain
+                    checked={gameStateMods.isSuddenDeath}
+                    onChange={(e) => setGameStateMods((m) => ({ ...m, isSuddenDeath: e.target.checked }))}
+                  >
                     {t('SANDBOX_SUDDEN_DEATH')}
-                  </label>
+                  </CheckboxField>
                 </div>
                 <div className={styles.section}>
                   <h4>{t('SANDBOX_RULES')}</h4>
@@ -683,19 +681,18 @@ export function SandboxControlPanel({ gameId, gameState, players }: SandboxContr
                     ] as const
                   ).map(([ruleKey, labelKey]) => (
                     <div key={ruleKey} className={styles.formGroup}>
-                      <label>
-                        <input
-                          type="checkbox"
-                          checked={gameStateMods.rules[ruleKey]}
-                          onChange={(e) =>
-                            setGameStateMods((m) => ({
-                              ...m,
-                              rules: { ...m.rules, [ruleKey]: e.target.checked },
-                            }))
-                          }
-                        />{' '}
+                      <CheckboxField
+                        plain
+                        checked={gameStateMods.rules[ruleKey]}
+                        onChange={(e) =>
+                          setGameStateMods((m) => ({
+                            ...m,
+                            rules: { ...m.rules, [ruleKey]: e.target.checked },
+                          }))
+                        }
+                      >
                         {t(labelKey)}
-                      </label>
+                      </CheckboxField>
                     </div>
                   ))}
                 </div>
@@ -709,7 +706,7 @@ export function SandboxControlPanel({ gameId, gameState, players }: SandboxContr
               <div className={styles.tabContent}>
                 <div className={styles.formGroup}>
                   <label>{t('SANDBOX_SELECT_PLAYER')}</label>
-                  <select
+                  <SelectField
                     className={styles.select}
                     value={selectedPlayerIndex}
                     onChange={(e) => {
@@ -725,11 +722,11 @@ export function SandboxControlPanel({ gameId, gameState, players }: SandboxContr
                         {p.name} (ID: {p.id})
                       </option>
                     ))}
-                  </select>
+                  </SelectField>
                 </div>
                 <div className={styles.formGroup}>
                   <label>{t('SANDBOX_FROM_ZONE')}</label>
-                  <select
+                  <SelectField
                     className={styles.select}
                     value={fromZone}
                     onChange={(e) => {
@@ -745,11 +742,11 @@ export function SandboxControlPanel({ gameId, gameState, players }: SandboxContr
                         {z.label}
                       </option>
                     ))}
-                  </select>
+                  </SelectField>
                 </div>
                 <div className={styles.formGroup}>
                   <label>{t('SANDBOX_CARD')}</label>
-                  <select
+                  <SelectField
                     key={`sandbox-card-pick-${fromZone}-${selectedPlayerIndex}`}
                     className={styles.select}
                     value={selectedCardIndex === null ? '' : String(selectedCardIndex)}
@@ -769,7 +766,7 @@ export function SandboxControlPanel({ gameId, gameState, players }: SandboxContr
                         {c}
                       </option>
                     ))}
-                  </select>
+                  </SelectField>
                   {availableCards.length === 0 ? (
                     <span className={styles.hint}>{t('SANDBOX_NO_CARDS_IN_ZONE', { zone: fromZone })}</span>
                   ) : null}
@@ -783,24 +780,23 @@ export function SandboxControlPanel({ gameId, gameState, players }: SandboxContr
                     >
                       {availableCards.map((c, i) => (
                         <div key={`${c}-${i}`} className={styles.cardCheckboxItem}>
-                          <label>
-                            <input
-                              type="checkbox"
-                              checked={selectedCardIndices.has(i)}
-                              onChange={(e) => {
-                                setSelectedCardIndices((prev) => {
-                                  const next = new Set(prev);
-                                  if (e.target.checked) {
-                                    next.add(i);
-                                  } else {
-                                    next.delete(i);
-                                  }
-                                  return next;
-                                });
-                              }}
-                            />
+                          <CheckboxField
+                            plain
+                            checked={selectedCardIndices.has(i)}
+                            onChange={(e) => {
+                              setSelectedCardIndices((prev) => {
+                                const next = new Set(prev);
+                                if (e.target.checked) {
+                                  next.add(i);
+                                } else {
+                                  next.delete(i);
+                                }
+                                return next;
+                              });
+                            }}
+                          >
                             {c}
-                          </label>
+                          </CheckboxField>
                         </div>
                       ))}
                     </div>
@@ -808,7 +804,7 @@ export function SandboxControlPanel({ gameId, gameState, players }: SandboxContr
                 ) : null}
                 <div className={styles.formGroup}>
                   <label>{t('SANDBOX_TO_ZONE')}</label>
-                  <select
+                  <SelectField
                     className={styles.select}
                     value={toZone}
                     onChange={(e) => setToZone(e.target.value as (typeof ZONES)[number]['value'])}
@@ -818,7 +814,7 @@ export function SandboxControlPanel({ gameId, gameState, players }: SandboxContr
                         {z.label}
                       </option>
                     ))}
-                  </select>
+                  </SelectField>
                 </div>
                 <div className={styles.buttonRow}>
                   <button type="button" className={styles.btn} onClick={() => void addCard()}>
@@ -838,7 +834,7 @@ export function SandboxControlPanel({ gameId, gameState, players }: SandboxContr
               <div className={styles.tabContent}>
                 <div className={styles.formGroup}>
                   <label>{t('SANDBOX_SELECT_PLAYER')}</label>
-                  <select
+                  <SelectField
                     className={styles.select}
                     value={selectedPlayerIndex}
                     onChange={(e) => {
@@ -851,18 +847,18 @@ export function SandboxControlPanel({ gameId, gameState, players }: SandboxContr
                         {p.name} (ID: {p.id})
                       </option>
                     ))}
-                  </select>
+                  </SelectField>
                 </div>
                 <div className={styles.formGroup}>
                   <label>{t('SANDBOX_LOCATION')}</label>
-                  <select
+                  <SelectField
                     className={styles.select}
                     value={pokemonLocation}
                     onChange={(e) => setPokemonLocation(e.target.value as 'active' | 'bench')}
                   >
                     <option value="active">{t('SANDBOX_ACTIVE')}</option>
                     <option value="bench">{t('SANDBOX_BENCH')}</option>
-                  </select>
+                  </SelectField>
                 </div>
                 {pokemonLocation === 'bench' ? (
                   <div className={styles.formGroup}>
@@ -929,7 +925,7 @@ export function SandboxControlPanel({ gameId, gameState, players }: SandboxContr
                 {pokemonMods.energyCount !== null && pokemonMods.energyCount > 0 ? (
                   <div className={styles.formGroup}>
                     <label>{t('SANDBOX_ENERGY_TYPE')}</label>
-                    <select
+                    <SelectField
                       className={styles.select}
                       value={selectedEnergyType}
                       onChange={(e) => setSelectedEnergyType(e.target.value)}
@@ -940,7 +936,7 @@ export function SandboxControlPanel({ gameId, gameState, players }: SandboxContr
                           {en}
                         </option>
                       ))}
-                    </select>
+                    </SelectField>
                   </div>
                 ) : null}
                 <div className={styles.section}>
@@ -955,19 +951,18 @@ export function SandboxControlPanel({ gameId, gameState, players }: SandboxContr
                     ] as const
                   ).map(([key, labelKey]) => (
                     <div key={key} className={styles.formGroup}>
-                      <label>
-                        <input
-                          type="checkbox"
-                          checked={pokemonMods.conditions[key]}
-                          onChange={(e) =>
-                            setPokemonMods((m) => ({
-                              ...m,
-                              conditions: { ...m.conditions, [key]: e.target.checked },
-                            }))
-                          }
-                        />{' '}
+                      <CheckboxField
+                        plain
+                        checked={pokemonMods.conditions[key]}
+                        onChange={(e) =>
+                          setPokemonMods((m) => ({
+                            ...m,
+                            conditions: { ...m.conditions, [key]: e.target.checked },
+                          }))
+                        }
+                      >
                         {t(labelKey)}
-                      </label>
+                      </CheckboxField>
                     </div>
                   ))}
                 </div>

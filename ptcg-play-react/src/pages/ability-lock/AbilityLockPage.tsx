@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import type { Card } from 'ptcg-server';
 import { getCardsAll } from '../../api/cardsApi';
 import { CardFace } from '../../components/cards/CardFace';
+import { CheckboxField } from '../../components/ui/CheckboxField';
 import { CardInfoPopup } from '../../card-info/CardInfoPopup';
 import { useAuth } from '../../context/AuthContext';
 import { useDeckCardScanUrl } from '../../context/CardImagesContext';
@@ -177,17 +178,12 @@ export function AbilityLockPage() {
               className={`${styles.card} ${isTested ? styles.cardTested : ''}`}
             >
               <div className={styles.faceWrap}>
-                <label
+                <CheckboxField
+                  plain
                   className={styles.check}
-                  title={isTested ? 'Mark as not tested' : 'Mark as tested & working'}
-                >
-                  <input
-                    type="checkbox"
-                    checked={isTested}
-                    onChange={() => setTested(toggleTestedCard(entry.fullName))}
-                    aria-label={`${entry.name}: tested and working`}
-                  />
-                </label>
+                  checked={isTested}
+                  onChange={() => setTested(toggleTestedCard(entry.fullName))}
+                />
                 <button
                   type="button"
                   className={styles.faceBtn}

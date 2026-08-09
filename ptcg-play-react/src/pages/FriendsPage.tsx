@@ -20,6 +20,7 @@ import { useAuth } from '../context/AuthContext';
 import { useCoreSession } from '../context/CoreSessionContext';
 import { useSnackbar } from '../context/SnackbarContext';
 import { ApiError } from '../api/apiError';
+import { Modal } from '../components/ui/Modal';
 import { resolveAvatarUrl } from '../utils/avatarUrl';
 import styles from './FriendsPage.module.css';
 
@@ -605,10 +606,8 @@ export function FriendsPage() {
           role="presentation"
           onClick={() => setAddModalOpen(false)}
         >
-          <div
+          <Modal
             className={styles.modalBox}
-            role="dialog"
-            aria-modal
             aria-labelledby="friends-add-modal-title"
             onClick={(e) => e.stopPropagation()}
           >
@@ -649,7 +648,7 @@ export function FriendsPage() {
                 </button>
               </div>
             </div>
-          </div>
+          </Modal>
         </div>
       ) : null}
     </div>

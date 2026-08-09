@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import type { Card, CardList, Player } from 'ptcg-server';
 import type { CardInfoPaneOptions, CardInfoTableAction } from './CardInfoPane';
 import { CardInfoPane } from './CardInfoPane';
+import { CheckboxField } from '../components/ui/CheckboxField';
 import { CardInfoImageColumn } from './CardInfoImageColumn';
 import paneStyles from './CardInfoPane.module.css';
 import styles from './CardInfoPopup.module.css';
@@ -173,32 +174,24 @@ export function CardInfoPopup({
                 <span className={styles.navHint}>← → browse</span>
               )}
               {onToggleTested && (
-                <label
+                <CheckboxField
+                  plain
                   className={styles.footerCheck}
-                  title={tested ? 'Mark as not tested' : testedLabel}
+                  checked={Boolean(tested)}
+                  onChange={() => onToggleTested()}
                 >
-                  <input
-                    type="checkbox"
-                    checked={Boolean(tested)}
-                    onChange={() => onToggleTested()}
-                    aria-label={testedLabel}
-                  />
                   <span>Tested</span>
-                </label>
+                </CheckboxField>
               )}
               {onToggleFlagged && (
-                <label
+                <CheckboxField
+                  plain
                   className={`${styles.footerCheck} ${styles.flagCheck}`}
-                  title={flagged ? 'Remove flag' : flaggedLabel}
+                  checked={Boolean(flagged)}
+                  onChange={() => onToggleFlagged()}
                 >
-                  <input
-                    type="checkbox"
-                    checked={Boolean(flagged)}
-                    onChange={() => onToggleFlagged()}
-                    aria-label={flaggedLabel}
-                  />
                   <span>Flag</span>
-                </label>
+                </CheckboxField>
               )}
             </div>
           )}

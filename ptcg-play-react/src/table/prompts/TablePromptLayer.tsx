@@ -35,6 +35,7 @@ import { CardFace } from '../../components/cards/CardFace';
 import { CardInfoPopup } from '../../card-info/CardInfoPopup';
 import { CheckboxField } from '../../components/ui/CheckboxField';
 import { useDeckName } from '../../hooks/useDeckName';
+import { playSfx } from '../../sfx';
 import styles from './TablePromptLayer.module.css';
 import { AttachEnergyPromptPanel } from './AttachEnergyPromptPanel';
 import { ChooseAttackPromptPanel } from './ChooseAttackPromptPanel';
@@ -1271,11 +1272,13 @@ function ChoosePrizePanel(props: {
       if (isSelected) {
         setSelected([]);
       } else {
+        playSfx('prizecardselected');
         setSelected([neIdx]);
       }
     } else if (isSelected) {
       setSelected((prev) => prev.filter((x) => x !== neIdx));
     } else if (selected.length < count) {
+      playSfx('prizecardselected');
       setSelected((prev) => [...prev, neIdx]);
     }
   };

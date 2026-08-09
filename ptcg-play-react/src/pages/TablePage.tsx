@@ -28,6 +28,7 @@ import { MatchResultsSplash } from '../table/end-game/MatchResultsSplash';
 import { SandboxControlPanel } from '../table/sandbox/SandboxControlPanel';
 import { ShellButton } from '../components/ui/ShellButton';
 import { selfPlayFocusPlayerId } from '../table/selfPlayFocusPlayerId';
+import { playAttackSfx, playSfx, useTableSfx } from '../sfx';
 import promptStyles from '../table/prompts/TablePromptLayer.module.css';
 
 const RECONNECT_GAME_ID_KEY = 'ptcg_reconnect_gameId';
@@ -235,6 +236,7 @@ export function TablePage() {
         index?: number;
       }) => {
         boardInteraction.triggerBasicAnimation(data);
+        playSfx('pokemonplay');
       };
       const onEvo = (data: {
         playerId: number;
@@ -243,6 +245,7 @@ export function TablePage() {
         index?: number;
       }) => {
         boardInteraction.triggerEvolutionAnimation(data);
+        playSfx('evolution');
       };
       const onAttack = (data: {
         playerId: number;
@@ -250,10 +253,12 @@ export function TablePage() {
         slot: string;
         index?: number;
         cardType?: number;
+        damage?: number;
         opponentId?: number;
       }) => {
         boardInteraction.triggerAttackAnimation(data);
         if (data.cardType !== undefined && data.opponentId !== undefined) {
+          playAttackSfx(data.cardType as CardType, data.damage ?? 0);
           boardInteraction.triggerAttackEffect({
             playerId: data.playerId,
             cardId: data.cardId,
@@ -275,6 +280,10 @@ export function TablePage() {
       };
       const onCoin = (data: { playerId: number; result: boolean }) => {
         boardInteraction.triggerCoinFlipAnimation(data.result, data.playerId);
+        playSfx('coinflip');
+      };
+      const onAttachEnergy = () => {
+        playSfx('energyattach');
       };
 
       raw.on(`game[${gameId}]:stateChange`, onState);
@@ -283,6 +292,7 @@ export function TablePage() {
       raw.on(`game[${gameId}]:attack`, onAttack);
       raw.on(`game[${gameId}]:ability`, onAbility);
       raw.on(`game[${gameId}]:coinFlip`, onCoin);
+      raw.on(`game[${gameId}]:attachEnergy`, onAttachEnergy);
 
       return () => {
         raw.off(`game[${gameId}]:stateChange`, onState);
@@ -291,6 +301,7 @@ export function TablePage() {
         raw.off(`game[${gameId}]:attack`, onAttack);
         raw.off(`game[${gameId}]:ability`, onAbility);
         raw.off(`game[${gameId}]:coinFlip`, onCoin);
+        raw.off(`game[${gameId}]:attachEnergy`, onAttachEnergy);
       };
     },
     [boardInteraction],
@@ -443,6 +454,8 @@ export function TablePage() {
     }
     return clientId;
   }, [localGame, clientId]);
+
+  useTableSfx({ localGame, clientId: tableClientId ?? clientId ?? 0 });
 
   const tableView = useMemo((): TableView | null => {
     if (!localGame || tableClientId == null) {

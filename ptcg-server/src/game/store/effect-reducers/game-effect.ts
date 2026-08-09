@@ -276,6 +276,7 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
           slot,
           index,
           cardType,
+          damage: attackEffect.damage,
           opponentId: opponent.id
         });
       }

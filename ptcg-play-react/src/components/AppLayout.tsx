@@ -1,13 +1,23 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useMemo } from 'react';
+import { useMemo, type ReactNode } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
 import { useCoreSession } from '../context/CoreSessionContext';
 import { SUPPORTED_LANGUAGE_CODES, type SupportedLanguageCode } from '../i18n/languages';
 import { partitionMyGames } from '../games/myGamesClassify';
+import { SelectField } from './ui/SelectField';
+import { playSfx } from '../sfx';
 import { UserAccountMenu } from './UserAccountMenu';
 import styles from './AppLayout.module.css';
+
+function NavLink({ to, children, className }: { to: string; children: ReactNode; className?: string }) {
+  return (
+    <Link to={to} className={className} onClick={() => playSfx('uiNavslide')}>
+      {children}
+    </Link>
+  );
+}
 
 function isDeckEditorPath(pathname: string): boolean {
   return /^\/deck\/[^/]+\/?$/.test(pathname);
@@ -74,27 +84,27 @@ export function AppLayout() {
         >
           <strong>{t('REACT_SHELL_TITLE')}</strong>
           <nav style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
-            <Link to="/games">{t('MAIN_GAMES')}</Link>
-            <Link to="/my-games" className={styles.navLinkWithBadge}>
+            <NavLink to="/games">{t('MAIN_GAMES')}</NavLink>
+            <NavLink to="/my-games" className={styles.navLinkWithBadge}>
               {t('MAIN_MY_GAMES')}
               {incomingInviteCount > 0 ? (
                 <span className={styles.navBadge} aria-label={t('REACT_MY_GAMES_BADGE_ARIA', { count: incomingInviteCount })}>
                   {incomingInviteCount}
                 </span>
               ) : null}
-            </Link>
-            <Link to="/spectate">{t('MAIN_SPECTATE')}</Link>
-            <Link to="/replays">{t('MAIN_REPLAYS')}</Link>
-            <Link to="/deck">{t('DECK_TITLE')}</Link>
-            <Link to="/ranking">{t('MAIN_RANKING')}</Link>
-            <Link to="/friends">{t('MAIN_FRIENDS')}</Link>
-            <Link to="/message">{t('MAIN_MESSAGES')}</Link>
-            <Link to="/battle-pass">{t('MAIN_BATTLE_PASS')}</Link>
-            <Link to="/parent">Parents</Link>
-            <Link to="/settings">{t('BUTTON_SETTINGS')}</Link>
+            </NavLink>
+            <NavLink to="/spectate">{t('MAIN_SPECTATE')}</NavLink>
+            <NavLink to="/replays">{t('MAIN_REPLAYS')}</NavLink>
+            <NavLink to="/deck">{t('DECK_TITLE')}</NavLink>
+            <NavLink to="/ranking">{t('MAIN_RANKING')}</NavLink>
+            <NavLink to="/friends">{t('MAIN_FRIENDS')}</NavLink>
+            <NavLink to="/message">{t('MAIN_MESSAGES')}</NavLink>
+            <NavLink to="/battle-pass">{t('MAIN_BATTLE_PASS')}</NavLink>
+            <NavLink to="/parent">Parents</NavLink>
+            <NavLink to="/settings">{t('BUTTON_SETTINGS')}</NavLink>
           </nav>
           <label style={{ display: 'flex', alignItems: 'center', gap: 6, marginLeft: 'auto' }}>
-            <select
+            <SelectField
               value={language}
               onChange={(e) => setLanguage(e.target.value as SupportedLanguageCode)}
               aria-label={t('LABEL_LANGUAGE')}
@@ -105,7 +115,7 @@ export function AppLayout() {
                   {labels[code]}
                 </option>
               ))}
-            </select>
+            </SelectField>
           </label>
           <UserAccountMenu />
         </header>
