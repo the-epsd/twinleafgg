@@ -1049,6 +1049,8 @@
   "SANDBOX_USED_VSTAR": "Used VSTAR",
   "SANDBOX_USED_GX": "Used GX",
   "SANDBOX_APPLY_PLAYER": "Apply player changes",
+  "SANDBOX_SHUFFLE_DECK": "Shuffle deck",
+  "SANDBOX_DECK_SHUFFLED": "Deck shuffled",
   "SANDBOX_TURN": "Turn",
   "SANDBOX_PHASE": "Phase",
   "SANDBOX_PHASE_SKIP": "— Skip phase —",

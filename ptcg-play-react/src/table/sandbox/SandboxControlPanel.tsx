@@ -325,6 +325,22 @@ export function SandboxControlPanel({ gameId, gameState, players }: SandboxContr
     }
   };
 
+  const shuffleSelectedPlayerDeck = async () => {
+    if (!selectedPlayer) {
+      return;
+    }
+    try {
+      await getSocketManager().emit('game:sandbox:modifyPlayer', {
+        gameId,
+        targetPlayerId: selectedPlayer.id,
+        modifications: { shuffleDeck: true },
+      });
+      ok('SANDBOX_DECK_SHUFFLED');
+    } catch (e) {
+      onSocketErr(e);
+    }
+  };
+
   const applyGameStateModifications = async () => {
     const mods: Record<string, unknown> = {};
     if (gameStateMods.turn !== null) {
@@ -593,6 +609,13 @@ export function SandboxControlPanel({ gameId, gameState, players }: SandboxContr
                 </div>
                 <button type="button" className={styles.btn} onClick={() => void applyPlayerModifications()}>
                   {t('SANDBOX_APPLY_PLAYER')}
+                </button>
+                <button
+                  type="button"
+                  className={`${styles.btn} ${styles.btnAccent}`}
+                  onClick={() => void shuffleSelectedPlayerDeck()}
+                >
+                  {t('SANDBOX_SHUFFLE_DECK')}
                 </button>
               </div>
             ) : null}

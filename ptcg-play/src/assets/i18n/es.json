@@ -1032,6 +1032,8 @@
   "SANDBOX_USED_VSTAR": "VSTAR usado",
   "SANDBOX_USED_GX": "GX usado",
   "SANDBOX_APPLY_PLAYER": "Aplicar cambios de jugador",
+  "SANDBOX_SHUFFLE_DECK": "Barajar el mazo",
+  "SANDBOX_DECK_SHUFFLED": "Mazo barajado",
   "SANDBOX_TURN": "Turno",
   "SANDBOX_PHASE": "Fase",
   "SANDBOX_PHASE_SKIP": "— Omitir fase —",

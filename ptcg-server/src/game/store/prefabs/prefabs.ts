@@ -25,12 +25,14 @@ import { DamageMap, MoveDamagePrompt } from '../prompts/move-damage-prompt';
 import { SelectPrompt } from '../prompts/select-prompt';
 import { ShowCardsPrompt } from '../prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../prompts/shuffle-prompt';
+import { WaitPrompt } from '../prompts/wait-prompt';
 import { StateUtils } from '../state-utils';
 import { CardList } from '../state/card-list';
 import { Player } from '../state/player';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { State, GamePhase } from '../state/state';
 import { StoreLike } from '../store-like';
+import { DECK_SHUFFLE_ANIMATION_WAIT_MS } from './deck-shuffle-animation';
 import { CAN_PLAY_TRAINER_CARD } from './trainer-prefabs';
 
 // =============================================================================
@@ -1475,11 +1477,18 @@ export function HAS_CARD_IN_DISCARD(
 
 /**
  * Shuffles the player's deck.
+ * After order is applied, a silent WaitPrompt gates follow-up draws so the 3D
+ * shuffle animation (triggered via Game arbiter socket emit) can finish.
  */
 export function SHUFFLE_DECK(store: StoreLike, state: State, player: Player): State {
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) =>
-    player.deck.applyOrder(order),
-  );
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+    player.deck.applyOrder(order);
+    store.prompt(
+      state,
+      new WaitPrompt(player.id, DECK_SHUFFLE_ANIMATION_WAIT_MS, 'Deck shuffle animation', false),
+      () => {},
+    );
+  });
 }
 
 /**

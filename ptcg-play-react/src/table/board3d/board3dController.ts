@@ -65,7 +65,7 @@ import {
 } from './board3d-constants';
 import type { CardInfoPaneOptions } from '../../card-info/CardInfoPane';
 import type { Board3dGameActions } from './board3dGameActions';
-import { BoardInteractionService, type AbilityAnimationEvent, type AbilityFocusAnchor, type BasicEntranceAnimationEvent, type CoinFlipAnimationEvent } from '../BoardInteractionService';
+import { BoardInteractionService, type AbilityAnimationEvent, type AbilityFocusAnchor, type BasicEntranceAnimationEvent, type CoinFlipAnimationEvent, type DeckShuffleAnimationEvent } from '../BoardInteractionService';
 import {
   getBoardConfig,
   getCameraConfig,
@@ -98,7 +98,7 @@ import { r3fPointerEventAsMouse } from './board3dR3fPointer';
 import { subscribeBoard3dInteractionStreams } from './board3dControllerSubscriptions';
 import { Board3dCard } from './board-3d-card';
 import { projectCardFaceToScreenAnchor } from './board3dAbilityFocusProjection';
-import { playDeckShufflePreview } from './board3dDeckShufflePreview';
+import { playDeckShuffleAnimation, playDeckShufflePreview } from './board3dDeckShufflePreview';
 import {
   LEGEND_3D_HALF_ROTATION,
   LEGEND_3D_HALF_SCALE,
@@ -631,6 +631,7 @@ export class Board3dController {
         playBoardAbilityAnimation: (ev) => this.playBoardAbilityAnimation(ev),
         playBoardCoinFlipAnimation: (ev) => this.playBoardCoinFlipAnimation(ev),
         cancelBoardCoinFlipAnimation: () => this.cancelBoardCoinFlipAnimation(),
+        playBoardDeckShuffleAnimation: (ev) => this.playBoardDeckShuffleAnimation(ev),
       }),
     );
 
@@ -670,6 +671,7 @@ export class Board3dController {
         playBoardAbilityAnimation: (ev) => this.playBoardAbilityAnimation(ev),
         playBoardCoinFlipAnimation: (ev) => this.playBoardCoinFlipAnimation(ev),
         cancelBoardCoinFlipAnimation: () => this.cancelBoardCoinFlipAnimation(),
+        playBoardDeckShuffleAnimation: (ev) => this.playBoardDeckShuffleAnimation(ev),
       }),
     );
 
@@ -1197,6 +1199,33 @@ export class Board3dController {
         stackId,
       });
     }
+  }
+
+  /** Production shuffle animation for one player's deck (socket / sandbox). */
+  triggerDeckShuffle(playerId: number): void {
+    if (!this.r3fMode) {
+      return;
+    }
+    const position =
+      this.bottomPlayer?.id === playerId
+        ? 'bottomPlayer'
+        : this.topPlayer?.id === playerId
+          ? 'topPlayer'
+          : null;
+    if (!position) {
+      return;
+    }
+    const stackId = `${position}_${playerId}_deck`;
+    const stackService = this.stateSync.getStackService();
+    playDeckShuffleAnimation({
+      stackService,
+      getCardById: (id) => this.stateSync.getCardById(id),
+      stackId,
+    });
+  }
+
+  private playBoardDeckShuffleAnimation(ev: DeckShuffleAnimationEvent): void {
+    this.triggerDeckShuffle(ev.playerId);
   }
 
   private refreshActiveTopCardSnapshot(): void {

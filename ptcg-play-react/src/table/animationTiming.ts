@@ -23,3 +23,6 @@ export const KO_TO_PRIZE_PROMPT_DELAY_MS = 350;
 
 /** Coin flip animation — keep in sync with server COIN_FLIP_ANIMATION_WAIT_MS. */
 export const BOARD_COIN_FLIP_SERVER_WAIT_MS = 2000;
+
+/** Deck shuffle animation — keep in sync with server DECK_SHUFFLE_ANIMATION_WAIT_MS. */
+export const BOARD_DECK_SHUFFLE_SERVER_WAIT_MS = 650;

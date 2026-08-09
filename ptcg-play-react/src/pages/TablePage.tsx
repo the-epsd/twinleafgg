@@ -282,6 +282,9 @@ export function TablePage() {
         boardInteraction.triggerCoinFlipAnimation(data.result, data.playerId);
         playSfx('coinflip');
       };
+      const onDeckShuffle = (data: { playerId: number }) => {
+        boardInteraction.triggerDeckShuffleAnimation(data.playerId);
+      };
       const onAttachEnergy = () => {
         playSfx('energyattach');
       };
@@ -292,6 +295,7 @@ export function TablePage() {
       raw.on(`game[${gameId}]:attack`, onAttack);
       raw.on(`game[${gameId}]:ability`, onAbility);
       raw.on(`game[${gameId}]:coinFlip`, onCoin);
+      raw.on(`game[${gameId}]:deckShuffle`, onDeckShuffle);
       raw.on(`game[${gameId}]:attachEnergy`, onAttachEnergy);
 
       return () => {
@@ -301,6 +305,7 @@ export function TablePage() {
         raw.off(`game[${gameId}]:attack`, onAttack);
         raw.off(`game[${gameId}]:ability`, onAbility);
         raw.off(`game[${gameId}]:coinFlip`, onCoin);
+        raw.off(`game[${gameId}]:deckShuffle`, onDeckShuffle);
         raw.off(`game[${gameId}]:attachEnergy`, onAttachEnergy);
       };
     },

@@ -653,6 +653,8 @@
   "SANDBOX_USED_VSTAR": "VSTAR使用済み",
   "SANDBOX_USED_GX": "GX使用済み",
   "SANDBOX_APPLY_PLAYER": "プレイヤー変更を適用",
+  "SANDBOX_SHUFFLE_DECK": "山札をシャッフル",
+  "SANDBOX_DECK_SHUFFLED": "山札をシャッフルしました",
   "SANDBOX_TURN": "ターン",
   "SANDBOX_PHASE": "フェーズ",
   "SANDBOX_PHASE_SKIP": "— フェーズをスキップ —",

@@ -79,6 +79,10 @@ export interface CoinFlipAnimationEvent {
   result: boolean;
 }
 
+export interface DeckShuffleAnimationEvent {
+  playerId: number;
+}
+
 export interface AttackEffectEvent {
   playerId: number;
   cardId: number | string;
@@ -172,6 +176,9 @@ export class BoardInteractionService {
 
   private coinFlipCancelSubject = new Subject<void>();
   public coinFlipCancel$ = this.coinFlipCancelSubject.asObservable();
+
+  private deckShuffleAnimationSubject = new Subject<DeckShuffleAnimationEvent>();
+  public deckShuffleAnimation$ = this.deckShuffleAnimationSubject.asObservable();
 
   private attackEffectSubject = new Subject<AttackEffectEvent>();
   public attackEffect$ = this.attackEffectSubject.asObservable();
@@ -1061,6 +1068,10 @@ export class BoardInteractionService {
 
   public cancelCoinFlipAnimation() {
     this.coinFlipCancelSubject.next();
+  }
+
+  public triggerDeckShuffleAnimation(playerId: number) {
+    this.deckShuffleAnimationSubject.next({ playerId });
   }
 
   public triggerAttackEffect(event: AttackEffectEvent) {

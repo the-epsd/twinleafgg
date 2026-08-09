@@ -14,6 +14,7 @@ import { Player } from '../state/player';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { SpecialCondition } from '../card/card-types';
 import { refreshStartingPokemonPromptBlocked } from './setup-reducer';
+import { emitDeckShuffleAnimation, fisherYatesOrder } from '../prefabs/deck-shuffle-animation';
 
 export function sandboxReducer(store: StoreLike, state: State, action: Action, clientRoleId: number): State {
   // Validate sandbox mode is enabled
@@ -154,6 +155,11 @@ export function sandboxReducer(store: StoreLike, state: State, action: Action, c
     if (mods.usedGX !== undefined) player.usedGX = mods.usedGX;
     if (mods.ancientSupporter !== undefined) player.ancientSupporter = mods.ancientSupporter;
     if (mods.rocketSupporter !== undefined) player.rocketSupporter = mods.rocketSupporter;
+
+    if (mods.shuffleDeck === true && player.deck.cards.length > 1) {
+      player.deck.applyOrder(fisherYatesOrder(player.deck.cards.length));
+      emitDeckShuffleAnimation(store, player.id);
+    }
 
     refreshStartingPokemonPromptBlocked(state, player);
     return state;

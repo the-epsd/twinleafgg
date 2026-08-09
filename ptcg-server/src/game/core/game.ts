@@ -17,6 +17,7 @@ import { AppendLogAction } from '../store/actions/append-log-action';
 import { ChangeAvatarAction } from '../store/actions/change-avatar-action';
 import { Format } from '../store/card/card-types';
 import { CheckHpEffect } from '../store/effects/check-effects';
+import { ShuffleDeckPrompt } from '../store/prompts/shuffle-prompt';
 import { logger } from '../../utils/logger';
 
 function getBroadcaster(): typeof import('../../backend/socket/game-state-broadcaster') {
@@ -177,12 +178,14 @@ export class Game implements StoreHandler {
 
   private handleArbiterPrompts(state: State): boolean {
     let resolved: { id: number, action: ResolvePromptAction } | undefined;
+    let resolvedPrompt = undefined as (typeof state.prompts)[number] | undefined;
     const unresolved = state.prompts.filter(item => item.result === undefined);
 
     for (let i = 0; i < unresolved.length; i++) {
       const action = this.arbiter.resolvePrompt(state, unresolved[i]);
       if (action !== undefined) {
         resolved = { id: unresolved[i].id, action };
+        resolvedPrompt = unresolved[i];
         break;
       }
     }
@@ -191,8 +194,20 @@ export class Game implements StoreHandler {
       return false;
     }
 
+    if (resolvedPrompt instanceof ShuffleDeckPrompt) {
+      this.emitDeckShuffle(resolvedPrompt.playerId);
+    }
+
     this.store.dispatch(resolved.action);
     return true;
+  }
+
+  private emitDeckShuffle(playerId: number): void {
+    this.core.emit((c: any) => {
+      if (typeof c.socket !== 'undefined') {
+        c.socket.emit(`game[${this.id}]:deckShuffle`, { playerId });
+      }
+    });
   }
 
   public dispatch(client: Client, action: Action): State {

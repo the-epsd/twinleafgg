@@ -4,6 +4,7 @@ import type {
   AbilityAnimationEvent,
   BasicEntranceAnimationEvent,
   CoinFlipAnimationEvent,
+  DeckShuffleAnimationEvent,
 } from '../BoardInteractionService';
 
 export type Board3dInteractionAnimationSink = {
@@ -15,6 +16,7 @@ export type Board3dInteractionAnimationSink = {
   playBoardAbilityAnimation: (ev: AbilityAnimationEvent) => void;
   playBoardCoinFlipAnimation: (ev: CoinFlipAnimationEvent) => void;
   cancelBoardCoinFlipAnimation: () => void;
+  playBoardDeckShuffleAnimation: (ev: DeckShuffleAnimationEvent) => void;
 };
 
 /** Selection + table animation streams wired for both legacy canvas and R3F controller init. */
@@ -33,5 +35,6 @@ export function subscribeBoard3dInteractionStreams(
     boardInteraction.abilityAnimation$.subscribe((ev) => sink.playBoardAbilityAnimation(ev)),
     boardInteraction.coinFlipAnimation$.subscribe((ev) => sink.playBoardCoinFlipAnimation(ev)),
     boardInteraction.coinFlipCancel$.subscribe(() => sink.cancelBoardCoinFlipAnimation()),
+    boardInteraction.deckShuffleAnimation$.subscribe((ev) => sink.playBoardDeckShuffleAnimation(ev)),
   ];
 }
