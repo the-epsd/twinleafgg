@@ -2961,7 +2961,8 @@ export class Board3dController {
 
       // Cover discard→draw (Research) and empty→draw refill so WaitPrompts / trainer
       // discard wait for the full batch, not only the draw segment.
-      let resolveHandEffectBatch: (() => void) | null = null;
+      // No-op default avoids `null` + `?.()` CFA `never` under tsc -b.
+      let resolveHandEffectBatch: () => void = () => {};
       if (willAnimateDiscard || willAnimateDraw) {
         const batchPromise = new Promise<void>((resolve) => {
           resolveHandEffectBatch = () => resolve();
@@ -3078,7 +3079,7 @@ export class Board3dController {
         if (willAnimateDraw) {
           this.handDrawAnimationLock = false;
         }
-        resolveHandEffectBatch?.();
+        resolveHandEffectBatch();
         this.promoteDeferredTrainerDiscard();
       }
 
