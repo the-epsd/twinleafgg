@@ -288,7 +288,12 @@ export class Board3dInteractionService {
       if (object.userData && (object.userData.isCard || object.userData.isDropZone)) {
         let p: Object3D | null = object;
         while (p) {
-          if (p.userData?.drawingFromDeck || p.userData?.playingToBoard || p.userData?.discardingFromHand) {
+          if (
+            p.userData?.drawingFromDeck ||
+            p.userData?.playingToBoard ||
+            p.userData?.discardingFromHand ||
+            p.userData?.isOpponentHandCard
+          ) {
             return;
           }
           p = p.parent;
@@ -304,6 +309,9 @@ export class Board3dInteractionService {
   resolveInteractiveCardFromSurface(surface: Object3D): Object3D | null {
     let obj: Object3D | null = surface;
     while (obj) {
+      if (obj.userData?.isOpponentHandCard) {
+        return null;
+      }
       if (obj.userData?.isEnergyIcon || obj.userData?.isToolCard) {
         return obj;
       }

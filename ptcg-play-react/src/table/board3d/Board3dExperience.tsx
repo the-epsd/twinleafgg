@@ -47,6 +47,7 @@ export function Board3dExperience({
 }: Board3dExperienceProps) {
   const worldRef = useRef<Group>(null!);
   const handRef = useRef<Group>(null!);
+  const opponentHandRef = useRef<Group>(null!);
   const ctrlRef = useRef<Board3dController | null>(null);
 
   const gl = useThree((s) => s.gl);
@@ -65,7 +66,8 @@ export function Board3dExperience({
   useLayoutEffect(() => {
     const world = worldRef.current;
     const hand = handRef.current;
-    if (!world || !hand) {
+    const opponentHand = opponentHandRef.current;
+    if (!world || !hand || !opponentHand) {
       return;
     }
 
@@ -75,6 +77,7 @@ export function Board3dExperience({
       camera: camera as PerspectiveCamera,
       worldContentRoot: world,
       handSlot: hand,
+      opponentHandSlot: opponentHand,
     };
 
     const ctrl = new Board3dController(
@@ -121,6 +124,7 @@ export function Board3dExperience({
       </Suspense>
       <group ref={worldRef}>
         <group ref={handRef} />
+        <group ref={opponentHandRef} />
         <Board3dBoardCardsLayer stateSync={runtime.stateSync} />
         <Board3dPrizeLayer />
       </group>

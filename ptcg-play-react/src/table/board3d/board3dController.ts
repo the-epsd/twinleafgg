@@ -33,7 +33,7 @@ import {
   type DrawFlightVisualPreset,
 } from './services/board-3d-animation.service';
 import { Board3dInteractionService, type DropResult, type PlayCardFlightPayload } from './services/board-3d-interaction.service';
-import { Board3dHandService } from './services/board-3d-hand.service';
+import { Board3dHandService, BOARD3D_PLAYER_HAND_Z } from './services/board-3d-hand.service';
 import { Board3dWireframeService } from './services/board-3d-wireframe.service';
 import { Board3dLightingService } from './services/board-3d-lighting.service';
 import { Board3dPostProcessingService } from './services/board-3d-post-processing.service';
@@ -136,6 +136,8 @@ export type Board3dR3fInitContext = {
   camera: PerspectiveCamera;
   worldContentRoot: Object3D;
   handSlot: Object3D;
+  /** Far-player hand row parent (sibling of {@link handSlot}). */
+  opponentHandSlot: Object3D;
 };
 
 export class Board3dController {
@@ -180,6 +182,8 @@ export class Board3dController {
   private worldContentRoot!: Object3D;
   /** Group that contains the hand fan (child of worldContentRoot in R3F). */
   private handSlot!: Object3D;
+  /** Group that contains the far-player hand row. */
+  private opponentHandSlot!: Object3D;
 
   /** When R3F mesh `onPointerDown` handles the same DOM event, skip duplicate canvas listener. */
   private r3fMeshPointerDownTs = -1;
@@ -599,6 +603,7 @@ export class Board3dController {
     this.camera = ctx.camera;
     this.worldContentRoot = ctx.worldContentRoot;
     this.handSlot = ctx.handSlot;
+    this.opponentHandSlot = ctx.opponentHandSlot;
     this.setProps(initial);
     this.stateSync.setAttachmentTargets(this.worldContentRoot, null, this.scene);
     this.interactionService.setWorldContentRoot(this.worldContentRoot);
@@ -615,6 +620,7 @@ export class Board3dController {
     this.initRenderer();
     this.worldContentRoot = this.scene;
     this.handSlot = this.scene;
+    this.opponentHandSlot = this.scene;
     this.stateSync.setAttachmentTargets(this.worldContentRoot, this.worldContentRoot, this.scene);
     this.interactionService.setWorldContentRoot(this.worldContentRoot);
     this.lightingService.initialize(this.scene);
@@ -626,6 +632,7 @@ export class Board3dController {
 
     // Initialize hand service
     this.handSlot.add(this.handService.getHandGroup());
+    this.opponentHandSlot.add(this.handService.getOpponentHandGroup());
 
     // Create drop zone indicators (async) with actual bench sizes
     const bottomBenchSize = this.bottomPlayer?.bench?.length ?? 5;
@@ -647,6 +654,7 @@ export class Board3dController {
       this.syncHand();
       this.hasInitializedHand = true;
     }
+    this.syncOpponentHand();
 
     this.selectionSubs.push(
       ...subscribeBoard3dInteractionStreams(this.boardInteractionService, {
@@ -669,6 +677,7 @@ export class Board3dController {
   private runInitR3f(): void {
     this.wireframeService.initialize(this.scene);
     this.handSlot.add(this.handService.getHandGroup());
+    this.opponentHandSlot.add(this.handService.getOpponentHandGroup());
 
     const bottomBenchSize = this.bottomPlayer?.bench?.length ?? 5;
     const topBenchSize = this.topPlayer?.bench?.length ?? 5;
@@ -687,6 +696,7 @@ export class Board3dController {
       this.syncHand();
       this.hasInitializedHand = true;
     }
+    this.syncOpponentHand();
 
     this.selectionSubs.push(
       ...subscribeBoard3dInteractionStreams(this.boardInteractionService, {
@@ -713,6 +723,7 @@ export class Board3dController {
     const clientChanged = this.clientId !== next.clientId;
     const gameStateChanged = this.gameState !== next.gameState;
     const handChanged = this.bottomPlayerHand !== next.bottomPlayerHand;
+    const topHandChanged = this.topPlayerHand !== next.topPlayerHand;
     const revealChanged =
       this.adminSpectatorReveal?.revealPrizes !== next.adminSpectatorReveal?.revealPrizes ||
       this.adminSpectatorReveal?.revealHands !== next.adminSpectatorReveal?.revealHands;
@@ -763,6 +774,10 @@ export class Board3dController {
     if (this.scene && (handChanged || revealChanged)) {
       this.syncHand();
       this.hasInitializedHand = true;
+    }
+
+    if (this.scene && (topHandChanged || revealChanged || handChanged)) {
+      this.syncOpponentHand();
     }
   }
 
@@ -1800,6 +1815,20 @@ export class Board3dController {
     return this.adminSpectatorReveal?.revealHands ?? false;
   }
 
+  /** Far hand face-up when viewing as that player, replay, or admin reveal (matches 2D topHandFaceDown). */
+  private isOpponentHandVisibleToViewer(): boolean {
+    if (!this.topPlayer) {
+      return false;
+    }
+    if (this.topPlayer.id === this.clientId) {
+      return true;
+    }
+    if (this.isReplayOmniscient()) {
+      return true;
+    }
+    return this.adminSpectatorReveal?.revealHands ?? false;
+  }
+
   private canRevealPrizesToViewer(): boolean {
     if (this.isReplayOmniscient()) {
       return true;
@@ -1943,8 +1972,8 @@ export class Board3dController {
    * ({@link Board3dAnimationService.playHandCardDropOnBoard}), not {@link Board3dAnimationService.playBasicAnimation}.
    */
   private playHandCardDropBasicAnimation(group: Group, meshId: string): void {
-    /** Matches {@link Board3dHandService} hand row Z. */
-    const handPlayFlightStartZ = 30;
+    /** Matches {@link BOARD3D_PLAYER_HAND_Z} / player hand row. */
+    const handPlayFlightStartZ = BOARD3D_PLAYER_HAND_Z;
     /** Matches retained drag scale when {@link Board3dInteractionService} uses hand play flight. */
     const handPlayFlightInitialScale = 1.3;
 
@@ -2426,6 +2455,24 @@ export class Board3dController {
     }
 
     this.syncHandChain = this.syncHandChain.then(() => this.runSyncHandOnce());
+  }
+
+  /** Static far-hand rebuild (no draw flights); safe to call alongside player-hand sync. */
+  private syncOpponentHand(): void {
+    if (!this.topPlayerHand || !this.topPlayer || !this.opponentHandSlot) {
+      return;
+    }
+
+    const opponentGroup = this.handService.getOpponentHandGroup();
+    if (!this.opponentHandSlot.children.includes(opponentGroup)) {
+      this.opponentHandSlot.add(opponentGroup);
+    }
+
+    void this.handService.updateOpponentHand(
+      this.topPlayerHand,
+      this.isOpponentHandVisibleToViewer(),
+      this.opponentHandSlot,
+    );
   }
 
   /** After server rejects playCard: skip animation queue and rebuild hand from current props immediately. */
