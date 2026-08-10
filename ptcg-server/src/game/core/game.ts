@@ -195,7 +195,7 @@ export class Game implements StoreHandler {
     }
 
     if (resolvedPrompt instanceof ShuffleDeckPrompt) {
-      this.emitDeckShuffle(resolvedPrompt.playerId);
+      this.emitDeckShuffle(resolvedPrompt.getPerspectivePlayerId());
     }
 
     this.store.dispatch(resolved.action);

@@ -13,7 +13,7 @@ export class ShuffleHandPrompt extends Prompt<number[]> {
     if (result === null) {
       return false;
     }
-    const player = state.players.find(p => p.id === this.playerId);
+    const player = state.players.find(p => p.id === this.getPerspectivePlayerId());
     if (player === undefined) {
       return false;
     }

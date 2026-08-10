@@ -43,8 +43,9 @@ export class ChoosePokemonPrompt extends Prompt<PokemonCardList[]> {
     if (result === null) {
       return result;  // operation cancelled
     }
-    const player = state.players.find(p => p.id === this.playerId);
-    const opponent = state.players.find(p => p.id !== this.playerId);
+    const perspectiveId = this.getPerspectivePlayerId();
+    const player = state.players.find(p => p.id === perspectiveId);
+    const opponent = state.players.find(p => p.id !== perspectiveId);
     if (player === undefined || opponent === undefined) {
       throw new GameError(GameMessage.INVALID_PROMPT_RESULT);
     }
@@ -64,7 +65,7 @@ export class ChoosePokemonPrompt extends Prompt<PokemonCardList[]> {
     if (result.some(cardList => cardList.cards.length === 0)) {
       return false;
     }
-    const player = state.players.find(p => p.id === this.playerId);
+    const player = state.players.find(p => p.id === this.getPerspectivePlayerId());
     if (player === undefined) {
       return false;
     }

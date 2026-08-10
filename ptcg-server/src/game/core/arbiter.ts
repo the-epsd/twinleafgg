@@ -13,14 +13,15 @@ export class Arbiter {
   constructor() { }
 
   public resolvePrompt(state: State, prompt: Prompt<any>): ResolvePromptAction | undefined {
-    const player = state.players.find(p => p.id === prompt.playerId);
+    const actor = state.players.find(p => p.id === prompt.playerId);
+    const owner = state.players.find(p => p.id === prompt.getPerspectivePlayerId());
 
-    if (player === undefined) {
+    if (actor === undefined || owner === undefined) {
       return;
     }
 
     if (prompt instanceof ShuffleDeckPrompt) {
-      const result = this.shuffle(player.deck);
+      const result = this.shuffle(owner.deck);
       return new ResolvePromptAction(prompt.id, result);
     }
 
@@ -29,7 +30,7 @@ export class Arbiter {
       const message = result
         ? GameLog.LOG_PLAYER_FLIPS_HEADS
         : GameLog.LOG_PLAYER_FLIPS_TAILS;
-      const log = new StateLog(message, { name: player.name });
+      const log = new StateLog(message, { name: actor.name });
       return new ResolvePromptAction(prompt.id, result, log);
     }
   }

@@ -25,6 +25,33 @@ export function WAS_TRAINER_USED(effect: Effect, card: TrainerCard): effect is T
   return effect instanceof TrainerEffect && effect.trainerCard === card;
 }
 
+/**
+ * Temporarily route interactive prompts to `controllerId` while keeping board
+ * perspective on the prompt's original player (see Store.prompt remap).
+ * Restores the previous controller after nested prompts settle.
+ */
+export function WITH_PROMPT_CONTROLLER(
+  store: StoreLike,
+  state: State,
+  controllerId: number,
+  run: (state: State) => State
+): State {
+  const previous = state.promptControllerId;
+  state.promptControllerId = controllerId;
+  state = run(state);
+
+  const restore = () => {
+    state.promptControllerId = previous;
+  };
+
+  if (store.hasPrompts()) {
+    return store.waitPrompt(state, restore);
+  }
+
+  restore();
+  return state;
+}
+
 // =============================================================================
 // Hand discard
 // =============================================================================

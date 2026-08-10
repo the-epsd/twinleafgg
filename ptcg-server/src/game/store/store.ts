@@ -197,6 +197,17 @@ export class Store implements StoreLike {
     for (let i = 0; i < prompts.length; i++) {
       const id = generateId(state.prompts);
       prompts[i].id = id;
+
+      // Route answers to promptController while keeping board perspective on the
+      // original owner (Hand Control / forced opponent card play).
+      const controllerId = state.promptControllerId;
+      if (controllerId !== undefined && controllerId !== prompts[i].playerId) {
+        if (prompts[i].perspectivePlayerId === undefined) {
+          prompts[i].perspectivePlayerId = prompts[i].playerId;
+        }
+        prompts[i].playerId = controllerId;
+      }
+
       state.prompts.push(prompts[i]);
     }
 

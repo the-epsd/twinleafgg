@@ -63,7 +63,7 @@ export class MoveDamagePrompt extends Prompt<DamageTransfer[]> {
     if (result === null) {
       return result;  // operation cancelled
     }
-    const player = state.players.find(p => p.id === this.playerId);
+    const player = state.players.find(p => p.id === this.getPerspectivePlayerId());
     if (player === undefined) {
       throw new GameError(GameMessage.INVALID_PROMPT_RESULT);
     }
@@ -97,7 +97,7 @@ export class MoveDamagePrompt extends Prompt<DamageTransfer[]> {
       return false;
     }
 
-    const player = state.players.find(p => p.id === this.playerId);
+    const player = state.players.find(p => p.id === this.getPerspectivePlayerId());
     if (player === undefined) {
       return false;
     }

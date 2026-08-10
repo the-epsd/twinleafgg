@@ -49,6 +49,7 @@ import { PutDamageOverlay } from './PutDamageOverlay';
 import { RemoveDamageOverlay } from './RemoveDamageOverlay';
 import { MoveDamageOverlay } from './MoveDamageOverlay';
 import { scanBlockedOwnZeroDamageFromState } from './pokemonPromptRows';
+import { getPromptPerspectivePlayerId } from './promptPerspective';
 import { BOARD3D_ATTACK_ANIMATION_DURATION_SEC, BOARD3D_ABILITY_ANIMATION_DURATION_SEC } from '../board3d/services/board-3d-animation.service';
 import { COIN_FLIP_SERVER_WAIT_MS } from '../coin-flip-animation';
 import {
@@ -619,7 +620,7 @@ function useRemoveDamageBoardEffect(
     const rdp = prompt as RemoveDamagePrompt;
     const extra = scanBlockedOwnZeroDamageFromState(
       game.state,
-      rdp.playerId,
+      getPromptPerspectivePlayerId(rdp),
       rdp.playerType,
       rdp.slots,
     );
@@ -1452,9 +1453,10 @@ function ChoosePrizePanel(props: {
 
   const { targetPlayer, prizeIndexByGrid } = useMemo(() => {
     const state = localGame.state;
-    const promptPlayer = state.players.find((p) => p.id === prompt.playerId);
+    const perspectiveId = getPromptPerspectivePlayerId(prompt);
+    const promptPlayer = state.players.find((p) => p.id === perspectiveId);
     const target = prompt.options.useOpponentPrizes
-      ? state.players.find((p) => p.id !== prompt.playerId)
+      ? state.players.find((p) => p.id !== perspectiveId)
       : promptPlayer;
     if (!target) {
       return { targetPlayer: null as null | (typeof promptPlayer), prizeIndexByGrid: [] as (number | undefined)[] };
