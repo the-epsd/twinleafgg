@@ -9,6 +9,8 @@ export type Board3dCardInfoData = {
   allowReveal?: boolean;
   facedown?: boolean;
   players?: Player[];
+  /** When true, Board3DCanvas shows in-scene inspect plates instead of CardInfoPopup. */
+  inspect3d?: boolean;
 };
 
 export type CardInfoPaneActionResult = (CardInfoTableAction & { cardList?: CardList }) | undefined;

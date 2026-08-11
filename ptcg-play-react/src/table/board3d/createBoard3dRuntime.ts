@@ -1,6 +1,7 @@
 import type { Board3dCardsAdapter } from './board3dCardsAdapter';
 import { Board3dAnimationService } from './services/board-3d-animation.service';
 import { Board3dAssetLoaderService } from './services/board-3d-asset-loader.service';
+import { Board3dCardInspectService } from './services/board-3d-card-inspect.service';
 import { Board3dCardOverlayService } from './services/board-3d-card-overlay.service';
 import { Board3dHandService } from './services/board-3d-hand.service';
 import { Board3dInteractionService } from './services/board-3d-interaction.service';
@@ -20,11 +21,13 @@ export type Board3dRuntime = {
   wireframeService: Board3dWireframeService;
   lightingService: Board3dLightingService;
   postProcessingService: Board3dPostProcessingService;
+  cardInspectService: Board3dCardInspectService;
 };
 
 export function createBoard3dRuntime(cardsAdapter: Board3dCardsAdapter): Board3dRuntime {
   const assetLoader = new Board3dAssetLoaderService();
   const animationService = new Board3dAnimationService();
+  const cardInspectService = new Board3dCardInspectService();
   const stackService = new Board3dStackService(assetLoader, cardsAdapter);
   const prizeService = new Board3dPrizeService(stackService);
   const overlayService = new Board3dCardOverlayService(assetLoader, cardsAdapter);
@@ -51,5 +54,6 @@ export function createBoard3dRuntime(cardsAdapter: Board3dCardsAdapter): Board3d
     wireframeService,
     lightingService,
     postProcessingService,
+    cardInspectService,
   };
 }

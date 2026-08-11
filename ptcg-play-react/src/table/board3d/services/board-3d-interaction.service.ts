@@ -721,6 +721,9 @@ export class Board3dInteractionService {
   }
 
   private beginPokemonHoverEffects(pokemon: Object3D): void {
+    if (pokemon.userData?.inspecting) {
+      return;
+    }
     if (this.hoveredPokemonCard && this.hoveredPokemonCard !== pokemon) {
       this.schedulePokemonHoverScaleRestore(
         this.hoveredPokemonCard,
@@ -783,6 +786,29 @@ export class Board3dInteractionService {
     this.hoveredPokemonCard = null;
     this.hoveredPokemonBoard3dCard = null;
     this.schedulePokemonHoverScaleRestore(card, original, board3d);
+  }
+
+  /** Immediately end Pokémon hover lift (e.g. before 3D card inspect). */
+  clearPokemonHoverEffects(): void {
+    if (!this.hoveredPokemonCard) {
+      return;
+    }
+    const card = this.hoveredPokemonCard;
+    const board3d = this.hoveredPokemonBoard3dCard;
+    const original = this.takeHoverRestingScale(
+      card.userData?.cardId as string | undefined,
+      this.hoveredPokemonOriginalScale,
+    );
+    const cardId = card.userData?.cardId as string | undefined;
+    gsap.killTweensOf(card.scale);
+    card.scale.copy(original);
+    board3d?.setOutline(false);
+    this.unlockBoardCardScale(cardId);
+    if (cardId) {
+      this.hoverRestingScales.delete(cardId);
+    }
+    this.hoveredPokemonCard = null;
+    this.hoveredPokemonBoard3dCard = null;
   }
 
   /**
@@ -888,6 +914,9 @@ export class Board3dInteractionService {
     this.pendingDragCamera = null;
 
     if (card) {
+      if (card.userData?.inspecting) {
+        return null;
+      }
       // Check if card is draggable, but DON'T start drag yet - wait for threshold
       if (card.userData.isHandCard && event.button === 0 && !disableHandDrag) {
         // Store pending drag info - will start on move threshold

@@ -79,6 +79,13 @@ export interface AbilityFocusState {
   anchor: AbilityFocusAnchor | null;
 }
 
+/** Screen-space anchor for the 3D card-info inspect plates (lower face quad). */
+export interface CardInspectFocusState {
+  anchor: AbilityFocusAnchor | null;
+  /** Compact retreat chip over the printed retreat cost (bottom-right). */
+  retreatAnchor?: AbilityFocusAnchor | null;
+}
+
 export interface CoinFlipAnimationEvent {
   playerId: number;
   result: boolean;
@@ -181,6 +188,9 @@ export class BoardInteractionService {
 
   private abilityFocusSubject = new BehaviorSubject<AbilityFocusState | null>(null);
   public abilityFocus$ = this.abilityFocusSubject.asObservable();
+
+  private cardInspectFocusSubject = new BehaviorSubject<CardInspectFocusState | null>(null);
+  public cardInspectFocus$ = this.cardInspectFocusSubject.asObservable();
 
   private coinFlipAnimationSubject = new Subject<CoinFlipAnimationEvent>();
   public coinFlipAnimation$ = this.coinFlipAnimationSubject.asObservable();
@@ -1099,6 +1109,14 @@ export class BoardInteractionService {
 
   public clearAbilityFocus(): void {
     this.abilityFocusSubject.next(null);
+  }
+
+  public setCardInspectFocus(state: CardInspectFocusState | null): void {
+    this.cardInspectFocusSubject.next(state);
+  }
+
+  public clearCardInspectFocus(): void {
+    this.cardInspectFocusSubject.next(null);
   }
 
   /**
