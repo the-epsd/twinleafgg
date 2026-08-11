@@ -45,6 +45,9 @@ export class StateSerializer {
       pathBuilder.goTo(this, key);
       const path = pathBuilder.getPath();
 
+      if (typeof value === 'function') {
+        return undefined;
+      }
       if (value instanceof Array) {
         return value;
       }
