@@ -8,23 +8,26 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 
 export class Pikachu extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.DELTA_SPECIES];
+  protected _tags = [CardTag.DELTA_SPECIES];
   public cardType: CardType = M;
   public hp: number = 50;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Tail Whap',
-    cost: [C],
-    damage: 10,
-    text: ''
-  }, {
-    name: 'Steel Headbutt',
-    cost: [M, C, C],
-    damage: 30,
-    text: 'Flip a coin. If heads, this attack does 30 damage plus 10 more damage.'
-  }];
+  public attacks = [
+    {
+      name: 'Tail Whap',
+      cost: [C],
+      damage: 10,
+      text: '',
+    },
+    {
+      name: 'Steel Headbutt',
+      cost: [M, C, C],
+      damage: 30,
+      text: 'Flip a coin. If heads, this attack does 30 damage plus 10 more damage.',
+    },
+  ];
 
   public set: string = 'HP';
   public name: string = 'Pikachu';
@@ -35,7 +38,7 @@ export class Pikachu extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      state = COIN_FLIP_PROMPT(store, state, player, results => {
+      state = COIN_FLIP_PROMPT(store, state, player, (results) => {
         if (results) {
           effect.damage += 10;
         }

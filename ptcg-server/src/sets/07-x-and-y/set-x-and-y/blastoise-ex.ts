@@ -17,24 +17,27 @@ import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/ga
 export class BlastoiseEx extends PokemonCard {
   public usedRapidSpin = false;
 
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 180;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
 
-  public attacks = [{
-    name: 'Rapid Spin',
-    cost: [C, C],
-    damage: 30,
-    text: 'Switch this Pokémon with 1 of your Benched Pokémon. Then, your opponent switches his or her Active Pokémon with 1 of his or her Benched Pokémon.'
-  }, {
-    name: 'Splash Bomb',
-    cost: [W, W, W],
-    damage: 120,
-    text: 'Flip a coin. If tails, this Pokémon does 30 damage to itself.'
-  }];
+  public attacks = [
+    {
+      name: 'Rapid Spin',
+      cost: [C, C],
+      damage: 30,
+      text: 'Switch this Pokémon with 1 of your Benched Pokémon. Then, your opponent switches his or her Active Pokémon with 1 of his or her Benched Pokémon.',
+    },
+    {
+      name: 'Splash Bomb',
+      cost: [W, W, W],
+      damage: 120,
+      text: 'Flip a coin. If tails, this Pokémon does 30 damage to itself.',
+    },
+  ];
 
   public set: string = 'XY';
   public setNumber: string = '29';

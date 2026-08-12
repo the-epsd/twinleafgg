@@ -1,28 +1,33 @@
-import { PokemonCard, Stage, CardTag, CardType, StoreLike, State, StateUtils } from "../../../game";
-import { Effect } from "../../../game/store/effects/effect";
-import { WAS_ATTACK_USED, THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN } from "../../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardTag, CardType, StoreLike, State, StateUtils } from '../../../game';
+import { Effect } from '../../../game/store/effects/effect';
+import {
+  WAS_ATTACK_USED,
+  THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN,
+} from '../../../game/store/prefabs/prefabs';
 
 export class SalamenceEX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public hp: number = 180;
   public cardType: CardType = N;
   public weakness = [{ type: Y }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Beastly Fang',
-    cost: [R, C, C],
-    damage: 10,
-    damageCalculation: '+',
-    text: 'This attack does 50 more damage for each of your opponent\'s Pokémon-EX.'
-  },
-  {
-    name: 'Dragon Strike',
-    cost: [R, W, C, C],
-    damage: 130,
-    text: 'This Pokémon can\'t use Dragon Strike during your next turn.'
-  }];
+  public attacks = [
+    {
+      name: 'Beastly Fang',
+      cost: [R, C, C],
+      damage: 10,
+      damageCalculation: '+',
+      text: "This attack does 50 more damage for each of your opponent's Pokémon-EX.",
+    },
+    {
+      name: 'Dragon Strike',
+      cost: [R, W, C, C],
+      damage: 130,
+      text: "This Pokémon can't use Dragon Strike during your next turn.",
+    },
+  ];
 
   public set: string = 'XYP';
   public cardImage: string = 'assets/cardback.png';

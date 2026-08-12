@@ -1,30 +1,32 @@
-import { PokemonCard, Stage, CardTag, CardType, StoreLike, State } from "../../../game";
-import { Effect } from "../../../game/store/effects/effect";
-import { WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
-import { BLOCK_RETREAT } from "../../../game/store/prefabs/effect-of-attack-prefabs";
+import { PokemonCard, Stage, CardTag, CardType, StoreLike, State } from '../../../game';
+import { Effect } from '../../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class KrookodileEx extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public evolvesFrom: string = 'Krokorok';
   public hp: number = 320;
   public cardType: CardType = D;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
 
-  public attacks = [{
-    name: 'Corner',
-    cost: [D, C],
-    damage: 80,
-    text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
-  },
-  {
-    name: 'Strong Bite',
-    cost: [D, D, C],
-    damage: 140,
-    damageCalculation: '+',
-    text: 'If this Pokémon has a Pokémon Tool attached, this attack does 140 more damage.'
-  }];
+  public attacks = [
+    {
+      name: 'Corner',
+      cost: [D, C],
+      damage: 80,
+      text: "During your opponent's next turn, the Defending Pokémon can't retreat.",
+    },
+    {
+      name: 'Strong Bite',
+      cost: [D, D, C],
+      damage: 140,
+      damageCalculation: '+',
+      text: 'If this Pokémon has a Pokémon Tool attached, this attack does 140 more damage.',
+    },
+  ];
 
   public regulationMark = 'I';
   public set: string = 'CRI';

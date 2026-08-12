@@ -21,7 +21,7 @@ function* usePowerBlast(
   }
 
   let flipResult = false;
-  yield COIN_FLIP_PROMPT(store, state, player, result => {
+  yield COIN_FLIP_PROMPT(store, state, player, (result) => {
     flipResult = result;
     next();
   });
@@ -52,7 +52,7 @@ function* usePowerBlast(
 }
 
 export class TornadusEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
   public hp: number = 170;
@@ -60,18 +60,20 @@ export class TornadusEx extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Blow Through',
-    cost: [C, C],
-    damage: 30,
-    text: 'If there is any Stadium card in play, this attack does 30 ' +
-    'more damage.'
-  }, {
-    name: 'Power Blast',
-    cost: [C, C, C],
-    damage: 100,
-    text: 'Flip a coin. If tails, discard an Energy attached to this Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'Blow Through',
+      cost: [C, C],
+      damage: 30,
+      text: 'If there is any Stadium card in play, this attack does 30 ' + 'more damage.',
+    },
+    {
+      name: 'Power Blast',
+      cost: [C, C, C],
+      damage: 100,
+      text: 'Flip a coin. If tails, discard an Energy attached to this Pokémon.',
+    },
+  ];
 
   public set: string = 'DEX';
   public name: string = 'Tornadus-EX';

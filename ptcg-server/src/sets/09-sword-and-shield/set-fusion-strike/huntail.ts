@@ -44,13 +44,13 @@ export class Huntail extends PokemonCard {
       const player = effect.player;
       const attackingPokemon = player.active.getPokemonCard();
 
-      if (!attackingPokemon || !attackingPokemon.tags.includes(CardTag.SINGLE_STRIKE)) {
+      if (!attackingPokemon || !attackingPokemon.hasTag(CardTag.SINGLE_STRIKE)) {
         return state;
       }
 
       let huntailInPlay = false;
 
-      state.players.forEach(p => {
+      state.players.forEach((p) => {
         if (p !== player) {
           p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
             if (card === this) {
@@ -64,7 +64,7 @@ export class Huntail extends PokemonCard {
         return state;
       }
 
-      let huntailOwner = state.players.find(p => p !== player);
+      let huntailOwner = state.players.find((p) => p !== player);
       if (!huntailOwner) {
         return state;
       }

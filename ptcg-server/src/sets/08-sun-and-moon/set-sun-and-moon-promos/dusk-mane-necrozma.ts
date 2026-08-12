@@ -1,6 +1,19 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, CardTag, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, CardTarget } from "../../../game";
-import { Effect } from "../../../game/store/effects/effect";
-import { DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
+import {
+  PokemonCard,
+  Stage,
+  CardType,
+  StoreLike,
+  State,
+  StateUtils,
+  CardTag,
+  ChoosePokemonPrompt,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  CardTarget,
+} from '../../../game';
+import { Effect } from '../../../game/store/effects/effect';
+import { DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class DuskManeNecrozma extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -10,19 +23,21 @@ export class DuskManeNecrozma extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Dusk Shot',
-    cost: [M],
-    damage: 0,
-    text: 'This attack does 60 damage to 1 of your opponent\'s Pokémon-GX or Pokémon-EX. This damage isn\'t affected by Weakness or Resistance.'
-  },
-  {
-    name: 'Rusty Claws',
-    cost: [M, M, C],
-    damage: 100,
-    damageCalculation: '+',
-    text: 'If your opponent has exactly 1 Prize card remaining, this attack does 100 more damage.'
-  }];
+  public attacks = [
+    {
+      name: 'Dusk Shot',
+      cost: [M],
+      damage: 0,
+      text: "This attack does 60 damage to 1 of your opponent's Pokémon-GX or Pokémon-EX. This damage isn't affected by Weakness or Resistance.",
+    },
+    {
+      name: 'Rusty Claws',
+      cost: [M, M, C],
+      damage: 100,
+      damageCalculation: '+',
+      text: 'If your opponent has exactly 1 Prize card remaining, this attack does 100 more damage.',
+    },
+  ];
 
   public set: string = 'SMP';
   public cardImage: string = 'assets/cardback.png';
@@ -42,7 +57,7 @@ export class DuskManeNecrozma extends PokemonCard {
       const hasGxExPokemon = (() => {
         let found = false;
         opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-          if (card.tags.includes(CardTag.POKEMON_GX) || card.tags.includes(CardTag.POKEMON_EX)) {
+          if (card.hasTag(CardTag.POKEMON_GX) || card.hasTag(CardTag.POKEMON_EX)) {
             found = true;
           }
         });
@@ -55,21 +70,25 @@ export class DuskManeNecrozma extends PokemonCard {
 
       const blocked: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        if (!card.tags.includes(CardTag.POKEMON_GX) || !card.tags.includes(CardTag.POKEMON_EX)) {
+        if (!card.hasTag(CardTag.POKEMON_GX) || !card.hasTag(CardTag.POKEMON_EX)) {
           blocked.push(target);
         }
       });
 
-      store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false, blocked }
-      ), selected => {
-        const targets = selected || [];
-        DAMAGE_OPPONENT_POKEMON(store, state, effect, 60, targets);
-      });
+      store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { min: 1, max: 1, allowCancel: false, blocked },
+        ),
+        (selected) => {
+          const targets = selected || [];
+          DAMAGE_OPPONENT_POKEMON(store, state, effect, 60, targets);
+        },
+      );
     }
 
     // Rusty Claws

@@ -1,9 +1,21 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, PokemonCardList, Card, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt } from '../../../game';
+import {
+  StoreLike,
+  State,
+  PokemonCardList,
+  Card,
+  ChooseCardsPrompt,
+  GameMessage,
+  ShuffleDeckPrompt,
+} from '../../../game';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { MOVE_CARDS, WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
+import {
+  MOVE_CARDS,
+  WAS_ATTACK_USED,
+  MULTIPLE_COIN_FLIPS_PROMPT,
+} from '../../../game/store/prefabs/prefabs';
 
 function* useKeepCalling(
   next: Function,
@@ -60,24 +72,27 @@ function* useKeepCalling(
 
 export class Sobble extends PokemonCard {
   public regulationMark = 'E';
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 60;
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Keep Calling',
-    cost: [C],
-    damage: 0,
-    text: 'Search your deck for up to 3 Basic Rapid Strike Pokémon and put them onto your Bench. Then, shuffle your deck.'
-  }, {
-    name: 'Double Spin',
-    cost: [C, C],
-    damage: 20,
-    text: 'Flip 2 coins. This attack does 20 damage for each heads.'
-  }];
+  public attacks = [
+    {
+      name: 'Keep Calling',
+      cost: [C],
+      damage: 0,
+      text: 'Search your deck for up to 3 Basic Rapid Strike Pokémon and put them onto your Bench. Then, shuffle your deck.',
+    },
+    {
+      name: 'Double Spin',
+      cost: [C, C],
+      damage: 20,
+      text: 'Flip 2 coins. This attack does 20 damage for each heads.',
+    },
+  ];
 
   public set: string = 'CRE';
   public cardImage: string = 'assets/cardback.png';
@@ -93,9 +108,11 @@ export class Sobble extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, results => {
+      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, (results) => {
         let heads: number = 0;
-        results.forEach(r => { heads += r ? 1 : 0; });
+        results.forEach((r) => {
+          heads += r ? 1 : 0;
+        });
         effect.damage = 20 * heads;
       });
     }

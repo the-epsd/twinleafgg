@@ -14,18 +14,21 @@ export class Jolteon extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Pin Missile',
-    cost: [C],
-    damage: 20,
-    damageCalculation: 'x',
-    text: 'Flip 4 coins. This attack does 20 damage times the number of heads.'
-  }, {
-    name: 'Electri-Defuse',
-    cost: [L, C],
-    damage: 40,
-    text: 'If the Defending Pokémon is a Pokémon-EX, that Pokémon can\'t attack during your opponent\'s next turn.'
-  }];
+  public attacks = [
+    {
+      name: 'Pin Missile',
+      cost: [C],
+      damage: 20,
+      damageCalculation: 'x',
+      text: 'Flip 4 coins. This attack does 20 damage times the number of heads.',
+    },
+    {
+      name: 'Electri-Defuse',
+      cost: [L, C],
+      damage: 40,
+      text: "If the Defending Pokémon is a Pokémon-EX, that Pokémon can't attack during your opponent's next turn.",
+    },
+  ];
 
   public set: string = 'PLF';
   public setNumber: string = '34';
@@ -45,7 +48,7 @@ export class Jolteon extends PokemonCard {
     // Electri-Defuse
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const defending = effect.opponent.active.getPokemonCard();
-      if (defending && defending.tags.includes(CardTag.POKEMON_EX)) {
+      if (defending && defending.hasTag(CardTag.POKEMON_EX)) {
         return DEFENDING_POKEMON_CANNOT_ATTACK(store, state, effect, this);
       }
     }
