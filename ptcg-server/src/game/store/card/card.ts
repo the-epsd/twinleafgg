@@ -39,6 +39,7 @@ export abstract class Card {
   /**
    * Getter/setter access method for card tags.
    * This function may be overridden if a specific card needs to check game state (e.g. game format) and return different properties in those scenarios.
+   * If you need to check if a card has a tag during gameplay, use hasTag() instead.
    */
   public get tags(): CardTag[] {
     return this._tags;
@@ -48,18 +49,34 @@ export abstract class Card {
     this._tags = value;
   }
 
+  /**
+   * Checks if this card has the specified tag, either naturally or added by some other game effect.
+   * @param tag The tag to check
+   * @returns `true` if this card has that tag, `false` otherwise
+   */
   public hasTag(tag: CardTag): boolean {
     return this.tags.includes(tag) || this._runtimeTags.includes(tag);
   }
 
+  /**
+   * Adds a tag to this card during gameplay.
+   * @param tag The tag to add
+   */
   public addRuntimeTag(tag: CardTag): void {
     this._runtimeTags.push(tag);
   }
 
+  /**
+   * Removes a tag to this card during gameplay.
+   * @param tag The tag to remove
+   */
   public removeRuntimeTag(tag: CardTag): void {
     this._runtimeTags = this._runtimeTags.filter((t, _) => t != tag);
   }
 
+  /**
+   * Removes all temporary during-gameplay tags.
+   */
   public clearRuntimeTags(): void {
     this._runtimeTags = [];
   }
