@@ -2,14 +2,18 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_POISON_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/attack-effects';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class VenusaurEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = G;
   public hp: number = 180;
@@ -21,14 +25,14 @@ export class VenusaurEx extends PokemonCard {
       name: 'Poison Powder',
       cost: [G, C, C],
       damage: 60,
-      text: 'Your opponent\'s Active Pokémon is now Poisoned.'
+      text: "Your opponent's Active Pokémon is now Poisoned.",
     },
     {
       name: 'Jungle Hammer',
       cost: [G, G, C, C],
       damage: 90,
-      text: 'Heal 30 damage from this Pokémon.'
-    }
+      text: 'Heal 30 damage from this Pokémon.',
+    },
   ];
 
   public set: string = 'XY';

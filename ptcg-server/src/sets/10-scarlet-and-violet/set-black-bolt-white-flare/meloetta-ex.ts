@@ -11,25 +11,29 @@ import { NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/attack-effec
 
 export class Meloettaex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public cardType = P;
   public hp: number = 200;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Live Debut',
-    powerType: PowerType.ABILITY,
-    text: 'If you go first, this Pokémon can attack on your first turn.'
-  }];
+  public powers = [
+    {
+      name: 'Live Debut',
+      powerType: PowerType.ABILITY,
+      text: 'If you go first, this Pokémon can attack on your first turn.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Echoed Voice',
-    cost: [P],
-    damage: 30,
-    text: 'During your next turn, this Pokémon\'s Echoed Voice attack does 80 more damage (before applying Weakness and Resistance).'
-  }];
+  public attacks = [
+    {
+      name: 'Echoed Voice',
+      cost: [P],
+      damage: 30,
+      text: "During your next turn, this Pokémon's Echoed Voice attack does 80 more damage (before applying Weakness and Resistance).",
+    },
+  ];
 
   public regulationMark = 'I';
   public set: string = 'BLK';

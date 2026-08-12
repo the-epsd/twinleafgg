@@ -4,9 +4,20 @@
 
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { CardType, CardTag, EnergyType } from '../../../game/store/card/card-types';
-import { GameError, GameMessage, PlayerType, StoreLike, State, StateUtils, GamePhase } from '../../../game';
+import {
+  GameError,
+  GameMessage,
+  PlayerType,
+  StoreLike,
+  State,
+  StateUtils,
+  GamePhase,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../../game/store/effects/check-effects';
+import {
+  CheckProvidedEnergyEffect,
+  CheckTableStateEffect,
+} from '../../../game/store/effects/check-effects';
 import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
 import { AttachEnergyEffect } from '../../../game/store/effects/play-card-effects';
 import { IS_SPECIAL_ENERGY_BLOCKED } from '../../../game/store/prefabs/prefabs';
@@ -19,11 +30,11 @@ export class DangerousEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dangerous Energy';
   public fullName: string = 'Dangerous Energy AOR';
-  public text: string = 'This card can only be attached to Darkness Pokémon. This card provides [D] Energy only while this card is attached to a Darkness Pokémon. Whenever the Darkness Pokémon this card is attached to is your Active Pokémon and is damaged by an attack from your opponent\'s Pokémon-EX (even if that Pokémon is Knocked Out), put 2 damage counters on the Attacking Pokémon-EX. (If this card is attached to anything other than a Darkness Pokémon, discard this card.)';
+  public text: string =
+    "This card can only be attached to Darkness Pokémon. This card provides [D] Energy only while this card is attached to a Darkness Pokémon. Whenever the Darkness Pokémon this card is attached to is your Active Pokémon and is damaged by an attack from your opponent's Pokémon-EX (even if that Pokémon is Knocked Out), put 2 damage counters on the Attacking Pokémon-EX. (If this card is attached to anything other than a Darkness Pokémon, discard this card.)";
 
   // Refs: set-fusion-strike/fusion-strike-energy.ts (type-restricted energy), set-flashfire/qwilfish.ts (ON_DAMAGED_BY_OPPONENT_ATTACK retaliation)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // Provide [D] energy when attached to Darkness Pokemon
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
       const pokemon = effect.source;
@@ -68,15 +79,15 @@ export class DangerousEnergy extends EnergyCard {
 
       // Check if attacker is Pokemon-EX
       const attackerPokemon = effect.source.getPokemonCard();
-      if (attackerPokemon && attackerPokemon.tags.includes(CardTag.POKEMON_EX)) {
+      if (attackerPokemon && attackerPokemon.hasTag(CardTag.POKEMON_EX)) {
         effect.source.damage += 20; // 2 damage counters
       }
     }
 
     // Discard if attached to non-Darkness Pokemon
     if (effect instanceof CheckTableStateEffect) {
-      state.players.forEach(player => {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      state.players.forEach((player) => {
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
           if (!cardList.cards.includes(this)) {
             return;
           }

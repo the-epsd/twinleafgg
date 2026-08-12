@@ -12,12 +12,17 @@ import { SlotType } from '../../../game';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 
 import { TrainerCard, TrainerType } from '../../../game';
-import { BLOCK_IF_DISCARD_EMPTY, BLOCK_IF_GX_ATTACK_USED, MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  BLOCK_IF_DISCARD_EMPTY,
+  BLOCK_IF_GX_ATTACK_USED,
+  MOVE_CARDS,
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 // CES Banette-GX 66 (https://limitlesstcg.com/cards/CES/66)
 export class BanetteGX extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
 
   public stage: Stage = Stage.STAGE_1;
 
@@ -33,27 +38,29 @@ export class BanetteGX extends PokemonCard {
 
   public retreat = [CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Shady Move',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), if this Pokémon is your Active Pokémon, you may move 1 damage counter from 1 Pokémon to another Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Shady Move',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn (before your attack), if this Pokémon is your Active Pokémon, you may move 1 damage counter from 1 Pokémon to another Pokémon.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Shadow Chant',
       cost: [CardType.PSYCHIC],
       damage: 30,
-      text: 'This attack does 10 more damage for each Supporter card in your discard pile. You can\'t add more than 100 damage in this way.'
+      text: "This attack does 10 more damage for each Supporter card in your discard pile. You can't add more than 100 damage in this way.",
     },
 
     {
       name: 'Tomb Hunt-GX',
       cost: [CardType.PSYCHIC],
       damage: 0,
-      text: 'Put 3 cards from your discard pile into your hand. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Put 3 cards from your discard pile into your hand. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'CES';
@@ -100,28 +107,32 @@ export class BanetteGX extends PokemonCard {
       });
 
       // doing the actual moving of cards
-      return store.prompt(state, new MoveDamagePrompt(
-        effect.player.id,
-        GameMessage.MOVE_DAMAGE,
-        PlayerType.ANY,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        maxAllowedDamage,
-        { min: 1, max: 1, allowCancel: false }
-      ), transfers => {
-        if (transfers === null) {
-          return;
-        }
-        player.marker.addMarker(this.SHADY_MARKER, this);
-
-        for (const transfer of transfers) {
-          const source = StateUtils.getTarget(state, player, transfer.from);
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          if (source.damage >= 10) {
-            source.damage -= 10;
-            target.damage += 10;
+      return store.prompt(
+        state,
+        new MoveDamagePrompt(
+          effect.player.id,
+          GameMessage.MOVE_DAMAGE,
+          PlayerType.ANY,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          maxAllowedDamage,
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (transfers) => {
+          if (transfers === null) {
+            return;
           }
-        }
-      });
+          player.marker.addMarker(this.SHADY_MARKER, this);
+
+          for (const transfer of transfers) {
+            const source = StateUtils.getTarget(state, player, transfer.from);
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            if (source.damage >= 10) {
+              source.damage -= 10;
+              target.damage += 10;
+            }
+          }
+        },
+      );
     }
 
     // Shadow Chant
@@ -129,7 +140,7 @@ export class BanetteGX extends PokemonCard {
       const player = effect.player;
 
       let supportersInDiscard = 0;
-      player.discard.cards.forEach(c => {
+      player.discard.cards.forEach((c) => {
         if (c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER) {
           supportersInDiscard += 1;
         }
@@ -154,17 +165,26 @@ export class BanetteGX extends PokemonCard {
       // set GX attack as used for game
       player.usedGX = true;
 
-      return store.prompt(state, [
-        new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_HAND,
-          player.discard,
-          {},
-          { min: 1, max: 3, allowCancel: false }
-        )], selected => {
+      return store.prompt(
+        state,
+        [
+          new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_CARD_TO_HAND,
+            player.discard,
+            {},
+            { min: 1, max: 3, allowCancel: false },
+          ),
+        ],
+        (selected) => {
           const cards = selected || [];
-          MOVE_CARDS(store, state, player.discard, player.hand, { cards, sourceCard: this, sourceEffect: this.attacks[1] });
-        });
+          MOVE_CARDS(store, state, player.discard, player.hand, {
+            cards,
+            sourceCard: this,
+            sourceEffect: this.attacks[1],
+          });
+        },
+      );
     }
 
     if (effect instanceof EndTurnEffect) {

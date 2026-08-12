@@ -6,23 +6,29 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class NsKlinklang extends PokemonCard {
-  public tags = [CardTag.NS];
+  protected _tags = [CardTag.NS];
   public stage: Stage = Stage.STAGE_2;
-  public evolvesFrom: string = 'N\'s Klang';
+  public evolvesFrom: string = "N's Klang";
   public cardType: CardType = M;
   public hp: number = 160;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
 
-  public attacks = [{
-    name: 'Magnetic Blast', cost: [C], damage: 50, text: ''
-  }, {
-    name: 'Triple Smash',
-    cost: [M, M, C],
-    damage: 120,
-    damageCalculation: 'x',
-    text: 'Flip 3 coins. This attack does 120 damage for each heads.'
-  }];
+  public attacks = [
+    {
+      name: 'Magnetic Blast',
+      cost: [C],
+      damage: 50,
+      text: '',
+    },
+    {
+      name: 'Triple Smash',
+      cost: [M, M, C],
+      damage: 120,
+      damageCalculation: 'x',
+      text: 'Flip 3 coins. This attack does 120 damage for each heads.',
+    },
+  ];
 
   public set: string = 'JTG';
 
@@ -30,11 +36,10 @@ export class NsKlinklang extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '105';
-  public name: string = 'N\'s Klinklang';
-  public fullName: string = 'N\'s Klinklang JTG';
+  public name: string = "N's Klinklang";
+  public fullName: string = "N's Klinklang JTG";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 3, results => {
@@ -45,5 +50,4 @@ export class NsKlinklang extends PokemonCard {
     }
     return state;
   }
-
 }

@@ -13,25 +13,29 @@ import { StoreLike } from '../../../game/store/store-like';
 
 export class Orthwormex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public cardType: CardType = M;
   public hp: number = 220;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C, C, C];
 
-  public powers = [{
-    name: 'Pummeling Payback',
-    powerType: PowerType.ABILITY,
-    text: 'If this Pokémon is damaged by an attack from your opponent\'s Pokémon(even if this Pokémon is Knocked Out), put 2 damage counters on the Attacking Pokémon for each [M] Energy attached to this Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Pummeling Payback',
+      powerType: PowerType.ABILITY,
+      text: "If this Pokémon is damaged by an attack from your opponent's Pokémon(even if this Pokémon is Knocked Out), put 2 damage counters on the Attacking Pokémon for each [M] Energy attached to this Pokémon.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Rock Tomb',
-    cost: [C, C, C, C],
-    damage: 150,
-    text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
-  }];
+  public attacks = [
+    {
+      name: 'Rock Tomb',
+      cost: [C, C, C, C],
+      damage: 150,
+      text: "During your opponent's next turn, the Defending Pokémon can't retreat.",
+    },
+  ];
 
   public regulationMark = 'H';
   public set: string = 'SCR';
@@ -72,9 +76,9 @@ export class Orthwormex extends PokemonCard {
       store.reduceEffect(state, checkProvidedEnergyEffect);
 
       let energyCount = 0;
-      checkProvidedEnergyEffect.energyMap.forEach(em => {
-        energyCount += em.provides.filter(cardType =>
-          cardType === CardType.METAL || cardType === CardType.ANY
+      checkProvidedEnergyEffect.energyMap.forEach((em) => {
+        energyCount += em.provides.filter(
+          (cardType) => cardType === CardType.METAL || cardType === CardType.ANY,
         ).length;
       });
 

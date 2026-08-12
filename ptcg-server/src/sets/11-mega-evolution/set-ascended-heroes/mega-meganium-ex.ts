@@ -6,20 +6,22 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class MegaMeganiumex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Bayleef';
-  public tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
   public cardType: CardType = G;
   public hp: number = 360;
   public weakness = [{ type: R }];
   public resistance = [];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Giant Bouquet',
-    cost: [C, C, C],
-    damage: 70,
-    damageCalculation: '+',
-    text: 'This attack does 50 more damage for each [G] Energy attached to this Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'Giant Bouquet',
+      cost: [C, C, C],
+      damage: 70,
+      damageCalculation: '+',
+      text: 'This attack does 50 more damage for each [G] Energy attached to this Pokémon.',
+    },
+  ];
 
   public regulationMark: string = 'I';
   public set: string = 'ASC';
@@ -37,10 +39,13 @@ export class MegaMeganiumex extends PokemonCard {
       state = store.reduceEffect(state, checkProvidedEnergy);
 
       grassEnergyCount = checkProvidedEnergy.energyMap.reduce((sum, energy) => {
-        return sum + energy.provides.filter(type => type === CardType.GRASS || type === CardType.ANY).length;
+        return (
+          sum +
+          energy.provides.filter((type) => type === CardType.GRASS || type === CardType.ANY).length
+        );
       }, 0);
 
-      effect.damage = 70 + (50 * grassEnergyCount);
+      effect.damage = 70 + 50 * grassEnergyCount;
     }
     return state;
   }

@@ -6,7 +6,7 @@ import { HealEffect } from '../../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Vaporeon extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Eevee';
   public cardType: CardType = W;
@@ -19,15 +19,15 @@ export class Vaporeon extends PokemonCard {
       name: 'Refreshing Rain',
       cost: [C],
       damage: 0,
-      text: 'Heal 30 damage from each of your Pokémon.'
+      text: 'Heal 30 damage from each of your Pokémon.',
     },
     {
       name: 'Gold Breaker',
       cost: [W, C],
       damage: 30,
       damageCalculation: '+',
-      text: 'If the Defending Pokémon is a Pokémon-EX, this attack does 50 more damage.'
-    }
+      text: 'If the Defending Pokémon is a Pokémon-EX, this attack does 50 more damage.',
+    },
   ];
 
   public set: string = 'PLF';
@@ -51,7 +51,7 @@ export class Vaporeon extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
       const defending = opponent.active.getPokemonCard();
-      if (defending && defending.tags.includes(CardTag.POKEMON_EX)) {
+      if (defending && defending.hasTag(CardTag.POKEMON_EX)) {
         effect.damage += 50;
       }
     }

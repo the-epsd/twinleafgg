@@ -21,15 +21,16 @@ export class REnergy extends EnergyCard {
   public fullName = 'R Energy TRR';
 
   public text =
-    'R Energy can be attached only to a Pokémon that has Dark or Rocket\'s in its name. While in play, R Energy provides 2 [D] Energy. (Doesn\'t count as a basic Energy card.) If the Pokémon R Energy is attached to attacks, the attack does 10 more damage to the Active Pokémon (before applying Weakness and Resistance). When your turn ends, discard R Energy.';
+    "R Energy can be attached only to a Pokémon that has Dark or Rocket's in its name. While in play, R Energy provides 2 [D] Energy. (Doesn't count as a basic Energy card.) If the Pokémon R Energy is attached to attacks, the attack does 10 more damage to the Active Pokémon (before applying Weakness and Resistance). When your turn ends, discard R Energy.";
 
   public R_MARKER = 'R_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
-
-      if (!effect.target.getPokemonCard()?.tags.includes(CardTag.DARK) &&
-        !effect.target.getPokemonCard()?.tags.includes(CardTag.ROCKETS)) {
+      if (
+        !effect.target.getPokemonCard()?.hasTag(CardTag.DARK) &&
+        !effect.target.getPokemonCard()?.hasTag(CardTag.ROCKETS)
+      ) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
@@ -45,7 +46,10 @@ export class REnergy extends EnergyCard {
       return state;
     }
 
-    if (effect instanceof BetweenTurnsEffect && effect.player.marker.hasMarker(this.R_MARKER, this)) {
+    if (
+      effect instanceof BetweenTurnsEffect &&
+      effect.player.marker.hasMarker(this.R_MARKER, this)
+    ) {
       const player = effect.player;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {

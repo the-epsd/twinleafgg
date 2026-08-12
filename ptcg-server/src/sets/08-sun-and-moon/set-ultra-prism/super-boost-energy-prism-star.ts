@@ -6,7 +6,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 
 export class SuperBoostEnergyPrismStar extends EnergyCard {
-  public tags = [CardTag.PRISM_STAR];
+  protected _tags = [CardTag.PRISM_STAR];
   public provides: CardType[] = [CardType.COLORLESS];
   public energyType = EnergyType.SPECIAL;
   public set: string = 'UPR';

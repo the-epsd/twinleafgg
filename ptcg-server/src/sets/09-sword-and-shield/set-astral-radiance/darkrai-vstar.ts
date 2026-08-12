@@ -1,6 +1,23 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, TrainerType, BoardEffect } from '../../../game/store/card/card-types';
-import { StoreLike, State, PlayerType, Card, GameError, GameMessage, ChooseCardsPrompt, TrainerCard, PowerType } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  TrainerType,
+  BoardEffect,
+} from '../../../game/store/card/card-types';
+import {
+  StoreLike,
+  State,
+  PlayerType,
+  Card,
+  GameError,
+  GameMessage,
+  ChooseCardsPrompt,
+  TrainerCard,
+  PowerType,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
@@ -8,8 +25,7 @@ import { DiscardToHandEffect } from '../../../game/store/effects/play-card-effec
 import { MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class DarkraiVSTAR extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_VSTAR];
+  protected _tags = [CardTag.POKEMON_VSTAR];
 
   public evolvesFrom = 'Darkrai V';
 
@@ -30,8 +46,8 @@ export class DarkraiVSTAR extends PokemonCard {
       name: 'Star Abyss',
       useWhenInPlay: true,
       powerType: PowerType.ABILITY,
-      text: 'During your turn, you may put up to 2 Item cards from your discard pile into your hand. (You can\'t use more than 1 VSTAR Power in a game.)'
-    }
+      text: "During your turn, you may put up to 2 Item cards from your discard pile into your hand. (You can't use more than 1 VSTAR Power in a game.)",
+    },
   ];
 
   public attacks = [
@@ -39,9 +55,8 @@ export class DarkraiVSTAR extends PokemonCard {
       name: 'Dark Pulse',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 30,
-      text: 'This attack does 30 more damage for each <span class="energy-symbol">[D]</span> Energy attached to all of your Pokémon.'
-    }
-
+      text: 'This attack does 30 more damage for each <span class="energy-symbol">[D]</span> Energy attached to all of your Pokémon.',
+    },
   ];
 
   public set: string = 'ASR';
@@ -55,7 +70,6 @@ export class DarkraiVSTAR extends PokemonCard {
   public fullName: string = 'Darkrai VSTAR ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
@@ -63,7 +77,7 @@ export class DarkraiVSTAR extends PokemonCard {
         throw new GameError(GameMessage.LABEL_VSTAR_USED);
       }
 
-      const hasItem = player.discard.cards.some(c => {
+      const hasItem = player.discard.cards.some((c) => {
         return c instanceof TrainerCard && c.trainerType === TrainerType.ITEM;
       });
 
@@ -79,7 +93,7 @@ export class DarkraiVSTAR extends PokemonCard {
         // If prevented, just return
         player.usedVSTAR = true;
 
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
           if (cardList.getPokemonCard() === this) {
             cardList.addBoardEffect(BoardEffect.ABILITY_USED);
           }
@@ -92,26 +106,33 @@ export class DarkraiVSTAR extends PokemonCard {
       player.usedVSTAR = true;
 
       let cards: Card[] = [];
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.discard,
-        { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
-        { min: 1, max: 2, allowCancel: true }
-      ), selected => {
-        cards = selected || [];
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.discard,
+          { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
+          { min: 1, max: 2, allowCancel: true },
+        ),
+        (selected) => {
+          cards = selected || [];
 
-        if (cards.length > 0) {
-          MOVE_CARDS(store, state, player.discard, player.hand, { cards, sourceCard: this, sourceEffect: this.powers[0] });
-        }
-
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (cardList.getPokemonCard() === this) {
-            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+          if (cards.length > 0) {
+            MOVE_CARDS(store, state, player.discard, player.hand, {
+              cards,
+              sourceCard: this,
+              sourceEffect: this.powers[0],
+            });
           }
-        });
 
-      });
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+            if (cardList.getPokemonCard() === this) {
+              cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+            }
+          });
+        },
+      );
     }
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
@@ -120,7 +141,7 @@ export class DarkraiVSTAR extends PokemonCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, cardList);
         store.reduceEffect(state, checkProvidedEnergyEffect);
-        checkProvidedEnergyEffect.energyMap.forEach(energy => {
+        checkProvidedEnergyEffect.energyMap.forEach((energy) => {
           if (energy.provides.includes(CardType.DARK)) {
             energies += 1;
           }
@@ -132,5 +153,4 @@ export class DarkraiVSTAR extends PokemonCard {
 
     return state;
   }
-
 }

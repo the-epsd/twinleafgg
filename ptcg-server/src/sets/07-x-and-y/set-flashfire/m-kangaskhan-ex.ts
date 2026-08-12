@@ -9,20 +9,22 @@ import { MEGA_EVOLUTION_END_TURN } from '../../../game/store/prefabs/tool-prefab
 
 export class MKangaskhanEX extends PokemonCard {
   public stage: Stage = Stage.MEGA;
-  public tags = [CardTag.POKEMON_EX, CardTag.MEGA];
+  protected _tags = [CardTag.POKEMON_EX, CardTag.MEGA];
   public evolvesFrom = 'Kangaskhan-EX';
   public cardType: CardType = C;
   public hp: number = 230;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
 
-  public attacks = [{
-    name: 'Wham Bam Punch',
-    cost: [C, C, C],
-    damage: 100,
-    damageCalculation: '+',
-    text: 'Flip a coin until you get tails. This attack does 30 more damage for each heads.'
-  }];
+  public attacks = [
+    {
+      name: 'Wham Bam Punch',
+      cost: [C, C, C],
+      damage: 100,
+      damageCalculation: '+',
+      text: 'Flip a coin until you get tails. This attack does 30 more damage for each heads.',
+    },
+  ];
 
   public set: string = 'FLF';
   public name: string = 'M Kangaskhan-EX';
@@ -43,5 +45,4 @@ export class MKangaskhanEX extends PokemonCard {
 
     return state;
   }
-
 }

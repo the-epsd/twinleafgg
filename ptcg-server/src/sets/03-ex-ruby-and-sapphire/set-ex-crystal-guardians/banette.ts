@@ -6,7 +6,11 @@ import { Effect } from '../../../game/store/effects/effect';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { StateUtils } from '../../../game/store/state-utils';
-import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, IS_POKEBODY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_CONFUSION_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  IS_POKEBODY_BLOCKED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Banette extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -17,18 +21,22 @@ export class Banette extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Safeguard',
-    powerType: PowerType.POKEBODY,
-    text: 'Prevent all effects of attacks, including damage, done to Banette by your opponent\'s Pokémon-ex.'
-  }];
+  public powers = [
+    {
+      name: 'Safeguard',
+      powerType: PowerType.POKEBODY,
+      text: "Prevent all effects of attacks, including damage, done to Banette by your opponent's Pokémon-ex.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Night Murmurs',
-    cost: [P, C],
-    damage: 30,
-    text: 'If the Defending Pokémon is a Basic Pokémon, that Pokémon is now Confused.'
-  }];
+  public attacks = [
+    {
+      name: 'Night Murmurs',
+      cost: [P, C],
+      damage: 30,
+      text: 'If the Defending Pokémon is a Basic Pokémon, that Pokémon is now Confused.',
+    },
+  ];
 
   public set: string = 'CG';
   public cardImage: string = 'assets/cardback.png';
@@ -37,7 +45,6 @@ export class Banette extends PokemonCard {
   public fullName: string = 'Banette CG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // Prevent damage from Pokemon-ex
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const pokemonCard = effect.target.getPokemonCard();
@@ -64,7 +71,7 @@ export class Banette extends PokemonCard {
         return state;
       }
 
-      if (sourceCard.tags.includes(CardTag.POKEMON_ex)) {
+      if (sourceCard.hasTag(CardTag.POKEMON_ex)) {
         effect.preventDefault = true;
       }
     }
@@ -77,5 +84,4 @@ export class Banette extends PokemonCard {
 
     return state;
   }
-
 }

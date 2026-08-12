@@ -2,13 +2,18 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_PARALYZED_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  COIN_FLIP_PROMPT,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { State, StateUtils, StoreLike } from '../../../game';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 export class GlalieEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 170;
@@ -38,7 +43,7 @@ export class GlalieEx extends PokemonCard {
     // Attack 1: Ice Breath
     // Ref: set-primal-clash/vulpix.ts (coin flip paralysis pattern)
     if (AFTER_ATTACK(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (result) {
           ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
         }

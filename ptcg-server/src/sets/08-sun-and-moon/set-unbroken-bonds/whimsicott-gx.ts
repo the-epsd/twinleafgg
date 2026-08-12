@@ -8,10 +8,16 @@ import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, COIN_FLIP_PROMPT, BLOCK_IF_GX_ATTACK_USED, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  COIN_FLIP_PROMPT,
+  BLOCK_IF_GX_ATTACK_USED,
+  SEARCH_DECK_FOR_CARDS_TO_HAND,
+} from '../../../game/store/prefabs/prefabs';
 
 export class WhimsicottGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Cottonee';
   public cardType: CardType = Y;
@@ -20,24 +26,29 @@ export class WhimsicottGx extends PokemonCard {
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Fluffy Cotton',
-    powerType: PowerType.ABILITY,
-    text: 'If any damage is done to this Pokémon by attacks, flip a coin. If heads, prevent that damage.'
-  }];
+  public powers = [
+    {
+      name: 'Fluffy Cotton',
+      powerType: PowerType.ABILITY,
+      text: 'If any damage is done to this Pokémon by attacks, flip a coin. If heads, prevent that damage.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Energy Blow',
-    cost: [Y],
-    damage: 10,
-    damageCalculation: '+',
-    text: 'This attack does 30 more damage times the amount of Energy attached to this Pokémon.'
-  }, {
-    name: 'Toy Box-GX',
-    cost: [Y],
-    damage: 0,
-    text: 'Search your deck for up to 5 cards and put them into your hand. Then, shuffle your deck. (You can\'t use more than 1 GX attack in a game.)'
-  }];
+  public attacks = [
+    {
+      name: 'Energy Blow',
+      cost: [Y],
+      damage: 10,
+      damageCalculation: '+',
+      text: 'This attack does 30 more damage times the amount of Energy attached to this Pokémon.',
+    },
+    {
+      name: 'Toy Box-GX',
+      cost: [Y],
+      damage: 0,
+      text: "Search your deck for up to 5 cards and put them into your hand. Then, shuffle your deck. (You can't use more than 1 GX attack in a game.)",
+    },
+  ];
 
   public set: string = 'UNB';
   public setNumber: string = '140';
@@ -48,7 +59,11 @@ export class WhimsicottGx extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Fluffy Cotton (passive - coin flip to prevent damage)
     // Ref: set-sun-and-moon/cutiefly.ts (Fly Around - DealDamageEffect coin flip prevention)
-    if (effect instanceof DealDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof DealDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       if (effect.damage > 0) {
         const player = StateUtils.findOwner(state, effect.target);
 
@@ -56,7 +71,7 @@ export class WhimsicottGx extends PokemonCard {
           return state;
         }
 
-        COIN_FLIP_PROMPT(store, state, player, result => {
+        COIN_FLIP_PROMPT(store, state, player, (result) => {
           if (result) {
             effect.damage = 0;
           }
@@ -84,9 +99,13 @@ export class WhimsicottGx extends PokemonCard {
       BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
 
-      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this,
+      SEARCH_DECK_FOR_CARDS_TO_HAND(
+        store,
+        state,
+        player,
+        this,
         {},
-        { min: 0, max: 5, allowCancel: true }
+        { min: 0, max: 5, allowCancel: true },
       );
     }
 

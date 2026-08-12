@@ -17,7 +17,7 @@ export function isDualLegendHalf(card: Card): card is PokemonCard {
 /** Both distinct halves of the same dual LEGEND must be in hand. */
 export function getDualLegendHalvesInHand(player: Player, card: PokemonCard): Card[] {
   const halves = player.hand.cards.filter(
-    (c: Card) => c.name === card.name && c.tags?.includes(CardTag.DUAL_LEGEND),
+    (c: Card) => c.name === card.name && c.tags.includes(CardTag.DUAL_LEGEND),
   );
   const bySetNumber = new Map<string, Card>();
   for (const half of halves) {
@@ -38,18 +38,21 @@ export function canPlayDualLegend(
   player: Player,
   card: PokemonCard,
 ): boolean {
-  if (state.phase !== GamePhase.PLAYER_TURN || state.players[state.activePlayer]?.id !== player.id) {
+  if (
+    state.phase !== GamePhase.PLAYER_TURN ||
+    state.players[state.activePlayer]?.id !== player.id
+  ) {
     return false;
   }
   if (!hasBothDualLegendHalvesInHand(player, card)) {
     return false;
   }
-  const openBench = player.bench.some(b => b.cards.length === 0);
+  const openBench = player.bench.some((b) => b.cards.length === 0);
   if (!openBench) {
     return false;
   }
   const power = card.powers?.find(
-    p => p.useFromHand === true && p.powerType === PowerType.LEGEND_ASSEMBLY,
+    (p) => p.useFromHand === true && p.powerType === PowerType.LEGEND_ASSEMBLY,
   );
   return power !== undefined;
 }
@@ -64,13 +67,13 @@ export function assembleDualLegendFromHand(
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  const openBench = player.bench.some(b => b.cards.length === 0);
+  const openBench = player.bench.some((b) => b.cards.length === 0);
   if (!openBench) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
   const power = triggeredCard.powers?.find(
-    p => p.useFromHand === true && p.powerType === PowerType.LEGEND_ASSEMBLY,
+    (p) => p.useFromHand === true && p.powerType === PowerType.LEGEND_ASSEMBLY,
   );
   if (!power) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);

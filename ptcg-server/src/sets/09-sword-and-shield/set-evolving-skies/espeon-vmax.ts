@@ -4,12 +4,16 @@ import { StoreLike, State, StateUtils, PowerType, PlayerType } from '../../../ga
 import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { AbstractAttackEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import {
+  AbstractAttackEffect,
+  ApplyWeaknessEffect,
+  DealDamageEffect,
+  PutDamageEffect,
+} from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class EspeonVMAX extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
 
   public stage: Stage = Stage.VMAX;
 
@@ -25,19 +29,21 @@ export class EspeonVMAX extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Solar Revelation',
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all effects of attacks from your opponent\'s Pokémon done to all of your Pokémon that have Energy attached. (Existing effects are not removed. Damage is not an effect.)'
-  }];
+  public powers = [
+    {
+      name: 'Solar Revelation',
+      powerType: PowerType.ABILITY,
+      text: "Prevent all effects of attacks from your opponent's Pokémon done to all of your Pokémon that have Energy attached. (Existing effects are not removed. Damage is not an effect.)",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Max Mindstorm',
       cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
       damage: 60,
-      text: 'This attack does 60 damage for each Energy attached to all of your opponent\'s Pokémon.'
-    }
+      text: "This attack does 60 damage for each Energy attached to all of your opponent's Pokémon.",
+    },
   ];
 
   public set: string = 'EVS';
@@ -51,9 +57,7 @@ export class EspeonVMAX extends PokemonCard {
   public fullName: string = 'Espeon VMAX EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -61,7 +65,7 @@ export class EspeonVMAX extends PokemonCard {
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
         const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, cardList);
         store.reduceEffect(state, checkProvidedEnergyEffect);
-        checkProvidedEnergyEffect.energyMap.forEach(energy => {
+        checkProvidedEnergyEffect.energyMap.forEach((energy) => {
           energies += energy.provides.length;
         });
       });
@@ -91,16 +95,19 @@ export class EspeonVMAX extends PokemonCard {
         return state;
       }
 
-      if (sourceCard && effect.target.cards.some(c => c.superType === SuperType.ENERGY)) {
-
+      if (sourceCard && effect.target.cards.some((c) => c.superType === SuperType.ENERGY)) {
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
           const player = StateUtils.findOwner(state, effect.target);
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
+          const stub = new PowerEffect(
+            player,
+            {
+              name: 'test',
+              powerType: PowerType.ABILITY,
+              text: '',
+            },
+            this,
+          );
           store.reduceEffect(state, stub);
         } catch {
           return state;

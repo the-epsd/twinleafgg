@@ -5,8 +5,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, DISCARD_ALL_ENERGY_FROM_POKEMON } from '../../../game/store/prefabs/prefabs';
 import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { } from '../../../game/store/prefabs/prefabs';
+
 export class LatiosEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = N;
   public hp: number = 170;
@@ -18,14 +19,14 @@ export class LatiosEx extends PokemonCard {
       name: 'Mach Flight',
       cost: [P, C],
       damage: 40,
-      text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
+      text: "The Defending Pokémon can't retreat during your opponent's next turn.",
     },
     {
       name: 'Luster Purge',
       cost: [W, P, C],
       damage: 150,
-      text: 'Discard all Energy attached to this Pokémon.'
-    }
+      text: 'Discard all Energy attached to this Pokémon.',
+    },
   ];
 
   public set: string = 'PLF';

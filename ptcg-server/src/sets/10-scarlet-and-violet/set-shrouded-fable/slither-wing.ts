@@ -9,10 +9,9 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class SlitherWing extends PokemonCard {
-
   public regulationMark = 'H';
 
-  public tags = [CardTag.ANCIENT];
+  protected _tags = [CardTag.ANCIENT];
 
   public stage = Stage.BASIC;
 
@@ -30,14 +29,14 @@ export class SlitherWing extends PokemonCard {
       cost: [CardType.FIGHTING, CardType.COLORLESS],
       damage: 20,
       damageCalculation: '+',
-      text: 'If your opponent has a Future Pokémon in play, this attack does 120 more damage.'
+      text: 'If your opponent has a Future Pokémon in play, this attack does 120 more damage.',
     },
     {
       name: 'Smashing Wings',
       cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS],
       damage: 130,
-      text: 'Discard 2 Energy from this Pokémon.'
-    }
+      text: 'Discard 2 Energy from this Pokémon.',
+    },
   ];
 
   public set: string = 'SFA';
@@ -51,14 +50,13 @@ export class SlitherWing extends PokemonCard {
   public fullName: string = 'Slither Wing SFA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       let opponentFuturePokemon = 0;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (card.tags.includes(CardTag.FUTURE)) {
+        if (card.hasTag(CardTag.FUTURE)) {
           opponentFuturePokemon++;
         }
       });
@@ -72,5 +70,4 @@ export class SlitherWing extends PokemonCard {
     }
     return state;
   }
-
 }

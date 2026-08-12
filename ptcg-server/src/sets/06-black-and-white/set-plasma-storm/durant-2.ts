@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND } from '../../../game/store/prefabs/prefabs';
 import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 export class Durant2 extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;
   public hp: number = 70;
@@ -22,14 +22,14 @@ export class Durant2 extends PokemonCard {
       name: 'Call for Backup',
       cost: [C],
       damage: 0,
-      text: 'Search your deck for a Pokémon, reveal it, and put it into your hand. Shuffle your deck afterward.'
+      text: 'Search your deck for a Pokémon, reveal it, and put it into your hand. Shuffle your deck afterward.',
     },
     {
       name: 'Metal Jail',
       cost: [M, C],
       damage: 30,
-      text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
-    }
+      text: "The Defending Pokémon can't retreat during your opponent's next turn.",
+    },
   ];
 
   public set: string = 'PLS';

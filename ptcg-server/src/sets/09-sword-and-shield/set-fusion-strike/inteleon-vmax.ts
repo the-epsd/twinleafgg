@@ -6,26 +6,29 @@ import { REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, AFTER_ATT
 export class InteleonVMAX extends PokemonCard {
   public stage: Stage = Stage.VMAX;
   public evolvesFrom = 'Inteleon V';
-  public tags = [CardTag.POKEMON_VMAX, CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.POKEMON_VMAX, CardTag.RAPID_STRIKE];
   public cardType: CardType = W;
   public hp: number = 320;
   public weakness = [{ type: L }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Double Gunner',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'You must discard a [W] Energy card from your hand in order to use this Ability. Once during your turn, you may choose 2 of your opponent\'s Benched Pokémon and put 2 damage counters on each of them.'
-  }];
+  public powers = [
+    {
+      name: 'Double Gunner',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: "You must discard a [W] Energy card from your hand in order to use this Ability. Once during your turn, you may choose 2 of your opponent's Benched Pokémon and put 2 damage counters on each of them.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Aqua Bullet',
-    cost: [W, C],
-    damage: 70,
-    damageCalculation: '+',
-    text: 'You may put an Energy attached to this Pokémon into your hand. If you do, this attack does 70 more damage.'
-  }];
+  public attacks = [
+    {
+      name: 'Aqua Bullet',
+      cost: [CardType.WATER, CardType.COLORLESS],
+      damage: 70,
+      text: 'You may put an Energy attached to this Pokémon into your hand. If you do, this attack does 70 more damage.',
+    },
+  ];
 
   public regulationMark = 'E';
   public set: string = 'FST';

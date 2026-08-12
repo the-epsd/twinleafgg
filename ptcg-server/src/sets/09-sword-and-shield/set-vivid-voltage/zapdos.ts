@@ -4,10 +4,21 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StoreLike, State, StateUtils } from '../../../game';
+import {
+  ChoosePokemonPrompt,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { CardTarget } from '../../../game/store/actions/play-card-action';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, DISCARD_ALL_ENERGY_FROM_POKEMON } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  DISCARD_ALL_ENERGY_FROM_POKEMON,
+} from '../../../game/store/prefabs/prefabs';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 
 export class Zapdos extends PokemonCard {
@@ -23,14 +34,14 @@ export class Zapdos extends PokemonCard {
       name: 'Drill Peck',
       cost: [C],
       damage: 20,
-      text: ''
+      text: '',
     },
     {
       name: 'Thunder Snipe',
       cost: [L, L, C],
       damage: 0,
-      text: 'Discard all Energy from this Pokémon, and this attack does 160 damage to 1 of your opponent\'s Pokémon V or Pokémon-GX. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "Discard all Energy from this Pokémon, and this attack does 160 damage to 1 of your opponent's Pokémon V or Pokémon-GX. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -57,8 +68,13 @@ export class Zapdos extends PokemonCard {
 
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
         const pokemon = cardList.getPokemonCard();
-        if (pokemon && (pokemon.tags.includes(CardTag.POKEMON_V) || pokemon.tags.includes(CardTag.POKEMON_GX)
-          || pokemon.tags.includes(CardTag.POKEMON_VMAX) || pokemon.tags.includes(CardTag.POKEMON_VSTAR))) {
+        if (
+          pokemon &&
+          (pokemon.hasTag(CardTag.POKEMON_V) ||
+            pokemon.hasTag(CardTag.POKEMON_GX) ||
+            pokemon.hasTag(CardTag.POKEMON_VMAX) ||
+            pokemon.hasTag(CardTag.POKEMON_VSTAR))
+        ) {
           hasValidTarget = true;
         } else {
           blockedTo.push(target);
@@ -69,20 +85,24 @@ export class Zapdos extends PokemonCard {
         return state;
       }
 
-      state = store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { allowCancel: false, min: 1, max: 1, blocked: blockedTo }
-      ), targets => {
-        if (!targets || targets.length === 0) {
-          return;
-        }
-        const damageEffect = new PutDamageEffect(effect, 160);
-        damageEffect.target = targets[0];
-        store.reduceEffect(state, damageEffect);
-      });
+      state = store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { allowCancel: false, min: 1, max: 1, blocked: blockedTo },
+        ),
+        (targets) => {
+          if (!targets || targets.length === 0) {
+            return;
+          }
+          const damageEffect = new PutDamageEffect(effect, 160);
+          damageEffect.target = targets[0];
+          store.reduceEffect(state, damageEffect);
+        },
+      );
 
       return state;
     }

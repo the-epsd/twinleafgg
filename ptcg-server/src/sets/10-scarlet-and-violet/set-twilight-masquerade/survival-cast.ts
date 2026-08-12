@@ -12,12 +12,11 @@ import { DAMAGED_FROM_FULL_HP, IS_TOOL_BLOCKED } from '../../../game/store/prefa
 // }
 
 export class SurvivalCast extends TrainerCard {
-
   public regulationMark = 'H';
 
   public trainerType: TrainerType = TrainerType.TOOL;
 
-  public tags = [CardTag.ACE_SPEC];
+  protected _tags = [CardTag.ACE_SPEC];
 
   public set: string = 'TWM';
 
@@ -30,15 +29,15 @@ export class SurvivalCast extends TrainerCard {
   public fullName = 'Survival Brace TWM';
 
   public text: string =
-    'If the Pokémon this card is attached to has full HP and would be Knocked Out by damage from an opponent\'s attack, that Pokémon is not Knocked Out and its remaining HP becomes 10 instead. Then, discard this card.';
-
+    "If the Pokémon this card is attached to has full HP and would be Knocked Out by damage from an opponent's attack, that Pokémon is not Knocked Out and its remaining HP becomes 10 instead. Then, discard this card.";
 
   public reduceEffect(store: any, state: State, effect: Effect): State {
     if (effect instanceof PutDamageEffect && effect.target.tools.includes(this)) {
       const player = StateUtils.findOwner(state, effect.target);
       if (
         IS_TOOL_BLOCKED(store, state, player, this) ||
-        !DAMAGED_FROM_FULL_HP(store, state, effect, player, effect.target)) {
+        !DAMAGED_FROM_FULL_HP(store, state, effect, player, effect.target)
+      ) {
         return state;
       }
 

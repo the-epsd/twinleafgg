@@ -7,7 +7,7 @@ import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER, THIS_POKEMON_CANNOT_USE_THIS_ATTACK_N
 export class FloatzelGL extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
-  public tags = [CardTag.POKEMON_SP];
+  protected _tags = [CardTag.POKEMON_SP];
   public hp: number = 80;
   public weakness = [{ type: L }];
   public retreat = [C];
@@ -37,7 +37,7 @@ export class FloatzelGL extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const hasSupporter = player.discard.cards.some(c => {
+      const hasSupporter = player.discard.cards.some((c) => {
         return c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER;
       });
 
@@ -46,24 +46,31 @@ export class FloatzelGL extends PokemonCard {
       }
 
       let cards: Card[] = [];
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.discard,
-        { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-        { min: 0, max: 2, allowCancel: true }
-      ), selected => {
-        cards = selected || [];
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.discard,
+          { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
+          { min: 0, max: 2, allowCancel: true },
+        ),
+        (selected) => {
+          cards = selected || [];
 
-        if (cards.length > 0) {
-          cards.forEach((card, index) => {
-            store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-          });
+          if (cards.length > 0) {
+            cards.forEach((card, index) => {
+              store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, {
+                name: player.name,
+                card: card.name,
+              });
+            });
 
-          SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-          MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards });
-        }
-      });
+            SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+            MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards });
+          }
+        },
+      );
     }
 
     // Giant Wave

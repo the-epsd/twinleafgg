@@ -3,15 +3,26 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, TrainerType } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  TrainerType,
+} from '../../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, StateUtils } from '../../../game';
 import { Card } from '../../../game/store/card/card';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { WAS_ATTACK_USED, MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  MOVE_CARDS,
+  SHOW_CARDS_TO_PLAYER,
+  SHUFFLE_DECK,
+} from '../../../game/store/prefabs/prefabs';
 
 export class GalarianMrRimeV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V, CardTag.FUSION_STRIKE];
+  protected _tags = [CardTag.POKEMON_V, CardTag.FUSION_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 210;
@@ -23,15 +34,15 @@ export class GalarianMrRimeV extends PokemonCard {
       name: 'Surprising Hand',
       cost: [W],
       damage: 0,
-      text: 'Search your deck for up to 3 Item cards, reveal them, and put them into your hand. Then, shuffle your deck.'
+      text: 'Search your deck for up to 3 Item cards, reveal them, and put them into your hand. Then, shuffle your deck.',
     },
     {
       name: 'Customized Cane',
       cost: [W, W, C],
       damage: 90,
       damageCalculation: '+',
-      text: 'If this Pokémon has a Pokémon Tool attached, this attack does 90 more damage.'
-    }
+      text: 'If this Pokémon has a Pokémon Tool attached, this attack does 90 more damage.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -52,24 +63,28 @@ export class GalarianMrRimeV extends PokemonCard {
       }
 
       let cards: Card[] = [];
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
-        { min: 0, max: 3, allowCancel: false }
-      ), selected => {
-        cards = selected || [];
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.deck,
+          { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
+          { min: 0, max: 3, allowCancel: false },
+        ),
+        (selected) => {
+          cards = selected || [];
 
-        if (cards.length === 0) {
+          if (cards.length === 0) {
+            SHUFFLE_DECK(store, state, player);
+            return;
+          }
+
+          MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: this });
+          SHOW_CARDS_TO_PLAYER(store, state, StateUtils.getOpponent(state, player), cards);
           SHUFFLE_DECK(store, state, player);
-          return;
-        }
-
-        MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: this });
-        SHOW_CARDS_TO_PLAYER(store, state, StateUtils.getOpponent(state, player), cards);
-        SHUFFLE_DECK(store, state, player);
-      });
+        },
+      );
     }
 
     // Attack 2: Customized Cane

@@ -8,11 +8,15 @@ import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
-import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  BLOCK_IF_GX_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+} from '../../../game/store/prefabs/prefabs';
 import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../../game/store/prefabs/attack-effects';
 
 export class TyranitarGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Pupitar';
   public cardType: CardType = D;
@@ -21,25 +25,27 @@ export class TyranitarGx extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C];
 
-  public powers = [{
-    name: 'Lost Out',
-    powerType: PowerType.ABILITY,
-    text: 'If your opponent\'s Pokémon is Knocked Out by damage from this Pokémon\'s attacks, put that Pokémon and all cards attached to it in the Lost Zone instead of the discard pile.'
-  }];
+  public powers = [
+    {
+      name: 'Lost Out',
+      powerType: PowerType.ABILITY,
+      text: "If your opponent's Pokémon is Knocked Out by damage from this Pokémon's attacks, put that Pokémon and all cards attached to it in the Lost Zone instead of the discard pile.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Dusty Ruckus',
       cost: [D, D, C],
       damage: 130,
-      text: 'This attack does 30 damage to each of your opponent\'s Benched Basic Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack does 30 damage to each of your opponent's Benched Basic Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Lay the Smackdown-GX',
       cost: [D, D, C],
       damage: 220,
-      text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "This attack's damage isn't affected by any effects on your opponent's Active Pokémon. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'LOT';
@@ -64,7 +70,7 @@ export class TyranitarGx extends PokemonCard {
         }
 
         const card = effect.target.getPokemonCard();
-        if (card !== undefined && !card.tags.includes(CardTag.PRISM_STAR)) {
+        if (card !== undefined && !card.hasTag(CardTag.PRISM_STAR)) {
           effect.target.marker.addMarker(this.LOST_OUT_MARKER, this);
         }
       }
@@ -76,7 +82,7 @@ export class TyranitarGx extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      opponent.bench.forEach(benched => {
+      opponent.bench.forEach((benched) => {
         if (benched.cards.length > 0) {
           const benchCard = benched.getPokemonCard();
           if (benchCard && benchCard.stage === Stage.BASIC) {

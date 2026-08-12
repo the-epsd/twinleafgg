@@ -2,12 +2,11 @@ import { CardTag, CardType, EnergyType } from '../../../game/store/card/card-typ
 import { EnergyCard } from '../../../game/store/card/energy-card';
 
 export class PlasmaEnergy extends EnergyCard {
-
   public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
 
   public set: string = 'PLS';
 
@@ -20,5 +19,4 @@ export class PlasmaEnergy extends EnergyCard {
   public setNumber: string = '127';
 
   public text = 'This card provides [C] Energy.';
-
 }

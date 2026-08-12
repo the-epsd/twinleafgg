@@ -7,10 +7,13 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { SlotType } from '../../../game/store/actions/play-card-action';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON,
+} from '../../../game/store/prefabs/prefabs';
 
 export class MBlastoiseEx extends PokemonCard {
-  public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
+  protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Blastoise-EX';
   public cardType: CardType = W;
@@ -23,8 +26,8 @@ export class MBlastoiseEx extends PokemonCard {
       name: 'Hydro Bombard',
       cost: [W, W, W],
       damage: 120,
-      text: 'This attack does 30 damage to 2 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "This attack does 30 damage to 2 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public set: string = 'XY';
@@ -37,7 +40,16 @@ export class MBlastoiseEx extends PokemonCard {
     // Attack 1: Hydro Bombard
     // Ref: set-dragons-exalted/registeel-ex.ts (Triple Laser)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON(30, effect, store, state, 2, 2, false, [SlotType.BENCH]);
+      THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON(
+        30,
+        effect,
+        store,
+        state,
+        2,
+        2,
+        false,
+        [SlotType.BENCH],
+      );
     }
 
     return state;

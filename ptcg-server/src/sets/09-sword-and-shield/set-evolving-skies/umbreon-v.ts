@@ -7,25 +7,27 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class UmbreonV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V, CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.POKEMON_V, CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = D;
   public hp: number = 200;
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Mean Look',
-    cost: [D],
-    damage: 30,
-    text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
-  },
-  {
-    name: 'Moonlight Blade',
-    cost: [D, C, C],
-    damage: 80,
-    text: 'If this Pokémon has any damage counters on it, this attack does 80 more damage.'
-  }];
+  public attacks = [
+    {
+      name: 'Mean Look',
+      cost: [D],
+      damage: 30,
+      text: "During your opponent's next turn, the Defending Pokémon " + "can't retreat.",
+    },
+    {
+      name: 'Moonlight Blade',
+      cost: [D, C, C],
+      damage: 80,
+      text: 'If this Pokémon has any damage counters on it, this attack ' + 'does 80 more damage.',
+    },
+  ];
 
   public regulationMark = 'E';
   public set: string = 'EVS';

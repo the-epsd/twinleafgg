@@ -1,9 +1,18 @@
-import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, PlayerType, CardTag } from '../../../game';
+import {
+  PokemonCard,
+  Stage,
+  CardType,
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  PlayerType,
+  CardTag,
+} from '../../../game';
 import { PutDamageEffect, AbstractAttackEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-
 
 export class Altaria extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -17,22 +26,22 @@ export class Altaria extends PokemonCard {
     {
       name: 'Safeguard',
       powerType: PowerType.POKEBODY,
-      text: 'Prevent all effects of attacks, including damage, done to Altaria by your opponent\'s Pokémon-ex.'
-    }
+      text: "Prevent all effects of attacks, including damage, done to Altaria by your opponent's Pokémon-ex.",
+    },
   ];
   public attacks = [
     {
       name: 'Double Wing Attack',
       cost: [CardType.LIGHTNING],
       damage: 0,
-      text: 'Does 20 damage to each Defending Pokémon.'
+      text: 'Does 20 damage to each Defending Pokémon.',
     },
     {
       name: 'Dive',
       cost: [CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
       damage: 50,
-      text: ''
-    }
+      text: '',
+    },
   ];
   public set: string = 'DX';
   public setNumber: string = '1';
@@ -42,7 +51,6 @@ export class Altaria extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       // Handle 'Double Wing Attack' effect
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -61,16 +69,19 @@ export class Altaria extends PokemonCard {
         return state;
       }
 
-      if (sourceCard && sourceCard.tags.includes(CardTag.POKEMON_ex)) {
-
+      if (sourceCard && sourceCard.hasTag(CardTag.POKEMON_ex)) {
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
           const player = StateUtils.findOwner(state, effect.target);
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
+          const stub = new PowerEffect(
+            player,
+            {
+              name: 'test',
+              powerType: PowerType.ABILITY,
+              text: '',
+            },
+            this,
+          );
           store.reduceEffect(state, stub);
         } catch {
           return state;
@@ -82,5 +93,4 @@ export class Altaria extends PokemonCard {
 
     return state;
   }
-
 }

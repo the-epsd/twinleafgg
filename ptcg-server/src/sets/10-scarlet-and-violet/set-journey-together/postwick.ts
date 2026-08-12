@@ -18,7 +18,8 @@ export class Postwick extends TrainerCard {
   public regulationMark = 'I';
   public cardImage: string = 'assets/cardback.png';
   public setNumber = '154';
-  public text: string = 'The attacks of Hop\'s Pokémon (both yours and your opponent\'s) do 30 more damage to the opponent\'s Active Pokémon (before applying Weakness and Resistance).';
+  public text: string =
+    "The attacks of Hop's Pokémon (both yours and your opponent's) do 30 more damage to the opponent's Active Pokémon (before applying Weakness and Resistance).";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof DealDamageEffect && StateUtils.getStadiumCard(state) === this) {
@@ -34,7 +35,7 @@ export class Postwick extends TrainerCard {
         return state;
       }
 
-      if (!effect.source.getPokemonCard()?.tags.includes(CardTag.HOPS)) {
+      if (!effect.source.getPokemonCard()?.hasTag(CardTag.HOPS)) {
         return state;
       }
       effect.damage += 30;

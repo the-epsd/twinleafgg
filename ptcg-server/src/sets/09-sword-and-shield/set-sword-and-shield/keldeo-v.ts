@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 
 export class KeldeoV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 210;
@@ -22,15 +22,15 @@ export class KeldeoV extends PokemonCard {
       name: 'Wave Splash',
       cost: [W],
       damage: 40,
-      text: ''
+      text: '',
     },
     {
       name: 'Secret Sword',
       cost: [C, C, C],
       damage: 50,
       damageCalculation: '+',
-      text: 'This attack does 30 more damage for each [W] Energy attached to this Pokémon.'
-    }
+      text: 'This attack does 30 more damage for each [W] Energy attached to this Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -47,8 +47,11 @@ export class KeldeoV extends PokemonCard {
       const player = effect.player;
       const checkEnergy = new CheckProvidedEnergyEffect(player);
       store.reduceEffect(state, checkEnergy);
-      const waterCount = checkEnergy.energyMap.reduce((sum, em) =>
-        sum + em.provides.filter(t => t === CardType.WATER || t === CardType.ANY).length, 0);
+      const waterCount = checkEnergy.energyMap.reduce(
+        (sum, em) =>
+          sum + em.provides.filter((t) => t === CardType.WATER || t === CardType.ANY).length,
+        0,
+      );
       effect.damage += waterCount * 30;
     }
 

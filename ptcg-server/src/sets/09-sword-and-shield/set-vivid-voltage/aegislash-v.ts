@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../../game/store/prefabs/attack-effects';
 
 export class AegislashV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;
   public hp: number = 210;
@@ -23,14 +23,14 @@ export class AegislashV extends PokemonCard {
       name: 'Slash',
       cost: [M, C],
       damage: 50,
-      text: ''
+      text: '',
     },
     {
       name: 'Sonic Edge',
       cost: [M, M, C],
       damage: 130,
-      text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
-    }
+      text: "This attack's damage isn't affected by any effects on your opponent's Active Pokémon.",
+    },
   ];
 
   public regulationMark: string = 'D';

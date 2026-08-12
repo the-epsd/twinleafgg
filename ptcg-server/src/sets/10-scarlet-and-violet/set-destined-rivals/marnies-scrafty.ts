@@ -7,31 +7,34 @@ import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 
 export class MarniesScrafty extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public evolvesFrom = 'Marnie\'s Scraggy';
-  public tags = [CardTag.MARNIES];
+  public evolvesFrom = "Marnie's Scraggy";
+  protected _tags = [CardTag.MARNIES];
   public cardType: CardType = D;
   public hp: number = 120;
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Rear Kick',
-    cost: [D],
-    damage: 40,
-    text: ''
-  }, {
-    name: 'Wild Tackle',
-    cost: [D, D, C],
-    damage: 160,
-    text: 'This Pokémon also does 30 damage to itself.'
-  }];
+  public attacks = [
+    {
+      name: 'Rear Kick',
+      cost: [D],
+      damage: 40,
+      text: '',
+    },
+    {
+      name: 'Wild Tackle',
+      cost: [D, D, C],
+      damage: 160,
+      text: 'This Pokémon also does 30 damage to itself.',
+    },
+  ];
 
   public regulationMark = 'I';
   public set: string = 'DRI';
   public setNumber = '133';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Marnie\'s Scrafty';
-  public fullName: string = 'Marnie\'s Scrafty DRI';
+  public name: string = "Marnie's Scrafty";
+  public fullName: string = "Marnie's Scrafty DRI";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

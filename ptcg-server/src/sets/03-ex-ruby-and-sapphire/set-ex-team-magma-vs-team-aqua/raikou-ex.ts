@@ -1,11 +1,17 @@
-import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_CONFUSION_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  COIN_FLIP_PROMPT,
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Raikouex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public cardType: CardType = L;
   public hp: number = 100;
   public weakness = [{ type: F }];
@@ -30,9 +36,8 @@ export class Raikouex extends PokemonCard {
   public fullName: string = 'Raikou ex MA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (AFTER_ATTACK(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (result) {
           ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
         }
@@ -40,7 +45,7 @@ export class Raikouex extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (!result) {
           THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, 20);
         }

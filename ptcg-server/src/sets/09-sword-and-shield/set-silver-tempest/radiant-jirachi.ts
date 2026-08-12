@@ -6,11 +6,15 @@ import { Effect } from '../../../game/store/effects/effect';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt } from '../../../game';
-import { IS_ABILITY_BLOCKED, MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  IS_ABILITY_BLOCKED,
+  MULTIPLE_COIN_FLIPS_PROMPT,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class RadiantJirachi extends PokemonCard {
-  public tags = [CardTag.RADIANT];
+  protected _tags = [CardTag.RADIANT];
   public regulationMark = 'F';
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;
@@ -19,11 +23,13 @@ export class RadiantJirachi extends PokemonCard {
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Entrusted Wishes',
-    powerType: PowerType.ABILITY,
-    text: 'If this Pokémon is in the Active Spot and is Knocked Out by damage from an attack from your opponent\'s Pokémon, search your deck for up to 3 cards and put them into your hand. Then, shuffle your deck.'
-  }];
+  public powers = [
+    {
+      name: 'Entrusted Wishes',
+      powerType: PowerType.ABILITY,
+      text: "If this Pokémon is in the Active Spot and is Knocked Out by damage from an attack from your opponent's Pokémon, search your deck for up to 3 cards and put them into your hand. Then, shuffle your deck.",
+    },
+  ];
 
   public attacks = [{
     name: 'Astral Misfortune',
@@ -39,8 +45,11 @@ export class RadiantJirachi extends PokemonCard {
   public fullName: string = 'Radiant Jirachi SIT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof KnockOutEffect && effect.target.cards.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
+    if (
+      effect instanceof KnockOutEffect &&
+      effect.target.cards.includes(this) &&
+      effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)
+    ) {
       // This Pokemon was knocked out
       const player = effect.player;
 
@@ -49,12 +58,15 @@ export class RadiantJirachi extends PokemonCard {
       }
 
       let cards: any[] = [];
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        {},
-        { min: 0, max: 3, allowCancel: false }),
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.deck,
+          {},
+          { min: 0, max: 3, allowCancel: false },
+        ),
         (selected: any[]) => {
           cards = selected || [];
           if (cards.length > 0) {
@@ -64,12 +76,13 @@ export class RadiantJirachi extends PokemonCard {
             player.deck.applyOrder(order);
             return state;
           });
-        });
+        },
+      );
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 2, results => {
-        if (results.every(r => r)) {
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 2, (results) => {
+        if (results.every((r) => r)) {
           KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
         }
       });

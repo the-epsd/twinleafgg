@@ -4,24 +4,34 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { GameError, GameMessage, PlayerType, PowerType, StoreLike, State, StateUtils } from '../../../game';
+import {
+  GameError,
+  GameMessage,
+  PlayerType,
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { RetreatEffect } from '../../../game/store/effects/game-effects';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Snorlax extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
   public hp: number = 130;
   public weakness = [{ type: F }];
   public retreat = [C, C, C, C];
 
-  public powers = [{
-    name: 'Block',
-    powerType: PowerType.ABILITY,
-    text: 'As long as this Pokémon is your Active Pokémon, your opponent\'s Active Pokémon can\'t retreat.'
-  }];
+  public powers = [
+    {
+      name: 'Block',
+      powerType: PowerType.ABILITY,
+      text: "As long as this Pokémon is your Active Pokémon, your opponent's Active Pokémon can't retreat.",
+    },
+  ];
 
   public attacks = [
     {
@@ -29,8 +39,8 @@ export class Snorlax extends PokemonCard {
       cost: [C, C, C, C, C],
       damage: 30,
       damageCalculation: 'x',
-      text: 'Does 30 damage times the number of Team Plasma Pokémon you have in play.'
-    }
+      text: 'Does 30 damage times the number of Team Plasma Pokémon you have in play.',
+    },
   ];
 
   public set: string = 'PLS';
@@ -66,7 +76,7 @@ export class Snorlax extends PokemonCard {
       let plasmaCount = 0;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card.tags.includes(CardTag.TEAM_PLASMA)) {
+        if (card.hasTag(CardTag.TEAM_PLASMA)) {
           plasmaCount++;
         }
       });

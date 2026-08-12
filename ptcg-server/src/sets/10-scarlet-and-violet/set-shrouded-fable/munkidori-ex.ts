@@ -9,24 +9,28 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs
 
 export class Munkidoriex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public cardType: CardType = D;
   public weakness = [{ type: F }];
   public hp: number = 210;
   public retreat = [C];
 
-  public powers = [{
-    name: 'Oh No You Don\'t',
-    powerType: PowerType.ABILITY,
-    text: 'If this Pokémon is Knocked Out by damage from an attack from your opponent\'s Pokémon, and if you have any Pecharunt ex in play, your opponent takes 1 fewer Prize card.'
-  }];
+  public powers = [
+    {
+      name: "Oh No You Don't",
+      powerType: PowerType.ABILITY,
+      text: "If this Pokémon is Knocked Out by damage from an attack from your opponent's Pokémon, and if you have any Pecharunt ex in play, your opponent takes 1 fewer Prize card.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Dirty Headbutt',
-    cost: [D, D, C],
-    damage: 190,
-    text: 'During your next turn, this Pokémon can\'t use Dirty Headbutt.'
-  }];
+  public attacks = [
+    {
+      name: 'Dirty Headbutt',
+      cost: [D, D, C],
+      damage: 190,
+      text: "During your next turn, this Pokémon can't use Dirty Headbutt.",
+    },
+  ];
 
   public regulationMark = 'H';
   public set: string = 'SFA';
@@ -36,7 +40,6 @@ export class Munkidoriex extends PokemonCard {
   public fullName: string = 'Munkidori ex SFA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
 

@@ -6,25 +6,27 @@ import { THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN 
 
 export class RegisteelStar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.STAR];
+  protected _tags = [CardTag.STAR];
   public cardType: CardType = M;
   public hp: number = 90;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C, C];
 
-  public attacks = [{
-    name: 'Barrier Attack',
-    cost: [M],
-    damage: 10,
-    text: 'During your opponent\'s next turn, any damage done to Registeel Star by attacks is reduced by 10 (after applying Weakness and Resistance).'
-  },
-  {
-    name: 'Final Laser',
-    cost: [M, M, C],
-    damage: 70,
-    text: 'Put 3 damage counters on your opponent\'s Pokémon in any way you like. If your opponent has only 1 Prize card left and Registeel Star is the only Pokémon you have in play, put 6 damage counters instead.'
-  }];
+  public attacks = [
+    {
+      name: 'Barrier Attack',
+      cost: [M],
+      damage: 10,
+      text: "During your opponent's next turn, any damage done to Registeel Star by attacks is reduced by 10 (after applying Weakness and Resistance).",
+    },
+    {
+      name: 'Final Laser',
+      cost: [M, M, C],
+      damage: 70,
+      text: "Put 3 damage counters on your opponent's Pokémon in any way you like. If your opponent has only 1 Prize card left and Registeel Star is the only Pokémon you have in play, put 6 damage counters instead.",
+    },
+  ];
 
   public set: string = 'LM';
   public setNumber: string = '92';

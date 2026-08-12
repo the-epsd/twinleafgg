@@ -1,17 +1,29 @@
 /* eslint-disable indent */
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, EnergyCard, GameMessage, Player, PowerType, State, StateUtils, StoreLike } from '../../../game';
+import {
+  Card,
+  ChooseCardsPrompt,
+  EnergyCard,
+  GameMessage,
+  Player,
+  PowerType,
+  State,
+  StateUtils,
+  StoreLike,
+} from '../../../game';
 import { CardTag } from '../../../game/store/card/card-types';
-import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
+import {
+  CheckAttackCostEffect,
+  CheckProvidedEnergyEffect,
+} from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class GalarianZapdosV extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
 
   public regulationMark = 'E';
 
@@ -25,19 +37,21 @@ export class GalarianZapdosV extends PokemonCard {
 
   public retreat = [CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Fighting Instinct',
-    powerType: PowerType.ABILITY,
-    text: 'This Pokémon\'s attacks cost [C] less for each of your opponent\'s Pokémon V in play.'
-  }];
+  public powers = [
+    {
+      name: 'Fighting Instinct',
+      powerType: PowerType.ABILITY,
+      text: "This Pokémon's attacks cost [C] less for each of your opponent's Pokémon V in play.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Thunderous Kick',
       cost: [CardType.FIGHTING, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 170,
-      text: 'Before doing damage, discard a Special Energy from your opponent\'s Active Pokémon.'
-    }
+      text: "Before doing damage, discard a Special Energy from your opponent's Active Pokémon.",
+    },
   ];
 
   public set: string = 'CRE';
@@ -52,10 +66,11 @@ export class GalarianZapdosV extends PokemonCard {
 
   // Implement ability
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof CheckAttackCostEffect &&
+    if (
+      effect instanceof CheckAttackCostEffect &&
       (effect.attack === this.attacks[0] ||
-        this.tools.some(tool => tool.attacks && tool.attacks.includes(effect.attack)))) {
+        this.tools.some((tool) => tool.attacks && tool.attacks.includes(effect.attack)))
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -66,14 +81,14 @@ export class GalarianZapdosV extends PokemonCard {
 
         // Check active Pokémon
         const activePokemon = player.active.getPokemonCard();
-        if (activePokemon && specialTags.some(tag => activePokemon.tags.includes(tag))) {
+        if (activePokemon && specialTags.some((tag) => activePokemon.hasTag(tag))) {
           count++;
         }
 
         // Check bench Pokémon
-        player.bench.forEach(slot => {
+        player.bench.forEach((slot) => {
           const benchPokemon = slot.getPokemonCard();
-          if (benchPokemon && specialTags.some(tag => benchPokemon.tags.includes(tag))) {
+          if (benchPokemon && specialTags.some((tag) => benchPokemon.hasTag(tag))) {
             count++;
           }
         });
@@ -82,11 +97,15 @@ export class GalarianZapdosV extends PokemonCard {
       };
 
       try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
+        const stub = new PowerEffect(
+          player,
+          {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: '',
+          },
+          this,
+        );
         store.reduceEffect(state, stub);
       } catch {
         console.log(effect.cost);
@@ -111,9 +130,7 @@ export class GalarianZapdosV extends PokemonCard {
       return state;
     }
 
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -122,26 +139,28 @@ export class GalarianZapdosV extends PokemonCard {
       const checkEnergy = new CheckProvidedEnergyEffect(player, oppActive);
       store.reduceEffect(state, checkEnergy);
 
-      checkEnergy.energyMap.forEach(em => {
+      checkEnergy.energyMap.forEach((em) => {
         const energyCard = em.card;
         if (energyCard instanceof EnergyCard && energyCard.energyType === EnergyType.SPECIAL) {
-
           let cards: Card[] = [];
-          store.prompt(state, new ChooseCardsPrompt(
-            player,
-            GameMessage.CHOOSE_CARD_TO_DISCARD,
-            oppActive,
-            { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
-            { min: 1, max: 1, allowCancel: false }
-          ), selected => {
-            cards = selected;
-          });
+          store.prompt(
+            state,
+            new ChooseCardsPrompt(
+              player,
+              GameMessage.CHOOSE_CARD_TO_DISCARD,
+              oppActive,
+              { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
+              { min: 1, max: 1, allowCancel: false },
+            ),
+            (selected) => {
+              cards = selected;
+            },
+          );
           oppActive.moveCardsTo(cards, opponent.discard);
 
           const damageEffect = new PutDamageEffect(effect, 20);
           damageEffect.target = opponent.active;
           store.reduceEffect(state, damageEffect);
-
         }
       });
     }

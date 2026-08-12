@@ -5,11 +5,14 @@ import { DISCARD_ALL_ENERGY_FROM_POKEMON, WAS_ATTACK_USED, FLIP_UNTIL_TAILS_AND_
 
 export class RayquazaStar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.STAR];
+  protected _tags = [CardTag.STAR];
   public cardType: CardType = C;
   public hp: number = 90;
   public weakness = [{ type: C }];
-  public resistance = [{ type: W, value: -30 }, { type: F, value: -30 }];
+  public resistance = [
+    { type: W, value: -30 },
+    { type: F, value: -30 },
+  ];
   public retreat = [C, C];
 
   public attacks = [{
@@ -32,7 +35,6 @@ export class RayquazaStar extends PokemonCard {
   public fullName: string = 'Rayquaza Star DX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
@@ -46,13 +48,12 @@ export class RayquazaStar extends PokemonCard {
 
       const opponent = effect.opponent;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, target) => {
-        if (target.tags.includes(CardTag.POKEMON_ex)) {
+        if (target.hasTag(CardTag.POKEMON_ex)) {
           const damageEffect = new PutDamageEffect(effect, 100);
           damageEffect.target = cardList;
           store.reduceEffect(state, damageEffect);
         }
       });
-
     }
 
     return state;

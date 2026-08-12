@@ -6,10 +6,14 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, DRAW_CARDS, DISCARD_TOP_X_CARDS_FROM_YOUR_DECK } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  DRAW_CARDS,
+  DISCARD_TOP_X_CARDS_FROM_YOUR_DECK,
+} from '../../../game/store/prefabs/prefabs';
 
 export class DrampaV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
   public hp: number = 210;
@@ -21,14 +25,14 @@ export class DrampaV extends PokemonCard {
       name: 'Spike Draw',
       cost: [C],
       damage: 20,
-      text: 'Draw 2 cards.'
+      text: 'Draw 2 cards.',
     },
     {
       name: 'Dragon Pulse',
       cost: [C, C, C],
       damage: 160,
-      text: 'Discard the top 2 cards of your deck.'
-    }
+      text: 'Discard the top 2 cards of your deck.',
+    },
   ];
 
   public regulationMark: string = 'F';

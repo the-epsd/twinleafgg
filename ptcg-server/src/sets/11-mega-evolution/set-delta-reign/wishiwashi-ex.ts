@@ -1,29 +1,51 @@
-import { CardTag, CardType, GameError, GameMessage, PokemonCard, PokemonCardList, PowerType, Stage, State, StateUtils, StoreLike } from "../../../game";
-import { Effect } from "../../../game/store/effects/effect";
-import { HealEffect } from "../../../game/store/effects/game-effects";
-import { WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN } from "../../../game/store/prefabs/prefabs";
+import {
+  CardTag,
+  CardType,
+  GameError,
+  GameMessage,
+  PokemonCard,
+  PokemonCardList,
+  PowerType,
+  Stage,
+  State,
+  StateUtils,
+  StoreLike,
+} from '../../../game';
+import { Effect } from '../../../game/store/effects/effect';
+import { HealEffect } from '../../../game/store/effects/game-effects';
+import {
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  USE_ABILITY_ONCE_PER_TURN,
+  ABILITY_USED,
+  REMOVE_MARKER_AT_END_OF_TURN,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Wishiwashiex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public cardType: CardType = W;
   public hp: number = 260;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];
 
-  public powers = [{
-    name: 'Ocean Gain',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'You may use this Ability once during your turn if this Pokémon is in the Active Spot. Heal 50 damage from this Pokémon.',
-  }];
+  public powers = [
+    {
+      name: 'Ocean Gain',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'You may use this Ability once during your turn if this Pokémon is in the Active Spot. Heal 50 damage from this Pokémon.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Hydro Splash',
-    cost: [W, W, W, C],
-    damage: 220,
-    text: '',
-  }];
+  public attacks = [
+    {
+      name: 'Hydro Splash',
+      cost: [W, W, W, C],
+      damage: 220,
+      text: '',
+    },
+  ];
 
   public regulationMark: string = 'J';
   public set: string = 'M6';

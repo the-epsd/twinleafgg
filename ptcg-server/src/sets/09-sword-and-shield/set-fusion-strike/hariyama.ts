@@ -11,7 +11,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Hariyama extends PokemonCard {
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Makuhita';
   public cardType: CardType = F;
@@ -19,18 +19,22 @@ export class Hariyama extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C, C, C];
 
-  public powers = [{
-    name: 'Guts',
-    powerType: PowerType.ABILITY,
-    text: 'If this Pokémon would be Knocked Out by damage from an attack, flip a coin. If heads, this Pokémon is not Knocked Out, and its remaining HP becomes 10.'
-  }];
+  public powers = [
+    {
+      name: 'Guts',
+      powerType: PowerType.ABILITY,
+      text: 'If this Pokémon would be Knocked Out by damage from an attack, flip a coin. If heads, this Pokémon is not Knocked Out, and its remaining HP becomes 10.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Hammer In',
-    cost: [F, C, C],
-    damage: 100,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Hammer In',
+      cost: [F, C, C],
+      damage: 100,
+      text: '',
+    },
+  ];
 
   public regulationMark: string = 'E';
 
@@ -59,7 +63,7 @@ export class Hariyama extends PokemonCard {
       store.reduceEffect(state, checkHpEffect);
 
       if (effect.target.damage + effect.damage >= checkHpEffect.hp) {
-        COIN_FLIP_PROMPT(store, state, player, result => {
+        COIN_FLIP_PROMPT(store, state, player, (result) => {
           if (result) {
             effect.surviveOnTenHPReason = this.powers[0].name;
           }

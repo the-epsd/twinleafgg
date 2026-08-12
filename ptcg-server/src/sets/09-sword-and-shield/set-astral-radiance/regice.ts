@@ -6,30 +6,43 @@ import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { MOVE_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
-function* useRegiGate(next: Function, store: StoreLike, state: State,
-  effect: AttackEffect, self: Card): IterableIterator<State> {
+function* useRegiGate(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  self: Card,
+): IterableIterator<State> {
   const player = effect.player;
-  const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
+  const slots: PokemonCardList[] = player.bench.filter((b) => b.cards.length === 0);
   const max = Math.min(slots.length, 1);
 
   let cards: Card[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-    player.deck,
-    { superType: SuperType.POKEMON, stage: Stage.BASIC },
-    { min: 0, max, allowCancel: false }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+      player.deck,
+      { superType: SuperType.POKEMON, stage: Stage.BASIC },
+      { min: 0, max, allowCancel: false },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   if (cards.length > slots.length) {
     cards.length = slots.length;
   }
 
   cards.forEach((card, index) => {
-    MOVE_CARDS(store, state, player.deck, slots[index], { cards: [card], sourceCard: self, sourceEffect: self.attacks[0] });
+    MOVE_CARDS(store, state, player.deck, slots[index], {
+      cards: [card],
+      sourceCard: self,
+      sourceEffect: self.attacks[0],
+    });
     slots[index].pokemonPlayedTurn = state.turn;
   });
 

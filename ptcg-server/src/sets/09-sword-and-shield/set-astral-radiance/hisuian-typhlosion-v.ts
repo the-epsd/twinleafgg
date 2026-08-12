@@ -2,7 +2,12 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_BURN_TO_PLAYER_ACTIVE, AFTER_ATTACK, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_BURN_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  SHUFFLE_DECK,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { GameMessage } from '../../../game/game-message';
@@ -10,7 +15,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { ShowCardsPrompt, State, StoreLike } from '../../../game';
 export class HisuianTyphlosionV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 210;
@@ -23,14 +28,14 @@ export class HisuianTyphlosionV extends PokemonCard {
       name: 'Singe',
       cost: [],
       damage: 0,
-      text: 'Your opponent\'s Active Pokémon is now Burned.'
+      text: "Your opponent's Active Pokémon is now Burned.",
     },
     {
       name: 'Petrifying Flame',
       cost: [P, P, C],
       damage: 120,
-      text: 'Choose a random card from your opponent\'s hand. Your opponent reveals that card and shuffles it into their deck.'
-    }
+      text: "Choose a random card from your opponent's hand. Your opponent reveals that card and shuffles it into their deck.",
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -58,14 +63,14 @@ export class HisuianTyphlosionV extends PokemonCard {
         const randomCard = opponent.hand.cards[randomIndex];
 
         // Reveal the randomly chosen card to the current player before shuffling
-        state = store.prompt(state, new ShowCardsPrompt(
-          player.id,
-          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-          [randomCard]
-        ), () => {
-          opponent.hand.moveCardTo(randomCard, opponent.deck);
-          SHUFFLE_DECK(store, state, opponent);
-        });
+        state = store.prompt(
+          state,
+          new ShowCardsPrompt(player.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, [randomCard]),
+          () => {
+            opponent.hand.moveCardTo(randomCard, opponent.deck);
+            SHUFFLE_DECK(store, state, opponent);
+          },
+        );
       }
     }
 

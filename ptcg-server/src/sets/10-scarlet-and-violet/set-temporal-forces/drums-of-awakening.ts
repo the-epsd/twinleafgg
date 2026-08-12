@@ -7,10 +7,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 
 export class DrumsOfAwakening extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public tags = [CardTag.ACE_SPEC];
+  protected _tags = [CardTag.ACE_SPEC];
 
   public regulationMark = 'H';
 
@@ -24,32 +23,28 @@ export class DrumsOfAwakening extends TrainerCard {
 
   public fullName: string = 'Awakening Drum TEF';
 
-  public text: string =
-    'Draw a card for each of your Ancient Pokémon in play.';
+  public text: string = 'Draw a card for each of your Ancient Pokémon in play.';
 
-  public canPlay(store: StoreLike, state: State, player: Player): boolean {    return true;
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
       const player = effect.player;
 
       let ancientPokemonCount = 0;
 
-      if (player.active?.getPokemonCard()?.tags.includes(CardTag.ANCIENT)) {
+      if (player.active?.getPokemonCard()?.hasTag(CardTag.ANCIENT)) {
         ancientPokemonCount++;
       }
 
-      player.bench.forEach(benchSpot => {
-        if (benchSpot.getPokemonCard()?.tags.includes(CardTag.ANCIENT)) {
+      player.bench.forEach((benchSpot) => {
+        if (benchSpot.getPokemonCard()?.hasTag(CardTag.ANCIENT)) {
           ancientPokemonCount++;
         }
       });
       player.deck.moveTo(player.hand, ancientPokemonCount);
-
     }
     return state;
   }

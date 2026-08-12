@@ -11,7 +11,7 @@ import { CoinFlipEffect } from '../../../game/store/effects/play-card-effects';
 export class Cinccinoex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Minccino';
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public hp: number = 240;
   public cardType: CardType = C;
   public weakness = [{ type: F }];

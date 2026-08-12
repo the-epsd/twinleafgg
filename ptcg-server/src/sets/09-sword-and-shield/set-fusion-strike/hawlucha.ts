@@ -3,14 +3,27 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../../game/store/card/card-types';
-import { ChooseCardsPrompt, EnergyCard, GameMessage, StoreLike, State, StateUtils } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  EnergyType,
+  SuperType,
+} from '../../../game/store/card/card-types';
+import {
+  ChooseCardsPrompt,
+  EnergyCard,
+  GameMessage,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 
 export class Hawlucha extends PokemonCard {
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
   public hp: number = 90;
@@ -23,8 +36,8 @@ export class Hawlucha extends PokemonCard {
       name: 'Flying Stomp',
       cost: [C],
       damage: 20,
-      text: 'Discard a Special Energy from your opponent\'s Active Pokémon.'
-    }
+      text: "Discard a Special Energy from your opponent's Active Pokémon.",
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -42,27 +55,31 @@ export class Hawlucha extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const specialEnergyCards = opponent.active.cards.filter(
-        c => c instanceof EnergyCard && (c as EnergyCard).energyType === EnergyType.SPECIAL
+        (c) => c instanceof EnergyCard && (c as EnergyCard).energyType === EnergyType.SPECIAL,
       );
 
       if (specialEnergyCards.length === 0) {
         return state;
       }
 
-      store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        opponent.active,
-        { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        const cards = selected || [];
-        if (cards.length > 0) {
-          const discardEnergy = new DiscardCardsEffect(effect, cards);
-          discardEnergy.target = opponent.active;
-          store.reduceEffect(state, discardEnergy);
-        }
-      });
+      store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          opponent.active,
+          { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          if (cards.length > 0) {
+            const discardEnergy = new DiscardCardsEffect(effect, cards);
+            discardEnergy.target = opponent.active;
+            store.reduceEffect(state, discardEnergy);
+          }
+        },
+      );
     }
 
     return state;

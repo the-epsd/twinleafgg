@@ -5,7 +5,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { COIN_FLIP_PROMPT, MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class GroudonEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = F;
   public hp: number = 180;
@@ -36,31 +36,32 @@ export class GroudonEx extends PokemonCard {
       const player = effect.player;
       const opponent = effect.opponent;
 
-      COIN_FLIP_PROMPT(store, state, player, result => {
+      COIN_FLIP_PROMPT(store, state, player, (result) => {
         if (result) {
-
-          if (!opponent.active.energies.cards.some(c => c.superType === SuperType.ENERGY)) {
+          if (!opponent.active.energies.cards.some((c) => c.superType === SuperType.ENERGY)) {
             return state;
           }
 
           let cards: Card[] = [];
-          return store.prompt(state, new ChooseCardsPrompt(
-            player,
-            GameMessage.CHOOSE_CARD_TO_DISCARD,
-            opponent.active,
-            { superType: SuperType.ENERGY },
-            { min: 1, max: 1, allowCancel: false }
-          ), selected => {
-            cards = selected;
+          return store.prompt(
+            state,
+            new ChooseCardsPrompt(
+              player,
+              GameMessage.CHOOSE_CARD_TO_DISCARD,
+              opponent.active,
+              { superType: SuperType.ENERGY },
+              { min: 1, max: 1, allowCancel: false },
+            ),
+            (selected) => {
+              cards = selected;
 
-            MOVE_CARDS(store, state, opponent.active, opponent.discard, { cards: cards });
-          });
-
+              MOVE_CARDS(store, state, opponent.active, opponent.discard, { cards: cards });
+            },
+          );
         }
       });
     }
 
     return state;
   }
-
 }

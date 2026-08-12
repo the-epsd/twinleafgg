@@ -4,7 +4,7 @@ import { Effect } from "../../../game/store/effects/effect";
 import { WAS_ATTACK_USED, THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN, BLOCK_IF_GX_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
 
 export class LugiaGX extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
   public hp: number = 190;
@@ -13,12 +13,14 @@ export class LugiaGX extends PokemonCard {
   public retreat = [C, C];
 
   public attacks = [{
-    name: 'Psychic', cost: [C, C, C],
+    name: 'Psychic',
+    cost: [C, C, C],
     damage: 30,
     text: 'This attack does 30 more damage times the amount of Energy attached to your opponent\'s Active Pokémon. '
   },
   {
-    name: 'Pelagic Blade', cost: [C, C, C, C],
+    name: 'Pelagic Blade',
+    cost: [C, C, C, C],
     damage: 170,
     text: 'This Pokémon can\'t attack during your next turn.'
   },
@@ -43,8 +45,10 @@ export class LugiaGX extends PokemonCard {
 
       const opponentProvidedEnergy = new CheckProvidedEnergyEffect(opponent);
       store.reduceEffect(state, opponentProvidedEnergy);
-      const opponentEnergyCount = opponentProvidedEnergy.energyMap
-        .reduce((left, p) => left + p.provides.length, 0);
+      const opponentEnergyCount = opponentProvidedEnergy.energyMap.reduce(
+        (left, p) => left + p.provides.length,
+        0,
+      );
 
       effect.damage += opponentEnergyCount * 30;
     }

@@ -12,12 +12,14 @@ export class Aegislash2 extends PokemonCard {
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C, C];
 
-  public powers = [{
-    name: 'Stance Change',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may switch this Pokémon with an Aegislash in your hand. Any attached cards, damage counters, Special Conditions, turns in play, and any other effects remain on the new Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Stance Change',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn, you may switch this Pokémon with an Aegislash in your hand. Any attached cards, damage counters, Special Conditions, turns in play, and any other effects remain on the new Pokémon.',
+    },
+  ];
 
   public attacks = [{
     name: 'Gigaton Bash',
@@ -45,7 +47,7 @@ export class Aegislash2 extends PokemonCard {
       }
 
       const aegislashInHand = player.hand.cards.filter(
-        c => c instanceof PokemonCard && c.name === 'Aegislash' && c !== this
+        (c) => c instanceof PokemonCard && c.name === 'Aegislash' && c !== this,
       );
 
       if (aegislashInHand.length === 0) {
@@ -93,10 +95,22 @@ export class Aegislash2 extends PokemonCard {
           if (handIndex !== -1) {
             player.hand.cards.splice(handIndex, 1);
           }
-          cardList.cards.splice(thisIndex, 0, newAegislash);
-          player.hand.cards.push(this);
-        }
-      });
+
+          const newAegislash = selected[0] as PokemonCard;
+
+          // Swap: remove this card from the PokemonCardList, insert new one
+          const thisIndex = cardList.cards.indexOf(this);
+          if (thisIndex !== -1) {
+            cardList.cards.splice(thisIndex, 1);
+            const handIndex = player.hand.cards.indexOf(newAegislash);
+            if (handIndex !== -1) {
+              player.hand.cards.splice(handIndex, 1);
+            }
+            cardList.cards.splice(thisIndex, 0, newAegislash);
+            player.hand.cards.push(this);
+          }
+        },
+      );
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.STANCE_CHANGE_MARKER, this);

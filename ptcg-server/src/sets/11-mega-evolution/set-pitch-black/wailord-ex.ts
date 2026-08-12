@@ -7,7 +7,7 @@ import { AFTER_ATTACK } from '../../../game/store/prefabs/prefabs';
 export class Wailordex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Wailmer';
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public cardType: CardType = W;
   public hp: number = 380;
   public weakness = [{ type: L }];

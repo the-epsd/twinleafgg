@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 export class Froslassex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public regulationMark = 'G';
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public evolvesFrom = 'Snorunt';
   public cardType: CardType = G;
   public hp: number = 250;
@@ -36,7 +36,6 @@ export class Froslassex extends PokemonCard {
   public fullName: string = 'Froslass ex PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
 
       return COIN_FLIP_PROMPT(store, state, effect.player, result => {
@@ -50,27 +49,29 @@ export class Froslassex extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const targets = opponent.bench.filter(b => b.cards.length > 0);
+      const targets = opponent.bench.filter((b) => b.cards.length > 0);
       if (targets.length === 0) {
         return state;
       }
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.BENCH],
-      ), selected => {
-        const target = selected[0];
-        const damageEffect = new PutDamageEffect(effect, 20);
-        damageEffect.target = target;
-        store.reduceEffect(state, damageEffect);
-      });
-
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.BENCH],
+        ),
+        (selected) => {
+          const target = selected[0];
+          const damageEffect = new PutDamageEffect(effect, 20);
+          damageEffect.target = target;
+          store.reduceEffect(state, damageEffect);
+        },
+      );
     }
     return state;
   }

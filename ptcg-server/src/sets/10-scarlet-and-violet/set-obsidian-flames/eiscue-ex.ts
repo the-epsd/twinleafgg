@@ -9,18 +9,20 @@ import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/eff
 
 export class Eiscueex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public cardType: CardType = R;
   public hp: number = 210;
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Scalding Block',
-    cost: [W, W, W],
-    damage: 160,
-    text: 'Discard an Energy from this Pokémon. During your opponent\'s next turn, the Defending Pokémon can\'t attack.'
-  }];
+  public attacks = [
+    {
+      name: 'Scalding Block',
+      cost: [W, W, W],
+      damage: 160,
+      text: "Discard an Energy from this Pokémon. During your opponent's next turn, the Defending Pokémon can't attack.",
+    },
+  ];
 
   public regulationMark = 'G';
   public set: string = 'OBF';

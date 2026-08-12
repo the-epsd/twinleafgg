@@ -332,7 +332,7 @@ export class Board3dController {
       return;
     }
     const prevIds = this.lastHandCardIds;
-    const nextIds = this.bottomPlayerHand.cards.map(c => c.id);
+    const nextIds = this.bottomPlayerHand.cards.map((c) => c.id);
     const pending = this.evaluateHandDiscardAnimation(prevIds, nextIds);
     if (!pending) {
       return;
@@ -393,7 +393,7 @@ export class Board3dController {
     private cardsAdapter: Board3dCardsAdapter,
     private gameActions: Board3dGameActions,
     private boardInteractionService: BoardInteractionService,
-  ) { }
+  ) {}
 
   private getHandPlayableCardIdsForDisplay(): number[] | undefined {
     if (
@@ -412,9 +412,7 @@ export class Board3dController {
     ) {
       return undefined;
     }
-    return this.isReplayOmniscient()
-      ? undefined
-      : this.bottomPlayer?.playableHandAbilityCardIds;
+    return this.isReplayOmniscient() ? undefined : this.bottomPlayer?.playableHandAbilityCardIds;
   }
 
   private shouldDisableHandDragForSelection(): boolean {
@@ -563,8 +561,7 @@ export class Board3dController {
     if (card) {
       const startingSetup = this.boardInteractionService.isChooseStartingPokemonsSelectionActive();
       const disableHandDrag = this.shouldDisableHandDragForSelection();
-      canvas.style.cursor =
-        disableHandDrag && !startingSetup ? 'pointer' : 'grabbing';
+      canvas.style.cursor = disableHandDrag && !startingSetup ? 'pointer' : 'grabbing';
       this.markDirty();
     }
   }
@@ -637,12 +634,14 @@ export class Board3dController {
     // Create drop zone indicators (async) with actual bench sizes
     const bottomBenchSize = this.bottomPlayer?.bench?.length ?? 5;
     const topBenchSize = this.topPlayer?.bench?.length ?? 5;
-    this.interactionService.createDropZoneIndicators(this.scene, bottomBenchSize, topBenchSize).then(rebuilt => {
-      if (rebuilt) {
-        this.createBenchSpotOutlines(bottomBenchSize, topBenchSize);
-      }
-      this.markDirty();
-    });
+    this.interactionService
+      .createDropZoneIndicators(this.scene, bottomBenchSize, topBenchSize)
+      .then((rebuilt) => {
+        if (rebuilt) {
+          this.createBenchSpotOutlines(bottomBenchSize, topBenchSize);
+        }
+        this.markDirty();
+      });
 
     // Sync initial game state if available
     if (this.gameState) {
@@ -681,12 +680,14 @@ export class Board3dController {
 
     const bottomBenchSize = this.bottomPlayer?.bench?.length ?? 5;
     const topBenchSize = this.topPlayer?.bench?.length ?? 5;
-    this.interactionService.createDropZoneIndicators(this.scene, bottomBenchSize, topBenchSize).then(rebuilt => {
-      if (rebuilt) {
-        this.createBenchSpotOutlines(bottomBenchSize, topBenchSize);
-      }
-      this.markDirty();
-    });
+    this.interactionService
+      .createDropZoneIndicators(this.scene, bottomBenchSize, topBenchSize)
+      .then((rebuilt) => {
+        if (rebuilt) {
+          this.createBenchSpotOutlines(bottomBenchSize, topBenchSize);
+        }
+        this.markDirty();
+      });
 
     if (this.gameState) {
       this.syncGameState();
@@ -748,11 +749,11 @@ export class Board3dController {
     if (handChanged) {
       this.pendingPrizeEmptiedBottom = this.emptiedPrizeSlotIndices(
         prevBottomPrizeOcc,
-        this.prizeSlotsOccupied(this.bottomPlayer)
+        this.prizeSlotsOccupied(this.bottomPlayer),
       );
       this.pendingPrizeEmptiedTop = this.emptiedPrizeSlotIndices(
         prevTopPrizeOcc,
-        this.prizeSlotsOccupied(this.topPlayer)
+        this.prizeSlotsOccupied(this.topPlayer),
       );
     } else {
       this.pendingPrizeEmptiedBottom = [];
@@ -914,13 +915,9 @@ export class Board3dController {
     this.camera.position.set(
       cameraConfig.position.x,
       cameraConfig.position.y,
-      cameraConfig.position.z
+      cameraConfig.position.z,
     );
-    this.camera.lookAt(
-      cameraConfig.lookAt.x,
-      cameraConfig.lookAt.y,
-      cameraConfig.lookAt.z
-    );
+    this.camera.lookAt(cameraConfig.lookAt.x, cameraConfig.lookAt.y, cameraConfig.lookAt.z);
   }
 
   private initRenderer(): void {
@@ -929,7 +926,7 @@ export class Board3dController {
     this.renderer = new WebGLRenderer({
       canvas,
       antialias: true,
-      alpha: true
+      alpha: true,
     });
 
     this.renderer.setSize(canvas.clientWidth, canvas.clientHeight);
@@ -949,7 +946,6 @@ export class Board3dController {
     this.renderer.toneMappingExposure = 1.2;
   }
 
-
   private async createBoardAsync(): Promise<void> {
     // Create board surface geometry
     const boardGeometry = new PlaneGeometry(70, 50);
@@ -962,7 +958,7 @@ export class Board3dController {
       // map: boardTexture,
       color: 0x404040, // Dark grey
       roughness: 1,
-      metalness: 0.00
+      metalness: 0.0,
     });
 
     this.boardMesh = new Mesh(boardGeometry, boardMaterial);
@@ -988,10 +984,8 @@ export class Board3dController {
     this.boardCenterOverlay.rotation.z = Math.PI;
     this.boardCenterOverlay.scale.x = -1;
 
-    const midX =
-      (ZONE_POSITIONS.bottomPlayer.active.x + ZONE_POSITIONS.topPlayer.active.x) / 2;
-    const midZ =
-      (ZONE_POSITIONS.bottomPlayer.active.z + ZONE_POSITIONS.topPlayer.active.z) / 2;
+    const midX = (ZONE_POSITIONS.bottomPlayer.active.x + ZONE_POSITIONS.topPlayer.active.x) / 2;
+    const midZ = (ZONE_POSITIONS.bottomPlayer.active.z + ZONE_POSITIONS.topPlayer.active.z) / 2;
     this.boardCenterOverlay.position.set(midX, BOARD_3D_CENTER_EMBLEM_Y, midZ);
     this.boardCenterOverlay.renderOrder = 50;
     this.boardCenterOverlay.receiveShadow = false;
@@ -1032,7 +1026,7 @@ export class Board3dController {
       transparent: true,
       opacity: 0.1,
       side: DoubleSide,
-      depthTest: true
+      depthTest: true,
     });
 
     this.boardGridGroup = new Group();
@@ -1158,13 +1152,9 @@ export class Board3dController {
     this.camera.position.set(
       cameraConfig.position.x,
       cameraConfig.position.y,
-      cameraConfig.position.z
+      cameraConfig.position.z,
     );
-    this.camera.lookAt(
-      cameraConfig.lookAt.x,
-      cameraConfig.lookAt.y,
-      cameraConfig.lookAt.z
-    );
+    this.camera.lookAt(cameraConfig.lookAt.x, cameraConfig.lookAt.y, cameraConfig.lookAt.z);
 
     this.markDirty();
   }
@@ -1344,9 +1334,7 @@ export class Board3dController {
 
       const discardCount = player.discard?.cards?.length ?? 0;
       const stackY =
-        discardCount > 0
-          ? (discardCount - 1) * Board3dStackService.STACK_HEIGHT_INCREMENT
-          : 0;
+        discardCount > 0 ? (discardCount - 1) * Board3dStackService.STACK_HEIGHT_INCREMENT : 0;
       const target = ZONE_POSITIONS[spec.position].discard.clone();
       target.y += stackY;
 
@@ -1389,10 +1377,7 @@ export class Board3dController {
 
       let trainerDiscardDetectedPlayerId: number | null = null;
       if (this.trainerToDiscardResolvePlayerId == null) {
-        if (
-          this.deferredTrainerDiscardPlayerId != null &&
-          !this.isTrainerDiscardBlocked()
-        ) {
+        if (this.deferredTrainerDiscardPlayerId != null && !this.isTrainerDiscardBlocked()) {
           trainerDiscardDetectedPlayerId = this.deferredTrainerDiscardPlayerId;
           this.deferredTrainerDiscardPlayerId = null;
           this.trainerToDiscardResolvePlayerId = trainerDiscardDetectedPlayerId;
@@ -1449,13 +1434,9 @@ export class Board3dController {
         this.koDiscardVisualFreezePlayerId ??
         undefined;
       const freezeDiscardVisibleCountForSync =
-        this.discardVisualFreezePlayerId != null
-          ? this.discardVisualFreezeVisibleCount
-          : undefined;
-      const freezeDiscardHandFlightBaseStackForSync =
-        this.discardHandFlightBaseStack ?? undefined;
-      const freezeDiscardHandFlightIdsForSync =
-        this.discardHandFlightVisibleIds ?? undefined;
+        this.discardVisualFreezePlayerId != null ? this.discardVisualFreezeVisibleCount : undefined;
+      const freezeDiscardHandFlightBaseStackForSync = this.discardHandFlightBaseStack ?? undefined;
+      const freezeDiscardHandFlightIdsForSync = this.discardHandFlightVisibleIds ?? undefined;
       const freezeSupporterClearForSync =
         this.pendingTrainerEffectPlayerId ??
         this.deferredTrainerDiscardPlayerId ??
@@ -1553,9 +1534,7 @@ export class Board3dController {
 
       const discardCount = player.discard?.cards?.length ?? 0;
       const stackY =
-        discardCount > 0
-          ? (discardCount - 1) * Board3dStackService.STACK_HEIGHT_INCREMENT
-          : 0;
+        discardCount > 0 ? (discardCount - 1) * Board3dStackService.STACK_HEIGHT_INCREMENT : 0;
       const target = ZONE_POSITIONS[position].discard.clone();
       target.y += stackY;
 
@@ -1589,12 +1568,14 @@ export class Board3dController {
     const topBenchSize = this.topPlayer?.bench?.length ?? 5;
 
     // Recreate drop zones with updated bench sizes
-    this.interactionService.createDropZoneIndicators(this.scene, bottomBenchSize, topBenchSize).then(rebuilt => {
-      if (rebuilt) {
-        this.createBenchSpotOutlines(bottomBenchSize, topBenchSize);
-      }
-      this.markDirty();
-    });
+    this.interactionService
+      .createDropZoneIndicators(this.scene, bottomBenchSize, topBenchSize)
+      .then((rebuilt) => {
+        if (rebuilt) {
+          this.createBenchSpotOutlines(bottomBenchSize, topBenchSize);
+        }
+        this.markDirty();
+      });
   }
 
   /** Bench ribbon tuning */
@@ -1705,7 +1686,7 @@ export class Board3dController {
       transparent: true,
       opacity: outlineOpacity,
       side: DoubleSide,
-      depthTest: true
+      depthTest: true,
     });
 
     const group = new Group();
@@ -1783,18 +1764,13 @@ export class Board3dController {
 
     // Bottom player occupancy
     const bottomActive = bottom?.active?.cards?.length > 0;
-    const bottomBench = bottom?.bench?.map(slot => slot?.cards?.length > 0) ?? [];
+    const bottomBench = bottom?.bench?.map((slot) => slot?.cards?.length > 0) ?? [];
 
     // Top player occupancy
     const topActive = top?.active?.cards?.length > 0;
-    const topBench = top?.bench?.map(slot => slot?.cards?.length > 0) ?? [];
+    const topBench = top?.bench?.map((slot) => slot?.cards?.length > 0) ?? [];
 
-    this.interactionService.updateOccupiedZones(
-      bottomActive,
-      bottomBench,
-      topActive,
-      topBench
-    );
+    this.interactionService.updateOccupiedZones(bottomActive, bottomBench, topActive, topBench);
   }
 
   /** Replay viewer sees both hands; near-hand must render face-up like the owner's. */
@@ -1854,10 +1830,8 @@ export class Board3dController {
       return null;
     }
     const slot = ev.slot;
-    const isActive =
-      slot === 'active' || slot === String(SlotType.ACTIVE);
-    const isBench =
-      slot === 'bench' || slot === String(SlotType.BENCH);
+    const isActive = slot === 'active' || slot === String(SlotType.ACTIVE);
+    const isBench = slot === 'bench' || slot === String(SlotType.BENCH);
     if (isActive) {
       return `${pos}_${ev.playerId}_active`;
     }
@@ -2046,8 +2020,7 @@ export class Board3dController {
   ): void {
     this.beginHandPlayFlightHiddenMeshes([meshId]);
 
-    const aspect =
-      this.canvasEl.clientWidth / Math.max(this.canvasEl.clientHeight, 1);
+    const aspect = this.canvasEl.clientWidth / Math.max(this.canvasEl.clientHeight, 1);
     const stageCenter = getDrawFlightStageCenterWorld(aspect, this.isUpsideDown);
     const targetWorld = boardCard.getGroup().position.clone();
     targetWorld.y = Math.max(targetWorld.y, 0.08);
@@ -2130,11 +2103,9 @@ export class Board3dController {
         : {};
       const waitingForLegendHalves =
         !!cardList &&
-        !!cardList.getPokemonCard()?.tags?.includes(CardTag.LEGEND) &&
+        !!cardList.getPokemonCard()?.tags.includes(CardTag.LEGEND) &&
         (!topHalfCard || !bottomHalfCard) &&
-        cardList.cards.some(
-          (c) => c.fullName.includes('(Top)') || c.fullName.includes('(Bottom)'),
-        );
+        cardList.cards.some((c) => c.fullName.includes('(Top)') || c.fullName.includes('(Bottom)'));
       if (waitingForLegendHalves) {
         if (attempt < maxAttempts) {
           requestAnimationFrame(() => tryPlay(attempt + 1));
@@ -2187,7 +2158,7 @@ export class Board3dController {
   private getRenderedHandCardIds(): number[] {
     return this.handService
       .getHandSlotSnapshots()
-      .map(s => s.cardId)
+      .map((s) => s.cardId)
       .filter((id): id is number => id !== undefined);
   }
 
@@ -2196,7 +2167,10 @@ export class Board3dController {
    * Merges rendered hand ids so a stale {@link lastHandCardIds} snapshot cannot
    * re-animate cards that are already on screen.
    */
-  private computeHandDrawDelta(prevIds: number[], nextIds: number[]): {
+  private computeHandDrawDelta(
+    prevIds: number[],
+    nextIds: number[],
+  ): {
     incomingDrawIds: number[];
     stableK: number;
     drawCount: number;
@@ -2205,13 +2179,13 @@ export class Board3dController {
   } {
     const renderedIds = this.getRenderedHandCardIds();
     const effectivePrevSet = new Set([...prevIds, ...renderedIds]);
-    const incomingDrawIds = nextIds.filter(id => !effectivePrevSet.has(id));
+    const incomingDrawIds = nextIds.filter((id) => !effectivePrevSet.has(id));
     const drawCount = incomingDrawIds.length;
 
     let stableK = nextIds.length;
     if (drawCount > 0) {
       const incomingSet = new Set(incomingDrawIds);
-      const firstIncomingIdx = nextIds.findIndex(id => incomingSet.has(id));
+      const firstIncomingIdx = nextIds.findIndex((id) => incomingSet.has(id));
       stableK = firstIncomingIdx >= 0 ? firstIncomingIdx : nextIds.length;
     }
 
@@ -2238,17 +2212,15 @@ export class Board3dController {
     }
     const nextSet = new Set(nextIds);
     const discardCards = this.bottomPlayer.discard.cards;
-    const discardIdSet = new Set(discardCards.map(c => c.id));
+    const discardIdSet = new Set(discardCards.map((c) => c.id));
     const removedFromHand = new Set(
-      prevIds.filter(id => !nextSet.has(id) && discardIdSet.has(id)),
+      prevIds.filter((id) => !nextSet.has(id) && discardIdSet.has(id)),
     );
     if (removedFromHand.size === 0) {
       return [];
     }
     // Match discard pile append order so flights and pile-top updates stay in sync.
-    return discardCards
-      .filter(c => removedFromHand.has(c.id))
-      .map(c => c.id);
+    return discardCards.filter((c) => removedFromHand.has(c.id)).map((c) => c.id);
   }
 
   /** Card ids removed from hand that returned to the bottom player's deck (shuffle-hand-into-deck). */
@@ -2408,10 +2380,9 @@ export class Board3dController {
         this.markDirty();
       }
       const trainerFollowsHandDiscard =
-        this.deferredTrainerDiscardPlayerId != null ||
-        this.pendingTrainerEffectPlayerId != null;
+        this.deferredTrainerDiscardPlayerId != null || this.pendingTrainerEffectPlayerId != null;
       if (anyFlown && trainerFollowsHandDiscard) {
-        await new Promise<void>(resolve => {
+        await new Promise<void>((resolve) => {
           setTimeout(resolve, HAND_DISCARD_TO_TRAINER_HOLD_SEC * 1000);
         });
       }
@@ -2497,7 +2468,10 @@ export class Board3dController {
    * Prize card id → grid index for the given player's prize layout.
    * Used so prize→hand flights start from the prize mesh, not the deck.
    */
-  private rebuildPrizeIdToGridFromPlayerPrizes(player: Player | undefined, into: Map<number, number>): void {
+  private rebuildPrizeIdToGridFromPlayerPrizes(
+    player: Player | undefined,
+    into: Map<number, number>,
+  ): void {
     into.clear();
     const prizes = player?.prizes;
     if (!prizes) {
@@ -2519,7 +2493,7 @@ export class Board3dController {
     }
     for (let i = 0; i < 6; i++) {
       const pile = prizes[i];
-      occ[i] = !!(pile?.cards?.length);
+      occ[i] = !!pile?.cards?.length;
     }
     return occ;
   }
@@ -2554,8 +2528,8 @@ export class Board3dController {
     const bottomSlots = [...this.pendingPrizeEmptiedBottom].sort((a, b) => a - b);
     const topSlots = [...this.pendingPrizeEmptiedTop].sort((a, b) => a - b);
     const slotQueue: PrizeFlightOrigin[] = [
-      ...bottomSlots.map(grid => ({ side: 'bottom' as const, grid })),
-      ...topSlots.map(grid => ({ side: 'top' as const, grid })),
+      ...bottomSlots.map((grid) => ({ side: 'bottom' as const, grid })),
+      ...topSlots.map((grid) => ({ side: 'top' as const, grid })),
     ];
     for (const id of incomingDrawIds) {
       if (!meta.has(id) && slotQueue.length > 0) {
@@ -2580,7 +2554,7 @@ export class Board3dController {
     gs: State | undefined,
     ourTurnJustBegan: boolean,
     bottomId: number | undefined,
-    nowActivePlayerId: number | undefined
+    nowActivePlayerId: number | undefined,
   ): HandDrawFlightSegment[] {
     if (incoming.length === 0) {
       return [];
@@ -2633,7 +2607,7 @@ export class Board3dController {
       deckPart.length === 1 && gs?.phase === GamePhase.PLAYER_TURN && firstTurnOpen;
     segs.push({
       ids: deckPart,
-      preset: singleTurnOpen ? 'turnBegin' : 'default'
+      preset: singleTurnOpen ? 'turnBegin' : 'default',
     });
     return segs;
   }
@@ -2648,7 +2622,7 @@ export class Board3dController {
     aspect: number,
     boardConfig: ReturnType<typeof getBoardConfig>,
     prizeFlightOrigins: ReadonlyMap<number, PrizeFlightOrigin>,
-    totalDeckDrawsFull: number
+    totalDeckDrawsFull: number,
   ): Promise<boolean> {
     const isFromPrize = (id: number) => prizeFlightOrigins.has(id);
 
@@ -2698,7 +2672,7 @@ export class Board3dController {
             stableKRun,
             0,
             true,
-            flyCardId
+            flyCardId,
           );
           if (!prep) {
             return false;
@@ -2712,8 +2686,8 @@ export class Board3dController {
               onRevealFace: () => {
                 this.handService.revealDrawFlightFace(prep.flyingCard);
               },
-              visualPreset: drawFlightPreset
-            }
+              visualPreset: drawFlightPreset,
+            },
           );
           this.handService.finishDrawFlight(prep.flyingCard, finalTotal);
         } finally {
@@ -2724,11 +2698,14 @@ export class Board3dController {
         const maxRowWidth = getMaxDrawStageRowWidthWorld(aspect, this.isUpsideDown);
         const { stageScale: batchStageScale, centerSpread: spread } = getMultiDrawBatchStageLayout(
           drawCount,
-          maxRowWidth
+          maxRowWidth,
         );
 
         let prizePrefixLenSeg = 0;
-        while (prizePrefixLenSeg < drawCount && isFromPrize(fullIncoming[globalBase + prizePrefixLenSeg])) {
+        while (
+          prizePrefixLenSeg < drawCount &&
+          isFromPrize(fullIncoming[globalBase + prizePrefixLenSeg])
+        ) {
           prizePrefixLenSeg++;
         }
         let prizeFirstIncomingBlock = true;
@@ -2765,7 +2742,7 @@ export class Board3dController {
               stableKRun,
               localStep,
               globalFirstStep,
-              flyCardId
+              flyCardId,
             );
             globalFirstStep = false;
             if (!prep) {
@@ -2780,7 +2757,7 @@ export class Board3dController {
               },
               omitPhasePad: true,
               targetStageScale: batchStageScale,
-              visualPreset: drawFlightPreset
+              visualPreset: drawFlightPreset,
             });
             staged[localStep] = prep.flyingCard;
           };
@@ -2798,12 +2775,12 @@ export class Board3dController {
             }
           }
 
-          const allStaged = !aborted && staged.every(c => c != null);
+          const allStaged = !aborted && staged.every((c) => c != null);
           if (!allStaged) {
             return false;
           }
 
-          await new Promise<void>(resolve => {
+          await new Promise<void>((resolve) => {
             setTimeout(resolve, getMultiDrawSharedHoldSec(drawFlightPreset) * 1000);
           });
           await Promise.all(
@@ -2815,9 +2792,9 @@ export class Board3dController {
                   burst: true,
                   visualPreset: drawFlightPreset,
                   delay: i * MULTI_DRAW_STAGE_TO_HAND_STAGGER_SEC,
-                }
-              )
-            )
+                },
+              ),
+            ),
           );
           for (let i = 0; i < drawCount; i++) {
             this.handService.finishDrawFlight(staged[i], finalTotal);
@@ -2849,7 +2826,7 @@ export class Board3dController {
         this.lastHandSyncActivePlayerId = undefined;
       }
 
-      const nextIds = this.bottomPlayerHand.cards.map(c => c.id);
+      const nextIds = this.bottomPlayerHand.cards.map((c) => c.id);
 
       if (opts?.immediate) {
         if (genAtStart !== this.handSyncInvalidationGen) {
@@ -2906,15 +2883,13 @@ export class Board3dController {
       };
 
       const looksLikeHandReorderOnly =
-        drawCount > 0 &&
-        prevLen === nextIds.length &&
-        handIdsSameMultiset(prevIds, nextIds);
+        drawCount > 0 && prevLen === nextIds.length && handIdsSameMultiset(prevIds, nextIds);
 
       // Playing a card removes from hand with no new ids (drawCount stays 0). Draws that also discard
       // (e.g. Prism Tower: −2 + draw 1) can shrink net size but still animate when the delta balances.
       // Empty→full draws (shuffle hand into deck, then draw) have prevLen 0 after hand→deck sync.
       const nextIdSet = new Set(nextIds);
-      const removedCount = prevIds.filter(id => !nextIdSet.has(id)).length;
+      const removedCount = prevIds.filter((id) => !nextIdSet.has(id)).length;
       const netGrowth = nextIds.length - effectivePrevCardCount;
       const handShrank = netGrowth < 0;
 
@@ -2963,8 +2938,7 @@ export class Board3dController {
 
       // Option A (setup UX): never deck-flight the hand during SETUP — avoids 7× mulligan
       // parades when an empty-hand stateChange is missed and diff looks like a full redraw.
-      const shouldAnimateDrawEffective =
-        shouldAnimateDraw && gs?.phase !== GamePhase.SETUP;
+      const shouldAnimateDrawEffective = shouldAnimateDraw && gs?.phase !== GamePhase.SETUP;
 
       const incomingDiscardIds = this.computeDiscardedFromHandIds(prevIds, nextIds);
       const pendingHandDiscard = this.evaluateHandDiscardAnimation(prevIds, nextIds);
@@ -3234,8 +3208,7 @@ export class Board3dController {
     if (card) {
       const startingSetup = this.boardInteractionService.isChooseStartingPokemonsSelectionActive();
       const disableHandDrag = this.shouldDisableHandDragForSelection();
-      canvas.style.cursor =
-        disableHandDrag && !startingSetup ? 'pointer' : 'grabbing';
+      canvas.style.cursor = disableHandDrag && !startingSetup ? 'pointer' : 'grabbing';
       this.markDirty();
     }
   };
@@ -3244,29 +3217,26 @@ export class Board3dController {
     const canvas = this.canvasEl;
 
     if (this.interactionService.getIsDragging() || this.interactionService.hasPendingDrag()) {
-      this.interactionService.onMouseMoveDrag(
-        event,
-        this.camera,
-        this.scene,
-        canvas
-      );
+      this.interactionService.onMouseMoveDrag(event, this.camera, this.scene, canvas);
     } else {
       const hoveredCard = this.interactionService.onMouseMove(
         event,
         this.camera,
         this.scene,
-        canvas
+        canvas,
       );
 
       if (hoveredCard !== this.currentHoveredCard) {
         if (hoveredCard) {
           const chooseHandCards = this.boardInteractionService.isChooseHandCardsSelectionActive();
           const legendAssembly = this.boardInteractionService.isLegendAssemblySelectionActive();
-          const startingSetup = this.boardInteractionService.isChooseStartingPokemonsSelectionActive();
-          canvas.style.cursor =
-            hoveredCard.userData.isHandCard
-              ? (startingSetup || (!chooseHandCards && !legendAssembly) ? 'grab' : 'pointer')
-              : 'pointer';
+          const startingSetup =
+            this.boardInteractionService.isChooseStartingPokemonsSelectionActive();
+          canvas.style.cursor = hoveredCard.userData.isHandCard
+            ? startingSetup || (!chooseHandCards && !legendAssembly)
+              ? 'grab'
+              : 'pointer'
+            : 'pointer';
         } else {
           canvas.style.cursor = 'default';
         }
@@ -3279,7 +3249,8 @@ export class Board3dController {
 
   private onMouseUp = (event: MouseEvent): void => {
     const canvas = this.canvasEl;
-    const isHandPlayTargetSelection = this.boardInteractionService.isHandPlayTargetSelectionActive();
+    const isHandPlayTargetSelection =
+      this.boardInteractionService.isHandPlayTargetSelectionActive();
     const result = this.interactionService.onMouseUp(
       event,
       this.camera,
@@ -3312,13 +3283,20 @@ export class Board3dController {
     if (result) {
       if (result.action === 'click' && result.clickedCard) {
         this.onCardClicked(result.clickedCard);
-      } else if (result.action === 'pickAttachTarget' && result.handIndex !== undefined && result.eligibleTargets) {
-        this.boardInteractionService.startHandPlayTargetSelection(result.eligibleTargets, (target) => {
-          this.updateSelectionVisuals();
-          if (target && result.handIndex !== undefined) {
-            this.executeHandAttachPlay(result.handIndex, target);
-          }
-        });
+      } else if (
+        result.action === 'pickAttachTarget' &&
+        result.handIndex !== undefined &&
+        result.eligibleTargets
+      ) {
+        this.boardInteractionService.startHandPlayTargetSelection(
+          result.eligibleTargets,
+          (target) => {
+            this.updateSelectionVisuals();
+            if (target && result.handIndex !== undefined) {
+              this.executeHandAttachPlay(result.handIndex, target);
+            }
+          },
+        );
         this.updateSelectionVisuals();
       } else if (result.action === 'playCard' && result.handIndex !== undefined && result.zone) {
         if (this.boardInteractionService.isChooseStartingPokemonsSelectionActive()) {
@@ -3657,7 +3635,10 @@ export class Board3dController {
 
     let board3dCard = flight?.board3dCard ?? null;
     if (!board3dCard) {
-      board3dCard = this.handService.liftHandCardForSetupAnimation(handIndex, this.worldContentRoot);
+      board3dCard = this.handService.liftHandCardForSetupAnimation(
+        handIndex,
+        this.worldContentRoot,
+      );
     }
     if (!board3dCard) {
       this.setupPlacementInFlight.delete(handIndex);
@@ -3731,7 +3712,11 @@ export class Board3dController {
       return;
     }
 
-    const halfIndices = resolveLegendAssemblyHalfHandIndices(handCards, playHandIndex, partnerIndex);
+    const halfIndices = resolveLegendAssemblyHalfHandIndices(
+      handCards,
+      playHandIndex,
+      partnerIndex,
+    );
     if (!halfIndices) {
       void this.gameActions
         .playCardAction(this.gameState.gameId, playHandIndex, playTarget)
@@ -3782,8 +3767,7 @@ export class Board3dController {
     topHalf.setOutline(false);
     bottomHalf.setOutline(false);
 
-    const aspect =
-      this.canvasEl.clientWidth / Math.max(this.canvasEl.clientHeight, 1);
+    const aspect = this.canvasEl.clientWidth / Math.max(this.canvasEl.clientHeight, 1);
     const stageCenter = getDrawFlightStageCenterWorld(aspect, this.isUpsideDown);
     const benchPositions = getBenchPositions(
       this.bottomPlayer.bench.length,
@@ -3877,10 +3861,10 @@ export class Board3dController {
     const trainerBoardHandPlay = cardIsTrainerBoardHandPlay(playedHandCard);
     const playTarget: CardTarget = trainerBoardHandPlay
       ? {
-        player: result.zone.player,
-        slot: SlotType.BOARD,
-        index: result.zone.index,
-      }
+          player: result.zone.player,
+          slot: SlotType.BOARD,
+          index: result.zone.index,
+        }
       : result.zone;
 
     const flight = result.playCardFlight;
@@ -3919,23 +3903,20 @@ export class Board3dController {
           ? (handCard as TrainerCard).trainerType
           : flight.trainerType;
 
-      const itemHandPlayFlight =
-        trainerBoardHandPlay && !cardIsSupporter(playedHandCard);
+      const itemHandPlayFlight = trainerBoardHandPlay && !cardIsSupporter(playedHandCard);
       if (itemHandPlayFlight) {
         this.discardVisualFreezePlayerId =
-          playTarget.player === PlayerType.BOTTOM_PLAYER
-            ? this.bottomPlayer.id
-            : this.topPlayer.id;
+          playTarget.player === PlayerType.BOTTOM_PLAYER ? this.bottomPlayer.id : this.topPlayer.id;
       }
 
       const supporterSlotMeshId = trainerBoardHandPlay
         ? board3dMeshIdForPlayTarget(
-          playTarget,
-          DropZoneType.SUPPORTER,
-          this.bottomPlayer,
-          this.topPlayer,
-          resolvedTrainerType
-        )
+            playTarget,
+            DropZoneType.SUPPORTER,
+            this.bottomPlayer,
+            this.topPlayer,
+            resolvedTrainerType,
+          )
         : null;
 
       const flightHiddenMeshIds: string[] = [];
@@ -3953,7 +3934,7 @@ export class Board3dController {
           flight.dropZoneType,
           this.bottomPlayer,
           this.topPlayer,
-          resolvedTrainerType
+          resolvedTrainerType,
         );
         if (singleHidden) {
           flightHiddenMeshIds.push(singleHidden);
@@ -4030,7 +4011,7 @@ export class Board3dController {
       void this.animationService
         .playHandCardDropOnBoard(group, flight.targetWorld, {
           endScale: flight.endScale,
-          endRotationY: flight.endRotationY
+          endRotationY: flight.endRotationY,
         })
         .then(() => {
           dropAnimDone = true;
@@ -4041,7 +4022,7 @@ export class Board3dController {
         .playCardAction(this.gameState.gameId, result.handIndex, playTarget)
         .catch(() => this.forceHandResyncAfterFailedPlay());
     }
-  };
+  }
 
   private onMouseLeave = (): void => {
     this.interactionService.cancelDrag();
@@ -4054,12 +4035,7 @@ export class Board3dController {
   private onContextMenu = (event: MouseEvent): void => {
     event.preventDefault();
     const canvas = this.canvasEl;
-    const card = this.interactionService.onMouseMove(
-      event,
-      this.camera,
-      this.scene,
-      canvas,
-    );
+    const card = this.interactionService.onMouseMove(event, this.camera, this.scene, canvas);
     if (card) {
       this.showCardInfoPane(card);
     }
@@ -4072,10 +4048,7 @@ export class Board3dController {
     const isSelectionMode = this.boardInteractionService.isSelectionActive();
 
     // Update board cards via stateSync
-    this.stateSync.updateSelectionState(
-      isSelectionMode,
-      this.boardInteractionService
-    );
+    this.stateSync.updateSelectionState(isSelectionMode, this.boardInteractionService);
 
     // Update hand cards
     this.updateHandSelectionVisuals(isSelectionMode);
@@ -4160,7 +4133,7 @@ export class Board3dController {
       const target: CardTarget = {
         player: PlayerType.BOTTOM_PLAYER,
         slot: SlotType.HAND,
-        index: handIndex
+        index: handIndex,
       };
 
       if (isSelectionMode) {
@@ -4205,7 +4178,7 @@ export class Board3dController {
       this.cardsAdapter.showCardInfo({
         card: cardData,
         cardList: cardList ?? this.bottomPlayerHand,
-        players: [this.topPlayer, this.bottomPlayer].filter(p => p),
+        players: [this.topPlayer, this.bottomPlayer].filter((p) => p),
       });
       return;
     }
@@ -4214,7 +4187,7 @@ export class Board3dController {
       this.cardsAdapter.showCardInfo({
         card: cardData,
         cardList,
-        players: [this.topPlayer, this.bottomPlayer].filter(p => p),
+        players: [this.topPlayer, this.bottomPlayer].filter((p) => p),
       });
       return;
     }
@@ -4249,7 +4222,7 @@ export class Board3dController {
       this.cardsAdapter.showCardInfo({
         card: cardData,
         cardList,
-        players: [this.topPlayer, this.bottomPlayer].filter(p => p)
+        players: [this.topPlayer, this.bottomPlayer].filter((p) => p),
       });
       return;
     }
@@ -4279,7 +4252,7 @@ export class Board3dController {
       this.cardsAdapter.showCardInfo({
         card: cardData,
         cardList,
-        players: [this.topPlayer, this.bottomPlayer].filter(p => p)
+        players: [this.topPlayer, this.bottomPlayer].filter((p) => p),
       });
       return;
     }
@@ -4289,8 +4262,13 @@ export class Board3dController {
       // Determine which player's Lost Zone this is
       const isBottomLostZone = this.bottomPlayer && this.bottomPlayer.lostzone === cardList;
       const isTopLostZone = this.topPlayer && this.topPlayer.lostzone === cardList;
-      const player = isBottomLostZone ? PlayerType.BOTTOM_PLAYER : (isTopLostZone ? PlayerType.TOP_PLAYER : PlayerType.BOTTOM_PLAYER);
-      const isOwner = (isBottomLostZone && this.bottomPlayer && this.bottomPlayer.id === this.clientId) ||
+      const player = isBottomLostZone
+        ? PlayerType.BOTTOM_PLAYER
+        : isTopLostZone
+          ? PlayerType.TOP_PLAYER
+          : PlayerType.BOTTOM_PLAYER;
+      const isOwner =
+        (isBottomLostZone && this.bottomPlayer && this.bottomPlayer.id === this.clientId) ||
         (isTopLostZone && this.topPlayer && this.topPlayer.id === this.clientId);
       const isDeleted = this.gameState.deleted;
 
@@ -4299,7 +4277,7 @@ export class Board3dController {
         this.cardsAdapter.showCardInfoList({
           card: cardData,
           cardList: cardList,
-          players: [this.topPlayer, this.bottomPlayer].filter(p => p)
+          players: [this.topPlayer, this.bottomPlayer].filter((p) => p),
         });
         return;
       }
@@ -4307,21 +4285,23 @@ export class Board3dController {
       const slot = SlotType.LOSTZONE;
       const options = { enableAbility: { useFromDiscard: false }, enableAttack: false };
 
-      this.cardsAdapter.showCardInfoList({
-        card: cardData,
-        cardList: cardList,
-        options,
-        players: [this.topPlayer, this.bottomPlayer].filter(p => p)
-      }).then(result => {
-        if (!result) {
-          return;
-        }
-        const gameId = this.gameState.gameId;
-        const index = cardList.cards.indexOf(result.card);
-        const target: CardTarget = { player, slot, index };
-        // Note: Lost Zone cards typically don't have abilities that can be used from Lost Zone
-        // but we handle the result in case future cards need this functionality
-      });
+      this.cardsAdapter
+        .showCardInfoList({
+          card: cardData,
+          cardList: cardList,
+          options,
+          players: [this.topPlayer, this.bottomPlayer].filter((p) => p),
+        })
+        .then((result) => {
+          if (!result) {
+            return;
+          }
+          const gameId = this.gameState.gameId;
+          const index = cardList.cards.indexOf(result.card);
+          const target: CardTarget = { player, slot, index };
+          // Note: Lost Zone cards typically don't have abilities that can be used from Lost Zone
+          // but we handle the result in case future cards need this functionality
+        });
       return;
     }
 
@@ -4330,8 +4310,13 @@ export class Board3dController {
       // Determine which player's discard this is by checking cardList reference
       const isBottomDiscard = this.bottomPlayer && this.bottomPlayer.discard === cardList;
       const isTopDiscard = this.topPlayer && this.topPlayer.discard === cardList;
-      const player = isBottomDiscard ? PlayerType.BOTTOM_PLAYER : (isTopDiscard ? PlayerType.TOP_PLAYER : PlayerType.BOTTOM_PLAYER);
-      const isOwner = (isBottomDiscard && this.bottomPlayer && this.bottomPlayer.id === this.clientId) ||
+      const player = isBottomDiscard
+        ? PlayerType.BOTTOM_PLAYER
+        : isTopDiscard
+          ? PlayerType.TOP_PLAYER
+          : PlayerType.BOTTOM_PLAYER;
+      const isOwner =
+        (isBottomDiscard && this.bottomPlayer && this.bottomPlayer.id === this.clientId) ||
         (isTopDiscard && this.topPlayer && this.topPlayer.id === this.clientId);
       const isDeleted = this.gameState.deleted;
 
@@ -4340,7 +4325,7 @@ export class Board3dController {
         this.cardsAdapter.showCardInfoList({
           card: cardData,
           cardList: cardList,
-          players: [this.topPlayer, this.bottomPlayer].filter(p => p)
+          players: [this.topPlayer, this.bottomPlayer].filter((p) => p),
         });
         return;
       }
@@ -4348,30 +4333,32 @@ export class Board3dController {
       const slot = SlotType.DISCARD;
       const options = { enableAbility: { useFromDiscard: true }, enableAttack: false };
 
-      this.cardsAdapter.showCardInfoList({
-        card: cardData,
-        cardList: cardList,
-        options,
-        players: [this.topPlayer, this.bottomPlayer].filter(p => p)
-      }).then(result => {
-        if (!result) {
-          return;
-        }
-        const gameId = this.gameState.gameId;
-        const index = cardList.cards.indexOf(result.card);
-        const target: CardTarget = { player, slot, index };
-
-        // Use ability from the card
-        if (result.ability) {
-          if (result.card.superType === SuperType.TRAINER) {
-            this.gameActions.trainerAbility(gameId, result.ability, target);
-          } else if (result.card.superType === SuperType.ENERGY) {
-            this.gameActions.energyAbility(gameId, result.ability, target);
-          } else {
-            this.gameActions.ability(gameId, result.ability, target);
+      this.cardsAdapter
+        .showCardInfoList({
+          card: cardData,
+          cardList: cardList,
+          options,
+          players: [this.topPlayer, this.bottomPlayer].filter((p) => p),
+        })
+        .then((result) => {
+          if (!result) {
+            return;
           }
-        }
-      });
+          const gameId = this.gameState.gameId;
+          const index = cardList.cards.indexOf(result.card);
+          const target: CardTarget = { player, slot, index };
+
+          // Use ability from the card
+          if (result.ability) {
+            if (result.card.superType === SuperType.TRAINER) {
+              this.gameActions.trainerAbility(gameId, result.ability, target);
+            } else if (result.card.superType === SuperType.ENERGY) {
+              this.gameActions.energyAbility(gameId, result.ability, target);
+            } else {
+              this.gameActions.ability(gameId, result.ability, target);
+            }
+          }
+        });
       return;
     }
 
@@ -4391,7 +4378,7 @@ export class Board3dController {
           cardList: cardList, // Use full deck CardList from userData
           allowReveal,
           facedown,
-          players: [this.topPlayer, this.bottomPlayer].filter(p => p)
+          players: [this.topPlayer, this.bottomPlayer].filter((p) => p),
         });
       }
       return;
@@ -4399,7 +4386,8 @@ export class Board3dController {
 
     // Handle prize click
     if (isPrize && cardList) {
-      const owner = (this.bottomPlayer && this.bottomPlayer.id === this.clientId) ||
+      const owner =
+        (this.bottomPlayer && this.bottomPlayer.id === this.clientId) ||
         (this.topPlayer && this.topPlayer.id === this.clientId);
       if (cardList.cards.length === 0) {
         return;
@@ -4407,19 +4395,20 @@ export class Board3dController {
       const card = cardList.cards[0];
       const facedown = this.canRevealPrizesToViewer()
         ? false
-        : (cardList.isSecret || (!cardList.isPublic && !owner));
+        : cardList.isSecret || (!cardList.isPublic && !owner);
       const allowReveal = facedown && (!!this.gameState.replay || this.canRevealPrizesToViewer());
       this.cardsAdapter.showCardInfo({
         card,
         allowReveal,
         facedown,
-        players: [this.topPlayer, this.bottomPlayer].filter(p => p)
+        players: [this.topPlayer, this.bottomPlayer].filter((p) => p),
       });
       return;
     }
 
     // Handle Stadium click
-    const isStadium = cardObject.userData.isStadium === true || isSharedStadiumMeshId(cardObject.userData.cardId);
+    const isStadium =
+      cardObject.userData.isStadium === true || isSharedStadiumMeshId(cardObject.userData.cardId);
     if (isStadium && cardList) {
       const isBottomOwner = this.bottomPlayer && this.bottomPlayer.id === this.clientId;
       const isDeleted = this.gameState.deleted;
@@ -4429,28 +4418,30 @@ export class Board3dController {
         this.cardsAdapter.showCardInfo({
           card: cardData,
           cardList: cardList,
-          players: [this.topPlayer, this.bottomPlayer].filter(p => p)
+          players: [this.topPlayer, this.bottomPlayer].filter((p) => p),
         });
         return;
       }
 
       // Owner can activate stadium effect
       const options = { enableTrainer: true };
-      this.cardsAdapter.showCardInfo({
-        card: cardData,
-        cardList: cardList,
-        options,
-        players: [this.topPlayer, this.bottomPlayer].filter(p => p)
-      }).then(result => {
-        if (!result) {
-          return;
-        }
+      this.cardsAdapter
+        .showCardInfo({
+          card: cardData,
+          cardList: cardList,
+          options,
+          players: [this.topPlayer, this.bottomPlayer].filter((p) => p),
+        })
+        .then((result) => {
+          if (!result) {
+            return;
+          }
 
-        // Use stadium card effect
-        if (result.trainer) {
-          this.gameActions.stadium(this.gameState.gameId);
-        }
-      });
+          // Use stadium card effect
+          if (result.trainer) {
+            this.gameActions.stadium(this.gameState.gameId);
+          }
+        });
       return;
     }
 
@@ -4497,7 +4488,7 @@ export class Board3dController {
       const target: CardTarget = cardTarget || {
         player: PlayerType.BOTTOM_PLAYER,
         slot: isHandCard ? SlotType.HAND : SlotType.ACTIVE,
-        index: isHandCard ? (cardObject.userData.handIndex ?? 0) : 0
+        index: isHandCard ? (cardObject.userData.handIndex ?? 0) : 0,
       };
 
       // Toggle selection if target is eligible
@@ -4517,8 +4508,8 @@ export class Board3dController {
 
     if (isHandCard) {
       // Hand cards: enable useFromHand abilities only when still playable (ability lock clears this).
-      const handPlayable = !!cardData?.id &&
-        !!this.bottomPlayer?.playableCardIds?.includes(cardData.id);
+      const handPlayable =
+        !!cardData?.id && !!this.bottomPlayer?.playableCardIds?.includes(cardData.id);
       options = {
         enableAbility: handPlayable ? { useFromHand: true } : undefined,
         enableAttack: false,
@@ -4526,9 +4517,16 @@ export class Board3dController {
     } else if (cardTarget) {
       if (cardTarget.slot === SlotType.ACTIVE) {
         // Active Pokemon: enable abilities (useWhenInPlay), attacks, and retreat (if not already retreated this turn)
-        canRetreat = !!(this.bottomPlayer && this.gameState?.state &&
-          this.bottomPlayer.retreatedTurn !== this.gameState.state.turn);
-        options = { enableAbility: { useWhenInPlay: true }, enableAttack: true, enableRetreat: canRetreat };
+        canRetreat = !!(
+          this.bottomPlayer &&
+          this.gameState?.state &&
+          this.bottomPlayer.retreatedTurn !== this.gameState.state.turn
+        );
+        options = {
+          enableAbility: { useWhenInPlay: true },
+          enableAttack: true,
+          enableRetreat: canRetreat,
+        };
       } else if (cardTarget.slot === SlotType.BENCH) {
         // Bench Pokemon: enable abilities (useWhenInPlay), no attacks
         options = { enableAbility: { useWhenInPlay: true }, enableAttack: false };
@@ -4536,36 +4534,38 @@ export class Board3dController {
     }
 
     // Get players for targeting
-    const players = [this.topPlayer, this.bottomPlayer].filter(p => p);
+    const players = [this.topPlayer, this.bottomPlayer].filter((p) => p);
 
-    this.cardsAdapter.showCardInfo({
-      card: cardData,
-      cardList: cardList,
-      options,
-      players
-    }).then(result => {
-      if (!result) return;
-      const gameId = this.gameState.gameId;
+    this.cardsAdapter
+      .showCardInfo({
+        card: cardData,
+        cardList: cardList,
+        options,
+        players,
+      })
+      .then((result) => {
+        if (!result) return;
+        const gameId = this.gameState.gameId;
 
-      // For hand cards, use HAND slot with the card's hand index
-      const target = cardTarget || {
-        player: PlayerType.BOTTOM_PLAYER,
-        slot: isHandCard ? SlotType.HAND : SlotType.ACTIVE,
-        index: isHandCard ? (cardObject.userData.handIndex ?? 0) : 0
-      };
+        // For hand cards, use HAND slot with the card's hand index
+        const target = cardTarget || {
+          player: PlayerType.BOTTOM_PLAYER,
+          slot: isHandCard ? SlotType.HAND : SlotType.ACTIVE,
+          index: isHandCard ? (cardObject.userData.handIndex ?? 0) : 0,
+        };
 
-      if (result.ability) {
-        if (cardData.superType === SuperType.TRAINER) {
-          this.gameActions.trainerAbility(gameId, result.ability, target);
-        } else {
-          this.gameActions.ability(gameId, result.ability, target);
+        if (result.ability) {
+          if (cardData.superType === SuperType.TRAINER) {
+            this.gameActions.trainerAbility(gameId, result.ability, target);
+          } else {
+            this.gameActions.ability(gameId, result.ability, target);
+          }
+        } else if (result.attack) {
+          this.gameActions.attack(gameId, result.attack);
+        } else if (result.retreat) {
+          if (!canRetreat) return;
+          this.gameActions.retreatStart(gameId);
         }
-      } else if (result.attack) {
-        this.gameActions.attack(gameId, result.attack);
-      } else if (result.retreat) {
-        if (!canRetreat) return;
-        this.gameActions.retreatStart(gameId);
-      }
-    });
+      });
   }
 }

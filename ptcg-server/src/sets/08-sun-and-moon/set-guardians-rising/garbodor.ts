@@ -8,7 +8,6 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 
 // GRI Garbodor 51 (https://limitlesstcg.com/cards/GRI/51)
 export class Garbodor extends PokemonCard {
-  public tags = [];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Trubbish';
   public cardType: CardType = P;
@@ -41,7 +40,7 @@ export class Garbodor extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       let opponentItems = 0;
-      opponent.discard.cards.forEach(c => {
+      opponent.discard.cards.forEach((c) => {
         if (c instanceof TrainerCard && c.trainerType === TrainerType.ITEM) {
           opponentItems += 1;
         }
@@ -62,20 +61,8 @@ export class Garbodor extends PokemonCard {
             if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
               return state;
             }
-            let cards: Card[] = [];
-            return store.prompt(state, new ChooseCardsPrompt(
-              player,
-              GameMessage.CHOOSE_CARD_TO_DISCARD,
-              opponent.active,
-              { superType: SuperType.ENERGY },
-              { min: 1, max: 1, allowCancel: false }
-            ), selected => {
-              cards = selected || [];
-              const discardEnergy = new DiscardCardsEffect(effect, cards);
-              return store.reduceEffect(state, discardEnergy);
-            });
-          }
-        });
+          },
+        );
       }
     }
     return state;

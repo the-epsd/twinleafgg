@@ -6,7 +6,7 @@ import { CheckAttackCostEffect } from '../../../game/store/effects/check-effects
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Huntail extends PokemonCard {
-  public tags = [CardTag.FUSION_STRIKE];
+  protected _tags = [CardTag.FUSION_STRIKE];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Clamperl';
   public cardType: CardType = W;
@@ -14,18 +14,22 @@ export class Huntail extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Single Strike Jammer',
-    powerType: PowerType.ABILITY,
-    text: 'Your opponent\'s Single Strike Pokémon\'s attacks cost [C] more.'
-  }];
+  public powers = [
+    {
+      name: 'Single Strike Jammer',
+      powerType: PowerType.ABILITY,
+      text: "Your opponent's Single Strike Pokémon's attacks cost Colorless more.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Cavernous Chomp',
-    cost: [W, C, C],
-    damage: 80,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Cavernous Chomp',
+      cost: [W, C, C],
+      damage: 80,
+      text: '',
+    },
+  ];
 
   public regulationMark: string = 'E';
   public set: string = 'FST';

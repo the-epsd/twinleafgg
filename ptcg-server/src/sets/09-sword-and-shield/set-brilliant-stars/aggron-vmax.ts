@@ -7,10 +7,9 @@ import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class AggronVMAX extends PokemonCard {
-
   public regulationMark = 'F';
 
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
 
   public stage: Stage = Stage.VMAX;
 
@@ -31,14 +30,20 @@ export class AggronVMAX extends PokemonCard {
       name: 'Cracking Stomp',
       cost: [CardType.METAL, CardType.COLORLESS, CardType.COLORLESS],
       damage: 150,
-      text: 'Discard the top card of your opponent\'s deck.'
+      text: "Discard the top card of your opponent's deck.",
     },
     {
       name: 'Max Take Down',
-      cost: [CardType.METAL, CardType.METAL, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [
+        CardType.METAL,
+        CardType.METAL,
+        CardType.COLORLESS,
+        CardType.COLORLESS,
+        CardType.COLORLESS,
+      ],
       damage: 270,
-      text: 'This Pokémon also does 30 damage to itself.'
-    }
+      text: 'This Pokémon also does 30 damage to itself.',
+    },
   ];
 
   public set: string = 'BRS';
@@ -52,17 +57,18 @@ export class AggronVMAX extends PokemonCard {
   public fullName: string = 'Aggron VMAX BRS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      // Discard 1 card from opponent's deck 
-      MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: 1, sourceCard: this, sourceEffect: this.attacks[0] });
-
+      // Discard 1 card from opponent's deck
+      MOVE_CARDS(store, state, opponent.deck, opponent.discard, {
+        count: 1,
+        sourceCard: this,
+        sourceEffect: this.attacks[0],
+      });
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-
       const player = effect.player;
 
       const dealDamage = new DealDamageEffect(effect, 30);
@@ -71,5 +77,4 @@ export class AggronVMAX extends PokemonCard {
     }
     return state;
   }
-
 }

@@ -7,10 +7,9 @@ import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class GyaradosVMAX extends PokemonCard {
-
   public regulationMark = 'E';
 
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
 
   public stage: Stage = Stage.VMAX;
 
@@ -24,17 +23,20 @@ export class GyaradosVMAX extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
-  public attacks = [{
-    name: 'Hyper Beam',
-    cost: [CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
-    damage: 120,
-    text: 'Discard an Energy from your opponent\'s Active Pokémon.'
-  }, {
-    name: 'Max Tyrant',
-    cost: [CardType.WATER, CardType.WATER, CardType.WATER, CardType.COLORLESS],
-    damage: 240,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Hyper Beam',
+      cost: [CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
+      damage: 120,
+      text: "Discard an Energy from your opponent's Active Pokémon.",
+    },
+    {
+      name: 'Max Tyrant',
+      cost: [CardType.WATER, CardType.WATER, CardType.WATER, CardType.COLORLESS],
+      damage: 240,
+      text: '',
+    },
+  ];
 
   public set: string = 'EVS';
 
@@ -47,28 +49,30 @@ export class GyaradosVMAX extends PokemonCard {
   public fullName: string = 'Gyarados VMAX EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       // Defending Pokemon has no energy cards attached
-      if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
+      if (!opponent.active.cards.some((c) => c.superType === SuperType.ENERGY)) {
         return state;
       }
 
       let card: Card;
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        opponent.active,
-        { superType: SuperType.ENERGY },
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        card = selected[0];
-        return store.reduceEffect(state, new DiscardCardsEffect(effect, [card]));
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          opponent.active,
+          { superType: SuperType.ENERGY },
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          card = selected[0];
+          return store.reduceEffect(state, new DiscardCardsEffect(effect, [card]));
+        },
+      );
     }
     return state;
   }

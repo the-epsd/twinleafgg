@@ -10,19 +10,21 @@ import { WAS_TRAINER_USED } from "../../../game/store/prefabs/trainer-prefabs";
 
 export class AncientTechnicalMachineIce extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
-  public tags = [CardTag.TECHNICAL_MACHINE];
+  protected _tags = [CardTag.TECHNICAL_MACHINE];
   public set: string = 'HL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '84';
   public name: string = 'Ancient Technical Machine [Ice]';
   public fullName: string = 'Ancient Technical Machine [Ice] HL';
 
-  public attacks: Attack[] = [{
-    name: 'Ice Generator',
-    cost: [C],
-    damage: 0,
-    text: 'Discard all of your opponent\'s Trainer cards in play. If you do, prevent all effects, including damage, done to the Pokémon using this attack during your opponent\'s next turn.'
-  }];
+  public attacks: Attack[] = [
+    {
+      name: 'Ice Generator',
+      cost: [C],
+      damage: 0,
+      text: "Discard all of your opponent's Trainer cards in play. If you do, prevent all effects, including damage, done to the Pokémon using this attack during your opponent's next turn.",
+    },
+  ];
 
   public text: string = 'Attach this card to 1 of your Evolved Pokémon (excluding Pokémon-ex and Pokémon that has an owner in its name) in play. That Pokémon may use this card\'s attack instead of its own. At the end of your turn, discard Ancient Technical Machine [Ice].';
 
@@ -34,7 +36,7 @@ export class AncientTechnicalMachineIce extends TrainerCard {
       const blocked: CardTarget[] = [];
       let eligibleCount = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
-        if (cardList.getPokemons().length < 2 || card.tags.includes(CardTag.POKEMON_ex)) {
+        if (cardList.getPokemons().length < 2 || card.hasTag(CardTag.POKEMON_ex)) {
           blocked.push(index);
         } else {
           eligibleCount++;
@@ -46,15 +48,19 @@ export class AncientTechnicalMachineIce extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      state = store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE],
-        { min: 1, max: 1, allowCancel: false, blocked },
-      ), transfers => {
-        player.supporter.moveCardTo(effect.trainerCard, transfers[0]);
-      });
+      state = store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          { min: 1, max: 1, allowCancel: false, blocked },
+        ),
+        (transfers) => {
+          player.supporter.moveCardTo(effect.trainerCard, transfers[0]);
+        },
+      );
     }
 
     if (effect instanceof EndTurnEffect) {
@@ -63,21 +69,23 @@ export class AncientTechnicalMachineIce extends TrainerCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
         if (cardList.cards.includes(this)) {
           cardList.moveCardTo(this, player.discard);
-
         }
       });
     }
 
     if (effect instanceof CheckTableStateEffect) {
-      state.players.forEach(player => {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      state.players.forEach((player) => {
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
           if (!cardList.cards.includes(this)) {
             return;
           }
 
           const attachedTo = cardList.getPokemonCard();
 
-          if (!!attachedTo && (attachedTo.tags.includes(CardTag.POKEMON_ex) || cardList.getPokemons().length < 2)) {
+          if (
+            !!attachedTo &&
+            (attachedTo.hasTag(CardTag.POKEMON_ex) || cardList.getPokemons().length < 2)
+          ) {
             cardList.moveCardTo(this, player.discard);
           }
         });
@@ -97,8 +105,11 @@ export class AncientTechnicalMachineIce extends TrainerCard {
       }
     }
 
-    if (effect instanceof CheckPokemonAttacksEffect && effect.player.active.cards.includes(this) &&
-      !effect.attacks.includes(this.attacks[0])) {
+    if (
+      effect instanceof CheckPokemonAttacksEffect &&
+      effect.player.active.cards.includes(this) &&
+      !effect.attacks.includes(this.attacks[0])
+    ) {
       effect.attacks.push(this.attacks[0]);
     }
 
@@ -111,14 +122,16 @@ export class AncientTechnicalMachineIce extends TrainerCard {
 
       // Discard stadium if it is opponent's
       if (opponent.stadium.cards.length > 0) {
-        MOVE_CARDS(store, state, opponent.stadium, opponent.discard, { cards: opponent.stadium.cards });
+        MOVE_CARDS(store, state, opponent.stadium, opponent.discard, {
+          cards: opponent.stadium.cards,
+        });
       }
 
       // Discard all of opponent's Trainer cards in play
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         const topPokemon = cardList.getPokemonCard() as unknown as TrainerCard | undefined;
         const pokemonsInStack = cardList.getPokemons();
-        const trainerCards = cardList.cards.filter(c => c instanceof TrainerCard);
+        const trainerCards = cardList.cards.filter((c) => c instanceof TrainerCard);
         const tools = cardList.tools.slice();
 
         // Tools are Trainer cards in play and should always be discarded.
@@ -139,7 +152,7 @@ export class AncientTechnicalMachineIce extends TrainerCard {
 
           // Trainer card that appears in the Pokemon stack but is not the top Pokemon
           // should not be discarded by this attack.
-          if (pokemonsInStack.some(pokemon => (pokemon as unknown as TrainerCard) === card)) {
+          if (pokemonsInStack.some((pokemon) => (pokemon as unknown as TrainerCard) === card)) {
             continue;
           }
           MOVE_CARDS(store, state, cardList, opponent.discard, { cards: [card] });

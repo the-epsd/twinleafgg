@@ -10,7 +10,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Cinderace extends PokemonCard {
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Raboot';
   public cardType: CardType = R;
@@ -18,19 +18,21 @@ export class Cinderace extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Crisis Power',
-    powerType: PowerType.ABILITY,
-    text: 'This Pokémon\'s attacks do 30 more damage to your opponent\'s Active Pokémon for each Prize card your opponent has taken (before applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: 'Crisis Power',
+      powerType: PowerType.ABILITY,
+      text: "This Pokémon's attacks do 30 more damage to your opponent's Active Pokémon for each Prize card your opponent has taken (before applying Weakness and Resistance).",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Fireball Shot',
       cost: [R, C],
       damage: 150,
-      text: 'During your next turn, this Pokémon can\'t attack.'
-    }
+      text: "During your next turn, this Pokémon can't attack.",
+    },
   ];
 
   public regulationMark: string = 'E';

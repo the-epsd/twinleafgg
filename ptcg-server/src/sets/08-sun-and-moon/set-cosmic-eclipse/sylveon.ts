@@ -40,10 +40,13 @@ export class Sylveon extends PokemonCard {
   public fullName: string = 'Sylveon CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect
-      && effect.trainerCard instanceof TrainerCard
-      && effect.trainerCard.trainerType === TrainerType.SUPPORTER
-      && effect.trainerCard.tags.includes(CardTag.TAG_TEAM)) {
+    // Track when a TAG TEAM Supporter is played
+    if (
+      effect instanceof TrainerEffect &&
+      effect.trainerCard instanceof TrainerCard &&
+      effect.trainerCard.trainerType === TrainerType.SUPPORTER &&
+      effect.trainerCard.hasTag(CardTag.TAG_TEAM)
+    ) {
       effect.player.marker.addMarker(this.TAG_TEAM_SUPPORTER_PLAYED_MARKER, this);
     }
 

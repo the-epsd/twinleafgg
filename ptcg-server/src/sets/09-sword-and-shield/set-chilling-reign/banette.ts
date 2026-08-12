@@ -1,17 +1,33 @@
-import { PokemonCard, Stage, CardTag, CardType, DamageMap, GameMessage, PlayerType, PutDamagePrompt, SlotType, State, StateUtils, StoreLike } from '../../../game';
+import {
+  PokemonCard,
+  Stage,
+  CardTag,
+  CardType,
+  DamageMap,
+  GameMessage,
+  PlayerType,
+  PutDamagePrompt,
+  SlotType,
+  State,
+  StateUtils,
+  StoreLike,
+} from '../../../game';
 import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
-import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_CONFUSION_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Banette extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
 
   public regulationMark = 'E';
 
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
 
   public evolvesFrom = 'Shuppet';
 
@@ -25,17 +41,20 @@ export class Banette extends PokemonCard {
 
   public retreat = [CardType.COLORLESS];
 
-  public attacks = [{
-    name: 'Resolute Spite',
-    cost: [CardType.PSYCHIC],
-    damage: 0,
-    text: 'Put up to 7 damage counters on this Pokémon. This attack does 20 damage for each damage counter you placed in this way.'
-  }, {
-    name: 'Eerie Light',
-    cost: [CardType.PSYCHIC, CardType.COLORLESS],
-    damage: 50,
-    text: 'Your opponent\'s Active Pokémon is now Confused.'
-  }];
+  public attacks = [
+    {
+      name: 'Resolute Spite',
+      cost: [CardType.PSYCHIC],
+      damage: 0,
+      text: 'Put up to 7 damage counters on this Pokémon. This attack does 20 damage for each damage counter you placed in this way.',
+    },
+    {
+      name: 'Eerie Light',
+      cost: [CardType.PSYCHIC, CardType.COLORLESS],
+      damage: 50,
+      text: "Your opponent's Active Pokémon is now Confused.",
+    },
+  ];
 
   public set: string = 'CRE';
 
@@ -54,14 +73,24 @@ export class Banette extends PokemonCard {
     }
 
     if (AFTER_ATTACK(effect, 1, this)) {
-      ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, effect.player), this);
+      ADD_CONFUSION_TO_PLAYER_ACTIVE(
+        store,
+        state,
+        StateUtils.getOpponent(state, effect.player),
+        this,
+      );
     }
 
     return state;
   }
 }
 
-function* attack(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
+function* attack(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   const maxAllowedDamage: DamageMap[] = [];
@@ -71,23 +100,27 @@ function* attack(next: Function, store: StoreLike, state: State, effect: AttackE
     maxAllowedDamage.push({ target, damage: checkHpEffect.hp + 70 });
   });
 
-  return store.prompt(state, new PutDamagePrompt(
-    effect.player.id,
-    GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.ACTIVE],
-    70,
-    maxAllowedDamage,
-    { allowCancel: false, allowPlacePartialDamage: true }
-  ), targets => {
-    const results = targets || [];
-    for (const result of results) {
-      const target = StateUtils.getTarget(state, player, result.target);
-      const putCountersEffect = new PutCountersEffect(effect, result.damage);
-      putCountersEffect.target = target;
-      store.reduceEffect(state, putCountersEffect);
-      effect.damage = result.damage * 2;
-      console.log(effect.damage);
-    }
-  });
+  return store.prompt(
+    state,
+    new PutDamagePrompt(
+      effect.player.id,
+      GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.ACTIVE],
+      70,
+      maxAllowedDamage,
+      { allowCancel: false, allowPlacePartialDamage: true },
+    ),
+    (targets) => {
+      const results = targets || [];
+      for (const result of results) {
+        const target = StateUtils.getTarget(state, player, result.target);
+        const putCountersEffect = new PutCountersEffect(effect, result.damage);
+        putCountersEffect.target = target;
+        store.reduceEffect(state, putCountersEffect);
+        effect.damage = result.damage * 2;
+        console.log(effect.damage);
+      }
+    },
+  );
 }

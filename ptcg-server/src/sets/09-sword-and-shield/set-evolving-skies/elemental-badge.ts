@@ -17,7 +17,8 @@ export class ElementalBadge extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Elemental Badge';
   public fullName: string = 'Elemental Badge EVS';
-  public text: string = 'If the Pokémon V this card is attached to has "Vaporeon," "Jolteon," or "Flareon" in its name, its attacks cost Colorless less. You may play any number of Item cards during your turn. Attach a Pokémon Tool to 1 of your Pokémon that doesn\'t already have a Pokémon Tool attached.';
+  public text: string =
+    'If the Pokémon V this card is attached to has "Vaporeon," "Jolteon," or "Flareon" in its name, its attacks cost Colorless less. You may play any number of Item cards during your turn. Attach a Pokémon Tool to 1 of your Pokémon that doesn\'t already have a Pokémon Tool attached.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-unified-minds/karate-belt.ts (CheckAttackCostEffect cost reduction for tool)
@@ -29,12 +30,12 @@ export class ElementalBadge extends TrainerCard {
       }
 
       // Only applies to Pokemon V with "Vaporeon", "Jolteon", or "Flareon" in its name
-      if (!sourceCard.tags.includes(CardTag.POKEMON_V)) {
+      if (!sourceCard.hasTag(CardTag.POKEMON_V)) {
         return state;
       }
 
       const validNames = ['Vaporeon', 'Jolteon', 'Flareon'];
-      if (!validNames.some(n => sourceCard.name.includes(n))) {
+      if (!validNames.some((n) => sourceCard.name.includes(n))) {
         return state;
       }
 

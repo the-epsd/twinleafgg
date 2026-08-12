@@ -7,15 +7,17 @@ import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 
 import { PokemonCardList } from '../../../game';
-import { IS_TOOL_BLOCKED, PREVENT_AND_CLEAR_SPECIAL_CONDITIONS } from '../../../game/store/prefabs/prefabs';
+import {
+  IS_TOOL_BLOCKED,
+  PREVENT_AND_CLEAR_SPECIAL_CONDITIONS,
+} from '../../../game/store/prefabs/prefabs';
 
 export class AncientBoosterEnergyCapsule extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.TOOL;
 
   public regulationMark = 'G';
 
-  public tags = [CardTag.ANCIENT];
+  protected _tags = [CardTag.ANCIENT];
 
   public set: string = 'PAR';
 
@@ -28,16 +30,19 @@ export class AncientBoosterEnergyCapsule extends TrainerCard {
   public fullName: string = 'Ancient Booster Energy Capsule PAR';
 
   public text: string =
-    'The Ancient Pokémon this card is attached to gets +60 HP, recovers from all Special Conditions, and can\'t be affected by any Special Conditions.';
+    "The Ancient Pokémon this card is attached to gets +60 HP, recovers from all Special Conditions, and can't be affected by any Special Conditions.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // Handle TrainerEffect - clear special conditions when tool is attached
-    if (effect instanceof TrainerEffect && effect.trainerCard === this && effect.target instanceof PokemonCardList) {
+    if (
+      effect instanceof TrainerEffect &&
+      effect.trainerCard === this &&
+      effect.target instanceof PokemonCardList
+    ) {
       const cardList = effect.target;
       const card = cardList.getPokemonCard();
 
-      if (card && card.tags.includes(CardTag.ANCIENT)) {
+      if (card && card.hasTag(CardTag.ANCIENT)) {
         // Clear all special conditions when attached
         if (cardList.specialConditions.length > 0) {
           cardList.specialConditions = [];
@@ -57,7 +62,7 @@ export class AncientBoosterEnergyCapsule extends TrainerCard {
         return state;
       }
 
-      if (card.tags.includes(CardTag.ANCIENT)) {
+      if (card.hasTag(CardTag.ANCIENT)) {
         effect.hp += 60;
       }
     }
@@ -70,11 +75,13 @@ export class AncientBoosterEnergyCapsule extends TrainerCard {
     PREVENT_AND_CLEAR_SPECIAL_CONDITIONS(state, effect, {
       shouldApply: (target, owner) => {
         const card = target.getPokemonCard();
-        return target.tools.includes(this)
-          && !!card
-          && card.tags.includes(CardTag.ANCIENT)
-          && !IS_TOOL_BLOCKED(store, state, owner, this);
-      }
+        return (
+          target.tools.includes(this) &&
+          !!card &&
+          card.hasTag(CardTag.ANCIENT) &&
+          !IS_TOOL_BLOCKED(store, state, owner, this)
+        );
+      },
     });
 
     return state;

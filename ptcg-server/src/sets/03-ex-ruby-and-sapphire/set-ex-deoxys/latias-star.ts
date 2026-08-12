@@ -3,15 +3,21 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, PlayerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { HealTargetEffect } from '../../../game/store/effects/attack-effects';
-import { DISCARD_ALL_ENERGY_FROM_POKEMON, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  DISCARD_ALL_ENERGY_FROM_POKEMON,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class LatiasStar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.STAR];
+  protected _tags = [CardTag.STAR];
   public cardType: CardType = C;
   public hp: number = 80;
   public weakness = [{ type: C }];
-  public resistance = [{ type: P, value: -30 }, { type: F, value: -30 }];
+  public resistance = [
+    { type: P, value: -30 },
+    { type: F, value: -30 },
+  ];
   public retreat = [C];
 
   public attacks = [
@@ -19,15 +25,15 @@ export class LatiasStar extends PokemonCard {
       name: 'Healing Light',
       cost: [C],
       damage: 10,
-      text: 'Remove 1 damage counter from each of your Pokémon (including Latias Star).'
+      text: 'Remove 1 damage counter from each of your Pokémon (including Latias Star).',
     },
     {
       name: 'Shooting Star',
       cost: [R, W, P],
       damage: 50,
       damageCalculation: '+',
-      text: 'If the Defending Pokémon is Pokémon-ex, discard all Energy cards attached to Latias Star and this attack does 50 damage plus 100 more damage.'
-    }
+      text: 'If the Defending Pokémon is Pokémon-ex, discard all Energy cards attached to Latias Star and this attack does 50 damage plus 100 more damage.',
+    },
   ];
 
   public set: string = 'DX';
@@ -37,7 +43,6 @@ export class LatiasStar extends PokemonCard {
   public setNumber: string = '105';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
@@ -52,7 +57,7 @@ export class LatiasStar extends PokemonCard {
       const opponent = effect.opponent;
       const defending = opponent.active;
 
-      if (defending.getPokemonCard()?.tags.includes(CardTag.POKEMON_ex)) {
+      if (defending.getPokemonCard()?.hasTag(CardTag.POKEMON_ex)) {
         DISCARD_ALL_ENERGY_FROM_POKEMON(store, state, effect, this);
         effect.damage += 100;
       }
@@ -60,5 +65,4 @@ export class LatiasStar extends PokemonCard {
 
     return state;
   }
-
 }

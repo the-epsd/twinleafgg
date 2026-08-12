@@ -3,11 +3,20 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, TrainerType } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  TrainerType,
+} from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  SEARCH_DECK_FOR_CARDS_TO_HAND,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Mawile extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -22,15 +31,15 @@ export class Mawile extends PokemonCard {
       name: 'Mining',
       cost: [C],
       damage: 0,
-      text: 'Search your deck for an Item card, reveal it, and put it into your hand. Then, shuffle your deck. If that card is a Pokémon Tool card, instead of putting it into your hand, you may attach it to 1 of your Pokémon that doesn\'t already have a Pokémon Tool attached to it.'
+      text: "Search your deck for an Item card, reveal it, and put it into your hand. Then, shuffle your deck. If that card is a Pokémon Tool card, instead of putting it into your hand, you may attach it to 1 of your Pokémon that doesn't already have a Pokémon Tool attached to it.",
     },
     {
       name: 'Bite Off',
       cost: [M, C],
       damage: 20,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is a Pokémon-GX or a Pokémon-EX, this attack does 30 more damage (before applying Weakness and Resistance).'
-    }
+      text: "If your opponent's Active Pokémon is a Pokémon-GX or a Pokémon-EX, this attack does 30 more damage (before applying Weakness and Resistance).",
+    },
   ];
 
   public set: string = 'CES';
@@ -45,9 +54,13 @@ export class Mawile extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       // Search for an Item card and put into hand (simplified - tool attachment optional feature)
-      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this,
+      SEARCH_DECK_FOR_CARDS_TO_HAND(
+        store,
+        state,
+        player,
+        this,
         { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM } as Partial<TrainerCard>,
-        { min: 0, max: 1, allowCancel: true }
+        { min: 0, max: 1, allowCancel: true },
       );
     }
 
@@ -58,10 +71,10 @@ export class Mawile extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       const opponentActive = opponent.active.getPokemonCard();
 
-      if (opponentActive && (
-        opponentActive.tags.includes(CardTag.POKEMON_GX) ||
-        opponentActive.tags.includes(CardTag.POKEMON_EX)
-      )) {
+      if (
+        opponentActive &&
+        (opponentActive.hasTag(CardTag.POKEMON_GX) || opponentActive.hasTag(CardTag.POKEMON_EX))
+      ) {
         effect.damage += 30;
       }
     }

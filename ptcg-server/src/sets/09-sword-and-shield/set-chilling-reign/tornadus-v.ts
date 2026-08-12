@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class TornadusV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V, CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.POKEMON_V, CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
   public hp: number = 210;
@@ -24,14 +24,14 @@ export class TornadusV extends PokemonCard {
       cost: [C],
       damage: 20,
       damageCalculation: '+',
-      text: 'If a Stadium is in play, this attack does 20 more damage.'
+      text: 'If a Stadium is in play, this attack does 20 more damage.',
     },
     {
       name: 'Blasting Hammer',
       cost: [C, C, C, C],
       damage: 180,
-      text: 'Discard an Energy from this Pokémon.'
-    }
+      text: 'Discard an Energy from this Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'E';

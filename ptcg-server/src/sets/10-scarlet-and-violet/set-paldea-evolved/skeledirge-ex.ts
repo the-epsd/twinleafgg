@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Skeledirgeex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public evolvesFrom = 'Crocalor';
   public cardType: CardType = R;
   public hp: number = 340;
@@ -20,14 +20,14 @@ export class Skeledirgeex extends PokemonCard {
       name: 'Vitality Song',
       cost: [R],
       damage: 50,
-      text: 'Heal 30 damage from each of your Pokémon.'
+      text: 'Heal 30 damage from each of your Pokémon.',
     },
     {
       name: 'Burning Voice',
       cost: [R, R],
       damage: 270,
       damageCalculation: '-',
-      text: 'This attack does 10 less damage for each damage counter on this Pokémon.'
+      text: 'This attack does 10 less damage for each damage counter on this Pokémon.',
     },
   ];
 

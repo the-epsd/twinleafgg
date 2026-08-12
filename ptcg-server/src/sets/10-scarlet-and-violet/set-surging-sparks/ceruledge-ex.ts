@@ -13,7 +13,7 @@ export class Ceruledgeex extends PokemonCard {
   public hp: number = 270;
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
   public weakness = [{ type: CardType.WATER }];
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
   public attacks = [
     {
@@ -21,14 +21,14 @@ export class Ceruledgeex extends PokemonCard {
       cost: [CardType.FIRE],
       damage: 30,
       damageCalculation: '+',
-      text: 'This attack does 20 more damage for each Energy card in your discard pile.'
+      text: 'This attack does 20 more damage for each Energy card in your discard pile.',
     },
     {
       name: 'Amethyst Rage',
       cost: [CardType.FIRE, CardType.PSYCHIC, CardType.METAL],
       damage: 280,
-      text: 'Discard all Energy from this Pokémon.'
-    }
+      text: 'Discard all Energy from this Pokémon.',
+    },
   ];
 
   public regulationMark = 'H';
@@ -39,10 +39,11 @@ export class Ceruledgeex extends PokemonCard {
   public setNumber: string = '36';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      const energyInDiscard = player.discard.cards.filter(c => c.superType === SuperType.ENERGY).length;
+      const energyInDiscard = player.discard.cards.filter(
+        (c) => c.superType === SuperType.ENERGY,
+      ).length;
       effect.damage += energyInDiscard * 20;
     }
 
@@ -50,15 +51,19 @@ export class Ceruledgeex extends PokemonCard {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
       if (cardList) {
-        const energyCards = cardList.cards.filter(c => c.superType === SuperType.ENERGY);
-        energyCards.forEach(c => {
+        const energyCards = cardList.cards.filter((c) => c.superType === SuperType.ENERGY);
+        energyCards.forEach((c) => {
           player.discard.cards.push(c);
         });
-        cardList.cards = cardList.cards.filter(c => c.superType !== SuperType.ENERGY);
+        cardList.cards = cardList.cards.filter((c) => c.superType !== SuperType.ENERGY);
       }
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

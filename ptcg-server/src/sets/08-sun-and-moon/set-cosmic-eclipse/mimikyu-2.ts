@@ -2,12 +2,15 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-
 import { GameMessage, Player, PlayerType, PowerType, State, StoreLike } from '../../../game';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_CONFUSION_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  COIN_FLIP_PROMPT,
+} from '../../../game/store/prefabs/prefabs';
 import { StateUtils } from '../../../game/store/state-utils';
 import {
   CAN_APPLY_LOCKER_ABILITY,
@@ -21,11 +24,13 @@ export class Mimikyu2 extends PokemonCard {
   public hp: number = 70;
   public retreat = [C];
 
-  public powers = [{
-    name: 'Shadow Box',
-    powerType: PowerType.ABILITY,
-    text: 'Pokémon-GX that have any damage counters on them (both yours and your opponent\'s) have no Abilities.'
-  }];
+  public powers = [
+    {
+      name: 'Shadow Box',
+      powerType: PowerType.ABILITY,
+      text: "Pokémon-GX that have any damage counters on them (both yours and your opponent's) have no Abilities.",
+    },
+  ];
 
   public attacks = [{
     name: 'Tail Trickery',
@@ -41,50 +46,54 @@ export class Mimikyu2 extends PokemonCard {
   public fullName: string = 'Mimikyu CEC 97';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    HANDLE_ABILITY_LOCK(effect, ({ card }) => {
-      if (!card.tags.includes(CardTag.POKEMON_GX)) {
-        return false;
-      }
-
-      let hasDamage = false;
-      try {
-        const cardList = StateUtils.findCardList(state, card);
-        if (cardList instanceof PokemonCardList && cardList.damage > 0) {
-          hasDamage = true;
+    HANDLE_ABILITY_LOCK(
+      effect,
+      ({ card }) => {
+        if (!card.hasTag(CardTag.POKEMON_GX)) {
+          return false;
         }
-      } catch {
-        return false;
-      }
-      if (!hasDamage) {
-        return false;
-      }
 
-      let isInPlay = false;
-      let owner: Player | undefined;
-      for (const player of state.players) {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-          if (cardList.getPokemonCard() === this) {
-            isInPlay = true;
-            owner = player;
+        let hasDamage = false;
+        try {
+          const cardList = StateUtils.findCardList(state, card);
+          if (cardList instanceof PokemonCardList && cardList.damage > 0) {
+            hasDamage = true;
           }
-        });
-      }
-      if (!isInPlay || !owner) {
-        return false;
-      }
+        } catch {
+          return false;
+        }
+        if (!hasDamage) {
+          return false;
+        }
 
-      // Check + PowerEffect: Shadow Box must itself be usable (e.g. Path to the Peak).
-      return CAN_APPLY_LOCKER_ABILITY(store, state, owner, this, this.powers[0]);
-    }, {
-      allowUseFromHand: true,
-      allowUseFromDiscard: true,
-      error: GameMessage.BLOCKED_BY_EFFECT,
-    });
+        let isInPlay = false;
+        let owner: Player | undefined;
+        for (const player of state.players) {
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+            if (cardList.getPokemonCard() === this) {
+              isInPlay = true;
+              owner = player;
+            }
+          });
+        }
+        if (!isInPlay || !owner) {
+          return false;
+        }
+
+        // Check + PowerEffect: Shadow Box must itself be usable (e.g. Path to the Peak).
+        return CAN_APPLY_LOCKER_ABILITY(store, state, owner, this, this.powers[0]);
+      },
+      {
+        allowUseFromHand: true,
+        allowUseFromDiscard: true,
+        error: GameMessage.BLOCKED_BY_EFFECT,
+      },
+    );
 
     // Attack 1: Tail Trickery
     // Ref: set-cosmic-eclipse/slurpuff.ts (Olfactory Enchantment - confused)
     if (AFTER_ATTACK(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (result) {
           ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
         }

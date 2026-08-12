@@ -12,11 +12,13 @@ export class Ninetales extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Safeguard',
-    powerType: PowerType.POKEBODY,
-    text: 'Prevent all effects of attacks, including damage, done to Ninetales by your opponent\'s Pokémon-ex.'
-  }];
+  public powers = [
+    {
+      name: 'Safeguard',
+      powerType: PowerType.POKEBODY,
+      text: "Prevent all effects of attacks, including damage, done to Ninetales by your opponent's Pokémon-ex.",
+    },
+  ];
 
   public attacks = [{
     name: 'Quick Attack',
@@ -60,7 +62,7 @@ export class Ninetales extends PokemonCard {
         return state;
       }
 
-      if (sourceCard.tags.includes(CardTag.POKEMON_ex)) {
+      if (sourceCard.hasTag(CardTag.POKEMON_ex)) {
         effect.preventDefault = true;
       }
     }
@@ -80,4 +82,4 @@ export class Ninetales extends PokemonCard {
 
     return state;
   }
-} 
+}

@@ -16,13 +16,14 @@ export class Beastite extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Beastite';
   public fullName: string = 'Beastite CEC';
-  public text: string = 'The attacks of the Ultra Beast this card is attached to do 10 more damage to your opponent\'s Active Pokémon for each Prize card you have taken (before applying Weakness and Resistance).';
+  public text: string =
+    "The attacks of the Ultra Beast this card is attached to do 10 more damage to your opponent's Active Pokémon for each Prize card you have taken (before applying Weakness and Resistance).";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-hidden-fates/scizor-gx.ts (Danger Perception - passive DealDamageEffect damage boost)
     if (effect instanceof DealDamageEffect && effect.source.tools.includes(this)) {
       const pokemonCard = effect.source.getPokemonCard();
-      if (!pokemonCard || !pokemonCard.tags.includes(CardTag.ULTRA_BEAST)) {
+      if (!pokemonCard || !pokemonCard.hasTag(CardTag.ULTRA_BEAST)) {
         return state;
       }
 

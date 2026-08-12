@@ -7,8 +7,7 @@ import { AfterDamageEffect, DealDamageEffect } from '../../../game/store/effects
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class ZacianVSTAR extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_VSTAR];
+  protected _tags = [CardTag.POKEMON_VSTAR];
 
   public regulationMark = 'F';
 
@@ -32,13 +31,13 @@ export class ZacianVSTAR extends PokemonCard {
       cost: [CardType.METAL, CardType.METAL, CardType.COLORLESS],
       // cost: [],
       damage: 200,
-      text: 'This attack\'s damage isn\'t affected by Weakness or Resistance, or by any effects on your opponent\'s Active Pokémon.'
+      text: "This attack's damage isn't affected by Weakness or Resistance, or by any effects on your opponent's Active Pokémon.",
     },
     {
       name: 'Sword Star',
       cost: [CardType.METAL, CardType.METAL, CardType.COLORLESS, CardType.COLORLESS],
       damage: 310,
-      text: 'This Pokémon also does 30 damage to itself. (You can\'t use more than 1 VSTAR Power in a game.)'
+      text: "This Pokémon also does 30 damage to itself. (You can't use more than 1 VSTAR Power in a game.)",
     },
   ];
 
@@ -53,12 +52,11 @@ export class ZacianVSTAR extends PokemonCard {
   public fullName: string = 'Zacian VSTAR CRZ';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const damage = 200;  // Fixed damage without weakness/resistance
+      const damage = 200; // Fixed damage without weakness/resistance
       effect.ignoreResistance = true;
       effect.ignoreWeakness = true;
 
@@ -86,4 +84,4 @@ export class ZacianVSTAR extends PokemonCard {
     }
     return state;
   }
-}  
+}

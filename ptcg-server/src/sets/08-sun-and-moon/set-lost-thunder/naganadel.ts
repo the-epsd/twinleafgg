@@ -1,14 +1,28 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, EnergyCard, GameError, GameMessage, PowerType, StateUtils } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  EnergyType,
+  SuperType,
+} from '../../../game/store/card/card-types';
+import {
+  StoreLike,
+  State,
+  ChooseCardsPrompt,
+  EnergyCard,
+  GameError,
+  GameMessage,
+  PowerType,
+  StateUtils,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 // LOT Naganadel 108 (https://limitlesstcg.com/cards/LOT/108)
 export class Naganadel extends PokemonCard {
-
-  public tags = [CardTag.ULTRA_BEAST];
+  protected _tags = [CardTag.ULTRA_BEAST];
 
   public stage: Stage = Stage.STAGE_1;
 
@@ -22,19 +36,21 @@ export class Naganadel extends PokemonCard {
 
   public retreat = [CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Charging Up',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), you may attach a basic Energy card from your discard pile to this Pokémon. '
-  }];
+  public powers = [
+    {
+      name: 'Charging Up',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn (before your attack), you may attach a basic Energy card from your discard pile to this Pokémon. ',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Turning Point',
       cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 80,
-      text: 'If you have exactly 3 Prize cards remaining, this attack does 80 more damage.'
+      text: 'If you have exactly 3 Prize cards remaining, this attack does 80 more damage.',
     },
   ];
 
@@ -51,7 +67,6 @@ export class Naganadel extends PokemonCard {
   public readonly CHARGE_MARKER = 'CHARGE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
@@ -59,9 +74,8 @@ export class Naganadel extends PokemonCard {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
       // checking if there's energy in the discard
-      const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard
-          && c.energyType === EnergyType.BASIC;
+      const hasEnergyInDiscard = player.discard.cards.some((c) => {
+        return c instanceof EnergyCard && c.energyType === EnergyType.BASIC;
       });
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -72,19 +86,23 @@ export class Naganadel extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_ATTACH,
-        player.discard,
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { min: 1, max: 1, allowCancel: false }
-      ), cards => {
-        cards = cards || [];
-        if (cards.length > 0) {
-          player.marker.addMarker(this.CHARGE_MARKER, this);
-          player.discard.moveCardsTo(cards, cardList);
-        }
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_ATTACH,
+          player.discard,
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (cards) => {
+          cards = cards || [];
+          if (cards.length > 0) {
+            player.marker.addMarker(this.CHARGE_MARKER, this);
+            player.discard.moveCardsTo(cards, cardList);
+          }
+        },
+      );
     }
 
     // Turning Point

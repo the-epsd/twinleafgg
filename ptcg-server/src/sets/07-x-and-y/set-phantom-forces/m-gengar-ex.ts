@@ -71,7 +71,7 @@ function* usePhantomGate(
 }
 
 export class MGengarEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX, CardTag.MEGA];
+  protected _tags = [CardTag.POKEMON_EX, CardTag.MEGA];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom = 'Gengar-EX';
   public cardType: CardType = P;

@@ -4,7 +4,15 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType } from '../../../game';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  PlayerType,
+  SlotType,
+} from '../../../game';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { Effect } from '../../../game/store/effects/effect';
@@ -20,19 +28,21 @@ export class Escavalier extends PokemonCard {
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Miraculous Armor',
-    powerType: PowerType.ABILITY,
-    text: 'This Pokémon takes 100 less damage from attacks from your opponent\'s Pokémon V (after applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: 'Miraculous Armor',
+      powerType: PowerType.ABILITY,
+      text: "This Pokémon takes 100 less damage from attacks from your opponent's Pokémon V (after applying Weakness and Resistance).",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Pike',
       cost: [M, C, C],
       damage: 90,
-      text: 'This attack also does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "This attack also does 30 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -46,9 +56,11 @@ export class Escavalier extends PokemonCard {
     // Ability: Miraculous Armor
     // Ref: set-silver-tempest/v-guard-energy.ts (PutDamageEffect + POKEMON_V tag check + reduceDamage)
     // Ref: set-darkness-ablaze/decidueye.ts (Deep Forest Camo - PutDamageEffect passive ability pattern)
-    if (effect instanceof PutDamageEffect
-      && effect.target.cards.includes(this)
-      && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       if (state.phase !== GamePhase.ATTACK) {
         return state;
       }
@@ -71,11 +83,12 @@ export class Escavalier extends PokemonCard {
       }
 
       const sourceCard = effect.source.getPokemonCard();
-      if (sourceCard && (
-        sourceCard.tags.includes(CardTag.POKEMON_V) ||
-        sourceCard.tags.includes(CardTag.POKEMON_VMAX) ||
-        sourceCard.tags.includes(CardTag.POKEMON_VSTAR)
-      )) {
+      if (
+        sourceCard &&
+        (sourceCard.hasTag(CardTag.POKEMON_V) ||
+          sourceCard.hasTag(CardTag.POKEMON_VMAX) ||
+          sourceCard.hasTag(CardTag.POKEMON_VSTAR))
+      ) {
         effect.reduceDamage(100);
       }
     }
@@ -86,22 +99,26 @@ export class Escavalier extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+      const hasBenched = opponent.bench.some((b) => b.cards.length > 0);
 
       if (hasBenched) {
-        store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-          PlayerType.TOP_PLAYER,
-          [SlotType.BENCH],
-          { min: 1, max: 1, allowCancel: false }
-        ), selected => {
-          if (selected && selected.length > 0) {
-            const damageEffect = new PutDamageEffect(effect, 30);
-            damageEffect.target = selected[0];
-            store.reduceEffect(state, damageEffect);
-          }
-        });
+        store.prompt(
+          state,
+          new ChoosePokemonPrompt(
+            player.id,
+            GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+            PlayerType.TOP_PLAYER,
+            [SlotType.BENCH],
+            { min: 1, max: 1, allowCancel: false },
+          ),
+          (selected) => {
+            if (selected && selected.length > 0) {
+              const damageEffect = new PutDamageEffect(effect, 30);
+              damageEffect.target = selected[0];
+              store.reduceEffect(state, damageEffect);
+            }
+          },
+        );
       }
     }
 

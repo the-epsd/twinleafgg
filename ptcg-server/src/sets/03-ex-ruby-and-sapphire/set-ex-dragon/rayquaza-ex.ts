@@ -8,12 +8,15 @@ import { MOVE_CARDS, WAS_ATTACK_USED, FLIP_UNTIL_TAILS_AND_COUNT_HEADS } from '.
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 
 export class Rayquazaex extends PokemonCard {
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
   public hp: number = 100;
   public weakness = [{ type: C }];
-  public resistance = [{ type: W, value: -30 }, { type: F, value: -30 }];
+  public resistance = [
+    { type: W, value: -30 },
+    { type: F, value: -30 },
+  ];
   public retreat = [C, C];
 
   public attacks = [{
@@ -36,7 +39,6 @@ export class Rayquazaex extends PokemonCard {
   public fullName: string = 'Rayquaza ex DR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
@@ -67,7 +69,7 @@ export class Rayquazaex extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      const options: { message: GameMessage, action: () => void }[] = [
+      const options: { message: GameMessage; action: () => void }[] = [
         {
           message: GameMessage.ALL_FIRE_ENERGIES,
           action: () => {
@@ -82,20 +84,21 @@ export class Rayquazaex extends PokemonCard {
 
             // Only discard cards that provide R or ANY energy
             const cards: Card[] = checkProvidedEnergy.energyMap
-              .filter(e => e.provides.includes(CardType.FIRE) || e.provides.includes(CardType.ANY))
-              .map(e => e.card);
+              .filter(
+                (e) => e.provides.includes(CardType.FIRE) || e.provides.includes(CardType.ANY),
+              )
+              .map((e) => e.card);
 
             effect.damage = 40 * cards.length;
             const discardEnergy = new DiscardCardsEffect(effect, cards);
             discardEnergy.target = cardList;
             store.reduceEffect(state, discardEnergy);
-          }
+          },
         },
 
         {
           message: GameMessage.ALL_LIGHTNING_ENERGIES,
           action: () => {
-
             // Discard all [L]
             const player = effect.player;
             const cardList = StateUtils.findCardList(state, this);
@@ -107,25 +110,31 @@ export class Rayquazaex extends PokemonCard {
 
             // Only discard cards that provide LIGHTNING or ANY energy
             const cards: Card[] = checkProvidedEnergy.energyMap
-              .filter(e => e.provides.includes(CardType.LIGHTNING) || e.provides.includes(CardType.ANY))
-              .map(e => e.card);
+              .filter(
+                (e) => e.provides.includes(CardType.LIGHTNING) || e.provides.includes(CardType.ANY),
+              )
+              .map((e) => e.card);
 
             effect.damage = 40 * cards.length;
             const discardEnergy = new DiscardCardsEffect(effect, cards);
             discardEnergy.target = cardList;
             store.reduceEffect(state, discardEnergy);
-          }
-        }
+          },
+        },
       ];
-      return store.prompt(state, new SelectPrompt(
-        player.id,
-        GameMessage.CHOOSE_OPTION,
-        options.map(opt => opt.message),
-        { allowCancel: false }
-      ), choice => {
-        const option = options[choice];
-        option.action();
-      });
+      return store.prompt(
+        state,
+        new SelectPrompt(
+          player.id,
+          GameMessage.CHOOSE_OPTION,
+          options.map((opt) => opt.message),
+          { allowCancel: false },
+        ),
+        (choice) => {
+          const option = options[choice];
+          option.action();
+        },
+      );
     }
     return state;
   }

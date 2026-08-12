@@ -17,7 +17,8 @@ export class AncientTomb extends TrainerCard {
   public cardImage = 'assets/cardback.png';
   public name: string = 'Ancient Tomb';
   public fullName: string = 'Ancient Tomb HL';
-  public text: string = 'Don\'t apply Weakness for all Pokémon in play (excluding Pokémon-ex and Pokémon that has an owner in its name).';
+  public text: string =
+    "Don't apply Weakness for all Pokémon in play (excluding Pokémon-ex and Pokémon that has an owner in its name).";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckPokemonStatsEffect && StateUtils.getStadiumCard(state) === this) {
@@ -28,7 +29,7 @@ export class AncientTomb extends TrainerCard {
         return state;
       }
 
-      if (!target?.tags.includes(CardTag.POKEMON_ex) && !target?.name.includes('\'s')) {
+      if (!target?.hasTag(CardTag.POKEMON_ex) && !target?.name.includes("'s")) {
         effect.weakness = [];
       }
 

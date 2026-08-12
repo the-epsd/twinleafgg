@@ -1,10 +1,30 @@
-import { PokemonCard, Stage, CardType, CardTag, StoreLike, State, StateUtils, ConfirmPrompt, GameMessage, DamageMap, PlayerType, PutDamagePrompt, SlotType, GameError } from '../../../game';
+import {
+  PokemonCard,
+  Stage,
+  CardType,
+  CardTag,
+  StoreLike,
+  State,
+  StateUtils,
+  ConfirmPrompt,
+  GameMessage,
+  DamageMap,
+  PlayerType,
+  PutDamagePrompt,
+  SlotType,
+  GameError,
+} from '../../../game';
 import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
-function* useLightningStormStar(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
+function* useLightningStormStar(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
@@ -21,28 +41,32 @@ function* useLightningStormStar(next: Function, store: StoreLike, state: State, 
 
   const damage = 240;
 
-  return store.prompt(state, new PutDamagePrompt(
-    effect.player.id,
-    GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-    PlayerType.TOP_PLAYER,
-    [SlotType.ACTIVE, SlotType.BENCH],
-    damage,
-    maxAllowedDamage,
-    { allowCancel: false, damageMultiple: 60 }
-  ), targets => {
-    const results = targets || [];
-    for (const result of results) {
-      const target = StateUtils.getTarget(state, player, result.target);
-      const putCountersEffect = new PutCountersEffect(effect, result.damage);
-      putCountersEffect.target = target;
-      store.reduceEffect(state, putCountersEffect);
-    }
-  });
+  return store.prompt(
+    state,
+    new PutDamagePrompt(
+      effect.player.id,
+      GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+      PlayerType.TOP_PLAYER,
+      [SlotType.ACTIVE, SlotType.BENCH],
+      damage,
+      maxAllowedDamage,
+      { allowCancel: false, damageMultiple: 60 },
+    ),
+    (targets) => {
+      const results = targets || [];
+      for (const result of results) {
+        const target = StateUtils.getTarget(state, player, result.target);
+        const putCountersEffect = new PutCountersEffect(effect, result.damage);
+        putCountersEffect.target = target;
+        store.reduceEffect(state, putCountersEffect);
+      }
+    },
+  );
 }
 
 export class ZeraoraVSTAR extends PokemonCard {
   public stage: Stage = Stage.VSTAR;
-  public tags = [CardTag.POKEMON_VSTAR];
+  protected _tags = [CardTag.POKEMON_VSTAR];
   public evolvesFrom: string = 'Zeraora V';
   public cardType: CardType = CardType.LIGHTNING;
   public hp: number = 270;
@@ -55,14 +79,14 @@ export class ZeraoraVSTAR extends PokemonCard {
       name: 'Crushing Beat',
       cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS],
       damage: 190,
-      text: 'You may discard a Stadium in play.'
+      text: 'You may discard a Stadium in play.',
     },
     {
       name: 'Lightning Storm Star',
       cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS],
       damage: 0,
-      text: 'Choose 1 of your opponent\'s Pokémon 4 times. (You can choose the same Pokémon more than once.) For each time you chose a Pokémon, do 60 damage to it. This damage isn\'t affected by Weakness or Resistance. (You can\'t use more than 1 VSTAR Power in a game.)'
-    }
+      text: "Choose 1 of your opponent's Pokémon 4 times. (You can choose the same Pokémon more than once.) For each time you chose a Pokémon, do 60 damage to it. This damage isn't affected by Weakness or Resistance. (You can't use more than 1 VSTAR Power in a game.)",
+    },
   ];
 
   public set: string = 'CRZ';
@@ -72,25 +96,26 @@ export class ZeraoraVSTAR extends PokemonCard {
   public setNumber: string = '55';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const stadiumCard = StateUtils.getStadiumCard(state);
       if (stadiumCard !== undefined) {
-
-        state = store.prompt(state, new ConfirmPrompt(
-          effect.player.id,
-          GameMessage.WANT_TO_DISCARD_STADIUM,
-        ), wantToUse => {
-          if (wantToUse) {
-
-            // Discard Stadium
-            const cardList = StateUtils.findCardList(state, stadiumCard);
-            const player = StateUtils.findOwner(state, cardList);
-            MOVE_CARDS(store, state, cardList, player.discard, { sourceCard: this, sourceEffect: this.attacks[0] });
+        state = store.prompt(
+          state,
+          new ConfirmPrompt(effect.player.id, GameMessage.WANT_TO_DISCARD_STADIUM),
+          (wantToUse) => {
+            if (wantToUse) {
+              // Discard Stadium
+              const cardList = StateUtils.findCardList(state, stadiumCard);
+              const player = StateUtils.findOwner(state, cardList);
+              MOVE_CARDS(store, state, cardList, player.discard, {
+                sourceCard: this,
+                sourceEffect: this.attacks[0],
+              });
+              return state;
+            }
             return state;
-          }
-          return state;
-        });
+          },
+        );
       }
     }
 

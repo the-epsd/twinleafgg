@@ -12,7 +12,7 @@ import { MoveEnergyPrompt, CardTarget } from '../../../game';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class PrimalKyogreEx extends PokemonCard {
-  public tags = [CardTag.MEGA, CardTag.POKEMON_EX, CardTag.PRIMAL];
+  protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX, CardTag.PRIMAL];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Kyogre-EX';
   public cardType: CardType = W;
@@ -86,7 +86,7 @@ export class PrimalKyogreEx extends PokemonCard {
       opponent.bench.forEach((benched) => {
         if (benched.cards.length > 0) {
           const pokemon = benched.getPokemonCard();
-          if (pokemon && pokemon.tags.includes(CardTag.POKEMON_EX)) {
+          if (pokemon && pokemon.hasTag(CardTag.POKEMON_EX)) {
             const damage = new PutDamageEffect(effect, 30);
             damage.target = benched;
             store.reduceEffect(state, damage);

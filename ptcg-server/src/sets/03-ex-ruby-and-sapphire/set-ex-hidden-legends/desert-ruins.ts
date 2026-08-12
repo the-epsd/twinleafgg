@@ -17,7 +17,8 @@ export class DesertRuins extends TrainerCard {
   public cardImage = 'assets/cardback.png';
   public name: string = 'Desert Ruins';
   public fullName: string = 'Desert Ruins HL';
-  public text: string = 'At any time between turns, each player puts 1 damage counter on his or her Pokémon-ex with maximum HP of at least 100.';
+  public text: string =
+    'At any time between turns, each player puts 1 damage counter on his or her Pokémon-ex with maximum HP of at least 100.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof BetweenTurnsEffect && StateUtils.getStadiumCard(state) === this) {
@@ -31,7 +32,7 @@ export class DesertRuins extends TrainerCard {
         }
 
         const pokemon = cardList.getPokemonCard();
-        if (pokemon && (pokemon.tags.includes(CardTag.POKEMON_ex)) && pokemon.hp >= 100) {
+        if (pokemon && pokemon.hasTag(CardTag.POKEMON_ex) && pokemon.hp >= 100) {
           cardList.damage += 10;
         }
       });

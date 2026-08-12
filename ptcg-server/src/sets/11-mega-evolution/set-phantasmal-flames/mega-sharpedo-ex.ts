@@ -1,29 +1,36 @@
 import { CardTag, CardType, PokemonCard, Stage, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { MOVE_CARDS, THIS_ATTACK_DOES_X_MORE_DAMAGE, THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  MOVE_CARDS,
+  THIS_ATTACK_DOES_X_MORE_DAMAGE,
+  THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class MegaSharpedoex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Carvanha';
-  public tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
   public cardType: CardType = D;
   public hp: number = 330;
   public weakness = [{ type: G }];
   public retreat = [];
 
-  public attacks = [{
-    name: 'Greedy Fang',
-    cost: [D],
-    damage: 70,
-    text: 'Draw 2 cards.',
-  },
-  {
-    name: 'Hungry Jaws',
-    cost: [D, D],
-    damage: 120,
-    damageCalculation: '+',
-    text: 'If this Pokémon has any damage counters on it, this attack does 150 more damage.',
-  }];
+  public attacks = [
+    {
+      name: 'Greedy Fang',
+      cost: [D],
+      damage: 70,
+      text: 'Draw 2 cards.',
+    },
+    {
+      name: 'Hungry Jaws',
+      cost: [D, D],
+      damage: 120,
+      damageCalculation: '+',
+      text: 'If this Pokémon has any damage counters on it, this attack does 150 more damage.',
+    },
+  ];
 
   public regulationMark: string = 'I';
   public set: string = 'PFL';

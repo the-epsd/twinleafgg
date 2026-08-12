@@ -8,7 +8,7 @@ import { OPPONENT_CANNOT_PLAY_CARDS } from '../../../game/store/prefabs/effect-o
 export class DialgaG extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;
-  public tags = [CardTag.POKEMON_SP];
+  protected _tags = [CardTag.POKEMON_SP];
   public hp: number = 100;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
@@ -42,7 +42,9 @@ export class DialgaG extends PokemonCard {
 
     // Second Strike
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      if (effect.opponent.active.damage >= 20) { effect.damage += 20; }
+      if (effect.opponent.active.damage >= 20) {
+        effect.damage += 20;
+      }
     }
     return state;
   }

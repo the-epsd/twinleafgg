@@ -1,9 +1,28 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameError, GameMessage, PlayerType, PowerType, StateUtils } from '../../../game';
+import {
+  StoreLike,
+  State,
+  GameError,
+  GameMessage,
+  PlayerType,
+  PowerType,
+  StateUtils,
+} from '../../../game';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
-import { AttachEnergyEffect, AttachPokemonToolEffect, PlayItemEffect, PlayStadiumEffect } from '../../../game/store/effects/play-card-effects';
-import { DRAW_CARDS, IS_ABILITY_BLOCKED, MOVE_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  AttachEnergyEffect,
+  AttachPokemonToolEffect,
+  PlayItemEffect,
+  PlayStadiumEffect,
+} from '../../../game/store/effects/play-card-effects';
+import {
+  DRAW_CARDS,
+  IS_ABILITY_BLOCKED,
+  MOVE_CARDS,
+  SHUFFLE_DECK,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Spiritomb extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -11,18 +30,22 @@ export class Spiritomb extends PokemonCard {
   public hp: number = 80;
   public retreat = [C];
 
-  public powers = [{
-    name: 'Sealing Scream',
-    powerType: PowerType.ABILITY,
-    text: 'Each player can\'t play any ACE SPEC cards from his or her hand.'
-  }];
+  public powers = [
+    {
+      name: 'Sealing Scream',
+      powerType: PowerType.ABILITY,
+      text: "Each player can't play any ACE SPEC cards from his or her hand.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Hexed Mirror',
-    cost: [C],
-    damage: 0,
-    text: 'Shuffle your hand into your deck. Then, draw a number of cards equal to the number of cards in your opponent\'s hand.'
-  }];
+  public attacks = [
+    {
+      name: 'Hexed Mirror',
+      cost: [C],
+      damage: 0,
+      text: "Shuffle your hand into your deck. Then, draw a number of cards equal to the number of cards in your opponent's hand.",
+    },
+  ];
 
   public set: string = 'LTR';
   public cardImage: string = 'assets/cardback.png';
@@ -33,8 +56,7 @@ export class Spiritomb extends PokemonCard {
   public readonly OPPONENT_CANNOT_PLAY_ACE_SPECS_MARKER = 'OPPONENT_CANNOT_PLAY_ACE_SPECS_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
-
-    if (effect instanceof PlayItemEffect && effect.trainerCard.tags.includes(CardTag.ACE_SPEC)) {
+    if (effect instanceof PlayItemEffect && effect.trainerCard.hasTag(CardTag.ACE_SPEC)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -57,7 +79,7 @@ export class Spiritomb extends PokemonCard {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
-    if (effect instanceof AttachPokemonToolEffect && effect.trainerCard.tags.includes(CardTag.ACE_SPEC)) {
+    if (effect instanceof AttachPokemonToolEffect && effect.trainerCard.hasTag(CardTag.ACE_SPEC)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -80,8 +102,7 @@ export class Spiritomb extends PokemonCard {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
-
-    if (effect instanceof AttachEnergyEffect && effect.energyCard.tags.includes(CardTag.ACE_SPEC)) {
+    if (effect instanceof AttachEnergyEffect && effect.energyCard.hasTag(CardTag.ACE_SPEC)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -104,8 +125,7 @@ export class Spiritomb extends PokemonCard {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
-
-    if (effect instanceof PlayStadiumEffect && effect.trainerCard.tags.includes(CardTag.ACE_SPEC)) {
+    if (effect instanceof PlayStadiumEffect && effect.trainerCard.hasTag(CardTag.ACE_SPEC)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -135,7 +155,9 @@ export class Spiritomb extends PokemonCard {
         return state;
       }
 
-      MOVE_CARDS(store, state, player.hand, player.deck, { cards: player.hand.cards.filter(c => c !== this) });
+      MOVE_CARDS(store, state, player.hand, player.deck, {
+        cards: player.hand.cards.filter((c) => c !== this),
+      });
       SHUFFLE_DECK(store, state, player);
       DRAW_CARDS(store, state, player, effect.opponent.hand.cards.length);
     }

@@ -3,13 +3,17 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../../game/store/prefabs/attack-effects';
-import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_CONFUSION_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Xurkitree extends PokemonCard {
-  public tags = [CardTag.ULTRA_BEAST];
+  protected _tags = [CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = L;
   public hp: number = 120;
@@ -22,14 +26,14 @@ export class Xurkitree extends PokemonCard {
       name: 'Dazzle Blast',
       cost: [L],
       damage: 20,
-      text: 'Your opponent\'s Active Pokémon is now Confused.'
+      text: "Your opponent's Active Pokémon is now Confused.",
     },
     {
       name: 'Cablegram',
       cost: [L, L, C],
       damage: 100,
-      text: 'If you have exactly 3 Prize cards remaining, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
+      text: "If you have exactly 3 Prize cards remaining, your opponent's Active Pokémon is now Paralyzed.",
+    },
   ];
 
   public set: string = 'FLI';

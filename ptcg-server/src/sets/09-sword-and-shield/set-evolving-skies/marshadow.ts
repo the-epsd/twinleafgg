@@ -6,7 +6,7 @@ import { WAS_ATTACK_USED, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../../game/st
 import { TAKE_MORE_PRIZES_IF_DEFENDING_KNOCKED_OUT_DURING_YOUR_NEXT_TURN } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Marshadow extends PokemonCard {
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 80;
@@ -19,14 +19,14 @@ export class Marshadow extends PokemonCard {
       name: 'Rapid Hunt',
       cost: [C],
       damage: 0,
-      text: 'Search your deck for up to 2 Rapid Strike cards, reveal them, and put them into your hand. Then, shuffle your deck.'
+      text: 'Search your deck for up to 2 Rapid Strike cards, reveal them, and put them into your hand. Then, shuffle your deck.',
     },
     {
       name: 'Shadow Flicker',
       cost: [C],
       damage: 10,
-      text: 'If the Defending Pokémon is Knocked Out during your next turn, take 1 more Prize card.'
-    }
+      text: 'If the Defending Pokémon is Knocked Out during your next turn, take 1 more Prize card.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -41,14 +41,18 @@ export class Marshadow extends PokemonCard {
       const player = effect.player;
       const blocked: number[] = [];
       player.deck.cards.forEach((card, index: number) => {
-        if (!card.tags.includes(CardTag.RAPID_STRIKE)) {
+        if (!card.hasTag(CardTag.RAPID_STRIKE)) {
           blocked.push(index);
         }
       });
 
-      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this,
+      SEARCH_DECK_FOR_CARDS_TO_HAND(
+        store,
+        state,
+        player,
+        this,
         {},
-        { min: 0, max: 2, allowCancel: true, blocked }
+        { min: 0, max: 2, allowCancel: true, blocked },
       );
     }
 

@@ -4,7 +4,7 @@ import { WAS_ATTACK_USED, BREAK_RULE } from "../../../game/store/prefabs/prefabs
 import { BLOCK_RETREAT, DEFENDING_POKEMON_TAKES_MORE_DAMAGE_DURING_YOUR_NEXT_TURN } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class ClawitzerBreak extends PokemonCard {
-  public tags = [CardTag.BREAK];
+  protected _tags = [CardTag.BREAK];
   public stage: Stage = Stage.BREAK;
   public evolvesFrom: string = 'Clawitzer';
   public cardType: CardType = W;

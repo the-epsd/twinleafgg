@@ -7,7 +7,7 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class Volcarona extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Larvesta';
   public cardType: CardType = R;
@@ -20,14 +20,14 @@ export class Volcarona extends PokemonCard {
       name: 'Solar Transporter',
       cost: [C],
       damage: 0,
-      text: 'Reveal the top 5 cards of your deck and put all Team Plasma cards you find there into your hand. Discard the other cards.'
+      text: 'Reveal the top 5 cards of your deck and put all Team Plasma cards you find there into your hand. Discard the other cards.',
     },
     {
       name: 'Leech Life',
       cost: [R, R, C],
       damage: 50,
-      text: 'Heal from this Pok\u00e9mon the same amount of damage you did to the Defending Pok\u00e9mon.'
-    }
+      text: 'Heal from this Pok\u00e9mon the same amount of damage you did to the Defending Pok\u00e9mon.',
+    },
   ];
 
   public set: string = 'PLB';
@@ -49,12 +49,12 @@ export class Volcarona extends PokemonCard {
       const teamPlasmaCards: Card[] = [];
       const otherCards: Card[] = [];
 
-      topCards.forEach(card => {
-        if (card instanceof PokemonCard && card.tags.includes(CardTag.TEAM_PLASMA)) {
+      topCards.forEach((card) => {
+        if (card instanceof PokemonCard && card.hasTag(CardTag.TEAM_PLASMA)) {
           teamPlasmaCards.push(card);
-        } else if (card instanceof TrainerCard && card.tags.includes(CardTag.TEAM_PLASMA)) {
+        } else if (card instanceof TrainerCard && card.hasTag(CardTag.TEAM_PLASMA)) {
           teamPlasmaCards.push(card);
-        } else if (card.superType === SuperType.ENERGY && card.tags.includes(CardTag.TEAM_PLASMA)) {
+        } else if (card.superType === SuperType.ENERGY && card.hasTag(CardTag.TEAM_PLASMA)) {
           teamPlasmaCards.push(card);
         } else {
           otherCards.push(card);
@@ -62,20 +62,20 @@ export class Volcarona extends PokemonCard {
       });
 
       // Show all revealed cards to opponent
-      store.prompt(state, new ShowCardsPrompt(
-        opponent.id,
-        GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-        topCards
-      ), () => {
-        // Move Team Plasma cards to hand
-        teamPlasmaCards.forEach(card => {
-          player.deck.moveCardTo(card, player.hand);
-        });
-        // Discard the other cards
-        otherCards.forEach(card => {
-          player.deck.moveCardTo(card, player.discard);
-        });
-      });
+      store.prompt(
+        state,
+        new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, topCards),
+        () => {
+          // Move Team Plasma cards to hand
+          teamPlasmaCards.forEach((card) => {
+            player.deck.moveCardTo(card, player.hand);
+          });
+          // Discard the other cards
+          otherCards.forEach((card) => {
+            player.deck.moveCardTo(card, player.discard);
+          });
+        },
+      );
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

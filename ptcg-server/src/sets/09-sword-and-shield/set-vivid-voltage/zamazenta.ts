@@ -17,14 +17,14 @@ export class Zamazenta extends PokemonCard {
       name: 'Metal Armament',
       cost: [C],
       damage: 30,
-      text: 'Attach a basic Energy card from your discard pile to this Pokémon.'
+      text: 'Attach a basic Energy card from your discard pile to this Pokémon.',
     },
     {
       name: 'Amazing Shield',
       cost: [L, F, M],
       damage: 180,
-      text: 'During your opponent\'s next turn, prevent all damage done to this Pokémon by attacks from Pokémon VMAX.'
-    }
+      text: "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Pokémon VMAX.",
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -39,14 +39,11 @@ export class Zamazenta extends PokemonCard {
     // Ref: set-burning-shadows/turtonator.ts
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON(
-        store, state, player, 1, undefined,
-        {
-          destinationSlots: [SlotType.ACTIVE],
-          energyFilter: { energyType: EnergyType.BASIC },
-          min: 0
-        }
-      );
+      ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON(store, state, player, 1, undefined, {
+        destinationSlots: [SlotType.ACTIVE],
+        energyFilter: { energyType: EnergyType.BASIC },
+        min: 0,
+      });
     }
 
     // Amazing Shield

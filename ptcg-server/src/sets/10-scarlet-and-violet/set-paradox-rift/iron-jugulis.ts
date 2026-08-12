@@ -1,16 +1,28 @@
-import { PokemonCard, Stage, CardTag, CardType, StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils, CardTarget } from '../../../game';
+import {
+  PokemonCard,
+  Stage,
+  CardTag,
+  CardType,
+  StoreLike,
+  State,
+  ChoosePokemonPrompt,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  StateUtils,
+  CardTarget,
+} from '../../../game';
 import { CheckAttackCostEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class IronJugulis extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
   public regulationMark = 'G';
 
-  public tags = [CardTag.FUTURE];
+  protected _tags = [CardTag.FUTURE];
 
   public cardType: CardType = CardType.COLORLESS;
 
@@ -27,14 +39,20 @@ export class IronJugulis extends PokemonCard {
       name: 'Homing Headbutt',
       cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 0,
-      text: 'This attack does 50 damage to 3 of your opponent\'s Pokémon that have any damage counters on them. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack does 50 damage to 3 of your opponent's Pokémon that have any damage counters on them. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Baryon Beam',
-      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [
+        CardType.COLORLESS,
+        CardType.COLORLESS,
+        CardType.COLORLESS,
+        CardType.COLORLESS,
+        CardType.COLORLESS,
+      ],
       damage: 150,
-      text: 'If this Pokémon has a Future Booster Energy Capsule attached, this attack can be used for [C][C][C].'
-    }
+      text: 'If this Pokémon has a Future Booster Energy Capsule attached, this attack can be used for [C][C][C].',
+    },
   ];
 
   public set: string = 'PAR';
@@ -48,12 +66,13 @@ export class IronJugulis extends PokemonCard {
   public fullName: string = 'Iron Jugulis PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const damagedBenchedPokemon = opponent.bench.filter(b => b.cards.length > 0 && b.damage > 0);
+      const damagedBenchedPokemon = opponent.bench.filter(
+        (b) => b.cards.length > 0 && b.damage > 0,
+      );
       if (damagedBenchedPokemon.length === 0) {
         return state;
       }
@@ -65,16 +84,20 @@ export class IronJugulis extends PokemonCard {
         }
       });
 
-      state = store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE],
-        { min: 1, max: 3, allowCancel: false, blocked }
-      ), selected => {
-        const targets = selected || [];
-        DAMAGE_OPPONENT_POKEMON(store, state, effect, 50, targets);
-      });
+      state = store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          { min: 1, max: 3, allowCancel: false, blocked },
+        ),
+        (selected) => {
+          const targets = selected || [];
+          DAMAGE_OPPONENT_POKEMON(store, state, effect, 50, targets);
+        },
+      );
     }
 
     if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[1]) {

@@ -4,7 +4,7 @@ import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, BLOCK_IF_GX_ATTACK
 import { OPPONENT_CANNOT_PLAY_ANY_CARDS } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class AlolanGolemGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Alolan Graveler';
   public cardType: CardType = L;

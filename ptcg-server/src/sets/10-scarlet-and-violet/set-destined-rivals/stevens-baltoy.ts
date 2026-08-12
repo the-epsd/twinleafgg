@@ -3,35 +3,42 @@ import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/ca
 import { StoreLike, State, GameMessage, ChooseCardsPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonFromDeckEffect } from '../../../game/store/effects/play-card-effects';
-import { GET_PLAYER_BENCH_SLOTS, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  GET_PLAYER_BENCH_SLOTS,
+  SHUFFLE_DECK,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class StevensBaltoy extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.STEVENS];
+  protected _tags = [CardTag.STEVENS];
   public cardType: CardType = P;
   public hp: number = 60;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Summoning Sign',
-    cost: [C],
-    damage: 0,
-    text: 'Search your deck for up to 2 Basic Steven\'s Pokémon and put them onto your Bench. Then, shuffle your deck.'
-  }, {
-    name: 'Psychic Sphere',
-    cost: [P],
-    damage: 20,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Summoning Sign',
+      cost: [C],
+      damage: 0,
+      text: "Search your deck for up to 2 Basic Steven's Pokémon and put them onto your Bench. Then, shuffle your deck.",
+    },
+    {
+      name: 'Psychic Sphere',
+      cost: [P],
+      damage: 20,
+      text: '',
+    },
+  ];
 
   public regulationMark = 'I';
   public set: string = 'DRI';
   public setNumber: string = '83';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Steven\'s Baltoy';
-  public fullName: string = 'Steven\'s Baltoy DRI';
+  public name: string = "Steven's Baltoy";
+  public fullName: string = "Steven's Baltoy DRI";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
@@ -42,25 +49,34 @@ export class StevensBaltoy extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-        player.deck,
-        { superType: SuperType.POKEMON, stage: Stage.BASIC },
-        {
-          min: 0, max: Math.min(slots.length, 2), allowCancel: false,
-          blocked: player.deck.cards
-            .filter(c => !c.tags.includes(CardTag.STEVENS))
-            .map(c => player.deck.cards.indexOf(c))
-        }
-      ), selected => {
-        const cards = selected || [];
-        cards.forEach((card, index) => {
-          store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card as PokemonCard, slots[index]));
-        });
-        SHUFFLE_DECK(store, state, player);
-        return state;
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+          player.deck,
+          { superType: SuperType.POKEMON, stage: Stage.BASIC },
+          {
+            min: 0,
+            max: Math.min(slots.length, 2),
+            allowCancel: false,
+            blocked: player.deck.cards
+              .filter((c) => !c.hasTag(CardTag.STEVENS))
+              .map((c) => player.deck.cards.indexOf(c)),
+          },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          cards.forEach((card, index) => {
+            store.reduceEffect(
+              state,
+              new PlayPokemonFromDeckEffect(player, card as PokemonCard, slots[index]),
+            );
+          });
+          SHUFFLE_DECK(store, state, player);
+          return state;
+        },
+      );
     }
 
     return state;

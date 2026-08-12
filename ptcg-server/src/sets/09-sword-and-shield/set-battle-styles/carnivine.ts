@@ -8,35 +8,35 @@ import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-pref
 
 export class Carnivine extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public cardType: CardType = G;
   public hp: number = 110;
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Big Bite',
-    cost: [C, C],
-    damage: 30,
-    text: ' During your opponent\'s next turn, the Defending Pokémon can\'t retreat. '
-  }, {
-    name: 'Triple Whip',
-    cost: [G, C, C],
-    damage: 60,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Big Bite',
+      cost: [C, C],
+      damage: 30,
+      text: "During your opponent's next turn, the Defending Pokémon can't retreat.",
+    },
+    {
+      name: 'Triple Whip',
+      cost: [G, C, C],
+      damage: 60,
+      text: '',
+    },
+  ];
 
   public set: string = 'BST';
-
   public regulationMark = 'E';
-
   public cardImage: string = 'assets/cardback.png';
   public fullName: string = 'Carnivine BST';
   public name: string = 'Carnivine';
   public setNumber: string = '9';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       return BLOCK_RETREAT(store, state, effect, this);
     }

@@ -1,4 +1,15 @@
-import { PokemonCard, Stage, CardType, State, StoreLike, CardTag, Card, ChooseEnergyPrompt, GameMessage, StateUtils } from '../../../game';
+import {
+  PokemonCard,
+  Stage,
+  CardType,
+  State,
+  StoreLike,
+  CardTag,
+  Card,
+  ChooseEnergyPrompt,
+  GameMessage,
+  StateUtils,
+} from '../../../game';
 import { DiscardCardsEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
@@ -6,12 +17,11 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Arcanineex extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom = 'Growlithe';
 
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
   public cardType = CardType.FIRE;
 
@@ -27,13 +37,13 @@ export class Arcanineex extends PokemonCard {
       cost: [CardType.FIRE, CardType.FIRE],
       damage: 30,
       damageCalculation: '+',
-      text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
+      text: 'This attack does 10 more damage for each damage counter on this Pokémon.',
     },
     {
       name: 'Bright Flame',
       cost: [CardType.FIRE, CardType.FIRE, CardType.FIRE],
       damage: 250,
-      text: 'Discard 2 [R] Energy from this Pokémon.'
+      text: 'Discard 2 [R] Energy from this Pokémon.',
     },
   ];
 
@@ -50,7 +60,6 @@ export class Arcanineex extends PokemonCard {
   public fullName: string = 'Arcanine ex SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       effect.damage += effect.player.active.damage * 10;
       return state;
@@ -62,21 +71,29 @@ export class Arcanineex extends PokemonCard {
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
-      state = store.prompt(state, new ChooseEnergyPrompt(
-        player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        checkProvidedEnergy.energyMap,
-        [CardType.FIRE, CardType.FIRE],
-        { allowCancel: false }
-      ), energy => {
-        const cards: Card[] = (energy || []).map(e => e.card);
-        const discardEnergy = new DiscardCardsEffect(effect, cards);
-        discardEnergy.target = player.active;
-        store.reduceEffect(state, discardEnergy);
-      });
+      state = store.prompt(
+        state,
+        new ChooseEnergyPrompt(
+          player.id,
+          GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+          checkProvidedEnergy.energyMap,
+          [CardType.FIRE, CardType.FIRE],
+          { allowCancel: false },
+        ),
+        (energy) => {
+          const cards: Card[] = (energy || []).map((e) => e.card);
+          const discardEnergy = new DiscardCardsEffect(effect, cards);
+          discardEnergy.target = player.active;
+          store.reduceEffect(state, discardEnergy);
+        },
+      );
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

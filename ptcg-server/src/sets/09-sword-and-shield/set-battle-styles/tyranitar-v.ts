@@ -6,12 +6,11 @@ import { Effect } from '../../../game/store/effects/effect';
 import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class TyranitarV extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
   public regulationMark = 'E';
 
-  public tags = [CardTag.POKEMON_V, CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.POKEMON_V, CardTag.SINGLE_STRIKE];
 
   public cardType: CardType = CardType.DARK;
 
@@ -26,14 +25,14 @@ export class TyranitarV extends PokemonCard {
       name: 'Cragalanche',
       cost: [CardType.DARK, CardType.COLORLESS, CardType.COLORLESS],
       damage: 60,
-      text: 'Discard the top 2 cards of your opponent\'s deck.'
+      text: "Discard the top 2 cards of your opponent's deck.",
     },
     {
       name: 'Single Strike Crush',
       cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS, CardType.COLORLESS],
       damage: 240,
-      text: 'Discard the top 4 cards of your deck.'
-    }
+      text: 'Discard the top 4 cards of your deck.',
+    },
   ];
 
   public set: string = 'BST';
@@ -47,25 +46,26 @@ export class TyranitarV extends PokemonCard {
   public fullName: string = 'Tyranitar V BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // Discard 2 cards from opponent's deck 
-      MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: 2, sourceCard: this, sourceEffect: this.attacks[0] });
-
+      // Discard 2 cards from opponent's deck
+      MOVE_CARDS(store, state, opponent.deck, opponent.discard, {
+        count: 2,
+        sourceCard: this,
+        sourceEffect: this.attacks[0],
+      });
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      // Discard 4 cards from your deck 
+      // Discard 4 cards from your deck
       player.deck.moveTo(player.discard, 4);
       return state;
     }
 
     return state;
   }
-
 }

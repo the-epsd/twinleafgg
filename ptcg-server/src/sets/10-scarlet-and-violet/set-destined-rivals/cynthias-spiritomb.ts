@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class CynthiasSpiritomb extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.CYNTHIAS];
+  protected _tags = [CardTag.CYNTHIAS];
   public cardType: CardType = D;
   public hp: number = 70;
   public weakness = [{ type: G }];
@@ -19,24 +19,24 @@ export class CynthiasSpiritomb extends PokemonCard {
       cost: [C],
       damage: 10,
       damageCalculation: 'x',
-      text: 'This attack does 10 damage for each damage counter on all your Benched Cynthia\'s Pokemon. Don\'t apply Weakness for this attack\'s damage.',
-    }
+      text: "This attack does 10 damage for each damage counter on all your Benched Cynthia's Pokemon. Don't apply Weakness for this attack's damage.",
+    },
   ];
 
   public regulationMark = 'I';
   public set: string = 'DRI';
   public setNumber: string = '129';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Cynthia\'s Spiritomb';
-  public fullName: string = 'Cynthia\'s Spiritomb DRI';
+  public name: string = "Cynthia's Spiritomb";
+  public fullName: string = "Cynthia's Spiritomb DRI";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       let totalDamage = 0;
 
-      player.bench.forEach(pokemon => {
-        if (pokemon.cards.some(card => card.tags.includes(CardTag.CYNTHIAS))) {
+      player.bench.forEach((pokemon) => {
+        if (pokemon.cards.some((card) => card.hasTag(CardTag.CYNTHIAS))) {
           totalDamage += pokemon.damage;
         }
       });

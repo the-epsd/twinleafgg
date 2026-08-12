@@ -13,7 +13,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 
 export class SharpedoEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = D;
   public hp: number = 170;
@@ -25,14 +25,14 @@ export class SharpedoEx extends PokemonCard {
       name: 'Hunt',
       cost: [D, C],
       damage: 0,
-      text: 'Switch 1 of your opponent\'s Benched Pokémon with his or her Active Pokémon. This attack does 30 damage to the new Active Pokémon.'
+      text: "Switch 1 of your opponent's Benched Pokémon with his or her Active Pokémon. This attack does 30 damage to the new Active Pokémon.",
     },
     {
       name: 'Jagged Fang',
       cost: [D, D, C],
       damage: 100,
-      text: 'Discard an Energy attached to this Pokémon. Then, discard an Energy attached to your opponent\'s Active Pokémon.'
-    }
+      text: "Discard an Energy attached to this Pokémon. Then, discard an Energy attached to your opponent's Active Pokémon.",
+    },
   ];
 
   public set: string = 'PRC';
@@ -47,22 +47,26 @@ export class SharpedoEx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const hasBench = opponent.bench.some(b => b.cards.length > 0);
+      const hasBench = opponent.bench.some((b) => b.cards.length > 0);
 
       if (hasBench) {
-        return store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-          PlayerType.TOP_PLAYER,
-          [SlotType.BENCH],
-          { allowCancel: false }
-        ), result => {
-          const cardList = result[0];
-          opponent.switchPokemon(cardList);
-          const damageEffect = new PutDamageEffect(effect, 30);
-          damageEffect.target = opponent.active;
-          store.reduceEffect(state, damageEffect);
-        });
+        return store.prompt(
+          state,
+          new ChoosePokemonPrompt(
+            player.id,
+            GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+            PlayerType.TOP_PLAYER,
+            [SlotType.BENCH],
+            { allowCancel: false },
+          ),
+          (result) => {
+            const cardList = result[0];
+            opponent.switchPokemon(cardList);
+            const damageEffect = new PutDamageEffect(effect, 30);
+            damageEffect.target = opponent.active;
+            store.reduceEffect(state, damageEffect);
+          },
+        );
       }
     }
 

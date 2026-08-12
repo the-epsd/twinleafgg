@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/pr
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class CramorantVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Cramorant V';
   public cardType: CardType = C;
@@ -19,13 +19,15 @@ export class CramorantVmax extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Max Jet',
-    cost: [C, C, C],
-    damage: 80,
-    damageCalculation: 'x',
-    text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 80 damage for each heads.'
-  }];
+  public attacks = [
+    {
+      name: 'Max Jet',
+      cost: [C, C, C],
+      damage: 80,
+      damageCalculation: 'x',
+      text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 80 damage for each heads.',
+    },
+  ];
 
   public regulationMark: string = 'D';
 

@@ -3,32 +3,41 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { GameError, GameMessage, PokemonCard, PowerType } from '../../../game';
-import { ABILITY_USED, DRAW_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ABILITY_USED,
+  DRAW_CARDS,
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_MORE_DAMAGE_PER_HEADS } from '../../../game/store/prefabs/attack-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 export class MegaKangaskhanex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
   public hp: number = 300;
   public cardType: CardType = C;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
 
-  public powers = [{
-    name: 'Run Errand',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, if this Pokémon is in the Active Spot, you may use this Ability. Draw 2 cards. You can\'t use more than 1 Run Errand Ability each turn.'
-  }];
+  public powers = [
+    {
+      name: 'Run Errand',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: "Once during your turn, if this Pokémon is in the Active Spot, you may use this Ability. Draw 2 cards. You can't use more than 1 Run Errand Ability each turn.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Rapid-Fire Combo',
-    cost: [C, C, C],
-    damage: 200,
-    damageCalculation: '+',
-    text: 'Flip a coin until you get tails. This attack does 50 more damage for each heads.'
-  }];
+  public attacks = [
+    {
+      name: 'Rapid-Fire Combo',
+      cost: [C, C, C],
+      damage: 200,
+      damageCalculation: '+',
+      text: 'Flip a coin until you get tails. This attack does 50 more damage for each heads.',
+    },
+  ];
 
   public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
@@ -38,7 +47,6 @@ export class MegaKangaskhanex extends PokemonCard {
   public regulationMark: string = 'I';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.usedRunErrand = false;
@@ -67,6 +75,4 @@ export class MegaKangaskhanex extends PokemonCard {
 
     return state;
   }
-
-
 }

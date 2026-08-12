@@ -7,24 +7,26 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class MegaAbsolex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
   public hp: number = 280;
   public cardType: CardType = D;
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Terminal Period',
-    cost: [D, C],
-    damage: 0,
-    text: 'If your opponent\'s Active Pokémon has exactly 6 damage counters on it, that Pokémon is Knocked Out.'
-  },
-  {
-    name: 'Claw of Darkness',
-    cost: [D, D, C],
-    damage: 200,
-    text: 'Your opponent reveals their hand, and you discard a card you find there.'
-  }];
+  public attacks = [
+    {
+      name: 'Terminal Period',
+      cost: [D, C],
+      damage: 0,
+      text: "If your opponent's Active Pokémon has exactly 6 damage counters on it, that Pokémon is Knocked Out.",
+    },
+    {
+      name: 'Claw of Darkness',
+      cost: [D, D, C],
+      damage: 200,
+      text: 'Your opponent reveals their hand, and you discard a card you find there.',
+    },
+  ];
 
   public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
@@ -34,7 +36,6 @@ export class MegaAbsolex extends PokemonCard {
   public regulationMark: string = 'I';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -51,24 +52,26 @@ export class MegaAbsolex extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        opponent.hand,
-        {},
-        { allowCancel: false, min: 1, max: 1 }
-      ), selectedCard => {
-        const selected = selectedCard || [];
-        if (selectedCard === null || selected.length === 0) {
-          return;
-        }
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          opponent.hand,
+          {},
+          { allowCancel: false, min: 1, max: 1 },
+        ),
+        (selectedCard) => {
+          const selected = selectedCard || [];
+          if (selectedCard === null || selected.length === 0) {
+            return;
+          }
 
-        opponent.hand.moveCardTo(selected[0], opponent.discard);
-      });
+          opponent.hand.moveCardTo(selected[0], opponent.discard);
+        },
+      );
     }
 
     return state;
   }
-
-
 }

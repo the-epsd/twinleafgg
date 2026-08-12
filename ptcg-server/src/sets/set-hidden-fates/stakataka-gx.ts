@@ -7,10 +7,15 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils, PlayerType } from '../../game';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, BLOCK_IF_GX_ATTACK_USED, DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN } from '../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  BLOCK_IF_GX_ATTACK_USED,
+  DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN,
+} from '../../game/store/prefabs/prefabs';
 
 export class StakatakaGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
+  protected _tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;
   public hp: number = 180;
@@ -18,26 +23,28 @@ export class StakatakaGx extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C];
 
-  public powers = [{
-    name: 'Ultra Wall',
-    powerType: PowerType.ABILITY,
-    text: 'Your Ultra Beasts take 10 less damage from your opponent\'s attacks (after applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: 'Ultra Wall',
+      powerType: PowerType.ABILITY,
+      text: "Your Ultra Beasts take 10 less damage from your opponent's attacks (after applying Weakness and Resistance).",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Gigaton Stomp',
       cost: [M, M, C],
       damage: 120,
-      text: ''
+      text: '',
     },
     {
       name: 'Assembly-GX',
       cost: [M, M, C],
       damage: 50,
       damageCalculation: '+',
-      text: 'This attack does 50 more damage for each Prize card you have taken. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "This attack does 50 more damage for each Prize card you have taken. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'HIF';
@@ -51,7 +58,7 @@ export class StakatakaGx extends PokemonCard {
     // Ref: set-celestial-storm/stakataka-gx.ts (Ultra Wall)
     if (effect instanceof DealDamageEffect) {
       const targetCard = effect.target.getPokemonCard();
-      if (!targetCard || !targetCard.tags.includes(CardTag.ULTRA_BEAST)) {
+      if (!targetCard || !targetCard.hasTag(CardTag.ULTRA_BEAST)) {
         return state;
       }
 

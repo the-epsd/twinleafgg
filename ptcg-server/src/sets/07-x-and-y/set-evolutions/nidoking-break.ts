@@ -10,7 +10,7 @@ import { BREAK_RULE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../../game/store/prefabs/attack-effects';
 
 export class NidokingBreak extends PokemonCard {
-  public tags = [CardTag.BREAK];
+  protected _tags = [CardTag.BREAK];
   public stage: Stage = Stage.BREAK;
   public evolvesFrom: string = 'Nidoking';
   public cardType: CardType = P;

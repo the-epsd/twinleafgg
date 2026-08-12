@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { PREVENT_THIS_ATTACK_UNTIL_LEAVES_ACTIVE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class GougingFireex extends PokemonCard {
-  public tags = [CardTag.POKEMON_ex, CardTag.ANCIENT];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.ANCIENT];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = R;
   public hp: number = 230;

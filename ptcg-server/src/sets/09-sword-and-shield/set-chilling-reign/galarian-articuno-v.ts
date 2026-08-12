@@ -1,22 +1,34 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SpecialCondition } from '../../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, GameError, GameMessage, Card, PowerType } from '../../../game';
+import {
+  StoreLike,
+  State,
+  ChooseCardsPrompt,
+  GameError,
+  GameMessage,
+  Card,
+  PowerType,
+} from '../../../game';
 
 import { Effect } from '../../../game/store/effects/effect';
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { DRAW_CARDS, MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  DRAW_CARDS,
+  MOVE_CARDS,
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class GalarianArticunoV extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
   public regulationMark = 'E';
 
   public cardType: CardType = CardType.PSYCHIC;
 
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
 
   public hp: number = 210;
 
@@ -31,8 +43,8 @@ export class GalarianArticunoV extends PokemonCard {
       name: 'Reconstitute',
       useWhenInPlay: true,
       powerType: PowerType.ABILITY,
-      text: 'You must discard 2 cards from your hand in order to use this Ability. Once during your turn, you may draw a card.'
-    }
+      text: 'You must discard 2 cards from your hand in order to use this Ability. Once during your turn, you may draw a card.',
+    },
   ];
 
   public attacks = [
@@ -40,8 +52,8 @@ export class GalarianArticunoV extends PokemonCard {
       name: 'Psyray',
       cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
       damage: 110,
-      text: 'Your opponent\'s Active Pokémon is now Confused.'
-    }
+      text: "Your opponent's Active Pokémon is now Confused.",
+    },
   ];
 
   public set: string = 'CRE';
@@ -62,20 +74,24 @@ export class GalarianArticunoV extends PokemonCard {
       player.marker.removeMarker(this.RECONSTITUTE_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.RECONSTITUTE_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.RECONSTITUTE_MARKER, this)
+    ) {
       const player = effect.player;
       player.marker.removeMarker(this.RECONSTITUTE_MARKER, this);
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
-      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED]);
+      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [
+        SpecialCondition.CONFUSED,
+      ]);
       store.reduceEffect(state, specialConditionEffect);
     }
 
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
-      const hasCardInHand = player.hand.cards.some(c => {
+      const hasCardInHand = player.hand.cards.some((c) => {
         return c instanceof Card;
       });
       if (!hasCardInHand) {
@@ -84,22 +100,29 @@ export class GalarianArticunoV extends PokemonCard {
       if (player.marker.hasMarker(this.RECONSTITUTE_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        player.hand,
-        {},
-        { allowCancel: true, min: 2, max: 2 }
-      ), cards => {
-        cards = cards || [];
-        if (cards.length === 0) {
-          return;
-        }
-        player.marker.addMarker(this.RECONSTITUTE_MARKER, this);
-        MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this, sourceEffect: this.powers[0] });
-        DRAW_CARDS(store, state, player, 1);
-
-      });
+      state = store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          player.hand,
+          {},
+          { allowCancel: true, min: 2, max: 2 },
+        ),
+        (cards) => {
+          cards = cards || [];
+          if (cards.length === 0) {
+            return;
+          }
+          player.marker.addMarker(this.RECONSTITUTE_MARKER, this);
+          MOVE_CARDS(store, state, player.hand, player.discard, {
+            cards,
+            sourceCard: this,
+            sourceEffect: this.powers[0],
+          });
+          DRAW_CARDS(store, state, player, 1);
+        },
+      );
 
       return state;
     }

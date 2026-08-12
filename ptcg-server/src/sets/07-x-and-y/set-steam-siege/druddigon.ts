@@ -43,7 +43,7 @@ export class Druddigon extends PokemonCard {
 
       let hasBreak = false;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card.tags.includes(CardTag.BREAK)) {
+        if (card.hasTag(CardTag.BREAK)) {
           hasBreak = true;
         }
       });
@@ -56,8 +56,8 @@ export class Druddigon extends PokemonCard {
     // Attack 2: Giga Claw
     // Ref: set-breakthrough/dodrio.ts (multiple coin flips)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 2, results => {
-        if (results.every(r => !r)) {
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 2, (results) => {
+        if (results.every((r) => !r)) {
           effect.damage = 0;
         }
       });

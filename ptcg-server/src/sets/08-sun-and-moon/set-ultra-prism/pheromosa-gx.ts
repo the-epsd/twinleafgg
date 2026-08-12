@@ -2,14 +2,19 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_CONFUSION_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  BLOCK_IF_GX_ATTACK_USED,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class PheromosaGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
+  protected _tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = G;
   public hp: number = 170;
@@ -22,21 +27,21 @@ export class PheromosaGx extends PokemonCard {
       cost: [G],
       damage: 30,
       canUseOnFirstTurn: true,
-      text: 'If you go first, you can use this attack on your first turn.'
+      text: 'If you go first, you can use this attack on your first turn.',
     },
     {
       name: 'Cruel Spike',
       cost: [G, G],
       damage: 60,
-      text: 'Your opponent\'s Active Pokémon is now Confused.'
+      text: "Your opponent's Active Pokémon is now Confused.",
     },
     {
       name: 'Beauty-GX',
       cost: [G, G],
       damage: 50,
       damageCalculation: 'x',
-      text: 'This attack does 50 damage for each Prize card your opponent has taken. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "This attack does 50 damage for each Prize card your opponent has taken. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'UPR';

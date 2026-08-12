@@ -136,7 +136,7 @@ function* useDarkAwakening(
 export class TeamRocketsNidorina extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = "Team Rocket's Nidoran ♀";
-  public tags = [CardTag.TEAM_ROCKET];
+  protected _tags = [CardTag.TEAM_ROCKET];
   public cardType: CardType = D;
   public hp: number = 90;
   public weakness = [{ type: F }];

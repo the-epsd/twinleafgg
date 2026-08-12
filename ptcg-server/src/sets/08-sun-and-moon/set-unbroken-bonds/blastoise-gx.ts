@@ -3,15 +3,37 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, EnergyCard, AttachEnergyPrompt, DiscardEnergyPrompt } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  EnergyType,
+  SuperType,
+} from '../../../game/store/card/card-types';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  EnergyCard,
+  AttachEnergyPrompt,
+  DiscardEnergyPrompt,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, BLOCK_IF_GX_ATTACK_USED, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  BLOCK_IF_GX_ATTACK_USED,
+  SHUFFLE_DECK,
+} from '../../../game/store/prefabs/prefabs';
 import { AttachEnergyEffect } from '../../../game/store/effects/play-card-effects';
 
 export class BlastoiseGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Wartortle';
   public cardType: CardType = W;
@@ -19,11 +41,13 @@ export class BlastoiseGx extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
 
-  public powers = [{
-    name: 'Solid Shell',
-    powerType: PowerType.ABILITY,
-    text: 'This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: 'Solid Shell',
+      powerType: PowerType.ABILITY,
+      text: 'This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).',
+    },
+  ];
 
   public attacks = [
     {
@@ -31,14 +55,14 @@ export class BlastoiseGx extends PokemonCard {
       cost: [W, W],
       damage: 60,
       damageCalculation: 'x',
-      text: 'Shuffle any amount of [W] Energy from your Pokémon into your deck. This attack does 60 damage for each card you shuffled into your deck in this way.'
+      text: 'Shuffle any amount of [W] Energy from your Pokémon into your deck. This attack does 60 damage for each card you shuffled into your deck in this way.',
     },
     {
       name: 'Giant Geyser-GX',
       cost: [W],
       damage: 0,
-      text: 'Attach any number of [W] Energy cards from your hand to your Pokémon in any way you like. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Attach any number of [W] Energy cards from your hand to your Pokémon in any way you like. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'UNB';
@@ -50,7 +74,11 @@ export class BlastoiseGx extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Solid Shell (passive - damage reduction)
     // Ref: set-forbidden-light/tyrantrum.ts (Tyrannical Heart - DealDamageEffect interception)
-    if (effect instanceof DealDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof DealDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = StateUtils.findOwner(state, effect.target);
 
       if (IS_ABILITY_BLOCKED(store, state, player, this)) {
@@ -68,8 +96,11 @@ export class BlastoiseGx extends PokemonCard {
       // Count total Water Energy on all Pokemon
       let totalWaterEnergy = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        totalWaterEnergy += cardList.cards.filter(c =>
-          c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.WATER)
+        totalWaterEnergy += cardList.cards.filter(
+          (c) =>
+            c instanceof EnergyCard &&
+            c.energyType === EnergyType.BASIC &&
+            c.provides.includes(CardType.WATER),
         ).length;
       });
 
@@ -78,26 +109,30 @@ export class BlastoiseGx extends PokemonCard {
         return state;
       }
 
-      store.prompt(state, new DiscardEnergyPrompt(
-        player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
-        { allowCancel: false, min: 1, max: totalWaterEnergy }
-      ), transfers => {
-        if (transfers === null || transfers.length === 0) {
-          effect.damage = 0;
-          return;
-        }
+      store.prompt(
+        state,
+        new DiscardEnergyPrompt(
+          player.id,
+          GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
+          { allowCancel: false, min: 1, max: totalWaterEnergy },
+        ),
+        (transfers) => {
+          if (transfers === null || transfers.length === 0) {
+            effect.damage = 0;
+            return;
+          }
 
-        for (const transfer of transfers) {
-          const source = StateUtils.getTarget(state, player, transfer.from);
-          source.moveCardTo(transfer.card, player.deck);
-        }
-        effect.damage = 60 * transfers.length;
-        SHUFFLE_DECK(store, state, player);
-      });
+          for (const transfer of transfers) {
+            const source = StateUtils.getTarget(state, player, transfer.from);
+            source.moveCardTo(transfer.card, player.deck);
+          }
+          effect.damage = 60 * transfers.length;
+          SHUFFLE_DECK(store, state, player);
+        },
+      );
     }
 
     // Attack 2: Giant Geyser-GX
@@ -108,31 +143,38 @@ export class BlastoiseGx extends PokemonCard {
       BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
 
-      const hasWaterEnergy = player.hand.cards.some(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.WATER)
+      const hasWaterEnergy = player.hand.cards.some(
+        (c) =>
+          c instanceof EnergyCard &&
+          c.energyType === EnergyType.BASIC &&
+          c.provides.includes(CardType.WATER),
       );
 
       if (!hasWaterEnergy) {
         return state;
       }
 
-      return store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_CARDS,
-        player.hand,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
-        { allowCancel: true }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          const energyCard = transfer.card as EnergyCard;
-          const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
-          store.reduceEffect(state, attachEnergyEffect);
-        }
-      });
+      return store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_CARDS,
+          player.hand,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
+          { allowCancel: true },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            const energyCard = transfer.card as EnergyCard;
+            const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
+            store.reduceEffect(state, attachEnergyEffect);
+          }
+        },
+      );
     }
 
     return state;

@@ -8,10 +8,9 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 
 export class DangerousLaser extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public tags = [CardTag.ACE_SPEC];
+  protected _tags = [CardTag.ACE_SPEC];
 
   public set: string = 'SFA';
 
@@ -25,23 +24,20 @@ export class DangerousLaser extends TrainerCard {
 
   public fullName: string = 'Dangerous Laser SFA';
 
-  public text: string =
-    'Your opponent\'s Active Pokémon is now Burned and Confused.';
+  public text: string = "Your opponent's Active Pokémon is now Burned and Confused.";
 
-  public canPlay(store: StoreLike, state: State, player: Player): boolean {    return true;
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       const active = opponent.active;
       active.addSpecialCondition(SpecialCondition.BURNED);
       active.addSpecialCondition(SpecialCondition.CONFUSED);
-
     }
     return state;
   }

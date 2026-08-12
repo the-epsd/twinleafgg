@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class GlaceonVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Glaceon V';
   public cardType: CardType = W;
@@ -19,19 +19,21 @@ export class GlaceonVmax extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Crystal Veil',
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all damage done to this Pokémon by attacks from your opponent\'s Pokémon VMAX, except any Glaceon VMAX.'
-  }];
+  public powers = [
+    {
+      name: 'Crystal Veil',
+      powerType: PowerType.ABILITY,
+      text: "Prevent all damage done to this Pokémon by attacks from your opponent's Pokémon VMAX, except any Glaceon VMAX.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Max Icicle',
       cost: [W, C, C],
       damage: 150,
-      text: 'This attack also does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "This attack also does 30 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -46,9 +48,11 @@ export class GlaceonVmax extends PokemonCard {
     // Prevent all damage done to this Pokémon by attacks from your opponent's Pokémon VMAX,
     // except any Glaceon VMAX.
     // Ref: set-vivid-voltage/zamazenta.ts (DealDamageEffect + sourceCard.tags VMAX check)
-    if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect)
-      && effect.target.cards.includes(this)
-      && effect.target.getPokemonCard() === this) {
+    if (
+      (effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = StateUtils.findOwner(state, effect.target);
 
       if (IS_ABILITY_BLOCKED(store, state, player, this)) {
@@ -56,9 +60,11 @@ export class GlaceonVmax extends PokemonCard {
       }
 
       const sourceCard = effect.source.getPokemonCard();
-      if (sourceCard
-        && sourceCard.tags.includes(CardTag.POKEMON_VMAX)
-        && sourceCard.name !== 'Glaceon VMAX') {
+      if (
+        sourceCard &&
+        sourceCard.hasTag(CardTag.POKEMON_VMAX) &&
+        sourceCard.name !== 'Glaceon VMAX'
+      ) {
         effect.preventDefault = true;
         return state;
       }
@@ -70,7 +76,7 @@ export class GlaceonVmax extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      if (opponent.bench.some(b => b.cards.length > 0)) {
+      if (opponent.bench.some((b) => b.cards.length > 0)) {
         THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON(30, effect, store, state);
       }
     }

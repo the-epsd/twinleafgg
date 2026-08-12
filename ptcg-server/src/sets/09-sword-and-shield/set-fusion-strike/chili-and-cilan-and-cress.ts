@@ -13,14 +13,15 @@ import { ChooseCardsPrompt, GameMessage } from '../../../game';
 
 export class ChiliAndCilanAndCress extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-  public tags = [CardTag.FUSION_STRIKE];
+  protected _tags = [CardTag.FUSION_STRIKE];
   public regulationMark: string = 'E';
   public set: string = 'FST';
   public setNumber: string = '227';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chili & Cilan & Cress';
   public fullName: string = 'Chili & Cilan & Cress FST 227';
-  public text: string = 'Search your deck for up to 3 Fusion Strike Pokémon, reveal them, and put them into your hand. Then, shuffle your deck. You may play only 1 Supporter card during your turn.';
+  public text: string =
+    'Search your deck for up to 3 Fusion Strike Pokémon, reveal them, and put them into your hand. Then, shuffle your deck. You may play only 1 Supporter card during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-fusion-strike/crossceiver.ts (CardTag.FUSION_STRIKE trainer search pattern)
@@ -29,8 +30,8 @@ export class ChiliAndCilanAndCress extends TrainerCard {
       const player = effect.player;
 
       // Find Fusion Strike Pokemon in deck
-      const fusionStrikePokemon = player.deck.cards.filter(c =>
-        c instanceof PokemonCard && c.tags && c.tags.includes(CardTag.FUSION_STRIKE)
+      const fusionStrikePokemon = player.deck.cards.filter(
+        (c) => c instanceof PokemonCard && c.hasTag(CardTag.FUSION_STRIKE),
       );
 
       if (fusionStrikePokemon.length === 0) {
@@ -41,24 +42,28 @@ export class ChiliAndCilanAndCress extends TrainerCard {
       // Block all non-Fusion-Strike Pokemon
       const blocked: number[] = [];
       player.deck.cards.forEach((card, index) => {
-        if (!(card instanceof PokemonCard) || !card.tags || !card.tags.includes(CardTag.FUSION_STRIKE)) {
+        if (!(card instanceof PokemonCard) || !card.hasTag(CardTag.FUSION_STRIKE)) {
           blocked.push(index);
         }
       });
 
       const max = Math.min(3, fusionStrikePokemon.length);
 
-      store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        { superType: SuperType.POKEMON },
-        { min: 0, max, allowCancel: false, blocked }
-      ), selected => {
-        const cards = selected || [];
-        player.deck.moveCardsTo(cards, player.hand);
-        SHUFFLE_DECK(store, state, player);
-      });
+      store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.deck,
+          { superType: SuperType.POKEMON },
+          { min: 0, max, allowCancel: false, blocked },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          player.deck.moveCardsTo(cards, player.hand);
+          SHUFFLE_DECK(store, state, player);
+        },
+      );
     }
 
     return state;

@@ -7,7 +7,7 @@ import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../game/store/pre
 
 export class AurasLucario extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.AURAS];
+  protected _tags = [CardTag.AURAS];
   public cardType: CardType = M;
   public hp: number = 70;
   public weakness = [{ type: R }];
@@ -34,7 +34,7 @@ export class AurasLucario extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (result) {
           PREVENT_DAMAGE(store, state, effect, this);
           PREVENT_EFFECTS_OF_ATTACKS(store, state, effect, this);

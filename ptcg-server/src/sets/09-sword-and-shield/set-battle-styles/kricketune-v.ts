@@ -14,7 +14,7 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED, WAS_POWER_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class KricketuneV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public regulationMark = 'E';
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = G;
@@ -54,7 +54,10 @@ export class KricketuneV extends PokemonCard {
       player.marker.removeMarker(this.EXCITING_STAGE_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.EXCITING_STAGE_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.EXCITING_STAGE_MARKER, this)
+    ) {
       const player = effect.player;
       player.marker.removeMarker(this.EXCITING_STAGE_MARKER, this);
     }

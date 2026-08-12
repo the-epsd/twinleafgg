@@ -1,41 +1,59 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameError, GameMessage, StateUtils, PowerType, PlayerType, ChooseCardsPrompt } from '../../../game';
+import {
+  StoreLike,
+  State,
+  GameError,
+  GameMessage,
+  StateUtils,
+  PowerType,
+  PlayerType,
+  ChooseCardsPrompt,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { ABILITY_USED, BLOCK_IF_GX_ATTACK_USED, MOVE_CARDS, TAKE_X_PRIZES, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ABILITY_USED,
+  BLOCK_IF_GX_ATTACK_USED,
+  MOVE_CARDS,
+  TAKE_X_PRIZES,
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 export class NaganadelGuzzlordGX extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM, CardTag.ULTRA_BEAST];
+  protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM, CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = N;
   public hp: number = 280;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];
 
-  public powers = [{
-    name: 'Violent Appetite',
-    powerType: PowerType.ABILITY,
-    useWhenInPlay: true,
-    text: 'Once during your turn (before your attack), you may discard a Pokémon from your hand. If you do, heal 60 damage from this Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Violent Appetite',
+      powerType: PowerType.ABILITY,
+      useWhenInPlay: true,
+      text: 'Once during your turn (before your attack), you may discard a Pokémon from your hand. If you do, heal 60 damage from this Pokémon.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Jet Pierce',
       cost: [P, D, C],
       damage: 180,
-      text: ''
+      text: '',
     },
     {
       name: 'Chaotic Order-GX',
       cost: [C],
       damage: 0,
       gxAttack: true,
-      text: 'Turn all of your Prize cards face up. (Those Prize cards remain face up for the rest of the game.) If this Pokémon has at least 1 extra [P] Energy and 1 extra [D] Energy attached to it (in addition to this attack\'s cost), take 2 Prize cards. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Turn all of your Prize cards face up. (Those Prize cards remain face up for the rest of the game.) If this Pokémon has at least 1 extra [P] Energy and 1 extra [D] Energy attached to it (in addition to this attack's cost), take 2 Prize cards. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'CEC';
@@ -57,27 +75,35 @@ export class NaganadelGuzzlordGX extends PokemonCard {
             throw new GameError(GameMessage.POWER_ALREADY_USED);
           }
 
-          const hasPokemonInHand = player.hand.cards.some(b => b instanceof PokemonCard);
+          const hasPokemonInHand = player.hand.cards.some((b) => b instanceof PokemonCard);
           if (!hasPokemonInHand) {
             throw new GameError(GameMessage.CANNOT_USE_POWER);
           }
 
-          return store.prompt(state, new ChooseCardsPrompt(
-            player,
-            GameMessage.CHOOSE_CARDS,
-            player.hand,
-            { superType: SuperType.POKEMON },
-            { allowCancel: false, min: 1, max: 1 }
-          ), cards => {
-            MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this, sourceEffect: this.powers[0] });
+          return store.prompt(
+            state,
+            new ChooseCardsPrompt(
+              player,
+              GameMessage.CHOOSE_CARDS,
+              player.hand,
+              { superType: SuperType.POKEMON },
+              { allowCancel: false, min: 1, max: 1 },
+            ),
+            (cards) => {
+              MOVE_CARDS(store, state, player.hand, player.discard, {
+                cards,
+                sourceCard: this,
+                sourceEffect: this.powers[0],
+              });
 
-            card.marker.addMarker(this.VIOLENT_APPETITE_MARKER, this);
-            player.marker.addMarker(this.VIOLENT_APPETITE_MARKER, this);
-            ABILITY_USED(player, card);
+              card.marker.addMarker(this.VIOLENT_APPETITE_MARKER, this);
+              player.marker.addMarker(this.VIOLENT_APPETITE_MARKER, this);
+              ABILITY_USED(player, card);
 
-            const healing = new HealEffect(player, player.active, 60);
-            store.reduceEffect(state, healing);
-          });
+              const healing = new HealEffect(player, player.active, 60);
+              store.reduceEffect(state, healing);
+            },
+          );
         }
       });
     }
@@ -89,7 +115,7 @@ export class NaganadelGuzzlordGX extends PokemonCard {
       BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
 
-      player.prizes.forEach(p => {
+      player.prizes.forEach((p) => {
         p.isPublic = true;
         p.faceUpPrize = true;
         p.isSecret = false;
@@ -99,14 +125,22 @@ export class NaganadelGuzzlordGX extends PokemonCard {
       const extraEffectCost: CardType[] = [P, D, C];
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       store.reduceEffect(state, checkProvidedEnergy);
-      const meetsExtraEffectCost = StateUtils.checkEnoughEnergy(checkProvidedEnergy.energyMap, extraEffectCost);
+      const meetsExtraEffectCost = StateUtils.checkEnoughEnergy(
+        checkProvidedEnergy.energyMap,
+        extraEffectCost,
+      );
 
-      if (!meetsExtraEffectCost) { return state; }  // If we don't have the extra energy, we just deal damage.
+      if (!meetsExtraEffectCost) {
+        return state;
+      } // If we don't have the extra energy, we just deal damage.
 
       return TAKE_X_PRIZES(store, state, player, 2);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.VIOLENT_APPETITE_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.VIOLENT_APPETITE_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.VIOLENT_APPETITE_MARKER, this);
       this.marker.removeMarker(this.VIOLENT_APPETITE_MARKER, this);
     }

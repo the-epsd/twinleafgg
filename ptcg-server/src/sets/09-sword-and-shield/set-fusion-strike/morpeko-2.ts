@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Morpeko2 extends PokemonCard {
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = D;
   public hp: number = 50;
@@ -22,8 +22,8 @@ export class Morpeko2 extends PokemonCard {
       cost: [D],
       damage: 30,
       damageCalculation: 'x',
-      text: 'This attack does 30 damage for each damage counter on this Pokémon.'
-    }
+      text: 'This attack does 30 damage for each damage counter on this Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'E';

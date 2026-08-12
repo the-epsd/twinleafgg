@@ -7,7 +7,7 @@ import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/eff
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class DialgaEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;
   public hp: number = 180;
@@ -40,7 +40,7 @@ export class DialgaEx extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, effect.player);
       const defendingPokemon = opponent.active.getPokemonCard();
 
-      if (defendingPokemon && defendingPokemon.tags.includes(CardTag.POKEMON_EX)) {
+      if (defendingPokemon && defendingPokemon.hasTag(CardTag.POKEMON_EX)) {
         return DEFENDING_POKEMON_CANNOT_ATTACK(store, state, effect, this);
       }
     }

@@ -3,13 +3,34 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, PlayerType, SlotType } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  EnergyType,
+  SuperType,
+} from '../../../game/store/card/card-types';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  GameError,
+  GameMessage,
+  PlayerType,
+  SlotType,
+} from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-prompt';
 import { AttachEnergyEffect } from '../../../game/store/effects/play-card-effects';
-import { WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  USE_ABILITY_ONCE_PER_TURN,
+  ABILITY_USED,
+  REMOVE_MARKER_AT_END_OF_TURN,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Clawitzer extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -19,20 +40,22 @@ export class Clawitzer extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Mega Boost',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), you may attach a Special Energy card from your hand to 1 of your Mega Evolution Pok\u00e9mon.'
-  }];
+  public powers = [
+    {
+      name: 'Mega Boost',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn (before your attack), you may attach a Special Energy card from your hand to 1 of your Mega Evolution Pok\u00e9mon.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Crabhammer',
       cost: [W, C, C],
       damage: 60,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'STS';
@@ -54,8 +77,8 @@ export class Clawitzer extends PokemonCard {
       }
 
       // Check if player has Special Energy in hand
-      const hasSpecialEnergy = player.hand.cards.some(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL
+      const hasSpecialEnergy = player.hand.cards.some(
+        (c) => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL,
       );
       if (!hasSpecialEnergy) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -65,7 +88,7 @@ export class Clawitzer extends PokemonCard {
       let hasMega = false;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         const pokemonCard = cardList.getPokemonCard();
-        if (pokemonCard && pokemonCard.tags.includes(CardTag.MEGA)) {
+        if (pokemonCard && pokemonCard.hasTag(CardTag.MEGA)) {
           hasMega = true;
         }
       });
@@ -77,31 +100,39 @@ export class Clawitzer extends PokemonCard {
       ABILITY_USED(player, this);
 
       // Build blockedTo list: block all non-Mega slots
-      const blockedTo: { player: PlayerType, slot: SlotType, index: number }[] = [];
+      const blockedTo: { player: PlayerType; slot: SlotType; index: number }[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, _card, target) => {
         const pokemonCard = cardList.getPokemonCard();
-        if (!pokemonCard || !pokemonCard.tags.includes(CardTag.MEGA)) {
+        if (!pokemonCard || !pokemonCard.hasTag(CardTag.MEGA)) {
           blockedTo.push(target);
         }
       });
 
-      return store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_CARDS,
-        player.hand,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
-        { allowCancel: false, min: 1, max: 1, blockedTo }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.hand.moveCardTo(transfer.card, target);
-          const attachEnergyEffect = new AttachEnergyEffect(player, transfer.card as EnergyCard, target);
-          store.reduceEffect(state, attachEnergyEffect);
-        }
-      });
+      return store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_CARDS,
+          player.hand,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
+          { allowCancel: false, min: 1, max: 1, blockedTo },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.hand.moveCardTo(transfer.card, target);
+            const attachEnergyEffect = new AttachEnergyEffect(
+              player,
+              transfer.card as EnergyCard,
+              target,
+            );
+            store.reduceEffect(state, attachEnergyEffect);
+          }
+        },
+      );
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.MEGA_BOOST_MARKER, this);

@@ -11,7 +11,7 @@ export class ArceusDark extends PokemonCard {
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
-  public tags = [CardTag.ARCEUS];
+  protected _tags = [CardTag.ARCEUS];
 
   public attacks = [
     {

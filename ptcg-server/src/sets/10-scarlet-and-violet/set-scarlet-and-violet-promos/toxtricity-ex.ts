@@ -6,7 +6,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class Toxtricityex extends PokemonCard {
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Toxel';
   public cardType: CardType = L;
@@ -19,8 +19,8 @@ export class Toxtricityex extends PokemonCard {
       name: 'Strumming Thunder',
       cost: [L, L, C],
       damage: 240,
-      text: 'Discard 2 Energy from this Pokémon.'
-    }
+      text: 'Discard 2 Energy from this Pokémon.',
+    },
   ];
 
   public set: string = 'SVP';

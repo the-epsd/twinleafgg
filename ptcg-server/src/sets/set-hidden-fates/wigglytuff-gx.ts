@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefa
 import { FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_MORE_DAMAGE_PER_HEADS } from '../../game/store/prefabs/attack-effects';
 
 export class WigglytuffGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Jigglypuff';
   public cardType: CardType = Y;
@@ -25,14 +25,14 @@ export class WigglytuffGx extends PokemonCard {
       cost: [Y, Y, C],
       damage: 100,
       damageCalculation: '+',
-      text: 'Flip a coin until you get tails. This attack does 30 more damage for each heads.'
+      text: 'Flip a coin until you get tails. This attack does 30 more damage for each heads.',
     },
     {
       name: 'Lovely Star-GX',
       cost: [Y, Y, C],
       damage: 130,
-      text: 'Heal all damage from this Pokémon. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Heal all damage from this Pokémon. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'HIF';

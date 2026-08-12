@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class TapuKokoV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = L;
   public hp: number = 200;
@@ -21,14 +21,14 @@ export class TapuKokoV extends PokemonCard {
       name: 'Spike Draw',
       cost: [L],
       damage: 20,
-      text: 'Draw 2 cards.'
+      text: 'Draw 2 cards.',
     },
     {
       name: 'Thunderous Bolt',
       cost: [L, L, C],
       damage: 200,
-      text: 'During your next turn, this Pokémon can\'t attack.'
-    }
+      text: "During your next turn, this Pokémon can't attack.",
+    },
   ];
 
   public regulationMark: string = 'D';

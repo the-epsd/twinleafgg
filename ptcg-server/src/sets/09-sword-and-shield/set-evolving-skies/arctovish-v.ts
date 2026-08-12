@@ -4,7 +4,7 @@ import { THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN, WAS_ATTACK_USED } from '../../../
 import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class ArctovishV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 220;
@@ -36,11 +36,12 @@ export class ArctovishV extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const defending = effect.opponent.active.getPokemonCard();
       const isVOrGX = defending && (
-        defending.tags.includes(CardTag.POKEMON_V) ||
-        defending.tags.includes(CardTag.POKEMON_VMAX) ||
-        defending.tags.includes(CardTag.POKEMON_VSTAR) ||
-        defending.tags.includes(CardTag.POKEMON_GX) ||
-        defending.tags.includes(CardTag.TAG_TEAM)
+        defending.hasTag(CardTag.POKEMON_V) ||
+        defending.hasTag(CardTag.POKEMON_VMAX) ||
+        defending.hasTag(CardTag.POKEMON_VSTAR) ||
+        defending.hasTag(CardTag.POKEMON_VUNION) ||
+        defending.hasTag(CardTag.POKEMON_GX) ||
+        defending.hasTag(CardTag.TAG_TEAM)
       );
 
       if (isVOrGX) {

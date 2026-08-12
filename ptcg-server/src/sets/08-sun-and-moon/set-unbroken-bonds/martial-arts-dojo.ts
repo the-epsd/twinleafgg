@@ -15,7 +15,8 @@ export class MartialArtsDojo extends TrainerCard {
   public set = 'UNB';
   public name = 'Martial Arts Dojo';
   public fullName = 'Martial Arts Dojo UNB';
-  public text = 'The attacks of non-Ultra Beast Pokémon that have any basic [F] Energy attached to them (both yours and your opponent\'s) do 10 more damage to the opponent\'s Active Pokémon (before applying Weakness and Resistance). If the attacking player has more Prize cards remaining than their opponent, those attacks do 40 more damage instead.';
+  public text =
+    "The attacks of non-Ultra Beast Pokémon that have any basic [F] Energy attached to them (both yours and your opponent's) do 10 more damage to the opponent's Active Pokémon (before applying Weakness and Resistance). If the attacking player has more Prize cards remaining than their opponent, those attacks do 40 more damage instead.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
@@ -26,14 +27,22 @@ export class MartialArtsDojo extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const hasBasicFightingEnergy = player.active.cards.filter(c => c.superType === SuperType.ENERGY && (c as EnergyCard).energyType === EnergyType.BASIC && c.name === 'Fighting Energy').length > 0;
+      const hasBasicFightingEnergy =
+        player.active.cards.filter(
+          (c) =>
+            c.superType === SuperType.ENERGY &&
+            (c as EnergyCard).energyType === EnergyType.BASIC &&
+            c.name === 'Fighting Energy',
+        ).length > 0;
 
       if (IS_STADIUM_EFFECT_BLOCKED(store, state, player, player.active, this)) {
         return state;
       }
 
-      if (player.active.cards.some(c => c.tags.includes(CardTag.ULTRA_BEAST)) ||
-        !hasBasicFightingEnergy) {
+      if (
+        player.active.cards.some((c) => c.hasTag(CardTag.ULTRA_BEAST)) ||
+        !hasBasicFightingEnergy
+      ) {
         return state;
       }
 

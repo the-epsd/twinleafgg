@@ -2,7 +2,11 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_BURN_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_BURN_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
 
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
@@ -10,7 +14,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class HoundoomV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = R;
   public hp: number = 210;
@@ -22,15 +26,15 @@ export class HoundoomV extends PokemonCard {
       name: 'Searing Flame',
       cost: [R],
       damage: 20,
-      text: 'Your opponent\'s Active Pokémon is now Burned.'
+      text: "Your opponent's Active Pokémon is now Burned.",
     },
     {
       name: 'Vengeful Flame',
       cost: [R, R, C],
       damage: 100,
       damageCalculation: '+',
-      text: 'If your Benched Fire Pokémon have any damage counters on them, this attack does 100 more damage.'
-    }
+      text: 'If your Benched Fire Pokémon have any damage counters on them, this attack does 100 more damage.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -53,7 +57,7 @@ export class HoundoomV extends PokemonCard {
       const player = effect.player;
 
       let hasDamagedFireOnBench = false;
-      player.bench.forEach(benched => {
+      player.bench.forEach((benched) => {
         if (benched.cards.length > 0 && benched.damage > 0) {
           // Check if this benched Pokemon is a Fire type
           const checkType = new CheckPokemonTypeEffect(benched);

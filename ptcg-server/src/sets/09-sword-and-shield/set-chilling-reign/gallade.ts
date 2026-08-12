@@ -6,7 +6,6 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Gallade extends PokemonCard {
-
   public regulationMark = 'E';
 
   public stage: Stage = Stage.STAGE_2;
@@ -26,14 +25,14 @@ export class Gallade extends PokemonCard {
       name: 'Feint',
       cost: [CardType.PSYCHIC],
       damage: 60,
-      text: 'This attack\'s damage isn\'t affected by Resistance.'
+      text: "This attack's damage isn't affected by Resistance.",
     },
     {
       name: 'Dynablade',
       cost: [C, C],
       damage: 60,
-      text: 'This attack does 60 damage for each of your opponent\'s Pokémon V in play.'
-    }
+      text: "This attack does 60 damage for each of your opponent's Pokémon V in play.",
+    },
   ];
 
   public set: string = 'CRE';
@@ -47,22 +46,27 @@ export class Gallade extends PokemonCard {
   public fullName: string = 'Gallade CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       effect.ignoreResistance = true;
-
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const benchPokemon = opponent.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined) as PokemonCard[];
-      const vPokemons = benchPokemon.filter(card => card.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX));
+      const benchPokemon = opponent.bench
+        .map((b) => b.getPokemonCard())
+        .filter((card) => card !== undefined) as PokemonCard[];
+      const vPokemons = benchPokemon.filter((card) =>
+        card.hasTag(CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX),
+      );
       const opponentActive = opponent.active.getPokemonCard();
-      if (opponentActive && opponentActive.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX || CardTag.POKEMON_ex)) {
+      if (
+        opponentActive &&
+        opponentActive.hasTag(
+          CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX || CardTag.POKEMON_ex,
+        )
+      ) {
         vPokemons.push(opponentActive);
       }
 
@@ -76,10 +80,8 @@ export class Gallade extends PokemonCard {
       }
 
       effect.damage *= vPokes;
-
     }
 
     return state;
   }
-
 }

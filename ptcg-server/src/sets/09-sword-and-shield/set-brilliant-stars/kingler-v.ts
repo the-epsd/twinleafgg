@@ -4,29 +4,45 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { AttachEnergyPrompt, GameMessage, PlayerType, ShuffleDeckPrompt, SlotType, StoreLike, State, StateUtils } from '../../../game';
+import {
+  AttachEnergyPrompt,
+  GameMessage,
+  PlayerType,
+  ShuffleDeckPrompt,
+  SlotType,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  COIN_FLIP_PROMPT,
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+} from '../../../game/store/prefabs/prefabs';
 
 export class KinglerV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 220;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];
 
-  public attacks = [{
-    name: 'Falling Bubbles',
-    cost: [W],
-    damage: 0,
-    text: 'Flip a coin. If heads, search your deck for up to 5 [W] Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck.'
-  }, {
-    name: 'Raging Pincer',
-    cost: [W, W, C],
-    damage: 200,
-    text: 'This Pokémon also does 30 damage to itself.'
-  }];
+  public attacks = [
+    {
+      name: 'Falling Bubbles',
+      cost: [W],
+      damage: 0,
+      text: 'Flip a coin. If heads, search your deck for up to 5 [W] Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck.',
+    },
+    {
+      name: 'Raging Pincer',
+      cost: [W, W, C],
+      damage: 200,
+      text: 'This Pokémon also does 30 damage to itself.',
+    },
+  ];
 
   public regulationMark: string = 'F';
 
@@ -41,7 +57,7 @@ export class KinglerV extends PokemonCard {
     // Ref: set-brilliant-stars/arceus-v.ts (AttachEnergyPrompt from deck) + COIN_FLIP_PROMPT
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      COIN_FLIP_PROMPT(store, state, player, result => {
+      COIN_FLIP_PROMPT(store, state, player, (result) => {
         if (!result) {
           return;
         }
@@ -50,24 +66,28 @@ export class KinglerV extends PokemonCard {
           return;
         }
 
-        store.prompt(state, new AttachEnergyPrompt(
-          player.id,
-          GameMessage.ATTACH_ENERGY_TO_BENCH,
-          player.deck,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.ACTIVE, SlotType.BENCH],
-          { superType: SuperType.ENERGY, name: 'Water Energy' },
-          { allowCancel: false, min: 0, max: 5 }
-        ), transfers => {
-          transfers = transfers || [];
-          for (const transfer of transfers) {
-            const target = StateUtils.getTarget(state, player, transfer.to);
-            player.deck.moveCardTo(transfer.card, target);
-          }
-          store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
-          });
-        });
+        store.prompt(
+          state,
+          new AttachEnergyPrompt(
+            player.id,
+            GameMessage.ATTACH_ENERGY_TO_BENCH,
+            player.deck,
+            PlayerType.BOTTOM_PLAYER,
+            [SlotType.ACTIVE, SlotType.BENCH],
+            { superType: SuperType.ENERGY, name: 'Water Energy' },
+            { allowCancel: false, min: 0, max: 5 },
+          ),
+          (transfers) => {
+            transfers = transfers || [];
+            for (const transfer of transfers) {
+              const target = StateUtils.getTarget(state, player, transfer.to);
+              player.deck.moveCardTo(transfer.card, target);
+            }
+            store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+              player.deck.applyOrder(order);
+            });
+          },
+        );
       });
     }
 

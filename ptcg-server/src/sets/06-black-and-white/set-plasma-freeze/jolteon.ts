@@ -8,7 +8,7 @@ import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/eff
 export class Jolteon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Eevee';
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public cardType: CardType = L;
   public hp: number = 90;
   public weakness = [{ type: F }];
@@ -36,8 +36,8 @@ export class Jolteon extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Pin Missile
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 4, results => {
-        const heads = results.filter(r => r).length;
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 4, (results) => {
+        const heads = results.filter((r) => r).length;
         effect.damage = 20 * heads;
       });
     }

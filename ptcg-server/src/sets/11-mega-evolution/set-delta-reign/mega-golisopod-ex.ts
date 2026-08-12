@@ -6,25 +6,27 @@ import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-pref
 export class MegaGolisopodex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Wimpod';
-  public tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
   public cardType: CardType = G;
   public hp: number = 340;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
 
-  public attacks = [{
-    name: 'Finishing Blow',
-    cost: [G],
-    damage: 60,
-    damageCalculation: '+',
-    text: 'This attack does 160 more damage if your opponent\'s Active Pokémon has any damage counters on it.',
-  },
-  {
-    name: 'Quatro Hold',
-    cost: [C, C, C],
-    damage: 160,
-    text: 'During your opponent\'s next turn, the Defending Pokémon can\'t Retreat.',
-  }];
+  public attacks = [
+    {
+      name: 'Finishing Blow',
+      cost: [G],
+      damage: 60,
+      damageCalculation: '+',
+      text: "This attack does 160 more damage if your opponent's Active Pokémon has any damage counters on it.",
+    },
+    {
+      name: 'Quatro Hold',
+      cost: [C, C, C],
+      damage: 160,
+      text: "During your opponent's next turn, the Defending Pokémon can't Retreat.",
+    },
+  ];
 
   public regulationMark: string = 'J';
   public set: string = 'M6';

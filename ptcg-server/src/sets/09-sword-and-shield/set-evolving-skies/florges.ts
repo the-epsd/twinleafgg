@@ -2,7 +2,12 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, IS_ABILITY_BLOCKED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_CONFUSION_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  IS_ABILITY_BLOCKED,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { GameMessage } from '../../../game/game-message';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 
@@ -11,9 +16,17 @@ import { GameError } from '../../../game/game-error';
 import { StateUtils } from '../../../game/store/state-utils';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { CardTarget, MoveEnergyPrompt, PlayerType, PowerType, SlotType, State, StoreLike } from '../../../game';
+import {
+  CardTarget,
+  MoveEnergyPrompt,
+  PlayerType,
+  PowerType,
+  SlotType,
+  State,
+  StoreLike,
+} from '../../../game';
 export class Florges extends PokemonCard {
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Floette';
   public cardType: CardType = P;
@@ -21,20 +34,22 @@ export class Florges extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Rapid Strike Connection',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'As often as you like during your turn, you may move an Energy from 1 of your Pokémon to 1 of your Rapid Strike Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Rapid Strike Connection',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'As often as you like during your turn, you may move an Energy from 1 of your Pokémon to 1 of your Rapid Strike Pokémon.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Wonder Shine',
       cost: [P, C, C],
       damage: 110,
-      text: 'Your opponent\'s Active Pokémon is now Confused.'
-    }
+      text: "Your opponent's Active Pokémon is now Confused.",
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -57,13 +72,13 @@ export class Florges extends PokemonCard {
       // Build blocked map: only allow moves TO Rapid Strike Pokemon
       const blockedTo: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (!card.tags.includes(CardTag.RAPID_STRIKE)) {
+        if (!card.hasTag(CardTag.RAPID_STRIKE)) {
           blockedTo.push(target);
         }
       });
 
       // Build blockedMap: exclude non-energy cards from sources
-      const blockedMap: { source: CardTarget, blocked: number[] }[] = [];
+      const blockedMap: { source: CardTarget; blocked: number[] }[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
         const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, cardList);
         store.reduceEffect(state, checkProvidedEnergy);
@@ -81,23 +96,27 @@ export class Florges extends PokemonCard {
         }
       });
 
-      return store.prompt(state, new MoveEnergyPrompt(
-        player.id,
-        GameMessage.MOVE_ENERGY_CARDS,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY },
-        { allowCancel: true, min: 0, max: 1, blockedTo, blockedMap }
-      ), transfers => {
-        if (!transfers || transfers.length === 0) {
-          return;
-        }
-        for (const transfer of transfers) {
-          const source = StateUtils.getTarget(state, player, transfer.from);
-          const targetSlot = StateUtils.getTarget(state, player, transfer.to);
-          source.moveCardTo(transfer.card, targetSlot);
-        }
-      });
+      return store.prompt(
+        state,
+        new MoveEnergyPrompt(
+          player.id,
+          GameMessage.MOVE_ENERGY_CARDS,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { superType: SuperType.ENERGY },
+          { allowCancel: true, min: 0, max: 1, blockedTo, blockedMap },
+        ),
+        (transfers) => {
+          if (!transfers || transfers.length === 0) {
+            return;
+          }
+          for (const transfer of transfers) {
+            const source = StateUtils.getTarget(state, player, transfer.from);
+            const targetSlot = StateUtils.getTarget(state, player, transfer.to);
+            source.moveCardTo(transfer.card, targetSlot);
+          }
+        },
+      );
     }
 
     // Attack 1: Wonder Shine

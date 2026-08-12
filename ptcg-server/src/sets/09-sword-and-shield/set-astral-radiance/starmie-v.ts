@@ -6,11 +6,8 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../../game/store/prefabs/attack-effects';
 
-
-
 export class StarmieV extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
 
   public regulationMark = 'F';
 
@@ -30,15 +27,15 @@ export class StarmieV extends PokemonCard {
       cost: [C, C],
       damage: 50,
       shredAttack: true,
-      text: 'This attack\'s damage isn\'t affected by Weakness or Resistance, or by any effects on your opponent\'s Active Pokémon.'
+      text: "This attack's damage isn't affected by Weakness or Resistance, or by any effects on your opponent's Active Pokémon.",
     },
     {
       name: 'Energy Spiral',
       cost: [W, W],
       damage: 50,
       damageCalculation: 'x',
-      text: 'This attack does 50 damage for each Energy attached to all of your opponent\'s Pokémon.'
-    }
+      text: "This attack does 50 damage for each Energy attached to all of your opponent's Pokémon.",
+    },
   ];
 
   public set: string = 'ASR';
@@ -52,7 +49,6 @@ export class StarmieV extends PokemonCard {
   public fullName: string = 'Starmie V ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS(store, state, effect, 50);
     }
@@ -65,7 +61,7 @@ export class StarmieV extends PokemonCard {
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
         const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, cardList);
         store.reduceEffect(state, checkProvidedEnergyEffect);
-        checkProvidedEnergyEffect.energyMap.forEach(energy => {
+        checkProvidedEnergyEffect.energyMap.forEach((energy) => {
           energies += energy.provides.length;
         });
       });
@@ -76,6 +72,3 @@ export class StarmieV extends PokemonCard {
     return state;
   }
 }
-
-
-

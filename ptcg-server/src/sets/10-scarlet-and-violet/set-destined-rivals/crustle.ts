@@ -4,7 +4,11 @@ import { StoreLike } from '../../../game/store/store-like';
 import { GamePhase, State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { PowerType, StateUtils } from '../../../game';
-import { AfterDamageEffect, ApplyWeaknessEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import {
+  AfterDamageEffect,
+  ApplyWeaknessEffect,
+  PutDamageEffect,
+} from '../../../game/store/effects/attack-effects';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
@@ -21,17 +25,19 @@ export class Crustle extends PokemonCard {
       name: 'Mysterious Stone House',
       useWhenInPlay: false,
       powerType: PowerType.ABILITY,
-      text: 'Prevent all damage done to this Pokémon by attacks from your opponent\'s Pokémon ex.'
-    }
+      text: "Prevent all damage done to this Pokémon by attacks from your opponent's Pokémon ex.",
+    },
   ];
 
-  public attacks = [{
-    name: 'Great Scissors',
-    cost: [G, C, C],
-    damage: 120,
-    shredAttack: true,
-    text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'Great Scissors',
+      cost: [G, C, C],
+      damage: 120,
+      shredAttack: true,
+      text: "This attack's damage isn't affected by any effects on your opponent's Active Pokémon.",
+    },
+  ];
 
   public set: string = 'DRI';
   public regulationMark = 'I';
@@ -63,8 +69,7 @@ export class Crustle extends PokemonCard {
         return state;
       }
 
-      if (sourceCard.tags.includes(CardTag.POKEMON_ex)) {
-
+      if (sourceCard.hasTag(CardTag.POKEMON_ex)) {
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
           const powerEffect = new PowerEffect(player, this.powers[0], this);
@@ -98,5 +103,4 @@ export class Crustle extends PokemonCard {
 
     return state;
   }
-
 }

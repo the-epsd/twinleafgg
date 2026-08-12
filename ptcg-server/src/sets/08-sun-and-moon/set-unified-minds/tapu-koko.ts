@@ -18,15 +18,15 @@ export class TapuKoko extends PokemonCard {
       name: 'Electro Ball',
       cost: [L],
       damage: 30,
-      text: ''
+      text: '',
     },
     {
       name: 'Nature Dive',
       cost: [L, L, C],
       damage: 100,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is an Ultra Beast, this attack does 100 more damage, and discard 2 Energy from this Pokémon.'
-    }
+      text: "If your opponent's Active Pokémon is an Ultra Beast, this attack does 100 more damage, and discard 2 Energy from this Pokémon.",
+    },
   ];
 
   public set: string = 'UNM';
@@ -43,7 +43,7 @@ export class TapuKoko extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const opponentActive = opponent.active.getPokemonCard();
-      if (opponentActive && opponentActive.tags.includes(CardTag.ULTRA_BEAST)) {
+      if (opponentActive && opponentActive.hasTag(CardTag.ULTRA_BEAST)) {
         effect.damage += 100;
         DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 2);
       }

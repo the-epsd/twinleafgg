@@ -8,8 +8,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class YveltalGX extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
 
   public stage: Stage = Stage.BASIC;
 
@@ -28,22 +27,22 @@ export class YveltalGX extends PokemonCard {
       name: 'Absorb Vitality',
       cost: [CardType.DARK],
       damage: 20,
-      text: 'Heal from this Pokémon the same amount of damage you did to your opponent\'s Active Pokémon.'
+      text: "Heal from this Pokémon the same amount of damage you did to your opponent's Active Pokémon.",
     },
 
     {
       name: 'Sonic Evil',
       cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 100,
-      text: 'This attack\'s damage isn\'t affected by Weakness or Resistance.'
+      text: "This attack's damage isn't affected by Weakness or Resistance.",
     },
 
     {
       name: 'Doom Count-GX',
       cost: [CardType.DARK],
       damage: 0,
-      text: 'If your opponent\'s Active Pokémon has exactly 4 damage counters on it, that Pokémon is Knocked Out. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "If your opponent's Active Pokémon has exactly 4 damage counters on it, that Pokémon is Knocked Out. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
   public set: string = 'FLI';
 
@@ -86,4 +85,4 @@ export class YveltalGX extends PokemonCard {
     }
     return state;
   }
-} 
+}

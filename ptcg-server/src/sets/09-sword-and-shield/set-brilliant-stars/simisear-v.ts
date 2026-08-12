@@ -3,15 +3,29 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
-import { AttachEnergyPrompt, GameMessage, PlayerType, SlotType, StoreLike, State, StateUtils } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+} from '../../../game/store/card/card-types';
+import {
+  AttachEnergyPrompt,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 
 export class SimisearV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = R;
   public hp: number = 210;
@@ -23,15 +37,15 @@ export class SimisearV extends PokemonCard {
       name: 'Bursting Power',
       cost: [R],
       damage: 20,
-      text: 'You may attach up to 2 basic Energy cards from your hand to your Pokémon in any way you like.'
+      text: 'You may attach up to 2 basic Energy cards from your hand to your Pokémon in any way you like.',
     },
     {
       name: 'Flare Juggling',
       cost: [R, C, C],
       damage: 90,
       damageCalculation: '+',
-      text: 'This attack does 30 more damage for each Energy attached to your opponent\'s Active Pokémon.'
-    }
+      text: "This attack does 30 more damage for each Energy attached to your opponent's Active Pokémon.",
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -47,28 +61,32 @@ export class SimisearV extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const hasBasicEnergyInHand = player.hand.cards.some(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC
+      const hasBasicEnergyInHand = player.hand.cards.some(
+        (c) => c instanceof EnergyCard && c.energyType === EnergyType.BASIC,
       );
       if (!hasBasicEnergyInHand) {
         return state;
       }
 
-      store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_CARDS,
-        player.hand,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { allowCancel: true, min: 0, max: 2 }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.hand.moveCardTo(transfer.card, target);
-        }
-      });
+      store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_CARDS,
+          player.hand,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+          { allowCancel: true, min: 0, max: 2 },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.hand.moveCardTo(transfer.card, target);
+          }
+        },
+      );
     }
 
     // Attack 2: Flare Juggling

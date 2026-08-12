@@ -17,32 +17,39 @@ import { StoreLike } from '../../../game/store/store-like';
 
 export class RapidStrikeScrollOfTheSkies extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public regulationMark: string = 'E';
   public set: string = 'CRE';
   public setNumber: string = '151';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rapid Strike Scroll of the Skies';
   public fullName: string = 'Rapid Strike Scroll of the Skies CRE';
-  public text: string = 'Attach a Pokémon Tool to 1 of your Pokémon that doesn\'t already have a Pokémon Tool attached. The Rapid Strike Pokémon this card is attached to can use the attack on this card. (You still need the necessary Energy to use this attack.) You may play any number of Item cards during your turn.';
+  public text: string =
+    "Attach a Pokémon Tool to 1 of your Pokémon that doesn't already have a Pokémon Tool attached. The Rapid Strike Pokémon this card is attached to can use the attack on this card. (You still need the necessary Energy to use this attack.) You may play any number of Item cards during your turn.";
 
   // Attack granted to Rapid Strike Pokemon: Gravdrop
   // Ref: https://bulbapedia.bulbagarden.net/wiki/Rapid_Strike_Scroll_of_the_Skies_(Chilling_Reign_151)
-  public attacks: Attack[] = [{
-    name: 'Gravdrop',
-    cost: [CardType.LIGHTNING, CardType.COLORLESS],
-    damage: 10,
-    damageCalculation: '+',
-    text: 'This attack does 50 more damage for each Energy attached to your opponent\'s Active Pokémon.'
-  }];
+  public attacks: Attack[] = [
+    {
+      name: 'Gravdrop',
+      cost: [CardType.LIGHTNING, CardType.COLORLESS],
+      damage: 10,
+      damageCalculation: '+',
+      text: "This attack does 50 more damage for each Energy attached to your opponent's Active Pokémon.",
+    },
+  ];
 
   // Ref: set-battle-styles/single-strike-scroll-of-scorn.ts (tool attack pattern)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Add attack to Rapid Strike Pokemon that has this tool
-    if (effect instanceof CheckPokemonAttacksEffect && effect.player.active.getPokemonCard()?.tools.includes(this) &&
-      !effect.attacks.includes(this.attacks[0])) {
-
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
+    if (
+      effect instanceof CheckPokemonAttacksEffect &&
+      effect.player.active.getPokemonCard()?.tools.includes(this) &&
+      !effect.attacks.includes(this.attacks[0])
+    ) {
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+        return state;
+      }
 
       effect.attacks.push(this.attacks[0]);
     }
@@ -51,7 +58,9 @@ export class RapidStrikeScrollOfTheSkies extends TrainerCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
-      if (!player.active.cards.some(c => c instanceof PokemonCard && c.tags.includes(CardTag.RAPID_STRIKE))) {
+      if (
+        !player.active.cards.some((c) => c instanceof PokemonCard && c.hasTag(CardTag.RAPID_STRIKE))
+      ) {
         return state;
       }
 

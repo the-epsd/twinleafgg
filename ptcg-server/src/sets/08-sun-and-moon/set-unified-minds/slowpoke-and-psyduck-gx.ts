@@ -1,11 +1,23 @@
-import { CardTag, CardType, ChooseCardsPrompt, GameMessage, PokemonCard, Stage, State, StateUtils, StoreLike, SuperType, TrainerType } from '../../../game';
+import {
+  CardTag,
+  CardType,
+  ChooseCardsPrompt,
+  GameMessage,
+  PokemonCard,
+  Stage,
+  State,
+  StateUtils,
+  StoreLike,
+  SuperType,
+  TrainerType,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class SlowpokePsyduckGX extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
+  protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 250;
@@ -38,26 +50,30 @@ export class SlowpokePsyduckGX extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      // Prompt player to choose cards to discard 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        player.hand,
-        { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-        { allowCancel: false, min: 0 }
-      ), cards => {
-        cards = cards || [];
-        if (cards.length === 0) {
-          return;
-        }
-        const discardSupporters = new DiscardCardsEffect(effect, cards);
-        discardSupporters.target = player.active;
-        store.reduceEffect(state, discardSupporters);
-        player.hand.moveCardsTo(cards, player.discard);
+      // Prompt player to choose cards to discard
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          player.hand,
+          { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
+          { allowCancel: false, min: 0 },
+        ),
+        (cards) => {
+          cards = cards || [];
+          if (cards.length === 0) {
+            return;
+          }
+          const discardSupporters = new DiscardCardsEffect(effect, cards);
+          discardSupporters.target = player.active;
+          store.reduceEffect(state, discardSupporters);
+          player.hand.moveCardsTo(cards, player.discard);
 
-        effect.damage = cards.length * 40;
-        return state;
-      });
+          effect.damage = cards.length * 40;
+          return state;
+        },
+      );
     }
 
     // Thrilling Times-GX
@@ -72,7 +88,10 @@ export class SlowpokePsyduckGX extends PokemonCard {
       const extraEffectCost: CardType[] = [W, W, W, W, W, W, W, W];
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       store.reduceEffect(state, checkProvidedEnergy);
-      const meetsExtraEffectCost = StateUtils.checkEnoughEnergy(checkProvidedEnergy.energyMap, extraEffectCost);
+      const meetsExtraEffectCost = StateUtils.checkEnoughEnergy(
+        checkProvidedEnergy.energyMap,
+        extraEffectCost,
+      );
 
       if (meetsExtraEffectCost) {
         coinFlips = 10;

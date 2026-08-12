@@ -3,13 +3,18 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON } from '../../game/store/prefabs/attack-effects';
-import { ADD_BURN_TO_PLAYER_ACTIVE, AFTER_ATTACK, BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import {
+  ADD_BURN_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  BLOCK_IF_GX_ATTACK_USED,
+  WAS_ATTACK_USED,
+} from '../../game/store/prefabs/prefabs';
 import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
 import { State, StoreLike } from '../../game';
 export class EnteiGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = R;
   public hp: number = 180;
@@ -21,20 +26,20 @@ export class EnteiGx extends PokemonCard {
       name: 'Combustion',
       cost: [R, C],
       damage: 50,
-      text: ''
+      text: '',
     },
     {
       name: 'Fire Fang',
       cost: [R, R, C],
       damage: 100,
-      text: 'Your opponent’s Active Pokémon is now Burned.'
+      text: 'Your opponent’s Active Pokémon is now Burned.',
     },
     {
       name: 'Brave Burn GX',
       cost: [R, R, C],
       damage: 0,
-      text: 'This attack does 150 damage to 1 of your opponent’s Benched Pokémon. (Don’t apply Weakness and Resistance for Benched Pokémon.) (You can’t use more than 1 GX attack in a game.)'
-    }
+      text: 'This attack does 150 damage to 1 of your opponent’s Benched Pokémon. (Don’t apply Weakness and Resistance for Benched Pokémon.) (You can’t use more than 1 GX attack in a game.)',
+    },
   ];
 
   public set: string = 'SLG';

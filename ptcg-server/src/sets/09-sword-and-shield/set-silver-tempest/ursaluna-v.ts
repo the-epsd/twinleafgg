@@ -6,10 +6,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class UrsalunaV extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
 
   public cardType: CardType = CardType.FIGHTING;
 
@@ -19,19 +18,23 @@ export class UrsalunaV extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Hard Coat',
-    powerType: PowerType.ABILITY,
-    text: 'This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: 'Hard Coat',
+      powerType: PowerType.ABILITY,
+      text: 'This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Peat Shoulder',
-    cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.FIGHTING],
-    damage: 220,
-    damageCalculation: '-',
-    text: 'This attack does 10 less damage for each damage counter on this Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'Peat Shoulder',
+      cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.FIGHTING],
+      damage: 220,
+      damageCalculation: '-',
+      text: 'This attack does 10 less damage for each damage counter on this Pokémon.',
+    },
+  ];
 
   public set: string = 'SIT';
 
@@ -46,7 +49,6 @@ export class UrsalunaV extends PokemonCard {
   public fullName: string = 'Ursaluna V SIT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // Reduce damage by 30
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const pokemonCard = effect.target.getPokemonCard();
@@ -79,4 +81,3 @@ export class UrsalunaV extends PokemonCard {
     return state;
   }
 }
-

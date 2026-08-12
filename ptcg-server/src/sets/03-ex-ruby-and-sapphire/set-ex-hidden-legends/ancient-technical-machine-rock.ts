@@ -1,8 +1,29 @@
-import { Attack, CardManager, CardTarget, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCard, SlotType, StateUtils } from '../../../game';
-import { CardTag, CardType, Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
+import {
+  Attack,
+  CardManager,
+  CardTarget,
+  ChoosePokemonPrompt,
+  GameError,
+  GameMessage,
+  PlayerType,
+  PokemonCard,
+  SlotType,
+  StateUtils,
+} from '../../../game';
+import {
+  CardTag,
+  CardType,
+  Stage,
+  SuperType,
+  TrainerType,
+} from '../../../game/store/card/card-types';
 import { ColorlessCostReducer } from '../../../game/store/card/pokemon-interface';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { CheckAttackCostEffect, CheckPokemonAttacksEffect, CheckTableStateEffect } from '../../../game/store/effects/check-effects';
+import {
+  CheckAttackCostEffect,
+  CheckPokemonAttacksEffect,
+  CheckTableStateEffect,
+} from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
@@ -13,25 +34,26 @@ import { AttackEffect } from '../../../game/store/effects/game-effects';
 
 export class AncientTechnicalMachineRock extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
-  public tags = [CardTag.TECHNICAL_MACHINE];
+  protected _tags = [CardTag.TECHNICAL_MACHINE];
   public set: string = 'HL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';
   public name: string = 'Ancient Technical Machine [Rock]';
   public fullName: string = 'Ancient Technical Machine [Rock] HL';
 
-  public attacks: Attack[] = [{
-    name: 'Stone Generator',
-    cost: [C],
-    damage: 0,
-    text: 'If your opponent has any Evolved Pokémon in play, remove the highest Stage Evolution card from each of them and put those cards back into his or her hand.'
-  }];
+  public attacks: Attack[] = [
+    {
+      name: 'Stone Generator',
+      cost: [C],
+      damage: 0,
+      text: 'If your opponent has any Evolved Pokémon in play, remove the highest Stage Evolution card from each of them and put those cards back into his or her hand.',
+    },
+  ];
 
   public text: string =
-    'Attach this card to 1 of your Evolved Pokémon (excluding Pokémon-ex and Pokémon that has an owner in its name) in play. That Pokémon may use this card\'s attack instead of its own. At the end of your turn, discard Ancient Technical Machine [Rock].';
+    "Attach this card to 1 of your Evolved Pokémon (excluding Pokémon-ex and Pokémon that has an owner in its name) in play. That Pokémon may use this card's attack instead of its own. At the end of your turn, discard Ancient Technical Machine [Rock].";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
@@ -39,7 +61,7 @@ export class AncientTechnicalMachineRock extends TrainerCard {
       const blocked: CardTarget[] = [];
       let eligibleCount = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
-        if (cardList.getPokemons().length < 2 || card.tags.includes(CardTag.POKEMON_ex)) {
+        if (cardList.getPokemons().length < 2 || card.hasTag(CardTag.POKEMON_ex)) {
           blocked.push(index);
         } else {
           eligibleCount++;
@@ -51,15 +73,19 @@ export class AncientTechnicalMachineRock extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      state = store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE],
-        { min: 1, max: 1, allowCancel: false, blocked },
-      ), transfers => {
-        player.supporter.moveCardTo(effect.trainerCard, transfers[0]);
-      });
+      state = store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          { min: 1, max: 1, allowCancel: false, blocked },
+        ),
+        (transfers) => {
+          player.supporter.moveCardTo(effect.trainerCard, transfers[0]);
+        },
+      );
     }
 
     if (effect instanceof EndTurnEffect) {
@@ -68,21 +94,23 @@ export class AncientTechnicalMachineRock extends TrainerCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
         if (cardList.cards.includes(this)) {
           cardList.moveCardTo(this, player.discard);
-
         }
       });
     }
 
     if (effect instanceof CheckTableStateEffect) {
-      state.players.forEach(player => {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      state.players.forEach((player) => {
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
           if (!cardList.cards.includes(this)) {
             return;
           }
 
           const attachedTo = cardList.getPokemonCard();
 
-          if (!!attachedTo && (attachedTo.tags.includes(CardTag.POKEMON_ex) || cardList.getPokemons().length < 2)) {
+          if (
+            !!attachedTo &&
+            (attachedTo.hasTag(CardTag.POKEMON_ex) || cardList.getPokemons().length < 2)
+          ) {
             cardList.moveCardTo(this, player.discard);
           }
         });
@@ -102,8 +130,11 @@ export class AncientTechnicalMachineRock extends TrainerCard {
       }
     }
 
-    if (effect instanceof CheckPokemonAttacksEffect && effect.player.active.cards.includes(this) &&
-      !effect.attacks.includes(this.attacks[0])) {
+    if (
+      effect instanceof CheckPokemonAttacksEffect &&
+      effect.player.active.cards.includes(this) &&
+      !effect.attacks.includes(this.attacks[0])
+    ) {
       effect.attacks.push(this.attacks[0]);
     }
 
@@ -113,15 +144,15 @@ export class AncientTechnicalMachineRock extends TrainerCard {
 
       // Look through all known cards to find out if Pokemon can evolve
       const cm = CardManager.getInstance();
-      const evolutions = cm.getAllCards().filter(c => {
+      const evolutions = cm.getAllCards().filter((c) => {
         return c instanceof PokemonCard && c.stage !== Stage.BASIC;
       }) as PokemonCard[];
 
       // Build possible evolution card names
       const evolutionNames: string[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (list, card, target) => {
-        const valid = evolutions.filter(e => e.evolvesFrom === card.name);
-        valid.forEach(c => {
+        const valid = evolutions.filter((e) => e.evolvesFrom === card.name);
+        valid.forEach((c) => {
           if (!evolutionNames.includes(c.name)) {
             evolutionNames.push(c.name);
           }
@@ -129,10 +160,16 @@ export class AncientTechnicalMachineRock extends TrainerCard {
       });
 
       if (opponent.active.getPokemonCard()) {
-        const activePokemon = opponent.active.cards.filter(card => card.superType === SuperType.POKEMON);
+        const activePokemon = opponent.active.cards.filter(
+          (card) => card.superType === SuperType.POKEMON,
+        );
         if (activePokemon.length > 0) {
           let lastPlayedPokemonIndex = activePokemon.length - 1;
-          while (lastPlayedPokemonIndex >= 0 && activePokemon[lastPlayedPokemonIndex] instanceof PokemonCard && (activePokemon[lastPlayedPokemonIndex] as PokemonCard).stage === Stage.BASIC) {
+          while (
+            lastPlayedPokemonIndex >= 0 &&
+            activePokemon[lastPlayedPokemonIndex] instanceof PokemonCard &&
+            (activePokemon[lastPlayedPokemonIndex] as PokemonCard).stage === Stage.BASIC
+          ) {
             lastPlayedPokemonIndex--;
           }
           if (lastPlayedPokemonIndex >= 0) {
@@ -142,12 +179,18 @@ export class AncientTechnicalMachineRock extends TrainerCard {
         }
       }
 
-      opponent.bench.forEach(benchSpot => {
+      opponent.bench.forEach((benchSpot) => {
         if (benchSpot.getPokemonCard()) {
-          const benchPokemon = benchSpot.cards.filter(card => card.superType === SuperType.POKEMON);
+          const benchPokemon = benchSpot.cards.filter(
+            (card) => card.superType === SuperType.POKEMON,
+          );
           if (benchPokemon.length > 0) {
             let lastPlayedPokemonIndex = benchPokemon.length - 1;
-            while (lastPlayedPokemonIndex >= 0 && benchPokemon[lastPlayedPokemonIndex] instanceof PokemonCard && (benchPokemon[lastPlayedPokemonIndex] as PokemonCard).stage === Stage.BASIC) {
+            while (
+              lastPlayedPokemonIndex >= 0 &&
+              benchPokemon[lastPlayedPokemonIndex] instanceof PokemonCard &&
+              (benchPokemon[lastPlayedPokemonIndex] as PokemonCard).stage === Stage.BASIC
+            ) {
               lastPlayedPokemonIndex--;
             }
             if (lastPlayedPokemonIndex >= 0) {
@@ -157,7 +200,6 @@ export class AncientTechnicalMachineRock extends TrainerCard {
           }
         }
       });
-
     }
 
     return state;

@@ -3,28 +3,34 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { CONFIRMATION_PROMPT, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  CONFIRMATION_PROMPT,
+  SWITCH_ACTIVE_WITH_BENCHED,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Victiniex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public cardType: CardType = R;
   public hp: number = 190;
   public weakness = [{ type: W }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Strafe',
-    cost: [R],
-    damage: 30,
-    text: 'You may switch this Pokémon with 1 of your Benched Pokémon.'
-  },
-  {
-    name: 'Victory Flame',
-    cost: [R, R, C],
-    damage: 220,
-    text: 'During your next turn, this Pokémon can\'t attack.'
-  }];
+  public attacks = [
+    {
+      name: 'Strafe',
+      cost: [R],
+      damage: 30,
+      text: 'You may switch this Pokémon with 1 of your Benched Pokémon.',
+    },
+    {
+      name: 'Victory Flame',
+      cost: [R, R, C],
+      damage: 220,
+      text: "During your next turn, this Pokémon can't attack.",
+    },
+  ];
 
   public regulationMark = 'G';
   public set: string = 'OBF';
@@ -37,7 +43,7 @@ export class Victiniex extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      CONFIRMATION_PROMPT(store, state, player, result => {
+      CONFIRMATION_PROMPT(store, state, player, (result) => {
         if (result) {
           SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
         }

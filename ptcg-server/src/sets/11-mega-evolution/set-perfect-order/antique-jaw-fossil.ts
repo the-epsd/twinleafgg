@@ -35,7 +35,7 @@ export class AntiqueJawFossil extends TrainerCard {
   public pokemonType = PokemonType.NORMAL;
   public evolvesFrom = '';
   public cardTag = [];
-  public tags = [CardTag.ANTIQUE];
+  protected _tags = [CardTag.ANTIQUE];
   public tools = [];
   public evolvesTo = [];
   public evolvesToStage = [];

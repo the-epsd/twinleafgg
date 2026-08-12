@@ -7,7 +7,7 @@ import { OPPONENT_CANNOT_PLAY_ITEM_CARDS } from '../../../game/store/prefabs/eff
 
 export class Banetteex extends PokemonCard {
   public regulationMark = 'G';
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Shuppet';
   public cardType: CardType = P;

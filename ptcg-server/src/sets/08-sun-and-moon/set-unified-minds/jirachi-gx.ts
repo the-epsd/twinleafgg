@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, BLOCK_IF_GX_ATTACK_USED, SHUFFLE_D
 import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class JirachiGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 160;
@@ -80,7 +80,7 @@ export class JirachiGx extends PokemonCard {
         }
       }
 
-      player.bench.forEach(b => {
+      player.bench.forEach((b) => {
         if (b.cards.length > 0) {
           const checkType = new CheckPokemonTypeEffect(b);
           store.reduceEffect(state, checkType);
@@ -96,22 +96,26 @@ export class JirachiGx extends PokemonCard {
         return SHUFFLE_DECK(store, state, player);
       }
 
-      store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_CARDS,
-        player.deck,
-        PlayerType.BOTTOM_PLAYER,
-        slots,
-        { superType: SuperType.ENERGY },
-        { allowCancel: false, min: 0, max: 1 }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.deck.moveCardTo(transfer.card, target);
-        }
-        SHUFFLE_DECK(store, state, player);
-      });
+      store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_CARDS,
+          player.deck,
+          PlayerType.BOTTOM_PLAYER,
+          slots,
+          { superType: SuperType.ENERGY },
+          { allowCancel: false, min: 0, max: 1 },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.deck.moveCardTo(transfer.card, target);
+          }
+          SHUFFLE_DECK(store, state, player);
+        },
+      );
     }
 
     // Star Shield-GX

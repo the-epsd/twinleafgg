@@ -9,7 +9,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class CharizardGx2 extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Charmeleon';
   public cardType: CardType = R;
@@ -22,14 +22,14 @@ export class CharizardGx2 extends PokemonCard {
       name: 'Flamethrower',
       cost: [R, R, C, C],
       damage: 140,
-      text: ''
+      text: '',
     },
     {
       name: 'Flare Blitz-GX',
       cost: [R, R, C, C],
       damage: 300,
-      text: '(You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "(You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'HIF';

@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Druddigon extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = N;
   public hp: number = 110;
@@ -21,14 +21,14 @@ export class Druddigon extends PokemonCard {
       name: 'Guard Press',
       cost: [C, C],
       damage: 20,
-      text: 'During your opponent\'s next turn, any damage done to this Pokémon by attacks is reduced by 20 (after applying Weakness and Resistance).'
+      text: "During your opponent's next turn, any damage done to this Pokémon by attacks is reduced by 20 (after applying Weakness and Resistance).",
     },
     {
       name: 'Dragon Claw',
       cost: [R, R, W, C],
       damage: 90,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'PLS';

@@ -7,23 +7,26 @@ import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/eff
 
 export class WhimsicottV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public cardType: CardType = P;
   public hp: number = 190;
   public weakness = [{ type: M }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Fluff Gets in the Way',
-    cost: [P],
-    damage: 20,
-    text: 'If the Defending Pokémon is a Basic Pokémon, it can\'t attack during your opponent\'s next turn.'
-  }, {
-    name: 'Cotton Guard',
-    cost: [P, C, C],
-    damage: 90,
-    text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
-  }];
+  public attacks = [
+    {
+      name: 'Fluff Gets in the Way',
+      cost: [P],
+      damage: 20,
+      text: "If the Defending Pokémon is a Basic Pokémon, it can't attack during your opponent's next turn.",
+    },
+    {
+      name: 'Cotton Guard',
+      cost: [P, C, C],
+      damage: 90,
+      text: "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).",
+    },
+  ];
 
   public regulationMark = 'F';
   public set: string = 'BRS';

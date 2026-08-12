@@ -22,8 +22,8 @@ export class Primeape extends PokemonCard {
       cost: [F],
       damage: 30,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is a Pokémon V, this attack does 60 more damage.'
-    }
+      text: "If your opponent's Active Pokémon is a Pokémon V, this attack does 60 more damage.",
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -41,11 +41,12 @@ export class Primeape extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       const opponentActive = opponent.active.getPokemonCard();
 
-      if (opponentActive && (
-        opponentActive.tags.includes(CardTag.POKEMON_V) ||
-        opponentActive.tags.includes(CardTag.POKEMON_VMAX) ||
-        opponentActive.tags.includes(CardTag.POKEMON_VSTAR)
-      )) {
+      if (
+        opponentActive &&
+        (opponentActive.hasTag(CardTag.POKEMON_V) ||
+          opponentActive.hasTag(CardTag.POKEMON_VMAX) ||
+          opponentActive.hasTag(CardTag.POKEMON_VSTAR))
+      ) {
         effect.damage += 60;
       }
     }

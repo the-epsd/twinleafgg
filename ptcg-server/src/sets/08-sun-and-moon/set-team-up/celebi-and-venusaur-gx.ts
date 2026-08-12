@@ -1,11 +1,18 @@
 import { CardTag, CardType, PokemonCard, Stage, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { ADD_BURN_TO_PLAYER_ACTIVE, ADD_CONFUSION_TO_PLAYER_ACTIVE, ADD_POISON_TO_PLAYER_ACTIVE, BLOCK_IF_GX_ATTACK_USED, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_BURN_TO_PLAYER_ACTIVE,
+  ADD_CONFUSION_TO_PLAYER_ACTIVE,
+  ADD_POISON_TO_PLAYER_ACTIVE,
+  BLOCK_IF_GX_ATTACK_USED,
+  SHUFFLE_DECK,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 
 export class CelebiVenusaurGX extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
+  protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = G;
   public hp: number = 270;
@@ -17,20 +24,20 @@ export class CelebiVenusaurGX extends PokemonCard {
       name: 'Pollen Hazard',
       cost: [G, C, C],
       damage: 50,
-      text: 'Your opponent\'s Active Pokémon is now Burned, Confused, and Poisoned.'
+      text: "Your opponent's Active Pokémon is now Burned, Confused, and Poisoned.",
     },
     {
       name: 'Solar Beam',
       cost: [G, G, C, C],
       damage: 150,
-      text: ''
+      text: '',
     },
     {
       name: 'Evergreen-GX',
       cost: [G, G, C, C],
       damage: 180,
       gxAttack: true,
-      text: 'Heal all damage from this Pokémon. If this Pokémon has at least 1 extra [G] Energy attached to it (in addition to this attack\'s cost), shuffle all cards from your discard pile into your deck. (You can\'t use more than 1 GX attack in a game.)'
+      text: "Heal all damage from this Pokémon. If this Pokémon has at least 1 extra [G] Energy attached to it (in addition to this attack's cost), shuffle all cards from your discard pile into your deck. (You can't use more than 1 GX attack in a game.)",
     },
   ];
 
@@ -62,7 +69,10 @@ export class CelebiVenusaurGX extends PokemonCard {
       const extraEffectCost: CardType[] = [G, G, G, C, C];
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       store.reduceEffect(state, checkProvidedEnergy);
-      const meetsExtraEffectCost = StateUtils.checkEnoughEnergy(checkProvidedEnergy.energyMap, extraEffectCost);
+      const meetsExtraEffectCost = StateUtils.checkEnoughEnergy(
+        checkProvidedEnergy.energyMap,
+        extraEffectCost,
+      );
 
       if (meetsExtraEffectCost) {
         player.discard.moveTo(player.deck);

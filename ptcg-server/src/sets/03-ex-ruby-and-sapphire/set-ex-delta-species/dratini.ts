@@ -2,15 +2,22 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { COIN_FLIP_PROMPT, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  COIN_FLIP_PROMPT,
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Dratini extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.DELTA_SPECIES];
+  protected _tags = [CardTag.DELTA_SPECIES];
   public cardType: CardType = L;
   public hp: number = 50;
   public weakness = [{ type: C }];
-  public resistance = [{ type: G, value: -30 }, { type: F, value: -30 }];
+  public resistance = [
+    { type: G, value: -30 },
+    { type: F, value: -30 },
+  ];
   public retreat = [C];
 
   public attacks = [{
@@ -32,7 +39,6 @@ export class Dratini extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 1, this)) {
       COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (!result) {
@@ -43,5 +49,4 @@ export class Dratini extends PokemonCard {
 
     return state;
   }
-
 }

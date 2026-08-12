@@ -5,12 +5,20 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
 import { PlayerType, PowerType, StateUtils, StoreLike, State } from '../../../game';
-import { CheckPokemonAttacksEffect, CheckTableStateEffect } from '../../../game/store/effects/check-effects';
+import {
+  CheckPokemonAttacksEffect,
+  CheckTableStateEffect,
+} from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { AFTER_ATTACK, IS_ABILITY_BLOCKED, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  AFTER_ATTACK,
+  IS_ABILITY_BLOCKED,
+  SWITCH_ACTIVE_WITH_BENCHED,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class CelebiEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = G;
   public hp: number = 110;
@@ -18,20 +26,22 @@ export class CelebiEx extends PokemonCard {
   public resistance = [{ type: W, value: -20 }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Time Recall',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Each of your evolved Pokémon can use any attack from its previous Evolutions. (You still need the necessary Energy to use each attack.)'
-  }];
+  public powers = [
+    {
+      name: 'Time Recall',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Each of your evolved Pokémon can use any attack from its previous Evolutions. (You still need the necessary Energy to use each attack.)',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Wind Whisk',
       cost: [G, C, C],
       damage: 60,
-      text: 'Switch this Pokémon with 1 of your Benched Pokémon.'
-    }
+      text: 'Switch this Pokémon with 1 of your Benched Pokémon.',
+    },
   ];
 
   public set: string = 'BCR';

@@ -11,7 +11,7 @@ import { BREAK_RULE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs
 import { COPY_OPPONENT_ACTIVE_ATTACK } from '../../../game/store/prefabs/attack-effects';
 
 export class ZoroarkBreak extends PokemonCard {
-  public tags = [CardTag.BREAK];
+  protected _tags = [CardTag.BREAK];
   public stage: Stage = Stage.BREAK;
   public evolvesFrom: string = 'Zoroark';
   public cardType: CardType = D;

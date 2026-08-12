@@ -6,7 +6,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { MEGA_EVOLUTION_END_TURN } from '../../../game/store/prefabs/tool-prefabs';
 
 export class MAlakazamEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX, CardTag.MEGA];
+  protected _tags = [CardTag.POKEMON_EX, CardTag.MEGA];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom = 'Alakazam-EX';
   public cardType: CardType = P;
@@ -14,13 +14,15 @@ export class MAlakazamEx extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Zen Force',
-    cost: [P, C],
-    damage: 10,
-    damageCalculation: '+',
-    text: "This attack does 30 more damage for each damage counter on your opponent's Active Pokémon.",
-  }];
+  public attacks = [
+    {
+      name: 'Zen Force',
+      cost: [P, C],
+      damage: 10,
+      damageCalculation: '+',
+      text: "This attack does 30 more damage for each damage counter on your opponent's Active Pokémon.",
+    },
+  ];
 
   public set: string = 'FCO';
   public name: string = 'M Alakazam-EX';

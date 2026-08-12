@@ -11,7 +11,7 @@ import { StoreLike } from '../../../game/store/store-like';
 export class TeamRocketsHandiwork extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public tags = [CardTag.TEAM_ROCKET];
+  protected _tags = [CardTag.TEAM_ROCKET];
 
   public set: string = 'FCO';
   public cardImage: string = 'assets/cardback.png';
@@ -19,10 +19,10 @@ export class TeamRocketsHandiwork extends TrainerCard {
   public name: string = 'Team Rocket\'s Handiwork';
   public fullName: string = 'Team Rocket\'s Handiwork FCO';
 
-  public text: string = 'Flip 2 coins. For each heads, discard 2 cards from the top of your opponent\'s deck.';
+  public text: string =
+    "Flip 2 coins. For each heads, discard 2 cards from the top of your opponent's deck.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -46,5 +46,4 @@ export class TeamRocketsHandiwork extends TrainerCard {
 
     return state;
   }
-
 }

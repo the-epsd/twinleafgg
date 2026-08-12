@@ -7,7 +7,7 @@ import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/
 
 export class Diglett extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public cardType: CardType = F;
   public hp: number = 50;
   public weakness = [{ type: G }];

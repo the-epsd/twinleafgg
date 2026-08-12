@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class Meltan extends PokemonCard {
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;
   public hp: number = 70;
@@ -23,14 +23,14 @@ export class Meltan extends PokemonCard {
       name: 'Iron Intake',
       cost: [M],
       damage: 0,
-      text: 'Heal 30 damage from this Pokémon.'
+      text: 'Heal 30 damage from this Pokémon.',
     },
     {
       name: 'Headbutt',
       cost: [C, C],
       damage: 20,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'E';

@@ -6,25 +6,27 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DEFENDING_POKEMON_DOES_LESS_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Toxel2 extends PokemonCard {
-  public tags = [CardTag.FUSION_STRIKE];
+  protected _tags = [CardTag.FUSION_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = L;
   public hp: number = 60;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Growl',
-    cost: [C],
-    damage: 0,
-    text: 'During your opponent\'s next turn, the Defending Pokémon\'s attacks do 30 less damage (before applying Weakness and Resistance).'
-  },
-  {
-    name: 'Tiny Bolt',
-    cost: [L],
-    damage: 10,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Growl',
+      cost: [C],
+      damage: 0,
+      text: "During your opponent's next turn, the Defending Pokémon's attacks do 30 less damage (before applying Weakness and Resistance).",
+    },
+    {
+      name: 'Tiny Bolt',
+      cost: [L],
+      damage: 10,
+      text: '',
+    },
+  ];
 
   public regulationMark = 'E';
   public set: string = 'FST';

@@ -9,7 +9,7 @@ export class DialgaGLVX extends PokemonCard {
   public stage: Stage = Stage.LV_X;
   public evolvesFrom = 'Dialga G';
   public cardType: CardType = M;
-  public tags = [CardTag.POKEMON_LV_X, CardTag.POKEMON_SP];
+  protected _tags = [CardTag.POKEMON_LV_X, CardTag.POKEMON_SP];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
@@ -35,21 +35,24 @@ export class DialgaGLVX extends PokemonCard {
   public fullName: string = 'Dialga G LV.X PL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    HANDLE_ABILITY_BLOCK(effect, ({ player, card }) => {
-      if (card.tags.includes(CardTag.POKEMON_SP)) {
-        return false;
-      }
-      const cardList = StateUtils.findCardList(state, this);
-      const owner = StateUtils.findOwner(state, cardList);
-      if (IS_POKEBODY_BLOCKED(store, state, owner, this)) {
-        return false;
-      }
-      return IS_ABILITY_LOCKER_IN_PLAY(state, player, this);
-    }, {
-      powerTypes: POKEBODY_TYPES,
-      error: GameMessage.BLOCKED_BY_ABILITY,
-    });
+    HANDLE_ABILITY_BLOCK(
+      effect,
+      ({ player, card }) => {
+        if (card.hasTag(CardTag.POKEMON_SP)) {
+          return false;
+        }
+        const cardList = StateUtils.findCardList(state, this);
+        const owner = StateUtils.findOwner(state, cardList);
+        if (IS_POKEBODY_BLOCKED(store, state, owner, this)) {
+          return false;
+        }
+        return IS_ABILITY_LOCKER_IN_PLAY(state, player, this);
+      },
+      {
+        powerTypes: POKEBODY_TYPES,
+        error: GameMessage.BLOCKED_BY_ABILITY,
+      },
+    );
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;

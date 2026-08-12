@@ -4,26 +4,28 @@ import { WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
 import { BOOST_IF_OTHER_ANCIENT_ATTACKED_LAST_TURN } from "../../../game/store/prefabs/attack-effects";
 
 export class Koraidon extends PokemonCard {
-  public tags = [CardTag.ANCIENT];
+  protected _tags = [CardTag.ANCIENT];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = F;
   public hp: number = 130;
   public retreat = [C, C];
   public weakness = [{ type: P }];
 
-  public attacks = [{
-    name: 'Unrelenting Onslaught',
-    cost: [C, C],
-    damage: 30,
-    damageCalculator: '+',
-    text: 'If 1 of your other Ancient Pokémon used an attack during your last turn, this attack does 150 more damage.'
-  },
-  {
-    name: 'Hammer In',
-    cost: [F, F, C],
-    damage: 110,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Unrelenting Onslaught',
+      cost: [C, C],
+      damage: 30,
+      damageCalculator: '+',
+      text: 'If 1 of your other Ancient Pokémon used an attack during your last turn, this attack does 150 more damage.',
+    },
+    {
+      name: 'Hammer In',
+      cost: [F, F, C],
+      damage: 110,
+      text: '',
+    },
+  ];
 
   public regulationMark = 'H';
   public set: string = 'SSP';

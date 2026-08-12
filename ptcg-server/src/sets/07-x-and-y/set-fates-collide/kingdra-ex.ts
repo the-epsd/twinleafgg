@@ -7,10 +7,13 @@ import { Stage, CardType, CardTag, EnergyType } from '../../../game/store/card/c
 import { StoreLike, State } from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, DISCARD_A_STADIUM_CARD_IN_PLAY } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  DISCARD_A_STADIUM_CARD_IN_PLAY,
+} from '../../../game/store/prefabs/prefabs';
 
 export class KingdraEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = N;
   public hp: number = 170;
@@ -22,15 +25,15 @@ export class KingdraEx extends PokemonCard {
       name: 'Big Storm',
       cost: [C],
       damage: 20,
-      text: 'Discard any Stadium card in play.'
+      text: 'Discard any Stadium card in play.',
     },
     {
       name: 'Dragon Trail',
       cost: [W, C, C, C],
       damage: 60,
       damageCalculation: '+',
-      text: 'This attack does 30 more damage for each basic [L] Energy attached to this Pokémon.'
-    }
+      text: 'This attack does 30 more damage for each basic [L] Energy attached to this Pokémon.',
+    },
   ];
 
   public set: string = 'FCO';
@@ -51,7 +54,10 @@ export class KingdraEx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const lightningCount = player.active.cards.filter(
-        c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.LIGHTNING)
+        (c) =>
+          c instanceof EnergyCard &&
+          c.energyType === EnergyType.BASIC &&
+          c.provides.includes(CardType.LIGHTNING),
       ).length;
       effect.damage += 30 * lightningCount;
     }

@@ -1,6 +1,16 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils, GameError, PowerType } from '../../../game';
+import {
+  StoreLike,
+  State,
+  ChoosePokemonPrompt,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  StateUtils,
+  GameError,
+  PowerType,
+} from '../../../game';
 
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
@@ -8,25 +18,29 @@ import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/pre
 export class RegigigasVSTAR extends PokemonCard {
   public stage: Stage = Stage.VSTAR;
   public evolvesFrom = 'Regigigas V';
-  public tags = [CardTag.POKEMON_VSTAR];
+  protected _tags = [CardTag.POKEMON_VSTAR];
   public cardType: CardType = C;
   public hp: number = 300;
   public weakness = [{ type: F }];
   public retreat = [C, C, C, C];
 
-  public powers = [{
-    name: 'Star Guardian',
-    powerType: PowerType.ABILITY,
-    useWhenInPlay: true,
-    text: 'During your turn, if your opponent has exactly 1 Prize card remaining, you may choose 1 of your opponent\'s Benched Pokémon. They discard that Pokémon and all attached cards. (You can\'t use more than 1 VSTAR Power in a game.)'
-  }];
+  public powers = [
+    {
+      name: 'Star Guardian',
+      powerType: PowerType.ABILITY,
+      useWhenInPlay: true,
+      text: "During your turn, if your opponent has exactly 1 Prize card remaining, you may choose 1 of your opponent's Benched Pokémon. They discard that Pokémon and all attached cards. (You can't use more than 1 VSTAR Power in a game.)",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Giga Impact',
-    cost: [C, C, C],
-    damage: 230,
-    text: 'During your next turn, this Pokémon can\'t attack.'
-  }];
+  public attacks = [
+    {
+      name: 'Giga Impact',
+      cost: [C, C, C],
+      damage: 230,
+      text: "During your next turn, this Pokémon can't attack.",
+    },
+  ];
 
   public regulationMark = 'F';
   public set: string = 'CRZ';
@@ -36,11 +50,10 @@ export class RegigigasVSTAR extends PokemonCard {
   public fullName: string = 'Regigigas VSTAR CRZ';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const hasBench = opponent.bench.some(b => b.cards.length > 0);
+      const hasBench = opponent.bench.some((b) => b.cards.length > 0);
 
       if (!hasBench) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -56,20 +69,24 @@ export class RegigigasVSTAR extends PokemonCard {
 
       //Add bench check
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false },
-      ), selected => {
-        const targets = selected || [];
-        targets.forEach(target => {
-          target.moveTo(opponent.discard);
-          player.usedVSTAR = true;
-        });
-        return state;
-      });
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.BENCH],
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          const targets = selected || [];
+          targets.forEach((target) => {
+            target.moveTo(opponent.discard);
+            player.usedVSTAR = true;
+          });
+          return state;
+        },
+      );
     }
 
     // Giga Impact

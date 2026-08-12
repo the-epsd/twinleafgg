@@ -10,14 +10,16 @@ export class LeafeonV extends PokemonCard {
   public hp: number = 200;
   public weakness = [{ type: R }];
   public retreat = [C];
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
 
-  public powers = [{
-    name: 'Greening Cells',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may search your deck for a [G] Energy card and attach it to 1 of your Pokémon. Then, shuffle your deck. If you use this Ability, your turn ends.'
-  }];
+  public powers = [
+    {
+      name: 'Greening Cells',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn, you may search your deck for a [G] Energy card and attach it to 1 of your Pokémon. Then, shuffle your deck. If you use this Ability, your turn ends.',
+    },
+  ];
 
   public attacks = [{
     name: 'Leaf Blade',
@@ -27,9 +29,7 @@ export class LeafeonV extends PokemonCard {
   }];
 
   public set: string = 'EVS';
-
   public regulationMark = 'E';
-
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '7';
   public name: string = 'Leafeon V';
@@ -39,29 +39,33 @@ export class LeafeonV extends PokemonCard {
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
-      state = store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_TO_BENCH,
-        player.deck,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Grass Energy' },
-        { allowCancel: true, min: 0, max: 1 },
-      ), transfers => {
-        transfers = transfers || [];
-        // cancelled by user
-        if (transfers.length === 0) {
-          SHUFFLE_DECK(store, state, player);
-          return state;
-        }
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.deck.moveCardTo(transfer.card, target);
-        }
-        state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-        });
-      });
+      state = store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_TO_BENCH,
+          player.deck,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Grass Energy' },
+          { allowCancel: true, min: 0, max: 1 },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          // cancelled by user
+          if (transfers.length === 0) {
+            SHUFFLE_DECK(store, state, player);
+            return state;
+          }
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.deck.moveCardTo(transfer.card, target);
+          }
+          state = store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+            player.deck.applyOrder(order);
+          });
+        },
+      );
 
       const endTurnEffect = new EndTurnEffect(player);
       store.reduceEffect(state, endTurnEffect);
@@ -80,5 +84,4 @@ export class LeafeonV extends PokemonCard {
 
     return state;
   }
-
 }

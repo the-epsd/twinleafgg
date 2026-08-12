@@ -10,7 +10,12 @@ import { GameMessage } from '../../../game/game-message';
 
 import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   const active = opponent.active;
@@ -32,7 +37,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   if (coinResult === false) {
-
     return state;
   }
 
@@ -43,7 +47,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 export class HypnotoxicLaser extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public tags: string[] = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
 
   public set: string = 'PLS';
   public name: string = 'Hypnotoxic Laser';
@@ -52,8 +56,8 @@ export class HypnotoxicLaser extends TrainerCard {
   public setNumber: string = '123';
 
   public text: string =
-    'Your opponent\'s Active Pokemon is now Poisoned. Flip a coin. ' +
-    'If heads, your opponent\'s Active Pokemon is also Asleep.';
+    "Your opponent's Active Pokemon is now Poisoned. Flip a coin. " +
+    "If heads, your opponent's Active Pokemon is also Asleep.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -63,5 +67,4 @@ export class HypnotoxicLaser extends TrainerCard {
 
     return state;
   }
-
 }

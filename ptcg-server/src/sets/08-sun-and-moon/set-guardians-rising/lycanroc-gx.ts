@@ -1,6 +1,16 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, BoardEffect } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt, ConfirmPrompt } from '../../../game';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  ChoosePokemonPrompt,
+  ConfirmPrompt,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
@@ -8,8 +18,7 @@ import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/pr
 
 // GRI Lycanroc-GX 74 (https://limitlesstcg.com/cards/GRI/74)
 export class LycanrocGX extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
 
   public stage: Stage = Stage.STAGE_1;
 
@@ -23,19 +32,21 @@ export class LycanrocGX extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Bloodthirsty Eyes',
-    useWhenInPlay: false,
-    powerType: PowerType.ABILITY,
-    text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may switch 1 of your opponent\'s Benched Pokémon with their Active Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Bloodthirsty Eyes',
+      useWhenInPlay: false,
+      powerType: PowerType.ABILITY,
+      text: "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may switch 1 of your opponent's Benched Pokémon with their Active Pokémon.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Claw Slash',
       cost: [CardType.FIGHTING, CardType.COLORLESS, CardType.COLORLESS],
       damage: 110,
-      text: ''
+      text: '',
     },
 
     {
@@ -43,8 +54,8 @@ export class LycanrocGX extends PokemonCard {
       cost: [CardType.FIGHTING, CardType.COLORLESS],
       damage: 50,
       gxAttack: true,
-      text: 'This attack does 50 damage for each of your opponent\'s Benched Pokémon. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "This attack does 50 damage for each of your opponent's Benched Pokémon. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'GRI';
@@ -63,36 +74,41 @@ export class LycanrocGX extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const hasBench = opponent.bench.some(b => b.cards.length > 0);
+      const hasBench = opponent.bench.some((b) => b.cards.length > 0);
 
       if (!hasBench) {
         return state;
       }
 
-      state = store.prompt(state, new ConfirmPrompt(
-        effect.player.id,
-        GameMessage.WANT_TO_USE_ABILITY,
-      ), wantToUse => {
-        if (wantToUse) {
-          return store.prompt(state, new ChoosePokemonPrompt(
-            player.id,
-            GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-            PlayerType.TOP_PLAYER,
-            [SlotType.BENCH],
-            { allowCancel: false }
-          ), result => {
-            const cardList = result[0];
+      state = store.prompt(
+        state,
+        new ConfirmPrompt(effect.player.id, GameMessage.WANT_TO_USE_ABILITY),
+        (wantToUse) => {
+          if (wantToUse) {
+            return store.prompt(
+              state,
+              new ChoosePokemonPrompt(
+                player.id,
+                GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+                PlayerType.TOP_PLAYER,
+                [SlotType.BENCH],
+                { allowCancel: false },
+              ),
+              (result) => {
+                const cardList = result[0];
 
-            player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-              if (cardList.getPokemonCard() === this) {
-                cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-              }
-            });
+                player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+                  if (cardList.getPokemonCard() === this) {
+                    cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+                  }
+                });
 
-            opponent.switchPokemon(cardList);
-          });
-        }
-      });
+                opponent.switchPokemon(cardList);
+              },
+            );
+          }
+        },
+      );
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

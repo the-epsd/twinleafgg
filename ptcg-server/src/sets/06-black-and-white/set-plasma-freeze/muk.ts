@@ -3,13 +3,14 @@ import { Stage, CardType, CardTag, SpecialCondition } from '../../../game/store/
 import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import {
-  WAS_ATTACK_USED, HEAL_X_DAMAGE_FROM_THIS_POKEMON
+  WAS_ATTACK_USED,
+  HEAL_X_DAMAGE_FROM_THIS_POKEMON,
 } from '../../../game/store/prefabs/prefabs';
 import { FLIP_UNTIL_TAILS_AND_COUNT_HEADS } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class Muk extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Grimer';
   public cardType: CardType = P;

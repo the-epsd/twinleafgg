@@ -10,7 +10,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Garbodor2 extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Trubbish';
   public cardType: CardType = P;
@@ -56,8 +56,8 @@ export class Garbodor2 extends PokemonCard {
     // Ref: set-noble-victories/conkeldurr.ts (Swing Around - multiple coin flips for damage)
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, results => {
-        const heads = results.filter(r => r).length;
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, (results) => {
+        const heads = results.filter((r) => r).length;
         effect.damage = 80 * heads;
       });
     }

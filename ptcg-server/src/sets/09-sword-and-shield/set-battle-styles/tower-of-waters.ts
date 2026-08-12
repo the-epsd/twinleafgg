@@ -18,7 +18,8 @@ export class TowerOfWaters extends TrainerCard {
   public setNumber: string = '138';
   public name: string = 'Tower of Waters';
   public fullName: string = 'Tower of Waters BST';
-  public text: string = 'The Retreat Cost of each Rapid Strike Pokémon in play (both yours and your opponent\'s) is [C][C] less.';
+  public text: string =
+    "The Retreat Cost of each Rapid Strike Pokémon in play (both yours and your opponent's) is [C][C] less.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckRetreatCostEffect && StateUtils.getStadiumCard(state) === this) {
@@ -29,7 +30,7 @@ export class TowerOfWaters extends TrainerCard {
         return state;
       }
 
-      if (pokemonCard && pokemonCard.tags.includes(CardTag.RAPID_STRIKE)) {
+      if (pokemonCard && pokemonCard.hasTag(CardTag.RAPID_STRIKE)) {
         const index = effect.cost.indexOf(CardType.COLORLESS);
         if (index !== -1) {
           effect.cost.splice(index, 2);

@@ -8,26 +8,28 @@ import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../../game/stor
 
 export class JolteonEX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public cardType: CardType = L;
   public hp: number = 160;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
   public retreat = [];
 
-  public attacks = [{
-    name: 'Swift',
-    cost: [L],
-    damage: 30,
-    shredAttack: true,
-    text: 'This attack\'s damage isn\'t affected by Weakness, Resistance, or any other effects on your opponent\'s Active Pokémon.'
-  },
-  {
-    name: 'Flash Ray',
-    cost: [L, C, C],
-    damage: 70,
-    text: 'During your opponent\'s next turn, prevent all damage done to this Pokémon by attacks from Basic Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'Swift',
+      cost: [L],
+      damage: 30,
+      shredAttack: true,
+      text: "This attack's damage isn't affected by Weakness, Resistance, or any other effects on your opponent's Active Pokémon.",
+    },
+    {
+      name: 'Flash Ray',
+      cost: [L, C, C],
+      damage: 70,
+      text: "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Basic Pokémon.",
+    },
+  ];
 
   public set: string = 'GEN';
   public setNumber: string = '28';

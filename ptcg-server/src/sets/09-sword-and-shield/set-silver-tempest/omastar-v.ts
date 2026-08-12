@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../../game/store/prefabs/prefa
 import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class OmastarV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 190;
@@ -43,16 +43,17 @@ export class OmastarV extends PokemonCard {
         return state;
       }
 
-      const slots = player.bench.filter(b => b.cards.length === 0);
+      const slots = player.bench.filter((b) => b.cards.length === 0);
       if (slots.length === 0) {
         return state;
       }
 
       const blocked: number[] = [];
       player.deck.cards.forEach((c, index) => {
-        const isFossilPokemon = c instanceof PokemonCard
-          && c.evolvesFrom
-          && c.evolvesFrom.toLowerCase().includes('fossil');
+        const isFossilPokemon =
+          c instanceof PokemonCard &&
+          c.evolvesFrom &&
+          c.evolvesFrom.toLowerCase().includes('fossil');
         if (!isFossilPokemon) {
           blocked.push(index);
         }
@@ -60,19 +61,26 @@ export class OmastarV extends PokemonCard {
 
       const maxPick = Math.min(2, slots.length);
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-        player.deck,
-        {},
-        { min: 0, max: maxPick, allowCancel: false, blocked }
-      ), selected => {
-        const cards = selected || [];
-        cards.forEach((card, index) => {
-          store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card as PokemonCard, slots[index]));
-        });
-        SHUFFLE_DECK(store, state, player);
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+          player.deck,
+          {},
+          { min: 0, max: maxPick, allowCancel: false, blocked },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          cards.forEach((card, index) => {
+            store.reduceEffect(
+              state,
+              new PlayPokemonFromDeckEffect(player, card as PokemonCard, slots[index]),
+            );
+          });
+          SHUFFLE_DECK(store, state, player);
+        },
+      );
     }
 
     // Tentacle Lock

@@ -4,14 +4,17 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
-import { CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../../game/store/effects/check-effects';
+import {
+  CheckProvidedEnergyEffect,
+  CheckTableStateEffect,
+} from '../../../game/store/effects/check-effects';
 import { StateUtils } from '../../../game/store/state-utils';
 import { PlayerType } from '../../../game';
 import { IS_SPECIAL_ENERGY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 import { EnergyEffect } from '../../../game/store/effects/play-card-effects';
 
 export class SingleStrikeEnergy extends EnergyCard {
-  public tags: CardTag[] = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public provides: CardType[] = [CardType.COLORLESS];
   public energyType = EnergyType.SPECIAL;
   public regulationMark = 'E';
@@ -28,7 +31,6 @@ As long as this card is attached to a Pokémon, it provides [F] and [D] Energy b
   public blendedEnergies = [CardType.FIGHTING, CardType.DARK];
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
       try {
         const energyEffect = new EnergyEffect(effect.player, this);
@@ -38,28 +40,31 @@ As long as this card is attached to a Pokémon, it provides [F] and [D] Energy b
       }
 
       // Find the first energy type that's not already provided by other energies
-      const neededType = this.blendedEnergies.find(type =>
-        !effect.energyMap.some(energy => energy.provides.includes(type))
+      const neededType = this.blendedEnergies.find(
+        (type) => !effect.energyMap.some((energy) => energy.provides.includes(type)),
       );
 
       if (neededType) {
         // Only provide the specific energy type that's needed
         effect.energyMap.push({
           card: this,
-          provides: [neededType]
+          provides: [neededType],
         });
       }
     }
 
     // Discard card when not attached to Single Strike Pokemon
     if (effect instanceof CheckTableStateEffect) {
-      state.players.forEach(player => {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (!cardList.cards.includes(this) || IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, cardList)) {
+      state.players.forEach((player) => {
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+          if (
+            !cardList.cards.includes(this) ||
+            IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, cardList)
+          ) {
             return;
           }
 
-          if (!cardList.getPokemonCard()?.tags.includes(CardTag.SINGLE_STRIKE)) {
+          if (!cardList.getPokemonCard()?.hasTag(CardTag.SINGLE_STRIKE)) {
             cardList.moveCardTo(this, player.discard);
           }
         });
@@ -71,7 +76,10 @@ As long as this card is attached to a Pokémon, it provides [F] and [D] Energy b
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (effect.target !== opponent.active || IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, effect.source)) {
+      if (
+        effect.target !== opponent.active ||
+        IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, effect.source)
+      ) {
         return state;
       }
 

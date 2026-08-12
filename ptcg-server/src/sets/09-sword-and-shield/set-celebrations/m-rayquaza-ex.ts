@@ -11,7 +11,7 @@ import { MEGA_EVOLUTION_END_TURN } from '../../../game/store/prefabs/tool-prefab
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 
 export class MRayquazaEx extends PokemonCard {
-  public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
+  protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Rayquaza-EX';
   public cardType: CardType = C;

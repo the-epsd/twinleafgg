@@ -16,8 +16,7 @@ import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class RadiantAlakazam extends PokemonCard {
-
-  public tags = [CardTag.RADIANT];
+  protected _tags = [CardTag.RADIANT];
 
   public regulationMark = 'F';
 
@@ -33,23 +32,27 @@ export class RadiantAlakazam extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Painful Spoons',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may move up to 2 damage ' +
-      'counters from 1 of your opponent\'s Pokémon to another of ' +
-      'their Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Painful Spoons',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text:
+        'Once during your turn, you may move up to 2 damage ' +
+        "counters from 1 of your opponent's Pokémon to another of " +
+        'their Pokémon.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Mind Ruler',
-    cost: [CardType.PSYCHIC, CardType.COLORLESS],
-    damage: 20,
-    damageCalculation: 'x',
-    text: 'This attack does 20 damage for each card in your ' +
-      'opponent\'s hand.'
-  }];
+  public attacks = [
+    {
+      name: 'Mind Ruler',
+      cost: [CardType.PSYCHIC, CardType.COLORLESS],
+      damage: 20,
+      damageCalculation: 'x',
+      text: 'This attack does 20 damage for each card in your ' + "opponent's hand.",
+    },
+  ];
 
   public set: string = 'SIT';
 
@@ -64,7 +67,6 @@ export class RadiantAlakazam extends PokemonCard {
   public readonly PAINFUL_SPOONS_MARKER = 'PAINFUL_SPOONS_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       player.marker.removeMarker(this.PAINFUL_SPOONS_MARKER, this);
@@ -75,8 +77,8 @@ export class RadiantAlakazam extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const damagedPokemon = [
-        ...opponent.bench.filter(b => b.cards.length > 0 && b.damage > 0),
-        ...(opponent.active.damage > 0 ? [opponent.active] : [])
+        ...opponent.bench.filter((b) => b.cards.length > 0 && b.damage > 0),
+        ...(opponent.active.damage > 0 ? [opponent.active] : []),
       ];
 
       if (player.marker.hasMarker(this.PAINFUL_SPOONS_MARKER, this)) {
@@ -94,38 +96,41 @@ export class RadiantAlakazam extends PokemonCard {
         maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
       });
 
-      return store.prompt(state, new MoveDamagePrompt(
-        effect.player.id,
-        GameMessage.MOVE_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        maxAllowedDamage,
-        { min: 1, max: 2, allowCancel: false, singleDestinationTarget: true }
-      ), transfers => {
+      return store.prompt(
+        state,
+        new MoveDamagePrompt(
+          effect.player.id,
+          GameMessage.MOVE_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          maxAllowedDamage,
+          { min: 1, max: 2, allowCancel: false, singleDestinationTarget: true },
+        ),
+        (transfers) => {
+          player.marker.addMarker(this.PAINFUL_SPOONS_MARKER, this);
 
-        player.marker.addMarker(this.PAINFUL_SPOONS_MARKER, this);
-
-        if (transfers === null) {
-          return;
-        }
-
-        for (const transfer of transfers) {
-          const source = StateUtils.getTarget(state, player, transfer.from);
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          const damageToMove = 10; // Each transfer represents 10 damage
-
-          source.damage -= damageToMove;
-          target.damage += damageToMove;
-        }
-
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (cardList.getPokemonCard() === this) {
-            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+          if (transfers === null) {
+            return;
           }
-        });
 
-        return state;
-      });
+          for (const transfer of transfers) {
+            const source = StateUtils.getTarget(state, player, transfer.from);
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            const damageToMove = 10; // Each transfer represents 10 damage
+
+            source.damage -= damageToMove;
+            target.damage += damageToMove;
+          }
+
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+            if (cardList.getPokemonCard() === this) {
+              cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+            }
+          });
+
+          return state;
+        },
+      );
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {

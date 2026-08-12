@@ -6,7 +6,7 @@ import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/pr
 import { PREVENT_DAMAGE_AND_EFFECTS_TO_ALL_YOUR_POKEMON } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class SolgaleoLunalaGX extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
+  protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 270;

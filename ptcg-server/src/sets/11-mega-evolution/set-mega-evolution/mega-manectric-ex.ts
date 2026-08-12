@@ -9,25 +9,27 @@ import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-pre
 export class MegaManectricEx extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Electrike';
-  public tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
   public hp: number = 330;
   public cardType: CardType = L;
   public weakness = [{ type: F }];
   public retreat = [];
 
-  public attacks = [{
-    name: 'Flash Ray',
-    cost: [L, L],
-    damage: 120,
-    text: 'During your opponent\'s next turn, prevent all damage done to this Pokémon by attacks from Basic Pokémon.'
-  },
-  {
-    name: 'Riotous Blasting',
-    cost: [L, L, L],
-    damage: 200,
-    damageCalculation: '+',
-    text: 'You may discard all Energy from this Pokémon and have this attack do 130 more damage.'
-  }];
+  public attacks = [
+    {
+      name: 'Flash Ray',
+      cost: [L, L],
+      damage: 120,
+      text: "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Basic Pokémon.",
+    },
+    {
+      name: 'Riotous Blasting',
+      cost: [L, L, L],
+      damage: 200,
+      damageCalculation: '+',
+      text: 'You may discard all Energy from this Pokémon and have this attack do 130 more damage.',
+    },
+  ];
 
   public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
@@ -47,12 +49,18 @@ export class MegaManectricEx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      CONFIRMATION_PROMPT(store, state, player, result => {
-        if (result) {
-          effect.damage += 130;
-          DISCARD_ALL_ENERGY_FROM_POKEMON(store, state, effect, this);
-        }
-      }, GameMessage.WANT_TO_DISCARD_ENERGY);
+      CONFIRMATION_PROMPT(
+        store,
+        state,
+        player,
+        (result) => {
+          if (result) {
+            effect.damage += 130;
+            DISCARD_ALL_ENERGY_FROM_POKEMON(store, state, effect, this);
+          }
+        },
+        GameMessage.WANT_TO_DISCARD_ENERGY,
+      );
     }
 
     return state;

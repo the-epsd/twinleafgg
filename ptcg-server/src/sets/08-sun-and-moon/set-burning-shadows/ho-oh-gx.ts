@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/pr
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class HoOhGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = R;
   public hp: number = 190;
@@ -23,21 +23,21 @@ export class HoOhGx extends PokemonCard {
       name: 'Sacred Fire',
       cost: [R, C, C],
       damage: 0,
-      text: 'This attack does 50 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack does 50 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Phoenix Burn',
       cost: [R, R, R, C],
       damage: 180,
-      text: 'This Pokémon can\'t use Phoenix Burn during your next turn.'
+      text: "This Pokémon can't use Phoenix Burn during your next turn.",
     },
     {
       name: 'Eternal Flame-GX',
       cost: [R, C, C],
       damage: 0,
       gxAttack: true,
-      text: 'Put 3 in any combination of Fire Pokémon-GX or Fire Pokémon-EX from your discard pile onto your Bench. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Put 3 in any combination of Fire Pokémon-GX or Fire Pokémon-EX from your discard pile onto your Bench. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'BUS';
@@ -66,15 +66,16 @@ export class HoOhGx extends PokemonCard {
       BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
 
-      const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
+      const slots: PokemonCardList[] = player.bench.filter((b) => b.cards.length === 0);
       if (slots.length === 0) {
         return state;
       }
 
-      const fireGxExInDiscard = player.discard.cards.filter(c =>
-        c instanceof PokemonCard &&
-        c.cardType === CardType.FIRE &&
-        (c.tags.includes(CardTag.POKEMON_GX) || c.tags.includes(CardTag.POKEMON_EX))
+      const fireGxExInDiscard = player.discard.cards.filter(
+        (c) =>
+          c instanceof PokemonCard &&
+          c.cardType === CardType.FIRE &&
+          (c.hasTag(CardTag.POKEMON_GX) || c.hasTag(CardTag.POKEMON_EX)),
       );
 
       if (fireGxExInDiscard.length === 0) {
@@ -85,28 +86,34 @@ export class HoOhGx extends PokemonCard {
 
       const blocked: number[] = [];
       player.discard.cards.forEach((c, index) => {
-        if (!(c instanceof PokemonCard) ||
+        if (
+          !(c instanceof PokemonCard) ||
           c.cardType !== CardType.FIRE ||
-          (!c.tags.includes(CardTag.POKEMON_GX) && !c.tags.includes(CardTag.POKEMON_EX))) {
+          (!c.hasTag(CardTag.POKEMON_GX) && !c.hasTag(CardTag.POKEMON_EX))
+        ) {
           blocked.push(index);
         }
       });
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-        player.discard,
-        { superType: SuperType.POKEMON, cardType: CardType.FIRE },
-        { min: max, max, allowCancel: false, blocked }
-      ), selected => {
-        const cards = selected || [];
-        cards.forEach((card, index) => {
-          if (index < slots.length) {
-            player.discard.moveCardTo(card, slots[index]);
-            slots[index].pokemonPlayedTurn = state.turn;
-          }
-        });
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+          player.discard,
+          { superType: SuperType.POKEMON, cardType: CardType.FIRE },
+          { min: max, max, allowCancel: false, blocked },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          cards.forEach((card, index) => {
+            if (index < slots.length) {
+              player.discard.moveCardTo(card, slots[index]);
+              slots[index].pokemonPlayedTurn = state.turn;
+            }
+          });
+        },
+      );
     }
 
     return state;

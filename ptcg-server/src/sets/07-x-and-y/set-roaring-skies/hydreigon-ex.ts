@@ -11,26 +11,28 @@ import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs
 import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../../game/store/prefabs/attack-effects';
 
 export class HydreigonEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = N;
   public hp: number = 180;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];
 
-  public powers = [{
-    name: 'Dragon Road',
-    powerType: PowerType.ABILITY,
-    text: 'If there is any Stadium card in play, the Retreat Cost of each of your Dragon Pokémon in play is ColorlessColorless less.'
-  }];
+  public powers = [
+    {
+      name: 'Dragon Road',
+      powerType: PowerType.ABILITY,
+      text: 'If there is any Stadium card in play, the Retreat Cost of each of your Dragon Pokémon in play is ColorlessColorless less.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Shred',
       cost: [P, D, C],
       damage: 80,
-      text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
-    }
+      text: "This attack's damage isn't affected by any effects on your opponent's Active Pokémon.",
+    },
   ];
 
   public set: string = 'ROS';

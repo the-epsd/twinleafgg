@@ -11,7 +11,7 @@ export class ArceusFire extends PokemonCard {
   public hp: number = 80;
   public weakness = [{ type: W }];
   public retreat = [C];
-  public tags = [CardTag.ARCEUS];
+  protected _tags = [CardTag.ARCEUS];
 
   public attacks = [{
     name: 'Bright FLame',

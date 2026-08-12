@@ -1,12 +1,24 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameError, GameMessage, PlayerType, PowerType, StateUtils } from '../../../game';
+import {
+  StoreLike,
+  State,
+  GameError,
+  GameMessage,
+  PlayerType,
+  PowerType,
+  StateUtils,
+} from '../../../game';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
-import { AttachEnergyEffect, AttachPokemonToolEffect, PlayItemEffect, PlayStadiumEffect } from '../../../game/store/effects/play-card-effects';
+import {
+  AttachEnergyEffect,
+  AttachPokemonToolEffect,
+  PlayItemEffect,
+  PlayStadiumEffect,
+} from '../../../game/store/effects/play-card-effects';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Genesect extends PokemonCard {
-
   public regulationMark = 'H';
 
   public stage: Stage = Stage.BASIC;
@@ -21,19 +33,21 @@ export class Genesect extends PokemonCard {
 
   public retreat = [CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Ace Canceller',
-    powerType: PowerType.ABILITY,
-    text: 'If this Pokémon has a Pokémon Tool attached, your opponent can\'t play any Ace Spec cards from their hand.'
-  }];
+  public powers = [
+    {
+      name: 'Ace Canceller',
+      powerType: PowerType.ABILITY,
+      text: "If this Pokémon has a Pokémon Tool attached, your opponent can't play any Ace Spec cards from their hand.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Magnet Blast',
       cost: [CardType.METAL, CardType.COLORLESS, CardType.COLORLESS],
       damage: 100,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'SFA';
@@ -49,8 +63,7 @@ export class Genesect extends PokemonCard {
   public readonly OPPONENT_CANNOT_PLAY_ACE_SPECS_MARKER = 'OPPONENT_CANNOT_PLAY_ACE_SPECS_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
-
-    if (effect instanceof PlayItemEffect && effect.trainerCard.tags.includes(CardTag.ACE_SPEC)) {
+    if (effect instanceof PlayItemEffect && effect.trainerCard.hasTag(CardTag.ACE_SPEC)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -77,7 +90,7 @@ export class Genesect extends PokemonCard {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
-    if (effect instanceof AttachPokemonToolEffect && effect.trainerCard.tags.includes(CardTag.ACE_SPEC)) {
+    if (effect instanceof AttachPokemonToolEffect && effect.trainerCard.hasTag(CardTag.ACE_SPEC)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -104,8 +117,7 @@ export class Genesect extends PokemonCard {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
-
-    if (effect instanceof AttachEnergyEffect && effect.energyCard.tags.includes(CardTag.ACE_SPEC)) {
+    if (effect instanceof AttachEnergyEffect && effect.energyCard.hasTag(CardTag.ACE_SPEC)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -132,8 +144,7 @@ export class Genesect extends PokemonCard {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
-
-    if (effect instanceof PlayStadiumEffect && effect.trainerCard.tags.includes(CardTag.ACE_SPEC)) {
+    if (effect instanceof PlayStadiumEffect && effect.trainerCard.hasTag(CardTag.ACE_SPEC)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

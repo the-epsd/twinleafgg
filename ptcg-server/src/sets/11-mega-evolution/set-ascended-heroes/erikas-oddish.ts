@@ -5,26 +5,28 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class ErikasOddish extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.ERIKAS];
+  protected _tags = [CardTag.ERIKAS];
   public cardType: CardType = G;
   public hp: number = 60;
   public weakness = [{ type: R }];
   public resistance = [];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Reckless Charge',
-    cost: [G],
-    damage: 30,
-    text: 'This Pokémon also does 10 damage to itself.'
-  }];
+  public attacks = [
+    {
+      name: 'Reckless Charge',
+      cost: [G],
+      damage: 30,
+      text: 'This Pokémon also does 10 damage to itself.',
+    },
+  ];
 
   public regulationMark = 'I';
   public set: string = 'ASC';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '1';
-  public name: string = 'Erika\'s Oddish';
-  public fullName: string = 'Erika\'s Oddish MC';
+  public name: string = "Erika's Oddish";
+  public fullName: string = "Erika's Oddish MC";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

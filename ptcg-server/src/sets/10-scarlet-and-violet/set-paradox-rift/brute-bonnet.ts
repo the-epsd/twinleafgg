@@ -6,25 +6,29 @@ import { WAS_POWER_USED, ADD_POISON_TO_PLAYER_ACTIVE, WAS_ATTACK_USED, THIS_POKE
 
 export class BruteBonnet extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.ANCIENT];
+  protected _tags = [CardTag.ANCIENT];
   public cardType: CardType = D;
   public hp: number = 120;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
 
-  public powers = [{
-    name: 'Toxic Powder',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, if this Pokémon has an Ancient Booster Energy Capsule attached, you may make both Active Pokémon Poisoned.'
-  }];
+  public powers = [
+    {
+      name: 'Toxic Powder',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn, if this Pokémon has an Ancient Booster Energy Capsule attached, you may make both Active Pokémon Poisoned.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Rampaging Hammer',
-    cost: [D, D, C],
-    damage: 120,
-    text: 'During your next turn, this Pokémon can\'t attack.'
-  }];
+  public attacks = [
+    {
+      name: 'Rampaging Hammer',
+      cost: [D, D, C],
+      damage: 120,
+      text: "During your next turn, this Pokémon can't attack.",
+    },
+  ];
 
   public regulationMark = 'G';
   public set: string = 'PAR';
@@ -36,13 +40,15 @@ export class BruteBonnet extends PokemonCard {
   public readonly TOXIC_POWDER_MARKER = 'TOXIC_POWDER_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       player.marker.removeMarker(this.TOXIC_POWDER_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.TOXIC_POWDER_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.TOXIC_POWDER_MARKER, this)
+    ) {
       const player = effect.player;
       player.marker.removeMarker(this.TOXIC_POWDER_MARKER, this);
     }
@@ -54,7 +60,11 @@ export class BruteBonnet extends PokemonCard {
       let isBruteBonnetWithAncientBooster = false;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this && cardList.tools.length > 0 && cardList.tools[0].name === 'Ancient Booster Energy Capsule') {
+        if (
+          card === this &&
+          cardList.tools.length > 0 &&
+          cardList.tools[0].name === 'Ancient Booster Energy Capsule'
+        ) {
           isBruteBonnetWithAncientBooster = true;
         }
       });
@@ -72,7 +82,7 @@ export class BruteBonnet extends PokemonCard {
 
       player.marker.addMarker(this.TOXIC_POWDER_MARKER, this);
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         if (cardList.getPokemonCard() === this) {
           cardList.addBoardEffect(BoardEffect.ABILITY_USED);
         }

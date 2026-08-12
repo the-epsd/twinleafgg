@@ -7,25 +7,27 @@ import { HealTargetEffect } from '../../../game/store/effects/attack-effects';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class ManaphyEX extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 120;
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Aqua Tube',
-    powerType: PowerType.ABILITY,
-    text: 'Each of your Pokémon that has any [W] Energy attached to it has no Retreat Cost.'
-  }];
+  public powers = [
+    {
+      name: 'Aqua Tube',
+      powerType: PowerType.ABILITY,
+      text: 'Each of your Pokémon that has any [W] Energy attached to it has no Retreat Cost.',
+    },
+  ];
   public attacks = [
     {
       name: 'Mineral Pump',
       cost: [W, W],
       damage: 60,
-      text: 'Heal 30 damage from each of your Benched Pokémon.'
-    }
+      text: 'Heal 30 damage from each of your Benched Pokémon.',
+    },
   ];
 
   public set: string = 'BKP';
@@ -55,7 +57,7 @@ export class ManaphyEX extends PokemonCard {
         return state;
       }
 
-      player.active.cards.forEach(card => {
+      player.active.cards.forEach((card) => {
         if (card.superType === SuperType.ENERGY && card.name === 'Water Energy') {
           effect.cost = [];
         }
@@ -78,4 +80,4 @@ export class ManaphyEX extends PokemonCard {
 
     return state;
   }
-} 
+}

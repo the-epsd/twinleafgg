@@ -4,14 +4,35 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameMessage, GameError, PlayerType, SlotType, AttachEnergyPrompt } from '../../../game';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  GameError,
+  PlayerType,
+  SlotType,
+  AttachEnergyPrompt,
+} from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttachEnergyEffect } from '../../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, BLOCK_IF_GX_ATTACK_USED, SHUFFLE_DECK, SWITCH_ACTIVE_WITH_BENCHED, DISCARD_ALL_ENERGY_FROM_POKEMON, REMOVE_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  USE_ABILITY_ONCE_PER_TURN,
+  ABILITY_USED,
+  BLOCK_IF_GX_ATTACK_USED,
+  SHUFFLE_DECK,
+  SWITCH_ACTIVE_WITH_BENCHED,
+  DISCARD_ALL_ENERGY_FROM_POKEMON,
+  REMOVE_MARKER_AT_END_OF_TURN,
+} from '../../../game/store/prefabs/prefabs';
 
 export class SolgaleoGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Cosmoem';
   public cardType: CardType = M;
@@ -20,26 +41,28 @@ export class SolgaleoGx extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C];
 
-  public powers = [{
-    name: 'Ultra Road',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), you may switch your Active Pokémon with 1 of your Benched Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Ultra Road',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn (before your attack), you may switch your Active Pokémon with 1 of your Benched Pokémon.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Sunsteel Strike',
       cost: [M, M, C],
       damage: 230,
-      text: 'Discard all Energy from this Pokémon.'
+      text: 'Discard all Energy from this Pokémon.',
     },
     {
       name: 'Sol Burst-GX',
       cost: [M],
       damage: 0,
-      text: 'Search your deck for up to 5 Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Search your deck for up to 5 Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'SUM';
@@ -60,7 +83,7 @@ export class SolgaleoGx extends PokemonCard {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
 
-      const hasBenched = player.bench.some(b => b.cards.length > 0);
+      const hasBenched = player.bench.some((b) => b.cards.length > 0);
       if (!hasBenched) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
@@ -91,24 +114,28 @@ export class SolgaleoGx extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_CARDS,
-        player.deck,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY },
-        { allowCancel: false, min: 0, max: 5 }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          const energyCard = transfer.card as EnergyCard;
-          const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
-          store.reduceEffect(state, attachEnergyEffect);
-        }
-        SHUFFLE_DECK(store, state, player);
-      });
+      return store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_CARDS,
+          player.deck,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { superType: SuperType.ENERGY },
+          { allowCancel: false, min: 0, max: 5 },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            const energyCard = transfer.card as EnergyCard;
+            const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
+            store.reduceEffect(state, attachEnergyEffect);
+          }
+          SHUFFLE_DECK(store, state, player);
+        },
+      );
     }
 
     return state;

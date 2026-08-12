@@ -5,26 +5,30 @@ import { WAS_POWER_USED, WAS_ATTACK_USED, THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN }
 
 export class ZacianV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public cardType: CardType = M;
   public hp: number = 220;
   public weakness = [{ type: R }];
   public retreat = [C, C];
   public resistance = [{ type: G, value: -30 }];
 
-  public powers = [{
-    name: 'Intrepid Sword',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may look at the top 3 cards of your deck and attach any number of [M] Energy cards you find there to this Pokémon. Put the other cards into your hand. If you use this Ability, your turn ends.'
-  }];
+  public powers = [
+    {
+      name: 'Intrepid Sword',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn, you may look at the top 3 cards of your deck and attach any number of [M] Energy cards you find there to this Pokémon. Put the other cards into your hand. If you use this Ability, your turn ends.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Brave Blade',
-    cost: [M, M, M],
-    damage: 230,
-    text: 'During your next turn, this Pokémon can\'t attack.'
-  }];
+  public attacks = [
+    {
+      name: 'Brave Blade',
+      cost: [M, M, M],
+      damage: 230,
+      text: "During your next turn, this Pokémon can't attack.",
+    },
+  ];
 
   public regulationMark = 'D';
   public set: string = 'SSH';
@@ -63,38 +67,47 @@ export class ZacianV extends PokemonCard {
       }
 
       // Filter Metal Energy
-      const metalEnergies = topdecks.cards.filter(card => card instanceof EnergyCard && card.name === 'Metal Energy');
+      const metalEnergies = topdecks.cards.filter(
+        (card) => card instanceof EnergyCard && card.name === 'Metal Energy',
+      );
       const metals = metalEnergies.length;
 
       if (metals === 0) {
         topdecks.moveTo(player.hand);
       } else {
         // Only allow attaching to this Zacian V
-        state = store.prompt(state, new AttachEnergyPrompt(
-          player.id,
-          GameMessage.ATTACH_ENERGY_CARDS,
-          topdecks,
-          PlayerType.BOTTOM_PLAYER,
-          // Only this Zacian V's slot
-          [zacianTarget.slot],
-          { superType: SuperType.ENERGY, name: 'Metal Energy' },
-          { allowCancel: false, min: 0, max: metals, sameTarget: true, blockedTo }
-        ), transfers => {
-          transfers = transfers || [];
-          // Attach selected Metal Energies to this Zacian V
-          for (const transfer of transfers) {
-            // Only allow attaching to this Zacian V
-            if (
-              transfer.to.player === zacianTarget!.player &&
-              transfer.to.slot === zacianTarget!.slot &&
-              transfer.to.index === zacianTarget!.index
-            ) {
-              topdecks.moveCardTo(transfer.card, StateUtils.getTarget(state, player, transfer.to));
+        state = store.prompt(
+          state,
+          new AttachEnergyPrompt(
+            player.id,
+            GameMessage.ATTACH_ENERGY_CARDS,
+            topdecks,
+            PlayerType.BOTTOM_PLAYER,
+            // Only this Zacian V's slot
+            [zacianTarget.slot],
+            { superType: SuperType.ENERGY, name: 'Metal Energy' },
+            { allowCancel: false, min: 0, max: metals, sameTarget: true, blockedTo },
+          ),
+          (transfers) => {
+            transfers = transfers || [];
+            // Attach selected Metal Energies to this Zacian V
+            for (const transfer of transfers) {
+              // Only allow attaching to this Zacian V
+              if (
+                transfer.to.player === zacianTarget!.player &&
+                transfer.to.slot === zacianTarget!.slot &&
+                transfer.to.index === zacianTarget!.index
+              ) {
+                topdecks.moveCardTo(
+                  transfer.card,
+                  StateUtils.getTarget(state, player, transfer.to),
+                );
+              }
             }
-          }
-          // Move the rest to hand
-          topdecks.moveTo(player.hand);
-        });
+            // Move the rest to hand
+            topdecks.moveTo(player.hand);
+          },
+        );
       }
 
       // end the turn

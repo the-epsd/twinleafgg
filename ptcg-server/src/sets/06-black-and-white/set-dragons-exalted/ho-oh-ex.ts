@@ -15,7 +15,7 @@ function* useRebirth(next: Function, store: StoreLike, state: State,
     throw new GameError(GameMessage.CANNOT_USE_POWER);
   }
 
-  const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
+  const slots: PokemonCardList[] = player.bench.filter((b) => b.cards.length === 0);
   if (slots.length === 0) {
     throw new GameError(GameMessage.CANNOT_USE_POWER);
   }
@@ -41,7 +41,7 @@ function* useRebirth(next: Function, store: StoreLike, state: State,
 
   let basicEnergies = 0;
   const typeMap: { [key: number]: boolean } = {};
-  player.discard.cards.forEach(c => {
+  player.discard.cards.forEach((c) => {
     if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC) {
       const cardType = c.provides[0];
       if (typeMap[cardType] === undefined) {
@@ -56,16 +56,20 @@ function* useRebirth(next: Function, store: StoreLike, state: State,
   }
 
   const count = Math.min(3, basicEnergies);
-  return store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_ATTACH,
-    player.discard,
-    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-    { min: count, max: count, allowCancel: false, differentTypes: true }
-  ), selected => {
-    const cards = selected || [];
-    player.discard.moveCardsTo(cards, slots[0]);
-  });
+  return store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_ATTACH,
+      player.discard,
+      { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+      { min: count, max: count, allowCancel: false, differentTypes: true },
+    ),
+    (selected) => {
+      const cards = selected || [];
+      player.discard.moveCardsTo(cards, slots[0]);
+    },
+  );
 }
 
 export class HoOhEx extends PokemonCard {
@@ -104,13 +108,12 @@ export class HoOhEx extends PokemonCard {
   public readonly REBIRTH_MAREKER = 'REBIRTH_MAREKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       let basicEnergies = 0;
       const typeMap: { [key: number]: boolean } = {};
-      player.active.cards.forEach(c => {
+      player.active.cards.forEach((c) => {
         if (c.superType === SuperType.ENERGY && (c as EnergyCard).energyType === EnergyType.BASIC) {
           const cardType = (c as EnergyCard).provides[0];
           if (typeMap[cardType] === undefined) {
@@ -129,11 +132,13 @@ export class HoOhEx extends PokemonCard {
       return generator.next().value;
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.REBIRTH_MAREKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.REBIRTH_MAREKER, this)
+    ) {
       effect.player.marker.removeMarker(this.REBIRTH_MAREKER, this);
     }
 
     return state;
   }
-
 }

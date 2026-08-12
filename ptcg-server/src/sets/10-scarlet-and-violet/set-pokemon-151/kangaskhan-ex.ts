@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Kangaskhanex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public regulationMark = 'G';
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public cardType: CardType = C;
   public hp: number = 230;
   public weakness = [{ type: F }];
@@ -35,9 +35,7 @@ export class Kangaskhanex extends PokemonCard {
   public fullName: string = 'Kangaskhan ex MEW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       const player = effect.player;
       player.deck.moveTo(player.hand, 3);
     }
@@ -53,5 +51,4 @@ export class Kangaskhanex extends PokemonCard {
 
     return state;
   }
-
 }

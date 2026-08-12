@@ -10,24 +10,27 @@ import { FLIP_COIN_FOR_FLY } from '../../../game/store/prefabs/effect-of-attack-
 
 export class FlyingPikachuV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public cardType: CardType = L;
   public hp: number = 190;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [];
 
-  public attacks = [{
-    name: 'Thunder Shock',
-    cost: [L],
-    damage: 20,
-    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-  }, {
-    name: 'Fly',
-    cost: [C, C, C],
-    damage: 120,
-    text: 'Flip a coin. If tails, this attack does nothing. If heads, during your opponent\'s next turn, prevent all damage from and effects of attacks done to this Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'Thunder Shock',
+      cost: [L],
+      damage: 20,
+      text: "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed.",
+    },
+    {
+      name: 'Fly',
+      cost: [C, C, C],
+      damage: 120,
+      text: "Flip a coin. If tails, this attack does nothing. If heads, during your opponent's next turn, prevent all damage from and effects of attacks done to this Pokémon.",
+    },
+  ];
 
   public regulationMark = 'E';
 

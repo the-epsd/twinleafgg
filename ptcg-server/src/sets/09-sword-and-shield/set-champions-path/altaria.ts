@@ -19,19 +19,21 @@ export class Altaria extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Miraculous Charm',
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all damage done to this Pokémon by attacks from your opponent\'s Pokémon V and Pokémon-GX.'
-  }];
+  public powers = [
+    {
+      name: 'Miraculous Charm',
+      powerType: PowerType.ABILITY,
+      text: "Prevent all damage done to this Pokémon by attacks from your opponent's Pokémon V and Pokémon-GX.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Speed Dive',
       cost: [C, C],
       damage: 60,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -64,7 +66,7 @@ export class Altaria extends PokemonCard {
         return state;
       }
 
-      if (sourceCard.tags.includes(CardTag.POKEMON_V) || sourceCard.tags.includes(CardTag.POKEMON_GX)) {
+      if (sourceCard.hasTag(CardTag.POKEMON_V) || sourceCard.hasTag(CardTag.POKEMON_GX)) {
         if (IS_ABILITY_BLOCKED(store, state, player, this)) {
           return state;
         }
@@ -92,7 +94,7 @@ export class Altaria extends PokemonCard {
         return state;
       }
 
-      if (sourceCard.tags.includes(CardTag.POKEMON_V) || sourceCard.tags.includes(CardTag.POKEMON_GX)) {
+      if (sourceCard.hasTag(CardTag.POKEMON_V) || sourceCard.hasTag(CardTag.POKEMON_GX)) {
         if (IS_ABILITY_BLOCKED(store, state, player, this)) {
           return state;
         }

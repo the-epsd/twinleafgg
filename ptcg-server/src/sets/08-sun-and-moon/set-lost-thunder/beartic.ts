@@ -22,14 +22,14 @@ export class Beartic extends PokemonCard {
       cost: [W, C, C],
       damage: 60,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is a Pokémon-GX or a Pokémon-EX, this attack does 60 more damage (before applying Weakness and Resistance).'
+      text: "If your opponent's Active Pokémon is a Pokémon-GX or a Pokémon-EX, this attack does 60 more damage (before applying Weakness and Resistance).",
     },
     {
       name: 'Blizzard Burn',
       cost: [W, C, C, C],
       damage: 150,
-      text: 'This Pokémon can\'t attack during your next turn.'
-    }
+      text: "This Pokémon can't attack during your next turn.",
+    },
   ];
 
   public set: string = 'LOT';
@@ -46,10 +46,10 @@ export class Beartic extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       const opponentActive = opponent.active.getPokemonCard();
 
-      if (opponentActive && (
-        opponentActive.tags.includes(CardTag.POKEMON_GX) ||
-        opponentActive.tags.includes(CardTag.POKEMON_EX)
-      )) {
+      if (
+        opponentActive &&
+        (opponentActive.hasTag(CardTag.POKEMON_GX) || opponentActive.hasTag(CardTag.POKEMON_EX))
+      ) {
         effect.damage += 60;
       }
     }

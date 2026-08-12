@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class Morgrem extends PokemonCard {
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Impidimp';
   public cardType: CardType = D;
@@ -18,17 +18,20 @@ export class Morgrem extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Bite',
-    cost: [D],
-    damage: 20,
-    text: ''
-  }, {
-    name: 'Crushing Blow',
-    cost: [D, D],
-    damage: 40,
-    text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'Bite',
+      cost: [D],
+      damage: 20,
+      text: '',
+    },
+    {
+      name: 'Crushing Blow',
+      cost: [D, D],
+      damage: 40,
+      text: "Flip a coin. If heads, discard an Energy from your opponent's Active Pokémon.",
+    },
+  ];
 
   public regulationMark: string = 'E';
 
@@ -42,7 +45,7 @@ export class Morgrem extends PokemonCard {
     // Attack 2: Crushing Blow
     // Ref: AGENTS-patterns.md (Flip a coin if heads discard energy from opponent)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (result) {
           DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
         }

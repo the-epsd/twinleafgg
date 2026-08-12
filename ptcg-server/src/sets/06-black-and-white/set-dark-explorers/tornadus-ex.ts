@@ -7,12 +7,16 @@ import { Effect } from '../../../game/store/effects/effect';
 import { GameMessage } from '../../../game/game-message';
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
-function* usePowerBlast(next: Function, store: StoreLike, state: State,
-  effect: AttackEffect): IterableIterator<State> {
+function* usePowerBlast(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   // Active Pokemon has no energy cards attached
-  if (!player.active.energies.cards.some(c => c.superType === SuperType.ENERGY)) {
+  if (!player.active.energies.cards.some((c) => c.superType === SuperType.ENERGY)) {
     return state;
   }
 
@@ -27,16 +31,20 @@ function* usePowerBlast(next: Function, store: StoreLike, state: State,
   }
 
   let cards: Card[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_DISCARD,
-    player.active,
-    { superType: SuperType.ENERGY },
-    { min: 1, max: 1, allowCancel: false }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_DISCARD,
+      player.active,
+      { superType: SuperType.ENERGY },
+      { min: 1, max: 1, allowCancel: false },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   const discardEnergy = new DiscardCardsEffect(effect, cards);
   discardEnergy.target = player.active;
@@ -72,7 +80,6 @@ export class TornadusEx extends PokemonCard {
   public setNumber: string = '90';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       if (StateUtils.getStadiumCard(state) !== undefined) {
         effect.damage += 30;
@@ -87,5 +94,4 @@ export class TornadusEx extends PokemonCard {
 
     return state;
   }
-
 }

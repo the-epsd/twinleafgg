@@ -12,8 +12,13 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: NightlyGarbageRun, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: NightlyGarbageRun,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   let pokemonsOrEnergyInDiscard: number = 0;
@@ -37,34 +42,39 @@ function* playCard(next: Function, store: StoreLike, state: State,
   effect.preventDefault = true;
 
   let cards: Card[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_DECK,
-    player.discard,
-    {},
-    { min: 1, max: 3, allowCancel: false, blocked }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_DECK,
+      player.discard,
+      {},
+      { min: 1, max: 3, allowCancel: false, blocked },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   cards.forEach((card, index) => {
-    store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
+    store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, {
+      name: player.name,
+      card: card.name,
+    });
   });
 
   player.discard.moveCardsTo(cards, player.deck);
 
-
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);
   });
 }
 
 export class NightlyGarbageRun extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public tags: string[] = [CardTag.ROCKETS_SECRET_MACHINE];
+  protected _tags = [CardTag.ROCKETS_SECRET_MACHINE];
 
   public set: string = 'TR';
 
@@ -88,5 +98,4 @@ export class NightlyGarbageRun extends TrainerCard {
 
     return state;
   }
-
 }

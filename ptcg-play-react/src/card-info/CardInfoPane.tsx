@@ -153,7 +153,7 @@ export function CardInfoPane({
         e.useFromHand &&
         power.useFromHand &&
         power.powerType === PowerType.LEGEND_ASSEMBLY &&
-        card.tags?.includes(CardTag.DUAL_LEGEND)
+        card.tags.includes(CardTag.DUAL_LEGEND)
       ) {
         ok = hasBothDualLegendHalvesInHand(cardList?.cards ?? [], card);
       }

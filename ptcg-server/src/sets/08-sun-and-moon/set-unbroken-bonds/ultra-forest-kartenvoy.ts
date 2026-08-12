@@ -19,7 +19,8 @@ export class UltraForestKartenvoy extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ultra Forest Kartenvoy';
   public fullName: string = 'Ultra Forest Kartenvoy UNB';
-  public text: string = 'During this turn, damage from your Ultra Beasts\' attacks isn\'t affected by any effects on your opponent\'s Active Pokémon. You may play only 1 Supporter card during your turn (before your attack).';
+  public text: string =
+    "During this turn, damage from your Ultra Beasts' attacks isn't affected by any effects on your opponent's Active Pokémon. You may play only 1 Supporter card during your turn (before your attack).";
 
   public readonly KARTENVOY_MARKER = 'ULTRA_FOREST_KARTENVOY_MARKER';
 
@@ -33,7 +34,7 @@ export class UltraForestKartenvoy extends TrainerCard {
     // When an Ultra Beast attacks, make damage bypass effects on opponent's Active
     if (effect instanceof AttackEffect && HAS_MARKER(this.KARTENVOY_MARKER, effect.player, this)) {
       const sourceCard = effect.player.active.getPokemonCard();
-      if (sourceCard && sourceCard.tags.includes(CardTag.ULTRA_BEAST)) {
+      if (sourceCard && sourceCard.hasTag(CardTag.ULTRA_BEAST)) {
         // Apply damage bypassing effects on opponent's Active Pokemon
         const opponent = StateUtils.getOpponent(state, effect.player);
 

@@ -6,12 +6,16 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, GameMessage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED, DRAW_CARDS_UNTIL_CARDS_IN_HAND } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  BLOCK_IF_GX_ATTACK_USED,
+  DRAW_CARDS_UNTIL_CARDS_IN_HAND,
+} from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 
 export class DragoniteGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Dragonair';
   public cardType: CardType = N;
@@ -24,20 +28,20 @@ export class DragoniteGx extends PokemonCard {
       name: 'Dragon Claw',
       cost: [W, L, C],
       damage: 130,
-      text: ''
+      text: '',
     },
     {
       name: 'Sky Judgment',
       cost: [C, C, C, C, C],
       damage: 270,
-      text: 'Discard 3 Energy from this Pokémon.'
+      text: 'Discard 3 Energy from this Pokémon.',
     },
     {
       name: 'Mach Delivery-GX',
       cost: [C],
       damage: 0,
-      text: 'You may discard any number of cards from your hand until you have 9 or fewer. Draw cards until you have 10 cards in your hand. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "You may discard any number of cards from your hand until you have 9 or fewer. Draw cards until you have 10 cards in your hand. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'UNM';
@@ -64,20 +68,24 @@ export class DragoniteGx extends PokemonCard {
       // May discard any number of cards from hand
       if (player.hand.cards.length > 0) {
         const maxDiscard = player.hand.cards.length;
-        store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_DISCARD,
-          player.hand,
-          {},
-          { min: 0, max: maxDiscard, allowCancel: false }
-        ), selected => {
-          const cards = selected || [];
-          cards.forEach(card => {
-            player.hand.moveCardTo(card, player.discard);
-          });
+        store.prompt(
+          state,
+          new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_CARD_TO_DISCARD,
+            player.hand,
+            {},
+            { min: 0, max: maxDiscard, allowCancel: false },
+          ),
+          (selected) => {
+            const cards = selected || [];
+            cards.forEach((card) => {
+              player.hand.moveCardTo(card, player.discard);
+            });
 
-          DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 10);
-        });
+            DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 10);
+          },
+        );
       } else {
         DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 10);
       }

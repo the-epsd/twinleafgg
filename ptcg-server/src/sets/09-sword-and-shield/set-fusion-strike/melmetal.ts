@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class Melmetal extends PokemonCard {
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Meltan';
   public cardType: CardType = M;
@@ -29,14 +29,14 @@ export class Melmetal extends PokemonCard {
       name: 'Ingot Swing',
       cost: [M, C, C],
       damage: 80,
-      text: 'During your opponent\'s next turn, prevent all damage done to this Pokémon by attacks from Pokémon that have an Ability.'
+      text: "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Pokémon that have an Ability.",
     },
     {
       name: 'Blasting Hammer',
       cost: [M, M, C, C],
       damage: 150,
-      text: 'Discard an Energy from this Pokémon.'
-    }
+      text: 'Discard an Energy from this Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -59,19 +59,23 @@ export class Melmetal extends PokemonCard {
     }
 
     // Prevent damage from Pokemon with Abilities during opponent's next turn
-    if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect)
-      && effect.target.cards.includes(this)
-      && effect.target.marker.hasMarker(this.INGOT_SWING_MARKER, this)) {
+    if (
+      (effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
+      effect.target.cards.includes(this) &&
+      effect.target.marker.hasMarker(this.INGOT_SWING_MARKER, this)
+    ) {
       const sourceCard = effect.source.getPokemonCard();
-      if (sourceCard && sourceCard.powers.some(p => p.powerType === PowerType.ABILITY)) {
+      if (sourceCard && sourceCard.powers.some((p) => p.powerType === PowerType.ABILITY)) {
         effect.preventDefault = true;
         return state;
       }
     }
 
     // Cleanup markers at end of opponent's turn
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_INGOT_SWING_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_INGOT_SWING_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_INGOT_SWING_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {

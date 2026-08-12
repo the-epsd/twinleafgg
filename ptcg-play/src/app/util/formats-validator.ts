@@ -250,22 +250,19 @@ export class FormatValidator {
         }
         case Format.GLC: {
           // For anyPrintingAllowed, do NOT check set date, only tags
-          return !(
-            card.tags &&
-            card.tags.some((t: any) =>
-              [
-                CardTag.ACE_SPEC.toString(),
-                CardTag.POKEMON_EX.toString(),
-                CardTag.POKEMON_ex.toString(),
-                CardTag.POKEMON_V.toString(),
-                CardTag.POKEMON_VMAX.toString(),
-                CardTag.POKEMON_VSTAR.toString(),
-                CardTag.RADIANT.toString(),
-                CardTag.POKEMON_GX.toString(),
-                CardTag.PRISM_STAR.toString(),
-                CardTag.POKEMON_VUNION.toString(),
-              ].includes(t),
-            )
+          return !card.tags.some((t: any) =>
+            [
+              CardTag.ACE_SPEC.toString(),
+              CardTag.POKEMON_EX.toString(),
+              CardTag.POKEMON_ex.toString(),
+              CardTag.POKEMON_V.toString(),
+              CardTag.POKEMON_VMAX.toString(),
+              CardTag.POKEMON_VSTAR.toString(),
+              CardTag.RADIANT.toString(),
+              CardTag.POKEMON_GX.toString(),
+              CardTag.PRISM_STAR.toString(),
+              CardTag.POKEMON_VUNION.toString(),
+            ].includes(t),
           );
         }
         case Format.RETRO:
@@ -310,22 +307,19 @@ export class FormatValidator {
         return (
           setDate >= new Date("Mon, 25 Apr 2011 00:00:00 GMT") &&
           setDate <= new Date() &&
-          !(
-            card.tags &&
-            card.tags.some((t: any) =>
-              [
-                CardTag.ACE_SPEC.toString(),
-                CardTag.POKEMON_EX.toString(),
-                CardTag.POKEMON_ex.toString(),
-                CardTag.POKEMON_V.toString(),
-                CardTag.POKEMON_VMAX.toString(),
-                CardTag.POKEMON_VSTAR.toString(),
-                CardTag.RADIANT.toString(),
-                CardTag.POKEMON_GX.toString(),
-                CardTag.PRISM_STAR.toString(),
-                CardTag.POKEMON_VUNION.toString(),
-              ].includes(t),
-            )
+          !card.tags.some((t: any) =>
+            [
+              CardTag.ACE_SPEC.toString(),
+              CardTag.POKEMON_EX.toString(),
+              CardTag.POKEMON_ex.toString(),
+              CardTag.POKEMON_V.toString(),
+              CardTag.POKEMON_VMAX.toString(),
+              CardTag.POKEMON_VSTAR.toString(),
+              CardTag.RADIANT.toString(),
+              CardTag.POKEMON_GX.toString(),
+              CardTag.PRISM_STAR.toString(),
+              CardTag.POKEMON_VUNION.toString(),
+            ].includes(t),
           )
         );
       }

@@ -1,23 +1,46 @@
-import { Attack, CardTag, CardType, GameError, GameMessage, PokemonCard, PokemonCardList, Power, PowerType, Stage, State, StateUtils, StoreLike, Weakness, CardList } from '../../../game';
+import {
+  Attack,
+  CardTag,
+  CardType,
+  GameError,
+  GameMessage,
+  PokemonCard,
+  PokemonCardList,
+  Power,
+  PowerType,
+  Stage,
+  State,
+  StateUtils,
+  StoreLike,
+  Weakness,
+  CardList,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { BLOCK_IF_DECK_EMPTY, GET_CARDS_ON_BOTTOM_OF_DECK, MOVE_CARDS, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  BLOCK_IF_DECK_EMPTY,
+  GET_CARDS_ON_BOTTOM_OF_DECK,
+  MOVE_CARDS,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class MistysPsyduck extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-  public tags: string[] = [CardTag.MISTYS];
+  protected _tags = [CardTag.MISTYS];
   public cardType: CardType = W;
   public hp: number = 50;
   public weakness: Weakness[] = [{ type: L }];
   public retreat: CardType[] = [C];
 
-  public powers: Power[] = [{
-    name: 'Slapstick Jump',
-    powerType: PowerType.ABILITY,
-    useWhenInPlay: true,
-    text: 'Once during your turn, if this Pokémon is on your Bench, you may discard the bottom card ' +
-      'of your deck. If you do, discard all cards attached to this Pokémon and put it on top of your deck.',
-  }];
+  public powers: Power[] = [
+    {
+      name: 'Slapstick Jump',
+      powerType: PowerType.ABILITY,
+      useWhenInPlay: true,
+      text:
+        'Once during your turn, if this Pokémon is on your Bench, you may discard the bottom card ' +
+        'of your deck. If you do, discard all cards attached to this Pokémon and put it on top of your deck.',
+    },
+  ];
 
   public attacks: Attack[] = [{ name: 'Sprinkle Water', cost: [W], damage: 30, text: '' }];
 
@@ -25,8 +48,8 @@ export class MistysPsyduck extends PokemonCard {
   public regulationMark: string = 'I';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '45';
-  public name: string = 'Misty\'s Psyduck';
-  public fullName: string = 'Misty\'s Psyduck DRI';
+  public name: string = "Misty's Psyduck";
+  public fullName: string = "Misty's Psyduck DRI";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_POWER_USED(effect, 0, this)) {
@@ -47,10 +70,11 @@ export class MistysPsyduck extends PokemonCard {
       }
 
       // Get attached cards (energy, tools, etc.)
-      const otherCards = cardList.cards.filter(card =>
-        !(card instanceof PokemonCard) &&
-        !cardList.getPokemons().includes(card as PokemonCard) &&
-        (!cardList.tools || !cardList.tools.includes(card))
+      const otherCards = cardList.cards.filter(
+        (card) =>
+          !(card instanceof PokemonCard) &&
+          !cardList.getPokemons().includes(card as PokemonCard) &&
+          (!cardList.tools || !cardList.tools.includes(card)),
       );
       const tools = [...cardList.tools];
 

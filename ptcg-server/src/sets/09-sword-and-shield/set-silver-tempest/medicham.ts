@@ -18,12 +18,14 @@ export class Medicham extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Chakra Awakening',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'If you have exactly 4 cards in your hand, this Pokémon\'s attacks cost ColorlessColorlessColorless less.'
-  }];
+  public powers = [
+    {
+      name: 'Chakra Awakening',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: "If you have exactly 4 cards in your hand, this Pokémon's attacks cost ColorlessColorlessColorless less.",
+    },
+  ];
 
   public attacks = [
     {
@@ -31,8 +33,8 @@ export class Medicham extends PokemonCard {
       cost: [C, C, C],
       damage: 80,
       damageCalculation: '+',
-      text: 'If your opponent has any Pokémon VMAX in play, this attack does 90 more damage.'
-    }
+      text: 'If your opponent has any Pokémon VMAX in play, this attack does 90 more damage.',
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -75,7 +77,7 @@ export class Medicham extends PokemonCard {
       if (player.hand.cards.length === 4) {
         // Remove up to 3 Colorless from the cost
         let removed = 0;
-        effect.cost = effect.cost.filter(c => {
+        effect.cost = effect.cost.filter((c) => {
           if (c === CardType.COLORLESS && removed < 3) {
             removed++;
             return false;
@@ -94,7 +96,7 @@ export class Medicham extends PokemonCard {
       // Check if any of opponent's Pokemon is a VMAX
       let hasVmax = false;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card.tags.includes(CardTag.POKEMON_VMAX)) {
+        if (card.hasTag(CardTag.POKEMON_VMAX)) {
           hasVmax = true;
         }
       });

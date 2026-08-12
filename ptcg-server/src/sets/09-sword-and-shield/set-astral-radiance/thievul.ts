@@ -17,19 +17,21 @@ export class Thievul extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Baffling',
-    powerType: PowerType.ABILITY,
-    text: 'If your opponent has 2 or fewer Prize cards remaining, whenever your opponent plays a Supporter card from their hand, prevent all effects of that card done to your Benched Pokémon V.'
-  }];
+  public powers = [
+    {
+      name: 'Baffling',
+      powerType: PowerType.ABILITY,
+      text: 'If your opponent has 2 or fewer Prize cards remaining, whenever your opponent plays a Supporter card from their hand, prevent all effects of that card done to your Benched Pokémon V.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Sharp Fang',
       cost: [D, D, C],
       damage: 110,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -50,7 +52,7 @@ export class Thievul extends PokemonCard {
 
       // Find which player owns Thievul
       let thievulOwner: any = null;
-      state.players.forEach(p => {
+      state.players.forEach((p) => {
         p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
           if (cardList.getPokemonCard() === this) {
             thievulOwner = p;
@@ -85,11 +87,12 @@ export class Thievul extends PokemonCard {
       thievulOwner.bench.forEach((benchSlot: any) => {
         if (benchSlot === target) {
           const pokemon = benchSlot.getPokemonCard();
-          if (pokemon && (
-            pokemon.tags.includes(CardTag.POKEMON_V) ||
-            pokemon.tags.includes(CardTag.POKEMON_VMAX) ||
-            pokemon.tags.includes(CardTag.POKEMON_VSTAR)
-          )) {
+          if (
+            pokemon &&
+            (pokemon.hasTag(CardTag.POKEMON_V) ||
+              pokemon.hasTag(CardTag.POKEMON_VMAX) ||
+              pokemon.hasTag(CardTag.POKEMON_VSTAR))
+          ) {
             targetIsOurBenchedV = true;
           }
         }

@@ -1,10 +1,15 @@
-import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_PARALYZED_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  COIN_FLIP_PROMPT,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class DarkPupitar extends PokemonCard {
-  public tags = [CardTag.DARK];
+  protected _tags = [CardTag.DARK];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Larvitar';
   public cardType: CardType = F;
@@ -32,10 +37,9 @@ export class DarkPupitar extends PokemonCard {
   public fullName: string = 'Dark Pupitar TRR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // Dark Streak
     if (AFTER_ATTACK(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (result) {
           ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
         }
@@ -49,4 +53,4 @@ export class DarkPupitar extends PokemonCard {
 
     return state;
   }
-} 
+}

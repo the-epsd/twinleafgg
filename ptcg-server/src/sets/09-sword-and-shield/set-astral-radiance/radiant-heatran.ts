@@ -5,9 +5,8 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { Effect } from '../../../game/store/effects/effect';
 
 export class RadiantHeatran extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.RADIANT];
+  protected _tags = [CardTag.RADIANT];
   public regulationMark = 'F';
   public cardType: CardType = R;
   public hp: number = 160;
@@ -20,7 +19,7 @@ export class RadiantHeatran extends PokemonCard {
       cost: [R, C, C],
       damage: 70,
       damageCalculation: 'x',
-      text: 'This attack does 70 damage for each damage counter on this Pokémon.'
+      text: 'This attack does 70 damage for each damage counter on this Pokémon.',
     },
   ];
 
@@ -37,5 +36,4 @@ export class RadiantHeatran extends PokemonCard {
     }
     return state;
   }
-
 }

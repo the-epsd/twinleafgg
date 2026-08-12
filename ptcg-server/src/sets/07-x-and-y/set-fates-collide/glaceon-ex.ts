@@ -11,7 +11,7 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class GlaceonEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 170;
@@ -24,14 +24,14 @@ export class GlaceonEx extends PokemonCard {
       cost: [W, C],
       damage: 20,
       damageCalculation: '+',
-      text: 'This attack does 10 more damage for each damage counter on your opponent\'s Active Pokémon.'
+      text: "This attack does 10 more damage for each damage counter on your opponent's Active Pokémon.",
     },
     {
       name: 'Crystal Ray',
       cost: [W, C, C],
       damage: 70,
-      text: 'During your opponent\'s next turn, prevent all damage done to this Pokémon by attacks from Evolution Pokémon.'
-    }
+      text: "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Evolution Pokémon.",
+    },
   ];
 
   public set: string = 'FCO';
@@ -70,7 +70,7 @@ export class GlaceonEx extends PokemonCard {
     // Cleanup marker at end of opponent's turn
     if (effect instanceof EndTurnEffect) {
       const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         cardList.marker.removeMarker(this.CRYSTAL_RAY_MARKER, this);
       });
     }

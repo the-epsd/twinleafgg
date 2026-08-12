@@ -10,7 +10,7 @@ export class ShadowRiderCalyrexV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public regulationMark = 'E';
   public cardType: CardType = P;
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public hp: number = 210;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

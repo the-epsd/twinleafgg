@@ -8,7 +8,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 
 export class Cryogonal extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public cardType: CardType = W;
   public hp: number = 80;
   public weakness = [{ type: M }];

@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class CharizardVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Charizard V';
   public cardType: CardType = R;
@@ -23,14 +23,14 @@ export class CharizardVmax extends PokemonCard {
       name: 'Claw Slash',
       cost: [C, C, C],
       damage: 100,
-      text: ''
+      text: '',
     },
     {
       name: 'G-Max Wildfire',
       cost: [R, R, R, C, C],
       damage: 300,
-      text: 'Discard 2 Energy from this Pokémon.'
-    }
+      text: 'Discard 2 Energy from this Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'D';

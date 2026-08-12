@@ -7,20 +7,20 @@ export type LegendDisplayHalves = {
 
 export function resolveLegendDisplayHalves(cardList: PokemonCardList): LegendDisplayHalves {
   const pokemonCard = cardList.getPokemonCard();
-  if (!pokemonCard?.tags?.includes(CardTag.LEGEND)) {
+  if (!pokemonCard?.tags.includes(CardTag.LEGEND)) {
     return {};
   }
 
   const top = cardList.cards.find(
     (c) =>
       c.superType === SuperType.POKEMON &&
-      c.tags?.includes(CardTag.LEGEND) &&
+      c.tags.includes(CardTag.LEGEND) &&
       c.fullName.includes('(Top)'),
   );
   const bottom = cardList.cards.find(
     (c) =>
       c.superType === SuperType.POKEMON &&
-      c.tags?.includes(CardTag.LEGEND) &&
+      c.tags.includes(CardTag.LEGEND) &&
       c.fullName.includes('(Bottom)'),
   );
 

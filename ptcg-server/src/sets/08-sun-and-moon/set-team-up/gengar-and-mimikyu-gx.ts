@@ -5,7 +5,7 @@ import { OPPONENT_CANNOT_PLAY_ANY_CARDS } from '../../../game/store/prefabs/effe
 
 export class GengarMimikyuGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
+  protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
   public cardType: CardType = P;
   public hp: number = 240;
   public weakness = [{ type: D }];
@@ -37,7 +37,7 @@ export class GengarMimikyuGX extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const trainerCount = opponent.hand.cards.filter(card => card instanceof TrainerCard).length;
+      const trainerCount = opponent.hand.cards.filter((card) => card instanceof TrainerCard).length;
       effect.damage = 50 * trainerCount;
     }
 
@@ -49,9 +49,12 @@ export class GengarMimikyuGX extends PokemonCard {
 
       OPPONENT_CANNOT_PLAY_ANY_CARDS(store, state, effect, this);
 
-      const extraEnergy = player.active.cards.filter(card =>
-        card.superType === SuperType.ENERGY && (card as EnergyCard).provides.includes(CardType.PSYCHIC)
-      ).length > 1;
+      const extraEnergy =
+        player.active.cards.filter(
+          (card) =>
+            card.superType === SuperType.ENERGY &&
+            (card as EnergyCard).provides.includes(CardType.PSYCHIC),
+        ).length > 1;
 
       if (extraEnergy) {
         const opponent = StateUtils.getOpponent(state, player);

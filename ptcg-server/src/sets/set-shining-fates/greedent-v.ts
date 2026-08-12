@@ -10,24 +10,27 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/pref
 import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
 
 export class GreedentV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
   public hp: number = 200;
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Crunch',
-    cost: [C, C],
-    damage: 40,
-    text: 'Discard an Energy from your opponent\'s Active Pokémon.'
-  }, {
-    name: 'Stumbling Press',
-    cost: [C, C, C],
-    damage: 180,
-    text: 'Flip a coin. If tails, this attack does nothing.'
-  }];
+  public attacks = [
+    {
+      name: 'Crunch',
+      cost: [C, C],
+      damage: 40,
+      text: "Discard an Energy from your opponent's Active Pokémon.",
+    },
+    {
+      name: 'Stumbling Press',
+      cost: [C, C, C],
+      damage: 180,
+      text: 'Flip a coin. If tails, this attack does nothing.',
+    },
+  ];
 
   public regulationMark: string = 'D';
 
@@ -48,7 +51,7 @@ export class GreedentV extends PokemonCard {
     // Ref: AGENTS-patterns.md (Flip a coin. If tails, this attack does nothing.)
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      COIN_FLIP_PROMPT(store, state, player, result => {
+      COIN_FLIP_PROMPT(store, state, player, (result) => {
         if (!result) {
           effect.damage = 0;
         }

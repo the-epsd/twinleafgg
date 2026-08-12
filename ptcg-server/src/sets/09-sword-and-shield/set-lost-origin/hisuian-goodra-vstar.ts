@@ -9,24 +9,28 @@ import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/pre
 export class HisuianGoodraVSTAR extends PokemonCard {
   public stage: Stage = Stage.VSTAR;
   public evolvesFrom = 'Hisuian Goodra V';
-  public tags = [CardTag.POKEMON_VSTAR];
+  protected _tags = [CardTag.POKEMON_VSTAR];
   public cardType: CardType = N;
   public hp: number = 270;
   public retreat = [C, C, C];
 
-  public powers = [{
-    name: 'Moisture Star',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'During your turn, you may heal all damage from this Pokémon. (You can\'t use more than 1 VSTAR Power in a game.) '
-  }];
+  public powers = [
+    {
+      name: 'Moisture Star',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: "During your turn, you may heal all damage from this Pokémon. (You can't use more than 1 VSTAR Power in a game.) ",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Rolling Iron',
-    cost: [W, M, C],
-    damage: 200,
-    text: 'During your opponent\'s next turn, this Pokémon takes 80 less damage from attacks (after applying Weakness and Resistance).'
-  }];
+  public attacks = [
+    {
+      name: 'Rolling Iron',
+      cost: [W, M, C],
+      damage: 200,
+      text: "During your opponent's next turn, this Pokémon takes 80 less damage from attacks (after applying Weakness and Resistance).",
+    },
+  ];
 
   public regulationMark = 'F';
   public set: string = 'LOR';
@@ -45,19 +49,18 @@ export class HisuianGoodraVSTAR extends PokemonCard {
 
       player.usedVSTAR = true;
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         if (cardList.getPokemonCard() === this) {
           const healEffect = new HealEffect(player, cardList, 999);
           store.reduceEffect(state, healEffect);
         }
       });
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         if (cardList.getPokemonCard() === this) {
           cardList.addBoardEffect(BoardEffect.ABILITY_USED);
         }
       });
-
     }
     if (WAS_ATTACK_USED(effect, 0, this)) {
       effect.player.active.damageReductionNextTurn = 80;

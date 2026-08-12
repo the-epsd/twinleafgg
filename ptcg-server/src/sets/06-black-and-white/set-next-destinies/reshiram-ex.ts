@@ -8,7 +8,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class ReshiramEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = R;
   public hp: number = 180;
@@ -34,7 +34,6 @@ export class ReshiramEx extends PokemonCard {
   public setNumber: string = '22';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
@@ -59,5 +58,4 @@ export class ReshiramEx extends PokemonCard {
 
     return state;
   }
-
 }

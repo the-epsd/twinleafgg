@@ -30,7 +30,7 @@ export class LifeHerb extends TrainerCard {
       let hasValidTarget = false;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (_cardList, card, target) => {
-        if (card.tags.includes(CardTag.POKEMON_ex)) {
+        if (card.hasTag(CardTag.POKEMON_ex)) {
           blocked.push(target);
         } else {
           hasValidTarget = true;
@@ -41,23 +41,27 @@ export class LifeHerb extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      COIN_FLIP_PROMPT(store, state, player, result => {
+      COIN_FLIP_PROMPT(store, state, player, (result) => {
         if (result) {
-          store.prompt(state, new ChoosePokemonPrompt(
-            player.id,
-            GameMessage.CHOOSE_POKEMON_TO_HEAL,
-            PlayerType.BOTTOM_PLAYER,
-            [SlotType.ACTIVE, SlotType.BENCH],
-            { min: 1, max: 1, allowCancel: false, blocked }
-          ), targets => {
-            if (!targets || targets.length === 0) {
-              return;
-            }
-            const target = targets[0];
-            const healEffect = new HealEffect(player, target, 60);
-            store.reduceEffect(state, healEffect);
-            target.specialConditions = [];
-          });
+          store.prompt(
+            state,
+            new ChoosePokemonPrompt(
+              player.id,
+              GameMessage.CHOOSE_POKEMON_TO_HEAL,
+              PlayerType.BOTTOM_PLAYER,
+              [SlotType.ACTIVE, SlotType.BENCH],
+              { min: 1, max: 1, allowCancel: false, blocked },
+            ),
+            (targets) => {
+              if (!targets || targets.length === 0) {
+                return;
+              }
+              const target = targets[0];
+              const healEffect = new HealEffect(player, target, 60);
+              store.reduceEffect(state, healEffect);
+              target.specialConditions = [];
+            },
+          );
         }
       });
     }

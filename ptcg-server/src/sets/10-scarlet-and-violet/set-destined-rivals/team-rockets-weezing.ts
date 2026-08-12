@@ -6,8 +6,8 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class TeamRocketsWeezing extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public evolvesFrom = 'Team Rocket\'s Koffing';
-  public tags = [CardTag.TEAM_ROCKET];
+  public evolvesFrom = "Team Rocket's Koffing";
+  protected _tags = [CardTag.TEAM_ROCKET];
   public cardType: CardType = D;
   public hp: number = 130;
   public weakness = [{ type: F }];
@@ -19,16 +19,16 @@ export class TeamRocketsWeezing extends PokemonCard {
       cost: [D, C],
       damage: 40,
       damageCalculation: 'x',
-      text: 'This attack does 40 damage for each Pokémon in play with Koffing or Weezing in its name.'
-    }
+      text: 'This attack does 40 damage for each Pokémon in play with Koffing or Weezing in its name.',
+    },
   ];
 
   public regulationMark = 'I';
   public set: string = 'DRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '126';
-  public name: string = 'Team Rocket\'s Weezing';
-  public fullName: string = 'Team Rocket\'s Weezing DRI';
+  public name: string = "Team Rocket's Weezing";
+  public fullName: string = "Team Rocket's Weezing DRI";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
@@ -36,17 +36,22 @@ export class TeamRocketsWeezing extends PokemonCard {
       const opponent = effect.opponent;
 
       let koffingsAndWeezings = 0;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
-        if (card.getPokemonCard()?.name.includes('Koffing') || card.getPokemonCard()?.name.includes('Weezing')) {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (card) => {
+        if (
+          card.getPokemonCard()?.name.includes('Koffing') ||
+          card.getPokemonCard()?.name.includes('Weezing')
+        ) {
           koffingsAndWeezings++;
         }
       });
-      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
-        if (card.getPokemonCard()?.name.includes('Koffing') || card.getPokemonCard()?.name.includes('Weezing')) {
+      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (card) => {
+        if (
+          card.getPokemonCard()?.name.includes('Koffing') ||
+          card.getPokemonCard()?.name.includes('Weezing')
+        ) {
           koffingsAndWeezings++;
         }
       });
-
 
       effect.damage = 40 * koffingsAndWeezings;
     }

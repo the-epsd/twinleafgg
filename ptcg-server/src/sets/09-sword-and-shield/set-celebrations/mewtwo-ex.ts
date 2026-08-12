@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class MewtwoEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 170;
@@ -24,14 +24,14 @@ export class MewtwoEx extends PokemonCard {
       cost: [C, C],
       damage: 20,
       damageCalculation: 'x',
-      text: 'Does 20 damage times the amount of Energy attached to this Pokémon and the Defending Pokémon.'
+      text: 'Does 20 damage times the amount of Energy attached to this Pokémon and the Defending Pokémon.',
     },
     {
       name: 'Psydrive',
       cost: [P, P, C],
       damage: 120,
-      text: 'Discard an Energy attached to this Pokémon.'
-    }
+      text: 'Discard an Energy attached to this Pokémon.',
+    },
   ];
 
   public set: string = 'CEL';
@@ -50,11 +50,17 @@ export class MewtwoEx extends PokemonCard {
 
       const playerEnergy = new CheckProvidedEnergyEffect(player);
       store.reduceEffect(state, playerEnergy);
-      const playerEnergyCount = playerEnergy.energyMap.reduce((sum, em) => sum + em.provides.length, 0);
+      const playerEnergyCount = playerEnergy.energyMap.reduce(
+        (sum, em) => sum + em.provides.length,
+        0,
+      );
 
       const opponentEnergy = new CheckProvidedEnergyEffect(opponent);
       store.reduceEffect(state, opponentEnergy);
-      const opponentEnergyCount = opponentEnergy.energyMap.reduce((sum, em) => sum + em.provides.length, 0);
+      const opponentEnergyCount = opponentEnergy.energyMap.reduce(
+        (sum, em) => sum + em.provides.length,
+        0,
+      );
 
       effect.damage = (playerEnergyCount + opponentEnergyCount) * 20;
     }

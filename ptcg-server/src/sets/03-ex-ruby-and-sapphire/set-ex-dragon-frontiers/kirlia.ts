@@ -7,7 +7,7 @@ import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK } from '../../../game/store/pr
 export class Kirlia extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Ralts';
-  public tags = [CardTag.DELTA_SPECIES];
+  protected _tags = [CardTag.DELTA_SPECIES];
   public cardType: CardType = R;
   public hp: number = 70;
   public weakness = [{ type: P }];
@@ -18,14 +18,14 @@ export class Kirlia extends PokemonCard {
       name: 'Flickering Flames',
       cost: [R, C],
       damage: 20,
-      text: 'The Defending Pokémon is now Asleep.'
+      text: 'The Defending Pokémon is now Asleep.',
     },
     {
       name: 'Smack',
       cost: [R, C, C],
       damage: 40,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'DF';
@@ -35,7 +35,6 @@ export class Kirlia extends PokemonCard {
   public fullName: string = 'Kirlia DF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (AFTER_ATTACK(effect, 0, this)) {
       ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }

@@ -3,7 +3,13 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { CardTag, EnergyType, Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
+import {
+  CardTag,
+  EnergyType,
+  Stage,
+  SuperType,
+  TrainerType,
+} from '../../../game/store/card/card-types';
 import { CardTarget, PlayerType, SlotType } from '../../../game/store/actions/play-card-action';
 import { GameError, GameMessage, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
@@ -34,8 +40,8 @@ export class TurboPatch extends TrainerCard {
       const player = effect.player;
 
       // Check preconditions
-      const hasBasicEnergyInDiscard = player.discard.cards.some(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC
+      const hasBasicEnergyInDiscard = player.discard.cards.some(
+        (c) => c instanceof EnergyCard && c.energyType === EnergyType.BASIC,
       );
       if (!hasBasicEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -50,8 +56,8 @@ export class TurboPatch extends TrainerCard {
           return;
         }
         const pokemon = cardList.getPokemonCard();
-        const isBasicNonGX = pokemon && pokemon.stage === Stage.BASIC &&
-          !pokemon.tags.includes(CardTag.POKEMON_GX);
+        const isBasicNonGX =
+          pokemon && pokemon.stage === Stage.BASIC && !pokemon.hasTag(CardTag.POKEMON_GX);
 
         if (isBasicNonGX) {
           hasValidTarget = true;
@@ -67,7 +73,7 @@ export class TurboPatch extends TrainerCard {
       effect.preventDefault = true;
       player.hand.moveCardTo(this, player.supporter);
 
-      state = COIN_FLIP_PROMPT(store, state, player, result => {
+      state = COIN_FLIP_PROMPT(store, state, player, (result) => {
         if (!result) {
           // Tails - no effect, just discard trainer
           player.supporter.moveCardTo(this, player.discard);
@@ -75,24 +81,28 @@ export class TurboPatch extends TrainerCard {
         }
 
         // Heads - attach basic energy to Basic non-GX Pokemon
-        state = store.prompt(state, new AttachEnergyPrompt(
-          player.id,
-          GameMessage.ATTACH_ENERGY_CARDS,
-          player.discard,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.ACTIVE, SlotType.BENCH],
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-          { allowCancel: false, min: 1, max: 1, blockedTo }
-        ), transfers => {
-          transfers = transfers || [];
+        state = store.prompt(
+          state,
+          new AttachEnergyPrompt(
+            player.id,
+            GameMessage.ATTACH_ENERGY_CARDS,
+            player.discard,
+            PlayerType.BOTTOM_PLAYER,
+            [SlotType.ACTIVE, SlotType.BENCH],
+            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+            { allowCancel: false, min: 1, max: 1, blockedTo },
+          ),
+          (transfers) => {
+            transfers = transfers || [];
 
-          for (const transfer of transfers) {
-            const target = StateUtils.getTarget(state, player, transfer.to);
-            player.discard.moveCardTo(transfer.card, target);
-          }
+            for (const transfer of transfers) {
+              const target = StateUtils.getTarget(state, player, transfer.to);
+              player.discard.moveCardTo(transfer.card, target);
+            }
 
-          player.supporter.moveCardTo(this, player.discard);
-        });
+            player.supporter.moveCardTo(this, player.discard);
+          },
+        );
       });
     }
 

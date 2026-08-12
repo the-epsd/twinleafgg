@@ -7,33 +7,35 @@ import { AfterDamageEffect, ApplyWeaknessEffect } from '../../../game/store/effe
 
 export class NsZekrom extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.NS];
+  protected _tags = [CardTag.NS];
   public cardType: CardType = N;
   public hp: number = 130;
   public weakness = [];
   public resistance = [];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Shred',
-    cost: [C, C, C],
-    damage: 70,
-    shredAttack: true,
-    text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
-  },
-  {
-    name: 'Rampaging Thunder',
-    cost: [R, L, L, C],
-    damage: 250,
-    text: 'During your next turn, this Pokémon can\'t use attacks.'
-  }];
+  public attacks = [
+    {
+      name: 'Shred',
+      cost: [C, C, C],
+      damage: 70,
+      shredAttack: true,
+      text: "This attack's damage isn't affected by any effects on your opponent's Active Pokémon.",
+    },
+    {
+      name: 'Rampaging Thunder',
+      cost: [R, L, L, C],
+      damage: 250,
+      text: "During your next turn, this Pokémon can't use attacks.",
+    },
+  ];
 
   public regulationMark: string = 'I';
   public set: string = 'ASC';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '155';
-  public name: string = 'N\'s Zekrom';
-  public fullName: string = 'N\'s Zekrom M2a';
+  public name: string = "N's Zekrom";
+  public fullName: string = "N's Zekrom M2a";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Shred
@@ -63,6 +65,3 @@ export class NsZekrom extends PokemonCard {
     return state;
   }
 }
-
-
-

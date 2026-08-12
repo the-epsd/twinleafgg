@@ -1,6 +1,20 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, EnergyType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, ChooseCardsPrompt, PowerType, GameError, EnergyCard } from '../../../game';
+import {
+  Stage,
+  CardType,
+  SuperType,
+  EnergyType,
+  CardTag,
+} from '../../../game/store/card/card-types';
+import {
+  StoreLike,
+  State,
+  StateUtils,
+  ChooseCardsPrompt,
+  PowerType,
+  GameError,
+  EnergyCard,
+} from '../../../game';
 
 import { Effect } from '../../../game/store/effects/effect';
 import { GameMessage } from '../../../game/game-message';
@@ -10,14 +24,13 @@ import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects
 import { MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class GalarianMoltresV extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
   public regulationMark = 'E';
 
   public cardType: CardType = CardType.DARK;
 
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
 
   public hp: number = 220;
 
@@ -30,8 +43,8 @@ export class GalarianMoltresV extends PokemonCard {
       name: 'Direflame Wings',
       useWhenInPlay: true,
       powerType: PowerType.ABILITY,
-      text: 'Once during your turn, you may attach a [D] Energy card from your discard pile to this Pokémon. You can\'t use more than 1 Direflame Wings Ability each turn.'
-    }
+      text: "Once during your turn, you may attach a [D] Energy card from your discard pile to this Pokémon. You can't use more than 1 Direflame Wings Ability each turn.",
+    },
   ];
 
   public attacks = [
@@ -39,8 +52,8 @@ export class GalarianMoltresV extends PokemonCard {
       name: 'Aura Burn',
       cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS],
       damage: 190,
-      text: 'This Pokémon also does 30 damage to itself.'
-    }
+      text: 'This Pokémon also does 30 damage to itself.',
+    },
   ];
 
   public set: string = 'CRE';
@@ -56,7 +69,6 @@ export class GalarianMoltresV extends PokemonCard {
   public readonly DIREFLAME_WINGS_MARKER = 'DIREFLAME_WINGS_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       player.marker.removeMarker(this.DIREFLAME_WINGS_MARKER, this);
@@ -69,10 +81,12 @@ export class GalarianMoltresV extends PokemonCard {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
-      const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c.superType === SuperType.ENERGY
-          && c.energyType === EnergyType.BASIC
-          && (c as EnergyCard).provides.includes(CardType.DARK);
+      const hasEnergyInDiscard = player.discard.cards.some((c) => {
+        return (
+          c.superType === SuperType.ENERGY &&
+          c.energyType === EnergyType.BASIC &&
+          (c as EnergyCard).provides.includes(CardType.DARK)
+        );
       });
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -83,22 +97,33 @@ export class GalarianMoltresV extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_ATTACH,
-        player.discard,
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Darkness Energy' },
-        { min: 0, max: 1, allowCancel: true }
-      ), cards => {
-        cards = cards || [];
-        if (cards.length > 0) {
-          player.marker.addMarker(this.DIREFLAME_WINGS_MARKER, this);
-          MOVE_CARDS(store, state, player.discard, cardList, { cards, sourceCard: this, sourceEffect: this.powers[0] });
-        }
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_ATTACH,
+          player.discard,
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Darkness Energy' },
+          { min: 0, max: 1, allowCancel: true },
+        ),
+        (cards) => {
+          cards = cards || [];
+          if (cards.length > 0) {
+            player.marker.addMarker(this.DIREFLAME_WINGS_MARKER, this);
+            MOVE_CARDS(store, state, player.discard, cardList, {
+              cards,
+              sourceCard: this,
+              sourceEffect: this.powers[0],
+            });
+          }
+        },
+      );
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.DIREFLAME_WINGS_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.DIREFLAME_WINGS_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.DIREFLAME_WINGS_MARKER, this);
     }
 
@@ -112,5 +137,4 @@ export class GalarianMoltresV extends PokemonCard {
 
     return state;
   }
-
 }

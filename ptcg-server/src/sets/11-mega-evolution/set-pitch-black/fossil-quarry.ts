@@ -30,7 +30,7 @@ function* useStadium(
   const maxPick = Math.min(2, slots.length);
   const blocked: number[] = [];
   player.deck.cards.forEach((card, index) => {
-    if (!(card instanceof TrainerCard && card.tags.includes(CardTag.ANTIQUE))) {
+    if (!(card instanceof TrainerCard && card.hasTag(CardTag.ANTIQUE))) {
       blocked.push(index);
     }
   });

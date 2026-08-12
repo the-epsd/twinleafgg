@@ -8,7 +8,7 @@ import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, WAS_ATT
 
 export class Pikachu extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.DELTA_SPECIES];
+  protected _tags = [CardTag.DELTA_SPECIES];
   public cardType: CardType = M;
   public hp: number = 40;
   public weakness = [{ type: F }];

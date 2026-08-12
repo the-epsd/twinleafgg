@@ -12,7 +12,7 @@ import { EvolveEffect } from '../../../game/store/effects/game-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 
 export class GlaceonV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 210;
@@ -24,14 +24,14 @@ export class GlaceonV extends PokemonCard {
       name: 'Frozen Awakening',
       cost: [W],
       damage: 0,
-      text: 'Search your deck for a card that evolves from this Pokémon and put it onto this Pokémon to evolve it. Then, shuffle your deck.'
+      text: 'Search your deck for a card that evolves from this Pokémon and put it onto this Pokémon to evolve it. Then, shuffle your deck.',
     },
     {
       name: 'Heavy Snow',
       cost: [W, C, C],
       damage: 120,
-      text: 'Discard a Stadium in play.'
-    }
+      text: 'Discard a Stadium in play.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -65,32 +65,36 @@ export class GlaceonV extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        { superType: SuperType.POKEMON },
-        { min: 1, max: 1, allowCancel: true, blocked }
-      ), selected => {
-        const cards = selected || [];
-        if (cards.length === 0) {
-          return;
-        }
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.deck,
+          { superType: SuperType.POKEMON },
+          { min: 1, max: 1, allowCancel: true, blocked },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          if (cards.length === 0) {
+            return;
+          }
 
-        const pokemonCard = cards[0] as PokemonCard;
+          const pokemonCard = cards[0] as PokemonCard;
 
-        // Move card to hand temporarily for EvolveEffect
-        player.deck.moveCardTo(pokemonCard, player.hand);
+          // Move card to hand temporarily for EvolveEffect
+          player.deck.moveCardTo(pokemonCard, player.hand);
 
-        // Evolve this Pokemon using EvolveEffect
-        const evolveEffect = new EvolveEffect(player, player.active, pokemonCard);
-        store.reduceEffect(state, evolveEffect);
+          // Evolve this Pokemon using EvolveEffect
+          const evolveEffect = new EvolveEffect(player, player.active, pokemonCard);
+          store.reduceEffect(state, evolveEffect);
 
-        // Shuffle deck
-        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-        });
-      });
+          // Shuffle deck
+          return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+            player.deck.applyOrder(order);
+          });
+        },
+      );
     }
 
     // Attack 2: Heavy Snow

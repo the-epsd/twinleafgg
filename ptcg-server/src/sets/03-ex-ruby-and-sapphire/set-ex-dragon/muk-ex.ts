@@ -16,31 +16,35 @@ import { GameMessage } from '../../../game/game-message';
 export class Mukex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Grimer';
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public cardType: CardType = G;
   public hp: number = 100;
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Toxic Gas',
-    powerType: PowerType.POKEBODY,
-    text: 'As long as Muk ex is your Active Pokémon, ignore all Poké-Powers and Poké-Bodies other than Toxic Gas.'
-  }];
+  public powers = [
+    {
+      name: 'Toxic Gas',
+      powerType: PowerType.POKEBODY,
+      text: 'As long as Muk ex is your Active Pokémon, ignore all Poké-Powers and Poké-Bodies other than Toxic Gas.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Poison Breath',
-    cost: [G],
-    damage: 10,
-    text: 'The Defending Pokémon is now Poisoned.'
-  },
-  {
-    name: 'Slimy Water',
-    cost: [G, G, C],
-    damage: 40,
-    damageCalculation: '+',
-    text: 'Does 40 damage plus 10 more damage for each [C] Energy in the Defending Pokémon\'s Retreat Cost (after applying effects to the Retreat Cost).'
-  }];
+  public attacks = [
+    {
+      name: 'Poison Breath',
+      cost: [G],
+      damage: 10,
+      text: 'The Defending Pokémon is now Poisoned.',
+    },
+    {
+      name: 'Slimy Water',
+      cost: [G, G, C],
+      damage: 40,
+      damageCalculation: '+',
+      text: "Does 40 damage plus 10 more damage for each [C] Energy in the Defending Pokémon's Retreat Cost (after applying effects to the Retreat Cost).",
+    },
+  ];
 
   public set: string = 'DR';
   public cardImage: string = 'assets/cardback.png';
@@ -51,17 +55,20 @@ export class Mukex extends PokemonCard {
   public usedPoisonSpurt = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    HANDLE_ABILITY_BLOCK(effect, ({ player }) => {
-      if (!IS_ABILITY_LOCKER_ACTIVE(state, player, this)) {
-        return false;
-      }
-      return CAN_APPLY_LOCKER_ABILITY(store, state, player, this, this.powers[0]);
-    }, {
-      powerTypes: POKEPOWER_AND_BODY_TYPES,
-      exemptPowerNames: ['Toxic Gas'],
-      error: GameMessage.BLOCKED_BY_ABILITY,
-    });
+    HANDLE_ABILITY_BLOCK(
+      effect,
+      ({ player }) => {
+        if (!IS_ABILITY_LOCKER_ACTIVE(state, player, this)) {
+          return false;
+        }
+        return CAN_APPLY_LOCKER_ABILITY(store, state, player, this, this.powers[0]);
+      },
+      {
+        powerTypes: POKEPOWER_AND_BODY_TYPES,
+        exemptPowerNames: ['Toxic Gas'],
+        error: GameMessage.BLOCKED_BY_ABILITY,
+      },
+    );
 
     // Poison Breath
     if (WAS_ATTACK_USED(effect, 0, this)) {

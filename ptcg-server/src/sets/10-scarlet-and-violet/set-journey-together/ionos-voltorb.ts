@@ -7,8 +7,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class IonosVoltorb extends PokemonCard {
-
-  public tags = [CardTag.IONOS];
+  protected _tags = [CardTag.IONOS];
 
   public stage: Stage = Stage.BASIC;
 
@@ -26,8 +25,8 @@ export class IonosVoltorb extends PokemonCard {
       cost: [C, C],
       damage: 20,
       damageCalculation: '+',
-      text: 'This attack does 20 more damage for each [L] Energy attached to all of your Iono\'s Pokémon.'
-    }
+      text: "This attack does 20 more damage for each [L] Energy attached to all of your Iono's Pokémon.",
+    },
   ];
 
   public regulationMark = 'I';
@@ -38,9 +37,9 @@ export class IonosVoltorb extends PokemonCard {
 
   public setNumber = '47';
 
-  public name: string = 'Iono\'s Voltorb';
+  public name: string = "Iono's Voltorb";
 
-  public fullName: string = 'Iono\'s Voltorb JTG';
+  public fullName: string = "Iono's Voltorb JTG";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
@@ -48,11 +47,14 @@ export class IonosVoltorb extends PokemonCard {
 
       let energies = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card.tags.includes(CardTag.IONOS)) {
+        if (card.hasTag(CardTag.IONOS)) {
           const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, cardList);
           store.reduceEffect(state, checkProvidedEnergyEffect);
-          checkProvidedEnergyEffect.energyMap.forEach(energy => {
-            if (energy.provides.includes(CardType.LIGHTNING) || energy.provides.includes(CardType.ANY)) {
+          checkProvidedEnergyEffect.energyMap.forEach((energy) => {
+            if (
+              energy.provides.includes(CardType.LIGHTNING) ||
+              energy.provides.includes(CardType.ANY)
+            ) {
               energies++;
             }
           });
@@ -64,5 +66,4 @@ export class IonosVoltorb extends PokemonCard {
 
     return state;
   }
-
 }

@@ -5,15 +5,27 @@
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardTag, EnergyType, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { CardTarget, PlayerType, SlotType } from '../../../game/store/actions/play-card-action';
-import { Card, GameError, GameMessage, PokemonCard, StoreLike, State, StateUtils } from '../../../game';
+import {
+  Card,
+  GameError,
+  GameMessage,
+  PokemonCard,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-prompt';
 
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: Rose, effect: TrainerEffect): IterableIterator<State> {
-
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: Rose,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   const supporterTurn = player.supporterTurn;
@@ -22,8 +34,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
   }
 
   // Check if there is any basic Energy in discard
-  const hasBasicEnergyInDiscard = player.discard.cards.some(c =>
-    c instanceof EnergyCard && c.energyType === EnergyType.BASIC
+  const hasBasicEnergyInDiscard = player.discard.cards.some(
+    (c) => c instanceof EnergyCard && c.energyType === EnergyType.BASIC,
   );
   if (!hasBasicEnergyInDiscard) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -38,7 +50,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
       return;
     }
     const pokemon = cardList.getPokemonCard();
-    if (pokemon instanceof PokemonCard && pokemon.tags.includes(CardTag.POKEMON_VMAX)) {
+    if (pokemon instanceof PokemonCard && pokemon.hasTag(CardTag.POKEMON_VMAX)) {
       hasVmax = true;
     } else {
       blockedTo.push(target);
@@ -53,19 +65,23 @@ function* playCard(next: Function, store: StoreLike, state: State,
   player.hand.moveCardTo(self, player.supporter);
 
   // Prompt to attach up to 2 basic energy from discard to 1 VMAX
-  let attached: { to: CardTarget, card: Card }[] = [];
-  yield store.prompt(state, new AttachEnergyPrompt(
-    player.id,
-    GameMessage.ATTACH_ENERGY_CARDS,
-    player.discard,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.ACTIVE, SlotType.BENCH],
-    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-    { allowCancel: false, min: 0, max: 2, blockedTo, sameTarget: true }
-  ), transfers => {
-    attached = transfers || [];
-    next();
-  });
+  let attached: { to: CardTarget; card: Card }[] = [];
+  yield store.prompt(
+    state,
+    new AttachEnergyPrompt(
+      player.id,
+      GameMessage.ATTACH_ENERGY_CARDS,
+      player.discard,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.ACTIVE, SlotType.BENCH],
+      { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+      { allowCancel: false, min: 0, max: 2, blockedTo, sameTarget: true },
+    ),
+    (transfers) => {
+      attached = transfers || [];
+      next();
+    },
+  );
 
   // If any energy was attached, discard hand
   if (attached.length > 0) {
@@ -76,7 +92,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
     // Discard entire hand
     const handCards = player.hand.cards.slice();
-    handCards.forEach(c => player.hand.moveCardTo(c, player.discard));
+    handCards.forEach((c) => player.hand.moveCardTo(c, player.discard));
   }
 
   player.supporter.moveCardTo(self, player.discard);
@@ -91,7 +107,8 @@ export class Rose extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rose';
   public fullName: string = 'Rose DAA';
-  public text: string = 'Attach up to 2 basic Energy cards from your discard pile to 1 of your Pokémon VMAX. If you attached any Energy cards in this way, discard your hand. You may play only 1 Supporter card during your turn.';
+  public text: string =
+    'Attach up to 2 basic Energy cards from your discard pile to 1 of your Pokémon VMAX. If you attached any Energy cards in this way, discard your hand. You may play only 1 Supporter card during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-sword-and-shield/quick-ball.ts (generator pattern)

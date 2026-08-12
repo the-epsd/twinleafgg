@@ -9,10 +9,18 @@ import { Effect } from '../../../game/store/effects/effect';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { AttachPokemonToolEffect } from '../../../game/store/effects/play-card-effects';
 import { IS_TOOL_BLOCKED } from '../../../game/store/prefabs/prefabs';
-import { StoreLike, State, Player, StateUtils, PlayerType, GameError, GameMessage } from '../../../game';
+import {
+  StoreLike,
+  State,
+  Player,
+  StateUtils,
+  PlayerType,
+  GameError,
+  GameMessage,
+} from '../../../game';
 
 function isPokemonEx(pokemon: PokemonCard): boolean {
-  return pokemon.tags.includes(CardTag.POKEMON_EX);
+  return pokemon.hasTag(CardTag.POKEMON_EX);
 }
 
 export class JammingNet extends TrainerCard {
@@ -23,7 +31,8 @@ export class JammingNet extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jamming Net';
   public fullName: string = 'Jamming Net Team Flare Hyper Gear PHF';
-  public text: string = 'Attach this Pokemon Tool to 1 of your opponent\'s Pokemon-EX that doesn\'t already have a Pokemon Tool attached to it.\n\nThe attacks of the Pokémon this card is attached to do 20 less damage to all Defending Pokémon (before applying Weakness and Resistance). (Don\'t apply Weakness and Resistance for Benched Pokémon.)\n\nWhen this card is removed from a Pokémon for any reason, put this card in its owner\'s discard pile.';
+  public text: string =
+    "Attach this Pokemon Tool to 1 of your opponent's Pokemon-EX that doesn't already have a Pokemon Tool attached to it.\n\nThe attacks of the Pokémon this card is attached to do 20 less damage to all Defending Pokémon (before applying Weakness and Resistance). (Don't apply Weakness and Resistance for Benched Pokémon.)\n\nWhen this card is removed from a Pokémon for any reason, put this card in its owner's discard pile.";
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     const opponent = StateUtils.getOpponent(state, player);
@@ -37,7 +46,10 @@ export class JammingNet extends TrainerCard {
   }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttachPokemonToolEffect && effect.trainerCard.fullName === this.fullName) {
+    if (
+      effect instanceof AttachPokemonToolEffect &&
+      effect.trainerCard.fullName === this.fullName
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const targetOwner = StateUtils.findOwner(state, effect.target);

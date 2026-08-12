@@ -8,7 +8,7 @@ import { PREVENT_DAMAGE, OPPONENT_CANNOT_PLAY_CARDS } from '../../../game/store/
 export class Noivernex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Noibat';
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public regulationMark = 'G';
   public cardType: CardType = N;
   public hp: number = 260;

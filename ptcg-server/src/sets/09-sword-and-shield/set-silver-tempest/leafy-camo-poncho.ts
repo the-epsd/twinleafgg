@@ -19,7 +19,8 @@ export class LeafyCamoPoncho extends TrainerCard {
       effect.trainerCard?.trainerType === TrainerType.SUPPORTER &&
       effect.target &&
       effect.target.cards.includes(this) &&
-      (effect.target.getPokemonCard()?.tags.includes(CardTag.POKEMON_VSTAR) || effect.target.getPokemonCard()?.tags.includes(CardTag.POKEMON_VMAX))
+      (effect.target.getPokemonCard()?.hasTag(CardTag.POKEMON_VSTAR) ||
+        effect.target.getPokemonCard()?.hasTag(CardTag.POKEMON_VMAX))
     ) {
       effect.target = undefined;
     }

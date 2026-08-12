@@ -9,7 +9,7 @@ import { CheckAttackCostEffect } from '../../../game/store/effects/check-effects
 import { Effect } from '../../../game/store/effects/effect';
 
 export class Celesteela extends PokemonCard {
-  public tags = [CardTag.ULTRA_BEAST];
+  protected _tags = [CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;
   public hp: number = 140;
@@ -22,8 +22,8 @@ export class Celesteela extends PokemonCard {
       name: 'Moon Raker',
       cost: [M, C, C, C, C],
       damage: 160,
-      text: 'If the total of both players\' remaining Prize cards is exactly 6, this attack can be used for Metal.'
-    }
+      text: "If the total of both players' remaining Prize cards is exactly 6, this attack can be used for Metal.",
+    },
   ];
 
   public set: string = 'CES';

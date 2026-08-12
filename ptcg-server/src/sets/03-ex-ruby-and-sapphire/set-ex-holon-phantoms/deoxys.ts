@@ -6,25 +6,29 @@ import { THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN_
 
 export class Deoxys extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.DELTA_SPECIES];
+  protected _tags = [CardTag.DELTA_SPECIES];
   public cardType: CardType = M;
   public hp: number = 80;
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Form Change',
-    powerType: PowerType.POKEPOWER,
-    useWhenInPlay: true,
-    text: 'Once during your turn (before your attack), you may search your deck for another Deoxys and switch it with Deoxys. (Any cards attached to Deoxys, damage counters, Special Conditions, and effects on it are now on the new Pokémon.) If you do, put Deoxys on top of your deck. Shuffle your deck afterward. You can\'t use more than 1 Form Change Poké-Power each turn.'
-  }];
+  public powers = [
+    {
+      name: 'Form Change',
+      powerType: PowerType.POKEPOWER,
+      useWhenInPlay: true,
+      text: "Once during your turn (before your attack), you may search your deck for another Deoxys and switch it with Deoxys. (Any cards attached to Deoxys, damage counters, Special Conditions, and effects on it are now on the new Pokémon.) If you do, put Deoxys on top of your deck. Shuffle your deck afterward. You can't use more than 1 Form Change Poké-Power each turn.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Delta Reduction',
-    cost: [M, C],
-    damage: 30,
-    text: 'During your opponent\'s next turn, any damage done to Deoxys by attacks is reduced by 30 (before applying Weakness and Resistance).'
-  }];
+  public attacks = [
+    {
+      name: 'Delta Reduction',
+      cost: [M, C],
+      damage: 30,
+      text: "During your opponent's next turn, any damage done to Deoxys by attacks is reduced by 30 (before applying Weakness and Resistance).",
+    },
+  ];
 
   public set: string = 'HP';
   public cardImage: string = 'assets/cardback.png';
@@ -63,35 +67,39 @@ export class Deoxys extends PokemonCard {
         }
       });
 
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-        player.deck,
-        { superType: SuperType.POKEMON },
-        { min: 1, max: 1, allowCancel: true, blocked },
-      ), (selection) => {
-        if (selection.length <= 0) {
-          return state;
-        }
+      state = store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+          player.deck,
+          { superType: SuperType.POKEMON },
+          { min: 1, max: 1, allowCancel: true, blocked },
+        ),
+        (selection) => {
+          if (selection.length <= 0) {
+            return state;
+          }
 
-        const pokemonCard = selection[0];
-        if (!(pokemonCard instanceof PokemonCard)) {
-          return state;
-        }
+          const pokemonCard = selection[0];
+          if (!(pokemonCard instanceof PokemonCard)) {
+            return state;
+          }
 
-        store.log(state, GameLog.LOG_PLAYER_TRANSFORMS_INTO_POKEMON, {
-          name: player.name,
-          pokemon: this.name,
-          card: pokemonCard.name,
-          effect: effect.power.name,
-        });
-        player.deck.moveCardTo(pokemonCard, targetCardList);
-        targetCardList.moveCardTo(this, player.deck);
+          store.log(state, GameLog.LOG_PLAYER_TRANSFORMS_INTO_POKEMON, {
+            name: player.name,
+            pokemon: this.name,
+            card: pokemonCard.name,
+            effect: effect.power.name,
+          });
+          player.deck.moveCardTo(pokemonCard, targetCardList);
+          targetCardList.moveCardTo(this, player.deck);
 
-        SHUFFLE_DECK(store, state, player);
-        ADD_MARKER(this.FORME_CHANGE_MARKER, player, this);
-        ABILITY_USED(player, this);
-      });
+          SHUFFLE_DECK(store, state, player);
+          ADD_MARKER(this.FORME_CHANGE_MARKER, player, this);
+          ABILITY_USED(player, this);
+        },
+      );
     }
     // Delta Reduction
     if (WAS_ATTACK_USED(effect, 0, this)) {

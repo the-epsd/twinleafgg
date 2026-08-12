@@ -5,10 +5,9 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class ThundurusEX extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = L;
-  public tags: string[] = [CardTag.POKEMON_EX, CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.POKEMON_EX, CardTag.TEAM_PLASMA];
   public hp: number = 170;
   public weakness: Weakness[] = [{ type: F }];
   public retreat: CardType[] = [C];
@@ -44,13 +43,13 @@ export class ThundurusEX extends PokemonCard {
           return;
         }
         const benchPokemon = bench.getPokemonCard();
-        if (benchPokemon && benchPokemon.tags.includes(CardTag.TEAM_PLASMA)) {
+        if (benchPokemon && benchPokemon.hasTag(CardTag.TEAM_PLASMA)) {
           validTargets = true;
         } else {
           const target: CardTarget = {
             player: PlayerType.BOTTOM_PLAYER,
             slot: SlotType.BENCH,
-            index
+            index,
           };
           blockedTo.push(target);
         }
@@ -60,26 +59,29 @@ export class ThundurusEX extends PokemonCard {
         return state;
       }
 
-      state = store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_TO_BENCH,
-        player.discard,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { superType: SuperType.ENERGY },
-        { allowCancel: true, min: 1, max: 1, blockedTo }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
-        }
-      });
+      state = store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_TO_BENCH,
+          player.discard,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          { superType: SuperType.ENERGY },
+          { allowCancel: true, min: 1, max: 1, blockedTo },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.discard.moveCardTo(transfer.card, target);
+          }
+        },
+      );
     }
 
     // Thunderous Noise
     if (WAS_ATTACK_USED(effect, 1, this)) {
-
       const player = effect.player;
       const pokemon = player.active;
 

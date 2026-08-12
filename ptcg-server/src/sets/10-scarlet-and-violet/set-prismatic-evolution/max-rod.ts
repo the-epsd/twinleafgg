@@ -13,8 +13,13 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { ShowCardsPrompt, StateUtils, SuperType } from '../../../game';
 
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: MaxRod, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: MaxRod,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
@@ -39,38 +44,43 @@ function* playCard(next: Function, store: StoreLike, state: State,
   effect.preventDefault = true;
 
   let cards: Card[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_DECK,
-    player.discard,
-    {},
-    { min: 1, max: 5, allowCancel: false, blocked }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_DECK,
+      player.discard,
+      {},
+      { min: 1, max: 5, allowCancel: false, blocked },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   cards.forEach((card, index) => {
-    store.log(state, GameLog.LOG_PLAYER_RETURNS_CARD_TO_HAND, { name: player.name, card: card.name });
+    store.log(state, GameLog.LOG_PLAYER_RETURNS_CARD_TO_HAND, {
+      name: player.name,
+      card: card.name,
+    });
   });
 
   if (cards.length > 0) {
-    yield store.prompt(state, new ShowCardsPrompt(
-      opponent.id,
-      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-      cards
-    ), () => next());
+    yield store.prompt(
+      state,
+      new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+      () => next(),
+    );
   }
 
   player.discard.moveCardsTo(cards, player.hand);
-
 }
 
 export class MaxRod extends TrainerCard {
-
   public regulationMark = 'H';
 
-  public tags = [CardTag.ACE_SPEC];
+  protected _tags = [CardTag.ACE_SPEC];
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
@@ -88,15 +98,14 @@ export class MaxRod extends TrainerCard {
     'Choose up to 5 in any combination of Pokémon and Basic Energy cards from your discard pile and put them into your hand.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
-    const hasTarget = player.discard.cards.some(c =>
-      c instanceof PokemonCard || (c.superType === SuperType.ENERGY)
+    const hasTarget = player.discard.cards.some(
+      (c) => c instanceof PokemonCard || c.superType === SuperType.ENERGY,
     );
     if (!hasTarget) {
       return false;
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -106,5 +115,4 @@ export class MaxRod extends TrainerCard {
 
     return state;
   }
-
 }

@@ -21,7 +21,7 @@ import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/pr
 import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class LatiasAndLatiosGx extends PokemonCard {
-  public tags = [CardTag.TAG_TEAM, CardTag.POKEMON_GX];
+  protected _tags = [CardTag.TAG_TEAM, CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = N;
   public hp: number = 250;
@@ -71,21 +71,25 @@ export class LatiasAndLatiosGx extends PokemonCard {
 
       if (basicEnergyInDiscard.length > 0) {
         const maxAttach = Math.min(5, basicEnergyInDiscard.length);
-        state = store.prompt(state, new AttachEnergyPrompt(
-          player.id,
-          GameMessage.ATTACH_ENERGY_CARDS,
-          player.discard,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.ACTIVE, SlotType.BENCH],
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-          { allowCancel: false, min: maxAttach, max: 5 }
-        ), transfers => {
-          transfers = transfers || [];
-          for (const transfer of transfers) {
-            const target = StateUtils.getTarget(state, player, transfer.to);
-            player.discard.moveCardTo(transfer.card, target);
-          }
-        });
+        state = store.prompt(
+          state,
+          new AttachEnergyPrompt(
+            player.id,
+            GameMessage.ATTACH_ENERGY_CARDS,
+            player.discard,
+            PlayerType.BOTTOM_PLAYER,
+            [SlotType.ACTIVE, SlotType.BENCH],
+            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+            { allowCancel: false, min: maxAttach, max: 5 },
+          ),
+          (transfers) => {
+            transfers = transfers || [];
+            for (const transfer of transfers) {
+              const target = StateUtils.getTarget(state, player, transfer.to);
+              player.discard.moveCardTo(transfer.card, target);
+            }
+          },
+        );
       }
 
       if (hasExtraEnergy) {

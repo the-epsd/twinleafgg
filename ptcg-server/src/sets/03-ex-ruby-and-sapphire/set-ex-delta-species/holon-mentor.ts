@@ -9,9 +9,8 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class HolonMentor extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-  public tags = [CardTag.DELTA_SPECIES];
+  protected _tags = [CardTag.DELTA_SPECIES];
   public set: string = 'DS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '93';
@@ -19,7 +18,7 @@ export class HolonMentor extends TrainerCard {
   public fullName: string = 'Holon Mentor DS';
 
   public text: string =
-    'Discard a card from your hand. If you can\'t discard a card from your hand, you can\'t play this card.\n\nSearch your deck for up to 3 Basic Pokémon that each has 100 HP or less, show them to your opponent, and put them into your hand. Shuffle your deck afterward.';
+    "Discard a card from your hand. If you can't discard a card from your hand, you can't play this card.\n\nSearch your deck for up to 3 Basic Pokémon that each has 100 HP or less, show them to your opponent, and put them into your hand. Shuffle your deck afterward.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -42,7 +41,13 @@ export class HolonMentor extends TrainerCard {
         return acc;
       }, [] as number[]);
 
-      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, player, {}, { min: 0, max: 3, allowCancel: false, blocked });
+      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(
+        store,
+        state,
+        player,
+        {},
+        { min: 0, max: 3, allowCancel: false, blocked },
+      );
       return state;
     }
 

@@ -11,7 +11,7 @@ import { OPPONENT_CANNOT_PLAY_ITEM_CARDS } from '../../../game/store/prefabs/eff
 
 export class PikachuVUNIONTopLeft extends PokemonCard {
   public stage: Stage = Stage.VUNION;
-  public tags = [CardTag.POKEMON_VUNION];
+  protected _tags = [CardTag.POKEMON_VUNION];
   public cardType: CardType = L;
   public hp: number = 300;
   public weakness = [{ type: F }];
@@ -70,11 +70,19 @@ export class PikachuVUNIONTopLeft extends PokemonCard {
       let topRightPiece = false;
       let bottomLeftPiece = false;
       let bottomRightPiece = false;
-      player.discard.cards.forEach(card => {
-        if (card instanceof PikachuVUNIONTopLeft) { topLeftPiece = true; }
-        if (card instanceof PikachuVUNIONTopRight) { topRightPiece = true; }
-        if (card instanceof PikachuVUNIONBottomLeft) { bottomLeftPiece = true; }
-        if (card instanceof PikachuVUNIONBottomRight) { bottomRightPiece = true; }
+      player.discard.cards.forEach((card) => {
+        if (card instanceof PikachuVUNIONTopLeft) {
+          topLeftPiece = true;
+        }
+        if (card instanceof PikachuVUNIONTopRight) {
+          topRightPiece = true;
+        }
+        if (card instanceof PikachuVUNIONBottomLeft) {
+          bottomLeftPiece = true;
+        }
+        if (card instanceof PikachuVUNIONBottomRight) {
+          bottomRightPiece = true;
+        }
       });
       if (topLeftPiece && topRightPiece && bottomLeftPiece && bottomRightPiece) {
         if (slots.length > 0) {

@@ -7,7 +7,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 import { DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
 
 export class DarkTyranitar2 extends PokemonCard {
-  public tags = [CardTag.DARK];
+  protected _tags = [CardTag.DARK];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Dark Pupitar';
   public cardType: CardType = D;
@@ -22,21 +22,21 @@ export class DarkTyranitar2 extends PokemonCard {
       cost: [C],
       damage: 10,
       damageCalculation: '+',
-      text: 'Does 10 damage plus 10 more damage for each Energy attached to Dark Tyranitar.'
+      text: 'Does 10 damage plus 10 more damage for each Energy attached to Dark Tyranitar.',
     },
     {
       name: 'Spinning Tail',
       cost: [D, C, C],
       damage: 0,
-      text: 'Does 20 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "Does 20 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Bite Off',
       cost: [D, D, C, C, C],
       damage: 70,
       damageCalculation: '+',
-      text: 'If the Defending Pokémon is Pokémon-ex, this attack does 70 damage plus 50 more damage.'
-    }
+      text: 'If the Defending Pokémon is Pokémon-ex, this attack does 70 damage plus 50 more damage.',
+    },
   ];
 
   public set: string = 'TRR';
@@ -46,7 +46,6 @@ export class DarkTyranitar2 extends PokemonCard {
   public fullName: string = 'Dark Tyranitar TRR 19';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // Grind
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
@@ -55,7 +54,7 @@ export class DarkTyranitar2 extends PokemonCard {
 
       const damagePerEnergy = 10;
       let energyCount = 0;
-      checkProvidedEnergy.energyMap.forEach(em => {
+      checkProvidedEnergy.energyMap.forEach((em) => {
         energyCount += em.provides.length;
       });
 
@@ -65,12 +64,12 @@ export class DarkTyranitar2 extends PokemonCard {
     // Spinning Tail
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const opponent = effect.opponent;
-      const benched = opponent.bench.filter(b => b.cards.length > 0);
+      const benched = opponent.bench.filter((b) => b.cards.length > 0);
 
       const activeDamageEffect = new DealDamageEffect(effect, 20);
       store.reduceEffect(state, activeDamageEffect);
 
-      benched.forEach(target => {
+      benched.forEach((target) => {
         const damageEffect = new PutDamageEffect(effect, 20);
         damageEffect.target = target;
         store.reduceEffect(state, damageEffect);
@@ -81,11 +80,11 @@ export class DarkTyranitar2 extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 2, this)) {
       const defending = effect.opponent.active;
 
-      if (defending && defending.getPokemonCard()?.tags.includes(CardTag.POKEMON_ex)) {
+      if (defending && defending.getPokemonCard()?.hasTag(CardTag.POKEMON_ex)) {
         effect.damage += 50;
       }
     }
 
     return state;
   }
-} 
+}

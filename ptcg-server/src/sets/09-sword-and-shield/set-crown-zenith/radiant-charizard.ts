@@ -7,24 +7,28 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs
 
 export class RadiantCharizard extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.RADIANT];
+  protected _tags = [CardTag.RADIANT];
   public cardType: CardType = R;
   public hp: number = 160;
   public weakness = [{ type: W }];
   public retreat = [C, C, C];
 
-  public powers = [{
-    name: 'Excited Heart',
-    powerType: PowerType.ABILITY,
-    text: 'This Pokémon\'s attacks cost [C] less for each Prize card your opponent has taken.'
-  }];
+  public powers = [
+    {
+      name: 'Excited Heart',
+      powerType: PowerType.ABILITY,
+      text: "This Pokémon's attacks cost [C] less for each Prize card your opponent has taken.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Combustion Blast',
-    cost: [R, C, C, C, C],
-    damage: 250,
-    text: 'During your next turn, this Pokémon can\'t use Combustion Blast.'
-  }];
+  public attacks = [
+    {
+      name: 'Combustion Blast',
+      cost: [R, C, C, C, C],
+      damage: 250,
+      text: "During your next turn, this Pokémon can't use Combustion Blast.",
+    },
+  ];
 
   public regulationMark = 'F';
   public set: string = 'CRZ';
@@ -34,7 +38,6 @@ export class RadiantCharizard extends PokemonCard {
   public fullName: string = 'Radiant Charizard CRZ';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

@@ -11,12 +11,11 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class RadiantGardevoir extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
   public regulationMark = 'F';
 
-  public tags = [CardTag.RADIANT];
+  protected _tags = [CardTag.RADIANT];
 
   public cardType: CardType = CardType.PSYCHIC;
 
@@ -26,19 +25,23 @@ export class RadiantGardevoir extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Loving Veil',
-    powerType: PowerType.ABILITY,
-    text: 'All of your Pokémon take 20 less damage from attacks from your opponent\'s Pokémon V (after applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: 'Loving Veil',
+      powerType: PowerType.ABILITY,
+      text: "All of your Pokémon take 20 less damage from attacks from your opponent's Pokémon V (after applying Weakness and Resistance).",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Psychic',
-    cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
-    damage: 70,
-    damageCalculation: '+',
-    text: 'This attack does 20 more damage for each Energy attached to your opponent\'s Active Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'Psychic',
+      cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
+      damage: 70,
+      damageCalculation: '+',
+      text: "This attack does 20 more damage for each Energy attached to your opponent's Active Pokémon.",
+    },
+  ];
 
   public set: string = 'LOR';
 
@@ -51,19 +54,19 @@ export class RadiantGardevoir extends PokemonCard {
   public fullName: string = 'Radiant Gardevoir LOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(opponent);
       store.reduceEffect(state, checkProvidedEnergyEffect);
-      const energyCount = checkProvidedEnergyEffect.energyMap
-        .reduce((left, p) => left + p.provides.length, 0);
+      const energyCount = checkProvidedEnergyEffect.energyMap.reduce(
+        (left, p) => left + p.provides.length,
+        0,
+      );
 
       effect.damage += energyCount * 20;
     }
-
 
     // Reduce damage by 20
     if (effect instanceof PutDamageEffect) {
@@ -72,16 +75,24 @@ export class RadiantGardevoir extends PokemonCard {
       const targetPlayer = StateUtils.findOwner(state, effect.target);
 
       // Check if the attack is from a Pokémon V, VSTAR, or VMAX
-      if (sourceCard && sourceCard.tags.includes(CardTag.POKEMON_V) || sourceCard && sourceCard.tags.includes(CardTag.POKEMON_VMAX) || sourceCard && sourceCard.tags.includes(CardTag.POKEMON_VSTAR)) {
+      if (
+        (sourceCard && sourceCard.hasTag(CardTag.POKEMON_V)) ||
+        (sourceCard && sourceCard.hasTag(CardTag.POKEMON_VMAX)) ||
+        (sourceCard && sourceCard.hasTag(CardTag.POKEMON_VSTAR))
+      ) {
         // Check if the damage target is owned by this card's owner
         if (targetPlayer === player) {
           // Try to reduce PowerEffect, to check if something is blocking our ability
           try {
-            const stub = new PowerEffect(player, {
-              name: 'test',
-              powerType: PowerType.ABILITY,
-              text: ''
-            }, this);
+            const stub = new PowerEffect(
+              player,
+              {
+                name: 'test',
+                powerType: PowerType.ABILITY,
+                text: '',
+              },
+              this,
+            );
             store.reduceEffect(state, stub);
           } catch {
             return state;

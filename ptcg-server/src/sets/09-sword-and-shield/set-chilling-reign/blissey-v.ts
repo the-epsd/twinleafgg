@@ -1,4 +1,18 @@
-import { PokemonCard, Stage, CardType, CardTag, State, StoreLike, PowerType, AttachEnergyPrompt, GameMessage, PlayerType, SlotType, StateUtils, SuperType } from '../../../game';
+import {
+  PokemonCard,
+  Stage,
+  CardType,
+  CardTag,
+  State,
+  StoreLike,
+  PowerType,
+  AttachEnergyPrompt,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  StateUtils,
+  SuperType,
+} from '../../../game';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 
@@ -6,10 +20,9 @@ import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/ga
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class BlisseyV extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
 
   public cardType: CardType = CardType.COLORLESS;
 
@@ -19,19 +32,23 @@ export class BlisseyV extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Natural Cure',
-    powerType: PowerType.ABILITY,
-    text: 'Whenever you attach an Energy card from your hand to this Pokémon, it recovers from all Special Conditions.'
-  }];
+  public powers = [
+    {
+      name: 'Natural Cure',
+      powerType: PowerType.ABILITY,
+      text: 'Whenever you attach an Energy card from your hand to this Pokémon, it recovers from all Special Conditions.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Blissful Blast',
-    cost: [CardType.COLORLESS],
-    damage: 10,
-    damageCalculation: '+',
-    text: 'This attack does 30 more damage for each Energy attached to this Pokémon. If you did any damage with this attack, you may attach up to 3 Energy cards from your discard pile to this Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'Blissful Blast',
+      cost: [CardType.COLORLESS],
+      damage: 10,
+      damageCalculation: '+',
+      text: 'This attack does 30 more damage for each Energy attached to this Pokémon. If you did any damage with this attack, you may attach up to 3 Energy cards from your discard pile to this Pokémon.',
+    },
+  ];
 
   public set: string = 'CRE';
 
@@ -48,7 +65,6 @@ export class BlisseyV extends PokemonCard {
   public usedBlissfulBlast = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // if (effect instanceof AttachEnergyEffect && effect.target.cards.includes(this)) {
     //   const player = effect.player;
     //   const pokemonCard = effect.target.getPokemonCard();
@@ -84,11 +100,11 @@ export class BlisseyV extends PokemonCard {
       let energies = 0;
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, player.active);
       store.reduceEffect(state, checkProvidedEnergyEffect);
-      checkProvidedEnergyEffect.energyMap.forEach(energy => {
+      checkProvidedEnergyEffect.energyMap.forEach((energy) => {
         energies += energy.provides.length;
       });
 
-      effect.damage = 10 + (30 * energies);
+      effect.damage = 10 + 30 * energies;
 
       //const energies = player.active.cards.filter(card => card instanceof EnergyCard);
 
@@ -104,7 +120,7 @@ export class BlisseyV extends PokemonCard {
         return state;
       }
 
-      const energyCards = player.discard.cards.filter(c => c.superType === SuperType.ENERGY);
+      const energyCards = player.discard.cards.filter((c) => c.superType === SuperType.ENERGY);
       const maxEnergyCards = Math.min(3, energyCards.length);
 
       if (energyCards.length === 0) {
@@ -114,24 +130,27 @@ export class BlisseyV extends PokemonCard {
 
       this.usedBlissfulBlast = false;
 
-      return store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_TO_BENCH,
-        player.discard,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE],
-        { superType: SuperType.ENERGY },
-        { allowCancel: false, min: 0, max: maxEnergyCards }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
-        }
-        return state;
-      });
+      return store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_TO_BENCH,
+          player.discard,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE],
+          { superType: SuperType.ENERGY },
+          { allowCancel: false, min: 0, max: maxEnergyCards },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.discard.moveCardTo(transfer.card, target);
+          }
+          return state;
+        },
+      );
     }
     return state;
   }
 }
-

@@ -11,7 +11,7 @@ export class ArceusGrass extends PokemonCard {
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -20 }];
   public retreat = [C, C];
-  public tags = [CardTag.ARCEUS];
+  protected _tags = [CardTag.ARCEUS];
 
   public attacks = [
     {

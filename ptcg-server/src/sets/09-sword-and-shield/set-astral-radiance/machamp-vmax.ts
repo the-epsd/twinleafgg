@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class MachampVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Machamp V';
   public cardType: CardType = F;
@@ -23,14 +23,14 @@ export class MachampVmax extends PokemonCard {
       cost: [F, C],
       damage: 80,
       damageCalculation: '+',
-      text: 'If your Benched Pokémon have any damage counters on them, this attack does 140 more damage.'
+      text: 'If your Benched Pokémon have any damage counters on them, this attack does 140 more damage.',
     },
     {
       name: 'G-Max Chi Strike',
       cost: [F, F, C],
       damage: 240,
-      text: 'During your next turn, this Pokémon can\'t use G-Max Chi Strike.'
-    }
+      text: "During your next turn, this Pokémon can't use G-Max Chi Strike.",
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -45,7 +45,7 @@ export class MachampVmax extends PokemonCard {
     // Ref: set-astral-radiance/machamp-v.ts (Revenge Buster - bench damage check)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      const hasBenchDamage = player.bench.some(b => b.cards.length > 0 && b.damage > 0);
+      const hasBenchDamage = player.bench.some((b) => b.cards.length > 0 && b.damage > 0);
       if (hasBenchDamage) {
         effect.damage += 140;
       }

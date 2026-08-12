@@ -7,7 +7,7 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Steelix extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Onix';
   public cardType: CardType = M;
@@ -21,14 +21,14 @@ export class Steelix extends PokemonCard {
       name: 'Metal Defender',
       cost: [M, C, C],
       damage: 50,
-      text: 'During your opponent\'s next turn, this Pokémon has no Weakness.'
+      text: "During your opponent's next turn, this Pokémon has no Weakness.",
     },
     {
       name: 'Heavy Impact',
       cost: [M, C, C, C, C],
       damage: 100,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'PLF';
@@ -57,11 +57,13 @@ export class Steelix extends PokemonCard {
     }
 
     // Clean up at end of opponent's turn
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_METAL_DEFENDER_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_METAL_DEFENDER_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_METAL_DEFENDER_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         cardList.marker.removeMarker(this.METAL_DEFENDER_MARKER, this);
       });
     }

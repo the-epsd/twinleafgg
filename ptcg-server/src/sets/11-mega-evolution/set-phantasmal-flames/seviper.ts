@@ -15,18 +15,22 @@ export class Seviper extends PokemonCard {
   public resistance = [];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Excite Power',
-    powerType: PowerType.ABILITY,
-    text: 'If you have a [D] Pokemon ex in play, this Pokemon\'s attacks do 120 more damage to your opponent\'s Active Pokemon.'
-  }];
+  public powers = [
+    {
+      name: 'Excite Power',
+      powerType: PowerType.ABILITY,
+      text: "If you have a [D] Pokemon ex in play, this Pokemon's attacks do 120 more damage to your opponent's Active Pokemon.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Jet Black Fang',
-    cost: [D, D, D],
-    damage: 120,
-    text: '',
-  }];
+  public attacks = [
+    {
+      name: 'Jet Black Fang',
+      cost: [D, D, D],
+      damage: 120,
+      text: '',
+    },
+  ];
 
   public regulationMark = 'I';
   public set: string = 'PFL';
@@ -36,7 +40,6 @@ export class Seviper extends PokemonCard {
   public fullName: string = 'Seviper M2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof AttackEffect && effect.source.cards.includes(this)) {
       const player = effect.player;
 
@@ -48,9 +51,12 @@ export class Seviper extends PokemonCard {
       // Check if player has a [D] Pokemon ex in play
       let hasDarkPokemonEx = false;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card && card instanceof PokemonCard &&
+        if (
+          card &&
+          card instanceof PokemonCard &&
           card.cardType === CardType.DARK &&
-          card.tags.includes(CardTag.POKEMON_ex)) {
+          card.hasTag(CardTag.POKEMON_ex)
+        ) {
           hasDarkPokemonEx = true;
         }
       });

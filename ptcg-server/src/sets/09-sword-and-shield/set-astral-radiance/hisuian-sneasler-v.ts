@@ -2,14 +2,18 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_POISON_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class HisuianSneaslerV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = D;
   public hp: number = 190;
@@ -21,15 +25,15 @@ export class HisuianSneaslerV extends PokemonCard {
       name: 'Poison Claws',
       cost: [],
       damage: 0,
-      text: 'Your opponent\'s Active Pokémon is now Poisoned.'
+      text: "Your opponent's Active Pokémon is now Poisoned.",
     },
     {
       name: 'Dire Claw',
       cost: [D, C],
       damage: 80,
       damageCalculation: 'x',
-      text: 'This attack does 80 damage for each Special Condition affecting your opponent\'s Active Pokémon.'
-    }
+      text: "This attack does 80 damage for each Special Condition affecting your opponent's Active Pokémon.",
+    },
   ];
 
   public regulationMark: string = 'F';

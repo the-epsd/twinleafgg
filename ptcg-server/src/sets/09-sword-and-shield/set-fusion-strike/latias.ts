@@ -18,7 +18,7 @@ import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_P
 import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Latias extends PokemonCard {
-  public tags = [CardTag.FUSION_STRIKE];
+  protected _tags = [CardTag.FUSION_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = N;
   public hp: number = 120;
@@ -59,7 +59,7 @@ export class Latias extends PokemonCard {
       USE_ABILITY_ONCE_PER_TURN(player, this.RED_ASSIST_MARKER, this);
 
       const hasPsychicInHand = player.hand.cards.some(
-        c => c instanceof EnergyCard && c.provides.includes(CardType.PSYCHIC)
+        (c) => c instanceof EnergyCard && c.provides.includes(CardType.PSYCHIC),
       );
       if (!hasPsychicInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -82,24 +82,32 @@ export class Latias extends PokemonCard {
         }
       });
 
-      state = store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_CARDS,
-        player.hand,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, provides: [CardType.PSYCHIC] },
-        { allowCancel: true, min: 1, max: 1, blockedTo }
-      ), transfers => {
-        transfers = transfers || [];
-        if (transfers.length === 0) {
-          return;
-        }
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.hand.moveCardTo(transfer.card, target);
-        }
-      });
+      state = store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_CARDS,
+          player.hand,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          {
+            superType: SuperType.ENERGY,
+            energyType: EnergyType.BASIC,
+            provides: [CardType.PSYCHIC],
+          },
+          { allowCancel: true, min: 1, max: 1, blockedTo },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          if (transfers.length === 0) {
+            return;
+          }
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.hand.moveCardTo(transfer.card, target);
+          }
+        },
+      );
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.RED_ASSIST_MARKER, this);

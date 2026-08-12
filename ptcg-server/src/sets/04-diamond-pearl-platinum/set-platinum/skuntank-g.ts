@@ -9,12 +9,11 @@ import { DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK } from '../../../game/store/pref
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 export class SkuntankG extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.PSYCHIC;
 
-  public tags = [CardTag.POKEMON_SP];
+  protected _tags = [CardTag.POKEMON_SP];
 
   public hp: number = 80;
 
@@ -22,19 +21,23 @@ export class SkuntankG extends PokemonCard {
 
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Poison Structure',
-    powerType: PowerType.POKEPOWER,
-    useWhenInPlay: true,
-    text: 'Once during your turn (before your attack), if you have a Stadium card in play, you may use this power. Each Active Pokémon (both yours and your opponent\'s) (excluding Pokémon SP) is now Poisoned. This power can\'t be used if Skuntank is affected by a Special Condition.'
-  }];
+  public powers = [
+    {
+      name: 'Poison Structure',
+      powerType: PowerType.POKEPOWER,
+      useWhenInPlay: true,
+      text: "Once during your turn (before your attack), if you have a Stadium card in play, you may use this power. Each Active Pokémon (both yours and your opponent's) (excluding Pokémon SP) is now Poisoned. This power can't be used if Skuntank is affected by a Special Condition.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Smokescreen',
-    cost: [CardType.COLORLESS, CardType.COLORLESS],
-    damage: 20,
-    text: 'If the Defending Pokémon tries to attack during your opponent\'s next turn, your opponent flips a coin. If tails, that attack does nothing.'
-  }];
+  public attacks = [
+    {
+      name: 'Smokescreen',
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
+      damage: 20,
+      text: "If the Defending Pokémon tries to attack during your opponent's next turn, your opponent flips a coin. If tails, that attack does nothing.",
+    },
+  ];
 
   public set: string = 'PL';
 
@@ -73,11 +76,11 @@ export class SkuntankG extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      if (!player.active?.getPokemonCard()?.tags.includes(CardTag.POKEMON_SP)) {
+      if (!player.active?.getPokemonCard()?.hasTag(CardTag.POKEMON_SP)) {
         ADD_POISON_TO_PLAYER_ACTIVE(store, state, player, this);
       }
 
-      if (!opponent.active?.getPokemonCard()?.tags.includes(CardTag.POKEMON_SP)) {
+      if (!opponent.active?.getPokemonCard()?.hasTag(CardTag.POKEMON_SP)) {
         ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this);
       }
 

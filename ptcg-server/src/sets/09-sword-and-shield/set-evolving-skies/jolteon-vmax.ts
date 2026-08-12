@@ -13,7 +13,7 @@ import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-
 import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
 
 export class JolteonVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Jolteon V';
   public cardType: CardType = L;
@@ -26,8 +26,8 @@ export class JolteonVmax extends PokemonCard {
       name: 'Max Thunder Rumble',
       cost: [L, C],
       damage: 100,
-      text: 'This attack also does 100 damage to 1 of your opponent\'s Benched Pokémon that has any damage counters on it. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "This attack also does 100 damage to 1 of your opponent's Benched Pokémon that has any damage counters on it. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -46,7 +46,7 @@ export class JolteonVmax extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Check if any benched Pokemon has damage counters
-      const hasDamagedBenched = opponent.bench.some(b => b.cards.length > 0 && b.damage > 0);
+      const hasDamagedBenched = opponent.bench.some((b) => b.cards.length > 0 && b.damage > 0);
       if (!hasDamagedBenched) {
         return state;
       }
@@ -63,20 +63,24 @@ export class JolteonVmax extends PokemonCard {
         }
       });
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.BENCH],
-        { allowCancel: true, blocked }
-      ), (targets: PokemonCardList[]) => {
-        if (!targets || targets.length === 0) {
-          return;
-        }
-        const damageEffect = new PutDamageEffect(effect, 100);
-        damageEffect.target = targets[0];
-        store.reduceEffect(state, damageEffect);
-      });
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.BENCH],
+          { allowCancel: true, blocked },
+        ),
+        (targets: PokemonCardList[]) => {
+          if (!targets || targets.length === 0) {
+            return;
+          }
+          const damageEffect = new PutDamageEffect(effect, 100);
+          damageEffect.target = targets[0];
+          store.reduceEffect(state, damageEffect);
+        },
+      );
     }
 
     return state;

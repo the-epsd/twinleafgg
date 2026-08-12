@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class RillaboomV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V, CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.POKEMON_V, CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = G;
   public hp: number = 220;
@@ -22,14 +22,14 @@ export class RillaboomV extends PokemonCard {
       name: 'Drain Punch',
       cost: [G, C, C],
       damage: 60,
-      text: 'Heal 30 damage from this Pokémon.'
+      text: 'Heal 30 damage from this Pokémon.',
     },
     {
       name: 'Drum Rush',
       cost: [G, C, C, C],
       damage: 160,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'E';

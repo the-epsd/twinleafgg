@@ -14,7 +14,7 @@ import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class MorpekoV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = L;
   public hp: number = 170;
@@ -26,14 +26,14 @@ export class MorpekoV extends PokemonCard {
       name: 'Spark',
       cost: [C],
       damage: 20,
-      text: 'This attack also does 20 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack also does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Electro Wheel',
       cost: [L, L, C],
       damage: 150,
-      text: 'Discard an Energy from this Pokémon. If you do, switch it with 1 of your Benched Pokémon.'
-    }
+      text: 'Discard an Energy from this Pokémon. If you do, switch it with 1 of your Benched Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -58,7 +58,7 @@ export class MorpekoV extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      if (!player.active.cards.some(c => c.superType === SuperType.ENERGY)) {
+      if (!player.active.cards.some((c) => c.superType === SuperType.ENERGY)) {
         return state;
       }
 
@@ -69,27 +69,31 @@ export class MorpekoV extends PokemonCard {
         return state;
       }
 
-      state = store.prompt(state, new ChooseEnergyPrompt(
-        player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        checkEnergy.energyMap,
-        [CardType.COLORLESS],
-        { allowCancel: false }
-      ), energy => {
-        const cards: Card[] = (energy || []).map(e => e.card);
-        if (cards.length > 0) {
-          const discardEnergy = new DiscardCardsEffect(effect, cards);
-          discardEnergy.target = player.active;
-          store.reduceEffect(state, discardEnergy);
-          this.electroWheelSwitched = true;
-        }
-      });
+      state = store.prompt(
+        state,
+        new ChooseEnergyPrompt(
+          player.id,
+          GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+          checkEnergy.energyMap,
+          [CardType.COLORLESS],
+          { allowCancel: false },
+        ),
+        (energy) => {
+          const cards: Card[] = (energy || []).map((e) => e.card);
+          if (cards.length > 0) {
+            const discardEnergy = new DiscardCardsEffect(effect, cards);
+            discardEnergy.target = player.active;
+            store.reduceEffect(state, discardEnergy);
+            this.electroWheelSwitched = true;
+          }
+        },
+      );
     }
 
     if (effect instanceof AfterAttackEffect && this.electroWheelSwitched) {
       this.electroWheelSwitched = false;
       const player = effect.player;
-      if (player.bench.some(b => b.cards.length > 0)) {
+      if (player.bench.some((b) => b.cards.length > 0)) {
         SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
       }
     }

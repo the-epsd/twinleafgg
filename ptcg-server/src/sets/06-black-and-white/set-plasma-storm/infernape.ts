@@ -10,7 +10,7 @@ import { DISCARD_ALL_ENERGY_FROM_POKEMON, WAS_ATTACK_USED } from '../../../game/
 import { OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Infernape extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Monferno';
   public cardType: CardType = R;
@@ -18,18 +18,20 @@ export class Infernape extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [];
 
-  public attacks = [{
-    name: 'Torment',
-    cost: [C],
-    damage: 30,
-    text: 'Choose 1 of the Defending Pokémon\'s attack. That Pokémon can\'t use that attack during your opponent\'s next turn.'
-  },
-  {
-    name: 'Malevolent Fire',
-    cost: [R, C],
-    damage: 120,
-    text: 'Discard all Energy attached to this Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'Torment',
+      cost: [C],
+      damage: 30,
+      text: "Choose 1 of the Defending Pokémon's attack. That Pokémon can't use that attack during your opponent's next turn.",
+    },
+    {
+      name: 'Malevolent Fire',
+      cost: [R, C],
+      damage: 120,
+      text: 'Discard all Energy attached to this Pokémon.',
+    },
+  ];
 
   public set: string = 'PLS';
   public setNumber: string = '17';

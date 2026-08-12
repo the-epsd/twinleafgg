@@ -1,20 +1,27 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import {
-  StoreLike, State, StateUtils, GameError, GameMessage,
-  PlayerType, PowerType, ChoosePokemonPrompt, ConfirmPrompt, SlotType
+  StoreLike,
+  State,
+  StateUtils,
+  GameError,
+  GameMessage,
+  PlayerType,
+  PowerType,
+  ChoosePokemonPrompt,
+  ConfirmPrompt,
+  SlotType,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class HopsDubwool extends PokemonCard {
-
-  public tags = [CardTag.HOPS];
+  protected _tags = [CardTag.HOPS];
 
   public stage: Stage = Stage.STAGE_1;
 
-  public evolvesFrom = 'Hop\'s Wooloo';
+  public evolvesFrom = "Hop's Wooloo";
 
   public cardType: CardType = C;
 
@@ -24,18 +31,21 @@ export class HopsDubwool extends PokemonCard {
 
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Defiant Horn',
-    powerType: PowerType.ABILITY,
-    text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may switch in 1 of your opponent\'s Benched Pokémon to the Active Spot.'
-  }];
+  public powers = [
+    {
+      name: 'Defiant Horn',
+      powerType: PowerType.ABILITY,
+      text: "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may switch in 1 of your opponent's Benched Pokémon to the Active Spot.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Headbutt',
-    cost: [C, C, C],
-    damage: 80,
-    text: ''
-  }
+  public attacks = [
+    {
+      name: 'Headbutt',
+      cost: [C, C, C],
+      damage: 80,
+      text: '',
+    },
   ];
 
   public regulationMark = 'I';
@@ -46,12 +56,11 @@ export class HopsDubwool extends PokemonCard {
 
   public setNumber: string = '136';
 
-  public name: string = 'Hop\'s Dubwool';
+  public name: string = "Hop's Dubwool";
 
-  public fullName: string = 'Hop\'s Dubwool JTG';
+  public fullName: string = "Hop's Dubwool JTG";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
 
@@ -59,34 +68,39 @@ export class HopsDubwool extends PokemonCard {
       if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
-      state = store.prompt(state, new ConfirmPrompt(
-        effect.player.id,
-        GameMessage.WANT_TO_USE_ABILITY,
-      ), wantToUse => {
-        if (wantToUse) {
-          const player = effect.player;
-          const opponent = StateUtils.getOpponent(state, player);
-          const hasBench = opponent.bench.some(b => b.cards.length > 0);
+      state = store.prompt(
+        state,
+        new ConfirmPrompt(effect.player.id, GameMessage.WANT_TO_USE_ABILITY),
+        (wantToUse) => {
+          if (wantToUse) {
+            const player = effect.player;
+            const opponent = StateUtils.getOpponent(state, player);
+            const hasBench = opponent.bench.some((b) => b.cards.length > 0);
 
-          if (!hasBench) {
-            throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-          }
+            if (!hasBench) {
+              throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
 
-          return store.prompt(state, new ChoosePokemonPrompt(
-            player.id,
-            GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-            PlayerType.TOP_PLAYER,
-            [SlotType.BENCH],
-            { allowCancel: false }
-          ), result => {
-            const cardList = result[0];
-            opponent.switchPokemon(cardList);
+            return store.prompt(
+              state,
+              new ChoosePokemonPrompt(
+                player.id,
+                GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+                PlayerType.TOP_PLAYER,
+                [SlotType.BENCH],
+                { allowCancel: false },
+              ),
+              (result) => {
+                const cardList = result[0];
+                opponent.switchPokemon(cardList);
+                return state;
+              },
+            );
+          } else {
             return state;
-          });
-        } else {
-          return state;
-        }
-      });
+          }
+        },
+      );
     }
     return state;
   }

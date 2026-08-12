@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class SkarmoryEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;
   public hp: number = 170;
@@ -22,15 +22,15 @@ export class SkarmoryEx extends PokemonCard {
       name: 'Joust',
       cost: [C, C],
       damage: 30,
-      text: 'Before doing damage, discard all Pokémon Tool cards attached to your opponent\'s Active Pokémon.'
+      text: "Before doing damage, discard all Pokémon Tool cards attached to your opponent's Active Pokémon.",
     },
     {
       name: 'Tailspin Piledriver',
       cost: [M, M, C],
       damage: 80,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 40 more damage.'
-    }
+      text: "If your opponent's Active Pokémon already has any damage counters on it, this attack does 40 more damage.",
+    },
   ];
 
   public set: string = 'XY';
@@ -48,7 +48,7 @@ export class SkarmoryEx extends PokemonCard {
 
       // Discard all tools from opponent's active before damage
       const tools = opponent.active.tools.slice();
-      tools.forEach(tool => {
+      tools.forEach((tool) => {
         opponent.active.moveCardTo(tool, opponent.discard);
       });
     }

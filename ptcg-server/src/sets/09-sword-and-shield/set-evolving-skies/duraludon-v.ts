@@ -7,7 +7,7 @@ import { DEFENDING_POKEMON_DOES_LESS_DAMAGE } from '../../../game/store/prefabs/
 
 export class DuraludonV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_V, CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.POKEMON_V, CardTag.SINGLE_STRIKE];
   public cardType: CardType = N;
   public hp: number = 220;
   public weakness = [];

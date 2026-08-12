@@ -7,7 +7,7 @@ import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-pref
 export class Croconaw extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Totodile';
-  public tags = [CardTag.DELTA_SPECIES];
+  protected _tags = [CardTag.DELTA_SPECIES];
   public cardType: CardType = L;
   public hp: number = 70;
   public weakness = [{ type: L }];
@@ -32,9 +32,8 @@ export class Croconaw extends PokemonCard {
   public setNumber: string = '27';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (result) {
           BLOCK_RETREAT(store, state, effect, this);
         }
@@ -42,5 +41,4 @@ export class Croconaw extends PokemonCard {
     }
     return state;
   }
-
-} 
+}

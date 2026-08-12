@@ -9,7 +9,6 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Bouffalant extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.COLORLESS;
@@ -20,20 +19,24 @@ export class Bouffalant extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Bouffer',
-    powerType: PowerType.ABILITY,
-    text: 'Any damage done to this Pokemon by attacks is reduced by 20 ' +
-      '(after applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: 'Bouffer',
+      powerType: PowerType.ABILITY,
+      text:
+        'Any damage done to this Pokemon by attacks is reduced by 20 ' +
+        '(after applying Weakness and Resistance).',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Gold Breaker',
-    cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
-    damage: 60,
-    text: 'If the Defending Pokemon is a Pokemon-EX, ' +
-      'this attack does 60 more damage.'
-  }];
+  public attacks = [
+    {
+      name: 'Gold Breaker',
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+      damage: 60,
+      text: 'If the Defending Pokemon is a Pokemon-EX, ' + 'this attack does 60 more damage.',
+    },
+  ];
 
   public set: string = 'DRX';
 
@@ -46,13 +49,12 @@ export class Bouffalant extends PokemonCard {
   public setNumber: string = '110';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       const defending = opponent.active.getPokemonCard();
-      if (defending && defending.tags.includes(CardTag.POKEMON_EX)) {
+      if (defending && defending.hasTag(CardTag.POKEMON_EX)) {
         effect.damage += 60;
       }
     }
@@ -83,5 +85,4 @@ export class Bouffalant extends PokemonCard {
 
     return state;
   }
-
 }

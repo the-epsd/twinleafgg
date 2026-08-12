@@ -12,7 +12,7 @@ export abstract class PokemonCard extends Card {
   public additionalCardTypes?: CardType[];
 
   /**
-   * Deprecated. Use Card.tags instead.
+   * Deprecated. Use Card._tags instead.
    */
   public cardTag: CardTag[] = [];
 

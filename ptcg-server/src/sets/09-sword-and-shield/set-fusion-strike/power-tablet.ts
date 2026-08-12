@@ -9,12 +9,11 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 
 export class PowerTablet extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'FST';
 
-  public tags = [CardTag.FUSION_STRIKE];
+  protected _tags = [CardTag.FUSION_STRIKE];
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -27,7 +26,7 @@ export class PowerTablet extends TrainerCard {
   public fullName: string = 'Power Tablet FST';
 
   public text: string =
-    'During this turn, your Fusion Strike Pokémon\'s attacks do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
+    "During this turn, your Fusion Strike Pokémon's attacks do 30 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).";
 
   public readonly POWER_TABLET_MARKER = 'POWER_TABLET_MARKER';
 
@@ -35,13 +34,19 @@ export class PowerTablet extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       player.marker.addMarker(this.POWER_TABLET_MARKER, this);
-
     }
 
-    if (effect instanceof DealDamageEffect && effect.player.active.getPokemonCard()?.tags.includes(CardTag.FUSION_STRIKE)) {
+    if (
+      effect instanceof DealDamageEffect &&
+      effect.player.active.getPokemonCard()?.hasTag(CardTag.FUSION_STRIKE)
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      if (player.marker.hasMarker(this.POWER_TABLET_MARKER, this) && effect.damage > 0 && effect.target === opponent.active) {
+      if (
+        player.marker.hasMarker(this.POWER_TABLET_MARKER, this) &&
+        effect.damage > 0 &&
+        effect.target === opponent.active
+      ) {
         effect.damage += 30;
       }
     }
@@ -53,5 +58,4 @@ export class PowerTablet extends TrainerCard {
 
     return state;
   }
-
 }

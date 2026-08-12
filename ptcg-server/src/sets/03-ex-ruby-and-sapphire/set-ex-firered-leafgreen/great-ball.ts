@@ -14,10 +14,10 @@ export class GreatBall extends TrainerCard {
   public setNumber: string = '92';
   public name: string = 'Great Ball';
   public fullName: string = 'Great Ball RG';
-  public text: string = 'Search your deck for a Basic Pokémon (excluding Pokémon-ex) and put it onto your Bench. Shuffle your deck afterward.';
+  public text: string =
+    'Search your deck for a Basic Pokémon (excluding Pokémon-ex) and put it onto your Bench. Shuffle your deck afterward.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
@@ -26,16 +26,21 @@ export class GreatBall extends TrainerCard {
 
       const blocked: number[] = [];
       player.deck.cards.forEach((c, index) => {
-        if (c instanceof PokemonCard && c.tags.includes(CardTag.POKEMON_ex)) {
+        if (c instanceof PokemonCard && c.hasTag(CardTag.POKEMON_ex)) {
           blocked.push(index);
         }
       });
 
-      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, player, { stage: Stage.BASIC }, { min: 0, max: 1, blocked });
+      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(
+        store,
+        state,
+        player,
+        { stage: Stage.BASIC },
+        { min: 0, max: 1, blocked },
+      );
       return state;
     }
 
     return state;
   }
-
 }

@@ -7,10 +7,14 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PlayerType, StoreLike, State } from '../../../game';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, CONFIRMATION_PROMPT, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  CONFIRMATION_PROMPT,
+  COIN_FLIP_PROMPT,
+} from '../../../game/store/prefabs/prefabs';
 
 export class MAggronEx extends PokemonCard {
-  public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
+  protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Aggron-EX';
   public cardType: CardType = M;
@@ -39,9 +43,9 @@ export class MAggronEx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      CONFIRMATION_PROMPT(store, state, player, wantsToFlip => {
+      CONFIRMATION_PROMPT(store, state, player, (wantsToFlip) => {
         if (wantsToFlip) {
-          COIN_FLIP_PROMPT(store, state, player, result => {
+          COIN_FLIP_PROMPT(store, state, player, (result) => {
             if (result) {
               effect.damage += 120;
             } else {

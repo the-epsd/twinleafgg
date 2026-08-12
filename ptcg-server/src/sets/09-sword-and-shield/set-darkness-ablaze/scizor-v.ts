@@ -10,7 +10,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class ScizorV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;
   public hp: number = 210;
@@ -23,14 +23,14 @@ export class ScizorV extends PokemonCard {
       name: 'Hack Off',
       cost: [M],
       damage: 30,
-      text: 'Discard a Pokémon Tool and a Special Energy from your opponent\'s Active Pokémon.'
+      text: "Discard a Pokémon Tool and a Special Energy from your opponent's Active Pokémon.",
     },
     {
       name: 'Slashing Claw',
       cost: [M, M, C],
       damage: 140,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -54,8 +54,8 @@ export class ScizorV extends PokemonCard {
       }
 
       // Discard 1 Special Energy from opponent's active
-      const specialEnergy = activeTarget.cards.find(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL
+      const specialEnergy = activeTarget.cards.find(
+        (c) => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL,
       );
       if (specialEnergy !== undefined) {
         activeTarget.moveCardTo(specialEnergy, opponent.discard);

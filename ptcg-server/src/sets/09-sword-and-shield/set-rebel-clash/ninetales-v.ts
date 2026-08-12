@@ -11,7 +11,7 @@ import { COPY_OPPONENT_ACTIVE_ATTACK } from '../../../game/store/prefabs/attack-
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class NinetalesV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = R;
   public hp: number = 200;
@@ -23,14 +23,14 @@ export class NinetalesV extends PokemonCard {
       name: 'Nine-Tailed Shapeshifter',
       cost: [R, C, C],
       damage: 0,
-      text: 'Choose 1 of your opponent\'s Active Pokémon\'s attacks and use it as this attack.'
+      text: "Choose 1 of your opponent's Active Pokémon's attacks and use it as this attack.",
     },
     {
       name: 'Flamethrower',
       cost: [R, C, C, C],
       damage: 180,
-      text: 'Discard an Energy from this Pokémon.'
-    }
+      text: 'Discard an Energy from this Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'D';

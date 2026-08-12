@@ -6,7 +6,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class IonosWattrel extends PokemonCard {
-  public tags = [CardTag.IONOS];
+  protected _tags = [CardTag.IONOS];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = L;
   public hp: number = 60;
@@ -14,24 +14,25 @@ export class IonosWattrel extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Quick Attack',
-    cost: [L],
-    damage: 10,
-    damageCalculation: '+',
-    text: 'Flip a coin. If heads, this attack does 20 more damage.'
-  }];
+  public attacks = [
+    {
+      name: 'Quick Attack',
+      cost: [L],
+      damage: 10,
+      damageCalculation: '+',
+      text: 'Flip a coin. If heads, this attack does 20 more damage.',
+    },
+  ];
 
   public regulationMark = 'I';
 
   public set: string = 'JTG';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '54';
-  public name: string = 'Iono\'s Wattrel';
-  public fullName: string = 'Iono\'s Wattrel JTG';
+  public name: string = "Iono's Wattrel";
+  public fullName: string = "Iono's Wattrel JTG";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 

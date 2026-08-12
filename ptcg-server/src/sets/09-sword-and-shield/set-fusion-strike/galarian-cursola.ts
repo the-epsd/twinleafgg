@@ -26,14 +26,14 @@ export class GalarianCursola extends PokemonCard {
       name: 'Force Regeneration',
       cost: [P],
       damage: 0,
-      text: 'Put a Basic Pokémon V from your opponent\'s discard pile onto their Bench. If you do, put damage counters on that Pokémon until its remaining HP is 30.'
+      text: "Put a Basic Pokémon V from your opponent's discard pile onto their Bench. If you do, put damage counters on that Pokémon until its remaining HP is 30.",
     },
     {
       name: 'Spooky Shot',
       cost: [P, C, C],
       damage: 80,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -50,51 +50,61 @@ export class GalarianCursola extends PokemonCard {
       const attackEffect = effect as AttackEffect;
       const player = attackEffect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const slots: PokemonCardList[] = opponent.bench.filter(b => b.cards.length === 0);
+      const slots: PokemonCardList[] = opponent.bench.filter((b) => b.cards.length === 0);
 
-      const hasVInDiscard = opponent.discard.cards.some(c =>
-        c instanceof PokemonCard && c.stage === Stage.BASIC &&
-        (c.tags.includes(CardTag.POKEMON_V) || c.tags.includes(CardTag.POKEMON_VMAX) || c.tags.includes(CardTag.POKEMON_VSTAR))
+      const hasVInDiscard = opponent.discard.cards.some(
+        (c) =>
+          c instanceof PokemonCard &&
+          c.stage === Stage.BASIC &&
+          (c.hasTag(CardTag.POKEMON_V) ||
+            c.hasTag(CardTag.POKEMON_VMAX) ||
+            c.hasTag(CardTag.POKEMON_VSTAR)),
       );
 
       if (!hasVInDiscard || slots.length === 0) {
         return state;
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-        opponent.discard,
-        { superType: SuperType.POKEMON, stage: Stage.BASIC },
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        if (!selected || selected.length === 0) {
-          return;
-        }
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+          opponent.discard,
+          { superType: SuperType.POKEMON, stage: Stage.BASIC },
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          if (!selected || selected.length === 0) {
+            return;
+          }
 
-        const chosenCard = selected[0] as PokemonCard;
-        // Must be a V-type Basic
-        if (!chosenCard.tags.includes(CardTag.POKEMON_V) &&
-          !chosenCard.tags.includes(CardTag.POKEMON_VMAX) &&
-          !chosenCard.tags.includes(CardTag.POKEMON_VSTAR)) {
-          return;
-        }
+          const chosenCard = selected[0] as PokemonCard;
+          // Must be a V-type Basic
+          if (
+            !chosenCard.hasTag(CardTag.POKEMON_V) &&
+            !chosenCard.hasTag(CardTag.POKEMON_VMAX) &&
+            !chosenCard.hasTag(CardTag.POKEMON_VSTAR)
+          ) {
+            return;
+          }
 
-        opponent.discard.moveCardTo(chosenCard, slots[0]);
-        slots[0].pokemonPlayedTurn = state.turn;
+          opponent.discard.moveCardTo(chosenCard, slots[0]);
+          slots[0].pokemonPlayedTurn = state.turn;
 
-        // Put damage counters until remaining HP is 30
-        const checkHp = new CheckHpEffect(opponent, slots[0]);
-        store.reduceEffect(state, checkHp);
-        const maxHp = checkHp.hp;
-        const existingDamage = slots[0].damage;
-        const damageToPlace = Math.max(0, maxHp - 30 - existingDamage);
-        if (damageToPlace > 0) {
-          const damageEffect = new PutDamageEffect(attackEffect, damageToPlace);
-          damageEffect.target = slots[0];
-          store.reduceEffect(state, damageEffect);
-        }
-      });
+          // Put damage counters until remaining HP is 30
+          const checkHp = new CheckHpEffect(opponent, slots[0]);
+          store.reduceEffect(state, checkHp);
+          const maxHp = checkHp.hp;
+          const existingDamage = slots[0].damage;
+          const damageToPlace = Math.max(0, maxHp - 30 - existingDamage);
+          if (damageToPlace > 0) {
+            const damageEffect = new PutDamageEffect(attackEffect, damageToPlace);
+            damageEffect.target = slots[0];
+            store.reduceEffect(state, damageEffect);
+          }
+        },
+      );
     }
 
     return state;

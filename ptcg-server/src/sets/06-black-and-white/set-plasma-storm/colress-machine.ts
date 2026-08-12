@@ -10,10 +10,9 @@ import { AttachEnergyPrompt, GameError, StateUtils } from '../../../game';
 import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 
 export class ColressMachine extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
 
   public set: string = 'PLS';
 
@@ -29,7 +28,6 @@ export class ColressMachine extends TrainerCard {
     'Search your deck for a Plasma Energy card and attach it to 1 of your Team Plasma Pokémon. Shuffle your deck afterward.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
@@ -40,7 +38,7 @@ export class ColressMachine extends TrainerCard {
       let teamPlasmaPokemonInPlay = false;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card) => {
-        if (card.tags.includes(CardTag.TEAM_PLASMA)) {
+        if (card.hasTag(CardTag.TEAM_PLASMA)) {
           teamPlasmaPokemonInPlay = true;
         }
       });
@@ -51,35 +49,39 @@ export class ColressMachine extends TrainerCard {
 
       const blocked2: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        if (!card.tags.includes(CardTag.TEAM_PLASMA)) {
+        if (!card.hasTag(CardTag.TEAM_PLASMA)) {
           blocked2.push(target);
         }
       });
 
-      state = store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_TO_ACTIVE,
-        player.deck,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE],
-        { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL, name: 'Plasma Energy' },
-        { allowCancel: false, min: 0, max: 1, blockedTo: blocked2 }
-      ), transfers => {
-        transfers = transfers || [];
+      state = store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_TO_ACTIVE,
+          player.deck,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL, name: 'Plasma Energy' },
+          { allowCancel: false, min: 0, max: 1, blockedTo: blocked2 },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
 
-        if (transfers.length === 0) {
+          if (transfers.length === 0) {
+            SHUFFLE_DECK(store, state, player);
+            return;
+          }
+
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.deck.moveCardTo(transfer.card, target);
+          }
           SHUFFLE_DECK(store, state, player);
-          return;
-        }
 
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.deck.moveCardTo(transfer.card, target);
-        }
-        SHUFFLE_DECK(store, state, player);
-
-        return state;
-      });
+          return state;
+        },
+      );
     }
     return state;
   }

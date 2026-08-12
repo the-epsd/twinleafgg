@@ -3,11 +3,14 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GamePhase, PowerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
-import { AfterDamageEffect, ApplyWeaknessEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import {
+  AfterDamageEffect,
+  ApplyWeaknessEffect,
+  PutDamageEffect,
+} from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Aegislash extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_2;
 
   public evolvesFrom = 'Doublade';
@@ -27,8 +30,8 @@ export class Aegislash extends PokemonCard {
       name: 'Mysterious Shield',
       useWhenInPlay: false,
       powerType: PowerType.ABILITY,
-      text: 'Prevent all damage done to this Pokémon by attacks from your opponent\'s Pokémon ex and Pokémon V.'
-    }
+      text: "Prevent all damage done to this Pokémon by attacks from your opponent's Pokémon ex and Pokémon V.",
+    },
   ];
 
   public attacks = [
@@ -37,7 +40,7 @@ export class Aegislash extends PokemonCard {
       cost: [CardType.METAL, CardType.COLORLESS],
       damage: 120,
       shredAttack: true,
-      text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
+      text: "This attack's damage isn't affected by any effects on your opponent's Active Pokémon.",
     },
   ];
 
@@ -76,8 +79,7 @@ export class Aegislash extends PokemonCard {
         return state;
       }
 
-      if (sourceCard.tags.includes(CardTag.POKEMON_ex) || sourceCard.tags.includes(CardTag.POKEMON_V)) {
-
+      if (sourceCard.hasTag(CardTag.POKEMON_ex) || sourceCard.hasTag(CardTag.POKEMON_V)) {
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
           const powerEffect = new PowerEffect(player, this.powers[0], this);
@@ -110,5 +112,4 @@ export class Aegislash extends PokemonCard {
 
     return state;
   }
-
 }

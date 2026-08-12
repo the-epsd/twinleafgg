@@ -3,14 +3,20 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+} from '../../../game/store/card/card-types';
 import { ChooseCardsPrompt, EnergyCard, GameMessage, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class SandacondaV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = F;
   public hp: number = 220;
@@ -22,14 +28,14 @@ export class SandacondaV extends PokemonCard {
       name: 'Sand Eater',
       cost: [F],
       damage: 30,
-      text: 'Attach a [F] Energy card from your discard pile to this Pokémon.'
+      text: 'Attach a [F] Energy card from your discard pile to this Pokémon.',
     },
     {
       name: 'Sand Breath',
       cost: [F, F, C],
       damage: 220,
-      text: 'Discard 2 Energy from this Pokémon.'
-    }
+      text: 'Discard 2 Energy from this Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -45,25 +51,32 @@ export class SandacondaV extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const fightingEnergy = player.discard.cards.filter(c =>
-        c instanceof EnergyCard &&
-        c.energyType === EnergyType.BASIC &&
-        c.name === 'Fighting Energy'
+      const fightingEnergy = player.discard.cards.filter(
+        (c) =>
+          c instanceof EnergyCard &&
+          c.energyType === EnergyType.BASIC &&
+          c.name === 'Fighting Energy',
       );
 
-      if (fightingEnergy.length === 0) { return state; }
+      if (fightingEnergy.length === 0) {
+        return state;
+      }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_ATTACH,
-        player.discard,
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fighting Energy' },
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        if (selected && selected.length > 0) {
-          player.discard.moveCardTo(selected[0], player.active);
-        }
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_ATTACH,
+          player.discard,
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fighting Energy' },
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          if (selected && selected.length > 0) {
+            player.discard.moveCardTo(selected[0], player.active);
+          }
+        },
+      );
     }
 
     // Attack 2: Sand Breath

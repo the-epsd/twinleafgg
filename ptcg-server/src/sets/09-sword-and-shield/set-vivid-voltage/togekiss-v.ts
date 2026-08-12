@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class TogekissV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
   public hp: number = 200;
@@ -23,14 +23,14 @@ export class TogekissV extends PokemonCard {
       cost: [C],
       damage: 20,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is an Evolution Pokémon, this attack does 70 more damage.'
+      text: "If your opponent's Active Pokémon is an Evolution Pokémon, this attack does 70 more damage.",
     },
     {
       name: 'Speed Wing',
       cost: [C, C, C],
       damage: 130,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'D';

@@ -5,7 +5,7 @@ import { BLOCK_IF_GX_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } 
 import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class ToxapexGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Mareanie';
   public cardType: CardType = P;
@@ -40,8 +40,8 @@ export class ToxapexGx extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Spike Cannon
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 4, results => {
-        const heads = results.filter(r => r).length;
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 4, (results) => {
+        const heads = results.filter((r) => r).length;
         effect.damage = 30 * heads;
       });
     }

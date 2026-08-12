@@ -19,12 +19,14 @@ export class SolidRage extends TrainerCard {
   public setNumber: string = '92';
 
   public text: string =
-    'Attach Solid Rage to 1 of your Evolved Pokémon (excluding Pokémon-ex) that doesn\'t already have a Pokémon Tool attached to it. If the Pokémon Solid Rage is attached to is a Basic Pokémon or Pokémon-ex, discard Solid Rage.\n\nIf you have more Prize cards left than your opponent, the Pokémon that Solid Rage is attached to does 20 more damage to the Active Pokémon (before applying Weakness and Resistance).';
+    "Attach Solid Rage to 1 of your Evolved Pokémon (excluding Pokémon-ex) that doesn't already have a Pokémon Tool attached to it. If the Pokémon Solid Rage is attached to is a Basic Pokémon or Pokémon-ex, discard Solid Rage.\n\nIf you have more Prize cards left than your opponent, the Pokémon that Solid Rage is attached to does 20 more damage to the Active Pokémon (before applying Weakness and Resistance).";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof AttachPokemonToolEffect && effect.trainerCard == this) {
-      if (effect.target.getPokemonCard()?.tags.includes(CardTag.POKEMON_ex) || effect.target.getPokemons().length < 2) {
+      if (
+        effect.target.getPokemonCard()?.hasTag(CardTag.POKEMON_ex) ||
+        effect.target.getPokemons().length < 2
+      ) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
     }
@@ -50,14 +52,14 @@ export class SolidRage extends TrainerCard {
     }
 
     if (effect instanceof CheckTableStateEffect) {
-      state.players.forEach(player => {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      state.players.forEach((player) => {
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
           if (!cardList.cards.includes(this)) {
             return;
           }
           const attachedTo = cardList.getPokemonCard();
 
-          if (!!attachedTo && (attachedTo.tags.includes(CardTag.POKEMON_ex))) {
+          if (!!attachedTo && attachedTo.hasTag(CardTag.POKEMON_ex)) {
             cardList.moveCardTo(this, player.discard);
             attachedTo.tools === undefined;
           }

@@ -1,6 +1,15 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { ChoosePokemonPrompt, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../../game';
+import {
+  ChoosePokemonPrompt,
+  GameMessage,
+  PlayerType,
+  PowerType,
+  SlotType,
+  State,
+  StateUtils,
+  StoreLike,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckAttackCostEffect } from '../../../game/store/effects/check-effects';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
@@ -9,29 +18,33 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Rayquazaex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex, CardTag.DELTA_SPECIES];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.DELTA_SPECIES];
   public cardType: CardType = L;
   public hp: number = 110;
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Rage Aura',
-    powerType: PowerType.POKEBODY,
-    text: 'If you have more Prize cards left than your opponent, ignore all [C] Energy necessary to use Rayquaza ex\'s Special Circuit and Sky-high Claws attacks.'
-  }];
+  public powers = [
+    {
+      name: 'Rage Aura',
+      powerType: PowerType.POKEBODY,
+      text: "If you have more Prize cards left than your opponent, ignore all [C] Energy necessary to use Rayquaza ex's Special Circuit and Sky-high Claws attacks.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Special Circuit',
-    cost: [L, C],
-    damage: 0,
-    text: 'Choose 1 of your opponent\'s Pokémon. This attack does 30 damage to the Pokémon. If you choose a Pokémon that has any Poké-Powers or Poké-Bodies, this attack does 50 damage instead. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-  },
-  {
-    name: 'Sky-High Claws',
-    cost: [L, L, C, C],
-    damage: 70,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Special Circuit',
+      cost: [L, C],
+      damage: 0,
+      text: "Choose 1 of your opponent's Pokémon. This attack does 30 damage to the Pokémon. If you choose a Pokémon that has any Poké-Powers or Poké-Bodies, this attack does 50 damage instead. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
+    {
+      name: 'Sky-High Claws',
+      cost: [L, L, C, C],
+      damage: 70,
+      text: '',
+    },
+  ];
 
   public set: string = 'DF';
   public cardImage: string = 'assets/cardback.png';
@@ -46,17 +59,20 @@ export class Rayquazaex extends PokemonCard {
   }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.POKEBODY,
-          text: ''
-        }, this);
+        const stub = new PowerEffect(
+          player,
+          {
+            name: 'test',
+            powerType: PowerType.POKEBODY,
+            text: '',
+          },
+          this,
+        );
         store.reduceEffect(state, stub);
       } catch {
         console.log(effect.cost);
@@ -86,11 +102,15 @@ export class Rayquazaex extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.POKEBODY,
-          text: ''
-        }, this);
+        const stub = new PowerEffect(
+          player,
+          {
+            name: 'test',
+            powerType: PowerType.POKEBODY,
+            text: '',
+          },
+          this,
+        );
         store.reduceEffect(state, stub);
       } catch {
         console.log(effect.cost);
@@ -119,70 +139,80 @@ export class Rayquazaex extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE],
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        const targets = selected;
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          const targets = selected;
 
-        const pokemonWithAbilities: PokemonCard[] = [];
+          const pokemonWithAbilities: PokemonCard[] = [];
 
-        // checking for poke-body
-        const stubPowerEffectForActive = new PowerEffect(opponent, {
-          name: 'test',
-          powerType: PowerType.POKEBODY,
-          text: ''
-        }, targets[0].getPokemonCard()!);
+          // checking for poke-body
+          const stubPowerEffectForActive = new PowerEffect(
+            opponent,
+            {
+              name: 'test',
+              powerType: PowerType.POKEBODY,
+              text: '',
+            },
+            targets[0].getPokemonCard()!,
+          );
 
-        try {
-          store.reduceEffect(state, stubPowerEffectForActive);
+          try {
+            store.reduceEffect(state, stubPowerEffectForActive);
 
-          if (targets[0].getPokemonCard() && targets[0].getPokemonCard()?.powers.length) {
-            pokemonWithAbilities.push(targets[0].getPokemonCard() as PokemonCard);
+            if (targets[0].getPokemonCard() && targets[0].getPokemonCard()?.powers.length) {
+              pokemonWithAbilities.push(targets[0].getPokemonCard() as PokemonCard);
+            }
+          } catch {
+            // no abilities in active
           }
-        } catch {
-          // no abilities in active
-        }
 
+          // checking for poke-power
+          const stubPowerEffectForActive2 = new PowerEffect(
+            opponent,
+            {
+              name: 'test',
+              powerType: PowerType.POKEPOWER,
+              text: '',
+            },
+            targets[0].getPokemonCard()!,
+          );
 
-        // checking for poke-power
-        const stubPowerEffectForActive2 = new PowerEffect(opponent, {
-          name: 'test',
-          powerType: PowerType.POKEPOWER,
-          text: ''
-        }, targets[0].getPokemonCard()!);
+          try {
+            store.reduceEffect(state, stubPowerEffectForActive2);
 
-        try {
-          store.reduceEffect(state, stubPowerEffectForActive2);
-
-          if (targets[0].getPokemonCard() && targets[0].getPokemonCard()?.powers.length) {
-            pokemonWithAbilities.push(targets[0].getPokemonCard() as PokemonCard);
+            if (targets[0].getPokemonCard() && targets[0].getPokemonCard()?.powers.length) {
+              pokemonWithAbilities.push(targets[0].getPokemonCard() as PokemonCard);
+            }
+          } catch {
+            // no abilities in active
           }
-        } catch {
-          // no abilities in active
-        }
 
+          targets.forEach((target) => {
+            //base damage
+            let damageEffect = new DealDamageEffect(effect, 30);
 
-        targets.forEach(target => {
-          //base damage
-          let damageEffect = new DealDamageEffect(effect, 30);
-
-          // if target has poke body or poke power, damage = 50 
-          if (pokemonWithAbilities.length > 0) {
-            damageEffect = new DealDamageEffect(effect, 50);
-          }
-          damageEffect.target = target;
-          if (target !== opponent.active) {
-            effect.ignoreWeakness = true;
-            effect.ignoreResistance = true;
-          }
-          store.reduceEffect(state, damageEffect);
-        });
-        return state;
-      });
+            // if target has poke body or poke power, damage = 50
+            if (pokemonWithAbilities.length > 0) {
+              damageEffect = new DealDamageEffect(effect, 50);
+            }
+            damageEffect.target = target;
+            if (target !== opponent.active) {
+              effect.ignoreWeakness = true;
+              effect.ignoreResistance = true;
+            }
+            store.reduceEffect(state, damageEffect);
+          });
+          return state;
+        },
+      );
     }
 
     return state;

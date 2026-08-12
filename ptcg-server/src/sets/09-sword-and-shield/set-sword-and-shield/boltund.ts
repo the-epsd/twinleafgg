@@ -21,15 +21,15 @@ export class Boltund extends PokemonCard {
       name: 'Big Bite',
       cost: [C, C],
       damage: 50,
-      text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
+      text: "During your opponent's next turn, the Defending Pokémon can't retreat.",
     },
     {
       name: 'Fighting Fangs',
       cost: [L, C, C],
       damage: 90,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is a Pokémon V or Pokémon-GX, this attack does 90 more damage.'
-    }
+      text: "If your opponent's Active Pokémon is a Pokémon V or Pokémon-GX, this attack does 90 more damage.",
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -51,7 +51,10 @@ export class Boltund extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const defendingCard = opponent.active.getPokemonCard();
-      if (defendingCard && (defendingCard.tags.includes(CardTag.POKEMON_V) || defendingCard.tags.includes(CardTag.POKEMON_GX))) {
+      if (
+        defendingCard &&
+        (defendingCard.hasTag(CardTag.POKEMON_V) || defendingCard.hasTag(CardTag.POKEMON_GX))
+      ) {
         effect.damage += 90;
       }
     }

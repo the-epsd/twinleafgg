@@ -8,10 +8,9 @@ import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../..
 import { DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class ScreamTail extends PokemonCard {
-
   public regulationMark = 'G';
 
-  public tags = [CardTag.ANCIENT];
+  protected _tags = [CardTag.ANCIENT];
 
   public stage = Stage.BASIC;
 
@@ -30,14 +29,14 @@ export class ScreamTail extends PokemonCard {
       name: 'Slap',
       cost: [CardType.PSYCHIC],
       damage: 30,
-      text: ''
+      text: '',
     },
     {
       name: 'Roaring Scream',
       cost: [CardType.PSYCHIC, CardType.COLORLESS],
       damage: 0,
-      text: 'This attack does 20 damage to 1 of your opponent\'s Pokémon for each damage counter on this Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "This attack does 20 damage to 1 of your opponent's Pokémon for each damage counter on this Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public set: string = 'PAR';
@@ -47,7 +46,6 @@ export class ScreamTail extends PokemonCard {
   public fullName: string = 'Scream Tail PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
@@ -55,16 +53,20 @@ export class ScreamTail extends PokemonCard {
       const damageOutput = damageCounters * 2;
 
       const max = Math.min(1);
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { min: max, max, allowCancel: false }
-      ), selected => {
-        const targets = selected || [];
-        DAMAGE_OPPONENT_POKEMON(store, state, effect, damageOutput, targets);
-      });
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { min: max, max, allowCancel: false },
+        ),
+        (selected) => {
+          const targets = selected || [];
+          DAMAGE_OPPONENT_POKEMON(store, state, effect, damageOutput, targets);
+        },
+      );
     }
     return state;
   }

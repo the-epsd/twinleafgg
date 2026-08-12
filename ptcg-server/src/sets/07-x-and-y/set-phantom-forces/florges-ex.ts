@@ -3,8 +3,22 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { Card, GameLog, GameMessage, PlayerType, StoreLike, State, StateUtils } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  TrainerType,
+} from '../../../game/store/card/card-types';
+import {
+  Card,
+  GameLog,
+  GameMessage,
+  PlayerType,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
@@ -12,7 +26,7 @@ import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 
 export class FlorgesEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = Y;
   public hp: number = 160;
@@ -25,15 +39,15 @@ export class FlorgesEx extends PokemonCard {
       name: 'Lead',
       cost: [Y],
       damage: 0,
-      text: 'Search your deck for a Supporter card, reveal it, and put it into your hand. Shuffle your deck afterward.'
+      text: 'Search your deck for a Supporter card, reveal it, and put it into your hand. Shuffle your deck afterward.',
     },
     {
       name: 'Bright Garden',
       cost: [Y, C],
       damage: 20,
       damageCalculation: 'x',
-      text: 'This attack does 20 damage times the number of Grass Pokémon and Fairy Pokémon you have in play.'
-    }
+      text: 'This attack does 20 damage times the number of Grass Pokémon and Fairy Pokémon you have in play.',
+    },
   ];
 
   public set: string = 'PHF';
@@ -53,33 +67,40 @@ export class FlorgesEx extends PokemonCard {
         return state;
       }
 
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-        { min: 0, max: 1, allowCancel: true }
-      ), (selected: Card[]) => {
-        const cards = selected || [];
+      state = store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.deck,
+          { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
+          { min: 0, max: 1, allowCancel: true },
+        ),
+        (selected: Card[]) => {
+          const cards = selected || [];
 
-        if (cards.length > 0) {
-          cards.forEach(card => {
-            store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-          });
-
-          store.prompt(state, new ShowCardsPrompt(
-            opponent.id,
-            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-            cards
-          ), () => {
-            cards.forEach(card => {
-              player.deck.moveCardTo(card, player.hand);
+          if (cards.length > 0) {
+            cards.forEach((card) => {
+              store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, {
+                name: player.name,
+                card: card.name,
+              });
             });
-          });
-        }
 
-        SHUFFLE_DECK(store, state, player);
-      });
+            store.prompt(
+              state,
+              new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+              () => {
+                cards.forEach((card) => {
+                  player.deck.moveCardTo(card, player.hand);
+                });
+              },
+            );
+          }
+
+          SHUFFLE_DECK(store, state, player);
+        },
+      );
     }
 
     // Attack 2: Bright Garden
@@ -92,7 +113,10 @@ export class FlorgesEx extends PokemonCard {
         const checkType = new CheckPokemonTypeEffect(cardList);
         store.reduceEffect(state, checkType);
 
-        if (checkType.cardTypes.includes(CardType.GRASS) || checkType.cardTypes.includes(CardType.FAIRY)) {
+        if (
+          checkType.cardTypes.includes(CardType.GRASS) ||
+          checkType.cardTypes.includes(CardType.FAIRY)
+        ) {
           count++;
         }
       });

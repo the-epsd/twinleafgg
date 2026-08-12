@@ -17,7 +17,8 @@ export class IslandChallengeAmulet extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Island Challenge Amulet';
   public fullName: string = 'Island Challenge Amulet CEC';
-  public text: string = 'The Pokémon-GX or Pokémon-EX this card is attached to gets -100 HP, and when it is Knocked Out by damage from an opponent\'s attack, that player takes 1 fewer Prize card.';
+  public text: string =
+    "The Pokémon-GX or Pokémon-EX this card is attached to gets -100 HP, and when it is Knocked Out by damage from an opponent's attack, that player takes 1 fewer Prize card.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // HP reduction for GX/EX Pokemon
@@ -38,7 +39,7 @@ export class IslandChallengeAmulet extends TrainerCard {
       }
 
       // Only applies to GX or EX Pokemon
-      if (!sourceCard.tags.includes(CardTag.POKEMON_GX) && !sourceCard.tags.includes(CardTag.POKEMON_EX)) {
+      if (!sourceCard.hasTag(CardTag.POKEMON_GX) && !sourceCard.hasTag(CardTag.POKEMON_EX)) {
         return state;
       }
 
@@ -61,7 +62,7 @@ export class IslandChallengeAmulet extends TrainerCard {
       }
 
       // Only applies to GX or EX Pokemon
-      if (!sourceCard.tags.includes(CardTag.POKEMON_GX) && !sourceCard.tags.includes(CardTag.POKEMON_EX)) {
+      if (!sourceCard.hasTag(CardTag.POKEMON_GX) && !sourceCard.hasTag(CardTag.POKEMON_EX)) {
         return state;
       }
 

@@ -6,11 +6,15 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, CONFIRMATION_PROMPT, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  CONFIRMATION_PROMPT,
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+} from '../../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_DAMAGE_PER_HEADS } from '../../../game/store/prefabs/attack-effects';
 
 export class SteelixEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;
   public hp: number = 180;
@@ -24,15 +28,15 @@ export class SteelixEx extends PokemonCard {
       cost: [M, C, C, C],
       damage: 80,
       damageCalculation: '+',
-      text: 'You may do 50 more damage. If you do, this Pokémon does 20 damage to itself.'
+      text: 'You may do 50 more damage. If you do, this Pokémon does 20 damage to itself.',
     },
     {
       name: 'Iron Tail',
       cost: [M, C, C, C, C],
       damage: 100,
       damageCalculation: 'x',
-      text: 'Flip a coin until you get tails. This attack does 100 damage times the number of heads.'
-    }
+      text: 'Flip a coin until you get tails. This attack does 100 damage times the number of heads.',
+    },
   ];
 
   public set: string = 'STS';
@@ -45,7 +49,7 @@ export class SteelixEx extends PokemonCard {
     // Attack 1: Wild Edge
     // Ref: set-ancient-origins/golurk.ts (Superpower)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      CONFIRMATION_PROMPT(store, state, effect.player, result => {
+      CONFIRMATION_PROMPT(store, state, effect.player, (result) => {
         if (result) {
           effect.damage += 50;
           THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, 20);

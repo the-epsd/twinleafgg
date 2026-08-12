@@ -6,10 +6,14 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
+} from '../../../game/store/prefabs/prefabs';
 
 export class HawluchaEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = F;
   public hp: number = 130;
@@ -17,12 +21,14 @@ export class HawluchaEx extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Counterattack',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'If this Pokémon is your Active Pokémon and is damaged by an opponent\'s attack (even if this Pokémon is Knocked Out), put 2 damage counters on the Attacking Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Counterattack',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: "If this Pokémon is your Active Pokémon and is damaged by an opponent's attack (even if this Pokémon is Knocked Out), put 2 damage counters on the Attacking Pokémon.",
+    },
+  ];
 
   public attacks = [
     {
@@ -30,8 +36,8 @@ export class HawluchaEx extends PokemonCard {
       cost: [F, C, C],
       damage: 60,
       damageCalculation: '+',
-      text: 'If there is any Stadium card in play, this attack does 40 more damage.'
-    }
+      text: 'If there is any Stadium card in play, this attack does 40 more damage.',
+    },
   ];
 
   public set: string = 'FFI';

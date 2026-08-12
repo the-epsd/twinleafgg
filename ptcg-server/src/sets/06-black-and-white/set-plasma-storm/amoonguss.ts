@@ -7,11 +7,15 @@ import { Stage, CardType, CardTag, SpecialCondition } from '../../../game/store/
 import { GameMessage, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  COIN_FLIP_PROMPT,
+  SHUFFLE_DECK,
+} from '../../../game/store/prefabs/prefabs';
 import { SelectOptionPrompt } from '../../../game/store/prompts/select-option-prompt';
 
 export class Amoonguss extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Foongus';
   public cardType: CardType = G;
@@ -45,7 +49,7 @@ export class Amoonguss extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      COIN_FLIP_PROMPT(store, state, player, result => {
+      COIN_FLIP_PROMPT(store, state, player, (result) => {
         if (result && opponent.hand.cards.length > 0) {
           const randomIndex = Math.floor(Math.random() * opponent.hand.cards.length);
           const cardToShuffle = opponent.hand.cards[randomIndex];
@@ -60,31 +64,31 @@ export class Amoonguss extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      COIN_FLIP_PROMPT(store, state, player, result => {
+      COIN_FLIP_PROMPT(store, state, player, (result) => {
         if (result) {
-          store.prompt(state, new SelectOptionPrompt(
-            player.id,
-            GameMessage.CHOOSE_OPTION,
-            [
-              'Paralyzed',
-              'Confused',
-              'Asleep',
-              'Poisoned',
-              'Burned'
-            ],
-            { allowCancel: false, defaultValue: 0 }
-          ), choice => {
-            const conditionMap: SpecialCondition[] = [
-              SpecialCondition.PARALYZED,
-              SpecialCondition.CONFUSED,
-              SpecialCondition.ASLEEP,
-              SpecialCondition.POISONED,
-              SpecialCondition.BURNED
-            ];
-            const selectedCondition = conditionMap[choice ?? 0];
-            const specialConditionEffect = new AddSpecialConditionsEffect(effect, [selectedCondition]);
-            store.reduceEffect(state, specialConditionEffect);
-          });
+          store.prompt(
+            state,
+            new SelectOptionPrompt(
+              player.id,
+              GameMessage.CHOOSE_OPTION,
+              ['Paralyzed', 'Confused', 'Asleep', 'Poisoned', 'Burned'],
+              { allowCancel: false, defaultValue: 0 },
+            ),
+            (choice) => {
+              const conditionMap: SpecialCondition[] = [
+                SpecialCondition.PARALYZED,
+                SpecialCondition.CONFUSED,
+                SpecialCondition.ASLEEP,
+                SpecialCondition.POISONED,
+                SpecialCondition.BURNED,
+              ];
+              const selectedCondition = conditionMap[choice ?? 0];
+              const specialConditionEffect = new AddSpecialConditionsEffect(effect, [
+                selectedCondition,
+              ]);
+              store.reduceEffect(state, specialConditionEffect);
+            },
+          );
         }
       });
     }

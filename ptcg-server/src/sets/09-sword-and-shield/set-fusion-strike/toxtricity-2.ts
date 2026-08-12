@@ -10,7 +10,7 @@ import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Toxtricity2 extends PokemonCard {
-  public tags = [CardTag.FUSION_STRIKE];
+  protected _tags = [CardTag.FUSION_STRIKE];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Toxel';
   public cardType: CardType = L;
@@ -18,19 +18,21 @@ export class Toxtricity2 extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Maximum Downer',
-    powerType: PowerType.ABILITY,
-    text: 'If all your Pokémon in play are Fusion Strike Pokémon, your opponent\'s Pokémon VMAX in play get -30 HP.'
-  }];
+  public powers = [
+    {
+      name: 'Maximum Downer',
+      powerType: PowerType.ABILITY,
+      text: "If all your Pokémon in play are Fusion Strike Pokémon, your opponent's Pokémon VMAX in play get -30 HP.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Head Bolt',
       cost: [L, L, C],
       damage: 90,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -45,7 +47,7 @@ export class Toxtricity2 extends PokemonCard {
     // Ref: set-surging-sparks/gravity-mountain.ts (CheckHpEffect HP reduction pattern)
     if (effect instanceof CheckHpEffect) {
       const targetCard = effect.target.getPokemonCard();
-      if (!targetCard || !targetCard.tags.includes(CardTag.POKEMON_VMAX)) {
+      if (!targetCard || !targetCard.hasTag(CardTag.POKEMON_VMAX)) {
         return state;
       }
 
@@ -54,7 +56,7 @@ export class Toxtricity2 extends PokemonCard {
 
       // Find where Toxtricity is and make sure it's the opponent
       let toxOwner: any = null;
-      state.players.forEach(p => {
+      state.players.forEach((p) => {
         p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
           if (cardList.getPokemonCard() === this) {
             toxOwner = p;
@@ -75,7 +77,7 @@ export class Toxtricity2 extends PokemonCard {
       let allFusionStrike = true;
       toxOwner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList: any) => {
         const card = cardList.getPokemonCard();
-        if (card && !card.tags.includes(CardTag.FUSION_STRIKE)) {
+        if (card && !card.hasTag(CardTag.FUSION_STRIKE)) {
           allFusionStrike = false;
         }
       });

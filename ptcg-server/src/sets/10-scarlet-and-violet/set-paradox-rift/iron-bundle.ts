@@ -1,4 +1,14 @@
-import { ChoosePokemonPrompt, GameError, PlayerType, PokemonCardList, PowerType, SlotType, State, StateUtils, StoreLike } from '../../../game';
+import {
+  ChoosePokemonPrompt,
+  GameError,
+  PlayerType,
+  PokemonCardList,
+  PowerType,
+  SlotType,
+  State,
+  StateUtils,
+  StoreLike,
+} from '../../../game';
 import { GameMessage } from '../../../game/game-message';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
@@ -8,7 +18,7 @@ import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/eff
 
 export class IronBundle extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.FUTURE];
+  protected _tags = [CardTag.FUTURE];
   public cardType: CardType = CardType.WATER;
   public hp: number = 100;
   public weakness = [{ type: CardType.LIGHTNING }];
@@ -19,8 +29,8 @@ export class IronBundle extends PokemonCard {
       name: 'Hyper Blower',
       useWhenInPlay: true,
       powerType: PowerType.ABILITY,
-      text: 'Once during your turn, if this Pokémon is on your Bench, you may switch out your opponent\'s Active Pokémon to the Bench. (Your opponent chooses the new Active Pokémon.) If you do, discard this Pokémon and all attached cards.'
-    }
+      text: "Once during your turn, if this Pokémon is on your Bench, you may switch out your opponent's Active Pokémon to the Bench. (Your opponent chooses the new Active Pokémon.) If you do, discard this Pokémon and all attached cards.",
+    },
   ];
 
   public attacks = [
@@ -28,8 +38,8 @@ export class IronBundle extends PokemonCard {
       name: 'Refrigerated Stream',
       cost: [CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
       damage: 80,
-      text: 'If the Defending Pokémon is an Evolution Pokémon, it can\'t attack during your opponent\'s next turn.'
-    }
+      text: "If the Defending Pokémon is an Evolution Pokémon, it can't attack during your opponent's next turn.",
+    },
   ];
 
   public set: string = 'PAR';
@@ -86,10 +96,20 @@ export class IronBundle extends PokemonCard {
             for (const tool of tools) {
               cardList.moveCardTo(tool, player.discard);
             }
+            // Move other cards (tools, energies, etc.) to the discard
+            if (otherCards.length > 0) {
+              MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
+            }
+            // Move tools to the discard
+            if (tools.length > 0) {
+              for (const tool of tools) {
+                cardList.moveCardTo(tool, player.discard);
+              }
+            }
+            return state;
           }
-          return state;
-        }
-      });
+        },
+      );
     }
 
     // Refrigerated Stream

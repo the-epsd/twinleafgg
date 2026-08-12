@@ -8,7 +8,7 @@ import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/
 
 export class ZapdosEx extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_EX, CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.POKEMON_EX, CardTag.TEAM_PLASMA];
   public cardType: CardType = L;
   public hp: number = 170;
   public weakness = [{ type: L }];
@@ -46,7 +46,7 @@ export class ZapdosEx extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      const hasPlasmaEnergy = player.active.cards.some(card => card instanceof PlasmaEnergy);
+      const hasPlasmaEnergy = player.active.cards.some((card) => card instanceof PlasmaEnergy);
       if (hasPlasmaEnergy) {
         effect.damage += 40;
       }

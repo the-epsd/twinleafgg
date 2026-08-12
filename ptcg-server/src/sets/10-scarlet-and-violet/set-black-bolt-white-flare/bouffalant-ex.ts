@@ -8,25 +8,29 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs
 
 export class Bouffalantex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public cardType = C;
   public hp: number = 220;
   public weakness = [{ type: F }];
   public resistance = [];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Bouffer',
-    powerType: PowerType.ABILITY,
-    text: 'This Pokemon takes 30 less damage from attacks (after applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: 'Bouffer',
+      powerType: PowerType.ABILITY,
+      text: 'This Pokemon takes 30 less damage from attacks (after applying Weakness and Resistance).',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Gold Breaker',
-    cost: [C, C, C],
-    damage: 100,
-    text: 'If your opponent\'s Active Pokemon is a Pokemon ex, this attack does 100 more damage.'
-  }];
+  public attacks = [
+    {
+      name: 'Gold Breaker',
+      cost: [C, C, C],
+      damage: 100,
+      text: "If your opponent's Active Pokemon is a Pokemon ex, this attack does 100 more damage.",
+    },
+  ];
 
   public regulationMark: string = 'I';
   public set: string = 'WHT';
@@ -65,10 +69,10 @@ export class Bouffalantex extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const oppActive = opponent.active.getPokemonCard();
-      if (oppActive && oppActive.tags && oppActive.tags.includes(CardTag.POKEMON_ex)) {
+      if (oppActive && oppActive.hasTag(CardTag.POKEMON_ex)) {
         effect.damage += 100;
       }
     }
     return state;
   }
-} 
+}

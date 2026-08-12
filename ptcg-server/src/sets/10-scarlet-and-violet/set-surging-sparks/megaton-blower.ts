@@ -6,10 +6,9 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class MegatonBlower extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public tags = [CardTag.ACE_SPEC];
+  protected _tags = [CardTag.ACE_SPEC];
 
   public set: string = 'SSP';
 
@@ -24,11 +23,11 @@ export class MegatonBlower extends TrainerCard {
   public fullName: string = 'Megaton Blower SSP';
 
   public text: string =
-    'Discard all Pokémon Tools and Special Energy from all of your opponent\'s Pokémon, and discard a Stadium in play.';
+    "Discard all Pokémon Tools and Special Energy from all of your opponent's Pokémon, and discard a Stadium in play.";
 
-  public canPlay(store: StoreLike, state: State, player: Player): boolean {    return true;
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -41,7 +40,10 @@ export class MegatonBlower extends TrainerCard {
         const cardList = StateUtils.findCardList(state, stadiumCard);
         if (cardList) {
           const stadiumOwner = StateUtils.findOwner(state, cardList);
-          state = MOVE_CARDS(store, state, cardList, stadiumOwner.discard, { cards: [stadiumCard], sourceCard: this });
+          state = MOVE_CARDS(store, state, cardList, stadiumOwner.discard, {
+            cards: [stadiumCard],
+            sourceCard: this,
+          });
         }
       }
 
@@ -49,12 +51,16 @@ export class MegatonBlower extends TrainerCard {
 
       // Function to discard special energy and tools from a PokemonCardList
       const discardSpecialEnergyAndTools = (pokemonCardList: PokemonCardList) => {
-        const cardsToDiscard = pokemonCardList.cards.filter(card =>
-          (card.superType === SuperType.ENERGY && (card as EnergyCard).energyType === EnergyType.SPECIAL) ||
-          (card instanceof TrainerCard && card.trainerType === TrainerType.TOOL)
+        const cardsToDiscard = pokemonCardList.cards.filter(
+          (card) =>
+            (card.superType === SuperType.ENERGY &&
+              (card as EnergyCard).energyType === EnergyType.SPECIAL) ||
+            (card instanceof TrainerCard && card.trainerType === TrainerType.TOOL),
         );
         if (cardsToDiscard.length > 0) {
-          state = MOVE_CARDS(store, state, pokemonCardList, opponent.discard, { cards: cardsToDiscard });
+          state = MOVE_CARDS(store, state, pokemonCardList, opponent.discard, {
+            cards: cardsToDiscard,
+          });
         }
       };
 
@@ -62,7 +68,7 @@ export class MegatonBlower extends TrainerCard {
       discardSpecialEnergyAndTools(opponent.active);
 
       // Discard from bench Pokémon
-      opponent.bench.forEach(benchPokemon => {
+      opponent.bench.forEach((benchPokemon) => {
         discardSpecialEnergyAndTools(benchPokemon);
       });
 

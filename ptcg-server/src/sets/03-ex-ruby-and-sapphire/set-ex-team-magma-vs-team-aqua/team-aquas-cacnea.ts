@@ -1,11 +1,17 @@
-import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_PARALYZED_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  COIN_FLIP_PROMPT,
+  MULTIPLE_COIN_FLIPS_PROMPT,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class TeamAquasCacnea extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.TEAM_AQUA];
+  protected _tags = [CardTag.TEAM_AQUA];
   public cardType: CardType = G;
   public additionalCardTypes = [D];
   public hp: number = 50;
@@ -28,13 +34,12 @@ export class TeamAquasCacnea extends PokemonCard {
   public set: string = 'MA';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '24';
-  public name: string = 'Team Aqua\'s Cacnea';
-  public fullName: string = 'Team Aqua\'s Cacnea MA';
+  public name: string = "Team Aqua's Cacnea";
+  public fullName: string = "Team Aqua's Cacnea MA";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (AFTER_ATTACK(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (result) {
           ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
         }
@@ -43,9 +48,9 @@ export class TeamAquasCacnea extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 4, results => {
+      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 4, (results) => {
         let heads: number = 0;
-        results.forEach(r => {
+        results.forEach((r) => {
           if (r) heads++;
         });
         effect.damage = 10 * heads;

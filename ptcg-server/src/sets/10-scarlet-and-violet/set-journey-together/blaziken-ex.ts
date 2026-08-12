@@ -4,7 +4,7 @@ import { EndTurnEffect } from "../../../game/store/effects/game-phase-effects";
 import { WAS_POWER_USED, WAS_ATTACK_USED, THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN } from "../../../game/store/prefabs/prefabs";
 
 export class Blazikenex extends PokemonCard {
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Combusken';
   public cardType: CardType = R;
@@ -12,19 +12,23 @@ export class Blazikenex extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Seething Spirit',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may attach a Basic Energy card from your discard pile to 1 of your Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Seething Spirit',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn, you may attach a Basic Energy card from your discard pile to 1 of your Pokémon.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Burning Assault',
-    cost: [R, C],
-    damage: 200,
-    text: 'During your next turn, this Pokemon can\'t attack.'
-  }];
+  public attacks = [
+    {
+      name: 'Burning Assault',
+      cost: [R, C],
+      damage: 200,
+      text: "During your next turn, this Pokemon can't attack.",
+    },
+  ];
 
   public regulationMark = 'H';
   public set: string = 'JTG';
@@ -36,7 +40,6 @@ export class Blazikenex extends PokemonCard {
   public readonly OVERFLOWING_SPIRIT_MARKER = 'OVERFLOWING_SPIRIT_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.marker.removeMarker(this.OVERFLOWING_SPIRIT_MARKER, this);
@@ -45,9 +48,8 @@ export class Blazikenex extends PokemonCard {
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c.superType === SuperType.ENERGY
-          && c.energyType === EnergyType.BASIC;
+      const hasEnergyInDiscard = player.discard.cards.some((c) => {
+        return c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC;
       });
 
       if (!hasEnergyInDiscard) {
@@ -58,34 +60,38 @@ export class Blazikenex extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      state = store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_TO_ACTIVE,
-        player.discard,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { allowCancel: false, min: 1, max: 1 }
-      ), transfers => {
-        transfers = transfers || [];
-        player.marker.addMarker(this.OVERFLOWING_SPIRIT_MARKER, this);
+      state = store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_TO_ACTIVE,
+          player.discard,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+          { allowCancel: false, min: 1, max: 1 },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          player.marker.addMarker(this.OVERFLOWING_SPIRIT_MARKER, this);
 
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (cardList.getPokemonCard() === this) {
-            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+            if (cardList.getPokemonCard() === this) {
+              cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+            }
+          });
+
+          if (transfers.length === 0) {
+            return;
           }
-        });
 
-        if (transfers.length === 0) {
-          return;
-        }
-
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
-        }
-        return state;
-      });
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.discard.moveCardTo(transfer.card, target);
+          }
+          return state;
+        },
+      );
     }
 
     // Burning Assault

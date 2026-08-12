@@ -9,24 +9,26 @@ import { OPPONENT_CANNOT_PLAY_ITEM_CARDS } from '../../../game/store/prefabs/eff
 
 export class VikavoltV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public cardType: CardType = L;
   public hp: number = 210;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
 
-  public attacks = [{
-    name: 'Paralyzing Bolt',
-    cost: [L, C],
-    damage: 50,
-    text: 'During your opponent\'s next turn, they can\'t play any Item cards from their hand.',
-  },
-  {
-    name: 'Super Zap Cannon',
-    cost: [L, L, C],
-    damage: 190,
-    text: 'Discard 2 Energy from this Pokémon.',
-  }];
+  public attacks = [
+    {
+      name: 'Paralyzing Bolt',
+      cost: [L, C],
+      damage: 50,
+      text: "During your opponent's next turn, they can't play any Item cards from their hand.",
+    },
+    {
+      name: 'Super Zap Cannon',
+      cost: [L, L, C],
+      damage: 190,
+      text: 'Discard 2 Energy from this Pokémon.',
+    },
+  ];
 
   public regulationMark = 'D';
   public set: string = 'DAA';

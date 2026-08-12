@@ -25,7 +25,7 @@ export class GreatPotion extends TrainerCard {
       const activeCard = player.active.getPokemonCard();
 
       // Must have an active GX Pokemon with damage
-      if (!activeCard || !activeCard.tags.includes(CardTag.POKEMON_GX)) {
+      if (!activeCard || !activeCard.hasTag(CardTag.POKEMON_GX)) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 

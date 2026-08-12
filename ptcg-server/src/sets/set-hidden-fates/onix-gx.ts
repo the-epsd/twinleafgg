@@ -2,35 +2,44 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import {
+  ADD_PARALYZED_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  COIN_FLIP_PROMPT,
+  WAS_ATTACK_USED,
+} from '../../game/store/prefabs/prefabs';
 import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
 import { State, StoreLike } from '../../game';
 export class OnixGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = F;
   public hp: number = 200;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];
 
-  public attacks = [{
-    name: 'Bind',
-    cost: [F],
-    damage: 30,
-    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-  }, {
-    name: 'Heavy Impact',
-    cost: [F, C, C, C, C],
-    damage: 150,
-    text: ''
-  }, {
-    name: 'Rocky Avalanche-GX',
-    cost: [F, C, C, C, C],
-    damage: 200,
-    text: 'During your opponent\'s next turn, this Pokémon takes 100 less damage from attacks (after applying Weakness and Resistance). (You can\'t use more than 1 GX attack in a game.)'
-  }];
+  public attacks = [
+    {
+      name: 'Bind',
+      cost: [F],
+      damage: 30,
+      text: "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed.",
+    },
+    {
+      name: 'Heavy Impact',
+      cost: [F, C, C, C, C],
+      damage: 150,
+      text: '',
+    },
+    {
+      name: 'Rocky Avalanche-GX',
+      cost: [F, C, C, C, C],
+      damage: 200,
+      text: "During your opponent's next turn, this Pokémon takes 100 less damage from attacks (after applying Weakness and Resistance). (You can't use more than 1 GX attack in a game.)",
+    },
+  ];
 
   public set: string = 'HIF';
   public setNumber: string = '36';
@@ -42,7 +51,7 @@ export class OnixGx extends PokemonCard {
     // Attack 1: Bind
     // Ref: set-unbroken-bonds/tentacruel.ts (Wrap)
     if (AFTER_ATTACK(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (result) {
           ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
         }
@@ -56,10 +65,8 @@ export class OnixGx extends PokemonCard {
     }
 
     // Intercept damage
-    
 
     // Cleanup at end of opponent's turn only
-    
 
     return state;
   }

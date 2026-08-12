@@ -8,7 +8,7 @@ import { OPPONENT_CANNOT_PLAY_CARDS } from '../../../game/store/prefabs/effect-o
 export class NoivernGX extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Noibat';
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public cardType: CardType = N;
   public hp: number = 200;
   public weakness = [{ type: Y }];

@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 export class CorviknightV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;
   public hp: number = 210;
@@ -22,14 +22,14 @@ export class CorviknightV extends PokemonCard {
       name: 'Clutch',
       cost: [M],
       damage: 30,
-      text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
+      text: "During your opponent's next turn, the Defending Pokémon can't retreat.",
     },
     {
       name: 'Sky Hurricane',
       cost: [M, M, C],
       damage: 190,
-      text: 'During your next turn, this Pokémon can\'t use Sky Hurricane.'
-    }
+      text: "During your next turn, this Pokémon can't use Sky Hurricane.",
+    },
   ];
 
   public regulationMark: string = 'E';
