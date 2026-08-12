@@ -1,7 +1,27 @@
-import { CardTag, CardType, ChooseCardsPrompt, GameError, GameMessage, PlayerType, PokemonCard, PowerType, Stage, State, StoreLike, SuperType } from "../../../game";
-import { Effect } from "../../../game/store/effects/effect";
-import { WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
-import { PREVENT_DAMAGE } from "../../../game/store/prefabs/effect-of-attack-prefabs";
+import {
+  CardTag,
+  CardType,
+  ChooseCardsPrompt,
+  GameError,
+  GameMessage,
+  PlayerType,
+  PokemonCard,
+  PowerType,
+  Stage,
+  State,
+  StoreLike,
+  SuperType,
+} from '../../../game';
+import { Effect } from '../../../game/store/effects/effect';
+import {
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  USE_ABILITY_ONCE_PER_TURN,
+  ABILITY_USED,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Aegislash2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -21,12 +41,14 @@ export class Aegislash2 extends PokemonCard {
     },
   ];
 
-  public attacks = [{
-    name: 'Gigaton Bash',
-    cost: [M, C],
-    damage: 70,
-    text: 'During your opponent\'s next turn, prevent all damage done to this Pokémon by attacks from Pokémon VMAX.'
-  }];
+  public attacks = [
+    {
+      name: 'Gigaton Bash',
+      cost: [M, C],
+      damage: 70,
+      text: "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Pokémon VMAX.",
+    },
+  ];
 
   public regulationMark: string = 'E';
   public set: string = 'BST';
@@ -75,30 +97,22 @@ export class Aegislash2 extends PokemonCard {
         }
       });
 
-      store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.hand,
-        { superType: SuperType.POKEMON },
-        { min: 1, max: 1, allowCancel: false, blocked }
-      ), selected => {
-        if (!selected || selected.length === 0) {
-          return;
-        }
-
-        const newAegislash = selected[0] as PokemonCard;
-
-        const thisIndex = cardList.cards.indexOf(this);
-        if (thisIndex !== -1) {
-          cardList.cards.splice(thisIndex, 1);
-          const handIndex = player.hand.cards.indexOf(newAegislash);
-          if (handIndex !== -1) {
-            player.hand.cards.splice(handIndex, 1);
+      store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.hand,
+          { superType: SuperType.POKEMON },
+          { min: 1, max: 1, allowCancel: false, blocked },
+        ),
+        (selected) => {
+          if (!selected || selected.length === 0) {
+            return;
           }
 
           const newAegislash = selected[0] as PokemonCard;
 
-          // Swap: remove this card from the PokemonCardList, insert new one
           const thisIndex = cardList.cards.indexOf(this);
           if (thisIndex !== -1) {
             cardList.cards.splice(thisIndex, 1);
@@ -106,8 +120,17 @@ export class Aegislash2 extends PokemonCard {
             if (handIndex !== -1) {
               player.hand.cards.splice(handIndex, 1);
             }
-            cardList.cards.splice(thisIndex, 0, newAegislash);
-            player.hand.cards.push(this);
+
+            // Swap: remove this card from the PokemonCardList, insert new one
+            if (thisIndex !== -1) {
+              cardList.cards.splice(thisIndex, 1);
+              const handIndex = player.hand.cards.indexOf(newAegislash);
+              if (handIndex !== -1) {
+                player.hand.cards.splice(handIndex, 1);
+              }
+              cardList.cards.splice(thisIndex, 0, newAegislash);
+              player.hand.cards.push(this);
+            }
           }
         },
       );

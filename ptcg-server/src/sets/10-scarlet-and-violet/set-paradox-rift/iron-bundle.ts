@@ -64,49 +64,54 @@ export class IronBundle extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      if (!opponent.bench.some(b => b.cards.length > 0)) {
+      if (!opponent.bench.some((b) => b.cards.length > 0)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        opponent.id,
-        GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { allowCancel: false }
-      ), targets => {
-        if (targets && targets.length > 0) {
-          opponent.active.clearEffects();
-          opponent.switchPokemon(targets[0]);
-          const cardList = player.bench[benchIndex];
-          const pokemons = cardList.getPokemons();
-          const otherCards = cardList.cards.filter(card =>
-            !(card instanceof PokemonCard) &&
-            !pokemons.includes(card as PokemonCard) &&
-            (!cardList.tools || !cardList.tools.includes(card))
-          );
-          const tools = [...cardList.tools];
-          if (pokemons.length > 0) {
-            MOVE_CARDS(store, state, cardList, player.discard, { cards: pokemons });
-          }
-          if (otherCards.length > 0) {
-            MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
-          }
-          if (tools.length > 0) {
-            for (const tool of tools) {
-              cardList.moveCardTo(tool, player.discard);
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          opponent.id,
+          GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          { allowCancel: false },
+        ),
+        (targets) => {
+          if (targets && targets.length > 0) {
+            opponent.active.clearEffects();
+            opponent.switchPokemon(targets[0]);
+            const cardList = player.bench[benchIndex];
+            const pokemons = cardList.getPokemons();
+            const otherCards = cardList.cards.filter(
+              (card) =>
+                !(card instanceof PokemonCard) &&
+                !pokemons.includes(card as PokemonCard) &&
+                (!cardList.tools || !cardList.tools.includes(card)),
+            );
+            const tools = [...cardList.tools];
+            if (pokemons.length > 0) {
+              MOVE_CARDS(store, state, cardList, player.discard, { cards: pokemons });
             }
-            // Move other cards (tools, energies, etc.) to the discard
             if (otherCards.length > 0) {
               MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
             }
-            // Move tools to the discard
             if (tools.length > 0) {
               for (const tool of tools) {
                 cardList.moveCardTo(tool, player.discard);
               }
+              // Move other cards (tools, energies, etc.) to the discard
+              if (otherCards.length > 0) {
+                MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
+              }
+              // Move tools to the discard
+              if (tools.length > 0) {
+                for (const tool of tools) {
+                  cardList.moveCardTo(tool, player.discard);
+                }
+              }
+              return state;
             }
-            return state;
           }
         },
       );

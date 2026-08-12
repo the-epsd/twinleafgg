@@ -14,27 +14,28 @@ export class HopsRookidee extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Intimidating Stare',
-    cost: [C],
-    damage: 0,
-    text: 'During your opponent\'s next turn, attacks used by the Defending Pokémon do 20 less damage (before applying Weakness and Resistance).'
-  },
-  {
-    name: 'Peck',
-    cost: [C, C],
-    damage: 20,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Intimidating Stare',
+      cost: [C],
+      damage: 0,
+      text: "During your opponent's next turn, attacks used by the Defending Pokémon do 20 less damage (before applying Weakness and Resistance).",
+    },
+    {
+      name: 'Peck',
+      cost: [C, C],
+      damage: 20,
+      text: '',
+    },
+  ];
 
   public regulationMark = 'I';
   public set: string = 'JTG';
   public setNumber: string = '133';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Hop\'s Rookidee';
-  public fullName: string = 'Hop\'s Rookidee JTG';
+  public name: string = "Hop's Rookidee";
+  public fullName: string = "Hop's Rookidee JTG";
 
-  public setNumber: string = '133';
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Intimidating Stare
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -27,6 +27,7 @@ import { EvolveEffect } from '../../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import {
   BLOCK_IF_GX_ATTACK_USED,
+  THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN,
   WAS_ATTACK_USED,
   WAS_POWER_USED,
 } from '../../../game/store/prefabs/prefabs';

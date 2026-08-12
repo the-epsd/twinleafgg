@@ -1,4 +1,21 @@
-import { PokemonCard, CardTag, Stage, CardType, StoreLike, State, StateUtils, GameMessage, ChoosePokemonPrompt, PlayerType, SlotType, CardTarget, AttachEnergyPrompt, EnergyCard, EnergyType, SuperType } from '../../../game';
+import {
+  PokemonCard,
+  CardTag,
+  Stage,
+  CardType,
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  ChoosePokemonPrompt,
+  PlayerType,
+  SlotType,
+  CardTarget,
+  AttachEnergyPrompt,
+  EnergyCard,
+  EnergyType,
+  SuperType,
+} from '../../../game';
 import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 
@@ -87,36 +104,38 @@ export class AlolanExeggutorex extends PokemonCard {
         }
       });
 
-      return COIN_FLIP_PROMPT(store, state, player, result => {
+      return COIN_FLIP_PROMPT(store, state, player, (result) => {
         if (result === true) {
           if (opponentActive && opponentActive.stage !== Stage.BASIC) {
             return state;
+          } else {
+            KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
           }
-          if (!result) {
-            if (!opponentBench) {
-              return state;
-            }
-            if (opponentBench) {
-              return store.prompt(
-                state,
-                new ChoosePokemonPrompt(
-                  player.id,
-                  GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-                  PlayerType.TOP_PLAYER,
-                  [SlotType.BENCH],
-                  { min: 1, max: 1, allowCancel: false, blocked: blocked },
-                ),
-                (selected) => {
-                  const targets = selected || [];
-                  targets.forEach((target) => {
-                    KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(store, state, effect, target);
-                  });
-                },
-              );
-            }
+        }
+        if (!result) {
+          if (!opponentBench) {
+            return state;
           }
-        },
-      );
+          if (opponentBench) {
+            return store.prompt(
+              state,
+              new ChoosePokemonPrompt(
+                player.id,
+                GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+                PlayerType.TOP_PLAYER,
+                [SlotType.BENCH],
+                { min: 1, max: 1, allowCancel: false, blocked: blocked },
+              ),
+              (selected) => {
+                const targets = selected || [];
+                targets.forEach((target) => {
+                  KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(store, state, effect, target);
+                });
+              },
+            );
+          }
+        }
+      });
     }
 
     TERA_RULE(effect, state, this);
