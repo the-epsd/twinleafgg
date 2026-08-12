@@ -89,6 +89,7 @@ export function Board3dExperience({
       runtime.wireframeService,
       runtime.lightingService,
       runtime.postProcessingService,
+      runtime.cardInspectService,
       cardsAdapter,
       gameActionsRef.current,
       boardInteractionRef.current,

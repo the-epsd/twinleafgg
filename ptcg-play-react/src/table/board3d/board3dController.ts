@@ -37,6 +37,7 @@ import { Board3dHandService, BOARD3D_PLAYER_HAND_Z } from './services/board-3d-h
 import { Board3dWireframeService } from './services/board-3d-wireframe.service';
 import { Board3dLightingService } from './services/board-3d-lighting.service';
 import { Board3dPostProcessingService } from './services/board-3d-post-processing.service';
+import { Board3dCardInspectService, BOARD3D_CARD_INFO_INSPECT_ENABLED } from './services/board-3d-card-inspect.service';
 import type { LocalGameState } from '../types/localGameState';
 import { hasUnresolvedGamePrompts } from '../activeGamePrompt';
 import {
@@ -53,7 +54,7 @@ import {
   type CardTarget,
   type State,
 } from 'ptcg-server';
-import type { Board3dCardsAdapter } from './board3dCardsAdapter';
+import type { Board3dCardsAdapter, Board3dCardInfoData, CardInfoPaneActionResult } from './board3dCardsAdapter';
 import {
   BOARD3D_CARD_SLOT_BASE_HEIGHT,
   BOARD3D_CARD_SLOT_BASE_WIDTH,
@@ -98,7 +99,11 @@ import {
 import { r3fPointerEventAsMouse } from './board3dR3fPointer';
 import { subscribeBoard3dInteractionStreams } from './board3dControllerSubscriptions';
 import { Board3dCard } from './board-3d-card';
-import { projectCardFaceToScreenAnchor } from './board3dAbilityFocusProjection';
+import {
+  projectCardFaceToScreenAnchor,
+  projectCardLowerFaceToScreenAnchor,
+  projectCardRetreatPlateToScreenAnchor,
+} from './board3dAbilityFocusProjection';
 import { playDeckShuffleAnimation, playDeckShufflePreview } from './board3dDeckShufflePreview';
 import {
   LEGEND_3D_HALF_ROTATION,
@@ -171,6 +176,7 @@ export class Board3dController {
 
   private animationFrameId: number = 0;
   private abilityFocusRafId: number | null = null;
+  private cardInspectFocusRafId: number | null = null;
   private holoClock = new Clock();
   private needsRender: boolean = true;
   private currentHoveredCard: any = null;
@@ -390,6 +396,7 @@ export class Board3dController {
     private wireframeService: Board3dWireframeService,
     private lightingService: Board3dLightingService,
     private postProcessingService: Board3dPostProcessingService,
+    private cardInspectService: Board3dCardInspectService,
     private cardsAdapter: Board3dCardsAdapter,
     private gameActions: Board3dGameActions,
     private boardInteractionService: BoardInteractionService,
@@ -810,6 +817,8 @@ export class Board3dController {
     this.animationService.killAllAnimations();
     this.animationService.disposeCoinFlipScene();
     this.stopAbilityFocusTracking();
+    this.stopCardInspectFocusTracking();
+    this.cardInspectService.dispose();
 
     this.lastSupporterTopCardIdByPlayerId.clear();
     this.trainerToDiscardResolvePlayerId = null;
@@ -1449,7 +1458,9 @@ export class Board3dController {
         this.topPlayer,
         this.bottomPlayer,
         {
-          skippedCardId: this.interactionService.getDraggedBoardCardId(),
+          skippedCardId:
+            this.interactionService.getDraggedBoardCardId() ??
+            this.cardInspectService.getInspectedCardId(),
           skippedScaleCardId: this.interactionService.getScaleLockedBoardCardIds(),
           handPlayFlightHiddenCardId: this.getHandPlayFlightHiddenMeshIdsForSync(),
           freezeDiscardVisualForPlayerId: freezeDiscardForSync,
@@ -1939,6 +1950,102 @@ export class Board3dController {
       this.abilityFocusRafId = null;
     }
     this.boardInteractionService.clearAbilityFocus();
+  }
+
+  private projectCardGroupLowerFaceToScreen(group: Object3D): AbilityFocusAnchor | null {
+    if (!this.canvasEl || !this.camera) {
+      return null;
+    }
+    const bridge = group.userData?.board3dCard as Board3dCard | undefined;
+    const cardMesh = bridge?.getMesh();
+    if (!cardMesh) {
+      return null;
+    }
+    const canvasRect = this.canvasEl.getBoundingClientRect();
+    return projectCardLowerFaceToScreenAnchor(cardMesh, this.camera, canvasRect, 2);
+  }
+
+  private projectCardGroupRetreatToScreen(group: Object3D): AbilityFocusAnchor | null {
+    if (!this.canvasEl || !this.camera) {
+      return null;
+    }
+    const bridge = group.userData?.board3dCard as Board3dCard | undefined;
+    const cardMesh = bridge?.getMesh();
+    if (!cardMesh) {
+      return null;
+    }
+    const canvasRect = this.canvasEl.getBoundingClientRect();
+    return projectCardRetreatPlateToScreenAnchor(cardMesh, this.camera, canvasRect, 1);
+  }
+
+  private startCardInspectFocusTracking(group: Object3D): void {
+    this.stopCardInspectFocusTracking();
+    const tick = (): void => {
+      const anchor = this.projectCardGroupLowerFaceToScreen(group);
+      const retreatAnchor = this.projectCardGroupRetreatToScreen(group);
+      this.boardInteractionService.setCardInspectFocus({ anchor, retreatAnchor });
+      this.cardInspectFocusRafId = requestAnimationFrame(tick);
+    };
+    tick();
+  }
+
+  private stopCardInspectFocusTracking(): void {
+    if (this.cardInspectFocusRafId != null) {
+      cancelAnimationFrame(this.cardInspectFocusRafId);
+      this.cardInspectFocusRafId = null;
+    }
+    this.boardInteractionService.clearCardInspectFocus();
+  }
+
+  /** Full card meshes get 3D inspect; energy icons / tool tabs keep the modal. */
+  private canUse3dCardInspect(cardObject: Object3D): boolean {
+    if (cardObject.userData.isEnergyIcon || cardObject.userData.isToolCard) {
+      return false;
+    }
+    if (cardObject.userData.isLegendHalf) {
+      return false;
+    }
+    return (
+      cardObject.userData.isCard === true ||
+      cardObject.userData.board3dCard != null ||
+      cardObject.userData.isBoardCard === true ||
+      cardObject.userData.isHandCard === true ||
+      cardObject.userData.isOpponentHandCard === true ||
+      cardObject.userData.isStadium === true ||
+      cardObject.userData.isPrize === true
+    );
+  }
+
+  /**
+   * Open card info — optionally starts 3D inspect when {@link BOARD3D_CARD_INFO_INSPECT_ENABLED}.
+   * Call {@link exitCardInspect} when the React prompt closes (no-op if inspect was not used).
+   */
+  private openCardInfo(
+    cardObject: Object3D,
+    data: Board3dCardInfoData,
+  ): Promise<CardInfoPaneActionResult> {
+    if (
+      !BOARD3D_CARD_INFO_INSPECT_ENABLED ||
+      !this.canUse3dCardInspect(cardObject) ||
+      !this.scene ||
+      !this.camera
+    ) {
+      return this.cardsAdapter.showCardInfo(data);
+    }
+
+    // Clear board hover scale so the inspect snapshot is the resting pose.
+    this.interactionService.clearPokemonHoverEffects();
+    this.interactionService.clearHoverState();
+
+    void this.cardInspectService.enterInspect(cardObject, this.scene, this.camera);
+    this.startCardInspectFocusTracking(cardObject);
+    return this.cardsAdapter.showCardInfo({ ...data, inspect3d: true });
+  }
+
+  /** Reverse inspect animation after the info overlay / modal closes. */
+  exitCardInspect(): void {
+    this.stopCardInspectFocusTracking();
+    void this.cardInspectService.exitInspect();
   }
 
   /**
@@ -4175,7 +4282,7 @@ export class Board3dController {
     const isSetupPreview = cardObject.userData.isSetupPreview === true;
 
     if (isHandCard || isSetupPreview) {
-      this.cardsAdapter.showCardInfo({
+      void this.openCardInfo(cardObject, {
         card: cardData,
         cardList: cardList ?? this.bottomPlayerHand,
         players: [this.topPlayer, this.bottomPlayer].filter((p) => p),
@@ -4184,7 +4291,7 @@ export class Board3dController {
     }
 
     if (cardTarget?.slot === SlotType.ACTIVE || cardTarget?.slot === SlotType.BENCH) {
-      this.cardsAdapter.showCardInfo({
+      void this.openCardInfo(cardObject, {
         card: cardData,
         cardList,
         players: [this.topPlayer, this.bottomPlayer].filter((p) => p),
@@ -4397,7 +4504,7 @@ export class Board3dController {
         ? false
         : cardList.isSecret || (!cardList.isPublic && !owner);
       const allowReveal = facedown && (!!this.gameState.replay || this.canRevealPrizesToViewer());
-      this.cardsAdapter.showCardInfo({
+      void this.openCardInfo(cardObject, {
         card,
         allowReveal,
         facedown,
@@ -4415,7 +4522,7 @@ export class Board3dController {
 
       if (!isBottomOwner || isDeleted) {
         // Show normal card info without trainer options
-        this.cardsAdapter.showCardInfo({
+        void this.openCardInfo(cardObject, {
           card: cardData,
           cardList: cardList,
           players: [this.topPlayer, this.bottomPlayer].filter((p) => p),
@@ -4425,17 +4532,15 @@ export class Board3dController {
 
       // Owner can activate stadium effect
       const options = { enableTrainer: true };
-      this.cardsAdapter
-        .showCardInfo({
-          card: cardData,
-          cardList: cardList,
-          options,
-          players: [this.topPlayer, this.bottomPlayer].filter((p) => p),
-        })
-        .then((result) => {
-          if (!result) {
-            return;
-          }
+      void this.openCardInfo(cardObject, {
+        card: cardData,
+        cardList: cardList,
+        options,
+        players: [this.topPlayer, this.bottomPlayer].filter(p => p)
+      }).then(result => {
+        if (!result) {
+          return;
+        }
 
           // Use stadium card effect
           if (result.trainer) {
@@ -4536,16 +4641,14 @@ export class Board3dController {
     // Get players for targeting
     const players = [this.topPlayer, this.bottomPlayer].filter((p) => p);
 
-    this.cardsAdapter
-      .showCardInfo({
-        card: cardData,
-        cardList: cardList,
-        options,
-        players,
-      })
-      .then((result) => {
-        if (!result) return;
-        const gameId = this.gameState.gameId;
+    this.openCardInfo(cardObject, {
+      card: cardData,
+      cardList: cardList,
+      options,
+      players
+    }).then(result => {
+      if (!result) return;
+      const gameId = this.gameState.gameId;
 
         // For hand cards, use HAND slot with the card's hand index
         const target = cardTarget || {
