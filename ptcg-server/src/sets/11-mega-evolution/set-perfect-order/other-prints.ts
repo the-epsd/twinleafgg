@@ -239,6 +239,7 @@ export class JacintheFA extends Jacinthe {
 
 export class ForestOfVitalityFA extends LushForest {
   public fullName = 'Forest of Vitality FA POR';
+  public set = 'POR';
   public setNumber = '109';
 }
 
