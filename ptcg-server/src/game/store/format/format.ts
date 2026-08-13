@@ -1,8 +1,6 @@
 import { Card } from '../card/card';
-import { Stage } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
-import { AT_LEAST_ONE_BASIC, CARD_TEXT_IDENTICAL, COUNT_CARDS_IN_DECK } from '../prefabs/formats';
-import { FLIP_UNTIL_TAILS_AND_COUNT_HEADS } from '../prefabs/prefabs';
+import { CARD_TEXT_IDENTICAL } from '../prefabs/formats';
 import { Erratum, GameplayRule } from './format-types';
 
 type CardNameAndSet = { name: string; set: string; setNumber: string };
@@ -62,7 +60,7 @@ export abstract class ConstructedFormat extends Format {
 
     isLegal = false;
     // If there are matches, for each card in samename, check if they're the exact same card.
-    // If it's not yet a hit, check if the
+    // If it's not yet a hit, check if there's a mon with identical text in format
     for (let checkCard of cardsWithSameNameInThisFormat) {
       isLegal ||= card.fullName == checkCard.fullName;
       isLegal ||= CARD_TEXT_IDENTICAL(card, checkCard as PokemonCard);
