@@ -1,4 +1,4 @@
-import { CoinFlipPrompt, GameMessage, PlayerType, PowerType, StateUtils } from '../../..';
+import { PlayerType, PowerType, StateUtils } from '../../..';
 import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { PutCountersEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
@@ -6,21 +6,15 @@ import { Effect } from '../../../game/store/effects/effect';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Machoke extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Machop';
-
-  public cardType: CardType = CardType.FIGHTING;
-
+  public cardType: CardType = F;
   public hp: number = 100;
-
-  public weakness = [{ type: CardType.PSYCHIC }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: P }];
+  public retreat = [C, C, C];
 
   public powers = [{
     name: 'Daunting Pose',
@@ -30,19 +24,15 @@ export class Machoke extends PokemonCard {
 
   public attacks = [{
     name: 'Cross Chop',
-    cost: [CardType.FIGHTING, CardType.FIGHTING],
+    cost: [F, F],
     damage: 30,
     text: 'Flip a coin. If heads, this attack does 30 more damage.'
   }];
 
   public set: string = 'GRI';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '64';
-
   public name: string = 'Machoke';
-
   public fullName: string = 'Machoke GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -51,9 +41,7 @@ export class Machoke extends PokemonCard {
 
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
           effect.damage += 30;
         }

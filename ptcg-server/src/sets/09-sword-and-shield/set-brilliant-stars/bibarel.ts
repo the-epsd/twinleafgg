@@ -5,26 +5,19 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { PowerType } from '../../../game/store/card/pokemon-types';
-import { CoinFlipPrompt, GameError, GameMessage, PlayerType } from '../../../game';
+import { GameError, GameMessage, PlayerType } from '../../../game';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { DRAW_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, WAS_ATTACK_USED, WAS_POWER_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Bibarel extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
-
   public regulationMark = 'F';
-
   public evolvesFrom = 'Bidoof';
-
-  public cardType: CardType = CardType.COLORLESS;
-
+  public cardType: CardType = C;
   public hp: number = 120;
-
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Industrious Incisors',
@@ -35,19 +28,15 @@ export class Bibarel extends PokemonCard {
 
   public attacks = [{
     name: 'Tail Smash',
-    cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+    cost: [C, C, C],
     damage: 100,
     text: 'Flip a coin. If tails, this attack does nothing.'
   }];
 
   public set: string = 'BRS';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '121';
-
   public name: string = 'Bibarel';
-
   public fullName: string = 'Bibarel BRS';
 
   public readonly INDUSTRIOUS_INCISORS_MARKER = 'INDUSTRIOUS_INCISORS_MARKER';
@@ -98,9 +87,7 @@ export class Bibarel extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === false) {
           effect.damage = 0;
         }

@@ -4,14 +4,29 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameMessage, GameError, ShowCardsPrompt } from '../../../game';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  GameError,
+  ShowCardsPrompt,
+} from '../../../game';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  USE_ABILITY_ONCE_PER_TURN,
+  ABILITY_USED,
+  BLOCK_IF_GX_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { REMOVE_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
 
 export class GumshoosGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Yungoos';
   public cardType: CardType = C;
@@ -19,27 +34,29 @@ export class GumshoosGx extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Search the Premises',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), you may have your opponent reveal their hand.'
-  }];
+  public powers = [
+    {
+      name: 'Search the Premises',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn (before your attack), you may have your opponent reveal their hand.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Headbutt Bounce',
       cost: [C, C, C],
       damage: 100,
-      text: ''
+      text: '',
     },
     {
       name: 'Gumshoe Chance-GX',
       cost: [C],
       damage: 10,
       damageCalculation: '+',
-      text: 'This attack does 50 damage times the amount of Energy attached to your opponent\'s Active Pokémon. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "This attack does 50 damage times the amount of Energy attached to your opponent's Active Pokémon. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'SUM';
@@ -67,11 +84,11 @@ export class GumshoosGx extends PokemonCard {
       // Show opponent's hand to the player
       const opponentHand = opponent.hand.cards;
       if (opponentHand.length > 0) {
-        store.prompt(state, new ShowCardsPrompt(
-          player.id,
-          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-          opponentHand
-        ), () => { });
+        store.prompt(
+          state,
+          new ShowCardsPrompt(player.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, opponentHand),
+          () => {},
+        );
       }
     }
 

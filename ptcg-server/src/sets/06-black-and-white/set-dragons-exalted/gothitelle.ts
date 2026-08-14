@@ -13,21 +13,18 @@ export class Gothitelle extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Doom Decree',
-      cost: [P, C],
-      damage: 0,
-      text: 'Flip 2 coins. If both of them are heads, the Defending Pokemon is Knocked Out.'
-    },
-    {
-      name: 'Black Magic',
-      cost: [P, C, C],
-      damage: 40,
-      damageCalculation: '+',
-      text: 'Does 20 more damage for each of your opponent\'s Benched Pokemon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Doom Decree',
+    cost: [P, C],
+    damage: 0,
+    text: 'Flip 2 coins. If both of them are heads, the Defending Pokemon is Knocked Out.'
+  }, {
+    name: 'Black Magic',
+    cost: [P, C, C],
+    damage: 40,
+    damageCalculation: '+',
+    text: 'Does 20 more damage for each of your opponent\'s Benched Pokemon.'
+  }];
 
   public set: string = 'DRX';
   public setNumber: string = '57';

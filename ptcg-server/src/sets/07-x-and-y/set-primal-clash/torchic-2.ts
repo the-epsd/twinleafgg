@@ -16,20 +16,17 @@ export class Torchic2 extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Flare Bonus',
-      cost: [R],
-      damage: 0,
-      text: 'Discard a [R] Energy card from your hand. If you do, draw 2 cards.'
-    },
-    {
-      name: 'Claw',
-      cost: [R],
-      damage: 20,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Flare Bonus',
+    cost: [R],
+    damage: 0,
+    text: 'Discard a [R] Energy card from your hand. If you do, draw 2 cards.'
+  }, {
+    name: 'Claw',
+    cost: [R],
+    damage: 20,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'PRC';
   public setNumber: string = '26';

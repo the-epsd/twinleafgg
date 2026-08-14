@@ -11,20 +11,17 @@ export class Meditite extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'High Jump Kick',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Fake Out',
-      cost: [F, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'High Jump Kick',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Fake Out',
+    cost: [F, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'EM';
   public setNumber: string = '55';

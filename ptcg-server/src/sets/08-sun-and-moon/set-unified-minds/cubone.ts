@@ -2,7 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, DEFENDING_POKEMON_DOES_LESS_DAMAGE } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { DEFENDING_POKEMON_DOES_LESS_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Cubone extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -16,8 +17,7 @@ export class Cubone extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'During your opponent\'s next turn, the Defending Pokémon\'s attacks do 20 less damage (before applying Weakness and Resistance).'
-  },
-  {
+  }, {
     name: 'Bonemerang',
     cost: [C, C],
     damage: 20,

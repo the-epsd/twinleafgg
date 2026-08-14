@@ -8,10 +8,18 @@ import { PowerType, StoreLike, State, GameError, GameMessage, PlayerType } from 
 import { HealEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  USE_ABILITY_ONCE_PER_TURN,
+  ABILITY_USED,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND,
+} from '../../../game/store/prefabs/prefabs';
 
 export class CelebiVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Celebi V';
   public cardType: CardType = G;
@@ -19,20 +27,22 @@ export class CelebiVmax extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Curative Forest',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may heal 20 damage from each of your Grass Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Curative Forest',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn, you may heal 20 damage from each of your Grass Pokémon.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Max Plant',
       cost: [G, C],
       damage: 130,
-      text: 'Search your deck for up to 2 Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.'
-    }
+      text: 'Search your deck for up to 2 Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -75,7 +85,10 @@ export class CelebiVmax extends PokemonCard {
     // Ref: set-team-up/poochyena.ts (SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND, up to 2)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, player, undefined, { min: 0, max: 2 });
+      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, player, undefined, {
+        min: 0,
+        max: 2,
+      });
     }
 
     return state;

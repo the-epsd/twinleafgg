@@ -17,22 +17,20 @@ export class Eelektrik extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Shocking Smash',
-      cost: [L],
-      damage: 0,
-      text: 'Flip a coin. If heads, discard an Energy from 1 of your opponent\'s Pokémon.'
-    },
-    {
-      name: 'Head Bolt',
-      cost: [L, C, C],
-      damage: 60,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Shocking Smash',
+    cost: [L],
+    damage: 0,
+    text: 'Flip a coin. If heads, discard an Energy from 1 of your opponent\'s Pokémon.'
+  }, {
+    name: 'Head Bolt',
+    cost: [L, C, C],
+    damage: 60,
+    text: ''
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'VIV';
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';

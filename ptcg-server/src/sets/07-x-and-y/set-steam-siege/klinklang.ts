@@ -8,7 +8,8 @@ import { PowerType, StoreLike, State, StateUtils, PlayerType } from '../../../ga
 import { Effect } from '../../../game/store/effects/effect';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { CheckRetreatCostEffect } from '../../../game/store/effects/check-effects';
-import { IS_ABILITY_BLOCKED, NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/attack-effects';
 
 export class Klinklang extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;

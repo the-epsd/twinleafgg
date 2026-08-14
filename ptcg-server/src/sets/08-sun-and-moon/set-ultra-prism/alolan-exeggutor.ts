@@ -19,21 +19,18 @@ export class AlolanExeggutor extends PokemonCard {
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Exeggutor\'s Paradise',
-      cost: [],
-      damage: 0,
-      text: 'For each of your Benched Exeggcute, search your deck for an Alolan Exeggutor or Alolan Exeggutor-GX and put it onto that Exeggcute to evolve it. Then, shuffle your deck.'
-    },
-    {
-      name: 'Draco Meteor Barrage',
-      cost: [G, C, C],
-      damage: 80,
-      damageCalculation: 'x',
-      text: 'Flip a coin for each [G] Energy attached to this Pokémon. This attack does 80 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Exeggutor\'s Paradise',
+    cost: [],
+    damage: 0,
+    text: 'For each of your Benched Exeggcute, search your deck for an Alolan Exeggutor or Alolan Exeggutor-GX and put it onto that Exeggcute to evolve it. Then, shuffle your deck.'
+  }, {
+    name: 'Draco Meteor Barrage',
+    cost: [G, C, C],
+    damage: 80,
+    damageCalculation: 'x',
+    text: 'Flip a coin for each [G] Energy attached to this Pokémon. This attack does 80 damage for each heads.'
+  }];
 
   public set: string = 'UPR';
   public setNumber: string = '95';

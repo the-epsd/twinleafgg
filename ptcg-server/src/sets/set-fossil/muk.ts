@@ -3,24 +3,19 @@ import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-ty
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { CoinFlipPrompt, GameMessage, PokemonCardList, PowerType, StateUtils } from '../../game';
+import { GameMessage, PokemonCardList, PowerType, StateUtils } from '../../game';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import {
-  CAN_APPLY_LOCKER_ABILITY,
-  HANDLE_ABILITY_BLOCK,
-  IS_ABILITY_LOCKER_IN_PLAY,
-  POKEMON_POWER_TYPES,
-} from '../../game/store/prefabs/ability-lock';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
+import { CAN_APPLY_LOCKER_ABILITY, HANDLE_ABILITY_BLOCK, IS_ABILITY_LOCKER_IN_PLAY, POKEMON_POWER_TYPES } from '../../game/store/prefabs/ability-lock';
 
 export class Muk extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Grimer';
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType = G;
   public hp: number = 70;
   public weakness = [{ type: P }];
   public resistance = [];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Toxic Gas',
@@ -28,23 +23,17 @@ export class Muk extends PokemonCard {
     text: 'Ignore all Pokémon Powers other than Toxic Gases. This power stops working while Muk is Asleep, Confused, or Paralyzed.'
   }];
 
-  public attacks = [
-    {
-      name: 'Sludge',
-      cost: [CardType.GRASS, CardType.GRASS, CardType.GRASS],
-      damage: 30,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Poisoned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Sludge',
+    cost: [G, G, G],
+    damage: 30,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Poisoned.'
+  }];
 
   public set: string = 'FO';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '13';
-
   public name: string = 'Muk';
-
   public fullName: string = 'Muk FO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -78,9 +67,7 @@ export class Muk extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      state = store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
+      state = COIN_FLIP_PROMPT(store, state, player, results => {
         if (results) {
           const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.POISONED]);
           store.reduceEffect(state, specialConditionEffect);

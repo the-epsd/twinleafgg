@@ -3,7 +3,13 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  EnergyType,
+  SuperType,
+} from '../../../game/store/card/card-types';
 import { EnergyCard, GameMessage, StateUtils, StoreLike, State } from '../../../game';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
@@ -12,7 +18,7 @@ import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../../game/stor
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class CobalionEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;
   public hp: number = 180;
@@ -25,14 +31,14 @@ export class CobalionEx extends PokemonCard {
       name: 'Righteous Edge',
       cost: [M],
       damage: 30,
-      text: 'Discard a Special Energy attached to the Defending Pokémon.'
+      text: 'Discard a Special Energy attached to the Defending Pokémon.',
     },
     {
       name: 'Steel Bullet',
       cost: [M, M, C],
       damage: 100,
-      text: 'This attack\'s damage isn\'t affected by Weakness, Resistance, or any other effects on the Defending Pokémon.'
-    }
+      text: "This attack's damage isn't affected by Weakness, Resistance, or any other effects on the Defending Pokémon.",
+    },
   ];
 
   public set: string = 'PLS';
@@ -48,32 +54,41 @@ export class CobalionEx extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const specialEnergy = opponent.active.cards.filter(card =>
-        card.superType === SuperType.ENERGY && (card as EnergyCard).energyType === EnergyType.SPECIAL
+      const specialEnergy = opponent.active.cards.filter(
+        (card) =>
+          card.superType === SuperType.ENERGY &&
+          (card as EnergyCard).energyType === EnergyType.SPECIAL,
       );
 
       if (specialEnergy.length > 0) {
         const blocked: number[] = [];
         opponent.active.cards.forEach((c, index) => {
-          if (c.superType !== SuperType.ENERGY || (c as EnergyCard).energyType !== EnergyType.SPECIAL) {
+          if (
+            c.superType !== SuperType.ENERGY ||
+            (c as EnergyCard).energyType !== EnergyType.SPECIAL
+          ) {
             blocked.push(index);
           }
         });
 
-        store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_DISCARD,
-          opponent.active,
-          {},
-          { min: 1, max: 1, allowCancel: false, blocked }
-        ), selected => {
-          const cards = selected || [];
-          if (cards.length > 0) {
-            const discardEffect = new DiscardCardsEffect(effect, cards);
-            discardEffect.target = opponent.active;
-            store.reduceEffect(state, discardEffect);
-          }
-        });
+        store.prompt(
+          state,
+          new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_CARD_TO_DISCARD,
+            opponent.active,
+            {},
+            { min: 1, max: 1, allowCancel: false, blocked },
+          ),
+          (selected) => {
+            const cards = selected || [];
+            if (cards.length > 0) {
+              const discardEffect = new DiscardCardsEffect(effect, cards);
+              discardEffect.target = opponent.active;
+              store.reduceEffect(state, discardEffect);
+            }
+          },
+        );
       }
     }
 

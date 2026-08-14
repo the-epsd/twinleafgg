@@ -14,14 +14,12 @@ export class Lotad extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Bubble Beam',
-      cost: [W, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Bubble Beam',
+    cost: [W, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '29';

@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefabs/attack-effects';
 
 export class Kangaskhan extends PokemonCard {
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
   public hp: number = 120;
@@ -22,15 +22,15 @@ export class Kangaskhan extends PokemonCard {
       name: 'Pound',
       cost: [C],
       damage: 30,
-      text: ''
+      text: '',
     },
     {
       name: 'Coordinated One-Two Punch',
       cost: [C, C, C],
       damage: 60,
       damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 100 more damage.'
-    }
+      text: 'Flip a coin. If heads, this attack does 100 more damage.',
+    },
   ];
 
   public regulationMark: string = 'E';

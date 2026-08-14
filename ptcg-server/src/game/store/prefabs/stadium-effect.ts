@@ -5,8 +5,16 @@ import { StoreLike } from '../store-like';
 import { TrainerCard } from '../card/trainer-card';
 import { StadiumEffect } from '../effects/play-card-effects';
 
+// =============================================================================
+// Internal probe state
+// =============================================================================
+
 /** True while an outer StadiumEffect probe is in flight. */
 let probingStadiumEffect = false;
+
+// =============================================================================
+// Stadium effect blocked check
+// =============================================================================
 
 /**
  * Checks if stadium effects done to the given Pokémon are being prevented
@@ -20,6 +28,10 @@ export function IS_STADIUM_EFFECT_BLOCKED(
   target: PokemonCardList,
   stadium?: TrainerCard,
 ): boolean {
+  if (state.players.some(p => p.stadiumAndToolHaveNoEffectTurnsRemaining > 0)) {
+    return true;
+  }
+
   // Nested probe (e.g. Silent Lab → IS_STADIUM_EFFECT_BLOCKED → Lunatone →
   // IS_ABILITY_BLOCKED → Silent Lab → IS_STADIUM_EFFECT_BLOCKED again).
   // New Moon takes priority over stadium ability locks: re-dispatch with
@@ -47,3 +59,4 @@ export function IS_STADIUM_EFFECT_BLOCKED(
   }
   return false;
 }
+

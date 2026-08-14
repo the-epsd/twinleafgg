@@ -5,11 +5,9 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import {
-  PlayerType, SlotType, CoinFlipPrompt, StateUtils, CardTarget,
-  GameError, GameMessage, PokemonCardList, ChooseCardsPrompt, Card,
-  Player
-} from '../../../game';
+import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+
+import { PlayerType, SlotType, StateUtils, CardTarget, GameError, GameMessage, PokemonCardList, ChooseCardsPrompt, Card, Player } from '../../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -33,7 +31,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   effect.preventDefault = true;
 
   let coinResult: boolean = false;
-  yield store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), result => {
+  yield COIN_FLIP_PROMPT(store, state, player, result => {
     coinResult = result;
     next();
   });
@@ -75,24 +73,18 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   target.moveCardsTo(cards, opponent.discard);
 
-
   return state;
 }
 
 export class CrushingHammer extends TrainerCard {
-
   public regulationMark = 'G';
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'SVI';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '168';
-
   public name: string = 'Crushing Hammer';
-
   public fullName: string = 'Crushing Hammer SVI';
 
   public text: string =

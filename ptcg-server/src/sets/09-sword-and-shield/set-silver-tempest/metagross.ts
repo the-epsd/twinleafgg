@@ -3,7 +3,8 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { ConfirmPrompt, GameMessage, PokemonCardList, PowerType, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { DrewTopdeckEffect } from '../../../game/store/effects/game-phase-effects';
-import { IS_ABILITY_BLOCKED, NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/attack-effects';
 
 export class Metagross extends PokemonCard {
 

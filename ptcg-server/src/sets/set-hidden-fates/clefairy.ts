@@ -16,20 +16,17 @@ export class Clefairy extends PokemonCard {
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Lead',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, search your deck for a Supporter card, reveal it, and put it into your hand. Then, shuffle your deck.'
-    },
-    {
-      name: 'Pound',
-      cost: [Y],
-      damage: 10,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Lead',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, search your deck for a Supporter card, reveal it, and put it into your hand. Then, shuffle your deck.'
+  }, {
+    name: 'Pound',
+    cost: [Y],
+    damage: 10,
+    text: ''
+  }];
 
   public set: string = 'HIF';
   public setNumber: string = '38';

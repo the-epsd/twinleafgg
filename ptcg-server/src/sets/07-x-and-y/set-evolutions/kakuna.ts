@@ -15,20 +15,17 @@ export class Kakuna extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Stiffen',
-      cost: [C, C],
-      damage: 0,
-      text: 'During your opponent\'s next turn, any damage done to this Pokémon by attacks is reduced by 40 (after applying Weakness and Resistance).'
-    },
-    {
-      name: 'Poison Powder',
-      cost: [G, G],
-      damage: 20,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Poisoned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Stiffen',
+    cost: [C, C],
+    damage: 0,
+    text: 'During your opponent\'s next turn, any damage done to this Pokémon by attacks is reduced by 40 (after applying Weakness and Resistance).'
+  }, {
+    name: 'Poison Powder',
+    cost: [G, G],
+    damage: 20,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Poisoned.'
+  }];
 
   public set: string = 'EVO';
   public setNumber: string = '6';

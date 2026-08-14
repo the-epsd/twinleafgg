@@ -6,11 +6,14 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN,
+} from '../../../game/store/prefabs/prefabs';
 import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class RhyperiorV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = F;
   public hp: number = 230;
@@ -22,14 +25,14 @@ export class RhyperiorV extends PokemonCard {
       name: 'Drill Run',
       cost: [F, C, C],
       damage: 80,
-      text: 'Discard an Energy from your opponent\'s Active Pokémon.'
+      text: "Discard an Energy from your opponent's Active Pokémon.",
     },
     {
       name: 'Heavy Rock Artillery',
       cost: [F, C, C, C],
       damage: 210,
-      text: 'During your next turn, this Pokémon can\'t use Heavy Rock Artillery.'
-    }
+      text: "During your next turn, this Pokémon can't use Heavy Rock Artillery.",
+    },
   ];
 
   public regulationMark: string = 'D';

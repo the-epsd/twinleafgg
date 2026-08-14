@@ -28,6 +28,7 @@ import { MatchResultsSplash } from '../table/end-game/MatchResultsSplash';
 import { SandboxControlPanel } from '../table/sandbox/SandboxControlPanel';
 import { ShellButton } from '../components/ui/ShellButton';
 import { selfPlayFocusPlayerId } from '../table/selfPlayFocusPlayerId';
+import { playAttackSfx, playSfx, useTableSfx } from '../sfx';
 import promptStyles from '../table/prompts/TablePromptLayer.module.css';
 
 const RECONNECT_GAME_ID_KEY = 'ptcg_reconnect_gameId';
@@ -142,6 +143,8 @@ export function TablePage() {
         .then(() => undefined)
         .catch((e: unknown) => {
           onGameSocketError(e);
+          // Re-throw so board optimistic flights can animate the card back to hand.
+          return Promise.reject(e);
         });
     return {
       playCardAction: (gameId, handIndex, target) =>
@@ -233,6 +236,7 @@ export function TablePage() {
         index?: number;
       }) => {
         boardInteraction.triggerBasicAnimation(data);
+        playSfx('pokemonplay');
       };
       const onEvo = (data: {
         playerId: number;
@@ -241,6 +245,7 @@ export function TablePage() {
         index?: number;
       }) => {
         boardInteraction.triggerEvolutionAnimation(data);
+        playSfx('evolution');
       };
       const onAttack = (data: {
         playerId: number;
@@ -248,10 +253,12 @@ export function TablePage() {
         slot: string;
         index?: number;
         cardType?: number;
+        damage?: number;
         opponentId?: number;
       }) => {
         boardInteraction.triggerAttackAnimation(data);
         if (data.cardType !== undefined && data.opponentId !== undefined) {
+          playAttackSfx(data.cardType as CardType, data.damage ?? 0);
           boardInteraction.triggerAttackEffect({
             playerId: data.playerId,
             cardId: data.cardId,
@@ -273,6 +280,13 @@ export function TablePage() {
       };
       const onCoin = (data: { playerId: number; result: boolean }) => {
         boardInteraction.triggerCoinFlipAnimation(data.result, data.playerId);
+        playSfx('coinflip');
+      };
+      const onDeckShuffle = (data: { playerId: number }) => {
+        boardInteraction.triggerDeckShuffleAnimation(data.playerId);
+      };
+      const onAttachEnergy = () => {
+        playSfx('energyattach');
       };
 
       raw.on(`game[${gameId}]:stateChange`, onState);
@@ -281,6 +295,8 @@ export function TablePage() {
       raw.on(`game[${gameId}]:attack`, onAttack);
       raw.on(`game[${gameId}]:ability`, onAbility);
       raw.on(`game[${gameId}]:coinFlip`, onCoin);
+      raw.on(`game[${gameId}]:deckShuffle`, onDeckShuffle);
+      raw.on(`game[${gameId}]:attachEnergy`, onAttachEnergy);
 
       return () => {
         raw.off(`game[${gameId}]:stateChange`, onState);
@@ -289,11 +305,27 @@ export function TablePage() {
         raw.off(`game[${gameId}]:attack`, onAttack);
         raw.off(`game[${gameId}]:ability`, onAbility);
         raw.off(`game[${gameId}]:coinFlip`, onCoin);
+        raw.off(`game[${gameId}]:deckShuffle`, onDeckShuffle);
+        raw.off(`game[${gameId}]:attachEnergy`, onAttachEnergy);
       };
     },
     [boardInteraction],
   );
 
+  // Clear reconnect tracking only when leaving this game route (not on transient disconnect).
+  useEffect(() => {
+    if (isReplayRoute || !Number.isFinite(serverGameId)) {
+      return;
+    }
+    return () => {
+      clearPersistedGameId();
+    };
+  }, [isReplayRoute, serverGameId]);
+
+  // Initial attach only — do not re-run on coreConnected or the table remounts mid-game
+  // and a failed rejoin/join replaces the board with ERROR_UNKNOWN.
+  // Always use game:join here: game:rejoin is for seat restore after a drop and rejects
+  // (or mis-handles) self-play / already-seated clients, which surfaces ERROR_UNKNOWN.
   useEffect(() => {
     if (isReplayRoute) {
       return;
@@ -317,6 +349,7 @@ export function TablePage() {
         if (cancelled) return;
         const local = gameStateToLocal(gs);
         setLocalGame(local);
+        setError(null);
         boardInteraction.updateGameLogs(local.logs);
         const isPlayer = local.state.players.some((p) => p.id === clientIdRef.current);
         if (isPlayer) {
@@ -335,9 +368,81 @@ export function TablePage() {
       cancelled = true;
       unregister?.();
       boardInteraction.endBoardSelection();
-      clearPersistedGameId();
     };
   }, [isReplayRoute, serverGameId, cardsInfo, boardInteraction, registerGameSocket, t]);
+
+  // Soft restore after socket drop: keep the board mounted; never flip to the error screen
+  // if we already have local game state. CoreSession also rejoins seats; this reapplies
+  // a full snapshot when listeners may have missed the server push.
+  const prevCoreConnectedRef = useRef<boolean | null>(null);
+  const localGameRef = useRef(localGame);
+  localGameRef.current = localGame;
+
+  useEffect(() => {
+    if (isReplayRoute || !Number.isFinite(serverGameId) || !cardsInfo) {
+      return;
+    }
+
+    const prevConnected = prevCoreConnectedRef.current;
+    prevCoreConnectedRef.current = coreConnected;
+
+    // Skip first run and any non-reconnect transition.
+    if (prevConnected === null || prevConnected !== false || coreConnected !== true) {
+      return;
+    }
+
+    const existing = localGameRef.current;
+    if (!existing || existing.gameId !== serverGameId) {
+      return;
+    }
+
+    // Self-play aborts on disconnect — don't try to rejoin a dead game into an error path.
+    if (existing.state.gameSettings?.selfPlay === true) {
+      return;
+    }
+
+    let cancelled = false;
+    void (async () => {
+      try {
+        const socket = getSocketManager();
+        let gs: import('ptcg-server').GameState;
+        try {
+          gs = await socket.emit<{ gameId: number }, import('ptcg-server').GameState>('game:rejoin', {
+            gameId: serverGameId,
+          });
+        } catch {
+          gs = await socket.emit<number, import('ptcg-server').GameState>('game:join', serverGameId);
+        }
+        if (cancelled) {
+          return;
+        }
+        const local = gameStateToLocal(gs);
+        setLocalGame((prev) => {
+          if (!prev || prev.gameId !== serverGameId) {
+            return local;
+          }
+          return {
+            ...local,
+            localId: prev.localId,
+            switchSide: prev.switchSide,
+            promptMinimized: prev.promptMinimized,
+          };
+        });
+        setError(null);
+        boardInteraction.updateGameLogs(local.logs);
+        const isPlayer = local.state.players.some((p) => p.id === clientIdRef.current);
+        if (isPlayer) {
+          persistGameId(serverGameId);
+        }
+      } catch {
+        // Keep the existing board; connection snackbar already covers the drop.
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isReplayRoute, serverGameId, cardsInfo, coreConnected, boardInteraction]);
 
   useEffect(() => {
     if (!isReplayRoute) {
@@ -441,6 +546,8 @@ export function TablePage() {
     }
     return clientId;
   }, [localGame, clientId]);
+
+  useTableSfx({ localGame, clientId: tableClientId ?? clientId ?? 0 });
 
   const tableView = useMemo((): TableView | null => {
     if (!localGame || tableClientId == null) {

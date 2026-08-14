@@ -10,7 +10,6 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Mimikyu extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.PSYCHIC;
@@ -21,18 +20,22 @@ export class Mimikyu extends PokemonCard {
 
   public retreat = [CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Safeguard',
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all damage done to this Pokémon by attacks from your opponent\'s Pokémon ex and Pokémon V.'
-  }];
+  public powers = [
+    {
+      name: 'Safeguard',
+      powerType: PowerType.ABILITY,
+      text: "Prevent all damage done to this Pokémon by attacks from your opponent's Pokémon ex and Pokémon V.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Ghost Eye',
-    cost: [CardType.PSYCHIC, CardType.COLORLESS],
-    damage: 0,
-    text: 'Put 7 damage counters on your opponent\'s Active Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'Ghost Eye',
+      cost: [CardType.PSYCHIC, CardType.COLORLESS],
+      damage: 0,
+      text: "Put 7 damage counters on your opponent's Active Pokémon.",
+    },
+  ];
 
   public regulationMark = 'G';
 
@@ -47,7 +50,6 @@ export class Mimikyu extends PokemonCard {
   public fullName: string = 'Mimikyu PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // Prevent damage from Pokemon-ex
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const pokemonCard = effect.target.getPokemonCard();
@@ -70,15 +72,23 @@ export class Mimikyu extends PokemonCard {
         return state;
       }
 
-      if (sourceCard.tags.includes(CardTag.POKEMON_ex) || sourceCard.tags.includes(CardTag.POKEMON_V) || sourceCard.tags.includes(CardTag.POKEMON_VMAX) || sourceCard.tags.includes(CardTag.POKEMON_VSTAR)) {
-
+      if (
+        sourceCard.hasTag(CardTag.POKEMON_ex) ||
+        sourceCard.hasTag(CardTag.POKEMON_V) ||
+        sourceCard.hasTag(CardTag.POKEMON_VMAX) ||
+        sourceCard.hasTag(CardTag.POKEMON_VSTAR)
+      ) {
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
+          const stub = new PowerEffect(
+            player,
+            {
+              name: 'test',
+              powerType: PowerType.ABILITY,
+              text: '',
+            },
+            this,
+          );
           store.reduceEffect(state, stub);
         } catch {
           return state;
@@ -95,5 +105,4 @@ export class Mimikyu extends PokemonCard {
 
     return state;
   }
-
 }

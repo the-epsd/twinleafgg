@@ -5,10 +5,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class VenusaurV extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
 
   public cardType: CardType = CardType.GRASS;
 
@@ -23,14 +22,14 @@ export class VenusaurV extends PokemonCard {
       name: 'Leaf Drain',
       cost: [CardType.GRASS, CardType.COLORLESS],
       damage: 50,
-      text: 'Heal 30 damage from this Pokémon.'
+      text: 'Heal 30 damage from this Pokémon.',
     },
     {
       name: 'Double-Edge',
       cost: [CardType.GRASS, CardType.GRASS, CardType.COLORLESS],
       damage: 190,
-      text: 'This Pokémon also does 30 damage to itself.'
-    }
+      text: 'This Pokémon also does 30 damage to itself.',
+    },
   ];
 
   public set: string = 'SWSH';
@@ -63,5 +62,4 @@ export class VenusaurV extends PokemonCard {
     }
     return state;
   }
-
 }

@@ -15,17 +15,16 @@ export class Staryu extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Double Spin',
-      cost: [C],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 10 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Double Spin',
+    cost: [C],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 10 damage for each heads.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'BRS';
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';

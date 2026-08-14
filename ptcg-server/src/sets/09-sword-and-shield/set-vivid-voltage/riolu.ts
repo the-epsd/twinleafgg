@@ -15,16 +15,15 @@ export class Riolu extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Best Punch',
-      cost: [C],
-      damage: 30,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Best Punch',
+    cost: [C],
+    damage: 30,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'VIV';
   public setNumber: string = '90';
   public cardImage: string = 'assets/cardback.png';

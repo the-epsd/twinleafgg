@@ -7,8 +7,10 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike, State, GameMessage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { CoinFlipPrompt } from '../../../game/store/prompts/coin-flip-prompt';
+
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
+
+import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -17,11 +19,11 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   effect.preventDefault = true;
 
-  yield store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), (result: boolean) => {
+  yield COIN_FLIP_PROMPT(store, state, player, result => {
     coin1Result = result;
     next();
   });
-  yield store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), (result: boolean) => {
+  yield COIN_FLIP_PROMPT(store, state, player, result => {
     coin2Result = result;
     next();
   });
@@ -41,17 +43,19 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.discard.moveCardsTo(cards, player.hand);
   }
 
-
 }
 
 export class OldPc extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
+
   public regulationMark: string = 'D';
+
   public set: string = 'DAA';
   public setNumber: string = '164';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Old PC';
   public fullName: string = 'Old PC DAA';
+
   public text: string = 'Flip 2 coins. If both are heads, put a card from your discard pile into your hand. You may play any number of Item cards during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

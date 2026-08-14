@@ -35,6 +35,9 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
 
   /* Play pokemon card */
   if (effect instanceof PlayPokemonEffect) {
+    if (effect.player.cannotPlayPokemonCards) {
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    }
     if (effect.player.cannotPlayPokemonWithAbilities
       && effect.pokemonCard.powers.some(power => power.powerType === PowerType.ABILITY)) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
@@ -76,6 +79,10 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
       (isEvolved && Array.isArray(pokemonCard.evolvesFromBase) && pokemonCard.evolvesFromBase.length > 0 && pokemonCard.evolvesFromBase.includes(effect.pokemonCard.evolvesFrom));
 
     if (isValidEvolution) {
+      if (player.cannotEvolvePokemonCards || effect.target.cannotEvolveNextTurn) {
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
+
       const playedTurnEffect = new CheckPokemonPlayedTurnEffect(effect.player, effect.target);
       store.reduceEffect(state, playedTurnEffect);
 

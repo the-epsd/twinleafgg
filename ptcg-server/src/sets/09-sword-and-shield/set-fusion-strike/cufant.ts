@@ -6,10 +6,13 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Cufant extends PokemonCard {
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;
   public hp: number = 100;
@@ -22,14 +25,14 @@ export class Cufant extends PokemonCard {
       name: 'Rollout',
       cost: [C],
       damage: 10,
-      text: ''
+      text: '',
     },
     {
       name: 'High Horsepower',
       cost: [M, C, C],
       damage: 80,
-      text: 'This Pokémon also does 20 damage to itself.'
-    }
+      text: 'This Pokémon also does 20 damage to itself.',
+    },
   ];
 
   public regulationMark: string = 'E';

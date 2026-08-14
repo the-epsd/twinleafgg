@@ -17,22 +17,20 @@ export class Bewear extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Hammer Arm',
-      cost: [C, C, C],
-      damage: 90,
-      text: 'Discard the top card of your opponent\'s deck.'
-    },
-    {
-      name: 'Big Throw',
-      cost: [C, C, C, C],
-      damage: 0,
-      text: 'Flip a coin. If heads, discard your opponent\'s Active Pokémon and all attached cards.'
-    }
-  ];
+  public attacks = [{
+    name: 'Hammer Arm',
+    cost: [C, C, C],
+    damage: 90,
+    text: 'Discard the top card of your opponent\'s deck.'
+  }, {
+    name: 'Big Throw',
+    cost: [C, C, C, C],
+    damage: 0,
+    text: 'Flip a coin. If heads, discard your opponent\'s Active Pokémon and all attached cards.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'RCL';
   public setNumber: string = '150';
   public cardImage: string = 'assets/cardback.png';

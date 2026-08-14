@@ -14,20 +14,17 @@ export class Bagon extends PokemonCard {
   public weakness = [{ type: Y }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Risky Kick',
-      cost: [C],
-      damage: 10,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    },
-    {
-      name: 'Dragon Eye',
-      cost: [R, W],
-      damage: 20,
-      text: 'Your opponent’s Active Pokémon is now Asleep.'
-    }
-  ];
+  public attacks = [{
+    name: 'Risky Kick',
+    cost: [C],
+    damage: 10,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }, {
+    name: 'Dragon Eye',
+    cost: [R, W],
+    damage: 20,
+    text: 'Your opponent’s Active Pokémon is now Asleep.'
+  }];
 
   public set: string = 'DRM';
   public setNumber: string = '42';

@@ -5,10 +5,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 
 export class RadiantHawlucha extends PokemonCard {
-
   public stage = Stage.BASIC;
 
-  public tags = [CardTag.RADIANT];
+  protected _tags = [CardTag.RADIANT];
 
   public cardType = CardType.FIGHTING;
 
@@ -18,18 +17,22 @@ export class RadiantHawlucha extends PokemonCard {
 
   public retreat = [CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Big Match',
-    powerType: PowerType.ABILITY,
-    text: 'As long as this Pokémon is on your Bench, your Pokémon\'s attacks do 30 more damage to your opponent\'s Active Pokémon VMAX (before applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: 'Big Match',
+      powerType: PowerType.ABILITY,
+      text: "As long as this Pokémon is on your Bench, your Pokémon's attacks do 30 more damage to your opponent's Active Pokémon VMAX (before applying Weakness and Resistance).",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Spiral Kick',
-    cost: [CardType.FIGHTING, CardType.COLORLESS],
-    damage: 50,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Spiral Kick',
+      cost: [CardType.FIGHTING, CardType.COLORLESS],
+      damage: 50,
+      text: '',
+    },
+  ];
 
   public regulationMark = 'F';
 
@@ -44,14 +47,12 @@ export class RadiantHawlucha extends PokemonCard {
   public fullName: string = 'Radiant Hawlucha ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof DealDamageEffect) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, effect.player);
 
       // Hawlucha must be on the bench (not the attacker)
-      const hawluchaOnBench = player.bench.some(b => b.getPokemonCard() === this);
+      const hawluchaOnBench = player.bench.some((b) => b.getPokemonCard() === this);
       if (!hawluchaOnBench) {
         return state;
       }
@@ -62,7 +63,7 @@ export class RadiantHawlucha extends PokemonCard {
       }
 
       const targetCard = effect.target.getPokemonCard();
-      if (targetCard && targetCard.tags.includes(CardTag.POKEMON_VMAX)) {
+      if (targetCard && targetCard.hasTag(CardTag.POKEMON_VMAX)) {
         effect.damage += 30;
       }
     }

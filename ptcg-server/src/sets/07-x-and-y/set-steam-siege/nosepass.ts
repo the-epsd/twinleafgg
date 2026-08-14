@@ -14,20 +14,17 @@ export class Nosepass extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Thunder Wave',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Rolling Tackle',
-      cost: [F, C, C],
-      damage: 40,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Thunder Wave',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Rolling Tackle',
+    cost: [F, C, C],
+    damage: 40,
+    text: ''
+  }];
 
   public set: string = 'STS';
   public setNumber: string = '54';

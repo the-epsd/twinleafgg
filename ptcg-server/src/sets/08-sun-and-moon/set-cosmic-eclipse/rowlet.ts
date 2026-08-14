@@ -1,11 +1,7 @@
 import { CardType, PokemonCard, Stage, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import {
-  COIN_FLIP_PROMPT,
-  PREVENT_DAMAGE,
-  PREVENT_EFFECTS_OF_ATTACKS,
-  WAS_ATTACK_USED,
-} from '../../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Rowlet extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -19,8 +15,7 @@ export class Rowlet extends PokemonCard {
     cost: [G],
     damage: 0,
     text: 'Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn.'
-  },
-  {
+  }, {
     name: 'Tackle',
     cost: [C, C],
     damage: 30,

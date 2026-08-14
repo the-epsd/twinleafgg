@@ -1,5 +1,22 @@
-import type { Attack, Card, CardList, EnergyCard, Player, PokemonCard, Power, TrainerCard } from 'ptcg-server';
-import { CardTag, CardType, EnergyType, PokemonCardList, PowerType, Stage, SuperType } from 'ptcg-server';
+import type {
+  Attack,
+  Card,
+  CardList,
+  EnergyCard,
+  Player,
+  PokemonCard,
+  Power,
+  TrainerCard,
+} from 'ptcg-server';
+import {
+  CardTag,
+  CardType,
+  EnergyType,
+  PokemonCardList,
+  PowerType,
+  Stage,
+  SuperType,
+} from 'ptcg-server';
 import i18n from '../i18n/i18n';
 import styles from './CardInfoPane.module.css';
 
@@ -196,7 +213,10 @@ function sortPrintings(cards: Card[], reference: Card): Card[] {
   return [...cards].sort((a, b) => comparePrintings(a, b, reference));
 }
 
-export function getGroupedAlternativePrintings(catalog: Card[], card: Card): GroupedAlternativePrintings {
+export function getGroupedAlternativePrintings(
+  catalog: Card[],
+  card: Card,
+): GroupedAlternativePrintings {
   const alternatives = catalog.filter((c) => c.name === card.name && c.fullName !== card.fullName);
   const otherPrints: Card[] = [];
   const sameNameOnly: Card[] = [];
@@ -709,11 +729,7 @@ export function getCardRuleText(card: Card): string {
   return typeof t === 'string' ? t : '';
 }
 
-export function getDisplayTagLabels(
-  card: Card,
-  showTags: boolean,
-  cardList?: CardList,
-): string[] {
+export function getDisplayTagLabels(card: Card, showTags: boolean, cardList?: CardList): string[] {
   if (!showTags || !card) {
     return [];
   }
@@ -721,7 +737,7 @@ export function getDisplayTagLabels(
   const labels = new Set<string>();
 
   // Prefer canonical Card.tags; fall back to deprecated PokemonCard.cardTag.
-  if (card.tags?.length) {
+  if (card.tags.length) {
     for (const tag of card.tags) {
       labels.add(String(tag));
     }
@@ -737,11 +753,7 @@ export function getDisplayTagLabels(
   // Team Plasma Badge grants TEAM_PLASMA to the Pokémon it is attached to.
   // Derive it from the in-play tool list so the pane updates even if runtime tag
   // mutations have not been applied/serialized yet.
-  if (
-    card.superType === SuperType.POKEMON &&
-    cardList &&
-    !isToolCardInList(card, cardList)
-  ) {
+  if (card.superType === SuperType.POKEMON && cardList && !isToolCardInList(card, cardList)) {
     const hasPlasmaBadge = pokemonCardListTools(cardList).some(
       (tool) => tool.name === 'Team Plasma Badge',
     );

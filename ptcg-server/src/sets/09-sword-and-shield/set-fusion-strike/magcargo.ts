@@ -17,22 +17,20 @@ export class Magcargo extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Rock Throw',
-      cost: [C, C],
-      damage: 40,
-      text: ''
-    },
-    {
-      name: 'Body Splash',
-      cost: [R, R, C],
-      damage: 150,
-      text: 'Flip 3 coins. For each tails, discard an Energy from this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Rock Throw',
+    cost: [C, C],
+    damage: 40,
+    text: ''
+  }, {
+    name: 'Body Splash',
+    cost: [R, R, C],
+    damage: 150,
+    text: 'Flip 3 coins. For each tails, discard an Energy from this Pokémon.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'FST';
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';

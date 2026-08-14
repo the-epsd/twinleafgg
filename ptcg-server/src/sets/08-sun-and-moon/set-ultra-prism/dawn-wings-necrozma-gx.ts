@@ -16,16 +16,11 @@ import {
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import {
-  BLOCK_IF_GX_ATTACK_USED,
-  PREVENT_DAMAGE,
-  PREVENT_EFFECTS_OF_ATTACKS,
-  WAS_ATTACK_USED,
-  WAS_POWER_USED,
-} from '../../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class DawnWingsNecrozmaGX extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
+  protected _tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 180;
@@ -33,12 +28,14 @@ export class DawnWingsNecrozmaGX extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Invasion',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), if this Pokémon is on your Bench, you may switch it with your Active Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Invasion',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn (before your attack), if this Pokémon is on your Bench, you may switch it with your Active Pokémon.',
+    },
+  ];
 
   public attacks = [{
     name: 'Dark Flash',
@@ -109,7 +106,10 @@ export class DawnWingsNecrozmaGX extends PokemonCard {
       PREVENT_EFFECTS_OF_ATTACKS(store, state, effect, this);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.INVASION_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.INVASION_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.INVASION_MARKER, this);
     }
 

@@ -6,6 +6,10 @@ import { CheckProvidedEnergyEffect } from '../effects/check-effects';
 import { AttackEffect } from '../effects/game-effects';
 import { PokemonCardList } from '../state/pokemon-card-list';
 
+// =============================================================================
+// Internal helpers
+// =============================================================================
+
 /**
  * These prefabs are for "costs" that effects/attacks must pay.
  */
@@ -57,6 +61,10 @@ function discardTransfersAsEffects(
 
   return state;
 }
+
+// =============================================================================
+// Discard energy costs
+// =============================================================================
 
 /**
  * Discard up to X Energy cards from this Pokémon.
@@ -261,3 +269,4 @@ export function DISCARD_X_ENERGY_FROM_THIS_POKEMON(
 
   return state;
 }
+

@@ -3,10 +3,11 @@ import { CardTag, CardType, Stage, SuperType } from '../../../game/store/card/ca
 import { StoreLike, State, GameError, GameMessage, StateUtils, Card, ChooseCardsPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED, OPPONENT_CANNOT_PLAY_SUPPORTER_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { OPPONENT_CANNOT_PLAY_SUPPORTER_CARDS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class ScreamTailex extends PokemonCard {
-  public tags = [CardTag.POKEMON_ex, CardTag.ANCIENT];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.ANCIENT];
   public regulationMark = 'H';
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
@@ -51,16 +52,20 @@ export class ScreamTailex extends PokemonCard {
         return state;
       }
       let card: Card;
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        opponent.active,
-        { superType: SuperType.ENERGY },
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        card = selected[0];
-        return store.reduceEffect(state, new DiscardCardsEffect(effect, [card]));
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          opponent.active,
+          { superType: SuperType.ENERGY },
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          card = selected[0];
+          return store.reduceEffect(state, new DiscardCardsEffect(effect, [card]));
+        },
+      );
     }
     return state;
   }

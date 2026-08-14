@@ -4,7 +4,8 @@ import { PowerType, StoreLike, State, StateUtils, GameError } from '../../../gam
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { GameMessage } from '../../../game/game-message';
-import { ABILITY_USED, ADD_MARKER, ADD_POISON_TO_PLAYER_ACTIVE, BLOCK_RETREAT, HAS_MARKER, REMOVE_MARKER, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { ABILITY_USED, ADD_MARKER, ADD_POISON_TO_PLAYER_ACTIVE, HAS_MARKER, REMOVE_MARKER, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
 export class Ariados extends PokemonCard {

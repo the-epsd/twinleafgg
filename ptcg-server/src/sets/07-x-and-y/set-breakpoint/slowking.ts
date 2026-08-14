@@ -6,10 +6,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../../game/store/card/card-types';
 import { Card, ChooseCardsPrompt, ChoosePokemonPrompt, EnergyCard, GameError, GameMessage, PowerType, StoreLike, State, StateUtils, PlayerType, SlotType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import {
-  WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN,
-  ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, COIN_FLIP_PROMPT, NEXT_TURN_ATTACK_BONUS
-} from '../../../game/store/prefabs/prefabs';
+import { WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/attack-effects';
 
 export class Slowking extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -26,14 +24,12 @@ export class Slowking extends PokemonCard {
     text: 'Once during your turn (before your attack), you may flip a coin. If heads, move an Energy from your opponent\'s Active Pokémon to 1 of his or her Benched Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Psych Up',
-      cost: [W, C],
-      damage: 40,
-      text: 'During your next turn, this Pokémon\'s Psych Up attack does 40 more damage (before applying Weakness and Resistance).'
-    }
-  ];
+  public attacks = [{
+    name: 'Psych Up',
+    cost: [W, C],
+    damage: 40,
+    text: 'During your next turn, this Pokémon\'s Psych Up attack does 40 more damage (before applying Weakness and Resistance).'
+  }];
 
   public set: string = 'BKP';
   public setNumber: string = '21';

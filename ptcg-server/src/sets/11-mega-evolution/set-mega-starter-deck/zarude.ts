@@ -5,30 +5,27 @@ import { Effect } from '../../../game/store/effects/effect';
 import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Zarude extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = D;
   public hp: number = 130;
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Corkscrew Punch',
-      cost: [D],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Special Whip',
-      cost: [D, C],
-      damage: 50,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. If both are heads, this attack does 150 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Corkscrew Punch',
+    cost: [D],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Special Whip',
+    cost: [D, C],
+    damage: 50,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. If both are heads, this attack does 150 more damage.'
+  }];
 
   public regulationMark = 'J';
+
   public set: string = 'MEZ';
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';

@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class GarchompC extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_SP];
+  protected _tags = [CardTag.POKEMON_SP];
   public cardType: CardType = C;
   public hp: number = 80;
   public weakness = [{ type: C }];
@@ -18,14 +18,14 @@ export class GarchompC extends PokemonCard {
       name: 'Claw Swipe',
       cost: [C, C],
       damage: 30,
-      text: ''
+      text: '',
     },
     {
       name: 'Earthquake',
       cost: [C, C, C],
       damage: 50,
-      text: 'This attack does 10 damage to each of your Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "This attack does 10 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public set: string = 'SV';
@@ -38,7 +38,7 @@ export class GarchompC extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (card) => {
         if (card !== player.active) {
           const damage = new PutDamageEffect(effect, 10);
           damage.target = card;

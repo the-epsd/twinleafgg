@@ -16,8 +16,7 @@ export class Horsea extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-  },
-  {
+  }, {
     name: 'Wave Splash',
     cost: [C, C],
     damage: 20,

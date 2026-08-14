@@ -6,10 +6,13 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, DISCARD_TOP_X_CARDS_FROM_YOUR_DECK } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  DISCARD_TOP_X_CARDS_FROM_YOUR_DECK,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Guzzlord extends PokemonCard {
-  public tags = [CardTag.ULTRA_BEAST];
+  protected _tags = [CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = D;
   public hp: number = 160;
@@ -19,11 +22,11 @@ export class Guzzlord extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Lord\'s Valley',
+      name: "Lord's Valley",
       cost: [D, D, D, D],
       damage: 160,
-      text: 'If you have exactly 2, 4, or 6 Prize cards remaining, discard the top 10 cards of your deck.'
-    }
+      text: 'If you have exactly 2, 4, or 6 Prize cards remaining, discard the top 10 cards of your deck.',
+    },
   ];
 
   public set: string = 'FLI';

@@ -11,7 +11,7 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs
 
 export class DuraludonVMAX extends PokemonCard {
   public stage: Stage = Stage.VMAX;
-  public tags = [CardTag.POKEMON_VMAX, CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.POKEMON_VMAX, CardTag.SINGLE_STRIKE];
   public evolvesFrom = 'Duraludon V';
   public cardType: CardType = N;
   public hp: number = 330;

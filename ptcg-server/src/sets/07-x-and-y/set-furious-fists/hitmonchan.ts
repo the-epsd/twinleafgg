@@ -15,21 +15,18 @@ export class Hitmonchan extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Bullet Punch',
-      cost: [C, C],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
-    },
-    {
-      name: 'Mach Cross',
-      cost: [F, C, C],
-      damage: 60,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Bullet Punch',
+    cost: [C, C],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
+  }, {
+    name: 'Mach Cross',
+    cost: [F, C, C],
+    damage: 60,
+    text: ''
+  }];
 
   public set: string = 'FFI';
   public setNumber: string = '48';

@@ -24,16 +24,15 @@ export class Appletun extends PokemonCard {
     text: 'Once during your turn, you may flip a coin. If heads, switch 1 of your opponent\'s Benched Basic Pokémon with their Active Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Solar Beam',
-      cost: [G, C],
-      damage: 70,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Solar Beam',
+    cost: [G, C],
+    damage: 70,
+    text: ''
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'RCL';
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';

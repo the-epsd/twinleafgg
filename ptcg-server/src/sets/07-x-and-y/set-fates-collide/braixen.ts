@@ -17,20 +17,17 @@ export class Braixen extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Destructive Flame',
-      cost: [R],
-      damage: 20,
-      text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
-    },
-    {
-      name: 'Crackling Ribbon',
-      cost: [C, C],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Destructive Flame',
+    cost: [R],
+    damage: 20,
+    text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
+  }, {
+    name: 'Crackling Ribbon',
+    cost: [C, C],
+    damage: 30,
+    text: ''
+  }];
 
   public set: string = 'FCO';
   public setNumber: string = '12';

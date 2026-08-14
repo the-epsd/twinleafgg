@@ -17,22 +17,20 @@ export class Kleavor2 extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Timber Cleave',
-      cost: [C, C],
-      damage: 0,
-      text: 'Flip 2 coins. If both of them are heads, your opponent\'s Active Pokémon is Knocked Out.'
-    },
-    {
-      name: 'Berserker Tackle',
-      cost: [F, F],
-      damage: 120,
-      text: 'This Pokémon also does 30 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Timber Cleave',
+    cost: [C, C],
+    damage: 0,
+    text: 'Flip 2 coins. If both of them are heads, your opponent\'s Active Pokémon is Knocked Out.'
+  }, {
+    name: 'Berserker Tackle',
+    cost: [F, F],
+    damage: 120,
+    text: 'This Pokémon also does 30 damage to itself.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'ASR';
   public setNumber: string = '86';
   public cardImage: string = 'assets/cardback.png';

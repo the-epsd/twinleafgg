@@ -11,6 +11,7 @@ import { MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs'
 
 export class TimeSpaceDistortion extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
+
   public set: string = 'MT';
   public name: string = 'Time-Space Distortion';
   public fullName: string = 'Time-Space Distortion MT';

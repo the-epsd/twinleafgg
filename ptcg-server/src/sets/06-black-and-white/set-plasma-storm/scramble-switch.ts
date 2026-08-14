@@ -8,10 +8,14 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { PlayerType, SlotType, GameError, PokemonCardList, ChooseCardsPrompt } from '../../../game';
 import { GameMessage } from '../../../game/game-message';
 
-
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
-  const hasBench = player.bench.some(b => b.cards.length > 0);
+  const hasBench = player.bench.some((b) => b.cards.length > 0);
 
   if (hasBench === false) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -22,36 +26,44 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   effect.preventDefault = true;
 
   let targets: PokemonCardList[] = [];
-  yield store.prompt(state, new ChoosePokemonPrompt(
-    player.id,
-    GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.BENCH],
-    { allowCancel: true }
-  ), results => {
-    targets = results || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChoosePokemonPrompt(
+      player.id,
+      GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.BENCH],
+      { allowCancel: true },
+    ),
+    (results) => {
+      targets = results || [];
+      next();
+    },
+  );
 
   if (targets.length === 0) {
     return state;
   }
 
   const target = targets[0];
-  const hasEnergies = player.active.cards.some(c => c.superType === SuperType.ENERGY);
+  const hasEnergies = player.active.cards.some((c) => c.superType === SuperType.ENERGY);
 
   if (hasEnergies) {
-    yield store.prompt(state, new ChooseCardsPrompt(
-      player,
-      GameMessage.ATTACH_ENERGY_TO_BENCH,
-      player.active,
-      { superType: SuperType.ENERGY },
-      { allowCancel: false, min: 0 }
-    ), selected => {
-      selected = selected || [];
-      player.active.moveCardsTo(selected, target);
-      next();
-    });
+    yield store.prompt(
+      state,
+      new ChooseCardsPrompt(
+        player,
+        GameMessage.ATTACH_ENERGY_TO_BENCH,
+        player.active,
+        { superType: SuperType.ENERGY },
+        { allowCancel: false, min: 0 },
+      ),
+      (selected) => {
+        selected = selected || [];
+        player.active.moveCardsTo(selected, target);
+        next();
+      },
+    );
   }
 
   // Discard trainer only when user selected a Pokemon
@@ -61,8 +73,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 }
 
 export class ScrambleSwitch extends TrainerCard {
-
-  public tags = [CardTag.ACE_SPEC];
+  protected _tags = [CardTag.ACE_SPEC];
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
@@ -88,5 +99,4 @@ export class ScrambleSwitch extends TrainerCard {
     }
     return state;
   }
-
 }

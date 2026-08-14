@@ -6,7 +6,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, BLOCK_RETREAT, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 export class Krokorok extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Sandile';
@@ -16,21 +17,18 @@ export class Krokorok extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Dark Clamp',
-      cost: [D],
-      damage: 10,
-      text: 'The Defending Pok\u00e9mon can\'t retreat during your opponent\'s next turn.'
-    },
-    {
-      name: 'Double Swing',
-      cost: [D, C, C],
-      damage: 60,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 60 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Dark Clamp',
+    cost: [D],
+    damage: 10,
+    text: 'The Defending Pok\u00e9mon can\'t retreat during your opponent\'s next turn.'
+  }, {
+    name: 'Double Swing',
+    cost: [D, C, C],
+    damage: 60,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 60 damage times the number of heads.'
+  }];
 
   public set: string = 'FLF';
   public setNumber: string = '57';

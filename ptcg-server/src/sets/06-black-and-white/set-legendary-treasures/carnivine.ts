@@ -17,15 +17,13 @@ export class Carnivine extends PokemonCard {
   public resistance = [{ type: W, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Ambush Bite',
-      cost: [G, C],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 more damage and discard an Energy attached to the Defending Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Ambush Bite',
+    cost: [G, C],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 20 more damage and discard an Energy attached to the Defending Pokémon.'
+  }];
 
   public set: string = 'LTR';
   public setNumber: string = '5';

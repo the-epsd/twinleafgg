@@ -1,12 +1,7 @@
 import { CardType, PokemonCard, Stage, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import {
-  WAS_ATTACK_USED,
-  DISCARD_ATTACKER_ENERGY_IF_THIS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN,
-  AFTER_ATTACK,
-  COIN_FLIP_PROMPT,
-  ADD_SLEEP_TO_PLAYER_ACTIVE,
-} from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, AFTER_ATTACK, COIN_FLIP_PROMPT, ADD_SLEEP_TO_PLAYER_ACTIVE } from '../../../game/store/prefabs/prefabs';
+import { DISCARD_ATTACKER_ENERGY_IF_THIS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Gastly extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -21,8 +16,7 @@ export class Gastly extends PokemonCard {
     cost: [P],
     damage: 0,
     text: 'During your opponent\'s next turn, if this Pokémon is Knocked Out by damage from an attack, discard an Energy attached to the Attacking Pokémon.'
-  },
-  {
+  }, {
     name: 'Nightmare',
     cost: [P, C],
     damage: 20,

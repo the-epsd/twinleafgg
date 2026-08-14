@@ -1,8 +1,9 @@
-import { BoardEffect, Card, CardList, CardType, ChooseCardsPrompt, CoinFlipPrompt, GameError, GameMessage, PlayerType, PokemonCard, PowerType, ShowCardsPrompt, Stage, State, StateUtils, StoreLike, SuperType, TrainerCard, TrainerType } from '../../../game';
+import { BoardEffect, Card, CardList, CardType, ChooseCardsPrompt, GameError, GameMessage, PlayerType, PokemonCard, PowerType, ShowCardsPrompt, Stage, State, StateUtils, StoreLike, SuperType, TrainerCard, TrainerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { TrainerToDeckEffect } from '../../../game/store/effects/play-card-effects';
-import { PREVENT_DAMAGE, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Florges extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -50,9 +51,7 @@ export class Florges extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
+      COIN_FLIP_PROMPT(store, state, player, results => {
         player.marker.addMarker(this.WONDROUS_GIFT_MARKER, this);
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {

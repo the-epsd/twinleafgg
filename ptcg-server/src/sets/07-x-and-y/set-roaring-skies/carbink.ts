@@ -24,14 +24,12 @@ export class Carbink extends PokemonCard {
     text: 'As long as this Pok\u00e9mon is on your Bench, prevent all damage done to this Pok\u00e9mon by attacks (both yours and your opponent\'s).'
   }];
 
-  public attacks = [
-    {
-      name: 'Spin Tackle',
-      cost: [Y, C, C],
-      damage: 60,
-      text: 'Flip a coin. If tails, this Pok\u00e9mon does 20 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Spin Tackle',
+    cost: [Y, C, C],
+    damage: 60,
+    text: 'Flip a coin. If tails, this Pok\u00e9mon does 20 damage to itself.'
+  }];
 
   public set: string = 'ROS';
   public setNumber: string = '47';

@@ -11,21 +11,18 @@ export class Nidoqueen extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Poison Horn',
-      cost: [P, C],
-      damage: 50,
-      text: 'The Defending Pokémon is now Poisoned.'
-    },
-    {
-      name: 'Double Stomp',
-      cost: [P, C, C],
-      damage: 60,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 30 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Poison Horn',
+    cost: [P, C],
+    damage: 50,
+    text: 'The Defending Pokémon is now Poisoned.'
+  }, {
+    name: 'Double Stomp',
+    cost: [P, C, C],
+    damage: 60,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 30 more damage for each heads.'
+  }];
 
   public set: string = 'PLF';
   public setNumber: string = '42';

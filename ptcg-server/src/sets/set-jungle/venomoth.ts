@@ -1,23 +1,18 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { CardTarget, ChoosePokemonPrompt, CoinFlipPrompt, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { CardTarget, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Venomoth extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Venonat';
-
-  public cardType: CardType = CardType.GRASS;
-
+  public cardType: CardType = G;
   public hp: number = 70;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
+  public weakness = [{ type: R }];
+  public resistance = [{ type: F, value: -30 }];
 
   public powers = [{
     name: 'Shift',
@@ -34,13 +29,9 @@ export class Venomoth extends PokemonCard {
   }];
 
   public set: string = 'JU';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '13';
-
   public name: string = 'Venomoth';
-
   public fullName: string = 'Venomoth JU';
 
   public readonly SHIFT_MARKER = 'SHIFT_MARKER';
@@ -99,9 +90,7 @@ export class Venomoth extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      state = store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
+      state = COIN_FLIP_PROMPT(store, state, player, results => {
         if (results) {
           opponent.active.addSpecialCondition(SpecialCondition.CONFUSED);
           opponent.active.addSpecialCondition(SpecialCondition.POISONED);

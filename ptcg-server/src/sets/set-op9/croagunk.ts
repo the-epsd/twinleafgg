@@ -5,13 +5,13 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
+
 import { GameMessage } from '../../game/game-message';
 import { StateUtils } from '../../game/store/state-utils';
 import { PlayerType } from '../../game/store/actions/play-card-action';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { AfterDamageEffect, HealTargetEffect } from '../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 function* useKnockOff(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -25,9 +25,7 @@ function* useKnockOff(next: Function, store: StoreLike, state: State,
   }
 
   let flipResult = false;
-  yield store.prompt(state, new CoinFlipPrompt(
-    player.id, GameMessage.COIN_FLIP
-  ), result => {
+  yield COIN_FLIP_PROMPT(store, state, player, result => {
     flipResult = result;
     next();
   });
@@ -53,38 +51,31 @@ function* useKnockOff(next: Function, store: StoreLike, state: State,
 }
 
 export class Croagunk extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.PSYCHIC;
-
+  public cardType: CardType = P;
   public hp: number = 60;
-
   public weakness = [{
-    type: CardType.PSYCHIC,
+    type: P,
     value: 10
   }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C];
 
   public attacks = [{
     name: 'Knock Off',
-    cost: [CardType.COLORLESS],
+    cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, choose 1 card from your opponent\'s hand ' +
-      'without looking and discard it.'
+    'without looking and discard it.'
   }, {
     name: 'Nimble',
-    cost: [CardType.PSYCHIC, CardType.PSYCHIC],
+    cost: [P, P],
     damage: 30,
     text: 'If you have Turtwig in play, remove from Croagunk the number of ' +
-      'damage counters equal to the damage you did to the Defending Pokemon.'
+    'damage counters equal to the damage you did to the Defending Pokemon.'
   }];
 
   public set: string = 'OP9';
-
   public name: string = 'Croagunk';
-
   public fullName: string = 'Croagunk OP9';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

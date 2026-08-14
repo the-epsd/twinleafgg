@@ -1,16 +1,19 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, PlayerType, StateUtils } from '../../../game';
-import { AfterDamageEffect, ApplyWeaknessEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import {
+  AfterDamageEffect,
+  ApplyWeaknessEffect,
+  PutDamageEffect,
+} from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class DragoniteV extends PokemonCard {
-
   public regulationMark = 'E';
 
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
 
   public stage: Stage = Stage.BASIC;
 
@@ -22,18 +25,21 @@ export class DragoniteV extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
-  public attacks = [{
-    name: 'Shred',
-    cost: [CardType.COLORLESS, CardType.COLORLESS],
-    damage: 50,
-    shredAttack: true,
-    text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
-  }, {
-    name: 'Dragon Gale',
-    cost: [CardType.WATER, CardType.WATER, CardType.LIGHTNING],
-    damage: 250,
-    text: 'This attack also does 20 damage to each of your Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-  }];
+  public attacks = [
+    {
+      name: 'Shred',
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
+      damage: 50,
+      shredAttack: true,
+      text: "This attack's damage isn't affected by any effects on your opponent's Active Pokémon.",
+    },
+    {
+      name: 'Dragon Gale',
+      cost: [CardType.WATER, CardType.WATER, CardType.LIGHTNING],
+      damage: 250,
+      text: "This attack also does 20 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
+  ];
 
   public set: string = 'EVS';
 
@@ -46,7 +52,6 @@ export class DragoniteV extends PokemonCard {
   public fullName: string = 'Dragonite V EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -80,5 +85,4 @@ export class DragoniteV extends PokemonCard {
 
     return state;
   }
-
 }

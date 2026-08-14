@@ -16,21 +16,18 @@ export class Masquerain extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Surprising Pattern',
-      cost: [G],
-      damage: 0,
-      text: 'Discard all Special Energy from each of your opponent\'s Pokémon.'
-    },
-    {
-      name: 'Hurricane Wing',
-      cost: [C, C, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 40 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Surprising Pattern',
+    cost: [G],
+    damage: 0,
+    text: 'Discard all Special Energy from each of your opponent\'s Pokémon.'
+  }, {
+    name: 'Hurricane Wing',
+    cost: [C, C, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 40 damage for each heads.'
+  }];
 
   public set: string = 'CES';
   public setNumber: string = '16';

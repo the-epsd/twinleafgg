@@ -4,7 +4,7 @@ import { PokemonCard } from '../card/pokemon-card';
 import { Power, Attack } from '../card/pokemon-types';
 import { CardList } from './card-list';
 import { Marker } from './card-marker';
-import { PendingEnergyAttachDamageCounters } from './pending-energy-attach-effects';
+import { PendingEnergyAttachDamageCounters, PendingEnergyAttachFromHandConsequence } from './pending-energy-attach-effects';
 import { State } from './state';
 import { StateUtils } from '../state-utils';
 
@@ -88,6 +88,14 @@ export class PokemonCardList extends CardList {
   public preventEffectsOfAttacksNextTurn: PreventDamageFilter | null = null;
   public preventEffectsOfAttacksNextTurnPending: PreventDamageFilter | null = null;
   public cannotBeHealedNextTurn: boolean = false;
+  /** True if this Pokémon had damage counters removed by a HealEffect this turn. */
+  public healedThisTurn: boolean = false;
+  /** During the opponent's next turn, this Pokémon has no Weakness. */
+  public noWeaknessNextTurn: boolean = false;
+  public noWeaknessNextTurnPending: boolean = false;
+  /** During the owner's next turn, this Pokémon has no Retreat Cost. */
+  public zeroRetreatCostNextTurn: boolean = false;
+  public zeroRetreatCostNextTurnPending: boolean = false;
   public defendingPokemonExtraDamageNextTurn: number = 0;
   public defendingPokemonExtraDamageAttackerId: number | undefined = undefined;
   public defendingPokemonExtraDamagePending: boolean = false;
@@ -173,10 +181,32 @@ export class PokemonCardList extends CardList {
   public attackDamageReductionAfterWeaknessNextTurn: number = 0;
   public cannotRetreatNextTurn: boolean = false;
   public cannotRetreatNextTurnPending: boolean = false;
+  /**
+   * During the owner's next turn, Energy can't be attached from their hand to this Pokémon.
+   * Set on the Defending Pokémon by Sand Tomb / Spit Glue / etc.
+   */
+  public cannotAttachEnergyFromHandNextTurn: boolean = false;
   public pendingEnergyAttachDamageCounters: PendingEnergyAttachDamageCounters | null = null;
+  /** Asleep / end-turn consequences when Energy is attached from hand (Boo-Hoo / Lazy Howl). */
+  public pendingEnergyAttachFromHandConsequence: PendingEnergyAttachFromHandConsequence | null = null;
   public pendingEnergyReturnToHand: Card[] = [];
   public blockedAttackNameNextTurn: string | undefined = undefined;
   public blockedAttackNameUntilLeavesActive: string | undefined = undefined;
+  /**
+   * Encore: during the owner's next turn, this Pokémon can only use this attack.
+   */
+  public onlyAllowedAttackNameNextTurn: string | undefined = undefined;
+  /**
+   * During the owner's next turn, Pokémon can't be played from hand to evolve this Pokémon.
+   */
+  public cannotEvolveNextTurn: boolean = false;
+  /**
+   * The Defending Pokémon has no Abilities until the end of the attacker's next turn
+   * (Gastro Acid). Cleared with a two-phase arm on the attacker's EndTurns.
+   */
+  public noAbilities: boolean = false;
+  public noAbilitiesAttackerId: number | undefined = undefined;
+  public noAbilitiesClearArmed: boolean = false;
   public _preservedConditionsDuringEvolution?: SpecialCondition[];
 
   public static readonly CLEAR_KNOCKOUT_MARKER = 'CLEAR_KNOCKOUT_MARKER';
@@ -283,10 +313,17 @@ export class PokemonCardList extends CardList {
     this.attackDamageReductionAfterWeaknessNextTurn = 0;
     this.cannotRetreatNextTurn = false;
     this.cannotRetreatNextTurnPending = false;
+    this.cannotAttachEnergyFromHandNextTurn = false;
     this.pendingEnergyAttachDamageCounters = null;
+    this.pendingEnergyAttachFromHandConsequence = null;
     this.pendingEnergyReturnToHand = [];
     this.blockedAttackNameNextTurn = undefined;
     this.blockedAttackNameUntilLeavesActive = undefined;
+    this.onlyAllowedAttackNameNextTurn = undefined;
+    this.cannotEvolveNextTurn = false;
+    this.noAbilities = false;
+    this.noAbilitiesAttackerId = undefined;
+    this.noAbilitiesClearArmed = false;
     this.damageReductionNextTurn = 0;
     this.damageReductionNextTurnFilter = null;
     this.damageReductionBeforeWeaknessNextTurn = 0;
@@ -295,6 +332,11 @@ export class PokemonCardList extends CardList {
     this.preventEffectsOfAttacksNextTurn = null;
     this.preventEffectsOfAttacksNextTurnPending = null;
     this.cannotBeHealedNextTurn = false;
+    this.healedThisTurn = false;
+    this.noWeaknessNextTurn = false;
+    this.noWeaknessNextTurnPending = false;
+    this.zeroRetreatCostNextTurn = false;
+    this.zeroRetreatCostNextTurnPending = false;
     this.defendingPokemonExtraDamageNextTurn = 0;
     this.defendingPokemonExtraDamageAttackerId = undefined;
     this.defendingPokemonExtraDamagePending = false;
@@ -374,6 +416,11 @@ export class PokemonCardList extends CardList {
     this.preventEffectsOfAttacksNextTurn = null;
     this.preventEffectsOfAttacksNextTurnPending = null;
     this.cannotBeHealedNextTurn = false;
+    this.healedThisTurn = false;
+    this.noWeaknessNextTurn = false;
+    this.noWeaknessNextTurnPending = false;
+    this.zeroRetreatCostNextTurn = false;
+    this.zeroRetreatCostNextTurnPending = false;
     this.defendingPokemonExtraDamageNextTurn = 0;
     this.defendingPokemonExtraDamageAttackerId = undefined;
     this.defendingPokemonExtraDamagePending = false;
@@ -409,10 +456,17 @@ export class PokemonCardList extends CardList {
     this.attackDamageReductionNextTurn = 0;
     this.cannotRetreatNextTurn = false;
     this.cannotRetreatNextTurnPending = false;
+    this.cannotAttachEnergyFromHandNextTurn = false;
     this.pendingEnergyAttachDamageCounters = null;
+    this.pendingEnergyAttachFromHandConsequence = null;
     this.pendingEnergyReturnToHand = [];
     this.blockedAttackNameNextTurn = undefined;
     this.blockedAttackNameUntilLeavesActive = undefined;
+    this.onlyAllowedAttackNameNextTurn = undefined;
+    this.cannotEvolveNextTurn = false;
+    this.noAbilities = false;
+    this.noAbilitiesAttackerId = undefined;
+    this.noAbilitiesClearArmed = false;
     // if (this.cards.length === 0) {
     //   this.damage = 0;
     // }
@@ -503,6 +557,10 @@ export class PokemonCardList extends CardList {
 
   exPokemon(): boolean {
     return this.cards.some((c) => c.tags.includes(CardTag.POKEMON_ex));
+  }
+
+  EXPokemon(): boolean {
+    return this.cards.some((c) => c.tags.includes(CardTag.POKEMON_EX));
   }
 
   isTera(): boolean {

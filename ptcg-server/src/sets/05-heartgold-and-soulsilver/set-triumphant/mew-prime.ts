@@ -1,19 +1,26 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
 import {
-  StoreLike, State, StateUtils, GameMessage,
-  ChooseAttackPrompt, PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  ChooseAttackPrompt,
+  PowerType,
   EnergyMap,
   GameError,
   Player,
   Card,
   ChooseCardsPrompt,
   GameLog,
-  ShuffleDeckPrompt
+  ShuffleDeckPrompt,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { UseAttackEffect } from '../../../game/store/effects/game-effects';
-import { CheckProvidedEnergyEffect, CheckAttackCostEffect } from '../../../game/store/effects/check-effects';
+import {
+  CheckProvidedEnergyEffect,
+  CheckAttackCostEffect,
+} from '../../../game/store/effects/check-effects';
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 // function* useApexDragon(next: Function, store: StoreLike, state: State,
@@ -82,8 +89,7 @@ import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/pre
 // }
 
 export class Mew extends PokemonCard {
-
-  public tags = [CardTag.PRIME];
+  protected _tags = [CardTag.PRIME];
 
   public stage: Stage = Stage.BASIC;
 
@@ -95,20 +101,22 @@ export class Mew extends PokemonCard {
 
   public retreat = [];
 
-  public powers = [{
-    name: 'Lost Link',
-    powerType: PowerType.POKEBODY,
-    useWhenInPlay: true,
-    text: 'Mew can use the attacks of all of the Pokémon in the Lost Zone (both yours and your opponent\'s). (You still need the necessary Energy to use each attack.) '
-  }];
+  public powers = [
+    {
+      name: 'Lost Link',
+      powerType: PowerType.POKEBODY,
+      useWhenInPlay: true,
+      text: "Mew can use the attacks of all of the Pokémon in the Lost Zone (both yours and your opponent's). (You still need the necessary Energy to use each attack.) ",
+    },
+  ];
 
   public attacks = [
     {
       name: 'See Off',
       cost: [CardType.PSYCHIC],
       damage: 0,
-      text: 'Search your deck for 1 Pokémon and put it in the Lost Zone. Shuffle your deck afterward.'
-    }
+      text: 'Search your deck for 1 Pokémon and put it in the Lost Zone. Shuffle your deck afterward.',
+    },
   ];
 
   public set: string = 'TM';
@@ -122,30 +130,36 @@ export class Mew extends PokemonCard {
   public fullName: string = 'Mew TM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       let cards: Card[] = [];
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        { superType: SuperType.POKEMON },
-        { min: 0, max: 1, allowCancel: true }
-      ), selected => {
-        cards = selected || [];
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.deck,
+          { superType: SuperType.POKEMON },
+          { min: 0, max: 1, allowCancel: true },
+        ),
+        (selected) => {
+          cards = selected || [];
 
-        cards.forEach((card, index) => {
-          player.deck.moveCardTo(card, player.lostzone);
+          cards.forEach((card, index) => {
+            player.deck.moveCardTo(card, player.lostzone);
 
-          store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_LOST_ZONE, { name: player.name, card: card.name });
-        });
-        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-        });
-      });
+            store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_LOST_ZONE, {
+              name: player.name,
+              card: card.name,
+            });
+          });
+          return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+            player.deck.applyOrder(order);
+          });
+        },
+      );
     }
 
     if (WAS_POWER_USED(effect, 0, this)) {
@@ -164,32 +178,35 @@ export class Mew extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      return store.prompt(state, new ChooseAttackPrompt(
-        player.id,
-        GameMessage.CHOOSE_ATTACK_TO_COPY,
-        pokemonCards,
-        { allowCancel: false, blocked }
-      ), attack => {
-        if (attack !== null) {
-          const useAttackEffect = new UseAttackEffect(player, attack);
-          store.reduceEffect(state, useAttackEffect);
-        }
-      });
+      return store.prompt(
+        state,
+        new ChooseAttackPrompt(player.id, GameMessage.CHOOSE_ATTACK_TO_COPY, pokemonCards, {
+          allowCancel: false,
+          blocked,
+        }),
+        (attack) => {
+          if (attack !== null) {
+            const useAttackEffect = new UseAttackEffect(player, attack);
+            store.reduceEffect(state, useAttackEffect);
+          }
+        },
+      );
     }
     return state;
   }
 
   private buildAttackList(
-    state: State, store: StoreLike, player: Player
-  ): { pokemonCards: PokemonCard[], blocked: { index: number, attack: string }[] } {
-
+    state: State,
+    store: StoreLike,
+    player: Player,
+  ): { pokemonCards: PokemonCard[]; blocked: { index: number; attack: string }[] } {
     const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
     store.reduceEffect(state, checkProvidedEnergyEffect);
     const energyMap = checkProvidedEnergyEffect.energyMap;
 
     const pokemonCards: PokemonCard[] = [];
-    const blocked: { index: number, attack: string }[] = [];
-    player.lostzone.cards.forEach(card => {
+    const blocked: { index: number; attack: string }[] = [];
+    player.lostzone.cards.forEach((card) => {
       if (card instanceof PokemonCard) {
         this.checkAttack(state, store, player, card, energyMap, pokemonCards, blocked);
       }
@@ -198,20 +215,24 @@ export class Mew extends PokemonCard {
     return { pokemonCards, blocked };
   }
 
-  private checkAttack(state: State, store: StoreLike, player: Player,
-    card: PokemonCard, energyMap: EnergyMap[], pokemonCards: PokemonCard[],
-    blocked: { index: number, attack: string }[]
+  private checkAttack(
+    state: State,
+    store: StoreLike,
+    player: Player,
+    card: PokemonCard,
+    energyMap: EnergyMap[],
+    pokemonCards: PokemonCard[],
+    blocked: { index: number; attack: string }[],
   ) {
     {
-
-      const attacks = card.attacks.filter(attack => {
+      const attacks = card.attacks.filter((attack) => {
         const checkAttackCost = new CheckAttackCostEffect(player, attack);
         state = store.reduceEffect(state, checkAttackCost);
         return StateUtils.checkEnoughEnergy(energyMap, checkAttackCost.cost as CardType[]);
       });
       const index = pokemonCards.length;
       pokemonCards.push(card);
-      card.attacks.forEach(attack => {
+      card.attacks.forEach((attack) => {
         if (!attacks.includes(attack)) {
           blocked.push({ index, attack: attack.name });
         }

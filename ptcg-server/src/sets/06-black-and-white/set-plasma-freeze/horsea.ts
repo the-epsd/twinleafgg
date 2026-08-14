@@ -11,15 +11,13 @@ export class Horsea extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Fin Smack',
-      cost: [W],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fin Smack',
+    cost: [W],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
+  }];
 
   public set: string = 'PLF';
   public setNumber: string = '18';

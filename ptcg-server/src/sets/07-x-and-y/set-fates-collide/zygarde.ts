@@ -3,11 +3,8 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../../game';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import {
-  DEFENDING_POKEMON_CANNOT_ATTACK,
-  GUST_OPPONENT_BENCHED_POKEMON,
-  WAS_ATTACK_USED,
-} from '../../../game/store/prefabs/prefabs';
+import { GUST_OPPONENT_BENCHED_POKEMON, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Zygarde extends PokemonCard {
   public stage: Stage = Stage.BASIC;

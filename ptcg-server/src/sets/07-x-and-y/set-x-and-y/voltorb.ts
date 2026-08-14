@@ -1,14 +1,16 @@
-import { PokemonCard, Stage, CardType, Resistance, PowerType, StoreLike, State, CoinFlipPrompt, GameMessage, StateUtils, GamePhase } from '../../../game';
+import { PokemonCard, Stage, CardType, Resistance, PowerType, StoreLike, State, StateUtils, GamePhase } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 
+import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+
 export class Voltorb extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType = L;
   public hp: number = 50;
-  public weakness = [{ type: CardType.FIGHTING }];
+  public weakness = [{ type: F }];
   public resistance: Resistance[] = [];
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public powers = [{
     name: 'Destiny Burst',
@@ -18,7 +20,7 @@ export class Voltorb extends PokemonCard {
 
   public attacks = [{
     name: 'Rollout',
-    cost: [CardType.COLORLESS],
+    cost: [C],
     damage: 10,
     text: ''
   }];
@@ -40,9 +42,7 @@ export class Voltorb extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
 
           opponent.active.damage += 50;

@@ -17,7 +17,8 @@ export class FairyCharmGrass extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fairy Charm Grass';
   public fullName: string = 'Fairy Charm Grass LOT';
-  public text: string = 'Prevent all damage done to the Fairy Pok\u00e9mon this card is attached to by attacks from your opponent\'s Grass Pok\u00e9mon-GX and Grass Pok\u00e9mon-EX.';
+  public text: string =
+    "Prevent all damage done to the Fairy Pok\u00e9mon this card is attached to by attacks from your opponent's Grass Pok\u00e9mon-GX and Grass Pok\u00e9mon-EX.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-lost-origin/panic-mask.ts (tool-based damage prevention)
@@ -50,8 +51,9 @@ export class FairyCharmGrass extends TrainerCard {
         const checkAttackerType = new CheckPokemonTypeEffect(player.active);
         store.reduceEffect(state, checkAttackerType);
         const isGrass = checkAttackerType.cardTypes.includes(CardType.GRASS);
-        const isGxOrEx = attackingPokemon.tags.includes(CardTag.POKEMON_GX) ||
-          attackingPokemon.tags.includes(CardTag.POKEMON_EX);
+        const isGxOrEx =
+          attackingPokemon.hasTag(CardTag.POKEMON_GX) ||
+          attackingPokemon.hasTag(CardTag.POKEMON_EX);
 
         if (isGrass && isGxOrEx) {
           effect.damage = 0;

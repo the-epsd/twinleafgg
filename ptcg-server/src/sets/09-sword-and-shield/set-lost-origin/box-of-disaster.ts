@@ -10,7 +10,6 @@ import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 import { ToolEffect } from '../../../game/store/effects/play-card-effects';
 
 export class BoxOfDisaster extends TrainerCard {
-
   public regulationMark = 'F';
 
   public trainerType: TrainerType = TrainerType.TOOL;
@@ -28,17 +27,20 @@ export class BoxOfDisaster extends TrainerCard {
   public damageDealt: boolean = false;
 
   public text: string =
-    'If the Pokémon V this card is attached to has full HP and is Knocked Out by damage from an attack from your opponent\'s Pokémon, put 8 damage counters on the Attacking Pokémon.';
+    "If the Pokémon V this card is attached to has full HP and is Knocked Out by damage from an attack from your opponent's Pokémon, put 8 damage counters on the Attacking Pokémon.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof PutDamageEffect && effect.target.tools.includes(this)) {
       const player = StateUtils.findOwner(state, effect.target);
 
       const pokemonCard = effect.target.getPokemonCard();
       const sourceCard = effect.source.getPokemonCard();
 
-      if (pokemonCard === undefined || sourceCard === undefined || state.phase !== GamePhase.ATTACK) {
+      if (
+        pokemonCard === undefined ||
+        sourceCard === undefined ||
+        state.phase !== GamePhase.ATTACK
+      ) {
         return state;
       }
 
@@ -57,17 +59,17 @@ export class BoxOfDisaster extends TrainerCard {
         store.reduceEffect(state, checkHpEffect);
 
         if (state.phase === GamePhase.ATTACK) {
-          if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_V)) {
+          if (pokemonCard && pokemonCard.hasTag(CardTag.POKEMON_V)) {
             if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {
               effect.source.damage += 80;
             }
           }
-          if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_VMAX)) {
+          if (pokemonCard && pokemonCard.hasTag(CardTag.POKEMON_VMAX)) {
             if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {
               effect.source.damage += 80;
             }
           }
-          if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_VSTAR)) {
+          if (pokemonCard && pokemonCard.hasTag(CardTag.POKEMON_VSTAR)) {
             if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {
               effect.source.damage += 80;
             }

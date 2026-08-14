@@ -17,14 +17,12 @@ export class Dedenne2 extends PokemonCard {
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Zzzap Touch',
-      cost: [Y],
-      damage: 10,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pok\u00e9mon is now Confused. If tails, your opponent\'s Active Pok\u00e9mon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Zzzap Touch',
+    cost: [Y],
+    damage: 10,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pok\u00e9mon is now Confused. If tails, your opponent\'s Active Pok\u00e9mon is now Paralyzed.'
+  }];
 
   public set: string = 'LOT';
   public setNumber: string = '142';

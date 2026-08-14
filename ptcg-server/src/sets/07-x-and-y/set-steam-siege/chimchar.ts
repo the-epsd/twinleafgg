@@ -16,20 +16,17 @@ export class Chimchar extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Scratch',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Ember',
-      cost: [R, C],
-      damage: 30,
-      text: 'Flip a coin. If tails, discard a [R] Energy attached to this Pok\u00e9mon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Scratch',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Ember',
+    cost: [R, C],
+    damage: 30,
+    text: 'Flip a coin. If tails, discard a [R] Energy attached to this Pok\u00e9mon.'
+  }];
 
   public set: string = 'STS';
   public setNumber: string = '18';

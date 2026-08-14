@@ -17,19 +17,21 @@ export class Lucario extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Tag Coach',
-    powerType: PowerType.ABILITY,
-    text: 'Your TAG TEAM Pokémon take 20 less damage from your opponent\'s attacks (after applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: 'Tag Coach',
+      powerType: PowerType.ABILITY,
+      text: "Your TAG TEAM Pokémon take 20 less damage from your opponent's attacks (after applying Weakness and Resistance).",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Mach Cross',
       cost: [F, C, C],
       damage: 90,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'UNM';
@@ -43,7 +45,7 @@ export class Lucario extends PokemonCard {
     // Ref: set-unbroken-bonds/lucario-and-melmetal-gx.ts (Full Metal Wall - damage reduction)
     if (effect instanceof DealDamageEffect) {
       const targetCard = effect.target.getPokemonCard();
-      if (!targetCard || !targetCard.tags.includes(CardTag.TAG_TEAM)) {
+      if (!targetCard || !targetCard.hasTag(CardTag.TAG_TEAM)) {
         return state;
       }
 

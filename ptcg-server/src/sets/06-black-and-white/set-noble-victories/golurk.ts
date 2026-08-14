@@ -14,21 +14,18 @@ export class Golurk extends PokemonCard {
   public resistance = [{ type: L, value: -20 }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Hammer Arm',
-      cost: [F, F, C],
-      damage: 60,
-      text: 'Discard the top card of your opponent\'s deck.'
-    },
-    {
-      name: 'Hurricane Punch',
-      cost: [F, F, C, C],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 50 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Hammer Arm',
+    cost: [F, F, C],
+    damage: 60,
+    text: 'Discard the top card of your opponent\'s deck.'
+  }, {
+    name: 'Hurricane Punch',
+    cost: [F, F, C, C],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 50 damage times the number of heads.'
+  }];
 
   public set: string = 'NVI';
   public cardImage: string = 'assets/cardback.png';

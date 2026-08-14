@@ -27,26 +27,22 @@ export class ArceusLvX2 extends PokemonCard {
   public stage: Stage = Stage.LV_X;
   public evolvesFrom = 'Arceus';
   public cardType: CardType = C;
-  public tags = [CardTag.POKEMON_LV_X, CardTag.ARCEUS];
+  protected _tags = [CardTag.POKEMON_LV_X, CardTag.ARCEUS];
   public hp: number = 120;
   public retreat = [C];
 
-  public powers = [
-    {
-      name: 'Multitype',
-      powerType: PowerType.POKEBODY,
-      text: "Arceus LV.X's type is the same type as its previous Level.",
-    },
-  ];
+  public powers = [{
+    name: 'Multitype',
+    powerType: PowerType.POKEBODY,
+    text: "Arceus LV.X's type is the same type as its previous Level.",
+  }];
 
-  public attacks = [
-    {
-      name: 'Meteor Blast',
-      cost: [G, R, C],
-      damage: 100,
-      text: "Flip a coin. If tails, this attack's base damage is 50 instead of 100.",
-    },
-  ];
+  public attacks = [{
+    name: 'Meteor Blast',
+    cost: [G, R, C],
+    damage: 100,
+    text: "Flip a coin. If tails, this attack's base damage is 50 instead of 100.",
+  }];
 
   public set: string = 'AR';
   public cardImage: string = 'assets/cardback.png';

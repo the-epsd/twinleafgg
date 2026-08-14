@@ -5,27 +5,30 @@ import { AFTER_ATTACK, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/pref
 
 export class LarrysDunsparce extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.LARRYS];
+  protected _tags = [CardTag.LARRYS];
   public cardType: CardType = C;
   public hp: number = 70;
   public weakness = [{ type: F }];
   public resistance = [];
   public retreat = [];
 
-  public attacks = [{
-    name: 'Rising Lunge',
-    cost: [C],
-    damage: 10,
-    damageCalculation: '+',
-    text: 'Flip a coin. If heads, this attack does 20 more damage.'
-  }];
+  public attacks = [
+    {
+      name: 'Rising Lunge',
+      cost: [C],
+      damage: 10,
+      damageCalculation: '+',
+      text: 'Flip a coin. If heads, this attack does 20 more damage.',
+    },
+  ];
 
   public regulationMark = 'I';
+
   public set: string = 'ASC';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '163';
-  public name: string = 'Larry\'s Dunsparce';
-  public fullName: string = 'Larry\'s Dunsparce MC';
+  public name: string = "Larry's Dunsparce";
+  public fullName: string = "Larry's Dunsparce MC";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (AFTER_ATTACK(effect, 0, this)) {

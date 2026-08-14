@@ -15,14 +15,12 @@ export class Feebas extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Float On',
-      cost: [W],
-      damage: 10,
-      text: 'Flip a coin. If tails, this Pokémon does 10 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Float On',
+    cost: [W],
+    damage: 10,
+    text: 'Flip a coin. If tails, this Pokémon does 10 damage to itself.'
+  }];
 
   public set: string = 'PRC';
   public setNumber: string = '43';

@@ -16,8 +16,7 @@ export class Horsea extends PokemonCard {
     cost: [C],
     damage: 10,
     text: ''
-  },
-  {
+  }, {
     name: 'Fin Smack',
     cost: [W, C],
     damage: 20,

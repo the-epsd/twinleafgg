@@ -5,18 +5,22 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { MoveCardsEffect } from '../../../game/store/effects/game-effects';
-import { CheckAttackCostEffect, CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
+import {
+  CheckAttackCostEffect,
+  CheckPokemonTypeEffect,
+} from '../../../game/store/effects/check-effects';
 import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 
 export class WondrousLabyrinthPrismStar extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
-  public tags = [CardTag.PRISM_STAR];
+  protected _tags = [CardTag.PRISM_STAR];
   public set: string = 'TEU';
   public setNumber: string = '158';
   public name: string = 'Wondrous Labyrinth Prism Star';
   public fullName: string = 'Wondrous Labyrinth Prism Star TEU';
   public cardImage: string = 'assets/cardback.png';
-  public text: string = 'The attacks of non-[Y] Pokémon (both yours and your opponent\'s) cost [C] more.\n\nWhenever any player plays an Item or Supporter card from their hand, prevent all effects of that card done to this Stadium card.';
+  public text: string =
+    "The attacks of non-[Y] Pokémon (both yours and your opponent's) cost [C] more.\n\nWhenever any player plays an Item or Supporter card from their hand, prevent all effects of that card done to this Stadium card.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckAttackCostEffect && StateUtils.getStadiumCard(state) === this) {

@@ -6,10 +6,14 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { Card, ChooseCardsPrompt, GameMessage, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES, DRAW_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES,
+  DRAW_CARDS,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class UmbreonEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = D;
   public hp: number = 170;
@@ -17,18 +21,20 @@ export class UmbreonEx extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Veil of Darkness',
-    cost: [C],
-    damage: 20,
-    text: 'Discard as many cards as you like from your hand. Then, draw that many cards.'
-  },
-  {
-    name: 'Endgame',
-    cost: [D, C, C],
-    damage: 70,
-    text: 'If your opponent\'s Mega Evolution Pokémon is Knocked Out by damage from this attack, take 2 more Prize cards.'
-  }];
+  public attacks = [
+    {
+      name: 'Veil of Darkness',
+      cost: [C],
+      damage: 20,
+      text: 'Discard as many cards as you like from your hand. Then, draw that many cards.',
+    },
+    {
+      name: 'Endgame',
+      cost: [D, C, C],
+      damage: 70,
+      text: "If your opponent's Mega Evolution Pokémon is Knocked Out by damage from this attack, take 2 more Prize cards.",
+    },
+  ];
 
   public set: string = 'FCO';
   public setNumber: string = '55';
@@ -41,20 +47,24 @@ export class UmbreonEx extends PokemonCard {
       const player = effect.player;
 
       if (player.hand.cards.length > 0) {
-        return store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_DISCARD,
-          player.hand,
-          {},
-          { allowCancel: true, min: 0, max: player.hand.cards.length }
-        ), (selected: Card[]) => {
-          const cards = selected || [];
-          if (cards.length === 0) {
-            return;
-          }
-          player.hand.moveCardsTo(cards, player.discard);
-          DRAW_CARDS(store, state, player, cards.length);
-        });
+        return store.prompt(
+          state,
+          new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_CARD_TO_DISCARD,
+            player.hand,
+            {},
+            { allowCancel: true, min: 0, max: player.hand.cards.length },
+          ),
+          (selected: Card[]) => {
+            const cards = selected || [];
+            if (cards.length === 0) {
+              return;
+            }
+            player.hand.moveCardsTo(cards, player.discard);
+            DRAW_CARDS(store, state, player, cards.length);
+          },
+        );
       }
     }
 

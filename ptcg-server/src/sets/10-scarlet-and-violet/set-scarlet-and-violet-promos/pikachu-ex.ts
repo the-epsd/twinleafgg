@@ -1,19 +1,21 @@
-import { PokemonCard, Stage, CardTag, CardType } from "../../../game";
+import { PokemonCard, Stage, CardTag, CardType } from '../../../game';
 
 export class Pikachuex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public hp: number = 200;
   public cardType: CardType = L;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Thunderbolt',
-    cost: [L, L, C],
-    damage: 120,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Thunderbolt',
+      cost: [L, L, C],
+      damage: 120,
+      text: '',
+    },
+  ];
 
   public regulationMark = 'H';
   public set: string = 'PR-SV';

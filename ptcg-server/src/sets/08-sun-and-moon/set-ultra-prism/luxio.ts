@@ -3,7 +3,8 @@ import { CardType, Stage } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { OPPONENT_CANNOT_PLAY_ITEM_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { OPPONENT_CANNOT_PLAY_ITEM_CARDS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Luxio extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

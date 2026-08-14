@@ -18,8 +18,7 @@ export class Kirlia extends PokemonCard {
     cost: [P],
     damage: 10,
     text: 'Flip a coin. If heads, discard 1 Energy card attached to the Defending Pokémon.'
-  },
-  {
+  }, {
     name: 'Super Psy',
     cost: [P, C, C],
     damage: 50,

@@ -3,7 +3,13 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  EnergyType,
+  SuperType,
+} from '../../../game/store/card/card-types';
 import { Card, ChooseEnergyPrompt, GameMessage, StoreLike, State, StateUtils } from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -13,7 +19,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 
 export class LaprasV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 210;
@@ -25,14 +31,14 @@ export class LaprasV extends PokemonCard {
       name: 'Body Surf',
       cost: [C],
       damage: 0,
-      text: 'Attach a [W] Energy card from your hand to this Pokémon. If you do, switch it with 1 of your Benched Pokémon.'
+      text: 'Attach a [W] Energy card from your hand to this Pokémon. If you do, switch it with 1 of your Benched Pokémon.',
     },
     {
       name: 'Ocean Loop',
       cost: [W, W, W, C],
       damage: 210,
-      text: 'Put 2 [W] Energy attached to this Pokémon into your hand.'
-    }
+      text: 'Put 2 [W] Energy attached to this Pokémon into your hand.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -51,37 +57,44 @@ export class LaprasV extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const hasWaterInHand = player.hand.cards.some(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.WATER)
+      const hasWaterInHand = player.hand.cards.some(
+        (c) =>
+          c instanceof EnergyCard &&
+          c.energyType === EnergyType.BASIC &&
+          c.provides.includes(CardType.WATER),
       );
 
       if (!hasWaterInHand) {
         return state;
       }
 
-      store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_ATTACH,
-        player.hand,
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
-        { min: 0, max: 1, allowCancel: false }
-      ), (cards: Card[]) => {
-        cards = cards || [];
-        if (cards.length > 0) {
-          // Attach energy to Lapras V (this)
-          const cardList = StateUtils.findCardList(state, this);
-          if (cardList) {
-            player.hand.moveCardsTo(cards, cardList);
+      store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_ATTACH,
+          player.hand,
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
+          { min: 0, max: 1, allowCancel: false },
+        ),
+        (cards: Card[]) => {
+          cards = cards || [];
+          if (cards.length > 0) {
+            // Attach energy to Lapras V (this)
+            const cardList = StateUtils.findCardList(state, this);
+            if (cardList) {
+              player.hand.moveCardsTo(cards, cardList);
+            }
+            this.bodySurfAttached = true;
           }
-          this.bodySurfAttached = true;
-        }
-      });
+        },
+      );
     }
 
     if (effect instanceof AfterAttackEffect && this.bodySurfAttached) {
       this.bodySurfAttached = false;
       const player = effect.player;
-      if (player.bench.some(b => b.cards.length > 0)) {
+      if (player.bench.some((b) => b.cards.length > 0)) {
         SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
       }
     }
@@ -98,8 +111,8 @@ export class LaprasV extends PokemonCard {
       const checkEnergy = new CheckProvidedEnergyEffect(player, player.active);
       state = store.reduceEffect(state, checkEnergy);
 
-      const waterEnergyMap = checkEnergy.energyMap.filter(em =>
-        em.provides.includes(CardType.WATER) || em.provides.includes(CardType.ANY)
+      const waterEnergyMap = checkEnergy.energyMap.filter(
+        (em) => em.provides.includes(CardType.WATER) || em.provides.includes(CardType.ANY),
       );
 
       if (waterEnergyMap.length === 0) {
@@ -108,18 +121,22 @@ export class LaprasV extends PokemonCard {
 
       const count = Math.min(2, waterEnergyMap.length);
 
-      store.prompt(state, new ChooseEnergyPrompt(
-        player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_HAND,
-        waterEnergyMap,
-        [CardType.COLORLESS, CardType.COLORLESS],
-        { allowCancel: false }
-      ), energy => {
-        const cards: Card[] = (energy || []).slice(0, count).map(e => e.card);
-        if (cards.length > 0) {
-          player.active.moveCardsTo(cards, player.hand);
-        }
-      });
+      store.prompt(
+        state,
+        new ChooseEnergyPrompt(
+          player.id,
+          GameMessage.CHOOSE_ENERGIES_TO_HAND,
+          waterEnergyMap,
+          [CardType.COLORLESS, CardType.COLORLESS],
+          { allowCancel: false },
+        ),
+        (energy) => {
+          const cards: Card[] = (energy || []).slice(0, count).map((e) => e.card);
+          if (cards.length > 0) {
+            player.active.moveCardsTo(cards, player.hand);
+          }
+        },
+      );
     }
 
     return state;

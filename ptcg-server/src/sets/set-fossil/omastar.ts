@@ -1,27 +1,26 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, CoinFlipPrompt, GameMessage } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Omastar extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Omanyte';
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType = W;
   public hp: number = 70;
-  public weakness = [{ type: CardType.GRASS }];
+  public weakness = [{ type: G }];
   public resistance = [];
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Water Gun',
     cost: [W, C],
     damage: 20,
     text: 'Does 20 damage plus 10 more damage for each [W] Energy attached to Omastar but not used to pay for this attack\'s Energy cost. You can\'t add more than 20 damage in this way.'
-  },
-  {
+  }, {
     name: 'Spike Cannon',
     cost: [W, W],
     damage: 30,
@@ -64,10 +63,7 @@ export class Omastar extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      state = store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
+      state = MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, results => {
         let heads: number = 0;
         results.forEach(r => { heads += r ? 1 : 0; });
         effect.damage = 30 * heads;

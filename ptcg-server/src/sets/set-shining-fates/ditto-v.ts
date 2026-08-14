@@ -26,7 +26,7 @@ import {
 } from '../../game/store/prefabs/prefabs';
 
 export class DittoV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
   public hp: number = 170;
@@ -75,7 +75,7 @@ export class DittoV extends PokemonCard {
         return (
           c instanceof PokemonCard &&
           c.stage === Stage.BASIC &&
-          c.tags.includes(CardTag.POKEMON_V) &&
+          c.hasTag(CardTag.POKEMON_V) &&
           c !== this
         );
       });
@@ -105,7 +105,7 @@ export class DittoV extends PokemonCard {
         if (
           !(card instanceof PokemonCard) ||
           (card as PokemonCard).stage !== Stage.BASIC ||
-          !(card as PokemonCard).tags.includes(CardTag.POKEMON_V) ||
+          !(card as PokemonCard).hasTag(CardTag.POKEMON_V) ||
           card === this
         ) {
           blocked.push(index);

@@ -18,8 +18,7 @@ export class Snivy2 extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-  },
-  {
+  }, {
     name: 'Tail Smack',
     cost: [G, C],
     damage: 20,

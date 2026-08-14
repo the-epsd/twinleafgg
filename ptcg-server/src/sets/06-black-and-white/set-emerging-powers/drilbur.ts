@@ -2,7 +2,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS } from '../../../game/store/prefabs/prefabs';
+import { NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS } from '../../../game/store/prefabs/attack-effects';
 
 export class Drilbur extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -32,9 +32,11 @@ export class Drilbur extends PokemonCard {
   public fullName: string = 'Drilbur EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS(effect, { source: this, bonusDamage: 30 });
-    }
+    NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS(effect, {
+      source: this,
+      bonusDamage: 30,
+      setupAttack: this.attacks[0],
+    });
 
     return state;
   }

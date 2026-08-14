@@ -17,7 +17,8 @@ export class FairyCharmUb extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fairy Charm UB';
   public fullName: string = 'Fairy Charm UB TEU';
-  public text: string = 'Prevent all damage done to the Fairy Pokémon this card is attached to by attacks from your opponent\'s Ultra Beast Pokémon-GX and Ultra Beast Pokémon-EX.';
+  public text: string =
+    "Prevent all damage done to the Fairy Pokémon this card is attached to by attacks from your opponent's Ultra Beast Pokémon-GX and Ultra Beast Pokémon-EX.";
 
   // Ref: set-lost-thunder/fairy-charm-psychic.ts (Fairy Charm tool damage prevention pattern)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -37,8 +38,11 @@ export class FairyCharmUb extends TrainerCard {
 
       // Check if attacking Pokemon is an Ultra Beast GX or EX
       const sourceCard = effect.source.getPokemonCard();
-      if (sourceCard && sourceCard.tags.includes(CardTag.ULTRA_BEAST) &&
-        (sourceCard.tags.includes(CardTag.POKEMON_GX) || sourceCard.tags.includes(CardTag.POKEMON_EX))) {
+      if (
+        sourceCard &&
+        sourceCard.hasTag(CardTag.ULTRA_BEAST) &&
+        (sourceCard.hasTag(CardTag.POKEMON_GX) || sourceCard.hasTag(CardTag.POKEMON_EX))
+      ) {
         effect.damage = 0;
       }
     }

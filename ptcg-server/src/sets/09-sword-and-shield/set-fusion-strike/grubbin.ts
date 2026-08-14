@@ -15,22 +15,20 @@ export class Grubbin extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Energize',
-      cost: [C],
-      damage: 0,
-      text: 'Attach a [L] Energy card from your discard pile to this Pokémon.'
-    },
-    {
-      name: 'Surprise Attack',
-      cost: [C, C, C],
-      damage: 50,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Energize',
+    cost: [C],
+    damage: 0,
+    text: 'Attach a [L] Energy card from your discard pile to this Pokémon.'
+  }, {
+    name: 'Surprise Attack',
+    cost: [C, C, C],
+    damage: 50,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'FST';
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';

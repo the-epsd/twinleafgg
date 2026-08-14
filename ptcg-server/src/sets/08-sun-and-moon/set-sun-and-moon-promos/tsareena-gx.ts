@@ -9,7 +9,7 @@ import {
 } from '../../../game/store/prefabs/prefabs';
 
 export class TsareenaGX extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Steenee';
   public cardType: CardType = G;
@@ -17,26 +17,28 @@ export class TsareenaGX extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'G Side Eye',
-    cost: [G],
-    damage: 0,
-    text: 'Switch 1 of your opponent\'s Benched Pokémon with their Active Pokémon. The new Active Pokémon is now Confused.',
-  },
-  {
-    name: 'Jumping Side Kick',
-    cost: [G, C, C],
-    damage: 90,
-    damageCalculation: '+',
-    text: 'If your opponent\'s Active Pokémon is Confused, this attack does 90 more damage.',
-  },
-  {
-    name: 'Queen\'s Command-GX',
-    cost: [G, G, C],
-    damage: 0,
-    gxAttack: true,
-    text: 'Your opponent discards 4 cards from their hand. (You can\'t use more than 1 GX attack in a game.)',
-  }];
+  public attacks = [
+    {
+      name: 'G Side Eye',
+      cost: [G],
+      damage: 0,
+      text: "Switch 1 of your opponent's Benched Pokémon with their Active Pokémon. The new Active Pokémon is now Confused.",
+    },
+    {
+      name: 'Jumping Side Kick',
+      cost: [G, C, C],
+      damage: 90,
+      damageCalculation: '+',
+      text: "If your opponent's Active Pokémon is Confused, this attack does 90 more damage.",
+    },
+    {
+      name: "Queen's Command-GX",
+      cost: [G, G, C],
+      damage: 0,
+      gxAttack: true,
+      text: "Your opponent discards 4 cards from their hand. (You can't use more than 1 GX attack in a game.)",
+    },
+  ];
 
   public set: string = 'SMP';
   public setNumber = '56';
@@ -85,7 +87,7 @@ export class TsareenaGX extends PokemonCard {
           {},
           { min: n, max: n, allowCancel: false },
         ),
-        selected => {
+        (selected) => {
           const cards = selected || [];
           opponent.hand.moveCardsTo(cards, opponent.discard);
         },

@@ -16,14 +16,12 @@ export class Fennekin2 extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Invite Out',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, switch 1 of your opponent\'s Benched Pokémon with his or her Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Invite Out',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, switch 1 of your opponent\'s Benched Pokémon with his or her Active Pokémon.'
+  }];
 
   public set: string = 'FCO';
   public setNumber: string = '11';

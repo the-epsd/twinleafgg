@@ -1,4 +1,4 @@
-import { CoinFlipPrompt, GameMessage } from '../../../game';
+
 import { CardType, SpecialCondition, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
@@ -6,23 +6,23 @@ import { Effect } from '../../../game/store/effects/effect';
 
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Chinchou extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType = L;
   public hp: number = 60;
-  public weakness = [{ type: CardType.FIGHTING }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Thunder Wave',
-    cost: [CardType.COLORLESS],
+    cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
   }, {
     name: 'Lightning Ball',
-    cost: [CardType.LIGHTNING, CardType.COLORLESS],
+    cost: [L, C],
     damage: 20,
     text: ''
   }];
@@ -39,9 +39,7 @@ export class Chinchou extends PokemonCard {
 
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
           const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED]);
           store.reduceEffect(state, specialConditionEffect);

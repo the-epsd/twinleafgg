@@ -17,21 +17,18 @@ export class Huntail extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Powerful Storm',
-      cost: [W],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'This attack does 20 damage times the amount of Energy attached to all of your Pokémon.'
-    },
-    {
-      name: 'Crunch',
-      cost: [W, C, C],
-      damage: 70,
-      text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Powerful Storm',
+    cost: [W],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'This attack does 20 damage times the amount of Energy attached to all of your Pokémon.'
+  }, {
+    name: 'Crunch',
+    cost: [W, C, C],
+    damage: 70,
+    text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
+  }];
 
   public set: string = 'PRC';
   public setNumber: string = '50';

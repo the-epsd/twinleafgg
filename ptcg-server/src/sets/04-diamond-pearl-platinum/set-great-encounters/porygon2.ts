@@ -3,7 +3,8 @@ import { CardType, Stage, SuperType, TrainerType } from '../../../game/store/car
 import { StoreLike, State, PowerType, StateUtils, PokemonCardList, TrainerCard, ChooseCardsPrompt, GameMessage, GameError } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { ABILITY_USED, ADD_MARKER, CAN_PLAY_SUPPORTER_CARD, HAS_MARKER, IS_ABILITY_BLOCKED, REMOVE_MARKER_AT_END_OF_TURN, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { ABILITY_USED, ADD_MARKER, HAS_MARKER, IS_ABILITY_BLOCKED, REMOVE_MARKER_AT_END_OF_TURN, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { CAN_PLAY_SUPPORTER_CARD } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class Porygon2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

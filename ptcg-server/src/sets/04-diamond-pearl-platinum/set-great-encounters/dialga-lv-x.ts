@@ -34,29 +34,25 @@ export class DialgaLVX extends PokemonCard {
   public stage: Stage = Stage.LV_X;
   public evolvesFrom = 'Dialga';
   public cardType: CardType = M;
-  public tags = [CardTag.POKEMON_LV_X];
+  protected _tags = [CardTag.POKEMON_LV_X];
   public hp: number = 110;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public powers = [
-    {
-      name: 'Time Skip',
-      powerType: PowerType.POKEPOWER,
-      useWhenInPlay: true,
-      text: "Once during your turn (before your attack), you may have your opponent flip 2 coins. If both of them are heads, your turn ends. If both of them are tails, after your opponent draws a card at the beginning of his or her next turn, his or her turn ends. This power can't be used if Dialga is affected by a Special Condition.",
-    },
-  ];
+  public powers = [{
+    name: 'Time Skip',
+    powerType: PowerType.POKEPOWER,
+    useWhenInPlay: true,
+    text: "Once during your turn (before your attack), you may have your opponent flip 2 coins. If both of them are heads, your turn ends. If both of them are tails, after your opponent draws a card at the beginning of his or her next turn, his or her turn ends. This power can't be used if Dialga is affected by a Special Condition.",
+  }];
 
-  public attacks = [
-    {
-      name: 'Metal Flash',
-      cost: [M, M, C, C],
-      damage: 80,
-      text: "During your next turn, Dialga can't use Metal Flash.",
-    },
-  ];
+  public attacks = [{
+    name: 'Metal Flash',
+    cost: [M, M, C, C],
+    damage: 80,
+    text: "During your next turn, Dialga can't use Metal Flash.",
+  }];
 
   public set: string = 'GE';
   public cardImage: string = 'assets/cardback.png';
@@ -66,7 +62,6 @@ export class DialgaLVX extends PokemonCard {
 
   public readonly TIME_SKIP_EFFECT_MARKER = 'TIME_SKIP_EFFECT_MARKER';
   public readonly TIME_SKIP_USED_MARKER = 'TIME_SKIP_USED_MARKER';
-
   public readonly METAL_FLASH_USED_MARKER = 'METAL_FLASH_USED_MARKER';
   public readonly METAL_FLASH_USED_2_MARKER = 'METAL_FLASH_USED_2_MARKER';
 

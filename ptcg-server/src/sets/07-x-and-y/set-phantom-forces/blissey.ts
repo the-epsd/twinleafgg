@@ -16,22 +16,19 @@ export class Blissey extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Tender Vengeance',
-      cost: [C, C, C],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip a coin. If heads, this attack does 10 damage times the number of damage counters on each of your Benched Pokémon.'
-    },
-    {
-      name: 'Charge Dash',
-      cost: [C, C, C, C],
-      damage: 60,
-      damageCalculation: '+',
-      text: 'You may do 20 more damage. If you do, this Pokémon does 20 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tender Vengeance',
+    cost: [C, C, C],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip a coin. If heads, this attack does 10 damage times the number of damage counters on each of your Benched Pokémon.'
+  }, {
+    name: 'Charge Dash',
+    cost: [C, C, C, C],
+    damage: 60,
+    damageCalculation: '+',
+    text: 'You may do 20 more damage. If you do, this Pokémon does 20 damage to itself.'
+  }];
 
   public set: string = 'PHF';
   public setNumber: string = '81';

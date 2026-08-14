@@ -18,14 +18,12 @@ export class Sewaddle2 extends PokemonCard {
     text: 'This Pokémon takes 10 less damage from attacks (after applying Weakness and Resistance).'
   }];
 
-  public attacks = [
-    {
-      name: 'Surprise Attack',
-      cost: [G],
-      damage: 20,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Surprise Attack',
+    cost: [G],
+    damage: 20,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'UNM';
   public setNumber: string = '7';

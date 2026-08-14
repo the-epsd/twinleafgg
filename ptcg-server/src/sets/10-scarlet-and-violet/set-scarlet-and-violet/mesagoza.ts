@@ -1,4 +1,4 @@
-import { ChooseCardsPrompt, CoinFlipPrompt, ShowCardsPrompt, ShuffleDeckPrompt } from '../../../game';
+import { ChooseCardsPrompt, ShowCardsPrompt, ShuffleDeckPrompt } from '../../../game';
 import { GameMessage } from '../../../game/game-message';
 import { SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
@@ -7,6 +7,8 @@ import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
 import { StateUtils } from '../../../game/store/state-utils';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+
+import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Mesagoza extends TrainerCard {
 
@@ -37,7 +39,7 @@ export class Mesagoza extends TrainerCard {
     const player = effect.player;
     const opponent = StateUtils.getOpponent(state, player);
 
-    return store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), flipResult => {
+    return COIN_FLIP_PROMPT(store, state, player, flipResult => {
       if (flipResult) {
         return store.prompt(state, new ChooseCardsPrompt(
           player,

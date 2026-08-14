@@ -13,11 +13,12 @@ import { IS_STADIUM_EFFECT_BLOCKED } from '../../game/store/prefabs/stadium-effe
 export class RocketsHideout extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
   public set: string = 'N3';
-  public name: string = 'Rocket\'s Hideout';
-  public fullName: string = 'Rocket\'s Hideout N3';
+  public name: string = "Rocket's Hideout";
+  public fullName: string = "Rocket's Hideout N3";
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '63';
-  public text: string = 'Each Pokémon in play with Dark in its name (even your opponent\'s) gets +20 HP.';
+  public text: string =
+    "Each Pokémon in play with Dark in its name (even your opponent's) gets +20 HP.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckHpEffect && StateUtils.getStadiumCard(state) === this) {
@@ -26,7 +27,7 @@ export class RocketsHideout extends TrainerCard {
         return state;
       }
 
-      if (effect.target.getPokemonCard()?.tags.includes(CardTag.DARK)) {
+      if (effect.target.getPokemonCard()?.hasTag(CardTag.DARK)) {
         effect.hp += 20;
       }
     }

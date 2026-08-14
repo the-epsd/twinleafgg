@@ -12,21 +12,18 @@ export class Luxio extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Jump On',
-      cost: [L],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 30 more damage.'
-    },
-    {
-      name: 'Wild Charge',
-      cost: [L, C, C],
-      damage: 60,
-      text: 'This Pokémon does 10 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Jump On',
+    cost: [L],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 30 more damage.'
+  }, {
+    name: 'Wild Charge',
+    cost: [L, C, C],
+    damage: 60,
+    text: 'This Pokémon does 10 damage to itself.'
+  }];
 
   public set: string = 'NXD';
   public setNumber: string = '44';

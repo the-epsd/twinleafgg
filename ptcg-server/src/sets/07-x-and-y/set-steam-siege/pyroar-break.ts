@@ -13,7 +13,7 @@ import {
 } from '../../../game/store/prefabs/prefabs';
 
 export class PyroarBreak extends PokemonCard {
-  public tags = [CardTag.BREAK];
+  protected _tags = [CardTag.BREAK];
   public stage: Stage = Stage.BREAK;
   public evolvesFrom: string = 'Pyroar';
   public cardType: CardType = R;

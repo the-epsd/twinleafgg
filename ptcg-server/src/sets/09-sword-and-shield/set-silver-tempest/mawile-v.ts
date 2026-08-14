@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class MawileV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 200;
@@ -22,17 +22,18 @@ export class MawileV extends PokemonCard {
       name: 'Pouty Slap',
       cost: [P],
       damage: 30,
-      text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
+      text: "Flip a coin. If heads, discard an Energy from your opponent's Active Pokémon.",
     },
     {
       name: 'Chomp Down',
       cost: [C, C, C],
       damage: 100,
-      text: 'Discard a random card from your opponent\'s hand.'
-    }
+      text: "Discard a random card from your opponent's hand.",
+    },
   ];
 
   public regulationMark: string = 'F';
+
   public set: string = 'SIT';
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
@@ -43,7 +44,7 @@ export class MawileV extends PokemonCard {
     // Attack 1: Pouty Slap
     // Ref: AGENTS-patterns.md (coin flip + discard opponent energy)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (result) {
           DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
         }

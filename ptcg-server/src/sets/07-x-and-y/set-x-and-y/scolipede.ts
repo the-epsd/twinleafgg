@@ -6,7 +6,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, BLOCK_RETREAT } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../../game/store/prefabs/attack-effects';
 export class Scolipede extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -16,21 +17,18 @@ export class Scolipede extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Random Peck',
-      cost: [P],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
-    },
-    {
-      name: 'Poison Ring',
-      cost: [P, C, C, C],
-      damage: 70,
-      text: 'Your opponent\'s Active Pokémon is now Poisoned. That Pokémon can\'t retreat during your opponent\'s next turn.'
-    }
-  ];
+  public attacks = [{
+    name: 'Random Peck',
+    cost: [P],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
+  }, {
+    name: 'Poison Ring',
+    cost: [P, C, C, C],
+    damage: 70,
+    text: 'Your opponent\'s Active Pokémon is now Poisoned. That Pokémon can\'t retreat during your opponent\'s next turn.'
+  }];
 
   public set: string = 'XY';
   public setNumber: string = '53';

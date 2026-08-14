@@ -6,11 +6,12 @@ import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-e
 import { PikachuVUNIONTopRight } from './pikachu-v-union-tr';
 import { PikachuVUNIONBottomLeft } from './pikachu-v-union-bl';
 import { PikachuVUNIONBottomRight } from './pikachu-v-union-br';
-import { WAS_ATTACK_USED, WAS_POWER_USED, COIN_FLIP_PROMPT, OPPONENT_CANNOT_PLAY_ITEM_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { OPPONENT_CANNOT_PLAY_ITEM_CARDS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class PikachuVUNIONTopLeft extends PokemonCard {
   public stage: Stage = Stage.VUNION;
-  public tags = [CardTag.POKEMON_VUNION];
+  protected _tags = [CardTag.POKEMON_VUNION];
   public cardType: CardType = L;
   public hp: number = 300;
   public weakness = [{ type: F }];
@@ -29,20 +30,17 @@ export class PikachuVUNIONTopLeft extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Attach up to 2 [L] Energy cards from your discard pile to this Pokémon.'
-  },
-  {
+  }, {
     name: 'Shocking Shock',
     cost: [L, C],
     damage: 120,
     text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-  },
-  {
+  }, {
     name: 'Disconnect',
     cost: [L, L, C],
     damage: 150,
     text: 'During your opponent\'s next turn, they can\'t play any Item cards from their hand.'
-  },
-  {
+  }, {
     name: 'Electro Ball Together',
     cost: [L, L, C],
     damage: 250,
@@ -50,7 +48,9 @@ export class PikachuVUNIONTopLeft extends PokemonCard {
   }];
 
   public set: string = 'SWSH';
+
   public regulationMark = 'E';
+
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '139';
   public name: string = 'Pikachu V-UNION';
@@ -70,11 +70,19 @@ export class PikachuVUNIONTopLeft extends PokemonCard {
       let topRightPiece = false;
       let bottomLeftPiece = false;
       let bottomRightPiece = false;
-      player.discard.cards.forEach(card => {
-        if (card instanceof PikachuVUNIONTopLeft) { topLeftPiece = true; }
-        if (card instanceof PikachuVUNIONTopRight) { topRightPiece = true; }
-        if (card instanceof PikachuVUNIONBottomLeft) { bottomLeftPiece = true; }
-        if (card instanceof PikachuVUNIONBottomRight) { bottomRightPiece = true; }
+      player.discard.cards.forEach((card) => {
+        if (card instanceof PikachuVUNIONTopLeft) {
+          topLeftPiece = true;
+        }
+        if (card instanceof PikachuVUNIONTopRight) {
+          topRightPiece = true;
+        }
+        if (card instanceof PikachuVUNIONBottomLeft) {
+          bottomLeftPiece = true;
+        }
+        if (card instanceof PikachuVUNIONBottomRight) {
+          bottomRightPiece = true;
+        }
       });
       if (topLeftPiece && topRightPiece && bottomLeftPiece && bottomRightPiece) {
         if (slots.length > 0) {

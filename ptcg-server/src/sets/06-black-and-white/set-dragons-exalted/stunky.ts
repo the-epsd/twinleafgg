@@ -17,14 +17,12 @@ export class Stunky extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Acid Spray',
-      cost: [D],
-      damage: 10,
-      text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Acid Spray',
+    cost: [D],
+    damage: 10,
+    text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokémon.'
+  }];
 
   public set: string = 'DRX';
   public setNumber: string = '76';

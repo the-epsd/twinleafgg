@@ -1,54 +1,42 @@
 import { Effect } from '../../../game/store/effects/effect';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { PowerType, StoreLike, State, CoinFlipPrompt, ConfirmPrompt, PlayerType } from '../../../game';
+import { PowerType, StoreLike, State, ConfirmPrompt, PlayerType } from '../../../game';
 import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
 import { GameLog, GameMessage } from '../../../game/game-message';
-import { ABILITY_USED, IS_ABILITY_BLOCKED, SEARCH_DECK_FOR_CARDS_TO_HAND, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { ABILITY_USED, IS_ABILITY_BLOCKED, SEARCH_DECK_FOR_CARDS_TO_HAND, SHUFFLE_DECK, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Roserade extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
 
   evolvesFrom = 'Roselia';
-
-  public cardType: CardType = CardType.GRASS;
-
+  public cardType: CardType = G;
   public hp: number = 90;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public resistance = [{ type: CardType.WATER, value: -20 }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public resistance = [{ type: W, value: -20 }];
+  public retreat = [C];
 
   public powers = [{
     name: 'Le Parfum',
     powerType: PowerType.ABILITY,
     text: 'When you play this Pokemon from your hand to evolve 1 of your ' +
-      'Pokemon, you may search your deck for any card and put it into your ' +
-      'hand. Shuffle your deck afterward.'
+    'Pokemon, you may search your deck for any card and put it into your ' +
+    'hand. Shuffle your deck afterward.'
   }];
 
-  public attacks = [
-    {
-      name: 'Squeeze',
-      cost: [CardType.GRASS, CardType.COLORLESS],
-      damage: 30,
-      text: 'Flip a coin. If heads, this attack does 20 more damage and ' +
-        'the Defending Pokemon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Squeeze',
+    cost: [G, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, this attack does 20 more damage and ' +
+    'the Defending Pokemon is now Paralyzed.'
+  }];
 
   public set: string = 'DRX';
-
   public name: string = 'Roserade';
-
   public fullName: string = 'Roserade DRX';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '15';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -86,9 +74,7 @@ export class Roserade extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
           const addSpecialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED]);
           effect.damage += 20;

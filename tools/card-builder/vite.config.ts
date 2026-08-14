@@ -11,14 +11,33 @@ const serverSetsRoot = join(rootDir, '../../ptcg-server/src/sets');
 
 interface ServerEffect {
   source: string;
-  attackText: string;
+  effectText: string;
+  attackText?: string;
+  kind: 'attack' | 'power' | 'trainer' | 'energy';
   body: string[];
   imports: string[];
   similarity: number;
+  bodyMode?: 'branch' | 'full';
 }
 
 function decodeString(value: string): string {
-  return value.replace(/\\'/g, "'").replace(/\\"/g, '"').replace(/\\\\/g, '\\');
+  return value
+    .replace(/\\n/g, '\n')
+    .replace(/\\r/g, '\r')
+    .replace(/\\'/g, "'")
+    .replace(/\\"/g, '"')
+    .replace(/\\\\/g, '\\');
+}
+
+function extractStringExpression(expression: string): string {
+  return [...expression.matchAll(/'((?:\\.|[^'])*)'|"((?:\\.|[^"])*)"/g)]
+    .map(match => decodeString(match[1] ?? match[2] ?? ''))
+    .join('');
+}
+
+function extractPublicText(source: string): string {
+  const match = source.match(/public\s+text(?:\s*:\s*string)?\s*=\s*([\s\S]*?);/);
+  return match ? extractStringExpression(match[1]) : '';
 }
 
 function normalizeGameImport(line: string): string {
@@ -100,6 +119,106 @@ function findSetDirectory(set: string): string | undefined {
   return [...candidates][0];
 }
 
+interface ReprintCandidateRecord {
+  className: string;
+  name: string;
+  set: string;
+  setNumber: string;
+  fullName: string;
+  sourcePath: string;
+  filePath: string;
+}
+
+function extractPublicString(source: string, property: string): string {
+  const match = source.match(new RegExp(`public\\s+${property}(?:\\s*:\\s*string)?\\s*=\\s*([\\s\\S]*?);`));
+  return match ? extractStringExpression(match[1]) : '';
+}
+
+function findReprintCandidates(set: string, name: string, excludeSetNumber = ''): ReprintCandidateRecord[] {
+  const directory = findSetDirectory(set);
+  const normalizedName = name.trim().toLowerCase();
+  const normalizedSetNumber = excludeSetNumber.trim();
+  if (!directory || !normalizedName) return [];
+
+  interface ParsedClass {
+    className: string;
+    extendsName: string;
+    classSource: string;
+    filePath: string;
+  }
+
+  const classes = collectTsFiles(serverSetsRoot).flatMap(filePath => {
+      const source = readFileSync(filePath, 'utf8');
+      return [...source.matchAll(/^export class\s+([A-Za-z_$][\w$]*)[^\{]*\{/gm)].flatMap(match => {
+        if (match.index === undefined) return [];
+        const open = source.indexOf('{', match.index);
+        const close = open < 0 ? -1 : matchingBrace(source, open);
+        if (open < 0 || close < 0) return [];
+        const declaration = match[0];
+        return [{
+          className: match[1],
+          extendsName: declaration.match(/\bextends\s+([A-Za-z_$][\w$]*)/)?.[1] || '',
+          classSource: source.slice(match.index, close + 1),
+          filePath,
+        }];
+      });
+    });
+  const classByName = new Map<string, ParsedClass>();
+  for (const parsed of classes) {
+    if (!classByName.has(parsed.className)) classByName.set(parsed.className, parsed);
+  }
+  const resolveProperty = (parsed: ParsedClass, property: string, seen = new Set<string>()): string => {
+    const own = extractPublicString(parsed.classSource, property);
+    if (own || !parsed.extendsName || seen.has(parsed.className)) return own;
+    seen.add(parsed.className);
+    const parent = classByName.get(parsed.extendsName);
+    return parent ? resolveProperty(parent, property, seen) : '';
+  };
+
+  return classes
+    .filter(parsed => parsed.filePath === directory || parsed.filePath.startsWith(`${directory}${sep}`))
+    .map(parsed => {
+      const cardName = resolveProperty(parsed, 'name');
+      const cardSet = resolveProperty(parsed, 'set').toUpperCase();
+      const setNumber = extractPublicString(parsed.classSource, 'setNumber');
+      return {
+        className: parsed.className,
+        name: cardName,
+        set: cardSet,
+        setNumber,
+        fullName: extractPublicString(parsed.classSource, 'fullName') || resolveProperty(parsed, 'fullName'),
+        sourcePath: relative(serverSetsRoot, parsed.filePath).replaceAll(sep, '/'),
+        filePath: parsed.filePath,
+      };
+    })
+    .filter(candidate => {
+      if (candidate.set !== set || candidate.name.trim().toLowerCase() !== normalizedName) return false;
+      return !(normalizedSetNumber && candidate.setNumber === normalizedSetNumber);
+    })
+    .filter((candidate, index, all) => all.findIndex(other =>
+      other.className === candidate.className && other.sourcePath === candidate.sourcePath
+    ) === index)
+    .sort((a, b) => a.set.localeCompare(b.set));
+}
+
+function serveReprintCandidates(req: IncomingMessage, res: ServerResponse, next: () => void): void {
+  if (req.url?.split('?')[0] !== '/reprint-candidates' || req.method !== 'GET') {
+    next();
+    return;
+  }
+  const url = new URL(req.url, 'http://localhost');
+  const set = url.searchParams.get('set')?.trim().toUpperCase() || '';
+  const name = url.searchParams.get('name')?.trim() || '';
+  const excludeSetNumber = url.searchParams.get('excludeSetNumber')?.trim() || '';
+  if (!/^[A-Z0-9][A-Z0-9_-]*$/.test(set) || !name) {
+    jsonResponse(res, 400, { error: 'Set code and card name are required.' });
+    return;
+  }
+  jsonResponse(res, 200, {
+    candidates: findReprintCandidates(set, name, excludeSetNumber).map(({ filePath: _filePath, ...candidate }) => candidate),
+  });
+}
+
 function normalizeSavedSource(source: string, cardDirectory: string): string {
   const gameDirectory = join(serverSetsRoot, '../game');
   const gameImportBase = relative(cardDirectory, gameDirectory).replaceAll(sep, '/');
@@ -169,6 +288,83 @@ function addCardToSetIndex(indexPath: string, className: string, fileName: strin
   if (updated !== source) writeFileSync(indexPath, updated, 'utf8');
 }
 
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function hasExportedClass(source: string, className: string): boolean {
+  return new RegExp(`export class\\s+${escapeRegExp(className)}\\b`).test(source);
+}
+
+function splitImportLines(source: string): { imports: string[]; body: string } {
+  const imports: string[] = [];
+  const body: string[] = [];
+  for (const line of source.split('\n')) {
+    if (/^\s*import\s/.test(line) && /;\s*$/.test(line)) {
+      imports.push(line.trim());
+    } else {
+      body.push(line);
+    }
+  }
+  return { imports, body: body.join('\n') };
+}
+
+function appendOrReplaceExportedClass(source: string, className: string, replacement: string): string {
+  const sourceParts = splitImportLines(source);
+  const replacementParts = splitImportLines(replacement);
+  const imports = [...new Set([...sourceParts.imports, ...replacementParts.imports])];
+  const body = sourceParts.body;
+  const replacementBody = replacementParts.body;
+  const match = new RegExp(`export class\\s+${escapeRegExp(className)}\\b`).exec(body);
+  let updatedBody: string;
+  if (!match || match.index === undefined) {
+    updatedBody = `${body.trimEnd()}\n\n${replacementBody.trim()}`;
+  } else {
+    const open = body.indexOf('{', match.index);
+    const close = open < 0 ? -1 : matchingBrace(body, open);
+    if (open < 0 || close < 0) throw new Error(`Could not locate the ${className} class body.`);
+    updatedBody = `${body.slice(0, match.index).trimEnd()}\n\n${replacementBody.trim()}${body.slice(close + 1)}`;
+  }
+  return `${imports.length ? `${imports.join('\n')}\n\n` : ''}${updatedBody.trimStart()}\n`;
+}
+
+function uniqueReprintClassName(directory: string, requested: string, set: string, setNumber: string, existingOtherPrints: string): string {
+  if (hasExportedClass(existingOtherPrints, requested)) return requested;
+  const occupied = collectTsFiles(directory).some(file => hasExportedClass(readFileSync(file, 'utf8'), requested));
+  if (!occupied) return requested;
+  const suffix = `${set}${setNumber}`.replace(/[^A-Za-z0-9]/g, '');
+  let candidate = `${requested}${suffix}`;
+  let index = 2;
+  while (collectTsFiles(directory).some(file => hasExportedClass(readFileSync(file, 'utf8'), candidate))) {
+    candidate = `${requested}${suffix}${index++}`;
+  }
+  return candidate;
+}
+
+function buildReprintSource(
+  candidate: ReprintCandidateRecord,
+  directory: string,
+  className: string,
+  payload: { set: string; setNumber: string; fullName: string; regulationMark?: string }
+): string {
+  const modulePath = relative(directory, candidate.filePath).replaceAll(sep, '/').replace(/\.ts$/, '');
+  const importPath = modulePath.startsWith('.') ? modulePath : `./${modulePath}`;
+  const quote = (value: string) => `'${value.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'`;
+  const lines = [
+    `import { ${candidate.className} } from '${importPath}';`,
+    '',
+    `export class ${className} extends ${candidate.className} {`,
+  ];
+  if (payload.regulationMark?.trim()) lines.push(`  public regulationMark = ${quote(payload.regulationMark.trim())};`);
+  lines.push(
+    `  public setNumber = ${quote(payload.setNumber.trim())};`,
+    `  public fullName = ${quote(payload.fullName.trim())};`,
+    `  public set = ${quote(payload.set.trim().toUpperCase())};`,
+    '}',
+  );
+  return lines.join('\n');
+}
+
 async function serveSaveCard(req: IncomingMessage, res: ServerResponse, next: () => void): Promise<void> {
   if (req.url?.split('?')[0] !== '/save-card' || req.method !== 'POST') {
     next();
@@ -181,6 +377,16 @@ async function serveSaveCard(req: IncomingMessage, res: ServerResponse, next: ()
       className?: string;
       source?: string;
       overwrite?: boolean;
+      reprint?: {
+        className: string;
+        sourceClassName: string;
+        sourcePath: string;
+        name: string;
+        set: string;
+        setNumber: string;
+        fullName: string;
+        regulationMark?: string;
+      };
     };
     const set = payload.set?.trim().toUpperCase() || '';
     const className = payload.className?.trim() || '';
@@ -188,7 +394,7 @@ async function serveSaveCard(req: IncomingMessage, res: ServerResponse, next: ()
       jsonResponse(res, 400, { error: 'Set code or class name is invalid.' });
       return;
     }
-    if (!payload.source?.trim()) {
+    if (!payload.source?.trim() && !payload.reprint) {
       jsonResponse(res, 400, { error: 'Generated source is empty.' });
       return;
     }
@@ -197,6 +403,51 @@ async function serveSaveCard(req: IncomingMessage, res: ServerResponse, next: ()
       jsonResponse(res, 404, { error: `Could not find a unique ptcg-server set folder for ${set}.` });
       return;
     }
+    if (payload.reprint) {
+      const reprint = payload.reprint;
+      const requiredReprintFields = [
+        reprint.className,
+        reprint.sourceClassName,
+        reprint.sourcePath,
+        reprint.name,
+        reprint.set,
+        reprint.setNumber,
+        reprint.fullName,
+      ];
+      if (
+        requiredReprintFields.some(value => typeof value !== 'string') ||
+        !/^[A-Za-z][A-Za-z0-9]*$/.test(reprint.className) ||
+        !reprint.name.trim()
+      ) {
+        jsonResponse(res, 400, { error: 'Reprint metadata is invalid.' });
+        return;
+      }
+      const candidate = findReprintCandidates(set, reprint.name, '').find(
+        item => item.className === reprint.sourceClassName && item.sourcePath === reprint.sourcePath
+      );
+      if (!candidate) {
+        jsonResponse(res, 400, { error: 'The selected reprint source is no longer available.' });
+        return;
+      }
+      const otherPrintsPath = join(directory, 'other-prints.ts');
+      const existingOtherPrints = existsSync(otherPrintsPath) ? readFileSync(otherPrintsPath, 'utf8') : '';
+      const savedClassName = uniqueReprintClassName(directory, reprint.className, set, reprint.setNumber, existingOtherPrints);
+      if (hasExportedClass(existingOtherPrints, savedClassName) && !payload.overwrite) {
+        jsonResponse(res, 409, { error: 'That reprint class already exists.', path: otherPrintsPath });
+        return;
+      }
+      const wrapper = buildReprintSource(candidate, directory, savedClassName, reprint);
+      const updatedOtherPrints = appendOrReplaceExportedClass(existingOtherPrints, savedClassName, wrapper);
+      writeFileSync(otherPrintsPath, updatedOtherPrints, 'utf8');
+      addCardToSetIndex(join(directory, 'index.ts'), savedClassName, 'other-prints');
+      jsonResponse(res, 200, {
+        message: `Saved ${savedClassName} to ${otherPrintsPath.replace(`${serverSetsRoot}/`, '')}`,
+        path: otherPrintsPath,
+        className: savedClassName,
+      });
+      return;
+    }
+
     const filePath = join(directory, `${toFileName(className)}.ts`);
     if (existsSync(filePath) && !payload.overwrite) {
       jsonResponse(res, 409, { error: 'File already exists.', path: filePath });
@@ -213,57 +464,152 @@ async function serveSaveCard(req: IncomingMessage, res: ServerResponse, next: ()
   }
 }
 
+function extractReducerBody(source: string): string | undefined {
+  const reducerStart = source.indexOf('public reduceEffect(');
+  if (reducerStart < 0) return undefined;
+  const open = source.indexOf('{', reducerStart);
+  const close = open < 0 ? -1 : matchingBrace(source, open);
+  return close < 0 ? undefined : source.slice(open + 1, close);
+}
+
+function extractBranchBody(reducer: string, pattern: RegExp): string[] | undefined {
+  const match = reducer.match(pattern);
+  if (!match || match.index === undefined) return undefined;
+  const branchOpen = reducer.indexOf('{', match.index);
+  const branchClose = matchingBrace(reducer, branchOpen);
+  if (branchOpen < 0 || branchClose < 0) return undefined;
+  let body = reducer.slice(branchOpen + 1, branchClose).trim().split('\n').filter(Boolean);
+  if (body.some(line => /\bplayer\b/.test(line.replace(/const player = effect\.player;/, '')))) {
+    body = body.filter(line => !/const player = effect\.player;/.test(line));
+    body.unshift('const player = effect.player;');
+  } else {
+    body = body.filter(line => !/const player = effect\.player;/.test(line));
+  }
+  return body;
+}
+
+function extractHelperFunctions(source: string): string[] {
+  const classStart = source.indexOf('export class ');
+  if (classStart < 0) return [];
+  const sourceClass = source.slice(classStart).match(/export class\s+([A-Za-z_$][\w$]*)/)?.[1];
+  const prefix = source.slice(0, classStart);
+  const helpers: string[] = [];
+  const pattern = /(?:async\s+)?function\s*\*?\s+[A-Za-z_$][\w$]*\s*\(/g;
+  for (const match of prefix.matchAll(pattern)) {
+    if (match.index === undefined) continue;
+    const open = source.indexOf('{', match.index);
+    const close = open < 0 ? -1 : matchingBrace(source, open);
+    if (close >= 0) {
+      const helper = source.slice(match.index, close + 1).trim();
+      helpers.push(sourceClass ? helper.replace(new RegExp(`\\b${sourceClass}\\b`, 'g'), 'any') : helper);
+    }
+  }
+  return helpers;
+}
+
+function extractArrayTexts(source: string, property: string, until: number): string[] {
+  const start = source.indexOf(property);
+  if (start < 0 || start >= until) return [];
+  const boundaries = ['public attacks', 'public powers', 'public set', 'public reduceEffect(']
+    .map(value => source.indexOf(value, start + property.length))
+    .filter(index => index >= 0 && index < until);
+  const end = boundaries.length > 0 ? Math.min(...boundaries) : until;
+  const section = source.slice(start, end);
+  return [...section.matchAll(/text\s*:\s*'((?:\\.|[^'])*)'|text\s*:\s*"((?:\\.|[^"])*)"/g)]
+    .map(match => decodeString(match[1] ?? match[2] ?? ''));
+}
+
+function buildEffectImports(source: string, body: string, kind: ServerEffect['kind']): string[] {
+  const imports = source
+    .split('\n')
+    .filter(line => line.startsWith('import '))
+    .filter(line => /^import .+ from ['"]/.test(line))
+    .filter(line => !line.includes('/card/pokemon-card') && !line.includes('/card/trainer-card') &&
+      !line.includes('/card/energy-card') && !line.includes('effects/effect'))
+    .map(normalizeGameImport)
+    .map(line => {
+      const importMatch = line.match(/^import \{ ([^}]+) \} from/);
+      if (!importMatch) return line;
+      const names = importMatch[1].split(',').map(name => name.trim())
+        .filter(name => sourceUsesName(body, name));
+      return names.length > 0 ? line.replace(importMatch[1], names.join(', ')) : '';
+    })
+    .filter(line => Boolean(line) && !/^import \{\s*\}?\s*;?$/.test(line));
+  const markerImport = kind === 'attack'
+    ? `import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';`
+    : kind === 'power'
+      ? `import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';`
+      : kind === 'trainer'
+        ? `import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';`
+        : '';
+  if (markerImport && !imports.some(line => line.includes(kind === 'trainer' ? 'WAS_TRAINER_USED' : kind === 'power' ? 'WAS_POWER_USED' : 'WAS_ATTACK_USED'))) {
+    imports.push(markerImport);
+  }
+  return imports;
+}
+
+function addServerEffect(
+  results: ServerEffect[],
+  file: string,
+  source: string,
+  effectText: string,
+  body: string[],
+  kind: ServerEffect['kind'],
+  bodyMode: ServerEffect['bodyMode'] = 'branch',
+  helpers: string[] = [],
+): void {
+  if (!effectText.trim() || body.length === 0) return;
+  results.push({
+    source: file.replace(`${serverSetsRoot}/`, ''),
+    effectText,
+    attackText: effectText,
+    kind,
+    body,
+    imports: buildEffectImports(source, `${body.join('\n')}\n${helpers.join('\n')}`, kind),
+    similarity: 1,
+    bodyMode,
+    helpers,
+  });
+}
+
 function buildServerEffects(): ServerEffect[] {
   const results: ServerEffect[] = [];
   for (const file of collectTsFiles(serverSetsRoot)) {
     const source = readFileSync(file, 'utf8');
-    const attacksStart = source.indexOf('public attacks');
+    const reducer = extractReducerBody(source);
+    if (!reducer) continue;
     const reducerStart = source.indexOf('public reduceEffect(');
-    if (attacksStart < 0 || reducerStart < 0 || attacksStart >= reducerStart) continue;
-    const attackSection = source.slice(attacksStart, reducerStart);
-    const attackTexts = [...attackSection.matchAll(/text:\s*'((?:\\.|[^'])*)'/g)]
-      .map(match => decodeString(match[1]));
-    const open = source.indexOf('{', reducerStart);
-    const close = open < 0 ? -1 : matchingBrace(source, open);
-    if (close < 0) continue;
-    const reducer = source.slice(open + 1, close);
-    for (const match of reducer.matchAll(/if\s*\(\s*WAS_ATTACK_USED\(effect,\s*(\d+),\s*this\)\s*\)\s*\{/g)) {
-      const branchOpen = reducer.indexOf('{', match.index);
-      const branchClose = matchingBrace(reducer, branchOpen);
-      const index = Number(match[1]);
-      if (branchOpen < 0 || branchClose < 0 || !attackTexts[index]?.trim()) continue;
-      let branchBody = reducer.slice(branchOpen + 1, branchClose).trim().split('\n').filter(Boolean);
-      if (branchBody.some(line => /\bplayer\b/.test(line.replace(/const player = effect\.player;/, '')))) {
-        branchBody = branchBody.filter(line => !/const player = effect\.player;/.test(line));
-        branchBody.unshift('const player = effect.player;');
+    const helpers = extractHelperFunctions(source);
+
+    if (source.includes('extends PokemonCard')) {
+      const attackTexts = extractArrayTexts(source, 'public attacks', reducerStart);
+      for (const match of reducer.matchAll(/if\s*\(\s*WAS_ATTACK_USED\(effect,\s*(\d+),\s*this\)\s*\)\s*\{/g)) {
+        const body = extractBranchBody(reducer.slice(match.index ?? 0), /^if\s*\(/);
+        const index = Number(match[1]);
+        if (body) addServerEffect(results, file, source, attackTexts[index] || '', body, 'attack', 'branch', helpers);
+      }
+
+      const powerTexts = extractArrayTexts(source, 'public powers', reducerStart);
+      for (const match of reducer.matchAll(/if\s*\(\s*WAS_POWER_USED\(effect,\s*(\d+),\s*this\)\s*\)\s*\{/g)) {
+        const body = extractBranchBody(reducer.slice(match.index ?? 0), /^if\s*\(/);
+        const index = Number(match[1]);
+        if (body) addServerEffect(results, file, source, powerTexts[index] || '', body, 'power', 'branch', helpers);
+      }
+    }
+
+    if (source.includes('extends TrainerCard')) {
+      const text = extractPublicText(source);
+      const trainerBody = extractBranchBody(reducer, /if\s*\(\s*WAS_TRAINER_USED\(effect,\s*this\)\s*\)\s*\{|if\s*\(\s*effect\s+instanceof\s+TrainerEffect\s*&&\s*effect\.trainerCard\s*===\s*this\s*\)\s*\{/);
+      if (trainerBody) {
+        addServerEffect(results, file, source, text, trainerBody, 'trainer', 'branch', helpers);
       } else {
-        branchBody = branchBody.filter(line => !/const player = effect\.player;/.test(line));
+        addServerEffect(results, file, source, text, reducer.trim().split('\n').filter(Boolean), 'trainer', 'full', helpers);
       }
-      const branchCode = branchBody.join('\n');
-      const imports = source
-        .split('\n')
-        .filter(line => line.startsWith('import ') &&
-          !line.includes('pokemon-card') &&
-          !line.includes('effects/effect'))
-        .map(normalizeGameImport)
-        .map(line => {
-          const importMatch = line.match(/^import \{ ([^}]+) \} from/);
-          if (!importMatch) return line;
-          const names = importMatch[1].split(',').map(name => name.trim())
-            .filter(name => sourceUsesName(branchCode, name));
-          return names.length > 0 ? line.replace(importMatch[1], names.join(', ')) : '';
-        })
-        .filter(Boolean);
-      if (!imports.some(line => line.includes('WAS_ATTACK_USED'))) {
-        imports.push(`import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';`);
-      }
-      results.push({
-        source: file.replace(`${serverSetsRoot}/`, ''),
-        attackText: attackTexts[index],
-        body: branchBody,
-        imports,
-        similarity: 1,
-      });
+    }
+
+    if (source.includes('extends EnergyCard')) {
+      const text = extractPublicText(source);
+      addServerEffect(results, file, source, text, reducer.trim().split('\n').filter(Boolean), 'energy', 'full', helpers);
     }
   }
   return results;
@@ -357,12 +703,14 @@ function tcgDataPlugin(): Plugin {
     configureServer(server) {
       server.middlewares.use(serveImplementedCardIds);
       server.middlewares.use(serveServerCardEffects);
+      server.middlewares.use(serveReprintCandidates);
       server.middlewares.use(serveSaveCard);
       server.middlewares.use(serveTcgData);
     },
     configurePreviewServer(server) {
       server.middlewares.use(serveImplementedCardIds);
       server.middlewares.use(serveServerCardEffects);
+      server.middlewares.use(serveReprintCandidates);
       server.middlewares.use(serveSaveCard);
       server.middlewares.use(serveTcgData);
     },

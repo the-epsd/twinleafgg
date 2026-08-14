@@ -4,54 +4,40 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { CoinFlipPrompt } from '../../../game/store/prompts/coin-flip-prompt';
-import { GameMessage } from '../../../game/game-message';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { StateUtils } from '../../../game/store/state-utils';
 import { PlayerType } from '../../../game/store/actions/play-card-action';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Wartortle extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom: string = 'Squirtle';
-
-  public cardType: CardType = CardType.WATER;
-
+  public cardType: CardType = W;
   public hp: number = 80;
-
-  public weakness = [{ type: CardType.GRASS }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: G }];
+  public retreat = [C, C];
 
   public attacks = [{
     name: 'Withdraw',
-    cost: [CardType.COLORLESS],
+    cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, prevent all damage done to this Pokemon ' +
-      'by attacks during your opponent\'s next turn.'
+    'by attacks during your opponent\'s next turn.'
   }, {
     name: 'Waterfall',
-    cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
+    cost: [W, W, C],
     damage: 60,
     text: ''
-
   }];
 
   public set: string = 'BCR';
-
   public name: string = 'Wartortle';
-
   public fullName: string = 'Wartortle BCR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '30';
 
   public readonly CLEAR_WITHDRAW_MARKER = 'CLEAR_WITHDRAW_MARKER';
-
   public readonly WITHDRAW_MARKER = 'WITHDRAW_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -60,9 +46,7 @@ export class Wartortle extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      return store.prompt(state, new CoinFlipPrompt(
-        player.id, GameMessage.COIN_FLIP
-      ), flipResult => {
+      return COIN_FLIP_PROMPT(store, state, player, flipResult => {
         if (flipResult) {
           player.active.marker.addMarker(this.WITHDRAW_MARKER, this);
           opponent.marker.addMarker(this.CLEAR_WITHDRAW_MARKER, this);

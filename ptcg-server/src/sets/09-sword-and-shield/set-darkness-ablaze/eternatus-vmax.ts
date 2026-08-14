@@ -5,14 +5,17 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { GameError, GameMessage, PlayerType, PowerType } from '../../../game';
-import { CheckPokemonTypeEffect, CheckTableStateEffect } from '../../../game/store/effects/check-effects';
+import {
+  CheckPokemonTypeEffect,
+  CheckTableStateEffect,
+} from '../../../game/store/effects/check-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class EternatusVMAX extends PokemonCard {
   public stage: Stage = Stage.VMAX;
   public evolvesFrom = 'Eternatus V';
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public cardType: CardType = D;
   public hp: number = 340;
   public weakness = [{ type: F }];
@@ -22,16 +25,19 @@ export class EternatusVMAX extends PokemonCard {
     {
       name: 'Eternal Zone',
       powerType: PowerType.ABILITY,
-      text: 'If all of your Pokémon in play are [D] type, you can have up to 8 Pokémon on your Bench, and you can\'t put non-[D] Pokémon into play. (If this Ability stops working, discard Pokémon from your Bench until you have 5.)'
-    }];
+      text: "If all of your Pokémon in play are [D] type, you can have up to 8 Pokémon on your Bench, and you can't put non-[D] Pokémon into play. (If this Ability stops working, discard Pokémon from your Bench until you have 5.)",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Dread End',
-    cost: [D, C],
-    damage: 30,
-    damageCalculation: 'x',
-    text: 'This attack does 30 damage for each of your [D] Pokémon in play.'
-  }];
+  public attacks = [
+    {
+      name: 'Dread End',
+      cost: [D, C],
+      damage: 30,
+      damageCalculation: 'x',
+      text: 'This attack does 30 damage for each of your [D] Pokémon in play.',
+    },
+  ];
 
   public set: string = 'DAA';
   public name: string = 'Eternatus VMAX';
@@ -47,11 +53,15 @@ export class EternatusVMAX extends PokemonCard {
     if (effect instanceof CheckTableStateEffect) {
       effect.benchSizes = state.players.map((player, index) => {
         try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
+          const stub = new PowerEffect(
+            player,
+            {
+              name: 'test',
+              powerType: PowerType.ABILITY,
+              text: '',
+            },
+            this,
+          );
           store.reduceEffect(state, stub);
         } catch {
           if (!player.marker.hasMarker(this.ETERNATUS_EXPANDED_BENCH, this)) {
@@ -64,7 +74,11 @@ export class EternatusVMAX extends PokemonCard {
         let isEternInPlay = false;
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
           const pokemon = cardList.getPokemonCard();
-          if (!!pokemon && pokemon.name === 'Eternatus VMAX' && pokemon.powers.map(p => p.name).includes(this.powers[0].name)) {
+          if (
+            !!pokemon &&
+            pokemon.name === 'Eternatus VMAX' &&
+            pokemon.powers.map((p) => p.name).includes(this.powers[0].name)
+          ) {
             isEternInPlay = true;
           }
         });
@@ -87,7 +101,7 @@ export class EternatusVMAX extends PokemonCard {
           darkPokemon++;
         }
 
-        player.bench.forEach(benchSpot => {
+        player.bench.forEach((benchSpot) => {
           if (benchSpot.cards.length > 0) {
             pokemonInPlay++;
             const benchedType = new CheckPokemonTypeEffect(benchSpot);
@@ -115,7 +129,10 @@ export class EternatusVMAX extends PokemonCard {
       });
     }
 
-    if (effect instanceof PlayPokemonEffect && effect.player.marker.hasMarker(this.ETERNATUS_EXPANDED_BENCH, this)) {
+    if (
+      effect instanceof PlayPokemonEffect &&
+      effect.player.marker.hasMarker(this.ETERNATUS_EXPANDED_BENCH, this)
+    ) {
       // trying to block non-dark types from being benched (this might still allow trainer to put in non-dark types)
       if (effect.pokemonCard.cardType !== D) {
         throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
@@ -134,7 +151,7 @@ export class EternatusVMAX extends PokemonCard {
         darksInPlay++;
       }
 
-      player.bench.forEach(benchSpot => {
+      player.bench.forEach((benchSpot) => {
         if (benchSpot.cards.length > 0) {
           const benchedType = new CheckPokemonTypeEffect(benchSpot);
           store.reduceEffect(state, benchedType);

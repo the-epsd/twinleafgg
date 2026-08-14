@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Beartic extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Cubchoo';
   public cardType: CardType = W;
@@ -23,14 +23,14 @@ export class Beartic extends PokemonCard {
       cost: [W, C],
       damage: 20,
       damageCalculation: 'x',
-      text: 'Does 20 damage times the number of damage counters on this Pokémon.'
+      text: 'Does 20 damage times the number of damage counters on this Pokémon.',
     },
     {
       name: 'Glacier Drop',
       cost: [W, W, C],
       damage: 90,
-      text: 'Discard the top card of your opponent\'s deck.'
-    }
+      text: "Discard the top card of your opponent's deck.",
+    },
   ];
 
   public set: string = 'PLS';

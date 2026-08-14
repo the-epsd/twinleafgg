@@ -17,21 +17,18 @@ export class Zapdos extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Random Spark',
-      cost: [L, C, C],
-      damage: 0,
-      text: 'This attack does 50 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    },
-    {
-      name: 'Thundering Hurricane',
-      cost: [L, C, C, C],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 50 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Random Spark',
+    cost: [L, C, C],
+    damage: 0,
+    text: 'This attack does 50 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }, {
+    name: 'Thundering Hurricane',
+    cost: [L, C, C, C],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 50 damage times the number of heads.'
+  }];
 
   public set: string = 'LTR';
   public setNumber: string = '46';

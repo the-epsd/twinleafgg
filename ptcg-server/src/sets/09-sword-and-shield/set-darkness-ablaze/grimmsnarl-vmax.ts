@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 
 export class GrimmsnarlVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Grimmsnarl V';
   public cardType: CardType = D;
@@ -24,8 +24,8 @@ export class GrimmsnarlVmax extends PokemonCard {
       cost: [D, D, D],
       damage: 170,
       damageCalculation: '+',
-      text: 'This attack does 50 more damage for each extra [D] Energy attached to this Pokémon (in addition to this attack\'s cost). You can\'t add more than 100 damage in this way.'
-    }
+      text: "This attack does 50 more damage for each extra [D] Energy attached to this Pokémon (in addition to this attack's cost). You can't add more than 100 damage in this way.",
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -45,8 +45,11 @@ export class GrimmsnarlVmax extends PokemonCard {
       store.reduceEffect(state, checkEnergy);
 
       // Count total [D] energy attached
-      const darkCount = checkEnergy.energyMap.reduce((sum, em) =>
-        sum + em.provides.filter(t => t === CardType.DARK || t === CardType.ANY).length, 0);
+      const darkCount = checkEnergy.energyMap.reduce(
+        (sum, em) =>
+          sum + em.provides.filter((t) => t === CardType.DARK || t === CardType.ANY).length,
+        0,
+      );
 
       // Attack cost requires 3 [D], extra is beyond that
       const extraDark = Math.max(0, darkCount - 3);

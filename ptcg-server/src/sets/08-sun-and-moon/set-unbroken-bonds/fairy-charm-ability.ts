@@ -19,7 +19,8 @@ export class FairyCharmAbility extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fairy Charm Ability';
   public fullName: string = 'Fairy Charm Ability UNB';
-  public text: string = 'Prevent all damage done to the Fairy Pokémon this card is attached to by attacks from your opponent\'s Pokémon-GX and Pokémon-EX that have Abilities.';
+  public text: string =
+    "Prevent all damage done to the Fairy Pokémon this card is attached to by attacks from your opponent's Pokémon-GX and Pokémon-EX that have Abilities.";
 
   // Ref: set-lost-thunder/fairy-charm-psychic.ts (Fairy Charm tool damage prevention pattern)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -39,9 +40,15 @@ export class FairyCharmAbility extends TrainerCard {
 
       // Check if attacking Pokemon is GX or EX with an Ability
       const sourceCard = effect.source.getPokemonCard();
-      if (sourceCard && (sourceCard.tags.includes(CardTag.POKEMON_GX) || sourceCard.tags.includes(CardTag.POKEMON_EX))) {
+      if (
+        sourceCard &&
+        (sourceCard.hasTag(CardTag.POKEMON_GX) || sourceCard.hasTag(CardTag.POKEMON_EX))
+      ) {
         // Check if the attacking Pokemon has an Ability
-        if (sourceCard instanceof PokemonCard && sourceCard.powers.some(p => p.powerType === PowerType.ABILITY)) {
+        if (
+          sourceCard instanceof PokemonCard &&
+          sourceCard.powers.some((p) => p.powerType === PowerType.ABILITY)
+        ) {
           effect.damage = 0;
         }
       }

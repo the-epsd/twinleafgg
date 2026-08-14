@@ -3,15 +3,24 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  EnergyType,
+  SuperType,
+} from '../../../game/store/card/card-types';
 import { GameMessage, PlayerType, SlotType, EnergyCard, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
-import { WAS_ATTACK_USED, DISCARD_TOP_X_OF_OPPONENTS_DECK } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  DISCARD_TOP_X_OF_OPPONENTS_DECK,
+} from '../../../game/store/prefabs/prefabs';
 
 export class HoundoomEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = R;
   public hp: number = 170;
@@ -23,14 +32,14 @@ export class HoundoomEx extends PokemonCard {
       name: 'Melting Horn',
       cost: [R],
       damage: 0,
-      text: 'Discard the top 2 cards of your opponent\'s deck.'
+      text: "Discard the top 2 cards of your opponent's deck.",
     },
     {
       name: 'Grand Flame',
       cost: [R, R],
       damage: 50,
-      text: 'Attach a [R] Energy card from your discard pile to 1 of your Benched Pokémon.'
-    }
+      text: 'Attach a [R] Energy card from your discard pile to 1 of your Benched Pokémon.',
+    },
   ];
 
   public set: string = 'BKT';
@@ -51,52 +60,69 @@ export class HoundoomEx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      const hasBench = player.bench.some(b => b.cards.length > 0);
+      const hasBench = player.bench.some((b) => b.cards.length > 0);
       if (!hasBench) {
         return state;
       }
 
-      const hasFireEnergy = player.discard.cards.some(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.FIRE)
+      const hasFireEnergy = player.discard.cards.some(
+        (c) =>
+          c instanceof EnergyCard &&
+          c.energyType === EnergyType.BASIC &&
+          c.provides.includes(CardType.FIRE),
       );
 
       if (!hasFireEnergy) {
         return state;
       }
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false }
-      ), targets => {
-        if (!targets || targets.length === 0) {
-          return state;
-        }
-
-        const target = targets[0];
-
-        const blocked: number[] = [];
-        player.discard.cards.forEach((card, index) => {
-          if (!(card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.provides.includes(CardType.FIRE))) {
-            blocked.push(index);
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (targets) => {
+          if (!targets || targets.length === 0) {
+            return state;
           }
-        });
 
-        return store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_ATTACH,
-          player.discard,
-          { superType: SuperType.ENERGY },
-          { min: 1, max: 1, allowCancel: false, blocked }
-        ), selected => {
-          const cards = selected || [];
-          cards.forEach(card => {
-            player.discard.moveCardTo(card, target);
+          const target = targets[0];
+
+          const blocked: number[] = [];
+          player.discard.cards.forEach((card, index) => {
+            if (
+              !(
+                card instanceof EnergyCard &&
+                card.energyType === EnergyType.BASIC &&
+                card.provides.includes(CardType.FIRE)
+              )
+            ) {
+              blocked.push(index);
+            }
           });
-        });
-      });
+
+          return store.prompt(
+            state,
+            new ChooseCardsPrompt(
+              player,
+              GameMessage.CHOOSE_CARD_TO_ATTACH,
+              player.discard,
+              { superType: SuperType.ENERGY },
+              { min: 1, max: 1, allowCancel: false, blocked },
+            ),
+            (selected) => {
+              const cards = selected || [];
+              cards.forEach((card) => {
+                player.discard.moveCardTo(card, target);
+              });
+            },
+          );
+        },
+      );
     }
 
     return state;

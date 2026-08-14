@@ -18,8 +18,7 @@ export class Toxicroak extends PokemonCard {
     cost: [P],
     damage: 20,
     text: 'The Defending Pokémon is now Poisoned. Flip a coin. If heads, the Defending Pokémon is now Paralyzed and Poisoned.'
-  },
-  {
+  }, {
     name: 'Slash',
     cost: [P, C, C],
     damage: 60,

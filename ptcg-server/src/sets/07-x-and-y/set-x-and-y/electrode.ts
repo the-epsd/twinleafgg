@@ -20,20 +20,17 @@ export class Electrode extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Eerie Impulse',
-      cost: [L],
-      damage: 0,
-      text: 'Flip a coin. If heads, discard an Energy attached to 1 of your opponent\'s Pokémon.'
-    },
-    {
-      name: 'Rollout',
-      cost: [C, C],
-      damage: 40,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Eerie Impulse',
+    cost: [L],
+    damage: 0,
+    text: 'Flip a coin. If heads, discard an Energy attached to 1 of your opponent\'s Pokémon.'
+  }, {
+    name: 'Rollout',
+    cost: [C, C],
+    damage: 40,
+    text: ''
+  }];
 
   public set: string = 'XY';
   public setNumber: string = '45';

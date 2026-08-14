@@ -17,21 +17,18 @@ export class AlolanRaticate extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Evil Orders',
-      cost: [C, C],
-      damage: 0,
-      text: 'Search your deck for a number of cards up to the number of your Benched Pokémon and put them into your hand. Then, shuffle your deck.'
-    },
-    {
-      name: 'Endeavor',
-      cost: [D, C, C],
-      damage: 60,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 30 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Evil Orders',
+    cost: [C, C],
+    damage: 0,
+    text: 'Search your deck for a number of cards up to the number of your Benched Pokémon and put them into your hand. Then, shuffle your deck.'
+  }, {
+    name: 'Endeavor',
+    cost: [D, C, C],
+    damage: 60,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 30 more damage for each heads.'
+  }];
 
   public set: string = 'SUM';
   public setNumber: string = '77';

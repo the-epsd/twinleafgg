@@ -23,14 +23,12 @@ export class Noivern extends PokemonCard {
     text: 'If any damage is done to this Pokémon by attacks, flip a coin. If heads, prevent that damage.'
   }];
 
-  public attacks = [
-    {
-      name: 'Boomburst',
-      cost: [P, D, C],
-      damage: 0,
-      text: 'This attack does 30 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
-  ];
+  public attacks = [{
+    name: 'Boomburst',
+    cost: [P, D, C],
+    damage: 0,
+    text: 'This attack does 30 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }];
 
   public set: string = 'FFI';
   public setNumber: string = '77';

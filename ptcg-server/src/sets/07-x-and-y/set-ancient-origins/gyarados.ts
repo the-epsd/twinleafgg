@@ -18,21 +18,18 @@ export class Gyarados extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Berserker Splash',
-      cost: [W, C, C],
-      damage: 80,
-      text: 'This attack does 10 damage to each Benched Pokémon (both yours and your opponent\'s). (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    },
-    {
-      name: 'Aqua Tail',
-      cost: [W, C, C, C],
-      damage: 90,
-      damageCalculation: '+',
-      text: 'Flip a coin for each [W] Energy attached to this Pokémon. This attack does 30 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Berserker Splash',
+    cost: [W, C, C],
+    damage: 80,
+    text: 'This attack does 10 damage to each Benched Pokémon (both yours and your opponent\'s). (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }, {
+    name: 'Aqua Tail',
+    cost: [W, C, C, C],
+    damage: 90,
+    damageCalculation: '+',
+    text: 'Flip a coin for each [W] Energy attached to this Pokémon. This attack does 30 more damage for each heads.'
+  }];
 
   public set: string = 'AOR';
   public setNumber: string = '20';

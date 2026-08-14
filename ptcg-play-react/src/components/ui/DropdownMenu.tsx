@@ -9,6 +9,7 @@ import {
   type ReactNode,
 } from 'react';
 import { cn } from '../../utils/cn';
+import { playSfx } from '../../sfx';
 import styles from './DropdownMenu.module.css';
 
 export type DropdownMenuItem = {
@@ -110,12 +111,15 @@ export function DropdownMenu({
 
   const setOpen = useCallback(
     (next: boolean) => {
+      if (next && !open) {
+        playSfx('uiDropnav');
+      }
       if (!isOpenControlled) {
         setOpenUncontrolled(next);
       }
       onOpenChange?.(next);
     },
-    [isOpenControlled, onOpenChange],
+    [isOpenControlled, onOpenChange, open],
   );
 
   const setActiveIndex = useCallback(

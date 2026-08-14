@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Buneary extends PokemonCard {
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
   public hp: number = 50;
@@ -22,11 +22,12 @@ export class Buneary extends PokemonCard {
       cost: [C, C],
       damage: 20,
       damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 20 damage for each heads.'
-    }
+      text: 'Flip 2 coins. This attack does 20 damage for each heads.',
+    },
   ];
 
   public regulationMark: string = 'E';
+
   public set: string = 'FST';
   public setNumber: string = '212';
   public cardImage: string = 'assets/cardback.png';
@@ -37,8 +38,8 @@ export class Buneary extends PokemonCard {
     // Attack 1: Double Kick
     // Ref: set-ultra-prism/lopunny.ts (Stompy Stomp - flip 2 coins, damage per heads)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 2, results => {
-        effect.damage = 20 * results.filter(r => r).length;
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 2, (results) => {
+        effect.damage = 20 * results.filter((r) => r).length;
       });
     }
 

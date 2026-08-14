@@ -16,20 +16,17 @@ export class Deino extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Headbutt',
-      cost: [D, C],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Surprise Attack',
-      cost: [D, D, C],
-      damage: 60,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Headbutt',
+    cost: [D, C],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Surprise Attack',
+    cost: [D, D, C],
+    damage: 60,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'CIN';
   public setNumber: string = '60';

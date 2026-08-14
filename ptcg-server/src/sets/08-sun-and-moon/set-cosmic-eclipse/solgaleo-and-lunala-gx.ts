@@ -1,11 +1,12 @@
-import { CardTag, CardType, PlayerType, PokemonCard, Stage, State, StoreLike } from '../../../game';
+import { CardTag, CardType, PokemonCard, Stage, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlaySupporterEffect } from '../../../game/store/effects/play-card-effects';
 import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE_AND_EFFECTS_TO_ALL_YOUR_POKEMON } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class SolgaleoLunalaGX extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
+  protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 270;
@@ -49,17 +50,14 @@ export class SolgaleoLunalaGX extends PokemonCard {
       }
     }
 
-    // Light of the Protector-GX — board-wide protect via pending flags on each Pokémon
+    // Light of the Protector-GX
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
 
       if (player.marker.hasMarker(this.PLAYED_LILLIES_FULL_FORCE_MARKER, this)) {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          cardList.preventDamageNextTurnPending = {};
-          cardList.preventEffectsOfAttacksNextTurnPending = {};
-        });
+        return PREVENT_DAMAGE_AND_EFFECTS_TO_ALL_YOUR_POKEMON(store, state, effect, this);
       }
     }
 

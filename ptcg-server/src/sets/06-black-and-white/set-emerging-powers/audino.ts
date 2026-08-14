@@ -14,21 +14,18 @@ export class Audino extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Powerful Slap',
-      cost: [C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 40 damage times the number of heads.'
-    },
-    {
-      name: 'Heal Pulse',
-      cost: [C, C, C],
-      damage: 0,
-      text: 'Heal 50 damage from 1 of your Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Powerful Slap',
+    cost: [C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 40 damage times the number of heads.'
+  }, {
+    name: 'Heal Pulse',
+    cost: [C, C, C],
+    damage: 0,
+    text: 'Heal 50 damage from 1 of your Pokémon.'
+  }];
 
   public set: string = 'EPO';
   public cardImage: string = 'assets/cardback.png';

@@ -1,22 +1,19 @@
 import { SuperType, EnergyType } from '../../../game/store/card/card-types';
-import { AttachEnergyPrompt, CoinFlipPrompt, EnergyCard, GameError, GameMessage, Player, PlayerType, SlotType, State, StateUtils, StoreLike, TrainerCard } from '../../../game';
+import { AttachEnergyPrompt, EnergyCard, GameError, GameMessage, Player, PlayerType, SlotType, State, StateUtils, StoreLike, TrainerCard } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 
-export class EnergySticker extends TrainerCard {
+import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
+export class EnergySticker extends TrainerCard {
   public superType = SuperType.TRAINER;
 
   public regulationMark = 'G';
 
   public set: string = 'MEW';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '159';
-
   public name: string = 'Energy Sticker';
-
   public fullName: string = 'Energy Sticker MEW';
 
   public text = 'Flip a coin. If heads, attach a Basic Energy card from your discard pile to 1 of your Benched Pokémon.';
@@ -35,13 +32,11 @@ export class EnergySticker extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
 
       const player = effect.player;
-
 
       const hasBench = player.bench.some(b => b.cards.length > 0);
       if (!hasBench) {
@@ -55,9 +50,7 @@ export class EnergySticker extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (!result) {
 
           return state;

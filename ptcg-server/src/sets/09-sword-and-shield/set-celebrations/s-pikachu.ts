@@ -15,15 +15,13 @@ export class SPikachu extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Birthday Surprise',
-      cost: [L, L],
-      damage: 30,
-      damageCalculation: '+',
-      text: 'If it\'s not your birthday, this attack does 30 damage. If it is your birthday, flip a coin. If heads, this attack does 30 damage plus 50 more damage; if tails, this attack does 30 damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Birthday Surprise',
+    cost: [L, L],
+    damage: 30,
+    damageCalculation: '+',
+    text: 'If it\'s not your birthday, this attack does 30 damage. If it is your birthday, flip a coin. If heads, this attack does 30 damage plus 50 more damage; if tails, this attack does 30 damage.'
+  }];
 
   public set: string = 'CEL';
   public setNumber: string = '24A';

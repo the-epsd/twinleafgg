@@ -12,21 +12,18 @@ export class Darmanitan extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Fire Fang',
-      cost: [R, C],
-      damage: 20,
-      text: 'The Defending Pokémon is now Burned.'
-    },
-    {
-      name: 'Thrash',
-      cost: [R, C, C],
-      damage: 70,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 more damage. If tails, this Pokémon does 20 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fire Fang',
+    cost: [R, C],
+    damage: 20,
+    text: 'The Defending Pokémon is now Burned.'
+  }, {
+    name: 'Thrash',
+    cost: [R, C, C],
+    damage: 70,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 20 more damage. If tails, this Pokémon does 20 damage to itself.'
+  }];
 
   public set: string = 'BLW';
   public cardImage: string = 'assets/cardback.png';

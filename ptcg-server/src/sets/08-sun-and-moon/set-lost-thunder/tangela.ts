@@ -14,20 +14,17 @@ export class Tangela extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Gentle Slap',
-      cost: [C, C],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Bind',
-      cost: [G, C, C],
-      damage: 40,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Gentle Slap',
+    cost: [C, C],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Bind',
+    cost: [G, C, C],
+    damage: 40,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'LOT';
   public setNumber: string = '1';

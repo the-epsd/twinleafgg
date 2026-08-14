@@ -14,7 +14,9 @@ import { COIN_FLIP_PROMPT, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 export class ApricornForest extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '118';
+
   public trainerType = TrainerType.STADIUM;
+
   public set = 'AQ';
   public name = 'Apricorn Forest';
   public fullName = 'Apricorn Forest AQ';

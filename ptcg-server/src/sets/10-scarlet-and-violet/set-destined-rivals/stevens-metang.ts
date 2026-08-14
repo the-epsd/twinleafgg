@@ -7,27 +7,29 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class StevensMetang extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public evolvesFrom: string = 'Steven\'s Beldum';
-  public tags: CardTag[] = [CardTag.STEVENS];
+  public evolvesFrom: string = "Steven's Beldum";
+  protected _tags = [CardTag.STEVENS];
   public cardType: CardType = M;
   public hp: number = 100;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Metal Slash',
-    cost: [M, C],
-    damage: 70,
-    text: 'During your next turn, this Pokémon can\'t attack.'
-  }];
+  public attacks = [
+    {
+      name: 'Metal Slash',
+      cost: [M, C],
+      damage: 70,
+      text: "During your next turn, this Pokémon can't attack.",
+    },
+  ];
 
   public regulationMark: string = 'I';
   public set: string = 'DRI';
   public setNumber: string = '144';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Steven\'s Metang';
-  public fullName: string = 'Steven\'s Metang DRI';
+  public name: string = "Steven's Metang";
+  public fullName: string = "Steven's Metang DRI";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Metal Slash

@@ -48,6 +48,12 @@ export type { TextFieldProps } from './ui/TextField';
 export { CheckboxField } from './ui/CheckboxField';
 export type { CheckboxFieldProps } from './ui/CheckboxField';
 
+export { SelectField } from './ui/SelectField';
+export type { SelectFieldProps } from './ui/SelectField';
+
+export { Modal } from './ui/Modal';
+export type { ModalProps } from './ui/Modal';
+
 export { FormAlert } from './ui/FormAlert';
 export type { FormAlertProps } from './ui/FormAlert';
 

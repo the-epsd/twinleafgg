@@ -4,14 +4,14 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
-import { CoinFlipPrompt } from '../../../game/store/prompts/coin-flip-prompt';
+
 import { GameMessage } from '../../../game/game-message';
 import { AbstractAttackEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { StateUtils } from '../../../game/store/state-utils';
 import { PlayerType, SlotType } from '../../../game/store/actions/play-card-action';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 function* useAquaJet(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -26,9 +26,7 @@ function* useAquaJet(next: Function, store: StoreLike, state: State,
   }
 
   let flipResult = false;
-  yield store.prompt(state, new CoinFlipPrompt(
-    player.id, GameMessage.COIN_FLIP
-  ), result => {
+  yield COIN_FLIP_PROMPT(store, state, player, result => {
     flipResult = result;
     next();
   });
@@ -53,51 +51,39 @@ function* useAquaJet(next: Function, store: StoreLike, state: State,
   });
 }
 
-
 export class Floatzel extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom: string = 'Buizel';
-
-  public cardType: CardType = CardType.WATER;
-
+  public cardType: CardType = W;
   public hp: number = 80;
-
   public weakness = [{
-    type: CardType.LIGHTNING,
+    type: L,
     value: 20
   }];
-
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Agility',
-    cost: [CardType.COLORLESS, CardType.COLORLESS],
+    cost: [C, C],
     damage: 20,
     text: 'Flip a coin. If heads, prevent all effects of an attack, ' +
-      'including damage, done to Floatzel during your opponent\'s next turn.'
+    'including damage, done to Floatzel during your opponent\'s next turn.'
   }, {
     name: 'Aqua Jet',
-    cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
+    cost: [W, W, C],
     damage: 60,
     text: 'Flip a coin. If heads, this attack does 10 damage to 1 ' +
-      'of your opponent\'s Benched Pokemon. (Don\'t apply Weakness ' +
-      'and Resistance for Benched Pokemon.)'
+    'of your opponent\'s Benched Pokemon. (Don\'t apply Weakness ' +
+    'and Resistance for Benched Pokemon.)'
   }];
 
   public set: string = 'GE';
-
   public name: string = 'Floatzel';
-
   public fullName: string = 'Floatzel GE';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '37';
 
   public readonly CLEAR_AGILITY_MARKER = 'CLEAR_AGILITY_MARKER';
-
   public readonly AGILITY_MARKER = 'AGILITY_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -105,9 +91,7 @@ export class Floatzel extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      state = store.prompt(state, new CoinFlipPrompt(
-        player.id, GameMessage.COIN_FLIP
-      ), flipResult => {
+      state = COIN_FLIP_PROMPT(store, state, player, flipResult => {
         if (flipResult) {
           player.active.marker.addMarker(this.AGILITY_MARKER, this);
           opponent.marker.addMarker(this.CLEAR_AGILITY_MARKER, this);

@@ -16,14 +16,12 @@ export class Gligar extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Stun Poison',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed and Poisoned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Stun Poison',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed and Poisoned.'
+  }];
 
   public set: string = 'ROS';
   public setNumber: string = '36';

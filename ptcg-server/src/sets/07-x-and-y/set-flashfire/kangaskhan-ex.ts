@@ -8,25 +8,27 @@ import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefa
 
 export class KangaskhanEX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public cardType: CardType = C;
   public hp: number = 180;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
 
-  public attacks = [{
-    name: 'Triple Draw',
-    cost: [C],
-    damage: 0,
-    text: 'Draw 3 cards.'
-  },
-  {
-    name: 'Kindred Kick',
-    cost: [C, C, C],
-    damage: 70,
-    damageCalculator: '+',
-    text: 'Flip a coin. If heads, this attack does 30 more damage.'
-  }];
+  public attacks = [
+    {
+      name: 'Triple Draw',
+      cost: [C],
+      damage: 0,
+      text: 'Draw 3 cards.',
+    },
+    {
+      name: 'Kindred Kick',
+      cost: [C, C, C],
+      damage: 70,
+      damageCalculator: '+',
+      text: 'Flip a coin. If heads, this attack does 30 more damage.',
+    },
+  ];
 
   public set: string = 'FLF';
   public cardImage: string = 'assets/cardback.png';
@@ -35,7 +37,6 @@ export class KangaskhanEX extends PokemonCard {
   public fullName: string = 'Kangaskhan-EX FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       DRAW_CARDS(store, state, effect.player, 3);
     }
@@ -46,5 +47,4 @@ export class KangaskhanEX extends PokemonCard {
 
     return state;
   }
-
 }

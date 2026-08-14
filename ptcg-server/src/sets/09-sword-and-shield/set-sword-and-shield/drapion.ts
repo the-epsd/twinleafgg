@@ -20,22 +20,20 @@ export class Drapion extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Hard Press',
-      cost: [D, C, C],
-      damage: 80,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Toxic Strike',
-      cost: [D, D, C, C],
-      damage: 130,
-      text: 'Your opponent\'s Active Pokémon is now Poisoned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Hard Press',
+    cost: [D, C, C],
+    damage: 80,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Toxic Strike',
+    cost: [D, D, C, C],
+    damage: 130,
+    text: 'Your opponent\'s Active Pokémon is now Poisoned.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'SSH';
   public setNumber: string = '122';
   public cardImage: string = 'assets/cardback.png';

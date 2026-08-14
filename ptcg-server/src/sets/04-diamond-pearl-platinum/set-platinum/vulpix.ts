@@ -7,27 +7,23 @@ import { COIN_FLIP_PROMPT, DRAW_CARDS, WAS_ATTACK_USED } from '../../../game/sto
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../../game/store/prefabs/attack-effects';
 
 export class Vulpix extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = R;
   public hp: number = 50;
   public weakness = [{ type: W, value: 10 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Reheat',
-      cost: [],
-      damage: 0,
-      text: 'Discard up to 2 Energy cards from your hand. For each card you discarded, draw 2 cards.'
-    },
-    {
-      name: 'Confuse Ray',
-      cost: [R, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
-    },
-  ];
+  public attacks = [{
+    name: 'Reheat',
+    cost: [],
+    damage: 0,
+    text: 'Discard up to 2 Energy cards from your hand. For each card you discarded, draw 2 cards.'
+  }, {
+    name: 'Confuse Ray',
+    cost: [R, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
+  }];
 
   public set: string = 'PL';
   public name: string = 'Vulpix';
@@ -67,11 +63,11 @@ export class Vulpix extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, (result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {
           YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED(store, state, effect);
         }
-      }));
+      });
     }
     return state;
   }

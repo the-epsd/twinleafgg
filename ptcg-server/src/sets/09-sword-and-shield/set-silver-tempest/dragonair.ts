@@ -14,22 +14,20 @@ export class Dragonair extends PokemonCard {
   public hp: number = 100;
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Wrap',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Surf',
-      cost: [W, L, C],
-      damage: 80,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Wrap',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Surf',
+    cost: [W, L, C],
+    damage: 80,
+    text: ''
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'SIT';
   public setNumber: string = '130';
   public cardImage: string = 'assets/cardback.png';

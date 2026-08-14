@@ -10,11 +10,13 @@ import { StoreLike } from '../../../game/store/store-like';
 
 export class SlumberingForest extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
+
   public set: string = 'UNM';
   public name: string = 'Slumbering Forest';
   public fullName: string = 'Slumbering Forest UNM';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '207';
+
   public text: string = 'If a Pokémon is Asleep, its owner flips 2 coins instead of 1 for that Special Condition between turns. If either of them is tails, that Pokémon is still Asleep.';
 
   public readonly SLUMBERING_MARKER = 'SLUMBERING_MARKER';

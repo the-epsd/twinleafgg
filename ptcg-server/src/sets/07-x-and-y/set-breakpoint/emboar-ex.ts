@@ -11,7 +11,7 @@ import { FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_MORE_DAMAGE_PER_HEADS } from '../.
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class EmboarEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = R;
   public hp: number = 180;
@@ -24,14 +24,14 @@ export class EmboarEx extends PokemonCard {
       cost: [R, C],
       damage: 20,
       damageCalculation: '+',
-      text: 'Flip a coin until you get tails. This attack does 20 more damage for each heads.'
+      text: 'Flip a coin until you get tails. This attack does 20 more damage for each heads.',
     },
     {
       name: 'Strong Flare',
       cost: [R, R, C, C],
       damage: 150,
-      text: 'Discard 2 Energy attached to this Pokémon.'
-    }
+      text: 'Discard 2 Energy attached to this Pokémon.',
+    },
   ];
 
   public set: string = 'BKP';

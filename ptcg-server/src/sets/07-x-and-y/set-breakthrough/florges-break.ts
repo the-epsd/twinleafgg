@@ -17,7 +17,7 @@ import {
 } from '../../../game/store/prefabs/prefabs';
 
 export class FlorgesBreak extends PokemonCard {
-  public tags = [CardTag.BREAK];
+  protected _tags = [CardTag.BREAK];
   public stage: Stage = Stage.BREAK;
   public evolvesFrom: string = 'Florges';
   public cardType: CardType = Y;

@@ -22,23 +22,21 @@ export class Raichu extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Thunder Shock',
-      cost: [L],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Ace Spark',
-      cost: [L, C, C],
-      damage: 100,
-      damageCalculation: '+',
-      text: 'If you have used your VSTAR Power, this attack does 120 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Thunder Shock',
+    cost: [L],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Ace Spark',
+    cost: [L, C, C],
+    damage: 100,
+    damageCalculation: '+',
+    text: 'If you have used your VSTAR Power, this attack does 120 more damage.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'LOR';
   public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';

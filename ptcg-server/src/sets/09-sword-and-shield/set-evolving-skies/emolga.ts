@@ -21,16 +21,15 @@ export class Emolga extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Thunder Shock',
-      cost: [L],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Thunder Shock',
+    cost: [L],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'EVS';
   public setNumber: string = '57';
   public cardImage: string = 'assets/cardback.png';

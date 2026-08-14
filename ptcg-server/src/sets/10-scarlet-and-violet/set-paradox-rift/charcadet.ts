@@ -2,12 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import {
-  WAS_ATTACK_USED,
-  COIN_FLIP_PROMPT,
-  PREVENT_DAMAGE,
-  PREVENT_EFFECTS_OF_ATTACKS,
-} from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Charcadet extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -21,8 +17,7 @@ export class Charcadet extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage from and effects of attacks done to this Pokémon.'
-  },
-  {
+  }, {
     name: 'Magma Punch',
     cost: [R, C],
     damage: 20,
@@ -30,6 +25,7 @@ export class Charcadet extends PokemonCard {
   }];
 
   public regulationMark: string = 'G';
+
   public set: string = 'PAR';
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';

@@ -12,21 +12,18 @@ export class Meowth extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Double Scratch',
-      cost: [C],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
-    },
-    {
-      name: 'Cat Kick',
-      cost: [C, C],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Double Scratch',
+    cost: [C],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
+  }, {
+    name: 'Cat Kick',
+    cost: [C, C],
+    damage: 20,
+    text: ''
+  }];
 
   public set: string = 'NXD';
   public setNumber: string = '80';

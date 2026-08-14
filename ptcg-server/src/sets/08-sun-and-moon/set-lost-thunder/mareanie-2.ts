@@ -15,21 +15,18 @@ export class Mareanie2 extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Peck',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Pin Missile',
-      cost: [P, C],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 10 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Peck',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Pin Missile',
+    cost: [P, C],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 10 damage for each heads.'
+  }];
 
   public set: string = 'LOT';
   public setNumber: string = '105';

@@ -11,14 +11,12 @@ export class Eevee extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Surprise Attack',
-      cost: [C],
-      damage: 20,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Surprise Attack',
+    cost: [C],
+    damage: 20,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'DEX';
   public setNumber: string = '83';

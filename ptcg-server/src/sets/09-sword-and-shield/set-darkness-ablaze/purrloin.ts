@@ -16,8 +16,7 @@ export class Purrloin extends PokemonCard {
     cost: [D],
     damage: 10,
     text: ''
-  },
-  {
+  }, {
     name: 'Fake Out',
     cost: [C, C],
     damage: 20,
@@ -25,7 +24,9 @@ export class Purrloin extends PokemonCard {
   }];
 
   public set: string = 'DAA';
+
   public regulationMark = 'D';
+
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '106';
   public name: string = 'Purrloin';

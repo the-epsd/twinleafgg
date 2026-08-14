@@ -1,7 +1,7 @@
-import { CardType, CoinFlipPrompt, GameMessage, PokemonCard, Stage, State, StoreLike } from '../../../game';
+import { CardType, PokemonCard, Stage, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { HealEffect } from '../../../game/store/effects/game-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Floragato extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -20,6 +20,7 @@ export class Floragato extends PokemonCard {
   }];
 
   public regulationMark: string = 'I';
+
   public set: string = 'JTG';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '17';
@@ -30,7 +31,7 @@ export class Floragato extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      return store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), flipResult => {
+      return COIN_FLIP_PROMPT(store, state, player, flipResult => {
         if (flipResult) {
           effect.damage += 30;
           store.reduceEffect(state, new HealEffect(effect.player, effect.source, 30));

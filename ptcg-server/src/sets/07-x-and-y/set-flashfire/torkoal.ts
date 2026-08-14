@@ -16,20 +16,17 @@ export class Torkoal extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Live Coal',
-      cost: [R],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Flamethrower',
-      cost: [R, R, C],
-      damage: 80,
-      text: 'Flip a coin. If tails, discard an Energy attached to this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Live Coal',
+    cost: [R],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Flamethrower',
+    cost: [R, R, C],
+    damage: 80,
+    text: 'Flip a coin. If tails, discard an Energy attached to this Pokémon.'
+  }];
 
   public set: string = 'FLF';
   public setNumber: string = '16';

@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class CopperajahVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Copperajah V';
   public cardType: CardType = M;
@@ -24,14 +24,14 @@ export class CopperajahVmax extends PokemonCard {
       cost: [M, M, C],
       damage: 100,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is a Basic Pokémon, this attack does 100 more damage.'
+      text: "If your opponent's Active Pokémon is a Basic Pokémon, this attack does 100 more damage.",
     },
     {
       name: 'G-Max Hammer',
       cost: [M, M, M, C],
       damage: 240,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'D';

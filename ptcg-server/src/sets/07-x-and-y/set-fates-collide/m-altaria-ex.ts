@@ -8,10 +8,11 @@ import { PlayerType, StoreLike, State } from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { HealEffect } from '../../../game/store/effects/game-effects';
-import { MEGA_EVOLUTION_END_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { MEGA_EVOLUTION_END_TURN } from '../../../game/store/prefabs/tool-prefabs';
 
 export class MAltariaEx extends PokemonCard {
-  public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
+  protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Altaria-EX';
   public cardType: CardType = Y;
@@ -20,13 +21,15 @@ export class MAltariaEx extends PokemonCard {
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Mist Purge',
-    cost: [Y, C, C],
-    damage: 100,
-    damageCalculation: '+',
-    text: 'If this Pokémon has any Special Energy attached to it, this attack does 30 more damage and heal 30 damage from each of your Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'Mist Purge',
+      cost: [Y, C, C],
+      damage: 100,
+      damageCalculation: '+',
+      text: 'If this Pokémon has any Special Energy attached to it, this attack does 30 more damage and heal 30 damage from each of your Pokémon.',
+    },
+  ];
 
   public set: string = 'FCO';
   public setNumber: string = '69';
@@ -42,7 +45,7 @@ export class MAltariaEx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const hasSpecial = player.active.cards.some(
-        c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL
+        (c) => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL,
       );
 
       if (hasSpecial) {

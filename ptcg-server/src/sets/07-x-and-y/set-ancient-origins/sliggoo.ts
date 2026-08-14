@@ -15,20 +15,17 @@ export class Sliggoo extends PokemonCard {
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Bubble',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Melt',
-      cost: [W, Y],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Bubble',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Melt',
+    cost: [W, Y],
+    damage: 20,
+    text: ''
+  }];
 
   public set: string = 'AOR';
   public setNumber: string = '59';

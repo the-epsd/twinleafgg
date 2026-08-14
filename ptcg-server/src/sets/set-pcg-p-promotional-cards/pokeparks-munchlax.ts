@@ -1,4 +1,5 @@
-import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, PREVENT_DAMAGE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE } from '../../game/store/prefabs/effect-of-attack-prefabs';
 import { State, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
@@ -16,8 +17,7 @@ export class PokeParksMunchlax extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, prevent all damage done to this Pokémon during your opponent\'s next turn.'
-  },
-  {
+  }, {
     name: 'Body Slam',
     cost: [C, C, C],
     damage: 30,

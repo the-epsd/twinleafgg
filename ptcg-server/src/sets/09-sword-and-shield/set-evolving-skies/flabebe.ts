@@ -8,7 +8,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Flabebe extends PokemonCard {
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 40;
@@ -20,8 +20,8 @@ export class Flabebe extends PokemonCard {
       name: 'Hypnotic Gaze',
       cost: [P],
       damage: 0,
-      text: 'Your opponent\'s Active Pokémon is now Asleep.'
-    }
+      text: "Your opponent's Active Pokémon is now Asleep.",
+    },
   ];
 
   public regulationMark: string = 'E';

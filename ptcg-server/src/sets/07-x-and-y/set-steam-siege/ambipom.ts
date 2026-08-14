@@ -17,22 +17,19 @@ export class Ambipom extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Furry Chance',
-      cost: [C],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'Discard the top card of your opponent\'s deck. If that card is an Energy card, this attack does 60 more damage.'
-    },
-    {
-      name: 'Double Hit',
-      cost: [C, C, C],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 50 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Furry Chance',
+    cost: [C],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Discard the top card of your opponent\'s deck. If that card is an Energy card, this attack does 60 more damage.'
+  }, {
+    name: 'Double Hit',
+    cost: [C, C, C],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 50 damage times the number of heads.'
+  }];
 
   public set: string = 'STS';
   public setNumber: string = '91';

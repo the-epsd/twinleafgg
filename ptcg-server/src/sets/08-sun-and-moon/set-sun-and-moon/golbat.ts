@@ -16,21 +16,18 @@ export class Golbat extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Super Poison Breath',
-      cost: [P],
-      damage: 0,
-      text: 'Your opponent\'s Active Pokémon is now Poisoned.'
-    },
-    {
-      name: 'Acrobatics',
-      cost: [C, C],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Super Poison Breath',
+    cost: [P],
+    damage: 0,
+    text: 'Your opponent\'s Active Pokémon is now Poisoned.'
+  }, {
+    name: 'Acrobatics',
+    cost: [C, C],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
+  }];
 
   public set: string = 'SUM';
   public setNumber: string = '55';

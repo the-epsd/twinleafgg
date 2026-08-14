@@ -6,9 +6,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class NsKlang extends PokemonCard {
-  public tags = [CardTag.NS];
+  protected _tags = [CardTag.NS];
   public stage: Stage = Stage.STAGE_1;
-  public evolvesFrom: string = 'N\'s Klink';
+  public evolvesFrom: string = "N's Klink";
   public cardType: CardType = M;
   public hp: number = 160;
   public weakness = [{ type: R }];
@@ -20,7 +20,7 @@ export class NsKlang extends PokemonCard {
       cost: [C],
       damage: 20,
       damageCalculation: 'x',
-      text: 'Your opponent\'s Active Pokémon is now Confused.'
+      text: "Your opponent's Active Pokémon is now Confused.",
     },
     { name: 'Confront', cost: [M, C], damage: 40, text: '' },
   ];
@@ -29,11 +29,10 @@ export class NsKlang extends PokemonCard {
   public regulationMark = 'I';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '104';
-  public name: string = 'N\'s Klang';
-  public fullName: string = 'N\'s Klang JTG';
+  public name: string = "N's Klang";
+  public fullName: string = "N's Klang JTG";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -41,5 +40,4 @@ export class NsKlang extends PokemonCard {
     }
     return state;
   }
-
 }

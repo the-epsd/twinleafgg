@@ -5,7 +5,8 @@ import { StoreLike, State, GameMessage, AttachEnergyPrompt, CardList, EnergyCard
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { BLOCK_IF_HAS_SPECIAL_CONDITION, WAS_POWER_USED, WAS_ATTACK_USED, COIN_FLIP_PROMPT, DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_IF_HAS_SPECIAL_CONDITION, WAS_POWER_USED, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Walrein extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;

@@ -17,8 +17,7 @@ export class Tepig2 extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Burned.'
-  },
-  {
+  }, {
     name: 'Firebreathing',
     cost: [R, C],
     damage: 10,

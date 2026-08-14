@@ -15,14 +15,12 @@ export class Swablu extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Glare and Peck',
-      cost: [C, C],
-      damage: 10,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Glare and Peck',
+    cost: [C, C],
+    damage: 10,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'LTR';
   public setNumber: string = '103';

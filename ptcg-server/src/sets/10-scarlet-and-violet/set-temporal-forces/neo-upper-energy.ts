@@ -5,11 +5,9 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 
-
 export class NeoUpperEnergy extends EnergyCard {
-
   public provides: CardType[] = [CardType.COLORLESS];
-  public tags = [CardTag.ACE_SPEC];
+  protected _tags = [CardTag.ACE_SPEC];
   public energyType = EnergyType.SPECIAL;
   public regulationMark = 'H';
   public set: string = 'TEF';

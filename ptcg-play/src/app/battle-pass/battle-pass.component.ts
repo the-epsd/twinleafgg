@@ -204,7 +204,7 @@ export class BattlePassComponent implements OnInit {
   }
 
   public addDebugExp(): void {
-    this.battlePassService.addDebugExp(100)
+    this.battlePassService.addDebugExp(100, this.selectedSeasonId || undefined)
       .pipe(untilDestroyed(this))
       .subscribe({
         next: () => {

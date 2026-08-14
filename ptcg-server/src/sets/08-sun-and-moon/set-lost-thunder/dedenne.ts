@@ -17,20 +17,17 @@ export class Dedenne extends PokemonCard {
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Nuzzle',
-      cost: [L],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Nuzzle Shot',
-      cost: [L],
-      damage: 0,
-      text: 'This attack does 10 damage for each of your Pokémon in play that has the Nuzzle attack to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
-  ];
+  public attacks = [{
+    name: 'Nuzzle',
+    cost: [L],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Nuzzle Shot',
+    cost: [L],
+    damage: 0,
+    text: 'This attack does 10 damage for each of your Pokémon in play that has the Nuzzle attack to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }];
 
   public set: string = 'LOT';
   public setNumber: string = '84';

@@ -13,11 +13,13 @@ import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class LifeHerb extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
+
   public set: string = 'CES';
   public setNumber: string = '136';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Life Herb';
   public fullName: string = 'Life Herb CES';
+
   public text: string = 'Flip a coin. If heads, heal 60 damage and remove all Special Conditions from 1 of your Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

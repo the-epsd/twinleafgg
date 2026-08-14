@@ -6,11 +6,14 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH,
+} from '../../../game/store/prefabs/prefabs';
 import { THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../../game/store/prefabs/prefabs';
 
 export class RillaboomV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = G;
   public hp: number = 220;
@@ -22,14 +25,14 @@ export class RillaboomV extends PokemonCard {
       name: 'Forest Feast',
       cost: [G],
       damage: 0,
-      text: 'Search your deck for up to 2 Basic Grass Pokémon and put them onto your Bench. Then, shuffle your deck.'
+      text: 'Search your deck for up to 2 Basic Grass Pokémon and put them onto your Bench. Then, shuffle your deck.',
     },
     {
       name: 'Wood Hammer',
       cost: [G, G, G, C],
       damage: 220,
-      text: 'This Pokémon also does 30 damage to itself.'
-    }
+      text: 'This Pokémon also does 30 damage to itself.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -45,9 +48,12 @@ export class RillaboomV extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, player,
+      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(
+        store,
+        state,
+        player,
         { stage: Stage.BASIC, cardType: CardType.GRASS },
-        { min: 0, max: 2, allowCancel: true }
+        { min: 0, max: 2, allowCancel: true },
       );
     }
 

@@ -15,20 +15,17 @@ export class Palpitoad extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Vibration',
-      cost: [C, C],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Suspicious Soundwave',
-      cost: [W, C, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Vibration',
+    cost: [C, C],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Suspicious Soundwave',
+    cost: [W, C, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
+  }];
 
   public set: string = 'PLF';
   public setNumber: string = '25';

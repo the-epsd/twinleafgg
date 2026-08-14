@@ -10,7 +10,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Emboar extends PokemonCard {
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Pignite';
   public cardType: CardType = R;
@@ -18,19 +18,21 @@ export class Emboar extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C, C, C];
 
-  public powers = [{
-    name: 'Fighting Fury Stance',
-    powerType: PowerType.ABILITY,
-    text: 'Your Single Strike Pokémon\'s attacks do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: 'Fighting Fury Stance',
+      powerType: PowerType.ABILITY,
+      text: "Your Single Strike Pokémon's attacks do 30 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Heat Crash',
       cost: [R, R, C, C],
       damage: 130,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -43,12 +45,15 @@ export class Emboar extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Fighting Fury Stance (passive - Single Strike Pokemon do 30 more damage to opponent's Active)
     // Ref: set-unbroken-bonds/incineroar.ts (Strong Cheer - DealDamageEffect damage boost for all Pokemon)
-    if (effect instanceof DealDamageEffect && effect.target === StateUtils.getOpponent(state, effect.player).active) {
+    if (
+      effect instanceof DealDamageEffect &&
+      effect.target === StateUtils.getOpponent(state, effect.player).active
+    ) {
       const player = effect.player;
 
       // Check if the attacking Pokemon has the SINGLE_STRIKE tag
       const attackingPokemon = effect.source.getPokemonCard();
-      if (!attackingPokemon || !attackingPokemon.tags.includes(CardTag.SINGLE_STRIKE)) {
+      if (!attackingPokemon || !attackingPokemon.hasTag(CardTag.SINGLE_STRIKE)) {
         return state;
       }
 

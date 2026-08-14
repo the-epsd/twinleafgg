@@ -18,8 +18,7 @@ export class Voltorb extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Discard an Energy card attached to Voltorb. The Defending Pokémon is now Confused.'
-  },
-  {
+  }, {
     name: 'Thunder Wave',
     cost: [C],
     damage: 10,

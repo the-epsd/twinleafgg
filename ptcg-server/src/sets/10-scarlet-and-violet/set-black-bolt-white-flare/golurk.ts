@@ -19,8 +19,7 @@ export class Golurk extends PokemonCard {
     damage: 80,
     damageCalculation: 'x',
     text: 'Flip 2 coins. This attack does 80 damage for each heads.'
-  },
-  {
+  }, {
     name: 'Golurk Hammer',
     cost: [P, P, C, C, C],
     damage: 200,
@@ -28,6 +27,7 @@ export class Golurk extends PokemonCard {
   }];
 
   public regulationMark = 'I';
+
   public set: string = 'BLK';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '43';

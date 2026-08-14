@@ -1,3 +1,4 @@
+import { Duraludon } from './duraludon';
 import { Gligar } from './gligar';
 import { Gliscor } from './gliscor';
 import { Ludicolo2PFL, Zacian2PFL, Toxtricity2PFL, Wigglytuff2PFL, MegaCharizardXex2PFL, Oricorioex2PFL, Rotomex2PFL, MegaSharpedoex2PFL, MegaLopunnyex2PFL, BattleColosseum2PFL, Dawn2PFL, Firebreather2PFL, GrimsleysGambit2PFL, SacredCharm2PFL, SwitchPFL, IgnitionEnergyPFL, MegaCharizardXex3PFL, Rotomex3PFL, MegaSharpedoex3PFL, MegaLopunnyex3PFL, Dawn3PFL, Blowtorch2PFL, MegaCharizardXex4PFL, FlygonIR, AmbipomIR } from './other-prints';
@@ -70,6 +71,7 @@ export const setPhantasmalFlames: Card[] = [
   new Darmanitan(),
   new Darumaka(),
   new Dawn(),
+  new Duraludon(),
   new Empoleonex(),
   new Firebreather(),
   new Flygon(),

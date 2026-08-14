@@ -19,20 +19,17 @@ export class Unfezant2 extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Feather Dance',
-      cost: [C, C],
-      damage: 0,
-      text: 'During your next turn, each of this Pokémon\'s attacks does 80 more damage (before applying Weakness and Resistance).'
-    },
-    {
-      name: 'Sky Attack',
-      cost: [C, C, C],
-      damage: 120,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Feather Dance',
+    cost: [C, C],
+    damage: 0,
+    text: 'During your next turn, each of this Pokémon\'s attacks does 80 more damage (before applying Weakness and Resistance).'
+  }, {
+    name: 'Sky Attack',
+    cost: [C, C, C],
+    damage: 120,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'ROS';
   public setNumber: string = '81';

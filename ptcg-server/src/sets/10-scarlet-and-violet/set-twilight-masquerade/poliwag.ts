@@ -3,7 +3,6 @@ import { Effect } from '../../../game/store/effects/effect';
 import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Poliwag extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 60;
@@ -22,7 +21,9 @@ export class Poliwag extends PokemonCard {
   ];
 
   public set: string = 'TWM';
+
   public regulationMark: string = 'H';
+
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '41';
   public name: string = 'Poliwag';

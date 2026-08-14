@@ -16,16 +16,15 @@ export class Sawk extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Sweep the Leg',
-      cost: [F],
-      damage: 30,
-      text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Sweep the Leg',
+    cost: [F],
+    damage: 30,
+    text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'BRS';
   public setNumber: string = '81';
   public cardImage: string = 'assets/cardback.png';

@@ -20,20 +20,17 @@ export class Tentacruel extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Wicked Tentacles',
-      cost: [C],
-      damage: 0,
-      text: 'Move an Energy from 1 of your opponent\'s Pokémon to another of their Pokémon. If you do, put 3 damage counters on the Pokémon you moved the Energy to.'
-    },
-    {
-      name: 'Wrap',
-      cost: [C, C, C],
-      damage: 60,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Wicked Tentacles',
+    cost: [C],
+    damage: 0,
+    text: 'Move an Energy from 1 of your opponent\'s Pokémon to another of their Pokémon. If you do, put 3 damage counters on the Pokémon you moved the Energy to.'
+  }, {
+    name: 'Wrap',
+    cost: [C, C, C],
+    damage: 60,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'UNB';
   public setNumber: string = '41';

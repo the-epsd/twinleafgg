@@ -16,22 +16,20 @@ export class Ambipom extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'All-You-Can-Grab',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin until you get tails. Search your deck for a number of cards up to the number of heads and put them into your hand. Then, shuffle your deck.'
-    },
-    {
-      name: 'Knock Off',
-      cost: [C, C],
-      damage: 50,
-      text: 'Discard a random card from your opponent\'s hand.'
-    }
-  ];
+  public attacks = [{
+    name: 'All-You-Can-Grab',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin until you get tails. Search your deck for a number of cards up to the number of heads and put them into your hand. Then, shuffle your deck.'
+  }, {
+    name: 'Knock Off',
+    cost: [C, C],
+    damage: 50,
+    text: 'Discard a random card from your opponent\'s hand.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'LOR';
   public setNumber: string = '145';
   public cardImage: string = 'assets/cardback.png';

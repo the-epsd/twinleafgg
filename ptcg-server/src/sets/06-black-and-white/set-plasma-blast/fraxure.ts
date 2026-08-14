@@ -12,20 +12,17 @@ export class Fraxure extends PokemonCard {
   public weakness = [{ type: N }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Paralyzing Gaze',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Dragon Claw',
-      cost: [F, M],
-      damage: 40,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Paralyzing Gaze',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Dragon Claw',
+    cost: [F, M],
+    damage: 40,
+    text: ''
+  }];
 
   public set: string = 'PLB';
   public setNumber: string = '68';

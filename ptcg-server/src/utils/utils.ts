@@ -52,8 +52,14 @@ export function deepIterate(source: any, callback: (holder: any, key: string, va
   }
 }
 
-export function deepClone(source: any, ignores: Function[] = [], refMap: {s: Object, d: Object}[] = []): any {
-  if (source === null) { return null; }
+export function deepClone(source: any, ignores: Function[] = [], refMap: { s: Object, d: Object }[] = []): any {
+  if (source === null) {
+    return null;
+  }
+
+  if (typeof source === 'function') {
+    return source;
+  }
 
   if (source instanceof Array) {
     return source.map((item: any) => deepClone(item, ignores, refMap));
@@ -68,7 +74,7 @@ export function deepClone(source: any, ignores: Function[] = [], refMap: {s: Obj
       return ref.d;
     }
     const dest = Object.create(source);
-    refMap.push({s: source, d: dest});
+    refMap.push({ s: source, d: dest });
     for (const key in source) {
       if (Object.prototype.hasOwnProperty.call(source, key)) {
         dest[key] = deepClone(source[key], ignores, refMap);
@@ -80,7 +86,7 @@ export function deepClone(source: any, ignores: Function[] = [], refMap: {s: Obj
   return source;
 }
 
-export function generateId<T extends {id: number}[]>(array: T): number {
+export function generateId<T extends { id: number }[]>(array: T): number {
   if (array.length === 0) {
     return 1;
   }

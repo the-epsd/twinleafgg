@@ -3,13 +3,14 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, ChoosePokemonPrompt, PlayerType, SlotType, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED, OPPONENT_CANNOT_PLAY_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { OPPONENT_CANNOT_PLAY_CARDS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class ShadowRiderCalyrexV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public regulationMark = 'E';
   public cardType: CardType = P;
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public hp: number = 210;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

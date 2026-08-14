@@ -13,21 +13,18 @@ export class Gurdurr extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Pound',
-      cost: [F, C],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Stone Edge',
-      cost: [F, F, C],
-      damage: 50,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 30 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Pound',
+    cost: [F, C],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Stone Edge',
+    cost: [F, F, C],
+    damage: 50,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 30 more damage.'
+  }];
 
   public set: string = 'BLW';
   public cardImage: string = 'assets/cardback.png';

@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class FlareonVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX, CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.POKEMON_VMAX, CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Flareon V';
   public cardType: CardType = R;
@@ -23,8 +23,8 @@ export class FlareonVmax extends PokemonCard {
       cost: [R, C, C],
       damage: 100,
       damageCalculation: 'x',
-      text: 'Discard the top 5 cards of your deck. This attack does 100 damage for each Energy card you discarded in this way.'
-    }
+      text: 'Discard the top 5 cards of your deck. This attack does 100 damage for each Energy card you discarded in this way.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -47,7 +47,7 @@ export class FlareonVmax extends PokemonCard {
       player.deck.moveTo(topCards, count);
 
       // Count Energy cards
-      const energyCount = topCards.cards.filter(c => c.superType === SuperType.ENERGY).length;
+      const energyCount = topCards.cards.filter((c) => c.superType === SuperType.ENERGY).length;
       effect.damage = 100 * energyCount;
 
       // Discard all top 5 cards

@@ -17,21 +17,18 @@ export class Metang extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Metal Claw',
-      cost: [M, C],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Bullet Punch',
-      cost: [M, M, C],
-      damage: 50,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Metal Claw',
+    cost: [M, C],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Bullet Punch',
+    cost: [M, M, C],
+    damage: 50,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
+  }];
 
   public set: string = 'AOR';
   public setNumber: string = '48';

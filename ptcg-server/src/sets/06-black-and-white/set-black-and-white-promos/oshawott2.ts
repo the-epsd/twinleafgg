@@ -16,8 +16,7 @@ export class Oshawott2 extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Asleep.'
-  },
-  {
+  }, {
     name: 'Surprise Attack',
     cost: [W, C],
     damage: 30,

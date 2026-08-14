@@ -16,9 +16,10 @@ export class HerosMedal extends TrainerCard {
   public set: string = 'VIV';
   public setNumber: string = '152';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Hero\'s Medal';
-  public fullName: string = 'Hero\'s Medal VIV';
-  public text: string = 'Attach a Pokémon Tool to 1 of your Pokémon that doesn\'t already have a Pokémon Tool attached. The Pokémon VMAX this card is attached to gets -100 HP, and if it is Knocked Out by damage from an attack from your opponent\'s Pokémon, that player takes 1 fewer Prize card. You can\'t attach this card to a Pokémon VMAX that has 100 HP or less remaining. You may play any number of Item cards during your turn.';
+  public name: string = "Hero's Medal";
+  public fullName: string = "Hero's Medal VIV";
+  public text: string =
+    "Attach a Pokémon Tool to 1 of your Pokémon that doesn't already have a Pokémon Tool attached. The Pokémon VMAX this card is attached to gets -100 HP, and if it is Knocked Out by damage from an attack from your opponent's Pokémon, that player takes 1 fewer Prize card. You can't attach this card to a Pokémon VMAX that has 100 HP or less remaining. You may play any number of Item cards during your turn.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Check for attachment restrictions
@@ -31,7 +32,7 @@ export class HerosMedal extends TrainerCard {
       }
 
       // Can only attach to Pokemon VMAX
-      if (!sourceCard.tags.includes(CardTag.POKEMON_VMAX)) {
+      if (!sourceCard.hasTag(CardTag.POKEMON_VMAX)) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
@@ -61,7 +62,7 @@ export class HerosMedal extends TrainerCard {
       }
 
       // Only applies to VMAX Pokemon
-      if (!sourceCard.tags.includes(CardTag.POKEMON_VMAX)) {
+      if (!sourceCard.hasTag(CardTag.POKEMON_VMAX)) {
         return state;
       }
 
@@ -84,7 +85,7 @@ export class HerosMedal extends TrainerCard {
       }
 
       // Only applies to VMAX Pokemon
-      if (!sourceCard.tags.includes(CardTag.POKEMON_VMAX)) {
+      if (!sourceCard.hasTag(CardTag.POKEMON_VMAX)) {
         return state;
       }
 

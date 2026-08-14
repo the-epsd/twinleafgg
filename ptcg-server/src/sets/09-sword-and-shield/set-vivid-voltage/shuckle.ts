@@ -15,22 +15,20 @@ export class Shuckle extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Deck Distiller',
-      cost: [F],
-      damage: 0,
-      text: 'Flip a coin until you get tails. For each heads, discard the top card of your opponent\'s deck.'
-    },
-    {
-      name: 'Rock Throw',
-      cost: [F, C],
-      damage: 50,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Deck Distiller',
+    cost: [F],
+    damage: 0,
+    text: 'Flip a coin until you get tails. For each heads, discard the top card of your opponent\'s deck.'
+  }, {
+    name: 'Rock Throw',
+    cost: [F, C],
+    damage: 50,
+    text: ''
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'VIV';
   public setNumber: string = '85';
   public cardImage: string = 'assets/cardback.png';

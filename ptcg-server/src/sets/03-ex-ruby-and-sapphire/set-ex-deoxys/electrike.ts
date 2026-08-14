@@ -1,10 +1,9 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, GameError } from '../../../game';
+import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { ADD_MARKER, COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { OPPONENT_CANNOT_PLAY_TRAINER_CARDS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Electrike extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -19,8 +18,7 @@ export class Electrike extends PokemonCard {
     cost: [L],
     damage: 0,
     text: 'Flip a coin. If heads, your opponent can\'t play Trainer cards from his or her hand during his or her next turn.',
-  },
-  {
+  }, {
     name: 'Gnaw',
     cost: [C, C],
     damage: 20,
@@ -33,29 +31,14 @@ export class Electrike extends PokemonCard {
   public name: string = 'Electrike';
   public fullName: string = 'Electrike DX';
 
-  public readonly OPPONENT_CANNOT_PLAY_TRAINER_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_TRAINER_CARDS_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // High Voltage
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const opponent = effect.opponent;
-
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+      return COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {
-          ADD_MARKER(this.OPPONENT_CANNOT_PLAY_TRAINER_CARDS_MARKER, opponent, this);
+          OPPONENT_CANNOT_PLAY_TRAINER_CARDS(store, state, effect, this);
         }
       });
-    }
-
-    if (effect instanceof TrainerEffect) {
-      const player = effect.player;
-      if (player.marker.hasMarker(this.OPPONENT_CANNOT_PLAY_TRAINER_CARDS_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.OPPONENT_CANNOT_PLAY_TRAINER_CARDS_MARKER, this);
     }
     return state;
   }

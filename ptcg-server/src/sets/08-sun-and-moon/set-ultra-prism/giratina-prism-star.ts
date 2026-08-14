@@ -3,7 +3,13 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+} from '../../../game/store/card/card-types';
 import {
   PowerType,
   StoreLike,
@@ -20,7 +26,7 @@ import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class GiratinaPrismStar extends PokemonCard {
-  public tags = [CardTag.PRISM_STAR];
+  protected _tags = [CardTag.PRISM_STAR];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 160;

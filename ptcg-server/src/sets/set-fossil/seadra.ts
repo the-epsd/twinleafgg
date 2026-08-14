@@ -3,28 +3,23 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import {
-  COIN_FLIP_PROMPT,
-  PREVENT_DAMAGE,
-  PREVENT_EFFECTS_OF_ATTACKS,
-  WAS_ATTACK_USED,
-} from '../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Seadra extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Horsea';
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType = W;
   public hp: number = 60;
-  public weakness = [{ type: CardType.LIGHTNING }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: L }];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Water Gun',
     cost: [W, C],
     damage: 20,
     text: 'Does 20 damage plus 10 more damage for each [W] Energy attached to Seadra but not used to pay for this attack\'s Energy cost. You can\'t add more than 20 damage in this way.'
-  },
-  {
+  }, {
     name: 'Agility',
     cost: [W, C, C],
     damage: 20,

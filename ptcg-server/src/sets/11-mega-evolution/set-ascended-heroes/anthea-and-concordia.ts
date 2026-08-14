@@ -1,4 +1,15 @@
-import { TrainerCard, TrainerType, StoreLike, State, StateUtils, GamePhase, GameError, GameMessage, PlayerType, Player } from '../../../game';
+import {
+  TrainerCard,
+  TrainerType,
+  StoreLike,
+  State,
+  StateUtils,
+  GamePhase,
+  GameError,
+  GameMessage,
+  PlayerType,
+  Player,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
@@ -23,12 +34,12 @@ During this turn, if your opponent's Active Pokémon is Knocked Out by damage fr
       return false;
     }
     const requiredPokemon = [
-      'N\'s Darmanitan',
-      'N\'s Zoroark ex',
-      'N\'s Vanilluxe',
-      'N\'s Klinklang',
-      'N\'s Reshiram',
-      'N\'s Zekrom'
+      "N's Darmanitan",
+      "N's Zoroark ex",
+      "N's Vanilluxe",
+      "N's Klinklang",
+      "N's Reshiram",
+      "N's Zekrom",
     ];
     const foundPokemon = new Set<string>();
     player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard) => {
@@ -42,9 +53,7 @@ During this turn, if your opponent's Active Pokémon is Knocked Out by damage fr
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       const supporterTurn = player.supporterTurn;
@@ -55,12 +64,12 @@ During this turn, if your opponent's Active Pokémon is Knocked Out by damage fr
 
       // Check if all 6 required N's Pokémon are in play
       const requiredPokemon = [
-        'N\'s Darmanitan',
-        'N\'s Zoroark ex',
-        'N\'s Vanilluxe',
-        'N\'s Klinklang',
-        'N\'s Reshiram',
-        'N\'s Zekrom'
+        "N's Darmanitan",
+        "N's Zoroark ex",
+        "N's Vanilluxe",
+        "N's Klinklang",
+        "N's Reshiram",
+        "N's Zekrom",
       ];
 
       const foundPokemon = new Set<string>();
@@ -105,8 +114,8 @@ During this turn, if your opponent's Active Pokémon is Knocked Out by damage fr
 
         // Check if attacking Pokémon is an N's Pokémon
         if (attackingPokemon) {
-          const isNsPokemon = attackingPokemon.name.startsWith('N\'s') ||
-            attackingPokemon.tags.includes(CardTag.NS);
+          const isNsPokemon =
+            attackingPokemon.name.startsWith("N's") || attackingPokemon.hasTag(CardTag.NS);
 
           if (isNsPokemon && effect.prizeCount > 0) {
             effect.prizeCount += 3;

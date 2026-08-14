@@ -1,26 +1,25 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, CoinFlipPrompt, GameMessage } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Sandslash extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Sandshrew';
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType = F;
   public hp: number = 70;
-  public weakness = [{ type: CardType.GRASS }];
-  public resistance = [{ type: CardType.LIGHTNING, value: -30 }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: G }];
+  public resistance = [{ type: L, value: -30 }];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Slash',
     cost: [C, C],
     damage: 20,
     text: ''
-  },
-  {
+  }, {
     name: 'Fury Swipes',
     cost: [F, F],
     damage: 20,
@@ -38,11 +37,7 @@ export class Sandslash extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      state = store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
+      state = MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 3, results => {
         let heads: number = 0;
         results.forEach(r => { heads += r ? 1 : 0; });
         effect.damage = 20 * heads;

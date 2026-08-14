@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 
 export class MewV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 180;
@@ -24,8 +24,8 @@ export class MewV extends PokemonCard {
       cost: [P, P],
       damage: 30,
       damageCalculation: 'x',
-      text: 'This attack does 30 damage for each Energy attached to both Active Pokémon.'
-    }
+      text: 'This attack does 30 damage for each Energy attached to both Active Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -48,7 +48,10 @@ export class MewV extends PokemonCard {
 
       const opponentEnergy = new CheckProvidedEnergyEffect(opponent, opponent.active);
       store.reduceEffect(state, opponentEnergy);
-      const opponentCount = opponentEnergy.energyMap.reduce((sum, em) => sum + em.provides.length, 0);
+      const opponentCount = opponentEnergy.energyMap.reduce(
+        (sum, em) => sum + em.provides.length,
+        0,
+      );
 
       effect.damage = 30 * (myCount + opponentCount);
     }

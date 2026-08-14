@@ -2,15 +2,27 @@ import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { Card, ChooseEnergyPrompt, ChoosePokemonPrompt, ConfirmPrompt, GameMessage, PlayerType, PokemonCard, ShuffleDeckPrompt, SlotType, StateUtils } from '../../../game';
+import {
+  Card,
+  ChooseEnergyPrompt,
+  ChoosePokemonPrompt,
+  ConfirmPrompt,
+  GameMessage,
+  PlayerType,
+  PokemonCard,
+  ShuffleDeckPrompt,
+  SlotType,
+  StateUtils,
+} from '../../../game';
 
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED, BLOCK_RETREAT, TERA_RULE } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, TERA_RULE } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class WellspringMaskOgerponex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public cardType: CardType = W;
   public weakness = [{ type: L }];
   public hp: number = 210;
@@ -45,7 +57,7 @@ export class WellspringMaskOgerponex extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const hasBench = opponent.bench.some(b => b.cards.length > 0);
+      const hasBench = opponent.bench.some((b) => b.cards.length > 0);
 
       if (!hasBench) {
         return state;

@@ -8,8 +8,7 @@ import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-e
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Incineroarex extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
 
   public stage: Stage = Stage.STAGE_2;
 
@@ -23,20 +22,28 @@ export class Incineroarex extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Hustle Play',
-    useWhenInPlay: false,
-    powerType: PowerType.ABILITY,
-    text: 'Attacks used by this Pokémon cost [C] less for each of your opponent\'s Benched Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Hustle Play',
+      useWhenInPlay: false,
+      powerType: PowerType.ABILITY,
+      text: "Attacks used by this Pokémon cost [C] less for each of your opponent's Benched Pokémon.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Blaze Blast',
-      cost: [CardType.FIRE, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [
+        CardType.FIRE,
+        CardType.COLORLESS,
+        CardType.COLORLESS,
+        CardType.COLORLESS,
+        CardType.COLORLESS,
+      ],
       damage: 240,
-      text: 'Your opponent\'s Active Pokémon is now Burned.'
-    }
+      text: "Your opponent's Active Pokémon is now Burned.",
+    },
   ];
 
   public set: string = 'TEF';

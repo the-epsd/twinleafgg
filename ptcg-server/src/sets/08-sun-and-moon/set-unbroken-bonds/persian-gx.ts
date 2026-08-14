@@ -9,10 +9,21 @@ import { Effect } from '../../../game/store/effects/effect';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { GamePhase } from '../../../game/store/state/state';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN, REMOVE_MARKER_AT_END_OF_TURN, BLOCK_IF_GX_ATTACK_USED, SEARCH_DECK_FOR_CARDS_TO_HAND, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  USE_ABILITY_ONCE_PER_TURN,
+  ABILITY_USED,
+  REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  BLOCK_IF_GX_ATTACK_USED,
+  SEARCH_DECK_FOR_CARDS_TO_HAND,
+  SWITCH_ACTIVE_WITH_BENCHED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class PersianGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Meowth';
   public cardType: CardType = C;
@@ -25,12 +36,14 @@ export class PersianGx extends PokemonCard {
 
   public usedSlashBack = false;
 
-  public powers = [{
-    name: 'Cat Walk',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), if 1 of your Pokémon-GX or Pokémon-EX was Knocked Out during your opponent\'s last turn, you may search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck. You can\'t use more than 1 Cat Walk Ability each turn.'
-  }];
+  public powers = [
+    {
+      name: 'Cat Walk',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: "Once during your turn (before your attack), if 1 of your Pokémon-GX or Pokémon-EX was Knocked Out during your opponent's last turn, you may search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck. You can't use more than 1 Cat Walk Ability each turn.",
+    },
+  ];
 
   public attacks = [
     {
@@ -38,14 +51,14 @@ export class PersianGx extends PokemonCard {
       cost: [C, C, C],
       damage: 10,
       damageCalculation: '+',
-      text: 'This attack does 20 more damage for each Pokémon in your discard pile. You can\'t add more than 180 damage in this way.'
+      text: "This attack does 20 more damage for each Pokémon in your discard pile. You can't add more than 180 damage in this way.",
     },
     {
       name: 'Slash Back-GX',
       cost: [C, C, C],
       damage: 150,
-      text: 'Switch this Pokémon with 1 of your Benched Pokémon. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Switch this Pokémon with 1 of your Benched Pokémon. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'UNB';
@@ -68,7 +81,10 @@ export class PersianGx extends PokemonCard {
 
       // Check if the KO'd Pokemon was GX or EX
       const knockedOutCard = effect.target.getPokemonCard();
-      if (knockedOutCard && (knockedOutCard.tags.includes(CardTag.POKEMON_GX) || knockedOutCard.tags.includes(CardTag.POKEMON_EX))) {
+      if (
+        knockedOutCard &&
+        (knockedOutCard.hasTag(CardTag.POKEMON_GX) || knockedOutCard.hasTag(CardTag.POKEMON_EX))
+      ) {
         const cardList = StateUtils.findCardList(state, this);
         const owner = StateUtils.findOwner(state, cardList);
         if (owner === player) {
@@ -95,9 +111,13 @@ export class PersianGx extends PokemonCard {
       USE_ABILITY_ONCE_PER_TURN(player, this.CAT_WALK_MARKER, this);
       ABILITY_USED(player, this);
 
-      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this,
+      SEARCH_DECK_FOR_CARDS_TO_HAND(
+        store,
+        state,
+        player,
+        this,
         {},
-        { min: 0, max: 2, allowCancel: true }
+        { min: 0, max: 2, allowCancel: true },
       );
     }
 
@@ -106,7 +126,7 @@ export class PersianGx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const pokemonInDiscard = player.discard.cards.filter(c => c instanceof PokemonCard).length;
+      const pokemonInDiscard = player.discard.cards.filter((c) => c instanceof PokemonCard).length;
       const bonusDamage = Math.min(20 * pokemonInDiscard, 180);
       effect.damage += bonusDamage;
     }
@@ -125,7 +145,7 @@ export class PersianGx extends PokemonCard {
     if (effect instanceof AfterAttackEffect && this.usedSlashBack) {
       this.usedSlashBack = false;
       const player = effect.player;
-      if (player.bench.some(b => b.cards.length > 0)) {
+      if (player.bench.some((b) => b.cards.length > 0)) {
         SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
       }
     }

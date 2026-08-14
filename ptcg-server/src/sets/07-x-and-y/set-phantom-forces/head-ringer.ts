@@ -3,11 +3,7 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { TrainerCard } from '../../../game/store/card/trainer-card';
-import {
-  CardTag,
-  CardType,
-  TrainerType,
-} from '../../../game/store/card/card-types';
+import { CardTag, CardType, TrainerType } from '../../../game/store/card/card-types';
 import {
   GameError,
   GameMessage,
@@ -43,10 +39,7 @@ export class HeadRinger extends TrainerCard {
       // Check if opponent has any Pokemon-EX without a tool
       let hasValidTarget = false;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (
-          card.tags.includes(CardTag.POKEMON_EX) &&
-          cardList.tools.length === 0
-        ) {
+        if (card.hasTag(CardTag.POKEMON_EX) && cardList.tools.length === 0) {
           hasValidTarget = true;
         }
       });
@@ -59,14 +52,13 @@ export class HeadRinger extends TrainerCard {
       effect.preventDefault = true;
 
       // Build blocked list using CardTarget format
-      const blocked: { player: PlayerType; slot: SlotType; index: number }[] =
-        [];
+      const blocked: { player: PlayerType; slot: SlotType; index: number }[] = [];
       const opponentActive = opponent.active;
       const opponentActivePokemon = opponentActive.getPokemonCard();
 
       if (
         !opponentActivePokemon ||
-        !opponentActivePokemon.tags.includes(CardTag.POKEMON_EX) ||
+        !opponentActivePokemon.hasTag(CardTag.POKEMON_EX) ||
         opponentActive.tools.length > 0
       ) {
         blocked.push({
@@ -78,11 +70,7 @@ export class HeadRinger extends TrainerCard {
 
       opponent.bench.forEach((benchSlot, index) => {
         const pokemonCard = benchSlot.getPokemonCard();
-        if (
-          !pokemonCard ||
-          !pokemonCard.tags.includes(CardTag.POKEMON_EX) ||
-          benchSlot.tools.length > 0
-        ) {
+        if (!pokemonCard || !pokemonCard.hasTag(CardTag.POKEMON_EX) || benchSlot.tools.length > 0) {
           blocked.push({
             player: PlayerType.TOP_PLAYER,
             slot: SlotType.BENCH,

@@ -17,21 +17,18 @@ export class Golurk2 extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Dig Out',
-      cost: [C],
-      damage: 20,
-      text: 'Discard the top card of your deck. If that card is a [F] Energy card, attach it to this Pokémon.'
-    },
-    {
-      name: 'Double Lariat',
-      cost: [F, C, C, C],
-      damage: 90,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 90 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Dig Out',
+    cost: [C],
+    damage: 20,
+    text: 'Discard the top card of your deck. If that card is a [F] Energy card, attach it to this Pokémon.'
+  }, {
+    name: 'Double Lariat',
+    cost: [F, C, C, C],
+    damage: 90,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 90 damage times the number of heads.'
+  }];
 
   public set: string = 'AOR';
   public setNumber: string = '41';

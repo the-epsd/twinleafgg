@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Mienfoo extends PokemonCard {
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = F;
   public hp: number = 60;
@@ -22,11 +22,12 @@ export class Mienfoo extends PokemonCard {
       cost: [F, C],
       damage: 30,
       damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 30 damage for each heads.'
-    }
+      text: 'Flip 2 coins. This attack does 30 damage for each heads.',
+    },
   ];
 
   public regulationMark: string = 'E';
+
   public set: string = 'BST';
   public setNumber: string = '76';
   public cardImage: string = 'assets/cardback.png';
@@ -37,8 +38,8 @@ export class Mienfoo extends PokemonCard {
     // Attack 1: Double Stab
     // Ref: set-unbroken-bonds/lickilicky.ts (Tonguenado - multiple coin flips for damage)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 2, results => {
-        const heads = results.filter(r => r).length;
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 2, (results) => {
+        const heads = results.filter((r) => r).length;
         effect.damage = 30 * heads;
       });
     }

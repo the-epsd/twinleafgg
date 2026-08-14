@@ -1,23 +1,18 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, CoinFlipPrompt, GameMessage } from '../../../game';
+import { PokemonCard, Stage, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Purrloin extends PokemonCard {
-
   public stage = Stage.BASIC;
-
-  public cardType = CardType.DARK;
-
+  public cardType = D;
   public hp = 60;
-
-  public weakness = [{ type: CardType.GRASS }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: G }];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Surprise Attack',
-    cost: [CardType.COLORLESS, CardType.COLORLESS],
+    cost: [C, C],
     damage: 30,
     text: 'Flip a coin. If tails, this attack does nothing.'
   }];
@@ -27,11 +22,8 @@ export class Purrloin extends PokemonCard {
   public regulationMark = 'F';
 
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '90';
-
   public name: string = 'Purrloin';
-
   public fullName: string = 'Purrloin BRS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -39,9 +31,7 @@ export class Purrloin extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === false) {
           effect.damage = 0;
         }

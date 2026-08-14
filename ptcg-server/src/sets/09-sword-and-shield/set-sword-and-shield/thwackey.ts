@@ -16,23 +16,21 @@ export class Thwackey extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Taunt',
-      cost: [C],
-      damage: 0,
-      text: 'Switch 1 of your opponent\'s Benched Pokémon with their Active Pokémon.'
-    },
-    {
-      name: 'Double Hit',
-      cost: [G, G, C],
-      damage: 60,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 60 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Taunt',
+    cost: [C],
+    damage: 0,
+    text: 'Switch 1 of your opponent\'s Benched Pokémon with their Active Pokémon.'
+  }, {
+    name: 'Double Hit',
+    cost: [G, G, C],
+    damage: 60,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 60 damage for each heads.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'SSH';
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';

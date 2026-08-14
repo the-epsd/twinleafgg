@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 
 export class MorpekoVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Morpeko V';
   public cardType: CardType = L;
@@ -23,8 +23,8 @@ export class MorpekoVmax extends PokemonCard {
       name: 'Max Discharge',
       cost: [L, L, C],
       damage: 180,
-      text: 'This attack also does 20 damage to each of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "This attack also does 20 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -40,7 +40,7 @@ export class MorpekoVmax extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      opponent.bench.forEach(benched => {
+      opponent.bench.forEach((benched) => {
         if (benched.cards.length > 0) {
           const damage = new PutDamageEffect(effect, 20);
           damage.target = benched;

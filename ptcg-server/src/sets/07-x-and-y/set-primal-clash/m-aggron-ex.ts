@@ -7,10 +7,14 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PlayerType, StoreLike, State } from '../../../game';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, CONFIRMATION_PROMPT, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  CONFIRMATION_PROMPT,
+  COIN_FLIP_PROMPT,
+} from '../../../game/store/prefabs/prefabs';
 
 export class MAggronEx extends PokemonCard {
-  public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
+  protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Aggron-EX';
   public cardType: CardType = M;
@@ -19,15 +23,13 @@ export class MAggronEx extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Megaton Slam',
-      cost: [M, M, C, C],
-      damage: 120,
-      damageCalculation: '+',
-      text: 'You may flip a coin. If heads, this attack does 120 more damage. If tails, this attack does 20 damage to each of your Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
-  ];
+  public attacks = [{
+    name: 'Megaton Slam',
+    cost: [M, M, C, C],
+    damage: 120,
+    damageCalculation: '+',
+    text: 'You may flip a coin. If heads, this attack does 120 more damage. If tails, this attack does 20 damage to each of your Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }];
 
   public set: string = 'PRC';
   public setNumber: string = '94';
@@ -41,9 +43,9 @@ export class MAggronEx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      CONFIRMATION_PROMPT(store, state, player, wantsToFlip => {
+      CONFIRMATION_PROMPT(store, state, player, (wantsToFlip) => {
         if (wantsToFlip) {
-          COIN_FLIP_PROMPT(store, state, player, result => {
+          COIN_FLIP_PROMPT(store, state, player, (result) => {
             if (result) {
               effect.damage += 120;
             } else {

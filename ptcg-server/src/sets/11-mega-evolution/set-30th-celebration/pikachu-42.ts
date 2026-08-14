@@ -9,19 +9,21 @@ export class Pikachu42 extends PokemonCard {
   public cardType: CardType = L;
   public weakness = [{ type: F }];
   public retreat = [C];
+
   public attacks = [{
     name: 'Charge-Up Dash',
     cost: [C],
     damage: 0,
     text: 'Flip a coin until you get tails. Search your deck for an amount of Basic [L] Energy up to the number of heads and attach it to this Pokémon. Then, shuffle your deck.'
-  },
-  {
+  }, {
     name: 'Pika Bolt',
     cost: [L, L, C],
     damage: 50,
     text: ''
   }];
+
   public regulationMark: string = 'J';
+
   public set: string = '30C';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '42';

@@ -18,8 +18,7 @@ export class Mew extends PokemonCard {
     damage: 10,
     damageCalculation: 'x',
     text: 'Does 10 damage times the amount of Energy attached to the Defending Pokémon.'
-  },
-  {
+  }, {
     name: 'Devolution Beam',
     cost: [P],
     damage: 0,

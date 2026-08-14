@@ -16,22 +16,20 @@ export class Weavile extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Ransack',
-      cost: [D],
-      damage: 0,
-      text: 'Flip 2 coins. If either of them is heads, your opponent reveals their hand. For each heads, choose a card you find there and put it on the bottom of your opponent\'s deck in any order.'
-    },
-    {
-      name: 'Slash',
-      cost: [D, C, C],
-      damage: 100,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Ransack',
+    cost: [D],
+    damage: 0,
+    text: 'Flip 2 coins. If either of them is heads, your opponent reveals their hand. For each heads, choose a card you find there and put it on the bottom of your opponent\'s deck in any order.'
+  }, {
+    name: 'Slash',
+    cost: [D, C, C],
+    damage: 100,
+    text: ''
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'BRS';
   public setNumber: string = '87';
   public cardImage: string = 'assets/cardback.png';

@@ -27,16 +27,15 @@ export class GalarianSlowking extends PokemonCard {
     text: 'Once during your turn, you may choose 1 of your Pokémon and flip a coin. If heads, heal 90 damage from that Pokémon. If tails, put 3 damage counters on that Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Spray Fluid',
-      cost: [D, C, C],
-      damage: 90,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Spray Fluid',
+    cost: [D, C, C],
+    damage: 90,
+    text: ''
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'CRE';
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';

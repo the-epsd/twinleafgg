@@ -6,25 +6,27 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Totodile extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.DELTA_SPECIES];
+  protected _tags = [CardTag.DELTA_SPECIES];
   public cardType: CardType = L;
   public hp: number = 40;
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Scratch',
-    cost: [C],
-    damage: 10,
-    text: ''
-  },
-  {
-    name: 'Rage',
-    cost: [L, C],
-    damage: 10,
-    damageCalculation: '+',
-    text: 'Does 10 damage plus 10 more damage for each damage counter on Totodile.'
-  }];
+  public attacks = [
+    {
+      name: 'Scratch',
+      cost: [C],
+      damage: 10,
+      text: '',
+    },
+    {
+      name: 'Rage',
+      cost: [L, C],
+      damage: 10,
+      damageCalculation: '+',
+      text: 'Does 10 damage plus 10 more damage for each damage counter on Totodile.',
+    },
+  ];
 
   public set: string = 'DF';
   public cardImage: string = 'assets/cardback.png';
@@ -33,7 +35,6 @@ export class Totodile extends PokemonCard {
   public fullName: string = 'Totodile DF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 1, this)) {
       effect.damage += effect.player.active.damage;
     }

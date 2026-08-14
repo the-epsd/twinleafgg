@@ -16,8 +16,7 @@ export class Chansey extends PokemonCard {
     cost: [C, C],
     damage: 20,
     text: ''
-  },
-  {
+  }, {
     name: 'Happy Punch',
     cost: [C, C, C],
     damage: 30,

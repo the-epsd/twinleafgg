@@ -1,8 +1,8 @@
-import { AttachEnergyPrompt, EnergyCard, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike, CoinFlipPrompt } from '../../../game';
+import { AttachEnergyPrompt, EnergyCard, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike } from '../../../game';
 import { CardType, Stage, SuperType } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Yveltal extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -17,8 +17,7 @@ export class Yveltal extends PokemonCard {
     cost: [D],
     damage: 30,
     text: 'Attach a [D] Energy card from your discard pile to 1 of your Benched Pokémon.'
-  },
-  {
+  }, {
     name: 'Darkness Blade',
     cost: [D, D, C],
     damage: 100,
@@ -70,9 +69,7 @@ export class Yveltal extends PokemonCard {
 
     // Darkness Blade
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      return store.prompt(state, [
-        new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (!result) {
           const player = effect.player;
           player.active.cannotAttackNextTurnPending = true;

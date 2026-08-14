@@ -17,20 +17,17 @@ export class TapuFini extends PokemonCard {
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Dream Away',
-      cost: [Y, C],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent shuffles their Active Pokémon and all cards attached to it into their deck.'
-    },
-    {
-      name: 'Wonder Shine',
-      cost: [Y, Y, C],
-      damage: 100,
-      text: 'Your opponent\'s Active Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Dream Away',
+    cost: [Y, C],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent shuffles their Active Pokémon and all cards attached to it into their deck.'
+  }, {
+    name: 'Wonder Shine',
+    cost: [Y, Y, C],
+    damage: 100,
+    text: 'Your opponent\'s Active Pokémon is now Confused.'
+  }];
 
   public set: string = 'LOT';
   public setNumber: string = '151';

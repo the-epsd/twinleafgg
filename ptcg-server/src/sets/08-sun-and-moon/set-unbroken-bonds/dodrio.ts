@@ -17,21 +17,18 @@ export class Dodrio extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Tri Attack',
-      cost: [C, C],
-      damage: 60,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 60 damage for each heads.'
-    },
-    {
-      name: 'Accelerating Stab',
-      cost: [C, C],
-      damage: 90,
-      text: 'This Pokémon can\'t use Accelerating Stab during your next turn.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tri Attack',
+    cost: [C, C],
+    damage: 60,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 60 damage for each heads.'
+  }, {
+    name: 'Accelerating Stab',
+    cost: [C, C],
+    damage: 90,
+    text: 'This Pokémon can\'t use Accelerating Stab during your next turn.'
+  }];
 
   public set: string = 'UNB';
   public setNumber: string = '151';

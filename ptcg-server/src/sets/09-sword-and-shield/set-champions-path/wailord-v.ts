@@ -3,13 +3,28 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
-import { AttachEnergyPrompt, EnergyCard, GameMessage, PlayerType, SlotType, StoreLike, State, StateUtils } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+} from '../../../game/store/card/card-types';
+import {
+  AttachEnergyPrompt,
+  EnergyCard,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class WailordV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 280;
@@ -21,18 +36,19 @@ export class WailordV extends PokemonCard {
       name: 'Draw Up',
       cost: [W],
       damage: 0,
-      text: 'Attach up to 3 [W] Energy cards from your discard pile to this Pokémon.'
+      text: 'Attach up to 3 [W] Energy cards from your discard pile to this Pokémon.',
     },
     {
       name: 'Ocean Waves',
       cost: [W, W, W, W],
       damage: 120,
       damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 120 damage for each heads.'
-    }
+      text: 'Flip 3 coins. This attack does 120 damage for each heads.',
+    },
   ];
 
   public regulationMark: string = 'D';
+
   public set: string = 'CPA';
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
@@ -45,31 +61,34 @@ export class WailordV extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const hasWaterEnergy = player.discard.cards.some(c =>
-        c instanceof EnergyCard &&
-        c.energyType === EnergyType.BASIC &&
-        c.name === 'Water Energy'
+      const hasWaterEnergy = player.discard.cards.some(
+        (c) =>
+          c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Water Energy',
       );
 
       if (!hasWaterEnergy) {
         return state;
       }
 
-      return store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_CARDS,
-        player.discard,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
-        { min: 0, max: 3, allowCancel: false, sameTarget: true }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
-        }
-      });
+      return store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_CARDS,
+          player.discard,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
+          { min: 0, max: 3, allowCancel: false, sameTarget: true },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.discard.moveCardTo(transfer.card, target);
+          }
+        },
+      );
     }
 
     // Attack 2: Ocean Waves
@@ -77,8 +96,8 @@ export class WailordV extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 3, results => {
-        const heads = results.filter(r => r).length;
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 3, (results) => {
+        const heads = results.filter((r) => r).length;
         effect.damage = 120 * heads;
       });
     }

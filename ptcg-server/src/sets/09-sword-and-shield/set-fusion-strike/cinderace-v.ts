@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class CinderaceV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = R;
   public hp: number = 220;
@@ -22,8 +22,8 @@ export class CinderaceV extends PokemonCard {
       name: 'Blaze Kick',
       cost: [R, R, C],
       damage: 210,
-      text: 'Discard 2 [R] Energy from this Pokémon.'
-    }
+      text: 'Discard 2 [R] Energy from this Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'E';

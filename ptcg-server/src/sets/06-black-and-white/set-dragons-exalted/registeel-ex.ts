@@ -6,7 +6,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON } from '../../../game/store/prefabs/prefabs';
 
 export class RegisteelEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;
   public hp: number = 180;
@@ -19,14 +19,14 @@ export class RegisteelEx extends PokemonCard {
       name: 'Triple Laser',
       cost: [C, C, C],
       damage: 0,
-      text: 'This attack does 30 damage to 3 of your opponent\'s Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+      text: "This attack does 30 damage to 3 of your opponent's Pokemon. (Don't apply Weakness and Resistance for Benched Pokemon.)",
     },
     {
       name: 'Protect Charge',
       cost: [M, M, C, C],
       damage: 80,
-      text: 'During your opponent\'s next turn, any damage done to this Pokemon by attacks is reduced by 20 (after applying Weakness and Resistance).'
-    }
+      text: "During your opponent's next turn, any damage done to this Pokemon by attacks is reduced by 20 (after applying Weakness and Resistance).",
+    },
   ];
 
   public set: string = 'DRX';
@@ -48,11 +48,7 @@ export class RegisteelEx extends PokemonCard {
 
     // Reduce incoming damage by 20
 
-
-
-
     // Cleanup markers at end of opponent's turn
-
 
     return state;
   }

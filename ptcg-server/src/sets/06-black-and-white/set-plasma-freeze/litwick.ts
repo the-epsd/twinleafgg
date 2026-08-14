@@ -10,20 +10,17 @@ export class Litwick extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Singe',
-      cost: [R],
-      damage: 0,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Burned.'
-    },
-    {
-      name: 'Live Coal',
-      cost: [R, C],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Singe',
+    cost: [R],
+    damage: 0,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Burned.'
+  }, {
+    name: 'Live Coal',
+    cost: [R, C],
+    damage: 20,
+    text: ''
+  }];
 
   public set: string = 'PLF';
   public setNumber: string = '14';

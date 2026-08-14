@@ -1,10 +1,5 @@
-import {
-  ADD_POISON_TO_PLAYER_ACTIVE,
-  AFTER_ATTACK,
-  COIN_FLIP_PROMPT,
-  PREVENT_DAMAGE,
-  WAS_ATTACK_USED,
-} from '../../../game/store/prefabs/prefabs';
+import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -23,8 +18,7 @@ export class Cascoon extends PokemonCard {
     cost: [G],
     damage: 0,
     text: 'Your opponent\'s Active Pokémon is now Poisoned.'
-  },
-  {
+  }, {
     name: 'Iron Defense',
     cost: [C, C],
     damage: 0,

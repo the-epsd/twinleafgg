@@ -4,49 +4,39 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 
-import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
-import { GameMessage } from '../../game/game-message';
 import { PlayerType } from '../../game/store/actions/play-card-action';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Pachirisu extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.LIGHTNING;
-
+  public cardType: CardType = L;
   public hp: number = 70;
-
   public weakness = [{
-    type: CardType.FIGHTING,
+    type: F,
     value: 20
   }];
-
   public resistance = [{
-    type: CardType.METAL,
+    type: M,
     value: -20
   }];
-
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Thunder Wave',
-    cost: [CardType.LIGHTNING],
+    cost: [L],
     damage: 10,
     text: 'Flip a coin. If heads, the Defending Pokemon is now Paralyzed.'
   }, {
     name: 'Poison Berry',
-    cost: [CardType.LIGHTNING, CardType.COLORLESS],
+    cost: [L, C],
     damage: 20,
     text: 'If you have Croagunk in play, this attack does 20 damage plus 20 ' +
-      'more damage and the Defending Pokemon is now Poisoned.'
+    'more damage and the Defending Pokemon is now Poisoned.'
   }];
 
   public set: string = 'OP9';
-
   public name: string = 'Pachirisu';
-
   public fullName: string = 'Pachirisu OP9';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -54,10 +44,7 @@ export class Pachirisu extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(state, new CoinFlipPrompt(
-        player.id,
-        GameMessage.COIN_FLIP
-      ), flipResult => {
+      return COIN_FLIP_PROMPT(store, state, player, flipResult => {
         if (flipResult) {
           const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED]);
           store.reduceEffect(state, specialCondition);

@@ -17,14 +17,12 @@ export class Servine2 extends PokemonCard {
   public resistance = [{ type: W, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Wring Out',
-      cost: [G, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed. Discard an Energy attached to the Defending Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Wring Out',
+    cost: [G, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed. Discard an Energy attached to the Defending Pokémon.'
+  }];
 
   public set: string = 'BLW';
   public cardImage: string = 'assets/cardback.png';

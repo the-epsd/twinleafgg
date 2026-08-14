@@ -3,7 +3,8 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 
-import { WAS_ATTACK_USED, BLOCK_RETREAT, COIN_FLIP_PROMPT, AFTER_ATTACK, SWITCH_OUT_OPPONENT_ACTIVE_POKEMON } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, AFTER_ATTACK, SWITCH_OUT_OPPONENT_ACTIVE_POKEMON } from '../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Victreebel extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -18,8 +19,7 @@ export class Victreebel extends PokemonCard {
     cost: [G],
     damage: 0,
     text: 'If your opponent has any Benched Pokémon, choose 1 of them and switch it with his or her Active Pokémon.'
-  },
-  {
+  }, {
     name: 'Acid',
     cost: [G, G],
     damage: 20,

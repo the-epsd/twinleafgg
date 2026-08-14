@@ -12,21 +12,18 @@ export class Basculin extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Flail',
-      cost: [C],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Does 10 damage times the number of damage counters on this Pokémon.'
-    },
-    {
-      name: 'Final Gambit',
-      cost: [W, C, C],
-      damage: 80,
-      text: 'Flip 2 coins. If both of them are tails, this Pokémon does 80 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Flail',
+    cost: [C],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Does 10 damage times the number of damage counters on this Pokémon.'
+  }, {
+    name: 'Final Gambit',
+    cost: [W, C, C],
+    damage: 80,
+    text: 'Flip 2 coins. If both of them are tails, this Pokémon does 80 damage to itself.'
+  }];
 
   public set: string = 'EPO';
   public cardImage: string = 'assets/cardback.png';

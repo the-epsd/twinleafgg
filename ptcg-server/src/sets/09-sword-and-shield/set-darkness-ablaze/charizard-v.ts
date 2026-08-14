@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class CharizardV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = R;
   public hp: number = 220;
@@ -22,14 +22,14 @@ export class CharizardV extends PokemonCard {
       name: 'Claw Slash',
       cost: [C, C, C],
       damage: 80,
-      text: ''
+      text: '',
     },
     {
       name: 'Fire Spin',
       cost: [R, R, C, C],
       damage: 220,
-      text: 'Discard 2 Energy from this Pokémon.'
-    }
+      text: 'Discard 2 Energy from this Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'D';

@@ -22,16 +22,15 @@ export class Misdreavus extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Confuse Ray',
-      cost: [P],
-      damage: 10,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Confuse Ray',
+    cost: [P],
+    damage: 10,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Confused.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'SIT';
   public setNumber: string = '63';
   public cardImage: string = 'assets/cardback.png';

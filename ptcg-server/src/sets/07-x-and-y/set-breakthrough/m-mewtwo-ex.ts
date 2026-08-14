@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class MMewtwoEx extends PokemonCard {
-  public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
+  protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Mewtwo-EX';
   public cardType: CardType = P;
@@ -23,8 +23,8 @@ export class MMewtwoEx extends PokemonCard {
       cost: [P, F, F, C],
       damage: 150,
       damageCalculation: '+',
-      text: 'If there is any Stadium card in play, this attack does 50 more damage, and this attack\'s damage isn\'t affected by Resistance or any effects on your opponent\'s Active Pokémon.'
-    }
+      text: "If there is any Stadium card in play, this attack does 50 more damage, and this attack's damage isn't affected by Resistance or any effects on your opponent's Active Pokémon.",
+    },
   ];
 
   public set: string = 'BKT';

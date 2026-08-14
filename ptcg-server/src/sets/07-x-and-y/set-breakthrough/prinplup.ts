@@ -15,14 +15,12 @@ export class Prinplup extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Ice Beam',
-      cost: [W, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Ice Beam',
+    cost: [W, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '37';

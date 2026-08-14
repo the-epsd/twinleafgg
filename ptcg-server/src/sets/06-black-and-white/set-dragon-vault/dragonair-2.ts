@@ -13,21 +13,18 @@ export class Dragonair2 extends PokemonCard {
   public weakness = [{ type: N }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Healing Melody',
-      cost: [G],
-      damage: 0,
-      text: 'Heal 10 damage from each of your Pok\u00e9mon.'
-    },
-    {
-      name: 'Slam',
-      cost: [L, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Healing Melody',
+    cost: [G],
+    damage: 0,
+    text: 'Heal 10 damage from each of your Pok\u00e9mon.'
+  }, {
+    name: 'Slam',
+    cost: [L, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
+  }];
 
   public set: string = 'DRV';
   public setNumber: string = '4';

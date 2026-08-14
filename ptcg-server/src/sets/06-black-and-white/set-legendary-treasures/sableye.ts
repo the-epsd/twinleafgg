@@ -13,14 +13,12 @@ export class Sableye extends PokemonCard {
   public hp: number = 70;
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Tight Jaw',
-      cost: [P, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tight Jaw',
+    cost: [P, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'LTR';
   public setNumber: string = '61';

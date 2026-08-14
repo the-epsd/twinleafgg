@@ -12,20 +12,17 @@ export class Pikachu extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Thundershock',
-      cost: [L],
-      damage: 10,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Tail Whap',
-      cost: [C, C],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Thundershock',
+    cost: [L],
+    damage: 10,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Tail Whap',
+    cost: [C, C],
+    damage: 20,
+    text: ''
+  }];
 
   public set: string = 'NXD';
   public setNumber: string = '39';

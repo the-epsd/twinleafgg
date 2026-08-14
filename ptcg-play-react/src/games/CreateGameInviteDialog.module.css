@@ -8,6 +8,7 @@
   justify-content: center;
   padding: 16px;
   box-sizing: border-box;
+  animation: inviteBackdropEnter 180ms cubic-bezier(0, 0, 0.2, 1);
 }
 
 .panel {
@@ -22,6 +23,30 @@
   flex-direction: column;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.22);
   border: 1px solid #d4d5d6;
+  transform-origin: center center;
+  animation: invitePanelEnter 180ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+@keyframes inviteBackdropEnter {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes invitePanelEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.85) translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1) translateY(0);
+  }
 }
 
 .title {

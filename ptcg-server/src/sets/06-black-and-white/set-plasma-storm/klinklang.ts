@@ -8,11 +8,15 @@ import { PlayerType, PowerType, StoreLike, State, StateUtils } from '../../../ga
 import { Effect } from '../../../game/store/effects/effect';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import {
+  IS_ABILITY_BLOCKED,
+  WAS_ATTACK_USED,
+  COIN_FLIP_PROMPT,
+} from '../../../game/store/prefabs/prefabs';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class Klinklang extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Klang';
   public cardType: CardType = M;
@@ -21,21 +25,21 @@ export class Klinklang extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C];
 
-  public powers = [{
-    name: 'Plasma Steel',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all damage done to your Metal Pokémon by attacks from your opponent\'s Pokémon-EX.'
-  }];
-
-  public attacks = [
+  public powers = [
     {
-      name: 'Heavy Bullet',
-      cost: [M, M, C],
-      damage: 70,
-      text: 'Flip a coin. If heads, this attack does 20 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      name: 'Plasma Steel',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: "Prevent all damage done to your Metal Pokémon by attacks from your opponent's Pokémon-EX.",
+    },
   ];
+
+  public attacks = [{
+    name: 'Heavy Bullet',
+    cost: [M, M, C],
+    damage: 70,
+    text: 'Flip a coin. If heads, this attack does 20 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '90';
@@ -61,7 +65,7 @@ export class Klinklang extends PokemonCard {
 
       // Check if the attacker is a Pokemon-EX
       const sourceCard = effect.source.getPokemonCard();
-      if (!sourceCard || !sourceCard.tags.includes(CardTag.POKEMON_EX)) {
+      if (!sourceCard || !sourceCard.hasTag(CardTag.POKEMON_EX)) {
         return state;
       }
 
@@ -89,9 +93,14 @@ export class Klinklang extends PokemonCard {
     // Attack 1: Heavy Bullet
     // Ref: set-next-destinies/lucario.ts (bench snipe on coin flip)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (result) {
-          THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON(20, effect, store, state);
+          THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON(
+            20,
+            effect,
+            store,
+            state,
+          );
         }
       });
     }

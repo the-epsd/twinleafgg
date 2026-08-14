@@ -11,20 +11,17 @@ export class Dragonair extends PokemonCard {
   public weakness = [{ type: N }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Wrap',
-      cost: [L],
-      damage: 20,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Tail Smack',
-      cost: [G, C, C],
-      damage: 50,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Wrap',
+    cost: [L],
+    damage: 20,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Tail Smack',
+    cost: [G, C, C],
+    damage: 50,
+    text: ''
+  }];
 
   public set: string = 'PLF';
   public setNumber: string = '82';

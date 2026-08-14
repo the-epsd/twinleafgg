@@ -3,9 +3,9 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/prefabs/prefabs';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
-import { CoinFlipPrompt, GameMessage, PowerType } from '../../game';
+import { PowerType } from '../../game';
 import { HealEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
@@ -81,13 +81,9 @@ export class SeasManaphy4 extends PokemonCard {
         }
       });
 
-      for (let i = 0; i < energyCount; i++) {
-        store.prompt(state, [
-          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-        ], result => {
-          if (result) {
-            effect.damage += 10;
-          }
+      if (energyCount > 0) {
+        MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, energyCount, results => {
+          effect.damage += results.filter(r => r).length * 10;
         });
       }
     }

@@ -15,15 +15,13 @@ export class Scyther extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Fury Cutter',
-      cost: [C, C],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'Flip 3 coins. If 1 of them is heads, this attack does 20 more damage. If 2 of them are heads, this attack does 50 more damage. If all of them are heads, this attack does 70 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fury Cutter',
+    cost: [C, C],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'Flip 3 coins. If 1 of them is heads, this attack does 20 more damage. If 2 of them are heads, this attack does 50 more damage. If all of them are heads, this attack does 70 more damage.'
+  }];
 
   public set: string = 'LOT';
   public setNumber: string = '3';

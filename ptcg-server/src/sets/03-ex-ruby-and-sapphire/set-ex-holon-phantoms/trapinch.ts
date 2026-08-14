@@ -1,27 +1,30 @@
 import { CardTag, PokemonCard, Stage, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { BLOCK_RETREAT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Trapinch extends PokemonCard {
   public stage = Stage.BASIC;
-  public tags = [CardTag.DELTA_SPECIES];
+  protected _tags = [CardTag.DELTA_SPECIES];
   public cardType = G;
   public hp = 50;
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Big Bite',
-    cost: [G],
-    damage: 10,
-    text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
-  },
-  {
-    name: 'Mud Slap',
-    cost: [C, C],
-    damage: 20,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Big Bite',
+      cost: [G],
+      damage: 10,
+      text: "The Defending Pokémon can't retreat during your opponent's next turn.",
+    },
+    {
+      name: 'Mud Slap',
+      cost: [C, C],
+      damage: 20,
+      text: '',
+    },
+  ];
 
   public set = 'HP';
   public setNumber = '84';

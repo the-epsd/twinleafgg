@@ -1,12 +1,22 @@
-import { Attack, CardTag, CardType, PokemonCard, Resistance, Stage, State, StateUtils, StoreLike, Weakness } from '../../../game';
+import {
+  Attack,
+  CardTag,
+  CardType,
+  PokemonCard,
+  Resistance,
+  Stage,
+  State,
+  StateUtils,
+  StoreLike,
+  Weakness,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { SHOW_CARDS_TO_PLAYER, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Absol extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = D;
-  public tags: string[] = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public hp: number = 100;
   public weakness: Weakness[] = [{ type: F }];
   public resistance: Resistance[] = [{ type: P, value: -20 }];
@@ -18,9 +28,14 @@ export class Absol extends PokemonCard {
       cost: [D, C],
       damage: 20,
       damageCalculation: '+',
-      text: 'Does 20 more damage for each of your opponent\'s Benched Pokémon.'
+      text: "Does 20 more damage for each of your opponent's Benched Pokémon.",
     },
-    { name: 'Fearsome Shadow', cost: [D, C, C], damage: 60, text: 'Your opponent reveals his or her hand.' },
+    {
+      name: 'Fearsome Shadow',
+      cost: [D, C, C],
+      damage: 60,
+      text: 'Your opponent reveals his or her hand.',
+    },
   ];
 
   public set: string = 'PLF';
@@ -30,11 +45,10 @@ export class Absol extends PokemonCard {
   public fullName: string = 'Absol PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      effect.damage += (opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0) * 20);
+      effect.damage += opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0) * 20;
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

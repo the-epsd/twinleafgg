@@ -14,21 +14,18 @@ export class Bronzong extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Psy Bolt',
-      cost: [M],
-      damage: 20,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Psychic Resonance',
-      cost: [M, C, C],
-      damage: 60,
-      damageCalculation: '+',
-      text: 'If your opponent has any Psychic Pokémon in play, this attack does 60 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Psy Bolt',
+    cost: [M],
+    damage: 20,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Psychic Resonance',
+    cost: [M, C, C],
+    damage: 60,
+    damageCalculation: '+',
+    text: 'If your opponent has any Psychic Pokémon in play, this attack does 60 more damage.'
+  }];
 
   public set: string = 'UPR';
   public setNumber: string = '87';

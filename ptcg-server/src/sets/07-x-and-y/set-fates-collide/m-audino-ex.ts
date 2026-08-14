@@ -2,11 +2,12 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { MEGA_EVOLUTION_END_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { MEGA_EVOLUTION_END_TURN } from '../../../game/store/prefabs/tool-prefabs';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class MAudinoEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX, CardTag.MEGA];
+  protected _tags = [CardTag.POKEMON_EX, CardTag.MEGA];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom = 'Audino-EX';
   public cardType: CardType = C;
@@ -14,12 +15,14 @@ export class MAudinoEx extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
 
-  public attacks = [{
-    name: 'Magical Symphony',
-    cost: [C, C, C],
-    damage: 110,
-    text: "If you played a Supporter card from your hand during this turn, this attack does 50 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
-  }];
+  public attacks = [
+    {
+      name: 'Magical Symphony',
+      cost: [C, C, C],
+      damage: 110,
+      text: "If you played a Supporter card from your hand during this turn, this attack does 50 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
+  ];
 
   public set: string = 'FCO';
   public name: string = 'M Audino-EX';

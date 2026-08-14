@@ -3,10 +3,15 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { MOVED_TO_ACTIVE_THIS_TURN, WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store/prefabs/prefabs';
+import {
+  MOVED_TO_ACTIVE_THIS_TURN,
+  WAS_ATTACK_USED,
+  BLOCK_IF_GX_ATTACK_USED,
+  SWITCH_ACTIVE_WITH_BENCHED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class GolisopodGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Wimpod';
   public cardType: CardType = G;
@@ -66,7 +71,7 @@ export class GolisopodGx extends PokemonCard {
       this.usedCrossingCutGx = false;
       const player = effect.player;
 
-      if (player.bench.some(b => b.cards.length > 0)) {
+      if (player.bench.some((b) => b.cards.length > 0)) {
         SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
       }
     }

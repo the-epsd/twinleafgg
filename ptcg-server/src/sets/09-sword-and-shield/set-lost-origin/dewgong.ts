@@ -6,13 +6,8 @@ import { GameMessage } from '../../../game/game-message';
 import { SlotType } from '../../../game/store/actions/play-card-action';
 import { Effect } from '../../../game/store/effects/effect';
 import { EnergyCard } from '../../../game/store/card/energy-card';
-import {
-  WAS_ATTACK_USED,
-  COIN_FLIP_PROMPT,
-  SHUFFLE_DECK,
-  PREVENT_DAMAGE,
-  PREVENT_EFFECTS_OF_ATTACKS,
-} from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Dewgong extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -36,6 +31,7 @@ export class Dewgong extends PokemonCard {
   }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'LOR';
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';

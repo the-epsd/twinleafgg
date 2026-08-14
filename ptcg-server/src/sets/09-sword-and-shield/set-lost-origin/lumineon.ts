@@ -2,12 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import {
-  WAS_ATTACK_USED,
-  COIN_FLIP_PROMPT,
-  PREVENT_DAMAGE,
-  PREVENT_EFFECTS_OF_ATTACKS,
-} from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Lumineon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -22,8 +18,7 @@ export class Lumineon extends PokemonCard {
     cost: [W],
     damage: 10,
     text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage from and effects of attacks done to this Pokémon.'
-  },
-  {
+  }, {
     name: 'Waterfall',
     cost: [W, W, C],
     damage: 120,
@@ -31,6 +26,7 @@ export class Lumineon extends PokemonCard {
   }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'LOR';
   public setNumber: string = '41';
   public cardImage: string = 'assets/cardback.png';

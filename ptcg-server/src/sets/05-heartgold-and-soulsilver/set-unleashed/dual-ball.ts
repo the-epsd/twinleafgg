@@ -3,12 +3,11 @@ import { TrainerType, SuperType, Stage } from '../../../game/store/card/card-typ
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import {
-  CoinFlipPrompt, ChooseCardsPrompt, Card, StateUtils, ShowCardsPrompt,
-  ShuffleDeckPrompt, GameError
-} from '../../../game';
+import { ChooseCardsPrompt, Card, StateUtils, ShowCardsPrompt, ShuffleDeckPrompt, GameError } from '../../../game';
 import { GameMessage } from '../../../game/game-message';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+
+import { MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -19,10 +18,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   let heads: number = 0;
-  yield store.prompt(state, [
-    new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-    new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-  ], results => {
+  yield MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, results => {
     results.forEach(r => { heads += r ? 1 : 0; });
     next();
   });
@@ -59,17 +55,12 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 }
 
 export class DualBall extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'UL';
-
   public name: string = 'Dual Ball';
-
   public fullName: string = 'Dual Ball UL';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '72';
 
   public text: string =

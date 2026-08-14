@@ -17,7 +17,8 @@ export class ShrineOfPunishment extends TrainerCard {
   public cardImage = 'assets/cardback.png';
   public name: string = 'Shrine of Punishment';
   public fullName: string = 'Shrine of Punishment CES';
-  public text: string = 'Between turns, put 1 damage counter on each Pokémon-GX and Pokémon-EX (both yours and your opponent\'s).';
+  public text: string =
+    "Between turns, put 1 damage counter on each Pokémon-GX and Pokémon-EX (both yours and your opponent's).";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof BetweenTurnsEffect && StateUtils.getStadiumCard(state) === this) {
@@ -31,7 +32,10 @@ export class ShrineOfPunishment extends TrainerCard {
         }
 
         const pokemon = cardList.getPokemonCard();
-        if (pokemon && (pokemon?.tags.includes(CardTag.POKEMON_GX) || pokemon.tags.includes(CardTag.POKEMON_EX))) {
+        if (
+          pokemon &&
+          (pokemon?.hasTag(CardTag.POKEMON_GX) || pokemon.hasTag(CardTag.POKEMON_EX))
+        ) {
           cardList.damage += 10;
         }
       });

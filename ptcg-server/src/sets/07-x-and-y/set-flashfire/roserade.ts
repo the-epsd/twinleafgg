@@ -17,20 +17,17 @@ export class Roserade extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Whiplash',
-      cost: [G],
-      damage: 0,
-      text: 'Flip a coin until you get tails. For each heads, discard an Energy attached to your opponent\'s Active Pokémon.'
-    },
-    {
-      name: 'Mega Drain',
-      cost: [G, G, G],
-      damage: 70,
-      text: 'Heal 20 damage from this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Whiplash',
+    cost: [G],
+    damage: 0,
+    text: 'Flip a coin until you get tails. For each heads, discard an Energy attached to your opponent\'s Active Pokémon.'
+  }, {
+    name: 'Mega Drain',
+    cost: [G, G, G],
+    damage: 70,
+    text: 'Heal 20 damage from this Pokémon.'
+  }];
 
   public set: string = 'FLF';
   public setNumber: string = '9';

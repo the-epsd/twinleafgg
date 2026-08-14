@@ -12,22 +12,19 @@ export class Throh extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Freestyle Strike',
-      cost: [F, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
-    },
-    {
-      name: 'Shoulder Throw',
-      cost: [F, C, C],
-      damage: 80,
-      damageCalculation: '-',
-      text: 'Does 80 damage minus 20 damage for each Colorless in the Defending Pok\u00e9mon\'s Retreat Cost.'
-    }
-  ];
+  public attacks = [{
+    name: 'Freestyle Strike',
+    cost: [F, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
+  }, {
+    name: 'Shoulder Throw',
+    cost: [F, C, C],
+    damage: 80,
+    damageCalculation: '-',
+    text: 'Does 80 damage minus 20 damage for each Colorless in the Defending Pok\u00e9mon\'s Retreat Cost.'
+  }];
 
   public set: string = 'PLB';
   public setNumber: string = '51';

@@ -15,15 +15,13 @@ export class Machop extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Dual Chop',
-      cost: [F, F],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Dual Chop',
+    cost: [F, F],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
+  }];
 
   public set: string = 'EVO';
   public setNumber: string = '57';

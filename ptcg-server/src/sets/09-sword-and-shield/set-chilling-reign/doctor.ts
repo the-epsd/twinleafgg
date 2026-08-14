@@ -17,7 +17,8 @@ export class Doctor extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Doctor';
   public fullName: string = 'Doctor CRE';
-  public text: string = 'Draw 2 cards. If your opponent\'s Active Pokémon is a Pokémon VMAX, draw 2 more cards. You may play only 1 Supporter card during your turn.';
+  public text: string =
+    "Draw 2 cards. If your opponent's Active Pokémon is a Pokémon VMAX, draw 2 more cards. You may play only 1 Supporter card during your turn.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-battle-styles/phoebe.ts (WAS_TRAINER_USED + VMAX check), set-lost-thunder/whitney.ts (DRAW_CARDS)
@@ -28,7 +29,7 @@ export class Doctor extends TrainerCard {
       DRAW_CARDS(store, state, player, 2);
 
       const opponentActive = opponent.active.getPokemonCard();
-      if (opponentActive && opponentActive.tags.includes(CardTag.POKEMON_VMAX)) {
+      if (opponentActive && opponentActive.hasTag(CardTag.POKEMON_VMAX)) {
         DRAW_CARDS(store, state, player, 2);
       }
     }

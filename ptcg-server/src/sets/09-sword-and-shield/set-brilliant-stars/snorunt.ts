@@ -21,22 +21,20 @@ export class Snorunt extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Ice Breath',
-      cost: [W],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Icy Snow',
-      cost: [W, C],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Ice Breath',
+    cost: [W],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Icy Snow',
+    cost: [W, C],
+    damage: 20,
+    text: ''
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'BRS';
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';

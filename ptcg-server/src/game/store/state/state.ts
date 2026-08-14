@@ -59,4 +59,10 @@ export class State {
    * (Emperor's Eyes vs Bide Barricade / Mischievous Lock "first in wins").
    */
   public abilityLockOrderCounter: number = 0;
+
+  /**
+   * When set, newly queued prompts are answered by this player while board
+   * perspective stays on the original prompt.playerId (see Prompt.perspectivePlayerId).
+   */
+  public promptControllerId?: number;
 }

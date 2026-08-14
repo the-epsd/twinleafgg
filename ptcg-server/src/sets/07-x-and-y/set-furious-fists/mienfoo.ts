@@ -15,20 +15,17 @@ export class Mienfoo extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Flop',
-      cost: [F],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Lunge',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Flop',
+    cost: [F],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Lunge',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'FFI';
   public setNumber: string = '56';

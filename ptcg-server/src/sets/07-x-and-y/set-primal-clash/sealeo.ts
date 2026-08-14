@@ -15,20 +15,17 @@ export class Sealeo extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Freezing Headbutt',
-      cost: [W, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Aurora Beam',
-      cost: [W, W, C],
-      damage: 50,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Freezing Headbutt',
+    cost: [W, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Aurora Beam',
+    cost: [W, W, C],
+    damage: 50,
+    text: ''
+  }];
 
   public set: string = 'PRC';
   public setNumber: string = '47';

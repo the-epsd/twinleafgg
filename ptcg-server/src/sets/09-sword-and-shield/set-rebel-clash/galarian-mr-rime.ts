@@ -23,17 +23,16 @@ export class GalarianMrRime extends PokemonCard {
     text: 'Prevent all effects of your opponent\'s attacks, except damage, done to all of your Pokémon that have Energy attached. (Existing effects are not removed.)'
   }];
 
-  public attacks = [
-    {
-      name: 'Triple Spin',
-      cost: [W, C],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 50 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Triple Spin',
+    cost: [W, C],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 50 damage for each heads.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'RCL';
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';

@@ -11,20 +11,17 @@ export class Grimer extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Lure Poison',
-      cost: [P],
-      damage: 0,
-      text: 'Flip a coin. If heads, switch 1 of your opponent\'s Benched Pokémon with the Defending Pokémon. The new Defending Pokémon is now Poisoned.'
-    },
-    {
-      name: 'Sludge Toss',
-      cost: [P, C, C],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Lure Poison',
+    cost: [P],
+    damage: 0,
+    text: 'Flip a coin. If heads, switch 1 of your opponent\'s Benched Pokémon with the Defending Pokémon. The new Defending Pokémon is now Poisoned.'
+  }, {
+    name: 'Sludge Toss',
+    cost: [P, C, C],
+    damage: 30,
+    text: ''
+  }];
 
   public set: string = 'PLF';
   public setNumber: string = '45';

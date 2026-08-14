@@ -11,7 +11,7 @@ import { ADD_POISON_TO_PLAYER_ACTIVE, WAS_ATTACK_USED } from '../../../game/stor
 export class Glimmoraex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Glimmet';
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public cardType: CardType = F;
   public hp: number = 270;
   public weakness = [{ type: G }];
@@ -21,15 +21,18 @@ export class Glimmoraex extends PokemonCard {
     {
       name: 'Dust Field',
       powerType: PowerType.ABILITY,
-      text: 'As long as this Pokémon is in the Active Spot, your opponent can\'t have more than 3 Benched Pokémon. If they have 4 or more Benched Pokémon, they discard Benched Pokémon until they have 3 Pokémon on the Bench. If more than one effect changes the number of Benched Pokémon allowed, use the smaller number.'
-    }];
+      text: "As long as this Pokémon is in the Active Spot, your opponent can't have more than 3 Benched Pokémon. If they have 4 or more Benched Pokémon, they discard Benched Pokémon until they have 3 Pokémon on the Bench. If more than one effect changes the number of Benched Pokémon allowed, use the smaller number.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Poisonous Gem',
-    cost: [F, F],
-    damage: 140,
-    text: 'Your opponent\'s Active Pokémon is now Poisoned.'
-  }];
+  public attacks = [
+    {
+      name: 'Poisonous Gem',
+      cost: [F, F],
+      damage: 140,
+      text: "Your opponent's Active Pokémon is now Poisoned.",
+    },
+  ];
 
   public set: string = 'OBF';
   public name: string = 'Glimmora ex';
@@ -44,11 +47,15 @@ export class Glimmoraex extends PokemonCard {
       effect.benchSizes = state.players.map((player, index) => {
         // gotta check the ability
         try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
+          const stub = new PowerEffect(
+            player,
+            {
+              name: 'test',
+              powerType: PowerType.ABILITY,
+              text: '',
+            },
+            this,
+          );
           store.reduceEffect(state, stub);
         } catch {
           return 5;
@@ -59,7 +66,12 @@ export class Glimmoraex extends PokemonCard {
         const opponent = StateUtils.getOpponent(state, player);
         opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
           const pokemon = cardList.getPokemonCard();
-          if (!!pokemon && cardList === opponent.active && pokemon.name === 'Glimmora ex' && pokemon.powers.map(p => p.name).includes(this.powers[0].name)) {
+          if (
+            !!pokemon &&
+            cardList === opponent.active &&
+            pokemon.name === 'Glimmora ex' &&
+            pokemon.powers.map((p) => p.name).includes(this.powers[0].name)
+          ) {
             isGlimmoraInPlay = true;
           }
         });

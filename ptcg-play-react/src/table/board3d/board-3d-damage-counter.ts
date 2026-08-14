@@ -17,6 +17,7 @@ import {
   DAMAGE_COUNTER_REST_Y,
   DAMAGE_COUNTER_REST_Z,
 } from './board-3d-overlay-layout';
+import { isUnderInspectingCard } from './board3dInspectingCard';
 
 const COUNTER_SIZE = 0.96; // Twice as large: 0.48 * 2 = 0.96 units
 
@@ -248,6 +249,10 @@ export class Board3dDamageCounter {
   /** Face the camera each frame (same pattern as energy icons / status markers). */
   updateBillboards(camera: PerspectiveCamera): void {
     if (!this.mesh) {
+      return;
+    }
+    if (isUnderInspectingCard(this.mesh)) {
+      this.mesh.quaternion.identity();
       return;
     }
     camera.getWorldQuaternion(Board3dDamageCounter._qCam);

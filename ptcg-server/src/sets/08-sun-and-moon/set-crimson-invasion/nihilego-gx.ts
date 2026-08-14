@@ -4,37 +4,48 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { CardList, PowerType, StoreLike, State, StateUtils, ConfirmPrompt, GameMessage } from '../../../game';
+import {
+  CardList,
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  ConfirmPrompt,
+  GameMessage,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED, BLOCK_RETREAT, ADD_CONFUSION_TO_PLAYER_ACTIVE, ADD_POISON_TO_PLAYER_ACTIVE, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED, ADD_CONFUSION_TO_PLAYER_ACTIVE, ADD_POISON_TO_PLAYER_ACTIVE, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 export class NihilegoGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
+  protected _tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 180;
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Empty Light',
-    powerType: PowerType.ABILITY,
-    text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may leave both Active Pokémon Confused and Poisoned.'
-  }];
+  public powers = [
+    {
+      name: 'Empty Light',
+      powerType: PowerType.ABILITY,
+      text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may leave both Active Pokémon Confused and Poisoned.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Lock Up',
       cost: [P, P, P],
       damage: 120,
-      text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
+      text: "The Defending Pokémon can't retreat during your opponent's next turn.",
     },
     {
       name: 'Symbiont-GX',
       cost: [P, P, P],
       damage: 0,
-      text: 'Add the top 2 cards of your opponent\'s deck to their Prize cards. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Add the top 2 cards of your opponent's deck to their Prize cards. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'CIN';
@@ -55,18 +66,19 @@ export class NihilegoGx extends PokemonCard {
         return state;
       }
 
-      state = store.prompt(state, new ConfirmPrompt(
-        player.id,
-        GameMessage.WANT_TO_USE_ABILITY
-      ), wantToUse => {
-        if (wantToUse) {
-          // Both Active Pokemon become Confused and Poisoned
-          ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, player, this);
-          ADD_POISON_TO_PLAYER_ACTIVE(store, state, player, this);
-          ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, opponent, this);
-          ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this);
-        }
-      });
+      state = store.prompt(
+        state,
+        new ConfirmPrompt(player.id, GameMessage.WANT_TO_USE_ABILITY),
+        (wantToUse) => {
+          if (wantToUse) {
+            // Both Active Pokemon become Confused and Poisoned
+            ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, player, this);
+            ADD_POISON_TO_PLAYER_ACTIVE(store, state, player, this);
+            ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, opponent, this);
+            ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this);
+          }
+        },
+      );
     }
 
     // Attack 1: Lock Up
@@ -87,11 +99,11 @@ export class NihilegoGx extends PokemonCard {
       const cardsToMove = Math.min(2, opponent.deck.cards.length);
       if (cardsToMove > 0) {
         const allPrizeCards = new CardList();
-        opponent.prizes.forEach(prizeList => {
+        opponent.prizes.forEach((prizeList) => {
           allPrizeCards.cards.push(...prizeList.cards);
         });
 
-        opponent.deck.cards.slice(0, cardsToMove).forEach(card => {
+        opponent.deck.cards.slice(0, cardsToMove).forEach((card) => {
           allPrizeCards.cards.push(card);
         });
         opponent.deck.cards.splice(0, cardsToMove);

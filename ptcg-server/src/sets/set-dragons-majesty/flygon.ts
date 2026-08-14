@@ -8,7 +8,8 @@ import { PowerType, StoreLike, State, StateUtils, PlayerType } from '../../game'
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { AbstractAttackEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, BLOCK_RETREAT } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../game/store/prefabs/effect-of-attack-prefabs';
 export class Flygon extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Vibrava';

@@ -12,12 +12,15 @@ import { HealEffect } from '../../../game/store/effects/game-effects';
 
 export class SweetHoney extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
+
   public regulationMark: string = 'F';
+
   public set: string = 'ASR';
   public setNumber: string = '153';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sweet Honey';
   public fullName: string = 'Sweet Honey ASR 153';
+
   public text: string = 'Choose 1 of your Pokémon, and then flip a coin until you get tails. For each heads, heal 40 damage from that Pokémon. You may play any number of Item cards during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -14,16 +14,15 @@ export class Meditite extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Yoga Shock',
-      cost: [C],
-      damage: 10,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Yoga Shock',
+    cost: [C],
+    damage: 10,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'RCL';
   public setNumber: string = '97';
   public cardImage: string = 'assets/cardback.png';

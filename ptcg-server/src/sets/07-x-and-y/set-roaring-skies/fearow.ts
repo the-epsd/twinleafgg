@@ -18,20 +18,17 @@ export class Fearow extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Peck',
-      cost: [C],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Drill Run',
-      cost: [C, C, C, C],
-      damage: 70,
-      text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Peck',
+    cost: [C],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Drill Run',
+    cost: [C, C, C, C],
+    damage: 70,
+    text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
+  }];
 
   public set: string = 'ROS';
   public setNumber: string = '66';

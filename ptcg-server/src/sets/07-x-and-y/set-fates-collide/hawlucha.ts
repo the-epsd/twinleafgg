@@ -15,20 +15,17 @@ export class Hawlucha extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Backflip',
-      cost: [C],
-      damage: 0,
-      text: 'Draw a card.'
-    },
-    {
-      name: 'Wicked Jab',
-      cost: [F, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Backflip',
+    cost: [C],
+    damage: 0,
+    text: 'Draw a card.'
+  }, {
+    name: 'Wicked Jab',
+    cost: [F, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'FCO';
   public setNumber: string = '48';

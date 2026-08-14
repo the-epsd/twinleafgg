@@ -18,7 +18,8 @@ export class AngeFloette extends TrainerCard {
   public name: string = 'Ange Floette';
   public fullName: string = 'Hyperrogue Ange Floette M4';
   public cardImage: string = 'assets/cardback.png';
-  public text: string = 'You can put this card into play only if you discard a Prism Tower in play, and you can put this card into play during the same turn you play Prism Tower.\n\nEach Mega Floette ex in play (both yours and your opponent\'s) gets +150 HP.';
+  public text: string =
+    "You can put this card into play only if you discard a Prism Tower in play, and you can put this card into play during the same turn you play Prism Tower.\n\nEach Mega Floette ex in play (both yours and your opponent's) gets +150 HP.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayStadiumEffect && effect.trainerCard === this) {
@@ -36,7 +37,11 @@ export class AngeFloette extends TrainerCard {
         return state;
       }
 
-      if (pokemonCard && pokemonCard.name === 'Mega Floette ex' && pokemonCard.tags.includes(CardTag.POKEMON_SV_MEGA)) {
+      if (
+        pokemonCard &&
+        pokemonCard.name === 'Mega Floette ex' &&
+        pokemonCard.hasTag(CardTag.POKEMON_SV_MEGA)
+      ) {
         effect.hp += 150;
       }
     }

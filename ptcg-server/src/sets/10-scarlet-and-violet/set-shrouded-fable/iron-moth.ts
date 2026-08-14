@@ -1,4 +1,13 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, PlayerType, CardTag } from '../../../game';
+import {
+  PokemonCard,
+  Stage,
+  CardType,
+  StoreLike,
+  State,
+  StateUtils,
+  PlayerType,
+  CardTag,
+} from '../../../game';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { HealEffect } from '../../../game/store/effects/game-effects';
@@ -11,21 +20,21 @@ export class IronMoth extends PokemonCard {
   public hp: number = 120;
   public weakness = [{ type: CardType.WATER }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
-  public tags = [CardTag.FUTURE];
+  protected _tags = [CardTag.FUTURE];
 
   public attacks = [
     {
       name: 'Suction',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 30,
-      text: 'Heal from this Pokémon the same amount of damage you did to your opponent\'s Active Pokémon.'
+      text: "Heal from this Pokémon the same amount of damage you did to your opponent's Active Pokémon.",
     },
     {
       name: 'Anachronism Repulsor',
       cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS],
       damage: 120,
-      text: 'During your next turn, prevent all damage done to this Pokémon by attacks from Ancient Pokémon.'
-    }
+      text: 'During your next turn, prevent all damage done to this Pokémon by attacks from Ancient Pokémon.',
+    },
   ];
   public regulationMark = 'H';
   public set: string = 'SFA';
@@ -38,7 +47,6 @@ export class IronMoth extends PokemonCard {
   public readonly CLEAR_WILD_REJECTOR_MARKER: string = 'CLEAR_WILD_REJECTOR_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       // Absorption
@@ -57,10 +65,12 @@ export class IronMoth extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof PutDamageEffect
-      && effect.target.marker.hasMarker(this.WILD_REJECTOR_MARKER)) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.marker.hasMarker(this.WILD_REJECTOR_MARKER)
+    ) {
       const card = effect.source.getPokemonCard();
-      const ancientPokemon = card && card.tags.includes(CardTag.ANCIENT);
+      const ancientPokemon = card && card.hasTag(CardTag.ANCIENT);
 
       if (ancientPokemon) {
         effect.preventDefault = true;
@@ -81,5 +91,4 @@ export class IronMoth extends PokemonCard {
 
     return state;
   }
-
 }

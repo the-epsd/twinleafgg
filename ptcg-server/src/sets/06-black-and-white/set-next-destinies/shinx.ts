@@ -12,21 +12,18 @@ export class Shinx extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Jump On',
-      cost: [L],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 10 more damage.'
-    },
-    {
-      name: 'Static Shock',
-      cost: [L, C],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Jump On',
+    cost: [L],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 10 more damage.'
+  }, {
+    name: 'Static Shock',
+    cost: [L, C],
+    damage: 20,
+    text: ''
+  }];
 
   public set: string = 'NXD';
   public setNumber: string = '42';

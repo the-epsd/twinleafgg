@@ -12,7 +12,7 @@ import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefab
 
 export class Scizor extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public tags = [CardTag.PRIME];
+  protected _tags = [CardTag.PRIME];
   public evolvesFrom = 'Scyther';
   public cardType: CardType = M;
   public hp: number = 100;
@@ -20,19 +20,23 @@ export class Scizor extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Skyscraper',
-    powerType: PowerType.POKEBODY,
-    text: 'Prevent all damage done to Scizor by attacks from your opponent\'s Pokémon that have any Special Energy cards attached to them.'
-  }];
+  public powers = [
+    {
+      name: 'Skyscraper',
+      powerType: PowerType.POKEBODY,
+      text: "Prevent all damage done to Scizor by attacks from your opponent's Pokémon that have any Special Energy cards attached to them.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Metal Scizors',
-    cost: [M, C],
-    damage: 30,
-    damageCalculation: '+',
-    text: 'Does 30 damage plus 20 more damage for each [M] Energy attached to Scizor.'
-  }];
+  public attacks = [
+    {
+      name: 'Metal Scizors',
+      cost: [M, C],
+      damage: 30,
+      damageCalculation: '+',
+      text: 'Does 30 damage plus 20 more damage for each [M] Energy attached to Scizor.',
+    },
+  ];
 
   public set: string = 'UD';
   public cardImage: string = 'assets/cardback.png';
@@ -41,7 +45,6 @@ export class Scizor extends PokemonCard {
   public fullName: string = 'Scizor UD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
@@ -49,15 +52,19 @@ export class Scizor extends PokemonCard {
       store.reduceEffect(state, checkProvidedEnergyEffect);
 
       let energyCount = 0;
-      checkProvidedEnergyEffect.energyMap.forEach(em => {
-        energyCount += em.provides.filter(cardType => {
+      checkProvidedEnergyEffect.energyMap.forEach((em) => {
+        energyCount += em.provides.filter((cardType) => {
           return cardType === CardType.METAL || cardType === CardType.ANY;
         }).length;
       });
       effect.damage += energyCount * 20;
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && state.phase === GamePhase.ATTACK) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.cards.includes(this) &&
+      state.phase === GamePhase.ATTACK
+    ) {
       const player = StateUtils.findOwner(state, effect.target);
 
       if (IS_POKEBODY_BLOCKED(store, state, player, this)) {
@@ -74,5 +81,4 @@ export class Scizor extends PokemonCard {
     }
     return state;
   }
-
 }

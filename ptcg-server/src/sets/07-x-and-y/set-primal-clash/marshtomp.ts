@@ -16,21 +16,18 @@ export class Marshtomp extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Mud-Slap',
-      cost: [W, C],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Endeavor',
-      cost: [W, C, C],
-      damage: 40,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Mud-Slap',
+    cost: [W, C],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Endeavor',
+    cost: [W, C, C],
+    damage: 40,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
+  }];
 
   public set: string = 'PRC';
   public setNumber: string = '34';

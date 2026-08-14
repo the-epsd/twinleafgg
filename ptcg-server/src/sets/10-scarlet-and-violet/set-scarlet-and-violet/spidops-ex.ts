@@ -1,15 +1,24 @@
-import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, PlayerType, CardTag } from '../../../game';
+import {
+  PokemonCard,
+  Stage,
+  CardType,
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  PlayerType,
+  CardTag,
+} from '../../../game';
 import { CheckRetreatCostEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Spidopsex extends PokemonCard {
-
   public regulationMark = 'G';
 
   public stage: Stage = Stage.STAGE_1;
 
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public cardType: CardType = CardType.GRASS;
 
   public hp: number = 260;
@@ -20,19 +29,23 @@ export class Spidopsex extends PokemonCard {
 
   public evolvesFrom = 'Tarountula';
 
-  public powers = [{
-    name: 'Trap Territory',
-    powerType: PowerType.ABILITY,
-    text: 'Your opponent\'s Active Pokémon\'s Retreat Cost is [C] more.'
-  }];
+  public powers = [
+    {
+      name: 'Trap Territory',
+      powerType: PowerType.ABILITY,
+      text: "Your opponent's Active Pokémon's Retreat Cost is [C] more.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Wire Hang',
-    cost: [CardType.GRASS, CardType.COLORLESS],
-    damage: 90,
-    damageCalculation: '+',
-    text: 'This attack does 30 more damage for each [C] in your opponent\'s Active Pokémon\'s Retreat Cost.'
-  }];
+  public attacks = [
+    {
+      name: 'Wire Hang',
+      cost: [CardType.GRASS, CardType.COLORLESS],
+      damage: 90,
+      damageCalculation: '+',
+      text: "This attack does 30 more damage for each [C] in your opponent's Active Pokémon's Retreat Cost.",
+    },
+  ];
 
   public set: string = 'SVI';
 
@@ -45,7 +58,6 @@ export class Spidopsex extends PokemonCard {
   public fullName: string = 'Spidops ex SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof CheckRetreatCostEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -89,7 +101,9 @@ export class Spidopsex extends PokemonCard {
 
       const opponentActiveCard = opponent.active.getPokemonCard();
       if (opponentActiveCard) {
-        const retreatCost = opponentActiveCard.retreat.filter(c => c === CardType.COLORLESS).length;
+        const retreatCost = opponentActiveCard.retreat.filter(
+          (c) => c === CardType.COLORLESS,
+        ).length;
 
         effect.damage += retreatCost * 30;
       }

@@ -16,7 +16,8 @@ export class DarknessEnergySpecial extends EnergyCard {
   public fullName = 'Darkness Energy N1';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '104';
-  public text = 'If the Pokémon Darkness Energy is attached to damages the Defending Pokémon (after applying Weakness and Resistance), the attack does 10 more damage to the Defending Pokémon. At the end of every turn, put 1 damage counter on the Pokémon Darkness Energy is attached to, unless it\'s [D] or has Dark in its name.\n\nDarkness Energy provides [D] Energy. (Doesn\'t count as a basic Energy card.)';
+  public text =
+    "If the Pokémon Darkness Energy is attached to damages the Defending Pokémon (after applying Weakness and Resistance), the attack does 10 more damage to the Defending Pokémon. At the end of every turn, put 1 damage counter on the Pokémon Darkness Energy is attached to, unless it's [D] or has Dark in its name.\n\nDarkness Energy provides [D] Energy. (Doesn't count as a basic Energy card.)";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Increase damage output
@@ -38,7 +39,10 @@ export class DarknessEnergySpecial extends EnergyCard {
         if (pokemon.cards.includes(this)) {
           const checkPokemonType = new CheckPokemonTypeEffect(pokemon);
           store.reduceEffect(state, checkPokemonType);
-          if (!checkPokemonType.cardTypes.includes(CardType.DARK) && !pokemon.getPokemonCard()?.tags.includes(CardTag.DARK)) {
+          if (
+            !checkPokemonType.cardTypes.includes(CardType.DARK) &&
+            !pokemon.getPokemonCard()?.hasTag(CardTag.DARK)
+          ) {
             pokemon.damage += 10;
           }
         }
@@ -47,7 +51,10 @@ export class DarknessEnergySpecial extends EnergyCard {
         if (pokemon.cards.includes(this)) {
           const checkPokemonType = new CheckPokemonTypeEffect(pokemon);
           store.reduceEffect(state, checkPokemonType);
-          if (!checkPokemonType.cardTypes.includes(CardType.DARK) && !pokemon.getPokemonCard()?.tags.includes(CardTag.DARK)) {
+          if (
+            !checkPokemonType.cardTypes.includes(CardType.DARK) &&
+            !pokemon.getPokemonCard()?.hasTag(CardTag.DARK)
+          ) {
             pokemon.damage += 10;
           }
         }
@@ -56,5 +63,4 @@ export class DarknessEnergySpecial extends EnergyCard {
 
     return state;
   }
-
 }

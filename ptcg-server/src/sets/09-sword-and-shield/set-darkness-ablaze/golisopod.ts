@@ -6,7 +6,11 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, PlayerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, AFTER_ATTACK, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  AFTER_ATTACK,
+  SWITCH_ACTIVE_WITH_BENCHED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Golisopod extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -22,14 +26,14 @@ export class Golisopod extends PokemonCard {
       cost: [C, C],
       damage: 30,
       damageCalculation: '+',
-      text: 'This attack does 50 more damage for each of your opponent\'s Pokémon V and Pokémon-GX in play.'
+      text: "This attack does 50 more damage for each of your opponent's Pokémon V and Pokémon-GX in play.",
     },
     {
       name: 'Smash Turn',
       cost: [G, C, C],
       damage: 70,
-      text: 'Switch this Pokémon with 1 of your Benched Pokémon.'
-    }
+      text: 'Switch this Pokémon with 1 of your Benched Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -48,7 +52,7 @@ export class Golisopod extends PokemonCard {
 
       let vgxCount = 0;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_GX)) {
+        if (card.hasTag(CardTag.POKEMON_V) || card.hasTag(CardTag.POKEMON_GX)) {
           vgxCount++;
         }
       });
@@ -60,7 +64,7 @@ export class Golisopod extends PokemonCard {
     // Ref: set-shining-legends/yveltal.ts (AFTER_ATTACK + SWITCH_ACTIVE_WITH_BENCHED)
     if (AFTER_ATTACK(effect, 1, this)) {
       const player = effect.player;
-      if (player.bench.some(b => b.cards.length > 0)) {
+      if (player.bench.some((b) => b.cards.length > 0)) {
         SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
       }
     }

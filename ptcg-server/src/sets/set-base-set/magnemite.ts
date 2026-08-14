@@ -7,40 +7,28 @@ import { Effect } from '../../game/store/effects/effect';
 import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Magnemite extends PokemonCard {
-
   public cardType: CardType = L;
-
   public stage: Stage = Stage.BASIC;
-
   public hp: number = 40;
-
   public weakness = [{ type: F }];
-
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Thunder Wave',
-      cost: [L],
-      damage: 10,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Selfdestruct',
-      cost: [L, C],
-      damage: 40,
-      text: 'Does 10 damage to each Pokémon on each player\'s Bench. (Don\'t apply Weakness and Resistance for Benched Pokémon.) Magnemite does 40 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Thunder Wave',
+    cost: [L],
+    damage: 10,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Selfdestruct',
+    cost: [L, C],
+    damage: 40,
+    text: 'Does 10 damage to each Pokémon on each player\'s Bench. (Don\'t apply Weakness and Resistance for Benched Pokémon.) Magnemite does 40 damage to itself.'
+  }];
 
   public set = 'BS';
-
   public fullName = 'Magnemite BS';
-
   public name = 'Magnemite';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '53';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

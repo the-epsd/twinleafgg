@@ -22,6 +22,8 @@ export class SandboxModifyPlayerAction implements Action {
       usedGX?: boolean;
       ancientSupporter?: boolean;
       rocketSupporter?: boolean;
+      /** Fisher–Yates shuffle the player's deck and emit deckShuffle animation. */
+      shuffleDeck?: boolean;
     }
   ) { }
 

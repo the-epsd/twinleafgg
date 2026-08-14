@@ -6,10 +6,11 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, DISCARD_A_STADIUM_CARD_IN_PLAY, MEGA_EVOLUTION_END_TURN } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, DISCARD_A_STADIUM_CARD_IN_PLAY } from '../../../game/store/prefabs/prefabs';
+import { MEGA_EVOLUTION_END_TURN } from '../../../game/store/prefabs/tool-prefabs';
 
 export class PrimalGroudonEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX, CardTag.MEGA, CardTag.PRIMAL];
+  protected _tags = [CardTag.POKEMON_EX, CardTag.MEGA, CardTag.PRIMAL];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Groudon-EX';
   public cardType: CardType = F;
@@ -17,19 +18,23 @@ export class PrimalGroudonEx extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];
 
-  public powers = [{
-    name: '\u03b8 Max',
-    powerType: PowerType.ANCIENT_TRAIT,
-    text: 'When 1 of your Pokemon becomes this Pokemon, heal all damage from it.',
-  }];
+  public powers = [
+    {
+      name: '\u03b8 Max',
+      powerType: PowerType.ANCIENT_TRAIT,
+      text: 'When 1 of your Pokemon becomes this Pokemon, heal all damage from it.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Gaia Volcano',
-    cost: [F, F, F, C],
-    damage: 100,
-    damageCalculation: '+',
-    text: 'If there is any Stadium card in play, this attack does 100 more damage. Discard that Stadium card.',
-  }];
+  public attacks = [
+    {
+      name: 'Gaia Volcano',
+      cost: [F, F, F, C],
+      damage: 100,
+      damageCalculation: '+',
+      text: 'If there is any Stadium card in play, this attack does 100 more damage. Discard that Stadium card.',
+    },
+  ];
 
   public set: string = 'AOR';
   public setNumber: string = '97';

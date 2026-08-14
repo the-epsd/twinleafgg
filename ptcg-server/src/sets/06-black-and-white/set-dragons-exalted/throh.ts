@@ -12,22 +12,19 @@ export class Throh extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Squeeze',
-      cost: [F, C, C],
-      damage: 40,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 more damage and the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Superpower',
-      cost: [F, C, C, C],
-      damage: 70,
-      damageCalculation: '+',
-      text: 'You may do 20 more damage. If you do, this Pokémon does 20 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Squeeze',
+    cost: [F, C, C],
+    damage: 40,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 20 more damage and the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Superpower',
+    cost: [F, C, C, C],
+    damage: 70,
+    damageCalculation: '+',
+    text: 'You may do 20 more damage. If you do, this Pokémon does 20 damage to itself.'
+  }];
 
   public set: string = 'DRX';
   public setNumber: string = '68';

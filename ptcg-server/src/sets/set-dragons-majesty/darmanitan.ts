@@ -17,21 +17,18 @@ export class Darmanitan extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Heat Assist',
-      cost: [R],
-      damage: 0,
-      text: 'Attach up to 3 [R] Energy cards from your hand to your Pokémon in any way you like.'
-    },
-    {
-      name: 'Darmani-Hands',
-      cost: [R, R, C],
-      damage: 30,
-      damageCalculation: '+',
-      text: 'Flip 4 coins. This attack does 50 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Heat Assist',
+    cost: [R],
+    damage: 0,
+    text: 'Attach up to 3 [R] Energy cards from your hand to your Pokémon in any way you like.'
+  }, {
+    name: 'Darmani-Hands',
+    cost: [R, R, C],
+    damage: 30,
+    damageCalculation: '+',
+    text: 'Flip 4 coins. This attack does 50 more damage for each heads.'
+  }];
 
   public set: string = 'DRM';
   public setNumber: string = '9';

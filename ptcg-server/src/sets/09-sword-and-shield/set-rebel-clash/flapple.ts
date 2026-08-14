@@ -1,10 +1,10 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, PowerType, StateUtils, PokemonCardList, ChooseCardsPrompt, Card, CoinFlipPrompt } from '../../../game';
+import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, PowerType, StateUtils, PokemonCardList, ChooseCardsPrompt, Card } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { EffectOfAbilityEffect } from '../../../game/store/effects/game-effects';
 import { GameMessage } from '../../../game/game-message';
-import { MOVE_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED, WAS_POWER_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 
 export class Flapple extends PokemonCard {
@@ -84,9 +84,7 @@ export class Flapple extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      return store.prompt(state, new CoinFlipPrompt(
-        player.id, GameMessage.COIN_FLIP
-      ), flipResult => {
+      return COIN_FLIP_PROMPT(store, state, player, flipResult => {
         if (flipResult) {
           // Defending Pokemon has no energy cards attached
           if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {

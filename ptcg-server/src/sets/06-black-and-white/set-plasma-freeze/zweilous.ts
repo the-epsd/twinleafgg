@@ -16,20 +16,17 @@ export class Zweilous extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Bite',
-      cost: [D, C],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Body Slam',
-      cost: [D, C, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Bite',
+    cost: [D, C],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Body Slam',
+    cost: [D, C, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'PLF';
   public setNumber: string = '77';

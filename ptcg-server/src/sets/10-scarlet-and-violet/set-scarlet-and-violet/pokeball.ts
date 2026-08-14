@@ -4,11 +4,13 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { GameLog, GameMessage } from '../../../game/game-message';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
-import { CoinFlipPrompt } from '../../../game/store/prompts/coin-flip-prompt';
+
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { Effect } from '../../../game/store/effects/effect';
 import { StateUtils, ShowCardsPrompt, GameError, Player } from '../../../game';
+
+import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -22,7 +24,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
-  yield store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), (result: boolean) => {
+  yield COIN_FLIP_PROMPT(store, state, player, result => {
     coinResult = result;
     next();
   });
@@ -56,26 +58,20 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.deck.moveCardsTo(cards, player.hand);
   }
 
-
   return store.prompt(state, new ShuffleDeckPrompt(player.id), (order: any[]) => {
     player.deck.applyOrder(order);
   });
 }
 
 export class Pokeball extends TrainerCard {
-
   public regulationMark = 'G';
 
   public trainerType = TrainerType.ITEM;
 
   public set = 'SVI';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '185';
-
   public name = 'Poké Ball';
-
   public fullName: string = 'Poké Ball SVI';
 
   public text: string = 'Flip a coin. If heads, search your deck for a Pokémon, reveal it, and put it into your hand. Shuffle your deck afterward.';

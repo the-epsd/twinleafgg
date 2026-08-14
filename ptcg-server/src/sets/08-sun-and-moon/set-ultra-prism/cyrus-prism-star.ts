@@ -19,7 +19,7 @@ import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effect
 
 export class CyrusPrismStar extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-  public tags = [CardTag.PRISM_STAR];
+  protected _tags = [CardTag.PRISM_STAR];
   public set: string = 'UPR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '120';

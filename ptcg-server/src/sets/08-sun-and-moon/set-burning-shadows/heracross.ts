@@ -27,14 +27,12 @@ export class Heracross extends PokemonCard {
 
   public usedPitch = false;
 
-  public attacks = [
-    {
-      name: 'Pitch',
-      cost: [G, G],
-      damage: 50,
-      text: 'Your opponent switches their Active Pokémon with 1 of their Benched Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Pitch',
+    cost: [G, G],
+    damage: 50,
+    text: 'Your opponent switches their Active Pokémon with 1 of their Benched Pokémon.'
+  }];
 
   public set: string = 'BUS';
   public setNumber: string = '11';

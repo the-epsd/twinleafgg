@@ -7,11 +7,15 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PlayerType, StoreLike, State } from '../../../game';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  MULTIPLE_COIN_FLIPS_PROMPT,
+  BLOCK_IF_GX_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED } from '../../../game/store/prefabs/attack-effects';
 
 export class IncineroarGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Torracat';
   public cardType: CardType = R;
@@ -19,28 +23,24 @@ export class IncineroarGx extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Hustling Strike',
-      cost: [R],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'This attack does 20 more damage for each of your Benched Fire Pokémon.'
-    },
-    {
-      name: 'Tiger Swing',
-      cost: [R, R, C],
-      damage: 80,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 50 more damage for each heads.'
-    },
-    {
-      name: 'Burning Slam-GX',
-      cost: [R, R, C],
-      damage: 200,
-      text: 'Your opponent\'s Active Pokémon is now Burned. (You can\'t use more than 1 GX attack in a game.)'
-    }
-  ];
+  public attacks = [{
+    name: 'Hustling Strike',
+    cost: [R],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'This attack does 20 more damage for each of your Benched Fire Pokémon.'
+  }, {
+    name: 'Tiger Swing',
+    cost: [R, R, C],
+    damage: 80,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 50 more damage for each heads.'
+  }, {
+    name: 'Burning Slam-GX',
+    cost: [R, R, C],
+    damage: 200,
+    text: 'Your opponent\'s Active Pokémon is now Burned. (You can\'t use more than 1 GX attack in a game.)'
+  }];
 
   public set: string = 'SUM';
   public setNumber: string = '27';
@@ -75,8 +75,8 @@ export class IncineroarGx extends PokemonCard {
     // Attack 2: Tiger Swing
     // Ref: AGENTS-patterns.md (multiple coin flips)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 2, results => {
-        const heads = results.filter(r => r).length;
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 2, (results) => {
+        const heads = results.filter((r) => r).length;
         effect.damage += 50 * heads;
       });
     }

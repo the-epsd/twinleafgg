@@ -19,8 +19,7 @@ export class Gabite extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Search your discard pile for up to 2 Energy cards, show them to your opponent, and put them into your hand.'
-  },
-  {
+  }, {
     name: 'Marvelous Shine',
     cost: [C, C],
     damage: 0,

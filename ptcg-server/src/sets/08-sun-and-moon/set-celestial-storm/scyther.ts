@@ -1,12 +1,7 @@
 import { CardType, PokemonCard, Stage, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import {
-  COIN_FLIP_PROMPT,
-  PREVENT_DAMAGE,
-  PREVENT_EFFECTS_OF_ATTACKS,
-  SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH,
-  WAS_ATTACK_USED,
-} from '../../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Scyther extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -20,8 +15,7 @@ export class Scyther extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Search your deck for up to 2 Scyther and put them onto your Bench. Then, shuffle your deck.'
-  },
-  {
+  }, {
     name: 'Agility',
     cost: [C, C],
     damage: 20,

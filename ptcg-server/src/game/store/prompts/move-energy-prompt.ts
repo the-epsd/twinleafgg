@@ -57,7 +57,7 @@ export class MoveEnergyPrompt extends Prompt<CardTransfer[]> {
     if (result === null) {
       return result;  // operation cancelled
     }
-    const player = state.players.find(p => p.id === this.playerId);
+    const player = state.players.find(p => p.id === this.getPerspectivePlayerId());
     if (player === undefined) {
       throw new GameError(GameMessage.INVALID_PROMPT_RESULT);
     }

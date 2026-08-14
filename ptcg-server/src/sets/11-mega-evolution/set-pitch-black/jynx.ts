@@ -16,24 +16,23 @@ export class Jynx extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Intense Kiss',
-      cost: [P],
-      damage: 0,
-      text: "At the end of your opponent's next turn, discard the Defending Pokémon and all attached cards.",
-    },
-    {
-      name: 'Psy Bolt',
-      cost: [P, C],
-      damage: 50,
-      text: "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed.",
-    },
-  ];
+  public attacks = [{
+    name: 'Intense Kiss',
+    cost: [P],
+    damage: 0,
+    text: "At the end of your opponent's next turn, discard the Defending Pokémon and all attached cards.",
+  }, {
+    name: 'Psy Bolt',
+    cost: [P, C],
+    damage: 50,
+    text: "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed.",
+  }];
 
   public set: string = 'PBL';
   public setNumber: string = '32';
+
   public regulationMark: string = 'J';
+
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jynx';
   public fullName: string = 'Jynx M5';

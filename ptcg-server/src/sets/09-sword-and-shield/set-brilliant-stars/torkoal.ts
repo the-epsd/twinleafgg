@@ -15,23 +15,21 @@ export class Torkoal extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Firebreathing',
-      cost: [C, C],
-      damage: 30,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 30 more damage.'
-    },
-    {
-      name: 'Guard Press',
-      cost: [R, C, C],
-      damage: 90,
-      text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
-    }
-  ];
+  public attacks = [{
+    name: 'Firebreathing',
+    cost: [C, C],
+    damage: 30,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 30 more damage.'
+  }, {
+    name: 'Guard Press',
+    cost: [R, C, C],
+    damage: 90,
+    text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'BRS';
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';

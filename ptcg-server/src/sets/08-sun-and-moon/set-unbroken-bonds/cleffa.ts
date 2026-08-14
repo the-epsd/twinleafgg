@@ -1,10 +1,10 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, ShuffleDeckPrompt, GameError, GameMessage, CoinFlipPrompt } from '../../../game';
+import { PowerType, StoreLike, State, ShuffleDeckPrompt, GameError, GameMessage } from '../../../game';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_POWER_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 function* useExcitableDraw(next: Function, store: StoreLike, state: State,
   effect: PowerEffect): IterableIterator<State> {
@@ -15,9 +15,7 @@ function* useExcitableDraw(next: Function, store: StoreLike, state: State,
   }
 
   let flipResult = false;
-  yield store.prompt(state, [
-    new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-  ], result => {
+  yield COIN_FLIP_PROMPT(store, state, player, result => {
     flipResult = result;
     next();
   });
@@ -37,13 +35,9 @@ function* useExcitableDraw(next: Function, store: StoreLike, state: State,
 }
 
 export class Cleffa extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.FAIRY;
-
+  public cardType: CardType = Y;
   public hp: number = 60;
-
   public retreat = [];
 
   public powers = [{
@@ -51,18 +45,14 @@ export class Cleffa extends PokemonCard {
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'Once during your turn (before your attack), you may flip a coin. ' +
-      'If heads, shuffle your hand into your deck and then draw 6 cards. ' +
-      'If you use this Ability, your turn ends.'
+    'If heads, shuffle your hand into your deck and then draw 6 cards. ' +
+    'If you use this Ability, your turn ends.'
   }];
 
   public set: string = 'UNB';
-
   public name: string = 'Cleffa';
-
   public fullName: string = 'Cleffa UNB';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '131';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

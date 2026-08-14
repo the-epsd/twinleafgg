@@ -16,8 +16,7 @@ export class Aipom extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Move an Energy card attached to the Defending Pokémon to another of your opponent\'s Pokémon.'
-  },
-  {
+  }, {
     name: 'Tail Smash',
     cost: [C, C],
     damage: 30,

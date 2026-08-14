@@ -2,7 +2,8 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, COPY_BENCH_ATTACK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { COPY_BENCH_ATTACK } from '../../../game/store/prefabs/attack-effects';
 import { CardType, Stage } from '../../../game/store/card/card-types';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
@@ -17,21 +18,18 @@ export class Liepard extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Tail Trickery',
-      cost: [D],
-      damage: 0,
-      text: 'The Defending Pokémon is now Confused.'
-    },
-    {
-      name: 'Assist',
-      cost: [D, C, C],
-      damage: 0,
-      copycatAttack: true,
-      text: 'Flip a coin. If heads, choose 1 of your Benched Pokémon\'s attacks and use it as this attack.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tail Trickery',
+    cost: [D],
+    damage: 0,
+    text: 'The Defending Pokémon is now Confused.'
+  }, {
+    name: 'Assist',
+    cost: [D, C, C],
+    damage: 0,
+    copycatAttack: true,
+    text: 'Flip a coin. If heads, choose 1 of your Benched Pokémon\'s attacks and use it as this attack.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '91';

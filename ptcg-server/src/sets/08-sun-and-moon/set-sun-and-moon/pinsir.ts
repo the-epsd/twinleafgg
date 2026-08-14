@@ -16,20 +16,17 @@ export class Pinsir extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Roof Fling',
-      cost: [C, C],
-      damage: 0,
-      text: 'Flip a coin. If heads, put your opponent\'s Active Pokémon and all cards attached to it into your opponent\'s hand.'
-    },
-    {
-      name: 'Guillotine',
-      cost: [G, G],
-      damage: 50,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Roof Fling',
+    cost: [C, C],
+    damage: 0,
+    text: 'Flip a coin. If heads, put your opponent\'s Active Pokémon and all cards attached to it into your opponent\'s hand.'
+  }, {
+    name: 'Guillotine',
+    cost: [G, G],
+    damage: 50,
+    text: ''
+  }];
 
   public set: string = 'SUM';
   public setNumber: string = '6';

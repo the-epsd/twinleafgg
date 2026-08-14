@@ -15,16 +15,15 @@ export class HisuianBasculin extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Surprise Attack',
-      cost: [],
-      damage: 40,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Surprise Attack',
+    cost: [],
+    damage: 40,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'LOR';
   public setNumber: string = '44';
   public cardImage: string = 'assets/cardback.png';

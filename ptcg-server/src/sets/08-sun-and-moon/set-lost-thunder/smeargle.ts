@@ -15,20 +15,17 @@ export class Smeargle extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Stunning Likeness',
-      cost: [C],
-      damage: 0,
-      text: 'Your opponent reveals their hand. You may use the effect of a Supporter card you find there as the effect of this attack.'
-    },
-    {
-      name: 'Tail Smash',
-      cost: [C],
-      damage: 30,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Stunning Likeness',
+    cost: [C],
+    damage: 0,
+    text: 'Your opponent reveals their hand. You may use the effect of a Supporter card you find there as the effect of this attack.'
+  }, {
+    name: 'Tail Smash',
+    cost: [C],
+    damage: 30,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'LOT';
   public setNumber: string = '157';

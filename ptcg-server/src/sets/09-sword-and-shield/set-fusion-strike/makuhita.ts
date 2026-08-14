@@ -3,24 +3,26 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 
 export class Makuhita extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public cardType: CardType = F;
   public hp: number = 90;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];
 
-  public attacks = [{
-    name: 'Lunge Out',
-    cost: [C],
-    damage: 10,
-    text: ''
-  },
-  {
-    name: 'Hammer In',
-    cost: [F, C, C],
-    damage: 60,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Lunge Out',
+      cost: [C],
+      damage: 10,
+      text: '',
+    },
+    {
+      name: 'Hammer In',
+      cost: [F, C, C],
+      damage: 60,
+      text: '',
+    },
+  ];
 
   public regulationMark = 'E';
   public set: string = 'FST';

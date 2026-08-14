@@ -7,19 +7,21 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Voltorbex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public hp: number = 170;
   public cardType: CardType = L;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Hundred-Hitting Ball',
-    cost: [C, C, C],
-    damage: 100,
-    damageCalculation: '+',
-    text: 'Flip a coin until you get tails. This attack does 100 more damage for each heads.'
-  }];
+  public attacks = [
+    {
+      name: 'Hundred-Hitting Ball',
+      cost: [C, C, C],
+      damage: 100,
+      damageCalculation: '+',
+      text: 'Flip a coin until you get tails. This attack does 100 more damage for each heads.',
+    },
+  ];
 
   public regulationMark = 'J';
   public set: string = 'ASC';

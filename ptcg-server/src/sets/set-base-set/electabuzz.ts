@@ -1,4 +1,4 @@
-import { CoinFlipPrompt, GameMessage, State, StateUtils } from '../../game';
+import { State, StateUtils } from '../../game';
 import { StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
@@ -7,40 +7,28 @@ import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Electabuzz extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.LIGHTNING;
-
+  public cardType: CardType = L;
   public hp: number = 70;
+  public weakness = [{ type: F }];
+  public retreat = [C, C];
 
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
-
-  public attacks = [
-    {
-      name: 'Thundershock',
-      cost: [CardType.LIGHTNING],
-      damage: 10,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Thunderpunch',
-      cost: [CardType.LIGHTNING, CardType.COLORLESS],
-      damage: 30,
-      text: 'Flip a coin. If heads, this attack does 30 damage plus 10 more damage; if tails, this attack does 30 damage plus Electabuzz does 10 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Thundershock',
+    cost: [L],
+    damage: 10,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Thunderpunch',
+    cost: [L, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, this attack does 30 damage plus 10 more damage; if tails, this attack does 30 damage plus Electabuzz does 10 damage to itself.'
+  }];
 
   public set: string = 'BS';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '20';
-
   public name: string = 'Electabuzz';
-
   public fullName: string = 'Electabuzz BS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -56,9 +44,7 @@ export class Electabuzz extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
           effect.damage += 10;
         }

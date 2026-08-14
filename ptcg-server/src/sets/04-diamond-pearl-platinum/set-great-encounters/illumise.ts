@@ -8,9 +8,8 @@ import { COIN_FLIP_PROMPT, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TU
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from '../../../game/store/prefabs/attack-effects';
 
 export class Illumise extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType = G;
   public hp: number = 70;
   public weakness = [{ type: R, value: +20 }];
   public retreat = [C];
@@ -21,14 +20,13 @@ export class Illumise extends PokemonCard {
     powerType: PowerType.POKEPOWER,
     text: 'Once during your turn (before your attack), you may flip a coin. If heads, search your deck for a [G] Basic Pokémon and put it onto your Bench. Shuffle your deck afterward. This power can\'t be used if Illumise is affected by a Special Condition.'
   }];
-  public attacks = [
-    {
-      name: 'Firefly Scent',
-      cost: [G, C],
-      damage: 30,
-      text: 'If the Defending Pokémon has any Poké-Bodies, that Pokémon is now Asleep.'
-    }
-  ];
+
+  public attacks = [{
+    name: 'Firefly Scent',
+    cost: [G, C],
+    damage: 30,
+    text: 'If the Defending Pokémon has any Poké-Bodies, that Pokémon is now Asleep.'
+  }];
 
   public set: string = 'GE';
   public cardImage: string = 'assets/cardback.png';

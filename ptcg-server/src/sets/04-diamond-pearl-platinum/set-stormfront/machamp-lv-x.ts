@@ -17,17 +17,14 @@ import {
 } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import {
-  IS_POKEBODY_BLOCKED,
-  THIS_POKEMON_SURVIVES_ON_TEN_HP_DURING_OPPONENTS_NEXT_TURN,
-  WAS_ATTACK_USED,
-} from '../../../game/store/prefabs/prefabs';
+import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { THIS_POKEMON_SURVIVES_ON_TEN_HP_DURING_OPPONENTS_NEXT_TURN } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class MachampLVX extends PokemonCard {
   public stage: Stage = Stage.LV_X;
   public evolvesFrom = 'Machamp';
   public cardType: CardType = F;
-  public tags = [CardTag.POKEMON_LV_X];
+  protected _tags = [CardTag.POKEMON_LV_X];
   public hp: number = 150;
   public weakness = [{ type: P, value: 40 }];
   public retreat = [C, C, C];

@@ -17,21 +17,18 @@ export class Escavalier extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Fury Attack',
-      cost: [M],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 30 damage for each heads.'
-    },
-    {
-      name: 'Iron Tackle',
-      cost: [M, M, C],
-      damage: 130,
-      text: 'This Pokémon does 30 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fury Attack',
+    cost: [M],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 30 damage for each heads.'
+  }, {
+    name: 'Iron Tackle',
+    cost: [M, M, C],
+    damage: 130,
+    text: 'This Pokémon does 30 damage to itself.'
+  }];
 
   public set: string = 'CIN';
   public setNumber: string = '69';

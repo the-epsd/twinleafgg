@@ -16,20 +16,17 @@ export class Dedenne extends PokemonCard {
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Nuzzle',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Spiral Drain',
-      cost: [Y, C, C],
-      damage: 60,
-      text: 'Heal 20 damage from this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Nuzzle',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Spiral Drain',
+    cost: [Y, C, C],
+    damage: 60,
+    text: 'Heal 20 damage from this Pokémon.'
+  }];
 
   public set: string = 'PHF';
   public setNumber: string = '70';

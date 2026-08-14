@@ -3,7 +3,8 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { MULTIPLE_COIN_FLIPS_PROMPT, COIN_FLIP_PROMPT, DEFENDING_POKEMON_CANNOT_ATTACK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MULTIPLE_COIN_FLIPS_PROMPT, COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Totodile extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -17,8 +18,7 @@ export class Totodile extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, the Defending Pokémon can\'t attack Totodile during your opponent\'s next turn. (Benching or evolving either Pokémon ends this effect.)'
-  },
-  {
+  }, {
     name: 'Fury Swipes',
     cost: [W],
     damage: 10,

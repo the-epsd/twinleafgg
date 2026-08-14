@@ -1,12 +1,8 @@
 import { CardType, PlayerType, PokemonCard, Stage, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { HealEffect } from '../../../game/store/effects/game-effects';
-import {
-  COIN_FLIP_PROMPT,
-  PREVENT_DAMAGE,
-  PREVENT_EFFECTS_OF_ATTACKS,
-  WAS_ATTACK_USED,
-} from '../../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Wailord extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -21,8 +17,7 @@ export class Wailord extends PokemonCard {
     cost: [W, W, C],
     damage: 40,
     text: 'Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn.'
-  },
-  {
+  }, {
     name: 'Open Sea',
     cost: [W, W, W, C],
     damage: 80,

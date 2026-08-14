@@ -14,21 +14,18 @@ export class Snover extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Powder Snow',
-      cost: [W],
-      damage: 0,
-      text: 'Your opponent\'s Active Pokémon is now Asleep.'
-    },
-    {
-      name: 'Double Smash',
-      cost: [W, C, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Powder Snow',
+    cost: [W],
+    damage: 0,
+    text: 'Your opponent\'s Active Pokémon is now Asleep.'
+  }, {
+    name: 'Double Smash',
+    cost: [W, C, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '39';

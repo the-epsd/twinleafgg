@@ -14,7 +14,8 @@ export class ChoiceBand extends TrainerCard {
   public cardImage = 'assets/cardback.png';
   public name: string = 'Choice Band';
   public fullName: string = 'Choice Band GRI';
-  public text: string = 'The attacks of the Pokémon this card is attached to do 30 more damage to your opponent\'s Active Pokémon-GX or Active Pokémon-EX (before applying Weakness and Resistance).';
+  public text: string =
+    "The attacks of the Pokémon this card is attached to do 30 more damage to your opponent's Active Pokémon-GX or Active Pokémon-EX (before applying Weakness and Resistance).";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof DealDamageEffect && effect.source.tools.includes(this)) {
@@ -29,7 +30,12 @@ export class ChoiceBand extends TrainerCard {
         return state;
       }
 
-      if (effect.damage > 0 && effect.target === opponent.active && defending && defending.tags.includes(CardTag.POKEMON_GX)) {
+      if (
+        effect.damage > 0 &&
+        effect.target === opponent.active &&
+        defending &&
+        defending.hasTag(CardTag.POKEMON_GX)
+      ) {
         effect.damage += 30;
       }
     }

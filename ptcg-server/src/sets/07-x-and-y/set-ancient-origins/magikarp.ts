@@ -15,14 +15,12 @@ export class Magikarp extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Epic Splash',
-      cost: [W],
-      damage: 30,
-      text: 'Flip 2 coins. If either of them is tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Epic Splash',
+    cost: [W],
+    damage: 30,
+    text: 'Flip 2 coins. If either of them is tails, this attack does nothing.'
+  }];
 
   public set: string = 'AOR';
   public setNumber: string = '19';

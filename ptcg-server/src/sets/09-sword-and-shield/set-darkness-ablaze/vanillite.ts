@@ -14,16 +14,15 @@ export class Vanillite extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Ice Over',
-      cost: [W],
-      damage: 10,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Ice Over',
+    cost: [W],
+    damage: 10,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'DAA';
   public setNumber: string = '45';
   public cardImage: string = 'assets/cardback.png';

@@ -4,10 +4,12 @@
 
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameError, GameMessage, Card, CoinFlipPrompt, ChooseCardsPrompt, ShuffleDeckPrompt } from '../../../game';
+import { StoreLike, State, GameError, GameMessage, Card, ChooseCardsPrompt, ShuffleDeckPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { CardList } from '../../../game/store/state/card-list';
+import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+
 // Ref: set-battle-styles/sordward-and-shielbert.ts (generator pattern with effect.preventDefault)
 // Ref: set-plasma-blast/root-fossil-lileep.ts (bottom deck lookup pattern)
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
@@ -19,10 +21,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // Flip a coin to determine how many bottom cards to look at
   let isHeads = false;
-  yield store.prompt(state, new CoinFlipPrompt(
-    player.id,
-    GameMessage.COIN_FLIP
-  ), result => {
+  yield COIN_FLIP_PROMPT(store, state, player, result => {
     isHeads = result;
     next();
   });
@@ -66,12 +65,15 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
 export class DiggingDuo extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
+
   public regulationMark: string = 'F';
+
   public set: string = 'CRZ';
   public setNumber: string = '126';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Digging Duo';
   public fullName: string = 'Digging Duo CRZ 126';
+
   public text: string = 'Flip a coin. If heads, look at the bottom 8 cards of your deck and put 1 of them into your hand. If tails, look at the bottom 3 cards of your deck and put 1 of them into your hand. Shuffle the other cards back into your deck. You may play only 1 Supporter card during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

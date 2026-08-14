@@ -66,7 +66,7 @@ export class AttachEnergyPrompt extends Prompt<CardAssign[]> {
     if (result === null) {
       return result;
     }
-    const player = state.players.find(p => p.id === this.playerId);
+    const player = state.players.find(p => p.id === this.getPerspectivePlayerId());
     if (player === undefined) {
       throw new GameError(GameMessage.INVALID_PROMPT_RESULT);
     }

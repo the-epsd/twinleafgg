@@ -1,18 +1,18 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, BoardEffect } from '../../game/store/card/card-types';
-import { CoinFlipPrompt, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { GameError, GameMessage, PlayerType, PokemonCardList, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Dragonite extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Dragonair';
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType = C;
   public hp: number = 100;
-  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
-  public retreat = [CardType.COLORLESS];
+  public resistance = [{ type: F, value: -30 }];
+  public retreat = [C];
 
   public powers = [{
     name: 'Step In',
@@ -70,10 +70,7 @@ export class Dragonite extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      state = store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
+      state = MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, results => {
         let heads: number = 0;
         results.forEach(r => { heads += r ? 1 : 0; });
         effect.damage = 40 * heads;

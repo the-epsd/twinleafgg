@@ -30,6 +30,11 @@ import {
   isChooseStartingPokemonsHandPrompt,
   isSetupActivePhaseSkipped,
 } from './prompts/chooseCardsHandSelection';
+import {
+  remapCardTargetSeat,
+  remapCardTargetsSeat,
+  swapPromptPlayerType,
+} from './prompts/promptPerspective';
 
 import {
   TRAINER_PLAY_EFFECT_PROMPT_DELAY_MS as SHARED_TRAINER_PLAY_EFFECT_PROMPT_DELAY_MS,
@@ -74,9 +79,20 @@ export interface AbilityFocusState {
   anchor: AbilityFocusAnchor | null;
 }
 
+/** Screen-space anchor for the 3D card-info inspect plates (lower face quad). */
+export interface CardInspectFocusState {
+  anchor: AbilityFocusAnchor | null;
+  /** Compact retreat chip over the printed retreat cost (bottom-right). */
+  retreatAnchor?: AbilityFocusAnchor | null;
+}
+
 export interface CoinFlipAnimationEvent {
   playerId: number;
   result: boolean;
+}
+
+export interface DeckShuffleAnimationEvent {
+  playerId: number;
 }
 
 export interface AttackEffectEvent {
@@ -152,6 +168,12 @@ export class BoardInteractionService {
   // Track if we're in replay mode
   private isReplayModeActive = false;
 
+  /**
+   * When true, prompt CardTargets use the effect owner's seats (BOTTOM = owner) while the
+   * local board uses the answerer's seats. Remap at the board ↔ prompt boundary.
+   */
+  private seatSwapActive = false;
+
   private evolutionAnimationSubject = new Subject<BasicEntranceAnimationEvent>();
   public evolutionAnimation$ = this.evolutionAnimationSubject.asObservable();
 
@@ -167,11 +189,17 @@ export class BoardInteractionService {
   private abilityFocusSubject = new BehaviorSubject<AbilityFocusState | null>(null);
   public abilityFocus$ = this.abilityFocusSubject.asObservable();
 
+  private cardInspectFocusSubject = new BehaviorSubject<CardInspectFocusState | null>(null);
+  public cardInspectFocus$ = this.cardInspectFocusSubject.asObservable();
+
   private coinFlipAnimationSubject = new Subject<CoinFlipAnimationEvent>();
   public coinFlipAnimation$ = this.coinFlipAnimationSubject.asObservable();
 
   private coinFlipCancelSubject = new Subject<void>();
   public coinFlipCancel$ = this.coinFlipCancelSubject.asObservable();
+
+  private deckShuffleAnimationSubject = new Subject<DeckShuffleAnimationEvent>();
+  public deckShuffleAnimation$ = this.deckShuffleAnimationSubject.asObservable();
 
   private attackEffectSubject = new Subject<AttackEffectEvent>();
   public attackEffect$ = this.attackEffectSubject.asObservable();
@@ -319,6 +347,23 @@ export class BoardInteractionService {
     }
   }
 
+  /**
+   * Undo a setup hand pick that failed before the preview landed (e.g. no slot / missing card).
+   * Placed Basics remain locked via {@link removeChooseHandCardByHandIndex}.
+   */
+  public revokeChooseHandCardForSetup(handIndex: number): void {
+    if (!this.isChooseStartingPokemonsSelectionActive()) {
+      return;
+    }
+    const currentTargets = this.selectedTargetsSubject.value;
+    const newTargets = currentTargets.filter(
+      t => !(t.slot === SlotType.HAND && t.index === handIndex),
+    );
+    if (newTargets.length !== currentTargets.length) {
+      this.selectedTargetsSubject.next(newTargets);
+    }
+  }
+
   /** Initial setup: Active is chosen and cannot be changed. */
   public isSetupActivePhaseSkipped(): boolean {
     const prompt = this.chooseCardsPrompt;
@@ -418,6 +463,27 @@ export class BoardInteractionService {
     this.endBoardSelection();
   }
 
+  private beginSeatSwapForPrompt(prompt: {
+    playerId: number;
+    perspectivePlayerId?: number;
+  }): void {
+    this.seatSwapActive =
+      prompt.perspectivePlayerId !== undefined &&
+      prompt.perspectivePlayerId !== prompt.playerId;
+  }
+
+  private toVisualTargets(targets: CardTarget[]): CardTarget[] {
+    return this.seatSwapActive ? remapCardTargetsSeat(targets) : targets;
+  }
+
+  private toPerspectiveTargets(targets: CardTarget[]): CardTarget[] {
+    return this.seatSwapActive ? remapCardTargetsSeat(targets) : targets;
+  }
+
+  private toVisualPlayerType(playerType: PlayerType): PlayerType {
+    return this.seatSwapActive ? swapPromptPlayerType(playerType) : playerType;
+  }
+
   /**
    * Start board selection mode for a Pokémon selection prompt
    */
@@ -430,12 +496,13 @@ export class BoardInteractionService {
       return;
     }
 
+    this.beginSeatSwapForPrompt(prompt);
     this.overlayKind = 'choose-pokemon';
     this.promptSubject.next(prompt);
     this.selectionModeSubject.next(true);
     this.selectedTargetsSubject.next([]);
-    this.blockedTargetsSubject.next(prompt.options.blocked || []);
-    this.eligiblePlayerTypeSubject.next(prompt.playerType);
+    this.blockedTargetsSubject.next(this.toVisualTargets(prompt.options.blocked || []));
+    this.eligiblePlayerTypeSubject.next(this.toVisualPlayerType(prompt.playerType));
     this.eligibleSlotsSubject.next(prompt.slots);
     this.minSelectionsSubject.next(prompt.options.min);
     this.maxSelectionsSubject.next(prompt.options.max);
@@ -541,6 +608,7 @@ export class BoardInteractionService {
       return;
     }
 
+    this.beginSeatSwapForPrompt(prompt);
     this.removeDamageHudAnchor = null;
     this.overlayKind = 'remove-damage';
     this.promptSubject.next(null);
@@ -549,8 +617,8 @@ export class BoardInteractionService {
     // Do not pass prompt.options.blockedFrom: those restrict transfer *sources* on the server
     // (e.g. Munkidori: opponents can't be `from`), not board clicks. Opponents must stay
     // selectable as `to` targets for moving damage onto them.
-    this.blockedTargetsSubject.next([...extraBlocked]);
-    this.eligiblePlayerTypeSubject.next(prompt.playerType);
+    this.blockedTargetsSubject.next(this.toVisualTargets([...extraBlocked]));
+    this.eligiblePlayerTypeSubject.next(this.toVisualPlayerType(prompt.playerType));
     this.eligibleSlotsSubject.next(prompt.slots);
     this.minSelectionsSubject.next(0);
     this.maxSelectionsSubject.next(1);
@@ -565,6 +633,7 @@ export class BoardInteractionService {
       return;
     }
 
+    this.beginSeatSwapForPrompt(prompt);
     this.removeDamageHudAnchor = null;
     this.overlayKind = 'move-damage';
     this.promptSubject.next(null);
@@ -572,7 +641,7 @@ export class BoardInteractionService {
     this.selectedTargetsSubject.next([]);
     // Do not block 0-damage Pokémon — they are valid move-damage destinations.
     this.blockedTargetsSubject.next([]);
-    this.eligiblePlayerTypeSubject.next(prompt.playerType);
+    this.eligiblePlayerTypeSubject.next(this.toVisualPlayerType(prompt.playerType));
     this.eligibleSlotsSubject.next(prompt.slots);
     this.minSelectionsSubject.next(0);
     this.maxSelectionsSubject.next(1);
@@ -587,14 +656,17 @@ export class BoardInteractionService {
       return;
     }
 
+    this.beginSeatSwapForPrompt(prompt);
     this.removeDamageHudAnchor = null;
     this.overlayKind = 'put-damage';
     this.clearPutDamagePlacementPreview();
     this.promptSubject.next(null);
     this.selectionModeSubject.next(true);
     this.selectedTargetsSubject.next([]);
-    this.blockedTargetsSubject.next([...prompt.options.blocked, ...extraBlocked]);
-    this.eligiblePlayerTypeSubject.next(prompt.playerType);
+    this.blockedTargetsSubject.next(
+      this.toVisualTargets([...prompt.options.blocked, ...extraBlocked]),
+    );
+    this.eligiblePlayerTypeSubject.next(this.toVisualPlayerType(prompt.playerType));
     this.eligibleSlotsSubject.next(prompt.slots);
     this.minSelectionsSubject.next(0);
     this.maxSelectionsSubject.next(1);
@@ -654,21 +726,36 @@ export class BoardInteractionService {
     this.putDamagePlacementPreview$.next();
   }
 
-  /** Update blocked targets while editing (e.g. your Pokémon reaches 0 damage). */
+  public toVisualCardTarget(target: CardTarget): CardTarget {
+    return this.seatSwapActive ? remapCardTargetSeat(target) : target;
+  }
+
+  /** Update blocked targets while editing (e.g. your Pokémon reaches 0 damage).
+   * Callers pass prompt-perspective targets; they are remapped to visual seats when needed.
+   */
   public setBlockedTargets(blocked: CardTarget[]): void {
-    this.blockedTargetsSubject.next(blocked);
+    const visualBlocked = this.toVisualTargets(blocked);
+    this.blockedTargetsSubject.next(visualBlocked);
     const sel = this.selectedTargetsSubject.value;
     const filtered = sel.filter(
       (t) =>
-        !blocked.some((b) => b.player === t.player && b.slot === t.slot && b.index === t.index),
+        !visualBlocked.some(
+          (b) => b.player === t.player && b.slot === t.slot && b.index === t.index,
+        ),
     );
     if (filtered.length !== sel.length) {
       this.selectedTargetsSubject.next(filtered);
     }
   }
 
+  /** Visual-seat targets (matches 3D board mesh CardTargets). */
   public getSelectedTargets(): CardTarget[] {
     return [...this.selectedTargetsSubject.value];
+  }
+
+  /** Prompt-perspective targets for overlay logic / server resolve payloads. */
+  public getPromptSelectedTargets(): CardTarget[] {
+    return this.toPerspectiveTargets(this.selectedTargetsSubject.value);
   }
 
   /**
@@ -677,6 +764,7 @@ export class BoardInteractionService {
   public endBoardSelection(): void {
     this.removeDamageHudAnchor = null;
     this.overlayKind = null;
+    this.seatSwapActive = false;
     this.handPlayEligibleTargets = [];
     this.legendAssemblyHandCards = [];
     this.legendAssemblyOnComplete = null;
@@ -897,8 +985,7 @@ export class BoardInteractionService {
       return;
     }
     if (this.selectionCallback) {
-      const currentTargets = this.selectedTargetsSubject.value;
-      this.selectionCallback(currentTargets);
+      this.selectionCallback(this.getPromptSelectedTargets());
       this.endBoardSelection();
     }
   }
@@ -1024,6 +1111,14 @@ export class BoardInteractionService {
     this.abilityFocusSubject.next(null);
   }
 
+  public setCardInspectFocus(state: CardInspectFocusState | null): void {
+    this.cardInspectFocusSubject.next(state);
+  }
+
+  public clearCardInspectFocus(): void {
+    this.cardInspectFocusSubject.next(null);
+  }
+
   /**
    * Latest 3D attack {@link Board3dAnimationService.playAttackAnimation} promise (set when the motion starts).
    * Not cleared when done so late subscribers can still await a settled promise. Overwritten on each new attack.
@@ -1038,12 +1133,73 @@ export class BoardInteractionService {
     return this.pendingAttackAnimationPromise;
   }
 
+  /** Latest hand → deck flight batch (shuffle-hand-into-deck). */
+  private pendingHandToDeckAnimationPromise: Promise<void> | null = null;
+  private handToDeckAnimationStartedAt = 0;
+
+  public setPendingHandToDeckAnimationPromise(p: Promise<void> | null): void {
+    this.pendingHandToDeckAnimationPromise = p;
+    if (p) {
+      this.handToDeckAnimationStartedAt = Date.now();
+    }
+  }
+
+  public getPendingHandToDeckAnimationPromise(): Promise<void> | null {
+    return this.pendingHandToDeckAnimationPromise;
+  }
+
+  public getHandToDeckAnimationStartedAt(): number {
+    return this.handToDeckAnimationStartedAt;
+  }
+
+  /** Latest deck shuffle GSAP promise. */
+  private pendingDeckShuffleAnimationPromise: Promise<void> | null = null;
+  private deckShuffleAnimationStartedAt = 0;
+
+  public setPendingDeckShuffleAnimationPromise(p: Promise<void> | null): void {
+    this.pendingDeckShuffleAnimationPromise = p;
+    if (p) {
+      this.deckShuffleAnimationStartedAt = Date.now();
+    }
+  }
+
+  public getPendingDeckShuffleAnimationPromise(): Promise<void> | null {
+    return this.pendingDeckShuffleAnimationPromise;
+  }
+
+  public getDeckShuffleAnimationStartedAt(): number {
+    return this.deckShuffleAnimationStartedAt;
+  }
+
+  /** Latest hand draw flight batch (multi-draw / single draw sync). */
+  private pendingDrawAnimationPromise: Promise<void> | null = null;
+  private drawAnimationStartedAt = 0;
+
+  public setPendingDrawAnimationPromise(p: Promise<void> | null): void {
+    this.pendingDrawAnimationPromise = p;
+    if (p) {
+      this.drawAnimationStartedAt = Date.now();
+    }
+  }
+
+  public getPendingDrawAnimationPromise(): Promise<void> | null {
+    return this.pendingDrawAnimationPromise;
+  }
+
+  public getDrawAnimationStartedAt(): number {
+    return this.drawAnimationStartedAt;
+  }
+
   public triggerCoinFlipAnimation(result: boolean, playerId: number) {
     this.coinFlipAnimationSubject.next({ result, playerId });
   }
 
   public cancelCoinFlipAnimation() {
     this.coinFlipCancelSubject.next();
+  }
+
+  public triggerDeckShuffleAnimation(playerId: number) {
+    this.deckShuffleAnimationSubject.next({ playerId });
   }
 
   public triggerAttackEffect(event: AttackEffectEvent) {

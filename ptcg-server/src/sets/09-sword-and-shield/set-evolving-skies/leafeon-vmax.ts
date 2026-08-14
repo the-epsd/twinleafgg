@@ -4,9 +4,7 @@ import { CheckRetreatCostEffect } from '../../../game/store/effects/check-effect
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
-
 export class LeafeonVMAX extends PokemonCard {
-
   public stage: Stage = Stage.VMAX;
 
   public evolvesFrom = 'Leafeon V';
@@ -19,7 +17,7 @@ export class LeafeonVMAX extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
 
   public attacks = [
     {
@@ -27,14 +25,14 @@ export class LeafeonVMAX extends PokemonCard {
       cost: [CardType.GRASS, CardType.COLORLESS],
       damage: 60,
       damageCalculation: 'x',
-      text: 'This attack does 60 damage for each [C] in your opponent\'s Active Pokémon\'s Retreat Cost.'
+      text: "This attack does 60 damage for each [C] in your opponent's Active Pokémon's Retreat Cost.",
     },
     {
       name: 'Max Leaf',
       cost: [CardType.GRASS, CardType.GRASS, CardType.COLORLESS],
       damage: 170,
-      text: 'Heal 30 damage from this Pokémon.'
-    }
+      text: 'Heal 30 damage from this Pokémon.',
+    },
   ];
 
   public set: string = 'EVS';
@@ -50,7 +48,6 @@ export class LeafeonVMAX extends PokemonCard {
   public fullName: string = 'Leafeon VMAX EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

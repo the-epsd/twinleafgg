@@ -32,6 +32,7 @@ import {
   type MoveEnergyTransfer,
 } from './moveEnergyPromptModel';
 import { buildPokemonPromptRows, type PokemonItem, type PokemonRow } from './pokemonPromptRows';
+import { getPromptPerspectivePlayerId } from './promptPerspective';
 import { findItemByTarget, targetsEqual } from './removeDamagePromptModel';
 import styles from './MoveEnergyPromptPanel.module.css';
 
@@ -146,7 +147,7 @@ export function MoveEnergyPromptPanel(props: MoveEnergyPromptPanelProps) {
   useEffect(() => {
     const built = buildPokemonPromptRows(
       localGame.state,
-      prompt.playerId,
+      getPromptPerspectivePlayerId(prompt),
       prompt.playerType,
       prompt.slots,
     );

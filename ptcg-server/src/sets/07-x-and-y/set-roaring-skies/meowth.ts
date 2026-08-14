@@ -15,21 +15,18 @@ export class Meowth extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Feelin\' Fine',
-      cost: [C],
-      damage: 0,
-      text: 'Draw a card.'
-    },
-    {
-      name: 'Fury Swipes',
-      cost: [C, C, C],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 20 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Feelin\' Fine',
+    cost: [C],
+    damage: 0,
+    text: 'Draw a card.'
+  }, {
+    name: 'Fury Swipes',
+    cost: [C, C, C],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 20 damage times the number of heads.'
+  }];
 
   public set: string = 'ROS';
   public setNumber: string = '67';

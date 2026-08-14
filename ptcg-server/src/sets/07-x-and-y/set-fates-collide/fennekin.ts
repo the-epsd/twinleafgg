@@ -3,24 +3,24 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { COIN_FLIP_PROMPT, DEFENDING_POKEMON_CANNOT_ATTACK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Fennekin extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType = R;
   public hp: number = 60;
-  public weakness = [{ type: CardType.FIRE }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Will-O-Wisp',
-    cost: [CardType.FIRE],
+    cost: [R],
     damage: 10,
     text: ''
-  },
-  {
+  }, {
     name: 'Tail Whip',
-    cost: [CardType.COLORLESS, CardType.COLORLESS],
+    cost: [C, C],
     damage: 0,
     text: 'Fliip a coin. If heads, the Defending Pokemon can\'t attack during your opponent\'s next turn.'
   }];

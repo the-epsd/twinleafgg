@@ -20,6 +20,7 @@ export class Jigglypuff extends PokemonCard {
   }];
 
   public regulationMark = 'I';
+
   public set: string = 'PFL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '76';

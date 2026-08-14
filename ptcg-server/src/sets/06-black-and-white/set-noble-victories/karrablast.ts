@@ -12,21 +12,18 @@ export class Karrablast extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Mysterious Evolution',
-      cost: [C],
-      damage: 0,
-      text: 'If Shelmet is in play, search your deck for a card that evolves from this Pokémon and put it onto this Pokémon. (This counts as evolving this Pokémon.) Shuffle your deck afterward.'
-    },
-    {
-      name: 'Fury Attack',
-      cost: [C, C],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 10 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Mysterious Evolution',
+    cost: [C],
+    damage: 0,
+    text: 'If Shelmet is in play, search your deck for a card that evolves from this Pokémon and put it onto this Pokémon. (This counts as evolving this Pokémon.) Shuffle your deck afterward.'
+  }, {
+    name: 'Fury Attack',
+    cost: [C, C],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 10 damage times the number of heads.'
+  }];
 
   public set: string = 'NVI';
   public cardImage: string = 'assets/cardback.png';

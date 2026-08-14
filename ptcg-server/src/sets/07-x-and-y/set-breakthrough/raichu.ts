@@ -24,15 +24,15 @@ export class Raichu extends PokemonCard {
       name: 'Thunderclap Shot',
       cost: [L, C],
       damage: 0,
-      text: 'This attack does 50 damage to each of your opponent\'s Pokémon-EX. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack does 50 damage to each of your opponent's Pokémon-EX. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Electrosmash',
       cost: [L, C, C],
       damage: 70,
       damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 more damage.'
-    }
+      text: 'Flip a coin. If heads, this attack does 20 more damage.',
+    },
   ];
 
   public set: string = 'BKT';
@@ -50,7 +50,7 @@ export class Raichu extends PokemonCard {
 
       // Damage the active if it is a Pokemon-EX
       const activeCard = opponent.active.getPokemonCard();
-      if (activeCard && activeCard.tags.includes(CardTag.POKEMON_EX)) {
+      if (activeCard && activeCard.hasTag(CardTag.POKEMON_EX)) {
         const dealDamage = new DealDamageEffect(effect, 50);
         dealDamage.target = opponent.active;
         store.reduceEffect(state, dealDamage);
@@ -58,9 +58,11 @@ export class Raichu extends PokemonCard {
 
       // Damage benched Pokemon-EX
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        if (cardList === opponent.active) { return; }
+        if (cardList === opponent.active) {
+          return;
+        }
         const pokemonCard = cardList.getPokemonCard();
-        if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_EX)) {
+        if (pokemonCard && pokemonCard.hasTag(CardTag.POKEMON_EX)) {
           const putDamage = new PutDamageEffect(effect, 50);
           putDamage.target = cardList;
           store.reduceEffect(state, putDamage);

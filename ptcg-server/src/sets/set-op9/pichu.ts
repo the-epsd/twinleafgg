@@ -1,13 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import {
-  StoreLike, State, ChooseCardsPrompt, Card, ShuffleDeckPrompt,
-  CoinFlipPrompt, ShowCardsPrompt, StateUtils, PowerType, GameError,
-  GameMessage, PokemonCardList
-} from '../../game';
+import { StoreLike, State, ChooseCardsPrompt, Card, ShuffleDeckPrompt, ShowCardsPrompt, StateUtils, PowerType, GameError, GameMessage, PokemonCardList } from '../../game';
 import { AttackEffect, PowerEffect, EvolveEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 function* useBabyEvolution(next: Function, store: StoreLike, state: State,
   self: Pichu, effect: PowerEffect): IterableIterator<State> {
@@ -51,10 +47,7 @@ function* useFindAFriend(next: Function, store: StoreLike, state: State,
   }
 
   let coinResult: boolean = false;
-  yield store.prompt(state, new CoinFlipPrompt(
-    player.id,
-    GameMessage.COIN_FLIP
-  ), result => {
+  yield COIN_FLIP_PROMPT(store, state, player, result => {
     coinResult = result;
     next();
   });
@@ -90,45 +83,34 @@ function* useFindAFriend(next: Function, store: StoreLike, state: State,
   });
 }
 
-
 export class Pichu extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.LIGHTNING;
-
+  public cardType: CardType = L;
   public hp: number = 40;
-
-  public weakness = [{ type: CardType.FIGHTING, value: 10 }];
-
-  public resistance = [{ type: CardType.METAL, value: -20 }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: F, value: 10 }];
+  public resistance = [{ type: M, value: -20 }];
+  public retreat = [C];
 
   public powers = [{
     name: 'Baby Evolution',
     useWhenInPlay: true,
     powerType: PowerType.POKEPOWER,
     text: 'Once during your turn (before your attack), you may put Pikachu ' +
-      'from your hand onto Pichu (this counts as evolving Pichu) and remove ' +
-      'all damage counters from Pichu.'
+    'from your hand onto Pichu (this counts as evolving Pichu) and remove ' +
+    'all damage counters from Pichu.'
   }];
 
-  public attacks = [
-    {
-      name: 'Find a Friend',
-      cost: [],
-      damage: 0,
-      text: 'Flip a coin. If heads, search your deck for a Pokemon, ' +
-        'show it to your opponent, and put it into your hand. ' +
-        'Shuffle your deck afterward.'
-    }
-  ];
+  public attacks = [{
+    name: 'Find a Friend',
+    cost: [],
+    damage: 0,
+    text: 'Flip a coin. If heads, search your deck for a Pokemon, ' +
+    'show it to your opponent, and put it into your hand. ' +
+    'Shuffle your deck afterward.'
+  }];
 
   public set: string = 'OP9';
-
   public name: string = 'Pichu';
-
   public fullName: string = 'Pichu OP9';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

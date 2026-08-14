@@ -16,21 +16,18 @@ export class Azumarill extends PokemonCard {
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Bubble Beam',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Superpower',
-      cost: [Y, C, C],
-      damage: 60,
-      damageCalculation: '+',
-      text: 'You may do 30 more damage. If you do, this Pokémon does 30 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Bubble Beam',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Superpower',
+    cost: [Y, C, C],
+    damage: 60,
+    damageCalculation: '+',
+    text: 'You may do 30 more damage. If you do, this Pokémon does 30 damage to itself.'
+  }];
 
   public set: string = 'PRC';
   public setNumber: string = '103';

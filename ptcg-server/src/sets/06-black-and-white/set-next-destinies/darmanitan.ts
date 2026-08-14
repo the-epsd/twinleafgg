@@ -13,21 +13,18 @@ export class Darmanitan extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Synchrodraw',
-      cost: [P],
-      damage: 0,
-      text: 'Shuffle your hand into your deck. Then, draw a number of cards equal to the number of cards in your opponent\'s hand.'
-    },
-    {
-      name: 'DarMAXitan',
-      cost: [C, C],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 50 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Synchrodraw',
+    cost: [P],
+    damage: 0,
+    text: 'Shuffle your hand into your deck. Then, draw a number of cards equal to the number of cards in your opponent\'s hand.'
+  }, {
+    name: 'DarMAXitan',
+    cost: [C, C],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 50 damage times the number of heads.'
+  }];
 
   public set: string = 'NXD';
   public setNumber: string = '60';

@@ -5,27 +5,23 @@ import { COIN_FLIP_PROMPT, THIS_ATTACK_DOES_X_MORE_DAMAGE, WAS_ATTACK_USED } fro
 import { Effect } from '../../../game/store/effects/effect';
 
 export class Pikachu extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType = L;
   public hp: number = 60;
-  public weakness = [{ type: CardType.FIGHTING }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Quick Attack',
-      cost: [CardType.LIGHTNING],
-      damage: 10,
-      text: 'Flip a coin. If heads, this attack does 10 more damage.'
-    },
-    {
-      name: 'Electro Ball',
-      cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS],
-      damage: 50,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Quick Attack',
+    cost: [L],
+    damage: 10,
+    text: 'Flip a coin. If heads, this attack does 10 more damage.'
+  }, {
+    name: 'Electro Ball',
+    cost: [L, L, C],
+    damage: 50,
+    text: ''
+  }];
 
   public set: string = 'BWP';
   public fullName: string = 'Pikachu BWP';

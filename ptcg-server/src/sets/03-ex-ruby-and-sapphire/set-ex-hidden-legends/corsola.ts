@@ -11,18 +11,20 @@ export class Corsola extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Coral Glow',
-    cost: [C],
-    damage: 0,
-    text: 'Draw a number of cards up to the number of your opponent\'s Basic Pokémon in play. (You can\'t have more than 10 cards in your hand in this way.)'
-  },
-  {
-    name: 'Surf',
-    cost: [W, C, C],
-    damage: 40,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Coral Glow',
+      cost: [C],
+      damage: 0,
+      text: "Draw a number of cards up to the number of your opponent's Basic Pokémon in play. (You can't have more than 10 cards in your hand in this way.)",
+    },
+    {
+      name: 'Surf',
+      cost: [W, C, C],
+      damage: 40,
+      text: '',
+    },
+  ];
 
   public set: string = 'HL';
   public cardImage: string = 'assets/cardback.png';
@@ -31,7 +33,6 @@ export class Corsola extends PokemonCard {
   public fullName: string = 'Corsola HL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = effect.opponent;
@@ -39,7 +40,7 @@ export class Corsola extends PokemonCard {
       let cardsToDraw = 0;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
         // ex era ruling is that this should mean unevolved
-        if (cardList.getPokemons().length === 1 || card.tags.includes(CardTag.LEGEND)) {
+        if (cardList.getPokemons().length === 1 || card.hasTag(CardTag.LEGEND)) {
           cardsToDraw++;
         }
       });

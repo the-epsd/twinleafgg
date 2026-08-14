@@ -15,15 +15,13 @@ export class Electrike2 extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Quick Turn',
-      cost: [L, C],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Quick Turn',
+    cost: [L, C],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
+  }];
 
   public set: string = 'DRX';
   public setNumber: string = '42';

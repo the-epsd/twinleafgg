@@ -1,24 +1,23 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, CoinFlipPrompt, GameMessage, ChooseCardsPrompt, EnergyCard } from '../../game';
+import { StoreLike, State, GameMessage, ChooseCardsPrompt, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AddSpecialConditionsEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
 
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Gastly extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType = P;
   public hp: number = 50;
-  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
+  public resistance = [{ type: F, value: -30 }];
 
   public attacks = [{
     name: 'Lick',
     cost: [P],
     damage: 10,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed'
-  },
-  {
+  }, {
     name: 'Energy Conversion',
     cost: [P, P],
     damage: 0,
@@ -35,9 +34,7 @@ export class Gastly extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      state = store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
+      state = COIN_FLIP_PROMPT(store, state, player, results => {
         if (results) {
           const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED]);
           store.reduceEffect(state, specialConditionEffect);

@@ -3,33 +3,60 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, PlayerType, AttachEnergyPrompt, EnergyCard, GameError, GameMessage, SlotType, CardTarget } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+} from '../../../game/store/card/card-types';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  PlayerType,
+  AttachEnergyPrompt,
+  EnergyCard,
+  GameError,
+  GameMessage,
+  SlotType,
+  CardTarget,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  USE_ABILITY_ONCE_PER_TURN,
+  ABILITY_USED,
+  REMOVE_MARKER_AT_END_OF_TURN,
+} from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class Latios extends PokemonCard {
-  public tags = [CardTag.FUSION_STRIKE];
+  protected _tags = [CardTag.FUSION_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = N;
   public hp: number = 130;
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Blue Assist',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may attach a [P] Energy card from your hand to 1 of your Latias.'
-  }];
+  public powers = [
+    {
+      name: 'Blue Assist',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn, you may attach a [P] Energy card from your hand to 1 of your Latias.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Luster Purge',
       cost: [W, W, P, C],
       damage: 210,
-      text: 'Discard 2 Energy from this Pokémon.'
-    }
+      text: 'Discard 2 Energy from this Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -55,7 +82,7 @@ export class Latios extends PokemonCard {
 
       // Check that we have a Psychic energy in hand
       const hasPsychicInHand = player.hand.cards.some(
-        c => c instanceof EnergyCard && c.provides.includes(CardType.PSYCHIC)
+        (c) => c instanceof EnergyCard && c.provides.includes(CardType.PSYCHIC),
       );
       if (!hasPsychicInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -82,24 +109,32 @@ export class Latios extends PokemonCard {
         }
       });
 
-      state = store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_CARDS,
-        player.hand,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, provides: [CardType.PSYCHIC] },
-        { allowCancel: true, min: 1, max: 1, blockedTo }
-      ), transfers => {
-        transfers = transfers || [];
-        if (transfers.length === 0) {
-          return;
-        }
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.hand.moveCardTo(transfer.card, target);
-        }
-      });
+      state = store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_CARDS,
+          player.hand,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          {
+            superType: SuperType.ENERGY,
+            energyType: EnergyType.BASIC,
+            provides: [CardType.PSYCHIC],
+          },
+          { allowCancel: true, min: 1, max: 1, blockedTo },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          if (transfers.length === 0) {
+            return;
+          }
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.hand.moveCardTo(transfer.card, target);
+          }
+        },
+      );
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.BLUE_ASSIST_MARKER, this);

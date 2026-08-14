@@ -4,33 +4,44 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { ChoosePokemonPrompt, GameMessage, PowerType, StoreLike, State, StateUtils, PlayerType, SlotType } from '../../../game';
+import {
+  ChoosePokemonPrompt,
+  GameMessage,
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  PlayerType,
+  SlotType,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
 import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
 
 export class HoopaV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V, CardTag.FUSION_STRIKE];
+  protected _tags = [CardTag.POKEMON_V, CardTag.FUSION_STRIKE];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = D;
   public hp: number = 220;
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Two-Faced',
-    powerType: PowerType.ABILITY,
-    text: 'As long as this Pokémon is in play, it is Psychic and Darkness type.'
-  }];
+  public powers = [
+    {
+      name: 'Two-Faced',
+      powerType: PowerType.ABILITY,
+      text: 'As long as this Pokémon is in play, it is Psychic and Darkness type.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Shadow Impact',
       cost: [D, D, C],
       damage: 170,
-      text: 'Put 3 damage counters on 1 of your Pokémon.'
-    }
+      text: 'Put 3 damage counters on 1 of your Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -60,19 +71,23 @@ export class HoopaV extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        if (selected && selected.length > 0) {
-          const countersEffect = new PutCountersEffect(effect, 30);
-          countersEffect.target = selected[0];
-          store.reduceEffect(state, countersEffect);
-        }
-      });
+      store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          if (selected && selected.length > 0) {
+            const countersEffect = new PutCountersEffect(effect, 30);
+            countersEffect.target = selected[0];
+            store.reduceEffect(state, countersEffect);
+          }
+        },
+      );
     }
 
     return state;

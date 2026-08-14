@@ -12,23 +12,22 @@ export class Deino extends PokemonCard {
   public resistance = [];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Body Slam',
-      cost: [C, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Darkness Fang',
-      cost: [D, C, C],
-      damage: 50,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Body Slam',
+    cost: [C, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Darkness Fang',
+    cost: [D, C, C],
+    damage: 50,
+    text: ''
+  }];
 
   public set: string = 'WHT';
+
   public regulationMark: string = 'I';
+
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '65';
   public name: string = 'Deino';

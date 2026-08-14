@@ -1,39 +1,59 @@
-import { CardTag, CardType, ChoosePokemonPrompt, GameMessage, PlayerType, PokemonCard, PowerType, SlotType, Stage, State, StateUtils, StoreLike } from '../../../game';
+import {
+  CardTag,
+  CardType,
+  ChoosePokemonPrompt,
+  GameMessage,
+  PlayerType,
+  PokemonCard,
+  PowerType,
+  SlotType,
+  Stage,
+  State,
+  StateUtils,
+  StoreLike,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { BLOCK_IF_GX_ATTACK_USED, CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  BLOCK_IF_GX_ATTACK_USED,
+  CONFIRMATION_PROMPT,
+  IS_ABILITY_BLOCKED,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 import { AttachEnergyEffect } from '../../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 export class VenusaurSnivyGX extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
+  protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = G;
   public hp: number = 270;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
 
-  public powers = [{
-    name: 'Shining Vine',
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, if this Pokémon is your Active Pokémon, when you attach a [G] Energy card from your hand to it, you may switch 1 of your opponent\'s Benched Pokémon with their Active Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Shining Vine',
+      powerType: PowerType.ABILITY,
+      text: "Once during your turn, if this Pokémon is your Active Pokémon, when you attach a [G] Energy card from your hand to it, you may switch 1 of your opponent's Benched Pokémon with their Active Pokémon.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Forest Dump',
       cost: [G, C, C, C],
       damage: 160,
-      text: ''
+      text: '',
     },
     {
       name: 'Solar Plant-GX',
       cost: [C, C, C],
       damage: 0,
       gxAttack: true,
-      text: 'This attack does 50 damage to each of your opponent\'s Pokémon. If this Pokémon has at least 2 extra Energy attached to it (in addition to this attack\'s cost), heal all damage from all of your Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.) (You can\'t use more than 1 GX attack in a game.)'
+      text: "This attack does 50 damage to each of your opponent's Pokémon. If this Pokémon has at least 2 extra Energy attached to it (in addition to this attack's cost), heal all damage from all of your Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) (You can't use more than 1 GX attack in a game.)",
     },
   ];
 
@@ -53,42 +73,59 @@ export class VenusaurSnivyGX extends PokemonCard {
       let benchHasPokemon = false;
 
       // checking if it's the active pokemon, it's ability isn't being blocked, and if the card provides grass specifically
-      if (player.active.getPokemonCard() !== this) { return state; }
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) { return state; }
-      if (!effect.energyCard.provides.includes(CardType.GRASS)) { return state; }
+      if (player.active.getPokemonCard() !== this) {
+        return state;
+      }
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+        return state;
+      }
+      if (!effect.energyCard.provides.includes(CardType.GRASS)) {
+        return state;
+      }
       // checking if the opponent has any benched pokemon
-      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
-        if (card !== opponent.active) { benchHasPokemon = true; }
+      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (card) => {
+        if (card !== opponent.active) {
+          benchHasPokemon = true;
+        }
       });
-      if (!benchHasPokemon) { return state; }
+      if (!benchHasPokemon) {
+        return state;
+      }
       // checking if this has already been used this turn
-      if (player.active.marker.hasMarker(this.SHINING_VINE_MARKER, this)) { return state; }
+      if (player.active.marker.hasMarker(this.SHINING_VINE_MARKER, this)) {
+        return state;
+      }
 
-      CONFIRMATION_PROMPT(store, state, player, result => {
+      CONFIRMATION_PROMPT(store, state, player, (result) => {
         if (result) {
+          return store.prompt(
+            state,
+            new ChoosePokemonPrompt(
+              player.id,
+              GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+              PlayerType.TOP_PLAYER,
+              [SlotType.BENCH],
+              { allowCancel: false },
+            ),
+            (result) => {
+              const cardList = result[0];
+              player.active.marker.addMarker(this.SHINING_VINE_MARKER, this);
+              player.marker.addMarker(this.SHINING_VINE_MARKER, this);
 
-          return store.prompt(state, new ChoosePokemonPrompt(
-            player.id,
-            GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-            PlayerType.TOP_PLAYER,
-            [SlotType.BENCH],
-            { allowCancel: false }
-          ), result => {
-            const cardList = result[0];
-            player.active.marker.addMarker(this.SHINING_VINE_MARKER, this);
-            player.marker.addMarker(this.SHINING_VINE_MARKER, this);
-
-            opponent.switchPokemon(cardList);
-          });
-
+              opponent.switchPokemon(cardList);
+            },
+          );
         }
       });
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.SHINING_VINE_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.SHINING_VINE_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.SHINING_VINE_MARKER, this);
 
-      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
+      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (card) => {
         if (card.marker.hasMarker(this.SHINING_VINE_MARKER, this)) {
           card.marker.removeMarker(this.SHINING_VINE_MARKER, this);
         }
@@ -103,7 +140,7 @@ export class VenusaurSnivyGX extends PokemonCard {
       BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
 
-      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
+      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (card) => {
         const damage = new DealDamageEffect(effect, 50);
         damage.target = card;
         store.reduceEffect(state, damage);
@@ -112,10 +149,13 @@ export class VenusaurSnivyGX extends PokemonCard {
       const extraEffectCost: CardType[] = [C, C, C, C, C];
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       store.reduceEffect(state, checkProvidedEnergy);
-      const meetsExtraEffectCost = StateUtils.checkEnoughEnergy(checkProvidedEnergy.energyMap, extraEffectCost);
+      const meetsExtraEffectCost = StateUtils.checkEnoughEnergy(
+        checkProvidedEnergy.energyMap,
+        extraEffectCost,
+      );
 
       if (meetsExtraEffectCost) {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (card) => {
           const healing = new HealEffect(player, card, card.damage);
           store.reduceEffect(state, healing);
         });

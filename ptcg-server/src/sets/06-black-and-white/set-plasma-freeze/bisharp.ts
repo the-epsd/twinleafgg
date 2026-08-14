@@ -5,7 +5,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Bisharp extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Pawniard';
   public cardType: CardType = D;
@@ -19,15 +19,15 @@ export class Bisharp extends PokemonCard {
       name: 'Slash',
       cost: [C],
       damage: 40,
-      text: ''
+      text: '',
     },
     {
       name: 'Dragon Slayer',
       cost: [D, D, C],
       damage: 80,
       damageCalculation: '+',
-      text: 'If the Defending Pokémon is a Dragon Pokémon, this attack does 40 more damage.'
-    }
+      text: 'If the Defending Pokémon is a Dragon Pokémon, this attack does 40 more damage.',
+    },
   ];
 
   public set: string = 'PLF';

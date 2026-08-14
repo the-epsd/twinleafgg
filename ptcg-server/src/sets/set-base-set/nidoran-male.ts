@@ -1,13 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage } from '../../game/store/card/card-types';
 import { Attack } from '../../game/store/card/pokemon-types';
-import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 
 import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import { GameMessage } from '../../game';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class NidoranMale extends PokemonCard {
   public name = 'Nidoran ♂';
@@ -33,10 +32,7 @@ export class NidoranMale extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      return store.prompt(
-        state,
-        new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP),
-        (heads) => {
+      return COIN_FLIP_PROMPT(store, state, effect.player, heads => {
           if (!heads) {
             effect.damage = 0;
           }

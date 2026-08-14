@@ -7,40 +7,28 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Deino extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.DRAGON;
-
+  public cardType: CardType = N;
   public hp: number = 60;
+  public weakness = [{ type: N }];
+  public retreat = [C, C];
 
-  public weakness = [{ type: CardType.DRAGON }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
-
-  public attacks = [
-    {
-      name: 'Deep Growl',
-      cost: [CardType.DARK],
-      damage: 0,
-      text: 'Flip a coin. If heads, the Defending Pokemon is now Paralyzed.'
-    },
-    {
-      name: 'Power Breath',
-      cost: [CardType.PSYCHIC, CardType.COLORLESS],
-      damage: 30,
-      text: 'Discard an Energy attached to this Pokemon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Deep Growl',
+    cost: [D],
+    damage: 0,
+    text: 'Flip a coin. If heads, the Defending Pokemon is now Paralyzed.'
+  }, {
+    name: 'Power Breath',
+    cost: [P, C],
+    damage: 30,
+    text: 'Discard an Energy attached to this Pokemon.'
+  }];
 
   public set: string = 'DRX';
-
   public name: string = 'Deino';
-
   public fullName: string = 'Deino DRX';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '93';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -1,13 +1,27 @@
-import { Attack, CardTag, CardType, PokemonCard, Stage, State, StoreLike, SuperType, Weakness } from '../../../game';
+import {
+  Attack,
+  CardTag,
+  CardType,
+  PokemonCard,
+  Stage,
+  State,
+  StoreLike,
+  SuperType,
+  Weakness,
+} from '../../../game';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { HealEffect } from '../../../game/store/effects/game-effects';
-import { AFTER_ATTACK, CONFIRMATION_PROMPT, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  AFTER_ATTACK,
+  CONFIRMATION_PROMPT,
+  SWITCH_ACTIVE_WITH_BENCHED,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class PalkiaEX extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-  public tags: string[] = [CardTag.POKEMON_EX, CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.POKEMON_EX, CardTag.TEAM_PLASMA];
   public cardType: CardType = N;
   public hp: number = 180;
   public weakness: Weakness[] = [{ type: N }];
@@ -18,7 +32,7 @@ export class PalkiaEX extends PokemonCard {
       name: 'Strafe',
       cost: [C, C, C],
       damage: 50,
-      text: 'You may switch this Pokémon with 1 of your Benched Pokémon.'
+      text: 'You may switch this Pokémon with 1 of your Benched Pokémon.',
     },
     {
       name: 'Dimension Heal',
@@ -35,12 +49,11 @@ export class PalkiaEX extends PokemonCard {
   public fullName: string = 'Palkia EX PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
-      const hasBenched = player.bench.some(b => b.cards.length > 0);
+      const hasBenched = player.bench.some((b) => b.cards.length > 0);
       if (hasBenched) {
-        CONFIRMATION_PROMPT(store, state, player, result => {
+        CONFIRMATION_PROMPT(store, state, player, (result) => {
           if (result) {
             SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
           }
@@ -56,7 +69,7 @@ export class PalkiaEX extends PokemonCard {
       store.reduceEffect(state, checkEnergy);
 
       let totalPlasmaEnergy = 0;
-      checkEnergy.energyMap.forEach(em => {
+      checkEnergy.energyMap.forEach((em) => {
         const energyCard = em.card;
         if (energyCard.superType === SuperType.ENERGY && energyCard.name === 'Plasma Energy') {
           totalPlasmaEnergy += 1;

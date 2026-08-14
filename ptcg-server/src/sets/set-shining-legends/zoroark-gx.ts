@@ -1,36 +1,61 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, BoardEffect } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, PlayerType, ChooseAttackPrompt, Attack, ChooseCardsPrompt, GameLog } from '../../game';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  GameError,
+  GameMessage,
+  PlayerType,
+  ChooseAttackPrompt,
+  Attack,
+  ChooseCardsPrompt,
+  GameLog,
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import {
+  BLOCK_IF_GX_ATTACK_USED,
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+} from '../../game/store/prefabs/prefabs';
 // citing empoleon to help make this (https://github.com/keeshii/ryuu-play/blob/master/ptcg-server/src/sets/set-black-and-white/empoleon.ts)
 
-function* useTricksterGX(next: Function, store: StoreLike, state: State,
-  effect: AttackEffect): IterableIterator<State> {
+function* useTricksterGX(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   const oppActive = opponent.active.getPokemonCard();
-  const oppBenched = opponent.bench.filter(b => b.cards.length > 0);
+  const oppBenched = opponent.bench.filter((b) => b.cards.length > 0);
 
-  const allOpponentPokemon = oppActive ? [oppActive, ...oppBenched.map(b => b.getPokemonCard())].filter((pokemon): pokemon is PokemonCard => pokemon !== undefined) : [];
+  const allOpponentPokemon = oppActive
+    ? [oppActive, ...oppBenched.map((b) => b.getPokemonCard())].filter(
+        (pokemon): pokemon is PokemonCard => pokemon !== undefined,
+      )
+    : [];
 
   // Check if player has used GX attack
   BLOCK_IF_GX_ATTACK_USED(player);
 
   let selected: any;
-  yield store.prompt(state, new ChooseAttackPrompt(
-    player.id,
-    GameMessage.CHOOSE_ATTACK_TO_COPY,
-    allOpponentPokemon,
-    { allowCancel: false }
-  ), result => {
-    selected = result;
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseAttackPrompt(player.id, GameMessage.CHOOSE_ATTACK_TO_COPY, allOpponentPokemon, {
+      allowCancel: false,
+    }),
+    (result) => {
+      selected = result;
+      next();
+    },
+  );
 
   const attack: Attack | null = selected;
 
@@ -40,7 +65,7 @@ function* useTricksterGX(next: Function, store: StoreLike, state: State,
 
   store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
     name: player.name,
-    attack: attack.name
+    attack: attack.name,
   });
 
   // set GX attack as used for game
@@ -63,8 +88,7 @@ function* useTricksterGX(next: Function, store: StoreLike, state: State,
 }
 
 export class ZoroarkGX extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
 
   public stage: Stage = Stage.STAGE_1;
 
@@ -78,19 +102,21 @@ export class ZoroarkGX extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Trade',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), you may discard a card from your hand. If you do, draw 2 cards.'
-  }];
+  public powers = [
+    {
+      name: 'Trade',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn (before your attack), you may discard a card from your hand. If you do, draw 2 cards.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Riotous Beating',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 0,
-      text: 'This attack does 20 damage for each of your Pokémon in play.'
+      text: 'This attack does 20 damage for each of your Pokémon in play.',
     },
 
     {
@@ -98,8 +124,8 @@ export class ZoroarkGX extends PokemonCard {
       cost: [CardType.DARK, CardType.DARK],
       damage: 0,
       gxAttack: true,
-      text: 'Choose 1 of your opponent\'s Pokémon\'s attacks and use it as this attack. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Choose 1 of your opponent's Pokémon's attacks and use it as this attack. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'SLG';
@@ -115,7 +141,6 @@ export class ZoroarkGX extends PokemonCard {
   public readonly TRADE_MARKER = 'TRADE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       player.marker.removeMarker(this.TRADE_MARKER, this);
@@ -129,35 +154,41 @@ export class ZoroarkGX extends PokemonCard {
       if (player.marker.hasMarker(this.TRADE_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        player.hand,
-        {},
-        { allowCancel: true, min: 1, max: 1 }
-      ), cards => {
-        cards = cards || [];
-        if (cards.length === 0) {
-          return;
-        }
-
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (cardList.getPokemonCard() === this) {
-            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+      state = store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          player.hand,
+          {},
+          { allowCancel: true, min: 1, max: 1 },
+        ),
+        (cards) => {
+          cards = cards || [];
+          if (cards.length === 0) {
+            return;
           }
-        });
 
-        player.marker.addMarker(this.TRADE_MARKER, this);
-        player.hand.moveCardsTo(cards, player.discard);
-        player.deck.moveTo(player.hand, 2);
-      });
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+            if (cardList.getPokemonCard() === this) {
+              cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+            }
+          });
+
+          player.marker.addMarker(this.TRADE_MARKER, this);
+          player.hand.moveCardsTo(cards, player.discard);
+          player.deck.moveTo(player.hand, 2);
+        },
+      );
       return state;
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       let pokemonInPlay = 0;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, () => { pokemonInPlay += 1; });
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, () => {
+        pokemonInPlay += 1;
+      });
       effect.damage = 20 * pokemonInPlay;
     }
 

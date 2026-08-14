@@ -15,15 +15,13 @@ export class Clauncher extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Double Pincers',
-      cost: [W],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Double Pincers',
+    cost: [W],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
+  }];
 
   public set: string = 'STS';
   public setNumber: string = '33';

@@ -4,9 +4,9 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, CoinFlipPrompt } from '../../../game';
+import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MOVE_CARDS, FLIP_UNTIL_TAILS_AND_COUNT_HEADS } from '../../../game/store/prefabs/prefabs';
 
 export class Lairon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -17,22 +17,20 @@ export class Lairon extends PokemonCard {
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Confront',
-      cost: [C, C],
-      damage: 40,
-      text: ''
-    },
-    {
-      name: 'Wreak Havoc',
-      cost: [M, M, C, C],
-      damage: 80,
-      text: 'Flip a coin until you get tails. For each heads, discard the top card of your opponent\'s deck.'
-    }
-  ];
+  public attacks = [{
+    name: 'Confront',
+    cost: [C, C],
+    damage: 40,
+    text: ''
+  }, {
+    name: 'Wreak Havoc',
+    cost: [M, M, C, C],
+    damage: 80,
+    text: 'Flip a coin until you get tails. For each heads, discard the top card of your opponent\'s deck.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'CRZ';
   public setNumber: string = '88';
   public cardImage: string = 'assets/cardback.png';
@@ -46,20 +44,11 @@ export class Lairon extends PokemonCard {
       const player = effect.player;
       const opponent = effect.opponent;
 
-      const flipCoin = (heads: number = 0): State => {
-        return store.prompt(state, [
-          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-        ], result => {
-          if (result === true) {
-            return flipCoin(heads + 1);
-          }
-          if (heads > 0) {
-            MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: heads, sourceCard: this, sourceEffect: this.attacks[1] });
-          }
-          return state;
-        });
-      };
-      return flipCoin();
+      return FLIP_UNTIL_TAILS_AND_COUNT_HEADS(store, state, player, heads => {
+      if (heads > 0) {
+                  MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: heads, sourceCard: this, sourceEffect: this.attacks[1] });
+                }
+    });
     }
 
     return state;

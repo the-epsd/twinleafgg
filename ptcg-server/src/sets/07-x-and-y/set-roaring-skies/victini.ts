@@ -14,20 +14,17 @@ export class Victini extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Me First',
-      cost: [C],
-      damage: 0,
-      text: 'Draw a card.'
-    },
-    {
-      name: 'Psy Bolt',
-      cost: [R, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Me First',
+    cost: [C],
+    damage: 0,
+    text: 'Draw a card.'
+  }, {
+    name: 'Psy Bolt',
+    cost: [R, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'ROS';
   public setNumber: string = '13';

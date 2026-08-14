@@ -19,21 +19,18 @@ export class Cacturne extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Derail',
-      cost: [D],
-      damage: 30,
-      text: 'Discard a Special Energy attached to your opponent\'s Active Pokémon.'
-    },
-    {
-      name: 'Pin Missile',
-      cost: [C, C, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 40 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Derail',
+    cost: [D],
+    damage: 30,
+    text: 'Discard a Special Energy attached to your opponent\'s Active Pokémon.'
+  }, {
+    name: 'Pin Missile',
+    cost: [C, C, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 40 damage times the number of heads.'
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '88';

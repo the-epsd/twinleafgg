@@ -16,8 +16,7 @@ export class Oddish extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Poisoned.'
-  },
-  {
+  }, {
     name: 'Razor Leaf',
     cost: [G],
     damage: 10,

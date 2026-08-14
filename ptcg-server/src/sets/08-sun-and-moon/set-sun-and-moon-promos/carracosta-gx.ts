@@ -1,11 +1,21 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, PowerType, ChooseCardsPrompt, GameMessage, Card, PokemonCardList, GameError } from '../../../game';
+import {
+  StoreLike,
+  State,
+  PowerType,
+  ChooseCardsPrompt,
+  GameMessage,
+  Card,
+  PokemonCardList,
+  GameError,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { BLOCK_RETREAT, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 export class CarracostaGX extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Tirtouga';
   public cardType: CardType = F;
@@ -13,25 +23,29 @@ export class CarracostaGX extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];
 
-  public powers = [{
-    name: 'High Density Armor',
-    useWhenInPlay: false,
-    powerType: PowerType.ABILITY,
-    text: 'If this Pokémon has full HP, it takes 90 less damage from your opponent\'s attacks (after applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: 'High Density Armor',
+      useWhenInPlay: false,
+      powerType: PowerType.ABILITY,
+      text: "If this Pokémon has full HP, it takes 90 less damage from your opponent's attacks (after applying Weakness and Resistance).",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Ground Crush',
-    cost: [F, C, C, C],
-    damage: 160,
-    text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
-  },
-  {
-    name: 'Stone Age-GX',
-    cost: [C],
-    damage: 0,
-    text: 'Put any number of Pokémon that evolve from Unidentified Fossil from your discard pile onto your Bench. (You can\'t use more than 1 GX attack in a game.)'
-  }];
+  public attacks = [
+    {
+      name: 'Ground Crush',
+      cost: [F, C, C, C],
+      damage: 160,
+      text: "The Defending Pokémon can't retreat during your opponent's next turn.",
+    },
+    {
+      name: 'Stone Age-GX',
+      cost: [C],
+      damage: 0,
+      text: "Put any number of Pokémon that evolve from Unidentified Fossil from your discard pile onto your Bench. (You can't use more than 1 GX attack in a game.)",
+    },
+  ];
 
   public set: string = 'SMP';
   public setNumber = '239';
@@ -65,33 +79,37 @@ export class CarracostaGX extends PokemonCard {
       player.usedGX = true;
 
       // Allow player to search deck and choose up to 2 Basic Pokemon
-      const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
+      const slots: PokemonCardList[] = player.bench.filter((b) => b.cards.length === 0);
 
       if (player.discard.cards.length === 0) {
         return state;
       }
       // Check if bench has open slots
-      const openSlots = player.bench.filter(b => b.cards.length === 0);
+      const openSlots = player.bench.filter((b) => b.cards.length === 0);
 
       if (openSlots.length === 0) {
         return state;
       }
 
       let cards: Card[] = [];
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-        player.discard,
-        { evolvesFrom: 'Unidentified Fossil' },
-        { min: 0, max: openSlots.length, allowCancel: false }
-      ), selectedCards => {
-        cards = selectedCards || [];
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+          player.discard,
+          { evolvesFrom: 'Unidentified Fossil' },
+          { min: 0, max: openSlots.length, allowCancel: false },
+        ),
+        (selectedCards) => {
+          cards = selectedCards || [];
 
-        cards.forEach((card, index) => {
-          player.discard.moveCardTo(card, slots[index]);
-          slots[index].pokemonPlayedTurn = state.turn;
-        });
-      });
+          cards.forEach((card, index) => {
+            player.discard.moveCardTo(card, slots[index]);
+            slots[index].pokemonPlayedTurn = state.turn;
+          });
+        },
+      );
     }
 
     return state;

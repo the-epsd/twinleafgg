@@ -22,20 +22,17 @@ export class Inkay extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Constrict',
-      cost: [D],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Tackle',
-      cost: [C, C],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Constrict',
+    cost: [D],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Tackle',
+    cost: [C, C],
+    damage: 20,
+    text: ''
+  }];
 
   public set: string = 'BUS';
   public setNumber: string = '89';

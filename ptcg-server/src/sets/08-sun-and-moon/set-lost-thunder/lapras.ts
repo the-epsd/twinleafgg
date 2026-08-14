@@ -23,14 +23,12 @@ export class Lapras extends PokemonCard {
     text: 'Once during your turn (before your attack), you may look at the top 2 cards of your deck and put them back in any order.'
   }];
 
-  public attacks = [
-    {
-      name: 'Ice Beam',
-      cost: [W, C],
-      damage: 50,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Ice Beam',
+    cost: [W, C],
+    damage: 50,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'LOT';
   public setNumber: string = '56';

@@ -13,20 +13,17 @@ export class Swoobat extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Gust',
-      cost: [C, C],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Heart Stamp',
-      cost: [P, C, C],
-      damage: 60,
-      text: 'Flip a coin. If heads, your opponent shuffles his or her hand into his or her deck.'
-    }
-  ];
+  public attacks = [{
+    name: 'Gust',
+    cost: [C, C],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Heart Stamp',
+    cost: [P, C, C],
+    damage: 60,
+    text: 'Flip a coin. If heads, your opponent shuffles his or her hand into his or her deck.'
+  }];
 
   public set: string = 'BLW';
   public cardImage: string = 'assets/cardback.png';

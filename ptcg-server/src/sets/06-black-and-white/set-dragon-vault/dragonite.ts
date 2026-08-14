@@ -13,21 +13,18 @@ export class Dragonite extends PokemonCard {
   public weakness = [{ type: N }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Hyper Beam',
-      cost: [L, C, C],
-      damage: 50,
-      text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pok\u00e9mon.'
-    },
-    {
-      name: 'Hurricane Tail',
-      cost: [G, C, C, C],
-      damage: 60,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 60 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Hyper Beam',
+    cost: [L, C, C],
+    damage: 50,
+    text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pok\u00e9mon.'
+  }, {
+    name: 'Hurricane Tail',
+    cost: [G, C, C, C],
+    damage: 60,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 60 damage times the number of heads.'
+  }];
 
   public set: string = 'DRV';
   public setNumber: string = '5';

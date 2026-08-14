@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class CharizardV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = R;
   public hp: number = 220;
@@ -21,14 +21,14 @@ export class CharizardV extends PokemonCard {
       name: 'Incinerate',
       cost: [R, R, C],
       damage: 90,
-      text: 'Before doing damage, discard all Pokémon Tools from your opponent\'s Active Pokémon.'
+      text: "Before doing damage, discard all Pokémon Tools from your opponent's Active Pokémon.",
     },
     {
       name: 'Heat Blast',
       cost: [R, R, R, C],
       damage: 180,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'F';

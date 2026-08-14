@@ -15,14 +15,12 @@ export class Feebas extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Add-a-Dash',
-      cost: [W],
-      damage: 0,
-      text: 'Flip 2 coins. For each heads, draw a card.'
-    }
-  ];
+  public attacks = [{
+    name: 'Add-a-Dash',
+    cost: [W],
+    damage: 0,
+    text: 'Flip 2 coins. For each heads, draw a card.'
+  }];
 
   public set: string = 'DRX';
   public setNumber: string = '27';

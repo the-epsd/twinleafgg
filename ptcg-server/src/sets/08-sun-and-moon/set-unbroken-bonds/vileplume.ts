@@ -24,14 +24,12 @@ export class Vileplume extends PokemonCard {
     text: 'Once during your turn (before your attack), you may flip a coin. If heads, choose Asleep, Burned, Confused, or Poisoned. Your opponent\'s Active Pokémon is now affected by that Special Condition.'
   }];
 
-  public attacks = [
-    {
-      name: 'Giant Bloom',
-      cost: [G, G, C],
-      damage: 90,
-      text: 'Heal 30 damage from this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Giant Bloom',
+    cost: [G, G, C],
+    damage: 90,
+    text: 'Heal 30 damage from this Pokémon.'
+  }];
 
   public set: string = 'UNB';
   public setNumber: string = '8';

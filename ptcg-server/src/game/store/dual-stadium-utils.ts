@@ -15,7 +15,7 @@ export function isDualStadiumCard(card: Card): card is TrainerCard {
 /** Both distinct halves of the same dual stadium must be in hand. */
 export function getDualStadiumHalvesInHand(player: Player, card: TrainerCard): Card[] {
   const halves = player.hand.cards.filter(
-    (c: Card) => c.name === card.name && c.tags?.includes(CardTag.DUAL_STADIUM),
+    (c: Card) => c.name === card.name && c.tags.includes(CardTag.DUAL_STADIUM),
   );
   const bySetNumber = new Map<string, Card>();
   for (const half of halves) {
@@ -30,8 +30,16 @@ export function hasBothDualStadiumHalvesInHand(player: Player, card: TrainerCard
   return getDualStadiumHalvesInHand(player, card).length >= 2;
 }
 
-export function canPlayDualStadium(store: StoreLike, state: State, player: Player, card: TrainerCard): boolean {
-  if (state.phase !== GamePhase.PLAYER_TURN || state.players[state.activePlayer]?.id !== player.id) {
+export function canPlayDualStadium(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  card: TrainerCard,
+): boolean {
+  if (
+    state.phase !== GamePhase.PLAYER_TURN ||
+    state.players[state.activePlayer]?.id !== player.id
+  ) {
     return false;
   }
   if (!hasBothDualStadiumHalvesInHand(player, card)) {

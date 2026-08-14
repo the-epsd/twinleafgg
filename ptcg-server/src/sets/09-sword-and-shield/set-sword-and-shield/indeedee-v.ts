@@ -6,12 +6,19 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { GameError, GameMessage, PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  USE_ABILITY_ONCE_PER_TURN,
+  ABILITY_USED,
+  REMOVE_MARKER_AT_END_OF_TURN,
+} from '../../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 
 export class IndeedeeV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 180;
@@ -19,12 +26,14 @@ export class IndeedeeV extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Watch Over',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may heal 20 damage from your Active Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Watch Over',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn, you may heal 20 damage from your Active Pokémon.',
+    },
+  ];
 
   public attacks = [
     {
@@ -32,8 +41,8 @@ export class IndeedeeV extends PokemonCard {
       cost: [P, C, C],
       damage: 10,
       damageCalculation: '+',
-      text: 'This attack does 60 more damage for each Energy attached to your opponent\'s Active Pokémon.'
-    }
+      text: "This attack does 60 more damage for each Energy attached to your opponent's Active Pokémon.",
+    },
   ];
 
   public regulationMark: string = 'D';

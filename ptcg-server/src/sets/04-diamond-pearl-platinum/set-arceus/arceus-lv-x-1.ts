@@ -27,7 +27,7 @@ export class ArceusLvX1 extends PokemonCard {
   public stage: Stage = Stage.LV_X;
   public evolvesFrom = 'Arceus';
   public cardType: CardType = C;
-  public tags = [CardTag.POKEMON_LV_X, CardTag.ARCEUS];
+  protected _tags = [CardTag.POKEMON_LV_X, CardTag.ARCEUS];
   public hp: number = 120;
   public retreat = [C];
 

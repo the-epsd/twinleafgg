@@ -7,11 +7,14 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, GameError, GameMessage, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE, KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
+import {
+  PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE,
+  KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON,
+} from '../../../game/store/prefabs/attack-effects';
 import { SlotType } from '../../../game/store/actions/play-card-action';
 
 export class HisuianTyphlosionVstar extends PokemonCard {
-  public tags = [CardTag.POKEMON_VSTAR];
+  protected _tags = [CardTag.POKEMON_VSTAR];
   public stage: Stage = Stage.VSTAR;
   public evolvesFrom: string = 'Hisuian Typhlosion V';
   public cardType: CardType = P;
@@ -25,14 +28,14 @@ export class HisuianTyphlosionVstar extends PokemonCard {
       name: 'Hollow Flame',
       cost: [P, P, C],
       damage: 180,
-      text: 'Put 3 damage counters on your opponent\'s Benched Pokémon in any way you like.'
+      text: "Put 3 damage counters on your opponent's Benched Pokémon in any way you like.",
     },
     {
       name: 'Shimmering Star',
       cost: [P],
       damage: 0,
-      text: 'If your opponent\'s Active Pokémon has exactly 4 damage counters on it, that Pokémon is Knocked Out. (You can\'t use more than 1 VSTAR Power in a game.)'
-    }
+      text: "If your opponent's Active Pokémon has exactly 4 damage counters on it, that Pokémon is Knocked Out. (You can't use more than 1 VSTAR Power in a game.)",
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -48,7 +51,7 @@ export class HisuianTyphlosionVstar extends PokemonCard {
     //      game/store/prefabs/attack-effects.ts (PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
-      const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+      const hasBenched = opponent.bench.some((b) => b.cards.length > 0);
       if (hasBenched) {
         PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE(3, store, state, effect, [SlotType.BENCH]);
       }

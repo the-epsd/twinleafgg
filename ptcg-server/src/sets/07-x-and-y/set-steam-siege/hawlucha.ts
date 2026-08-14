@@ -25,15 +25,13 @@ export class Hawlucha extends PokemonCard {
     text: 'When you play this Pok\u00e9mon from your hand onto your Bench, you may have your opponent switch his or her Active Pok\u00e9mon with 1 of his or her Benched Pok\u00e9mon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Acrobatics',
-      cost: [C, C],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Acrobatics',
+    cost: [C, C],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
+  }];
 
   public set: string = 'STS';
   public setNumber: string = '97';

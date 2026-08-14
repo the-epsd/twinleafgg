@@ -16,23 +16,21 @@ export class Zoroark extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Double Claw',
-      cost: [C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 40 damage for each heads.'
-    },
-    {
-      name: 'Night Daze',
-      cost: [D, D, C],
-      damage: 100,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Double Claw',
+    cost: [C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 40 damage for each heads.'
+  }, {
+    name: 'Night Daze',
+    cost: [D, D, C],
+    damage: 100,
+    text: ''
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'FST';
   public setNumber: string = '171';
   public cardImage: string = 'assets/cardback.png';

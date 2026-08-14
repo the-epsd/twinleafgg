@@ -20,14 +20,12 @@ export class Duskull extends PokemonCard {
     cost: [],
     damage: 0,
     text: 'Put up to 3 damage counters on Duskull. Then, put that many damage counters on the Defending Pokémon.'
-  },
-  {
+  }, {
     name: 'Ram',
     cost: [P],
     damage: 10,
     text: ''
-  },
-  {
+  }, {
     name: 'Night Bind',
     cost: [P, C],
     damage: 20,

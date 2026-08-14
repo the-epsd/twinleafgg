@@ -1,10 +1,10 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, PowerType, PlayerType, CoinFlipPrompt, GameMessage } from '../../../game';
+import { StoreLike, State, PowerType, PlayerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckRetreatCostEffect } from '../../../game/store/effects/check-effects';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Magnemite extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -19,14 +19,12 @@ export class Magnemite extends PokemonCard {
     text: 'As long as this Pokémon is your Active Pokémon, its Retreat Cost is [C] less for each Magnemite on your Bench.'
   }];
 
-  public attacks = [
-    {
-      name: 'Lightning Ball',
-      cost: [C, C],
-      damage: 20,
-      text: '',
-    }
-  ];
+  public attacks = [{
+    name: 'Lightning Ball',
+    cost: [C, C],
+    damage: 20,
+    text: '',
+  }];
 
   public set: string = 'BKT';
   public cardImage: string = 'assets/cardback.png';
@@ -76,9 +74,7 @@ export class Magnemite extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
           effect.damage += 10;
         }

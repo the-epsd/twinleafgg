@@ -6,10 +6,12 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ConfirmPrompt } from '../../../game/store/prompts/confirm-prompt';
 import { GameMessage } from '../../../game/game-message';
-import { CoinFlipPrompt } from '../../../game/store/prompts/coin-flip-prompt';
+
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { PlayerType, SlotType } from '../../../game/store/actions/play-card-action';
 import { StateUtils } from '../../../game/store/state-utils';
+
+import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -40,10 +42,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   if (playTwoCards === false) {
     let coinFlip = false;
-    yield store.prompt(state, new CoinFlipPrompt(
-      player.id,
-      GameMessage.COIN_FLIP
-    ), result => {
+    yield COIN_FLIP_PROMPT(store, state, player, result => {
       coinFlip = result;
 
       next();
@@ -94,17 +93,12 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 }
 
 export class PokeBlower extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'SF';
-
   public name: string = 'Poke Blower +';
-
   public fullName: string = 'Poke Blower SF';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '88';
 
   public text: string =

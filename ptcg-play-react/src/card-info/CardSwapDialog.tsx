@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import type { Card } from 'ptcg-server';
 import { SuperType } from 'ptcg-server';
 import { CardFace } from '../components/cards';
+import { Modal } from '../components/ui/Modal';
 import { isFavoriteCard, toggleFavoriteCard } from './favoriteCardsStorage';
 import type { GroupedAlternativePrintings } from './cardInfoUtils';
 import styles from './CardSwapDialog.module.css';
@@ -185,10 +186,8 @@ export function CardSwapDialog({
 
   return (
     <div className={styles.backdrop} role="presentation" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
-      <div
+      <Modal
         className={styles.panel}
-        role="dialog"
-        aria-modal="true"
         aria-labelledby="card-swap-title"
         onMouseDown={(e) => e.stopPropagation()}
       >
@@ -262,7 +261,7 @@ export function CardSwapDialog({
             {t('BUTTON_CANCEL')}
           </button>
         </div>
-      </div>
+      </Modal>
     </div>
   );
 }

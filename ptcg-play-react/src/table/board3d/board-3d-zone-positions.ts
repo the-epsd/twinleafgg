@@ -13,65 +13,66 @@ export const ZONE_POSITIONS = {
     active: new Vector3(0, 0.1, 18),      // Moved closer to center (was Z=12)
     supporter: new Vector3(6, 0.1, 18),   // Beside Active, to the right
     bench: [
-      new Vector3(-8, 0.1, 24),          // Moved to where Active was (was Z=18)
-      new Vector3(-4, 0.1, 24),
+      // Spacing 2.875; first 5 stay centered on x=0
+      new Vector3(-5.75, 0.1, 24),
+      new Vector3(-2.875, 0.1, 24),
       new Vector3(0, 0.1, 24),
-      new Vector3(4, 0.1, 24),
-      new Vector3(8, 0.1, 24),
-      new Vector3(12, 0.1, 24),
-      new Vector3(16, 0.1, 24),
-      new Vector3(20, 0.1, 24),
+      new Vector3(2.875, 0.1, 24),
+      new Vector3(5.75, 0.1, 24),
+      new Vector3(8.625, 0.1, 24),
+      new Vector3(11.5, 0.1, 24),
+      new Vector3(14.375, 0.1, 24),
     ],
     board: new Vector3(0, 0.1, 16),  // General trainer area - covers most of player's side
-    prizes: new Vector3(-18, 0.1, 20),
-    deck: new Vector3(20, 0.1, 18),
-    discard: new Vector3(20, 0.1, 24),
+    prizes: new Vector3(-15, 0.1, 20),
+    deck: new Vector3(14, 0.1, 18),
+    discard: new Vector3(14, 0.1, 24),
     lostZone: new Vector3(-10, 0.1, 18),
   },
   topPlayer: {
     active: new Vector3(0, 0.1, 10),     // Moved closer to center (was Z=-12)
     supporter: new Vector3(-6, 0.1, 10), // Beside Active, to the left
     bench: [
-      new Vector3(8, 0.1, 4),          // Moved to where Active was (was Z=-18)
-      new Vector3(4, 0.1, 4),
+      new Vector3(5.75, 0.1, 4),
+      new Vector3(2.875, 0.1, 4),
       new Vector3(0, 0.1, 4),
-      new Vector3(-4, 0.1, 4),
-      new Vector3(-8, 0.1, 4),
-      new Vector3(-12, 0.1, 4),
-      new Vector3(-16, 0.1, 4),
-      new Vector3(-20, 0.1, 4),
+      new Vector3(-2.875, 0.1, 4),
+      new Vector3(-5.75, 0.1, 4),
+      new Vector3(-8.625, 0.1, 4),
+      new Vector3(-11.5, 0.1, 4),
+      new Vector3(-14.375, 0.1, 4),
     ],
     board: new Vector3(0, 0.1, 3),
-    prizes: new Vector3(20, 0.1, 8),
-    deck: new Vector3(-18, 0.1, 10), // Z=10 matches active row; symmetrical with bottom deck
-    discard: new Vector3(-18, 0.1, 4),
+    prizes: new Vector3(15, 0.1, 8),
+    deck: new Vector3(-14, 0.1, 10), // Z=10 matches active row; symmetrical with bottom deck
+    discard: new Vector3(-14, 0.1, 4),
     lostZone: new Vector3(-10, 0.1, 10),
   }
 };
 
 // Original bench positions (before shift) - used for 8-spot benches
 // These extend further left/right than the current shifted positions.
-// Top player bench shifted +2 in x to avoid overlapping with discard at (-18, 4).
+// Top player bench kept clear of discard at (-18, 4).
 export const ORIGINAL_BENCH_POSITIONS = {
   bottomPlayer: [
-    new Vector3(-12, 0.1, 24),
-    new Vector3(-8, 0.1, 24),
-    new Vector3(-4, 0.1, 24),
-    new Vector3(0, 0.1, 24),
-    new Vector3(4, 0.1, 24),
-    new Vector3(8, 0.1, 24),
-    new Vector3(12, 0.1, 24),
-    new Vector3(16, 0.1, 24),
+    new Vector3(-10.0625, 0.1, 24),
+    new Vector3(-7.1875, 0.1, 24),
+    new Vector3(-4.3125, 0.1, 24),
+    new Vector3(-1.4375, 0.1, 24),
+    new Vector3(1.4375, 0.1, 24),
+    new Vector3(4.3125, 0.1, 24),
+    new Vector3(7.1875, 0.1, 24),
+    new Vector3(10.0625, 0.1, 24),
   ],
   topPlayer: [
-    new Vector3(14, 0.1, 4),   // Shifted +2 right to avoid discard at x=-18
-    new Vector3(10, 0.1, 4),
-    new Vector3(6, 0.1, 4),
-    new Vector3(2, 0.1, 4),
-    new Vector3(-2, 0.1, 4),
-    new Vector3(-6, 0.1, 4),
-    new Vector3(-10, 0.1, 4),
-    new Vector3(-14, 0.1, 4),
+    new Vector3(10.0625, 0.1, 4),
+    new Vector3(7.1875, 0.1, 4),
+    new Vector3(4.3125, 0.1, 4),
+    new Vector3(1.4375, 0.1, 4),
+    new Vector3(-1.4375, 0.1, 4),
+    new Vector3(-4.3125, 0.1, 4),
+    new Vector3(-7.1875, 0.1, 4),
+    new Vector3(-10.0625, 0.1, 4),
   ]
 };
 
@@ -85,14 +86,15 @@ export const MOBILE_ZONE_POSITIONS = {
     active: new Vector3(0, 0.1, 18),
     supporter: new Vector3(6, 0.1, 18),
     bench: [
-      new Vector3(-6, 0.1, 24),
-      new Vector3(-3, 0.1, 24),
+      // Spacing 2.15625 (0.75× desktop 2.875); first 5 stay centered on x=0
+      new Vector3(-4.3125, 0.1, 24),
+      new Vector3(-2.15625, 0.1, 24),
       new Vector3(0, 0.1, 24),
-      new Vector3(3, 0.1, 24),
-      new Vector3(6, 0.1, 24),
-      new Vector3(9, 0.1, 24),
-      new Vector3(12, 0.1, 24),
-      new Vector3(15, 0.1, 24),
+      new Vector3(2.15625, 0.1, 24),
+      new Vector3(4.3125, 0.1, 24),
+      new Vector3(6.46875, 0.1, 24),
+      new Vector3(8.625, 0.1, 24),
+      new Vector3(10.78125, 0.1, 24),
     ],
     board: new Vector3(0, 0.1, 16),
     prizes: new Vector3(-18, 0.1, 20),
@@ -104,14 +106,14 @@ export const MOBILE_ZONE_POSITIONS = {
     active: new Vector3(0, 0.1, 10),
     supporter: new Vector3(-6, 0.1, 10),
     bench: [
-      new Vector3(6, 0.1, 4),
-      new Vector3(3, 0.1, 4),
+      new Vector3(4.3125, 0.1, 4),
+      new Vector3(2.15625, 0.1, 4),
       new Vector3(0, 0.1, 4),
-      new Vector3(-3, 0.1, 4),
-      new Vector3(-6, 0.1, 4),
-      new Vector3(-9, 0.1, 4),
-      new Vector3(-12, 0.1, 4),
-      new Vector3(-15, 0.1, 4),
+      new Vector3(-2.15625, 0.1, 4),
+      new Vector3(-4.3125, 0.1, 4),
+      new Vector3(-6.46875, 0.1, 4),
+      new Vector3(-8.625, 0.1, 4),
+      new Vector3(-10.78125, 0.1, 4),
     ],
     board: new Vector3(0, 0.1, 3),
     prizes: new Vector3(20, 0.1, 8),
@@ -123,28 +125,27 @@ export const MOBILE_ZONE_POSITIONS = {
 
 /**
  * Mobile-specific original bench positions for 8-spot benches.
- * Top player bench shifted +2 right to avoid overlapping with discard at (-18, 4).
  */
 export const MOBILE_ORIGINAL_BENCH_POSITIONS = {
   bottomPlayer: [
-    new Vector3(-9, 0.1, 24),
-    new Vector3(-6, 0.1, 24),
-    new Vector3(-3, 0.1, 24),
-    new Vector3(0, 0.1, 24),
-    new Vector3(3, 0.1, 24),
-    new Vector3(6, 0.1, 24),
-    new Vector3(9, 0.1, 24),
-    new Vector3(12, 0.1, 24),
+    new Vector3(-7.546875, 0.1, 24),
+    new Vector3(-5.390625, 0.1, 24),
+    new Vector3(-3.234375, 0.1, 24),
+    new Vector3(-1.078125, 0.1, 24),
+    new Vector3(1.078125, 0.1, 24),
+    new Vector3(3.234375, 0.1, 24),
+    new Vector3(5.390625, 0.1, 24),
+    new Vector3(7.546875, 0.1, 24),
   ],
   topPlayer: [
-    new Vector3(11, 0.1, 4),   // Shifted +2 right to avoid discard at x=-18
-    new Vector3(8, 0.1, 4),
-    new Vector3(5, 0.1, 4),
-    new Vector3(2, 0.1, 4),
-    new Vector3(-1, 0.1, 4),
-    new Vector3(-4, 0.1, 4),
-    new Vector3(-7, 0.1, 4),
-    new Vector3(-10, 0.1, 4),
+    new Vector3(7.546875, 0.1, 4),
+    new Vector3(5.390625, 0.1, 4),
+    new Vector3(3.234375, 0.1, 4),
+    new Vector3(1.078125, 0.1, 4),
+    new Vector3(-1.078125, 0.1, 4),
+    new Vector3(-3.234375, 0.1, 4),
+    new Vector3(-5.390625, 0.1, 4),
+    new Vector3(-7.546875, 0.1, 4),
   ]
 };
 

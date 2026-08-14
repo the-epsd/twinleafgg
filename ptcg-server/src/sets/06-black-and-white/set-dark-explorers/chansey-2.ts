@@ -11,15 +11,13 @@ export class Chansey2 extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Continuous Tumble',
-      cost: [C, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip a coin until you get tails. This attack does 30 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Continuous Tumble',
+    cost: [C, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip a coin until you get tails. This attack does 30 damage times the number of heads.'
+  }];
 
   public set: string = 'DEX';
   public setNumber: string = '81';

@@ -14,14 +14,12 @@ export class Torchic extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Singe',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent’s Active Pokémon is now Burned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Singe',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent’s Active Pokémon is now Burned.'
+  }];
 
   public set: string = 'DRM';
   public setNumber: string = '4';

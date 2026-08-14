@@ -25,14 +25,12 @@ export class Manaphy extends PokemonCard {
     text: 'When this Pokémon is Knocked Out by damage from an opponent\'s attack, search your deck for a card and put it into your hand. Shuffle your deck afterward.'
   }];
 
-  public attacks = [
-    {
-      name: 'Seafaring',
-      cost: [W],
-      damage: 0,
-      text: 'Flip 3 coins. For each heads, attach a [W] Energy card from your discard pile to your Benched Pokémon in any way you like.'
-    }
-  ];
+  public attacks = [{
+    name: 'Seafaring',
+    cost: [W],
+    damage: 0,
+    text: 'Flip 3 coins. For each heads, attach a [W] Energy card from your discard pile to your Benched Pokémon in any way you like.'
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '34';

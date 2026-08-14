@@ -1,9 +1,9 @@
 import { Attack, CardType, PokemonCard, Stage, State, StoreLike, Weakness } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { DEFENDING_POKEMON_DOES_LESS_DAMAGE, COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { DEFENDING_POKEMON_DOES_LESS_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Eevee extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
   public hp: number = 60;

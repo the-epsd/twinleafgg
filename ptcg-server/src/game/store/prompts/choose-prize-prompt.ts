@@ -47,13 +47,14 @@ export class ChoosePrizePrompt extends Prompt<CardList[]> {
     if (result === null) {
       return result;
     }
-    const player = state.players.find(p => p.id === this.playerId);
+    const perspectiveId = this.getPerspectivePlayerId();
+    const player = state.players.find(p => p.id === perspectiveId);
     if (player === undefined) {
       throw new GameError(GameMessage.INVALID_PROMPT_RESULT);
     }
 
     const targetPlayer = this.options.useOpponentPrizes
-      ? state.players.find(p => p.id !== this.playerId)
+      ? state.players.find(p => p.id !== perspectiveId)
       : player;
 
     if (targetPlayer === undefined) {
@@ -69,13 +70,14 @@ export class ChoosePrizePrompt extends Prompt<CardList[]> {
       return this.options.allowCancel;
     }
 
-    const player = state.players.find(p => p.id === this.playerId);
+    const perspectiveId = this.getPerspectivePlayerId();
+    const player = state.players.find(p => p.id === perspectiveId);
     if (player === undefined) {
       return false;
     }
 
     const targetPlayer = this.options.useOpponentPrizes
-      ? state.players.find(p => p.id !== this.playerId)
+      ? state.players.find(p => p.id !== perspectiveId)
       : player;
 
     if (targetPlayer === undefined) {

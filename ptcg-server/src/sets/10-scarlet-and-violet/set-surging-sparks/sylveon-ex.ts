@@ -4,12 +4,13 @@ import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, ShuffleDeckPro
 import { Effect } from '../../../game/store/effects/effect';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, DEFENDING_POKEMON_DOES_LESS_DAMAGE } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { DEFENDING_POKEMON_DOES_LESS_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Sylveonex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Eevee';
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public cardType: CardType = P;
   public hp: number = 270;
   public weakness = [{ type: M }];
@@ -44,7 +45,10 @@ export class Sylveonex extends PokemonCard {
       effect.player.marker.removeMarker(this.CLEAR_ANGELITE_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ANGELITE_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.ANGELITE_MARKER, this)
+    ) {
       effect.player.marker.addMarker(this.CLEAR_ANGELITE_MARKER, this);
     }
 
@@ -57,7 +61,7 @@ export class Sylveonex extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const hasBench = opponent.bench.some(b => b.cards.length > 0);
+      const hasBench = opponent.bench.some((b) => b.cards.length > 0);
 
       if (hasBench === false) {
         return state;
@@ -68,29 +72,37 @@ export class Sylveonex extends PokemonCard {
       }
       effect.player.marker.addMarker(this.ANGELITE_MARKER, this);
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.BENCH],
-        { min: 1, max: 2, allowCancel: false },
-      ), selected => {
-        const targets = selected || [];
-        player.marker.addMarker(this.ANGELITE_MARKER, this);
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.BENCH],
+          { min: 1, max: 2, allowCancel: false },
+        ),
+        (selected) => {
+          const targets = selected || [];
+          player.marker.addMarker(this.ANGELITE_MARKER, this);
 
-        targets.forEach(target => {
-          target.clearEffects();
-          target.damage = 0;
-          target.moveTo(opponent.deck);
+          targets.forEach((target) => {
+            target.clearEffects();
+            target.damage = 0;
+            target.moveTo(opponent.deck);
 
-          return store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
-            opponent.deck.applyOrder(order);
+            return store.prompt(state, new ShuffleDeckPrompt(opponent.id), (order) => {
+              opponent.deck.applyOrder(order);
+            });
           });
-        });
-      });
+        },
+      );
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

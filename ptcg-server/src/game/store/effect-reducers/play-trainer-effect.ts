@@ -11,6 +11,7 @@ import { StateUtils } from '../state-utils';
 import { CardTag, TrainerType } from '../card/card-types';
 import { Player } from '../state/player';
 import { TrainerCard } from '../card/trainer-card';
+import { CoinFlipEffect } from '../effects/play-card-effects';
 
 function getTrainerCleanupTarget(player: Player, trainerCard: TrainerCard) {
   return trainerCard.tags.includes(CardTag.PRISM_STAR) ? player.lostzone : player.discard;
@@ -55,6 +56,36 @@ function finalizeTrainerCleanup(
   return state;
 }
 
+/**
+ * Dizzying Wind-style: when playing a Trainer, flip a coin; on tails discard
+ * with no effect. On heads (or when the flag is inactive), run `onContinue`.
+ */
+function withOptionalCoinFlipCancelTrainer(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  trainerCard: TrainerCard,
+  onContinue: () => State,
+): State {
+  if (player.coinFlipCancelTrainerPlayTurnsRemaining <= 0) {
+    return onContinue();
+  }
+
+  const coinFlip = new CoinFlipEffect(player, result => {
+    if (!result) {
+      const target = getTrainerCleanupTarget(player, trainerCard);
+      if (player.hand.cards.includes(trainerCard)) {
+        player.hand.moveCardTo(trainerCard, target);
+      } else if (player.supporter.cards.includes(trainerCard)) {
+        player.supporter.moveCardTo(trainerCard, target);
+      }
+      return;
+    }
+    onContinue();
+  });
+  return store.reduceEffect(state, coinFlip);
+}
+
 
 export function playTrainerReducer(store: StoreLike, state: State, effect: Effect): State {
 
@@ -66,24 +97,26 @@ export function playTrainerReducer(store: StoreLike, state: State, effect: Effec
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
-    const playTrainer = new TrainerEffect(player, effect.trainerCard, effect.target);
-    state = store.reduceEffect(state, playTrainer);
-    restorePlayedTrainerToPlayZoneIfNeeded(store, player, effect.trainerCard);
-    state = finalizeTrainerCleanup(
-      store,
-      state,
-      player,
-      effect.trainerCard,
-      state.rules.supporterCleanupAtEndTurn
-    );
-    store.log(state, GameLog.LOG_PLAYER_PLAYS_SUPPORTER, {
-      name: player.name,
-      card: effect.trainerCard.name
+    return withOptionalCoinFlipCancelTrainer(store, state, player, effect.trainerCard, () => {
+      const playTrainer = new TrainerEffect(player, effect.trainerCard, effect.target);
+      state = store.reduceEffect(state, playTrainer);
+      restorePlayedTrainerToPlayZoneIfNeeded(store, player, effect.trainerCard);
+      state = finalizeTrainerCleanup(
+        store,
+        state,
+        player,
+        effect.trainerCard,
+        state.rules.supporterCleanupAtEndTurn
+      );
+      store.log(state, GameLog.LOG_PLAYER_PLAYS_SUPPORTER, {
+        name: player.name,
+        card: effect.trainerCard.name
+      });
+
+      player.supporterTurn += 1;
+
+      return state;
     });
-
-    player.supporterTurn += 1;
-
-    return state;
   }
 
   /* Play stadium card */
@@ -96,31 +129,33 @@ export function playTrainerReducer(store: StoreLike, state: State, effect: Effec
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
-    // Handle player's existing stadium
-    if (player.stadium.cards.length > 0) {
-      if (stadiumCard && stadiumCard.tags.includes(CardTag.PRISM_STAR)) {
-        player.stadium.moveTo(player.lostzone);
-      } else {
-        player.stadium.moveTo(player.discard);
+    return withOptionalCoinFlipCancelTrainer(store, state, player, effect.trainerCard, () => {
+      // Handle player's existing stadium
+      if (player.stadium.cards.length > 0) {
+        if (stadiumCard && stadiumCard.tags.includes(CardTag.PRISM_STAR)) {
+          player.stadium.moveTo(player.lostzone);
+        } else {
+          player.stadium.moveTo(player.discard);
+        }
       }
-    }
 
-    // Handle opponent's existing stadium
-    if (opponent.stadium.cards.length > 0) {
-      if (stadiumCard && stadiumCard.tags.includes(CardTag.PRISM_STAR)) {
-        opponent.stadium.moveTo(opponent.lostzone);
-      } else {
-        opponent.stadium.moveTo(opponent.discard);
+      // Handle opponent's existing stadium
+      if (opponent.stadium.cards.length > 0) {
+        if (stadiumCard && stadiumCard.tags.includes(CardTag.PRISM_STAR)) {
+          opponent.stadium.moveTo(opponent.lostzone);
+        } else {
+          opponent.stadium.moveTo(opponent.discard);
+        }
       }
-    }
 
-    store.log(state, GameLog.LOG_PLAYER_PLAYS_STADIUM, {
-      name: effect.player.name,
-      card: effect.trainerCard.name
+      store.log(state, GameLog.LOG_PLAYER_PLAYS_STADIUM, {
+        name: effect.player.name,
+        card: effect.trainerCard.name
+      });
+      player.stadiumUsedTurn = 0;
+      player.hand.moveCardTo(effect.trainerCard, player.stadium);
+      return state;
     });
-    player.stadiumUsedTurn = 0;
-    player.hand.moveCardTo(effect.trainerCard, player.stadium);
-    return state;
   }
 
   // Play Pokemon Tool card
@@ -145,23 +180,25 @@ export function playTrainerReducer(store: StoreLike, state: State, effect: Effec
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
-    store.log(state, GameLog.LOG_PLAYER_PLAYS_TOOL, {
-      name: player.name,
-      card: trainerCard.name,
-      pokemon: pokemonCard.name
+    return withOptionalCoinFlipCancelTrainer(store, state, player, trainerCard, () => {
+      store.log(state, GameLog.LOG_PLAYER_PLAYS_TOOL, {
+        name: player.name,
+        card: trainerCard.name,
+        pokemon: pokemonCard.name
+      });
+      player.hand.moveCardTo(trainerCard, target);
+      // Remove from cards if present (should only be in tools)
+      const idx = target.cards.indexOf(trainerCard);
+      if (idx !== -1) {
+        target.cards.splice(idx, 1);
+      }
+      target.tools.push(effect.trainerCard);
+
+      const playTrainer = new TrainerEffect(player, trainerCard, target);
+      state = store.reduceEffect(state, playTrainer);
+
+      return state;
     });
-    player.hand.moveCardTo(trainerCard, target);
-    // Remove from cards if present (should only be in tools)
-    const idx = target.cards.indexOf(trainerCard);
-    if (idx !== -1) {
-      target.cards.splice(idx, 1);
-    }
-    target.tools.push(effect.trainerCard);
-
-    const playTrainer = new TrainerEffect(player, trainerCard, target);
-    state = store.reduceEffect(state, playTrainer);
-
-    return state;
   }
 
   // Play item card
@@ -171,17 +208,19 @@ export function playTrainerReducer(store: StoreLike, state: State, effect: Effec
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
-    const playTrainer = new TrainerEffect(effect.player, effect.trainerCard, effect.target);
-    effect.player.hand.moveCardTo(effect.trainerCard, effect.player.supporter);
-    state = store.reduceEffect(state, playTrainer);
-    restorePlayedTrainerToPlayZoneIfNeeded(store, effect.player, effect.trainerCard);
-    state = finalizeTrainerCleanup(store, state, effect.player, effect.trainerCard, false);
-    store.log(state, GameLog.LOG_PLAYER_PLAYS_ITEM, {
-      name: effect.player.name,
-      card: effect.trainerCard.name
-    });
+    return withOptionalCoinFlipCancelTrainer(store, state, player, effect.trainerCard, () => {
+      const playTrainer = new TrainerEffect(effect.player, effect.trainerCard, effect.target);
+      effect.player.hand.moveCardTo(effect.trainerCard, effect.player.supporter);
+      state = store.reduceEffect(state, playTrainer);
+      restorePlayedTrainerToPlayZoneIfNeeded(store, effect.player, effect.trainerCard);
+      state = finalizeTrainerCleanup(store, state, effect.player, effect.trainerCard, false);
+      store.log(state, GameLog.LOG_PLAYER_PLAYS_ITEM, {
+        name: effect.player.name,
+        card: effect.trainerCard.name
+      });
 
-    return state;
+      return state;
+    });
   }
 
   // Process trainer effect

@@ -54,7 +54,7 @@ function* playCard(
 
 export class UnfairStamp extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
-  public tags = [CardTag.ACE_SPEC];
+  protected _tags = [CardTag.ACE_SPEC];
   public set: string = 'TWM';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '165';
@@ -78,25 +78,16 @@ Each player shuffles their hand into their deck. Then, you draw 5 cards, and you
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(
-        () => generator.next(),
-        store,
-        state,
-        this,
-        effect,
-      );
+      const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
 
     if (effect instanceof KnockOutEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const duringTurn = [GamePhase.PLAYER_TURN, GamePhase.ATTACK].includes(
-        state.phase,
-      );
+      const duringTurn = [GamePhase.PLAYER_TURN, GamePhase.ATTACK].includes(state.phase);
 
       // Do not activate between turns, or when it's not opponents turn.
       if (!duringTurn || state.players[state.activePlayer] !== opponent) {

@@ -13,22 +13,19 @@ export class Sigilyph2 extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Quick Turn',
-      cost: [P],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
-    },
-    {
-      name: 'Psychic Assault',
-      cost: [C, C, C],
-      damage: 40,
-      damageCalculation: '+',
-      text: 'Does 10 more damage for each damage counter on the Defending Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Quick Turn',
+    cost: [P],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
+  }, {
+    name: 'Psychic Assault',
+    cost: [C, C, C],
+    damage: 40,
+    damageCalculation: '+',
+    text: 'Does 10 more damage for each damage counter on the Defending Pokémon.'
+  }];
 
   public set: string = 'EPO';
   public cardImage: string = 'assets/cardback.png';

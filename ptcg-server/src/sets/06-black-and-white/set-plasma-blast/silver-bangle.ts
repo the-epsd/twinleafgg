@@ -7,9 +7,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { IS_TOOL_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
-
 export class SilverBangle extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.TOOL;
 
   public set: string = 'PLB';
@@ -32,24 +30,25 @@ export class SilverBangle extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, effect.player);
 
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+        return state;
+      }
 
       if (effect.target !== player.active && effect.target !== opponent.active) {
         return state;
       }
 
       const pokemonCard = effect.source.getPokemonCard();
-      if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_EX)) {
+      if (pokemonCard && pokemonCard.hasTag(CardTag.POKEMON_EX)) {
         return state;
       }
 
       const targetCard = effect.target.getPokemonCard();
-      if (targetCard && targetCard.tags.includes(CardTag.POKEMON_EX)) {
+      if (targetCard && targetCard.hasTag(CardTag.POKEMON_EX)) {
         effect.damage += 30;
       }
     }
 
     return state;
   }
-
 }

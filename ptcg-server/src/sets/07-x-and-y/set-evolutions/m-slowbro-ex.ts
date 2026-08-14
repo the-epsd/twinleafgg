@@ -6,10 +6,11 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, ADD_CONFUSION_TO_PLAYER_ACTIVE, NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, ADD_CONFUSION_TO_PLAYER_ACTIVE } from '../../../game/store/prefabs/prefabs';
+import { NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/attack-effects';
 
 export class MSlowbroEx extends PokemonCard {
-  public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
+  protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Slowbro-EX';
   public cardType: CardType = W;
@@ -23,8 +24,8 @@ export class MSlowbroEx extends PokemonCard {
       cost: [W, W, W],
       damage: 100,
       damageCalculation: '+',
-      text: 'This Pokémon is now Confused. During your next turn, this Pokémon\'s Loll Roll Spin attack does 100 more damage (before applying Weakness and Resistance).'
-    }
+      text: "This Pokémon is now Confused. During your next turn, this Pokémon's Loll Roll Spin attack does 100 more damage (before applying Weakness and Resistance).",
+    },
   ];
 
   public set: string = 'EVO';
@@ -48,7 +49,7 @@ export class MSlowbroEx extends PokemonCard {
       source: this,
       bonusDamage: 100,
       bonusMarker: this.LOLL_ROLL_SPIN_MARKER,
-      clearMarker: this.LOLL_ROLL_SPIN_MARKER_2
+      clearMarker: this.LOLL_ROLL_SPIN_MARKER_2,
     });
 
     return state;

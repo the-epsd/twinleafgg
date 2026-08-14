@@ -1,7 +1,7 @@
-import { CardType, CoinFlipPrompt, GameMessage, PokemonCard, Stage, State, StoreLike } from '../../../game';
+import { CardType, PokemonCard, Stage, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Sprigatito extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -19,6 +19,7 @@ export class Sprigatito extends PokemonCard {
   }];
 
   public regulationMark: string = 'I';
+
   public set: string = 'JTG';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '16';
@@ -29,11 +30,7 @@ export class Sprigatito extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
+      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 3, results => {
         let heads: number = 0;
         results.forEach(r => { heads += r ? 1 : 0; });
         effect.damage = 10 * heads;

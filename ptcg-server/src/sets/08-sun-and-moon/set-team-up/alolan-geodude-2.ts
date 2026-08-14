@@ -16,20 +16,17 @@ export class AlolanGeodude2 extends PokemonCard {
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Charge',
-      cost: [],
-      damage: 0,
-      text: 'Search your deck for up to 2 [L] Energy cards and attach them to this Pokémon. Then, shuffle your deck.'
-    },
-    {
-      name: 'Smash Bomb',
-      cost: [L, C, C],
-      damage: 50,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Charge',
+    cost: [],
+    damage: 0,
+    text: 'Search your deck for up to 2 [L] Energy cards and attach them to this Pokémon. Then, shuffle your deck.'
+  }, {
+    name: 'Smash Bomb',
+    cost: [L, C, C],
+    damage: 50,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'TEU';
   public setNumber: string = '35';

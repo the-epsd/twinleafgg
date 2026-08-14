@@ -1,11 +1,10 @@
 import { PokemonCard, Stage, CardType, StoreLike, State, Card } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
-import { StateUtils, ChooseCardsPrompt, CoinFlipPrompt, GameMessage, SuperType } from '../../../game';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { StateUtils, ChooseCardsPrompt, GameMessage, SuperType } from '../../../game';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Servine extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Snivy';
   public cardType: CardType = G;
@@ -26,6 +25,7 @@ export class Servine extends PokemonCard {
   }];
 
   public regulationMark = 'I';
+
   public set: string = 'BLK';
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';
@@ -37,9 +37,7 @@ export class Servine extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      return store.prompt(state, new CoinFlipPrompt(
-        player.id, GameMessage.COIN_FLIP
-      ), flipResult => {
+      return COIN_FLIP_PROMPT(store, state, player, flipResult => {
         if (flipResult) {
           // Defending Pokemon has no energy cards attached
           if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {

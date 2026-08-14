@@ -16,14 +16,12 @@ export class Golett extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Smash Punch',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Smash Punch',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'AOR';
   public setNumber: string = '34';

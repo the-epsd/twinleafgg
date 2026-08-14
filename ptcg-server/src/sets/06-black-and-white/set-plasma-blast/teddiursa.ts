@@ -11,15 +11,13 @@ export class Teddiursa extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Fury Swipes',
-      cost: [C, C],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 10 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fury Swipes',
+    cost: [C, C],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 10 damage times the number of heads.'
+  }];
 
   public set: string = 'PLB';
   public setNumber: string = '75';

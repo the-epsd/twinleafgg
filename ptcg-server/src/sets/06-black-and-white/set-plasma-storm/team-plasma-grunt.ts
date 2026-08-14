@@ -12,7 +12,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 
 export class TeamPlasmaGrunt extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public set: string = 'PLS';
   public setNumber: string = '125';
   public cardImage: string = 'assets/cardback.png';
@@ -33,7 +33,7 @@ export class TeamPlasmaGrunt extends TrainerCard {
 
       // Check if there are Team Plasma cards in hand (excluding this card)
       const plasmaCards = player.hand.cards.filter(
-        (c) => c !== this && c.tags && c.tags.includes(CardTag.TEAM_PLASMA),
+        (c) => c !== this && c.hasTag(CardTag.TEAM_PLASMA),
       );
 
       if (plasmaCards.length === 0) {
@@ -45,7 +45,7 @@ export class TeamPlasmaGrunt extends TrainerCard {
 
       const blocked: number[] = [];
       player.hand.cards.forEach((c, index) => {
-        if (!c.tags || !c.tags.includes(CardTag.TEAM_PLASMA)) {
+        if (!c.hasTag(CardTag.TEAM_PLASMA)) {
           blocked.push(index);
         }
       });

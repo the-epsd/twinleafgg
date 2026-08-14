@@ -72,11 +72,15 @@ export type AspectRatioCategory = 'widescreen' | 'standard' | 'mobile';
  * Widescreen preset (aspect >= 1.6)
  * Covers 16:9 (≈1.78) and 16:10 (≈1.6)
  */
+/**
+ * Camera pull-back (~6%) so the playfield reads smaller and leaves margin for the
+ * opponent hand row above the far bench. lookAt.z lowered to sit the board lower.
+ */
 const WIDESCREEN_CONFIG: Board3dConfig = {
   camera: {
     fov: 31,
-    position: { x: 0, y: 47.5, z: 35 },
-    lookAt: { x: 0, y: 0, z: 18 }
+    position: { x: 0, y: 50.35, z: 37.1 },
+    lookAt: { x: 0, y: 0, z: 15.5 }
   },
   zonePositions: ZONE_POSITIONS,
   originalBenchPositions: ORIGINAL_BENCH_POSITIONS,
@@ -90,8 +94,8 @@ const WIDESCREEN_CONFIG: Board3dConfig = {
 const STANDARD_CONFIG: Board3dConfig = {
   camera: {
     fov: 31,
-    position: { x: 0, y: 60, z: 45 },
-    lookAt: { x: 0, y: 0, z: 18 }
+    position: { x: 0, y: 63.6, z: 47.7 },
+    lookAt: { x: 0, y: 0, z: 15.5 }
   },
   zonePositions: ZONE_POSITIONS,
   originalBenchPositions: ORIGINAL_BENCH_POSITIONS,
@@ -105,8 +109,8 @@ const STANDARD_CONFIG: Board3dConfig = {
 const MOBILE_CONFIG: Board3dConfig = {
   camera: {
     fov: 31,
-    position: { x: 0, y: 60, z: 45 },
-    lookAt: { x: 0, y: 0, z: 18 }
+    position: { x: 0, y: 63.6, z: 47.7 },
+    lookAt: { x: 0, y: 0, z: 15.5 }
   },
   zonePositions: MOBILE_ZONE_POSITIONS,
   originalBenchPositions: MOBILE_ORIGINAL_BENCH_POSITIONS,

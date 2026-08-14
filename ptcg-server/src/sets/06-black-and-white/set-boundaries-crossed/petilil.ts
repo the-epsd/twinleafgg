@@ -15,14 +15,12 @@ export class Petilil extends PokemonCard {
   public resistance = [{ type: W, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Sleep Powder',
-      cost: [G],
-      damage: 10,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Asleep.'
-    }
-  ];
+  public attacks = [{
+    name: 'Sleep Powder',
+    cost: [G],
+    damage: 10,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Asleep.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '16';

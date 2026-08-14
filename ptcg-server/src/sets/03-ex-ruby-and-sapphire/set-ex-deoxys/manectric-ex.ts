@@ -2,7 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, PokemonCardList, Card, GameError, GameMessage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, OPPONENT_CANNOT_PLAY_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { OPPONENT_CANNOT_PLAY_CARDS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../../game/store/prefabs/attack-effects';
@@ -10,25 +11,27 @@ import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../
 export class Manectricex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Electrike';
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public cardType: CardType = L;
   public hp: number = 100;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -30 }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Disconnect',
-    cost: [L, C],
-    damage: 40,
-    text: 'Your opponent can\'t play any Trainer cards (except for Supporter cards) from his or her hand during your opponent\'s next turn.',
-  },
-  {
-    name: 'Mega Shot',
-    cost: [L, L, C],
-    damage: 0,
-    text: 'Discard all [L] Energy attached to Manectric ex and then choose 1 of your opponent\'s Pokémon. This attack does 80 damage to that Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)',
-  }];
+  public attacks = [
+    {
+      name: 'Disconnect',
+      cost: [L, C],
+      damage: 40,
+      text: "Your opponent can't play any Trainer cards (except for Supporter cards) from his or her hand during your opponent's next turn.",
+    },
+    {
+      name: 'Mega Shot',
+      cost: [L, L, C],
+      damage: 0,
+      text: "Discard all [L] Energy attached to Manectric ex and then choose 1 of your opponent's Pokémon. This attack does 80 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
+  ];
 
   public set: string = 'DX';
   public cardImage: string = 'assets/cardback.png';

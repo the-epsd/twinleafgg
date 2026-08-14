@@ -14,20 +14,17 @@ export class Turtonator extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Body Slam',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Heat Blast',
-      cost: [R, R, C],
-      damage: 90,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Body Slam',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Heat Blast',
+    cost: [R, R, C],
+    damage: 90,
+    text: ''
+  }];
 
   public set: string = 'GRI';
   public setNumber: string = '17';

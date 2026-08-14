@@ -1,42 +1,31 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, AttachEnergyPrompt, PlayerType, SlotType, StateUtils, CoinFlipPrompt } from '../../../game';
+import { StoreLike, State, AttachEnergyPrompt, PlayerType, SlotType, StateUtils } from '../../../game';
 
 import { Effect } from '../../../game/store/effects/effect';
 import { GameMessage } from '../../../game/game-message';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Porygon extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.COLORLESS;
-
+  public cardType: CardType = C;
   public hp: number = 60;
+  public weakness = [{ type: F }];
+  public retreat = [C];
 
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public retreat = [CardType.COLORLESS];
-
-  public attacks = [
-    {
-      name: 'Data Displacement',
-      cost: [CardType.COLORLESS],
-      damage: 10,
-      text: 'Flip a coin. If heads, move an Energy from your opponent\'s Active Pokémon to 1 of their Benched Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Data Displacement',
+    cost: [C],
+    damage: 10,
+    text: 'Flip a coin. If heads, move an Energy from your opponent\'s Active Pokémon to 1 of their Benched Pokémon.'
+  }];
 
   public regulationMark = 'G';
 
   public set: string = 'PAR';
-
   public name: string = 'Porygon';
-
   public fullName: string = 'Porygon PAR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '142';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -46,9 +35,7 @@ export class Porygon extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       const hasBench = opponent.bench.some(b => b.cards.length > 0);
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
 
           if (hasBench === false) {

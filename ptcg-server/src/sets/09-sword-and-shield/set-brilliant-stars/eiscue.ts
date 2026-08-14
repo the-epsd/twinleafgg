@@ -1,14 +1,24 @@
-import { PokemonCard, Stage, CardType, CardTag, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, State, StoreLike } from '../../../game';
+import {
+  PokemonCard,
+  Stage,
+  CardType,
+  CardTag,
+  ChoosePokemonPrompt,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  State,
+  StoreLike,
+} from '../../../game';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Eiscue extends PokemonCard {
-
   public stage = Stage.BASIC;
 
-  public tags = [CardTag.FUSION_STRIKE];
+  protected _tags = [CardTag.FUSION_STRIKE];
 
   public cardType = CardType.WATER;
 
@@ -25,14 +35,14 @@ export class Eiscue extends PokemonCard {
       name: 'Block Slider',
       cost: [CardType.WATER, CardType.WATER],
       damage: 0,
-      text: 'This attack does 40 damage to 1 of your opponent\'s Pokémon for each Fusion Strike Energy attached to all of your Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack does 40 damage to 1 of your opponent's Pokémon for each Fusion Strike Energy attached to all of your Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Icicle Missile',
       cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
       damage: 100,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark = 'F';
@@ -49,29 +59,31 @@ export class Eiscue extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       const player = effect.player;
 
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
       store.reduceEffect(state, checkProvidedEnergyEffect);
 
       let energyCount = 0;
-      checkProvidedEnergyEffect.energyMap.forEach(em => {
-        energyCount += em.provides.filter(cardType => {
-          return em.card.tags.includes(CardTag.FUSION_STRIKE);
+      checkProvidedEnergyEffect.energyMap.forEach((em) => {
+        energyCount += em.provides.filter((cardType) => {
+          return em.card.hasTag(CardTag.FUSION_STRIKE);
         }).length;
       });
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        const targets = selected || [];
-        DAMAGE_OPPONENT_POKEMON(store, state, effect, energyCount * 40, targets);
-      }
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          const targets = selected || [];
+          DAMAGE_OPPONENT_POKEMON(store, state, effect, energyCount * 40, targets);
+        },
       );
     }
     return state;

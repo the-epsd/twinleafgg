@@ -1,13 +1,24 @@
-import { ChoosePokemonPrompt, GameError, PlayerType, PokemonCardList, PowerType, SlotType, State, StateUtils, StoreLike } from '../../../game';
+import {
+  ChoosePokemonPrompt,
+  GameError,
+  PlayerType,
+  PokemonCardList,
+  PowerType,
+  SlotType,
+  State,
+  StateUtils,
+  StoreLike,
+} from '../../../game';
 import { GameMessage } from '../../../game/game-message';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { DEFENDING_POKEMON_CANNOT_ATTACK, MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class IronBundle extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.FUTURE];
+  protected _tags = [CardTag.FUTURE];
   public cardType: CardType = CardType.WATER;
   public hp: number = 100;
   public weakness = [{ type: CardType.LIGHTNING }];
@@ -18,8 +29,8 @@ export class IronBundle extends PokemonCard {
       name: 'Hyper Blower',
       useWhenInPlay: true,
       powerType: PowerType.ABILITY,
-      text: 'Once during your turn, if this Pokémon is on your Bench, you may switch out your opponent\'s Active Pokémon to the Bench. (Your opponent chooses the new Active Pokémon.) If you do, discard this Pokémon and all attached cards.'
-    }
+      text: "Once during your turn, if this Pokémon is on your Bench, you may switch out your opponent's Active Pokémon to the Bench. (Your opponent chooses the new Active Pokémon.) If you do, discard this Pokémon and all attached cards.",
+    },
   ];
 
   public attacks = [
@@ -27,8 +38,8 @@ export class IronBundle extends PokemonCard {
       name: 'Refrigerated Stream',
       cost: [CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
       damage: 80,
-      text: 'If the Defending Pokémon is an Evolution Pokémon, it can\'t attack during your opponent\'s next turn.'
-    }
+      text: "If the Defending Pokémon is an Evolution Pokémon, it can't attack during your opponent's next turn.",
+    },
   ];
 
   public set: string = 'PAR';
@@ -53,42 +64,57 @@ export class IronBundle extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      if (!opponent.bench.some(b => b.cards.length > 0)) {
+      if (!opponent.bench.some((b) => b.cards.length > 0)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        opponent.id,
-        GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { allowCancel: false }
-      ), targets => {
-        if (targets && targets.length > 0) {
-          opponent.active.clearEffects();
-          opponent.switchPokemon(targets[0]);
-          const cardList = player.bench[benchIndex];
-          const pokemons = cardList.getPokemons();
-          const otherCards = cardList.cards.filter(card =>
-            !(card instanceof PokemonCard) &&
-            !pokemons.includes(card as PokemonCard) &&
-            (!cardList.tools || !cardList.tools.includes(card))
-          );
-          const tools = [...cardList.tools];
-          if (pokemons.length > 0) {
-            MOVE_CARDS(store, state, cardList, player.discard, { cards: pokemons });
-          }
-          if (otherCards.length > 0) {
-            MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
-          }
-          if (tools.length > 0) {
-            for (const tool of tools) {
-              cardList.moveCardTo(tool, player.discard);
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          opponent.id,
+          GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          { allowCancel: false },
+        ),
+        (targets) => {
+          if (targets && targets.length > 0) {
+            opponent.active.clearEffects();
+            opponent.switchPokemon(targets[0]);
+            const cardList = player.bench[benchIndex];
+            const pokemons = cardList.getPokemons();
+            const otherCards = cardList.cards.filter(
+              (card) =>
+                !(card instanceof PokemonCard) &&
+                !pokemons.includes(card as PokemonCard) &&
+                (!cardList.tools || !cardList.tools.includes(card)),
+            );
+            const tools = [...cardList.tools];
+            if (pokemons.length > 0) {
+              MOVE_CARDS(store, state, cardList, player.discard, { cards: pokemons });
+            }
+            if (otherCards.length > 0) {
+              MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
+            }
+            if (tools.length > 0) {
+              for (const tool of tools) {
+                cardList.moveCardTo(tool, player.discard);
+              }
+              // Move other cards (tools, energies, etc.) to the discard
+              if (otherCards.length > 0) {
+                MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
+              }
+              // Move tools to the discard
+              if (tools.length > 0) {
+                for (const tool of tools) {
+                  cardList.moveCardTo(tool, player.discard);
+                }
+              }
+              return state;
             }
           }
-          return state;
-        }
-      });
+        },
+      );
     }
 
     // Refrigerated Stream

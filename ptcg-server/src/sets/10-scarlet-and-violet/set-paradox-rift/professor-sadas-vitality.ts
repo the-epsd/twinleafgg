@@ -10,10 +10,9 @@ import { AttachEnergyPrompt, EnergyCard, GameError, Player, StateUtils } from '.
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 export class ProfessorSadasVitality extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public tags = [CardTag.ANCIENT];
+  protected _tags = [CardTag.ANCIENT];
 
   public regulationMark = 'G';
 
@@ -23,9 +22,9 @@ export class ProfessorSadasVitality extends TrainerCard {
 
   public setNumber: string = '170';
 
-  public name: string = 'Professor Sada\'s Vitality';
+  public name: string = "Professor Sada's Vitality";
 
-  public fullName: string = 'Professor Sada\'s Vitality PAR';
+  public fullName: string = "Professor Sada's Vitality PAR";
 
   public text: string =
     'Choose up to 2 of your Ancient Pokémon and attach a Basic Energy card from your discard pile to each of them. If you attached any Energy in this way, draw 3 cards.';
@@ -34,15 +33,15 @@ export class ProfessorSadasVitality extends TrainerCard {
     if (player.supporterTurn > 0) {
       return false;
     }
-    const hasEnergyInDiscard = player.discard.cards.some(c =>
-      c instanceof EnergyCard && c.energyType === EnergyType.BASIC
+    const hasEnergyInDiscard = player.discard.cards.some(
+      (c) => c instanceof EnergyCard && c.energyType === EnergyType.BASIC,
     );
     if (!hasEnergyInDiscard) {
       return false;
     }
     let ancientPokemonInPlay = false;
     player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card) => {
-      if (card.tags.includes(CardTag.ANCIENT)) {
+      if (card.hasTag(CardTag.ANCIENT)) {
         ancientPokemonInPlay = true;
       }
     });
@@ -52,9 +51,7 @@ export class ProfessorSadasVitality extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.ancientSupporter = false;
@@ -73,9 +70,8 @@ export class ProfessorSadasVitality extends TrainerCard {
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard
-          && c.energyType === EnergyType.BASIC;
+      const hasEnergyInDiscard = player.discard.cards.some((c) => {
+        return c instanceof EnergyCard && c.energyType === EnergyType.BASIC;
       });
 
       if (!hasEnergyInDiscard) {
@@ -85,7 +81,7 @@ export class ProfessorSadasVitality extends TrainerCard {
       let ancientPokemonInPlay = false;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card) => {
-        if (card.tags.includes(CardTag.ANCIENT)) {
+        if (card.hasTag(CardTag.ANCIENT)) {
           ancientPokemonInPlay = true;
         }
       });
@@ -96,7 +92,7 @@ export class ProfessorSadasVitality extends TrainerCard {
 
       const blocked2: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        if (!card.tags.includes(CardTag.ANCIENT)) {
+        if (!card.hasTag(CardTag.ANCIENT)) {
           blocked2.push(target);
         }
       });
@@ -111,35 +107,37 @@ export class ProfessorSadasVitality extends TrainerCard {
 
       //   chosen.forEach(target => {
 
-      state = store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_TO_ACTIVE,
-        player.discard,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { allowCancel: false, min: 1, max: 2, blockedTo: blocked2, differentTargets: true }
-      ), transfers => {
-        transfers = transfers || [];
+      state = store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_TO_ACTIVE,
+          player.discard,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+          { allowCancel: false, min: 1, max: 2, blockedTo: blocked2, differentTargets: true },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
 
-        player.ancientSupporter = true;
+          player.ancientSupporter = true;
 
-        if (transfers.length === 0) {
-          return;
-        }
+          if (transfers.length === 0) {
+            return;
+          }
 
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
-        }
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.discard.moveCardTo(transfer.card, target);
+          }
 
-        if (transfers.length > 0) {
-          player.deck.moveTo(player.hand, 3);
-
-
-        }
-        return state;
-      });
+          if (transfers.length > 0) {
+            player.deck.moveTo(player.hand, 3);
+          }
+          return state;
+        },
+      );
     }
     return state;
   }

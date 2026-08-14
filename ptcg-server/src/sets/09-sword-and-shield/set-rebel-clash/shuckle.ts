@@ -22,22 +22,20 @@ export class Shuckle extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Berry Picking',
-      cost: [C],
-      damage: 0,
-      text: 'Shuffle up to 5 basic Energy cards from your discard pile into your deck.'
-    },
-    {
-      name: 'Bind',
-      cost: [G, C, C],
-      damage: 50,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Berry Picking',
+    cost: [C],
+    damage: 0,
+    text: 'Shuffle up to 5 basic Energy cards from your discard pile into your deck.'
+  }, {
+    name: 'Bind',
+    cost: [G, C, C],
+    damage: 50,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'RCL';
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';

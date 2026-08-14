@@ -15,14 +15,12 @@ export class Riolu2 extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Smash Punch',
-      cost: [F],
-      damage: 30,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Smash Punch',
+    cost: [F],
+    damage: 30,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'FCO';
   public setNumber: string = '46';

@@ -3,30 +3,33 @@ import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, OPPONENT_CANNOT_PLAY_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { OPPONENT_CANNOT_PLAY_CARDS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Crobat extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Golbat';
-  public tags = [CardTag.DELTA_SPECIES];
+  protected _tags = [CardTag.DELTA_SPECIES];
   public cardType: CardType = G;
   public additionalCardTypes = [M];
   public hp: number = 90;
   public weakness = [{ type: P }];
   public retreat = [];
 
-  public attacks = [{
-    name: 'Radar Jam',
-    cost: [C, C],
-    damage: 30,
-    text: 'Your opponent can\'t play any Trainer cards (except for Supporter cards) from his or her hand during your opponent\'s next turn.'
-  },
-  {
-    name: 'Target Attack',
-    cost: [G, M, C],
-    damage: 0,
-    text: 'Choose 1 of your opponent\'s Pokémon. This attack does 40 damage to that Pokémon. If that Pokémon already has damage counters on it, this attack does 60 damage instead. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-  }];
+  public attacks = [
+    {
+      name: 'Radar Jam',
+      cost: [C, C],
+      damage: 30,
+      text: "Your opponent can't play any Trainer cards (except for Supporter cards) from his or her hand during your opponent's next turn.",
+    },
+    {
+      name: 'Target Attack',
+      cost: [G, M, C],
+      damage: 0,
+      text: "Choose 1 of your opponent's Pokémon. This attack does 40 damage to that Pokémon. If that Pokémon already has damage counters on it, this attack does 60 damage instead. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
+  ];
 
   public set: string = 'DS';
   public cardImage: string = 'assets/cardback.png';

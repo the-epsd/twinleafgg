@@ -12,14 +12,12 @@ export class Larvesta2 extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Ember',
-      cost: [R],
-      damage: 20,
-      text: 'Flip a coin. If tails, discard an Energy attached to this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Ember',
+    cost: [R],
+    damage: 20,
+    text: 'Flip a coin. If tails, discard an Energy attached to this Pokémon.'
+  }];
 
   public set: string = 'NVI';
   public cardImage: string = 'assets/cardback.png';

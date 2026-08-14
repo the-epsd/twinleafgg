@@ -1,11 +1,8 @@
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType } from '../../../game/store/card/card-types';
-import { GameError, GameMessage, PlayerType, PowerType, State, StateUtils, StoreLike } from '../../../game';
-import { Effect } from '../../../game/store/effects/effect';
-import { CheckAttackCostEffect } from '../../../game/store/effects/check-effects';
-import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { AttachEnergyEffect } from '../../../game/store/effects/play-card-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
+import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, PlayerType } from "../../../game";
+import { CheckAttackCostEffect } from "../../../game/store/effects/check-effects";
+import { Effect } from "../../../game/store/effects/effect";
+import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
+import { OPPONENT_CANNOT_PLAY_CARDS } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class Azelf extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -33,10 +30,7 @@ export class Azelf extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '4';
 
-  public readonly BIND_PULSE_MARKER = 'BIND_PULSE_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // Sticky Membrane
     if (effect instanceof CheckAttackCostEffect) {
       const opponent = StateUtils.getOpponent(state, effect.player);
@@ -70,29 +64,9 @@ export class Azelf extends PokemonCard {
         effect.cost.push(CardType.COLORLESS);
       }
     }
-
+    // Bind Pulse
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      opponent.marker.addMarker(this.BIND_PULSE_MARKER, this);
-    }
-
-    if (effect instanceof AttachEnergyEffect && effect.energyCard.energyType === EnergyType.SPECIAL) {
-      const player = effect.player;
-      if (player.marker.hasMarker(this.BIND_PULSE_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-    }
-
-    if (effect instanceof EndTurnEffect) {
-
-      if (effect.player.marker.hasMarker(this.BIND_PULSE_MARKER, this)) {
-        effect.player.marker.removeMarker(this.BIND_PULSE_MARKER, this);
-        const opponent = StateUtils.getOpponent(state, effect.player);
-        opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-          cardList.marker.removeMarker(this.BIND_PULSE_MARKER, this);
-        });
-      }
+      return OPPONENT_CANNOT_PLAY_CARDS(store, state, effect, this, { specialEnergy: true });
     }
 
     return state;

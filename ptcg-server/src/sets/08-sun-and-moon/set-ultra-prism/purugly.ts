@@ -1,11 +1,8 @@
 import { CardType, PokemonCard, Stage, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { DISCARD_A_STADIUM_CARD_IN_PLAY } from '../../../game/store/prefabs/attack-effects';
-import {
-  PREVENT_DAMAGE,
-  PREVENT_EFFECTS_OF_ATTACKS,
-  WAS_ATTACK_USED,
-} from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Purugly extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

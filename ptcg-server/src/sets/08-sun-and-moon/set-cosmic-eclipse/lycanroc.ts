@@ -17,11 +17,13 @@ export class Lycanroc extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Boiling Blood',
-    powerType: PowerType.ABILITY,
-    text: 'If your opponent has any Pokémon-GX or Pokémon-EX in play, this Pokémon\'s attacks cost ColorlessColorlessColorless less.'
-  }];
+  public powers = [
+    {
+      name: 'Boiling Blood',
+      powerType: PowerType.ABILITY,
+      text: "If your opponent has any Pokémon-GX or Pokémon-EX in play, this Pokémon's attacks cost ColorlessColorlessColorless less.",
+    },
+  ];
 
   public attacks = [
     {
@@ -29,8 +31,8 @@ export class Lycanroc extends PokemonCard {
       cost: [C, C, C],
       damage: 60,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon has any Special Energy attached to it, this attack does 70 more damage.'
-    }
+      text: "If your opponent's Active Pokémon has any Special Energy attached to it, this attack does 70 more damage.",
+    },
   ];
 
   public set: string = 'CEC';
@@ -57,7 +59,10 @@ export class Lycanroc extends PokemonCard {
       let hasGxOrEx = false;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         const pokemonCard = cardList.getPokemonCard();
-        if (pokemonCard && (pokemonCard.tags.includes(CardTag.POKEMON_GX) || pokemonCard.tags.includes(CardTag.POKEMON_EX))) {
+        if (
+          pokemonCard &&
+          (pokemonCard.hasTag(CardTag.POKEMON_GX) || pokemonCard.hasTag(CardTag.POKEMON_EX))
+        ) {
           hasGxOrEx = true;
         }
       });
@@ -81,8 +86,8 @@ export class Lycanroc extends PokemonCard {
     // Ref: AGENTS-patterns.md (special energy check for bonus damage)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
-      const hasSpecialEnergy = opponent.active.cards.some(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL
+      const hasSpecialEnergy = opponent.active.cards.some(
+        (c) => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL,
       );
       if (hasSpecialEnergy) {
         effect.damage += 70;

@@ -8,12 +8,17 @@ import { StoreLike, State, GameError, GameMessage, ChooseCardsPrompt } from '../
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const name = effect.trainerCard.name;
 
   // Must have another Crossceiver in hand besides this one
-  const second = player.hand.cards.find(c => {
+  const second = player.hand.cards.find((c) => {
     return c.name === name && c !== effect.trainerCard;
   });
   if (second === undefined) {
@@ -21,9 +26,13 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   // Check if discard has any Pokemon or Supporter cards
-  const hasTarget = player.discard.cards.some(c => {
-    if (c.superType === SuperType.POKEMON) { return true; }
-    if (c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER) { return true; }
+  const hasTarget = player.discard.cards.some((c) => {
+    if (c.superType === SuperType.POKEMON) {
+      return true;
+    }
+    if (c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER) {
+      return true;
+    }
     return false;
   });
 
@@ -45,18 +54,22 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   let selected: any[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.discard,
-    {},
-    { min: 1, max: 1, allowCancel: false, blocked }
-  ), cards => {
-    selected = cards || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.discard,
+      {},
+      { min: 1, max: 1, allowCancel: false, blocked },
+    ),
+    (cards) => {
+      selected = cards || [];
+      next();
+    },
+  );
 
-  selected.forEach(card => {
+  selected.forEach((card) => {
     player.discard.moveCardTo(card, player.hand);
   });
 
@@ -64,19 +77,19 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   if (second !== undefined) {
     player.hand.moveCardTo(second, player.discard);
   }
-
 }
 
 export class Crossceiver extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
-  public tags = [CardTag.FUSION_STRIKE];
+  protected _tags = [CardTag.FUSION_STRIKE];
   public regulationMark: string = 'E';
   public set: string = 'FST';
   public setNumber: string = '231';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Crossceiver';
   public fullName: string = 'Crossceiver FST 231';
-  public text: string = 'You must play 2 Crossceiver cards at once. (This effect works one time for 2 cards.) Put a Pokémon or a Supporter card from your discard pile into your hand. You may play any number of Item cards during your turn.';
+  public text: string =
+    'You must play 2 Crossceiver cards at once. (This effect works one time for 2 cards.) Put a Pokémon or a Supporter card from your discard pile into your hand. You may play any number of Item cards during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-fusion-strike/cross-switcher.ts (two-at-once pattern), set-phantom-forces/vs-seeker.ts (discard search)

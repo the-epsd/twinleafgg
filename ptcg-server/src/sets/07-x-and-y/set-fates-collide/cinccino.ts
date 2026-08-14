@@ -18,20 +18,17 @@ export class Cinccino extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Covet',
-      cost: [C],
-      damage: 0,
-      text: 'Your opponent reveals his or her hand. Choose a card you find there and put it on the bottom of your opponent\'s deck.'
-    },
-    {
-      name: 'Last Resort',
-      cost: [C],
-      damage: 60,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Covet',
+    cost: [C],
+    damage: 0,
+    text: 'Your opponent reveals his or her hand. Choose a card you find there and put it on the bottom of your opponent\'s deck.'
+  }, {
+    name: 'Last Resort',
+    cost: [C],
+    damage: 60,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'FCO';
   public setNumber: string = '88';

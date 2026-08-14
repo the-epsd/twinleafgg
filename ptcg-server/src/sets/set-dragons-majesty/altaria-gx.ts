@@ -2,12 +2,13 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED, PREVENT_DAMAGE } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE } from '../../game/store/prefabs/effect-of-attack-prefabs';
 import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS, YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from '../../game/store/prefabs/attack-effects';
 import { HealTargetEffect } from '../../game/store/effects/attack-effects';
 
 export class AltariaGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Swablu';
   public cardType: CardType = N;
@@ -15,24 +16,26 @@ export class AltariaGx extends PokemonCard {
   public weakness = [{ type: Y }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Bright Tone',
-    cost: [Y, C],
-    damage: 50,
-    text: 'During your opponent\'s next turn, prevent all damage done to this Pokémon by attacks from Pokémon-GX and Pokémon-EX.'
-  },
-  {
-    name: 'Sonic Edge',
-    cost: [W, Y, C],
-    damage: 110,
-    text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
-  },
-  {
-    name: 'Euphoria GX',
-    cost: [Y, C],
-    damage: 0,
-    text: 'Your opponent\'s Active Pokémon is now Asleep. Heal all damage from all of your Pokémon. (You can\'t use more than 1 GX attack in a game.)'
-  }];
+  public attacks = [
+    {
+      name: 'Bright Tone',
+      cost: [Y, C],
+      damage: 50,
+      text: "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Pokémon-GX and Pokémon-EX.",
+    },
+    {
+      name: 'Sonic Edge',
+      cost: [W, Y, C],
+      damage: 110,
+      text: "This attack's damage isn't affected by any effects on your opponent's Active Pokémon.",
+    },
+    {
+      name: 'Euphoria GX',
+      cost: [Y, C],
+      damage: 0,
+      text: "Your opponent's Active Pokémon is now Asleep. Heal all damage from all of your Pokémon. (You can't use more than 1 GX attack in a game.)",
+    },
+  ];
 
   public set: string = 'DRM';
   public setNumber: string = '41';

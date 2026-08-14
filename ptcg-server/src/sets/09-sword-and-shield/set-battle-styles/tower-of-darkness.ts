@@ -10,7 +10,6 @@ import { ChooseCardsPrompt, Card } from '../../../game';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 
 export class TowerOfDarkness extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.STADIUM;
 
   public regulationMark = 'E';
@@ -26,14 +25,13 @@ export class TowerOfDarkness extends TrainerCard {
   public fullName: string = 'Tower of Darkness BST';
 
   public text: string =
-    'Once during each playe\'s turn, that player may draw 2 cards. In order to use this effect, that player must discard a Single Strike card from their hand.';
+    "Once during each playe's turn, that player may draw 2 cards. In order to use this effect, that player must discard a Single Strike card from their hand.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && StateUtils.getStadiumCard(state) === this) {
-
       const player = effect.player;
-      const hasEnergyInHand = player.hand.cards.some(c => {
-        return c instanceof Card && c.tags.includes(CardTag.SINGLE_STRIKE);
+      const hasEnergyInHand = player.hand.cards.some((c) => {
+        return c instanceof Card && c.hasTag(CardTag.SINGLE_STRIKE);
       });
       if (!hasEnergyInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -41,27 +39,29 @@ export class TowerOfDarkness extends TrainerCard {
 
       const blocked: number[] = [];
       player.hand.cards.forEach((c, index) => {
-        if (c instanceof Card && c.tags.includes(CardTag.SINGLE_STRIKE)) {
+        if (c instanceof Card && c.hasTag(CardTag.SINGLE_STRIKE)) {
           blocked.push(index);
         }
       });
 
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        player.hand,
-        {},
-        { allowCancel: true, min: 1, max: 1, blocked: blocked }
-      ), cards => {
-        cards = cards || [];
-        if (cards.length === 0) {
-          return;
-        }
-        player.hand.moveCardsTo(cards, player.discard);
-        player.deck.moveTo(player.hand, 2);
-
-
-      });
+      state = store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          player.hand,
+          {},
+          { allowCancel: true, min: 1, max: 1, blocked: blocked },
+        ),
+        (cards) => {
+          cards = cards || [];
+          if (cards.length === 0) {
+            return;
+          }
+          player.hand.moveCardsTo(cards, player.discard);
+          player.deck.moveTo(player.hand, 2);
+        },
+      );
 
       return state;
     }

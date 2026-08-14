@@ -1,8 +1,8 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../../game/store/card/card-types';
-import { Card, StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, CoinFlipPrompt, CardTarget, PokemonCardList, ChooseCardsPrompt } from '../../../game';
+import { Card, StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, CardTarget, PokemonCardList, ChooseCardsPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { COIN_FLIP_PROMPT, MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, MOVE_CARDS, WAS_ATTACK_USED, FLIP_UNTIL_TAILS_AND_COUNT_HEADS } from '../../../game/store/prefabs/prefabs';
 import { THIS_ATTACK_DOES_X_DAMAGE_FOR_EACH_POKEMON_IN_YOUR_DISCARD_PILE } from '../../../game/store/prefabs/attack-effects';
 
 export class Gyarados extends PokemonCard {
@@ -20,14 +20,12 @@ export class Gyarados extends PokemonCard {
     damage: 30,
     damageCalculation: 'x',
     text: 'Does 30 damage times the number of Magikarp in your discard pile.'
-  },
-  {
+  }, {
     name: 'Wreak Havoc',
     cost: [W, C],
     damage: 40,
     text: 'Flip a coin until you get tails. For each heads, discard the top card from your opponent\'s deck.'
-  },
-  {
+  }, {
     name: 'Dragon Beat',
     cost: [W, W, C, C, C],
     damage: 100,
@@ -50,18 +48,9 @@ export class Gyarados extends PokemonCard {
       const player = effect.player;
       const opponent = effect.opponent;
 
-      const flipCoin = (heads: number = 0): State => {
-        return store.prompt(state, [
-          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-        ], result => {
-          if (result === true) {
-            return flipCoin(heads + 1);
-          }
-          MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: heads, sourceCard: this, sourceEffect: this.attacks[1] });
-          return state;
-        });
-      };
-      return flipCoin();
+      return FLIP_UNTIL_TAILS_AND_COUNT_HEADS(store, state, player, heads => {
+      MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: heads, sourceCard: this, sourceEffect: this.attacks[1] });
+    });
     }
 
     if (WAS_ATTACK_USED(effect, 2, this)) {

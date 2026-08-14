@@ -1,30 +1,52 @@
-import { AttachEnergyPrompt, CardTag, CardType, EnergyType, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../../game';
+import {
+  AttachEnergyPrompt,
+  CardTag,
+  CardType,
+  EnergyType,
+  GameMessage,
+  PlayerType,
+  PokemonCard,
+  SlotType,
+  Stage,
+  State,
+  StateUtils,
+  StoreLike,
+  SuperType,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { COIN_FLIP_PROMPT, MOVE_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  COIN_FLIP_PROMPT,
+  MOVE_CARDS,
+  SHUFFLE_DECK,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Raikouex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public cardType: CardType = L;
   public hp: number = 200;
   public weakness = [{ type: F }];
   public retreat = [];
 
-  public attacks = [{
-    name: 'Gather Lightning',
-    cost: [L],
-    damage: 0,
-    canUseOnFirstTurn: true,
-    text: 'If you go first, you can use this attack during your first turn. Search your deck for a [L] Energy card and attach it to this Pokemon. Then, shuffle your deck.'
-  },
-  {
-    name: 'Power Rush',
-    cost: [L, L, C],
-    damage: 200,
-    text: 'Flip a coin. If tails, this Pokemon can\'t attack during your next turn.'
-  }];
+  public attacks = [
+    {
+      name: 'Gather Lightning',
+      cost: [L],
+      damage: 0,
+      canUseOnFirstTurn: true,
+      text: 'If you go first, you can use this attack during your first turn. Search your deck for a [L] Energy card and attach it to this Pokemon. Then, shuffle your deck.',
+    },
+    {
+      name: 'Power Rush',
+      cost: [L, L, C],
+      damage: 200,
+      text: "Flip a coin. If tails, this Pokemon can't attack during your next turn.",
+    },
+  ];
 
   public regulationMark: string = 'J';
+
   public set: string = 'M6';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '24';
@@ -36,34 +58,41 @@ export class Raikouex extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_CARDS,
-        player.deck,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },
-        { allowCancel: false, min: 0, max: 1 },
-      ), transfers => {
-        transfers = transfers || [];
+      return store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_CARDS,
+          player.deck,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },
+          { allowCancel: false, min: 0, max: 1 },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
 
-        if (transfers.length === 0) {
+          if (transfers.length === 0) {
+            SHUFFLE_DECK(store, state, player);
+            return state;
+          }
+
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            MOVE_CARDS(store, state, player.deck, target, {
+              cards: [transfer.card],
+              sourceCard: this,
+            });
+          }
+
           SHUFFLE_DECK(store, state, player);
-          return state;
-        }
-
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          MOVE_CARDS(store, state, player.deck, target, { cards: [transfer.card], sourceCard: this });
-        }
-
-        SHUFFLE_DECK(store, state, player);
-      });
+        },
+      );
     }
 
     // Power Rush
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (!result) {
           effect.player.active.cannotAttackNextTurnPending = true;
         }

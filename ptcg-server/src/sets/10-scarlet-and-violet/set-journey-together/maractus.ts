@@ -2,7 +2,8 @@ import { CardType, GamePhase, PokemonCard, PowerType, Stage, State, StateUtils, 
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { BLOCK_RETREAT, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Maractus extends PokemonCard {
   public stage: Stage = Stage.BASIC;

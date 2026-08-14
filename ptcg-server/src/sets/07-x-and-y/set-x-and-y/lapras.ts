@@ -18,21 +18,18 @@ export class Lapras extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Seafaring',
-      cost: [W],
-      damage: 0,
-      text: 'Flip 3 coins. For each heads, attach a [W] Energy card from your discard pile to your Benched Pokémon in any way you like.'
-    },
-    {
-      name: 'Hydro Pump',
-      cost: [C, C],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'This attack does 20 more damage for each [W] Energy attached to this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Seafaring',
+    cost: [W],
+    damage: 0,
+    text: 'Flip 3 coins. For each heads, attach a [W] Energy card from your discard pile to your Benched Pokémon in any way you like.'
+  }, {
+    name: 'Hydro Pump',
+    cost: [C, C],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'This attack does 20 more damage for each [W] Energy attached to this Pokémon.'
+  }];
 
   public set: string = 'XY';
   public setNumber: string = '35';

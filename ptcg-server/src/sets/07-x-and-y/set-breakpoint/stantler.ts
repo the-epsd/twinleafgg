@@ -14,21 +14,18 @@ export class Stantler extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Mystifying Horns',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Confused.'
-    },
-    {
-      name: 'Big Charge',
-      cost: [C, C],
-      damage: 30,
-      damageCalculation: '+',
-      text: 'If you have any Mega Evolution Pokémon on your Bench, this attack does 50 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Mystifying Horns',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Confused.'
+  }, {
+    name: 'Big Charge',
+    cost: [C, C],
+    damage: 30,
+    damageCalculation: '+',
+    text: 'If you have any Mega Evolution Pokémon on your Bench, this attack does 50 more damage.'
+  }];
 
   public set: string = 'BKP';
   public setNumber: string = '91';

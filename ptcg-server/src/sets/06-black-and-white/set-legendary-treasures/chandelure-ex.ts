@@ -7,10 +7,14 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE, YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED, YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../../game/store/prefabs/attack-effects';
+import {
+  PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE,
+  YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED,
+  YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED,
+} from '../../../game/store/prefabs/attack-effects';
 
 export class ChandelureEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 170;
@@ -22,14 +26,14 @@ export class ChandelureEx extends PokemonCard {
       name: 'Cursed Drop',
       cost: [P],
       damage: 0,
-      text: 'Put 4 damage counters on your opponent\'s Pokémon in any way you like.'
+      text: "Put 4 damage counters on your opponent's Pokémon in any way you like.",
     },
     {
       name: 'Eerie Glow',
       cost: [P, P, C],
       damage: 70,
-      text: 'The Defending Pokémon is now Burned and Confused.'
-    }
+      text: 'The Defending Pokémon is now Burned and Confused.',
+    },
   ];
 
   public set: string = 'LTR';

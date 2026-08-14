@@ -11,15 +11,13 @@ export class Vanillite extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Double Spin',
-      cost: [C],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Double Spin',
+    cost: [C],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
+  }];
 
   public set: string = 'DEX';
   public setNumber: string = '33';

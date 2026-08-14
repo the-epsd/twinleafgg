@@ -15,20 +15,17 @@ export class Poliwhirl extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Bubble',
-      cost: [W],
-      damage: 20,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Knuckle Punch',
-      cost: [C, C],
-      damage: 40,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Bubble',
+    cost: [W],
+    damage: 20,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Knuckle Punch',
+    cost: [C, C],
+    damage: 40,
+    text: ''
+  }];
 
   public set: string = 'UNB';
   public setNumber: string = '38';

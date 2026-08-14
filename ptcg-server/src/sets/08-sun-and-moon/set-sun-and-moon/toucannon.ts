@@ -2,7 +2,8 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_BURN_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/prefabs';
+import { ADD_BURN_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/attack-effects';
 import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -19,20 +20,17 @@ export class Toucannon extends PokemonCard {
   public readonly ECHOED_VOICE_MARKER = 'TOUCANNON_ECHOED_VOICE_MARKER';
   public readonly ECHOED_VOICE_CLEAR_MARKER = 'TOUCANNON_ECHOED_VOICE_CLEAR_MARKER';
 
-  public attacks = [
-    {
-      name: 'Echoed Voice',
-      cost: [C, C],
-      damage: 60,
-      text: 'During your next turn, this Pokémon\'s Echoed Voice attack does 60 more damage (before applying Weakness and Resistance).'
-    },
-    {
-      name: 'Beak Blast',
-      cost: [C, C, C],
-      damage: 100,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Burned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Echoed Voice',
+    cost: [C, C],
+    damage: 60,
+    text: 'During your next turn, this Pokémon\'s Echoed Voice attack does 60 more damage (before applying Weakness and Resistance).'
+  }, {
+    name: 'Beak Blast',
+    cost: [C, C, C],
+    damage: 100,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Burned.'
+  }];
 
   public set: string = 'SUM';
   public setNumber: string = '108';

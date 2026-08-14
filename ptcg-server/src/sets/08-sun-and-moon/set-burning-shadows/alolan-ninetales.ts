@@ -17,19 +17,21 @@ export class AlolanNinetales extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Luminous Barrier',
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all effects of attacks, including damage, done to this Pokémon by your opponent\'s Pokémon-GX or Pokémon-EX.'
-  }];
+  public powers = [
+    {
+      name: 'Luminous Barrier',
+      powerType: PowerType.ABILITY,
+      text: "Prevent all effects of attacks, including damage, done to this Pokémon by your opponent's Pokémon-GX or Pokémon-EX.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Aurora Beam',
       cost: [W, C, C],
       damage: 80,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'BUS';
@@ -57,7 +59,7 @@ export class AlolanNinetales extends PokemonCard {
         return state;
       }
 
-      if (sourceCard.tags.includes(CardTag.POKEMON_EX) || sourceCard.tags.includes(CardTag.POKEMON_GX)) {
+      if (sourceCard.hasTag(CardTag.POKEMON_EX) || sourceCard.hasTag(CardTag.POKEMON_GX)) {
         // Check if ability is blocked
         try {
           const powerEffect = new PowerEffect(player, this.powers[0], this);

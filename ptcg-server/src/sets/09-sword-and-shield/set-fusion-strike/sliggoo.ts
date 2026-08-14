@@ -21,22 +21,20 @@ export class Sliggoo extends PokemonCard {
   public hp: number = 80;
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Melt',
-      cost: [C],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Body Slam',
-      cost: [W, P],
-      damage: 50,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Melt',
+    cost: [C],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Body Slam',
+    cost: [W, P],
+    damage: 50,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'FST';
   public setNumber: string = '196';
   public cardImage: string = 'assets/cardback.png';

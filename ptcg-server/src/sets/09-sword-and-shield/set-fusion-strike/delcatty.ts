@@ -16,23 +16,21 @@ export class Delcatty extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Willful Busybody',
-      cost: [C],
-      damage: 0,
-      text: 'Your opponent reveals their hand. Choose a card you find there and put it on the bottom of their deck.'
-    },
-    {
-      name: 'Double Slap',
-      cost: [C, C],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 50 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Willful Busybody',
+    cost: [C],
+    damage: 0,
+    text: 'Your opponent reveals their hand. Choose a card you find there and put it on the bottom of their deck.'
+  }, {
+    name: 'Double Slap',
+    cost: [C, C],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 50 damage for each heads.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'FST';
   public setNumber: string = '211';
   public cardImage: string = 'assets/cardback.png';

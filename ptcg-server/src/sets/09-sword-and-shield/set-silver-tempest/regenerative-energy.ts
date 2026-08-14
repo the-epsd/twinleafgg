@@ -6,9 +6,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { EvolveEffect, HealEffect } from '../../../game/store/effects/game-effects';
 import { IS_SPECIAL_ENERGY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
-
 export class RegenerativeEnergy extends EnergyCard {
-
   public regulationMark = 'F';
   public provides: CardType[] = [CardType.COLORLESS];
   public energyType = EnergyType.SPECIAL;
@@ -23,7 +21,6 @@ export class RegenerativeEnergy extends EnergyCard {
 Whenever you play a Pokémon from your hand to evolve the Pokémon V this card is attached to, heal 100 damage from that Pokémon.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // Provide energy when attached to Single Strike Pokemon
     if (effect instanceof EvolveEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
@@ -32,7 +29,7 @@ Whenever you play a Pokémon from your hand to evolve the Pokémon V this card i
         return state;
       }
 
-      if (effect.target.getPokemonCard()?.tags.includes(CardTag.POKEMON_V)) {
+      if (effect.target.getPokemonCard()?.hasTag(CardTag.POKEMON_V)) {
         const healEffect = new HealEffect(player, effect.target, 100);
         store.reduceEffect(state, healEffect);
       }
@@ -41,4 +38,3 @@ Whenever you play a Pokémon from your hand to evolve the Pokémon V this card i
     return state;
   }
 }
-

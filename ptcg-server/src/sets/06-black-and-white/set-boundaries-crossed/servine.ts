@@ -16,21 +16,18 @@ export class Servine extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Vine Whip',
-      cost: [G],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Double Slash',
-      cost: [G, C, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 40 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Vine Whip',
+    cost: [G],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Double Slash',
+    cost: [G, C, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 40 damage times the number of heads.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '12';

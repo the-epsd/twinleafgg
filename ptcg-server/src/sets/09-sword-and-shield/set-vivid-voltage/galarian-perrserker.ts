@@ -18,8 +18,7 @@ export class GalarianPerrserker extends PokemonCard {
     cost: [M],
     damage: 20,
     text: 'Flip 3 coins. If any of them are heads, your opponent reveals their hand. Then, for each heads, discard a Trainer card from your opponent\'s hand.'
-  },
-  {
+  }, {
     name: 'Claw Slash',
     cost: [M, C, C],
     damage: 90,
@@ -27,7 +26,9 @@ export class GalarianPerrserker extends PokemonCard {
   }];
 
   public set: string = 'VIV';
+
   public regulationMark: string = 'D';
+
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '113';
   public name: string = 'Galarian Perserker';

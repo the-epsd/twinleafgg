@@ -3,30 +3,41 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
-import { ADD_MARKER, COIN_FLIP_PROMPT, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import {
+  ADD_MARKER,
+  COIN_FLIP_PROMPT,
+  HAS_MARKER,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  WAS_ATTACK_USED,
+} from '../../game/store/prefabs/prefabs';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Pichu extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.BABY];
+  protected _tags = [CardTag.BABY];
   public cardType: CardType = L;
   public hp: number = 30;
   public retreat = [];
+
   public evolvesTo = ['Pikachu'];
 
-  public powers = [{
-    name: 'Baby Rule',
-    powerType: PowerType.BABY_RULE,
-    text: 'If this Baby Pokémon is your Active Pokémon and your opponent tries to attack, your opponent flips a coin (before doing anything required in order to use that attack). If tails, your opponent\'s turn ends without an attack.'
-  }];
+  public powers = [
+    {
+      name: 'Baby Rule',
+      powerType: PowerType.BABY_RULE,
+      text: "If this Baby Pokémon is your Active Pokémon and your opponent tries to attack, your opponent flips a coin (before doing anything required in order to use that attack). If tails, your opponent's turn ends without an attack.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Zzzap',
-    cost: [C],
-    damage: 0,
-    text: 'Does 20 damage to each Pokémon in play that has a Pokémon Power. Don\'t apply Weakness and Resistance.'
-  }];
+  public attacks = [
+    {
+      name: 'Zzzap',
+      cost: [C],
+      damage: 0,
+      text: "Does 20 damage to each Pokémon in play that has a Pokémon Power. Don't apply Weakness and Resistance.",
+    },
+  ];
 
   public set: string = 'N1';
   public cardImage: string = 'assets/cardback.png';
@@ -37,18 +48,24 @@ export class Pichu extends PokemonCard {
   public readonly BABY_MARKER = 'BABY_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // Baby Rule effect
     if (effect instanceof UseAttackEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       try {
-        store.reduceEffect(state, new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.BABY_RULE,
-          text: ''
-        }, this));
+        store.reduceEffect(
+          state,
+          new PowerEffect(
+            player,
+            {
+              name: 'test',
+              powerType: PowerType.BABY_RULE,
+              text: '',
+            },
+            this,
+          ),
+        );
       } catch {
         return state;
       }
@@ -62,7 +79,7 @@ export class Pichu extends PokemonCard {
       if (opponent.active.getPokemonCard() === this) {
         effect.preventDefault = true;
 
-        COIN_FLIP_PROMPT(store, state, player, result => {
+        COIN_FLIP_PROMPT(store, state, player, (result) => {
           if (!result) {
             const endTurnEffect = new EndTurnEffect(player);
             store.reduceEffect(state, endTurnEffect);
@@ -82,15 +99,19 @@ export class Pichu extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Check both players' Pokémon for Poké-Powers/Bodies
-      [player, opponent].forEach(currentPlayer => {
+      [player, opponent].forEach((currentPlayer) => {
         // Check active Pokémon
         const activeCard = currentPlayer.active.getPokemonCard();
         if (activeCard) {
-          const stubPowerEffect = new PowerEffect(currentPlayer, {
-            name: 'test',
-            powerType: PowerType.POKEMON_POWER,
-            text: ''
-          }, activeCard);
+          const stubPowerEffect = new PowerEffect(
+            currentPlayer,
+            {
+              name: 'test',
+              powerType: PowerType.POKEMON_POWER,
+              text: '',
+            },
+            activeCard,
+          );
 
           try {
             store.reduceEffect(state, stubPowerEffect);
@@ -106,14 +127,18 @@ export class Pichu extends PokemonCard {
         }
 
         // Check bench Pokémon
-        currentPlayer.bench.forEach(bench => {
+        currentPlayer.bench.forEach((bench) => {
           const benchCard = bench.getPokemonCard();
           if (benchCard) {
-            const stubPowerEffect = new PowerEffect(currentPlayer, {
-              name: 'test',
-              powerType: PowerType.POKEMON_POWER,
-              text: ''
-            }, benchCard);
+            const stubPowerEffect = new PowerEffect(
+              currentPlayer,
+              {
+                name: 'test',
+                powerType: PowerType.POKEMON_POWER,
+                text: '',
+              },
+              benchCard,
+            );
 
             try {
               store.reduceEffect(state, stubPowerEffect);

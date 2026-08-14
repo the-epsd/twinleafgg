@@ -21,7 +21,6 @@ export class Maxie extends TrainerCard {
     'Search your hand or discard pile for a Pokémon with Team Magma in its name and put it onto your Bench. Treat the new Benched Pokémon as a Basic Pokémon. If it is a Stage 2 Pokémon, put 2 damage counters on that Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
@@ -38,7 +37,7 @@ export class Maxie extends TrainerCard {
       const blockedHand: number[] = [];
       let hasTeamMagmaInHand = false;
       player.hand.cards.forEach((card, index) => {
-        if (card instanceof PokemonCard && card.tags.includes(CardTag.TEAM_MAGMA)) {
+        if (card instanceof PokemonCard && card.hasTag(CardTag.TEAM_MAGMA)) {
           hasTeamMagmaInHand = true;
         } else {
           blockedHand.push(index);
@@ -48,7 +47,7 @@ export class Maxie extends TrainerCard {
       const blockedDiscard: number[] = [];
       let hasTeamMagmaInDiscard = false;
       player.discard.cards.forEach((card, index) => {
-        if (card instanceof PokemonCard && card.tags.includes(CardTag.TEAM_MAGMA)) {
+        if (card instanceof PokemonCard && card.hasTag(CardTag.TEAM_MAGMA)) {
           hasTeamMagmaInDiscard = true;
         } else {
           blockedDiscard.push(index);
@@ -59,30 +58,34 @@ export class Maxie extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      const options: { message: GameMessage, action: () => void }[] = [];
+      const options: { message: GameMessage; action: () => void }[] = [];
       // Add possible options
       if (hasTeamMagmaInHand) {
         options.push({
           message: GameMessage.CHOOSE_CARD_TO_HAND,
           action: () => {
-            store.prompt(state, new ChooseCardsPrompt(
-              player,
-              GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-              player.hand,
-              { superType: SuperType.POKEMON },
-              { min: 1, max: 1, allowCancel: false, blocked: blockedHand }
-            ), selected => {
-              const cards = selected || [];
-              cards.forEach((card, index) => {
-                player.hand.moveCardTo(card, slots[index]);
-                slots[index].pokemonPlayedTurn = state.turn;
+            store.prompt(
+              state,
+              new ChooseCardsPrompt(
+                player,
+                GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+                player.hand,
+                { superType: SuperType.POKEMON },
+                { min: 1, max: 1, allowCancel: false, blocked: blockedHand },
+              ),
+              (selected) => {
+                const cards = selected || [];
+                cards.forEach((card, index) => {
+                  player.hand.moveCardTo(card, slots[index]);
+                  slots[index].pokemonPlayedTurn = state.turn;
 
-                if (slots[index].getPokemonCard()?.stage === Stage.STAGE_2) {
-                  slots[index].damage += 20; // Add 2 damage counters
-                }
-              });
-            });
-          }
+                  if (slots[index].getPokemonCard()?.stage === Stage.STAGE_2) {
+                    slots[index].damage += 20; // Add 2 damage counters
+                  }
+                });
+              },
+            );
+          },
         });
       }
       // If there are cards in discard, add option to choose from there
@@ -90,48 +93,57 @@ export class Maxie extends TrainerCard {
         options.push({
           message: GameMessage.CHOOSE_CARD_FROM_DISCARD,
           action: () => {
-            store.prompt(state, new ChooseCardsPrompt(
-              player,
-              GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-              player.discard,
-              { superType: SuperType.POKEMON },
-              { min: 1, max: 1, allowCancel: false, blocked: blockedDiscard }
-            ), selected => {
-              const cards = selected || [];
-              cards.forEach((card, index) => {
-                player.discard.moveCardTo(card, slots[index]);
-                slots[index].pokemonPlayedTurn = state.turn;
+            store.prompt(
+              state,
+              new ChooseCardsPrompt(
+                player,
+                GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+                player.discard,
+                { superType: SuperType.POKEMON },
+                { min: 1, max: 1, allowCancel: false, blocked: blockedDiscard },
+              ),
+              (selected) => {
+                const cards = selected || [];
+                cards.forEach((card, index) => {
+                  player.discard.moveCardTo(card, slots[index]);
+                  slots[index].pokemonPlayedTurn = state.turn;
 
-                if (slots[index].getPokemonCard()?.stage === Stage.STAGE_2) {
-                  slots[index].damage += 20; // Add 2 damage counters
-                }
-              });
-            });
-          }
+                  if (slots[index].getPokemonCard()?.stage === Stage.STAGE_2) {
+                    slots[index].damage += 20; // Add 2 damage counters
+                  }
+                });
+              },
+            );
+          },
         });
       }
 
       // If only one option, execute it immediately
       if (options.length === 1) {
         options[0].action();
-      } else { // If multiple options, prompt the player to choose
-        store.prompt(state, new SelectOptionPrompt(
-          player.id,
-          GameMessage.CHOOSE_OPTION,
-          [
-            'Choose a Team Magma Pokémon from your hand to put onto your Bench',
-            'Choose a Team Magma Pokémon from your discard pile to put onto your Bench'
-          ],
-          {
-            allowCancel: true,
-          }), choice => {
+      } else {
+        // If multiple options, prompt the player to choose
+        store.prompt(
+          state,
+          new SelectOptionPrompt(
+            player.id,
+            GameMessage.CHOOSE_OPTION,
+            [
+              'Choose a Team Magma Pokémon from your hand to put onto your Bench',
+              'Choose a Team Magma Pokémon from your discard pile to put onto your Bench',
+            ],
+            {
+              allowCancel: true,
+            },
+          ),
+          (choice) => {
             const option = options[choice];
             option.action();
-          });
+          },
+        );
       }
     }
 
     return state;
   }
-
 }

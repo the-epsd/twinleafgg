@@ -16,15 +16,13 @@ export class Helioptile extends PokemonCard {
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Tail Rap',
-      cost: [L, C],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tail Rap',
+    cost: [L, C],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
+  }];
 
   public set: string = 'PHF';
   public setNumber: string = '28';

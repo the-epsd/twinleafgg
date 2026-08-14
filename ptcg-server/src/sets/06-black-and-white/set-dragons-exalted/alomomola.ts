@@ -12,21 +12,18 @@ export class Alomomola extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Mysterious Beam',
-      cost: [W, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokémon.'
-    },
-    {
-      name: 'Double Slap',
-      cost: [W, C, C],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 50 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Mysterious Beam',
+    cost: [W, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokémon.'
+  }, {
+    name: 'Double Slap',
+    cost: [W, C, C],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 50 damage times the number of heads.'
+  }];
 
   public set: string = 'DRX';
   public setNumber: string = '37';

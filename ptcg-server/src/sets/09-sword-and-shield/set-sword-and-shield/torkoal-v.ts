@@ -3,7 +3,13 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  EnergyType,
+  SuperType,
+} from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { CardList } from '../../../game/store/state/card-list';
@@ -12,7 +18,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class TorkoalV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = R;
   public hp: number = 210;
@@ -25,14 +31,14 @@ export class TorkoalV extends PokemonCard {
       cost: [R, R, C],
       damage: 90,
       damageCalculation: '+',
-      text: 'Discard the top card of your deck. If that card is a [R] Energy card, this attack does 90 more damage.'
+      text: 'Discard the top card of your deck. If that card is a [R] Energy card, this attack does 90 more damage.',
     },
     {
       name: 'Steam Crush',
       cost: [R, R, R, C],
       damage: 120,
-      text: 'Discard 2 Energy from your opponent\'s Active Pokémon.'
-    }
+      text: "Discard 2 Energy from your opponent's Active Pokémon.",
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -57,7 +63,8 @@ export class TorkoalV extends PokemonCard {
       player.deck.moveTo(topCard, 1);
 
       // Check if it's a [R] Basic Energy card
-      const isFireEnergy = topCard.cards.length > 0 &&
+      const isFireEnergy =
+        topCard.cards.length > 0 &&
         topCard.cards[0] instanceof EnergyCard &&
         (topCard.cards[0] as EnergyCard).energyType === EnergyType.BASIC &&
         (topCard.cards[0] as EnergyCard).provides.includes(CardType.FIRE);
@@ -74,11 +81,11 @@ export class TorkoalV extends PokemonCard {
     // Ref: set-cosmic-eclipse/absol.ts (DiscardCardsEffect), set-cosmic-eclipse/torkoal.ts (Kindle)
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
-      const hasEnergy1 = opponent.active.cards.some(c => c.superType === SuperType.ENERGY);
+      const hasEnergy1 = opponent.active.cards.some((c) => c.superType === SuperType.ENERGY);
       if (hasEnergy1) {
         DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
       }
-      const hasEnergy2 = opponent.active.cards.some(c => c.superType === SuperType.ENERGY);
+      const hasEnergy2 = opponent.active.cards.some((c) => c.superType === SuperType.ENERGY);
       if (hasEnergy2) {
         DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
       }

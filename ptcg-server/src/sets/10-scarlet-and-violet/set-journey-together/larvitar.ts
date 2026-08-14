@@ -1,29 +1,29 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, CoinFlipPrompt, StateUtils, Card, ChooseCardsPrompt } from '../../../game';
+import { StoreLike, State, GameMessage, StateUtils, Card, ChooseCardsPrompt } from '../../../game';
 
 import { Effect } from '../../../game/store/effects/effect';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Larvitar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType = F;
   public hp: number = 70;
-  public weakness = [{ type: CardType.GRASS }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: G }];
+  public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Crunch',
-      cost: [CardType.COLORLESS, CardType.COLORLESS],
-      damage: 20,
-      text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Crunch',
+    cost: [C, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
+  }];
 
   public set: string = 'JTG';
+
   public regulationMark = 'I';
+
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '80';
   public name: string = 'Larvitar';
@@ -34,9 +34,7 @@ export class Larvitar extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
 
           // Defending Pokemon has no energy cards attached

@@ -11,20 +11,17 @@ export class Chatot extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Tone-Deaf',
-      cost: [C],
-      damage: 10,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
-    },
-    {
-      name: 'Peck',
-      cost: [C, C],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Tone-Deaf',
+    cost: [C],
+    damage: 10,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
+  }, {
+    name: 'Peck',
+    cost: [C, C],
+    damage: 30,
+    text: ''
+  }];
 
   public set: string = 'DEX';
   public setNumber: string = '85';

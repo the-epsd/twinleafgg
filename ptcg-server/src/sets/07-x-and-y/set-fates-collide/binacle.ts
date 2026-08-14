@@ -15,15 +15,13 @@ export class Binacle extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Swing Around',
-      cost: [W, C],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Swing Around',
+    cost: [W, C],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
+  }];
 
   public set: string = 'FCO';
   public setNumber: string = '22';

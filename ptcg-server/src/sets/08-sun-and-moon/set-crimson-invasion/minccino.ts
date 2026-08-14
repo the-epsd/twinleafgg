@@ -21,14 +21,12 @@ export class Minccino extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Tickle',
-      cost: [C],
-      damage: 10,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tickle',
+    cost: [C],
+    damage: 10,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'CIN';
   public setNumber: string = '85';

@@ -22,16 +22,15 @@ export class Nuzleaf extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Fake Out',
-      cost: [D],
-      damage: 20,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fake Out',
+    cost: [D],
+    damage: 20,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'EVS';
   public setNumber: string = '96';
   public cardImage: string = 'assets/cardback.png';

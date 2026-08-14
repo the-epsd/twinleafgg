@@ -10,28 +10,23 @@ export class Galvantula extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Stun Needle',
-      cost: [L],
-      damage: 20,
-
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokemon is now Paralyzed.',
-    },
-
-    {
-      name: 'Shocking Pursuit',
-      cost: [L, C],
-      damage: 0,
-      damageCalculation: 'x',
-      text: 'This attack does 20 damage for each damage counter on your opponent\'s Active Pokemon.'
-
-
-    }
-  ];
+  public attacks = [{
+    name: 'Stun Needle',
+    cost: [L],
+    damage: 20,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokemon is now Paralyzed.',
+  }, {
+    name: 'Shocking Pursuit',
+    cost: [L, C],
+    damage: 0,
+    damageCalculation: 'x',
+    text: 'This attack does 20 damage for each damage counter on your opponent\'s Active Pokemon.'
+  }];
 
   public set: string = 'VIV';
+
   public regulationMark: string = 'D';
+
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '56';
   public name: string = 'Galvantula';

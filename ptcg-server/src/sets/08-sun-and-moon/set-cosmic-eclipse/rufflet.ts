@@ -16,15 +16,13 @@ export class Rufflet extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Fury Attack',
-      cost: [C],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 10 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fury Attack',
+    cost: [C],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 10 damage for each heads.'
+  }];
 
   public set: string = 'CEC';
   public setNumber: string = '177';

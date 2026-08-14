@@ -24,14 +24,12 @@ export class Jellicent extends PokemonCard {
     text: 'The Retreat Cost of each of your opponent\'s Pokémon in play is Colorless more.'
   }];
 
-  public attacks = [
-    {
-      name: 'Eerie Light',
-      cost: [W, C, C],
-      damage: 40,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Eerie Light',
+    cost: [W, C, C],
+    damage: 40,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '45';

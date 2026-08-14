@@ -25,14 +25,12 @@ export class Dragalge extends PokemonCard {
     text: 'If this Pokémon is your Active Pokémon and is damaged by an opponent\'s attack (even if this Pokémon is Knocked Out), the Attacking Pokémon is now Poisoned.'
   }];
 
-  public attacks = [
-    {
-      name: 'Twister',
-      cost: [P, C],
-      damage: 60,
-      text: 'Flip 2 coins. For each heads, discard an Energy from your opponent\'s Active Pokémon. If both of them are tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Twister',
+    cost: [P, C],
+    damage: 60,
+    text: 'Flip 2 coins. For each heads, discard an Energy from your opponent\'s Active Pokémon. If both of them are tails, this attack does nothing.'
+  }];
 
   public set: string = 'FLI';
   public setNumber: string = '53';

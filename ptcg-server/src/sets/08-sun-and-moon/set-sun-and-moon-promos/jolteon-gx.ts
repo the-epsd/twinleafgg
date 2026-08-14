@@ -13,15 +13,11 @@ import {
 } from '../../../game';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import {
-  BLOCK_IF_GX_ATTACK_USED,
-  PREVENT_DAMAGE,
-  PREVENT_EFFECTS_OF_ATTACKS,
-  WAS_ATTACK_USED,
-} from '../../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class JolteonGX extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Eevee';
   public cardType: CardType = L;
@@ -61,25 +57,29 @@ export class JolteonGX extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+      const hasBenched = opponent.bench.some((b) => b.cards.length > 0);
       if (!hasBenched) {
         return state;
       }
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.BENCH],
-        { allowCancel: false }
-      ), targets => {
-        if (!targets || targets.length === 0) {
-          return;
-        }
-        const damageEffect = new PutDamageEffect(effect, 30);
-        damageEffect.target = targets[0];
-        store.reduceEffect(state, damageEffect);
-      });
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.BENCH],
+          { allowCancel: false },
+        ),
+        (targets) => {
+          if (!targets || targets.length === 0) {
+            return;
+          }
+          const damageEffect = new PutDamageEffect(effect, 30);
+          damageEffect.target = targets[0];
+          store.reduceEffect(state, damageEffect);
+        },
+      );
     }
 
     // Swift Run-GX

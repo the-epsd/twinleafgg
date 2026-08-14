@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/pr
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class VikavoltGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Charjabug';
   public cardType: CardType = L;
@@ -26,20 +26,20 @@ export class VikavoltGx extends PokemonCard {
       name: 'Charge Beam',
       cost: [L],
       damage: 50,
-      text: 'Attach an Energy card from your discard pile to this Pokémon.'
+      text: 'Attach an Energy card from your discard pile to this Pokémon.',
     },
     {
       name: 'Super Zap Cannon',
       cost: [L, C, C, C],
       damage: 180,
-      text: 'Discard 2 Energy from this Pokémon.'
+      text: 'Discard 2 Energy from this Pokémon.',
     },
     {
       name: 'Gigatron-GX',
       cost: [L, C, C, C],
       damage: 0,
-      text: 'This attack does 60 damage to each of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.) (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "This attack does 60 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'GRI';
@@ -53,21 +53,25 @@ export class VikavoltGx extends PokemonCard {
     // Ref: set-evolutions/mewtwo-ex.ts (Energy Absorption)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      const hasEnergy = player.discard.cards.some(c => c instanceof EnergyCard);
+      const hasEnergy = player.discard.cards.some((c) => c instanceof EnergyCard);
 
       if (hasEnergy) {
-        return store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_ATTACH,
-          player.discard,
-          { superType: SuperType.ENERGY },
-          { min: 1, max: 1, allowCancel: false }
-        ), cards => {
-          cards = cards || [];
-          if (cards.length > 0) {
-            player.discard.moveCardsTo(cards, player.active);
-          }
-        });
+        return store.prompt(
+          state,
+          new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_CARD_TO_ATTACH,
+            player.discard,
+            { superType: SuperType.ENERGY },
+            { min: 1, max: 1, allowCancel: false },
+          ),
+          (cards) => {
+            cards = cards || [];
+            if (cards.length > 0) {
+              player.discard.moveCardsTo(cards, player.active);
+            }
+          },
+        );
       }
     }
 
@@ -86,7 +90,7 @@ export class VikavoltGx extends PokemonCard {
       BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
 
-      opponent.bench.forEach(benched => {
+      opponent.bench.forEach((benched) => {
         if (benched.cards.length > 0) {
           const damage = new PutDamageEffect(effect, 60);
           damage.target = benched;

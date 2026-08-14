@@ -20,14 +20,12 @@ export class Snorlax extends PokemonCard {
     text: 'As long as Snorlax is your Active Pokémon, the Defending Pokémon can\'t retreat. This power stops working when Snorlax is affected by a Special Condition.'
   }];
 
-  public attacks = [
-    {
-      name: 'Roll Over',
-      cost: [C, C, C, C],
-      damage: 30,
-      text: 'Snorlax is now Asleep. Flip a coin. If heads, the Defending Pokémon is now Asleep.'
-    }
-  ];
+  public attacks = [{
+    name: 'Roll Over',
+    cost: [C, C, C, C],
+    damage: 30,
+    text: 'Snorlax is now Asleep. Flip a coin. If heads, the Defending Pokémon is now Asleep.'
+  }];
 
   public set: string = 'PR';
   public cardImage: string = 'assets/cardback.png';
@@ -65,11 +63,11 @@ export class Snorlax extends PokemonCard {
     // Roll Over
     if (WAS_ATTACK_USED(effect, 0, this)) {
       ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, effect.player, this);
-      COIN_FLIP_PROMPT(store, state, effect.player, (result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {
           YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(store, state, effect);
         }
-      }));
+      });
     }
 
     return state;

@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { cn } from '../../utils/cn';
+import { CheckboxField } from '../ui/CheckboxField';
+import { SelectField } from '../ui/SelectField';
 import { TwinleafButton } from './TwinleafButton';
 import styles from './TwinleafForm.module.css';
 import type { TwinleafFormField, TwinleafFormStyle, TwinleafFormValues } from './twinleafFormTypes';
@@ -142,17 +144,17 @@ export function TwinleafForm({
           if (field.type === 'checkbox') {
             return (
               <div key={field.name} className={styles.field}>
-                <label className={styles.checkboxLabel} htmlFor={field.name}>
-                  <input
-                    id={field.name}
-                    type="checkbox"
-                    className={styles.checkboxInput}
-                    checked={Boolean(values[field.name])}
-                    onChange={(e) => setFieldValue(field.name, e.target.checked)}
-                  />
+                <CheckboxField
+                  plain
+                  id={field.name}
+                  className={styles.checkboxLabel}
+                  inputClassName={styles.checkboxInput}
+                  checked={Boolean(values[field.name])}
+                  onChange={(e) => setFieldValue(field.name, e.target.checked)}
+                >
                   <span className={styles.checkmark} />
                   {field.label}
-                </label>
+                </CheckboxField>
                 {showValidation && isInvalid(field.name) ? (
                   <div className={styles.error}>{errors[field.name]}</div>
                 ) : null}
@@ -166,7 +168,7 @@ export function TwinleafForm({
                 <label className={styles.label} htmlFor={field.name}>
                   {field.label}
                 </label>
-                <select
+                <SelectField
                   id={field.name}
                   className={styles.select}
                   value={String(values[field.name] ?? '')}
@@ -180,7 +182,7 @@ export function TwinleafForm({
                       {option.label}
                     </option>
                   ))}
-                </select>
+                </SelectField>
                 {showValidation && isInvalid(field.name) ? (
                   <div className={styles.error}>{errors[field.name]}</div>
                 ) : null}

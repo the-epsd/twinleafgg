@@ -17,21 +17,18 @@ export class Lilligant extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Petal Blizzard',
-      cost: [C],
-      damage: 0,
-      text: 'This attack does 10 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    },
-    {
-      name: 'Petal Dance',
-      cost: [G, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 40 damage for each heads. This Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Petal Blizzard',
+    cost: [C],
+    damage: 0,
+    text: 'This attack does 10 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }, {
+    name: 'Petal Dance',
+    cost: [G, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 40 damage for each heads. This Pokémon is now Confused.'
+  }];
 
   public set: string = 'GRI';
   public setNumber: string = '5';

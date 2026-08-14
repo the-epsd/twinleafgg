@@ -5,7 +5,7 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { COIN_FLIP_PROMPT, IS_POKEPOWER_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { MULTIPLE_COIN_FLIPS_PROMPT, IS_POKEPOWER_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Giratina extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -78,19 +78,18 @@ export class Giratina extends PokemonCard {
       const player = effect.player;
       const opponent = effect.opponent;
 
-      let heads = 0;
-      COIN_FLIP_PROMPT(store, state, player, result => { if (result) heads++; });
-      COIN_FLIP_PROMPT(store, state, player, result => { if (result) heads++; });
-
-      if (heads > 0) {
-        opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
-          if (card !== opponent.active) {
-            const damage = new PutDamageEffect(effect, (10 * heads));
-            damage.target = card;
-            store.reduceEffect(state, damage);
-          }
-        });
-      }
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, results => {
+        const heads = results.filter(r => r).length;
+        if (heads > 0) {
+          opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
+            if (card !== opponent.active) {
+              const damage = new PutDamageEffect(effect, (10 * heads));
+              damage.target = card;
+              store.reduceEffect(state, damage);
+            }
+          });
+        }
+      });
     }
 
     return state;

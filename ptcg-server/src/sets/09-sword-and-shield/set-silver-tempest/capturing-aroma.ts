@@ -6,22 +6,20 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, CoinFlipPrompt, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../../game';
+import { Card, ChooseCardsPrompt, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../../game';
+
+import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class CapturingAroma extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'SIT';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '153';
 
   public regulationMark = 'F';
 
   public name: string = 'Capturing Aroma';
-
   public fullName: string = 'Capturing Aroma SIT';
 
   public text: string =
@@ -46,7 +44,7 @@ export class CapturingAroma extends TrainerCard {
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      return store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), flipResult => {
+      return COIN_FLIP_PROMPT(store, state, player, flipResult => {
         if (flipResult) {
           let cards: Card[] = [];
           return store.prompt(state, new ChooseCardsPrompt(
@@ -69,7 +67,6 @@ export class CapturingAroma extends TrainerCard {
             cards.forEach((card, index) => {
               store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
             });
-
 
             if (cards.length > 0) {
               player.supporter.moveCardTo(this, player.discard);

@@ -8,8 +8,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Armarougeex extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
 
   public evolvesFrom = 'Charcadet';
 
@@ -23,20 +22,22 @@ export class Armarougeex extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Crimson Armor',
-    useWhenInPlay: false,
-    powerType: PowerType.ABILITY,
-    text: 'If this Pokémon has full HP, it takes 80 less damage from attacks from your opponent\'s Pokémon (after applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: 'Crimson Armor',
+      useWhenInPlay: false,
+      powerType: PowerType.ABILITY,
+      text: "If this Pokémon has full HP, it takes 80 less damage from attacks from your opponent's Pokémon (after applying Weakness and Resistance).",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Scorching Bazooka',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 40,
-      text: 'This attack does 40 more damage for each [R] Energy attached to this Pokémon.'
-    }
+      text: 'This attack does 40 more damage for each [R] Energy attached to this Pokémon.',
+    },
   ];
 
   public set: string = 'PAR';
@@ -78,8 +79,8 @@ export class Armarougeex extends PokemonCard {
       store.reduceEffect(state, checkProvidedEnergyEffect);
 
       let energyCount = 0;
-      checkProvidedEnergyEffect.energyMap.forEach(em => {
-        energyCount += em.provides.filter(cardType => {
+      checkProvidedEnergyEffect.energyMap.forEach((em) => {
+        energyCount += em.provides.filter((cardType) => {
           return cardType === CardType.FIRE || cardType === CardType.ANY;
         }).length;
       });

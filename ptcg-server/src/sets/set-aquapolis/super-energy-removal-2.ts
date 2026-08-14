@@ -9,6 +9,7 @@ import { StoreLike } from '../../game/store/store-like';
 
 export class SuperEnergyRemoval2 extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
+
   public set: string = 'AQ';
   public setNumber = '134';
   public name: string = 'Super Energy Removal 2';

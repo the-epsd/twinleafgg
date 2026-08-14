@@ -7,11 +7,14 @@ import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store
 export class Dragonair2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Dratini';
-  public tags = [CardTag.DELTA_SPECIES];
+  protected _tags = [CardTag.DELTA_SPECIES];
   public cardType: CardType = L;
   public hp: number = 70;
   public weakness = [{ type: C }];
-  public resistance = [{ type: G, value: -30 }, { type: F, value: -30 }];
+  public resistance = [
+    { type: G, value: -30 },
+    { type: F, value: -30 },
+  ];
   public retreat = [C];
 
   public attacks = [{
@@ -20,8 +23,7 @@ export class Dragonair2 extends PokemonCard {
     damage: 20,
     damageCalculation: 'x',
     text: 'Flip 2 coin. This attack does 20 damage times the number of heads.'
-  },
-  {
+  }, {
     name: 'Dragon Rage',
     cost: [L, C, C],
     damage: 40,
@@ -35,10 +37,9 @@ export class Dragonair2 extends PokemonCard {
   public fullName: string = 'Dragonair DS 41';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 2, (results) => {
-        effect.damage = 20 * results.filter(result => result).length;
+        effect.damage = 20 * results.filter((result) => result).length;
       });
     }
 

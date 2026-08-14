@@ -2,7 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { COIN_FLIP_PROMPT, PREVENT_DAMAGE, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Chansey extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -16,8 +17,7 @@ export class Chansey extends PokemonCard {
     cost: [C, C],
     damage: 0,
     text: 'Flip a coin. If heads, prevent all damage done to Chansey by attacks during your opponent\'s next turn.'
-  },
-  {
+  }, {
     name: 'Double-edge',
     cost: [C, C, C, C],
     damage: 80,

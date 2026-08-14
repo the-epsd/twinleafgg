@@ -1,49 +1,36 @@
-import { Card, CoinFlipPrompt, GameMessage, State, StoreLike } from '../../../game';
+import { Card, State, StoreLike } from '../../../game';
 import { CardType, SpecialCondition, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { AddSpecialConditionsEffect, DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Zapdos extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.LIGHTNING;
-
+  public cardType: CardType = L;
   public hp: number = 120;
+  public weakness = [{ type: L }];
+  public resistance = [{ type: F, value: -30 }];
+  public retreat = [C, C];
 
-  public weakness = [{ type: CardType.LIGHTNING }];
-
-  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
-
-  public attacks = [
-    {
-      name: 'Thunder Wave',
-      cost: [CardType.LIGHTNING],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Thunderbolt',
-      cost: [L, L, C],
-      damage: 190,
-      text: 'Discard all Energy from this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Thunder Wave',
+    cost: [L],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Thunderbolt',
+    cost: [L, L, C],
+    damage: 190,
+    text: 'Discard all Energy from this Pokémon.'
+  }];
 
   public set: string = 'TWM';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '65';
-
   public name: string = 'Zapdos';
-
   public fullName: string = 'Zapdos TWM';
 
   public regulationMark: string = 'H';
@@ -53,9 +40,7 @@ export class Zapdos extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
           const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED]);
           store.reduceEffect(state, specialConditionEffect);

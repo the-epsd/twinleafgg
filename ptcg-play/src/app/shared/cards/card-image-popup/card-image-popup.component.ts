@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
+import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { Card } from 'ptcg-server';
 import { CardsBaseService } from '../cards-base.service';
 
@@ -17,6 +17,7 @@ export class CardImagePopupComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) data: { card: Card, facedown: boolean, customImageUrl?: string },
     private cardsBaseService: CardsBaseService,
+    private dialogRef: MatDialogRef<CardImagePopupComponent>,
   ) {
     this.card = data.card;
     this.facedown = data.facedown;
@@ -41,12 +42,14 @@ export class CardImagePopupComponent {
   public saveUrlOverride(): void {
     if (this.isValidUrl(this.customImageUrl)) {
       this.cardsBaseService.setCustomImageForCard(this.card, this.customImageUrl);
+      this.dialogRef.close(true);
     }
   }
 
   public resetUrlOverride(): void {
     this.customImageUrl = '';
     this.cardsBaseService.clearCustomImageForCard(this.card);
+    this.dialogRef.close(true);
   }
 
 }

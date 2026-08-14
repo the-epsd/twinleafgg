@@ -16,22 +16,19 @@ export class Sneasel extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Fury Swipes',
-      cost: [C],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 10 damage for each heads.'
-    },
-    {
-      name: 'Beat Up',
-      cost: [D, D],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip a coin for each Pokémon you have in play. This attack does 30 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fury Swipes',
+    cost: [C],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 10 damage for each heads.'
+  }, {
+    name: 'Beat Up',
+    cost: [D, D],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip a coin for each Pokémon you have in play. This attack does 30 damage for each heads.'
+  }];
 
   public set: string = 'CES';
   public setNumber: string = '86';

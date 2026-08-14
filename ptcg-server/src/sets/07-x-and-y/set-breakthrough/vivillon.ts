@@ -27,14 +27,12 @@ export class Vivillon extends PokemonCard {
     text: 'Once during your turn (before your attack), you may flip a coin. If heads, search your deck for a basic Energy card and attach it to 1 of your Pokémon. Shuffle your deck afterward.'
   }];
 
-  public attacks = [
-    {
-      name: 'Sleep Powder',
-      cost: [G, C, C],
-      damage: 60,
-      text: 'Your opponent\'s Active Pokémon is now Asleep.'
-    }
-  ];
+  public attacks = [{
+    name: 'Sleep Powder',
+    cost: [G, C, C],
+    damage: 60,
+    text: 'Your opponent\'s Active Pokémon is now Asleep.'
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '15';

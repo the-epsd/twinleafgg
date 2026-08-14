@@ -6,7 +6,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, BLOCK_RETREAT } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 export class Zoroark extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -17,20 +18,17 @@ export class Zoroark extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Corner',
-      cost: [D],
-      damage: 30,
-      text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
-    },
-    {
-      name: 'Night Claw',
-      cost: [D, C, C],
-      damage: 100,
-      text: 'Flip a coin. If tails, discard 2 Energy attached to this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Corner',
+    cost: [D],
+    damage: 30,
+    text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
+  }, {
+    name: 'Night Claw',
+    cost: [D, C, C],
+    damage: 100,
+    text: 'Flip a coin. If tails, discard 2 Energy attached to this Pokémon.'
+  }];
 
   public set: string = 'XY';
   public setNumber: string = '73';

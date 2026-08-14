@@ -6,10 +6,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class GyaradosV extends PokemonCard {
-
   public regulationMark = 'E';
 
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
 
   public stage: Stage = Stage.BASIC;
 
@@ -23,17 +22,20 @@ export class GyaradosV extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
-  public attacks = [{
-    name: 'Get Angry',
-    cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
-    damage: 20,
-    text: 'This attack does 20 damage for each damage counter on this Pokémon.'
-  }, {
-    name: 'Max Tyrant',
-    cost: [CardType.WATER, CardType.WATER, CardType.WATER, CardType.COLORLESS],
-    damage: 180,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Get Angry',
+      cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
+      damage: 20,
+      text: 'This attack does 20 damage for each damage counter on this Pokémon.',
+    },
+    {
+      name: 'Max Tyrant',
+      cost: [CardType.WATER, CardType.WATER, CardType.WATER, CardType.COLORLESS],
+      damage: 180,
+      text: '',
+    },
+  ];
 
   public set: string = 'EVS';
 
@@ -46,9 +48,7 @@ export class GyaradosV extends PokemonCard {
   public fullName: string = 'Gyarados V EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       // Get Drifloon's damage
       const gyaradosDamage = effect.player.active.damage;
 
@@ -61,5 +61,4 @@ export class GyaradosV extends PokemonCard {
 
     return state;
   }
-
 }

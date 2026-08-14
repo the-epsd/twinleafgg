@@ -15,14 +15,12 @@ export class Staryu extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Lunge',
-      cost: [C],
-      damage: 20,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Lunge',
+    cost: [C],
+    damage: 20,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'PRC';
   public setNumber: string = '32';

@@ -16,23 +16,19 @@ export class Krookodile extends PokemonCard {
   public resistance = [{ type: L, value: -20 }];
   public retreat = [C, C, C];
 
-  public powers = [
-    {
-      name: 'Black Eyes',
-      powerType: PowerType.ABILITY,
-      text: 'Once during your turn (before your attack), if this Pokémon is your Active Pokémon, you may flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
-    }
-  ];
+  public powers = [{
+    name: 'Black Eyes',
+    powerType: PowerType.ABILITY,
+    text: 'Once during your turn (before your attack), if this Pokémon is your Active Pokémon, you may flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
+  }];
 
-  public attacks = [
-    {
-      name: 'Thrash',
-      cost: [F, F, C],
-      damage: 70,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 more damage. If tails, this Pokémon does 20 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Thrash',
+    cost: [F, F, C],
+    damage: 70,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 20 more damage. If tails, this Pokémon does 20 damage to itself.'
+  }];
 
   public set: string = 'EPO';
   public cardImage: string = 'assets/cardback.png';

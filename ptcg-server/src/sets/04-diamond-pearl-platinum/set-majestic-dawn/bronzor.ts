@@ -16,8 +16,7 @@ export class Bronzor extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'The Defending Pokémon is now Asleep.'
-  },
-  {
+  }, {
     name: 'Confuse Ray',
     cost: [P],
     damage: 10,

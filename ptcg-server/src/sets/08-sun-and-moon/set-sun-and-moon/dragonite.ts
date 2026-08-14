@@ -17,20 +17,17 @@ export class Dragonite extends PokemonCard {
   public weakness = [{ type: Y }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Dragon Wave',
-      cost: [G, L],
-      damage: 130,
-      text: 'Discard a [G] Energy and a [L] Energy from this Pokémon.'
-    },
-    {
-      name: 'Giant Tail',
-      cost: [C, C, C, C, C],
-      damage: 200,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Dragon Wave',
+    cost: [G, L],
+    damage: 130,
+    text: 'Discard a [G] Energy and a [L] Energy from this Pokémon.'
+  }, {
+    name: 'Giant Tail',
+    cost: [C, C, C, C, C],
+    damage: 200,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'SUM';
   public setNumber: string = '96';

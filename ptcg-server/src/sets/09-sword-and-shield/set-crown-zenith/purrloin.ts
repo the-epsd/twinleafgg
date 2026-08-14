@@ -15,17 +15,16 @@ export class Purrloin extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Fury Swipes',
-      cost: [C],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 10 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fury Swipes',
+    cost: [C],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 10 damage for each heads.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'CRZ';
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';

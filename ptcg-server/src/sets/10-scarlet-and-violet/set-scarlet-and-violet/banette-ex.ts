@@ -2,11 +2,12 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage, TrainerCard, ShowCardsPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, OPPONENT_CANNOT_PLAY_ITEM_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { OPPONENT_CANNOT_PLAY_ITEM_CARDS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Banetteex extends PokemonCard {
   public regulationMark = 'G';
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Shuppet';
   public cardType: CardType = P;

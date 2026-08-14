@@ -16,15 +16,13 @@ export class Doduo extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Fury Attack',
-      cost: [C],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 10 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fury Attack',
+    cost: [C],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 10 damage times the number of heads.'
+  }];
 
   public set: string = 'EVO';
   public setNumber: string = '69';

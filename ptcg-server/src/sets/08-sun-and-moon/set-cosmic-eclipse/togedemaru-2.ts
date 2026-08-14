@@ -22,14 +22,12 @@ export class Togedemaru2 extends PokemonCard {
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Thunder Shock',
-      cost: [L, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Thunder Shock',
+    cost: [L, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'CEC';
   public setNumber: string = '74';

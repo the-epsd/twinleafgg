@@ -4,13 +4,21 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PlayerType, GameMessage, ChoosePokemonPrompt, SlotType } from '../../../game';
+import {
+  StoreLike,
+  State,
+  StateUtils,
+  PlayerType,
+  GameMessage,
+  ChoosePokemonPrompt,
+  SlotType,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, DAMAGE_OPPONENT_POKEMON } from '../../../game/store/prefabs/prefabs';
 import { PUT_ENERGY_FROM_OPPONENTS_ACTIVE_INTO_THEIR_HAND } from '../../../game/store/prefabs/attack-effects';
 
 export class InteleonVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Inteleon V';
   public cardType: CardType = W;
@@ -23,14 +31,14 @@ export class InteleonVmax extends PokemonCard {
       name: 'Hydro Snipe',
       cost: [W],
       damage: 60,
-      text: 'You may put an Energy attached to your opponent\'s Active Pokémon into their hand.'
+      text: "You may put an Energy attached to your opponent's Active Pokémon into their hand.",
     },
     {
       name: 'Max Bullet',
       cost: [W, W, C],
       damage: 160,
-      text: 'This attack also does 60 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "This attack also does 60 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -53,18 +61,22 @@ export class InteleonVmax extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const benchCount = opponent.bench.filter(b => b.cards.length > 0).length;
+      const benchCount = opponent.bench.filter((b) => b.cards.length > 0).length;
       if (benchCount > 0) {
-        store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-          PlayerType.TOP_PLAYER,
-          [SlotType.BENCH],
-          { min: 1, max: 1, allowCancel: false }
-        ), selected => {
-          const targets = selected || [];
-          DAMAGE_OPPONENT_POKEMON(store, state, effect, 60, targets);
-        });
+        store.prompt(
+          state,
+          new ChoosePokemonPrompt(
+            player.id,
+            GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+            PlayerType.TOP_PLAYER,
+            [SlotType.BENCH],
+            { min: 1, max: 1, allowCancel: false },
+          ),
+          (selected) => {
+            const targets = selected || [];
+            DAMAGE_OPPONENT_POKEMON(store, state, effect, 60, targets);
+          },
+        );
       }
     }
 

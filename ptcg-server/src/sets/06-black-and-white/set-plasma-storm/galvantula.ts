@@ -17,21 +17,18 @@ export class Galvantula extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Discharge',
-      cost: [L],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Discard all [L] Energy attached to this Pokémon. This attack does 30 damage times the number of Energy cards you discarded.'
-    },
-    {
-      name: 'Signal Beam',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Discharge',
+    cost: [L],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Discard all [L] Energy attached to this Pokémon. This attack does 30 damage times the number of Energy cards you discarded.'
+  }, {
+    name: 'Signal Beam',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '51';

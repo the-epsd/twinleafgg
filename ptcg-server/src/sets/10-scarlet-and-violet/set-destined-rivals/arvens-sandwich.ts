@@ -9,15 +9,16 @@ import { HealEffect } from '../../../game/store/effects/game-effects';
 
 export class ArvensSandwich extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
-  public tags = [CardTag.ARVENS];
+  protected _tags = [CardTag.ARVENS];
   public regulationMark = 'I';
   public set: string = 'DRI';
   public setNumber: string = '161';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Arven\'s Sandwich';
-  public fullName: string = 'Arven\'s Sandwich DRI';
+  public name: string = "Arven's Sandwich";
+  public fullName: string = "Arven's Sandwich DRI";
 
-  public text: string = 'Heal 30 damage from your Active Pokémon. If that Pokémon is an Arven\'s Pokémon, heal 100 damage instead.';
+  public text: string =
+    "Heal 30 damage from your Active Pokémon. If that Pokémon is an Arven's Pokémon, heal 100 damage instead.";
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     if (player.active.damage === 0) {
@@ -25,7 +26,6 @@ export class ArvensSandwich extends TrainerCard {
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_TRAINER_USED(effect, this)) {
@@ -35,7 +35,7 @@ export class ArvensSandwich extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      if (player.active.getPokemonCard()?.tags.includes(CardTag.ARVENS)) {
+      if (player.active.getPokemonCard()?.hasTag(CardTag.ARVENS)) {
         const healing = new HealEffect(player, player.active, 100);
         store.reduceEffect(state, healing);
       } else {
@@ -46,5 +46,4 @@ export class ArvensSandwich extends TrainerCard {
 
     return state;
   }
-
 }

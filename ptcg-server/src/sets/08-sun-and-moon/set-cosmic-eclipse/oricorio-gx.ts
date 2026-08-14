@@ -6,38 +6,51 @@ import { Effect } from '../../../game/store/effects/effect';
 import { GameError, GameMessage, PowerType, StateUtils } from '../../../game';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { ABILITY_USED, ADD_MARKER, BLOCK_IF_GX_ATTACK_USED, HAS_MARKER, REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ABILITY_USED,
+  ADD_MARKER,
+  BLOCK_IF_GX_ATTACK_USED,
+  HAS_MARKER,
+  REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN,
+  SWITCH_ACTIVE_WITH_BENCHED,
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class OricorioGX extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public cardType: CardType = CardType.PSYCHIC;
   public weakness = [{ type: CardType.DARK }];
   public resistance = [{ type: CardType.FIGHTING, value: -20 }];
   public hp: number = 170;
   public retreat = [CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Dance of Tribute',
-    powerType: PowerType.ABILITY,
-    useWhenInPlay: true,
-    text: 'Once during your turn (before your attack), if any of your Pokémon were Knocked Out during your opponent\'s last turn, you may draw 3 cards. You can\'t use more than 1 Dance of Tribute Ability each turn.'
-  }];
+  public powers = [
+    {
+      name: 'Dance of Tribute',
+      powerType: PowerType.ABILITY,
+      useWhenInPlay: true,
+      text: "Once during your turn (before your attack), if any of your Pokémon were Knocked Out during your opponent's last turn, you may draw 3 cards. You can't use more than 1 Dance of Tribute Ability each turn.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Razor Wing',
-    cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
-    damage: 80,
-    text: ''
-  },
-  {
-    name: 'Strafe-GX',
-    cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
-    damage: 100,
-    text: 'Switch this Pokémon with 1 of your Benched Pokémon.'
-      + ' (You can\'t use more than 1 GX attack in a game.) '
-  }];
+  public attacks = [
+    {
+      name: 'Razor Wing',
+      cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
+      damage: 80,
+      text: '',
+    },
+    {
+      name: 'Strafe-GX',
+      cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
+      damage: 100,
+      text:
+        'Switch this Pokémon with 1 of your Benched Pokémon.' +
+        " (You can't use more than 1 GX attack in a game.) ",
+    },
+  ];
 
   public set: string = 'CEC';
   public setNumber: string = '95';

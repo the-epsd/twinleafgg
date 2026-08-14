@@ -4,12 +4,28 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { PowerType, PlayerType, StoreLike, State, StateUtils, GameMessage, ConfirmPrompt, SlotType } from '../../../game';
+import {
+  PowerType,
+  PlayerType,
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  ConfirmPrompt,
+  SlotType,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PutDamagePrompt } from '../../../game/store/prompts/put-damage-prompt';
 import { DamageMap } from '../../../game/store/prompts/move-damage-prompt';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, JUST_EVOLVED } from '../../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP, YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../../game/store/prefabs/attack-effects';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  JUST_EVOLVED,
+} from '../../../game/store/prefabs/prefabs';
+import {
+  YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP,
+  YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED,
+} from '../../../game/store/prefabs/attack-effects';
 
 export class Gengar extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -20,19 +36,21 @@ export class Gengar extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [];
 
-  public powers = [{
-    name: 'Shadow Pain',
-    powerType: PowerType.ABILITY,
-    text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may put 6 damage counters on your opponent\'s Pokémon-GX and Pokémon-EX in any way you like.'
-  }];
+  public powers = [
+    {
+      name: 'Shadow Pain',
+      powerType: PowerType.ABILITY,
+      text: "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may put 6 damage counters on your opponent's Pokémon-GX and Pokémon-EX in any way you like.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Twilight Poison',
       cost: [C, C, C],
       damage: 70,
-      text: 'Your opponent\'s Active Pokémon is now Asleep and Poisoned.'
-    }
+      text: "Your opponent's Active Pokémon is now Asleep and Poisoned.",
+    },
   ];
 
   public set: string = 'UNB';
@@ -56,7 +74,7 @@ export class Gengar extends PokemonCard {
       // Check if opponent has any GX or EX Pokemon
       let hasGxEx = false;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card.tags.includes(CardTag.POKEMON_GX) || card.tags.includes(CardTag.POKEMON_EX)) {
+        if (card.hasTag(CardTag.POKEMON_GX) || card.hasTag(CardTag.POKEMON_EX)) {
           hasGxEx = true;
         }
       });
@@ -65,38 +83,43 @@ export class Gengar extends PokemonCard {
         return state;
       }
 
-      store.prompt(state, new ConfirmPrompt(
-        player.id,
-        GameMessage.WANT_TO_USE_ABILITY,
-      ), wantToUse => {
-        if (wantToUse) {
-          // Build maxAllowedDamage map, setting 0 for non-GX/EX Pokemon
-          const maxAllowedDamage: DamageMap[] = [];
-          opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-            if (card.tags.includes(CardTag.POKEMON_GX) || card.tags.includes(CardTag.POKEMON_EX)) {
-              maxAllowedDamage.push({ target, damage: 9999 });
-            } else {
-              maxAllowedDamage.push({ target, damage: 0 });
-            }
-          });
+      store.prompt(
+        state,
+        new ConfirmPrompt(player.id, GameMessage.WANT_TO_USE_ABILITY),
+        (wantToUse) => {
+          if (wantToUse) {
+            // Build maxAllowedDamage map, setting 0 for non-GX/EX Pokemon
+            const maxAllowedDamage: DamageMap[] = [];
+            opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
+              if (card.hasTag(CardTag.POKEMON_GX) || card.hasTag(CardTag.POKEMON_EX)) {
+                maxAllowedDamage.push({ target, damage: 9999 });
+              } else {
+                maxAllowedDamage.push({ target, damage: 0 });
+              }
+            });
 
-          store.prompt(state, new PutDamagePrompt(
-            player.id,
-            GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-            PlayerType.TOP_PLAYER,
-            [SlotType.ACTIVE, SlotType.BENCH],
-            60, // 6 damage counters = 60 damage
-            maxAllowedDamage,
-            { allowCancel: false }
-          ), targets => {
-            const results = targets || [];
-            for (const result of results) {
-              const target = StateUtils.getTarget(state, player, result.target);
-              target.damage += result.damage;
-            }
-          });
-        }
-      });
+            store.prompt(
+              state,
+              new PutDamagePrompt(
+                player.id,
+                GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+                PlayerType.TOP_PLAYER,
+                [SlotType.ACTIVE, SlotType.BENCH],
+                60, // 6 damage counters = 60 damage
+                maxAllowedDamage,
+                { allowCancel: false },
+              ),
+              (targets) => {
+                const results = targets || [];
+                for (const result of results) {
+                  const target = StateUtils.getTarget(state, player, result.target);
+                  target.damage += result.damage;
+                }
+              },
+            );
+          }
+        },
+      );
 
       return state;
     }

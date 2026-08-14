@@ -1,4 +1,14 @@
-import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, GamePhase, CardTag } from '../../../game';
+import {
+  PokemonCard,
+  Stage,
+  CardType,
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  GamePhase,
+  CardTag,
+} from '../../../game';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 
@@ -11,18 +21,22 @@ export class Wobbuffet extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Safeguard',
-    powerType: PowerType.POKEBODY,
-    text: 'Prevent all effects of attacks, including damage, done to Wobbuffet by your opponent\'s Pokémon-ex.'
-  }];
+  public powers = [
+    {
+      name: 'Safeguard',
+      powerType: PowerType.POKEBODY,
+      text: "Prevent all effects of attacks, including damage, done to Wobbuffet by your opponent's Pokémon-ex.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Flip Over',
-    cost: [P, C, C],
-    damage: 50,
-    text: 'Wobbuffet does 10 damage to itself, and don\'t apply Weakness and Resistance to this damage.'
-  }];
+  public attacks = [
+    {
+      name: 'Flip Over',
+      cost: [P, C, C],
+      damage: 50,
+      text: "Wobbuffet does 10 damage to itself, and don't apply Weakness and Resistance to this damage.",
+    },
+  ];
 
   public set: string = 'SS';
   public setNumber: string = '26';
@@ -53,7 +67,7 @@ export class Wobbuffet extends PokemonCard {
         return state;
       }
 
-      if (sourceCard.tags.includes(CardTag.POKEMON_ex)) {
+      if (sourceCard.hasTag(CardTag.POKEMON_ex)) {
         effect.preventDefault = true;
       }
     }
@@ -72,4 +86,4 @@ export class Wobbuffet extends PokemonCard {
 
     return state;
   }
-} 
+}

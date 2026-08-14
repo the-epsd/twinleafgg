@@ -17,14 +17,14 @@ export class Golurk extends PokemonCard {
       name: 'Iron Fist of Justice',
       cost: [C, C],
       damage: 60,
-      text: 'If you have any Team Plasma Pokémon in play, this attack does nothing.'
+      text: 'If you have any Team Plasma Pokémon in play, this attack does nothing.',
     },
     {
       name: 'Shadow Punch',
       cost: [P, P, C, C],
       damage: 80,
-      text: 'This attack\'s damage isn\'t affected by Resistance.'
-    }
+      text: "This attack's damage isn't affected by Resistance.",
+    },
   ];
 
   public set: string = 'PLB';
@@ -41,7 +41,7 @@ export class Golurk extends PokemonCard {
       let hasTeamPlasma = false;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         const pokemon = cardList.getPokemonCard();
-        if (pokemon && pokemon.tags.includes(CardTag.TEAM_PLASMA)) {
+        if (pokemon && pokemon.hasTag(CardTag.TEAM_PLASMA)) {
           hasTeamPlasma = true;
         }
       });

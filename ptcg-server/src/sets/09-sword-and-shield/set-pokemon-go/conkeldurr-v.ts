@@ -7,10 +7,9 @@ import { State, StoreLike } from '../../../game';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class ConkeldurrV extends PokemonCard {
-
   public stage = Stage.BASIC;
 
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
 
   public cardType = CardType.FIGHTING;
 
@@ -26,15 +25,15 @@ export class ConkeldurrV extends PokemonCard {
       cost: [CardType.FIGHTING],
       damage: 20,
       damageCalculation: '+',
-      text: 'If this Pokémon was damaged by an attack during your opponent\'s last turn, this attack does that much more damage.'
+      text: "If this Pokémon was damaged by an attack during your opponent's last turn, this attack does that much more damage.",
     },
     {
       name: 'Dynamic Punch',
       cost: [CardType.FIGHTING, CardType.COLORLESS, CardType.COLORLESS],
       damage: 90,
       damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 90 more damage, and your opponent\'s Active Pokémon is now Confused.'
-    }
+      text: "Flip a coin. If heads, this attack does 90 more damage, and your opponent's Active Pokémon is now Confused.",
+    },
   ];
 
   public set: string = 'PGO';
@@ -61,7 +60,9 @@ export class ConkeldurrV extends PokemonCard {
       const coinFlipEffect = new CoinFlipEffect(effect.player, (result: boolean) => {
         if (result) {
           effect.damage += 90;
-          const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED]);
+          const specialConditionEffect = new AddSpecialConditionsEffect(effect, [
+            SpecialCondition.CONFUSED,
+          ]);
           state = store.reduceEffect(state, specialConditionEffect);
         }
       });

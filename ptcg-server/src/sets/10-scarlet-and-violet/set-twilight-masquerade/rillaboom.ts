@@ -2,7 +2,8 @@ import { CardType, PokemonCard, Stage, State, StoreLike } from "../../../game";
 import { DealDamageEffect } from "../../../game/store/effects/attack-effects";
 import { CheckRetreatCostEffect, CheckAttackCostEffect } from "../../../game/store/effects/check-effects";
 import { Effect } from "../../../game/store/effects/effect";
-import { WAS_ATTACK_USED, DEFENDING_POKEMON_ATTACKS_COST_MORE, DEFENDING_POKEMON_RETREAT_COSTS_MORE } from "../../../game/store/prefabs/prefabs";
+import { WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
+import { DEFENDING_POKEMON_ATTACKS_COST_MORE, DEFENDING_POKEMON_RETREAT_COSTS_MORE } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class Rillaboom extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;

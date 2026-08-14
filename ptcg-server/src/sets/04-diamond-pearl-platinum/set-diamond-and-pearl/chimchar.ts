@@ -18,8 +18,7 @@ export class Chimchar extends PokemonCard {
     cost: [],
     damage: 10,
     text: ''
-  },
-  {
+  }, {
     name: 'Ember',
     cost: [R, C],
     damage: 30,

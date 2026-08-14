@@ -17,21 +17,18 @@ export class Furret extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Buried Treasure Hunt',
-      cost: [C],
-      damage: 0,
-      text: 'Look at the top 4 cards of your deck and put 2 of them into your hand. Discard the other cards.'
-    },
-    {
-      name: 'Slam',
-      cost: [C, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Buried Treasure Hunt',
+    cost: [C],
+    damage: 0,
+    text: 'Look at the top 4 cards of your deck and put 2 of them into your hand. Discard the other cards.'
+  }, {
+    name: 'Slam',
+    cost: [C, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
+  }];
 
   public set: string = 'FLF';
   public setNumber: string = '82';

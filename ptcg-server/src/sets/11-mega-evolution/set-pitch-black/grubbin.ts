@@ -13,18 +13,18 @@ export class Grubbin extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'String Shot',
-      cost: [C],
-      damage: 10,
-      text: "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed.",
-    },
-  ];
+  public attacks = [{
+    name: 'String Shot',
+    cost: [C],
+    damage: 10,
+    text: "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed.",
+  }];
 
   public set: string = 'PBL';
   public setNumber: string = '2';
+
   public regulationMark: string = 'J';
+
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Grubbin';
   public fullName: string = 'Grubbin M5';

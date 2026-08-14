@@ -23,14 +23,12 @@ export class Bewear extends PokemonCard {
     text: 'As long as this Pokémon is on your Bench, your Active Pokémon\'s Retreat Cost is ColorlessColorless less.'
   }];
 
-  public attacks = [
-    {
-      name: 'Lariat',
-      cost: [C, C, C],
-      damage: 120,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Lariat',
+    cost: [C, C, C],
+    damage: 120,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'CEC';
   public setNumber: string = '182';

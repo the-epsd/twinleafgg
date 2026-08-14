@@ -14,7 +14,7 @@ import {
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class ChesnaughtBreak extends PokemonCard {
-  public tags = [CardTag.BREAK];
+  protected _tags = [CardTag.BREAK];
   public stage: Stage = Stage.BREAK;
   public evolvesFrom: string = 'Chesnaught';
   public cardType: CardType = G;

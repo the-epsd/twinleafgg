@@ -1,23 +1,17 @@
-import { ChoosePokemonPrompt, CoinFlipPrompt, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../../game';
+import { ChoosePokemonPrompt, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../../game';
 import { GameLog, GameMessage } from '../../../game/game-message';
 import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class GalarianZigzagoon extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.DARK;
-
+  public cardType: CardType = D;
   public hp: number = 70;
-
-  public weakness = [{ type: CardType.GRASS }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: G }];
+  public retreat = [C];
 
   public powers = [{
     name: 'Headbutt Tantrum',
@@ -25,23 +19,17 @@ export class GalarianZigzagoon extends PokemonCard {
     text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may put 1 damage counter on 1 of your opponent\'s Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Surprise Attack',
-      cost: [CardType.DARK, CardType.COLORLESS],
-      damage: 30,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Surprise Attack',
+    cost: [D, C],
+    damage: 30,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'SSH';
-
   public name: string = 'Galarian Zigzagoon';
-
   public fullName: string = 'Galarian Zigzagoon SSH';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '117';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -70,9 +58,7 @@ export class GalarianZigzagoon extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      return store.prompt(state, [
-        new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP),
-      ], heads => {
+      return COIN_FLIP_PROMPT(store, state, effect.player, heads => {
         if (heads) {
           effect.damage = 0;
         }

@@ -13,20 +13,17 @@ export class Haxorus extends PokemonCard {
   public weakness = [];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Guillotine',
-      cost: [C, C, C],
-      damage: 60,
-      text: ''
-    },
-    {
-      name: 'Stunning Uppercut',
-      cost: [C, C, C, C],
-      damage: 80,
-      text: 'Flip 2 coins. If both of them are heads, the Defending Pokémon is now Paralyzed. If both of them are tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Guillotine',
+    cost: [C, C, C],
+    damage: 60,
+    text: ''
+  }, {
+    name: 'Stunning Uppercut',
+    cost: [C, C, C, C],
+    damage: 80,
+    text: 'Flip 2 coins. If both of them are heads, the Defending Pokémon is now Paralyzed. If both of them are tails, this attack does nothing.'
+  }];
 
   public set: string = 'DEX';
   public setNumber: string = '88';

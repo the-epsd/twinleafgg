@@ -17,23 +17,21 @@ export class Swellow extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Quick Attack',
-      cost: [C],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 40 more damage.'
-    },
-    {
-      name: 'Energy Assist',
-      cost: [C, C],
-      damage: 40,
-      text: 'Attach up to 2 basic Energy cards from your discard pile to 1 of your Benched Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Quick Attack',
+    cost: [C],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 40 more damage.'
+  }, {
+    name: 'Energy Assist',
+    cost: [C, C],
+    damage: 40,
+    text: 'Attach up to 2 basic Energy cards from your discard pile to 1 of your Benched Pokémon.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'VIV';
   public setNumber: string = '134';
   public cardImage: string = 'assets/cardback.png';

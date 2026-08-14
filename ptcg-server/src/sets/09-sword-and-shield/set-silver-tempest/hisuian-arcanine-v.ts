@@ -4,26 +4,42 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, PlayerType, SlotType, CardTarget } from '../../../game';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  GameError,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  CardTarget,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { MoveEnergyPrompt } from '../../../game/store/prompts/move-energy-prompt';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+} from '../../../game/store/prefabs/prefabs';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 
 export class HisuianArcanineV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = F;
   public hp: number = 230;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
 
-  public powers = [{
-    name: 'Irresistible Force',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'As often as you like during your turn, you may move a [F] Energy from 1 of your other Pokémon to this Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Irresistible Force',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'As often as you like during your turn, you may move a [F] Energy from 1 of your other Pokémon to this Pokémon.',
+    },
+  ];
 
   public attacks = [
     {
@@ -31,8 +47,8 @@ export class HisuianArcanineV extends PokemonCard {
       cost: [C, C, C, C],
       damage: 90,
       damageCalculation: '+',
-      text: 'This attack does 30 more damage for each [F] Energy attached to this Pokémon.'
-    }
+      text: 'This attack does 30 more damage for each [F] Energy attached to this Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -61,7 +77,7 @@ export class HisuianArcanineV extends PokemonCard {
       });
 
       // Build blocked map: only allow moving Fighting Energy from other Pokemon
-      const blockedMap: { source: CardTarget, blocked: number[] }[] = [];
+      const blockedMap: { source: CardTarget; blocked: number[] }[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
         // Block 'this' as a source (move from other Pokemon only)
         if (card === this) {
@@ -70,8 +86,8 @@ export class HisuianArcanineV extends PokemonCard {
 
         const blocked: number[] = [];
         cardList.cards.forEach((c, index) => {
-          const isFightingEnergy = c instanceof EnergyCard &&
-            c.provides.includes(CardType.FIGHTING);
+          const isFightingEnergy =
+            c instanceof EnergyCard && c.provides.includes(CardType.FIGHTING);
           if (!isFightingEnergy) {
             blocked.push(index);
           }
@@ -95,24 +111,28 @@ export class HisuianArcanineV extends PokemonCard {
         }
       });
 
-      return store.prompt(state, new MoveEnergyPrompt(
-        player.id,
-        GameMessage.MOVE_ENERGY_CARDS,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE],
-        {},
-        { allowCancel: true, blockedMap, blockedTo, min: 1, max: 1 }
-      ), transfers => {
-        if (transfers === null || transfers.length === 0) {
-          return;
-        }
+      return store.prompt(
+        state,
+        new MoveEnergyPrompt(
+          player.id,
+          GameMessage.MOVE_ENERGY_CARDS,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          {},
+          { allowCancel: true, blockedMap, blockedTo, min: 1, max: 1 },
+        ),
+        (transfers) => {
+          if (transfers === null || transfers.length === 0) {
+            return;
+          }
 
-        for (const transfer of transfers) {
-          const source = StateUtils.getTarget(state, player, transfer.from);
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          source.moveCardTo(transfer.card, target);
-        }
-      });
+          for (const transfer of transfers) {
+            const source = StateUtils.getTarget(state, player, transfer.from);
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            source.moveCardTo(transfer.card, target);
+          }
+        },
+      );
     }
 
     // Attack 1: Rock Bullet
@@ -124,11 +144,10 @@ export class HisuianArcanineV extends PokemonCard {
       let fightingCount = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card === this) {
-          fightingCount = cardList.cards.filter(c =>
-            c instanceof EnergyCard && (
-              c.provides.includes(CardType.FIGHTING) ||
-              c.provides.includes(CardType.ANY)
-            )
+          fightingCount = cardList.cards.filter(
+            (c) =>
+              c instanceof EnergyCard &&
+              (c.provides.includes(CardType.FIGHTING) || c.provides.includes(CardType.ANY)),
           ).length;
         }
       });

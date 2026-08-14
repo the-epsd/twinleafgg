@@ -15,14 +15,12 @@ export class Tympole extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Surprise Attack',
-      cost: [W],
-      damage: 20,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Surprise Attack',
+    cost: [W],
+    damage: 20,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'PLF';
   public setNumber: string = '24';

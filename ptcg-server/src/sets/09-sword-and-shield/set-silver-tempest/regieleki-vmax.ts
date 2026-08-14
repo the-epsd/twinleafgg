@@ -1,20 +1,15 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import {
-  PowerType, StoreLike, State,
-  PlayerType,
-  StateUtils
-} from '../../../game';
+import { PowerType, StoreLike, State, PlayerType, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class RegielekiVMAX extends PokemonCard {
-
   public regulationMark = 'F';
 
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
 
   public stage: Stage = Stage.VMAX;
 
@@ -28,21 +23,22 @@ export class RegielekiVMAX extends PokemonCard {
 
   public retreat = [];
 
-  public powers = [{
-    name: 'Transistor',
-    powerType: PowerType.ABILITY,
-    text: 'Your Basic [L] Pokémon\'s attacks do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: 'Transistor',
+      powerType: PowerType.ABILITY,
+      text: "Your Basic [L] Pokémon's attacks do 30 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Max Thunder and Lightning',
       cost: [CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS],
       damage: 220,
-      text: 'During your next turn, this Pokémon can\'t attack.'
-    }
+      text: "During your next turn, this Pokémon can't attack.",
+    },
   ];
-
 
   public set: string = 'SIT';
 
@@ -69,7 +65,8 @@ export class RegielekiVMAX extends PokemonCard {
         return state;
       }
 
-      const hasZapdosInPlay = player.bench.some(b => b.cards.includes(this)) || player.active.cards.includes(this);
+      const hasZapdosInPlay =
+        player.bench.some((b) => b.cards.includes(this)) || player.active.cards.includes(this);
       let numberOfRegielekiVMAXInPlay = 0;
 
       if (hasZapdosInPlay) {
@@ -83,13 +80,14 @@ export class RegielekiVMAX extends PokemonCard {
       const checkPokemonTypeEffect = new CheckPokemonTypeEffect(player.active);
       store.reduceEffect(state, checkPokemonTypeEffect);
 
-      if (checkPokemonTypeEffect.cardTypes.includes(CardType.LIGHTNING) && effect.target === opponent.active) {
+      if (
+        checkPokemonTypeEffect.cardTypes.includes(CardType.LIGHTNING) &&
+        effect.target === opponent.active
+      ) {
         if (effect.player.active.getPokemonCard()?.stage === Stage.BASIC) {
           effect.damage += 30 * numberOfRegielekiVMAXInPlay;
         }
       }
-
-
     }
 
     return state;

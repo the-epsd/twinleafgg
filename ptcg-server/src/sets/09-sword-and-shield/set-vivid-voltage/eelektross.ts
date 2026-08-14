@@ -3,10 +3,8 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import {
-  DEFENDING_POKEMON_TAKES_DAMAGE_ON_ENERGY_ATTACH_FROM_HAND_NEXT_TURN,
-  WAS_ATTACK_USED,
-} from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { DEFENDING_POKEMON_TAKES_DAMAGE_ON_ENERGY_ATTACH_FROM_HAND_NEXT_TURN } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Eelektross extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;

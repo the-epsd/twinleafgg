@@ -15,20 +15,17 @@ export class Kirlia2 extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Mind Bend',
-      cost: [P, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
-    },
-    {
-      name: 'Spinning Attack',
-      cost: [P, C, C],
-      damage: 40,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Mind Bend',
+    cost: [P, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
+  }, {
+    name: 'Spinning Attack',
+    cost: [P, C, C],
+    damage: 40,
+    text: ''
+  }];
 
   public set: string = 'LTR';
   public setNumber: string = '60';

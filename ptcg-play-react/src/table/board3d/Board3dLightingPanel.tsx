@@ -6,6 +6,8 @@ import {
   cloneBoard3dLightingDefaults,
   type Board3dToneMappingKey,
 } from './board3dLightingConfig';
+import { CheckboxField } from '../../components/ui/CheckboxField';
+import { SelectField } from '../../components/ui/SelectField';
 import styles from './Board3DCanvas.module.css';
 
 type Board3dLightingPanelProps = {
@@ -133,16 +135,16 @@ export function Board3dLightingPanel({ settings, onChange }: Board3dLightingPane
                 </span>
               </label>
             ))}
-            <label className={`${styles.lightingRow} ${styles.lightingCheck}`}>
-              <input
-                type="checkbox"
-                checked={settings.directional.castShadow}
-                onChange={(e) =>
-                  set({ directional: { ...settings.directional, castShadow: e.target.checked } })
-                }
-              />
+            <CheckboxField
+              plain
+              className={`${styles.lightingRow} ${styles.lightingCheck}`}
+              checked={settings.directional.castShadow}
+              onChange={(e) =>
+                set({ directional: { ...settings.directional, castShadow: e.target.checked } })
+              }
+            >
               Cast shadow
-            </label>
+            </CheckboxField>
           </section>
 
           <section className={styles.lightingSection}>
@@ -223,7 +225,7 @@ export function Board3dLightingPanel({ settings, onChange }: Board3dLightingPane
             <div className={styles.lightingSectionTitle}>Renderer</div>
             <label className={styles.lightingRow}>
               Tone mapping
-              <select
+              <SelectField
                 className={styles.lightingSelect}
                 value={settings.renderer.toneMapping}
                 onChange={(e) =>
@@ -240,7 +242,7 @@ export function Board3dLightingPanel({ settings, onChange }: Board3dLightingPane
                     {o.label}
                   </option>
                 ))}
-              </select>
+              </SelectField>
             </label>
             <label className={styles.lightingRow}>
               Exposure

@@ -4,7 +4,8 @@ import { PlayerType, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED, DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Diancie extends PokemonCard {
   public stage: Stage = Stage.BASIC;

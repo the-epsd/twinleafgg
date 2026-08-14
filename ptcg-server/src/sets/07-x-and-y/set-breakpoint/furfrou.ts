@@ -14,20 +14,17 @@ export class Furfrou extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Collect',
-      cost: [C],
-      damage: 0,
-      text: 'Draw a card.'
-    },
-    {
-      name: 'Tight Jaw',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Collect',
+    cost: [C],
+    damage: 0,
+    text: 'Draw a card.'
+  }, {
+    name: 'Tight Jaw',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'BKP';
   public setNumber: string = '95';

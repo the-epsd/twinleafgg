@@ -5,8 +5,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK } from '../../../game/store/prefabs/prefabs';
 
 export class DarkraiV extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
 
   public regulationMark = 'F';
 
@@ -25,14 +24,14 @@ export class DarkraiV extends PokemonCard {
       name: 'Wind of Darkness',
       cost: [CardType.DARK, CardType.COLORLESS],
       damage: 50,
-      text: ''
+      text: '',
     },
     {
       name: 'Dark Void',
       cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS],
       damage: 130,
-      text: 'Your opponent\'s Active Pokémon is now Asleep.'
-    }
+      text: "Your opponent's Active Pokémon is now Asleep.",
+    },
   ];
 
   public set: string = 'ASR';
@@ -46,7 +45,6 @@ export class DarkraiV extends PokemonCard {
   public fullName: string = 'Darkrai V ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (AFTER_ATTACK(effect, 1, this)) {
       ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, effect.player), this);
     }

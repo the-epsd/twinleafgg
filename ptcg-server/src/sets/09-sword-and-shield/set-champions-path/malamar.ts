@@ -15,23 +15,21 @@ export class Malamar extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Eerie Wave',
-      cost: [D, C],
-      damage: 50,
-      text: 'Your opponent\'s Active Pokémon is now Confused.'
-    },
-    {
-      name: 'Random Peck',
-      cost: [D, D, C],
-      damage: 80,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 40 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Eerie Wave',
+    cost: [D, C],
+    damage: 50,
+    text: 'Your opponent\'s Active Pokémon is now Confused.'
+  }, {
+    name: 'Random Peck',
+    cost: [D, D, C],
+    damage: 80,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 40 more damage for each heads.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'CPA';
   public setNumber: string = '45';
   public cardImage: string = 'assets/cardback.png';

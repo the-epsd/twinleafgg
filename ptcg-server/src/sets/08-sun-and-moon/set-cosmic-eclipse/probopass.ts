@@ -23,21 +23,18 @@ export class Probopass extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Hard Press',
-      cost: [C, C, C],
-      damage: 60,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Triple Nose',
-      cost: [M, C, C, C],
-      damage: 80,
-      damageCalculation: '+',
-      text: 'Flip 3 coins. This attack does 40 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Hard Press',
+    cost: [C, C, C],
+    damage: 60,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Triple Nose',
+    cost: [M, C, C, C],
+    damage: 80,
+    damageCalculation: '+',
+    text: 'Flip 3 coins. This attack does 40 more damage for each heads.'
+  }];
 
   public set: string = 'CEC';
   public setNumber: string = '141';

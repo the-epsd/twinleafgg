@@ -4,42 +4,32 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 
 import { Effect } from '../../../game/store/effects/effect';
-import { CoinFlipPrompt } from '../../../game/store/prompts/coin-flip-prompt';
-import { GameMessage } from '../../../game/game-message';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Riolu extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.FIGHTING;
-
+  public cardType: CardType = F;
   public hp: number = 70;
-
-  public weakness = [{ type: CardType.PSYCHIC }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: P }];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Punch',
-    cost: [CardType.COLORLESS],
+    cost: [C],
     damage: 10,
     text: ''
   }, {
     name: 'Quick Attack',
-    cost: [CardType.FIGHTING, CardType.COLORLESS],
+    cost: [F, C],
     damage: 10,
     text: 'Flip a coin. If heads, this attack does 20 more damage.'
   }];
 
   public set: string = 'LTR';
-
   public name: string = 'Riolu';
-
   public fullName: string = 'Riolu LTR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '79';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -47,9 +37,7 @@ export class Riolu extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
           effect.damage += 20;
         }

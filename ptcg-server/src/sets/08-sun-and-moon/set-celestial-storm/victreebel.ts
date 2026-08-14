@@ -24,14 +24,12 @@ export class Victreebel extends PokemonCard {
     text: 'Once during your turn (before your attack), you may flip a coin. If heads, switch 1 of your opponent\'s Benched Pokémon with their Active Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Corrosive Acid',
-      cost: [G, G, C],
-      damage: 80,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Burned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Corrosive Acid',
+    cost: [G, G, C],
+    damage: 80,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Burned.'
+  }];
 
   public set: string = 'CES';
   public setNumber: string = '3';

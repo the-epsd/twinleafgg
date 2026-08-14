@@ -11,14 +11,12 @@ export class Remoraid extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Bubble Beam',
-      cost: [W, W],
-      damage: 20,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Bubble Beam',
+    cost: [W, W],
+    damage: 20,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'PLB';
   public setNumber: string = '18';

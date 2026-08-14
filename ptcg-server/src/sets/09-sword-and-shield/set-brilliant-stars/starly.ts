@@ -16,16 +16,15 @@ export class Starly extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Claw',
-      cost: [C],
-      damage: 30,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Claw',
+    cost: [C],
+    damage: 30,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'BRS';
   public setNumber: string = '117';
   public cardImage: string = 'assets/cardback.png';

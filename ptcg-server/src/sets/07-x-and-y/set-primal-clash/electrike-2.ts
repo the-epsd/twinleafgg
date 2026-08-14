@@ -15,14 +15,12 @@ export class Electrike2 extends PokemonCard {
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Thunder Fang',
-      cost: [L],
-      damage: 10,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Thunder Fang',
+    cost: [L],
+    damage: 10,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'PRC';
   public setNumber: string = '60';

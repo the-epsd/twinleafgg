@@ -14,21 +14,17 @@ export class Charjabug extends PokemonCard {
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Shocking Jaws',
-      cost: [L, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Electric Ball',
-      cost: [L, C, C],
-      damage: 50,
-      text: ''
-    },
-
-  ];
+  public attacks = [{
+    name: 'Shocking Jaws',
+    cost: [L, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Electric Ball',
+    cost: [L, C, C],
+    damage: 50,
+    text: ''
+  }];
 
   public set: string = 'SUM';
   public cardImage: string = 'assets/cardback.png';
@@ -39,11 +35,11 @@ export class Charjabug extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, (result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {
           YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
         }
-      }));
+      });
     }
 
     return state;

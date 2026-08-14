@@ -20,7 +20,6 @@ export class Gastly extends PokemonCard {
     text: 'Flip a coin. If heads, the Defending Pokémon is now Asleep. If tails, the Defending Pokémon is now Confused.'
   }];
 
-
   public set: string = 'EX';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '109';

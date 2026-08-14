@@ -9,11 +9,13 @@ import { DRAW_CARDS, MULTIPLE_COIN_FLIPS_PROMPT, SEARCH_DECK_FOR_CARDS_TO_HAND }
 
 export class VictoryMedal extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
+
   public set: string = 'UP';
   public name: string = 'Victory Medal';
   public fullName: string = 'Victory Medal UP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = 'Victory Medal';
+
   public text: string = 'Flip 2 coins. If one of them is heads, draw a card. If both are heads, search your deck for any 1 card, put it into your hand, and shuffle your deck afterward.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

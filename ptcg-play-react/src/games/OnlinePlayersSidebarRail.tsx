@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { OnlinePlayersSidebar } from './OnlinePlayersSidebar';
+import { SelfPlayGameDialog } from './SelfPlayGameDialog';
 import styles from './OnlinePlayersSidebarRail.module.css';
 
 export function OnlinePlayersSidebarRail() {
   const { t } = useTranslation();
   const [collapsed, setCollapsed] = useState(false);
+  const [selfPlayOpen, setSelfPlayOpen] = useState(false);
   const railClass = collapsed ? styles.railCollapsed : styles.railExpanded;
 
   return (
@@ -21,8 +23,15 @@ export function OnlinePlayersSidebarRail() {
       </button>
       {!collapsed ? (
         <div className={styles.panel}>
-          <OnlinePlayersSidebar appearance="sandbox" />
+          <OnlinePlayersSidebar
+            appearance="sandbox"
+            selfPlayOpen={selfPlayOpen}
+            onSelfPlayOpenChange={setSelfPlayOpen}
+          />
         </div>
+      ) : null}
+      {selfPlayOpen ? (
+        <SelfPlayGameDialog open onClose={() => setSelfPlayOpen(false)} />
       ) : null}
     </div>
   );

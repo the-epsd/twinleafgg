@@ -1,11 +1,15 @@
-import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_CONFUSION_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayerType, State, StoreLike } from '../../../game';
 export class Chatot extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
   public hp: number = 60;
@@ -18,14 +22,14 @@ export class Chatot extends PokemonCard {
       name: 'Misinformation',
       cost: [C],
       damage: 0,
-      text: 'Discard all Pok\u00e9mon Tool cards attached to each of your opponent\'s Pok\u00e9mon.'
+      text: "Discard all Pok\u00e9mon Tool cards attached to each of your opponent's Pok\u00e9mon.",
     },
     {
       name: 'Tone-Deaf',
       cost: [C, C],
       damage: 20,
-      text: 'The Defending Pok\u00e9mon is now Confused.'
-    }
+      text: 'The Defending Pok\u00e9mon is now Confused.',
+    },
   ];
 
   public set: string = 'PLB';
@@ -41,7 +45,7 @@ export class Chatot extends PokemonCard {
 
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         const tools = cardList.tools.slice();
-        tools.forEach(tool => {
+        tools.forEach((tool) => {
           cardList.moveCardTo(tool, opponent.discard);
         });
       });

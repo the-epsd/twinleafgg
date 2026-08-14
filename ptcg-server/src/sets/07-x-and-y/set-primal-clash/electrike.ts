@@ -7,7 +7,6 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../../game/s
 import { TrainerTargetEffect } from '../../../game/store/effects/play-card-effects';
 
 export class Electrike extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = L;
   public hp: number = 50;
@@ -21,21 +20,18 @@ export class Electrike extends PokemonCard {
     text: 'Whenever your opponent plays a Trainer card (excluding Pokémon Tools and Stadium cards), prevent all effects of that card done to this Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Thunder Fang',
-      cost: [L],
-      damage: 10,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-  ];
+  public attacks = [{
+    name: 'Thunder Fang',
+    cost: [L],
+    damage: 10,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'PRC';
   public setNumber = '60';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Electrike';
   public fullName: string = 'Electrike PRC';
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -52,11 +48,11 @@ export class Electrike extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, (result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {
           YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
         }
-      }));
+      });
     }
 
     return state;

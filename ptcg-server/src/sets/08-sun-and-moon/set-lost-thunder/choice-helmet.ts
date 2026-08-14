@@ -16,7 +16,8 @@ export class ChoiceHelmet extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Choice Helmet';
   public fullName: string = 'Choice Helmet LOT';
-  public text: string = 'The Pokémon this card is attached to takes 30 less damage from the attacks of your opponent\'s Pokémon-GX and Pokémon-EX (after applying Weakness and Resistance).';
+  public text: string =
+    "The Pokémon this card is attached to takes 30 less damage from the attacks of your opponent's Pokémon-GX and Pokémon-EX (after applying Weakness and Resistance).";
 
   // Ref: set-x-and-y/hard-charm.ts (Tool damage reduction pattern)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -28,7 +29,10 @@ export class ChoiceHelmet extends TrainerCard {
       }
 
       const sourceCard = effect.source.getPokemonCard();
-      if (sourceCard && (sourceCard.tags.includes(CardTag.POKEMON_GX) || sourceCard.tags.includes(CardTag.POKEMON_EX))) {
+      if (
+        sourceCard &&
+        (sourceCard.hasTag(CardTag.POKEMON_GX) || sourceCard.hasTag(CardTag.POKEMON_EX))
+      ) {
         effect.damage = Math.max(0, effect.damage - 30);
       }
     }

@@ -3,7 +3,8 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
-import { COIN_FLIP_PROMPT, PREVENT_DAMAGE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE } from '../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Chansey extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -13,20 +14,17 @@ export class Chansey extends PokemonCard {
   public resistance = [{ type: P, value: -30 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Scrunch',
-      cost: [C, C],
-      damage: 0,
-      text: 'Flip a coin. If heads, prevent all damage done to Chansey during your opponent\'s next turn. (Any other effects of attacks still happen.)'
-    },
-    {
-      name: 'Double-edge',
-      cost: [C, C, C, C],
-      damage: 80,
-      text: 'Chansey does 80 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Scrunch',
+    cost: [C, C],
+    damage: 0,
+    text: 'Flip a coin. If heads, prevent all damage done to Chansey during your opponent\'s next turn. (Any other effects of attacks still happen.)'
+  }, {
+    name: 'Double-edge',
+    cost: [C, C, C, C],
+    damage: 80,
+    text: 'Chansey does 80 damage to itself.'
+  }];
 
   public set: string = 'BS';
   public fullName = 'Chansey BS';

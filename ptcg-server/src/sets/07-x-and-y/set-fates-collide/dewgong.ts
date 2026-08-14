@@ -17,20 +17,17 @@ export class Dewgong extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Freezing Breath',
-      cost: [W],
-      damage: 20,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed. If tails, your opponent\'s Active Pokémon is now Asleep.'
-    },
-    {
-      name: 'Aurora Beam',
-      cost: [W, C, C, C],
-      damage: 100,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Freezing Breath',
+    cost: [W],
+    damage: 20,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed. If tails, your opponent\'s Active Pokémon is now Asleep.'
+  }, {
+    name: 'Aurora Beam',
+    cost: [W, C, C, C],
+    damage: 100,
+    text: ''
+  }];
 
   public set: string = 'FCO';
   public setNumber: string = '16';

@@ -2,8 +2,8 @@ import { CardType, Stage } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { PokemonCard, GameMessage, CoinFlipPrompt } from '../../../game';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PokemonCard } from '../../../game';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Scorbunny extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -20,6 +20,7 @@ export class Scorbunny extends PokemonCard {
   }];
 
   public regulationMark: string = 'I';
+
   public set: string = 'MEG';
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
@@ -31,7 +32,7 @@ export class Scorbunny extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      state = store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), result => {
+      state = COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === false) { // tails
           effect.damage = 0;
         }

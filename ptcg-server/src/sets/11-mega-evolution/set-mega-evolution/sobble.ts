@@ -23,6 +23,7 @@ export class Sobble extends PokemonCard {
   public setNumber: string = '39';
   public name: string = 'Sobble';
   public fullName: string = 'Sobble M1S';
+
   public regulationMark = 'I';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

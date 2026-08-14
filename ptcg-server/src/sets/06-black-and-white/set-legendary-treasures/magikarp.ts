@@ -15,14 +15,12 @@ export class Magikarp extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Flailing Flop',
-      cost: [C],
-      damage: 10,
-      text: 'Flip a coin. If tails, this Pokémon does 10 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Flailing Flop',
+    cost: [C],
+    damage: 10,
+    text: 'Flip a coin. If tails, this Pokémon does 10 damage to itself.'
+  }];
 
   public set: string = 'LTR';
   public setNumber: string = '30';

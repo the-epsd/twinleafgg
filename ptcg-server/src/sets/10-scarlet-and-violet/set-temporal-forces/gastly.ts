@@ -17,8 +17,7 @@ export class Gastly extends PokemonCard {
     cost: [D],
     damage: 0,
     text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
-  },
-  {
+  }, {
     name: 'Suffocating Gas',
     cost: [D, D],
     damage: 30,
@@ -26,6 +25,7 @@ export class Gastly extends PokemonCard {
   }];
 
   public regulationMark = 'H';
+
   public set: string = 'TEF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '102';

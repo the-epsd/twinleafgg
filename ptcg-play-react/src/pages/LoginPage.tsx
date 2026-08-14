@@ -5,8 +5,10 @@ import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import { SUPPORTED_LANGUAGE_CODES } from '../i18n/languages';
 import { ApiError } from '../api/apiError';
+import { CheckboxField } from '../components/ui/CheckboxField';
 import { DropdownMenu } from '../components/ui/DropdownMenu';
 import { TwinleafCtaButton } from '../components/ui/TwinleafCtaButton';
+import { playSfx } from '../sfx';
 import styles from './auth/AuthShell.module.css';
 
 const SAVED_USERNAME_KEY = 'ptcg_login_saved_username';
@@ -32,6 +34,7 @@ export function LoginPage() {
   const selectedLanguageIndex = SUPPORTED_LANGUAGE_CODES.indexOf(language);
 
   useEffect(() => {
+    playSfx('uiMenuslideLanding');
     const saved = localStorage.getItem(SAVED_USERNAME_KEY);
     if (saved) {
       setName(saved);
@@ -90,14 +93,14 @@ export function LoginPage() {
               />
             </label>
 
-            <label className={styles.check}>
-              <input
-                type="checkbox"
-                checked={rememberUsername}
-                onChange={(e) => setRememberUsername(e.target.checked)}
-              />
+            <CheckboxField
+              plain
+              className={styles.check}
+              checked={rememberUsername}
+              onChange={(e) => setRememberUsername(e.target.checked)}
+            >
               {t('LOGIN_REMEMBER_USERNAME')}
-            </label>
+            </CheckboxField>
 
             <label className={styles.field}>
               {t('LOGIN_PASSWORD')}

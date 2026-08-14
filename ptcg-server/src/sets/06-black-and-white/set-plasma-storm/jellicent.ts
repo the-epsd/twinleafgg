@@ -11,7 +11,7 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class Jellicent extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Frillish';
   public cardType: CardType = W;
@@ -19,20 +19,22 @@ export class Jellicent extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Spiteful Spirit',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'If this Pokémon is your Active Pokémon and is Knocked Out by damage from an opponent\'s attack, the Attacking Pokémon is now Confused and Poisoned.'
-  }];
+  public powers = [
+    {
+      name: 'Spiteful Spirit',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: "If this Pokémon is your Active Pokémon and is Knocked Out by damage from an opponent's attack, the Attacking Pokémon is now Confused and Poisoned.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Aqua Bullet',
       cost: [W, C],
       damage: 40,
-      text: 'Does 10 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "Does 10 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public set: string = 'PLS';

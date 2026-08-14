@@ -23,16 +23,15 @@ export class Feraligatr extends PokemonCard {
     text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you must flip a coin. If heads, discard the top 5 cards of your opponent\'s deck. If tails, discard the top 5 cards of your deck.'
   }];
 
-  public attacks = [
-    {
-      name: 'Crunch',
-      cost: [W, W, C],
-      damage: 140,
-      text: 'Discard an Energy from your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Crunch',
+    cost: [W, W, C],
+    damage: 140,
+    text: 'Discard an Energy from your opponent\'s Active Pokémon.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'FST';
   public setNumber: string = '57';
   public cardImage: string = 'assets/cardback.png';

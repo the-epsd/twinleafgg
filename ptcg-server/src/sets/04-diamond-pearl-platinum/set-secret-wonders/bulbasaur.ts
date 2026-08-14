@@ -16,8 +16,7 @@ export class Bulbasaur extends PokemonCard {
     cost: [],
     damage: 0,
     text: 'The Defending Pokémon is now Asleep.'
-  },
-  {
+  }, {
     name: 'Bullet Seed',
     cost: [G, C],
     damage: 10,

@@ -17,16 +17,15 @@ export class Lilligant extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Dizzying Flower',
-      cost: [G, C],
-      damage: 70,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Asleep. If tails, your opponent\'s Active Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Dizzying Flower',
+    cost: [G, C],
+    damage: 70,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Asleep. If tails, your opponent\'s Active Pokémon is now Confused.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'EVS';
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';

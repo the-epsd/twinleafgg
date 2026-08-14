@@ -7,7 +7,7 @@ import { CheckTableStateEffect } from '../../../game/store/effects/check-effects
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Garganaclex extends PokemonCard {
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Naclstack';
   public cardType: CardType = F;
@@ -15,12 +15,14 @@ export class Garganaclex extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];
 
-  public powers = [{
-    name: 'Salty Body',
-    useWhenInPlay: false,
-    powerType: PowerType.ABILITY,
-    text: 'This Pokémon can\'t be affected by any Special Conditions.'
-  }];
+  public powers = [
+    {
+      name: 'Salty Body',
+      useWhenInPlay: false,
+      powerType: PowerType.ABILITY,
+      text: "This Pokémon can't be affected by any Special Conditions.",
+    },
+  ];
 
   public attacks = [{
     name: 'Block Hammer',
@@ -44,15 +46,19 @@ export class Garganaclex extends PokemonCard {
 
     // Salty Body
     if (effect instanceof CheckTableStateEffect) {
-      state.players.forEach(player => {
+      state.players.forEach((player) => {
         const activeCard = player.active.getPokemonCard();
 
         try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
+          const stub = new PowerEffect(
+            player,
+            {
+              name: 'test',
+              powerType: PowerType.ABILITY,
+              text: '',
+            },
+            this,
+          );
           store.reduceEffect(state, stub);
         } catch {
           return state;
@@ -65,7 +71,7 @@ export class Garganaclex extends PokemonCard {
         }
 
         const conditions = player.active.specialConditions.slice();
-        conditions.forEach(condition => {
+        conditions.forEach((condition) => {
           player.active.removeSpecialCondition(condition);
         });
       });

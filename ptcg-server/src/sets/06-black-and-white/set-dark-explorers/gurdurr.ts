@@ -12,21 +12,18 @@ export class Gurdurr extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Low Kick',
-      cost: [C],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Steel Swing',
-      cost: [F, C, C],
-      damage: 60,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 60 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Low Kick',
+    cost: [C],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Steel Swing',
+    cost: [F, C, C],
+    damage: 60,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 60 damage times the number of heads.'
+  }];
 
   public set: string = 'DEX';
   public setNumber: string = '59';

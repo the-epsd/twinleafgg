@@ -17,8 +17,7 @@ export class Scyther extends PokemonCard {
     cost: [C],
     damage: 10,
     text: ''
-  },
-  {
+  }, {
     name: 'Fury Cutter',
     cost: [G, C],
     damage: 10,

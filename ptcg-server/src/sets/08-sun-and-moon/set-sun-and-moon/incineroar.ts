@@ -15,21 +15,18 @@ export class Incineroar extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Fire Fang',
-      cost: [R, C],
-      damage: 30,
-      text: 'Your opponent\'s Active Pokémon is now Burned.'
-    },
-    {
-      name: 'Darkest Lariat',
-      cost: [R, R, C],
-      damage: 100,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 100 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fire Fang',
+    cost: [R, C],
+    damage: 30,
+    text: 'Your opponent\'s Active Pokémon is now Burned.'
+  }, {
+    name: 'Darkest Lariat',
+    cost: [R, R, C],
+    damage: 100,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 100 damage for each heads.'
+  }];
 
   public set: string = 'SUM';
   public setNumber: string = '26';

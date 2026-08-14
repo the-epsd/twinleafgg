@@ -16,15 +16,13 @@ export class Inkay extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Disorderly Flip',
-      cost: [D, C],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 10 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Disorderly Flip',
+    cost: [D, C],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 10 damage times the number of heads.'
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '93';

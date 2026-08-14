@@ -25,20 +25,17 @@ export class Butterfree extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Bye-Bye Heal',
-      cost: [G],
-      damage: 0,
-      text: 'Heal all damage from all of your Pokémon. Shuffle this Pokémon and all cards attached to it into your deck.'
-    },
-    {
-      name: 'Stun Spore',
-      cost: [G, C, C],
-      damage: 60,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Bye-Bye Heal',
+    cost: [G],
+    damage: 0,
+    text: 'Heal all damage from all of your Pokémon. Shuffle this Pokémon and all cards attached to it into your deck.'
+  }, {
+    name: 'Stun Spore',
+    cost: [G, C, C],
+    damage: 60,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'BUS';
   public setNumber: string = '3';

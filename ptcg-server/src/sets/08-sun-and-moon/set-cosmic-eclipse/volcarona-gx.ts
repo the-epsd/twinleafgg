@@ -3,16 +3,41 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameError, GameMessage, PlayerType, SlotType, Card, StateUtils, PokemonCardList } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+} from '../../../game/store/card/card-types';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  GameError,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  Card,
+  StateUtils,
+  PokemonCardList,
+} from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  USE_ABILITY_ONCE_PER_TURN,
+  ABILITY_USED,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  BLOCK_IF_GX_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class VolcaronaGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Larvesta';
   public cardType: CardType = R;
@@ -22,26 +47,28 @@ export class VolcaronaGx extends PokemonCard {
 
   public readonly FLAMING_SHOT_MARKER = 'VOLCARONA_GX_CEC_FLAMING_SHOT_MARKER';
 
-  public powers = [{
-    name: 'Flaming Shot',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), you may discard a [R] Energy card from your hand. If you do, put 2 damage counters on 1 of your opponent\'s Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Flaming Shot',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: "Once during your turn (before your attack), you may discard a [R] Energy card from your hand. If you do, put 2 damage counters on 1 of your opponent's Pokémon.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Backfire',
       cost: [R, R, C],
       damage: 160,
-      text: 'Put 2 [R] Energy attached to this Pokémon into your hand.'
+      text: 'Put 2 [R] Energy attached to this Pokémon into your hand.',
     },
     {
       name: 'Massive Heat Wave-GX',
       cost: [R],
       damage: 0,
-      text: 'Discard an Energy from each of your opponent\'s Pokémon. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Discard an Energy from each of your opponent's Pokémon. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'CEC';
@@ -61,8 +88,11 @@ export class VolcaronaGx extends PokemonCard {
       }
 
       // Check for [R] Energy in hand
-      const hasFireEnergy = player.hand.cards.some(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.FIRE)
+      const hasFireEnergy = player.hand.cards.some(
+        (c) =>
+          c instanceof EnergyCard &&
+          c.energyType === EnergyType.BASIC &&
+          c.provides.includes(CardType.FIRE),
       );
 
       if (!hasFireEnergy) {
@@ -73,31 +103,39 @@ export class VolcaronaGx extends PokemonCard {
       ABILITY_USED(player, this);
 
       // Discard a [R] Energy from hand
-      store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        player.hand,
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
-        { allowCancel: false, min: 1, max: 1 }
-      ), cards => {
-        cards = cards || [];
-        if (cards.length > 0) {
-          player.hand.moveCardsTo(cards, player.discard);
+      store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          player.hand,
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
+          { allowCancel: false, min: 1, max: 1 },
+        ),
+        (cards) => {
+          cards = cards || [];
+          if (cards.length > 0) {
+            player.hand.moveCardsTo(cards, player.discard);
 
-          // Put 2 damage counters on 1 of opponent's Pokemon
-          store.prompt(state, new ChoosePokemonPrompt(
-            player.id,
-            GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-            PlayerType.TOP_PLAYER,
-            [SlotType.ACTIVE, SlotType.BENCH],
-            { allowCancel: false }
-          ), targets => {
-            if (targets && targets.length > 0) {
-              targets[0].damage += 20;
-            }
-          });
-        }
-      });
+            // Put 2 damage counters on 1 of opponent's Pokemon
+            store.prompt(
+              state,
+              new ChoosePokemonPrompt(
+                player.id,
+                GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+                PlayerType.TOP_PLAYER,
+                [SlotType.ACTIVE, SlotType.BENCH],
+                { allowCancel: false },
+              ),
+              (targets) => {
+                if (targets && targets.length > 0) {
+                  targets[0].damage += 20;
+                }
+              },
+            );
+          }
+        },
+      );
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.FLAMING_SHOT_MARKER, this);
@@ -109,13 +147,16 @@ export class VolcaronaGx extends PokemonCard {
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
 
       // Find Fire Energy attached to this Pokemon
-      const fireEnergy = cardList.cards.filter(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.FIRE)
+      const fireEnergy = cardList.cards.filter(
+        (c) =>
+          c instanceof EnergyCard &&
+          c.energyType === EnergyType.BASIC &&
+          c.provides.includes(CardType.FIRE),
       );
 
       if (fireEnergy.length > 0) {
         const toMove = fireEnergy.slice(0, 2);
-        toMove.forEach(card => {
+        toMove.forEach((card) => {
           cardList.moveCardTo(card, player.hand);
         });
       }
@@ -131,7 +172,7 @@ export class VolcaronaGx extends PokemonCard {
       player.usedGX = true;
 
       // For each opponent Pokemon with energy, discard 1 energy
-      const pokemonWithEnergy: { cardList: PokemonCardList, energyCards: Card[] }[] = [];
+      const pokemonWithEnergy: { cardList: PokemonCardList; energyCards: Card[] }[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         const energyCards = cardList.cards.filter((c: Card) => c instanceof EnergyCard);
         if (energyCards.length > 0) {
@@ -143,18 +184,22 @@ export class VolcaronaGx extends PokemonCard {
         if (energyCards.length === 1) {
           cardList.moveCardTo(energyCards[0], opponent.discard);
         } else {
-          store.prompt(state, new ChooseCardsPrompt(
-            player,
-            GameMessage.CHOOSE_CARD_TO_DISCARD,
-            cardList,
-            { superType: SuperType.ENERGY },
-            { min: 1, max: 1, allowCancel: false }
-          ), (selected: Card[]) => {
-            const cards = selected || [];
-            cards.forEach((card: Card) => {
-              cardList.moveCardTo(card, opponent.discard);
-            });
-          });
+          store.prompt(
+            state,
+            new ChooseCardsPrompt(
+              player,
+              GameMessage.CHOOSE_CARD_TO_DISCARD,
+              cardList,
+              { superType: SuperType.ENERGY },
+              { min: 1, max: 1, allowCancel: false },
+            ),
+            (selected: Card[]) => {
+              const cards = selected || [];
+              cards.forEach((card: Card) => {
+                cardList.moveCardTo(card, opponent.discard);
+              });
+            },
+          );
         }
       });
     }

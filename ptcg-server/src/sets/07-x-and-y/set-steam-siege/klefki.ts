@@ -1,15 +1,34 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import {
-  PowerType, StoreLike, State, GameError, GameMessage, StateUtils,
-  PokemonCardList, CardTarget, PlayerType, ChoosePokemonPrompt, SlotType
+  PowerType,
+  StoreLike,
+  State,
+  GameError,
+  GameMessage,
+  StateUtils,
+  PokemonCardList,
+  CardTarget,
+  PlayerType,
+  ChoosePokemonPrompt,
+  SlotType,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../../game/store/effects/game-effects';
-import { IS_ABILITY_BLOCKED, MOVE_CARDS, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  IS_ABILITY_BLOCKED,
+  MOVE_CARDS,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
-function* usePower(next: Function, store: StoreLike, state: State, self: Klefki, effect: PowerEffect): IterableIterator<State> {
+function* usePower(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: Klefki,
+  effect: PowerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const cardList = StateUtils.findCardList(state, self);
 
@@ -39,48 +58,53 @@ function* usePower(next: Function, store: StoreLike, state: State, self: Klefki,
   }
 
   // everything checked, we are ready to attach UnownQ as a tool.
-  return store.prompt(state, new ChoosePokemonPrompt(
-    player.id,
-    GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.ACTIVE, SlotType.BENCH],
-    { allowCancel: true, blocked }
-  ), targets => {
-    if (targets && targets.length > 0) {
-      // Attach Unown Q as a Pokemon Tool
-      player.bench[benchIndex].moveCardTo(pokemonCard, targets[0]);
-      targets[0].tools.push(pokemonCard);
+  return store.prompt(
+    state,
+    new ChoosePokemonPrompt(
+      player.id,
+      GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.ACTIVE, SlotType.BENCH],
+      { allowCancel: true, blocked },
+    ),
+    (targets) => {
+      if (targets && targets.length > 0) {
+        // Attach Unown Q as a Pokemon Tool
+        player.bench[benchIndex].moveCardTo(pokemonCard, targets[0]);
+        targets[0].tools.push(pokemonCard);
 
-      // Discard other cards
-      const unownGSlot = player.bench[benchIndex];
-      const unownGCard = unownGSlot.getPokemonCard();
+        // Discard other cards
+        const unownGSlot = player.bench[benchIndex];
+        const unownGCard = unownGSlot.getPokemonCard();
 
-      if (!unownGCard) {
-        return state;
-      }
-
-      const otherCards = unownGSlot.cards.filter(card =>
-        !(card instanceof PokemonCard) &&
-        !unownGSlot.getPokemons().includes(card as PokemonCard) &&
-        (!unownGSlot.tools || !unownGSlot.tools.includes(card))
-      );
-      const tools = [...unownGSlot.tools];
-
-      // Move tools to discard first
-      if (tools.length > 0) {
-        for (const tool of tools) {
-          unownGSlot.moveCardTo(tool, player.discard);
+        if (!unownGCard) {
+          return state;
         }
-      }
 
-      // Move other cards to discard
-      if (otherCards.length > 0) {
-        MOVE_CARDS(store, state, unownGSlot, player.discard, { cards: otherCards });
-      }
+        const otherCards = unownGSlot.cards.filter(
+          (card) =>
+            !(card instanceof PokemonCard) &&
+            !unownGSlot.getPokemons().includes(card as PokemonCard) &&
+            (!unownGSlot.tools || !unownGSlot.tools.includes(card)),
+        );
+        const tools = [...unownGSlot.tools];
 
-      unownGSlot.clearEffects();
-    }
-  });
+        // Move tools to discard first
+        if (tools.length > 0) {
+          for (const tool of tools) {
+            unownGSlot.moveCardTo(tool, player.discard);
+          }
+        }
+
+        // Move other cards to discard
+        if (otherCards.length > 0) {
+          MOVE_CARDS(store, state, unownGSlot, player.discard, { cards: otherCards });
+        }
+
+        unownGSlot.clearEffects();
+      }
+    },
+  );
 }
 
 export class Klefki extends PokemonCard {
@@ -91,19 +115,23 @@ export class Klefki extends PokemonCard {
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Wonder Lock',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), if this Pokémon is on your Bench, you may discard all cards attached to this Pokémon and attach it to 1 of your Pokémon as a Pokémon Tool card. Prevent any damage done to the Pokémon this card is attached to by attacks from your opponent\'s Mega Evolution Pokémon. If this card is attached to a Pokémon, discard this card at the end of your opponent\'s turn.'
-  }];
+  public powers = [
+    {
+      name: 'Wonder Lock',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: "Once during your turn (before your attack), if this Pokémon is on your Bench, you may discard all cards attached to this Pokémon and attach it to 1 of your Pokémon as a Pokémon Tool card. Prevent any damage done to the Pokémon this card is attached to by attacks from your opponent's Mega Evolution Pokémon. If this card is attached to a Pokémon, discard this card at the end of your opponent's turn.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Fairy Wind',
-    cost: [Y, C],
-    damage: 30,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Fairy Wind',
+      cost: [Y, C],
+      damage: 30,
+      text: '',
+    },
+  ];
 
   public set: string = 'STS';
   public name: string = 'Klefki';
@@ -112,7 +140,6 @@ export class Klefki extends PokemonCard {
   public setNumber: string = '80';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_POWER_USED(effect, 0, this)) {
       const generator = usePower(() => generator.next(), store, state, this, effect);
       return generator.next().value;
@@ -127,7 +154,7 @@ export class Klefki extends PokemonCard {
         return state;
       }
       const sourceCard = effect.source?.getPokemonCard();
-      if (sourceCard && sourceCard.tags.includes(CardTag.MEGA)) {
+      if (sourceCard && sourceCard.hasTag(CardTag.MEGA)) {
         if (IS_ABILITY_BLOCKED(store, state, effect.player, this)) {
           return state;
         }
@@ -158,5 +185,4 @@ export class Klefki extends PokemonCard {
 
     return state;
   }
-
 }

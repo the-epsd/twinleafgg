@@ -10,28 +10,25 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { KnockOutEffect, MoveCardsEffect } from '../../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { DRAW_CARDS, REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {
+  DRAW_CARDS,
+  REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN,
+  SHUFFLE_DECK,
+} from '../../../game/store/prefabs/prefabs';
 
 export class TeamRocketsArcher extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
-  public tags = [CardTag.TEAM_ROCKET];
-
+  protected _tags = [CardTag.TEAM_ROCKET];
   public regulationMark = 'I';
-
   public set: string = 'DRI';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '170';
+  public name: string = "Team Rocket's Archer";
+  public fullName: string = "Team Rocket's Archer DRI";
 
-  public name: string = 'Team Rocket\'s Archer';
-
-  public fullName: string = 'Team Rocket\'s Archer DRI';
-
-  public text: string = `You can use this card only if any of your Team Rocket's Pokemon were Knocked Out during your opponent's last turn.
-
-Each player shuffles their hand into their deck. Then, you draw 5 cards, and your opponent draws 3 cards.`;
+  public text: string =
+    "You can use this card only if any of your Team Rocket's Pokemon were Knocked Out during your opponent's last turn.\n\n" +
+    'Each player shuffles their hand into their deck. Then, you draw 5 cards, and your opponent draws 3 cards.';
 
   public readonly ARCHER_MARKER = 'ARCHER_MARKER';
 
@@ -44,7 +41,6 @@ Each player shuffles their hand into their deck. Then, you draw 5 cards, and you
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Handle playing the card
@@ -70,12 +66,17 @@ Each player shuffles their hand into their deck. Then, you draw 5 cards, and you
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       effect.preventDefault = true;
 
-      const cards = player.hand.cards.filter(c => c !== this);
+      const cards = player.hand.cards.filter((c) => c !== this);
 
-      const playerMoveEffect = new MoveCardsEffect(player.hand, player.deck, { cards, sourceCard: this });
+      const playerMoveEffect = new MoveCardsEffect(player.hand, player.deck, {
+        cards,
+        sourceCard: this,
+      });
       state = store.reduceEffect(state, playerMoveEffect);
 
-      const opponentMoveEffect = new MoveCardsEffect(opponent.hand, opponent.deck, { sourceCard: this });
+      const opponentMoveEffect = new MoveCardsEffect(opponent.hand, opponent.deck, {
+        sourceCard: this,
+      });
       state = store.reduceEffect(state, opponentMoveEffect);
 
       // opponent shuffle and draw
@@ -102,9 +103,7 @@ Each player shuffles their hand into their deck. Then, you draw 5 cards, and you
 
       // Check if knocked out Pokemon was a Team Rocket's Pokemon
       const knockedOutPokemon = effect.target.getPokemonCard();
-      if (knockedOutPokemon &&
-        knockedOutPokemon.tags &&
-        knockedOutPokemon.tags.includes(CardTag.TEAM_ROCKET)) {
+      if (knockedOutPokemon && knockedOutPokemon.hasTag(CardTag.TEAM_ROCKET)) {
         effect.player.marker.addMarker(this.ARCHER_MARKER, this);
       }
 

@@ -1,16 +1,20 @@
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt, CoinFlipPrompt, GameError } from '../../../game';
+import { StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt, GameError } from '../../../game';
 import { TrainerEffect, TrainerTargetEffect } from '../../../game/store/effects/play-card-effects';
+
+import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class PokemonReversal extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
+
   public set: string = 'UF';
   public name: string = 'Pokémon Reversal';
   public fullName: string = 'Pokemon Reversal UF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '88';
+
   public text = 'Flip a coin. If heads, choose 1 of your opponent\'s Benched Pokémon and switch it with your opponent\'s Active Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -27,9 +31,7 @@ export class PokemonReversal extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      return store.prompt(state, new CoinFlipPrompt(
-        player.id, GameMessage.COIN_FLIP
-      ), flipResult => {
+      return COIN_FLIP_PROMPT(store, state, player, flipResult => {
         if (flipResult) {
           return store.prompt(state, new ChoosePokemonPrompt(
             player.id,

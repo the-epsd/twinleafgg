@@ -16,8 +16,7 @@ export class Onix extends PokemonCard {
     cost: [C, C],
     damage: 30,
     text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-  },
-  {
+  }, {
     name: 'Strength',
     cost: [C, C, C, C],
     damage: 100,
@@ -29,6 +28,7 @@ export class Onix extends PokemonCard {
   public setNumber: string = '70';
   public name: string = 'Onix';
   public fullName: string = 'Onix M1L';
+
   public regulationMark = 'I';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

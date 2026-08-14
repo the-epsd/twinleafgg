@@ -1,6 +1,22 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, SpecialCondition } from '../../../game/store/card/card-types';
-import { StoreLike, State, PowerType, AttachEnergyPrompt, GameMessage, PlayerType, SlotType, StateUtils, GameError } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  SpecialCondition,
+} from '../../../game/store/card/card-types';
+import {
+  StoreLike,
+  State,
+  PowerType,
+  AttachEnergyPrompt,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  StateUtils,
+  GameError,
+} from '../../../game';
 
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
@@ -9,27 +25,29 @@ import { AddSpecialConditionsPowerEffect } from '../../../game/store/effects/che
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Volcanionex extends PokemonCard {
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.FIRE;
   public hp: number = 220;
   public weakness = [{ type: CardType.WATER }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Scorching Steam',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, if this Pokemon is in your Active Spot, you may make your opponent\'s Active Pokémon Burned.'
-  }];
+  public powers = [
+    {
+      name: 'Scorching Steam',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: "Once during your turn, if this Pokemon is in your Active Spot, you may make your opponent's Active Pokémon Burned.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Heat Cyclone',
       cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS],
       damage: 160,
-      text: 'Move an Energy from this Pokémon to 1 of your Benched Pokémon.'
-    }
+      text: 'Move an Energy from this Pokémon to 1 of your Benched Pokémon.',
+    },
   ];
 
   public set: string = 'JTG';
@@ -63,7 +81,7 @@ export class Volcanionex extends PokemonCard {
         opponent,
         this,
         opponent.active,
-        [SpecialCondition.BURNED]
+        [SpecialCondition.BURNED],
       );
       store.reduceEffect(state, specialCondition);
 
@@ -74,27 +92,31 @@ export class Volcanionex extends PokemonCard {
     // Heat Cyclone
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      const hasBench = player.bench.some(b => b.cards.length > 0);
+      const hasBench = player.bench.some((b) => b.cards.length > 0);
 
       if (hasBench === false) {
         return state;
       }
 
-      return store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_TO_BENCH,
-        player.active,
-        PlayerType.TOP_PLAYER,
-        [SlotType.BENCH],
-        { superType: SuperType.ENERGY },
-        { allowCancel: false, min: 1, max: 1 }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.active.moveCardTo(transfer.card, target);
-        }
-      });
+      return store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_TO_BENCH,
+          player.active,
+          PlayerType.TOP_PLAYER,
+          [SlotType.BENCH],
+          { superType: SuperType.ENERGY },
+          { allowCancel: false, min: 1, max: 1 },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.active.moveCardTo(transfer.card, target);
+          }
+        },
+      );
     }
 
     if (effect instanceof EndTurnEffect) {
@@ -103,5 +125,4 @@ export class Volcanionex extends PokemonCard {
 
     return state;
   }
-
 }

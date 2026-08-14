@@ -3,15 +3,8 @@ import { Stage, CardType, SuperType } from '../../../game/store/card/card-types'
 import { PowerType, StoreLike, State, GameError, GameMessage, PlayerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import {
-  WAS_ATTACK_USED,
-  WAS_POWER_USED,
-  USE_ABILITY_ONCE_PER_TURN,
-  ABILITY_USED,
-  REMOVE_MARKER_AT_END_OF_TURN,
-  THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN,
-  PREVENT_DAMAGE,
-} from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Aegislash2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;

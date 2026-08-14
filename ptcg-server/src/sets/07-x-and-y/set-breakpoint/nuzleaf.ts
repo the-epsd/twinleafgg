@@ -17,20 +17,17 @@ export class Nuzleaf extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Corkscrew Punch',
-      cost: [D],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Razor Wind',
-      cost: [C, C],
-      damage: 40,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Corkscrew Punch',
+    cost: [D],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Razor Wind',
+    cost: [C, C],
+    damage: 40,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'BKP';
   public setNumber: string = '72';

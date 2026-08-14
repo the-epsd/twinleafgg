@@ -4,13 +4,26 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { PowerType, PlayerType, StoreLike, State, StateUtils, AttachEnergyPrompt, SlotType, GameMessage } from '../../../game';
+import {
+  PowerType,
+  PlayerType,
+  StoreLike,
+  State,
+  StateUtils,
+  AttachEnergyPrompt,
+  SlotType,
+  GameMessage,
+} from '../../../game';
 import { AbstractAttackEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  BLOCK_IF_GX_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class CelesteelaGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
+  protected _tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
   public hp: number = 200;
@@ -18,25 +31,27 @@ export class CelesteelaGx extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C, C, C, C];
 
-  public powers = [{
-    name: 'Force Canceler',
-    powerType: PowerType.ABILITY,
-    text: 'As long as this Pokémon is your Active Pokémon, prevent all effects of your opponent\'s GX attacks, including damage, done to your Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Force Canceler',
+      powerType: PowerType.ABILITY,
+      text: "As long as this Pokémon is your Active Pokémon, prevent all effects of your opponent's GX attacks, including damage, done to your Pokémon.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Power Cyclone',
       cost: [C, C, C],
       damage: 110,
-      text: 'Move an Energy from this Pokémon to 1 of your Benched Pokémon.'
+      text: 'Move an Energy from this Pokémon to 1 of your Benched Pokémon.',
     },
     {
       name: 'Discovery-GX',
       cost: [C],
       damage: 0,
-      text: 'Count your Prize cards and put them into your hand. Then, take that many cards from the top of your deck and put them face down as your Prize cards. If you don\'t have that many cards in your deck, this attack does nothing. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Count your Prize cards and put them into your hand. Then, take that many cards from the top of your deck and put them face down as your Prize cards. If you don't have that many cards in your deck, this attack does nothing. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'UNB';
@@ -80,24 +95,28 @@ export class CelesteelaGx extends PokemonCard {
     // Ref: set-x-and-y/yveltal-ex.ts (Y Cyclone - move energy to bench)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      const hasBench = player.bench.some(b => b.cards.length > 0);
+      const hasBench = player.bench.some((b) => b.cards.length > 0);
 
       if (hasBench) {
-        store.prompt(state, new AttachEnergyPrompt(
-          player.id,
-          GameMessage.ATTACH_ENERGY_TO_BENCH,
-          player.active,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.BENCH],
-          { superType: SuperType.ENERGY },
-          { allowCancel: false, min: 1, max: 1 }
-        ), transfers => {
-          transfers = transfers || [];
-          for (const transfer of transfers) {
-            const target = StateUtils.getTarget(state, player, transfer.to);
-            player.active.moveCardTo(transfer.card, target);
-          }
-        });
+        store.prompt(
+          state,
+          new AttachEnergyPrompt(
+            player.id,
+            GameMessage.ATTACH_ENERGY_TO_BENCH,
+            player.active,
+            PlayerType.BOTTOM_PLAYER,
+            [SlotType.BENCH],
+            { superType: SuperType.ENERGY },
+            { allowCancel: false, min: 1, max: 1 },
+          ),
+          (transfers) => {
+            transfers = transfers || [];
+            for (const transfer of transfers) {
+              const target = StateUtils.getTarget(state, player, transfer.to);
+              player.active.moveCardTo(transfer.card, target);
+            }
+          },
+        );
       }
     }
 
@@ -109,7 +128,7 @@ export class CelesteelaGx extends PokemonCard {
       BLOCK_IF_GX_ATTACK_USED(player);
 
       // Count prize cards remaining
-      const prizeCount = player.prizes.filter(p => p.cards.length > 0).length;
+      const prizeCount = player.prizes.filter((p) => p.cards.length > 0).length;
 
       // If not enough cards in deck, does nothing
       if (player.deck.cards.length < prizeCount) {
@@ -120,7 +139,7 @@ export class CelesteelaGx extends PokemonCard {
       player.usedGX = true;
 
       // Put all prize cards into hand
-      player.prizes.forEach(prizeList => {
+      player.prizes.forEach((prizeList) => {
         if (prizeList.cards.length > 0) {
           prizeList.moveTo(player.hand);
         }

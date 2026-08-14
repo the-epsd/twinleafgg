@@ -16,14 +16,12 @@ export class Foongus extends PokemonCard {
   public resistance = [{ type: W, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Astonish',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, choose a random card from your opponent\'s hand. Your opponent reveals that card and shuffles it into his or her deck.'
-    }
-  ];
+  public attacks = [{
+    name: 'Astonish',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, choose a random card from your opponent\'s hand. Your opponent reveals that card and shuffles it into his or her deck.'
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '12';

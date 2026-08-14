@@ -13,14 +13,12 @@ export class Palpitoad extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Bubble Beam',
-      cost: [W, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Bubble Beam',
+    cost: [W, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'DEX';
   public setNumber: string = '32';

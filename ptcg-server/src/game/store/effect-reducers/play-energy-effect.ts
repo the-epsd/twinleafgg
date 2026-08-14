@@ -5,8 +5,9 @@ import { GameMessage, GameLog } from '../../game-message';
 import { Effect } from '../effects/effect';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
-import { EnergyType } from '../card/card-types';
+import { EnergyType, SpecialCondition } from '../card/card-types';
 import { SlotType } from '../actions/play-card-action';
+import { EndTurnEffect } from '../effects/game-phase-effects';
 
 /**
  * Helper function to emit animation events
@@ -36,12 +37,19 @@ export function playEnergyReducer(store: StoreLike, state: State, effect: Effect
     if (pokemonCard === undefined) {
       throw new GameError(GameMessage.INVALID_TARGET);
     }
+    if (effect.player.cannotPlayEnergyCards) {
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    }
     if (effect.energyCard.energyType === EnergyType.SPECIAL
       && effect.player.cannotPlaySpecialEnergyCards) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
     const fromHand = effect.player.hand.cards.includes(effect.energyCard);
+    if (fromHand && effect.target.cannotAttachEnergyFromHandNextTurn) {
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    }
+
     if (fromHand && effect.target.pendingEnergyAttachDamageCounters) {
       state = RESOLVE_PENDING_ENERGY_ATTACH_DAMAGE_COUNTERS(store, state, effect);
     }
@@ -67,6 +75,16 @@ export function playEnergyReducer(store: StoreLike, state: State, effect: Effect
       slot: String(slot),
       index
     });
+
+    if (fromHand && effect.target.pendingEnergyAttachFromHandConsequence) {
+      const consequence = effect.target.pendingEnergyAttachFromHandConsequence;
+      if (consequence.asleep) {
+        effect.target.addSpecialCondition(SpecialCondition.ASLEEP);
+      }
+      if (consequence.endTurn) {
+        state = store.reduceEffect(state, new EndTurnEffect(effect.player));
+      }
+    }
 
     return state;
   }

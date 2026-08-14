@@ -85,6 +85,10 @@ export function initNextTurn(store: StoreLike, state: State): State {
   let drawCardForTurn: DrawCardForTurnEffect;
   try {
     drawCardForTurn = new DrawCardForTurnEffect(player);
+    if (player.cannotDrawAtStartOfTurn) {
+      player.cannotDrawAtStartOfTurn = false;
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    }
     store.reduceEffect(state, drawCardForTurn);
   } catch {
     return state;
@@ -208,6 +212,7 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
 
     player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
       cardList.removeBoardEffect(BoardEffect.ABILITY_USED);
+      cardList.healedThisTurn = false;
       if (card.damageTakenLastTurn !== undefined) {
         card.damageTakenLastTurn = 0;
       }
@@ -233,6 +238,7 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
       cardList.preventEffectsOfAttacksNextTurnPending = null;
       cardList.surviveOnTenHpNextTurn = null;
       cardList.retaliateOnDamageNextTurn = null;
+      cardList.noWeaknessNextTurn = false;
     });
 
     // Activate pending prevent-damage / revenge / survive on this player's Pokémon
@@ -253,6 +259,10 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
       if (cardList.retaliateOnDamageNextTurnPending !== null) {
         cardList.retaliateOnDamageNextTurn = cardList.retaliateOnDamageNextTurnPending;
         cardList.retaliateOnDamageNextTurnPending = null;
+      }
+      if (cardList.noWeaknessNextTurnPending) {
+        cardList.noWeaknessNextTurn = true;
+        cardList.noWeaknessNextTurnPending = false;
       }
       if (cardList.denyPrizesIfKnockedOutNextTurnPending) {
         cardList.denyPrizesIfKnockedOutNextTurn = true;
@@ -408,15 +418,50 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
         cardList.cannotRetreatNextTurn = true;
         cardList.cannotRetreatNextTurnPending = false;
       }
+      if (cardList.zeroRetreatCostNextTurn) {
+        cardList.zeroRetreatCostNextTurn = false;
+      }
+      if (cardList.zeroRetreatCostNextTurnPending) {
+        cardList.zeroRetreatCostNextTurn = true;
+        cardList.zeroRetreatCostNextTurnPending = false;
+      }
       if (cardList.pendingEnergyAttachDamageCounters) {
         cardList.pendingEnergyAttachDamageCounters = null;
+      }
+      if (cardList.cannotAttachEnergyFromHandNextTurn) {
+        cardList.cannotAttachEnergyFromHandNextTurn = false;
+      }
+      if (cardList.pendingEnergyAttachFromHandConsequence) {
+        cardList.pendingEnergyAttachFromHandConsequence = null;
       }
       if (cardList.blockedAttackNameNextTurn !== undefined) {
         cardList.blockedAttackNameNextTurn = undefined;
       }
+      if (cardList.onlyAllowedAttackNameNextTurn !== undefined) {
+        cardList.onlyAllowedAttackNameNextTurn = undefined;
+      }
+      if (cardList.cannotEvolveNextTurn) {
+        cardList.cannotEvolveNextTurn = false;
+      }
       if (cardList.cannotBeHealedNextTurn) {
         cardList.cannotBeHealedNextTurn = false;
       }
+    });
+
+    // Gastro Acid: no Abilities until end of attacker's next turn (2 EndTurns of attacker)
+    [player, opponent].forEach(p => {
+      p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+        if (cardList.noAbilitiesAttackerId !== player.id || !cardList.noAbilities) {
+          return;
+        }
+        if (cardList.noAbilitiesClearArmed) {
+          cardList.noAbilities = false;
+          cardList.noAbilitiesAttackerId = undefined;
+          cardList.noAbilitiesClearArmed = false;
+        } else {
+          cardList.noAbilitiesClearArmed = true;
+        }
+      });
     });
 
     // Clear attack-sourced play locks after the locked player's turn(s)

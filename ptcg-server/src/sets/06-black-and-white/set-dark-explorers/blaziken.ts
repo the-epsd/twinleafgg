@@ -7,43 +7,30 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED } from '../../../game/stor
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class Blaziken extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom = 'Combusken';
-
   public cardType: CardType = R;
-
   public hp: number = 140;
-
   public weakness = [{ type: W }];
-
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Blaze Kick',
-      cost: [R, C],
-      damage: 40,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 30 more damage. If tails, the Defending Pokémon is now Burned.'
-    },
-    {
-      name: 'Flamethrower',
-      cost: [R, R, C],
-      damage: 130,
-      text: 'Discard an Energy attached to this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Blaze Kick',
+    cost: [R, C],
+    damage: 40,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 30 more damage. If tails, the Defending Pokémon is now Burned.'
+  }, {
+    name: 'Flamethrower',
+    cost: [R, R, C],
+    damage: 130,
+    text: 'Discard an Energy attached to this Pokémon.'
+  }];
 
   public set: string = 'DEX';
-
   public setNumber: string = '17';
-
   public cardImage: string = 'assets/cardback.png';
-
   public name: string = 'Blaziken';
-
   public fullName: string = 'Blaziken DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

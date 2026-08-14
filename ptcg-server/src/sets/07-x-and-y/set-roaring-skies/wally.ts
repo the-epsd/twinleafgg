@@ -15,7 +15,12 @@ import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   if (player.deck.cards.length === 0) {
@@ -34,15 +39,15 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // Look through all known cards to find out if Pokemon can evolve
   const cm = CardManager.getInstance();
-  const evolutions = cm.getAllCards().filter(c => {
-    return c instanceof PokemonCard && c.stage !== Stage.BASIC && !c.tags.includes(CardTag.POKEMON_EX);
+  const evolutions = cm.getAllCards().filter((c) => {
+    return c instanceof PokemonCard && c.stage !== Stage.BASIC && !c.hasTag(CardTag.POKEMON_EX);
   }) as PokemonCard[];
 
   // Build possible evolution card names
   const evolutionNames: string[] = [];
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-    const valid = evolutions.filter(e => e.evolvesFrom === card.name);
-    valid.forEach(c => {
+    const valid = evolutions.filter((e) => e.evolvesFrom === card.name);
+    valid.forEach((c) => {
       if (!evolutionNames.includes(c.name)) {
         evolutionNames.push(c.name);
       }
@@ -63,21 +68,23 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   let cards: Card[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_EVOLVE,
-    player.deck,
-    { superType: SuperType.POKEMON },
-    { min: 1, max: 1, allowCancel: true, blocked }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_EVOLVE,
+      player.deck,
+      { superType: SuperType.POKEMON },
+      { min: 1, max: 1, allowCancel: true, blocked },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   // Canceled by user, he didn't found the card in the deck
   if (cards.length === 0) {
-
-
     return state;
   }
 
@@ -85,25 +92,26 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   const blocked2: CardTarget[] = [];
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-    if (card.name !== evolution.evolvesFrom && !card.tags.includes(CardTag.POKEMON_EX)) {
+    if (card.name !== evolution.evolvesFrom && !card.hasTag(CardTag.POKEMON_EX)) {
       blocked2.push(target);
     }
   });
 
   let targets: PokemonCardList[] = [];
-  yield store.prompt(state, new ChoosePokemonPrompt(
-    player.id,
-    GameMessage.CHOOSE_POKEMON_TO_EVOLVE,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.ACTIVE, SlotType.BENCH],
-    { allowCancel: false, blocked: blocked2 }
-  ), selection => {
-    targets = selection || [];
-    next();
-  });
-
-
-
+  yield store.prompt(
+    state,
+    new ChoosePokemonPrompt(
+      player.id,
+      GameMessage.CHOOSE_POKEMON_TO_EVOLVE,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.ACTIVE, SlotType.BENCH],
+      { allowCancel: false, blocked: blocked2 },
+    ),
+    (selection) => {
+      targets = selection || [];
+      next();
+    },
+  );
 
   if (targets.length === 0) {
     return state; // canceled by user
@@ -118,13 +126,12 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   targets[0].clearEffects();
   targets[0].pokemonPlayedTurn = state.turn;
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);
   });
 }
 
 export class Wally extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'ROS';
@@ -148,5 +155,4 @@ export class Wally extends TrainerCard {
 
     return state;
   }
-
 }

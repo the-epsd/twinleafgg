@@ -1,32 +1,68 @@
-import { PokemonCard, Stage, PowerType, StoreLike, State, GameMessage, StateUtils, PlayerType, SuperType, GameError, PokemonCardList, SlotType, ChoosePokemonPrompt, ChooseCardsPrompt, EnergyType, CardTag } from '../../../game';
-import { CheckPokemonAttacksEffect, CheckPokemonPowersEffect, CheckTableStateEffect } from '../../../game/store/effects/check-effects';
+import {
+  PokemonCard,
+  Stage,
+  PowerType,
+  StoreLike,
+  State,
+  GameMessage,
+  StateUtils,
+  PlayerType,
+  SuperType,
+  GameError,
+  PokemonCardList,
+  SlotType,
+  ChoosePokemonPrompt,
+  ChooseCardsPrompt,
+  EnergyType,
+  CardTag,
+} from '../../../game';
+import {
+  CheckPokemonAttacksEffect,
+  CheckPokemonPowersEffect,
+  CheckTableStateEffect,
+} from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { WAS_POWER_USED, BLOCK_EFFECT_IF_MARKER, ADD_MARKER, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, BLOCK_IF_HAS_SPECIAL_CONDITION, DISCARD_TOP_X_OF_OPPONENTS_DECK, AFTER_ATTACK, MOVE_CARD_TO, THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_POWER_USED,
+  BLOCK_EFFECT_IF_MARKER,
+  ADD_MARKER,
+  ABILITY_USED,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  BLOCK_IF_HAS_SPECIAL_CONDITION,
+  DISCARD_TOP_X_OF_OPPONENTS_DECK,
+  AFTER_ATTACK,
+  MOVE_CARD_TO,
+  THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN,
+} from '../../../game/store/prefabs/prefabs';
 
 export class RegigigasLVX extends PokemonCard {
   public stage = Stage.LV_X;
   public evolvesFrom = 'Regigigas';
-  public tags = [CardTag.POKEMON_LV_X];
+  protected _tags = [CardTag.POKEMON_LV_X];
   public cardType = C;
   public hp = 150;
   public weakness = [{ type: F }];
   public retreat = [C, C, C, C];
 
-  public powers = [{
-    name: 'Sacrifice',
-    powerType: PowerType.POKEPOWER,
-    useWhenInPlay: true,
-    text: 'Once during your turn (before your attack), you may choose 1 of your Pokémon in play and that Pokémon is Knocked Out. Then, search your discard pile for up to 2 basic Energy cards, attach them to Regigigas, and remove 8 damage counters from Regigigas. This power can\'t be used if Regigigas is affected by a Special Condition.'
-  }];
+  public powers = [
+    {
+      name: 'Sacrifice',
+      powerType: PowerType.POKEPOWER,
+      useWhenInPlay: true,
+      text: "Once during your turn (before your attack), you may choose 1 of your Pokémon in play and that Pokémon is Knocked Out. Then, search your discard pile for up to 2 basic Energy cards, attach them to Regigigas, and remove 8 damage counters from Regigigas. This power can't be used if Regigigas is affected by a Special Condition.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Giga Blaster',
-    cost: [W, F, M, C],
-    damage: 100,
-    text: 'Discard the top card from your opponent\'s deck. Then, choose 1 card from your opponent\'s hand without looking and discard it. Regigigas can\'t use Giga Blaster during your next turn.'
-  }];
+  public attacks = [
+    {
+      name: 'Giga Blaster',
+      cost: [W, F, M, C],
+      damage: 100,
+      text: "Discard the top card from your opponent's deck. Then, choose 1 card from your opponent's hand without looking and discard it. Regigigas can't use Giga Blaster during your next turn.",
+    },
+  ];
 
   public set: string = 'SF';
   public cardImage: string = 'assets/cardback.png';
@@ -37,7 +73,6 @@ export class RegigigasLVX extends PokemonCard {
   public readonly SACRIFICE_MARKER = 'SACRIFICE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // Ref: set-ex-deoxys/camerupt.ts (Back Burner), set-triumphant/electrode.ts (Energymite)
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
@@ -50,60 +85,70 @@ export class RegigigasLVX extends PokemonCard {
       const regigigasCardList = StateUtils.findCardList(state, this) as PokemonCardList;
 
       // Choose 1 of your Pokémon in play to Knock Out
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        const targets = selected || [];
-        if (targets.length === 0) {
-          return state;
-        }
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          const targets = selected || [];
+          if (targets.length === 0) {
+            return state;
+          }
 
-        const chosenCardList = targets[0] as PokemonCardList;
+          const chosenCardList = targets[0] as PokemonCardList;
 
-        // Move attached cards (energy, tools) to discard before KO
-        const pokemons = chosenCardList.getPokemons();
-        const attachedCards = chosenCardList.cards.filter(c => !pokemons.includes(c as PokemonCard));
-        const tools = chosenCardList.tools.slice();
+          // Move attached cards (energy, tools) to discard before KO
+          const pokemons = chosenCardList.getPokemons();
+          const attachedCards = chosenCardList.cards.filter(
+            (c) => !pokemons.includes(c as PokemonCard),
+          );
+          const tools = chosenCardList.tools.slice();
 
-        attachedCards.forEach(c => chosenCardList.moveCardTo(c, player.discard));
-        tools.forEach(c => chosenCardList.moveCardTo(c, player.discard));
+          attachedCards.forEach((c) => chosenCardList.moveCardTo(c, player.discard));
+          tools.forEach((c) => chosenCardList.moveCardTo(c, player.discard));
 
-        // Mark chosen Pokémon for KO
-        chosenCardList.damage += 999;
+          // Mark chosen Pokémon for KO
+          chosenCardList.damage += 999;
 
-        // Search discard pile for up to 2 basic Energy cards, attach them to Regigigas
-        const hasBasicEnergy = player.discard.cards.some(c =>
-          c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC
-        );
+          // Search discard pile for up to 2 basic Energy cards, attach them to Regigigas
+          const hasBasicEnergy = player.discard.cards.some(
+            (c) => c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC,
+          );
 
-        if (!hasBasicEnergy) {
-          // Still remove 8 damage counters from Regigigas
-          const healEffect = new HealEffect(player, regigigasCardList, 80);
-          store.reduceEffect(state, healEffect);
-          return state;
-        }
+          if (!hasBasicEnergy) {
+            // Still remove 8 damage counters from Regigigas
+            const healEffect = new HealEffect(player, regigigasCardList, 80);
+            store.reduceEffect(state, healEffect);
+            return state;
+          }
 
-        return store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.ATTACH_ENERGY_CARDS,
-          player.discard,
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-          { min: 0, max: 2, allowCancel: false }
-        ), cards => {
-          cards = cards || [];
-          cards.forEach(card => {
-            player.discard.moveCardTo(card, regigigasCardList);
-          });
+          return store.prompt(
+            state,
+            new ChooseCardsPrompt(
+              player,
+              GameMessage.ATTACH_ENERGY_CARDS,
+              player.discard,
+              { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+              { min: 0, max: 2, allowCancel: false },
+            ),
+            (cards) => {
+              cards = cards || [];
+              cards.forEach((card) => {
+                player.discard.moveCardTo(card, regigigasCardList);
+              });
 
-          // Remove 8 damage counters from Regigigas
-          const healEffect = new HealEffect(player, regigigasCardList, 80);
-          store.reduceEffect(state, healEffect);
-        });
-      });
+              // Remove 8 damage counters from Regigigas
+              const healEffect = new HealEffect(player, regigigasCardList, 80);
+              store.reduceEffect(state, healEffect);
+            },
+          );
+        },
+      );
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.SACRIFICE_MARKER, this);
@@ -125,7 +170,9 @@ export class RegigigasLVX extends PokemonCard {
     //Lv. X Stuff
     // making sure it gets put on the active pokemon
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      if (effect.target !== effect.player.active) { throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD); }
+      if (effect.target !== effect.player.active) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
     }
 
     // Trying to get all of the previous stage's attacks and powers
@@ -173,7 +220,11 @@ export class RegigigasLVX extends PokemonCard {
 
       // Add attacks from the previous stage to this one
       for (const evolutionCard of cardList.cards) {
-        if (evolutionCard.superType === SuperType.POKEMON && evolutionCard !== this && evolutionCard.name === this.evolvesFrom) {
+        if (
+          evolutionCard.superType === SuperType.POKEMON &&
+          evolutionCard !== this &&
+          evolutionCard.name === this.evolvesFrom
+        ) {
           effect.attacks.push(...(evolutionCard.attacks || []));
         }
       }
@@ -201,7 +252,11 @@ export class RegigigasLVX extends PokemonCard {
 
       // Adds the powers from the previous stage
       for (const evolutionCard of cardList.cards) {
-        if (evolutionCard.superType === SuperType.POKEMON && evolutionCard !== this && evolutionCard.name === this.evolvesFrom) {
+        if (
+          evolutionCard.superType === SuperType.POKEMON &&
+          evolutionCard !== this &&
+          evolutionCard.name === this.evolvesFrom
+        ) {
           effect.powers.push(...(evolutionCard.powers || []));
         }
       }

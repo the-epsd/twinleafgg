@@ -6,7 +6,7 @@ import { CheckAttackCostEffect } from '../../../game/store/effects/check-effects
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Huntail extends PokemonCard {
-  public tags = [CardTag.FUSION_STRIKE];
+  protected _tags = [CardTag.FUSION_STRIKE];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Clamperl';
   public cardType: CardType = W;
@@ -14,18 +14,22 @@ export class Huntail extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Single Strike Jammer',
-    powerType: PowerType.ABILITY,
-    text: 'Your opponent\'s Single Strike Pokémon\'s attacks cost [C] more.'
-  }];
+  public powers = [
+    {
+      name: 'Single Strike Jammer',
+      powerType: PowerType.ABILITY,
+      text: "Your opponent's Single Strike Pokémon's attacks cost Colorless more.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Cavernous Chomp',
-    cost: [W, C, C],
-    damage: 80,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Cavernous Chomp',
+      cost: [W, C, C],
+      damage: 80,
+      text: '',
+    },
+  ];
 
   public regulationMark: string = 'E';
   public set: string = 'FST';
@@ -40,13 +44,13 @@ export class Huntail extends PokemonCard {
       const player = effect.player;
       const attackingPokemon = player.active.getPokemonCard();
 
-      if (!attackingPokemon || !attackingPokemon.tags.includes(CardTag.SINGLE_STRIKE)) {
+      if (!attackingPokemon || !attackingPokemon.hasTag(CardTag.SINGLE_STRIKE)) {
         return state;
       }
 
       let huntailInPlay = false;
 
-      state.players.forEach(p => {
+      state.players.forEach((p) => {
         if (p !== player) {
           p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
             if (card === this) {
@@ -60,7 +64,7 @@ export class Huntail extends PokemonCard {
         return state;
       }
 
-      let huntailOwner = state.players.find(p => p !== player);
+      let huntailOwner = state.players.find((p) => p !== player);
       if (!huntailOwner) {
         return state;
       }

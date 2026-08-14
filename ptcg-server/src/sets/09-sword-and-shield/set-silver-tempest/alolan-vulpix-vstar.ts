@@ -3,14 +3,15 @@ import { Stage, CardTag } from '../../../game/store/card/card-types';
 import { GameError, GameMessage, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { ApplyWeaknessEffect, AfterDamageEffect } from '../../../game/store/effects/attack-effects';
-import { PREVENT_DAMAGE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class AlolanVulpixVSTAR extends PokemonCard {
   public stage = Stage.VSTAR;
   public evolvesFrom = 'Alolan Vulpix V';
   public cardType = W;
   public hp = 240;
-  public tags = [CardTag.POKEMON_VSTAR];
+  protected _tags = [CardTag.POKEMON_VSTAR];
   public weakness = [{ type: M }];
   public retreat = [C];
 
@@ -58,7 +59,6 @@ export class AlolanVulpixVSTAR extends PokemonCard {
 
     // Silvery Snow Star
     if (WAS_ATTACK_USED(effect, 1, this)) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -66,10 +66,19 @@ export class AlolanVulpixVSTAR extends PokemonCard {
         throw new GameError(GameMessage.LABEL_VSTAR_USED);
       }
 
-      const benchPokemon = opponent.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined) as PokemonCard[];
-      const vPokemons = benchPokemon.filter(card => card.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX));
+      const benchPokemon = opponent.bench
+        .map((b) => b.getPokemonCard())
+        .filter((card) => card !== undefined) as PokemonCard[];
+      const vPokemons = benchPokemon.filter((card) =>
+        card.hasTag(CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX),
+      );
       const opponentActive = opponent.active.getPokemonCard();
-      if (opponentActive && opponentActive.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX || CardTag.POKEMON_ex)) {
+      if (
+        opponentActive &&
+        opponentActive.hasTag(
+          CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX || CardTag.POKEMON_ex,
+        )
+      ) {
         vPokemons.push(opponentActive);
       }
 

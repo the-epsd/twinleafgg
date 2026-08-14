@@ -17,8 +17,7 @@ export class Rattata extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Search your deck for a Basic Pokémon and put it onto your Bench. Shuffle your deck afterward.'
-  },
-  {
+  }, {
     name: 'Snarl',
     cost: [C],
     damage: 0,

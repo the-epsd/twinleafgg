@@ -12,21 +12,18 @@ export class Vanillish extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Triple Spin',
-      cost: [W],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 20 damage times the number of heads.'
-    },
-    {
-      name: 'Frost Breath',
-      cost: [W, C, C],
-      damage: 50,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Triple Spin',
+    cost: [W],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 20 damage times the number of heads.'
+  }, {
+    name: 'Frost Breath',
+    cost: [W, C, C],
+    damage: 50,
+    text: ''
+  }];
 
   public set: string = 'DEX';
   public setNumber: string = '34';

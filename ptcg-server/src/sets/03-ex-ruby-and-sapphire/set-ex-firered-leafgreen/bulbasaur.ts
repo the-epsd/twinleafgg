@@ -16,8 +16,7 @@ export class Bulbasaur extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Asleep and Poisoned.'
-  },
-  {
+  }, {
     name: 'Razor Leaf',
     cost: [C, C],
     damage: 20,

@@ -1,4 +1,4 @@
-import type { ServerEffect } from './types';
+import type { EffectKind, ServerEffect } from './types';
 
 let cached: ServerEffect[] | null = null;
 
@@ -32,12 +32,13 @@ export async function loadServerEffects(): Promise<ServerEffect[]> {
   return cached;
 }
 
-export async function findServerEffect(text: string): Promise<ServerEffect | undefined> {
+export async function findServerEffect(text: string, kind?: EffectKind): Promise<ServerEffect | undefined> {
   if (!text.trim()) return undefined;
   const effects = await loadServerEffects();
   const ranked = effects
-    .map(effect => ({ effect, score: similarity(text, effect.attackText) }))
-    .filter(({ score }) => score >= 0.75)
+    .filter(effect => !kind || effect.kind === kind || (!effect.kind && kind === 'attack'))
+    .map(effect => ({ effect, score: similarity(text, effect.effectText || effect.attackText || '') }))
+    .filter(({ score }) => score >= (kind === 'energy' ? 0.68 : 0.75))
     .sort((a, b) => b.score - a.score);
   const best = ranked[0];
   if (!best) return undefined;

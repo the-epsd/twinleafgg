@@ -23,15 +23,13 @@ export class Crustle extends PokemonCard {
     text: 'This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
   }];
 
-  public attacks = [
-    {
-      name: 'Fury Cutter',
-      cost: [G, C, C],
-      damage: 50,
-      damageCalculation: '+',
-      text: 'Flip 3 coins. If 1 of them is heads, this attack does 40 more damage. If 2 of them are heads, this attack does 80 more damage. If all of them are heads, this attack does 150 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fury Cutter',
+    cost: [G, C, C],
+    damage: 50,
+    damageCalculation: '+',
+    text: 'Flip 3 coins. If 1 of them is heads, this attack does 40 more damage. If 2 of them are heads, this attack does 80 more damage. If all of them are heads, this attack does 150 more damage.'
+  }];
 
   public set: string = 'UNM';
   public setNumber: string = '11';

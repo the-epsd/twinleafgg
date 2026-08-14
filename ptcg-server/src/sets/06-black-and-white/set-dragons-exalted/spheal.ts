@@ -15,15 +15,13 @@ export class Spheal extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Unstoppable Roll',
-      cost: [W, C],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. If both of them are heads, this attack does 30 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Unstoppable Roll',
+    cost: [W, C],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. If both of them are heads, this attack does 30 more damage.'
+  }];
 
   public set: string = 'DRX';
   public setNumber: string = '29';

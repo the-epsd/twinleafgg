@@ -2,12 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import {
-  WAS_ATTACK_USED,
-  COIN_FLIP_PROMPT,
-  PREVENT_DAMAGE,
-  PREVENT_EFFECTS_OF_ATTACKS,
-} from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Shelgon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -24,6 +20,7 @@ export class Shelgon extends PokemonCard {
   }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'EVS';
   public setNumber: string = '108';
   public cardImage: string = 'assets/cardback.png';

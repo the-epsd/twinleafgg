@@ -4,13 +4,28 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, PlayerType } from '../../../game';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  GameError,
+  GameMessage,
+  PlayerType,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  USE_ABILITY_ONCE_PER_TURN,
+  ABILITY_USED,
+  REMOVE_MARKER_AT_END_OF_TURN,
+} from '../../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 
 export class OrbeetleVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Orbeetle V';
   public cardType: CardType = G;
@@ -20,12 +35,14 @@ export class OrbeetleVmax extends PokemonCard {
 
   public readonly EERIE_BEAM_MARKER = 'ORBEETLE_VMAX_VIV_EERIE_BEAM_MARKER';
 
-  public powers = [{
-    name: 'Eerie Beam',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, if this Pokémon is in the Active Spot, you may put 1 damage counter on each of your opponent\'s Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Eerie Beam',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: "Once during your turn, if this Pokémon is in the Active Spot, you may put 1 damage counter on each of your opponent's Pokémon.",
+    },
+  ];
 
   public attacks = [
     {
@@ -33,8 +50,8 @@ export class OrbeetleVmax extends PokemonCard {
       cost: [G, C],
       damage: 50,
       damageCalculation: '+',
-      text: 'This attack does 50 more damage for each Energy attached to your opponent\'s Active Pokémon.'
-    }
+      text: "This attack does 50 more damage for each Energy attached to your opponent's Active Pokémon.",
+    },
   ];
 
   public regulationMark: string = 'D';

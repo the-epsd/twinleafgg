@@ -17,21 +17,21 @@ export class Purrloin extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Captivate',
-      cost: [D],
-      damage: 0,
-      text: 'Flip a coin. If heads, switch 1 of your opponent\'s Benched Pokémon with the Defending Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Captivate',
+    cost: [D],
+    damage: 0,
+    text: 'Flip a coin. If heads, switch 1 of your opponent\'s Benched Pokémon with the Defending Pokémon.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '90';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Purrloin';
   public fullName: string = 'Purrloin BCR';
+
   public usedCaptivate = false;
+
   public captivateHeads = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

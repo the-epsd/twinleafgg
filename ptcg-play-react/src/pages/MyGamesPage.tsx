@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
+import { SelfPlayGameDialog } from '../games/SelfPlayGameDialog';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Format, type GameInfo, type UserInfo } from 'ptcg-server';
@@ -129,7 +130,7 @@ export function MyGamesPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { games, clientId, connected, error: socketError } = useCoreSession();
+  const { games, clientId, error: socketError } = useCoreSession();
   const { showSnackbar } = useSnackbar();
 
   const myUserId = user?.userId ?? 0;
@@ -139,6 +140,7 @@ export function MyGamesPage() {
   );
 
   const [busyGameId, setBusyGameId] = useState<number | null>(null);
+  const [selfPlayOpen, setSelfPlayOpen] = useState(false);
 
   const onDecline = useCallback(
     async (gameId: number) => {
@@ -169,12 +171,8 @@ export function MyGamesPage() {
         <div className={styles.main}>
           <header className={styles.hero}>
             <h1 className={styles.title}>{t('MAIN_MY_GAMES')}</h1>
-            {!connected ? (
-              <p className={styles.alert}>
-                {socketError
-                  ? t('REACT_SOCKET_PREFIX', { message: socketError })
-                  : t('REACT_CONNECTING')}
-              </p>
+            {socketError ? (
+              <p className={styles.alert}>{t('REACT_SOCKET_PREFIX', { message: socketError })}</p>
             ) : null}
           </header>
 
@@ -253,12 +251,19 @@ export function MyGamesPage() {
                   </span>
                   <span>{t('REACT_MY_GAMES_PLAYERS_MENU')}</span>
                 </div>
-                <OnlinePlayersSidebar appearance="arena" />
+                <OnlinePlayersSidebar
+                  appearance="arena"
+                  selfPlayOpen={selfPlayOpen}
+                  onSelfPlayOpenChange={setSelfPlayOpen}
+                />
               </div>
             </div>
           </div>
         </aside>
       </div>
+      {selfPlayOpen ? (
+        <SelfPlayGameDialog open onClose={() => setSelfPlayOpen(false)} />
+      ) : null}
     </div>
   );
 }

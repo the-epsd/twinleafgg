@@ -7,7 +7,13 @@ import {
   StateUtils,
   StoreLike,
 } from '../../../game';
-import { CardTag, CardType, EnergyType, Stage, SuperType } from '../../../game/store/card/card-types';
+import {
+  CardTag,
+  CardType,
+  EnergyType,
+  Stage,
+  SuperType,
+} from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../../game/store/prefabs/attack-effects';
@@ -19,7 +25,7 @@ export class Arceus extends PokemonCard {
   public hp: number = 80;
   public weakness = [{ type: F }];
   public retreat = [C];
-  public tags = [CardTag.ARCEUS];
+  protected _tags = [CardTag.ARCEUS];
 
   public attacks = [
     {

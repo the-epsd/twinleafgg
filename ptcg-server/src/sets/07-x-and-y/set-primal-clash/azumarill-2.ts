@@ -17,22 +17,19 @@ export class Azumarill2 extends PokemonCard {
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Tail Rap',
-      cost: [Y, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
-    },
-    {
-      name: 'Dwindling Wave',
-      cost: [Y, C, C],
-      damage: 100,
-      damageCalculation: '-',
-      text: 'This attack does 100 damage minus 10 damage for each damage counter on this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tail Rap',
+    cost: [Y, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
+  }, {
+    name: 'Dwindling Wave',
+    cost: [Y, C, C],
+    damage: 100,
+    damageCalculation: '-',
+    text: 'This attack does 100 damage minus 10 damage for each damage counter on this Pokémon.'
+  }];
 
   public set: string = 'PRC';
   public setNumber: string = '104';

@@ -8,14 +8,13 @@ import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class HisuianElectrodeV extends PokemonCard {
-
   public stage = Stage.BASIC;
 
   public cardType = CardType.GRASS;
 
   public hp = 210;
 
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
 
   public weakness = [{ type: CardType.FIRE }];
 
@@ -26,13 +25,13 @@ export class HisuianElectrodeV extends PokemonCard {
       name: 'Tantrum Blast',
       cost: [],
       damage: 100,
-      text: 'This attack does 100 damage for each Special Condition affecting this Pokémon.'
+      text: 'This attack does 100 damage for each Special Condition affecting this Pokémon.',
     },
     {
       name: 'Solar Shot',
       cost: [CardType.GRASS, CardType.COLORLESS],
       damage: 120,
-      text: 'Discard all Energy from this Pokémon.'
+      text: 'Discard all Energy from this Pokémon.',
     },
   ];
 
@@ -53,15 +52,12 @@ export class HisuianElectrodeV extends PokemonCard {
   public CLEAR_SOLAR_SHOT_MARKER = 'CLEAR_SOLAR_SHOT_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
 
       effect.damage = cardList.specialConditions.length * 100;
 
       return state;
-
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
@@ -70,7 +66,7 @@ export class HisuianElectrodeV extends PokemonCard {
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
-      const cards: Card[] = checkProvidedEnergy.energyMap.map(e => e.card);
+      const cards: Card[] = checkProvidedEnergy.energyMap.map((e) => e.card);
       const discardEnergy = new DiscardCardsEffect(effect, cards);
       discardEnergy.target = player.active;
       store.reduceEffect(state, discardEnergy);
@@ -78,5 +74,4 @@ export class HisuianElectrodeV extends PokemonCard {
 
     return state;
   }
-
 }

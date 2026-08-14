@@ -2,13 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import {
-  WAS_ATTACK_USED,
-  COIN_FLIP_PROMPT,
-  PREVENT_DAMAGE,
-  PREVENT_EFFECTS_OF_ATTACKS,
-  DRAW_CARDS,
-} from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Unfezant extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -24,8 +19,7 @@ export class Unfezant extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Draw 4 cards.'
-  },
-  {
+  }, {
     name: 'Swift Flight',
     cost: [C, C],
     damage: 120,
@@ -33,6 +27,7 @@ export class Unfezant extends PokemonCard {
   }];
 
   public regulationMark = 'I';
+
   public set: string = 'BLK';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '73';

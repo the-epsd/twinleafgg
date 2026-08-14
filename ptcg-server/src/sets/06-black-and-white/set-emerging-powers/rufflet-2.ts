@@ -13,20 +13,17 @@ export class Rufflet2 extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Peck',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Claw',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Peck',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Claw',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'EPO';
   public cardImage: string = 'assets/cardback.png';

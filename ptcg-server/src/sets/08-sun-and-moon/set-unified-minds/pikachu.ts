@@ -16,20 +16,17 @@ export class Pikachu extends PokemonCard {
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Meal Time',
-      cost: [L],
-      damage: 0,
-      text: 'Flip a coin until you get tails. For each heads, draw a card.'
-    },
-    {
-      name: 'Gnaw',
-      cost: [L, C],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Meal Time',
+    cost: [L],
+    damage: 0,
+    text: 'Flip a coin until you get tails. For each heads, draw a card.'
+  }, {
+    name: 'Gnaw',
+    cost: [L, C],
+    damage: 20,
+    text: ''
+  }];
 
   public set: string = 'UNM';
   public setNumber: string = '55';

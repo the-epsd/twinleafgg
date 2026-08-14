@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType, BoardEffect } from '../../../game/store/card/card-types';
+import { Stage, EnergyType, SuperType, BoardEffect } from '../../../game/store/card/card-types';
 import { Attack, PowerType } from '../../../game/store/card/pokemon-types';
 import { StoreLike, State, GameMessage, Card, ChooseCardsPrompt, GameError, PlayerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
@@ -44,7 +44,6 @@ function* useSpaceBeacon(next: Function, store: StoreLike, state: State,
     return state;
   }
 
-
   let recovered: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
@@ -68,7 +67,6 @@ function* useSpaceBeacon(next: Function, store: StoreLike, state: State,
     }
   });
 
-
   MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: self, sourceEffect: self.powers[0] });
   MOVE_CARDS(store, state, player.discard, player.hand, { cards: recovered, sourceCard: self, sourceEffect: self.powers[0] });
 
@@ -76,41 +74,32 @@ function* useSpaceBeacon(next: Function, store: StoreLike, state: State,
 }
 
 export class Starmie extends PokemonCard {
-
   public name = 'Starmie';
-
   public cardImage: string = 'assets/cardback.png';
-
   public set = 'EVO';
 
   public evolvesFrom: string = 'Staryu';
 
   public fullName = 'Starmie EVO';
-
   public setNumber = '31';
 
-  public cardType = CardType.WATER;
-
+  public cardType = W;
   public stage = Stage.STAGE_1;
-
   public hp = 90;
-
-  public weakness = [{ type: CardType.GRASS }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: G }];
+  public retreat = [C];
 
   public powers = [{
     name: 'Space Beacon',
     powerType: PowerType.ABILITY,
     useWhenInPlay: true,
     text: 'Once during your turn (before your attack), you may discard a card from your hand. If you do, put 2 basic Energy cards from your discard pile into your hand. (You can\'t choose a card you discarded with the effect of this Ability.)'
-
   }];
 
   public attacks: Attack[] = [
     {
       name: 'Star Freeze',
-      cost: [CardType.WATER, CardType.COLORLESS],
+      cost: [W, C],
       damage: 30,
       text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
     }
@@ -143,7 +132,6 @@ export class Starmie extends PokemonCard {
       player.marker.addMarker(this.SPACE_BEACON_MARKER, this);
       return generator.next().value;
     }
-
 
     if (AFTER_ATTACK(effect, 0, this)) {
       COIN_FLIP_PROMPT(store, state, effect.player, result => {

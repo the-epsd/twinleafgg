@@ -10,11 +10,21 @@ import { Card } from '../../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { EnergyCard, ShuffleDeckPrompt } from '../../../game';
 
-function* playCard(next: Function, store: StoreLike, state: State, self: UrnOfVitality, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: UrnOfVitality,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
-  const NoSingleStrikeEnergyInDiscard = player.discard.cards.some(c => {
-    return c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL && c.name === 'Single Strike Energy';
+  const NoSingleStrikeEnergyInDiscard = player.discard.cards.some((c) => {
+    return (
+      c instanceof EnergyCard &&
+      c.energyType === EnergyType.SPECIAL &&
+      c.name === 'Single Strike Energy'
+    );
   });
 
   if (!NoSingleStrikeEnergyInDiscard) {
@@ -25,32 +35,34 @@ function* playCard(next: Function, store: StoreLike, state: State, self: UrnOfVi
   effect.preventDefault = true;
 
   let cards: Card[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_DECK,
-    player.discard,
-    { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL, name: 'Single Strike Energy' },
-    { min: 1, max: 2, allowCancel: true }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_DECK,
+      player.discard,
+      { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL, name: 'Single Strike Energy' },
+      { min: 1, max: 2, allowCancel: true },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   if (cards.length > 0) {
     player.discard.moveCardsTo(cards, player.deck);
-
   }
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);
   });
 }
 
 export class UrnOfVitality extends TrainerCard {
-
   public regulationMark = 'E';
 
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
@@ -65,8 +77,7 @@ export class UrnOfVitality extends TrainerCard {
   public fullName: string = 'Urn of Vitality BST';
 
   public text: string =
-    'Shuffle up to 2 Single Strike Energy cards from your discard pile into' +
-    'your deck.';
+    'Shuffle up to 2 Single Strike Energy cards from your discard pile into' + 'your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -75,5 +86,4 @@ export class UrnOfVitality extends TrainerCard {
     }
     return state;
   }
-
 }

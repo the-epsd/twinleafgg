@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { Format } from 'ptcg-server';
 import { useSettings } from '../context/SettingsContext';
 import { DECK_FORMAT_OPTIONS } from '../deck-editor/deckFormatOptions';
+import { CheckboxField } from '../components/ui/CheckboxField';
+import { playSfx } from '../sfx';
 import { SettingsCardImagesPanel } from './SettingsCardImagesPanel';
 import styles from './SettingsPage.module.css';
 
@@ -72,7 +74,10 @@ export function SettingsPage() {
             role="tab"
             aria-selected={activeTab === 'general'}
             className={`${styles.tabButton} ${activeTab === 'general' ? styles.tabButtonActive : ''}`}
-            onClick={() => setActiveTab('general')}
+            onClick={() => {
+              playSfx('uiButton');
+              setActiveTab('general');
+            }}
           >
             General
           </button>
@@ -81,7 +86,10 @@ export function SettingsPage() {
             role="tab"
             aria-selected={activeTab === 'images'}
             className={`${styles.tabButton} ${activeTab === 'images' ? styles.tabButtonActive : ''}`}
-            onClick={() => setActiveTab('images')}
+            onClick={() => {
+              playSfx('uiButton');
+              setActiveTab('images');
+            }}
           >
             {t('PROFILE_CHANGE_CARD_IMAGES')}
           </button>
@@ -90,58 +98,56 @@ export function SettingsPage() {
 
       {activeTab === 'general' ? (
         <div className={styles.content} role="tabpanel">
-          <label className={styles.row}>
-            <input
-              type="checkbox"
-              checked={draft.holoEnabled}
-              onChange={(e) => setDraft((d) => ({ ...d, holoEnabled: e.target.checked }))}
-            />
+          <CheckboxField
+            plain
+            className={styles.row}
+            checked={draft.holoEnabled}
+            onChange={(e) => setDraft((d) => ({ ...d, holoEnabled: e.target.checked }))}
+          >
             Enable Holo Effects
-          </label>
-          <label className={styles.row}>
-            <input
-              type="checkbox"
-              checked={draft.showCardName}
-              onChange={(e) => setDraft((d) => ({ ...d, showCardName: e.target.checked }))}
-            />
+          </CheckboxField>
+          <CheckboxField
+            plain
+            className={styles.row}
+            checked={draft.showCardName}
+            onChange={(e) => setDraft((d) => ({ ...d, showCardName: e.target.checked }))}
+          >
             Show Card Names
-          </label>
-          <label className={styles.row}>
-            <input
-              type="checkbox"
-              checked={draft.showTags}
-              onChange={(e) => setDraft((d) => ({ ...d, showTags: e.target.checked }))}
-            />
+          </CheckboxField>
+          <CheckboxField
+            plain
+            className={styles.row}
+            checked={draft.showTags}
+            onChange={(e) => setDraft((d) => ({ ...d, showTags: e.target.checked }))}
+          >
             Show Tags
-          </label>
-          <label className={styles.row}>
-            <input
-              type="checkbox"
-              checked={draft.debugMarkersEnabled}
-              onChange={(e) => setDraft((d) => ({ ...d, debugMarkersEnabled: e.target.checked }))}
-            />
+          </CheckboxField>
+          <CheckboxField
+            plain
+            className={styles.row}
+            checked={draft.debugMarkersEnabled}
+            onChange={(e) => setDraft((d) => ({ ...d, debugMarkersEnabled: e.target.checked }))}
+          >
             Debug Markers Turned On
-          </label>
-          <label className={styles.row}>
-            <input
-              type="checkbox"
-              checked={!draft.use3dBoardDefault}
-              onChange={(e) =>
-                setDraft((d) => ({ ...d, use3dBoardDefault: !e.target.checked }))
-              }
-            />
+          </CheckboxField>
+          <CheckboxField
+            plain
+            className={styles.row}
+            checked={!draft.use3dBoardDefault}
+            onChange={(e) => setDraft((d) => ({ ...d, use3dBoardDefault: !e.target.checked }))}
+          >
             Use 2D Game Board
-          </label>
-          <label className={styles.row}>
-            <input
-              type="checkbox"
-              checked={draft.board2dPerspectiveEnabled}
-              onChange={(e) =>
-                setDraft((d) => ({ ...d, board2dPerspectiveEnabled: e.target.checked }))
-              }
-            />
+          </CheckboxField>
+          <CheckboxField
+            plain
+            className={styles.row}
+            checked={draft.board2dPerspectiveEnabled}
+            onChange={(e) =>
+              setDraft((d) => ({ ...d, board2dPerspectiveEnabled: e.target.checked }))
+            }
+          >
             2D Board Perspective
-          </label>
+          </CheckboxField>
 
           <div className={styles.sliderBlock}>
             <label htmlFor="settings-card-size">Card Size</label>
@@ -171,14 +177,14 @@ export function SettingsPage() {
             <span className={styles.sliderValue}>{s.cardTextKerning.toFixed(1)}px</span>
           </div>
 
-          <label className={styles.row}>
-            <input
-              type="checkbox"
-              checked={draft.sfxEnabled}
-              onChange={(e) => setDraft((d) => ({ ...d, sfxEnabled: e.target.checked }))}
-            />
+          <CheckboxField
+            plain
+            className={styles.row}
+            checked={draft.sfxEnabled}
+            onChange={(e) => setDraft((d) => ({ ...d, sfxEnabled: e.target.checked }))}
+          >
             Sound Effects
-          </label>
+          </CheckboxField>
 
           <div className={styles.sliderBlock}>
             <label htmlFor="settings-sfx-vol">Sound Effects Volume</label>
@@ -198,14 +204,14 @@ export function SettingsPage() {
             <span className={styles.sectionLabel}>Hidden Formats</span>
             <div className={styles.formatList}>
               {DECK_FORMAT_OPTIONS.map(({ value, labelKey }) => (
-                <label key={value}>
-                  <input
-                    type="checkbox"
-                    checked={isFormatHidden(value)}
-                    onChange={(e) => onHiddenFormatsChange(value, e.target.checked)}
-                  />
+                <CheckboxField
+                  key={value}
+                  plain
+                  checked={isFormatHidden(value)}
+                  onChange={(e) => onHiddenFormatsChange(value, e.target.checked)}
+                >
                   {t(labelKey)}
-                </label>
+                </CheckboxField>
               ))}
             </div>
           </div>
@@ -218,10 +224,24 @@ export function SettingsPage() {
 
       {activeTab === 'general' ? (
         <div className={styles.actions}>
-          <button type="button" className={styles.btn} onClick={() => navigate(-1)}>
+          <button
+            type="button"
+            className={styles.btn}
+            onClick={() => {
+              playSfx('uiButton');
+              navigate(-1);
+            }}
+          >
             {t('BUTTON_CANCEL')}
           </button>
-          <button type="button" className={styles.btnPrimary} onClick={save}>
+          <button
+            type="button"
+            className={styles.btnPrimary}
+            onClick={() => {
+              playSfx('uiButton');
+              save();
+            }}
+          >
             {t('BUTTON_SAVE')}
           </button>
         </div>

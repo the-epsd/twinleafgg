@@ -9,7 +9,8 @@ import { Effect } from '../../../game/store/effects/effect';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
 import { DamageMap, PutDamagePrompt } from '../../../game';
-import { IS_ABILITY_BLOCKED, NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/attack-effects';
 import { StateUtils } from '../../../game/store/state-utils';
 
 export class Dusknoir extends PokemonCard {

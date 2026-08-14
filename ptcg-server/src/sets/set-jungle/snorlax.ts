@@ -1,23 +1,18 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { CoinFlipPrompt, GameMessage, PokemonCardList, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { PokemonCardList, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { CheckTableStateEffect } from '../../game/store/effects/check-effects';
-import { IS_POKEMON_POWER_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { IS_POKEMON_POWER_BLOCKED, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Snorlax extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.COLORLESS;
-
+  public cardType: CardType = C;
   public hp: number = 90;
-
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public resistance = [{ type: CardType.PSYCHIC, value: -30 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public resistance = [{ type: P, value: -30 }];
+  public retreat = [C, C, C, C];
 
   public powers = [{
     name: 'Thick Skinned',
@@ -33,13 +28,9 @@ export class Snorlax extends PokemonCard {
   }];
 
   public set: string = 'JU';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '11';
-
   public name: string = 'Snorlax';
-
   public fullName: string = 'Snorlax JU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -64,9 +55,7 @@ export class Snorlax extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      state = store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
+      state = COIN_FLIP_PROMPT(store, state, player, results => {
         if (results) {
           const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED]);
           store.reduceEffect(state, specialConditionEffect);

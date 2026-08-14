@@ -17,20 +17,17 @@ export class Fletchinder extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Flap',
-      cost: [C],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Razor Wind',
-      cost: [C, C],
-      damage: 40,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Flap',
+    cost: [C],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Razor Wind',
+    cost: [C, C],
+    damage: 40,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'GRI';
   public setNumber: string = '110';

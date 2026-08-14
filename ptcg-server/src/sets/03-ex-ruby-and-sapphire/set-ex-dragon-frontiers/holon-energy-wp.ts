@@ -23,17 +23,21 @@ export class HolonEnergyWP extends EnergyCard {
   public text =
     'Holon Energy WP provides [C] Energy.' +
     '\n\n' +
-    'If the Pokémon that Holon Energy WP is attached to also has a basic [W] Energy card attached to it, prevent all effects of attacks, excluding damage, done to that Pokémon by your opponent\'s Pokémon. If the Pokémon that Holon Energy WP is attached to also has a basic [P] Energy card attached to it, that Pokémon\'s Retreat Cost is 0. Ignore these effects if Holon Energy WP is attached to Pokémon-ex.';
+    "If the Pokémon that Holon Energy WP is attached to also has a basic [W] Energy card attached to it, prevent all effects of attacks, excluding damage, done to that Pokémon by your opponent's Pokémon. If the Pokémon that Holon Energy WP is attached to also has a basic [P] Energy card attached to it, that Pokémon's Retreat Cost is 0. Ignore these effects if Holon Energy WP is attached to Pokémon-ex.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof AttackEffect
-      && effect.target
-      && effect.target.cards.includes(this)
-      && !effect.target.tags.includes(CardTag.POKEMON_ex)
-      && !IS_SPECIAL_ENERGY_BLOCKED(store, state, effect.opponent, this, effect.target)) {
-
-      if (effect.target.energies.cards.some((card: any) => card.energyType === EnergyType.BASIC && card.name === 'Water Energy')) {
+    if (
+      effect instanceof AttackEffect &&
+      effect.target &&
+      effect.target.cards.includes(this) &&
+      !effect.target.hasTag(CardTag.POKEMON_ex) &&
+      !IS_SPECIAL_ENERGY_BLOCKED(store, state, effect.opponent, this, effect.target)
+    ) {
+      if (
+        effect.target.energies.cards.some(
+          (card: any) => card.energyType === EnergyType.BASIC && card.name === 'Water Energy',
+        )
+      ) {
         // Allow Weakness & Resistance
         if (effect instanceof ApplyWeaknessEffect) {
           return state;
@@ -49,10 +53,14 @@ export class HolonEnergyWP extends EnergyCard {
       }
     }
 
-    if (effect instanceof CheckRetreatCostEffect
-      && effect.player.active.cards.includes(this)
-      && !effect.player.active.getPokemonCard()?.tags.includes(CardTag.POKEMON_ex)
-      && effect.player.active.energies.cards.some((card: any) => card.energyType === EnergyType.BASIC && card.name === 'Psychic Energy')) {
+    if (
+      effect instanceof CheckRetreatCostEffect &&
+      effect.player.active.cards.includes(this) &&
+      !effect.player.active.getPokemonCard()?.hasTag(CardTag.POKEMON_ex) &&
+      effect.player.active.energies.cards.some(
+        (card: any) => card.energyType === EnergyType.BASIC && card.name === 'Psychic Energy',
+      )
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       if (!IS_SPECIAL_ENERGY_BLOCKED(store, state, opponent, this, effect.player.active)) {
@@ -62,5 +70,4 @@ export class HolonEnergyWP extends EnergyCard {
 
     return state;
   }
-
 }

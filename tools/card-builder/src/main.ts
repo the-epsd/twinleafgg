@@ -4,6 +4,7 @@ import type {
   EnergyShort,
   PowerDraft,
   PowerTypeName,
+  ReprintCandidate,
   StageName,
   WeaknessValue,
 } from './types';
@@ -32,7 +33,13 @@ import {
   runSearch,
 } from './tcgdex/browse';
 import type { BrowseSourceMeta } from './tcgdex/mapCardToDraft';
-import { TcgDexApiError, resetDataSource } from './tcgdex/client';
+import {
+  cardImageUrl,
+  findCardsByNameAndSet,
+  findReprintCandidates,
+  TcgDexApiError,
+  resetDataSource,
+} from './tcgdex/client';
 import { clearImplementedCache } from './data/implemented';
 
 function uid(prefix: string): string {
@@ -96,8 +103,11 @@ function defaultDraft(): CardDraft {
     name: '',
     trainerType: 'ITEM',
     trainerText: '',
+    trainerPrefabs: [],
     energyType: 'BASIC',
     provides: 'C',
+    blendedEnergies: '',
+    blendedEnergyCount: '1',
     energyText: '',
   };
 }
@@ -108,9 +118,89 @@ let outputError = '';
 let statusMessage = '';
 let view: 'browse' | 'editor' = 'browse';
 let browse = createBrowseState();
+let browseScrollY = 0;
 let sourceMeta: BrowseSourceMeta | null = null;
+let imageModalOpen = false;
+let imageModalUrl = '';
+let imageModalAlt = '';
+let reprintCandidates: Array<ReprintCandidate & { imageUrl?: string }> = [];
+let selectedReprintKey = '';
+let saveAsReprint = false;
+let reprintLoading = false;
+let reprintError = '';
+let reprintLookupVersion = 0;
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
+
+window.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && imageModalOpen) {
+    imageModalOpen = false;
+    imageModalUrl = '';
+    render();
+  }
+});
+
+function reprintKey(candidate: ReprintCandidate): string {
+  return `${candidate.sourcePath}:${candidate.className}`;
+}
+
+function selectedReprintCandidate(): (ReprintCandidate & { imageUrl?: string }) | undefined {
+  return reprintCandidates.find(candidate => reprintKey(candidate) === selectedReprintKey);
+}
+
+function clearReprintState(): void {
+  reprintLookupVersion++;
+  reprintCandidates = [];
+  selectedReprintKey = '';
+  saveAsReprint = false;
+  reprintLoading = false;
+  reprintError = '';
+}
+
+async function refreshReprintCandidates(): Promise<void> {
+  const name = draft.name.trim();
+  const set = draft.set.trim().toUpperCase();
+  const lookupVersion = ++reprintLookupVersion;
+  reprintCandidates = [];
+  selectedReprintKey = '';
+  saveAsReprint = false;
+  reprintError = '';
+  if (!name || !set) {
+    reprintLoading = false;
+    render();
+    return;
+  }
+
+  reprintLoading = true;
+  render();
+  try {
+    const candidates = await findReprintCandidates(set, name, draft.setNumber);
+    const cardsBySet = new Map<string, Awaited<ReturnType<typeof findCardsByNameAndSet>>>();
+    await Promise.all(
+      [...new Set(candidates.map(candidate => candidate.set))].map(async candidateSet => {
+        cardsBySet.set(candidateSet, await findCardsByNameAndSet(name, candidateSet));
+      })
+    );
+    if (lookupVersion !== reprintLookupVersion) return;
+    reprintCandidates = candidates.map(candidate => ({
+      ...candidate,
+      imageUrl: cardImageUrl(
+        cardsBySet.get(candidate.set)?.find(card => card.localId === candidate.setNumber)?.image,
+        'high'
+      ),
+    }));
+    selectedReprintKey = reprintCandidates.length > 0 ? reprintKey(reprintCandidates[0]) : '';
+    saveAsReprint = reprintCandidates.length === 1;
+  } catch (error) {
+    if (lookupVersion !== reprintLookupVersion) return;
+    reprintError = error instanceof Error ? error.message : String(error);
+  } finally {
+    if (lookupVersion === reprintLookupVersion) {
+      reprintLoading = false;
+      render();
+    }
+  }
+}
 
 async function ensureSeriesLoaded() {
   if (browse.series.length > 0 || browse.loading) return;
@@ -130,7 +220,7 @@ function energyOptions(selected: string, includeEmpty = false): string {
 }
 
 function renderPrefabPicker(
-  kind: 'attack' | 'power',
+  kind: 'attack' | 'power' | 'trainer',
   itemId: string,
   selected: AttackDraft['selectedPrefabs']
 ): string {
@@ -327,9 +417,12 @@ function renderTrainerFields(): string {
             .join('')}
         </select>
       </label>
+      <label>Tags (comma CardTag names)<input data-root="tags" value="${escapeAttr(draft.tags)}" placeholder="ACE_SPEC" /></label>
     </div>
     <label>Text<textarea data-root="trainerText" rows="4">${escapeHtml(draft.trainerText)}</textarea></label>
-    <p class="muted">Trainer effect prefab generation is limited — use Pokemon cards for attack/ability prefab scaffolding.</p>
+    ${renderPrefabPicker('trainer', 'trainer-effect', draft.trainerPrefabs)}
+    ${draft.trainerServerEffect ? `<p class="muted">Fallback matched ${escapeHtml(draft.trainerServerEffect.source)} (${Math.round(draft.trainerServerEffect.similarity * 100)}% text similarity).</p>` : ''}
+    <p class="muted">Trainer effects try shared prefabs first, then reuse a similar Trainer reducer from the server codebase.</p>
   `;
 }
 
@@ -343,8 +436,12 @@ function renderEnergyFields(): string {
         </select>
       </label>
       <label>Provides (e.g. CC)<input data-root="provides" value="${escapeAttr(draft.provides)}" /></label>
+      <label>Blended types (e.g. FDY)<input data-root="blendedEnergies" value="${escapeAttr(draft.blendedEnergies)}" placeholder="optional" /></label>
+      <label>Blended energy count<input type="number" min="1" data-root="blendedEnergyCount" value="${escapeAttr(draft.blendedEnergyCount)}" /></label>
     </div>
+    <label>Tags (comma CardTag names)<input data-root="tags" value="${escapeAttr(draft.tags)}" placeholder="ACE_SPEC" /></label>
     <label>Text<textarea data-root="energyText" rows="3">${escapeHtml(draft.energyText)}</textarea></label>
+    ${draft.energyServerEffect ? `<p class="muted">Fallback matched ${escapeHtml(draft.energyServerEffect.source)} (${Math.round(draft.energyServerEffect.similarity * 100)}% text similarity).</p>` : ''}
   `;
 }
 
@@ -367,18 +464,69 @@ function computedClassName(): string {
   );
 }
 
-function render() {
-  const scrollY = window.scrollY;
+function renderReprintSection(): string {
+  const selected = selectedReprintCandidate();
+  const name = draft.name.trim();
+  const set = draft.set.trim();
+  let content = '';
+  if (!name || !set) {
+    content = '<p class="muted">Enter a card name and set to check for existing reprint sources.</p>';
+  } else if (reprintLoading) {
+    content = '<p class="muted">Checking the set for an existing card with this name…</p>';
+  } else if (reprintError) {
+    content = `<p class="muted">${escapeHtml(reprintError)}</p>`;
+  } else if (reprintCandidates.length === 0) {
+    content = '<p class="muted">No same-set reprint candidate found.</p>';
+  } else {
+    content = `
+      <p class="muted">Found ${reprintCandidates.length} existing card${reprintCandidates.length === 1 ? '' : 's'} with this name. Confirm the source before saving.</p>
+      <div class="reprint-options">
+        ${reprintCandidates
+          .map(candidate => {
+            const key = reprintKey(candidate);
+            return `<div class="reprint-option${key === selectedReprintKey ? ' is-selected' : ''}">
+              <input type="radio" name="reprint-source" data-reprint-candidate="${escapeAttr(key)}" value="${escapeAttr(key)}" ${key === selectedReprintKey ? 'checked' : ''} aria-label="Use ${escapeAttr(candidate.fullName || candidate.name)} as reprint source" />
+              ${candidate.imageUrl
+                ? `<button type="button" class="reprint-image-button" data-action="open-reprint-image" data-image-url="${escapeAttr(candidate.imageUrl)}" data-image-alt="${escapeAttr(candidate.fullName || candidate.name)}" aria-label="Enlarge ${escapeAttr(candidate.fullName || candidate.name)} image"><img src="${escapeAttr(candidate.imageUrl)}" alt="${escapeAttr(candidate.fullName || candidate.name)}" /></button>`
+                : '<div class="reprint-image-missing">No art</div>'}
+              <div><strong>${escapeHtml(candidate.fullName || candidate.name)}</strong><small>${escapeHtml(candidate.set)} · #${escapeHtml(candidate.setNumber)} · ${escapeHtml(candidate.sourcePath)}</small></div>
+            </div>`;
+          })
+          .join('')}
+      </div>
+      <label class="reprint-toggle"><input type="checkbox" data-reprint-enabled ${saveAsReprint ? 'checked' : ''} /> Save as a reprint in <code>other-prints.ts</code></label>
+      ${selected ? `<p class="muted">The saved class will inherit <code>${escapeHtml(selected.className)}</code> and override this print’s set metadata.</p>` : ''}
+    `;
+  }
+  return `<section class="reprint-section">
+    <div class="block-head"><h3>Possible reprint</h3></div>
+    ${content}
+  </section>`;
+}
+
+type RenderScrollMode = 'preserve' | 'top' | 'browse';
+
+function render(scrollMode: RenderScrollMode = 'preserve') {
+  const scrollY =
+    scrollMode === 'top' ? 0 : scrollMode === 'browse' ? browseScrollY : window.scrollY;
   const active = document.activeElement as HTMLElement | null;
   const activeKey =
+    active?.getAttribute('data-output') ||
     active?.getAttribute('data-root') ||
     active?.getAttribute('data-key') ||
     active?.getAttribute('data-action') ||
     '';
   const activeId = active?.getAttribute('data-id') || active?.getAttribute('data-item') || '';
-  const selStart = active instanceof HTMLInputElement || active instanceof HTMLTextAreaElement
-    ? active.selectionStart
-    : null;
+  const selStart =
+    active instanceof HTMLInputElement || active instanceof HTMLTextAreaElement
+      ? active.selectionStart
+      : null;
+  const selEnd =
+    active instanceof HTMLInputElement || active instanceof HTMLTextAreaElement
+      ? active.selectionEnd
+      : null;
+  const selectedReprint = selectedReprintCandidate();
+  const canSave = Boolean(outputCode || (saveAsReprint && selectedReprint));
 
   const heroActions =
     view === 'browse'
@@ -386,14 +534,14 @@ function render() {
          <button type="button" data-action="reload-browse">Reload catalog</button>`
       : `<button type="button" data-action="show-browse">← Browse cards</button>
          <button type="button" class="primary" data-action="generate">Generate card</button>
-         <button type="button" data-action="save" ${outputCode ? '' : 'disabled'}>Save to ptcg-server</button>
+         <button type="button" data-action="save" ${canSave ? '' : 'disabled'}>${saveAsReprint && selectedReprint ? 'Save reprint to other-prints.ts' : 'Save to ptcg-server'}</button>
          <button type="button" data-action="copy" ${outputCode ? '' : 'disabled'}>Copy output</button>
          <button type="button" data-action="reset">Reset form</button>`;
 
   const sourceBanner =
     view === 'editor' && sourceMeta
       ? `<div class="source-banner">
-          ${sourceMeta.imageUrl ? `<img src="${escapeAttr(sourceMeta.imageUrl)}" alt="" />` : ''}
+          ${sourceMeta.imageUrl ? `<button type="button" class="source-image-button" data-action="open-image-modal" aria-label="Enlarge card image"><img src="${escapeAttr(sourceMeta.imageUrl)}" alt="Reference card" /></button>` : ''}
           <div>
             <strong>Loaded from local catalog</strong>
             <p class="muted">${escapeHtml(sourceMeta.tcgDexId)}${sourceMeta.setName ? ` · ${escapeHtml(sourceMeta.setName)}` : ''}${sourceMeta.rarity ? ` · ${escapeHtml(sourceMeta.rarity)}` : ''}</p>
@@ -450,7 +598,14 @@ function render() {
         <div class="block-head">
           <h2>Generated TypeScript</h2>
         </div>
-        <pre><code>${escapeHtml(outputCode || '// Click “Generate card” to emit source.')}</code></pre>
+        <textarea
+          class="generated-code"
+          data-output="generated-code"
+          aria-label="Generated TypeScript"
+          spellcheck="false"
+          placeholder="Click “Generate card” to emit source."
+        >${escapeHtml(outputCode)}</textarea>
+        ${renderReprintSection()}
         <details class="catalog-help">
           <summary>Available attack/ability prefab patterns</summary>
           <ul>
@@ -486,6 +641,16 @@ function render() {
     ${outputError ? `<div class="error-box">${escapeHtml(outputError)}</div>` : ''}
 
     ${body}
+    ${
+      imageModalOpen && imageModalUrl
+        ? `<div class="image-modal-backdrop" data-image-modal role="dialog" aria-modal="true" aria-label="Card image preview">
+            <div class="image-modal">
+              <button type="button" class="modal-close" data-action="close-image-modal" aria-label="Close image preview">×</button>
+              <img src="${escapeAttr(imageModalUrl)}" alt="${escapeAttr(imageModalAlt || 'Card image enlarged')}" />
+            </div>
+          </div>`
+        : ''
+    }
   `;
 
   bindEvents();
@@ -494,7 +659,9 @@ function render() {
   // Restore focus roughly
   if (activeKey && view === 'editor') {
     const candidates = Array.from(
-      app.querySelectorAll<HTMLElement>(`[data-root="${activeKey}"], [data-key="${activeKey}"]`)
+      app.querySelectorAll<HTMLElement>(
+        `[data-output="${activeKey}"], [data-root="${activeKey}"], [data-key="${activeKey}"]`
+      )
     );
     const el =
       (activeId
@@ -510,7 +677,7 @@ function render() {
         (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement)
       ) {
         try {
-          el.setSelectionRange(selStart, selStart);
+          el.setSelectionRange(selStart, selEnd ?? selStart);
         } catch {
           /* ignore */
         }
@@ -609,6 +776,7 @@ async function handleBrowse(action: string | null, btn: HTMLButtonElement) {
     }
     case 'pick-card': {
       const id = btn.getAttribute('data-id')!;
+      browseScrollY = window.scrollY;
       browse.loading = true;
       statusMessage = `Loading ${id}…`;
       outputError = '';
@@ -631,7 +799,8 @@ async function handleBrowse(action: string | null, btn: HTMLButtonElement) {
               ? err.message
               : String(err);
       }
-      render();
+      render(view === 'editor' ? 'top' : 'preserve');
+      if (view === 'editor') void refreshReprintCandidates();
       break;
     }
   }
@@ -645,7 +814,40 @@ function findPower(id: string): PowerDraft | undefined {
   return draft.powers.find(p => p.id === id);
 }
 
+function findSelectedPrefabs(kind: 'attack' | 'power' | 'trainer', itemId: string): AttackDraft['selectedPrefabs'] | undefined {
+  if (kind === 'attack') return findAttack(itemId)?.selectedPrefabs;
+  if (kind === 'power') return findPower(itemId)?.selectedPrefabs;
+  return draft.trainerPrefabs;
+}
+
 function bindEvents() {
+  const imageModal = app.querySelector<HTMLDivElement>('[data-image-modal]');
+  imageModal?.addEventListener('click', event => {
+    if (event.target === imageModal) {
+      imageModalOpen = false;
+      render();
+    }
+  });
+
+  app.querySelectorAll<HTMLInputElement>('[data-reprint-candidate]').forEach(input => {
+    input.addEventListener('change', () => {
+      selectedReprintKey = input.value;
+      saveAsReprint = true;
+      render();
+    });
+  });
+
+  const reprintToggle = app.querySelector<HTMLInputElement>('[data-reprint-enabled]');
+  reprintToggle?.addEventListener('change', () => {
+    saveAsReprint = reprintToggle.checked;
+    render();
+  });
+
+  const generatedCode = app.querySelector<HTMLTextAreaElement>('[data-output="generated-code"]');
+  generatedCode?.addEventListener('input', () => {
+    outputCode = generatedCode.value;
+  });
+
   app.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>('[data-root]').forEach(el => {
     const key = el.getAttribute('data-root')!;
     const handler = () => {
@@ -656,6 +858,9 @@ function bindEvents() {
       }
       if (key === 'extends' || key === 'hasPowers' || key === 'hasAttacks') {
         render();
+      }
+      if (key === 'name' || key === 'set' || key === 'setNumber') {
+        void refreshReprintCandidates();
       }
     };
     el.addEventListener('change', handler);
@@ -708,12 +913,12 @@ function bindEvents() {
 
   app.querySelectorAll<HTMLInputElement>('[data-action="prefab-param"]').forEach(el => {
     el.addEventListener('input', () => {
-      const kind = el.getAttribute('data-kind') as 'attack' | 'power';
+      const kind = el.getAttribute('data-kind') as 'attack' | 'power' | 'trainer';
       const itemId = el.getAttribute('data-item')!;
       const selId = el.getAttribute('data-sel')!;
       const key = el.getAttribute('data-key')!;
-      const item = kind === 'attack' ? findAttack(itemId) : findPower(itemId);
-      const sel = item?.selectedPrefabs.find(s => s.id === selId);
+      const selected = findSelectedPrefabs(kind, itemId);
+      const sel = selected?.find(s => s.id === selId);
       if (sel) sel.params[key] = el.value;
     });
   });
@@ -730,19 +935,29 @@ function bindEvents() {
 async function handleAction(action: string | null, btn: HTMLButtonElement) {
   switch (action) {
     case 'show-browse':
+      imageModalOpen = false;
+      imageModalUrl = '';
+      clearReprintState();
       view = 'browse';
       statusMessage = '';
       outputError = '';
-      render();
+      render('browse');
       void ensureSeriesLoaded();
       break;
     case 'show-editor':
+      imageModalOpen = false;
+      imageModalUrl = '';
+      clearReprintState();
+      browseScrollY = window.scrollY;
       view = 'editor';
       sourceMeta = null;
       statusMessage = '';
-      render();
+      render('top');
       break;
     case 'reload-browse':
+      imageModalOpen = false;
+      imageModalUrl = '';
+      clearReprintState();
       browse = createBrowseState();
       view = 'browse';
       statusMessage = '';
@@ -779,7 +994,7 @@ async function handleAction(action: string | null, btn: HTMLButtonElement) {
       break;
     }
     case 'add-prefab': {
-      const kind = btn.getAttribute('data-kind') as 'attack' | 'power';
+      const kind = btn.getAttribute('data-kind') as 'attack' | 'power' | 'trainer';
       const itemId = btn.getAttribute('data-item')!;
       const select = app.querySelector<HTMLSelectElement>(
         `select[data-role="prefab-select"][data-kind="${kind}"][data-item="${itemId}"]`
@@ -788,39 +1003,50 @@ async function handleAction(action: string | null, btn: HTMLButtonElement) {
       if (!prefabId) return;
       const created = createManualSelected(prefabId);
       if (!created) return;
-      const item = kind === 'attack' ? findAttack(itemId) : findPower(itemId);
-      item?.selectedPrefabs.push(created);
+      const selected = findSelectedPrefabs(kind, itemId);
+      selected?.push(created);
       render();
       break;
     }
     case 'remove-prefab': {
-      const kind = btn.getAttribute('data-kind') as 'attack' | 'power';
+      const kind = btn.getAttribute('data-kind') as 'attack' | 'power' | 'trainer';
       const itemId = btn.getAttribute('data-item')!;
       const selId = btn.getAttribute('data-sel')!;
-      const item = kind === 'attack' ? findAttack(itemId) : findPower(itemId);
-      if (item) {
-        item.selectedPrefabs = item.selectedPrefabs.filter(s => s.id !== selId);
+      const selected = findSelectedPrefabs(kind, itemId);
+      if (selected) {
+        selected.splice(0, selected.length, ...selected.filter(s => s.id !== selId));
       }
       render();
       break;
     }
     case 'match-prefabs': {
-      const kind = btn.getAttribute('data-kind') as 'attack' | 'power';
+      const kind = btn.getAttribute('data-kind') as 'attack' | 'power' | 'trainer';
       const itemId = btn.getAttribute('data-item')!;
-      const item = kind === 'attack' ? findAttack(itemId) : findPower(itemId);
-      if (!item) return;
+      const item = kind === 'attack' ? findAttack(itemId) : kind === 'power' ? findPower(itemId) : undefined;
+      const text = kind === 'trainer' ? draft.trainerText : item?.text;
+      if (!text) return;
       try {
-        const matched = matchEffectText(item.text, kind);
-        item.selectedPrefabs = matchedToSelected(matched);
-        item.matchError = undefined;
+        const matched = matchEffectText(text, kind);
+        if (kind === 'trainer') {
+          draft.trainerPrefabs = matchedToSelected(matched);
+          draft.trainerServerEffect = undefined;
+        } else if (item) {
+          item.selectedPrefabs = matchedToSelected(matched);
+          item.matchError = undefined;
+          item.serverEffect = undefined;
+        }
         statusMessage = matched.length
           ? `Matched ${matched.length} prefab(s).`
           : 'No effect text — nothing to match (plain damage attack is OK).';
         outputError = '';
       } catch (err) {
         const msg = err instanceof Error ? err.message : String(err);
-        item.matchError = msg;
-        item.selectedPrefabs = [];
+        if (kind === 'trainer') {
+          draft.trainerPrefabs = [];
+        } else if (item) {
+          item.matchError = msg;
+          item.selectedPrefabs = [];
+        }
         statusMessage = '';
         outputError = msg;
       }
@@ -846,6 +1072,29 @@ async function handleAction(action: string | null, btn: HTMLButtonElement) {
       render();
       break;
     }
+    case 'open-image-modal':
+      if (!sourceMeta?.imageUrl) return;
+      imageModalOpen = true;
+      imageModalUrl = sourceMeta.imageUrl;
+      imageModalAlt = 'Reference card enlarged';
+      render();
+      app.querySelector<HTMLButtonElement>('[data-action="close-image-modal"]')?.focus();
+      break;
+    case 'open-reprint-image': {
+      const imageUrl = btn.getAttribute('data-image-url');
+      if (!imageUrl) return;
+      imageModalOpen = true;
+      imageModalUrl = imageUrl;
+      imageModalAlt = btn.getAttribute('data-image-alt') || 'Reprint source card enlarged';
+      render();
+      app.querySelector<HTMLButtonElement>('[data-action="close-image-modal"]')?.focus();
+      break;
+    }
+    case 'close-image-modal':
+      imageModalOpen = false;
+      imageModalUrl = '';
+      render();
+      break;
     case 'copy':
       if (outputCode) {
         navigator.clipboard.writeText(outputCode).then(() => {
@@ -855,7 +1104,21 @@ async function handleAction(action: string | null, btn: HTMLButtonElement) {
       }
       break;
     case 'save': {
-      if (!outputCode) return;
+      syncAllInputs();
+      const selected = selectedReprintCandidate();
+      const reprint = saveAsReprint && selected
+        ? {
+            className: draft.className || computedClassName().replace(/[^A-Za-z0-9]/g, ''),
+            sourceClassName: selected.className,
+            sourcePath: selected.sourcePath,
+            name: draft.name,
+            set: draft.set,
+            setNumber: draft.setNumber,
+            fullName: computedFullName(),
+            regulationMark: draft.regulationMark,
+          }
+        : undefined;
+      if (!outputCode && !reprint) return;
       const save = async (overwrite: boolean) => {
         const response = await fetch('/save-card', {
           method: 'POST',
@@ -865,6 +1128,7 @@ async function handleAction(action: string | null, btn: HTMLButtonElement) {
             className: draft.className || draft.name.replace(/[^a-zA-Z0-9 ]/g, ' ').split(/\s+/).filter(Boolean).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(''),
             source: outputCode,
             overwrite,
+            ...(reprint ? { reprint } : {}),
           }),
         });
         const result = (await response.json()) as { message?: string; error?: string };
@@ -887,6 +1151,9 @@ async function handleAction(action: string | null, btn: HTMLButtonElement) {
       break;
     }
     case 'reset':
+      imageModalOpen = false;
+      imageModalUrl = '';
+      clearReprintState();
       draft = defaultDraft();
       sourceMeta = null;
       outputCode = '';
@@ -919,13 +1186,14 @@ function syncAllInputs() {
     if (power) (power as any)[el.getAttribute('data-key')!] = el.checked;
   });
   app.querySelectorAll<HTMLInputElement>('[data-action="prefab-param"]').forEach(el => {
-    const kind = el.getAttribute('data-kind') as 'attack' | 'power';
-    const item = kind === 'attack'
-      ? findAttack(el.getAttribute('data-item')!)
-      : findPower(el.getAttribute('data-item')!);
-    const sel = item?.selectedPrefabs.find(s => s.id === el.getAttribute('data-sel'));
+    const kind = el.getAttribute('data-kind') as 'attack' | 'power' | 'trainer';
+    const selected = findSelectedPrefabs(kind, el.getAttribute('data-item')!);
+    const sel = selected?.find(s => s.id === el.getAttribute('data-sel'));
     if (sel) sel.params[el.getAttribute('data-key')!] = el.value;
   });
+
+  const generatedCode = app.querySelector<HTMLTextAreaElement>('[data-output="generated-code"]');
+  if (generatedCode) outputCode = generatedCode.value;
 }
 
 function escapeHtml(s: string): string {

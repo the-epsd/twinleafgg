@@ -3,13 +3,8 @@ import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import {
-  COIN_FLIP_PROMPT,
-  DAMAGE_OPPONENT_POKEMON,
-  PREVENT_DAMAGE,
-  PREVENT_EFFECTS_OF_ATTACKS,
-  WAS_ATTACK_USED,
-} from '../../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Seadra extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -32,6 +27,7 @@ export class Seadra extends PokemonCard {
   }];
 
   public regulationMark = 'F';
+
   public set: string = 'LOR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '36';

@@ -15,20 +15,17 @@ export class Gligar extends PokemonCard {
   public resistance = [{ type: L, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Tail Smack',
-      cost: [F],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Wicked Jab',
-      cost: [F, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tail Smack',
+    cost: [F],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Wicked Jab',
+    cost: [F, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '80';

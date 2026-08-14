@@ -17,8 +17,7 @@ export class Weedle extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Search your deck for a Basic Pokémon and put it onto your Bench. Shuffle your deck afterward.'
-  },
-  {
+  }, {
     name: 'String Shot',
     cost: [G],
     damage: 0,

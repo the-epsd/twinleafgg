@@ -4,34 +4,49 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { ChooseCardsPrompt, ConfirmPrompt, GameMessage, PowerType, StoreLike, State, TrainerCard, TrainerType } from '../../../game';
+import {
+  ChooseCardsPrompt,
+  ConfirmPrompt,
+  GameMessage,
+  PowerType,
+  StoreLike,
+  State,
+  TrainerCard,
+  TrainerType,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, MOVE_CARDS, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  MOVE_CARDS,
+  IS_ABILITY_BLOCKED,
+} from '../../../game/store/prefabs/prefabs';
 import { SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK } from '../../../game/store/prefabs/attack-effects';
 
 export class EldegossV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = G;
   public hp: number = 180;
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Happy Match',
-    powerType: PowerType.ABILITY,
-    text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may put a Supporter card from your discard pile into your hand.'
-  }];
+  public powers = [
+    {
+      name: 'Happy Match',
+      powerType: PowerType.ABILITY,
+      text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may put a Supporter card from your discard pile into your hand.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Float Up',
       cost: [C, C],
       damage: 50,
-      text: 'You may shuffle this Pokémon and all attached cards into your deck.'
-    }
+      text: 'You may shuffle this Pokémon and all attached cards into your deck.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -49,8 +64,8 @@ export class EldegossV extends PokemonCard {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
 
-      const supportersInDiscard = player.discard.cards.filter(c =>
-        c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER
+      const supportersInDiscard = player.discard.cards.filter(
+        (c) => c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER,
       );
 
       if (supportersInDiscard.length === 0) {
@@ -62,35 +77,45 @@ export class EldegossV extends PokemonCard {
         return state;
       }
 
-      store.prompt(state, new ConfirmPrompt(
-        player.id,
-        GameMessage.WANT_TO_USE_ABILITY,
-      ), wantToUse => {
-        if (wantToUse) {
-          store.prompt(state, new ChooseCardsPrompt(
-            player,
-            GameMessage.CHOOSE_CARD_TO_HAND,
-            player.discard,
-            { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-            { min: 1, max: 1, allowCancel: false }
-          ), selected => {
-            const cards = selected || [];
-            MOVE_CARDS(store, state, player.discard, player.hand, { cards, sourceCard: this, sourceEffect: this.powers[0] });
-          });
-        }
-      });
+      store.prompt(
+        state,
+        new ConfirmPrompt(player.id, GameMessage.WANT_TO_USE_ABILITY),
+        (wantToUse) => {
+          if (wantToUse) {
+            store.prompt(
+              state,
+              new ChooseCardsPrompt(
+                player,
+                GameMessage.CHOOSE_CARD_TO_HAND,
+                player.discard,
+                { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
+                { min: 1, max: 1, allowCancel: false },
+              ),
+              (selected) => {
+                const cards = selected || [];
+                MOVE_CARDS(store, state, player.discard, player.hand, {
+                  cards,
+                  sourceCard: this,
+                  sourceEffect: this.powers[0],
+                });
+              },
+            );
+          }
+        },
+      );
     }
 
     // Attack 1: Float Up
     // Ref: set-crimson-invasion/kartana-gx.ts (Gale Blade - optional shuffle self into deck)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      store.prompt(state, new ConfirmPrompt(
-        player.id,
-        GameMessage.WANT_TO_USE_ABILITY,
-      ), wantToUse => {
-        this.wantsToShuffle = wantToUse;
-      });
+      store.prompt(
+        state,
+        new ConfirmPrompt(player.id, GameMessage.WANT_TO_USE_ABILITY),
+        (wantToUse) => {
+          this.wantsToShuffle = wantToUse;
+        },
+      );
     }
 
     if (effect instanceof AfterAttackEffect && this.wantsToShuffle) {

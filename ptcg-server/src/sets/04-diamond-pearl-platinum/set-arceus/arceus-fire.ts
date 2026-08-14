@@ -11,16 +11,14 @@ export class ArceusFire extends PokemonCard {
   public hp: number = 80;
   public weakness = [{ type: W }];
   public retreat = [C];
-  public tags = [CardTag.ARCEUS];
+  protected _tags = [CardTag.ARCEUS];
 
-  public attacks = [
-    {
-      name: 'Bright FLame',
-      cost: [R, C, C],
-      damage: 80,
-      text: 'Flip a coin. If tails, discard 2 Energy attached to Arceus.',
-    },
-  ];
+  public attacks = [{
+    name: 'Bright FLame',
+    cost: [R, C, C],
+    damage: 80,
+    text: 'Flip a coin. If tails, discard 2 Energy attached to Arceus.',
+  }];
 
   public set: string = 'AR';
   public cardImage: string = 'assets/cardback.png';

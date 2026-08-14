@@ -11,14 +11,12 @@ export class Cacnea extends PokemonCard {
   public resistance = [{ type: W, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Poison Sting',
-      cost: [G],
-      damage: 0,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Poisoned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Poison Sting',
+    cost: [G],
+    damage: 0,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Poisoned.'
+  }];
 
   public set: string = 'PLF';
   public setNumber: string = '9';

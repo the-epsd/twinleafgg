@@ -1,9 +1,9 @@
-import { Attack, ChooseAttackPrompt, CoinFlipPrompt, GameLog, GameMessage, PokemonCard, State, StateUtils, StoreLike } from '../../../game';
+import { Attack, ChooseAttackPrompt, GameLog, GameMessage, PokemonCard, State, StateUtils, StoreLike } from '../../../game';
 import { CardType, Stage } from '../../../game/store/card/card-types';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 function* useMetronome(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -53,42 +53,29 @@ function* useMetronome(next: Function, store: StoreLike, state: State,
 }
 
 export class Clefairy extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
   public regulationMark = 'D';
-
-  public cardType: CardType = CardType.PSYCHIC;
-
-  public weakness = [{ type: CardType.METAL }];
-
+  public cardType: CardType = P;
+  public weakness = [{ type: M }];
   public hp: number = 60;
+  public retreat = [C];
 
-  public retreat = [CardType.COLORLESS];
-
-  public attacks = [
-    {
-      name: 'Pound',
-      cost: [CardType.PSYCHIC],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Mini-Metronome',
-      cost: [CardType.COLORLESS, CardType.COLORLESS],
-      damage: 0,
-      text: 'Flip a coin. If heads, choose 1 of your opponent\'s Active Pokémon\'s attacks and use it as this attack.'
-    }
-  ];
+  public attacks = [{
+    name: 'Pound',
+    cost: [P],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Mini-Metronome',
+    cost: [C, C],
+    damage: 0,
+    text: 'Flip a coin. If heads, choose 1 of your opponent\'s Active Pokémon\'s attacks and use it as this attack.'
+  }];
 
   public set: string = 'VIV';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '63';
-
   public name: string = 'Clefairy';
-
   public fullName: string = 'Clefairy VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -96,9 +83,7 @@ export class Clefairy extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
           const generator = useMetronome(() => generator.next(), store, state, effect);
           return generator.next().value;

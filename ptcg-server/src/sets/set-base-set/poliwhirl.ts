@@ -4,7 +4,8 @@ import { Attack } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import { COIN_FLIP_PROMPT, OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK } from '../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Poliwhirl extends PokemonCard {
   public stage = Stage.STAGE_1;

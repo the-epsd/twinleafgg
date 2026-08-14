@@ -18,6 +18,7 @@ import {
 } from './discardEnergyPromptModel';
 import { buildOriginalCardIndexMap } from './moveEnergyPromptModel';
 import { buildPokemonPromptRows, type PokemonItem, type PokemonRow } from './pokemonPromptRows';
+import { getPromptPerspectivePlayerId } from './promptPerspective';
 import { findItemByTarget, targetsEqual } from './removeDamagePromptModel';
 import moveStyles from './MoveEnergyPromptPanel.module.css';
 import styles from './DiscardEnergyPromptPanel.module.css';
@@ -49,7 +50,7 @@ export function DiscardEnergyPromptPanel(props: DiscardEnergyPromptPanelProps) {
   useEffect(() => {
     const built = buildPokemonPromptRows(
       localGame.state,
-      prompt.playerId,
+      getPromptPerspectivePlayerId(prompt),
       prompt.playerType,
       prompt.slots,
     );

@@ -17,20 +17,17 @@ export class Weezing extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Balloon Bomb',
-      cost: [C, C],
-      damage: 0,
-      text: 'Flip 2 coins. For each heads, discard 2 cards from the top of your opponent\'s deck.'
-    },
-    {
-      name: 'Thick Liquid',
-      cost: [P, C, C],
-      damage: 80,
-      text: 'Both Active Pokémon are now Confused and Poisoned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Balloon Bomb',
+    cost: [C, C],
+    damage: 0,
+    text: 'Flip 2 coins. For each heads, discard 2 cards from the top of your opponent\'s deck.'
+  }, {
+    name: 'Thick Liquid',
+    cost: [P, C, C],
+    damage: 80,
+    text: 'Both Active Pokémon are now Confused and Poisoned.'
+  }];
 
   public set: string = 'FCO';
   public setNumber: string = '28';

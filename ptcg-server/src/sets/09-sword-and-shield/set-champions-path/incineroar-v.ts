@@ -3,14 +3,31 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../../game/store/card/card-types';
-import { AttachEnergyPrompt, GameMessage, PlayerType, SlotType, StateUtils, StoreLike, State } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  EnergyType,
+  SuperType,
+} from '../../../game/store/card/card-types';
+import {
+  AttachEnergyPrompt,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  StateUtils,
+  StoreLike,
+  State,
+} from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+} from '../../../game/store/prefabs/prefabs';
 
 export class IncineroarV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = R;
   public hp: number = 220;
@@ -22,14 +39,14 @@ export class IncineroarV extends PokemonCard {
       name: 'Grand Flame',
       cost: [R, R, C],
       damage: 90,
-      text: 'Attach up to 2 [R] Energy cards from your discard pile to 1 of your Benched Pokémon.'
+      text: 'Attach up to 2 [R] Energy cards from your discard pile to 1 of your Benched Pokémon.',
     },
     {
       name: 'Flare Blitzer',
       cost: [R, R, R, C],
       damage: 220,
-      text: 'This Pokémon also does 30 damage to itself.'
-    }
+      text: 'This Pokémon also does 30 damage to itself.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -45,13 +62,14 @@ export class IncineroarV extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const hasBenched = player.bench.some(b => b.cards.length > 0);
+      const hasBenched = player.bench.some((b) => b.cards.length > 0);
       if (!hasBenched) {
         return state;
       }
 
-      const energyInDiscard = player.discard.cards.filter(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Fire Energy'
+      const energyInDiscard = player.discard.cards.filter(
+        (c) =>
+          c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Fire Energy',
       );
 
       if (energyInDiscard.length === 0) {
@@ -60,21 +78,25 @@ export class IncineroarV extends PokemonCard {
 
       const max = Math.min(2, energyInDiscard.length);
 
-      state = store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_TO_BENCH,
-        player.discard,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
-        { allowCancel: false, min: 0, max, sameTarget: true }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
-        }
-      });
+      state = store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_TO_BENCH,
+          player.discard,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
+          { allowCancel: false, min: 0, max, sameTarget: true },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.discard.moveCardTo(transfer.card, target);
+          }
+        },
+      );
     }
 
     // Attack 2: Flare Blitzer

@@ -18,22 +18,20 @@ export class Cinderace3 extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Flame Cloak',
-      cost: [R],
-      damage: 40,
-      text: 'Attach a [R] Energy card from your discard pile to this Pokémon.'
-    },
-    {
-      name: 'Bright Flame',
-      cost: [R, R, C],
-      damage: 160,
-      text: 'Flip a coin. If tails, discard 2 Energy from this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Flame Cloak',
+    cost: [R],
+    damage: 40,
+    text: 'Attach a [R] Energy card from your discard pile to this Pokémon.'
+  }, {
+    name: 'Bright Flame',
+    cost: [R, R, C],
+    damage: 160,
+    text: 'Flip a coin. If tails, discard 2 Energy from this Pokémon.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'SSH';
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';

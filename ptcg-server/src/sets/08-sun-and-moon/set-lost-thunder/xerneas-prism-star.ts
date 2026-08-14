@@ -4,7 +4,7 @@ import { MovedToActiveEffect } from "../../../game/store/effects/game-effects";
 import { REMOVE_MARKER_AT_END_OF_TURN, MOVED_TO_ACTIVE_THIS_TURN, IS_ABILITY_BLOCKED, WAS_ATTACK_USED, THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN } from "../../../game/store/prefabs/prefabs";
 
 export class XerneasPrismStar extends PokemonCard {
-  public tags = [CardTag.PRISM_STAR];
+  protected _tags = [CardTag.PRISM_STAR];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = Y;
   public hp: number = 160;

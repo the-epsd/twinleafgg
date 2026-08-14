@@ -10,14 +10,12 @@ export class Litwick extends PokemonCard {
   public weakness = [{ type: D }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Searing Flame',
-      cost: [C, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Burned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Searing Flame',
+    cost: [C, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Burned.'
+  }];
 
   public set: string = 'NVI';
   public cardImage: string = 'assets/cardback.png';

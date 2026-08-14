@@ -7,7 +7,8 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefabs/attack-effects';
-import { SURVIVE_ON_TEN_IF_FULL_HP, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { SURVIVE_ON_TEN_IF_FULL_HP } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Crustle extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

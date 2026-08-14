@@ -20,14 +20,12 @@ export class Cutiefly extends PokemonCard {
   public readonly FLY_AROUND_MARKER = 'CUTIEFLY_FLY_AROUND_MARKER';
   public readonly CLEAR_FLY_AROUND_MARKER = 'CUTIEFLY_CLEAR_FLY_AROUND_MARKER';
 
-  public attacks = [
-    {
-      name: 'Fly Around',
-      cost: [Y],
-      damage: 10,
-      text: 'If any damage is done to this Pokémon by attacks during your opponent\'s next turn, flip a coin. If heads, prevent that damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fly Around',
+    cost: [Y],
+    damage: 10,
+    text: 'If any damage is done to this Pokémon by attacks during your opponent\'s next turn, flip a coin. If heads, prevent that damage.'
+  }];
 
   public set: string = 'SUM';
   public setNumber: string = '92';

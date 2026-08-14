@@ -16,21 +16,18 @@ export class Mienshao extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Knock Off',
-      cost: [F, C],
-      damage: 20,
-      text: 'Discard a random card from your opponent\'s hand.'
-    },
-    {
-      name: 'Double Whip',
-      cost: [F, C, C],
-      damage: 70,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 70 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Knock Off',
+    cost: [F, C],
+    damage: 20,
+    text: 'Discard a random card from your opponent\'s hand.'
+  }, {
+    name: 'Double Whip',
+    cost: [F, C, C],
+    damage: 70,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 70 damage times the number of heads.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '88';

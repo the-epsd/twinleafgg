@@ -27,7 +27,7 @@ import {
 } from '../../../game/store/prefabs/prefabs';
 
 export class OmastarBreak extends PokemonCard {
-  public tags = [CardTag.BREAK];
+  protected _tags = [CardTag.BREAK];
   public stage: Stage = Stage.BREAK;
   public evolvesFrom: string = 'Omastar';
   public cardType: CardType = W;
@@ -67,7 +67,7 @@ export class OmastarBreak extends PokemonCard {
       opponent.bench.forEach((b) => {
         if (b.cards.length > 0) {
           const pokemonCard = b.getPokemonCard();
-          if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_EX)) {
+          if (pokemonCard && pokemonCard.hasTag(CardTag.POKEMON_EX)) {
             benchedEX.push(b);
           }
         }
@@ -96,7 +96,7 @@ export class OmastarBreak extends PokemonCard {
           }
           const target = targets[0];
           const targetCard = target.getPokemonCard();
-          if (!targetCard || !targetCard.tags.includes(CardTag.POKEMON_EX)) {
+          if (!targetCard || !targetCard.hasTag(CardTag.POKEMON_EX)) {
             return;
           }
 

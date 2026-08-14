@@ -7,7 +7,8 @@ import { Effect } from '../../../game/store/effects/effect';
 import { PowerType, StateUtils } from '../../..';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 
-import { PREVENT_DAMAGE_TO_YOUR_BENCHED_POKEMON_FROM_OPPONENT_ATTACKS, PREVENT_EFFECTS_TO_YOUR_BENCHED_POKEMON_FROM_OPPONENT_ATTACKS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE_TO_YOUR_BENCHED_POKEMON_FROM_OPPONENT_ATTACKS, PREVENT_EFFECTS_TO_YOUR_BENCHED_POKEMON_FROM_OPPONENT_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Rabsca extends PokemonCard {
 

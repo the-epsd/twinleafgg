@@ -1,55 +1,30 @@
-import {
-  CardTag,
-  CardTarget,
-  CardType,
-  ConfirmPrompt,
-  EnergyCard,
-  GameMessage,
-  MoveEnergyPrompt,
-  PlayerType,
-  PokemonCard,
-  PowerType,
-  SlotType,
-  Stage,
-  State,
-  StateUtils,
-  StoreLike,
-  SuperType,
-} from '../../../game';
-import { Effect } from '../../../game/store/effects/effect';
-import { MovedToActiveEffect, PowerEffect } from '../../../game/store/effects/game-effects';
-import {
-  MOVED_TO_ACTIVE_THIS_TURN,
-  REMOVE_MARKER_AT_END_OF_TURN,
-  WAS_ATTACK_USED,
-} from '../../../game/store/prefabs/prefabs';
+import { PokemonCard, Stage, CardTag, CardType, PowerType, StoreLike, State, ConfirmPrompt, GameMessage, CardTarget, PlayerType, EnergyCard, MoveEnergyPrompt, SlotType, SuperType, StateUtils } from "../../../game";
+import { Effect } from "../../../game/store/effects/effect";
+import { MovedToActiveEffect, PowerEffect } from "../../../game/store/effects/game-effects";
+import { REMOVE_MARKER_AT_END_OF_TURN, MOVED_TO_ACTIVE_THIS_TURN, WAS_ATTACK_USED, THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN } from "../../../game/store/prefabs/prefabs";
 
 export class Cobalionex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public cardType: CardType = M;
   public hp: number = 210;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C];
 
-  public powers = [
-    {
-      name: 'Metal Road',
-      useWhenInPlay: false,
-      powerType: PowerType.ABILITY,
-      text: 'Once during your turn, when this Pokémon moves from your Bench to the Active Spot, you may use this Ability. Move any amount of [M] Energy from your other Pokémon to this Pokémon.',
-    },
-  ];
+  public powers = [{
+    name: 'Metal Road',
+    useWhenInPlay: false,
+    powerType: PowerType.ABILITY,
+    text: 'Once during your turn, when this Pokémon moves from your Bench to the Active Spot, you may use this Ability. Move any amount of [M] Energy from your other Pokémon to this Pokémon.',
+  }];
 
-  public attacks = [
-    {
-      name: 'Power Tackle',
-      cost: [M, M, C],
-      damage: 200,
-      text: "During your next turn, this Pokémon can't attack.",
-    },
-  ];
+  public attacks = [{
+    name: 'Power Tackle',
+    cost: [M, M, C],
+    damage: 200,
+    text: "During your next turn, this Pokémon can't attack.",
+  }];
 
   public regulationMark: string = 'J';
   public set: string = 'CRI';
@@ -165,7 +140,7 @@ export class Cobalionex extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      effect.player.active.cannotAttackNextTurnPending = true;
+      THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN(effect.player);
     }
 
     return state;

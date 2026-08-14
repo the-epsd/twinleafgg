@@ -13,21 +13,18 @@ export class Bronzor extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Knock Away',
-      cost: [M, C],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 10 more damage.'
-    },
-    {
-      name: 'Spinning Attack',
-      cost: [M, C, C],
-      damage: 40,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Knock Away',
+    cost: [M, C],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 10 more damage.'
+  }, {
+    name: 'Spinning Attack',
+    cost: [M, C, C],
+    damage: 40,
+    text: ''
+  }];
 
   public set: string = 'NXD';
   public setNumber: string = '75';

@@ -12,20 +12,17 @@ export class Eelektrik extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Thunder Wave',
-      cost: [L],
-      damage: 20,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Headbutt',
-      cost: [C, C],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Thunder Wave',
+    cost: [L],
+    damage: 20,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Headbutt',
+    cost: [C, C],
+    damage: 30,
+    text: ''
+  }];
 
   public set: string = 'PLB';
   public setNumber: string = '32';

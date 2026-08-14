@@ -17,18 +17,28 @@ export class RibbonBadge extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ribbon Badge';
   public fullName: string = 'Ribbon Badge EVS';
-  public text: string = 'If the Pokémon V this card is attached to has "Sylveon" in its name and is Knocked Out by damage from an attack from your opponent\'s Pokémon, that player takes 1 fewer Prize card. You may play any number of Item cards during your turn. Attach a Pokémon Tool to 1 of your Pokémon that doesn\'t already have a Pokémon Tool attached.';
+  public text: string =
+    'If the Pokémon V this card is attached to has "Sylveon" in its name and is Knocked Out by damage from an attack from your opponent\'s Pokémon, that player takes 1 fewer Prize card. You may play any number of Item cards during your turn. Attach a Pokémon Tool to 1 of your Pokémon that doesn\'t already have a Pokémon Tool attached.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Prize reduction when Sylveon V KO'd by opponent's attack
     // Ref: set-vivid-voltage/heros-medal.ts (KnockOutEffect prize reduction with tag + phase check)
-    if (effect instanceof KnockOutEffect && effect.target.tools.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
-
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
+    if (
+      effect instanceof KnockOutEffect &&
+      effect.target.tools.includes(this) &&
+      effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)
+    ) {
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+        return state;
+      }
 
       const pokemonCard = effect.target.getPokemonCard();
-      if (pokemonCard?.name.includes('Sylveon') &&
-        (pokemonCard?.tags.includes(CardTag.POKEMON_V) || pokemonCard?.tags.includes(CardTag.POKEMON_VMAX) || pokemonCard?.tags.includes(CardTag.POKEMON_VSTAR))) {
+      if (
+        pokemonCard?.name.includes('Sylveon') &&
+        (pokemonCard?.hasTag(CardTag.POKEMON_V) ||
+          pokemonCard?.hasTag(CardTag.POKEMON_VMAX) ||
+          pokemonCard?.hasTag(CardTag.POKEMON_VSTAR))
+      ) {
         effect.prizeCount -= 1;
       }
 

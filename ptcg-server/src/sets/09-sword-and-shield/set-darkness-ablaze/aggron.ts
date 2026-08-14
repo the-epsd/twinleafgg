@@ -6,7 +6,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { SURVIVE_ON_TEN_IF_FULL_HP } from '../../../game/store/prefabs/prefabs';
+import { SURVIVE_ON_TEN_IF_FULL_HP } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Aggron extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;

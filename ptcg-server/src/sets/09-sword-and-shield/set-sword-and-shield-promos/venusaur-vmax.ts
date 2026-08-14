@@ -6,10 +6,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class VenusaurVMAX extends PokemonCard {
-
   public stage: Stage = Stage.VMAX;
 
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
 
   public cardType: CardType = CardType.GRASS;
 
@@ -26,14 +25,14 @@ export class VenusaurVMAX extends PokemonCard {
       name: 'Forest Storm',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 30,
-      text: 'This attack does 30 damage for each [G] Energy attached to all of your Pokémon.'
+      text: 'This attack does 30 damage for each [G] Energy attached to all of your Pokémon.',
     },
     {
       name: 'G-Max Bloom',
       cost: [CardType.GRASS, CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 210,
-      text: 'Heal 30 damage from this Pokémon.'
-    }
+      text: 'Heal 30 damage from this Pokémon.',
+    },
   ];
 
   public set: string = 'SWSH';
@@ -49,7 +48,6 @@ export class VenusaurVMAX extends PokemonCard {
   public fullName: string = 'Venusaur VMAX SWSH 102';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
@@ -58,8 +56,8 @@ export class VenusaurVMAX extends PokemonCard {
         store.reduceEffect(state, checkProvidedEnergyEffect);
 
         let grassEnergy = 0;
-        checkProvidedEnergyEffect.energyMap.forEach(energy => {
-          energy.provides.forEach(c => {
+        checkProvidedEnergyEffect.energyMap.forEach((energy) => {
+          energy.provides.forEach((c) => {
             grassEnergy += c === CardType.GRASS ? 1 : 0;
           });
         });

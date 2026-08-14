@@ -12,14 +12,12 @@ export class Basculin extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Crunch',
-      cost: [W, W],
-      damage: 30,
-      text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Crunch',
+    cost: [W, W],
+    damage: 30,
+    text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokémon.'
+  }];
 
   public set: string = 'BLW';
   public setNumber: string = '35';

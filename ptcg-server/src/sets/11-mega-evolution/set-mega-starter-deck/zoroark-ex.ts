@@ -5,8 +5,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Zoroarkex extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Zorua';
   public cardType: CardType = D;
@@ -20,14 +19,14 @@ export class Zoroarkex extends PokemonCard {
       cost: [D],
       damage: 20,
       damageCalculation: 'x',
-      text: 'This attack does 20 damage times the number of Pokémon you have in play.'
+      text: 'This attack does 20 damage times the number of Pokémon you have in play.',
     },
     {
       name: 'Slash Down',
       cost: [D, C, C],
       damage: 210,
-      text: 'During your next turn, this Pokémon can\'t use Slash Down.'
-    }
+      text: "During your next turn, this Pokémon can't use Slash Down.",
+    },
   ];
 
   public regulationMark = 'J';
@@ -41,7 +40,9 @@ export class Zoroarkex extends PokemonCard {
     // Ref: set-shining-legends/zoroark-gx.ts (Riotous Beating)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       let pokemonInPlay = 0;
-      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, () => { pokemonInPlay += 1; });
+      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, () => {
+        pokemonInPlay += 1;
+      });
       effect.damage = 20 * pokemonInPlay;
     }
 

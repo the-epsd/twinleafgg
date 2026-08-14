@@ -21,16 +21,15 @@ export class Clobbopus extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Bind',
-      cost: [F],
-      damage: 10,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Bind',
+    cost: [F],
+    damage: 10,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'SSH';
   public setNumber: string = '106';
   public cardImage: string = 'assets/cardback.png';

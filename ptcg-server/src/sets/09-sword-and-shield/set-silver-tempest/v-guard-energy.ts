@@ -7,9 +7,7 @@ import { StateUtils } from '../../../game';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { IS_SPECIAL_ENERGY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
-
 export class VGuardEnergy extends EnergyCard {
-
   public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
@@ -29,7 +27,7 @@ export class VGuardEnergy extends EnergyCard {
   public text =
     'As long as this card is attached to a Pokémon, it provides [C] Energy.' +
     '\n' +
-    'The Pokémon this card is attached to takes 30 less damage from attacks from your opponent\'s Pokémon V (after applying Weakness and Resistance). This effect can\'t be applied more than once at a time to the same Pokémon.';
+    "The Pokémon this card is attached to takes 30 less damage from attacks from your opponent's Pokémon V (after applying Weakness and Resistance). This effect can't be applied more than once at a time to the same Pokémon.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Reduce damage by 30
@@ -46,9 +44,8 @@ export class VGuardEnergy extends EnergyCard {
       }
 
       const sourceCard = effect.source.getPokemonCard();
-      if (sourceCard?.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VMAX || CardTag.POKEMON_VSTAR)) {
-
-        // Check if damage target is owned by this card's owner 
+      if (sourceCard?.hasTag(CardTag.POKEMON_V || CardTag.POKEMON_VMAX || CardTag.POKEMON_VSTAR)) {
+        // Check if damage target is owned by this card's owner
         const targetPlayer = StateUtils.findOwner(state, effect.target);
         if (targetPlayer === player) {
           effect.reduceDamage(30, this.name);
@@ -61,4 +58,3 @@ export class VGuardEnergy extends EnergyCard {
     return state;
   }
 }
-

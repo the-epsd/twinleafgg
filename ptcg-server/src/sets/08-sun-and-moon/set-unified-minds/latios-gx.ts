@@ -3,15 +3,11 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PlayerType, PowerType, StoreLike, State, GameError, GameMessage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
-import {
-  WAS_ATTACK_USED,
-  IS_ABILITY_BLOCKED,
-  BLOCK_IF_GX_ATTACK_USED,
-  PREVENT_DAMAGE,
-} from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class LatiosGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 170;
@@ -20,11 +16,13 @@ export class LatiosGx extends PokemonCard {
 
   public readonly CLEAR_VISION_MARKER = 'LATIOS_GX_UNM_CLEAR_VISION_MARKER';
 
-  public powers = [{
-    name: 'Power Bind',
-    powerType: PowerType.ABILITY,
-    text: 'If you have 4 or fewer Pokemon in play, this Pokemon can\'t attack.'
-  }];
+  public powers = [
+    {
+      name: 'Power Bind',
+      powerType: PowerType.ABILITY,
+      text: "If you have 4 or fewer Pokemon in play, this Pokemon can't attack.",
+    },
+  ];
 
   public attacks = [{
     name: 'Tag Purge',

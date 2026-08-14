@@ -27,14 +27,12 @@ export class Emolga extends PokemonCard {
     text: 'Once during your turn (before your attack), you may search your deck for a Pokémon that has the Nuzzle attack, reveal it, and put it into your hand. Then, shuffle your deck.'
   }];
 
-  public attacks = [
-    {
-      name: 'Nuzzle',
-      cost: [L],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Nuzzle',
+    cost: [L],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'TEU';
   public setNumber: string = '46';

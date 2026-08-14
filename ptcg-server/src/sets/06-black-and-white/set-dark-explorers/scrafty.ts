@@ -19,8 +19,7 @@ export class Scrafty extends PokemonCard {
     cost: [C, C],
     damage: 30,
     text: ''
-  },
-  {
+  }, {
     name: 'Crushing Blow',
     cost: [D, D, C],
     damage: 70,

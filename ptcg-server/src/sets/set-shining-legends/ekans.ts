@@ -14,14 +14,12 @@ export class Ekans extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Poison Sting',
-      cost: [C],
-      damage: 10,
-      text: 'Flip a coin. If heads, your opponent’s Active Pokémon is now Poisoned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Poison Sting',
+    cost: [C],
+    damage: 10,
+    text: 'Flip a coin. If heads, your opponent’s Active Pokémon is now Poisoned.'
+  }];
 
   public set: string = 'SLG';
   public setNumber: string = '36';

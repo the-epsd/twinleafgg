@@ -15,20 +15,17 @@ export class Bidoof extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Tackle',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Hyper Fang',
-      cost: [C, C, C],
-      damage: 60,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tackle',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Hyper Fang',
+    cost: [C, C, C],
+    damage: 60,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'UNM';
   public setNumber: string = '171';

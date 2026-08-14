@@ -19,8 +19,7 @@ export class PokeParksLatios extends PokemonCard {
     cost: [G, C],
     damage: 30,
     text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.If tails, this attack does nothing.'
-  },
-  {
+  }, {
     name: 'Luster Purge',
     cost: [L, C, C],
     damage: 60,

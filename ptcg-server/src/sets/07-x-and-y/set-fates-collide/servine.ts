@@ -23,14 +23,12 @@ export class Servine extends PokemonCard {
     text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon, you may flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
   }];
 
-  public attacks = [
-    {
-      name: 'Vine Whip',
-      cost: [G],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Vine Whip',
+    cost: [G],
+    damage: 20,
+    text: ''
+  }];
 
   public set: string = 'FCO';
   public setNumber: string = '6';

@@ -1,4 +1,5 @@
 export type CardBase = 'PokemonCard' | 'TrainerCard' | 'EnergyCard';
+export type EffectKind = 'attack' | 'power' | 'trainer' | 'energy';
 
 export type EnergyShort =
   | 'G'
@@ -11,7 +12,8 @@ export type EnergyShort =
   | 'M'
   | 'Y'
   | 'N'
-  | 'C';
+  | 'C'
+  | 'A';
 
 export const ENERGY_SHORTS: EnergyShort[] = [
   'G',
@@ -39,6 +41,7 @@ export const ENERGY_LABELS: Record<EnergyShort, string> = {
   Y: 'Fairy (Y)',
   N: 'Dragon (N)',
   C: 'Colorless (C)',
+  A: 'Any type (A)',
 };
 
 export const STAGES = [
@@ -81,7 +84,7 @@ export type PowerTypeName = (typeof POWER_TYPES)[number];
 
 export type WeaknessValue = 'x2' | '+20' | '+30';
 
-export type PrefabScope = 'attack' | 'power' | 'both';
+export type PrefabScope = EffectKind | 'both';
 
 export interface PrefabParamDef {
   key: string;
@@ -115,7 +118,7 @@ export interface PrefabDefinition {
 }
 
 export interface PrefabGenContext {
-  kind: 'attack' | 'power';
+  kind: EffectKind;
   index: number;
   attackName?: string;
   powerName?: string;
@@ -169,15 +172,30 @@ export interface PowerDraft {
   knocksOutSelf: boolean;
   isFossil: boolean;
   selectedPrefabs: SelectedPrefab[];
+  serverEffect?: ServerEffect;
   matchError?: string;
 }
 
 export interface ServerEffect {
   source: string;
-  attackText: string;
+  effectText: string;
+  /** Kept for compatibility with older server-card-effects payloads. */
+  attackText?: string;
+  kind: EffectKind;
   body: string[];
   imports: string[];
   similarity: number;
+  bodyMode?: 'branch' | 'full';
+  helpers?: string[];
+}
+
+export interface ReprintCandidate {
+  className: string;
+  name: string;
+  set: string;
+  setNumber: string;
+  fullName: string;
+  sourcePath: string;
 }
 
 export interface CardDraft {
@@ -206,8 +224,13 @@ export interface CardDraft {
   // Trainer
   trainerType: 'ITEM' | 'SUPPORTER' | 'STADIUM' | 'TOOL';
   trainerText: string;
+  trainerPrefabs: SelectedPrefab[];
+  trainerServerEffect?: ServerEffect;
   // Energy
   energyType: 'BASIC' | 'SPECIAL';
   provides: string;
+  blendedEnergies: string;
+  blendedEnergyCount: string;
   energyText: string;
+  energyServerEffect?: ServerEffect;
 }

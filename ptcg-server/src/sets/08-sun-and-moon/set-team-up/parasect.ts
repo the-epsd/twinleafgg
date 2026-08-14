@@ -29,14 +29,12 @@ export class Parasect extends PokemonCard {
     text: 'Put 2 damage counters on your opponent\'s Confused Pokémon between turns.'
   }];
 
-  public attacks = [
-    {
-      name: 'Mysterious Powder',
-      cost: [G, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Mysterious Powder',
+    cost: [G, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Confused.'
+  }];
 
   public set: string = 'TEU';
   public setNumber: string = '7';
@@ -45,6 +43,7 @@ export class Parasect extends PokemonCard {
   public fullName: string = 'Parasect TEU';
 
   // Ref: set-burning-shadows/seviper.ts (More Poison - BetweenTurnsEffect passive ability)
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Panic Spores (passive - between turns)
     if (effect instanceof BetweenTurnsEffect) {

@@ -10,16 +10,15 @@ export class Weedle extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Surprise Attack',
-      cost: [G],
-      damage: 30,
-      text: 'Flip a coin. If tails, this attack does nothing.',
-    },
-  ];
+  public attacks = [{
+    name: 'Surprise Attack',
+    cost: [G],
+    damage: 30,
+    text: 'Flip a coin. If tails, this attack does nothing.',
+  }];
 
   public regulationMark = 'J';
+
   public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '1';

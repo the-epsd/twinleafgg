@@ -19,8 +19,7 @@ export class Haunter extends PokemonCard {
     cost: [C, C],
     damage: 10,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
-  },
-  {
+  }, {
     name: 'Shadow Hand',
     cost: [P, C, C],
     damage: 10,

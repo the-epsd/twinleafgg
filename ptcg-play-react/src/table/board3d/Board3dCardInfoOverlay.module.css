@@ -1,0 +1,99 @@
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: 520;
+  pointer-events: none;
+}
+
+.dismiss {
+  position: absolute;
+  inset: 0;
+  pointer-events: auto;
+  cursor: default;
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+.plateStack {
+  position: fixed;
+  left: 0;
+  top: 0;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 8px;
+  overflow: visible;
+  padding: 4px;
+  box-sizing: border-box;
+  z-index: 1;
+  will-change: transform;
+}
+
+.plate {
+  margin: 0;
+  flex: 0 0 auto;
+  padding: 10px 12px;
+  border-radius: 4px;
+  border: 1.5px solid rgba(20, 18, 28, 0.85);
+  background: linear-gradient(
+    165deg,
+    rgba(214, 196, 232, 0.96) 0%,
+    rgba(196, 178, 222, 0.94) 100%
+  );
+  box-shadow:
+    0 2px 0 rgba(255, 255, 255, 0.35),
+    0 6px 14px rgba(0, 0, 0, 0.32);
+  color: #1a1520;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.retreatPlate {
+  position: fixed;
+  left: 0;
+  top: 0;
+  pointer-events: auto;
+  display: flex;
+  align-items: stretch;
+  box-sizing: border-box;
+  border-radius: 3px;
+  border: 1.5px solid rgba(20, 18, 28, 0.85);
+  background: linear-gradient(
+    165deg,
+    rgba(214, 196, 232, 0.96) 0%,
+    rgba(196, 178, 222, 0.94) 100%
+  );
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.35),
+    0 4px 10px rgba(0, 0, 0, 0.28);
+  color: #1a1520;
+  will-change: transform;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.retreatInner {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 4px 6px;
+  min-width: 0;
+}
+
+.retreatLabel {
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.retreatRow {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}

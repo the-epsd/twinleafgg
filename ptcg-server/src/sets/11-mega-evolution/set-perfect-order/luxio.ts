@@ -1,4 +1,14 @@
-import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, CardTag, PlayerType } from '../../../game';
+import {
+  PokemonCard,
+  Stage,
+  CardType,
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  CardTag,
+  PlayerType,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { CheckTableStateEffect } from '../../../game/store/effects/check-effects';
@@ -11,18 +21,22 @@ export class Luxio extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Fighting Roar',
-    powerType: PowerType.ABILITY,
-    text: 'If your opponent\'s Active Pokémon is a Pokémon ex, this Pokémon can evolve during your first turn or the turn you play it.'
-  }];
+  public powers = [
+    {
+      name: 'Fighting Roar',
+      powerType: PowerType.ABILITY,
+      text: "If your opponent's Active Pokémon is a Pokémon ex, this Pokémon can evolve during your first turn or the turn you play it.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Static Shock',
-    cost: [L, C],
-    damage: 40,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Static Shock',
+      cost: [L, C],
+      damage: 40,
+      text: '',
+    },
+  ];
 
   public regulationMark = 'J';
   public set: string = 'POR';
@@ -39,13 +53,17 @@ export class Luxio extends PokemonCard {
         const opponent = StateUtils.getOpponent(state, player);
         const opponentActive = opponent.active.getPokemonCard();
 
-        if (opponentActive && opponentActive.tags.includes(CardTag.POKEMON_ex)) {
+        if (opponentActive && opponentActive.hasTag(CardTag.POKEMON_ex)) {
           try {
-            const stub = new PowerEffect(player, {
-              name: 'test',
-              powerType: PowerType.ABILITY,
-              text: ''
-            }, this);
+            const stub = new PowerEffect(
+              player,
+              {
+                name: 'test',
+                powerType: PowerType.ABILITY,
+                text: '',
+              },
+              this,
+            );
             store.reduceEffect(state, stub);
           } catch {
             return state;
@@ -54,8 +72,11 @@ export class Luxio extends PokemonCard {
           // Allow evolution on first turn or first turn this Pokemon is put into play
           if (state.turn === 1 || state.turn === 2) {
             player.canEvolve = true;
-            player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-              if (cardList.getPokemonCard() === this || cardList.cards.some(c => c.name === 'Shinx')) {
+            player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+              if (
+                cardList.getPokemonCard() === this ||
+                cardList.cards.some((c) => c.name === 'Shinx')
+              ) {
                 cardList.pokemonPlayedTurn = state.turn - 1;
               }
             });

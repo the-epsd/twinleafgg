@@ -17,21 +17,18 @@ export class Scrafty extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Low Kick',
-      cost: [C, C],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Machine Gun Headbutt',
-      cost: [D, D],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 50 damage times the number of heads. This Pok\u00e9mon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Low Kick',
+    cost: [C, C],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Machine Gun Headbutt',
+    cost: [D, D],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 50 damage times the number of heads. This Pok\u00e9mon is now Confused.'
+  }];
 
   public set: string = 'FFI';
   public setNumber: string = '67';

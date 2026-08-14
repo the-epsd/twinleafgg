@@ -14,20 +14,17 @@ export class Roselia extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Sleep Powder',
-      cost: [G],
-      damage: 10,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Asleep.'
-    },
-    {
-      name: 'Cut',
-      cost: [G, G],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Sleep Powder',
+    cost: [G],
+    damage: 10,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Asleep.'
+  }, {
+    name: 'Cut',
+    cost: [G, G],
+    damage: 20,
+    text: ''
+  }];
 
   public set: string = 'FLF';
   public setNumber: string = '8';

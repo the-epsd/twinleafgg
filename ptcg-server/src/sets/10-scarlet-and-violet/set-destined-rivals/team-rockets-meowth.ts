@@ -1,10 +1,10 @@
-import { PokemonCard, Stage, CardType, CardTag, StoreLike, State, GameMessage, StateUtils, CoinFlipPrompt } from '../../../game';
+import { PokemonCard, Stage, CardType, CardTag, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { AFTER_ATTACK, MOVE_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, MOVE_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class TeamRocketsMeowth extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.TEAM_ROCKET];
+  protected _tags = [CardTag.TEAM_ROCKET];
   public cardType: CardType = C;
   public hp: number = 70;
   public weakness = [{ type: F }];
@@ -15,23 +15,25 @@ export class TeamRocketsMeowth extends PokemonCard {
       name: 'Cat Nab',
       cost: [C],
       damage: 0,
-      text: 'Choose a random card from your opponent\'s hand. Your opponent reveals that card and shuffles it into their deck.'
+      text: "Choose a random card from your opponent's hand. Your opponent reveals that card and shuffles it into their deck.",
     },
     {
       name: 'Wild Scratch',
       cost: [C, C],
       damage: 20,
       damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 20 damage for each heads.'
-    }
+      text: 'Flip 3 coins. This attack does 20 damage for each heads.',
+    },
   ];
 
   public set: string = 'DRI';
+
   public regulationMark = 'I';
+
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '149';
-  public name: string = 'Team Rocket\'s Meowth';
-  public fullName: string = 'Team Rocket\'s Meowth DRI';
+  public name: string = "Team Rocket's Meowth";
+  public fullName: string = "Team Rocket's Meowth DRI";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Cat Nab
@@ -46,7 +48,11 @@ export class TeamRocketsMeowth extends PokemonCard {
       if (opponent.hand.cards.length > 0) {
         const randomIndex = Math.floor(Math.random() * opponent.hand.cards.length);
         const randomCard = opponent.hand.cards[randomIndex];
-        MOVE_CARDS(store, state, opponent.hand, opponent.deck, { cards: [randomCard], sourceCard: this, sourceEffect: this.attacks[0] });
+        MOVE_CARDS(store, state, opponent.hand, opponent.deck, {
+          cards: [randomCard],
+          sourceCard: this,
+          sourceEffect: this.attacks[0],
+        });
         SHUFFLE_DECK(store, state, opponent);
       }
     }
@@ -55,11 +61,7 @@ export class TeamRocketsMeowth extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
+      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 3, results => {
         let heads: number = 0;
         results.forEach(r => { heads += r ? 1 : 0; });
         effect.damage = 20 * heads;

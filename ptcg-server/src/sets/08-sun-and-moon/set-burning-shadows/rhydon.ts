@@ -16,20 +16,17 @@ export class Rhydon extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Rock Tumble',
-      cost: [F, F, C],
-      damage: 80,
-      text: 'This attack\'s damage isn\'t affected by Resistance.'
-    },
-    {
-      name: 'Megahorn',
-      cost: [F, F, F, C],
-      damage: 120,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Rock Tumble',
+    cost: [F, F, C],
+    damage: 80,
+    text: 'This attack\'s damage isn\'t affected by Resistance.'
+  }, {
+    name: 'Megahorn',
+    cost: [F, F, F, C],
+    damage: 120,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'BUS';
   public setNumber: string = '66';

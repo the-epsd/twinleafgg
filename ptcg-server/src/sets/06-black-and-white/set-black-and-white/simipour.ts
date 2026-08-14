@@ -13,21 +13,18 @@ export class Simipour extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Scald',
-      cost: [W],
-      damage: 20,
-      text: 'The Defending Pokémon is now Burned.'
-    },
-    {
-      name: 'Fury Swipes',
-      cost: [C, C, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 40 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Scald',
+    cost: [W],
+    damage: 20,
+    text: 'The Defending Pokémon is now Burned.'
+  }, {
+    name: 'Fury Swipes',
+    cost: [C, C, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 40 damage times the number of heads.'
+  }];
 
   public set: string = 'BLW';
   public cardImage: string = 'assets/cardback.png';

@@ -18,21 +18,18 @@ export class Leavanny extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Cleave',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip 2 coins. If both of them are heads, discard all Energy attached to the Defending Pokémon.'
-    },
-    {
-      name: 'Leaf Blade',
-      cost: [G, G, C],
-      damage: 70,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Cleave',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip 2 coins. If both of them are heads, discard all Energy attached to the Defending Pokémon.'
+  }, {
+    name: 'Leaf Blade',
+    cost: [G, G, C],
+    damage: 70,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 20 more damage.'
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '10';

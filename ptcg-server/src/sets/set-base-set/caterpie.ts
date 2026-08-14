@@ -7,21 +7,18 @@ import { StateUtils } from '../../game';
 import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Caterpie extends PokemonCard {
-
   public stage = Stage.BASIC;
   public cardType = G;
   public hp = 40;
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'String Shot',
-      cost: [G],
-      damage: 10,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'String Shot',
+    cost: [G],
+    damage: 10,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }];
 
   public set = 'BS';
   public setNumber = '45';

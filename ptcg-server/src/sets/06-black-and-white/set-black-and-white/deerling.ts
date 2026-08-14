@@ -14,21 +14,18 @@ export class Deerling extends PokemonCard {
   public resistance = [{ type: W, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Double Kick',
-      cost: [C],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
-    },
-    {
-      name: 'Leech Seed',
-      cost: [G, C],
-      damage: 20,
-      text: 'Heal 10 damage from this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Double Kick',
+    cost: [C],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
+  }, {
+    name: 'Leech Seed',
+    cost: [G, C],
+    damage: 20,
+    text: 'Heal 10 damage from this Pokémon.'
+  }];
 
   public set: string = 'BLW';
   public cardImage: string = 'assets/cardback.png';

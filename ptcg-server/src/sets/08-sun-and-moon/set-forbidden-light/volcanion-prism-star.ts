@@ -20,7 +20,7 @@ import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class VolcanionPrismStar extends PokemonCard {
-  public tags = [CardTag.PRISM_STAR];
+  protected _tags = [CardTag.PRISM_STAR];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 160;

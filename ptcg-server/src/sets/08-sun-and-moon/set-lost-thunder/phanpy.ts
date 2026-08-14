@@ -15,14 +15,12 @@ export class Phanpy extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Last Resort',
-      cost: [F, C],
-      damage: 50,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Last Resort',
+    cost: [F, C],
+    damage: 50,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'LOT';
   public setNumber: string = '111';

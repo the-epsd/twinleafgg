@@ -1,36 +1,32 @@
-import { CardTag, CardType, ChooseCardsPrompt, CoinFlipPrompt, GameError, GameMessage, PlayerType, PokemonCard, PowerType, Stage, State, StateUtils, StoreLike, SuperType } from "../../../game";
+import { CardTag, CardType, ChooseCardsPrompt, GameError, GameMessage, PlayerType, PokemonCard, PowerType, Stage, State, StateUtils, StoreLike, SuperType } from "../../../game";
 import { CheckTableStateEffect, CheckPokemonAttacksEffect, CheckPokemonPowersEffect } from "../../../game/store/effects/check-effects";
 import { Effect } from "../../../game/store/effects/effect";
 import { PlayPokemonEffect } from "../../../game/store/effects/play-card-effects";
 import { HANDLE_ABILITY_BLOCK, IS_ABILITY_LOCKER_IN_PLAY, POKEBODY_TYPES } from "../../../game/store/prefabs/ability-lock";
-import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED, MOVE_CARDS } from "../../../game/store/prefabs/prefabs";
+import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED, MOVE_CARDS, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class DialgaGLVX extends PokemonCard {
   public stage: Stage = Stage.LV_X;
   public evolvesFrom = 'Dialga G';
   public cardType: CardType = M;
-  public tags = [CardTag.POKEMON_LV_X, CardTag.POKEMON_SP];
+  protected _tags = [CardTag.POKEMON_LV_X, CardTag.POKEMON_SP];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public powers = [
-    {
-      name: 'Time Crystal',
-      powerType: PowerType.POKEBODY,
-      text: "Each Pokémon (both yours and your opponent's) (excluding Pokémon SP) can't use any Poké-Bodies.",
-    },
-  ];
+  public powers = [{
+    name: 'Time Crystal',
+    powerType: PowerType.POKEBODY,
+    text: "Each Pokémon (both yours and your opponent's) (excluding Pokémon SP) can't use any Poké-Bodies.",
+  }];
 
-  public attacks = [
-    {
-      name: 'Remove Lost',
-      cost: [M, M, C, C],
-      damage: 80,
-      text: 'Flip a coin until you get tails. For each heads, remove an Energy card attached to the Defending Pokémon and put it in the Lost Zone.',
-    },
-  ];
+  public attacks = [{
+    name: 'Remove Lost',
+    cost: [M, M, C, C],
+    damage: 80,
+    text: 'Flip a coin until you get tails. For each heads, remove an Energy card attached to the Defending Pokémon and put it in the Lost Zone.',
+  }];
 
   public set: string = 'PL';
   public cardImage: string = 'assets/cardback.png';
@@ -39,21 +35,24 @@ export class DialgaGLVX extends PokemonCard {
   public fullName: string = 'Dialga G LV.X PL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    HANDLE_ABILITY_BLOCK(effect, ({ player, card }) => {
-      if (card.tags.includes(CardTag.POKEMON_SP)) {
-        return false;
-      }
-      const cardList = StateUtils.findCardList(state, this);
-      const owner = StateUtils.findOwner(state, cardList);
-      if (IS_POKEBODY_BLOCKED(store, state, owner, this)) {
-        return false;
-      }
-      return IS_ABILITY_LOCKER_IN_PLAY(state, player, this);
-    }, {
-      powerTypes: POKEBODY_TYPES,
-      error: GameMessage.BLOCKED_BY_ABILITY,
-    });
+    HANDLE_ABILITY_BLOCK(
+      effect,
+      ({ player, card }) => {
+        if (card.hasTag(CardTag.POKEMON_SP)) {
+          return false;
+        }
+        const cardList = StateUtils.findCardList(state, this);
+        const owner = StateUtils.findOwner(state, cardList);
+        if (IS_POKEBODY_BLOCKED(store, state, owner, this)) {
+          return false;
+        }
+        return IS_ABILITY_LOCKER_IN_PLAY(state, player, this);
+      },
+      {
+        powerTypes: POKEBODY_TYPES,
+        error: GameMessage.BLOCKED_BY_ABILITY,
+      },
+    );
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
@@ -61,10 +60,7 @@ export class DialgaGLVX extends PokemonCard {
 
       let numFlips = 0;
 
-      return store.prompt(
-        state,
-        [new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)],
-        (result) => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
           if (result === true) {
             numFlips++;
             return this.reduceEffect(store, state, effect);

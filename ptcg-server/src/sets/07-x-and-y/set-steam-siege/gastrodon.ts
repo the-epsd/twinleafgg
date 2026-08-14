@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardType, StoreLike, State } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
-import { WAS_ATTACK_USED, DEFENDING_POKEMON_ATTACKS_COST_MORE, DEFENDING_POKEMON_RETREAT_COSTS_MORE, AFTER_ATTACK, ADD_SLEEP_TO_PLAYER_ACTIVE } from "../../../game/store/prefabs/prefabs";
+import { WAS_ATTACK_USED, AFTER_ATTACK, ADD_SLEEP_TO_PLAYER_ACTIVE } from "../../../game/store/prefabs/prefabs";
+import { DEFENDING_POKEMON_ATTACKS_COST_MORE, DEFENDING_POKEMON_RETREAT_COSTS_MORE } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class Gastrodon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -9,9 +10,6 @@ export class Gastrodon extends PokemonCard {
   public hp: number = 110;
   public weakness = [{ type: G }];
   public retreat = [C, C];
-
-  public readonly STICKY_SHOT_MARKER = 'GASTRODON_STS_STICKY_SHOT_MARKER';
-  public readonly CLEAR_STICKY_SHOT_MARKER = 'GASTRODON_STS_CLEAR_STICKY_SHOT_MARKER';
 
   public attacks = [{
     name: 'Sticky Shot',
@@ -39,7 +37,6 @@ export class Gastrodon extends PokemonCard {
       state = DEFENDING_POKEMON_RETREAT_COSTS_MORE(store, state, effect, 1);
       return state;
     }
-
     // Water Pulse
     if (AFTER_ATTACK(effect, 1, this)) {
       ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);

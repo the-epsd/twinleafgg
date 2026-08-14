@@ -22,22 +22,20 @@ export class Cloyster extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Shell Grab',
-      cost: [C],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Tidal Wave',
-      cost: [W, C, C],
-      damage: 100,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Shell Grab',
+    cost: [C],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Tidal Wave',
+    cost: [W, C, C],
+    damage: 100,
+    text: ''
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'SSH';
   public setNumber: string = '41';
   public cardImage: string = 'assets/cardback.png';

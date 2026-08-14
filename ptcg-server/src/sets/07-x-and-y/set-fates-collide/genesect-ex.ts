@@ -4,16 +4,30 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, TrainerType } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameMessage, GameError, PokemonCardList } from '../../../game';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  GameMessage,
+  GameError,
+  PokemonCardList,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, ABILITY_USED, USE_ABILITY_ONCE_PER_TURN, REMOVE_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  ABILITY_USED,
+  USE_ABILITY_ONCE_PER_TURN,
+  REMOVE_MARKER_AT_END_OF_TURN,
+} from '../../../game/store/prefabs/prefabs';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { CardList } from '../../../game/store/state/card-list';
 import { StateUtils } from '../../../game/store/state-utils';
 
 export class GenesectEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;
   public hp: number = 180;
@@ -21,12 +35,14 @@ export class GenesectEx extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Drive Change',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), you may put a Pokémon Tool card attached to this Pokémon into your hand.'
-  }];
+  public powers = [
+    {
+      name: 'Drive Change',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn (before your attack), you may put a Pokémon Tool card attached to this Pokémon into your hand.',
+    },
+  ];
 
   public attacks = [
     {
@@ -34,8 +50,8 @@ export class GenesectEx extends PokemonCard {
       cost: [M, M, M],
       damage: 100,
       damageCalculation: '+',
-      text: 'Discard as many [M] Energy attached to this Pokémon as you like. This attack does 20 more damage for each Energy card discarded in this way.'
-    }
+      text: 'Discard as many [M] Energy attached to this Pokémon as you like. This attack does 20 more damage for each Energy card discarded in this way.',
+    },
   ];
 
   public set: string = 'FCO';
@@ -72,18 +88,22 @@ export class GenesectEx extends PokemonCard {
       } else {
         const toolList = new CardList();
         toolList.cards = [...cardList.tools];
-        store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_HAND,
-          toolList,
-          { trainerType: TrainerType.TOOL },
-          { min: 1, max: 1, allowCancel: false }
-        ), selected => {
-          if (selected && selected.length > 0) {
-            const tool = selected[0];
-            cardList.moveCardTo(tool, player.hand);
-          }
-        });
+        store.prompt(
+          state,
+          new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_CARD_TO_HAND,
+            toolList,
+            { trainerType: TrainerType.TOOL },
+            { min: 1, max: 1, allowCancel: false },
+          ),
+          (selected) => {
+            if (selected && selected.length > 0) {
+              const tool = selected[0];
+              cardList.moveCardTo(tool, player.hand);
+            }
+          },
+        );
       }
     }
 
@@ -94,27 +114,31 @@ export class GenesectEx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const metalEnergy = player.active.cards.filter(
-        c => c instanceof EnergyCard && c.provides.includes(CardType.METAL)
+        (c) => c instanceof EnergyCard && c.provides.includes(CardType.METAL),
       );
 
       if (metalEnergy.length > 0) {
         const energyList = new CardList();
         energyList.cards = metalEnergy;
 
-        store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_DISCARD,
-          energyList,
-          {},
-          { min: 0, max: metalEnergy.length, allowCancel: false }
-        ), selected => {
-          if (selected && selected.length > 0) {
-            effect.damage += 20 * selected.length;
-            selected.forEach(c => {
-              player.active.moveCardTo(c, player.discard);
-            });
-          }
-        });
+        store.prompt(
+          state,
+          new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_CARD_TO_DISCARD,
+            energyList,
+            {},
+            { min: 0, max: metalEnergy.length, allowCancel: false },
+          ),
+          (selected) => {
+            if (selected && selected.length > 0) {
+              effect.damage += 20 * selected.length;
+              selected.forEach((c) => {
+                player.active.moveCardTo(c, player.discard);
+              });
+            }
+          },
+        );
       }
     }
 

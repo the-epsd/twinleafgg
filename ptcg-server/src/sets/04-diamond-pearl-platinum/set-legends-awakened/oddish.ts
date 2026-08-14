@@ -1,8 +1,8 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, CoinFlipPrompt, GameMessage, StateUtils } from '../../../game';
+import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { ADD_POISON_TO_PLAYER_ACTIVE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { ADD_POISON_TO_PLAYER_ACTIVE, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Oddish extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -16,8 +16,7 @@ export class Oddish extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Poisoned.'
-  },
-  {
+  }, {
     name: 'Ram',
     cost: [P, C],
     damage: 20,
@@ -35,9 +34,7 @@ export class Oddish extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
           ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this);
         }

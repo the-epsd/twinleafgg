@@ -19,8 +19,7 @@ export class Stoutland extends PokemonCard {
     cost: [C, C],
     damage: 0,
     text: 'Flip 3 coins. Put a number of cards up to the number of heads from your discard pile into your hand.'
-  },
-  {
+  }, {
     name: 'Special Fang',
     cost: [C, C, C, C],
     damage: 100,
@@ -29,6 +28,7 @@ export class Stoutland extends PokemonCard {
   }];
 
   public regulationMark = 'I';
+
   public set: string = 'WHT';
   public setNumber: string = '76';
   public cardImage: string = 'assets/cardback.png';

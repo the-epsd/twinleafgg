@@ -1,16 +1,18 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SpecialCondition } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
-import { AddSpecialConditionsEffect, DealDamageEffect } from '../../../game/store/effects/attack-effects';
+import {
+  AddSpecialConditionsEffect,
+  DealDamageEffect,
+} from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class GengarV extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
-  public tags = [CardTag.POKEMON_V, CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.POKEMON_V, CardTag.SINGLE_STRIKE];
 
   public cardType: CardType = CardType.DARK;
 
@@ -25,14 +27,14 @@ export class GengarV extends PokemonCard {
       name: 'Dark Slumber',
       cost: [CardType.DARK, CardType.DARK],
       damage: 40,
-      text: 'Your opponent\'s Active Pokémon is now Asleep.'
+      text: "Your opponent's Active Pokémon is now Asleep.",
     },
     {
       name: 'Pain Explosion',
       cost: [CardType.DARK, CardType.DARK, CardType.DARK],
       damage: 190,
-      text: 'Put 3 damage counters on this Pokémon.'
-    }
+      text: 'Put 3 damage counters on this Pokémon.',
+    },
   ];
 
   public set: string = 'FST';
@@ -48,14 +50,14 @@ export class GengarV extends PokemonCard {
   public fullName: string = 'Gengar V FST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
+      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [
+        SpecialCondition.ASLEEP,
+      ]);
       store.reduceEffect(state, specialConditionEffect);
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-
       const player = effect.player;
 
       const dealDamage = new DealDamageEffect(effect, 30);
@@ -64,5 +66,4 @@ export class GengarV extends PokemonCard {
     }
     return state;
   }
-
 }

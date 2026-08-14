@@ -16,15 +16,13 @@ export class Scraggy extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Tail Rap',
-      cost: [D, C],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tail Rap',
+    cost: [D, C],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
+  }];
 
   public set: string = 'FLF';
   public setNumber: string = '58';

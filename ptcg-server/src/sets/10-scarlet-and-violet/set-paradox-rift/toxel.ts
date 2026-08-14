@@ -11,16 +11,17 @@ export class Toxel extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Whimsy Tackle',
-      cost: [L, L],
-      damage: 60,
-      text: 'Flip a coin. If tails, this attack does nothing.',
-    }
-  ];
+  public attacks = [{
+    name: 'Whimsy Tackle',
+    cost: [L, L],
+    damage: 60,
+    text: 'Flip a coin. If tails, this attack does nothing.',
+  }];
+
   public set: string = 'PAR';
+
   public regulationMark = 'G';
+
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '69';
   public name: string = 'Toxel';

@@ -18,21 +18,18 @@ export class Primeape extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Swagger',
-      cost: [C],
-      damage: 20,
-      text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pok\u00e9mon.'
-    },
-    {
-      name: 'Spirited Throw',
-      cost: [F, F],
-      damage: 30,
-      damageCalculation: '+',
-      text: 'If, before doing damage, your opponent\'s Active Pok\u00e9mon has more remaining HP than this Pok\u00e9mon, this attack does 60 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Swagger',
+    cost: [C],
+    damage: 20,
+    text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pok\u00e9mon.'
+  }, {
+    name: 'Spirited Throw',
+    cost: [F, F],
+    damage: 30,
+    damageCalculation: '+',
+    text: 'If, before doing damage, your opponent\'s Active Pok\u00e9mon has more remaining HP than this Pok\u00e9mon, this attack does 60 more damage.'
+  }];
 
   public set: string = 'STS';
   public setNumber: string = '53';

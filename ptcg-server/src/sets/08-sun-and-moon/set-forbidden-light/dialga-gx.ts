@@ -8,7 +8,7 @@ import { ApplyWeaknessEffect, AfterDamageEffect } from '../../../game/store/effe
 import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class DialgaGX extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;
   public hp: number = 180;
@@ -21,22 +21,22 @@ export class DialgaGX extends PokemonCard {
       name: 'Overclock',
       cost: [M],
       damage: 0,
-      text: 'Draw cards until you have 6 cards in your hand.'
+      text: 'Draw cards until you have 6 cards in your hand.',
     },
     {
       name: 'Shred',
       cost: [M, C, C],
       damage: 80,
       shredAttack: true,
-      text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
+      text: "This attack's damage isn't affected by any effects on your opponent's Active Pokémon.",
     },
     {
       name: 'Timeless-GX',
       cost: [M, M, M, C, C],
       damage: 150,
       gxAttack: true,
-      text: 'Take another turn after this one. (Skip the between-turns step.) (You can\'t use more than 1 GX attack in a game.) '
-    }
+      text: "Take another turn after this one. (Skip the between-turns step.) (You can't use more than 1 GX attack in a game.) ",
+    },
   ];
 
   public set: string = 'FLI';
@@ -48,14 +48,19 @@ export class DialgaGX extends PokemonCard {
   public readonly TIMELESS_GX_MARKER_2 = 'TIMELESS_GX_MARKER_2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.TIMELESS_GX_MARKER_2, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.TIMELESS_GX_MARKER_2, this)
+    ) {
       effect.player.marker.removeMarker(this.TIMELESS_GX_MARKER, this);
       effect.player.marker.removeMarker(this.TIMELESS_GX_MARKER_2, this);
       effect.player.usedTurnSkip = false;
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.TIMELESS_GX_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.TIMELESS_GX_MARKER, this)
+    ) {
       effect.player.marker.addMarker(this.TIMELESS_GX_MARKER_2, this);
     }
 

@@ -6,12 +6,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { GameError, GameMessage, PowerType, ShuffleDeckPrompt, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import {
-  WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED,
-  USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN,
-  BLOCK_RETREAT,
-  DRAW_CARDS, SELECT_PROMPT
-} from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, DRAW_CARDS, SELECT_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 export class Flygon extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Vibrava';

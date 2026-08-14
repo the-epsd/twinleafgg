@@ -16,20 +16,17 @@ export class Shuckle extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Hide a Berry',
-      cost: [C],
-      damage: 0,
-      text: 'Draw 2 cards. Then, put a card from your hand on the bottom of your deck.'
-    },
-    {
-      name: 'Wrap',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Hide a Berry',
+    cost: [C],
+    damage: 0,
+    text: 'Draw 2 cards. Then, put a card from your hand on the bottom of your deck.'
+  }, {
+    name: 'Wrap',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'FCO';
   public setNumber: string = '1';

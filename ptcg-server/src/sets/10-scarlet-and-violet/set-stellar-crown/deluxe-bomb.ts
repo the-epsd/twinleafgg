@@ -7,10 +7,9 @@ import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
 import { StateUtils } from '../../../game/store/state-utils';
 import { ToolEffect } from '../../../game/store/effects/play-card-effects';
 
-
 export class DeluxeBomb extends TrainerCard {
   public regulationMark = 'G';
-  public tags = [CardTag.ACE_SPEC];
+  protected _tags = [CardTag.ACE_SPEC];
   public trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'SCR';
   public cardImage: string = 'assets/cardback.png';
@@ -19,7 +18,7 @@ export class DeluxeBomb extends TrainerCard {
   public fullName = 'Deluxe Bomb SCR';
 
   public text: string =
-    'If the Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent\'s Pokémon (even if this Pokémon is Knocked Out), put 12 damage counters on the Attacking Pokémon. If you placed any damage counters in this way, discard this card.';
+    "If the Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out), put 12 damage counters on the Attacking Pokémon. If you placed any damage counters in this way, discard this card.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AfterDamageEffect && effect.target.tools.includes(this)) {
@@ -41,7 +40,7 @@ export class DeluxeBomb extends TrainerCard {
       if (state.phase === GamePhase.ATTACK) {
         effect.source.damage += 120;
 
-        effect.target.cards.forEach(card => {
+        effect.target.cards.forEach((card) => {
           if (card === this) {
             effect.target.moveCardTo(card, targetPlayer.discard);
           }
@@ -51,5 +50,4 @@ export class DeluxeBomb extends TrainerCard {
 
     return state;
   }
-
 }

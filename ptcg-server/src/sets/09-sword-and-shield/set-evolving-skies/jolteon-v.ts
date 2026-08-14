@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class JolteonV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = L;
   public hp: number = 190;
@@ -22,18 +22,19 @@ export class JolteonV extends PokemonCard {
       name: 'Thunder Spear',
       cost: [C],
       damage: 0,
-      text: 'This attack does 20 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack does 20 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Pin Missile',
       cost: [L, C, C],
       damage: 60,
       damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 60 damage for each heads.'
-    }
+      text: 'Flip 4 coins. This attack does 60 damage for each heads.',
+    },
   ];
 
   public regulationMark: string = 'E';
+
   public set: string = 'EVS';
   public setNumber: string = '177';
   public cardImage: string = 'assets/cardback.png';
@@ -52,8 +53,8 @@ export class JolteonV extends PokemonCard {
     // Flip 4 coins. This attack does 60 damage for each heads.
     // Ref: AGENTS-patterns.md (MULTIPLE_COIN_FLIPS_PROMPT)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 4, results => {
-        const heads = results.filter(r => r).length;
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 4, (results) => {
+        const heads = results.filter((r) => r).length;
         effect.damage = 60 * heads;
       });
     }

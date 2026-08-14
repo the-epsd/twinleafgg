@@ -7,7 +7,7 @@ import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../../game/
 import { TERA_RULE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Espathraex extends PokemonCard {
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Flittle';
   public cardType: CardType = G;
@@ -15,12 +15,13 @@ export class Espathraex extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public powers =
-    [{
+  public powers = [
+    {
       name: 'Dazzling Gaze',
       powerType: PowerType.ABILITY,
-      text: 'As long as this Pokémon is in the Active Spot, attacks used by your opponent\'s Active Pokémon cost [C] more.'
-    }];
+      text: "As long as this Pokémon is in the Active Spot, attacks used by your opponent's Active Pokémon cost [C] more.",
+    },
+  ];
 
   public attacks = [{
     name: 'Psy Ball',
@@ -46,13 +47,16 @@ export class Espathraex extends PokemonCard {
 
       // Check if Espathra ex is in the active position
       if (owner.active.getPokemonCard() === this) {
-
         try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
+          const stub = new PowerEffect(
+            player,
+            {
+              name: 'test',
+              powerType: PowerType.ABILITY,
+              text: '',
+            },
+            this,
+          );
           store.reduceEffect(state, stub);
         } catch {
           return state;
@@ -76,13 +80,17 @@ export class Espathraex extends PokemonCard {
 
       const playerProvidedEnergy = new CheckProvidedEnergyEffect(player);
       store.reduceEffect(state, playerProvidedEnergy);
-      const playerEnergyCount = playerProvidedEnergy.energyMap
-        .reduce((left, p) => left + p.provides.length, 0);
+      const playerEnergyCount = playerProvidedEnergy.energyMap.reduce(
+        (left, p) => left + p.provides.length,
+        0,
+      );
 
       const opponentProvidedEnergy = new CheckProvidedEnergyEffect(opponent);
       store.reduceEffect(state, opponentProvidedEnergy);
-      const opponentEnergyCount = opponentProvidedEnergy.energyMap
-        .reduce((left, p) => left + p.provides.length, 0);
+      const opponentEnergyCount = opponentProvidedEnergy.energyMap.reduce(
+        (left, p) => left + p.provides.length,
+        0,
+      );
 
       effect.damage += (playerEnergyCount + opponentEnergyCount) * 30;
     }

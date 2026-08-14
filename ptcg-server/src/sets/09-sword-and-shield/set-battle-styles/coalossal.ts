@@ -17,23 +17,21 @@ export class Coalossal extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Coal Cannon',
-      cost: [C],
-      damage: 90,
-      damageCalculation: 'x',
-      text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 90 damage for each heads.'
-    },
-    {
-      name: 'Wild Tackle',
-      cost: [F, C, C, C],
-      damage: 200,
-      text: 'This Pokémon also does 50 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Coal Cannon',
+    cost: [C],
+    damage: 90,
+    damageCalculation: 'x',
+    text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 90 damage for each heads.'
+  }, {
+    name: 'Wild Tackle',
+    cost: [F, C, C, C],
+    damage: 200,
+    text: 'This Pokémon also does 50 damage to itself.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'BST';
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';

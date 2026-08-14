@@ -12,21 +12,18 @@ export class Kricketot extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Beat',
-      cost: [G],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Double Headbutt',
-      cost: [G, G],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 10 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Beat',
+    cost: [G],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Double Headbutt',
+    cost: [G, G],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 10 more damage for each heads.'
+  }];
 
   public set: string = 'NXD';
   public setNumber: string = '3';

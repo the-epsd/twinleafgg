@@ -1,13 +1,20 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  EnergyType,
+  SuperType,
+} from '../../../game/store/card/card-types';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { StoreLike, State, StateUtils, PlayerType, SlotType, GameMessage, AttachEnergyPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED, THIS_POKEMON_RETALIATES_ON_DAMAGE_DURING_OPPONENTS_NEXT_TURN } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { THIS_POKEMON_RETALIATES_ON_DAMAGE_DURING_OPPONENTS_NEXT_TURN } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class TurtonatorGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = R;
   public hp: number = 190;
@@ -54,8 +61,11 @@ export class TurtonatorGx extends PokemonCard {
       BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
 
-      const fireEnergyInDiscard = player.discard.cards.filter(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.FIRE)
+      const fireEnergyInDiscard = player.discard.cards.filter(
+        (c) =>
+          c instanceof EnergyCard &&
+          c.energyType === EnergyType.BASIC &&
+          c.provides.includes(CardType.FIRE),
       );
 
       if (fireEnergyInDiscard.length === 0) {
@@ -64,21 +74,25 @@ export class TurtonatorGx extends PokemonCard {
 
       const maxAttach = Math.min(5, fireEnergyInDiscard.length);
 
-      return store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_CARDS,
-        player.discard,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
-        { allowCancel: false, min: maxAttach, max: maxAttach }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
-        }
-      });
+      return store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_CARDS,
+          player.discard,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
+          { allowCancel: false, min: maxAttach, max: maxAttach },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.discard.moveCardTo(transfer.card, target);
+          }
+        },
+      );
     }
 
     return state;

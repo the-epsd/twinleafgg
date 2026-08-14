@@ -2,7 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, BLOCK_RETREAT } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class Pinsir extends PokemonCard {
@@ -12,20 +13,17 @@ export class Pinsir extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Power Pinch',
-      cost: [C, C],
-      damage: 0,
-      text: 'Flip 2 coins. For each heads, discard an Energy attached to the Defending Pokémon.'
-    },
-    {
-      name: 'Grip and Squeeze',
-      cost: [G, G, C],
-      damage: 70,
-      text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
-    }
-  ];
+  public attacks = [{
+    name: 'Power Pinch',
+    cost: [C, C],
+    damage: 0,
+    text: 'Flip 2 coins. For each heads, discard an Energy attached to the Defending Pokémon.'
+  }, {
+    name: 'Grip and Squeeze',
+    cost: [G, G, C],
+    damage: 70,
+    text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
+  }];
 
   public set: string = 'NXD';
   public setNumber: string = '1';

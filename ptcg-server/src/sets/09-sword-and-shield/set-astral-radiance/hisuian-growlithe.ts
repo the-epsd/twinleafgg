@@ -1,6 +1,7 @@
 import { CardType, PokemonCard, Stage, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { COIN_FLIP_PROMPT, PREVENT_DAMAGE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class HisuianGrowlithe extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -14,8 +15,7 @@ export class HisuianGrowlithe extends PokemonCard {
     cost: [],
     damage: 0,
     text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage done to this Pokémon by attacks.'
-  },
-  {
+  }, {
     name: 'Bite',
     cost: [F, C],
     damage: 30,
@@ -23,6 +23,7 @@ export class HisuianGrowlithe extends PokemonCard {
   }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'ASR';
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';

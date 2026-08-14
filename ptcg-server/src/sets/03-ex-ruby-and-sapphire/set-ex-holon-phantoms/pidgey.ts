@@ -3,19 +3,21 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 
 export class Pidgey extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.DELTA_SPECIES];
+  protected _tags = [CardTag.DELTA_SPECIES];
   public cardType: CardType = L;
   public hp: number = 40;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Wing Attack',
-    cost: [C],
-    damage: 10,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Wing Attack',
+      cost: [C],
+      damage: 10,
+      text: '',
+    },
+  ];
 
   public set: string = 'HP';
   public setNumber: string = '77';

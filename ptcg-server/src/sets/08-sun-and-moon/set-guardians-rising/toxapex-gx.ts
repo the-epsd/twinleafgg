@@ -1,16 +1,11 @@
 import { CardTag, CardType, PokemonCard, Stage, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../../game/store/prefabs/attack-effects';
-import {
-  BLOCK_IF_GX_ATTACK_USED,
-  MULTIPLE_COIN_FLIPS_PROMPT,
-  PREVENT_DAMAGE,
-  PREVENT_EFFECTS_OF_ATTACKS,
-  WAS_ATTACK_USED,
-} from '../../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class ToxapexGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Mareanie';
   public cardType: CardType = P;
@@ -24,14 +19,12 @@ export class ToxapexGx extends PokemonCard {
     damage: 30,
     damageCalculation: 'x',
     text: 'Flip 4 coins. This attack does 30 damage for each heads.'
-  },
-  {
+  }, {
     name: 'Super Intense Poison',
     cost: [P, P, P],
     damage: 0,
     text: 'Your opponent\'s Active Pokémon is now Poisoned. Put 10 damage counters instead of 1 on that Pokémon between turns.'
-  },
-  {
+  }, {
     name: 'Total Shelter-GX',
     cost: [P, P, P],
     damage: 150,
@@ -47,8 +40,8 @@ export class ToxapexGx extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Spike Cannon
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 4, results => {
-        const heads = results.filter(r => r).length;
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 4, (results) => {
+        const heads = results.filter((r) => r).length;
         effect.damage = 30 * heads;
       });
     }

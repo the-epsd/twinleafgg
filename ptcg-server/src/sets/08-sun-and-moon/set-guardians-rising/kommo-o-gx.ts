@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/pr
 import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../../game/store/prefabs/attack-effects';
 
 export class KommoOGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Hakamo-o';
   public cardType: CardType = N;
@@ -23,21 +23,21 @@ export class KommoOGx extends PokemonCard {
       name: 'Adamantine Press',
       cost: [C],
       damage: 30,
-      text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
+      text: "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).",
     },
     {
       name: 'Shred',
       cost: [L, F, C, C],
       damage: 130,
       shredAttack: true,
-      text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
+      text: "This attack's damage isn't affected by any effects on your opponent's Active Pokémon.",
     },
     {
       name: 'Ultra Uppercut-GX',
       cost: [L, F, C, C],
       damage: 240,
-      text: '(You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "(You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'GRI';
@@ -51,10 +51,6 @@ export class KommoOGx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       effect.player.active.damageReductionNextTurn = 30;
     }
-
-
-
-
 
     // Attack 2: Shred
     // Ref: set-sun-and-moon/bruxish.ts (Psychic Fangs)

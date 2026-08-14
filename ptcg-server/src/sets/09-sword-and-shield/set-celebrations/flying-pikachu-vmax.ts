@@ -2,12 +2,13 @@ import { Effect } from '../../../game/store/effects/effect';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
-import { PREVENT_DAMAGE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class FlyingPikachuVMAX extends PokemonCard {
   public stage: Stage = Stage.VMAX;
   public evolvesFrom = 'Flying Pikachu V';
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public cardType: CardType = CardType.LIGHTNING;
   public hp: number = 310;
   public weakness = [{ type: CardType.LIGHTNING }];
@@ -16,7 +17,7 @@ export class FlyingPikachuVMAX extends PokemonCard {
 
   public attacks = [{
     name: 'Max Balloon',
-    cost: [CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS],
+    cost: [L, C, C],
     damage: 160,
     text: 'During your opponent\'s next turn, prevent all damage done to this Pokémon by attacks from Basic Pokémon.'
   }];

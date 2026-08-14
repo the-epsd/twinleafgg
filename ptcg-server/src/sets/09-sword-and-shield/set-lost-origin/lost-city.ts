@@ -15,7 +15,8 @@ export class LostCity extends TrainerCard {
   public setNumber: string = '161';
   public name: string = 'Lost City';
   public fullName: string = 'Lost City LOR';
-  public text: string = 'Whenever a Pokémon (either yours or your opponent\'s) is Knocked Out, put that Pokémon in the Lost Zone instead of the discard pile. (Discard all attached cards.)';
+  public text: string =
+    "Whenever a Pokémon (either yours or your opponent's) is Knocked Out, put that Pokémon in the Lost Zone instead of the discard pile. (Discard all attached cards.)";
 
   public readonly LOST_CITY_MARKER = 'LOST_CITY_MARKER';
 
@@ -28,7 +29,7 @@ export class LostCity extends TrainerCard {
         return state;
       }
 
-      if (card !== undefined && !card.tags.includes(CardTag.PRISM_STAR)) {
+      if (card !== undefined && !card.hasTag(CardTag.PRISM_STAR)) {
         effect.target.marker.addMarker(this.LOST_CITY_MARKER, this);
       }
     }

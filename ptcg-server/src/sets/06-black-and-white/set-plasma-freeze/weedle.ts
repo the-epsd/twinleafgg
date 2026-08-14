@@ -11,15 +11,13 @@ export class Weedle extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Triple Stab',
-      cost: [G],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 10 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Triple Stab',
+    cost: [G],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 10 damage times the number of heads.'
+  }];
 
   public set: string = 'PLF';
   public setNumber: string = '1';

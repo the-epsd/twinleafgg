@@ -15,20 +15,17 @@ export class Scatterbug extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'String Shot',
-      cost: [G],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Tackle',
-      cost: [G, C],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'String Shot',
+    cost: [G],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Tackle',
+    cost: [G, C],
+    damage: 20,
+    text: ''
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '13';

@@ -13,21 +13,18 @@ export class Boldore2 extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Headbutt',
-      cost: [C, C],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Hard Crash',
-      cost: [F, C, C],
-      damage: 60,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 more damage. If tails, this Pokémon does 20 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Headbutt',
+    cost: [C, C],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Hard Crash',
+    cost: [F, C, C],
+    damage: 60,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 20 more damage. If tails, this Pokémon does 20 damage to itself.'
+  }];
 
   public set: string = 'EPO';
   public cardImage: string = 'assets/cardback.png';

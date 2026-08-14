@@ -16,20 +16,17 @@ export class Meloetta extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Sing',
-      cost: [C],
-      damage: 0,
-      text: 'Your opponent\'s Active Pokémon is now Asleep.'
-    },
-    {
-      name: 'Miracle Harmony',
-      cost: [P, C, C],
-      damage: 0,
-      text: 'Flip a coin for each of your Pokémon in play that has the Sing attack. This attack does 10 damage for each heads to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
-  ];
+  public attacks = [{
+    name: 'Sing',
+    cost: [C],
+    damage: 0,
+    text: 'Your opponent\'s Active Pokémon is now Asleep.'
+  }, {
+    name: 'Miracle Harmony',
+    cost: [P, C, C],
+    damage: 0,
+    text: 'Flip a coin for each of your Pokémon in play that has the Sing attack. This attack does 10 damage for each heads to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }];
 
   public set: string = 'LOT';
   public setNumber: string = '104';

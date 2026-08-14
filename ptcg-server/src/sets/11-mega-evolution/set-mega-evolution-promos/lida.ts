@@ -19,14 +19,11 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import {
-  CLEAN_UP_SUPPORTER,
-  SHUFFLE_DECK,
-  WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN,
-} from '../../../game/store/prefabs/prefabs';
+import { SHUFFLE_DECK, WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN } from '../../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER } from '../../../game/store/prefabs/trainer-prefabs';
 
 function isMegaEvolutionEx(card: PokemonCard): boolean {
-  return card.tags.includes(CardTag.POKEMON_SV_MEGA) && card.tags.includes(CardTag.POKEMON_ex);
+  return card.hasTag(CardTag.POKEMON_SV_MEGA) && card.hasTag(CardTag.POKEMON_ex);
 }
 
 function* playCard(
@@ -42,9 +39,11 @@ function* playCard(
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
 
-  if (!WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN(player, {
-    tags: [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex],
-  })) {
+  if (
+    !WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN(player, {
+      tags: [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex],
+    })
+  ) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
@@ -71,42 +70,50 @@ function* playCard(
   }
 
   const cardList = new CardList();
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.deck,
-    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-    { min: 0, max: 2, allowCancel: false },
-  ), selected => {
-    const cards = selected || [];
-    player.deck.moveCardsTo(cards, cardList);
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.deck,
+      { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+      { min: 0, max: 2, allowCancel: false },
+    ),
+    (selected) => {
+      const cards = selected || [];
+      player.deck.moveCardsTo(cards, cardList);
+      next();
+    },
+  );
 
   if (cardList.cards.length > 0) {
     const energyCount = cardList.cards.length;
-    yield store.prompt(state, new AttachEnergyPrompt(
-      player.id,
-      GameMessage.ATTACH_ENERGY_CARDS,
-      cardList,
-      PlayerType.BOTTOM_PLAYER,
-      [SlotType.ACTIVE, SlotType.BENCH],
-      { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-      {
-        allowCancel: false,
-        min: energyCount,
-        max: energyCount,
-        sameTarget: true,
-        blockedTo: blockedTargets,
+    yield store.prompt(
+      state,
+      new AttachEnergyPrompt(
+        player.id,
+        GameMessage.ATTACH_ENERGY_CARDS,
+        cardList,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.ACTIVE, SlotType.BENCH],
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+        {
+          allowCancel: false,
+          min: energyCount,
+          max: energyCount,
+          sameTarget: true,
+          blockedTo: blockedTargets,
+        },
+      ),
+      (transfers) => {
+        transfers = transfers || [];
+        for (const transfer of transfers) {
+          const target = StateUtils.getTarget(state, player, transfer.to);
+          cardList.moveCardTo(transfer.card, target);
+        }
+        next();
       },
-    ), transfers => {
-      transfers = transfers || [];
-      for (const transfer of transfers) {
-        const target = StateUtils.getTarget(state, player, transfer.to);
-        cardList.moveCardTo(transfer.card, target);
-      }
-      next();
-    });
+    );
   }
   return SHUFFLE_DECK(store, state, player);
 }
@@ -127,9 +134,11 @@ Search your deck for up to 2 Basic Energy cards and attach them to 1 of your Meg
     if (player.supporterTurn > 0) {
       return false;
     }
-    if (!WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN(player, {
-      tags: [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex],
-    })) {
+    if (
+      !WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN(player, {
+        tags: [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex],
+      })
+    ) {
       return false;
     }
     let hasMegaEvolutionEx = false;

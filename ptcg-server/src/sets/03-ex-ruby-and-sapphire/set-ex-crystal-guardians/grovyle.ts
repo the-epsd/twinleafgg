@@ -2,15 +2,13 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import {
-  FLIP_COIN_TO_PREVENT_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN,
-  WAS_ATTACK_USED,
-} from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { FLIP_COIN_TO_PREVENT_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Grovyle extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Treecko';
-  public tags = [CardTag.DELTA_SPECIES];
+  protected _tags = [CardTag.DELTA_SPECIES];
   public cardType: CardType = P;
   public hp: number = 70;
   public weakness = [{ type: R }];
@@ -22,14 +20,14 @@ export class Grovyle extends PokemonCard {
       name: 'Scratch',
       cost: [C, C],
       damage: 20,
-      text: ''
+      text: '',
     },
     {
       name: 'Agility',
       cost: [P, C, C],
       damage: 30,
-      text: 'Flip a coin. If heads, prevent all effects of an attack, including damage, done to Grovyle during your opponent\'s next turn.'
-    }
+      text: "Flip a coin. If heads, prevent all effects of an attack, including damage, done to Grovyle during your opponent's next turn.",
+    },
   ];
 
   public set: string = 'CG';

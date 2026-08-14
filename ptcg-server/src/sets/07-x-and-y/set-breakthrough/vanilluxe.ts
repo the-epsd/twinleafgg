@@ -2,7 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, OPPONENT_CANNOT_PLAY_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { OPPONENT_CANNOT_PLAY_CARDS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED, YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../../game/store/prefabs/attack-effects';
 
 export class Vanilluxe extends PokemonCard {
@@ -18,8 +19,7 @@ export class Vanilluxe extends PokemonCard {
     cost: [W, C],
     damage: 30,
     text: 'Until the end of your next turn, each player can\'t play any Supporter or Stadium cards from his or her hand.'
-  },
-  {
+  }, {
     name: 'Deep Freeze',
     cost: [W, C, C],
     damage: 70,

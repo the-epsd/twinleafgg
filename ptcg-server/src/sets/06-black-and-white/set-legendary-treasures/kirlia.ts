@@ -17,21 +17,18 @@ export class Kirlia extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Tiptoe Step',
-      cost: [P],
-      damage: 0,
-      text: 'Draw a card for each [P] Energy attached to this Pokémon.'
-    },
-    {
-      name: 'Double Slap',
-      cost: [P, C],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tiptoe Step',
+    cost: [P],
+    damage: 0,
+    text: 'Draw a card for each [P] Energy attached to this Pokémon.'
+  }, {
+    name: 'Double Slap',
+    cost: [P, C],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
+  }];
 
   public set: string = 'LTR';
   public setNumber: string = 'RC9';

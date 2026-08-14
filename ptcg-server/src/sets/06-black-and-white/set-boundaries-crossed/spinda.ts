@@ -15,14 +15,12 @@ export class Spinda extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Whimsy Tackle',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Whimsy Tackle',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '115';

@@ -1,18 +1,16 @@
-import { CoinFlipPrompt, GameMessage, ShuffleDeckPrompt, State, StoreLike, TrainerCard, TrainerType } from '../../game';
+import { ShuffleDeckPrompt, State, StoreLike, TrainerCard, TrainerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+
+import { COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Gambler extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'FO';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '60';
-
   public name: string = 'Gambler';
-
   public fullName: string = 'Gambler FO';
 
   public text: string =
@@ -37,9 +35,7 @@ export class Gambler extends TrainerCard {
 
         player.deck.moveTo(player.hand, 4);
       });
-      state = store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
+      state = COIN_FLIP_PROMPT(store, state, player, results => {
         if (results) {
           player.deck.moveTo(player.hand, 8);
         } else {

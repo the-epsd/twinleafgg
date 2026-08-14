@@ -8,10 +8,14 @@ import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  BLOCK_IF_GX_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class ScizorGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Scyther';
   public cardType: CardType = M;
@@ -20,26 +24,28 @@ export class ScizorGx extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Danger Perception',
-    powerType: PowerType.ABILITY,
-    text: 'If this Pokémon\'s remaining HP is 100 or less, its attacks do 80 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: 'Danger Perception',
+      powerType: PowerType.ABILITY,
+      text: "If this Pokémon's remaining HP is 100 or less, its attacks do 80 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Steel Wing',
       cost: [M, C],
       damage: 80,
-      text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
+      text: "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).",
     },
     {
       name: 'Cross-Cut-GX',
       cost: [C, C, C],
       damage: 100,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is an Evolution Pokémon, this attack does 100 more damage. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "If your opponent's Active Pokémon is an Evolution Pokémon, this attack does 100 more damage. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'CES';

@@ -5,30 +5,35 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { UseAttackEffect } from '../../../game/store/effects/game-effects';
-import { IS_ABILITY_BLOCKED, NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/attack-effects';
 // Energy type constants (P, C, D, F) are assumed to be globally available as in other SV11B cards
 
 export class Meloettaex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public cardType = P;
   public hp: number = 200;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Live Debut',
-    powerType: PowerType.ABILITY,
-    text: 'If you go first, this Pokémon can attack on your first turn.'
-  }];
+  public powers = [
+    {
+      name: 'Live Debut',
+      powerType: PowerType.ABILITY,
+      text: 'If you go first, this Pokémon can attack on your first turn.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Echoed Voice',
-    cost: [P],
-    damage: 30,
-    text: 'During your next turn, this Pokémon\'s Echoed Voice attack does 80 more damage (before applying Weakness and Resistance).'
-  }];
+  public attacks = [
+    {
+      name: 'Echoed Voice',
+      cost: [P],
+      damage: 30,
+      text: "During your next turn, this Pokémon's Echoed Voice attack does 80 more damage (before applying Weakness and Resistance).",
+    },
+  ];
 
   public regulationMark = 'I';
   public set: string = 'BLK';

@@ -1,16 +1,12 @@
-import {
-  ADD_POISON_TO_PLAYER_ACTIVE,
-  AFTER_ATTACK,
-  WAS_ATTACK_USED,
-  DENY_PRIZES_IF_THIS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN,
-} from '../../../game/store/prefabs/prefabs';
+import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { DENY_PRIZES_IF_THIS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 
 export class Poipole extends PokemonCard {
-  public tags = [CardTag.ULTRA_BEAST];
+  protected _tags = [CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 70;
@@ -22,14 +18,14 @@ export class Poipole extends PokemonCard {
       name: 'Spit Poison',
       cost: [C],
       damage: 0,
-      text: 'Your opponent\'s Active Pokémon is now Poisoned.'
+      text: "Your opponent's Active Pokémon is now Poisoned.",
     },
     {
       name: 'Knockout Reviver',
       cost: [P, C],
       damage: 0,
-      text: 'During your opponent\'s next turn, if this Pokémon is Knocked Out, your opponent can\'t take any Prize cards for it.'
-    }
+      text: "During your opponent's next turn, if this Pokémon is Knocked Out, your opponent can't take any Prize cards for it.",
+    },
   ];
 
   public set: string = 'FLI';

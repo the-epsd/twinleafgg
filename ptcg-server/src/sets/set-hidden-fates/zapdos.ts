@@ -4,9 +4,21 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, AttachEnergyPrompt } from '../../game';
+import {
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  AttachEnergyPrompt,
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  MULTIPLE_COIN_FLIPS_PROMPT,
+  SHUFFLE_DECK,
+} from '../../game/store/prefabs/prefabs';
 
 export class Zapdos extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -21,14 +33,14 @@ export class Zapdos extends PokemonCard {
       name: 'Hurricane Call',
       cost: [C, C],
       damage: 0,
-      text: 'Flip 4 coins. For each heads, search your deck for a [L] Energy card and attach it to 1 of your Pokémon-GX or Pokémon-EX. Then, shuffle your deck.'
+      text: 'Flip 4 coins. For each heads, search your deck for a [L] Energy card and attach it to 1 of your Pokémon-GX or Pokémon-EX. Then, shuffle your deck.',
     },
     {
       name: 'Sky-High Claws',
       cost: [L, L, C],
       damage: 100,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'HIF';
@@ -43,8 +55,8 @@ export class Zapdos extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 4, results => {
-        const heads = results.filter(r => r).length;
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 4, (results) => {
+        const heads = results.filter((r) => r).length;
 
         if (heads === 0) {
           SHUFFLE_DECK(store, state, player);
@@ -55,7 +67,10 @@ export class Zapdos extends PokemonCard {
         let hasGxOrEx = false;
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
           const pokemon = cardList.getPokemonCard();
-          if (pokemon && (pokemon.tags.includes(CardTag.POKEMON_GX) || pokemon.tags.includes(CardTag.POKEMON_EX))) {
+          if (
+            pokemon &&
+            (pokemon.hasTag(CardTag.POKEMON_GX) || pokemon.hasTag(CardTag.POKEMON_EX))
+          ) {
             hasGxOrEx = true;
           }
         });
@@ -66,8 +81,8 @@ export class Zapdos extends PokemonCard {
         }
 
         // Check if deck has Lightning Energy
-        const hasLightningEnergy = player.deck.cards.some(c =>
-          c.superType === SuperType.ENERGY && c.name === 'Lightning Energy'
+        const hasLightningEnergy = player.deck.cards.some(
+          (c) => c.superType === SuperType.ENERGY && c.name === 'Lightning Energy',
         );
 
         if (!hasLightningEnergy) {
@@ -77,32 +92,43 @@ export class Zapdos extends PokemonCard {
 
         // Build blocked targets list: only allow GX/EX Pokemon
         const blockedTo: any[] = [];
-        if (!player.active.getPokemonCard()?.tags.some(t => t === CardTag.POKEMON_GX || t === CardTag.POKEMON_EX)) {
+        if (
+          !player.active
+            .getPokemonCard()
+            ?.tags.some((t) => t === CardTag.POKEMON_GX || t === CardTag.POKEMON_EX)
+        ) {
           blockedTo.push({ player: PlayerType.BOTTOM_PLAYER, slot: SlotType.ACTIVE, index: 0 });
         }
         player.bench.forEach((b, index) => {
           const pokemon = b.getPokemonCard();
-          if (!pokemon || !pokemon.tags.some(t => t === CardTag.POKEMON_GX || t === CardTag.POKEMON_EX)) {
+          if (
+            !pokemon ||
+            !pokemon.tags.some((t) => t === CardTag.POKEMON_GX || t === CardTag.POKEMON_EX)
+          ) {
             blockedTo.push({ player: PlayerType.BOTTOM_PLAYER, slot: SlotType.BENCH, index });
           }
         });
 
-        store.prompt(state, new AttachEnergyPrompt(
-          player.id,
-          GameMessage.ATTACH_ENERGY_CARDS,
-          player.deck,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.ACTIVE, SlotType.BENCH],
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },
-          { allowCancel: false, min: 0, max: heads, blockedTo }
-        ), transfers => {
-          transfers = transfers || [];
-          for (const transfer of transfers) {
-            const target = StateUtils.getTarget(state, player, transfer.to);
-            player.deck.moveCardTo(transfer.card, target);
-          }
-          SHUFFLE_DECK(store, state, player);
-        });
+        store.prompt(
+          state,
+          new AttachEnergyPrompt(
+            player.id,
+            GameMessage.ATTACH_ENERGY_CARDS,
+            player.deck,
+            PlayerType.BOTTOM_PLAYER,
+            [SlotType.ACTIVE, SlotType.BENCH],
+            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },
+            { allowCancel: false, min: 0, max: heads, blockedTo },
+          ),
+          (transfers) => {
+            transfers = transfers || [];
+            for (const transfer of transfers) {
+              const target = StateUtils.getTarget(state, player, transfer.to);
+              player.deck.moveCardTo(transfer.card, target);
+            }
+            SHUFFLE_DECK(store, state, player);
+          },
+        );
       });
     }
 

@@ -19,8 +19,7 @@ export class PokeParksMudkip extends PokemonCard {
     cost: [C],
     damage: 10,
     text: ''
-  },
-  {
+  }, {
     name: 'Flamethrower',
     cost: [W, C, C],
     damage: 30,

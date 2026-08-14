@@ -16,17 +16,16 @@ export class Rookidee extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Fury Attack',
-      cost: [C],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 10 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fury Attack',
+    cost: [C],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 10 damage for each heads.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'FST';
   public setNumber: string = '219';
   public cardImage: string = 'assets/cardback.png';

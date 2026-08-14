@@ -1,11 +1,13 @@
 import { SuperType, EnergyType } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameError, GameMessage, AttachEnergyPrompt, PlayerType, SlotType, StateUtils, CoinFlipPrompt, TrainerCard } from '../../../game';
+import { StoreLike, State, GameError, GameMessage, AttachEnergyPrompt, PlayerType, SlotType, StateUtils, TrainerCard } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 
-export class EnergyPickup extends TrainerCard {
+import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
+export class EnergyPickup extends TrainerCard {
   public superType = SuperType.TRAINER;
+
   public set: string = 'LA';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '132';
@@ -28,9 +30,7 @@ export class EnergyPickup extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (!result) {
 
           return state;

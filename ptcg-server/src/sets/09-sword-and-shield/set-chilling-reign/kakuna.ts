@@ -7,18 +7,20 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Kakuna extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Weedle';
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public cardType: CardType = G;
   public hp: number = 80;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
 
-  public attacks = [{
-    name: 'Stiffen',
-    cost: [G],
-    damage: 0,
-    text: 'During your opponent\'s next turn, this Pokémon takes 40 less damage from attacks (after applying Weakness and Resistance).'
-  }];
+  public attacks = [
+    {
+      name: 'Stiffen',
+      cost: [G],
+      damage: 0,
+      text: "During your opponent's next turn, this Pokémon takes 40 less damage from attacks (after applying Weakness and Resistance).",
+    },
+  ];
 
   public set: string = 'CRE';
   public name: string = 'Kakuna';

@@ -66,6 +66,7 @@ import { TapuKoko } from './tapu-koko';
 import { EspeonDeoxysGX } from '../set-unified-minds/espeon-and-deoxys-gx';
 import { UmbreonDarkraiGX } from '../set-unified-minds/umbreon-and-darkrai-gx';
 import { CharizardGX } from '../set-burning-shadows/charizard-gx';
+import { DuskManeNecrozma } from './dusk-mane-necrozma';
 
 export class UmbreonDarkraiGXSMP extends UmbreonDarkraiGX {
   public fullName = 'Umbreon & Darkrai-GX SMP';
@@ -472,5 +473,11 @@ export class SolgaleoGX3SMP extends SolgaleoGXSMP104 {
 export class CharizardGXSMP60 extends CharizardGX {
   public setNumber = '60';
   public fullName: string = 'Charizard-GX SMP 60';
+  public set = 'SMP';
+}
+
+export class DuskManeNecrozmaSMP extends DuskManeNecrozma {
+  public setNumber = '124';
+  public fullName: string = 'Dusk Mane Necrozma SMP';
   public set = 'SMP';
 }

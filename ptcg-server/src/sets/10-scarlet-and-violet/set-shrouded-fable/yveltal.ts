@@ -1,11 +1,11 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, CoinFlipPrompt, GameMessage, PlayerType, StateUtils } from '../../../game';
+import { Card, ChooseCardsPrompt, GameMessage, PlayerType, StateUtils } from '../../../game';
 import { StoreLike, State } from '../../../game';
 
 import { Effect } from '../../../game/store/effects/effect';
 import { DiscardCardsEffect, PutCountersEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Yveltal extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -15,22 +15,20 @@ export class Yveltal extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Corrosive Winds',
-      cost: [CardType.DARK],
-      damage: 0,
-      text: 'Put 2 damage counters on each of your opponent\'s Pokemon that has any damage counters on it.'
-    },
-    {
-      name: 'Destructive Beam',
-      cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS],
-      damage: 100,
-      text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokemon.'
-    },
-  ];
+  public attacks = [{
+    name: 'Corrosive Winds',
+    cost: [D],
+    damage: 0,
+    text: 'Put 2 damage counters on each of your opponent\'s Pokemon that has any damage counters on it.'
+  }, {
+    name: 'Destructive Beam',
+    cost: [D, D, C],
+    damage: 100,
+    text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokemon.'
+  }];
 
   public regulationMark = 'H';
+
   public set = 'SFA';
   public setNumber = '35';
   public cardImage = 'assets/cardback.png';
@@ -61,9 +59,7 @@ export class Yveltal extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
 
           let card: Card;

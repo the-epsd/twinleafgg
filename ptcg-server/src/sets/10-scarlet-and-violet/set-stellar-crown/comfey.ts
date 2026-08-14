@@ -1,17 +1,7 @@
-import {
-  PokemonCard,
-  Stage,
-  CardType,
-  StoreLike,
-  State,
-  GameError,
-  GameMessage,
-  StateUtils,
-  CoinFlipPrompt,
-} from '../../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State, GameError, GameMessage, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Comfey extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -20,23 +10,21 @@ export class Comfey extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Flower Shower',
-      cost: [CardType.PSYCHIC],
-      damage: 0,
-      text: 'Each player draws 3 cards.',
-    },
-    {
-      name: 'Play Rough',
-      cost: [CardType.PSYCHIC],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 more damage.',
-    },
-  ];
+  public attacks = [{
+    name: 'Flower Shower',
+    cost: [P],
+    damage: 0,
+    text: 'Each player draws 3 cards.',
+  }, {
+    name: 'Play Rough',
+    cost: [P],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 20 more damage.',
+  }];
 
   public regulationMark = 'H';
+
   public set: string = 'SCR';
   public name: string = 'Comfey';
   public fullName: string = 'Comfey SCR';
@@ -63,10 +51,7 @@ export class Comfey extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      return store.prompt(
-        state,
-        [new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)],
-        (result) => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
           if (result === true) {
             effect.damage += 20;
           }

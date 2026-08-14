@@ -22,7 +22,7 @@ import { ChooseEnergyPrompt } from '../../../game/store/prompts/choose-energy-pr
 import { DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Greninjaex extends PokemonCard {
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public regulationMark = 'H';
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Frogadier';

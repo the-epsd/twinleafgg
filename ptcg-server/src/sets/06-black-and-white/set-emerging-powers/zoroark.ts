@@ -14,21 +14,18 @@ export class Zoroark extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Fury Swipes',
-      cost: [D],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 20 damage times the number of heads.'
-    },
-    {
-      name: 'Night Daze',
-      cost: [D, C, C],
-      damage: 80,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Fury Swipes',
+    cost: [D],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 20 damage times the number of heads.'
+  }, {
+    name: 'Night Daze',
+    cost: [D, C, C],
+    damage: 80,
+    text: ''
+  }];
 
   public set: string = 'EPO';
   public cardImage: string = 'assets/cardback.png';

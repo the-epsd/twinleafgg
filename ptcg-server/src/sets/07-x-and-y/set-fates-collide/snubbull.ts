@@ -16,14 +16,12 @@ export class Snubbull extends PokemonCard {
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Ruckus',
-      cost: [Y, C],
-      damage: 50,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Ruckus',
+    cost: [Y, C],
+    damage: 50,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'FCO';
   public setNumber: string = '68';

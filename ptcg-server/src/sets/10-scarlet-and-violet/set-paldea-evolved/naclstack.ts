@@ -4,8 +4,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { CoinFlipPrompt, GameMessage } from '../../../game';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Naclstack extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -27,7 +26,9 @@ export class Naclstack extends PokemonCard {
   public name: string = 'Naclstack';
   public fullName: string = 'Naclstack PAL';
   public setNumber: string = '122';
+
   public regulationMark: string = 'G';
+
   public cardImage: string = 'assets/cardback.png';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -36,11 +37,7 @@ export class Naclstack extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
+      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 3, results => {
         let heads: number = 0;
         results.forEach(r => { heads += r ? 1 : 0; });
         effect.damage = 60 * heads;

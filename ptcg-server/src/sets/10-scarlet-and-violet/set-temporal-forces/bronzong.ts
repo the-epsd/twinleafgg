@@ -1,12 +1,7 @@
-import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
-import { Effect } from '../../../game/store/effects/effect';
-import { GameMessage, GameError, PokemonCard, StateUtils } from '../../../game';
-
-import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PokemonCard, Stage, CardType, StoreLike, State } from "../../../game";
+import { Effect } from "../../../game/store/effects/effect";
+import { WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
+import { OPPONENT_CANNOT_EVOLVE_POKEMON } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class Bronzong extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -37,45 +32,10 @@ export class Bronzong extends PokemonCard {
   public name: string = 'Bronzong';
   public fullName: string = 'Bronzong TEF';
 
-  public readonly EVOLUTION_JAMMER_MARKER = 'EVOLUTION_JAMMER_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    // Evolution Jammer attack - prevent opponent from evolving during their next turn
+    // Evolution Jammer
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // Set marker and prevent evolution
-      opponent.marker.addMarker(this.EVOLUTION_JAMMER_MARKER, this);
-      opponent.canEvolve = false;
-    }
-
-    // Block evolution attempts when marker is present
-    if (effect instanceof PlayPokemonEffect) {
-      const player = effect.player;
-      if (player.marker.hasMarker(this.EVOLUTION_JAMMER_MARKER, this)) {
-        // Check if this is an evolution attempt (not a basic Pokémon being played to empty slot)
-        const stage = effect.pokemonCard.stage;
-        const isEvolved = stage === Stage.STAGE_1 || stage === Stage.STAGE_2;
-        const target = effect.target;
-        const hasTargetPokemon = target && target.cards.length > 0;
-
-        // If it's an evolution card and there's a target Pokémon, block it
-        if (isEvolved && hasTargetPokemon) {
-          throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-        }
-      }
-    }
-
-    // Clear the marker and reset canEvolve when opponent's turn ends
-    if (effect instanceof EndTurnEffect) {
-      const player = effect.player;
-      if (player.marker.hasMarker(this.EVOLUTION_JAMMER_MARKER, this)) {
-        player.marker.removeMarker(this.EVOLUTION_JAMMER_MARKER, this);
-        // Reset canEvolve to default (false) - it will be set to true elsewhere if needed
-        player.canEvolve = false;
-      }
+      return OPPONENT_CANNOT_EVOLVE_POKEMON(store, state, effect, this);
     }
 
     return state;

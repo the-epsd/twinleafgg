@@ -19,6 +19,7 @@ export class Croconaw extends PokemonCard {
   }];
 
   public regulationMark = 'I';
+
   public set: string = 'ASC';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '42';

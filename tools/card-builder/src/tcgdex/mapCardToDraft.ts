@@ -146,13 +146,14 @@ function mapAttack(a: TcgDexAttack): AttackDraft {
 
 function mapAbility(a: TcgDexAbility): PowerDraft {
   const powerType = mapPowerType(a.type);
-  // Passive by default — user toggles useWhenInPlay for activated abilities
+  const normalizedType = (a.type || '').toLowerCase();
+  const isPassive = normalizedType.includes('body') || normalizedType.includes('ancient trait');
   return {
     id: uid('pwr'),
     name: a.name || '',
     powerType,
     text: a.effect || '',
-    useWhenInPlay: false,
+    useWhenInPlay: !isPassive,
     useFromHand: false,
     useFromHandToBench: false,
     useFromDiscard: false,
@@ -216,8 +217,11 @@ export function mapTcgDexCardToDraft(card: TcgDexCard): CardDraft {
     name,
     trainerType: 'ITEM',
     trainerText: '',
+    trainerPrefabs: [],
     energyType: 'BASIC',
     provides: 'C',
+    blendedEnergies: '',
+    blendedEnergyCount: '1',
     energyText: '',
   };
 

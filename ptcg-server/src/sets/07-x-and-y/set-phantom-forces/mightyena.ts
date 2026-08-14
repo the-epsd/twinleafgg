@@ -18,20 +18,17 @@ export class Mightyena extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Crunch',
-      cost: [D, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
-    },
-    {
-      name: 'Darkness Fang',
-      cost: [D, C, C],
-      damage: 80,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Crunch',
+    cost: [D, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
+  }, {
+    name: 'Darkness Fang',
+    cost: [D, C, C],
+    damage: 80,
+    text: ''
+  }];
 
   public set: string = 'PHF';
   public setNumber: string = '54';

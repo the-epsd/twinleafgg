@@ -5,12 +5,13 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { ChooseCardsPrompt, CoinFlipPrompt, PokemonCard } from '../../../game';
+import { ChooseCardsPrompt, PokemonCard } from '../../../game';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
-import { BLOCK_IF_NO_SLOTS, GET_PLAYER_BENCH_SLOTS, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_IF_NO_SLOTS, GET_PLAYER_BENCH_SLOTS, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class HolonFossil extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
+
   public set: string = 'HP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '86';
@@ -52,7 +53,7 @@ export class HolonFossil extends TrainerCard {
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      return store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), flipResult => {
+      return COIN_FLIP_PROMPT(store, state, player, flipResult => {
         if (flipResult) {
           SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, player, {}, { min: 0, max: 1, blocked: blockedDeck });
         } else if (!flipResult) {

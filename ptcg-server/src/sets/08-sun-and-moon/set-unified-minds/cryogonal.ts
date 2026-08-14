@@ -1,9 +1,7 @@
-import { CardType, GameError, GameMessage, PokemonCard, Stage, State, StoreLike } from '../../../game';
+import { CardType, PokemonCard, Stage, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { PlayItemEffect } from '../../../game/store/effects/play-card-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { OPPONENT_CANNOT_PLAY_ITEM_CARDS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Cryogonal extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -12,14 +10,12 @@ export class Cryogonal extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Frozen Lock',
-      cost: [W],
-      damage: 10,
-      text: 'Your opponent can\'t play any Item cards from their hand during their next turn.'
-    },
-  ];
+  public attacks = [{
+    name: 'Frozen Lock',
+    cost: [W],
+    damage: 10,
+    text: 'Your opponent can\'t play any Item cards from their hand during their next turn.'
+  }];
 
   public set = 'UNM';
   public setNumber = '46';
@@ -27,23 +23,10 @@ export class Cryogonal extends PokemonCard {
   public name = 'Cryogonal';
   public fullName = 'Cryogonal UNM';
 
-  private readonly FROZEN_LOCK_MARKER = 'FROZEN_LOCK_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Frozen Lock
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const opponent = effect.opponent;
-      opponent.marker.addMarker(this.FROZEN_LOCK_MARKER, this);
-    }
-
-    // Block item cards while we have the marker
-    if (effect instanceof PlayItemEffect && effect.player.marker.hasMarker(this.FROZEN_LOCK_MARKER)) {
-      throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
-    }
-
-    // Remove marker at the end of a player's turn
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.FROZEN_LOCK_MARKER)) {
-      effect.player.marker.removeMarker(this.FROZEN_LOCK_MARKER);
+      return OPPONENT_CANNOT_PLAY_ITEM_CARDS(store, state, effect, this);
     }
     return state;
   }

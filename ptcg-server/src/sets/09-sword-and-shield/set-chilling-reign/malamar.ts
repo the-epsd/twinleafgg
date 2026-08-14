@@ -4,12 +4,20 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, GameMessage, ShowCardsPrompt, StoreLike, State, StateUtils } from '../../../game';
+import {
+  Card,
+  ChooseCardsPrompt,
+  GameMessage,
+  ShowCardsPrompt,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 
 export class Malamar extends PokemonCard {
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Inkay';
   public cardType: CardType = P;
@@ -24,8 +32,8 @@ export class Malamar extends PokemonCard {
       cost: [P],
       damage: 40,
       damageCalculation: 'x',
-      text: 'Reveal any number of Rapid Strike cards from your hand. This attack does 40 damage for each card you revealed in this way. Then, shuffle those cards into your deck.'
-    }
+      text: 'Reveal any number of Rapid Strike cards from your hand. This attack does 40 damage for each card you revealed in this way. Then, shuffle those cards into your deck.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -44,33 +52,41 @@ export class Malamar extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const rapidStrikeCardsInHand = player.hand.cards.filter(
-        c => c instanceof Card && c.tags.includes(CardTag.RAPID_STRIKE)
+        (c) => c instanceof Card && c.hasTag(CardTag.RAPID_STRIKE),
       );
 
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.hand,
-        { tags: [CardTag.RAPID_STRIKE] },
-        { min: 0, max: rapidStrikeCardsInHand.length, allowCancel: false }
-      ), selected => {
-        const chosenCards = selected || [];
+      state = store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.hand,
+          { tags: [CardTag.RAPID_STRIKE] },
+          { min: 0, max: rapidStrikeCardsInHand.length, allowCancel: false },
+        ),
+        (selected) => {
+          const chosenCards = selected || [];
 
-        effect.damage = 40 * chosenCards.length;
+          effect.damage = 40 * chosenCards.length;
 
-        if (chosenCards.length > 0) {
-          // Reveal chosen cards to opponent
-          store.prompt(state, new ShowCardsPrompt(
-            opponent.id,
-            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-            chosenCards
-          ), () => { });
+          if (chosenCards.length > 0) {
+            // Reveal chosen cards to opponent
+            store.prompt(
+              state,
+              new ShowCardsPrompt(
+                opponent.id,
+                GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+                chosenCards,
+              ),
+              () => {},
+            );
 
-          // Shuffle chosen cards into deck
-          player.hand.moveCardsTo(chosenCards, player.deck);
-          SHUFFLE_DECK(store, state, player);
-        }
-      });
+            // Shuffle chosen cards into deck
+            player.hand.moveCardsTo(chosenCards, player.deck);
+            SHUFFLE_DECK(store, state, player);
+          }
+        },
+      );
 
       return state;
     }

@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class GreatTusk2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.ANCIENT];
+  protected _tags = [CardTag.ANCIENT];
   public cardType: CardType = F;
   public hp: number = 140;
   public weakness = [{ type: P }];
@@ -18,16 +18,15 @@ export class GreatTusk2 extends PokemonCard {
       name: 'Lunge Out',
       cost: [F, C],
       damage: 30,
-      text: ''
+      text: '',
     },
     {
       name: 'Wrathful Charge',
       cost: [F, C, C],
       damage: 80,
       damageCalculation: '+',
-      text: 'If your Benched Pokémon have any damage counters on them, this attack does 80 more damage.'
+      text: 'If your Benched Pokémon have any damage counters on them, this attack does 80 more damage.',
     },
-
   ];
 
   public set: string = 'TEF';
@@ -43,10 +42,11 @@ export class GreatTusk2 extends PokemonCard {
       const player = effect.player;
 
       // Check if any benched Pokémon has damage
-      const hasDamagedBench = player.bench.some(pokemon => pokemon.damage > 0);
+      const hasDamagedBench = player.bench.some((pokemon) => pokemon.damage > 0);
       if (hasDamagedBench) {
         effect.damage += 80;
       }
-    } return state;
+    }
+    return state;
   }
 }

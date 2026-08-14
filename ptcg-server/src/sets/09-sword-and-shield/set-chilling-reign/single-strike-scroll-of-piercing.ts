@@ -16,32 +16,39 @@ import { StoreLike } from '../../../game/store/store-like';
 
 export class SingleStrikeScrollOfPiercing extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public regulationMark: string = 'E';
   public set: string = 'CRE';
   public setNumber: string = '154';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Single Strike Scroll of Piercing';
   public fullName: string = 'Single Strike Scroll of Piercing CRE';
-  public text: string = 'Attach a Pokémon Tool to 1 of your Pokémon that doesn\'t already have a Pokémon Tool attached. The Single Strike Pokémon this card is attached to can use the attack on this card. (You still need the necessary Energy to use this attack.) You may play any number of Item cards during your turn.';
+  public text: string =
+    "Attach a Pokémon Tool to 1 of your Pokémon that doesn't already have a Pokémon Tool attached. The Single Strike Pokémon this card is attached to can use the attack on this card. (You still need the necessary Energy to use this attack.) You may play any number of Item cards during your turn.";
 
   // Attack granted to Single Strike Pokemon: Bullet Breakthrough
   // Ref: https://bulbapedia.bulbagarden.net/wiki/Single_Strike_Scroll_of_Piercing_(Chilling_Reign_154)
-  public attacks: Attack[] = [{
-    name: 'Bullet Breakthrough',
-    cost: [CardType.FIRE, CardType.COLORLESS, CardType.COLORLESS],
-    damage: 120,
-    shredAttack: true,
-    text: 'This attack\'s damage isn\'t affected by Weakness or Resistance, or by any effects on your opponent\'s Active Pokémon.'
-  }];
+  public attacks: Attack[] = [
+    {
+      name: 'Bullet Breakthrough',
+      cost: [CardType.FIRE, CardType.COLORLESS, CardType.COLORLESS],
+      damage: 120,
+      shredAttack: true,
+      text: "This attack's damage isn't affected by Weakness or Resistance, or by any effects on your opponent's Active Pokémon.",
+    },
+  ];
 
   // Ref: set-battle-styles/single-strike-scroll-of-scorn.ts (tool attack pattern)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Add attack to Single Strike Pokemon that has this tool
-    if (effect instanceof CheckPokemonAttacksEffect && effect.player.active.getPokemonCard()?.tools.includes(this) &&
-      !effect.attacks.includes(this.attacks[0])) {
-
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
+    if (
+      effect instanceof CheckPokemonAttacksEffect &&
+      effect.player.active.getPokemonCard()?.tools.includes(this) &&
+      !effect.attacks.includes(this.attacks[0])
+    ) {
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+        return state;
+      }
 
       effect.attacks.push(this.attacks[0]);
     }
@@ -50,7 +57,11 @@ export class SingleStrikeScrollOfPiercing extends TrainerCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
-      if (!player.active.cards.some(c => c instanceof PokemonCard && c.tags.includes(CardTag.SINGLE_STRIKE))) {
+      if (
+        !player.active.cards.some(
+          (c) => c instanceof PokemonCard && c.hasTag(CardTag.SINGLE_STRIKE),
+        )
+      ) {
         return state;
       }
 

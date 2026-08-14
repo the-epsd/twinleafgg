@@ -6,10 +6,13 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+} from '../../../game/store/prefabs/prefabs';
 
 export class RegirockV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = F;
   public hp: number = 220;
@@ -22,14 +25,14 @@ export class RegirockV extends PokemonCard {
       cost: [F, C],
       damage: 30,
       damageCalculation: '+',
-      text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
+      text: 'This attack does 10 more damage for each damage counter on this Pokémon.',
     },
     {
       name: 'Rocky Tackle',
       cost: [F, F, C],
       damage: 190,
-      text: 'This Pokémon also does 30 damage to itself.'
-    }
+      text: 'This Pokémon also does 30 damage to itself.',
+    },
   ];
 
   public regulationMark: string = 'D';

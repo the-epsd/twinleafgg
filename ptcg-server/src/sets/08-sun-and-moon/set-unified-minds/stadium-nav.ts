@@ -1,4 +1,4 @@
-import { CoinFlipPrompt, ShuffleDeckPrompt } from '../../../game';
+import { ShuffleDeckPrompt } from '../../../game';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { Card } from '../../../game/store/card/card';
@@ -12,18 +12,15 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
-export class StadiumNav extends TrainerCard {
+import { MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
+export class StadiumNav extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'UNM';
-
   public name: string = 'Stadium Nav';
-
   public fullName: string = 'Stadium Nav UNM';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '208';
 
   public text: string =
@@ -45,10 +42,7 @@ export class StadiumNav extends TrainerCard {
       effect.preventDefault = true;
 
       let heads: number = 0;
-      store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, results => {
         results.forEach(r => { heads += r ? 1 : 0; });
 
         if (heads === 0) {
@@ -76,8 +70,6 @@ export class StadiumNav extends TrainerCard {
           { min: 0, max: heads, allowCancel: false, blocked }
         ), selected => {
           cards = selected || [];
-
-
 
           if (cards.length > 0) {
 

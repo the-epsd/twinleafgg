@@ -2,11 +2,12 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, PowerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { MEGA_EVOLUTION_END_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { MEGA_EVOLUTION_END_TURN } from '../../../game/store/prefabs/tool-prefabs';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 
 export class MRayquazaEX2 extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX, CardTag.MEGA];
+  protected _tags = [CardTag.POKEMON_EX, CardTag.MEGA];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom = 'Rayquaza-EX';
   public cardType: CardType = C;
@@ -15,19 +16,23 @@ export class MRayquazaEX2 extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Δ Evolution',
-    powerType: PowerType.ANCIENT_TRAIT,
-    text: 'You may play this card from your hand to evolve a Pokémon during your first turn or the turn you play that Pokémon.',
-  }];
+  public powers = [
+    {
+      name: 'Δ Evolution',
+      powerType: PowerType.ANCIENT_TRAIT,
+      text: 'You may play this card from your hand to evolve a Pokémon during your first turn or the turn you play that Pokémon.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Emerald Break',
-    cost: [C, C, C],
-    damage: 30,
-    damageCalculation: 'x',
-    text: 'This attack does 30 damage times the number of your Benched Pokémon.',
-  }];
+  public attacks = [
+    {
+      name: 'Emerald Break',
+      cost: [C, C, C],
+      damage: 30,
+      damageCalculation: 'x',
+      text: 'This attack does 30 damage times the number of your Benched Pokémon.',
+    },
+  ];
 
   public set: string = 'ROS';
   public name: string = 'M Rayquaza-EX';

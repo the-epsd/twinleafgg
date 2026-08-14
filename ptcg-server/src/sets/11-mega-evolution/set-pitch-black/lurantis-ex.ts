@@ -16,7 +16,7 @@ import {
 export class Lurantisex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Fomantis';
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public cardType: CardType = G;
   public hp: number = 260;
   public weakness = [{ type: R }];

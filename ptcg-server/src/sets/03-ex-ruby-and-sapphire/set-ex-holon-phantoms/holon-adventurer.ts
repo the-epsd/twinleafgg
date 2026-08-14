@@ -8,9 +8,8 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class HolonAdventurer extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-  public tags = [CardTag.DELTA_SPECIES];
+  protected _tags = [CardTag.DELTA_SPECIES];
   public set: string = 'HP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';
@@ -30,37 +29,47 @@ export class HolonAdventurer extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      if (player.hand.cards.filter(c => c !== effect.trainerCard).length < 1 || player.deck.cards.length === 0) {
+      if (
+        player.hand.cards.filter((c) => c !== effect.trainerCard).length < 1 ||
+        player.deck.cards.length === 0
+      ) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       effect.preventDefault = true;
 
-      state = store.prompt(state, new ChooseCardsPrompt(
-        effect.player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        player.hand,
-        {},
-        { allowCancel: false, min: 1, max: 1 }
-      ), cards => {
-        cards = cards || [];
-        if (cards.length === 0) {
-          return;
-        }
-        let cardsToDraw = 3;
+      state = store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          effect.player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          player.hand,
+          {},
+          { allowCancel: false, min: 1, max: 1 },
+        ),
+        (cards) => {
+          cards = cards || [];
+          if (cards.length === 0) {
+            return;
+          }
+          let cardsToDraw = 3;
 
-        if (cards[0] instanceof PokemonCard && cards[0].tags.includes(CardTag.DELTA_SPECIES)) {
-          cardsToDraw = 4;
-        }
+          if (cards[0] instanceof PokemonCard && cards[0].hasTag(CardTag.DELTA_SPECIES)) {
+            cardsToDraw = 4;
+          }
 
-        MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
-        cards.forEach((card, index) => {
-          store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
-        });
+          MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
+          cards.forEach((card, index) => {
+            store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, {
+              name: player.name,
+              card: card.name,
+            });
+          });
 
-        DRAW_CARDS(store, state, player, cardsToDraw);
-      });
+          DRAW_CARDS(store, state, player, cardsToDraw);
+        },
+      );
       return state;
     }
 

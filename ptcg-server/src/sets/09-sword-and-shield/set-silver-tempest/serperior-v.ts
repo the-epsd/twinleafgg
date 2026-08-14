@@ -1,11 +1,19 @@
-import { PokemonCard, Stage, CardType, CardTag, StoreLike, State, PlayerType, PokemonCardList, StateUtils } from '../../../game';
+import {
+  PokemonCard,
+  Stage,
+  CardType,
+  CardTag,
+  StoreLike,
+  State,
+  PlayerType,
+  PokemonCardList,
+  StateUtils,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
-
 export class SerperiorV extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.GRASS;
@@ -16,21 +24,21 @@ export class SerperiorV extends PokemonCard {
 
   public retreat = [CardType.COLORLESS];
 
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
 
   public attacks = [
     {
       name: 'Noble Light',
       cost: [CardType.COLORLESS],
       damage: 0,
-      text: 'Heal 30 damage from each Pokémon (both yours and your opponent\'s).'
+      text: "Heal 30 damage from each Pokémon (both yours and your opponent's).",
     },
     {
       name: 'Solar Beam',
       cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 120,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'SIT';
@@ -46,9 +54,7 @@ export class SerperiorV extends PokemonCard {
   public fullName: string = 'Serperior V SIT 7';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -68,7 +74,7 @@ export class SerperiorV extends PokemonCard {
         return state;
       }
 
-      targets.forEach(target => {
+      targets.forEach((target) => {
         // Heal Pokemon
         const healEffect = new HealEffect(player, target, 30);
         store.reduceEffect(state, healEffect);
@@ -77,5 +83,4 @@ export class SerperiorV extends PokemonCard {
 
     return state;
   }
-
 }

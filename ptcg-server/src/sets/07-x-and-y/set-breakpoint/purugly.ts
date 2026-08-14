@@ -17,21 +17,18 @@ export class Purugly extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Slash',
-      cost: [C, C],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Nyan Press',
-      cost: [C, C, C],
-      damage: 40,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 40 more damage. If tails, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Slash',
+    cost: [C, C],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Nyan Press',
+    cost: [C, C, C],
+    damage: 40,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 40 more damage. If tails, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'BKP';
   public setNumber: string = '94';

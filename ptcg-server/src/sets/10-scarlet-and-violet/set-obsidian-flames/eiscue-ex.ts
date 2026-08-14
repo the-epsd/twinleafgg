@@ -4,22 +4,25 @@ import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
-import { DEFENDING_POKEMON_CANNOT_ATTACK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Eiscueex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public cardType: CardType = R;
   public hp: number = 210;
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Scalding Block',
-    cost: [W, W, W],
-    damage: 160,
-    text: 'Discard an Energy from this Pokémon. During your opponent\'s next turn, the Defending Pokémon can\'t attack.'
-  }];
+  public attacks = [
+    {
+      name: 'Scalding Block',
+      cost: [W, W, W],
+      damage: 160,
+      text: "Discard an Energy from this Pokémon. During your opponent's next turn, the Defending Pokémon can't attack.",
+    },
+  ];
 
   public regulationMark = 'G';
   public set: string = 'OBF';

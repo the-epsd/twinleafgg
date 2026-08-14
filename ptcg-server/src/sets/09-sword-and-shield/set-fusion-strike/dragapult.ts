@@ -6,7 +6,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Dragapult extends PokemonCard {
   public regulationMark: string = 'E';
-  public tags = [CardTag.FUSION_STRIKE];
+  protected _tags = [CardTag.FUSION_STRIKE];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Drakloak';
   public cardType: CardType = P;
@@ -15,19 +15,21 @@ export class Dragapult extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [];
 
-  public attacks = [{
-    name: 'Fusion Strike Assault',
-    cost: [P],
-    damage: 30,
-    damageCalculation: 'x',
-    text: 'This attack does 30 damage for each of your Fusion Strike Pokémon in play.'
-  },
-  {
-    name: 'Speed Attack',
-    cost: [P, C],
-    damage: 120,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Fusion Strike Assault',
+      cost: [P],
+      damage: 30,
+      damageCalculation: 'x',
+      text: 'This attack does 30 damage for each of your Fusion Strike Pokémon in play.',
+    },
+    {
+      name: 'Speed Attack',
+      cost: [P, C],
+      damage: 120,
+      text: '',
+    },
+  ];
 
   public set: string = 'FST';
   public cardImage: string = 'assets/cardback.png';
@@ -42,16 +44,16 @@ export class Dragapult extends PokemonCard {
 
       let fusionStrikeCount = 0;
 
-      playerBench.forEach(c => {
+      playerBench.forEach((c) => {
         if (c.getPokemonCard() instanceof PokemonCard) {
-          if (c.getPokemonCard()?.tags?.includes(CardTag.FUSION_STRIKE)) {
+          if (c.getPokemonCard()?.hasTag(CardTag.FUSION_STRIKE)) {
             fusionStrikeCount++;
           }
         }
       });
 
       // Include the active Pokémon if it's fusion strike
-      if (player.active.getPokemonCard()?.tags?.includes(CardTag.FUSION_STRIKE)) {
+      if (player.active.getPokemonCard()?.hasTag(CardTag.FUSION_STRIKE)) {
         fusionStrikeCount++;
       }
 

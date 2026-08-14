@@ -6,10 +6,14 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType } from '../../../game/store/card/card-types';
 import { StoreLike, State, PlayerType, SlotType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, ATTACH_ENERGY_PROMPT } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  COIN_FLIP_PROMPT,
+  ATTACH_ENERGY_PROMPT,
+} from '../../../game/store/prefabs/prefabs';
 
 export class ReshiramV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = R;
   public hp: number = 220;
@@ -21,17 +25,18 @@ export class ReshiramV extends PokemonCard {
       name: 'Sparkling Wing',
       cost: [R],
       damage: 0,
-      text: 'Search your deck for up to 2 basic Energy cards and attach them to 1 of your Pokémon. Then, shuffle your deck.'
+      text: 'Search your deck for up to 2 basic Energy cards and attach them to 1 of your Pokémon. Then, shuffle your deck.',
     },
     {
       name: 'White Blaze',
       cost: [R, R, C],
       damage: 200,
-      text: 'Flip a coin. If tails, during your next turn, this Pokémon can\'t attack.'
-    }
+      text: "Flip a coin. If tails, during your next turn, this Pokémon can't attack.",
+    },
   ];
 
   public regulationMark: string = 'F';
+
   public set: string = 'SIT';
   public setNumber: string = '24';
   public cardImage: string = 'assets/cardback.png';
@@ -49,12 +54,14 @@ export class ReshiramV extends PokemonCard {
       }
 
       return ATTACH_ENERGY_PROMPT(
-        store, state, player,
+        store,
+        state,
+        player,
         PlayerType.BOTTOM_PLAYER,
         SlotType.DECK,
         [SlotType.ACTIVE, SlotType.BENCH],
         { energyType: EnergyType.BASIC },
-        { min: 0, max: 2, allowCancel: false, differentTargets: false }
+        { min: 0, max: 2, allowCancel: false, differentTargets: false },
       );
     }
 
@@ -62,7 +69,7 @@ export class ReshiramV extends PokemonCard {
     // Ref: set-unbroken-bonds/wartortle.ts (Aqua Slash - cannotAttackNextTurnPending with coin flip)
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      COIN_FLIP_PROMPT(store, state, player, result => {
+      COIN_FLIP_PROMPT(store, state, player, (result) => {
         if (!result) {
           player.active.cannotAttackNextTurnPending = true;
         }

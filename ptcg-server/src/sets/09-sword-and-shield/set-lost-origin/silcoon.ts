@@ -2,11 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import {
-  WAS_ATTACK_USED,
-  COIN_FLIP_PROMPT,
-  DEFENDING_POKEMON_CANNOT_ATTACK,
-} from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Silcoon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -21,8 +18,7 @@ export class Silcoon extends PokemonCard {
     cost: [G],
     damage: 0,
     text: 'Flip a coin. If heads, during your opponent\'s next turn, the Defending Pokémon can\'t attack.'
-  },
-  {
+  }, {
     name: 'Ram',
     cost: [G, C],
     damage: 20,
@@ -30,6 +26,7 @@ export class Silcoon extends PokemonCard {
   }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'LOR';
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';

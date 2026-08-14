@@ -12,16 +12,16 @@ import { PlayerType } from '../../../game/store/actions/play-card-action';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 export class TeamRocketsAriana extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-  public tags = [CardTag.TEAM_ROCKET];
+  protected _tags = [CardTag.TEAM_ROCKET];
   public regulationMark = 'I';
   public set: string = 'DRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '171';
-  public name: string = 'Team Rocket\'s Ariana';
-  public fullName: string = 'Team Rocket\'s Ariana DRI';
+  public name: string = "Team Rocket's Ariana";
+  public fullName: string = "Team Rocket's Ariana DRI";
 
   public text: string =
-    'Draw cards until you have 5 cards in your hand. If all of your Pokémon in play are Team Rocket\'s Pokemon, draw cards until you have 8 cards in your hand instead.';
+    "Draw cards until you have 5 cards in your hand. If all of your Pokémon in play are Team Rocket's Pokemon, draw cards until you have 8 cards in your hand instead.";
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     if (player.supporterTurn > 0) {
@@ -29,7 +29,6 @@ export class TeamRocketsAriana extends TrainerCard {
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -52,9 +51,7 @@ export class TeamRocketsAriana extends TrainerCard {
       if (player.active.cards.length > 0) {
         hasPokemon = true;
         const activePokemon = player.active.getPokemonCard();
-        if (!activePokemon ||
-          !activePokemon.tags ||
-          !activePokemon.tags.includes(CardTag.TEAM_ROCKET)) {
+        if (!activePokemon || !activePokemon.hasTag(CardTag.TEAM_ROCKET)) {
           allTeamRocket = false;
         }
       }
@@ -63,14 +60,14 @@ export class TeamRocketsAriana extends TrainerCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (cardList !== player.active && card instanceof PokemonCard) {
           hasPokemon = true;
-          if (!card.tags || !card.tags.includes(CardTag.TEAM_ROCKET)) {
+          if (!card.hasTag(CardTag.TEAM_ROCKET)) {
             allTeamRocket = false;
           }
         }
       });
 
       // Set target hand size
-      const targetHandSize = (hasPokemon && allTeamRocket) ? 8 : 5;
+      const targetHandSize = hasPokemon && allTeamRocket ? 8 : 5;
 
       // Draw until target hand size is reached
       while (player.hand.cards.length < targetHandSize) {

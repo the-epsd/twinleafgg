@@ -6,10 +6,8 @@ import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-e
 import { AttachEnergyEffect } from '../../../game/store/effects/play-card-effects';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
-
 export class WailordEx extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
 
   public stage: Stage = Stage.BASIC;
 
@@ -21,20 +19,23 @@ export class WailordEx extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Water Veil',
-    powerType: PowerType.ABILITY,
-    text: 'Whenever you attach an Energy card from your hand to this ' +
-      'Pokemon, remove all Special Conditions from it.'
-  }];
+  public powers = [
+    {
+      name: 'Water Veil',
+      powerType: PowerType.ABILITY,
+      text:
+        'Whenever you attach an Energy card from your hand to this ' +
+        'Pokemon, remove all Special Conditions from it.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'High Breaching',
       cost: [CardType.WATER, CardType.WATER, CardType.WATER, CardType.WATER, CardType.WATER],
       damage: 120,
-      text: 'This Pokemon is now Asleep.'
-    }
+      text: 'This Pokemon is now Asleep.',
+    },
   ];
 
   public set: string = 'PRC';
@@ -48,9 +49,10 @@ export class WailordEx extends PokemonCard {
   public setNumber: string = '38';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
+      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [
+        SpecialCondition.ASLEEP,
+      ]);
       specialConditionEffect.target = effect.player.active;
       store.reduceEffect(state, specialConditionEffect);
       return state;
@@ -72,12 +74,11 @@ export class WailordEx extends PokemonCard {
       }
 
       const conditions = effect.target.specialConditions.slice();
-      conditions.forEach(condition => {
+      conditions.forEach((condition) => {
         effect.target.removeSpecialCondition(condition);
       });
     }
 
     return state;
   }
-
 }

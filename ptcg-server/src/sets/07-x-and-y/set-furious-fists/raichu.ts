@@ -16,20 +16,17 @@ export class Raichu extends PokemonCard {
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Thunder Shock',
-      cost: [L, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Electro Ball',
-      cost: [L, L, C],
-      damage: 80,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Thunder Shock',
+    cost: [L, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Electro Ball',
+    cost: [L, L, C],
+    damage: 80,
+    text: ''
+  }];
 
   public set: string = 'FFI';
   public setNumber: string = '28';

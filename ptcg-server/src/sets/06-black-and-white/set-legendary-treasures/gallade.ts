@@ -15,21 +15,18 @@ export class Gallade extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Nerve Shot',
-      cost: [F],
-      damage: 30,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Pandemonium Blade',
-      cost: [F, C, C],
-      damage: 60,
-      damageCalculation: '+',
-      text: 'Does 20 more damage for each of your Benched Pokémon that has any damage counters on it.'
-    }
-  ];
+  public attacks = [{
+    name: 'Nerve Shot',
+    cost: [F],
+    damage: 30,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Pandemonium Blade',
+    cost: [F, C, C],
+    damage: 60,
+    damageCalculation: '+',
+    text: 'Does 20 more damage for each of your Benched Pokémon that has any damage counters on it.'
+  }];
 
   public set: string = 'LTR';
   public setNumber: string = '81';

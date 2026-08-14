@@ -18,8 +18,7 @@ export class Trapinch extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokémon.'
-  },
-  {
+  }, {
     name: 'Hyper Beam',
     cost: [F, C],
     damage: 20,

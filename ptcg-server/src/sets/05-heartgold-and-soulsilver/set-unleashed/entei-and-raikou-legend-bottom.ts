@@ -1,39 +1,48 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardTag } from '../../../game/store/card/card-types';
-import { GameError, GameMessage, PokemonCardList, PowerType, State, StoreLike } from '../../../game';
+import {
+  GameError,
+  GameMessage,
+  PokemonCardList,
+  PowerType,
+  State,
+  StoreLike,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { EnteiAndRaikouLegendTop } from './entei-and-raikou-legend-top';
 import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class EnteiAndRaikouLegendBottom extends PokemonCard {
   public stage: Stage = Stage.LEGEND;
-  public tags = [CardTag.LEGEND, CardTag.DUAL_LEGEND];
+  protected _tags = [CardTag.LEGEND, CardTag.DUAL_LEGEND];
   public cardType = R;
   public additionalCardTypes = [L];
   public hp: number = 140;
   public weakness = [{ type: W }, { type: F }];
   public retreat = [];
 
-  public powers = [{
-    name: 'Legend Assembly',
-    text: 'Put this card from your hand onto your Bench only with the other half of Entei & Raikou LEGEND.',
-    exemptFromAbilityLock: true,
-    useFromHand: true,
-    powerType: PowerType.LEGEND_ASSEMBLY,
-  }];
+  public powers = [
+    {
+      name: 'Legend Assembly',
+      text: 'Put this card from your hand onto your Bench only with the other half of Entei & Raikou LEGEND.',
+      exemptFromAbilityLock: true,
+      useFromHand: true,
+      powerType: PowerType.LEGEND_ASSEMBLY,
+    },
+  ];
 
   public attacks = [
     {
       name: 'Detonation Spin',
       cost: [R, C],
       damage: 90,
-      text: 'Discard a [R] Energy attached to Entei & Raikou LEGEND.'
+      text: 'Discard a [R] Energy attached to Entei & Raikou LEGEND.',
     },
     {
       name: 'Thunder Fall',
       cost: [L, C],
       damage: 0,
-      text: 'Discard all Energy attached to Entei & Raikou LEGEND. This attack does 80 damage to each Pokémon that has any Poké-Powers (both yours and your opponent\'s). This attack\'s damage isn\'t affected by Weakness or Resistance.'
+      text: "Discard all Energy attached to Entei & Raikou LEGEND. This attack does 80 damage to each Pokémon that has any Poké-Powers (both yours and your opponent's). This attack's damage isn't affected by Weakness or Resistance.",
     },
   ];
 
@@ -47,7 +56,7 @@ export class EnteiAndRaikouLegendBottom extends PokemonCard {
     // assemblin the avengers
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
-      const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
+      const slots: PokemonCardList[] = player.bench.filter((b) => b.cards.length === 0);
 
       if (slots.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -58,7 +67,7 @@ export class EnteiAndRaikouLegendBottom extends PokemonCard {
       let topCard: EnteiAndRaikouLegendTop | null = null;
       let bottomCard: EnteiAndRaikouLegendBottom | null = null;
 
-      player.hand.cards.forEach(card => {
+      player.hand.cards.forEach((card) => {
         if (card instanceof EnteiAndRaikouLegendTop && !topPiece) {
           topPiece = true;
           topCard = card;

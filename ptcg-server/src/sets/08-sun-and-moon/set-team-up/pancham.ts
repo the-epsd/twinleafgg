@@ -16,14 +16,12 @@ export class Pancham extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Arm Thrust',
-      cost: [C, C],
-      damage: 40,
-      text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Arm Thrust',
+    cost: [C, C],
+    damage: 40,
+    text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'TEU';
   public setNumber: string = '81';

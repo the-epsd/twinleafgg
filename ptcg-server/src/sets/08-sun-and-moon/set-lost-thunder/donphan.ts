@@ -2,7 +2,8 @@ import { PowerType, State, StoreLike } from '../../../game';
 import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { NEXT_TURN_ATTACK_BONUS, SURVIVE_ON_TEN_IF_FULL_HP } from '../../../game/store/prefabs/prefabs';
+import { NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/attack-effects';
+import { SURVIVE_ON_TEN_IF_FULL_HP } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Donphan extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

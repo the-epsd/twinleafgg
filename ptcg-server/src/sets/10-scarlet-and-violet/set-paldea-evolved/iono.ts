@@ -4,10 +4,9 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { CardList, GameError, GameMessage, Player } from '../../../game';
+import { Card, GameError, GameMessage, Player } from '../../../game';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { MoveCardsEffect } from '../../../game/store/effects/game-effects';
-
+import { DRAW_CARDS, MOVE_HAND_TO_DECK_THEN_DRAW } from '../../../game/store/prefabs/prefabs';
 
 export class Iono extends TrainerCard {
   public regulationMark = 'G';
@@ -31,12 +30,10 @@ export class Iono extends TrainerCard {
     const opponent = StateUtils.getOpponent(state, player);
     const otherCardsInHand = player.hand.cards.filter(c => c !== this).length;
 
-    // Cannot play if we only hold Iono and deck is empty
     if (otherCardsInHand === 0 && player.deck.cards.length === 0) {
       return false;
     }
 
-    // Cannot play if both hands would be empty (nothing to shuffle)
     if (otherCardsInHand === 0 && opponent.hand.cards.length === 0) {
       return false;
     }
@@ -46,71 +43,74 @@ export class Iono extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const supporterTurn = player.supporterTurn;
-
-      if (supporterTurn > 0) {
+      if (player.supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
-      // We will discard this card after prompt confirmation
-      effect.preventDefault = true;
+      const playerCards = player.hand.cards.filter(c => c !== this);
+      const opponentCards = [...opponent.hand.cards];
 
-      const cards = player.hand.cards.filter(c => c !== this);
-
-      // Shuffle the player's hand
-      this.shufflePlayerHand(player);
-
-      // Shuffle the opponent's hand
-      this.shufflePlayerHand(opponent);
-
-      const deckBottom = new CardList();
-      const opponentDeckBottom = new CardList();
-
-      if (cards.length === 0 && player.deck.cards.length === 0) {
+      if (playerCards.length === 0 && player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      if (player.hand.cards.length === 0 && opponent.hand.cards.length === 0) {
+      if (playerCards.length === 0 && opponentCards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      const playerMoveEffect = new MoveCardsEffect(player.hand, deckBottom, { cards, sourceCard: this });
-      state = store.reduceEffect(state, playerMoveEffect);
+      this.shuffleCards(playerCards);
+      this.shuffleCards(opponentCards);
 
-      const opponentMoveEffect = new MoveCardsEffect(opponent.hand, opponentDeckBottom, { sourceCard: this });
-      state = store.reduceEffect(state, opponentMoveEffect);
+      // One player at a time (hand→deck wait → draw) so board animations can finish.
+      const runOpponent = (): void => {
+        if (opponentCards.length > 0) {
+          MOVE_HAND_TO_DECK_THEN_DRAW(store, state, opponent, {
+            cards: opponentCards,
+            drawCount: opponent.getPrizeLeft(),
+            sourceCard: this,
+          });
+          return;
+        }
+        // Player put cards; opponent had an empty hand — still draws for prizes.
+        if (playerCards.length > 0) {
+          DRAW_CARDS(store, state, opponent, opponent.getPrizeLeft());
+        }
+      };
 
-      deckBottom.moveTo(player.deck);
-      opponentDeckBottom.moveTo(opponent.deck);
-
-      player.deck.moveTo(player.hand, player.getPrizeLeft());
-
-      // Check if moving cards from opponent's hand was prevented
-
-      if (!opponentMoveEffect.preventDefault) {
-        opponent.deck.moveTo(opponent.hand, opponent.getPrizeLeft());
+      if (playerCards.length > 0) {
+        return MOVE_HAND_TO_DECK_THEN_DRAW(store, state, player, {
+          cards: playerCards,
+          drawCount: player.getPrizeLeft(),
+          sourceCard: this,
+          afterDraw: () => runOpponent(),
+        });
       }
 
-
-
-
+      // Only opponent has cards to put on the bottom.
+      return MOVE_HAND_TO_DECK_THEN_DRAW(store, state, opponent, {
+        cards: opponentCards,
+        drawCount: opponent.getPrizeLeft(),
+        sourceCard: this,
+        afterDraw: () => {
+          DRAW_CARDS(store, state, player, player.getPrizeLeft());
+        },
+        onMovePrevented: () => {
+          // Opponent put was blocked (e.g. Milotic); acting player still draws.
+          DRAW_CARDS(store, state, player, player.getPrizeLeft());
+        },
+      });
     }
 
     return state;
   }
 
-  shufflePlayerHand(player: Player): void {
-    const hand = player.hand.cards;
-
-    // Shuffle the hand using the Fisher-Yates shuffle algorithm
-    for (let i = hand.length - 1; i > 0; i--) {
+  private shuffleCards(cards: Card[]): void {
+    for (let i = cards.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [hand[i], hand[j]] = [hand[j], hand[i]];
+      [cards[i], cards[j]] = [cards[j], cards[i]];
     }
   }
 }

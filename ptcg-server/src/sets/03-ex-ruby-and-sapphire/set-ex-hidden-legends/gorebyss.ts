@@ -19,8 +19,7 @@ export class Gorebyss extends PokemonCard {
     cost: [C],
     damage: 10,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-  },
-  {
+  }, {
     name: 'Mystic Water',
     cost: [W, C],
     damage: 20,

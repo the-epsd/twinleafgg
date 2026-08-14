@@ -3,13 +3,13 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { BLOCK_RETREAT, MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED } from '../../../game/store/prefabs/attack-effects';
 export class Scovillainex extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Capsakid';
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public cardType: CardType = G;
   public hp: number = 260;
   public weakness = [{ type: R }];
@@ -20,14 +20,14 @@ export class Scovillainex extends PokemonCard {
       name: 'Chili Snapper Bind',
       cost: [C],
       damage: 0,
-      text: 'Your opponent\'s Active Pokémon is now Burned. The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
+      text: "Your opponent's Active Pokémon is now Burned. The Defending Pokémon can't retreat during your opponent's next turn.",
     },
     {
       name: 'Two-Headed Crushing',
       cost: [G, G],
       damage: 140,
-      text: 'Discard a random card from your opponent\'s hand. Discard the top card of your opponent\'s deck.'
-    }
+      text: "Discard a random card from your opponent's hand. Discard the top card of your opponent's deck.",
+    },
   ];
 
   public regulationMark = 'G';

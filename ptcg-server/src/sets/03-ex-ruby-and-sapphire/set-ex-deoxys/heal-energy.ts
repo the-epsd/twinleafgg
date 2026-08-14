@@ -1,5 +1,10 @@
 import { StoreLike, State } from '../../../game';
-import { CardTag, CardType, EnergyType, SpecialCondition } from '../../../game/store/card/card-types';
+import {
+  CardTag,
+  CardType,
+  EnergyType,
+  SpecialCondition,
+} from '../../../game/store/card/card-types';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { HealEffect } from '../../../game/store/effects/game-effects';
@@ -15,10 +20,10 @@ export class HealEnergy extends EnergyCard {
   public name = 'Heal Energy';
   public fullName = 'Heal Energy DX';
 
-  public text = 'Heal Energy provides [C] Energy. When you attach this card from your hand to 1 of your Pokémon, remove 1 damage counter and all Special Conditions from that Pokémon. If Heal Energy is attached to Pokémon-ex, Heal Energy has no effect other than providing Energy.';
+  public text =
+    'Heal Energy provides [C] Energy. When you attach this card from your hand to 1 of your Pokémon, remove 1 damage counter and all Special Conditions from that Pokémon. If Heal Energy is attached to Pokémon-ex, Heal Energy has no effect other than providing Energy.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
       const player = effect.player;
 
@@ -26,7 +31,7 @@ export class HealEnergy extends EnergyCard {
         return state;
       }
 
-      if (effect.target.getPokemonCard()?.tags.includes(CardTag.POKEMON_ex)) {
+      if (effect.target.getPokemonCard()?.hasTag(CardTag.POKEMON_ex)) {
         return state;
       }
 

@@ -16,14 +16,12 @@ export class Beldum2 extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Single Smash',
-      cost: [C, C],
-      damage: 50,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Single Smash',
+    cost: [C, C],
+    damage: 50,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'CES';
   public setNumber: string = '93';

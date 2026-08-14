@@ -6,7 +6,6 @@ import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/p
 import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class Sharpedo extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Carvanha';
   public cardType: CardType = D;
@@ -22,6 +21,7 @@ export class Sharpedo extends PokemonCard {
   }];
 
   public regulationMark = 'J';
+
   public set: string = 'MEZ';
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';

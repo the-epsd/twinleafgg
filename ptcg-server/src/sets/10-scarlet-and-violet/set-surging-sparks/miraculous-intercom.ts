@@ -10,11 +10,17 @@ import { Card } from '../../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { Player, ShowCardsPrompt, StateUtils } from '../../../game';
 
-function* playCard(next: Function, store: StoreLike, state: State, self: MiraculousIntercom, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: MiraculousIntercom,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
-  const hasSupporter = player.discard.cards.some(c => {
+  const hasSupporter = player.discard.cards.some((c) => {
     return c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER;
   });
 
@@ -27,27 +33,31 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Miracul
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
   let cards: Card[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.discard,
-    { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-    { min: 1, max: 2, allowCancel: false }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.discard,
+      { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
+      { min: 1, max: 2, allowCancel: false },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   cards.forEach((card, index) => {
     store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
   });
 
   if (cards.length > 0) {
-    yield store.prompt(state, new ShowCardsPrompt(
-      opponent.id,
-      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-      cards
-    ), () => next());
+    yield store.prompt(
+      state,
+      new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+      () => next(),
+    );
   }
 
   if (cards.length > 0) {
@@ -61,9 +71,8 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Miracul
 }
 
 export class MiraculousIntercom extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.ITEM;
-  public tags = [CardTag.ACE_SPEC];
+  protected _tags = [CardTag.ACE_SPEC];
   public regulationMark = 'H';
   public set: string = 'SSP';
   public name: string = 'Miracle Headset';
@@ -71,19 +80,17 @@ export class MiraculousIntercom extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '183';
 
-  public text: string =
-    'Put up to 2 Supporter cards from your discard pile into your hand.';
+  public text: string = 'Put up to 2 Supporter cards from your discard pile into your hand.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
-    const hasSupporter = player.discard.cards.some(c =>
-      c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER
+    const hasSupporter = player.discard.cards.some(
+      (c) => c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER,
     );
     if (!hasSupporter) {
       return false;
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -92,5 +99,4 @@ export class MiraculousIntercom extends TrainerCard {
     }
     return state;
   }
-
 }

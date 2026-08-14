@@ -22,15 +22,13 @@ export class Marowak extends PokemonCard {
     text: 'Prevent all effects of attacks done to you or your hand by your opponent\'s Pokémon. Remove any existing effects.'
   }];
 
-  public attacks = [
-    {
-      name: 'Bonemerang',
-      cost: [F, C],
-      damage: 60,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 60 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Bonemerang',
+    cost: [F, C],
+    damage: 60,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 60 damage times the number of heads.'
+  }];
 
   public set: string = 'FCO';
   public setNumber: string = '37';

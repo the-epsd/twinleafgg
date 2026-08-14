@@ -12,7 +12,7 @@ import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/s
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 
 export class KleavorV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = F;
   public hp: number = 210;
@@ -24,14 +24,14 @@ export class KleavorV extends PokemonCard {
       name: 'Cut',
       cost: [F],
       damage: 40,
-      text: ''
+      text: '',
     },
     {
       name: 'Axe Slash',
       cost: [F, F, C],
       damage: 150,
-      text: 'Discard an Energy from this Pokémon. If you do, discard an Energy from your opponent\'s Active Pokémon.'
-    }
+      text: "Discard an Energy from this Pokémon. If you do, discard an Energy from your opponent's Active Pokémon.",
+    },
   ];
 
   public regulationMark: string = 'F';

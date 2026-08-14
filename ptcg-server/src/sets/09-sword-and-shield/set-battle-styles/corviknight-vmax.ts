@@ -10,7 +10,7 @@ import { EffectOfAbilityEffect } from '../../../game/store/effects/game-effects'
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class CorviknightVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Corviknight V';
   public cardType: CardType = M;
@@ -19,19 +19,21 @@ export class CorviknightVmax extends PokemonCard {
   public resistance = [{ type: G, value: -30 }];
   public retreat = [];
 
-  public powers = [{
-    name: 'Lustrous Body',
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all effects of your opponent\'s Pokémon\'s Abilities done to this Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Lustrous Body',
+      powerType: PowerType.ABILITY,
+      text: "Prevent all effects of your opponent's Pokémon's Abilities done to this Pokémon.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'G-Max Hurricane',
       cost: [M, M, C],
       damage: 240,
-      text: 'During your next turn, this Pokémon can\'t use G-Max Hurricane.'
-    }
+      text: "During your next turn, this Pokémon can't use G-Max Hurricane.",
+    },
   ];
 
   public regulationMark: string = 'E';

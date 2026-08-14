@@ -15,20 +15,17 @@ export class Lilligant extends PokemonCard {
   public resistance = [{ type: W, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Bemusing Aroma',
-      cost: [G],
-      damage: 20,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed and Poisoned. If tails, the Defending Pokémon is now Confused.'
-    },
-    {
-      name: 'Cut',
-      cost: [G, C, C],
-      damage: 60,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Bemusing Aroma',
+    cost: [G],
+    damage: 20,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed and Poisoned. If tails, the Defending Pokémon is now Confused.'
+  }, {
+    name: 'Cut',
+    cost: [G, C, C],
+    damage: 60,
+    text: ''
+  }];
 
   public set: string = 'EPO';
   public cardImage: string = 'assets/cardback.png';

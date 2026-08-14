@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 
 export class TrevenantVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Trevenant V';
   public cardType: CardType = G;
@@ -24,14 +24,14 @@ export class TrevenantVmax extends PokemonCard {
       cost: [G, C],
       damage: 40,
       damageCalculation: 'x',
-      text: 'This attack does 40 damage for each Supporter card in your opponent\'s discard pile.'
+      text: "This attack does 40 damage for each Supporter card in your opponent's discard pile.",
     },
     {
       name: 'Max Tree',
       cost: [G, G, C],
       damage: 180,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -49,8 +49,8 @@ export class TrevenantVmax extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const supporterCount = opponent.discard.cards.filter(card =>
-        card instanceof TrainerCard && card.trainerType === TrainerType.SUPPORTER
+      const supporterCount = opponent.discard.cards.filter(
+        (card) => card instanceof TrainerCard && card.trainerType === TrainerType.SUPPORTER,
       ).length;
 
       effect.damage = 40 * supporterCount;

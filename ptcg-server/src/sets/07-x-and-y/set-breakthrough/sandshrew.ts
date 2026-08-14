@@ -6,7 +6,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, BLOCK_RETREAT } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 export class Sandshrew extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = F;
@@ -14,21 +15,18 @@ export class Sandshrew extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Double Scratch',
-      cost: [F],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
-    },
-    {
-      name: 'Sand Tomb',
-      cost: [F, C],
-      damage: 20,
-      text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
-    }
-  ];
+  public attacks = [{
+    name: 'Double Scratch',
+    cost: [F],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
+  }, {
+    name: 'Sand Tomb',
+    cost: [F, C],
+    damage: 20,
+    text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '75';

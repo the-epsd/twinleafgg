@@ -17,20 +17,17 @@ export class Mawile extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Call for Family',
-      cost: [C],
-      damage: 0,
-      text: 'Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck.'
-    },
-    {
-      name: 'Crunch',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Call for Family',
+    cost: [C],
+    damage: 0,
+    text: 'Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck.'
+  }, {
+    name: 'Crunch',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
+  }];
 
   public set: string = 'CIN';
   public setNumber: string = '64';

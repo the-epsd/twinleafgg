@@ -6,11 +6,20 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, GameError, GameMessage, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, DRAW_CARDS_UNTIL_CARDS_IN_HAND, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  USE_ABILITY_ONCE_PER_TURN,
+  ABILITY_USED,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  DRAW_CARDS_UNTIL_CARDS_IN_HAND,
+  BLOCK_IF_GX_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class SilvallyGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Type: Null';
   public cardType: CardType = C;
@@ -18,26 +27,30 @@ export class SilvallyGx extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Disk Reload',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), you may draw cards until you have 5 cards in your hand.'
-  }];
+  public powers = [
+    {
+      name: 'Disk Reload',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn (before your attack), you may draw cards until you have 5 cards in your hand.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Brave Buddies',
-    cost: [C, C],
-    damage: 50,
-    damageCalculation: '+',
-    text: 'If you played a Supporter card from your hand during this turn, this attack does 70 more damage.'
-  },
-  {
-    name: 'Silver Knight-GX',
-    cost: [C, C],
-    damage: 0,
-    text: 'If your opponent\'s Active Pokémon is an Ultra Beast, it is Knocked Out. (You can\'t use more than 1 GX attack in a game.)'
-  }];
+  public attacks = [
+    {
+      name: 'Brave Buddies',
+      cost: [C, C],
+      damage: 50,
+      damageCalculation: '+',
+      text: 'If you played a Supporter card from your hand during this turn, this attack does 70 more damage.',
+    },
+    {
+      name: 'Silver Knight-GX',
+      cost: [C, C],
+      damage: 0,
+      text: "If your opponent's Active Pokémon is an Ultra Beast, it is Knocked Out. (You can't use more than 1 GX attack in a game.)",
+    },
+  ];
 
   public set: string = 'CEC';
   public setNumber: string = '184';
@@ -89,7 +102,7 @@ export class SilvallyGx extends PokemonCard {
       player.usedGX = true;
 
       const pokemon = opponent.active.getPokemonCard();
-      if (pokemon && pokemon.tags.includes(CardTag.ULTRA_BEAST)) {
+      if (pokemon && pokemon.hasTag(CardTag.ULTRA_BEAST)) {
         KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
       }
     }

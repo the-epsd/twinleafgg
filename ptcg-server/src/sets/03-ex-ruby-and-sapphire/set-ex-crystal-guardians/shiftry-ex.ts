@@ -1,4 +1,13 @@
-import { ChoosePokemonPrompt, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../../game';
+import {
+  ChoosePokemonPrompt,
+  GameMessage,
+  PlayerType,
+  PowerType,
+  SlotType,
+  State,
+  StateUtils,
+  StoreLike,
+} from '../../../game';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
@@ -9,31 +18,35 @@ import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefab
 export class Shiftryex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Nuzleaf';
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public cardType: CardType = D;
   public hp: number = 140;
   public weakness = [{ type: G }, { type: F }];
   public resistance = [{ type: P, value: -30 }];
   public retreat = [];
 
-  public powers = [{
-    name: 'Dark Eyes',
-    powerType: PowerType.POKEBODY,
-    text: 'After your opponent\'s Pokémon uses a Poké-Power, put 2 damage counters on that Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Dark Eyes',
+      powerType: PowerType.POKEBODY,
+      text: "After your opponent's Pokémon uses a Poké-Power, put 2 damage counters on that Pokémon.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Target Attack',
-    cost: [D, C],
-    damage: 0,
-    text: 'Choose 1 of your opponent\'s Pokémon. This attack does 30 damage to that Pokémon. If that Pokémon already has any damage counters on it, this attack does 50 damage instead. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-  },
-  {
-    name: 'Blade Arms',
-    cost: [D, C, C],
-    damage: 70,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Target Attack',
+      cost: [D, C],
+      damage: 0,
+      text: "Choose 1 of your opponent's Pokémon. This attack does 30 damage to that Pokémon. If that Pokémon already has any damage counters on it, this attack does 50 damage instead. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
+    {
+      name: 'Blade Arms',
+      cost: [D, C, C],
+      damage: 70,
+      text: '',
+    },
+  ];
 
   public set: string = 'CG';
   public cardImage: string = 'assets/cardback.png';
@@ -42,7 +55,6 @@ export class Shiftryex extends PokemonCard {
   public fullName: string = 'Shiftry ex CG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof PowerEffect && effect.power.powerType === PowerType.POKEPOWER) {
       // Ignore synthetic probe effects emitted by IS_POKEPOWER_BLOCKED.
       if (!effect.card.powers.includes(effect.power)) {
@@ -78,26 +90,29 @@ export class Shiftryex extends PokemonCard {
       const opponent = effect.opponent;
 
       const targets = opponent.getPokemonInPlay();
-      if (targets.length === 0)
-        return state;
+      if (targets.length === 0) return state;
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE],
-      ), selected => {
-        const target = selected[0];
-        const damage = target.damage > 0 ? 50 : 30;
-        let damageEffect: DealDamageEffect | PutDamageEffect;
-        if (target === opponent.active) {
-          damageEffect = new DealDamageEffect(effect, damage);
-        } else {
-          damageEffect = new PutDamageEffect(effect, damage);
-        }
-        damageEffect.target = target;
-        store.reduceEffect(state, damageEffect);
-      });
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+        ),
+        (selected) => {
+          const target = selected[0];
+          const damage = target.damage > 0 ? 50 : 30;
+          let damageEffect: DealDamageEffect | PutDamageEffect;
+          if (target === opponent.active) {
+            damageEffect = new DealDamageEffect(effect, damage);
+          } else {
+            damageEffect = new PutDamageEffect(effect, damage);
+          }
+          damageEffect.target = target;
+          store.reduceEffect(state, damageEffect);
+        },
+      );
     }
 
     return state;

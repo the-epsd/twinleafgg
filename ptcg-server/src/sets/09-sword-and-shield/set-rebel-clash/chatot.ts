@@ -23,16 +23,15 @@ export class Chatot extends PokemonCard {
     text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may flip a coin. If heads, put a Supporter card from your discard pile into your hand.'
   }];
 
-  public attacks = [
-    {
-      name: 'Glide',
-      cost: [C, C],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Glide',
+    cost: [C, C],
+    damage: 30,
+    text: ''
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'RCL';
   public setNumber: string = '142';
   public cardImage: string = 'assets/cardback.png';

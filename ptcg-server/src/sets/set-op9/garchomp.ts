@@ -1,57 +1,43 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, CoinFlipPrompt, ChooseEnergyPrompt, Card, StateUtils } from '../../game';
+import { StoreLike, State, ChooseEnergyPrompt, Card, StateUtils } from '../../game';
 
 import { PutDamageEffect, DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Garchomp extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom = 'Gabite';
-
-  public cardType: CardType = CardType.COLORLESS;
-
+  public cardType: CardType = C;
   public hp: number = 130;
-
-  public weakness = [{ type: CardType.COLORLESS, value: 30 }];
-
+  public weakness = [{ type: C, value: 30 }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Dragon Rage',
-      cost: [CardType.COLORLESS],
-      damage: 80,
-      text: 'Flip 2 coins. If either of them is tails, this attack does nothing.'
-    },
-    {
-      name: 'Jet Sword',
-      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
-      damage: 100,
-      text: 'Discard 2 Energy attached to Garchomp and this attack does 10 ' +
-        'damage to each of your opponent\'s Benched Pokemon. (Don\'t apply ' +
-        'Weakness and Resistance for Benched Pokemon.)'
-    }
-  ];
+  public attacks = [{
+    name: 'Dragon Rage',
+    cost: [C],
+    damage: 80,
+    text: 'Flip 2 coins. If either of them is tails, this attack does nothing.'
+  }, {
+    name: 'Jet Sword',
+    cost: [C, C, C],
+    damage: 100,
+    text: 'Discard 2 Energy attached to Garchomp and this attack does 10 ' +
+    'damage to each of your opponent\'s Benched Pokemon. (Don\'t apply ' +
+    'Weakness and Resistance for Benched Pokemon.)'
+  }];
 
   public set: string = 'OP9';
-
   public name: string = 'Garchomp';
-
   public fullName: string = 'Garchomp OP9';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
+      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, results => {
         if (results.some(r => r === false)) {
           effect.damage = 0;
         }

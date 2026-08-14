@@ -16,20 +16,17 @@ export class Growlithe extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Rest',
-      cost: [C, C],
-      damage: 0,
-      text: 'Heal all damage from this Pokémon. This Pokémon is now Asleep.'
-    },
-    {
-      name: 'Lunge',
-      cost: [R, C, C],
-      damage: 40,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Rest',
+    cost: [C, C],
+    damage: 0,
+    text: 'Heal all damage from this Pokémon. This Pokémon is now Asleep.'
+  }, {
+    name: 'Lunge',
+    cost: [R, C, C],
+    damage: 40,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'LTR';
   public setNumber: string = 'RC4';

@@ -22,22 +22,22 @@ export class Goodra extends PokemonCard {
   public weakness: { type: CardType }[] = [];
   public resistance: { type: CardType; value: number }[] = [];
   public retreat = [C, C, C];
-  public powers = [
-    {
-      name: 'Slimy Sliding',
-      powerType: PowerType.ABILITY,
-      text: "When your opponent's Active Pokémon retreats, your opponent flips a coin. If tails, Energy for its Retreat Cost is not discarded, and they don't switch Pokémon. The effect of Slimy Sliding doesn't stack.",
-    },
-  ];
-  public attacks = [
-    {
-      name: 'Dragon Pulse',
-      cost: [W, P],
-      damage: 160,
-      text: 'Discard the top card of your deck.',
-    },
-  ];
+
+  public powers = [{
+    name: 'Slimy Sliding',
+    powerType: PowerType.ABILITY,
+    text: "When your opponent's Active Pokémon retreats, your opponent flips a coin. If tails, Energy for its Retreat Cost is not discarded, and they don't switch Pokémon. The effect of Slimy Sliding doesn't stack.",
+  }];
+
+  public attacks = [{
+    name: 'Dragon Pulse',
+    cost: [W, P],
+    damage: 160,
+    text: 'Discard the top card of your deck.',
+  }];
+
   public regulationMark = 'J';
+
   public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '68';

@@ -6,9 +6,10 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, BLOCK_RETREAT } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 export class WobbuffetV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 220;
@@ -21,14 +22,14 @@ export class WobbuffetV extends PokemonCard {
       name: 'Gritty Comeback',
       cost: [C, C],
       damage: 0,
-      text: 'Switch all damage counters on this Pokémon with those on your opponent\'s Active Pokémon.'
+      text: "Switch all damage counters on this Pokémon with those on your opponent's Active Pokémon.",
     },
     {
       name: 'Shadow Bind',
       cost: [P, P],
       damage: 70,
-      text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
-    }
+      text: "During your opponent's next turn, the Defending Pokémon can't retreat.",
+    },
   ];
 
   public regulationMark: string = 'D';

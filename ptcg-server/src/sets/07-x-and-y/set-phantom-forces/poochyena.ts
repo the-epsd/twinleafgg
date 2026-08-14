@@ -16,20 +16,17 @@ export class Poochyena extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Bite',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Lunge',
-      cost: [D, C],
-      damage: 30,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Bite',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Lunge',
+    cost: [D, C],
+    damage: 30,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'PHF';
   public setNumber: string = '53';

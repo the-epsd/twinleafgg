@@ -1,19 +1,15 @@
-import { ChoosePokemonPrompt, CoinFlipPrompt, GameMessage, PlayerType, PowerType, SlotType, State, StoreLike } from '../../../game';
+import { ChoosePokemonPrompt, GameMessage, PlayerType, PowerType, SlotType, State, StoreLike } from '../../../game';
 import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { EffectOfAbilityEffect } from '../../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_POWER_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Tyrogue extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.FIGHTING;
-
+  public cardType: CardType = F;
   public hp: number = 60;
-
   public retreat = [];
 
   public powers = [{
@@ -24,13 +20,9 @@ export class Tyrogue extends PokemonCard {
   }];
 
   public set: string = 'UNB';
-
   public name: string = 'Tyrogue';
-
   public fullName: string = 'Tyrogue UNB';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '100';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -38,9 +30,7 @@ export class Tyrogue extends PokemonCard {
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (!result) {
           const endTurnEffect = new EndTurnEffect(player);
           store.reduceEffect(state, endTurnEffect);

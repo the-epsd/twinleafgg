@@ -3,10 +3,11 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, ShuffleDeckPrompt, PokemonCardList } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, BLOCK_IF_GX_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED, DEFENDING_POKEMON_DOES_LESS_DAMAGE } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, BLOCK_IF_GX_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store/prefabs/prefabs';
+import { DEFENDING_POKEMON_DOES_LESS_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class SuicuneGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 180;
@@ -15,12 +16,14 @@ export class SuicuneGx extends PokemonCard {
 
   public usedBriniclesGx = false;
 
-  public powers = [{
-    name: 'Phantom Winds',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), if this Pokémon is on your Bench, you may shuffle it and all cards attached to it into your deck.'
-  }];
+  public powers = [
+    {
+      name: 'Phantom Winds',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn (before your attack), if this Pokémon is on your Bench, you may shuffle it and all cards attached to it into your deck.',
+    },
+  ];
 
   public attacks = [{
     name: 'Cure Stream',
@@ -60,7 +63,7 @@ export class SuicuneGx extends PokemonCard {
       cardList.moveTo(player.deck);
       cardList.clearEffects();
 
-      return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+      return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
         player.deck.applyOrder(order);
       });
     }
@@ -81,7 +84,7 @@ export class SuicuneGx extends PokemonCard {
       this.usedBriniclesGx = false;
       const player = effect.player;
 
-      if (player.bench.some(b => b.cards.length > 0)) {
+      if (player.bench.some((b) => b.cards.length > 0)) {
         SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
       }
     }

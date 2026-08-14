@@ -16,20 +16,17 @@ export class Rhydon extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Horn Drill',
-      cost: [F, C, C],
-      damage: 50,
-      text: ''
-    },
-    {
-      name: 'Mad Mountain',
-      cost: [F, F, F, C],
-      damage: 0,
-      text: 'Flip 2 coins. If both of them are heads, discard the top card of your opponent\'s deck for each damage counter on this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Horn Drill',
+    cost: [F, C, C],
+    damage: 50,
+    text: ''
+  }, {
+    name: 'Mad Mountain',
+    cost: [F, F, F, C],
+    damage: 0,
+    text: 'Flip 2 coins. If both of them are heads, discard the top card of your opponent\'s deck for each damage counter on this Pokémon.'
+  }];
 
   public set: string = 'XY';
   public setNumber: string = '61';

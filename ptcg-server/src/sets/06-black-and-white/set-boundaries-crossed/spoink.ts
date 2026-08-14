@@ -15,15 +15,13 @@ export class Spoink extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Flail Around',
-      cost: [P],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 10 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Flail Around',
+    cost: [P],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 10 damage times the number of heads.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '59';

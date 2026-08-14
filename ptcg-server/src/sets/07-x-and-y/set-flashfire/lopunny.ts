@@ -26,14 +26,12 @@ export class Lopunny extends PokemonCard {
     text: 'Once during your turn (before your attack), you may return this Pok\u00e9mon and all cards attached to it to your hand.'
   }];
 
-  public attacks = [
-    {
-      name: 'Sitdown Bounce',
-      cost: [C, C, C],
-      damage: 80,
-      text: 'Flip a coin. If tails, this Pok\u00e9mon can\'t attack during your next turn.'
-    }
-  ];
+  public attacks = [{
+    name: 'Sitdown Bounce',
+    cost: [C, C, C],
+    damage: 80,
+    text: 'Flip a coin. If tails, this Pok\u00e9mon can\'t attack during your next turn.'
+  }];
 
   public set: string = 'FLF';
   public setNumber: string = '85';

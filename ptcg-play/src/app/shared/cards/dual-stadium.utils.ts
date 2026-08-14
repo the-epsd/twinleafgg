@@ -1,17 +1,19 @@
-import { Card, CardTag } from 'ptcg-server';
+import { Card, CardTag } from "ptcg-server";
 
 export function isDualStadiumHalf(card: Card | undefined | null): boolean {
   if (!card) {
     return false;
   }
-  if (card.tags?.includes(CardTag.DUAL_STADIUM)) {
+  if (card.tags.includes(CardTag.DUAL_STADIUM)) {
     return true;
   }
-  return card.name === 'Legendary Summit' && card.set === 'M6';
+  return card.name === "Legendary Summit" && card.set === "M6";
 }
 
 /** Left/right stadium halves sorted by set number (left = lower number). */
-export function resolveDualStadiumDisplayHalves(cardsInZone: Card[]): [Card, Card] | null {
+export function resolveDualStadiumDisplayHalves(
+  cardsInZone: Card[],
+): [Card, Card] | null {
   if (!cardsInZone?.length) {
     return null;
   }
@@ -21,7 +23,9 @@ export function resolveDualStadiumDisplayHalves(cardsInZone: Card[]): [Card, Car
     return null;
   }
 
-  const inZone = cardsInZone.filter(c => c.name === anchor.name && isDualStadiumHalf(c));
+  const inZone = cardsInZone.filter(
+    (c) => c.name === anchor.name && isDualStadiumHalf(c),
+  );
   const bySetNumber = new Map<string, Card>();
   for (const half of inZone) {
     if (!bySetNumber.has(half.setNumber)) {

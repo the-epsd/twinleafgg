@@ -20,8 +20,7 @@ export class Luxray extends PokemonCard {
     cost: [L],
     damage: 60,
     text: 'Does 20 damage to 1 of your Benched Pokémon.'
-  },
-  {
+  }, {
     name: 'Crunch',
     cost: [L, L, C],
     damage: 80,

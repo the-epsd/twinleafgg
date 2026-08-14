@@ -5,7 +5,8 @@ import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
-import { COPY_OPPONENT_ACTIVE_ATTACK, MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { COPY_OPPONENT_ACTIVE_ATTACK } from '../../../game/store/prefabs/attack-effects';
 
 function* useNastyPlot(next: Function, store: StoreLike, state: State,
   effect: AttackEffect, self: Card): IterableIterator<State> {

@@ -1,60 +1,45 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card-types';
-import { StoreLike, State, CoinFlipPrompt } from '../../../game';
+import { StoreLike, State } from '../../../game';
 
 import { Effect } from '../../../game/store/effects/effect';
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
-import { GameMessage } from '../../../game/game-message';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Pikachu extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.LIGHTNING;
-
+  public cardType: CardType = L;
   public hp: number = 60;
+  public weakness = [{ type: F }];
+  public resistance = [{ type: M, value: -20 }];
+  public retreat = [C];
 
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public resistance = [{ type: CardType.METAL, value: -20 }];
-
-  public retreat = [CardType.COLORLESS];
-
-  public attacks = [
-    {
-      name: 'Nuzzle',
-      cost: [CardType.COLORLESS],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokemon ' +
-        'is now Paralyzed.'
-    },
-    {
-      name: 'Quick Attack',
-      cost: [CardType.COLORLESS, CardType.COLORLESS],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 10 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Nuzzle',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokemon ' +
+    'is now Paralyzed.'
+  }, {
+    name: 'Quick Attack',
+    cost: [C, C],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 10 more damage.'
+  }];
 
   public set: string = 'XY';
-
   public name: string = 'Pikachu';
-
   public fullName: string = 'Pikachu XY';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '42';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
           const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED]);
           store.reduceEffect(state, specialConditionEffect);
@@ -65,9 +50,7 @@ export class Pikachu extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
           effect.damage += 10;
         }

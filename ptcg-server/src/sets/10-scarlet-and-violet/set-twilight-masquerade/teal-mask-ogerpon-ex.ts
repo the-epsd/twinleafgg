@@ -1,6 +1,23 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType, BoardEffect } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameError, GameMessage, StateUtils, ChooseCardsPrompt, EnergyCard, PlayerType } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+  BoardEffect,
+} from '../../../game/store/card/card-types';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  GameError,
+  GameMessage,
+  StateUtils,
+  ChooseCardsPrompt,
+  EnergyCard,
+  PlayerType,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
@@ -10,8 +27,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class TealMaskOgerponex extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
   public regulationMark = 'H';
 
@@ -25,12 +41,14 @@ export class TealMaskOgerponex extends PokemonCard {
 
   public retreat = [CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Teal Dance',
-    powerType: PowerType.ABILITY,
-    useWhenInPlay: true,
-    text: 'Once during your turn, you may attach a Basic [G] Energy card from your hand to this Pokémon. If you attached any Energy to a Pokémon in this way, draw a card.'
-  }];
+  public powers = [
+    {
+      name: 'Teal Dance',
+      powerType: PowerType.ABILITY,
+      useWhenInPlay: true,
+      text: 'Once during your turn, you may attach a Basic [G] Energy card from your hand to this Pokémon. If you attached any Energy to a Pokémon in this way, draw a card.',
+    },
+  ];
 
   public attacks = [
     {
@@ -38,8 +56,8 @@ export class TealMaskOgerponex extends PokemonCard {
       cost: [CardType.GRASS, CardType.GRASS, CardType.GRASS],
       damage: 30,
       damageCalculation: '+',
-      text: 'This attack does 30 more damage for each Energy attached to both Active Pokémon.'
-    }
+      text: 'This attack does 30 more damage for each Energy attached to both Active Pokémon.',
+    },
   ];
 
   public set: string = 'TWM';
@@ -55,7 +73,6 @@ export class TealMaskOgerponex extends PokemonCard {
   public readonly TEAL_DANCE_MARKER = 'TEAL_DANCE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       player.marker.removeMarker(this.TEAL_DANCE_MARKER, this);
@@ -68,10 +85,12 @@ export class TealMaskOgerponex extends PokemonCard {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
-      const hasEnergyInHand = player.hand.cards.some(c => {
-        return c instanceof EnergyCard
-          && c.energyType === EnergyType.BASIC
-          && c.provides.includes(CardType.GRASS);
+      const hasEnergyInHand = player.hand.cards.some((c) => {
+        return (
+          c instanceof EnergyCard &&
+          c.energyType === EnergyType.BASIC &&
+          c.provides.includes(CardType.GRASS)
+        );
       });
       if (!hasEnergyInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -82,35 +101,42 @@ export class TealMaskOgerponex extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_ATTACH,
-        player.hand,
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Grass Energy' },
-        { min: 0, max: 1, allowCancel: false }
-      ), cards => {
-        cards = cards || [];
-        if (cards.length > 0) {
-          player.marker.addMarker(this.TEAL_DANCE_MARKER, this);
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_ATTACH,
+          player.hand,
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Grass Energy' },
+          { min: 0, max: 1, allowCancel: false },
+        ),
+        (cards) => {
+          cards = cards || [];
+          if (cards.length > 0) {
+            player.marker.addMarker(this.TEAL_DANCE_MARKER, this);
 
-          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-            if (cardList.getPokemonCard() === this) {
-              cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-            }
-          });
+            player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+              if (cardList.getPokemonCard() === this) {
+                cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+              }
+            });
 
-          player.hand.moveCardsTo(cards, cardList);
+            player.hand.moveCardsTo(cards, cardList);
 
-          // cards.forEach((card, index) => {
-          //   store.log(state, GameLog.LOG_PLAYER_ATTACHES_CARD, { name: player.name, card: card.name, cardList: cardList });
-          // });
+            // cards.forEach((card, index) => {
+            //   store.log(state, GameLog.LOG_PLAYER_ATTACHES_CARD, { name: player.name, card: card.name, cardList: cardList });
+            // });
 
-          player.deck.moveTo(player.hand, 1);
-        }
-      });
+            player.deck.moveTo(player.hand, 1);
+          }
+        },
+      );
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.TEAL_DANCE_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.TEAL_DANCE_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.TEAL_DANCE_MARKER, this);
     }
 
@@ -120,18 +146,26 @@ export class TealMaskOgerponex extends PokemonCard {
 
       const playerProvidedEnergy = new CheckProvidedEnergyEffect(player);
       store.reduceEffect(state, playerProvidedEnergy);
-      const playerEnergyCount = playerProvidedEnergy.energyMap
-        .reduce((left, p) => left + p.provides.length, 0);
+      const playerEnergyCount = playerProvidedEnergy.energyMap.reduce(
+        (left, p) => left + p.provides.length,
+        0,
+      );
 
       const opponentProvidedEnergy = new CheckProvidedEnergyEffect(opponent);
       store.reduceEffect(state, opponentProvidedEnergy);
-      const opponentEnergyCount = opponentProvidedEnergy.energyMap
-        .reduce((left, p) => left + p.provides.length, 0);
+      const opponentEnergyCount = opponentProvidedEnergy.energyMap.reduce(
+        (left, p) => left + p.provides.length,
+        0,
+      );
 
       effect.damage += (playerEnergyCount + opponentEnergyCount) * 30;
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

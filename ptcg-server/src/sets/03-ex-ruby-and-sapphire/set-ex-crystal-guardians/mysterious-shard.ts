@@ -19,7 +19,8 @@ export class MysteriousShard extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '81';
 
-  public text: string = 'Attach Mysterious Shard to 1 of your Pokémon (excluding Pokémon-ex) that doesn\'t already have a Pokémon Tool attached to it. If the Pokémon Mysterious Shard is attached to is a Pokémon-ex, discard this card. \n\nPrevent all effects of attacks, including damage, done to the Pokémon that Mysterious Shard is attached to by your opponent\'s Pokémon-ex .Discard this card at the end of your opponent\'s next turn.';
+  public text: string =
+    "Attach Mysterious Shard to 1 of your Pokémon (excluding Pokémon-ex) that doesn't already have a Pokémon Tool attached to it. If the Pokémon Mysterious Shard is attached to is a Pokémon-ex, discard this card. \n\nPrevent all effects of attacks, including damage, done to the Pokémon that Mysterious Shard is attached to by your opponent's Pokémon-ex .Discard this card at the end of your opponent's next turn.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PutDamageEffect && effect.target.tools.includes(this)) {
@@ -42,7 +43,7 @@ export class MysteriousShard extends TrainerCard {
         return state;
       }
 
-      if (sourceCard.tags.includes(CardTag.POKEMON_ex)) {
+      if (sourceCard.hasTag(CardTag.POKEMON_ex)) {
         // Try to reduce PowerEffect, to check if something is blocking our ability
         if (IS_TOOL_BLOCKED(store, state, player, this)) {
           return state;
@@ -52,8 +53,8 @@ export class MysteriousShard extends TrainerCard {
     }
 
     if (effect instanceof CheckTableStateEffect) {
-      state.players.forEach(player => {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      state.players.forEach((player) => {
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
           if (!cardList.cards.includes(this)) {
             return state;
           }
@@ -64,7 +65,7 @@ export class MysteriousShard extends TrainerCard {
             return state;
           }
 
-          if (!!attachedTo && (attachedTo.tags.includes(CardTag.POKEMON_ex))) {
+          if (!!attachedTo && attachedTo.hasTag(CardTag.POKEMON_ex)) {
             MOVE_CARD_TO(state, this, player.discard);
           }
         });
@@ -73,16 +74,19 @@ export class MysteriousShard extends TrainerCard {
     }
 
     if (effect instanceof AttachPokemonToolEffect && effect.trainerCard == this) {
-      if (effect.target.getPokemonCard()?.tags.includes(CardTag.POKEMON_ex)) {
+      if (effect.target.getPokemonCard()?.hasTag(CardTag.POKEMON_ex)) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
     }
 
     // Discard card at the end of opponent's turn
     if (effect instanceof EndTurnEffect) {
-      state.players.forEach(player => {
+      state.players.forEach((player) => {
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-          if (cardList.tools.includes(this) && StateUtils.findOwner(state, cardList) !== effect.player) {
+          if (
+            cardList.tools.includes(this) &&
+            StateUtils.findOwner(state, cardList) !== effect.player
+          ) {
             cardList.moveCardTo(this, player.discard);
           }
         });
@@ -90,5 +94,4 @@ export class MysteriousShard extends TrainerCard {
     }
     return state;
   }
-
 }

@@ -15,23 +15,21 @@ export class Hippopotas extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Tackle',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Double Stomp',
-      cost: [F, F, F, C],
-      damage: 70,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 30 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tackle',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Double Stomp',
+    cost: [F, F, F, C],
+    damage: 70,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 30 more damage for each heads.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'DAA';
   public setNumber: string = '93';
   public cardImage: string = 'assets/cardback.png';

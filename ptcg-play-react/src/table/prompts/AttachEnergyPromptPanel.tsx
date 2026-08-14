@@ -28,6 +28,7 @@ import {
   type AttachAssignment,
 } from './attachEnergyPromptModel';
 import { buildPokemonPromptRows, type PokemonItem, type PokemonRow } from './pokemonPromptRows';
+import { getPromptPerspectivePlayerId } from './promptPerspective';
 import { findItemByTarget } from './removeDamagePromptModel';
 import styles from './AttachEnergyPromptPanel.module.css';
 
@@ -135,7 +136,7 @@ export function AttachEnergyPromptPanel(props: AttachEnergyPromptPanelProps) {
   useEffect(() => {
     const built = buildPokemonPromptRows(
       localGame.state,
-      prompt.playerId,
+      getPromptPerspectivePlayerId(prompt),
       prompt.playerType,
       prompt.slots,
     );

@@ -1,13 +1,8 @@
-import { CardType, PokemonCard, Stage, State, StoreLike } from '../../../game';
-import { Effect } from '../../../game/store/effects/effect';
-import {
-  COIN_FLIP_PROMPT,
-  PREVENT_DAMAGE,
-  PREVENT_EFFECTS_OF_ATTACKS,
-  REMOVE_MARKER_AT_END_OF_TURN,
-  REPLACE_MARKER_AT_END_OF_TURN,
-  WAS_ATTACK_USED,
-} from '../../../game/store/prefabs/prefabs';
+import { PokemonCard, Stage, CardType, StoreLike, State } from "../../../game";
+import { Effect } from "../../../game/store/effects/effect";
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from "../../../game/store/prefabs/prefabs";
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from "../../../game/store/prefabs/effect-of-attack-prefabs";
+import { NEXT_TURN_ATTACK_BONUS } from "../../../game/store/prefabs/attack-effects";
 
 export class Swellow extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -38,9 +33,6 @@ export class Swellow extends PokemonCard {
   public name: string = 'Swellow';
   public fullName: string = 'Swellow GRI';
 
-  public readonly USED_AGILITY_MARKER = 'SWELLOW_GRI_USED_AGILITY';
-  public readonly CLEAR_USED_AGILITY_MARKER = 'SWELLOW_GRI_CLEAR_USED_AGILITY';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Agility
     if (WAS_ATTACK_USED(effect, 0, this)) {
@@ -50,20 +42,15 @@ export class Swellow extends PokemonCard {
           PREVENT_EFFECTS_OF_ATTACKS(store, state, effect, this);
         }
       });
-
-      // Track Agility for Swallow Dive (2-phase: persists until end of next turn)
-      effect.player.marker.addMarker(this.USED_AGILITY_MARKER, this);
     }
 
-    // Swallow Dive
-    if (WAS_ATTACK_USED(effect, 1, this)) {
-      if (effect.player.marker.hasMarker(this.CLEAR_USED_AGILITY_MARKER, this)) {
-        effect.damage += 80;
-      }
-    }
-
-    REMOVE_MARKER_AT_END_OF_TURN(effect, this.CLEAR_USED_AGILITY_MARKER, this);
-    REPLACE_MARKER_AT_END_OF_TURN(effect, this.USED_AGILITY_MARKER, this.CLEAR_USED_AGILITY_MARKER, this);
+    // Agility → Swallow Dive next-turn damage bonus
+    NEXT_TURN_ATTACK_BONUS(effect, {
+      attack: this.attacks[1],
+      setupAttack: this.attacks[0],
+      source: this,
+      bonusDamage: 80,
+    });
 
     return state;
   }
