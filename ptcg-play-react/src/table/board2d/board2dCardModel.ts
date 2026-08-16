@@ -59,14 +59,14 @@ function getBreakDisplay(cardList: PokemonCardList): { mainCard?: Card; breakCar
   if (!pokemon) {
     return {};
   }
-  if (pokemon.tags.includes(CardTag.BREAK)) {
+  if (pokemon.hasTag(CardTag.BREAK)) {
     const prior = [...cardList.cards]
       .reverse()
       .find(
         (c) =>
           c.superType === SuperType.POKEMON &&
           c !== pokemon &&
-          !(c as { tags?: CardTag[] }).tags.includes(CardTag.BREAK),
+          !c.hasTag(CardTag.BREAK),
       );
     return { mainCard: prior ?? pokemon, breakCard: pokemon };
   }
