@@ -60,9 +60,29 @@ import { Volbeat } from './volbeat';
 import { Vulpix } from './vulpix';
 import { Wishiwashi } from './wishiwashi';
 import { Zapdos } from './zapdos';
+import { Zekrom } from './zekrom';
+import { Zeraora } from './zeraora';
+import { Toxel } from './toxel';
+import { Toxtricity } from './toxtricity';
+import { Toxtricity2 } from './toxtricity-2';
+import { Morpeko } from './morpeko';
+import { Miraidon } from './miraidon';
+import { Mewtwo } from './mewtwo';
+import { Mew } from './mew';
+import { Marill } from './marill';
+import { Azumarill } from './azumarill';
+import { Unown } from './unown';
+import { Drifloon } from './drifloon';
+import { Cresselia } from './cresselia';
+import { Chandelure } from './chandelure';
+import { Xerneas } from './xerneas';
+import { Comfey } from './comfey';
+import { Cosmog } from './cosmog';
+import { Cosmoem } from './cosmoem';
+import { Lunala } from './lunala';
+import { Gimmighoul } from './gimmighoul';
 import { Zorua } from './zorua';
 import { Zoroark } from './zoroark';
-import { Zeraora } from './zeraora';
 import { DarknessEnergyArt, FightingEnergyArt, FireEnergyArt, GrassEnergyArt, LightningEnergyArt, MetalEnergyArt, PsychicEnergyArt, WaterEnergyArt } from './energy-art';
 
 export const set30thCelebration: Card[] = [
@@ -117,13 +137,33 @@ export const set30thCelebration: Card[] = [
   new Pikachu51(),
   new Pikachu52(),
   new Zapdos(),
+  new Zekrom(),
   new Greninjaex(),
   new Zeraora(),
+  new Toxel(),
+  new Toxtricity(),
+  new Toxtricity2(),
+  new Morpeko(),
+  new Miraidon(),
+  new Mewtwo(),
+  new Mew(),
+  new Marill(),
+  new Azumarill(),
   new Espeon(),
-  new Mewex(),
-  new Mewtwoex(),
   new Espeonex(),
   new Sylveonex(),
+  new Unown(),
+  new Drifloon(),
+  new Cresselia(),
+  new Chandelure(),
+  new Xerneas(),
+  new Comfey(),
+  new Cosmog(),
+  new Cosmoem(),
+  new Lunala(),
+  new Gimmighoul(),
+  new Mewex(),
+  new Mewtwoex(),
   new Umbreon(),
   new Umbreonex(),
   new Eevee(),
