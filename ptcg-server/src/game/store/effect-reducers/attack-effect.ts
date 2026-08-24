@@ -162,6 +162,42 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
       }
     }
 
+    // Reflect Shield: when damaged, flip a coin; heads prevents damage and retaliates.
+    const coinFlipRetaliate = getActiveRetaliateOnDamage(target);
+    if (coinFlipRetaliate !== null
+      && 'coinFlipPrevent' in coinFlipRetaliate
+      && coinFlipRetaliate.coinFlipPrevent === true
+      && 'damage' in coinFlipRetaliate
+      && effect.damage > 0
+      && state.phase === GamePhase.ATTACK
+      && effect.source
+      && StateUtils.findOwner(state, target) !== effect.player) {
+      const targetOwner = StateUtils.findOwner(state, target);
+      return store.prompt(state, new CoinFlipPrompt(
+        targetOwner.id,
+        GameMessage.COIN_FLIP,
+      ), (result) => {
+        if (!result) {
+          return applyPutDamage(store, state, effect);
+        }
+
+        let sourceList = effect.target;
+        const attackerPlayer = state.players.find(p => p.id === coinFlipRetaliate.attackerPlayerId);
+        if (attackerPlayer) {
+          attackerPlayer.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+            if (card === coinFlipRetaliate.sourceCard) {
+              sourceList = cardList;
+            }
+          });
+        }
+        const revengeBase = new AttackEffect(targetOwner, effect.player, coinFlipRetaliate.attack);
+        revengeBase.source = sourceList;
+        const retaliateEffect = retaliateDamageEffect(revengeBase, coinFlipRetaliate.damage, effect.source);
+        retaliateEffect.markerSource = coinFlipRetaliate.sourceCard;
+        return store.reduceEffect(state, retaliateEffect);
+      });
+    }
+
     return applyPutDamage(store, state, effect);
   }
 
@@ -347,8 +383,10 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
 
     // Revenge trap (Shell Trap / Counter Press) — even if Knocked Out.
     // Must be an EffectOfAttack attributed to the retaliator so Mist Energy blocks it.
+    // coinFlipPrevent traps are resolved during PutDamageEffect instead.
     const retaliate = getActiveRetaliateOnDamage(effect.target);
     if (retaliate !== null
+      && !('coinFlipPrevent' in retaliate && retaliate.coinFlipPrevent)
       && effect.damage > 0
       && targetOwner !== effect.player
       && state.phase === GamePhase.ATTACK

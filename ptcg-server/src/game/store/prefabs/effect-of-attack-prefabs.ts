@@ -849,6 +849,9 @@ export function THIS_POKEMON_SURVIVES_ON_TEN_HP_DURING_OPPONENTS_NEXT_TURN(
 /**
  * During your opponent's next turn, if this Pokémon is damaged by an attack
  * (even if Knocked Out), put damage on / reflect to the Attacking Pokémon.
+ *
+ * Pass `{ damage: N, coinFlipPrevent: true }` for Reflect Shield-style text:
+ * when damaged, flip a coin; if heads, prevent that damage and deal N to the attacker.
  */
 export function THIS_POKEMON_RETALIATES_ON_DAMAGE_DURING_OPPONENTS_NEXT_TURN(
   store: StoreLike,

@@ -40,9 +40,14 @@ export interface SurviveOnTenHpOptions {
   coinFlipOnWouldKo?: boolean;
 }
 
-/** Revenge trap: fixed HP damage or reflect damage taken. */
+/**
+ * Revenge trap: fixed HP damage or reflect damage taken.
+ * When `coinFlipPrevent` is true (Reflect Shield): on damage during the opponent's
+ * next turn, flip a coin; if heads, prevent that damage and still deal `damage` to
+ * the attacker; if tails, take the damage (no revenge).
+ */
 export type RetaliateOnDamageOptions =
-  | { damage: number }
+  | { damage: number; coinFlipPrevent?: boolean }
   | { reflect: true };
 
 /** Armed revenge trap with attack attribution (so Mist Energy / effects-of-attacks can block). */
@@ -244,6 +249,8 @@ export class PokemonCardList extends CardList {
       } else if (card.name === 'Antique Jaw Fossil') {
         result.push(card as PokemonCard);
       } else if (card.name === 'Antique Sail Fossil') {
+        result.push(card as PokemonCard);
+      } else if (card.name === 'Antique Root Fossil') {
         result.push(card as PokemonCard);
       } else if (card.name === 'Claw Fossil') {
         result.push(card as PokemonCard);

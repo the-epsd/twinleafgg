@@ -84,7 +84,6 @@ import { Alomomola2 } from './alomomola2';
 import { Swoobat } from './swoobat';
 import { Gurdurr } from './gurdurr';
 import { Gurdurr2 } from './gurdurr2';
-import { Conkeldurr } from './conkeldurr';
 import { Throh } from './throh';
 import { Sawk } from './sawk';
 import { Sandile } from './sandile';
@@ -189,7 +188,6 @@ export const setBlackAndWhite: Card[] = [
   new Swoobat(),
   new Gurdurr(),
   new Gurdurr2(),
-  new Conkeldurr(),
   new Throh(),
   new Sawk(),
   new Sandile(),
