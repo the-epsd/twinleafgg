@@ -50,6 +50,7 @@ export function SelfPlayGameDialog({ open, onClose }: SelfPlayGameDialogProps) {
   const [sandboxAllPokemonBasic, setSandboxAllPokemonBasic] = useState(false);
   const [sandboxAttacksCostNoEnergy, setSandboxAttacksCostNoEnergy] = useState(false);
   const [sandboxRetreatCostsNoEnergy, setSandboxRetreatCostsNoEnergy] = useState(false);
+  const [unlimitedEnergyAttachments, setUnlimitedEnergyAttachments] = useState(false);
   const [loadingDecks, setLoadingDecks] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -63,6 +64,7 @@ export function SelfPlayGameDialog({ open, onClose }: SelfPlayGameDialogProps) {
     setSandboxAllPokemonBasic(false);
     setSandboxAttacksCostNoEnergy(false);
     setSandboxRetreatCostsNoEnergy(false);
+    setUnlimitedEnergyAttachments(false);
     setError(null);
     setFormat(Format.STANDARD);
     setTimeLimit(1200);
@@ -73,6 +75,7 @@ export function SelfPlayGameDialog({ open, onClose }: SelfPlayGameDialogProps) {
       setSandboxAllPokemonBasic(false);
       setSandboxAttacksCostNoEnergy(false);
       setSandboxRetreatCostsNoEnergy(false);
+      setUnlimitedEnergyAttachments(false);
     }
   }, [sandboxMode]);
 
@@ -165,6 +168,7 @@ export function SelfPlayGameDialog({ open, onClose }: SelfPlayGameDialogProps) {
         gs.sandboxAllPokemonBasic = sandboxAllPokemonBasic;
         gs.sandboxAttacksCostNoEnergy = sandboxAttacksCostNoEnergy;
         gs.sandboxRetreatCostsNoEnergy = sandboxRetreatCostsNoEnergy;
+        gs.rules.unlimitedEnergyAttachments = unlimitedEnergyAttachments;
       }
       gs.selfPlay = true;
 
@@ -196,6 +200,7 @@ export function SelfPlayGameDialog({ open, onClose }: SelfPlayGameDialogProps) {
     sandboxAllPokemonBasic,
     sandboxAttacksCostNoEnergy,
     sandboxRetreatCostsNoEnergy,
+    unlimitedEnergyAttachments,
     isAdmin,
     createSelfPlayGame,
     navigate,
@@ -357,6 +362,15 @@ export function SelfPlayGameDialog({ open, onClose }: SelfPlayGameDialogProps) {
                   onChange={(e) => setSandboxRetreatCostsNoEnergy(e.target.checked)}
                 >
                   {t('GAMES_SANDBOX_RETREAT_NO_ENERGY')}
+                </CheckboxField>
+                <CheckboxField
+                  plain
+                  className={styles.checkboxRow}
+                  checked={unlimitedEnergyAttachments}
+                  disabled={submitting}
+                  onChange={(e) => setUnlimitedEnergyAttachments(e.target.checked)}
+                >
+                  {t('GAMES_UNLIMITED_ENERGY')}
                 </CheckboxField>
               </div>
             ) : null}
