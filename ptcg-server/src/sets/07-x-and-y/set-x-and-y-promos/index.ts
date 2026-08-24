@@ -38,6 +38,7 @@ import {
   SylveonTK6S,
   WigglytuffTK7B,
 } from './other-prints';
+import { SalamenceEX } from './salamence-ex';
 
 export const setXYPromos: Card[] = [
   new Azelf(),
@@ -53,6 +54,7 @@ export const setXYPromos: Card[] = [
   new Suicune(),
   new Sylveon(),
   new Noivern(),
+  new SalamenceEX(),
 
   // Other Prints
   new PalaceBookXYP(),

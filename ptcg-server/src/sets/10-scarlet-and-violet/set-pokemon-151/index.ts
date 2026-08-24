@@ -25,6 +25,7 @@ import { EreikasInvitation } from './erikas-invitation';
 import { Fearow } from './fearow';
 import { BulbasaurIR, IvysaurIR, CharmanderIR, CharmeleonIR, SquirtleIR, NidokingIR, VenusaurexFA, CharizardexFA, BlastoiseexFA, ArbokexFA, KangaskhanexFA, ZapdosexFA, MewexFA, ErikasInvitationFA, GiovannisCharismaFA, VenusaurexSIR, CharizardexSIR, BlastoiseexSIR, ZapdosexSIR, ErikasInvitationSIR, GiovannisCharismaSIR, MewexHR, SwitchHR, BasicPsychicEnergyHR, WartortleIR } from './full-art';
 import { Gastly } from './gastly';
+import { Gengar } from './gengar';
 import { GiovannisCharisma } from './giovannis-charisma';
 import { Gloom } from './gloom';
 import { Golbat } from './golbat';
@@ -103,6 +104,7 @@ export const setPokemon151: Card[] = [
   new EreikasInvitation(),
   new Fearow(),
   new Gastly(),
+  new Gengar(),
   new GiovannisCharisma(),
   new Gloom(),
   new Golbat(),

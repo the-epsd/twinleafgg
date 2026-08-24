@@ -2,6 +2,8 @@ import { BebesSearchSW, PlusPowerSW, PotionSW, SwitchSW, DarknessEnergySpecialSW
 import { Card } from '../../../game/store/card/card';
 import { Bulbasaur } from './bulbasaur';
 import { Duskull } from './duskull';
+import { Electabuzz } from './electabuzz';
+import { Electivire } from './electivire';
 import { Flaaffy } from './flaaffy';
 import { Gallade } from './gallade';
 import { Gardevoir } from './gardevoir';
@@ -26,6 +28,8 @@ import { NightMaintenanceSW } from './other-prints';
 export const setSecretWonders: Card[] = [
   new Bulbasaur(),
   new Duskull(),
+  new Electabuzz(),
+  new Electivire(),
   new Flaaffy(),
   new Gallade(),
   new Mew(),
