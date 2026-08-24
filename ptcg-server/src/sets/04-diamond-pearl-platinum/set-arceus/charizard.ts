@@ -18,7 +18,7 @@ export class Charizard extends PokemonCard {
   public powers = [{
     name: 'Fire Formation',
     powerType: PowerType.POKEBODY,
-    text: 'Each of Charizard\'s attacks does 10 more damage for each Fire Pokémon on your Bench to your opponent\'s Active Pokémon (before applying Weakness and Resistance).'
+    text: 'Each of Charizard\'s attacks does 10 more damage for each [R] Pokémon on your Bench to your opponent\'s Active Pokémon (before applying Weakness and Resistance).'
   }];
 
   public attacks = [{

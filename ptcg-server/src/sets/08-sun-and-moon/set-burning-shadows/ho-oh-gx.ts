@@ -36,7 +36,7 @@ export class HoOhGx extends PokemonCard {
       cost: [R, C, C],
       damage: 0,
       gxAttack: true,
-      text: "Put 3 in any combination of Fire Pokémon-GX or Fire Pokémon-EX from your discard pile onto your Bench. (You can't use more than 1 GX attack in a game.)",
+      text: "Put 3 in any combination of [R] Pokémon-GX or [R] Pokémon-EX from your discard pile onto your Bench. (You can't use more than 1 GX attack in a game.)",
     },
   ];
 

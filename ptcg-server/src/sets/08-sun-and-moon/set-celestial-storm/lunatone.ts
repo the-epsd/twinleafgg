@@ -2,23 +2,11 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import {
-  ADD_PARALYZED_TO_PLAYER_ACTIVE,
-  AFTER_ATTACK,
-  COIN_FLIP_PROMPT,
-} from '../../../game/store/prefabs/prefabs';
-import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
-import { Effect } from '../../../game/store/effects/effect';
-import { Player, PlayerType, PowerType, State, StoreLike } from '../../../game';
-import { StateUtils } from '../../../game/store/state-utils';
-import {
-  CAN_APPLY_LOCKER_ABILITY,
-  HANDLE_ABILITY_LOCK,
-} from '../../../game/store/prefabs/ability-lock';
-import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
-import { GameMessage } from '../../../game/game-message';
+import { PokemonCard, Stage, CardType, PowerType, Player, PlayerType, State, StoreLike, CardTag, StateUtils, PokemonCardList, GameMessage } from "../../../game";
+import { CheckPokemonTypeEffect } from "../../../game/store/effects/check-effects";
+import { Effect } from "../../../game/store/effects/effect";
+import { HANDLE_ABILITY_LOCK, CAN_APPLY_LOCKER_ABILITY } from "../../../game/store/prefabs/ability-lock";
+import { AFTER_ATTACK, COIN_FLIP_PROMPT, ADD_PARALYZED_TO_PLAYER_ACTIVE } from "../../../game/store/prefabs/prefabs";
 
 export class Lunatone extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -27,13 +15,11 @@ export class Lunatone extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public powers = [
-    {
-      name: 'Sol Shade',
-      powerType: PowerType.ABILITY,
-      text: "If you have Solrock in play, Fire Pokémon in play (both yours and your opponent's) have no Abilities, except Pokémon-GX and Pokémon-EX.",
-    },
-  ];
+  public powers = [{
+    name: 'Sol Shade',
+    powerType: PowerType.ABILITY,
+    text: "If you have Solrock in play, [R] Pokémon in play (both yours and your opponent's) have no Abilities, except Pokémon-GX and Pokémon-EX.",
+  }];
 
   public attacks = [{
     name: 'Psyshock',

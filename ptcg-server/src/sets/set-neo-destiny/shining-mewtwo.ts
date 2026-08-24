@@ -23,7 +23,7 @@ export class ShiningMewtwo extends PokemonCard {
     cost: [P, P, R],
     damage: 40,
     damageCalculation: '+',
-    text: 'Discard a Fire Energy card attached to Shining Mewtwo or this attack does nothing. This attack does 40 damage plus 10 damage for each Energy attached to the Defending Pokémon.'
+    text: 'Discard a [R] Energy card attached to Shining Mewtwo or this attack does nothing. This attack does 40 damage plus 10 damage for each Energy attached to the Defending Pokémon.'
   }];
 
   public set: string = 'N4';

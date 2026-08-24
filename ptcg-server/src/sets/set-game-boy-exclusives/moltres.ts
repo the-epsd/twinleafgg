@@ -16,7 +16,7 @@ export class Moltres extends PokemonCard {
   public powers = [{
     name: 'Firegiver',
     powerType: PowerType.POKEMON_POWER,
-    text: 'When you put Moltres into play during your turn (not during set-up), put from 1 to 4 (chosen at random) Fire Energy cards from your deck into your hand. Shuffle your deck afterward.'
+    text: 'When you put Moltres into play during your turn (not during set-up), put from 1 to 4 (chosen at random) [R] Energy cards from your deck into your hand. Shuffle your deck afterward.'
   }];
 
   public attacks = [{

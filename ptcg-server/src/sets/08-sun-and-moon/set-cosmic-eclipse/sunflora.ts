@@ -15,7 +15,7 @@ export class Sunflora extends PokemonCard {
     name: 'Solar Power',
     cost: [C, C],
     damage: 0,
-    text: 'During your next turn, ignore all Energy in the attack costs of Grass Pokémon and Fire Pokémon. (This includes Pokémon that come into play on that turn.)'
+    text: 'During your next turn, ignore all Energy in the attack costs of [G] Pokémon and [R] Pokémon. (This includes Pokémon that come into play on that turn.)'
   },
   {
     name: 'Solar Beam',
