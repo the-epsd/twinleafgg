@@ -5,7 +5,6 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Liepard extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Purrloin';
   public cardType: CardType = D;
@@ -13,31 +12,29 @@ export class Liepard extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Pursuit Claw',
-      cost: [D],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'This attack does 20 damage times the number of damage counters on your opponent\'s Active Pokémon.'
-    },
-    {
-      name: 'Slash',
-      cost: [D, C, C],
-      damage: 90,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Pursuit Claw',
+    cost: [D],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'This attack does 20 damage times the number of damage counters on your opponent\'s Active Pokémon.'
+  },
+  {
+    name: 'Slash',
+    cost: [D, C, C],
+    damage: 90,
+    text: ''
+  }];
 
   public regulationMark = 'J';
-  public set: string = 'MEZ';
+  public set: string = 'J-MEZ';
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Liepard';
   public fullName: string = 'Liepard MEZ';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-plasma-storm/vespiquen.ts (Damage Beat)
+    // Pursuit Claw
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
       const damageCounters = Math.floor(opponent.active.damage / 10);

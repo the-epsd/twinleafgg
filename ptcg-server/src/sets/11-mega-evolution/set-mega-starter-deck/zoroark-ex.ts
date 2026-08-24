@@ -13,31 +13,29 @@ export class Zoroarkex extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Riotous Beating',
-      cost: [D],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'This attack does 20 damage times the number of Pokémon you have in play.',
-    },
-    {
-      name: 'Slash Down',
-      cost: [D, C, C],
-      damage: 210,
-      text: "During your next turn, this Pokémon can't use Slash Down.",
-    },
-  ];
+  public attacks = [{
+    name: 'Riotous Beating',
+    cost: [D],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'This attack does 20 damage times the number of Pokémon you have in play.',
+  },
+  {
+    name: 'Slash Down',
+    cost: [D, C, C],
+    damage: 210,
+    text: "During your next turn, this Pokémon can't use Slash Down.",
+  }];
 
   public regulationMark = 'J';
-  public set: string = 'MEZ';
+  public set: string = 'J-MEZ';
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zoroark ex';
   public fullName: string = 'Zoroark ex MEZ';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-shining-legends/zoroark-gx.ts (Riotous Beating)
+    // Riotous Beating
     if (WAS_ATTACK_USED(effect, 0, this)) {
       let pokemonInPlay = 0;
       effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, () => {
@@ -46,7 +44,7 @@ export class Zoroarkex extends PokemonCard {
       effect.damage = 20 * pokemonInPlay;
     }
 
-    // Ref: set-battle-styles/corviknight-v.ts (Sky Hurricane)
+    // Slash Down
     if (WAS_ATTACK_USED(effect, 1, this)) {
       effect.player.active.cannotUseAttacksNextTurnPending.push('Slash Down');
     }

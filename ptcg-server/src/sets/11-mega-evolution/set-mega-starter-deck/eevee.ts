@@ -13,30 +13,28 @@ export class Eevee extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Nap',
-      cost: [C],
-      damage: 0,
-      text: 'Heal 20 damage from this Pokémon.'
-    },
-    {
-      name: 'Headbutt',
-      cost: [C],
-      damage: 10,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Nap',
+    cost: [C],
+    damage: 0,
+    text: 'Heal 20 damage from this Pokémon.'
+  },
+  {
+    name: 'Headbutt',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }];
 
   public regulationMark = 'J';
-  public set: string = 'MEE';
+  public set: string = 'J-MEE';
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Eevee';
   public fullName: string = 'Eevee MEE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-sun-and-moon/caterpie.ts (Nap)
+    // Nap
     if (WAS_ATTACK_USED(effect, 0, this)) {
       HEAL_X_DAMAGE_FROM_THIS_POKEMON(20, effect, store, state);
     }

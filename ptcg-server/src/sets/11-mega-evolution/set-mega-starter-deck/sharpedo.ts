@@ -21,15 +21,14 @@ export class Sharpedo extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-
-  public set: string = 'MEZ';
+  public set: string = 'J-MEZ';
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sharpedo';
   public fullName: string = 'Sharpedo MEZ';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-sun-and-moon/sandile.ts (Crunch)
+    // Crunch
     if (WAS_ATTACK_USED(effect, 0, this)) {
       COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {

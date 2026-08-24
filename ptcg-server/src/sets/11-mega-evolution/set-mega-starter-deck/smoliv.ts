@@ -16,7 +16,7 @@ export class Smoliv extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'MEM';
+  public set: string = 'J-MEM';
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Smoliv';

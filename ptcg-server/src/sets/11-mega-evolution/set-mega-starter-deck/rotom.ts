@@ -19,8 +19,7 @@ export class Rotom extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-
-  public set: string = 'MEE';
+  public set: string = 'J-MEE';
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rotom';

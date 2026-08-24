@@ -12,7 +12,6 @@ import {
 } from '../../../game/store/prefabs/prefabs';
 
 export class Delibird extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
   public hp: number = 90;
@@ -35,7 +34,7 @@ export class Delibird extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'MEE';
+  public set: string = 'J-MEE';
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Delibird';
@@ -44,7 +43,7 @@ export class Delibird extends PokemonCard {
   public readonly ENERGY_PRESENT_MARKER = 'DELIBIRD_MEE_ENERGY_PRESENT_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-shining-fates/celebi.ts (Woodland Stroll), set-temporal-forces/metang.ts (remainder to bottom)
+    // Energy Present
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 

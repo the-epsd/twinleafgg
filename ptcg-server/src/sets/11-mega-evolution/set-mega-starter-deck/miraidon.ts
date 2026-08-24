@@ -5,7 +5,6 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Miraidon extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = L;
   public hp: number = 120;
@@ -26,7 +25,7 @@ export class Miraidon extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'MEE';
+  public set: string = 'J-MEE';
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Miraidon';
