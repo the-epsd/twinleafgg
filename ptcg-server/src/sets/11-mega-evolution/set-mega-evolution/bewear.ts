@@ -17,7 +17,8 @@ export class Bewear extends PokemonCard {
     cost: [C, C],
     damage: 50,
     text: ''
-  }, {
+  },
+  {
     name: 'Hyper Lariat',
     cost: [C, C, C],
     damage: 100,
@@ -26,7 +27,6 @@ export class Bewear extends PokemonCard {
   }];
 
   public regulationMark = 'I';
-
   public set: string = 'MEG';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '112';

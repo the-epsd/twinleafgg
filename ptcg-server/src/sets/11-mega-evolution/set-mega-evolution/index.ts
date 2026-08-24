@@ -57,15 +57,19 @@ import { Onix } from './onix';
 import { Pachirisu } from './pachirisu';
 import { PowerProtein } from './power-protein';
 import { Raboot } from './raboot';
+import { Raikou } from './raikou';
 import { Ralts } from './ralts';
 import { Riolu } from './riolu';
 import { Scorbunny } from './scorbunny';
+import { Shuckle } from './shuckle';
+import { ShuckleMEG136 } from './other-prints';
 import { Snom } from './snom';
 import { Snover } from './snover';
 import { Sobble } from './sobble';
 import { Solrock } from './solrock';
 import { Steelix } from './steelix';
 import { StrangeTimepiece } from './strange-timepiece';
+import { Stufful } from './stufful';
 import { SurfingBeach } from './surfing-beach';
 import { Tinkatink } from './tinkatink';
 import { Tinkaton } from './tinkaton';
@@ -138,16 +142,20 @@ export const setMegaEvolution: Card[] = [
   new Pachirisu(),
   new PowerProtein(),
   new Raboot(),
+  new Raikou(),
   new Ralts(),
   new RepelMEG(),
   new Riolu(),
   new Scorbunny(),
+  new Shuckle(),
+  new ShuckleMEG136(),
   new Snom(),
   new Snover(),
   new Sobble(),
   new Solrock(),
   new Steelix(),
   new StrangeTimepiece(),
+  new Stufful(),
   new SurfingBeach(),
   new Tangela(),
   new Tangrowth(),

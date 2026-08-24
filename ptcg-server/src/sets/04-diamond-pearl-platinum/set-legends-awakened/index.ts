@@ -4,6 +4,7 @@ import { Azelf } from './azelf';
 import { AzelfLVX } from './azelf-lv-x';
 import { CynthiasFeelings } from './cynthias-feelings';
 import { EnergyPickup } from './energy-pickup';
+import { Heatran } from './heatran';
 import { Mesprit } from './mesprit';
 import { MespritLVX } from './mesprit-lv-x';
 import { MewtwoLVX } from './mewtwo-lv-x';
@@ -21,6 +22,7 @@ export const setLegendsAwakened: Card[] = [
   new AzelfLVX(),
   new CynthiasFeelings(),
   new EnergyPickup(),
+  new Heatran(),
   new Mesprit(),
   new MespritLVX(),
   new MewtwoLVX(),
