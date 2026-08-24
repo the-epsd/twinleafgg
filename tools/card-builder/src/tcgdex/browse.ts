@@ -31,6 +31,9 @@ export interface BrowseState {
   cards: TcgDexCardResume[];
   searchQuery: string;
   filter: string;
+  searchOffset: number;
+  searchPageSize: number;
+  searchHasMore: boolean;
   implementedIds: Set<string>;
   hideImplemented: boolean;
 }
@@ -48,6 +51,9 @@ export function createBrowseState(): BrowseState {
     cards: [],
     searchQuery: '',
     filter: '',
+    searchOffset: 0,
+    searchPageSize: 80,
+    searchHasMore: false,
     implementedIds: new Set(),
     hideImplemented: false,
   };
@@ -165,16 +171,44 @@ function renderBrowseBody(state: BrowseState): string {
   if (state.hideImplemented) {
     cards = cards.filter(c => !isImplemented(state.implementedIds, c.id));
   }
-  if (cards.length === 0 && !state.loading) {
+  if (state.cards.length === 0 && !state.loading) {
     return `<p class="muted">No cards found.</p>`;
   }
   const implementedCount = state.cards.filter(c => isImplemented(state.implementedIds, c.id)).length;
+  const filteredOutCount = state.hideImplemented ? cards.length : state.cards.length;
+  const allHiddenByFilter =
+    state.hideImplemented && state.cards.length > 0 && filteredOutCount === 0 && !state.loading;
+
+  const searchPagination =
+    state.level === 'search'
+      ? `<div class="search-pagination">
+          <div class="search-range muted">
+            ${
+              state.cards.length
+                ? `Showing ${escapeHtml(String(state.searchOffset + 1))}–${escapeHtml(
+                    String(state.searchOffset + state.cards.length)
+                  )}`
+                : 'Showing 0 results'
+            }
+          </div>
+          <div class="search-pagination-buttons">
+            <button type="button" data-browse="search-prev" ${
+              state.searchOffset <= 0 ? 'disabled' : ''
+            }>Prev</button>
+            <button type="button" data-browse="search-next" ${!state.searchHasMore ? 'disabled' : ''}>
+              Next
+            </button>
+          </div>
+        </div>`
+      : '';
+
   return `
   ${
     state.cards.length && state.implementedIds.size
       ? `<p class="muted browse-impl-summary">${implementedCount} of ${state.cards.length} shown as implemented</p>`
       : ''
   }
+  ${allHiddenByFilter ? `<p class="muted">All ${state.cards.length} result(s) on this page are already implemented.</p>` : ''}
   <div class="card-grid">
     ${cards
       .map(c => {
@@ -190,7 +224,8 @@ function renderBrowseBody(state: BrowseState): string {
         </button>`;
       })
       .join('')}
-  </div>`;
+  </div>
+  ${searchPagination}`;
 }
 
 export async function loadSeries(state: BrowseState): Promise<void> {
@@ -249,10 +284,16 @@ export async function runSearch(state: BrowseState, query: string): Promise<void
   state.error = '';
   state.level = 'search';
   try {
-    state.cards = await searchCardsByName(query);
+    const { cards, hasMore } = await searchCardsByName(query, {
+      offset: state.searchOffset,
+      limit: state.searchPageSize,
+    });
+    state.cards = cards;
+    state.searchHasMore = hasMore;
   } catch (e) {
     state.error = e instanceof TcgDexApiError ? e.message : String(e);
     state.cards = [];
+    state.searchHasMore = false;
   } finally {
     state.loading = false;
   }
