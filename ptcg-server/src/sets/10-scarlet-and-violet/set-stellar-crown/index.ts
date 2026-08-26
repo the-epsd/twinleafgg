@@ -92,7 +92,11 @@ import { Marill } from "./marill";
 import { AntiqueCoverFossil } from "./antique-cover-fossil";
 import { Toedscool } from "./toedscool";
 
+import { AntiqueRootFossil } from './antique-root-fossil';
+import { Cradily } from './cradily';
+import { Lileep } from './lileep';
 export const setStellarCrown: Card[] = [
+  new AntiqueRootFossil(),
   new Applin(),
   new Archaludon(),
   new AreaZeroUnderdepths(),
@@ -103,6 +107,7 @@ export const setStellarCrown: Card[] = [
   new Comfey(),
   new Crabrawler(),
   new Crabominable(),
+  new Cradily(),
   new Crispin(),
   new Diancie(),
   new Drednaw(),
@@ -114,6 +119,7 @@ export const setStellarCrown: Card[] = [
   new Galvantulaex(),
   new Garganaclex(),
   new GlassTrumpet(),
+  new Lileep(),
   new SparklingCrystal(),
   new GravityGemstone(),
   new GreatTree(),

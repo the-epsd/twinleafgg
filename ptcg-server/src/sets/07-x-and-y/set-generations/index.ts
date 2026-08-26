@@ -1,3 +1,4 @@
+import { Olympia } from './olympia';
 import { PonytaGEN, RapidashGEN, PikachuGEN, RaichuGEN, GolbatGEN, SlowpokeGEN, HaunterGEN, GengarGEN, MrMimeGEN, CrushingHammerGEN, EnergySwitchPKGEN, EvosodaGEN, MaintenanceGEN, PokeBallGEN, PokemonFanClubGEN, ShaunaGEN, DoubleColorlessEnergyGEN, JolteonEX2GEN, TeamFlareGrunt2GEN, Raichu2GEN, WobbuffetGEN, YveltalGEN, SwirlixGEN, WallyGEN, Pikachu2GEN, GardevoirExGEN, MGardevoirExGEN } from './other-prints';
 import { Card } from '../../../game/store/card/card';
 import { GrassEnergy, FireEnergy, WaterEnergy, LightningEnergy, PsychicEnergy, FightingEnergy, DarknessEnergy, MetalEnergy, FairyEnergy } from './basic-energies';
@@ -15,6 +16,7 @@ export const setGenerations: Card[] = [
   new MaxRevive(),
   new Meowstic(),
   new MeowsticEX(),
+  new Olympia(),
   new RedCard(),
   new Revitalizer(),
   new TeamFlareGrunt(),

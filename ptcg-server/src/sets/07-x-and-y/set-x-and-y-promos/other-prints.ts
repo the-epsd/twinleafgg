@@ -18,6 +18,7 @@ import { Jirachi as JirachiXYP67 } from './jirachi';
 import { Karen as KarenXYP177 } from './karen';
 import { Bronzong } from '../set-phantom-forces/bronzong';
 import { Sylveon } from './sylveon';
+import { Wigglytuff2 } from '../set-x-and-y/wigglytuff-2';
 
 export class PalaceBookXYP extends PalaceBook {
   public setNumber = 'NAN83';
@@ -142,4 +143,10 @@ export class SylveonTK6S extends Sylveon {
   public setNumber = '30';
   public fullName: string = 'Sylveon TK6S';
   public set = 'TK6S';
+}
+
+export class WigglytuffTK7B extends Wigglytuff2 {
+  public setNumber = '30';
+  public fullName: string = 'Wigglytuff TK7B';
+  public set = 'TK7B';
 }

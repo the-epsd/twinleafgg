@@ -2,8 +2,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Baltoy extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -11,20 +10,19 @@ export class Baltoy extends PokemonCard {
   public hp: number = 50;
   public weakness = [{ type: G, value: +10 }];
   public retreat = [C];
-  public attacks = [
-    {
-      name: 'Psychic Balance',
-      cost: [C],
-      damage: 0,
-      text: 'If you have less cards in your hand than your opponent, draw cards until you have the same number of cards as your opponent. (If you have more or the same number of cards in your hand as your opponent, this attack does nothing.)'
-    },
-    {
-      name: 'Spin Turn',
-      cost: [F, C],
-      damage: 20,
-      text: 'Switch Baltoy with 1 of your Benched Pokémon.'
-    }
-  ];
+
+  public attacks = [{
+    name: 'Psychic Balance',
+    cost: [C],
+    damage: 0,
+    text: 'If you have less cards in your hand than your opponent, draw cards until you have the same number of cards as your opponent. (If you have more or the same number of cards in your hand as your opponent, this attack does nothing.)'
+  },
+  {
+    name: 'Spin Turn',
+    cost: [F, C],
+    damage: 20,
+    text: 'Switch Baltoy with 1 of your Benched Pokémon.'
+  }];
 
   public set: string = 'GE';
   public setNumber: string = '60';
@@ -33,7 +31,7 @@ export class Baltoy extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Psychic Balance
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -46,7 +44,8 @@ export class Baltoy extends PokemonCard {
       }
     }
 
-    if (WAS_ATTACK_USED(effect, 1, this)) {
+    // Spin Turn
+    if (AFTER_ATTACK(effect, 1, this)) {
       const player = effect.player;
 
       const hasBenched = player.bench.some(b => b.cards.length > 0);

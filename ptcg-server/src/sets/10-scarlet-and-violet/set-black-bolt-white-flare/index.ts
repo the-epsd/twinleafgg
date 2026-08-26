@@ -128,6 +128,8 @@ import {
   StoutlandAR,
   GolettAR,
   GolurkAR,
+  VenipedeIR,
+  WhirlipedeIR,
 } from './other-prints';
 import { Palpitoad } from './palpitoad';
 import { Pidove } from './pidove';
@@ -151,10 +153,12 @@ import { Tranquill } from './tranquill';
 import { Tympole } from './tympole';
 import { Tynamo } from './tynamo';
 import { Unfezant } from './unfezant';
+import { Venipede } from './venipede';
 import { Victini } from './victini';
 import { Virizion } from './virizion';
 import { Volcarona } from './volcarona';
 import { Whimsicottex } from './whimsicott-ex';
+import { Whirlipede } from './whirlipede';
 import { Zekromex } from './zekrom-ex';
 import { Zoroark } from './zoroark';
 import { Zorua } from './zorua';
@@ -168,6 +172,8 @@ export const setSV11: Card[] = [
   new Gothita(),
   new Gothorita(),
   new Gothitelle(),
+  new Venipede(),
+  new VenipedeIR(),
   new Victini(),
   new Snivy(),
   new Servine(),
@@ -181,6 +187,8 @@ export const setSV11: Card[] = [
   new Tynamo(),
   new Eelektrik(),
   new Kyuremex(),
+  new Whirlipede(),
+  new WhirlipedeIR(),
   new Zekromex(),
   new Reshiramex(),
   new Hilda(),

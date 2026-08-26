@@ -1,3 +1,4 @@
+import { Aipom } from './aipom';
 import { Duraludon } from './duraludon';
 import { Gligar } from './gligar';
 import { Gliscor } from './gliscor';
@@ -56,6 +57,7 @@ import { WonderPatch } from './wonder-patch';
 import { Zacian } from './zacian';
 
 export const setPhantasmalFlames: Card[] = [
+  new Aipom(),
   new Ambipom(),
   new Archaludon(),
   new BattleColosseum(),

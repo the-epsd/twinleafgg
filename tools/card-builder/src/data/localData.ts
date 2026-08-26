@@ -274,33 +274,57 @@ export async function getCard(id: string): Promise<TcgDexCard> {
   return localCardToDraftShape(card, set);
 }
 
-export async function searchCardsByName(name: string): Promise<TcgDexCardResume[]> {
+export async function searchCardsByName(
+  name: string,
+  options?: {
+    offset?: number;
+    limit?: number;
+  }
+): Promise<{ cards: TcgDexCardResume[]; hasMore: boolean }> {
   const q = name.trim().toLowerCase();
-  if (!q) return [];
+  if (!q) return { cards: [], hasMore: false };
+
+  const offset = Math.max(0, Math.floor(options?.offset ?? 0));
+  const limit = Math.max(1, Math.floor(options?.limit ?? 80));
+  const endExclusive = offset + limit;
+
   const sets = await loadAllSets();
-  const results: TcgDexCardResume[] = [];
-  // Search newest sets first; stop after enough hits
-  for (const set of sets) {
-    if (results.length >= 80) break;
-    let cards: LocalCard[];
+  const cards: TcgDexCardResume[] = [];
+  let hasMore = false;
+
+  // Search newest sets first; collect only matches within [offset, offset+limit).
+  // `matchIndex` counts matches (not non-matching cards).
+  let matchIndex = 0;
+  outer: for (const set of sets) {
+    let setCards: LocalCard[];
     try {
-      cards = await loadSetCards(set.id);
+      setCards = await loadSetCards(set.id);
     } catch {
       continue;
     }
-    for (const c of cards) {
-      if (c.name.toLowerCase().includes(q)) {
-        results.push({
+
+    for (const c of setCards) {
+      if (!c.name.toLowerCase().includes(q)) continue;
+
+      if (matchIndex >= endExclusive) {
+        hasMore = true;
+        break outer;
+      }
+
+      if (matchIndex >= offset) {
+        cards.push({
           id: c.id,
           localId: c.number,
           name: c.name,
           image: c.images?.small || c.images?.large,
         });
-        if (results.length >= 80) break;
       }
+
+      matchIndex++;
     }
   }
-  return results;
+
+  return { cards, hasMore };
 }
 
 export async function findCardsByNameAndSet(name: string, setCode: string): Promise<TcgDexCardResume[]> {

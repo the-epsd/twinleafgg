@@ -4,8 +4,12 @@ import { Celebi } from './celebi';
 import { Greninja } from './greninja';
 import { Jirachi } from './jirachi';
 import { Karen } from './karen';
+import { Latias } from './latias';
+import { Latios } from './latios';
 import { Meloetta } from './meloetta';
+import { PikachuLibre } from './pikachu-libre';
 import { Regirock } from './regirock';
+import { Suicune } from './suicune';
 import { Sylveon } from './sylveon';
 import { Noivern } from './noivern';
 
@@ -31,7 +35,10 @@ import {
   Karen2XYP,
   PalaceBookXYP,
   BronzongXYP,
+  SylveonTK6S,
+  WigglytuffTK7B,
 } from './other-prints';
+import { SalamenceEX } from './salamence-ex';
 
 export const setXYPromos: Card[] = [
   new Azelf(),
@@ -39,10 +46,15 @@ export const setXYPromos: Card[] = [
   new Greninja(),
   new Jirachi(),
   new Karen(),
+  new Latias(),
+  new Latios(),
   new Meloetta(),
+  new PikachuLibre(),
   new Regirock(),
+  new Suicune(),
   new Sylveon(),
   new Noivern(),
+  new SalamenceEX(),
 
   // Other Prints
   new PalaceBookXYP(),
@@ -65,4 +77,6 @@ export const setXYPromos: Card[] = [
   new Jirachi2XYP(),
   new YveltalEx3XYP(),
   new Karen2XYP(),
+  new SylveonTK6S(),
+  new WigglytuffTK7B(),
 ];

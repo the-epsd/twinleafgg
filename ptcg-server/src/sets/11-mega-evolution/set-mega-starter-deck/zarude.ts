@@ -16,7 +16,8 @@ export class Zarude extends PokemonCard {
     cost: [D],
     damage: 20,
     text: ''
-  }, {
+  },
+  {
     name: 'Special Whip',
     cost: [D, C],
     damage: 50,
@@ -25,15 +26,14 @@ export class Zarude extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-
-  public set: string = 'MEZ';
+  public set: string = 'J-MEZ';
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zarude';
   public fullName: string = 'Zarude MEZ';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-primal-clash/seadra.ts (Knockout Needle)
+    // Special Whip
     if (WAS_ATTACK_USED(effect, 1, this)) {
       MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 2, results => {
         if (results.every(r => r)) {

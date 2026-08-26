@@ -21,7 +21,7 @@ export class Yveltal extends PokemonCard {
   },
   {
     name: 'Dark Feather',
-    cost: [D, C, C],
+    cost: [D, D, C],
     damage: 110,
     text: ''
   }];

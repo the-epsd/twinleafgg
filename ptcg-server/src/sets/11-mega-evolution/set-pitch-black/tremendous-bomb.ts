@@ -11,8 +11,8 @@ import { IS_TOOL_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class TremendousBomb extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
-  public set: string = 'M5';
-  public setNumber: string = '73';
+  public set: string = 'PBL';
+  public setNumber: string = '82';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tremendous Bomb';

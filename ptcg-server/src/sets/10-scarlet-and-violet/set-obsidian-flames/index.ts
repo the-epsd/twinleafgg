@@ -1,5 +1,6 @@
 import { Card } from '../../../game/store/card/card';
 import { Absolex } from './absol-ex';
+import { Altaria } from './altaria';
 import { Barboach } from './barboach';
 import { Bellibolt } from './bellibolt';
 import { Bonsly } from './bonsly';
@@ -67,6 +68,7 @@ import { Revavroomex } from './revavroom-ex';
 export const setObsidianFlames: Card[] = [
 
   new Absolex(),
+  new Altaria(),
   new ArvenOBF(),
   new Barboach(),
   new Bonsly(),

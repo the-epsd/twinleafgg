@@ -17,24 +17,22 @@ export class Meowscaradaex extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Magical Bullet',
-      cost: [C, C],
-      damage: 120,
-      text: "This attack also does 120 damage to 1 of your opponent's Benched Pokémon that has any damage counters on it. (Don't apply Weakness and Resistance for Benched Pokémon.)",
-    },
-  ];
+  public attacks = [{
+    name: 'Magical Bullet',
+    cost: [C, C],
+    damage: 120,
+    text: "This attack also does 120 damage to 1 of your opponent's Benched Pokémon that has any damage counters on it. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+  }];
 
   public regulationMark = 'J';
-  public set: string = 'MEM';
+  public set: string = 'J-MEM';
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Meowscarada ex';
   public fullName: string = 'Meowscarada ex MEM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-evolving-skies/jolteon-vmax.ts (Max Thunder Rumble)
+    // Magical Bullet
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

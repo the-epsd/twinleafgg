@@ -12,7 +12,6 @@ import { BlackKyuremex } from './black-kyurem-ex';
 import { Blitzle } from './blitzle';
 import { Capsakid } from './capsakid.';
 import { CounterGainSSP, ScrambleSwitchSSP } from './other-prints';
-import { CelebrationFanfare } from './celebration-fanfare';
 import { Centiskorch } from './centiskorch';
 import { Ceruledge } from './ceruledge';
 import { Ceruledgeex } from './ceruledge-ex';
@@ -175,7 +174,6 @@ export const setSurgingSparks: Card[] = [
   new Archaludonex(),
   new MegatonBlower(),
   new Smoochum(),
-  new CelebrationFanfare(),
   new DragonsElixir(),
   new Drayton(),
   new RichEnergy(),

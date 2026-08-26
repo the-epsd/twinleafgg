@@ -62,6 +62,8 @@ import { Zweilous } from './zweilous';
 import { Lillipup } from './lillipup';
 import { Herdier } from './herdier';
 import { Stoutland } from './stoutland';
+import { Venipede } from './venipede';
+import { Whirlipede } from './whirlipede';
 
 export class AirBalloonSV11 extends AirBalloon {
   public regulationMark = 'I';
@@ -588,4 +590,18 @@ export class ReshiramexWR extends Reshiramex {
   public setNumber = '173';
   public set = 'WHT';
   public fullName: string = 'Reshiram exWR SV11W';
+}
+
+export class VenipedeIR extends Venipede {
+  public regulationMark = 'I';
+  public setNumber = '132';
+  public fullName = 'VenipedeIR BLK';
+  public set = 'BLK';
+}
+
+export class WhirlipedeIR extends Whirlipede {
+  public regulationMark = 'I';
+  public setNumber = '133';
+  public fullName = 'WhirlipedeIR BLK';
+  public set = 'BLK';
 }

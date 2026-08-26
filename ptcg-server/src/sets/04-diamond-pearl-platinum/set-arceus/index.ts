@@ -12,6 +12,8 @@ import { ArceusMetal } from './arceus-metal';
 import { ArceusPsychic } from './arceus-psychic';
 import { ArceusWater } from './arceus-water';
 import { BeginningDoor } from './beginning-door';
+import { Charizard } from './charizard';
+import { Charmander } from './charmander';
 import { ExpertBelt } from './expert-belt';
 import { Froslass } from './froslass';
 import { Gengar } from './gengar';
@@ -21,6 +23,8 @@ import { UltimateZone } from './ultimate-zone';
 
 export const setArceus: Card[] = [
   new BeginningDoor(),
+  new Charizard(),
+  new Charmander(),
   new ExpertBelt(),
   new Arceus(),
   new ArceusMetal(),

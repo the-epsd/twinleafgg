@@ -17,7 +17,7 @@ export class Typhlosion extends PokemonCard {
     name: 'Firestarter',
     powerType: PowerType.POKEPOWER,
     useWhenInPlay: true,
-    text: 'Once during your turn (before your attack), you may attach a Fire Energy card from your discard pile to 1 of your Benched Pokémon. This power can\'t be used if Typhlosion is affected by a Special Condition.'
+    text: 'Once during your turn (before your attack), you may attach a [R] Energy card from your discard pile to 1 of your Benched Pokémon. This power can\'t be used if Typhlosion is affected by a Special Condition.'
   }];
 
   public attacks = [{

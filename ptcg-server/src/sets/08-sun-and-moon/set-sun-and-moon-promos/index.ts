@@ -1,11 +1,13 @@
 import { PassimianSMP, OranguruSMP, Oricorio2SMP, Rowlet2SMP, Popplio2SMP, VikavoltSMP, TapuKoko3SMP, TapuBuluGXSMP, TapuKokoGXSMP, EspeonGXSMP, DecidueyeGXSMP, CosmogSMP, TapuKokoGX2SMP, LucarioSMP, NecrozmaGXSMP, MarshadowGXSMP, SalazzleGXSMP, BuzzwoleGXSMP, SalazzleSMP, ZoruaSMP, ZoroarkGXSMP, MarshadowSMP, LatiosSMP, SilvallyGXSMP, Lucario2SMP, Mimikyu2SMP, DawnWingsNecrozmaGXSMP, DuskManeNecrozmaGXSMP, MalamarSMP, NaganadelGXSMP, UltraNecrozmaGXSMP, DelcattySMP, GlaceonGXSMP, RaikouSMP, GiratinaSMP, CharizardSMP, Zapdos2SMP, NidoqueenSMP, JirachiSMP, VolcanionSMP, PersianSMP, MewtwoMewGXSMP, GarchompGiratinaGXSMP, NecrozmaSMP, MoltresZapdosArticunoGXSMP, Mewtwo2SMP, BuzzwoleSMP, EnteiSMP, PhioneSMP, BlacephalonSMP, Charizard2SMP, CharizardBraixenGXSMP, ReshiramCharizardGX2SMP, PikachuZekromGX2SMP, SolgaleoGX3SMP, CharizardGXSMP60 } from './other-prints';
 import { Card } from '../../../game/store/card/card';
+import { AlolanRaichu } from './alolan-raichu';
 import { CarracostaGX } from './carracosta-gx';
 import { FirefighterPikachu } from './firefighter-pikachu';
 import { GreninjaGX } from './greninja-gx';
 import { JolteonGX } from './jolteon-gx';
 import { LucarioGX } from './lucario-gx';
 import { Lurantis } from './lurantis';
+import { Lycanroc } from './lycanroc';
 import { CelebiVenusaurGXSMP, DhelmiseSMP, EeveeSnorlaxGXSMP, EspeonDeoxysGXSMP, LucarioMelmetalGXSMP, LycanrocSMP, MagikarpWailordGXSMP, MewSMP, ReshiramCharizardGXSMP, TapuKokoSMP, UmbreonDarkraiGXSMP, VenusaurSnivyGXSMP } from './other-prints';
 import { PalaceBook } from './palace-book';
 import { PikachuZekromGX } from './pikachu-and-zekrom-gx';
@@ -18,12 +20,14 @@ import { TrevenantDusknoirGX } from './trevenant-dusknoir-gx';
 import { TsareenaGX } from './tsareena-gx';
 
 export const setSunAndMoonPromos: Card[] = [
+  new AlolanRaichu(),
   new CarracostaGX(),
   new FirefighterPikachu(),
   new GreninjaGX(),
   new JolteonGX(),
   new LucarioGX(),
   new Lurantis(),
+  new Lycanroc(),
   new PalaceBook(),
   new PikachuZekromGX(),
   new ShiningCelebi(),
@@ -33,6 +37,7 @@ export const setSunAndMoonPromos: Card[] = [
   new TapuLele(),
   new TrevenantDusknoirGX(),
   new TsareenaGX(),
+
 
   // Other prints
   new UmbreonDarkraiGXSMP(),

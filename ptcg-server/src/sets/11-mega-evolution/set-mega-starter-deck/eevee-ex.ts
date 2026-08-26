@@ -17,36 +17,33 @@ export class Eeveeex extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Collect',
-      cost: [C],
-      damage: 0,
-      text: 'Draw 3 cards.',
-    },
-    {
-      name: 'Brave Dash',
-      cost: [C, C, C],
-      damage: 200,
-      text: 'Flip a coin. If tails, this Pokémon does 30 damage to itself.',
-    },
-  ];
+  public attacks = [{
+    name: 'Collect',
+    cost: [C],
+    damage: 0,
+    text: 'Draw 3 cards.',
+  },
+  {
+    name: 'Brave Dash',
+    cost: [C, C, C],
+    damage: 200,
+    text: 'Flip a coin. If tails, this Pokémon does 30 damage to itself.',
+  }];
 
   public regulationMark = 'J';
-
-  public set: string = 'MEE';
+  public set: string = 'J-MEE';
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Eevee ex';
   public fullName: string = 'Eevee ex MEE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-rebel-clash/snorlax.ts (Collect)
+    // Collect
     if (WAS_ATTACK_USED(effect, 0, this)) {
       DRAW_CARDS(store, state, effect.player, 3);
     }
 
-    // Ref: set-noble-victories/stunfisk-2.ts (Thunder)
+    // Brave Dash
     if (WAS_ATTACK_USED(effect, 1, this)) {
       return COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (!result) {

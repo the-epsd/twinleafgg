@@ -23,6 +23,7 @@ import { BlackBeltsTraining } from '../set-prismatic-evolution/black-belts-train
 import { BlackBeltsTraining as BlackBeltsTrainingPRE96 } from '../set-prismatic-evolution/black-belts-training';
 import { ProfessorsResearch } from '../set-scarlet-and-violet/professors-research';
 import { ProfessorsResearch as ProfessorsResearchSVI189 } from '../set-scarlet-and-violet/professors-research';
+import { CelebratoryFanfare } from '../../11-mega-evolution/set-mega-evolution-promos/celebratory-fanfare';
 export class ToxelSVP extends Toxel {
   public setNumber = '119';
   public fullName: string = 'Toxel SVP';
@@ -39,6 +40,12 @@ export class Miraidonex3SVP extends MiraidonexOBF79 {
   public setNumber = '143';
   public fullName: string = 'Miraidon ex3 SVP';
   public set = 'SVP';
+}
+
+export class CelebratoryFanfareSVP extends CelebratoryFanfare {
+  public setNumber = '174';
+  public fullName: string = 'Celebratory Fanfare SV-P';
+  public set = 'SV-P';
 }
 
 export class EspeonexSVP extends Espeonex {

@@ -19,7 +19,7 @@ export class Moltres extends PokemonCard {
   public powers = [{
     name: 'Flame Charge',
     powerType: PowerType.POKEPOWER,
-    text: 'Once during your turn, when you put Moltres from your hand onto your Bench, you may flip a coin. If heads, search your discard pile for up to 3 Fire Energy cards and attach them to Moltres.',
+    text: 'Once during your turn, when you put Moltres from your hand onto your Bench, you may flip a coin. If heads, search your discard pile for up to 3 [R] Energy cards and attach them to Moltres.',
   }];
 
   public attacks = [{

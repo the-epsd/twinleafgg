@@ -6,7 +6,6 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefabs/attack-effects';
 
 export class Pawmi extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = L;
   public hp: number = 60;
@@ -22,14 +21,14 @@ export class Pawmi extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'MEE';
+  public set: string = 'J-MEE';
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pawmi';
   public fullName: string = 'Pawmi MEE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-celestial-storm/lombre.ts (Ambush)
+    // Quick Attack
     if (WAS_ATTACK_USED(effect, 0, this)) {
       FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE(store, state, effect, 20);
     }

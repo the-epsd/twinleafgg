@@ -702,6 +702,9 @@ function bindBrowseEvents() {
     const q = new FormData(searchForm).get('q');
     const query = String(q || '').trim();
     if (!query) return;
+    browse.searchOffset = 0;
+    browse.searchHasMore = false;
+    browse.cards = [];
     statusMessage = '';
     outputError = '';
     browse.loading = true;
@@ -736,6 +739,28 @@ function bindBrowseEvents() {
 
 async function handleBrowse(action: string | null, btn: HTMLButtonElement) {
   switch (action) {
+    case 'search-prev': {
+      if (browse.searchOffset <= 0) return;
+      browse.loading = true;
+      statusMessage = `Searching ${browse.searchQuery}…`;
+      outputError = '';
+      browse.searchOffset = Math.max(0, browse.searchOffset - browse.searchPageSize);
+      render();
+      await runSearch(browse, browse.searchQuery);
+      render();
+      break;
+    }
+    case 'search-next': {
+      if (!browse.searchHasMore) return;
+      browse.loading = true;
+      statusMessage = `Searching ${browse.searchQuery}…`;
+      outputError = '';
+      browse.searchOffset += browse.searchPageSize;
+      render();
+      await runSearch(browse, browse.searchQuery);
+      render();
+      break;
+    }
     case 'go-series':
       browse.level = 'series';
       browse.filter = '';
