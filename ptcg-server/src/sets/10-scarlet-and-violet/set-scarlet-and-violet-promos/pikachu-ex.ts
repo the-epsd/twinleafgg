@@ -18,7 +18,7 @@ export class Pikachuex extends PokemonCard {
   ];
 
   public regulationMark = 'H';
-  public set: string = 'PR-SV';
+  public set: string = 'SVP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '106';
   public name: string = 'Pikachu ex';
