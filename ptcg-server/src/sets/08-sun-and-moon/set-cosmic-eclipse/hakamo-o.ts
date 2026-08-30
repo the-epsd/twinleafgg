@@ -12,7 +12,7 @@ import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects
 export class HakamoO extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Jangmo-o';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 80;
   public weakness = [{ type: Y }];
   public retreat = [C, C];

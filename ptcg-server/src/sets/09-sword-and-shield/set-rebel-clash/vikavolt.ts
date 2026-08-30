@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, GET_TOTAL_ENERGY_ATTACHED_TO_PLAYERS_POKEMON, THIS_POK
 export class Vikavolt extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Charjabug';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 150;
   public weakness = [{ type: F }];
   public retreat = [C, C];

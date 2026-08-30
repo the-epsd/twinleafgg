@@ -14,7 +14,7 @@ import { Card, EnergyCard, PlayerType, SlotType, State, StoreLike } from '../../
 export class Grumpig extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Spoink';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 100;
   public weakness = [{ type: P }];
   public retreat = [C, C];

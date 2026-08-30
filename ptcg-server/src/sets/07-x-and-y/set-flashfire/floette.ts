@@ -4,7 +4,7 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, PlayerType } from '../../../game';
+import { PowerType, StoreLike, State, PlayerType, pokemonHasCardType } from '../../../game';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
@@ -12,7 +12,7 @@ import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 export class Floette extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Flabebe';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 70;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];
@@ -44,7 +44,7 @@ export class Floette extends PokemonCard {
     // Ref: set-plasma-freeze/umbreon.ts (Dark Shade)
     if (effect instanceof CheckHpEffect) {
       const targetCard = effect.target.getPokemonCard();
-      if (!targetCard || targetCard.cardType !== CardType.GRASS) {
+      if (!targetCard || !pokemonHasCardType(targetCard, CardType.GRASS)) {
         return state;
       }
 

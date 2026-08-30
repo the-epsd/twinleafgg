@@ -10,7 +10,7 @@ import {
 export class MarniesPurrloin extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.MARNIES];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 60;
   public weakness = [{ type: G }];
   public retreat = [C];

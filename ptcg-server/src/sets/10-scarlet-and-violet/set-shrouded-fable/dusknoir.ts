@@ -9,7 +9,7 @@ import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-pref
 export class Dusknoir extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Dusclops';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 160;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

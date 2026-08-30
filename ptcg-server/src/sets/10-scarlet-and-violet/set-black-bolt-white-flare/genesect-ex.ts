@@ -1,5 +1,4 @@
-import {
-  PokemonCard,
+import { PokemonCard,
   Stage,
   CardType,
   State,
@@ -8,8 +7,7 @@ import {
   GameError,
   GameMessage,
   SuperType,
-  CardTag,
-} from '../../../game';
+  CardTag, pokemonHasCardType } from '../../../game';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 
 import {
@@ -25,7 +23,7 @@ import {
 export class Genesectex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 220;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
@@ -76,7 +74,7 @@ export class Genesectex extends PokemonCard {
         if (
           !(
             card instanceof PokemonCard &&
-            card.cardType === CardType.METAL &&
+            pokemonHasCardType(card, CardType.METAL) &&
             card.evolvesFrom !== '' &&
             card.stage !== Stage.LV_X
           )

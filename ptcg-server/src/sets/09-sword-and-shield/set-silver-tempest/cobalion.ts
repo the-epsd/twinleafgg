@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../../game/store/card/card-types';
-import { CardList, ChooseCardsPrompt, GameMessage, PowerType, ShuffleDeckPrompt, State, StateUtils, StoreLike } from '../../..';
+import { CardList, ChooseCardsPrompt, GameMessage, PowerType, ShuffleDeckPrompt, State, StateUtils, StoreLike, pokemonHasCardTypeOptional } from '../../..';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 
@@ -10,7 +10,7 @@ export class Cobalion extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
   public regulationMark = 'F';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
@@ -44,7 +44,7 @@ export class Cobalion extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (player.active.getPokemonCard()?.stage == Stage.BASIC && opponent.active.getPokemonCard()?.cardType == CardType.DARK) {
+      if (player.active.getPokemonCard()?.stage == Stage.BASIC && pokemonHasCardTypeOptional(opponent.active.getPokemonCard(), CardType.DARK)) {
         if (effect instanceof DealDamageEffect) {
           effect.damage += 30;
         }

@@ -21,7 +21,7 @@ export class HopsCorviknight extends PokemonCard {
 
   protected _tags = [CardTag.HOPS];
 
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
 
   public hp: number = 170;
 

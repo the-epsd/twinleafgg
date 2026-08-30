@@ -14,7 +14,7 @@ import { PlayerType, SlotType, State, StoreLike } from '../../game';
 export class Milotic extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Feebas';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 120;
   public weakness = [{ type: G }];
   public retreat = [C];

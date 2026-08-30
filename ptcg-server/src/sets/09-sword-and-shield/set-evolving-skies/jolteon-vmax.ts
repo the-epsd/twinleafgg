@@ -16,7 +16,7 @@ export class JolteonVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Jolteon V';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 300;
   public weakness = [{ type: F }];
   public retreat = [];

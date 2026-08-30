@@ -13,7 +13,7 @@ export class DarkAlakazam extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Dark Kadabra';
   public hp: number = 60;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public weakness = [{ type: P }];
   public retreat = [C, C, C];
 

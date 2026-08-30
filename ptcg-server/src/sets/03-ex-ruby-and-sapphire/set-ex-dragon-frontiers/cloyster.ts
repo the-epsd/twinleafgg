@@ -11,7 +11,7 @@ import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefab
 export class Cloyster extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Shelder';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 70;
   public weakness = [{ type: L }];
   public retreat = [C];

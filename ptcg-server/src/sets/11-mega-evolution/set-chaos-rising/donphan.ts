@@ -15,7 +15,7 @@ export class Donphan extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Phanpy';
   public hp: number = 150;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
 

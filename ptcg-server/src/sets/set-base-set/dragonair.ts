@@ -15,7 +15,7 @@ export class Dragonair extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Dratini';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 80;
 
   public cardImage: string = 'assets/cardback.png';

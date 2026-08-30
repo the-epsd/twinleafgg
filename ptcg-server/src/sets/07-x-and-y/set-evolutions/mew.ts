@@ -11,7 +11,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { PowerType, State, StoreLike } from '../../../game';
 export class Mew extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 40;
   public weakness = [{ type: P }];
   public retreat = [C];

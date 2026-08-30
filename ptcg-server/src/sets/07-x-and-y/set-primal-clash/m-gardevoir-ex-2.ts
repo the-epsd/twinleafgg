@@ -9,7 +9,7 @@ export class MGardevoirEx2 extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX, CardTag.MEGA];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom = 'Gardevoir-EX';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 210;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

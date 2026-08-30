@@ -33,7 +33,7 @@ import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects
 export class GardevoirLVX extends PokemonCard {
   public stage: Stage = Stage.LV_X;
   public evolvesFrom = 'Gardevoir';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   protected _tags = [CardTag.POKEMON_LV_X];
   public hp: number = 130;
   public weakness = [{ type: D }];

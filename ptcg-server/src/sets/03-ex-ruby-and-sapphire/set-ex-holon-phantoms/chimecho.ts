@@ -33,7 +33,7 @@ import {
 export class Chimecho extends PokemonCard {
   protected _tags = [CardTag.DELTA_SPECIES];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 60;
   public weakness = [{ type: P }];
   public retreat = [C];

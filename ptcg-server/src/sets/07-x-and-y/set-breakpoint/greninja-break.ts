@@ -19,7 +19,7 @@ export class GreninjaBREAK extends PokemonCard {
   public stage: Stage = Stage.BREAK;
   protected _tags = [CardTag.BREAK];
   public evolvesFrom = 'Greninja';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 170;
 
   public powers = [

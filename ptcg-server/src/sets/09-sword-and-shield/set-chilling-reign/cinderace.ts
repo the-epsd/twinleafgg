@@ -13,7 +13,7 @@ export class Cinderace extends PokemonCard {
   protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Raboot';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 170;
   public weakness = [{ type: W }];
   public retreat = [C];

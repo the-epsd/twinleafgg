@@ -12,7 +12,7 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../../game/s
 export class Flygon extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Vibrava';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 140;
   public weakness = [{ type: N }];
   public retreat = [C];

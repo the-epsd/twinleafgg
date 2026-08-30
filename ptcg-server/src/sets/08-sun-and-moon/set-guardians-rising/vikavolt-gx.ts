@@ -15,7 +15,7 @@ export class VikavoltGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Charjabug';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 240;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

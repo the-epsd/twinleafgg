@@ -33,8 +33,7 @@ export class Gardevoir extends PokemonCard {
   public evolvesFrom: string = 'Kirlia';
   protected _tags = [CardTag.DELTA_SPECIES];
   public hp = 100;
-  public cardType: CardType = P;
-  public additionalCardTypes = [M];
+  public cardType: CardType[] = [P, M];
   public weakness = [{ type: P }];
   public retreat = [C, C];
 

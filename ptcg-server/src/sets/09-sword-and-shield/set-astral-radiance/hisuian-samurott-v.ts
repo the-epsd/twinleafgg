@@ -22,7 +22,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class HisuianSamurottV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp: number = 220;
 

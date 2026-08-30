@@ -28,7 +28,7 @@ import { UseAttackEffect } from '../../../game/store/effects/game-effects';
 export class ArceusLvX3 extends PokemonCard {
   public stage: Stage = Stage.LV_X;
   public evolvesFrom = 'Arceus';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   protected _tags = [CardTag.POKEMON_LV_X, CardTag.ARCEUS];
   public hp: number = 120;
   public retreat = [C];
@@ -64,7 +64,10 @@ export class ArceusLvX3 extends PokemonCard {
 
       effect.target.cards.forEach((card) => {
         if (card instanceof PokemonCard && card.name === 'Arceus' && card !== this) {
-          effect.target.getPokemonCard()?.cardType === card.cardType;
+          const pokemon = effect.target.getPokemonCard();
+          if (pokemon) {
+            pokemon.cardType = [...card.cardType];
+          }
           return state;
         }
       });

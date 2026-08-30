@@ -19,7 +19,7 @@ import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 
 export class Ditto extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: P }];
   public retreat = [C];

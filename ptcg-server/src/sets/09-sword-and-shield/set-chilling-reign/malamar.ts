@@ -20,7 +20,7 @@ export class Malamar extends PokemonCard {
   protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Inkay';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 120;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

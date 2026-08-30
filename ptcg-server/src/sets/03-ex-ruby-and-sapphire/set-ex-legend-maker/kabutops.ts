@@ -20,7 +20,7 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 export class Kabutops extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Kabuto';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 110;
   public weakness = [{ type: G }];
   public retreat = [C, C];

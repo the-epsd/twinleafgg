@@ -18,7 +18,7 @@ import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 export class Latios extends PokemonCard {
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 110;
 

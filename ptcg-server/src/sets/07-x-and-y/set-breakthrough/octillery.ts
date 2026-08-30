@@ -14,7 +14,7 @@ import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-pref
 export class Octillery extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Remoraid';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: G }];
   public retreat = [C, C];

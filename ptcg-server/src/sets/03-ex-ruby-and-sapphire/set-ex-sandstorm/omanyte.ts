@@ -7,7 +7,7 @@ import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, GET_PLA
 export class Omanyte extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Mysterious Fossil';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 70;
   public weakness = [{ type: L }];
   public retreat = [C];

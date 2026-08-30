@@ -7,7 +7,7 @@ import { reduceIncarnateUnionEffect } from './incarnate-union';
 
 export class Thundurus extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 120;
   public weakness = [{ type: F }];
   public retreat = [C];

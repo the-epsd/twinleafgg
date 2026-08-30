@@ -31,7 +31,7 @@ export class Banette extends PokemonCard {
 
   public evolvesFrom = 'Shuppet';
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 80;
 

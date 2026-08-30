@@ -7,7 +7,7 @@ import { AFTER_ATTACK, SWITCH_IN_OPPONENT_BENCHED_POKEMON } from '../../../game/
 export class Volbeat extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 80;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public weakness = [{ type: R }];
   public retreat = [C];
 

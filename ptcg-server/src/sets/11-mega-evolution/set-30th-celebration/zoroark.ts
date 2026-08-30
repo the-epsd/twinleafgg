@@ -9,7 +9,7 @@ export class Zoroark extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Zorua';
   public hp: number = 120;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public weakness = [{ type: G }];
   public retreat = [C];
   public powers = [{

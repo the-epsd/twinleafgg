@@ -1,4 +1,4 @@
-import { CardTag, CardType, GameMessage, PlayerType, PokemonCard, PokemonCardList, PowerType, Stage, State, StateUtils, StoreLike } from "../../../game";
+import { CardTag, CardType, GameMessage, PlayerType, PokemonCard, PokemonCardList, PowerType, Stage, State, StateUtils, StoreLike, pokemonHasCardType } from '../../../game';
 import { CheckPokemonTypeEffect } from "../../../game/store/effects/check-effects";
 import { Effect } from "../../../game/store/effects/effect";
 import { HANDLE_ABILITY_BLOCK, POKEPOWER_TYPES } from "../../../game/store/prefabs/ability-lock";
@@ -7,7 +7,7 @@ import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED, SEARCH_YOUR_DECK_FOR_POKEMON_AND_
 
 export class Solrock extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 70;
   public weakness = [{ type: G }];
   public retreat = [C];
@@ -79,7 +79,7 @@ export class Solrock extends PokemonCard {
         } catch {
           return false;
         }
-        return card.cardType === CardType.COLORLESS;
+        return pokemonHasCardType(card, CardType.COLORLESS);
       },
       {
         powerTypes: POKEPOWER_TYPES,

@@ -11,7 +11,7 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 
 export class Eiscue extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 120;
   public weakness = [{ type: M }];
   public retreat = [C, C];

@@ -15,7 +15,7 @@ import { WAS_POWER_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/pr
 
 export class Munna extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: P }];
   public retreat = [C, C];

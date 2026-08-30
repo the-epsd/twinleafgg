@@ -15,7 +15,7 @@ import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../..
 export class Houndoom extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Houndour';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 70;
   public retreat = [C];
   public weakness = [{ type: W }];

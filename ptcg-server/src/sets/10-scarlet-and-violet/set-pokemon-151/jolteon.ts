@@ -19,7 +19,7 @@ export class Jolteon extends PokemonCard {
 
   public evolvesFrom = 'Eevee';
 
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [CardType.LIGHTNING];
 
   public hp: number = 110;
 

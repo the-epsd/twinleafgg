@@ -54,7 +54,7 @@ function* useAquaJet(next: Function, store: StoreLike, state: State,
 export class Floatzel extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Buizel';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 80;
   public weakness = [{
     type: L,

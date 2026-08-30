@@ -18,7 +18,7 @@ import { PowerEffect } from '../../../game/store/effects/game-effects';
 export class LilliesRibombee extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = "Lillie's Cutiefly";
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
   protected _tags = [CardTag.LILLIES];
   public hp: number = 70;
   public weakness = [{ type: CardType.METAL }];

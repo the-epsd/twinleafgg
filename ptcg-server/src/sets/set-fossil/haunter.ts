@@ -11,7 +11,7 @@ import { IS_POKEMON_POWER_BLOCKED, WAS_ATTACK_USED } from '../../game/store/pref
 export class Haunter extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Gastly';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 50;
   public weakness = [];
   public resistance = [{ type: F, value: -30 }];

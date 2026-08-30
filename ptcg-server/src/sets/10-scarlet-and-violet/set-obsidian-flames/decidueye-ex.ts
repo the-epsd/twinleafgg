@@ -26,7 +26,7 @@ export class Decidueyeex extends PokemonCard {
 
   public evolvesFrom = 'Dartrix';
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 320;
 

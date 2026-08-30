@@ -13,7 +13,7 @@ import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/att
 export class Torterra extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Grotle';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 180;
   public weakness: Weakness[] = [{ type: R }];
   public retreat = [C, C, C, C];

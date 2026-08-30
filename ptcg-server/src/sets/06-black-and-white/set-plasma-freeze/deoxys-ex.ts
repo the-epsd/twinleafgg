@@ -20,7 +20,7 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs
 
 export class DeoxysEX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   protected _tags = [CardTag.POKEMON_EX, CardTag.TEAM_PLASMA];
   public hp: number = 170;
   public weakness: Weakness[] = [{ type: P }];

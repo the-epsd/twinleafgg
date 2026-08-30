@@ -10,7 +10,7 @@ export class MAudinoEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX, CardTag.MEGA];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom = 'Audino-EX';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 220;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

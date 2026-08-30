@@ -13,7 +13,7 @@ import { SURVIVE_ON_TEN_IF_FULL_HP } from '../../../game/store/prefabs/effect-of
 export class Crustle extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Dwebble';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 100;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

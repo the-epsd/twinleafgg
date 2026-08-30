@@ -10,7 +10,7 @@ export class DarkKadabra extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Abra';
   public hp: number = 50;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public weakness = [{ type: P }];
   public retreat = [C, C];
 

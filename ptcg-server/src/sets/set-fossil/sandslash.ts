@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/pr
 export class Sandslash extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Sandshrew';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 70;
   public weakness = [{ type: G }];
   public resistance = [{ type: L, value: -30 }];

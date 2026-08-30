@@ -85,7 +85,7 @@ function* useFindAFriend(next: Function, store: StoreLike, state: State,
 
 export class Pichu extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 40;
   public weakness = [{ type: F, value: 10 }];
   public resistance = [{ type: M, value: -20 }];

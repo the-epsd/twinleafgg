@@ -4,7 +4,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 export class Ursaring extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Teddiursa';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 140;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

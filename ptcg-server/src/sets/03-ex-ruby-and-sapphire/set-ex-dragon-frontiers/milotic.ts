@@ -9,7 +9,7 @@ export class Milotic extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Feebas';
   public hp: number = 90;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public weakness = [{ type: L }];
   public retreat = [C, C];
 

@@ -25,7 +25,7 @@ export class Meganium extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Bayleef';
   protected _tags = [CardTag.PRIME];
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 150;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -30 }];

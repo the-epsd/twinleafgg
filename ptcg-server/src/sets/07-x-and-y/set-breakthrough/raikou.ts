@@ -10,7 +10,7 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 
 export class Raikou extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 120;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

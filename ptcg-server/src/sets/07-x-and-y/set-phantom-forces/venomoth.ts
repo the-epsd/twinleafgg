@@ -7,7 +7,7 @@ import { OPPONENT_COIN_FLIP_CANCEL_TRAINER_CARDS } from "../../../game/store/pre
 export class Venomoth extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Venonat';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public retreat = [C];

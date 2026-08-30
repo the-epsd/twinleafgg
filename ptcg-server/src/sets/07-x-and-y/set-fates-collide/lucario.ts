@@ -11,7 +11,7 @@ export class Lucario extends PokemonCard {
 
   public evolvesFrom = 'Riolu';
 
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType[] = [CardType.METAL];
 
   public hp: number = 110;
 

@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Sinistcha extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Poltchageist';
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
   public hp: number = 70;
   public weakness = [{ type: CardType.FIRE }];
   public retreat = [CardType.COLORLESS];

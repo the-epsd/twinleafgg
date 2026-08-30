@@ -11,7 +11,7 @@ import {
 export class Shellder extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 40;
   public weakness = [{ type: L }];
   public retreat = [C];

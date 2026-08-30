@@ -9,7 +9,7 @@ import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 export class Electabuzz extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 70;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public weakness = [{ type: F, value: 20 }];
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C, C];

@@ -13,7 +13,7 @@ export class PrimalGroudonEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX, CardTag.MEGA, CardTag.PRIMAL];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Groudon-EX';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 240;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];

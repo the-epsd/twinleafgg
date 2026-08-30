@@ -15,7 +15,7 @@ import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effect
 export class Kecleon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.RAPID_STRIKE];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C, C];

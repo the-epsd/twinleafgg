@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, ADD_SLEEP_TO_PLAYER_ACTIVE } from 
 
 export class Komala extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];

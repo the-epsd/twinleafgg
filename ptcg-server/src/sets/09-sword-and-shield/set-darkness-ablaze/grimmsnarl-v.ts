@@ -12,7 +12,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class GrimmsnarlV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 220;
   public weakness = [{ type: G }];
   public retreat = [C, C];

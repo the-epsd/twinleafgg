@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardTag } from '../../../game/store/card/card-types';
+import { CardType, Stage, CardTag } from '../../../game/store/card/card-types';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
@@ -10,7 +10,7 @@ export class Hydreigonex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Zweilous';
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 330;
   public weakness = [{ type: G }];
   public resistance = [];

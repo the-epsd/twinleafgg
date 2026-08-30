@@ -5,7 +5,7 @@ export class MarniesMorgrem extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = "Marnie's Impidimp";
   protected _tags = [CardTag.MARNIES];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 100;
   public weakness = [{ type: G }];
   public retreat = [C];

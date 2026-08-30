@@ -24,7 +24,7 @@ export class KinglerVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Kingler V';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 330;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];

@@ -25,7 +25,7 @@ export class Inteleon extends PokemonCard {
 
   public evolvesFrom = 'Drizzile';
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp: number = 150;
 

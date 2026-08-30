@@ -25,7 +25,7 @@ import {
 
 export class Minun extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType = L;
+  public cardType: CardType[] = [L];
   public weakness = [{ type: F, value: +10 }];
   public resistance = [{ type: M, value: -20 }];
   public hp: number = 60;

@@ -15,7 +15,7 @@ import { ADD_PARALYZED_TO_PLAYER_ACTIVE, ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTA
 export class Drapion extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Skorupi';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 140;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

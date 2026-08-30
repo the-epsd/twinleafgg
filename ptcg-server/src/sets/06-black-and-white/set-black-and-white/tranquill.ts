@@ -11,7 +11,7 @@ export class Tranquill extends PokemonCard {
 
   public evolvesFrom = 'Pidove';
 
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
 
   public hp: number = 70;
 

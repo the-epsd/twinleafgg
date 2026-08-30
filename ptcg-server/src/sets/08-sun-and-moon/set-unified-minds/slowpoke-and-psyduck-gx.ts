@@ -19,7 +19,7 @@ import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } 
 export class SlowpokePsyduckGX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 250;
   public weakness = [{ type: G }];
   public retreat = [C, C];

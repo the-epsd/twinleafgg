@@ -13,7 +13,7 @@ import { GamePhase } from '../../../game/store/state/state';
 
 export class Spiritomb extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 60;
   public weakness = [{ type: G }];
   public retreat = [C, C];

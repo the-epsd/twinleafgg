@@ -18,7 +18,7 @@ export class Goodra extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Sliggoo';
   public hp: number = 160;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public weakness: { type: CardType }[] = [];
   public resistance: { type: CardType; value: number }[] = [];
   public retreat = [C, C, C];

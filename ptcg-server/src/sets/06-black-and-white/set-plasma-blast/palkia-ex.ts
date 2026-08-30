@@ -22,7 +22,7 @@ import {
 export class PalkiaEX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_EX, CardTag.TEAM_PLASMA];
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 180;
   public weakness: Weakness[] = [{ type: N }];
   public retreat: CardType[] = [C, C];

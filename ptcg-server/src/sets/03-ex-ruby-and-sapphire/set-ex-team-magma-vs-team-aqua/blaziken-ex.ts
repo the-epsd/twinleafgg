@@ -14,7 +14,7 @@ export class Blazikenex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Combusken';
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 150;
   public weakness = [{ type: W }, { type: P }];
   public retreat = [C, C];

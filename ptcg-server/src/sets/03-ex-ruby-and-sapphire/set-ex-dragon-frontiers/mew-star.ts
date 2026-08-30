@@ -31,7 +31,7 @@ import { DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/a
 export class MewStar extends PokemonCard {
   protected _tags = [CardTag.STAR, CardTag.DELTA_SPECIES];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 70;
   public weakness = [{ type: P }];
   public retreat = [C];

@@ -1,5 +1,4 @@
-import {
-  PokemonCard,
+import { PokemonCard,
   CardTag,
   Stage,
   CardType,
@@ -15,8 +14,7 @@ import {
   StateUtils,
   EnergyCard,
   CardTarget,
-  EnergyType,
-} from '../../../game';
+  EnergyType, pokemonHasCardType } from '../../../game';
 import { CheckPokemonStatsEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { EvolveEffect } from '../../../game/store/effects/game-effects';
@@ -27,7 +25,7 @@ export class Archaludonex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Duraludon';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 300;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
@@ -73,7 +71,7 @@ export class Archaludonex extends PokemonCard {
 
       const blocked2: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        if (card.cardType !== M) {
+        if (!pokemonHasCardType(card, M)) {
           blocked2.push(target);
         }
       });

@@ -6,7 +6,7 @@ import { AFTER_ATTACK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefa
 
 export class Baltoy extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 50;
   public weakness = [{ type: G, value: +10 }];
   public retreat = [C];

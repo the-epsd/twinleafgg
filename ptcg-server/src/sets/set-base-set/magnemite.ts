@@ -7,7 +7,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Magnemite extends PokemonCard {
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public stage: Stage = Stage.BASIC;
   public hp: number = 40;
   public weakness = [{ type: F }];

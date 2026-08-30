@@ -28,7 +28,7 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from '../../../game/stor
 export class DarkraiPrismStar extends PokemonCard {
   protected _tags = [CardTag.PRISM_STAR];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 160;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

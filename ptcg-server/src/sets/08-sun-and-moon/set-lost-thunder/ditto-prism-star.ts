@@ -7,7 +7,7 @@ import { CheckTableStateEffect } from '../../../game/store/effects/check-effects
 
 export class DittoPrismStar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
   public hp: number = 40;
   public weakness = [{ type: CardType.FIGHTING }];
   public retreat = [CardType.COLORLESS];

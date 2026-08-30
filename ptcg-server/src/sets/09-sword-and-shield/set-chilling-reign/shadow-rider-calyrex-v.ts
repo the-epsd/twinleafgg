@@ -9,7 +9,7 @@ import { OPPONENT_CANNOT_PLAY_CARDS } from '../../../game/store/prefabs/effect-o
 export class ShadowRiderCalyrexV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public regulationMark = 'E';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   protected _tags = [CardTag.POKEMON_V];
   public hp: number = 210;
   public weakness = [{ type: D }];

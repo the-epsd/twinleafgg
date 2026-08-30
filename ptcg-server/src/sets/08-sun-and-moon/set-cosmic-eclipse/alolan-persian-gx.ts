@@ -22,7 +22,7 @@ export class AlolanPersianGX extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Alolan Meowth';
   protected _tags = [CardTag.POKEMON_GX];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 200;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

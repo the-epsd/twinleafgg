@@ -20,7 +20,7 @@ export class Musharna extends PokemonCard {
 
   public evolvesFrom = 'Munna';
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 100;
 

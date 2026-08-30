@@ -8,7 +8,7 @@ import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../game/store/pre
 export class AurasLucario extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.AURAS];
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

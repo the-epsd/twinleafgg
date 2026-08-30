@@ -33,7 +33,7 @@ export class AlolanNinetalesGX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Alolan Vulpix';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 200;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

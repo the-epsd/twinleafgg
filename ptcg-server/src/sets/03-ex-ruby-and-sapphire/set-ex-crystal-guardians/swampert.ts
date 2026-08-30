@@ -17,7 +17,7 @@ import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects
 export class Swampert extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Marshtomp';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 120;
   public weakness = [{ type: G }];
   public retreat = [C, C];

@@ -22,7 +22,7 @@ export class DelphoxV extends PokemonCard {
 
   protected _tags = [CardTag.POKEMON_V];
 
-  public cardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
 
   public hp = 210;
 

@@ -16,7 +16,7 @@ import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/pr
 export class ReshiramCharizardGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 270;
   public weakness = [{ type: W }];
   public retreat = [C, C, C];

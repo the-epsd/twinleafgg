@@ -7,7 +7,7 @@ import { AFTER_ATTACK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefa
 export class Hippowdon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Hippopotas';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 130;
   public weakness = [{ type: W }];
   public resistance = [{ type: L, value: -20 }];

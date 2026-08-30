@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, SHUFFLE_DECK, DRAW_CARDS } from '../../../game/store/p
 
 export class Wishiwashi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 30;
   public weakness = [{ type: L }];
   public retreat = [C];

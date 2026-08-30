@@ -9,7 +9,7 @@ import { THIS_POKEMON_RETALIATES_ON_DAMAGE_DURING_OPPONENTS_NEXT_TURN } from '..
 export class GalarianStunfiskV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 200;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

@@ -6,7 +6,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { EvolveEffect } from '../../../game/store/effects/game-effects';
 
 export class Herdier extends PokemonCard {
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Lillipup';
   public hp: number = 90;

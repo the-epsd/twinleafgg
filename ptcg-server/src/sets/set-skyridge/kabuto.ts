@@ -8,7 +8,7 @@ import { IS_POKEBODY_BLOCKED } from '../../game/store/prefabs/prefabs';
 export class Kabuto extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Mysterious Fossil';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 50;
   public weakness = [{ type: G }];
   public retreat = [C];

@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage } from '../../game/store/card/card-types';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { Attack } from '../../game/store/card/pokemon-types';
 
 import { Effect } from '../../game/store/effects/effect';
@@ -14,7 +14,7 @@ export class Jynx extends PokemonCard {
   public fullName = 'Jynx BS';
 
   public stage = Stage.BASIC;
-  public cardType = P;
+  public cardType: CardType[] = [P];
 
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '31';

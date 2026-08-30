@@ -4,7 +4,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 export class Lombre extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Lotad';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: L }];
   public retreat = [C];

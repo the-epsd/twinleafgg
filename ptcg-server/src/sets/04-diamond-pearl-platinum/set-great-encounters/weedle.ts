@@ -7,7 +7,7 @@ import { ADD_PARALYZED_TO_PLAYER_ACTIVE, COIN_FLIP_PROMPT, SEARCH_YOUR_DECK_FOR_
 
 export class Weedle extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 50;
   public weakness = [{ type: R, value: +10 }];
   public retreat = [C];

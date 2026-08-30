@@ -23,7 +23,7 @@ export class BlazikenGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Combusken';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 240;
   public weakness = [{ type: W }];
   public retreat = [C];

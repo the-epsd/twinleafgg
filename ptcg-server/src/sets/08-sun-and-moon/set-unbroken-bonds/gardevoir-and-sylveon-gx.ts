@@ -26,7 +26,7 @@ import {
 export class GardevoirSylveonGX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.FAIRY;
+  public cardType: CardType[] = [CardType.FAIRY];
   public hp: number = 260;
   public weakness = [{ type: CardType.METAL }];
   public resistance = [{ type: CardType.DARK, value: -20 }];

@@ -63,7 +63,7 @@ export class Swampertex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   protected _tags = [CardTag.POKEMON_ex];
   public evolvesFrom = 'Marshtomp';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 150;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

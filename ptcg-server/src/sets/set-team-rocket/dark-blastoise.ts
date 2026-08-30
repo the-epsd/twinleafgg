@@ -18,7 +18,7 @@ export class DarkBlastoise extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Dark Wartortle';
   public hp: number = 70;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public weakness = [{ type: L }];
   public retreat = [C, C];
 

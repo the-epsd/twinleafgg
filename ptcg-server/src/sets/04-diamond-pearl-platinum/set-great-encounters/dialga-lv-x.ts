@@ -33,7 +33,7 @@ import {
 export class DialgaLVX extends PokemonCard {
   public stage: Stage = Stage.LV_X;
   public evolvesFrom = 'Dialga';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   protected _tags = [CardTag.POKEMON_LV_X];
   public hp: number = 110;
   public weakness = [{ type: R }];

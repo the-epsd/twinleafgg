@@ -6,7 +6,7 @@ import { ADD_POISON_TO_PLAYER_ACTIVE, ADD_SLEEP_TO_PLAYER_ACTIVE, CONFIRMATION_P
 export class Ariados extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Spinarak';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness: Weakness[] = [{ type: P }];
   public retreat: CardType[] = [C];

@@ -11,7 +11,7 @@ export class Electivire extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Electabuzz';
   public hp: number = 100;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public weakness = [{ type: F, value: 30 }];
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C, C, C];

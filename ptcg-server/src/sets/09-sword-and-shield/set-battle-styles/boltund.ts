@@ -12,7 +12,7 @@ import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-pref
 export class Boltund extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Yamper';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public retreat = [C];

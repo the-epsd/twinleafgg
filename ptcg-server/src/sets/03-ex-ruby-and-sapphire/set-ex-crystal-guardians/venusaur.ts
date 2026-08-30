@@ -8,7 +8,7 @@ import { ADD_POISON_TO_PLAYER_ACTIVE, ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK, 
 export class Venusaur extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Ivysaur';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 110;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { Not, IsNull } from 'typeorm';
 import { AuthToken, Validate, check } from '../services';
-import { CardManager, DeckAnalyser, GameWinner } from '../../game';
+import { CardManager, DeckAnalyser, GameWinner, getPrimaryCardType } from '../../game';
 import { Controller, Get, Post } from './controller';
 import { DeckSaveRequest } from '../interfaces';
 import { ApiErrorEnum } from '../common/errors';
@@ -1195,7 +1195,7 @@ export function getValidFormatsForCardList(cardNames: string[]): number[] {
     }
     // check for different type violation
     const pokemonCards = cards.filter((c: any) => c && c.superType === SuperType.POKEMON);
-    const pokemonSet = new Set(pokemonCards.map((c: any) => c && c.cardType));
+    const pokemonSet = new Set(pokemonCards.map((c: any) => c && getPrimaryCardType(c)));
     if (pokemonSet.size > 1) {
       formatList = formatList.filter((f: number) => f !== Format.GLC);
     }

@@ -20,7 +20,7 @@ export class SingleStrikeUrshifuVMAX extends PokemonCard {
 
   protected _tags = [CardTag.POKEMON_VMAX, CardTag.SINGLE_STRIKE];
 
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp: number = 330;
 

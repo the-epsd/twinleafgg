@@ -9,7 +9,7 @@ import { IS_ABILITY_BLOCKED, WAS_POWER_USED } from '../../../game/store/prefabs/
 
 export class Kingdra extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
   public hp: number = 150;
   public weakness = [{ type: CardType.LIGHTNING }];
   public retreat = [CardType.COLORLESS];

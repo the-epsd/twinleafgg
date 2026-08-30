@@ -12,7 +12,7 @@ import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects
 export class Orbeetle extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Dottler';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 110;
   public weakness = [{ type: R }];
   public retreat = [C];

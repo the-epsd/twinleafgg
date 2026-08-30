@@ -11,7 +11,7 @@ export class AltariaGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Swablu';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 200;
   public weakness = [{ type: Y }];
   public retreat = [C];

@@ -25,7 +25,7 @@ export class AlolanRaticateGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Alolan Rattata';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 200;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

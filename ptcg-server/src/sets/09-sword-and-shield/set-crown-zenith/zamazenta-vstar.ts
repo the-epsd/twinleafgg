@@ -23,7 +23,7 @@ export class ZamazentaVstar extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VSTAR];
   public stage: Stage = Stage.VSTAR;
   public evolvesFrom: string = 'Zamazenta V';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 270;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

@@ -25,8 +25,7 @@ import { SuicuneAndEnteiLegendBottom } from './suicune-and-entei-legend-bottom';
 export class SuicuneAndEnteiLegendTop extends PokemonCard {
   public stage: Stage = Stage.LEGEND;
   protected _tags = [CardTag.LEGEND, CardTag.DUAL_LEGEND];
-  public cardType = R;
-  public additionalCardTypes = [W];
+  public cardType: CardType[] = [R, W];
   public hp: number = 160;
   public weakness = [{ type: W }, { type: L }];
   public retreat = [C];

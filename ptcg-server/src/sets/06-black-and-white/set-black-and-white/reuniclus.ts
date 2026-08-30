@@ -62,7 +62,7 @@ function* useDamageSwap(next: Function, store: StoreLike, state: State, effect: 
 export class Reuniclus extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Duosion';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 90;
   public weakness = [{ type: P }];
   public retreat = [C, C];

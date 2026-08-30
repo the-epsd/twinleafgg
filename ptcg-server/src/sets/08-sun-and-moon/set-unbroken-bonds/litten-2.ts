@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, DRAW_CARDS, ADD_SLEEP_TO_PLAYER_ACTIVE } from '../../.
 import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 export class Litten2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 60;
   public weakness = [{ type: W }];
   public retreat = [C];

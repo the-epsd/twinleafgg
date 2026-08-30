@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER, COIN_FLIP_PROMP
 export class Unfezant2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Tranquill';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 140;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

@@ -38,7 +38,7 @@ export class LeafeonGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Eevee';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 200;
   public weakness = [{ type: R }];
   public retreat = [C, C];

@@ -9,7 +9,7 @@ export class Dugtrio extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Diglett';
   protected _tags = [CardTag.RAPID_STRIKE];
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 90;
   public weakness = [{ type: G }];
   public retreat = [C];

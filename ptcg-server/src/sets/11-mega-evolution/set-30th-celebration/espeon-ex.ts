@@ -9,7 +9,7 @@ export class Espeonex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex];
   public evolvesFrom: string = 'Eevee';
   public hp: number = 260;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public weakness = [{ type: D }];
   public retreat = [C];
 

@@ -15,7 +15,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, MULTIPLE_COIN_FLIPS_PROMPT, SHUFFLE_
 export class Aromatisse extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Spritzee';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 90;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

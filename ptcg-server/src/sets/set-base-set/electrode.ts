@@ -20,7 +20,7 @@ export class Electrode extends PokemonCard implements EnergyCard {
 
   public stage = Stage.STAGE_1;
   public evolvesFrom = 'Voltorb';
-  public cardType = L;
+  public cardType: CardType[] = [L];
 
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '21';

@@ -1,4 +1,4 @@
-import { CardTag, CardType, PlayerType, PokemonCard, Stage, State, StoreLike } from '../../../game';
+import { CardTag, CardType, PlayerType, PokemonCard, Stage, State, StoreLike, pokemonHasCardTypeOptional } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import {
   CheckAttackCostEffect,
@@ -10,7 +10,7 @@ import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE } from '../../../game/store/p
 export class EspeonDeoxysGX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 260;
   public weakness = [{ type: P }];
   public retreat = [C, C];
@@ -45,7 +45,7 @@ export class EspeonDeoxysGX extends PokemonCard {
       let psychics = 0;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (card) => {
-        if (card.getPokemonCard()?.cardType === CardType.PSYCHIC) {
+        if (pokemonHasCardTypeOptional(card.getPokemonCard(), CardType.PSYCHIC)) {
           psychics++;
         }
       });

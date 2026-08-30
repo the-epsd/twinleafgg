@@ -8,7 +8,7 @@ import { AttachEnergyPrompt, EnergyCard, PlayerType, SlotType, State, StoreLike 
 export class Volcarona extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Larvesta';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 110;
   public weakness = [{ type: W }];
   public retreat = [C];

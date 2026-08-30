@@ -4,7 +4,7 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 export class HopsWooloo extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.HOPS];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [C];

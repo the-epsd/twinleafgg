@@ -22,7 +22,7 @@ export class MSceptileEx extends PokemonCard {
   protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Sceptile-EX';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 220;
   public weakness = [{ type: R }];
   public retreat = [C, C];
@@ -69,7 +69,7 @@ export class MSceptileEx extends PokemonCard {
           player.hand,
           PlayerType.BOTTOM_PLAYER,
           [SlotType.BENCH],
-          { superType: SuperType.ENERGY, cardType: CardType.GRASS },
+          { superType: SuperType.ENERGY, cardType: [CardType.GRASS] },
           { allowCancel: true, min: 0, max: 2 },
         ),
         (transfers) => {

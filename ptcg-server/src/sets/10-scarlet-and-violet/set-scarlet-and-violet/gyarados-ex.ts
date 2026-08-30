@@ -11,7 +11,7 @@ export class Gyaradosex extends PokemonCard {
 
   protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
-  public cardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp = 300;
 

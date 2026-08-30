@@ -9,7 +9,7 @@ import { MULTIPLE_COIN_FLIPS_PROMPT, IS_POKEPOWER_BLOCKED, WAS_ATTACK_USED } fro
 
 export class Giratina extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 100;
   public weakness = [{ type: D }];
   public resistance = [{ type: C, value: -20 }];

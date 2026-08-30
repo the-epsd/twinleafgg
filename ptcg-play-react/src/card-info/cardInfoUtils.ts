@@ -12,6 +12,7 @@ import {
   CardTag,
   CardType,
   EnergyType,
+  getPokemonCardTypes,
   PokemonCardList,
   PowerType,
   SpecialCondition,
@@ -145,8 +146,7 @@ export function getCardGameplaySignature(card: Card): string {
     return JSON.stringify({
       ...base,
       hp: pokemon.hp,
-      cardType: pokemon.cardType,
-      additionalCardTypes: pokemon.additionalCardTypes ?? [],
+      cardType: getPokemonCardTypes(pokemon),
       stage: pokemon.stage,
       evolvesFrom: pokemon.evolvesFrom ?? '',
       weakness: pokemon.weakness ?? [],

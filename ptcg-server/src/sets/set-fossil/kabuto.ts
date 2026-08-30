@@ -10,7 +10,7 @@ export class Kabuto extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Mysterious Fossil';
   public hp: number = 30;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public weakness = [{ type: G }];
   public retreat = [C];
 

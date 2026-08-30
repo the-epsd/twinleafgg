@@ -1,3 +1,4 @@
+import { pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
@@ -40,7 +41,7 @@ export class TeamRocketsWatchtower extends TrainerCard {
         store.reduceEffect(state, checkType);
         return checkType.cardTypes.includes(CardType.COLORLESS);
       } catch {
-        return card.cardType === CardType.COLORLESS;
+        return pokemonHasCardType(card, CardType.COLORLESS);
       }
     }, {
       allowUseFromHand: true,

@@ -10,7 +10,7 @@ import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs
 export class Centiskorch extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Sizzlipede';
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
   public hp: number = 130;
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 

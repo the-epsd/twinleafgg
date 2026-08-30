@@ -25,7 +25,7 @@ import {
 export class TapuKokoGX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 170;
   public retreat = [C, C];
 

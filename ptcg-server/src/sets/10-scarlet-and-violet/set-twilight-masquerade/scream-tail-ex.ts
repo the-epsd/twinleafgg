@@ -10,7 +10,7 @@ export class ScreamTailex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex, CardTag.ANCIENT];
   public regulationMark = 'H';
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 190;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

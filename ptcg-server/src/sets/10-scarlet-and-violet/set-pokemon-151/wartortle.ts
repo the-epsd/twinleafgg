@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Wartortle extends PokemonCard {
   public stage = Stage.STAGE_1;
   public evolvesFrom = 'Squirtle';
-  public cardType = W;
+  public cardType: CardType[] = [W];
   public hp = 100;
   public weakness = [{ type: L }];
   public retreat = [C, C];
@@ -44,7 +44,7 @@ export class Wartortle extends PokemonCard {
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.discard,
         {
-          cardType: CardType.WATER
+          cardType: [CardType.WATER]
         },
         {
           min: 0,

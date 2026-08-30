@@ -8,7 +8,7 @@ import { PowerEffect } from '../../../game/store/effects/game-effects';
 export class Aerodactyl extends PokemonCard {
   public stage: Stage = Stage.RESTORED;
   public evolvesFrom: string = 'Old Amber Aerodactyl';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 90;
   public weakness = [{ type: G }];
   public retreat = [C];

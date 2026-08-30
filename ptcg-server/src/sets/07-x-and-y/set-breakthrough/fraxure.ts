@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Fraxure extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Axew';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 80;
   public weakness = [{ type: Y }];
   public retreat = [C, C];

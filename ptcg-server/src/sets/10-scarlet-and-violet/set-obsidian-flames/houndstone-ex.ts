@@ -1,3 +1,4 @@
+import { pokemonHasCardType } from '../../../game';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
@@ -9,7 +10,7 @@ export class Houndstoneex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Greavard';
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 260;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
@@ -49,7 +50,7 @@ export class Houndstoneex extends PokemonCard {
 
       let psychicsInDiscard = 0;
       player.discard.cards.forEach((card) => {
-        if (card instanceof PokemonCard && card.cardType === P) {
+        if (card instanceof PokemonCard && pokemonHasCardType(card, P)) {
           psychicsInDiscard++;
         }
       });

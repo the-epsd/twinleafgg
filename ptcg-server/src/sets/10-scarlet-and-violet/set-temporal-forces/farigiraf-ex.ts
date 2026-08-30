@@ -19,7 +19,7 @@ export class Farigirafex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Girafarig';
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
   public hp: number = 260;
   public weakness = [{ type: CardType.GRASS }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];

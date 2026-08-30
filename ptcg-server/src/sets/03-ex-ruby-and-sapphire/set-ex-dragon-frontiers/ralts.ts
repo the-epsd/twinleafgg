@@ -10,7 +10,7 @@ import {
 export class Ralts extends PokemonCard {
   protected _tags = [CardTag.DELTA_SPECIES];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 50;
   public weakness = [{ type: P }];
   public retreat = [C];

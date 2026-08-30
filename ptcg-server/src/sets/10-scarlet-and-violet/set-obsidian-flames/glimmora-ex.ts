@@ -12,7 +12,7 @@ export class Glimmoraex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Glimmet';
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 270;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

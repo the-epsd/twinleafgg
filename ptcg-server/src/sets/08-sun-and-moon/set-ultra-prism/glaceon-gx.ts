@@ -25,7 +25,7 @@ export class GlaceonGX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Eevee';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 200;
   public weakness = [{ type: M }];
   public retreat = [C, C];

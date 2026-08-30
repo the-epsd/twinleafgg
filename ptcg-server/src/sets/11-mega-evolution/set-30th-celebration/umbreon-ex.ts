@@ -9,7 +9,7 @@ export class Umbreonex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex];
   public evolvesFrom: string = 'Eevee';
   public hp: number = 270;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public weakness = [{ type: G }];
   public retreat = [C, C];
   public attacks = [

@@ -11,7 +11,7 @@ import { CheckRetreatCostEffect } from '../../../game/store/effects/check-effect
 
 export class Sudowoodo extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 110;
   public weakness = [{ type: G }];
   public retreat = [C, C];

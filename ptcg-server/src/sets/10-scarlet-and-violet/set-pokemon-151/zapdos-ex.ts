@@ -22,7 +22,7 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs
 export class Zapdosex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 200;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

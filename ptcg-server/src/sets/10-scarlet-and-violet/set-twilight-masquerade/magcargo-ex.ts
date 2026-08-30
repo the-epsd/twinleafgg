@@ -22,7 +22,7 @@ export class Magcargoex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Slugma';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 270;
   public weakness = [{ type: W }];
   public retreat = [C, C, C];

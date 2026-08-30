@@ -19,7 +19,7 @@ export class Klinklang extends PokemonCard {
   protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Klang';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 140;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

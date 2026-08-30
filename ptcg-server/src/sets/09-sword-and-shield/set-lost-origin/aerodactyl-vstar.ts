@@ -17,7 +17,7 @@ export class AerodactylVstar extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VSTAR];
   public stage: Stage = Stage.VSTAR;
   public evolvesFrom: string = 'Aerodactyl V';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 260;
   public weakness = [{ type: G }];
   public retreat = [C, C];

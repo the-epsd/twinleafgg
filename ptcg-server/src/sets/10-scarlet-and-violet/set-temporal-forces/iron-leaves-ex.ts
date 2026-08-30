@@ -21,7 +21,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class IronLeavesex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex, CardTag.FUTURE];
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 220;
   public weakness = [{ type: R }];
   public retreat = [C];

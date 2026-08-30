@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage } from '../../../game/store/card/card-types';
+import { CardType, Stage } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
@@ -8,7 +8,7 @@ import { FLIP_COIN_TO_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN } from '../../..
 
 export class Squirtle extends PokemonCard {
   public stage = Stage.BASIC;
-  public cardType = W;
+  public cardType: CardType[] = [W];
   public hp = 60;
   public weakness = [{ type: L }];
   public retreat = [C];

@@ -13,7 +13,7 @@ export class CramorantVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Cramorant V';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 320;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

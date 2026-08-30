@@ -14,7 +14,7 @@ export class MRayquazaEx extends PokemonCard {
   protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Rayquaza-EX';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 220;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

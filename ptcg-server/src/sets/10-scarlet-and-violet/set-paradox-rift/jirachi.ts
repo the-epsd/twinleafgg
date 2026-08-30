@@ -11,7 +11,7 @@ export class Jirachi extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType[] = [CardType.METAL];
 
   public hp: number = 70;
 

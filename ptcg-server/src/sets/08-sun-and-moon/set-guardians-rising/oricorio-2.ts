@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage } from '../../../game/store/card/card-types';
+import { CardType, Stage } from '../../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, PlayerType, SlotType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { DamageMap } from '../../../game';
@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 // GRI Oricorio 56 (https://limitlesstcg.com/cards/GRI/56)
 export class Oricorio2 extends PokemonCard {
   public stage = Stage.BASIC;
-  public cardType = P;
+  public cardType: CardType[] = [P];
   public hp = 90;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -20 }];

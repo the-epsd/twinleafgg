@@ -12,7 +12,7 @@ import { StoreLike } from '../../../game/store/store-like';
 export class Lucario extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Riolu';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 120;
   public weakness = [{ type: P }];
   public retreat = [C];

@@ -35,7 +35,7 @@ export class HolonsMagneton extends PokemonCard implements EnergyCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = "Holon's Magnemite";
   protected _tags = [CardTag.HOLONS];
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

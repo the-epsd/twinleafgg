@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { CardTarget, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { CardTarget, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, State, StateUtils, StoreLike, pokemonHasCardType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED, WAS_POWER_USED, COIN_FLIP_PROMPT } from '../../game/st
 export class Venomoth extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Venonat';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public resistance = [{ type: F, value: -30 }];
@@ -52,13 +52,13 @@ export class Venomoth extends PokemonCard {
       const blocked: CardTarget[] = [];
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
-        if (card.cardType === CardType.COLORLESS) {
+        if (pokemonHasCardType(card, CardType.COLORLESS)) {
           blocked.push(index);
         }
       });
 
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, index) => {
-        if (card.cardType === CardType.COLORLESS) {
+        if (pokemonHasCardType(card, CardType.COLORLESS)) {
           blocked.push(index);
         }
       });
@@ -76,7 +76,7 @@ export class Venomoth extends PokemonCard {
       ), result => {
         const cardList = result[0];
         const cardListPokemon = cardList.getPokemonCard() as PokemonCard;
-        this.cardType = cardListPokemon.cardType;
+        this.cardType = [...cardListPokemon.cardType];
 
         player.marker.addMarker(this.SHIFT_MARKER, this);
 

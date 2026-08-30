@@ -27,7 +27,7 @@ export class Tatsugiriex extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
 
   public hp: number = 160;
 

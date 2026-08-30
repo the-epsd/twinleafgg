@@ -18,7 +18,7 @@ export class Blastoiseex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Wartortle';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 330;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];

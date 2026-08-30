@@ -1,4 +1,4 @@
-import { ConfirmPrompt, GameMessage, State, StoreLike } from '../../../game';
+import { CardType, ConfirmPrompt, GameMessage, State, StoreLike } from '../../../game';
 import { Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -7,7 +7,7 @@ import { SWITCH_ACTIVE_WITH_BENCHED, AFTER_ATTACK } from '../../../game/store/pr
 export class Yanma extends PokemonCard {
   public stage = Stage.BASIC;
   public hp = 80;
-  public cardType = G;
+  public cardType: CardType[] = [G];
   public weakness = [{ type: R }];
   public retreat = [C];
 

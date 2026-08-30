@@ -5,7 +5,7 @@ import { THIS_POKEMON_HAS_NO_RETREAT_COST_DURING_YOUR_NEXT_TURN } from "../../..
 
 export class AlolanGeodude extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

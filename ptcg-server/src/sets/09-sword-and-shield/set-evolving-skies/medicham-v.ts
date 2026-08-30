@@ -1,5 +1,4 @@
-import {
-  PokemonCard,
+import { CardType, PokemonCard,
   ChoosePokemonPrompt,
   GameMessage,
   PlayerType,
@@ -8,8 +7,7 @@ import {
   StoreLike,
   GameError,
   CardTag,
-  Stage,
-} from '../../../game';
+  Stage, } from '../../../game';
 import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 
@@ -22,7 +20,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class MedichamV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_V];
-  public cardType = F;
+  public cardType: CardType[] = [F];
   public hp = 210;
   public weakness = [{ type: P }];
   public retreat = [C, C];

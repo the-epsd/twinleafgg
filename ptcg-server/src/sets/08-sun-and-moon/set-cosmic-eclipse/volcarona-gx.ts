@@ -40,7 +40,7 @@ export class VolcaronaGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Larvesta';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 210;
   public weakness = [{ type: W }];
   public retreat = [C, C, C];

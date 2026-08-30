@@ -21,7 +21,7 @@ import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 export class IlenesMimeJr extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.VS];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 50;
   public weakness = [{ type: P }];
   public retreat = [C];

@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, PowerType, StateUtils, PlayerType } from '../../../game';
+import { PlayerType, PowerType, State, StateUtils, StoreLike, pokemonHasCardTypeOptional } from '../../../game';
 import { EffectOfAbilityEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckPokemonStatsEffect } from '../../../game/store/effects/check-effects';
@@ -9,7 +9,7 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs
 export class LilliesClefairyex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex, CardTag.LILLIES];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 190;
   public weakness = [{ type: M }];
   public retreat = [C];
@@ -59,7 +59,7 @@ export class LilliesClefairyex extends PokemonCard {
       }
 
       // Return if no Clefairy or target is not Dragon type
-      if (!isClefairyexInPlay || pokemonCard.getPokemonCard()?.cardType !== CardType.DRAGON) {
+      if (!isClefairyexInPlay || !pokemonHasCardTypeOptional(pokemonCard.getPokemonCard(), CardType.DRAGON)) {
         return state;
       }
 

@@ -9,7 +9,7 @@ import { COPY_OPPONENT_ACTIVE_ATTACK } from '../../../game/store/prefabs/attack-
 export class Krookodile extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Krokorok';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 140;
   public weakness = [{ type: W }];
   public retreat = [C, C, C];

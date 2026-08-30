@@ -23,7 +23,7 @@ export class HeatranVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Heatran V';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 330;
   public weakness = [{ type: W }];
   public retreat = [C, C, C, C];

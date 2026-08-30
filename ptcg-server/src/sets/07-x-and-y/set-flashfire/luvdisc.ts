@@ -5,7 +5,7 @@ import { FLIP_COIN_OPPONENT_CANNOT_DRAW_AT_START_OF_NEXT_TURN } from "../../../g
 
 export class Luvdisc extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 60;
   public weakness = [{ type: G }];
   public retreat = [C];

@@ -4,7 +4,7 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 export class TyranitarV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_V];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 230;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];

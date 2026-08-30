@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardTag, EnergyType, SuperType } from '../../../game/store/card/card-types';
+import { CardType, Stage, CardTag, EnergyType, SuperType } from '../../../game/store/card/card-types';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { Effect } from '../../../game/store/effects/effect';
@@ -20,7 +20,7 @@ import { THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN, WAS_ATTACK_USED, WAS_POWER_USED }
 export class SandyShocksex extends PokemonCard {
   public stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex, CardTag.ANCIENT];
-  public cardType = F;
+  public cardType: CardType[] = [F];
   public hp = 220;
   public weakness = [{ type: G }];
   public retreat = [C, C];

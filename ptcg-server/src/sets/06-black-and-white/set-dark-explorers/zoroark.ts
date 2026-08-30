@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, PlayerType } from '../../../game';
+import { StoreLike, State, PlayerType, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
@@ -11,7 +11,7 @@ export class Zoroark extends PokemonCard {
 
   public evolvesFrom = 'Zorua';
 
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
 
   public hp: number = 100;
 
@@ -55,7 +55,7 @@ export class Zoroark extends PokemonCard {
       let darkPokemonCount = 0;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card.cardType === CardType.DARK) {
+        if (pokemonHasCardType(card, CardType.DARK)) {
           darkPokemonCount++;
         }
       });

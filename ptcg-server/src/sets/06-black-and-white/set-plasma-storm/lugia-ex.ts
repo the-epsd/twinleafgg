@@ -20,7 +20,7 @@ import {
 export class LugiaEx extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_EX, CardTag.TEAM_PLASMA];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 180;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

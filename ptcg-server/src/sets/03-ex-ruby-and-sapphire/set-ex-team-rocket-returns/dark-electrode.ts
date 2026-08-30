@@ -36,8 +36,7 @@ export class DarkElectrode extends PokemonCard {
   protected _tags = [CardTag.DARK];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Voltorb';
-  public cardType: CardType = L;
-  public additionalCardTypes = [D];
+  public cardType: CardType[] = [L, D];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [C];

@@ -7,7 +7,7 @@ import { DRAW_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs
 export class TeamMagmasNumel extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.TEAM_MAGMA];
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 50;
   public weakness = [{ type: W }];
   public retreat = [C];

@@ -14,7 +14,7 @@ import { Player } from '../../../game/store/state/player';
 export class AlolanExeggutor extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Exeggcute';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 130;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];

@@ -5,7 +5,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Raticate extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Rattata';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];

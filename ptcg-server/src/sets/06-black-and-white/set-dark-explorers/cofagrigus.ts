@@ -9,7 +9,7 @@ export class Cofagrigus extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Yamask';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 100;
   public weakness = [{ type: D }];
   public retreat = [C, C];

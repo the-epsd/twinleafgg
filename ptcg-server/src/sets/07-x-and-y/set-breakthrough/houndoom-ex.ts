@@ -22,7 +22,7 @@ import {
 export class HoundoomEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 170;
   public weakness = [{ type: W }];
   public retreat = [C, C];

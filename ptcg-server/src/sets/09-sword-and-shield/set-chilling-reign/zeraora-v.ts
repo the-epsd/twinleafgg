@@ -26,7 +26,7 @@ import {
 export class ZeraoraV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V, CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 210;
   public weakness = [{ type: F }];
   public retreat = [C, C];

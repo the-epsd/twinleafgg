@@ -7,7 +7,7 @@ import { MOVE_CARDS, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/sto
 
 export class Wiglett extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 60;
   public weakness = [{ type: L }];
   public retreat = [C];

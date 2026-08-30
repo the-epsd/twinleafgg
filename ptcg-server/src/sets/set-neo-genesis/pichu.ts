@@ -16,7 +16,7 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 export class Pichu extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.BABY];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 30;
   public retreat = [];
 

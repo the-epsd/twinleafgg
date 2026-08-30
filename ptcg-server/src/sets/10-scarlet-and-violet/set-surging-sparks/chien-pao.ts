@@ -12,7 +12,7 @@ export class ChienPao extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
 
   public hp: number = 120;
 

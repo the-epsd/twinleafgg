@@ -23,7 +23,7 @@ import {
 export class ErikasTangela extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.ERIKAS];
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public resistance = [];

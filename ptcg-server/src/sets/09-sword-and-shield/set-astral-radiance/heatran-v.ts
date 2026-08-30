@@ -15,7 +15,7 @@ import { State, StoreLike } from '../../../game';
 export class HeatranV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 220;
   public weakness = [{ type: W }];
   public retreat = [C, C, C];

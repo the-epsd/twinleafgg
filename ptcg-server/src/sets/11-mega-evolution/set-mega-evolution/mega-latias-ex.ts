@@ -12,7 +12,7 @@ export class MegaLatiasex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_SV_MEGA];
   public hp: number = 280;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public retreat = [C];
 
   public attacks = [

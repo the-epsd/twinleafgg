@@ -34,7 +34,7 @@ export class RotomVstar extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VSTAR];
   public stage: Stage = Stage.VSTAR;
   public evolvesFrom: string = 'Rotom V';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 250;
   public weakness = [{ type: F }];
   public retreat = [C];

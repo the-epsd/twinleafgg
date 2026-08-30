@@ -14,7 +14,7 @@ export class Mienshao extends PokemonCard {
   protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Mienfoo';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 90;
   public weakness = [{ type: P }];
   public retreat = [C];

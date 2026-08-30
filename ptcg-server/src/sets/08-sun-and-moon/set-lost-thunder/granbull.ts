@@ -11,7 +11,7 @@ export class Granbull extends PokemonCard {
 
   public evolvesFrom = 'Snubbull';
 
-  public cardType: CardType = CardType.FAIRY;
+  public cardType: CardType[] = [CardType.FAIRY];
 
   public hp: number = 130;
 

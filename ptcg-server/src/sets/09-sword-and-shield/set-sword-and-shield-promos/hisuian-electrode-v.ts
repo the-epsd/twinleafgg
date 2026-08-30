@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class HisuianElectrodeV extends PokemonCard {
   public stage = Stage.BASIC;
 
-  public cardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp = 210;
 

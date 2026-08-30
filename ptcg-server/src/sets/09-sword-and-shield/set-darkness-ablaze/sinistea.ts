@@ -8,7 +8,7 @@ import { PUT_X_DAMAGE_COUNTERS_ON_YOUR_OPPONENTS_ACTIVE_POKEMON } from '../../..
 
 export class Sinistea extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 30;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

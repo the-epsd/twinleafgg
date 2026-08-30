@@ -18,7 +18,7 @@ import {
 export class JirachiPrismStar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.PRISM_STAR];
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

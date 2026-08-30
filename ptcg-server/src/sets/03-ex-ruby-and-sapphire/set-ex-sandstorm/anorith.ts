@@ -7,7 +7,7 @@ import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND, WAS_ATTACK_USED } from 
 export class Anorith extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Claw Fossil';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 80;
   public weakness = [{ type: G }];
   public retreat = [C];

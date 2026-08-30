@@ -22,7 +22,7 @@ import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
 export class Smoochum extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 50;
   public weakness = [{ type: M }];
   public retreat = [C];

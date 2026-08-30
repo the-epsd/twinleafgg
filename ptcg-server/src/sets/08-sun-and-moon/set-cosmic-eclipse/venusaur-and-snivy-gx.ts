@@ -28,7 +28,7 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 export class VenusaurSnivyGX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 270;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];

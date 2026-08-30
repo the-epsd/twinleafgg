@@ -29,7 +29,7 @@ export class ElectrodeGX extends PokemonCard {
 
   public evolvesFrom = 'Voltorb';
 
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [CardType.LIGHTNING];
 
   public hp: number = 190;
 

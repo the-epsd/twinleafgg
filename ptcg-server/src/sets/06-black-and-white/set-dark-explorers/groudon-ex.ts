@@ -9,7 +9,7 @@ export class GroudonEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
 
   public hp: number = 180;
 

@@ -1,4 +1,4 @@
-import { GameError, PokemonCard } from '../../../game';
+import { GameError, PokemonCard, pokemonHasCardType } from '../../../game';
 import { GameLog, GameMessage } from '../../../game/game-message';
 import { Card } from '../../../game/store/card/card';
 import { CardType, SuperType, TrainerType } from '../../../game/store/card/card-types';
@@ -36,7 +36,7 @@ export class Revitalizer extends TrainerCard {
       let pokemonInDiscard: number = 0;
       const blocked: number[] = [];
       player.discard.cards.forEach((c, index) => {
-        if (c instanceof PokemonCard && c.cardType === CardType.GRASS) {
+        if (c instanceof PokemonCard && pokemonHasCardType(c, CardType.GRASS)) {
           pokemonInDiscard += 1;
         } else {
           blocked.push(index);

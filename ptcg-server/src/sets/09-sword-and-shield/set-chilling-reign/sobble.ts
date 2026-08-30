@@ -74,7 +74,7 @@ export class Sobble extends PokemonCard {
   public regulationMark = 'E';
   protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 60;
   public weakness = [{ type: L }];
   public retreat = [C];

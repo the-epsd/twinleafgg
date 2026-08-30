@@ -17,7 +17,7 @@ export class TeamRocketsAmpharos extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = "Team Rocket's Flaaffy";
   protected _tags = [CardTag.TEAM_ROCKET];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 140;
   public weakness = [{ type: F }];
   public retreat = [C, C];

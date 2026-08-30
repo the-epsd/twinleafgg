@@ -8,7 +8,7 @@ import { OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK } from '../../game/store/prefa
 export class AurasLucario2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.AURAS];
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

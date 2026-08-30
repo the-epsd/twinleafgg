@@ -5,7 +5,7 @@
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardType, EnergyType, Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { EnergyCard } from '../../../game/store/card/energy-card';
-import { AttachEnergyPrompt, CardTarget, PlayerType, SlotType, StoreLike, State, StateUtils, GameMessage, GameError } from '../../../game';
+import { AttachEnergyPrompt, CardTarget, PlayerType, SlotType, StoreLike, State, StateUtils, GameMessage, GameError, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 export class TheMaskedRoyal extends TrainerCard {
@@ -33,7 +33,7 @@ export class TheMaskedRoyal extends TrainerCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
         const pokemonCard = cardList.getPokemonCard();
         if (pokemonCard && pokemonCard.stage === Stage.STAGE_2 &&
-          (pokemonCard.cardType === CardType.GRASS || pokemonCard.cardType === CardType.FIRE || pokemonCard.cardType === CardType.WATER)) {
+          (pokemonHasCardType(pokemonCard, CardType.GRASS) || pokemonHasCardType(pokemonCard, CardType.FIRE) || pokemonHasCardType(pokemonCard, CardType.WATER))) {
           hasValidTarget = true;
         } else {
           blocked.push(target);

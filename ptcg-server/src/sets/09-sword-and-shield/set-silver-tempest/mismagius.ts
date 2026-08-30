@@ -16,7 +16,7 @@ export class Mismagius extends PokemonCard {
 
   public evolvesFrom = 'Misdreavus';
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 90;
 

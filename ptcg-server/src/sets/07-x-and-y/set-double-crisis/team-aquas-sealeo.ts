@@ -20,7 +20,7 @@ export class TeamAquasSealeo extends PokemonCard {
   public evolvesFrom: string = "Team Aqua's Spheal";
   protected _tags = [CardTag.TEAM_AQUA];
   public hp: number = 90;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public weakness = [{ type: M }];
   public retreat = [C, C, C];
 

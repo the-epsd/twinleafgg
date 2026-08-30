@@ -10,7 +10,7 @@ export class Dragonair extends PokemonCard {
   public regulationMark = 'G';
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Dratini';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 100;
   public weakness = [];
   public retreat = [C, C];

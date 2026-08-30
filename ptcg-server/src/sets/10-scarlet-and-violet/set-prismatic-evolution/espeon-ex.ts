@@ -13,7 +13,7 @@ export class Espeonex extends PokemonCard {
 
   public evolvesFrom = 'Eevee';
 
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
 
   public hp: number = 270;
 

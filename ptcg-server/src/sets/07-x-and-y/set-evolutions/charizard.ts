@@ -13,7 +13,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 export class Charizard extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Charmeleon';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 150;
   public weakness = [{ type: W }];
   public resistance = [{ type: F, value: -20 }];

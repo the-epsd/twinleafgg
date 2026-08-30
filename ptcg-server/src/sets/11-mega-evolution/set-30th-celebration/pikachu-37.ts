@@ -6,7 +6,7 @@ import { SEARCH_DECK_FOR_CARDS_TO_HAND, WAS_ATTACK_USED } from "../../../game/st
 export class Pikachu37 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 70;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public weakness = [{ type: F }];
   public retreat = [C];
   public attacks = [{

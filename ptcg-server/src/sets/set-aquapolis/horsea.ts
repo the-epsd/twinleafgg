@@ -8,7 +8,7 @@ import { StateUtils } from '../../game';
 
 export class Horsea extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 40;
   public weakness = [{ type: L }];
   public retreat = [C];

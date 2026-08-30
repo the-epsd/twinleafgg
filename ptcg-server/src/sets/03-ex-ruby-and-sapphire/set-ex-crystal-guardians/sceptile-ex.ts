@@ -18,7 +18,7 @@ export class Sceptileex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Grovyle';
   protected _tags = [CardTag.POKEMON_ex, CardTag.DELTA_SPECIES];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 140;
   public weakness = [{ type: G }, { type: R }];
   public resistance = [{ type: W, value: -30 }];

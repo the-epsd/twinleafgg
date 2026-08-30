@@ -1,7 +1,6 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, BoardEffect } from '../../../game/store/card/card-types';
-import {
-  PowerType,
+import { PowerType,
   StoreLike,
   State,
   GameError,
@@ -9,8 +8,7 @@ import {
   PlayerType,
   SlotType,
   PokemonCardList,
-  ChoosePokemonPrompt,
-} from '../../../game';
+  ChoosePokemonPrompt, pokemonHasCardType } from '../../../game';
 import { CardTarget } from '../../../game/store/actions/play-card-action';
 import { Effect } from '../../../game/store/effects/effect';
 import { HealEffect } from '../../../game/store/effects/game-effects';
@@ -19,7 +17,7 @@ import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 export class Ludicolo extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Lombre';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 160;
   public weakness = [{ type: R }];
   public retreat = [C, C];
@@ -60,7 +58,7 @@ export class Ludicolo extends PokemonCard {
           c instanceof PokemonCard &&
           c.hasTag(CardTag.POKEMON_ex) &&
           c.hasTag(CardTag.POKEMON_SV_MEGA) &&
-          c.cardType === CardType.GRASS
+          pokemonHasCardType(c, CardType.GRASS)
         );
       });
       if (!hasMegaEvolutionPokemonInPlay) {

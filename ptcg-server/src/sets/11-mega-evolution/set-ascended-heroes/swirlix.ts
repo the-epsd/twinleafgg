@@ -4,7 +4,7 @@ import { CardType, Stage } from '../../../game/store/card/card-types';
 export class Swirlix extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 60;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public weakness = [{ type: M }];
   public retreat = [C];
 

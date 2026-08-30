@@ -14,7 +14,7 @@ import {
 export class ZygardeEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 190;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

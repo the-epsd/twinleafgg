@@ -1,3 +1,4 @@
+import { pokemonHasCardType } from '../../../game';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, CardType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
@@ -39,7 +40,7 @@ export class CleansingGloves extends TrainerCard {
       }
 
       const targetCard = effect.target.getPokemonCard();
-      if (targetCard && targetCard.cardType === CardType.PSYCHIC) {
+      if (targetCard && pokemonHasCardType(targetCard, CardType.PSYCHIC)) {
         effect.damage += 30;
       }
     }

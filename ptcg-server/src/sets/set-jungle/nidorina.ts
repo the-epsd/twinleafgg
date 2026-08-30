@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, MULTIPLE_COIN_FLIPS_PROMPT } from '.
 
 export class Nidorina extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: P }];
   public retreat = [C];

@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardTag } from '../../../game/store/card/card-types';
+import { CardType, Stage, CardTag } from '../../../game/store/card/card-types';
 import { GameError, GameMessage, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { ApplyWeaknessEffect, AfterDamageEffect } from '../../../game/store/effects/attack-effects';
@@ -9,7 +9,7 @@ import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-pre
 export class AlolanVulpixVSTAR extends PokemonCard {
   public stage = Stage.VSTAR;
   public evolvesFrom = 'Alolan Vulpix V';
-  public cardType = W;
+  public cardType: CardType[] = [W];
   public hp = 240;
   protected _tags = [CardTag.POKEMON_VSTAR];
   public weakness = [{ type: M }];

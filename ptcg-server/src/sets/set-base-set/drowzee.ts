@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage } from '../../game/store/card/card-types';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { Attack } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
@@ -14,7 +14,7 @@ export class Drowzee extends PokemonCard {
   public fullName = 'Drowzee BS';
   public setNumber = '49';
 
-  public cardType = P;
+  public cardType: CardType[] = [P];
   public stage = Stage.BASIC;
   public hp = 50;
   public weakness = [{ type: P }];

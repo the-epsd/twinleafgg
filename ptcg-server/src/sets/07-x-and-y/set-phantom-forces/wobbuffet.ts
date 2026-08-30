@@ -1,3 +1,4 @@
+import { pokemonHasCardType } from '../../../game';
 import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { PowerType } from '../../../game/store/card/pokemon-types';
@@ -19,7 +20,7 @@ import { GameMessage } from '../../../game/game-message';
 export class Wobbuffet extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 110;
   public weakness = [{ type: P }];
   public retreat = [C, C];
@@ -71,7 +72,7 @@ export class Wobbuffet extends PokemonCard {
           if (checkPokemonType.cardTypes.includes(CardType.PSYCHIC)) {
             return false;
           }
-        } else if (card.cardType === CardType.PSYCHIC) {
+        } else if (pokemonHasCardType(card, CardType.PSYCHIC)) {
           return false;
         }
       } catch {

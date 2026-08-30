@@ -39,7 +39,7 @@ function* useCallForFamily(next: Function, store: StoreLike, state: State,
 
 export class Poliwag extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
   public hp: number = 60;
   public weakness = [{ type: CardType.GRASS }];
   public retreat = [CardType.COLORLESS];

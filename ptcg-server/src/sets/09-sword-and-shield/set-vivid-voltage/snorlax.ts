@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED, WAS_POWER_USED, COIN_FLIP_PROMPT } from '../../../game
 
 export class Snorlax extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 130;
   public retreat = [C, C, C];
   public weakness = [{ type: F }];

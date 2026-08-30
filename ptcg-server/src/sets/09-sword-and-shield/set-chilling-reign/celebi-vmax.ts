@@ -22,7 +22,7 @@ export class CelebiVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Celebi V';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 310;
   public weakness = [{ type: R }];
   public retreat = [C];

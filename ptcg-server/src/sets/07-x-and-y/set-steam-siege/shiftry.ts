@@ -6,7 +6,7 @@ import { STADIUM_AND_TOOL_CARDS_HAVE_NO_EFFECT } from "../../../game/store/prefa
 export class Shiftry extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Nuzleaf';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 140;
   public weakness = [{ type: R }];
   public retreat = [C, C];

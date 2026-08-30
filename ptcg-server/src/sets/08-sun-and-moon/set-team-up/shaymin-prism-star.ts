@@ -8,7 +8,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class ShayminPrismStar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.PRISM_STAR];
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public retreat = [];

@@ -1,10 +1,10 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, AttachEnergyPrompt, GameMessage, ShuffleDeckPrompt, StateUtils, PlayerType, SlotType, SuperType } from '../../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State, AttachEnergyPrompt, GameMessage, ShuffleDeckPrompt, StateUtils, PlayerType, SlotType, SuperType, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Shaymin extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public retreat = [];
@@ -37,7 +37,7 @@ export class Shaymin extends PokemonCard {
       // Check if there are any benched Grass Pokemon
       const hasGrassBench = player.bench.some(bench => {
         const pokemonCard = bench.getPokemonCard();
-        return pokemonCard && pokemonCard.cardType === CardType.GRASS;
+        return pokemonCard && pokemonHasCardType(pokemonCard, CardType.GRASS);
       });
 
       if (!hasGrassBench) {
@@ -61,7 +61,7 @@ export class Shaymin extends PokemonCard {
         const validTransfers = transfers.filter(transfer => {
           const target = StateUtils.getTarget(state, player, transfer.to);
           const pokemonCard = target.getPokemonCard();
-          return pokemonCard && pokemonCard.cardType === CardType.GRASS;
+          return pokemonCard && pokemonHasCardType(pokemonCard, CardType.GRASS);
         });
 
         if (validTransfers.length > 0) {

@@ -6,7 +6,7 @@ import { ATTACH_ENERGY_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefa
 export class WellspringMaskOgerpon extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 110;
   public weakness: Weakness[] = [{ type: L }];
   public retreat: CardType[] = [C];

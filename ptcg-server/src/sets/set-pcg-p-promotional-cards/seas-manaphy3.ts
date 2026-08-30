@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 
 export class SeasManaphy3 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 60;
   public weakness = [{ type: L }];
   public retreat = [C];
@@ -33,7 +33,7 @@ export class SeasManaphy3 extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, effect.player, { cardType: CardType.WATER, stage: Stage.BASIC }, { min: 0, max: 2 });
+      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, effect.player, { cardType: [CardType.WATER], stage: Stage.BASIC }, { min: 0, max: 2 });
     }
 
     return state;

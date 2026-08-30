@@ -1,4 +1,4 @@
-import { Card, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCard, PokemonCardList, SelectPrompt, SlotType, StateUtils } from '../../../game';
+import { Card, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCard, PokemonCardList, SelectPrompt, SlotType, StateUtils, pokemonHasCardType } from '../../../game';
 import { CardType, EnergyType, Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -24,7 +24,7 @@ export class DangerousDrill extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (!player.hand.cards.some(c => c instanceof PokemonCard && c.cardType === CardType.DARK)) {
+      if (!player.hand.cards.some(c => c instanceof PokemonCard && pokemonHasCardType(c, CardType.DARK))) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
@@ -32,7 +32,7 @@ export class DangerousDrill extends TrainerCard {
         player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         player.hand,
-        { superType: SuperType.POKEMON, cardType: CardType.DARK },
+        { superType: SuperType.POKEMON, cardType: [CardType.DARK] },
         { allowCancel: true, min: 1, max: 1 }
       ), cards => {
         cards = cards || [];

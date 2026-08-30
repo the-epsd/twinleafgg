@@ -9,7 +9,7 @@ import { PREVENT_THIS_ATTACK_UNTIL_LEAVES_ACTIVE } from '../../../game/store/pre
 export class GougingFireex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex, CardTag.ANCIENT];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 230;
   public weakness = [{ type: W }];
   public retreat = [C, C];

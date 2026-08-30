@@ -16,7 +16,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class EternatusV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_V];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 220;
   public weakness = [{ type: F }];
   public retreat = [C, C];

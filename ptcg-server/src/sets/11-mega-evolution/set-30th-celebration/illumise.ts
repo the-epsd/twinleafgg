@@ -7,7 +7,7 @@ import { IS_ABILITY_BLOCKED } from "../../../game/store/prefabs/prefabs";
 export class Illumise extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 80;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public weakness = [{ type: R }];
   public retreat = [C];
 

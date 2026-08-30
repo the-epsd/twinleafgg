@@ -6,7 +6,7 @@ import { State, StoreLike } from '../../../game';
 
 export class Zigzagoon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 40;
   public weakness = [{ type: F }];
   public retreat = [C];

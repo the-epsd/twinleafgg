@@ -9,7 +9,7 @@ import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/
 export class ZapdosEx extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_EX, CardTag.TEAM_PLASMA];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 170;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

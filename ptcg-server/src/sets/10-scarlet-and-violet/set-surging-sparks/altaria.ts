@@ -8,7 +8,7 @@ import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-pre
 export class Altaria extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Swablu';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 120;
   public retreat = [C];
 

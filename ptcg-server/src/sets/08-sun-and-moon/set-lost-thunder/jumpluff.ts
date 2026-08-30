@@ -10,7 +10,7 @@ export class Jumpluff extends PokemonCard {
 
   public evolvesFrom = 'Skiploom';
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 70;
 

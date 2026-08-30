@@ -12,7 +12,7 @@ export class Salamenceex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Shelgon';
-  public cardType: CardType = CardType.DRAGON;
+  public cardType: CardType[] = [CardType.DRAGON];
   public hp: number = 320;
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 

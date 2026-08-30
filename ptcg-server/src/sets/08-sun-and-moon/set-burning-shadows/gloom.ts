@@ -5,7 +5,7 @@ import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK } from '../../../game/stor
 export class Gloom extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Oddish';
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
   public hp: number = 80;
   public weakness = [{ type: CardType.FIRE }];
   public resistance: Resistance[] = [];

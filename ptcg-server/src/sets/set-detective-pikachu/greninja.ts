@@ -10,7 +10,7 @@ import { DAMAGE_OPPONENT_POKEMON, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '..
 export class Greninja extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Frogadier';
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
   public hp: number = 140;
   public weakness = [{ type: CardType.GRASS }];
   public retreat = [CardType.COLORLESS];

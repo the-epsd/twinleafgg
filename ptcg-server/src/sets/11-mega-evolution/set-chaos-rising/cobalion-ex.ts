@@ -6,7 +6,7 @@ import { REMOVE_MARKER_AT_END_OF_TURN, MOVED_TO_ACTIVE_THIS_TURN, WAS_ATTACK_USE
 export class Cobalionex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 210;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

@@ -28,7 +28,7 @@ import {
 
 export class TapuKokoPrismStar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   protected _tags = [CardTag.PRISM_STAR];
   public hp: number = 130;
   public weakness = [{ type: F }];

@@ -9,7 +9,7 @@ export class Salazzle extends PokemonCard {
   public regulationMark = 'H';
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Salandit';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 120;
   public weakness = [{ type: W }];
   public retreat = [C];

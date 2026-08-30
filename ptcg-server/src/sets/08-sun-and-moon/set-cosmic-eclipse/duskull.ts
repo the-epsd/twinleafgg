@@ -6,7 +6,7 @@ import { MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store
 
 export class Duskull extends PokemonCard {
 
-  public cardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp = 40;
 

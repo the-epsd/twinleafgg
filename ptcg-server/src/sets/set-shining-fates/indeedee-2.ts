@@ -11,7 +11,7 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 
 export class Indeedee2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public retreat = [C];

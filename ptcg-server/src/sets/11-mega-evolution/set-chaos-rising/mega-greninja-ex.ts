@@ -36,7 +36,7 @@ export class MegaGreninjaex extends PokemonCard {
   public evolvesFrom = 'Frogadier';
   protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
   public hp: number = 350;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public weakness = [{ type: L }];
   public retreat = [C];
 

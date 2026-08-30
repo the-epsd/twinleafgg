@@ -6,7 +6,7 @@ import { reduceIncarnateUnionEffect } from './incarnate-union';
 
 export class Enamorus extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 120;
   public weakness = [{ type: M }];
   public retreat = [C];

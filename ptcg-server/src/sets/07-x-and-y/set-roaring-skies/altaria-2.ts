@@ -4,7 +4,7 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { PlayerType, PowerType, StoreLike, State } from '../../../game';
+import { PlayerType, PowerType, StoreLike, State, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckPokemonStatsEffect } from '../../../game/store/effects/check-effects';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
@@ -12,7 +12,7 @@ import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 export class Altaria2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Swablu';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
@@ -76,7 +76,7 @@ export class Altaria2 extends PokemonCard {
 
       // Only remove weakness from Colorless Pokemon
       const targetCard = effect.target.getPokemonCard();
-      if (targetCard && targetCard.cardType === CardType.COLORLESS) {
+      if (targetCard && pokemonHasCardType(targetCard, CardType.COLORLESS)) {
         effect.weakness = [];
       }
     }

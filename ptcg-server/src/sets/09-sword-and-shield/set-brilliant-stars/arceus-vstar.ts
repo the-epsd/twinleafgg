@@ -82,7 +82,7 @@ export class ArceusVSTAR extends PokemonCard {
 
   public evolvesFrom = 'Arceus V';
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp: number = 280;
 

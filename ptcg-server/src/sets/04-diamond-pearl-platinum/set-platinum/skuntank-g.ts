@@ -11,7 +11,7 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 export class SkuntankG extends PokemonCard {
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   protected _tags = [CardTag.POKEMON_SP];
 

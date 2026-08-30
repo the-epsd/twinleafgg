@@ -7,7 +7,7 @@ import { THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../../ga
 export class Riolu2 extends PokemonCard {
   public regulationMark = 'G';
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
   public hp: number = 70;
   public weakness = [{ type: CardType.PSYCHIC }];
   public retreat = [CardType.COLORLESS];

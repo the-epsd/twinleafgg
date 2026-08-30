@@ -6,7 +6,7 @@ import { OPPONENT_CANNOT_PLAY_ANY_CARDS } from '../../../game/store/prefabs/effe
 export class GengarMimikyuGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 240;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -20 }];

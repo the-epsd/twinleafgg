@@ -12,7 +12,7 @@ import {
 export class NaganadelGX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 210;
   public weakness = [{ type: P }];
   public retreat = [C];

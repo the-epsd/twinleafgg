@@ -28,7 +28,7 @@ import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../
 export class GarchompCLVX extends PokemonCard {
   public stage: Stage = Stage.LV_X;
   public evolvesFrom = 'Garchomp C';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   protected _tags = [CardTag.POKEMON_LV_X, CardTag.POKEMON_SP];
   public hp: number = 110;
   public weakness = [{ type: C }];

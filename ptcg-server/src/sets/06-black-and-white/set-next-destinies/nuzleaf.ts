@@ -7,7 +7,7 @@ import { AFTER_ATTACK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefa
 export class Nuzleaf extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Seedot';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

@@ -9,7 +9,7 @@ import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../../game/stor
 export class JolteonEX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_EX];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 160;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

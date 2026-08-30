@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, StoreLike, State, CardTag } from '../../../game';
+import { CardType, PokemonCard, Stage, StoreLike, State, CardTag } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
@@ -9,7 +9,7 @@ export class EthansTyphlosion extends PokemonCard {
 
   protected _tags = [CardTag.ETHANS];
 
-  public cardType = R;
+  public cardType: CardType[] = [R];
 
   public hp = 170;
 

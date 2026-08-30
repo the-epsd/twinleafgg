@@ -25,7 +25,7 @@ export class Machamp extends PokemonCard {
 
   public hp: number = 100;
 
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public weakness: Weakness[] = [{ type: CardType.PSYCHIC }];
 

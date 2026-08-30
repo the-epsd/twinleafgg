@@ -9,7 +9,7 @@ export class MegaSlowbroex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Slowpoke';
   protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 330;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

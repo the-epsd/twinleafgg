@@ -8,7 +8,7 @@ import { reduceHideNSneak } from './hide-n-sneak';
 
 export class Poltchageist extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 30;
   public weakness = [{ type: R }];
   public retreat = [];

@@ -9,7 +9,7 @@ import { PowerEffect } from '../../../game/store/effects/game-effects';
 
 export class Azelf extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public weakness = [{ type: P, value: +20 }];
   public retreat = [C];

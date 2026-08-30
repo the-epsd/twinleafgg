@@ -4,7 +4,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 export class Electivire extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Electabuzz';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 110;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

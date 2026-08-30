@@ -7,7 +7,7 @@ import { DEFENDING_POKEMON_WEAKNESS_IS_NOW } from "../../../game/store/prefabs/e
 export class Pikachu40 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 80;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public weakness = [{ type: F }];
   public retreat = [C];
   public attacks = [{

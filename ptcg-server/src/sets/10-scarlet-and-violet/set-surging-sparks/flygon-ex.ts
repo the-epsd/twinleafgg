@@ -25,7 +25,7 @@ export class Flygonex extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp: number = 310;
 

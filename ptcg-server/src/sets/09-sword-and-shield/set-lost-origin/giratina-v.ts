@@ -17,7 +17,7 @@ export class GiratinaV extends PokemonCard {
 
   public regulationMark = 'F';
 
-  public cardType: CardType = CardType.DRAGON;
+  public cardType: CardType[] = [CardType.DRAGON];
 
   public hp: number = 220;
 

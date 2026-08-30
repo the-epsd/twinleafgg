@@ -7,7 +7,7 @@ import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 export class Leavanny extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Swadloon';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public retreat = [C];

@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 
 export class Farfetchd extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 80;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

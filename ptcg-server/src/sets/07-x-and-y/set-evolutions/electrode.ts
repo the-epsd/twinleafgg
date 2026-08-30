@@ -4,7 +4,7 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType } from '../../../game/store/card/card-types';
-import { CardTarget, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, StoreLike, State, StateUtils } from '../../../game';
+import { CardTarget, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, State, StateUtils, StoreLike, pokemonHasCardType, pokemonHasCardTypeOptional } from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
@@ -15,7 +15,7 @@ import { WAS_POWER_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/
 export class Electrode extends PokemonCard implements EnergyCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Voltorb';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
@@ -65,7 +65,7 @@ export class Electrode extends PokemonCard implements EnergyCard {
       // Check if there's at least one Lightning Pokemon to attach to
       let hasLightningTarget = false;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        if (cardList.getPokemonCard() !== this && cardList.getPokemonCard()?.cardType === CardType.LIGHTNING) {
+        if (cardList.getPokemonCard() !== this && pokemonHasCardTypeOptional(cardList.getPokemonCard(), CardType.LIGHTNING)) {
           hasLightningTarget = true;
         }
       });
@@ -86,7 +86,7 @@ export class Electrode extends PokemonCard implements EnergyCard {
       // Build blocked list for non-Lightning Pokemon
       const blocked: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (card.cardType !== CardType.LIGHTNING) {
+        if (!pokemonHasCardType(card, CardType.LIGHTNING)) {
           blocked.push(target);
         }
       });

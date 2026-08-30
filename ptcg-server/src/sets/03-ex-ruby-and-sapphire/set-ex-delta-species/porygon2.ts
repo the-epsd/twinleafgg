@@ -18,7 +18,7 @@ import {
 export class Porygon2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Porygon';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [C];

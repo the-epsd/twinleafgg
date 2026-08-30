@@ -1,5 +1,5 @@
 
-import { Stage } from '../../game/store/card/card-types';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Attack } from '../../game/store/card/pokemon-types';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
@@ -15,7 +15,7 @@ export class Pikachu extends PokemonCard {
   public set = 'BS';
   public setNumber = '58';
 
-  public cardType = L;
+  public cardType: CardType[] = [L];
 
   public fullName = 'Pikachu BS';
 

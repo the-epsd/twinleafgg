@@ -7,7 +7,7 @@ export class AlolanGolemGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Alolan Graveler';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 250;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

@@ -8,7 +8,7 @@ import { } from '../../../game/store/prefabs/prefabs';
 export class Sableye extends PokemonCard {
   protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public retreat = [C];
 

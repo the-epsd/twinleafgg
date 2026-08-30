@@ -12,7 +12,7 @@ export class Manectricex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Electrike';
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -30 }];

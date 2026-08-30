@@ -10,7 +10,7 @@ export class Vikavolt extends PokemonCard {
 
   public evolvesFrom = 'Charjabug';
 
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [CardType.LIGHTNING];
 
   public hp: number = 160;
 

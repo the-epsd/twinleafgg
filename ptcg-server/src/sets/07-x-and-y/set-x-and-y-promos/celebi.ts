@@ -9,7 +9,7 @@ import { IS_ABILITY_BLOCKED, MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/s
 
 export class Celebi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
   public hp: number = 70;
   public weakness = [{ type: CardType.FIRE }];
   public retreat = [CardType.COLORLESS];

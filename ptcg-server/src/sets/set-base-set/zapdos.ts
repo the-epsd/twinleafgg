@@ -20,7 +20,7 @@ export class Zapdos extends PokemonCard {
   public setNumber: string = '16';
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 90;
   public resistance = [{
     type: F,

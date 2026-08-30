@@ -9,7 +9,7 @@ export class MegaPyroarex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Litleo';
   protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 340;
   public weakness = [{ type: W }];
   public retreat = [C, C];

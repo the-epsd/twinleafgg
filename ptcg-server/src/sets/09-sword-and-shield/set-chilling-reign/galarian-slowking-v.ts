@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, DRAW_CARDS } from '../../../game/store/prefabs/prefabs
 export class GalarianSlowkingV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V, CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 220;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

@@ -11,7 +11,7 @@ import { GamePhase } from '../../../game/store/state/state';
 export class Jellicent extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Frillish';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 110;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];

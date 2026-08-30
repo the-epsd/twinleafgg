@@ -13,7 +13,7 @@ export class LuxrayBreak extends PokemonCard {
   protected _tags = [CardTag.BREAK];
   public stage: Stage = Stage.BREAK;
   public evolvesFrom: string = 'Luxray';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 170;
   public retreat = [];
 

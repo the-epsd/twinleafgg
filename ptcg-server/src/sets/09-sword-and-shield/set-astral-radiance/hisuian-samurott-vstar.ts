@@ -19,7 +19,7 @@ import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/pre
 export class HisuianSamurottVSTAR extends PokemonCard {
   public stage: Stage = Stage.VSTAR;
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp: number = 270;
 

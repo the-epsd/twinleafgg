@@ -11,7 +11,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { AttachEnergyPrompt, Card, PlayerType, SlotType, State, StoreLike } from '../../../game';
 export class Torkoal extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 120;
   public weakness = [{ type: W }];
   public retreat = [C, C, C];

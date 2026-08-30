@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardTag, SuperType } from '../../../game/store/card/card-types';
+import { CardType, Stage, CardTag, SuperType } from '../../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, PokemonCardList, Card } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/pre
 export class Nidoqueen extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Nidorina';
-  public cardType = P;
+  public cardType: CardType[] = [P];
   public hp = 160;
   public weakness = [{ type: P }];
   public resistance = [];

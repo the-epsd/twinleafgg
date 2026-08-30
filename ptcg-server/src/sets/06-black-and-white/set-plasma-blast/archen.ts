@@ -11,7 +11,7 @@ export class Archen extends PokemonCard {
 
   public stage: Stage = Stage.RESTORED;
 
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp: number = 70;
 

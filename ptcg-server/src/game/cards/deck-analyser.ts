@@ -2,7 +2,7 @@ import { Card } from '../store/card/card';
 import { CardManager } from './card-manager';
 import { EnergyCard } from '../store/card/energy-card';
 import { EnergyType, Stage, CardType, CardTag, Format } from '../store/card/card-types';
-import { PokemonCard } from '../store/card/pokemon-card';
+import { PokemonCard, getPokemonCardTypes } from '../store/card/pokemon-card';
 
 export class DeckAnalyser {
 
@@ -133,12 +133,12 @@ export class DeckAnalyser {
 
     for (let i = 0; i < this.cards.length; i++) {
       const card = this.cards[i];
-      let cardType = CardType.NONE;
 
       if (card instanceof PokemonCard) {
-        cardType = card.cardType;
-        if (cardType !== CardType.NONE && cardTypes.indexOf(cardType) === -1) {
-          cardTypes.push(cardType);
+        for (const cardType of getPokemonCardTypes(card)) {
+          if (cardType !== CardType.NONE && cardTypes.indexOf(cardType) === -1) {
+            cardTypes.push(cardType);
+          }
         }
       }
     }

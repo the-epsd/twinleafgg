@@ -5,7 +5,7 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class TeamRocketsKangaskhanex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.TEAM_ROCKET, CardTag.POKEMON_ex];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 230;
   public weakness = [{ type: F }];
   public resistance = [];

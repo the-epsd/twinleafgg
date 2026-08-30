@@ -13,7 +13,7 @@ import {
 
 export class Zacian extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 110;
   public weakness = [{ type: M }];
   public retreat = [C, C];

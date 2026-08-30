@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, MULTIPLE_COIN_FLIPS_PROMPT } from '.
 export class Cloyster extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Shellder';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 50;
   public weakness = [{ type: L }];
   public retreat = [C, C];

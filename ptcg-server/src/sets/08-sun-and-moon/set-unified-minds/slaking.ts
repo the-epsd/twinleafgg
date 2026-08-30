@@ -12,7 +12,7 @@ import {
 export class Slaking extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Vigoroth';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 180;
   public weakness = [{ type: F }];
   public retreat = [C, C, C, C];

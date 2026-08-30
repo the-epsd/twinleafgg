@@ -8,7 +8,7 @@ import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE } from '../../../game/store/p
 export class Blacephalon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.ULTRA_BEAST];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 110;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -20 }];

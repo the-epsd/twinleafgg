@@ -7,7 +7,7 @@ import { AFTER_ATTACK, COIN_FLIP_PROMPT, SHUFFLE_DECK, THIS_POKEMON_DOES_DAMAGE_
 export class Flaaffy extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Mareep';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 80;
   public weakness = [{ type: F, value: +20 }];
   public resistance = [{ type: M, value: -20 }];

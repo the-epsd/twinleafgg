@@ -21,7 +21,7 @@ export class Talonflame extends PokemonCard {
 
   protected _tags = [CardTag.PLAY_DURING_SETUP];
 
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
 
   public hp: number = 130;
 

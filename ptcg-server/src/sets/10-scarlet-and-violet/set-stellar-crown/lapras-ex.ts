@@ -24,7 +24,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Laprasex extends PokemonCard {
-  public cardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 

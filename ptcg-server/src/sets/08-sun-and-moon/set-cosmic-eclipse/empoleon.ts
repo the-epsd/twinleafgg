@@ -64,7 +64,7 @@ function* useRecall(next: Function, store: StoreLike, state: State,
 export class Empoleon extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Prinplup';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 160;
   public weakness = [{ type: L }];
   public retreat = [C, C];

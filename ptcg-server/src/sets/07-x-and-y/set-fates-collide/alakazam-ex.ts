@@ -22,7 +22,7 @@ import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects
 export class AlakazamEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 160;
   public weakness = [{ type: P }];
   public retreat = [C, C];

@@ -9,7 +9,7 @@ import { StoreLike } from '../../../game/store/store-like';
 export class Wooper extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 40;
   public weakness = [{ type: G }];
   public retreat = [C];

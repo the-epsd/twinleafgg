@@ -11,7 +11,7 @@ export class CynthiasMilotic extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = "Cynthia's Feebas";
   protected _tags = [CardTag.CYNTHIAS];
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 130;
   public weakness = [{ type: L }];
   public retreat = [C, C];

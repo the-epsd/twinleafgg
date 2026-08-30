@@ -20,7 +20,7 @@ export class MegaClefableex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Clefairy';
   protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_SV_MEGA];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 320;
   public weakness = [{ type: M }];
   public retreat = [C];

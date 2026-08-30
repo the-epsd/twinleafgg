@@ -4,7 +4,7 @@ import { CardType, Stage } from '../../../game/store/card/card-types';
 export class Rolycoly extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 80;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
 

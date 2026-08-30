@@ -11,7 +11,7 @@ import { COIN_FLIP_PROMPT, DRAW_CARDS_UNTIL_CARDS_IN_HAND, HEAL_X_DAMAGE_FROM_TH
 export class Lilligant extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Petilil';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -20 }];

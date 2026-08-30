@@ -39,7 +39,7 @@ import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-pref
 export class GreninjaVUNIONTopLeft extends PokemonCard {
   public stage: Stage = Stage.VUNION;
   protected _tags = [CardTag.POKEMON_VUNION];
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 300;
   public weakness = [{ type: L }];
   public retreat = [C, C];

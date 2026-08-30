@@ -10,7 +10,7 @@ export class RoaringMoon extends PokemonCard {
 
   protected _tags = [CardTag.ANCIENT];
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp: number = 140;
 

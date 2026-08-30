@@ -8,7 +8,7 @@ import { DEFENDING_POKEMON_ATTACKS_COST_MORE, DEFENDING_POKEMON_RETREAT_COSTS_MO
 export class Rillaboom extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Thwackey';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 180;
   public weakness = [{ type: R }];
   public retreat = [C, C, C, C];

@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
 export class Pikachu38 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 60;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public weakness = [{ type: F }];
   public retreat = [C];
   public attacks = [{

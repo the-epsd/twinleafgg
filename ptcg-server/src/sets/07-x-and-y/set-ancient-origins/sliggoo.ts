@@ -10,7 +10,7 @@ import { State, StoreLike } from '../../../game';
 export class Sliggoo extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Goomy';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 70;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];

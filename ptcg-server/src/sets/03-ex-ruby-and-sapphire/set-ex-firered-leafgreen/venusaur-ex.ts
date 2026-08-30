@@ -29,7 +29,7 @@ export class Venusaurex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Ivysaur';
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 150;
   public weakness = [{ type: R }, { type: P }];
   public retreat = [C, C, C];

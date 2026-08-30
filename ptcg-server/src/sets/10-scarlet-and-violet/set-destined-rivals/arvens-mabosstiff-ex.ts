@@ -8,7 +8,7 @@ export class ArvensMabosstiffex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = "Arven's Maschiff";
   protected _tags = [CardTag.POKEMON_ex, CardTag.ARVENS];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 270;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

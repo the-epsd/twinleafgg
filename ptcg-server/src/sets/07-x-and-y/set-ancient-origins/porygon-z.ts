@@ -6,7 +6,7 @@ import { DEFENDING_POKEMON_ATTACKS_COST_MORE } from "../../../game/store/prefabs
 export class PorygonZ extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Porygon2';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public retreat = [C, C];

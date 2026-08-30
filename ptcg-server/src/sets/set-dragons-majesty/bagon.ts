@@ -9,7 +9,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { State, StoreLike } from '../../game';
 export class Bagon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 60;
   public weakness = [{ type: Y }];
   public retreat = [C];

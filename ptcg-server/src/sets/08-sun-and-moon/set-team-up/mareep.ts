@@ -19,7 +19,7 @@ export class Mareep extends PokemonCard {
 
   public name = 'Mareep';
 
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [CardType.LIGHTNING];
 
   public stage: Stage = Stage.BASIC;
 

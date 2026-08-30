@@ -8,7 +8,7 @@ import { State, StoreLike } from '../../../game';
 export class Poipole extends PokemonCard {
   protected _tags = [CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public weakness = [{ type: P }];
   public retreat = [C];

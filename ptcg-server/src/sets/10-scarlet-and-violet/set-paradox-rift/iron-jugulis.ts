@@ -24,7 +24,7 @@ export class IronJugulis extends PokemonCard {
 
   protected _tags = [CardTag.FUTURE];
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp: number = 130;
 

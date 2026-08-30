@@ -10,7 +10,7 @@ import { AfterDamageEffect, PutDamageEffect } from '../../../game/store/effects/
 export class LatiasEX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_EX];
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 160;
   public weakness = [{ type: N }];
   public retreat = [C, C, C];

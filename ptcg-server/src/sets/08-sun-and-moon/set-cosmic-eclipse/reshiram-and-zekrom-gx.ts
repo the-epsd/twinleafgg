@@ -33,7 +33,7 @@ import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/pr
 export class ReshiramAndZekromGx extends PokemonCard {
   protected _tags = [CardTag.TAG_TEAM, CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 270;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];

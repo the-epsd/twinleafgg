@@ -13,7 +13,7 @@ export class GarbodorVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Garbodor V';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 330;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

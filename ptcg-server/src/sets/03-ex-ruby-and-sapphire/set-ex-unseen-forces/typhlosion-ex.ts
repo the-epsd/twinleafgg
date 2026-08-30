@@ -21,7 +21,7 @@ export class Typhlosionex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Quilava';
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 150;
   public weakness = [{ type: W }, { type: F }];
   public retreat = [C];

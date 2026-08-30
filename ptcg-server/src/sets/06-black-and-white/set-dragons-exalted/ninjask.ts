@@ -11,7 +11,7 @@ import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
 export class Ninjask extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Nincada';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 60;
   public weakness = [{ type: R }];
   public retreat = [C];

@@ -13,7 +13,7 @@ export class WigglytuffGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Jigglypuff';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 210;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, GUST_OPPONENT_BENCHED_POKEMON } from
 
 export class Fennekin2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 50;
   public weakness = [{ type: W }];
   public retreat = [C];

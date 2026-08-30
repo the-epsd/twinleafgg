@@ -6,7 +6,7 @@ import { NEXT_TURN_ATTACK_BASE_DAMAGE } from '../../../game/store/prefabs/attack
 
 export class Skorupi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: P }];
   public retreat = [C, C];

@@ -9,7 +9,7 @@ export class MegaGalladeex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Kirlia';
   protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 350;
   public weakness = [{ type: P }];
   public retreat = [C, C];

@@ -27,7 +27,7 @@ import {
 export class PalkiaGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 180;
   public weakness: Weakness[] = [{ type: Y }];
   public retreat = [C, C, C];

@@ -6,7 +6,7 @@ import { MOVED_TO_ACTIVE_THIS_TURN, WAS_ATTACK_USED } from '../../../game/store/
 export class Keldeoex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 210;
   public weakness = [{ type: L }];
   public retreat = [C, C];

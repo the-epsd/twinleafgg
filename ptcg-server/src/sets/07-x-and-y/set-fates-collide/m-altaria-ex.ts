@@ -15,7 +15,7 @@ export class MAltariaEx extends PokemonCard {
   protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Altaria-EX';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 220;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

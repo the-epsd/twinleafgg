@@ -1,4 +1,4 @@
-import { EnergyCard, PokemonCard, ShowCardsPrompt, StateUtils } from '../../../game';
+import { EnergyCard, PokemonCard, ShowCardsPrompt, StateUtils, pokemonHasCardType } from '../../../game';
 import { GameError } from '../../../game/game-error';
 import { GameLog, GameMessage } from '../../../game/game-message';
 import { Card } from '../../../game/store/card/card';
@@ -22,7 +22,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const blocked: number[] = [];
   player.deck.cards.forEach((card, index) => {
     // eslint-disable-next-line no-empty    
-    if ((card instanceof PokemonCard && card.stage === Stage.BASIC && card.cardType === CardType.GRASS) ||
+    if ((card instanceof PokemonCard && card.stage === Stage.BASIC && pokemonHasCardType(card, CardType.GRASS)) ||
       (card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Grass Energy')) {
       /**/
     } else {

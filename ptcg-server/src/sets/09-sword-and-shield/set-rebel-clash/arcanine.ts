@@ -12,7 +12,7 @@ import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 export class Arcanine extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Growlithe';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 130;
   public weakness = [{ type: W }];
   public retreat = [C, C];

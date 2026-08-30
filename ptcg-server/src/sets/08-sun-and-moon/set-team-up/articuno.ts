@@ -1,4 +1,4 @@
-import { AttachEnergyPrompt, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../../game';
+import { AttachEnergyPrompt, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike, pokemonHasCardType } from '../../../game';
 import { CardType, Stage, SuperType } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -10,7 +10,7 @@ export class Articuno extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
 
   public hp: number = 110;
 
@@ -95,9 +95,7 @@ export class Articuno extends PokemonCard {
       if (effect.target) {
         const pokemonCard = effect.target.getPokemonCard && effect.target.getPokemonCard();
         if (pokemonCard) {
-          const isWater = Array.isArray(pokemonCard.cardType)
-            ? pokemonCard.cardType.includes(CardType.WATER)
-            : pokemonCard.cardType === CardType.WATER;
+          const isWater = pokemonHasCardType(pokemonCard, CardType.WATER);
           if (isWater && opponent.bench.some(b => b === effect.target)) {
             effect.preventDefault = true;
           }

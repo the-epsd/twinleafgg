@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, WAS_POWER_USED, COIN_FLIP_PROMPT } from '../../../game
 export class Revavroom extends PokemonCard {
   public regulationMark = 'G';
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 140;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

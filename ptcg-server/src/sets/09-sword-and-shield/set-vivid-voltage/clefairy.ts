@@ -55,7 +55,7 @@ function* useMetronome(next: Function, store: StoreLike, state: State,
 export class Clefairy extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public regulationMark = 'D';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public weakness = [{ type: M }];
   public hp: number = 60;
   public retreat = [C];

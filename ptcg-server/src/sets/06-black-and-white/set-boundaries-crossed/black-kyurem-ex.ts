@@ -15,7 +15,7 @@ import { State, StoreLike } from '../../../game';
 export class BlackKyuremEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 180;
   public weakness = [{ type: N }];
   public retreat = [C, C, C];

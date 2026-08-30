@@ -26,7 +26,7 @@ import {
 export class MistysPsyduck extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.MISTYS];
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 50;
   public weakness: Weakness[] = [{ type: L }];
   public retreat: CardType[] = [C];

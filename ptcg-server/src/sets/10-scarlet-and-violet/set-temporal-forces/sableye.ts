@@ -9,7 +9,7 @@ export class Sableye extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp: number = 70;
 

@@ -94,7 +94,7 @@ export class ZoroarkGX extends PokemonCard {
 
   public evolvesFrom = 'Zorua';
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp: number = 210;
 

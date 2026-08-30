@@ -8,7 +8,7 @@ export class Pidgeot extends PokemonCard {
   public regulationMark = 'G';
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Pidgeotto';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 130;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

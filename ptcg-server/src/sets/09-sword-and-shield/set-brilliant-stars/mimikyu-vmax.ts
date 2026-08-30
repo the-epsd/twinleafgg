@@ -16,7 +16,7 @@ export class MimikyuVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Mimikyu V';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 300;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

@@ -9,7 +9,7 @@ export class Bayleef extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Chikorita';
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -30 }];

@@ -6,7 +6,7 @@ import { WAS_ATTACK_USED, SHOW_CARDS_TO_PLAYER, MOVE_CARDS, SHUFFLE_DECK, COIN_F
 export class Lapras extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 130;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public weakness = [{ type: M }];
   public retreat = [C, C];
 

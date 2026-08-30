@@ -9,7 +9,7 @@ import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
 
 export class ErikasDratini extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   protected _tags = [CardTag.ERIKAS];
   public hp: number = 40;
   public weakness = [];

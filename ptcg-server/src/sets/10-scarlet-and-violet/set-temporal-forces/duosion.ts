@@ -10,7 +10,7 @@ export class Duosion extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Solosis';
   public regulationMark = 'H';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

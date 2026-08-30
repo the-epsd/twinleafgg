@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, PlayerType } from "../../../game";
+import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, PlayerType, pokemonHasCardType } from '../../../game';
 import { Effect } from "../../../game/store/effects/effect";
 import { AttackEffect } from "../../../game/store/effects/game-effects";
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from "../../../game/store/prefabs/prefabs";
@@ -6,7 +6,7 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from "../../../
 export class Machamp extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Machoke';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 150;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];
@@ -38,7 +38,7 @@ export class Machamp extends PokemonCard {
 
       // Check if attacker is a Fighting Pokemon
       const attackerCard = player.active.getPokemonCard();
-      if (attackerCard && attackerCard.cardType === CardType.FIGHTING) {
+      if (attackerCard && pokemonHasCardType(attackerCard, CardType.FIGHTING)) {
         // Check if this Machamp is in play on the same side
         let machampInPlay = false;
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {

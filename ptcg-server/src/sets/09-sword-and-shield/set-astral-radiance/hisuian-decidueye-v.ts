@@ -11,7 +11,7 @@ import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../../game/stor
 
 export class HisuianDecidueyeV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 220;
   protected _tags = [CardTag.POKEMON_V];
   public weakness = [{ type: P }];

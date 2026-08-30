@@ -12,7 +12,7 @@ import { JUST_EVOLVED, IS_ABILITY_BLOCKED, CONFIRMATION_PROMPT } from '../../../
 export class Electrode extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Voltorb';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
@@ -68,7 +68,7 @@ export class Electrode extends PokemonCard {
             GameMessage.MOVE_ENERGY_CARDS,
             PlayerType.BOTTOM_PLAYER,
             [SlotType.BENCH, SlotType.ACTIVE],
-            { superType: SuperType.ENERGY, cardType: CardType.LIGHTNING },
+            { superType: SuperType.ENERGY, cardType: [CardType.LIGHTNING] },
             { allowCancel: true }
           ), transfers => {
             if (!transfers) {

@@ -1,4 +1,4 @@
-import { ChoosePokemonPrompt, GameMessage, PlayerType, PokemonCard, SlotType } from '../../game';
+import { ChoosePokemonPrompt, GameMessage, getPokemonCardTypes, PlayerType, PokemonCard, SlotType } from '../../game';
 import { CardType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
@@ -42,7 +42,7 @@ export class FriendBall extends TrainerCard {
 
         const blocked: number[] = [];
         player.deck.cards.forEach((card, index) => {
-          if (card instanceof PokemonCard && uniqueTypes.has(card.cardType)) {
+          if (card instanceof PokemonCard && getPokemonCardTypes(card).some(type => uniqueTypes.has(type))) {
             // Valid card
           } else {
             blocked.push(index);

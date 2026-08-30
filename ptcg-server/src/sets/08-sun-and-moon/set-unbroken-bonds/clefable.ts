@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Clefable extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Clefairy';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 110;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

@@ -7,7 +7,7 @@ import { SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../../game/store/prefabs/prefa
 export class Sudowoodo extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 110;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public weakness = [{ type: G }];
   public retreat = [C];
 

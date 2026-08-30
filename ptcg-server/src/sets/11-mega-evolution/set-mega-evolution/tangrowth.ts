@@ -10,7 +10,7 @@ export class Tangrowth extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Tangela';
   public hp: number = 150;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public weakness = [{ type: R }];
   public retreat = [C, C, C, C];
 

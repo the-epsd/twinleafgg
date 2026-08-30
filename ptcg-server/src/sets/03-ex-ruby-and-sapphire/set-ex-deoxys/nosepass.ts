@@ -8,7 +8,7 @@ import { ABILITY_USED, ADD_MARKER, COIN_FLIP_PROMPT, HAS_MARKER, REMOVE_MARKER, 
 
 export class Nosepass extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 60;
   public weakness = [{ type: W }];
   public retreat = [C];

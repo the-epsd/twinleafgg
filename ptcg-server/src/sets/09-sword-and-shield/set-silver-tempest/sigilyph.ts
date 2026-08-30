@@ -13,7 +13,7 @@ import {
 
 export class Sigilyph extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 100;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

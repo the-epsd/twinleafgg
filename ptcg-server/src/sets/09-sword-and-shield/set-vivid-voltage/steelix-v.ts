@@ -14,7 +14,7 @@ import {
 export class SteelixV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 250;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

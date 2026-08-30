@@ -1,5 +1,4 @@
-import {
-  PokemonCard,
+import { CardType, PokemonCard,
   Stage,
   PowerType,
   StoreLike,
@@ -7,8 +6,7 @@ import {
   ChooseCardsPrompt,
   GameMessage,
   StateUtils,
-  CardTag,
-} from '../../../game';
+  CardTag, } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import {
   WAS_POWER_USED,
@@ -29,7 +27,7 @@ export class EthansQuilava extends PokemonCard {
 
   protected _tags = [CardTag.ETHANS];
 
-  public cardType = R;
+  public cardType: CardType[] = [R];
 
   public hp = 100;
 

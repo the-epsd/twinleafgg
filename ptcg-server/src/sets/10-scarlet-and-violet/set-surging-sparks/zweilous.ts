@@ -6,7 +6,7 @@ import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs
 export class Zweilous extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Deino';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 100;
   public weakness = [{ type: G }];
   public resistance = [];

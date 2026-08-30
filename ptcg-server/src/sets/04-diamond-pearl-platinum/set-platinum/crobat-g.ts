@@ -49,7 +49,7 @@ function* useFlashBite(
 export class CrobatG extends PokemonCard {
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   protected _tags = [CardTag.POKEMON_SP];
 

@@ -34,7 +34,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class HolonsCastform extends PokemonCard implements EnergyCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.HOLONS];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 50;
   public weakness = [{ type: F }];
   public retreat = [C];

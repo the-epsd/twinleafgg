@@ -13,7 +13,7 @@ import { BLOCK_IF_HAS_SPECIAL_CONDITION, WAS_ATTACK_USED, WAS_POWER_USED } from 
 export class Feraligatr extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Croconaw';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 140;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

@@ -12,7 +12,7 @@ import { State, StoreLike } from '../../../game';
 export class Raikouex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public retreat = [C, C];

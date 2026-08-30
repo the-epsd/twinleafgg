@@ -6,7 +6,7 @@ import { ADD_BURN_TO_PLAYER_ACTIVE, AFTER_ATTACK } from '../../../game/store/pre
 
 export class Salandit extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: P }];
   public retreat = [C];

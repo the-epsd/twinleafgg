@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, PowerType, GameMessage, PlayerType, SlotType, GameError, AttachEnergyPrompt, StateUtils, CardTarget } from '../../../game';
+import { StoreLike, State, PowerType, GameMessage, PlayerType, SlotType, GameError, AttachEnergyPrompt, StateUtils, CardTarget, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
@@ -10,7 +10,7 @@ export class Magneton extends PokemonCard {
   public regulationMark = 'H';
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Magnemite';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -51,7 +51,7 @@ export class Magneton extends PokemonCard {
 
       const blocked2: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        if (card.cardType !== CardType.LIGHTNING) {
+        if (!pokemonHasCardType(card, CardType.LIGHTNING)) {
           blocked2.push(target);
         }
       });

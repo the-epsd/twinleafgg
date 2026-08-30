@@ -8,7 +8,7 @@ import { IS_POKEMON_POWER_BLOCKED, WAS_ATTACK_USED } from '../../game/store/pref
 export class MrMime extends PokemonCard {
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 40;
 

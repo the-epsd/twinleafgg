@@ -11,7 +11,7 @@ import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-
 export class Manectric2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Electrike';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];

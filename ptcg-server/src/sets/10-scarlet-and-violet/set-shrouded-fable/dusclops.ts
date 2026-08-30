@@ -13,7 +13,7 @@ export class Dusclops extends PokemonCard {
 
   public evolvesFrom = 'Duskull';
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 90;
 

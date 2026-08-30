@@ -29,7 +29,7 @@ export class LurantisGX extends PokemonCard {
 
   public evolvesFrom = 'Fomantis';
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 210;
 

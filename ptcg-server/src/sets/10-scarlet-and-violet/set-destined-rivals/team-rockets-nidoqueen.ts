@@ -8,7 +8,7 @@ export class TeamRocketsNidoqueen extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = "Team Rocket's Nidorina";
   protected _tags = [CardTag.TEAM_ROCKET];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 170;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

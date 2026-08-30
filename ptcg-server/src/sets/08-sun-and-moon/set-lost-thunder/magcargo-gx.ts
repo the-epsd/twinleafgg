@@ -40,7 +40,7 @@ export class MagcargoGX extends PokemonCard {
 
   public evolvesFrom = 'Slugma';
 
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
 
   public hp: number = 210;
 

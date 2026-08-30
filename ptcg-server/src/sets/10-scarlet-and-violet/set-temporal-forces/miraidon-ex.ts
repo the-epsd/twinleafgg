@@ -13,7 +13,7 @@ import {
 export class Miraidonex extends PokemonCard {
   protected _tags = [CardTag.FUTURE, CardTag.POKEMON_ex];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 220;
   public retreat = [C];
 

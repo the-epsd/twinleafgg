@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, PowerType, GameError, GameMessage } from '../../../game';
+import { StoreLike, State, PowerType, GameError, GameMessage, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 import {
@@ -18,7 +18,7 @@ export class ShayminVSTAR extends PokemonCard {
 
   public evolvesFrom = 'Shaymin V';
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 250;
 
@@ -66,7 +66,7 @@ export class ShayminVSTAR extends PokemonCard {
       // Heal each Benched Grass Pokemon by 120 damage
       player.bench.forEach((benchSpot) => {
         const pokemonCard = benchSpot.getPokemonCard();
-        if (pokemonCard && pokemonCard.cardType === CardType.GRASS) {
+        if (pokemonCard && pokemonHasCardType(pokemonCard, CardType.GRASS)) {
           const healEffect = new HealEffect(player, benchSpot, 120);
           state = store.reduceEffect(state, healEffect);
           player.usedVSTAR = true;

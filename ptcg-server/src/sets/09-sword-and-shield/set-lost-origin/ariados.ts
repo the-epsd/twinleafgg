@@ -12,7 +12,7 @@ import { State, StoreLike } from '../../../game';
 export class Ariados extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Spinarak';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];

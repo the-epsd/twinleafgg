@@ -8,7 +8,7 @@ import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED, MOVE_CARDS, COIN_FLIP_PROMPT } fr
 export class DialgaGLVX extends PokemonCard {
   public stage: Stage = Stage.LV_X;
   public evolvesFrom = 'Dialga G';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   protected _tags = [CardTag.POKEMON_LV_X, CardTag.POKEMON_SP];
   public hp: number = 120;
   public weakness = [{ type: R }];

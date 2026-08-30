@@ -22,7 +22,7 @@ export class StarmieGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Staryu';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 190;
   public weakness = [{ type: G }];
   public retreat = [];

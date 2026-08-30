@@ -17,7 +17,7 @@ import {
 export class RocketsScytherex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex, CardTag.ROCKETS];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public resistance = [{ type: F, value: -30 }];

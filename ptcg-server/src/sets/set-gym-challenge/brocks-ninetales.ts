@@ -9,8 +9,7 @@ import { IS_POKEMON_POWER_BLOCKED, HAS_MARKER, ADD_MARKER, ABILITY_USED, CONFIRM
 interface NinetalesPrintedSnapshot {
   name: string;
   hp: number;
-  cardType: CardType;
-  additionalCardTypes: CardType[] | undefined;
+  cardType: CardType[];
   stage: Stage;
   evolvesFrom: string;
   weakness: Weakness[];
@@ -19,11 +18,15 @@ interface NinetalesPrintedSnapshot {
   tags: CardTag[];
 }
 
+function cloneCardType(cardType: CardType[]): CardType[] {
+  return [...cardType];
+}
+
 export class BrocksNinetales extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Brock\'s Vulpix';
   public hp: number = 70;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public weakness: Weakness[] = [{ type: W }];
   public resistance: Resistance[] = [];
   public retreat: CardType[] = [C];
@@ -58,8 +61,7 @@ export class BrocksNinetales extends PokemonCard {
   private readonly printed: NinetalesPrintedSnapshot = {
     name: 'Brock\'s Ninetales',
     hp: 70,
-    cardType: CardType.FIRE,
-    additionalCardTypes: undefined,
+    cardType: [CardType.FIRE],
     stage: Stage.STAGE_1,
     evolvesFrom: 'Brock\'s Vulpix',
     weakness: [{ type: CardType.WATER }],
@@ -150,10 +152,7 @@ export class BrocksNinetales extends PokemonCard {
   private applyCopy(copy: PokemonCard): void {
     if (this.shapeshiftSource === copy) {
       this.hp = copy.hp;
-      this.cardType = copy.cardType;
-      this.additionalCardTypes = copy.additionalCardTypes
-        ? [...copy.additionalCardTypes]
-        : undefined;
+      this.cardType = cloneCardType(copy.cardType);
       this.stage = copy.stage;
       this.evolvesFrom = copy.evolvesFrom;
       this.weakness = copy.weakness.map(w => ({ ...w })) as Weakness[];
@@ -171,10 +170,7 @@ export class BrocksNinetales extends PokemonCard {
 
     this.shapeshiftSource = copy;
     this.hp = copy.hp;
-    this.cardType = copy.cardType;
-    this.additionalCardTypes = copy.additionalCardTypes
-      ? [...copy.additionalCardTypes]
-      : undefined;
+    this.cardType = cloneCardType(copy.cardType);
     this.stage = copy.stage;
     this.evolvesFrom = copy.evolvesFrom;
     this.weakness = copy.weakness.map(w => ({ ...w })) as Weakness[];
@@ -198,8 +194,7 @@ export class BrocksNinetales extends PokemonCard {
     this.shapeshiftSource = undefined;
     this.name = this.printed.name;
     this.hp = this.printed.hp;
-    this.cardType = this.printed.cardType;
-    this.additionalCardTypes = this.printed.additionalCardTypes;
+    this.cardType = cloneCardType(this.printed.cardType);
     this.stage = this.printed.stage;
     this.evolvesFrom = this.printed.evolvesFrom;
     this.weakness = this.printed.weakness.map(w => ({ ...w }));

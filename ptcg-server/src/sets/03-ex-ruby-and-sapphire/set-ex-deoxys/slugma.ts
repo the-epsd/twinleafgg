@@ -4,7 +4,7 @@ import { AFTER_ATTACK, DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Slugma extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 50;
   public weakness = [{ type: W }];
   public retreat = [C, C];

@@ -11,7 +11,7 @@ export class Omanyte extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Mysterious Fossil';
   public hp: number = 40;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public weakness = [{ type: G }];
   public retreat = [C];
 

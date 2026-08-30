@@ -10,7 +10,7 @@ import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 export class Persian extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Meowth';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];

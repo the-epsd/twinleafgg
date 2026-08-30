@@ -19,7 +19,7 @@ import {
 export class Medichamex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 110;
   public weakness = [{ type: P }];
   public retreat = [C, C];

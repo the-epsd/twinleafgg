@@ -5,7 +5,7 @@ import { MOVE_CARDS, WAS_ATTACK_USED, FLIP_UNTIL_TAILS_AND_COUNT_HEADS } from '.
 export class Steelix extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Onix';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 170;
   public weakness: Weakness[] = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

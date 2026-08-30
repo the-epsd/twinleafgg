@@ -8,7 +8,7 @@ import { HealTargetEffect } from '../../../game/store/effects/attack-effects';
 export class AudinoEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 180;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

@@ -10,7 +10,7 @@ import {
   REMOVE_MARKER_AT_END_OF_TURN,
   WAS_POWER_USED,
 } from '../../game/store/prefabs/prefabs';
-import { CardTag, Stage } from '../../game/store/card/card-types';
+import { CardType, CardTag, Stage } from '../../game/store/card/card-types';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { StateUtils } from '../../game/store/state-utils';
@@ -21,7 +21,7 @@ export class DarkGloom extends PokemonCard {
   public stage = Stage.STAGE_1;
   public evolvesFrom = 'Oddish';
   protected _tags = [CardTag.DARK];
-  public cardType = G;
+  public cardType: CardType[] = [G];
   public hp = 50;
   public weakness = [{ type: R }];
   public retreat = [C, C];

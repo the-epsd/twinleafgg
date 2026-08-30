@@ -6,7 +6,7 @@ import { AFTER_ATTACK, SWITCH_ACTIVE_WITH_BENCHED } from "../../../game/store/pr
 export class Pikachu32 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 50;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public weakness = [{ type: F }];
   public retreat = [C];
   public attacks = [{

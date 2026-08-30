@@ -6,7 +6,7 @@ import { AFTER_ATTACK, WAS_ATTACK_USED } from "../../../game/store/prefabs/prefa
 export class Horsea extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 50;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public weakness = [{ type: L }];
   public retreat = [C];
 

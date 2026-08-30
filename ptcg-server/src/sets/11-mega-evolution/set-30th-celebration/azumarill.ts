@@ -9,7 +9,7 @@ export class Azumarill extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Marill';
   public hp: number = 130;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public weakness = [{ type: M }];
   public retreat = [C, C];
 

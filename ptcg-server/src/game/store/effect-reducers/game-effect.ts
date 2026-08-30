@@ -1,7 +1,7 @@
 import { GameError } from '../../game-error';
 import { GameLog, GameMessage } from '../../game-message';
 import { BoardEffect, CardTag, CardType, SpecialCondition, SuperType } from '../card/card-types';
-import { PokemonCard } from '../card/pokemon-card';
+import { PokemonCard, getPrimaryCardType } from '../card/pokemon-card';
 import { Power, PowerType, Resistance, Weakness } from '../card/pokemon-types';
 import { ApplyWeaknessEffect, DealDamageEffect, DiscardCardsEffect } from '../effects/attack-effects';
 import { Player } from '../state/player';
@@ -79,14 +79,13 @@ function emitAbilityAnimationEvent(
 function applyWeaknessAndResistance(
   damage: number,
   cardTypes: CardType[],
-  additionalCardTypes: CardType[],
   weakness: Weakness[],
   resistance: Resistance[]
 ): number {
   let multiply = 1;
   let modifier = 0;
 
-  const allTypes = [...cardTypes, ...additionalCardTypes];
+  const allTypes = cardTypes;
 
   for (const item of weakness) {
     if (allTypes.includes(item.type)) {
@@ -263,7 +262,7 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   }
   const card = attackingPokemon.getPokemonCard();
   const cardId = card ? card.id : undefined;
-  const cardType = card ? card.cardType : undefined;
+  const cardType = card ? getPrimaryCardType(card) : undefined;
 
   // Emit attack animation event
   const game = (store as any).handler;
@@ -611,11 +610,10 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
     const checkPokemonStats = new CheckPokemonStatsEffect(effect.target);
     state = store.reduceEffect(state, checkPokemonStats);
 
-    const cardType = checkPokemonType.cardTypes;
-    const additionalCardTypes = checkPokemonType.cardTypes;
+    const cardTypes = checkPokemonType.cardTypes;
     const weakness = effect.ignoreWeakness ? [] : checkPokemonStats.weakness;
     const resistance = effect.ignoreResistance ? [] : checkPokemonStats.resistance;
-    effect.damage = applyWeaknessAndResistance(effect.damage, cardType, additionalCardTypes, weakness, resistance);
+    effect.damage = applyWeaknessAndResistance(effect.damage, cardTypes, weakness, resistance);
     return state;
   }
 

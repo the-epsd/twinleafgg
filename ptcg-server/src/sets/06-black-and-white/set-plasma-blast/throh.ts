@@ -7,7 +7,7 @@ import { CheckRetreatCostEffect } from '../../../game/store/effects/check-effect
 
 export class Throh extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 100;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];

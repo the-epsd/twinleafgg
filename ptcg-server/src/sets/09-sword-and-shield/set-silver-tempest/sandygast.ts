@@ -8,7 +8,7 @@ import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-pref
 export class Sandygast extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public regulationMark: string = 'F';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 80;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

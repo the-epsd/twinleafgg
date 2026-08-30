@@ -24,7 +24,7 @@ export class NsDarmanitan extends PokemonCard {
 
   public evolvesFrom = "N's Darumaka";
 
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
 
   public weakness = [{ type: W }];
 

@@ -8,7 +8,7 @@ import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 export class Arctozolt extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Rare Fossil';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public retreat = [C, C];

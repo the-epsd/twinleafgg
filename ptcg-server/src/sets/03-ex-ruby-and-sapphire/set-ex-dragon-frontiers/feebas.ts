@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Feebas extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 30;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public weakness = [{ type: L }];
   public retreat = [C];
 

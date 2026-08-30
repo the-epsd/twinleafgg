@@ -30,7 +30,7 @@ export class VictiniVMAX extends PokemonCard {
 
   public evolvesFrom = 'Victini V';
 
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
 
   public hp: number = 190;
 

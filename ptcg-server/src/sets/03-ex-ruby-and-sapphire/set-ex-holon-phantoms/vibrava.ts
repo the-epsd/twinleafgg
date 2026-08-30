@@ -1,10 +1,10 @@
-import { CardTag, PokemonCard, Stage, State, StoreLike } from '../../../game';
+import { CardType, CardTag, PokemonCard, Stage, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefabs/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Vibrava extends PokemonCard {
-  public cardType = G;
+  public cardType: CardType[] = [G];
   public stage = Stage.STAGE_1;
   public evolvesFrom = 'Trapinch';
   protected _tags = [CardTag.DELTA_SPECIES];

@@ -10,7 +10,7 @@ import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-
 export class Lucario extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Riolu';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 100;
   public weakness = [{ type: P }];
   public retreat = [C];

@@ -11,7 +11,7 @@ export class Rabsca extends PokemonCard {
 
   public evolvesFrom = 'Rellor';
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 70;
 

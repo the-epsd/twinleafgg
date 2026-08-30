@@ -15,7 +15,7 @@ import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/pre
 export class Beautifly extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Silcoon';
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
   public hp: number = 130;
   public weakness = [{ type: CardType.FIRE }];
   public retreat = [CardType.COLORLESS];

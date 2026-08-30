@@ -1,4 +1,4 @@
-import { State, StoreLike } from '../../../game';
+import { State, StoreLike, pokemonHasCardType } from '../../../game';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -10,7 +10,7 @@ import {
 
 export class Corsola extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 60;
   public weakness = [{ type: G }];
   public retreat = [C];
@@ -42,7 +42,7 @@ export class Corsola extends PokemonCard {
       effect.player.deck.cards.forEach((card, index) => {
         if (
           card instanceof PokemonCard &&
-          (card.cardType === CardType.WATER || card.cardType === CardType.FIGHTING) &&
+          (pokemonHasCardType(card, CardType.WATER) || pokemonHasCardType(card, CardType.FIGHTING)) &&
           !card.hasTag(CardTag.POKEMON_ex)
         ) {
           return;

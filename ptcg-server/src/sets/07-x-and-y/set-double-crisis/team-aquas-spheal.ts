@@ -5,7 +5,7 @@ export class TeamAquasSpheal extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.TEAM_AQUA];
   public hp: number = 60;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public weakness = [{ type: M }];
   public retreat = [C, C];
 

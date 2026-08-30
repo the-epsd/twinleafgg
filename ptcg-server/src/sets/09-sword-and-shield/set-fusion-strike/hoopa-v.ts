@@ -22,7 +22,7 @@ import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
 export class HoopaV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V, CardTag.FUSION_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 220;
   public weakness = [{ type: G }];
   public retreat = [C, C];

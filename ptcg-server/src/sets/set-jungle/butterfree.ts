@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 export class Butterfree extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 70;
 

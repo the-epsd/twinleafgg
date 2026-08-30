@@ -27,8 +27,7 @@ export class TeamMagmasClaydol extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = "Team Magma's Baltoy";
   protected _tags = [CardTag.TEAM_MAGMA];
-  public cardType: CardType = P;
-  public additionalCardTypes = [D];
+  public cardType: CardType[] = [P, D];
   public hp: number = 80;
   public weakness = [{ type: P }];
   public retreat = [C, C];

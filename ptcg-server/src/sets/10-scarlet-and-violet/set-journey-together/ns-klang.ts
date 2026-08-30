@@ -9,7 +9,7 @@ export class NsKlang extends PokemonCard {
   protected _tags = [CardTag.NS];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = "N's Klink";
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 160;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];

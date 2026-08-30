@@ -1,11 +1,11 @@
-import { PokemonCard, Stage, StoreLike, State } from '../../../game';
+import { CardType, PokemonCard, Stage, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Purrloin extends PokemonCard {
   public stage = Stage.BASIC;
-  public cardType = D;
+  public cardType: CardType[] = [D];
   public hp = 60;
   public weakness = [{ type: G }];
   public retreat = [C];

@@ -10,7 +10,7 @@ export class HoOh extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
 
   public hp: number = 130;
 

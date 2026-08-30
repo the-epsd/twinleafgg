@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, ADD_MARKER, COIN_FLIP_PROMPT, CLEAR_MARKER_AND_OPPONEN
 
 export class Cutiefly extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 30;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

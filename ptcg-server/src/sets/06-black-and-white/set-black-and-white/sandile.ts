@@ -7,7 +7,7 @@ import { FLIP_COIN_IF_HEADS_DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../gam
 
 export class Sandile extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 60;
   public weakness = [{ type: W }];
   public retreat = [C];

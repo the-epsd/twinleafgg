@@ -12,7 +12,7 @@ export class FlareonVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX, CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Flareon V';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 320;
   public weakness = [{ type: W }];
   public retreat = [C, C];

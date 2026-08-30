@@ -78,7 +78,7 @@ export class MewVMAX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX, CardTag.FUSION_STRIKE];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom = 'Mew V';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 310;
   public weakness = [{ type: D }];
   public retreat = [];

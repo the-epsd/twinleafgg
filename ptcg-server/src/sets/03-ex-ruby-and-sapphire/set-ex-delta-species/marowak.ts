@@ -15,8 +15,7 @@ export class Marowak extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Cubone';
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = F;
-  public additionalCardTypes = [M];
+  public cardType: CardType[] = [F, M];
   public hp: number = 80;
   public weakness = [{ type: G }];
   public retreat = [C];

@@ -8,7 +8,7 @@ import { AfterDamageEffect, ApplyWeaknessEffect } from '../../../game/store/effe
 export class NsZekrom extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.NS];
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 130;
   public weakness = [];
   public resistance = [];

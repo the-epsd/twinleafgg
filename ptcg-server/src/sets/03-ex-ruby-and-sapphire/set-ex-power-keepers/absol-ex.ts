@@ -17,7 +17,7 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 export class Absolex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -30 }];

@@ -15,7 +15,7 @@ export class Mewex extends PokemonCard {
   public regulationMark = 'G';
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 180;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

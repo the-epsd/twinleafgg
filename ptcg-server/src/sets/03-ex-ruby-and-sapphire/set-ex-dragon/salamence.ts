@@ -15,7 +15,7 @@ import { FLIP_COIN_TO_PREVENT_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN } fr
 export class Salamence extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Shelgon';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 120;
   public weakness = [{ type: C }];
   public resistance = [{ type: R, value: -30 }, { type: F, value: -30 }];

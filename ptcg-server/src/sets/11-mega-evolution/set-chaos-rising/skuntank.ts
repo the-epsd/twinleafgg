@@ -7,7 +7,7 @@ export class Skuntank extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Stunky';
   public hp: number = 110;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public weakness = [{ type: F }];
   public retreat = [C, C];
 

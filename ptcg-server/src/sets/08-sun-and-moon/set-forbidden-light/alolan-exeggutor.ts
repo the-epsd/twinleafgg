@@ -11,7 +11,7 @@ export class AlolanExeggutor extends PokemonCard {
 
   public evolvesFrom = 'Exeggcute';
 
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
 
   public hp: number = 160;
 

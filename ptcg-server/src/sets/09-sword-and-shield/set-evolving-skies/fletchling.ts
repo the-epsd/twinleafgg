@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, DRAW_CARDS } from '../../../game/sto
 
 export class Fletchling extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 40;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

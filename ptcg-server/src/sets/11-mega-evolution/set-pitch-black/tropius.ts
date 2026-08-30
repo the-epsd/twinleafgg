@@ -14,7 +14,7 @@ import { StoreLike } from '../../../game/store/store-like';
 
 export class Tropius extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 110;
   public weakness = [{ type: R }];
   public retreat = [C];

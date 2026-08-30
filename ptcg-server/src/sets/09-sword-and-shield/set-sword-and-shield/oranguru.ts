@@ -1,4 +1,4 @@
-import { ChooseCardsPrompt, GameError, GameMessage, PowerType, State, StoreLike } from '../../../game';
+import { CardType, ChooseCardsPrompt, GameError, GameMessage, PowerType, State, StoreLike } from '../../../game';
 import { Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -9,7 +9,7 @@ import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Oranguru extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 120;
   public retreat = [C, C];
   public weakness = [{ type: F }];

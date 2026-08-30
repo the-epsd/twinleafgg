@@ -33,7 +33,7 @@ import {
 
 export class Girafarig extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public retreat = [C];
   public weakness = [{ type: P }];

@@ -13,7 +13,7 @@ export class Cloyster extends PokemonCard {
   public regulationMark = 'E';
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Shellder';
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
   public hp: number = 130;
   public weakness = [{ type: CardType.LIGHTNING }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];

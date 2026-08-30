@@ -8,7 +8,7 @@ export class BlazikenV extends PokemonCard {
 
   protected _tags = [CardTag.POKEMON_V, CardTag.RAPID_STRIKE];
 
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
 
   public hp: number = 210;
 

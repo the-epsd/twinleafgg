@@ -7,7 +7,7 @@ import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-e
 
 export class Slowpoke extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 70;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];

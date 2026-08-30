@@ -11,7 +11,7 @@ export class MVenusaurEX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX, CardTag.MEGA];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom = 'Venusaur-EX';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 230;
   public weakness = [{ type: R }];
   public retreat = [C, C, C, C];

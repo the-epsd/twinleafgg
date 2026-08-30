@@ -64,7 +64,7 @@ export class Whimsicottex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   protected _tags = [CardTag.POKEMON_ex];
   public evolvesFrom = 'Cottonee';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 230;
   public weakness = [{ type: R }];
   public resistance = [];

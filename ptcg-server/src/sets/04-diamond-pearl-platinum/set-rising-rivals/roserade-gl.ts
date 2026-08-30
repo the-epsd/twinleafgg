@@ -18,7 +18,7 @@ import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-pref
 
 export class RoseradeGL extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   protected _tags = [CardTag.POKEMON_SP];
   public hp: number = 80;
   public weakness = [{ type: R }];

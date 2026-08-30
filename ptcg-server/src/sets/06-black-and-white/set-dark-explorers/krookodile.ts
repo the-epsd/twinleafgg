@@ -11,7 +11,7 @@ export class Krookodile extends PokemonCard {
 
   public evolvesFrom = 'Krokorok';
 
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
 
   public hp: number = 150;
 

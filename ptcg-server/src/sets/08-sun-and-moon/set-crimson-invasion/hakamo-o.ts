@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store
 export class HakamoO extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Jangmo-o';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 90;
   public weakness = [{ type: Y }];
   public retreat = [C];

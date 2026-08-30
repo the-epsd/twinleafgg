@@ -23,7 +23,7 @@ export class Slakingex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Vigoroth';
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 340;
   public weakness = [{ type: F }];
   public retreat = [C, C, C, C];

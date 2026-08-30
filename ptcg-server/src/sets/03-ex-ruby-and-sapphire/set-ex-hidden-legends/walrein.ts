@@ -11,7 +11,7 @@ import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/eff
 export class Walrein extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Sealeo';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp = 120;
   public weakness = [{ type: M }];
   public retreat = [C, C, C];

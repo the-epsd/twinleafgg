@@ -9,7 +9,7 @@ export class Toxtricityex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Toxel';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 260;
   public weakness = [{ type: F }];
   public retreat = [C, C];

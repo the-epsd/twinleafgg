@@ -6,7 +6,7 @@ import { BUG_OUT } from '../../../game/store/prefabs/shared-attack-prefabs';
 
 export class Combee extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 50;
   public weakness = [{ type: R }];
   public retreat = [C];

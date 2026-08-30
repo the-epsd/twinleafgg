@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PowerType } from '../../../game/store/card/pokemon-types';
-import { StoreLike, State } from '../../../game';
+import { StoreLike, State, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
@@ -10,7 +10,7 @@ export class Charizard extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Charmeleon';
   public hp: number = 140;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public weakness = [{ type: W, value: 30 }];
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C, C, C];
@@ -56,8 +56,7 @@ export class Charizard extends PokemonCard {
           return;
         }
 
-        const hasFireType = pokemon.cardType === CardType.FIRE || pokemon.additionalCardTypes?.includes(CardType.FIRE);
-        if (hasFireType) {
+        if (pokemonHasCardType(pokemon, CardType.FIRE)) {
           firePokemonCount++;
         }
       });

@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 export class Toxicroak extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Croagunk';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 110;
   public weakness = [{ type: F }];
   public retreat = [C];

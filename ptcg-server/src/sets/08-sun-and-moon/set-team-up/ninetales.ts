@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, EnergyCard, GameError, ChooseCardsPrompt, SuperType } from '../../../game';
+import { CardType, PokemonCard, Stage, StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, EnergyCard, GameError, ChooseCardsPrompt, SuperType } from '../../../game';
 import { PowerType } from '../../../game';
 import { EffectOfAbilityEffect } from '../../../game/store/effects/game-effects';
 import { Attack } from '../../../game/store/card/pokemon-types';
@@ -10,7 +10,7 @@ export class Ninetales extends PokemonCard {
 
   public stage = Stage.STAGE_1;
   public evolvesFrom = 'Vulpix';
-  public cardType = R;
+  public cardType: CardType[] = [R];
   public hp = 100;
   public weakness = [{ type: W }];
   public retreat = [C];

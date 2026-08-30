@@ -51,7 +51,7 @@ function* useDamageSwap(next: Function, store: StoreLike, state: State, effect: 
 export class Alakazam extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Kadabra';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];

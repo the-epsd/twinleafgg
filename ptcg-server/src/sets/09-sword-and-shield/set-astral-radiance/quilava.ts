@@ -4,7 +4,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 export class Quilava extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Cyndaquil';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 90;
   public weakness = [{ type: W }];
   public retreat = [C];

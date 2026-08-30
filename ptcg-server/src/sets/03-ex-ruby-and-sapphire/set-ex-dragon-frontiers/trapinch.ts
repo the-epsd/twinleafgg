@@ -16,7 +16,7 @@ import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
 export class Trapinch extends PokemonCard {
   protected _tags = [CardTag.DELTA_SPECIES];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 40;
   public weakness = [{ type: G }];
   public retreat = [C];

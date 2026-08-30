@@ -11,7 +11,7 @@ export class IonosVoltorb extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
 
   public hp: number = 70;
 

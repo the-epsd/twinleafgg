@@ -8,7 +8,7 @@ import { IS_ABILITY_BLOCKED, MULTIPLE_COIN_FLIPS_PROMPT, USE_ABILITY_ONCE_PER_TU
 export class Tirtouga extends PokemonCard {
   public stage: Stage = Stage.RESTORED;
   public evolvesFrom: string = 'Cover Fossil';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

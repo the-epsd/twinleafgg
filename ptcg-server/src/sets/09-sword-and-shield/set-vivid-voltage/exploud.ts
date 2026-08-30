@@ -6,7 +6,7 @@ export class Exploud extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Loudred';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 160;
   public weakness: Weakness[] = [{ type: F }];
   public retreat: CardType[] = [C, C, C];

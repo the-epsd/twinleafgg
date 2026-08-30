@@ -31,7 +31,7 @@ export class IonosBelliboltex extends PokemonCard {
 
   public evolvesFrom: string = "Iono's Tadbulb";
 
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
 
   public hp: number = 280;
 

@@ -8,7 +8,7 @@ import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/s
 export class Hydreigon2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Zweilous';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 150;
   public weakness = [{ type: N }];
   public retreat = [C, C, C];

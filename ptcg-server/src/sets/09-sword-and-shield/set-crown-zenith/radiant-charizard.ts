@@ -8,7 +8,7 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs
 export class RadiantCharizard extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.RADIANT];
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 160;
   public weakness = [{ type: W }];
   public retreat = [C, C, C];

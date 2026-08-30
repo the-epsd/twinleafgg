@@ -1,14 +1,12 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import {
-  PowerType,
+import { PowerType,
   StoreLike,
   State,
   StateUtils,
   PlayerType,
   GamePhase,
-  EnergyCard,
-} from '../../../game';
+  EnergyCard, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { DiscardCardsEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import {
@@ -23,7 +21,7 @@ export class NecrozmaGX extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 180;
 
@@ -78,7 +76,7 @@ export class NecrozmaGX extends PokemonCard {
       }
 
       // It's not an attack or a Pokemon that isn't colorless attacks
-      if (state.phase !== GamePhase.ATTACK || pokemonCard.cardType !== CardType.COLORLESS) {
+      if (state.phase !== GamePhase.ATTACK || !pokemonHasCardType(pokemonCard, CardType.COLORLESS)) {
         return state;
       }
 

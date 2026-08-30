@@ -9,7 +9,7 @@ import { IS_POKEBODY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Yanma extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 50;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

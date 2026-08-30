@@ -14,7 +14,7 @@ export class GengarV extends PokemonCard {
 
   protected _tags = [CardTag.POKEMON_V, CardTag.SINGLE_STRIKE];
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp = 210;
 

@@ -11,7 +11,7 @@ import {
 
 export class PalkiaG extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   protected _tags = [CardTag.POKEMON_SP];
   public hp: number = 100;
   public weakness = [{ type: L }];

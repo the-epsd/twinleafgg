@@ -13,7 +13,7 @@ import { GamePhase } from '../../../game/store/state/state';
 
 export class Komala extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public retreat = [C, C];

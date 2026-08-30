@@ -10,7 +10,7 @@ export class TeamRocketsPorygon2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   protected _tags = [CardTag.TEAM_ROCKET];
   public evolvesFrom = "Team Rocket's Porygon";
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];

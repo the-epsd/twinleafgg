@@ -11,7 +11,7 @@ import { DAMAGE_OPPONENT_POKEMON, MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } 
 export class Vibrava extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Trapinch';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 80;
   public weakness = [{ type: N }];
   public retreat = [C];

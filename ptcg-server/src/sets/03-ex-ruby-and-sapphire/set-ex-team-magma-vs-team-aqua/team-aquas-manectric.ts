@@ -30,8 +30,7 @@ export class TeamAquasManectric extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = "Team Aqua's Electrike";
   protected _tags = [CardTag.TEAM_AQUA];
-  public cardType: CardType = L;
-  public additionalCardTypes = [D];
+  public cardType: CardType[] = [L, D];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -30 }];

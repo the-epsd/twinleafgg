@@ -13,7 +13,7 @@ import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Zebstrika extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [CardType.LIGHTNING];
   public hp: number = 110;
   public weakness = [{ type: CardType.FIGHTING }];
   public retreat = [CardType.COLORLESS];

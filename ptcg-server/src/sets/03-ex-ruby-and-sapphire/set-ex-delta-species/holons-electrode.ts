@@ -35,7 +35,7 @@ export class HolonsElectrode extends PokemonCard implements EnergyCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = "Holon's Voltorb";
   protected _tags = [CardTag.HOLONS];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [];

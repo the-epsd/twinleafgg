@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardTag } from '../../../game/store/card/card-types';
+import { CardType, Stage, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
@@ -12,7 +12,7 @@ export class Excadrillex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public cardTag = [CardTag.POKEMON_ex];
   public evolvesFrom = 'Drillbur';
-  public cardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 270;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

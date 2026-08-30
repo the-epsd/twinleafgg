@@ -6,7 +6,7 @@ import { WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_
 export class Moltres extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 120;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public weakness = [{ type: W }];
   public retreat = [C];
 

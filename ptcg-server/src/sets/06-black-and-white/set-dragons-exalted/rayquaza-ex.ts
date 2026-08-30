@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class RayquazaEx extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_EX];
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 170;
   public weakness = [{ type: N }];
   public retreat = [C];

@@ -14,7 +14,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 export class Goodra extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Sliggoo';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 150;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];

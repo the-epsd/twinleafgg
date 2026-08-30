@@ -24,7 +24,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class EmpoleonV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V, CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 210;
   public weakness = [{ type: L }];
   public retreat = [C, C];

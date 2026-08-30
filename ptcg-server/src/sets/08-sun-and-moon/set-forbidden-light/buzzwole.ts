@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Buzzwole extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.ULTRA_BEAST];
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
   public hp: number = 130;
   public weakness = [{ type: P }];
   public retreat = [C, C];

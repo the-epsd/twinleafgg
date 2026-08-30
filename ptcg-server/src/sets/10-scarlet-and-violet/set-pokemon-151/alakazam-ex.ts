@@ -8,7 +8,7 @@ export class Alakazamex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Kadabra';
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 310;
   public weakness = [{ type: D }];
   public retreat = [C];

@@ -15,7 +15,7 @@ export class LucarioVSTAR extends PokemonCard {
 
   public evolvesFrom = 'Lucario V';
 
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public regulationMark = 'F';
 

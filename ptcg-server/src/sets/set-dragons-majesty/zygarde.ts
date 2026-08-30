@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { BLOCK_RETREAT } from '../../game/store/prefabs/effect-of-attack-prefabs';
 export class Zygarde extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 130;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];

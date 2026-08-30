@@ -10,7 +10,7 @@ import { AFTER_ATTACK, MOVE_CARDS, SHUFFLE_DECK, SHOW_CARDS_TO_PLAYER } from '..
 
 export class Seedot extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 50;
   public weakness = [{ type: R }];
   public retreat = [C];

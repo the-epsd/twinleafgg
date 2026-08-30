@@ -52,7 +52,7 @@ function* useBulldoze(next: Function, store: StoreLike, state: State,
 export class Seismitoad extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Palpitoad';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 160;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

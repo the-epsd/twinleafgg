@@ -8,7 +8,7 @@ import { IS_ABILITY_BLOCKED, MOVED_TO_ACTIVE_THIS_TURN, WAS_ATTACK_USED } from '
 export class Golisopod extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp: number = 140;
 

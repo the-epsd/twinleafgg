@@ -22,7 +22,7 @@ export class ErikasVileplumeex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = "Erika's Gloom";
   protected _tags = [CardTag.POKEMON_ex, CardTag.ERIKAS];
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 310;
   public weakness = [{ type: R }];
   public resistance = [];

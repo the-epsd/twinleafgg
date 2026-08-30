@@ -1,7 +1,6 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import {
-  StoreLike,
+import { StoreLike,
   State,
   StateUtils,
   GameMessage,
@@ -12,8 +11,7 @@ import {
   Card,
   ChooseCardsPrompt,
   GameError,
-  ShowCardsPrompt,
-} from '../../../game';
+  ShowCardsPrompt, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
@@ -34,7 +32,7 @@ function* useApexDragon(
     (card) => card.superType === SuperType.POKEMON,
   ) as PokemonCard[];
   const dragonTypePokemon = discardPokemon.filter(
-    (card) => card.cardType === CardType.DRAGON && card.name !== 'Regidrago VSTAR',
+    (card) => pokemonHasCardType(card, CardType.DRAGON) && card.name !== 'Regidrago VSTAR',
   );
 
   if (dragonTypePokemon.length === 0) {
@@ -99,7 +97,7 @@ export class RegidragoVSTAR extends PokemonCard {
 
   public evolvesFrom = 'Regidrago V';
 
-  public cardType: CardType = CardType.DRAGON;
+  public cardType: CardType[] = [CardType.DRAGON];
 
   public hp: number = 280;
 

@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, MOVE_CARDS } from '../../../game/sto
 export class DialgaEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX, CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 180;
   public weakness = [{ type: N }];
   public retreat = [C, C];

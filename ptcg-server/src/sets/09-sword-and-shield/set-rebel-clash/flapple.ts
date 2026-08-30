@@ -11,7 +11,7 @@ export class Flapple extends PokemonCard {
   public regulationMark = 'D';
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Applin';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public retreat = [C];

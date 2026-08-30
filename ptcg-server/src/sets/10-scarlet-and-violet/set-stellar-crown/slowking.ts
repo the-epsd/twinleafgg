@@ -95,7 +95,7 @@ function* useSeekInspiration(
 export class Slowking extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Slowpoke';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 120;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

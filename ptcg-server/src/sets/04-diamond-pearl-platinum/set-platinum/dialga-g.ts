@@ -7,7 +7,7 @@ import { OPPONENT_CANNOT_PLAY_CARDS } from '../../../game/store/prefabs/effect-o
 
 export class DialgaG extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   protected _tags = [CardTag.POKEMON_SP];
   public hp: number = 100;
   public weakness = [{ type: R }];

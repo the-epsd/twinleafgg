@@ -11,7 +11,7 @@ export class CastformSunnyForm extends PokemonCard {
 
   public regulationMark = 'E';
 
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
 
   public hp = 70;
 

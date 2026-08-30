@@ -28,7 +28,7 @@ export class HisuianDecidueyeVSTAR extends PokemonCard {
   public evolvesFrom = 'Hisuian Decidueye V';
   protected _tags = [CardTag.POKEMON_VSTAR];
   public regulationMark = 'F';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 270;
   public weakness = [{ type: P }];
   public retreat = [C, C];

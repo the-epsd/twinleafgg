@@ -6,7 +6,7 @@ import { THIS_POKEMON_HAS_NO_WEAKNESS_DURING_OPPONENTS_NEXT_TURN } from "../../.
 export class AltariaEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 170;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

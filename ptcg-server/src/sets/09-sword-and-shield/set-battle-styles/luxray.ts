@@ -15,7 +15,7 @@ export class Luxray extends PokemonCard {
   protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Luxio';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 150;
   public weakness = [{ type: F }];
   public retreat = [C];

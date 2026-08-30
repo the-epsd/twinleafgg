@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK } from '../../game/store/prefabs/effect-of-attack-prefabs';
 export class Horsea extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
   public hp: number = 40;
   public weakness = [{ type: CardType.LIGHTNING }];
   public resistance = [];

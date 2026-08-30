@@ -7,7 +7,7 @@ import { OPPONENT_CANNOT_PLAY_CARDS } from '../../../game/store/prefabs/effect-o
 
 export class Gastly extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 50;
   public weakness = [{ type: D, value: 10 }];
   public resistance = [{ type: C, value: -20 }];

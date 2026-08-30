@@ -17,8 +17,7 @@ import { FLIP_COIN_TO_PREVENT_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN } fr
 export class Dragonite extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Dragonair';
-  public cardType: CardType = L;
-  public additionalCardTypes = [M];
+  public cardType: CardType[] = [L, M];
   public hp: number = 100;
   public weakness = [{ type: C }];
   public resistance = [{ type: G, value: -30 }, { type: F, value: -30 }];

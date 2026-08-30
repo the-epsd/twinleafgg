@@ -8,7 +8,7 @@ import { OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK } from '../../game/store/prefa
 export class MistysPoliwag extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.MISTYS];
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 50;
   public weakness = [{ type: G }];
   public retreat = [C];

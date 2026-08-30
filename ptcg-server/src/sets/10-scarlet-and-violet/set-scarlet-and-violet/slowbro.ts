@@ -71,7 +71,7 @@ function* useDamageSwap(next: Function, store: StoreLike, state: State, effect: 
 export class Slowbro extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Slowpoke';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 100;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];

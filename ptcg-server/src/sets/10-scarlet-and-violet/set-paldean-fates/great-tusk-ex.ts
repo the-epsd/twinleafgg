@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class GreatTuskex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex, CardTag.ANCIENT];
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 250;
   public weakness = [{ type: P }];
   public retreat = [C, C, C, C];

@@ -12,7 +12,7 @@ import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-
 
 export class Xerneas extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 120;
   public weakness = [{ type: M }];
   public retreat = [C, C];

@@ -23,7 +23,7 @@ export class Chandelure extends PokemonCard {
 
   public evolvesFrom = 'Lampent';
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 130;
 

@@ -7,7 +7,7 @@ export class Lileep extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Antique Root Fossil';
   public hp: number = 100;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public weakness = [{ type: R }];
   public retreat = [C, C];
 

@@ -1,11 +1,11 @@
-import { PokemonCard, Stage, StoreLike, State, StateUtils, GameError, GameMessage } from '../../../game';
+import { CardType, PokemonCard, Stage, StoreLike, State, StateUtils, GameError, GameMessage } from '../../../game';
 import { PowerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, HAS_MARKER, MULTIPLE_COIN_FLIPS_PROMPT, REMOVE_MARKER_AT_END_OF_TURN, SHOW_CARDS_TO_PLAYER, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class MrMime extends PokemonCard {
   public stage = Stage.BASIC;
-  public cardType = P;
+  public cardType: CardType[] = [P];
   public hp = 70;
   public weakness = [{ type: P }];
   public retreat = [C];

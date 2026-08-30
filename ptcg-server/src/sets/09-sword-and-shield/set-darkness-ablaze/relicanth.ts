@@ -11,7 +11,7 @@ import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects
 
 export class Relicanth extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: L }];
   public retreat = [C];

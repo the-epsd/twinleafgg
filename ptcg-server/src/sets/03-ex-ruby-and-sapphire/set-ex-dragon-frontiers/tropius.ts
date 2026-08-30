@@ -15,7 +15,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class Tropius extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public retreat = [C];

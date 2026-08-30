@@ -6,7 +6,7 @@ import { IS_POKEBODY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Lotad extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 40;
   public weakness = [{ type: L }];
   public retreat = [C];

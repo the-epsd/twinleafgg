@@ -11,7 +11,7 @@ import { ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, COIN_FLIP_PROMPT, HAS_MARKE
 
 export class Beldum extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 50;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
@@ -58,7 +58,7 @@ export class Beldum extends PokemonCard {
 
       COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (result) {
-          SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, effect.player, { cardType: CardType.METAL, stage: Stage.BASIC }, { min: 0, max: 1, allowCancel: false });
+          SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, effect.player, { cardType: [CardType.METAL], stage: Stage.BASIC }, { min: 0, max: 1, allowCancel: false });
         }
       });
     }

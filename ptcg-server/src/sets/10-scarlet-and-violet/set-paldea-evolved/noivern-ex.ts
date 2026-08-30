@@ -10,7 +10,7 @@ export class Noivernex extends PokemonCard {
   public evolvesFrom = 'Noibat';
   protected _tags = [CardTag.POKEMON_ex];
   public regulationMark = 'G';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 260;
 
   public attacks = [{

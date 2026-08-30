@@ -13,7 +13,7 @@ export class Electivireex extends PokemonCard {
   public regulationMark = 'I';
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Electabuzz';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 280;
   public weakness = [{ type: F }];
   public retreat = [C, C, C, C];

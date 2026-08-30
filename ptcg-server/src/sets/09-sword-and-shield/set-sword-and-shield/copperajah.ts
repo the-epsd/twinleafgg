@@ -11,7 +11,7 @@ export class Copperajah extends PokemonCard {
 
   public evolvesFrom = 'Cufant';
 
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType[] = [CardType.METAL];
 
   public hp: number = 190;
 

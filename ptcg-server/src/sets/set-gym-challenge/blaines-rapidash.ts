@@ -7,7 +7,7 @@ export class BlainesRapidash extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = "Blaine's Ponyta";
   protected _tags = [CardTag.BLAINES];
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 70;
   public weakness = [{ type: W }];
   public retreat = [];

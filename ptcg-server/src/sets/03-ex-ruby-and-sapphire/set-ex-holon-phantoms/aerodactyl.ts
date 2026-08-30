@@ -7,7 +7,7 @@ export class Aerodactyl extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Mysterious Fossil';
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 70;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

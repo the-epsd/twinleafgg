@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, PlayerType, StateUtils } from '../../../game';
+import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, PlayerType, StateUtils, pokemonHasCardType } from '../../../game';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
@@ -6,7 +6,7 @@ import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Bouffalant extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
   public hp: number = 100;
   public weakness = [{ type: CardType.FIGHTING }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
@@ -52,7 +52,7 @@ export class Bouffalant extends PokemonCard {
       }
 
       const targetPokemon = effect.target.getPokemonCard();
-      if (targetPokemon && targetPokemon.cardType === CardType.COLORLESS && targetPokemon.stage === Stage.BASIC && StateUtils.findOwner(state, effect.target) === player) {
+      if (targetPokemon && pokemonHasCardType(targetPokemon, CardType.COLORLESS) && targetPokemon.stage === Stage.BASIC && StateUtils.findOwner(state, effect.target) === player) {
         effect.reduceDamage(60, this.powers[0].name);
       }
     }

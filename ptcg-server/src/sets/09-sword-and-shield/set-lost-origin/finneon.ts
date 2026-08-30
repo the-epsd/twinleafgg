@@ -12,7 +12,7 @@ import { AttachEnergyEffect } from '../../../game/store/effects/play-card-effect
 
 export class Finneon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 50;
   public weakness = [{ type: L }];
   public retreat = [C];

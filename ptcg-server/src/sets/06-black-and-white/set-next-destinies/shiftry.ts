@@ -13,7 +13,7 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 export class Shiftry extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Nuzleaf';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

@@ -11,7 +11,7 @@ export class Braixen extends PokemonCard {
 
   public evolvesFrom = 'Fennekin';
 
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
 
   public hp: number = 90;
 

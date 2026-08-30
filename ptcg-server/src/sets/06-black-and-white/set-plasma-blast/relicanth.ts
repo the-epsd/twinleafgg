@@ -10,7 +10,7 @@ import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 export class Relicanth extends PokemonCard {
   protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: G }];
   public retreat = [C];

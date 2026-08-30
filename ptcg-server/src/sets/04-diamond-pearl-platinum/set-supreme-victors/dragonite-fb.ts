@@ -7,7 +7,7 @@ import { Effect } from '../../../game/store/effects/effect';
 export class DragoniteFB extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_SP];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 100;
   public weakness = [{ type: C }];
   public resistance = [{ type: F, value: -20 }];

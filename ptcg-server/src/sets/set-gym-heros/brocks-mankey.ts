@@ -15,7 +15,7 @@ import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 export class BrocksMankey extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.BROCKS];
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 40;
   public weakness = [{ type: P }];
   public retreat = [];

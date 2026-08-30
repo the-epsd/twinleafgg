@@ -14,7 +14,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class SingleStrikeUrshifuV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_V, CardTag.SINGLE_STRIKE];
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 220;
   public weakness = [{ type: P }];
   public retreat = [C, C];

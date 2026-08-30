@@ -11,7 +11,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 
 export class Rotom extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

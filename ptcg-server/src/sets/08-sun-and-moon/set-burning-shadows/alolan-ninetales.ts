@@ -12,7 +12,7 @@ import { PowerEffect } from '../../../game/store/effects/game-effects';
 export class AlolanNinetales extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Alolan Vulpix';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 110;
   public weakness = [{ type: M }];
   public retreat = [C];

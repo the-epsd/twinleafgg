@@ -13,7 +13,7 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 export class BrocksVulpix extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 50;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public weakness = [{ type: W }];
   public retreat = [C];
 

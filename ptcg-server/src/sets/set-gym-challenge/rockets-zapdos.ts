@@ -20,7 +20,7 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 export class RocketsZapdos extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.ROCKETS];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 70;
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C];

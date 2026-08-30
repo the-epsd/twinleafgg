@@ -35,7 +35,7 @@ export class Gardevoirex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Kirlia';
   protected _tags = [CardTag.POKEMON_ex, CardTag.DELTA_SPECIES];
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 150;
   public weakness = [{ type: P }];
   public retreat = [C, C];

@@ -18,7 +18,7 @@ import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 export class GreninjaVUNIONBottomLeft extends PokemonCard {
   public stage: Stage = Stage.VUNION;
   protected _tags = [CardTag.POKEMON_VUNION];
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 300;
   public weakness = [{ type: L }];
   public retreat = [C, C];

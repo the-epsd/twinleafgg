@@ -15,7 +15,7 @@ import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
 export class AlolanMuk extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Alolan Grimer';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 120;
   public weakness = [{ type: P }];
   public retreat = [C, C, C, C];

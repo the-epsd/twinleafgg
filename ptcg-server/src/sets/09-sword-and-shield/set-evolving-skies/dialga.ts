@@ -6,7 +6,7 @@ import { DEFENDING_POKEMON_CANNOT_ATTACK } from "../../../game/store/prefabs/eff
 export class Dialga extends PokemonCard {
   protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 130;
   public retreat = [C, C];
 

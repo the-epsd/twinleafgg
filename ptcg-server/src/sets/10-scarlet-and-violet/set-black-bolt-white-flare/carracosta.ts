@@ -8,7 +8,7 @@ import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-pref
 export class Carracosta extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Tirtouga';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 180;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];

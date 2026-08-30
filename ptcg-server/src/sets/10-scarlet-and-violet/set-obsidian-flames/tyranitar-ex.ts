@@ -10,7 +10,7 @@ export class Tyranitarex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Pupitar';
   protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 340;
   public weakness = [{ type: F }];
   public retreat = [C, C, C, C];

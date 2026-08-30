@@ -7,7 +7,7 @@ import { WAS_POWER_USED, ADD_POISON_TO_PLAYER_ACTIVE, WAS_ATTACK_USED, THIS_POKE
 export class BruteBonnet extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.ANCIENT];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 120;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

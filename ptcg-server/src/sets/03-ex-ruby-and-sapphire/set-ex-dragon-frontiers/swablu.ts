@@ -9,7 +9,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class Swablu extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 40;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

@@ -12,7 +12,7 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 export class NoivernV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 200;
   public retreat = [];
 

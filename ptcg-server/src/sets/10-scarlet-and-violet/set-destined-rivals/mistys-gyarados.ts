@@ -16,7 +16,7 @@ export class MistysGyarados extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = "Misty's Magikarp";
   protected _tags = [CardTag.MISTYS];
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 180;
   public weakness: Weakness[] = [{ type: L }];
   public retreat: CardType[] = [C, C, C, C];

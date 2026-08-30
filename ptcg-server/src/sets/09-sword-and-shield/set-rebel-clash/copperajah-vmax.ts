@@ -12,7 +12,7 @@ export class CopperajahVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Copperajah V';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 340;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

@@ -4,7 +4,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 export class Bayleef extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Chikorita';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 100;
   public weakness = [{ type: R }];
   public resistance = [];

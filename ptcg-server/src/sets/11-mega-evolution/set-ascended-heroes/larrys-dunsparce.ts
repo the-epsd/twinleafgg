@@ -6,7 +6,7 @@ import { AFTER_ATTACK, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/pref
 export class LarrysDunsparce extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.LARRYS];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public resistance = [];

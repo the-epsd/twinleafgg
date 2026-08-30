@@ -15,7 +15,7 @@ export class DarkWeezing extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Koffing';
   public hp: number = 60;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public weakness = [{ type: P }];
   public retreat = [C];
 

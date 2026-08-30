@@ -4,7 +4,7 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, ChooseCardsPrompt, PokemonCardList } from '../../game';
+import { StoreLike, State, GameMessage, ChooseCardsPrompt, PokemonCardList, pokemonHasCardType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -12,7 +12,7 @@ export class DragoniteGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Dragonair';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 250;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];
@@ -64,7 +64,7 @@ export class DragoniteGx extends PokemonCard {
       }
 
       const dragonInDiscard = player.discard.cards.filter(
-        (c) => c instanceof PokemonCard && c.cardType === CardType.DRAGON,
+        (c) => c instanceof PokemonCard && pokemonHasCardType(c, CardType.DRAGON),
       );
 
       if (dragonInDiscard.length === 0) {
@@ -75,7 +75,7 @@ export class DragoniteGx extends PokemonCard {
 
       const blocked: number[] = [];
       player.discard.cards.forEach((c, index) => {
-        if (!(c instanceof PokemonCard) || c.cardType !== CardType.DRAGON) {
+        if (!(c instanceof PokemonCard) || !pokemonHasCardType(c, CardType.DRAGON)) {
           blocked.push(index);
         }
       });
@@ -86,7 +86,7 @@ export class DragoniteGx extends PokemonCard {
           player,
           GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
           player.discard,
-          { superType: SuperType.POKEMON, cardType: CardType.DRAGON },
+          { superType: SuperType.POKEMON, cardType: [CardType.DRAGON] },
           { min: max, max, allowCancel: false, blocked },
         ),
         (selected) => {

@@ -10,17 +10,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
-import {
-  CardTarget,
-  ChoosePokemonPrompt,
-  GameError,
-  GameMessage,
-  PlayerType,
-  PokemonCardList,
-  PowerType,
-  SlotType,
-  StateUtils,
-} from '../../../game';
+import { CardTarget, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, StateUtils, pokemonHasCardType, pokemonHasCardTypeOptional } from '../../../game';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { CheckTableStateEffect } from '../../../game/store/effects/check-effects';
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
@@ -34,7 +24,7 @@ function* useChainsOfControl(
   const player = effect.player;
   const hasDarkBench = player.bench.some(
     (b) =>
-      b.getPokemonCard()?.cardType === CardType.DARK && b.getPokemonCard()?.name !== 'Pecharunt ex',
+      pokemonHasCardTypeOptional(b.getPokemonCard(), CardType.DARK) && b.getPokemonCard()?.name !== 'Pecharunt ex',
   );
 
   if (player.chainsOfControlUsed == true) {
@@ -50,7 +40,7 @@ function* useChainsOfControl(
     if (card.name === 'Pecharunt ex') {
       blocked.push(target);
     }
-    if (list.getPokemonCard()?.cardType !== CardType.DARK) {
+    if (!pokemonHasCardTypeOptional(list.getPokemonCard(), CardType.DARK)) {
       blocked.push(target);
     }
   });
@@ -58,7 +48,7 @@ function* useChainsOfControl(
   // Count Dark Pokemon in play
   let darkPokemonCount = 0;
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card) => {
-    if (card.cardType === CardType.DARK) {
+    if (pokemonHasCardType(card, CardType.DARK)) {
       darkPokemonCount++;
     }
   });
@@ -99,7 +89,7 @@ export class Pecharuntex extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp: number = 190;
 

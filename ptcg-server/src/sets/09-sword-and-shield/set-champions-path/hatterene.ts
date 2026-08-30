@@ -13,7 +13,7 @@ import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-e
 export class Hatterene extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Hattrem';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 150;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

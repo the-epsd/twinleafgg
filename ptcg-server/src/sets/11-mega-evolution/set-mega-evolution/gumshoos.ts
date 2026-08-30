@@ -10,7 +10,7 @@ import { ABILITY_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefab
 export class Gumshoos extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Yungoos';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public retreat = [C];

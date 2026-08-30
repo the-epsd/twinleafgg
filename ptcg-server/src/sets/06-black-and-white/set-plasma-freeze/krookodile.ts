@@ -17,7 +17,7 @@ export class Krookodile extends PokemonCard {
   protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Krokorok';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 140;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

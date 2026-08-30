@@ -12,7 +12,7 @@ export class Grimmsnarl extends PokemonCard {
   protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Morgrem';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 170;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

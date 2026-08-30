@@ -18,7 +18,7 @@ export class RagingBolt extends PokemonCard {
 
   protected _tags = [CardTag.ANCIENT];
 
-  public cardType: CardType = CardType.DRAGON;
+  public cardType: CardType[] = [CardType.DRAGON];
 
   public hp: number = 130;
 

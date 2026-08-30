@@ -55,7 +55,7 @@ function* useBeckon(next: Function, store: StoreLike, state: State, effect: Atta
 
 export class Ralts extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 50;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

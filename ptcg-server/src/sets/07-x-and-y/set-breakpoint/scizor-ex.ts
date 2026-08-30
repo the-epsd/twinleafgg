@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, MOVED_TO_ACTIVE_THIS_TURN } from '../../../game/store/
 export class ScizorEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 170;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

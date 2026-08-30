@@ -18,7 +18,7 @@ export class MegaCameruptEx extends PokemonCard {
   public evolvesFrom: string = 'Numel';
   protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
   public hp: number = 340;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public weakness = [{ type: W }];
   public retreat = [C, C, C, C];
 

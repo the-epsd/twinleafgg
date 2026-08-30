@@ -1,4 +1,4 @@
-import { GameError, GameMessage, PokemonCardList, StateUtils } from '../../..';
+import { GameError, GameMessage, PokemonCardList, StateUtils, pokemonHasCardType } from '../../..';
 import { PlayerType } from '../../../game/store/actions/play-card-action';
 import { CardType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
@@ -24,7 +24,7 @@ export class CrystalCave extends TrainerCard {
 
       const targets: PokemonCardList[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if ([CardType.METAL, CardType.DRAGON].includes(card.cardType) && cardList.damage > 0) {
+        if ((pokemonHasCardType(card, CardType.METAL) || pokemonHasCardType(card, CardType.DRAGON)) && cardList.damage > 0) {
           targets.push(cardList);
         }
       });

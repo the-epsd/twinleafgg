@@ -6,7 +6,7 @@ import { State, StoreLike } from '../../../game';
 export class Amaura extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Antique Sail Fossil';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 100;
   public weakness = [{ type: M }];
   public retreat = [C, C, C];

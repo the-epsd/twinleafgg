@@ -13,7 +13,7 @@ export class Toxtricity2 extends PokemonCard {
   protected _tags = [CardTag.FUSION_STRIKE];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Toxel';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 120;
   public weakness = [{ type: F }];
   public retreat = [C, C];

@@ -12,7 +12,7 @@ import { PlayStadiumEffect } from '../../../game/store/effects/play-card-effects
 
 export class Palkia extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 130;
   public weakness = [{ type: L }];
   public retreat = [C, C];

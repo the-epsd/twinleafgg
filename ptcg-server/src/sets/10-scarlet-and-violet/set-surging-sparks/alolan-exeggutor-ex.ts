@@ -26,7 +26,7 @@ export class AlolanExeggutorex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Exeggcute';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 300;
   public retreat = [C, C, C];
 

@@ -12,8 +12,7 @@ export class DarkPupitar extends PokemonCard {
   protected _tags = [CardTag.DARK];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Larvitar';
-  public cardType: CardType = F;
-  public additionalCardTypes = [D];
+  public cardType: CardType[] = [F, D];
   public hp: number = 80;
   public weakness = [{ type: G }];
   public retreat = [C, C];

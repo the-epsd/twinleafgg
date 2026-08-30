@@ -10,7 +10,7 @@ import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Jirachi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType[] = [CardType.METAL];
   public hp: number = 70;
   public weakness = [{ type: CardType.FIRE }];
   public resistance = [{ type: CardType.PSYCHIC, value: -20 }];

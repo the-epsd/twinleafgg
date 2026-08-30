@@ -6,7 +6,7 @@ export class Lombre extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Lotad';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness: Weakness[] = [{ type: L }];
   public retreat: CardType[] = [C];

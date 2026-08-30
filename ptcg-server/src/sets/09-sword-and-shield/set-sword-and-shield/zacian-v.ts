@@ -6,7 +6,7 @@ import { WAS_POWER_USED, WAS_ATTACK_USED, THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN }
 export class ZacianV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_V];
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 220;
   public weakness = [{ type: R }];
   public retreat = [C, C];

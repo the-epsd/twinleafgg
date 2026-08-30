@@ -9,7 +9,7 @@ export class Machoke extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Machop';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 80;
   public weakness = [{ type: P, value: 20 }];
   public retreat = [C, C];

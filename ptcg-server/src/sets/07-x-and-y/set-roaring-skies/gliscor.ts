@@ -12,7 +12,7 @@ import { SlotType } from '../../../game/store/actions/play-card-action';
 export class Gliscor extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Gligar';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 90;
   public weakness = [{ type: W }];
   public retreat = [C];

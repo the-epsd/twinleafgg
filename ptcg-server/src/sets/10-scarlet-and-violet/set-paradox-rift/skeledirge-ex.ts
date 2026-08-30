@@ -35,7 +35,7 @@ export class Skeledirgeex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Crocalor';
   protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 330;
   public retreat = [C, C, C];
   public weakness = [{ type: R }];

@@ -10,8 +10,7 @@ export class Crobat extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Golbat';
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = G;
-  public additionalCardTypes = [M];
+  public cardType: CardType[] = [G, M];
   public hp: number = 90;
   public weakness = [{ type: P }];
   public retreat = [];

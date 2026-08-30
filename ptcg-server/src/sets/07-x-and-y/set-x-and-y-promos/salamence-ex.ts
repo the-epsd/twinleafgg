@@ -6,7 +6,7 @@ export class SalamenceEX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_EX];
   public hp: number = 180;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public weakness = [{ type: Y }];
   public retreat = [C, C];
 

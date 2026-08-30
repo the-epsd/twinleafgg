@@ -12,7 +12,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { AttachEnergyPrompt, GameError, Player, StateUtils } from '../../../game';
+import { AttachEnergyPrompt, GameError, Player, StateUtils, pokemonHasCardType } from '../../../game';
 
 export class GlassTrumpet extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -45,7 +45,7 @@ Choose up to 2 of your Benched [C] Pokémon and attach a Basic Energy card from 
     }
     let hasColorlessBench = false;
     player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-      if (target.slot === SlotType.BENCH && card.cardType === CardType.COLORLESS) {
+      if (target.slot === SlotType.BENCH && pokemonHasCardType(card, CardType.COLORLESS)) {
         hasColorlessBench = true;
       }
     });
@@ -85,7 +85,7 @@ Choose up to 2 of your Benched [C] Pokémon and attach a Basic Energy card from 
 
       const blocked2: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        if (card.cardType !== CardType.COLORLESS) {
+        if (!pokemonHasCardType(card, CardType.COLORLESS)) {
           blocked2.push(target);
         }
       });

@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs
 export class Copperajah extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Cufant';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 190;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

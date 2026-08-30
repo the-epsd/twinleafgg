@@ -7,7 +7,7 @@ import { SWITCH_ACTIVE_WITH_BENCHED, AFTER_ATTACK } from '../../../game/store/pr
 export class Cascoon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Wurmple';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public resistance = [];

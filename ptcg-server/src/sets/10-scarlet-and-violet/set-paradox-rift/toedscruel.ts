@@ -12,7 +12,7 @@ export class Toedscruel extends PokemonCard {
 
   public evolvesFrom = 'Toedscool';
 
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
 
   public hp: number = 120;
 

@@ -12,7 +12,7 @@ export class Dragoniteex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public evolvesFrom = 'Dragonair';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 330;
   public weakness = [];
   public retreat = [C, C];

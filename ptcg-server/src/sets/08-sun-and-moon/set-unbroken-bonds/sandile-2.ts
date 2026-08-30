@@ -7,7 +7,7 @@ import { ARM_NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS } from '../../../game/store/pref
 
 export class Sandile2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

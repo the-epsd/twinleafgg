@@ -8,7 +8,7 @@ import { PUT_X_DAMAGE_COUNTERS_ON_ALL_YOUR_OPPONENTS_POKEMON } from '../../../ga
 export class Shedinja extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Nincada';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 30;
   public retreat = [C];
 

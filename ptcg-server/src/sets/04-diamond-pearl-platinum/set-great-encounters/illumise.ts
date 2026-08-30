@@ -9,7 +9,7 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from '../../../game/stor
 
 export class Illumise extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: R, value: +20 }];
   public retreat = [C];
@@ -56,7 +56,7 @@ export class Illumise extends PokemonCard {
 
       COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (result) {
-          SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, player, { cardType: CardType.GRASS, stage: Stage.BASIC }, { min: 0, max: 1 });
+          SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, player, { cardType: [CardType.GRASS], stage: Stage.BASIC }, { min: 0, max: 1 });
         }
       });
     }

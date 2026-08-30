@@ -19,7 +19,7 @@ export class RegigigasVSTAR extends PokemonCard {
   public stage: Stage = Stage.VSTAR;
   public evolvesFrom = 'Regigigas V';
   protected _tags = [CardTag.POKEMON_VSTAR];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 300;
   public weakness = [{ type: F }];
   public retreat = [C, C, C, C];

@@ -20,7 +20,7 @@ export class Hydreigonex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Zweilous';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 330;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

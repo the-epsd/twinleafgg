@@ -6,7 +6,7 @@ import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER, THIS_POKEMON_CANNOT_USE_THIS_ATTACK_N
 
 export class FloatzelGL extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   protected _tags = [CardTag.POKEMON_SP];
   public hp: number = 80;
   public weakness = [{ type: L }];

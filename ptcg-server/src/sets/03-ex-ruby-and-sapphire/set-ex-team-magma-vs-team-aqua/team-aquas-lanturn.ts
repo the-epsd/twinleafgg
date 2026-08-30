@@ -31,7 +31,7 @@ export class TeamAquasLanturn extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = "Team Aqua's Chinchou";
   protected _tags = [CardTag.TEAM_AQUA];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -30 }];

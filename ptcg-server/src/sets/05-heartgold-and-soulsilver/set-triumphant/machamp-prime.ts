@@ -30,7 +30,7 @@ export class Machamp extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Machoke';
   protected _tags = [CardTag.PRIME];
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 150;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];

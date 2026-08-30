@@ -17,8 +17,7 @@ const TRANSFORM_POWER: Power = {
 interface DittoPrintedSnapshot {
   name: string;
   hp: number;
-  cardType: CardType;
-  additionalCardTypes: CardType[] | undefined;
+  cardType: CardType[];
   stage: Stage;
   weakness: Weakness[];
   resistance: Resistance[];
@@ -28,10 +27,14 @@ interface DittoPrintedSnapshot {
   tags: CardTag[];
 }
 
+function cloneCardType(cardType: CardType[]): CardType[] {
+  return [...cardType];
+}
+
 export class Ditto extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 50;
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
   public weakness: Weakness[] = [{ type: CardType.FIGHTING }];
   public resistance: Resistance[] = [{ type: CardType.PSYCHIC, value: -30 }];
   public retreat: CardType[] = [CardType.COLORLESS];
@@ -51,8 +54,7 @@ export class Ditto extends PokemonCard {
   private readonly printed: DittoPrintedSnapshot = {
     name: 'Ditto',
     hp: 50,
-    cardType: CardType.COLORLESS,
-    additionalCardTypes: undefined,
+    cardType: [CardType.COLORLESS],
     stage: Stage.BASIC,
     weakness: [{ type: CardType.FIGHTING }],
     resistance: [{ type: CardType.PSYCHIC, value: -30 }],
@@ -131,10 +133,7 @@ export class Ditto extends PokemonCard {
     // AttackEffect / PowerEffect references stay valid.
     if (this.transformSource === copy) {
       this.hp = copy.hp;
-      this.cardType = copy.cardType;
-      this.additionalCardTypes = copy.additionalCardTypes
-        ? [...copy.additionalCardTypes]
-        : undefined;
+      this.cardType = cloneCardType(copy.cardType);
       this.stage = copy.stage;
       this.weakness = copy.weakness.map(w => ({ ...w })) as Weakness[];
       this.resistance = copy.resistance.map(r => ({ ...r })) as Resistance[];
@@ -150,10 +149,7 @@ export class Ditto extends PokemonCard {
 
     this.transformSource = copy;
     this.hp = copy.hp;
-    this.cardType = copy.cardType;
-    this.additionalCardTypes = copy.additionalCardTypes
-      ? [...copy.additionalCardTypes]
-      : undefined;
+    this.cardType = cloneCardType(copy.cardType);
     this.stage = copy.stage;
     this.weakness = copy.weakness.map(w => ({ ...w })) as Weakness[];
     this.resistance = copy.resistance.map(r => ({ ...r })) as Resistance[];
@@ -174,8 +170,7 @@ export class Ditto extends PokemonCard {
     this.transformSource = undefined;
     this.name = this.printed.name;
     this.hp = this.printed.hp;
-    this.cardType = this.printed.cardType;
-    this.additionalCardTypes = this.printed.additionalCardTypes;
+    this.cardType = cloneCardType(this.printed.cardType);
     this.stage = this.printed.stage;
     this.weakness = this.printed.weakness.map(w => ({ ...w }));
     this.resistance = this.printed.resistance.map(r => ({ ...r }));

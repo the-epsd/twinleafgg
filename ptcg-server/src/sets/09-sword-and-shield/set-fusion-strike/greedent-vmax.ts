@@ -11,7 +11,7 @@ import {
 export class GreedentVMAX extends PokemonCard {
   public stage: Stage = Stage.VMAX;
   public evolvesFrom = 'Greedent V';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 320;
   protected _tags = [CardTag.POKEMON_VMAX];
   public weakness = [{ type: F }];

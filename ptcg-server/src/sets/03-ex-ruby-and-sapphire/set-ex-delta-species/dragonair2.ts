@@ -8,7 +8,7 @@ export class Dragonair2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Dratini';
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 70;
   public weakness = [{ type: C }];
   public resistance = [

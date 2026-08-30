@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED, FLIP_UNTIL_TAILS_AND_COUNT_HEADS } from '../../game/st
 export class Dragonair extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Dratini';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 70;
   public retreat = [C, C];
 

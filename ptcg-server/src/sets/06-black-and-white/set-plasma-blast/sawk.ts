@@ -5,7 +5,7 @@ import { DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG, WAS_ATTACK_USED } fro
 export class Sawk extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 90;
   public weakness: Weakness[] = [{ type: P }];
   public retreat: CardType[] = [C];

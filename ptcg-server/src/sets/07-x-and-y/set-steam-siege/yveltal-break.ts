@@ -13,7 +13,7 @@ export class YveltalBreak extends PokemonCard {
   protected _tags = [CardTag.BREAK];
   public stage: Stage = Stage.BREAK;
   public evolvesFrom: string = 'Yveltal';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 150;
   public retreat = [];
 

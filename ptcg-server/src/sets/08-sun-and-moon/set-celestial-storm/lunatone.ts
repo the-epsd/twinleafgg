@@ -2,7 +2,7 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { PokemonCard, Stage, CardType, PowerType, Player, PlayerType, State, StoreLike, CardTag, StateUtils, PokemonCardList, GameMessage } from "../../../game";
+import { PokemonCard, Stage, CardType, PowerType, Player, PlayerType, State, StoreLike, CardTag, StateUtils, PokemonCardList, GameMessage, pokemonHasCardType } from '../../../game';
 import { CheckPokemonTypeEffect } from "../../../game/store/effects/check-effects";
 import { Effect } from "../../../game/store/effects/effect";
 import { HANDLE_ABILITY_LOCK, CAN_APPLY_LOCKER_ABILITY } from "../../../game/store/prefabs/ability-lock";
@@ -10,7 +10,7 @@ import { AFTER_ATTACK, COIN_FLIP_PROMPT, ADD_PARALYZED_TO_PLAYER_ACTIVE } from "
 
 export class Lunatone extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: P }];
   public retreat = [C];
@@ -80,7 +80,7 @@ export class Lunatone extends PokemonCard {
             if (!checkType.cardTypes.includes(CardType.FIRE)) {
               return false;
             }
-          } else if (card.cardType !== CardType.FIRE) {
+          } else if (!pokemonHasCardType(card, CardType.FIRE)) {
             return false;
           }
         } catch {

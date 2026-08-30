@@ -19,7 +19,7 @@ export class Spidopsex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
 
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 260;
 

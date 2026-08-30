@@ -17,7 +17,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class TeamRocketsWobbuffet extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.TEAM_ROCKET];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 110;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

@@ -350,7 +350,7 @@ function generatePokemonStub(card: any, className: string, setCode: string, need
 
   // cardType
   const cardType = card.types && card.types[0] ? typeShort(card.types[0]) : 'C';
-  lines.push(`  public cardType: CardType = ${cardType};`);
+  lines.push(`  public cardType: CardType[] = [${cardType}];`);
 
   // hp
   lines.push(`  public hp: number = ${parseInt(card.hp, 10) || 0};`);

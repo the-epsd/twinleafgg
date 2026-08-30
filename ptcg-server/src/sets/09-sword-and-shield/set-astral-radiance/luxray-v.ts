@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { CardTag, Stage, SuperType } from '../../../game/store/card/card-types';
+import { CardType, CardTag, Stage, SuperType } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage, Card } from '../../../game';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
@@ -12,7 +12,7 @@ import {
 } from '../../../game/store/prefabs/prefabs';
 
 export class LuxrayV extends PokemonCard {
-  public cardType = L;
+  public cardType: CardType[] = [L];
 
   protected _tags = [CardTag.POKEMON_V];
 

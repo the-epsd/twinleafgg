@@ -29,7 +29,7 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 export class CobalionGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_GX];
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 170;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

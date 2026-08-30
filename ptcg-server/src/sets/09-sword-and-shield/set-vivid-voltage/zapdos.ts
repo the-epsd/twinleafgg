@@ -23,7 +23,7 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 
 export class Zapdos extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 110;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

@@ -13,7 +13,7 @@ export class MorpekoVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Morpeko V';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 300;
   public weakness = [{ type: F }];
   public retreat = [C];

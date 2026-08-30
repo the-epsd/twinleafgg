@@ -17,7 +17,7 @@ export class HisuianTyphlosionVstar extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VSTAR];
   public stage: Stage = Stage.VSTAR;
   public evolvesFrom: string = 'Hisuian Typhlosion V';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 260;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

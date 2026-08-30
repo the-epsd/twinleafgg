@@ -27,7 +27,7 @@ import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 export class TapuFiniGX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 170;
   public retreat = [C];
 

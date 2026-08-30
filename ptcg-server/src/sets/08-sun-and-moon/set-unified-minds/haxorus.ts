@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_P
 export class Haxorus extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Fraxure';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 150;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];

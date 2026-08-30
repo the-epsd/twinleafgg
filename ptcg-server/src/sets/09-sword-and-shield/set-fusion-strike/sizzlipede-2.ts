@@ -10,7 +10,7 @@ import { State, StoreLike } from '../../../game';
 export class Sizzlipede2 extends PokemonCard {
   protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 70;
   public weakness = [{ type: W }];
   public retreat = [C, C];

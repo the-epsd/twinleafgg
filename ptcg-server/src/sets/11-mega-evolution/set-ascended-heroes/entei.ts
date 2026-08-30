@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Entei extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 140;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public weakness = [{ type: W }];
   public retreat = [C, C, C];
 

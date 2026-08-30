@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, THIS_POKEMON_CANNOT_USE_THIS_ATTACK_
 export class Wailord extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Wailmer';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 200;
   public weakness = [{ type: L }];
   public retreat = [C, C, C, C];

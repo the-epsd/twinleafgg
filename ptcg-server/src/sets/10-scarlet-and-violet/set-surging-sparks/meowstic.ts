@@ -14,7 +14,7 @@ export class Meowstic extends PokemonCard {
 
   public evolvesFrom = 'Espurr';
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 90;
 

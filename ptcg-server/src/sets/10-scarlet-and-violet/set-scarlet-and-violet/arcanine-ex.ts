@@ -23,7 +23,7 @@ export class Arcanineex extends PokemonCard {
 
   protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
-  public cardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
 
   public hp = 280;
 

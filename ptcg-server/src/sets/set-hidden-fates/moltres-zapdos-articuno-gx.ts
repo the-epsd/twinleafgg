@@ -17,7 +17,7 @@ import { SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK } from '../.
 export class MoltresZapdosArticunoGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 300;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

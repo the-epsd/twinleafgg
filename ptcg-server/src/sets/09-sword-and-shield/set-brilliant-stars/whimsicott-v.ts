@@ -8,7 +8,7 @@ import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/eff
 export class WhimsicottV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_V];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 190;
   public weakness = [{ type: M }];
   public retreat = [C];

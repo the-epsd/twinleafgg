@@ -15,7 +15,7 @@ export class WoChienex extends PokemonCard {
 
   public stage = Stage.BASIC;
 
-  public cardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp = 230;
 

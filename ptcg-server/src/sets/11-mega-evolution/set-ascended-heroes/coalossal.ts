@@ -11,7 +11,7 @@ export class Coalossal extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Carkol';
   public hp: number = 180;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];
 

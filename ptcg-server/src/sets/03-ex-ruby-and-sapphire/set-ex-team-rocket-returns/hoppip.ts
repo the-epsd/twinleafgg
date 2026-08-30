@@ -7,7 +7,7 @@ import { COIN_FLIP_PROMPT, IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../..
 
 export class Hoppip extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 30;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -30 }];

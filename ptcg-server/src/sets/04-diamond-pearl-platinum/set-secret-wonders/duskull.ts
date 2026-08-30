@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, MOVE_CARD_TO, SHUFFLE_DECK, SHOW_CAR
 
 export class Duskull extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 50;
   public weakness = [{ type: D, value: +10 }];
   public resistance = [{ type: C, value: -20 }];

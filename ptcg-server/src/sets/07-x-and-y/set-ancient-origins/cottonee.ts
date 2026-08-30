@@ -6,7 +6,7 @@ import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK } from '../../../game/store/pr
 
 export class Cottonee extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 40;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

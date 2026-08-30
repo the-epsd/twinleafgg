@@ -13,7 +13,7 @@ export class CorviknightVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Corviknight V';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 320;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

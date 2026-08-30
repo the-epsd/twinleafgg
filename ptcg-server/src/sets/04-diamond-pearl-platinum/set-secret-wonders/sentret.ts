@@ -6,7 +6,7 @@ import { AFTER_ATTACK } from '../../../game/store/prefabs/prefabs';
 
 export class Sentret extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 60;
   public weakness = [{ type: F, value: +10 }];
   public retreat = [C];

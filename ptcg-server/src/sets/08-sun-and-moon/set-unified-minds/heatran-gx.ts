@@ -28,7 +28,7 @@ import {
 } from '../../../game/store/prefabs/prefabs';
 
 export class HeatranGX extends PokemonCard {
-  public cardType = R;
+  public cardType: CardType[] = [R];
   protected _tags = [CardTag.POKEMON_GX];
   public hp = 190;
   public stage = Stage.BASIC;

@@ -27,7 +27,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class HolonsMagnemite extends PokemonCard implements EnergyCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.HOLONS];
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 40;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

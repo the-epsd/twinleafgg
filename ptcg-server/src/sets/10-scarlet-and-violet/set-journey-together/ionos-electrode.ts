@@ -11,7 +11,7 @@ export class IonosElectrode extends PokemonCard {
   protected _tags = [CardTag.IONOS];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = "Iono's Voltorb";
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 100;
   public weakness = [{ type: F }];
 

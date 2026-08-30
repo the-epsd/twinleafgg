@@ -11,7 +11,7 @@ import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND, IS_ABILITY_BLOCKED, THI
 export class Dragonair extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Dratini';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 100;
   public weakness = [];
   public resistance = [];

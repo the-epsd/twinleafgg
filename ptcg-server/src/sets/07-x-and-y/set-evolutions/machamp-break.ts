@@ -20,7 +20,7 @@ export class MachampBreak extends PokemonCard {
   protected _tags = [CardTag.BREAK];
   public stage: Stage = Stage.BREAK;
   public evolvesFrom: string = 'Machamp';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 190;
   public retreat = [];
 

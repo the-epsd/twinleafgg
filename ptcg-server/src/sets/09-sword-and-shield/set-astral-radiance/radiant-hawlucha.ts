@@ -9,7 +9,7 @@ export class RadiantHawlucha extends PokemonCard {
 
   protected _tags = [CardTag.RADIANT];
 
-  public cardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp = 90;
 

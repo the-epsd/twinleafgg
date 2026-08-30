@@ -22,7 +22,7 @@ export class Salazzleex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Salandit';
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 260;
   public weakness = [{ type: W }];
   public retreat = [C];

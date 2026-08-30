@@ -9,7 +9,7 @@ import { CAN_PLAY_SUPPORTER_CARD } from '../../../game/store/prefabs/trainer-pre
 export class Porygon2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Porygon';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 70;
   public weakness = [{ type: F, value: +20 }];
   public retreat = [C, C];

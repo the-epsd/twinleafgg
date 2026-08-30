@@ -9,8 +9,7 @@ export class DarkFlaaffy extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Mareep';
   protected _tags = [CardTag.DARK];
-  public cardType: CardType = L;
-  public additionalCardTypes = [D];
+  public cardType: CardType[] = [L, D];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public retreat = [C];

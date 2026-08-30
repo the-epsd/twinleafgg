@@ -12,7 +12,7 @@ export class Shinx extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [CardType.LIGHTNING];
 
   public weakness = [{ type: CardType.FIRE }];
 

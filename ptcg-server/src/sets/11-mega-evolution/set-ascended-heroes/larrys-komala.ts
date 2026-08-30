@@ -29,7 +29,7 @@ import {
 export class LarrysKomala extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.LARRYS];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: L }];
   public resistance = [];

@@ -28,7 +28,7 @@ export class UnownVSTAR extends PokemonCard {
   public regulationMark = 'F';
   public stage: Stage = Stage.VSTAR;
   public evolvesFrom = 'Unown V';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 250;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

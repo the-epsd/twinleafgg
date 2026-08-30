@@ -12,7 +12,7 @@ export class Gallade extends PokemonCard {
 
   public evolvesFrom = 'Kirlia';
 
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp: number = 170;
 

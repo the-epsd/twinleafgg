@@ -29,7 +29,7 @@ export class Florges extends PokemonCard {
   protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Floette';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 130;
   public weakness = [{ type: M }];
   public retreat = [C, C];

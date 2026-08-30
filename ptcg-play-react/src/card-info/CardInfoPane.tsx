@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Card, CardList, EnergyCard, Player, PokemonCard, TrainerCard } from 'ptcg-server';
-import { CardType, BoardEffect, EnergyType, PokemonCardList, PowerType, SuperType, TrainerType, CardTag } from 'ptcg-server';
+import { CardType, BoardEffect, EnergyType, getPokemonCardTypes, PokemonCardList, PowerType, SuperType, TrainerType, CardTag } from 'ptcg-server';
 import { CardSwapDialog } from './CardSwapDialog';
 import { EnergyTypeIcon } from './EnergyTypeIcon';
 import { isFavoriteCard, toggleFavoriteCard } from './favoriteCardsStorage';
@@ -257,13 +257,7 @@ export function CardInfoPane({
                 </span>
               </div>
               <div className={styles.subtitleCardType}>
-                <EnergyTypeIcon
-                  type={displayPokemon.cardType}
-                  size="compact"
-                  collapseLayout={false}
-                  className={styles.titleTypeIcon}
-                />
-                {displayPokemon.additionalCardTypes?.map((t) => (
+                {getPokemonCardTypes(displayPokemon).map((t: CardType) => (
                   <EnergyTypeIcon
                     key={String(t)}
                     type={t}

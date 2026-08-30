@@ -11,7 +11,7 @@ import { EffectOfAbilityEffect } from '../../../game/store/effects/game-effects'
 
 export class Hitmonchan extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 120;
   public weakness = [{ type: P }];
   public retreat = [C];

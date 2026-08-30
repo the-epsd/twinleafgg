@@ -17,8 +17,7 @@ import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefab
 export class TeamMagmasGroudon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.TEAM_MAGMA];
-  public cardType: CardType = F;
-  public additionalCardTypes = [D];
+  public cardType: CardType[] = [F, D];
   public hp: number = 100;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

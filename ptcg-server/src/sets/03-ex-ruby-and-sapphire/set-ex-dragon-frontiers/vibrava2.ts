@@ -13,7 +13,7 @@ export class Vibrava2 extends PokemonCard {
   protected _tags = [CardTag.DELTA_SPECIES];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Trapinch';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public weakness = [{ type: C }];
   public resistance = [

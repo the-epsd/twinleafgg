@@ -1,5 +1,4 @@
-import {
-  AttachEnergyPrompt,
+import { CardType, AttachEnergyPrompt,
   CardTag,
   CardTarget,
   EnergyType,
@@ -13,8 +12,7 @@ import {
   State,
   StateUtils,
   StoreLike,
-  SuperType,
-} from '../../../game';
+  SuperType, } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../../game/store/prefabs/attack-effects';
 import {
@@ -28,8 +26,7 @@ import {
 } from '../../../game/store/prefabs/prefabs';
 
 export class Flygon extends PokemonCard {
-  public cardType = G;
-  public additionalCardTypes = [M];
+  public cardType: CardType[] = [G, M];
   public stage = Stage.BASIC;
   public evolvesFrom = 'Vibrava';
   protected _tags = [CardTag.DELTA_SPECIES];

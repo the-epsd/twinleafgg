@@ -12,7 +12,7 @@ export class Electivire extends PokemonCard {
 
   public evolvesFrom = 'Electabuzz';
 
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [CardType.LIGHTNING];
 
   public hp: number = 140;
 

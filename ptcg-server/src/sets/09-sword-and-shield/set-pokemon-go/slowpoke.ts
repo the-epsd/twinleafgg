@@ -7,7 +7,7 @@ import { HEAL_X_DAMAGE_FROM_THIS_POKEMON, WAS_ATTACK_USED } from '../../../game/
 
 export class Slowpoke extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
   public hp: number = 70;
   public weakness = [{ type: CardType.LIGHTNING }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];

@@ -16,7 +16,7 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs
 export class Palafinex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Finizen';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 340;
   public weakness = [{ type: L }];
   public retreat = [C, C];

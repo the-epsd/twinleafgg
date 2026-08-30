@@ -4,7 +4,7 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 export class Shelmet extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.FUSION_STRIKE];
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];

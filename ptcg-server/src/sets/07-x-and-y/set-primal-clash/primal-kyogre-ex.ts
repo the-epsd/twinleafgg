@@ -15,7 +15,7 @@ export class PrimalKyogreEx extends PokemonCard {
   protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX, CardTag.PRIMAL];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Kyogre-EX';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 240;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];

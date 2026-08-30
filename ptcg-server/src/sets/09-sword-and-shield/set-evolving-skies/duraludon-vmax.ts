@@ -13,7 +13,7 @@ export class DuraludonVMAX extends PokemonCard {
   public stage: Stage = Stage.VMAX;
   protected _tags = [CardTag.POKEMON_VMAX, CardTag.SINGLE_STRIKE];
   public evolvesFrom = 'Duraludon V';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 330;
   public weakness = [];
   public retreat = [C, C, C];

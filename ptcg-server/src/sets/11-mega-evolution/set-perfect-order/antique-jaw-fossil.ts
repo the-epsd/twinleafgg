@@ -8,7 +8,7 @@ import { WAS_POWER_USED, IS_ABILITY_BLOCKED } from "../../../game/store/prefabs/
 export class AntiqueJawFossil extends TrainerCard {
   public trainerType = TrainerType.ITEM;
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
   public cardTypez: CardType = CardType.COLORLESS;
   public movedToActiveThisTurn = false;
   public pokemonType = PokemonType.NORMAL;

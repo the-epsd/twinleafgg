@@ -4,13 +4,13 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils } from '../../game';
+import { StoreLike, State, StateUtils, pokemonHasCardType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND } from '../../game/store/prefabs/prefabs';
 
 export class Keldeo extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 110;
   public weakness = [{ type: G }];
   public retreat = [C, C];
@@ -45,13 +45,13 @@ export class Keldeo extends PokemonCard {
 
       const blocked: number[] = [];
       player.discard.cards.forEach((c, index) => {
-        if (!(c instanceof PokemonCard) || c.cardType !== CardType.WATER) {
+        if (!(c instanceof PokemonCard) || !pokemonHasCardType(c, CardType.WATER)) {
           blocked.push(index);
         }
       });
 
       const hasWaterPokemon = player.discard.cards.some(c =>
-        c instanceof PokemonCard && c.cardType === CardType.WATER
+        c instanceof PokemonCard && pokemonHasCardType(c, CardType.WATER)
       );
       if (!hasWaterPokemon) {
         return state;

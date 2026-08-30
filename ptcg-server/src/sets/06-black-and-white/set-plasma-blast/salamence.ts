@@ -8,7 +8,7 @@ import { ConfirmPrompt } from '../../../game/store/prompts/confirm-prompt';
 export class Salamence extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Shelgon';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 150;
   public weakness = [{ type: N }];
   public retreat = [C, C, C, C];

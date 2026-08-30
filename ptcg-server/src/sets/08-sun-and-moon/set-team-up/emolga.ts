@@ -12,7 +12,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { Card, PowerType, State, StoreLike } from '../../../game';
 export class Emolga extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 60;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

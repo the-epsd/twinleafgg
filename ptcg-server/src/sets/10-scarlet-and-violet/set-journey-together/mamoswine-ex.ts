@@ -28,7 +28,7 @@ export class Mamoswineex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   protected _tags = [CardTag.POKEMON_ex];
   public evolvesFrom = 'Piloswine';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 340;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];

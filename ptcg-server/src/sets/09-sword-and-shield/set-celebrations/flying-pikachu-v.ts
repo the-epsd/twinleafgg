@@ -11,7 +11,7 @@ import { FLIP_COIN_FOR_FLY } from '../../../game/store/prefabs/effect-of-attack-
 export class FlyingPikachuV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_V];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 190;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

@@ -25,7 +25,7 @@ import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 export class Hawlucha extends PokemonCard {
   protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

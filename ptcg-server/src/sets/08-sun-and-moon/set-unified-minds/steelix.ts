@@ -8,7 +8,7 @@ import { YOUR_POKEMON_CANNOT_ATTACK_DURING_YOUR_NEXT_TURN } from '../../../game/
 export class Steelix extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Onix';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 170;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];

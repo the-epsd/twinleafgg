@@ -25,7 +25,7 @@ import {
 export class HoopaGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 190;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

@@ -9,7 +9,7 @@ import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class RotasBonsly extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 50;
   public weakness = [{ type: W }];
   public retreat = [C];

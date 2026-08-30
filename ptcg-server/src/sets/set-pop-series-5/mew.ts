@@ -24,7 +24,7 @@ import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 export class Mew extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 60;
   public weakness = [{ type: P }];
   public retreat = [C];

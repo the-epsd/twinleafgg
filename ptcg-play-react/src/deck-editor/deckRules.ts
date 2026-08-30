@@ -1,5 +1,5 @@
 import type { Card, EnergyCard, PokemonCard, TrainerCard } from 'ptcg-server';
-import { CardTag, CardType, EnergyType, Stage, SuperType, TrainerType } from 'ptcg-server';
+import { CardTag, CardType, EnergyType, getPrimaryCardType, Stage, SuperType, TrainerType } from 'ptcg-server';
 import type { DeckSlot } from './types';
 
 export function isBasicEnergy(card: Card): boolean {
@@ -205,7 +205,7 @@ export function sortDeckSlots(slots: DeckSlot[]): DeckSlot[] {
   const chainSortType = (chain: DeckSlot[]): CardType => {
     // Prefer the basic's type so cross-type evolutions stay in the basic's type group.
     const basic = chain.find((s) => (s.card as PokemonCard).stage === Stage.BASIC);
-    return ((basic ?? chain[0]).card as PokemonCard).cardType;
+    return getPrimaryCardType((basic ?? chain[0]).card as PokemonCard);
   };
 
   const sortedChains = Array.from(evolutionChains.entries())

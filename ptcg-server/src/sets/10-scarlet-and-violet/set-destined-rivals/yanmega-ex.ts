@@ -31,7 +31,7 @@ export class Yanmegaex extends PokemonCard {
   public regulationMark = 'I';
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Yanma';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 280;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

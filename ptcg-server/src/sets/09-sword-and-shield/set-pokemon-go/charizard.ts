@@ -21,7 +21,7 @@ export class Charizard extends PokemonCard {
 
   public name = 'Charizard';
 
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
 
   public evolvesFrom: string = 'Charmeleon';
 

@@ -6,7 +6,7 @@ export class MegaFeraligatrex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Croconaw';
   protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 370;
   public weakness = [{ type: L }];
   public resistance = [];

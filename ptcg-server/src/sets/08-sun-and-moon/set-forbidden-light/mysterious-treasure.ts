@@ -1,4 +1,4 @@
-import { CardList, PokemonCard } from '../../../game';
+import { CardList, PokemonCard, pokemonHasCardType } from '../../../game';
 import { GameError } from '../../../game/game-error';
 import { GameLog, GameMessage } from '../../../game/game-message';
 import { Card } from '../../../game/store/card/card';
@@ -22,7 +22,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   const blocked: number[] = [];
   player.deck.cards.forEach((card, index) => {
-    if (card instanceof PokemonCard && card.cardType !== CardType.DRAGON && card.cardType !== CardType.PSYCHIC) {
+    if (card instanceof PokemonCard && !pokemonHasCardType(card, CardType.DRAGON) && !pokemonHasCardType(card, CardType.PSYCHIC)) {
       blocked.push(index);
     }
   });

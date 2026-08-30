@@ -19,7 +19,7 @@ export class ArvensToedscruel extends PokemonCard {
   protected _tags = [CardTag.ARVENS];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = "Arven's Toedscool";
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 140;
   public weakness = [{ type: G }];
   public retreat = [C, C];

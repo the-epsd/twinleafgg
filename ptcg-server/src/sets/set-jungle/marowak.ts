@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/pr
 
 export class Marowak extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 60;
   public weakness = [{ type: G }];
   public resistance = [{ type: L, value: -30 }];
@@ -59,7 +59,7 @@ export class Marowak extends PokemonCard {
         player,
         GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
         player.deck,
-        { superType: SuperType.POKEMON, stage: Stage.BASIC, cardType: CardType.FIGHTING },
+        { superType: SuperType.POKEMON, stage: Stage.BASIC, cardType: [CardType.FIGHTING] },
         { min: 1, max: 1, allowCancel: true }
       ), selected => {
         cards = selected || [];

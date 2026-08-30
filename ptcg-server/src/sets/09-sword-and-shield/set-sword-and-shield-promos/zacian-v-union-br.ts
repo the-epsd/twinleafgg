@@ -19,7 +19,7 @@ import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 export class ZacianVUNIONBottomRight extends PokemonCard {
   public stage: Stage = Stage.VUNION;
   protected _tags = [CardTag.POKEMON_VUNION];
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 320;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

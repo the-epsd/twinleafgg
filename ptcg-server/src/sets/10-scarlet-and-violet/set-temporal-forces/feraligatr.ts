@@ -10,7 +10,7 @@ import { ABILITY_USED, ADD_MARKER, BLOCK_EFFECT_IF_MARKER, HAS_MARKER, REMOVE_MA
 export class Feraligatr extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Croconaw';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 180;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];

@@ -24,7 +24,7 @@ export class Beedrill extends PokemonCard {
 
   public regulationMark = 'E';
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp = 130;
 

@@ -17,7 +17,7 @@ export class Pidgey extends PokemonCard {
 
   public setNumber = '57';
 
-  public cardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public fullName = 'Pidgey BS';
 

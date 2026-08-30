@@ -17,7 +17,7 @@ import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 export class Latiasex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: C }];
   public resistance = [

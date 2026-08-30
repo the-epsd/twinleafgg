@@ -9,7 +9,7 @@ import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED, FLIP_UNTIL_TAILS_AND_COUNT_HE
 export class TogepiCleffaIgglybuffGX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 240;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

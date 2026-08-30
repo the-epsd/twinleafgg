@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED, THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN, WAS_POWER_USED }
 export class GenesectV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V, CardTag.FUSION_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 190;
   public weakness = [{ type: R }];
   public retreat = [C, C];

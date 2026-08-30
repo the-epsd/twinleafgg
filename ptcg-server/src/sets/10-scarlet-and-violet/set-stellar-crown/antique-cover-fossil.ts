@@ -32,7 +32,7 @@ export class AntiqueCoverFossil extends TrainerCard {
   public superType = SuperType.TRAINER;
   public regulationMark = 'H';
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
   public hp: number = 60;
   public movedToActiveThisTurn = false;
   public pokemonType = PokemonType.NORMAL;

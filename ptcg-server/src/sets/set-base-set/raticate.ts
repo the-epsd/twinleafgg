@@ -13,7 +13,7 @@ export class Raticate extends PokemonCard {
 
   public set = 'BS';
 
-  public cardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public fullName = 'Raticate BS';
 

@@ -10,7 +10,7 @@ export class Falinks extends PokemonCard {
 
   protected _tags = [CardTag.RAPID_STRIKE];
 
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp: number = 110;
 

@@ -12,7 +12,7 @@ export class Magnezone extends PokemonCard {
 
   public evolvesFrom = 'Magneton';
 
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType[] = [CardType.METAL];
 
   public hp: number = 150;
 

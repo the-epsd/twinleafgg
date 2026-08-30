@@ -7,7 +7,7 @@ import { SWITCH_ACTIVE_WITH_BENCHED, AFTER_ATTACK } from '../../../game/store/pr
 
 export class Buneary extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [C];

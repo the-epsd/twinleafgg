@@ -14,7 +14,7 @@ export class Cacturne extends PokemonCard {
   public usedPull = false;
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Cacnea';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public retreat = [C, C];

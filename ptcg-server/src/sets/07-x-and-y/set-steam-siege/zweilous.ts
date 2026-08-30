@@ -12,7 +12,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 export class Zweilous extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Deino';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 90;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];

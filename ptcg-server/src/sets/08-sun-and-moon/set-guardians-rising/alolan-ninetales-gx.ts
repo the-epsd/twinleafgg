@@ -26,7 +26,7 @@ export class AlolanNinetalesGX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Alolan Vulpix';
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
   public hp: number = 210;
   public weakness = [{ type: CardType.METAL }];
   public retreat = [CardType.COLORLESS];

@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 export class Nidoqueen extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 90;
 

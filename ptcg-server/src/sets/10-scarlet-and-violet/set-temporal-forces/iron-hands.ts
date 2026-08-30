@@ -8,7 +8,7 @@ import { DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG, WAS_ATTACK_USED, COIN
 
 export class IronHands extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   protected _tags = [CardTag.FUTURE];
   public hp: number = 140;
   public weakness = [{ type: F }];

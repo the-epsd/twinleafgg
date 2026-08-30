@@ -9,7 +9,7 @@ import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../game/store/prefabs/
 export class AurasLucario3 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.AURAS];
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

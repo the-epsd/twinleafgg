@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND } from '../../..
 export class Sandslash extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Sandshrew';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 120;
   public weakness = [{ type: G }];
   public retreat = [C, C];

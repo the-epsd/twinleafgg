@@ -32,7 +32,7 @@ import {
 export class ZeraoraGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_GX];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 190;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

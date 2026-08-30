@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Kyogre extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 140;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public weakness = [{ type: L }];
   public retreat = [C, C, C, C];
 

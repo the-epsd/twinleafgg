@@ -24,8 +24,7 @@ import {
 export class TeamAquasKyogre extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.TEAM_AQUA];
-  public cardType: CardType = W;
-  public additionalCardTypes = [D];
+  public cardType: CardType[] = [W, D];
   public hp: number = 100;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

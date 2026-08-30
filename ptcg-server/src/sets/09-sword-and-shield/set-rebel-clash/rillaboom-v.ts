@@ -15,7 +15,7 @@ import { THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../../game/store/prefabs/
 export class RillaboomV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 220;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
@@ -52,7 +52,7 @@ export class RillaboomV extends PokemonCard {
         store,
         state,
         player,
-        { stage: Stage.BASIC, cardType: CardType.GRASS },
+        { stage: Stage.BASIC, cardType: [CardType.GRASS] },
         { min: 0, max: 2, allowCancel: true },
       );
     }

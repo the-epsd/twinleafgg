@@ -12,7 +12,7 @@ import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 export class AlolanNinetales extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Alolan Vulpix';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 110;
   public weakness = [{ type: M }];
   public retreat = [C];

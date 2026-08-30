@@ -7,7 +7,7 @@ import { AFTER_ATTACK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 export class TeamRocketsLarvitar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.TEAM_ROCKET];
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 70;
   public weakness = [{ type: G }];
   public retreat = [C];

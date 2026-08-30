@@ -15,7 +15,7 @@ export class ZacianVSTAR extends PokemonCard {
 
   public evolvesFrom = 'Zacian V';
 
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType[] = [CardType.METAL];
 
   public hp: number = 270;
 

@@ -15,7 +15,7 @@ export class Aegislash extends PokemonCard {
 
   public evolvesFrom = 'Doublade';
 
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType[] = [CardType.METAL];
 
   public hp: number = 150;
 

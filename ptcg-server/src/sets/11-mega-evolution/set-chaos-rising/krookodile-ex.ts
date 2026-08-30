@@ -8,7 +8,7 @@ export class KrookodileEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex];
   public evolvesFrom: string = 'Krokorok';
   public hp: number = 320;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
 

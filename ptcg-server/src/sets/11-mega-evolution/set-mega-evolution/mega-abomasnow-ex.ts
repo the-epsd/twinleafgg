@@ -16,7 +16,7 @@ export class MegaAbomasnowEx extends PokemonCard {
   public evolvesFrom = 'Snover';
   protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
   public hp: number = 350;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public weakness = [{ type: M }];
   public retreat = [C, C, C, C];
 

@@ -13,7 +13,7 @@ export class BoltundVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Boltund V';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 320;
   public weakness = [{ type: F }];
   public retreat = [C, C];

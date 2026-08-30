@@ -6,7 +6,7 @@ import { AFTER_ATTACK, DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Virizion extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public retreat = [C];

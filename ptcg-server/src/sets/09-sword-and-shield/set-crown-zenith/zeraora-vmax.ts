@@ -18,7 +18,7 @@ export class ZeraoraVMAX extends PokemonCard {
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Zeraora V';
   protected _tags = [CardTag.POKEMON_VMAX];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 320;
   public weakness = [{ type: F }];
   public retreat = [C, C];

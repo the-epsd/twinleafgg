@@ -15,7 +15,7 @@ export class TapuKokoVMAX extends PokemonCard {
 
   public evolvesFrom = 'Tapu Koko V';
 
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [CardType.LIGHTNING];
 
   public hp: number = 320;
 

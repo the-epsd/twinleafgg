@@ -27,7 +27,7 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 export class BronzongG extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_SP];
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 90;
   public weakness = [{ type: P }];
   public resistance = [{ type: R, value: -20 }];

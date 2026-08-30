@@ -65,7 +65,7 @@ function* useGeneticMemory(next: Function, store: StoreLike, state: State,
 export class Kingdraex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Seadra';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 150;
   public weakness = [{ type: G }, { type: L }];
   public retreat = [C, C, C];

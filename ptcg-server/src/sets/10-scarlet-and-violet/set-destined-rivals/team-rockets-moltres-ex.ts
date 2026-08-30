@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class TeamRocketsMoltresex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex, CardTag.TEAM_ROCKET];
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 220;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

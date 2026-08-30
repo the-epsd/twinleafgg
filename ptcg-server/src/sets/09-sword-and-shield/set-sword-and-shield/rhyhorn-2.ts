@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs
 
 export class Rhyhorn2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 90;
   public weakness = [{ type: G }];
   public retreat = [C, C];

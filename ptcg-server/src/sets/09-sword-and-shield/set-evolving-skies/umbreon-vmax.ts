@@ -25,7 +25,7 @@ export class UmbreonVMAX extends PokemonCard {
 
   public evolvesFrom = 'Umbreon V';
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp: number = 310;
 

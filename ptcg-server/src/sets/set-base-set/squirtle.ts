@@ -9,7 +9,7 @@ import { PREVENT_DAMAGE } from '../../game/store/prefabs/effect-of-attack-prefab
 
 export class Squirtle extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 40;
   public weakness = [{ type: L }];
   public retreat = [C];

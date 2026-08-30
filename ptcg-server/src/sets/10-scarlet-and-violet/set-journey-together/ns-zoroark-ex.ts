@@ -91,7 +91,7 @@ export class NsZoroarkex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex, CardTag.NS];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = "N's Zorua";
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 280;
   public weakness = [{ type: G }];
   public retreat = [C, C];

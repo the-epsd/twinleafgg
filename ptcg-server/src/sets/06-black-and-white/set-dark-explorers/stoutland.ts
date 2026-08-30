@@ -10,7 +10,7 @@ import { EnergyType } from '../../../game/store/card/card-types';
 export class Stoutland extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Herdier';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

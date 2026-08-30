@@ -20,7 +20,7 @@ export class Hitmonchan extends PokemonCard {
 
   public hp = 90;
 
-  public cardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public weakness = [{ type: CardType.PSYCHIC }];
 

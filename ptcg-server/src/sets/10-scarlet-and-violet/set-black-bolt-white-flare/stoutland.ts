@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Stoutland extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Herdier';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 160;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

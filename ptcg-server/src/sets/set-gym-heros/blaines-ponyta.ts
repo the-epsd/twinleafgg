@@ -8,7 +8,7 @@ import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../game/store/pre
 export class BlainesPonyta extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.BLAINES];
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 40;
   public weakness = [{ type: W }];
   public retreat = [];

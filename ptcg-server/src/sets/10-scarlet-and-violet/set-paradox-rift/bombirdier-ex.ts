@@ -68,7 +68,7 @@ export class Bombirdierex extends PokemonCard {
 
   protected _tags = [CardTag.POKEMON_ex];
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp: number = 200;
 

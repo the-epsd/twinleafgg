@@ -8,7 +8,7 @@ import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 export class GalarianWeezing extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Koffing';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public retreat = [C, C];

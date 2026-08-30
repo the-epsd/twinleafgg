@@ -14,7 +14,7 @@ import { GamePhase } from '../../../game/store/state/state';
 export class Trevenant extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Phantump';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];

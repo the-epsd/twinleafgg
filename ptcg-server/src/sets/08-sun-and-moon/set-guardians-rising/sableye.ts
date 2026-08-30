@@ -5,7 +5,7 @@ import { OPPONENT_CANNOT_PLAY_SUPPORTER_CARDS } from "../../../game/store/prefab
 
 export class Sableye extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 60;
   public retreat = [C];
 

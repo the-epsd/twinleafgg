@@ -6,7 +6,7 @@ import { BOOST_IF_OTHER_ANCIENT_ATTACKED_LAST_TURN } from "../../../game/store/p
 export class Koraidon extends PokemonCard {
   protected _tags = [CardTag.ANCIENT];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 130;
   public retreat = [C, C];
   public weakness = [{ type: P }];

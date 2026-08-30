@@ -18,7 +18,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 export class Cleffa extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.BABY];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 30;
   public retreat = [];
 

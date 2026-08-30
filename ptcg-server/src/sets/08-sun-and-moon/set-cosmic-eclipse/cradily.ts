@@ -14,7 +14,7 @@ import { PowerType, State, StoreLike } from '../../../game';
 export class Cradily extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Lileep';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 150;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];

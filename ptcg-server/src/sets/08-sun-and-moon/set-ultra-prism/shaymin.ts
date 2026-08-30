@@ -12,7 +12,7 @@ import { PlayPokemonFromDeckEffect } from '../../../game/store/effects/play-card
 import { State, StoreLike } from '../../../game';
 export class Shaymin extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public retreat = [C];

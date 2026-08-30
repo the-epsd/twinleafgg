@@ -11,7 +11,7 @@ export class Steelixex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Onix';
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 150;
   public weakness = [{ type: R }, { type: F }];
   public resistance = [

@@ -16,7 +16,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class AmbipomG extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_SP];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public retreat = [C];

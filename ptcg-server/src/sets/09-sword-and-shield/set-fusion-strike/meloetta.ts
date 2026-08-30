@@ -13,7 +13,7 @@ export class Meloetta extends PokemonCard {
 
   protected _tags = [CardTag.FUSION_STRIKE];
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 90;
 

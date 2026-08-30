@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardTag, Card, ChooseCardsPrompt, GameMessage, State, StateUtils, StoreLike } from '../../../game';
+import { CardType, PokemonCard, Stage, CardTag, Card, ChooseCardsPrompt, GameMessage, State, StateUtils, StoreLike } from '../../../game';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 
@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 export class Sneasel extends PokemonCard {
   public stage = Stage.BASIC;
   protected _tags = [CardTag.RAPID_STRIKE];
-  public cardType = W;
+  public cardType: CardType[] = [W];
   public hp = 70;
   public weakness = [{ type: M }];
   public retreat = [C];

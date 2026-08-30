@@ -20,7 +20,7 @@ import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
 
 export class Mimikyu2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public retreat = [C];
 

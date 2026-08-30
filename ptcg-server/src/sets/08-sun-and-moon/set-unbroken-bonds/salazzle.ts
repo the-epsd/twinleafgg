@@ -9,7 +9,7 @@ import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Salazzle extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
   public hp: number = 100;
   public weakness = [{ type: CardType.WATER }];
   public retreat = [CardType.COLORLESS];

@@ -22,7 +22,7 @@ export class SilvallyGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Type: Null';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 210;
   public weakness = [{ type: F }];
   public retreat = [C, C];

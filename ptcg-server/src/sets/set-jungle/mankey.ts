@@ -8,7 +8,7 @@ import { ABILITY_USED, ADD_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SHOW_CARDS_TO_P
 export class Mankey extends PokemonCard {
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp: number = 30;
 

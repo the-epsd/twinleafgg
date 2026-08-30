@@ -47,7 +47,7 @@ function* useWhirlpool(next: Function, store: StoreLike, state: State,
 export class Zweilous extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Deino';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 80;
   public weakness = [{ type: N }];
   public retreat = [C, C];

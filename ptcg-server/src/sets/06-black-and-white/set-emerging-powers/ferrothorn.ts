@@ -10,7 +10,7 @@ import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/ga
 export class Ferrothorn extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Ferroseed';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

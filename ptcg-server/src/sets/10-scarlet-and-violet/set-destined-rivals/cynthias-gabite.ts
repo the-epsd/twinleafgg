@@ -28,7 +28,7 @@ export class CynthiasGabite extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = "Cynthia's Gible";
   protected _tags = [CardTag.CYNTHIAS];
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 100;
   public weakness = [{ type: G }];
   public retreat = [C];

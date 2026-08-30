@@ -8,7 +8,7 @@ export class Jumpluff extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Skiploom';
   protected _tags = [CardTag.RAPID_STRIKE];
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
   public hp: number = 90;
   public weakness = [{ type: CardType.FIRE }];
 

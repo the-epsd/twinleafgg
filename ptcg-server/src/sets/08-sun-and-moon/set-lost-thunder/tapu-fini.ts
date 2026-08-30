@@ -11,7 +11,7 @@ import { State, StoreLike } from '../../../game';
 import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 export class TapuFini extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 120;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED, ADD_POISON_TO_PLAYER_ACTIVE } from '../../../game/stor
 export class Whirlipede extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Venipede';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];

@@ -17,7 +17,7 @@ export class ErikasGloom extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   protected _tags = [CardTag.ERIKAS];
   public evolvesFrom: string = "Erika's Oddish";
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public resistance = [];

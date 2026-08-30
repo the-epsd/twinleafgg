@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage } from '../../game/store/card/card-types';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { Attack } from '../../game/store/card/pokemon-types';
 
 import { Effect } from '../../game/store/effects/effect';
@@ -16,7 +16,7 @@ export class Koffing extends PokemonCard {
   public fullName = 'Koffing BS';
 
   public stage = Stage.BASIC;
-  public cardType = G;
+  public cardType: CardType[] = [G];
   public hp = 50;
   public weakness = [{ type: P }];
   public retreat = [C];

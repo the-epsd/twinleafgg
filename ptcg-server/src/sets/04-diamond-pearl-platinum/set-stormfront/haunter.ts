@@ -9,7 +9,7 @@ import { Card, GameLog, State, StoreLike, TrainerCard, TrainerType } from '../..
 export class Haunter extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Gastly';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: D, value: +20 }];
   public resistance = [{ type: C, value: -20 }];

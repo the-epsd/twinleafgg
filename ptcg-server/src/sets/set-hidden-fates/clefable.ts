@@ -4,7 +4,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 export class Clefable extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Clefairy';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 120;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

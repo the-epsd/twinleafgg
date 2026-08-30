@@ -12,7 +12,7 @@ export class Ampharosex extends PokemonCard {
 
   protected _tags = [CardTag.POKEMON_ex];
 
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [CardType.LIGHTNING];
 
   public hp: number = 330;
 

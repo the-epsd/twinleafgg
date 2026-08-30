@@ -21,7 +21,7 @@ import { SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefa
 
 export class Terapagos extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 120;
   public weakness = [{ type: F }];
   public retreat = [C, C];

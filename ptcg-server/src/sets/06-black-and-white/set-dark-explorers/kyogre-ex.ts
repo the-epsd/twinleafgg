@@ -22,7 +22,7 @@ export class KyogreEx extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
 
   public hp: number = 170;
 

@@ -17,7 +17,7 @@ export class Arbolivaex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Dolliv';
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 310;
   public weakness = [{ type: R }];
   public retreat = [C, C];

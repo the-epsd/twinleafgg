@@ -26,7 +26,7 @@ export class TeamRocketsCrobatex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = "Team Rocket's Golbat";
   protected _tags = [CardTag.TEAM_ROCKET, CardTag.POKEMON_ex];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 310;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

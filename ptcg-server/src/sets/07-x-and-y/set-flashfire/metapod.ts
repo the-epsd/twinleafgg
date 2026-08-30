@@ -17,7 +17,7 @@ export class Metapod extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Caterpie';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public retreat = [C, C];

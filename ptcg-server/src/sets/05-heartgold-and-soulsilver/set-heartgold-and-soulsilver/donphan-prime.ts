@@ -9,7 +9,7 @@ export class Donphan extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Phanpy';
   protected _tags = [CardTag.PRIME];
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 120;
   public weakness = [{ type: W }];
   public resistance = [{ type: L, value: -20 }];

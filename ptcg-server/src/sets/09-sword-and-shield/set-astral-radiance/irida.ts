@@ -11,7 +11,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { GameError } from '../../../game';
+import { GameError, pokemonHasCardType } from '../../../game';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
@@ -38,7 +38,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   let itemsOrTools = 0;
   const blocked: number[] = [];
   player.deck.cards.forEach((c, index) => {
-    if (c instanceof PokemonCard && c.cardType === CardType.WATER) {
+    if (c instanceof PokemonCard && pokemonHasCardType(c, CardType.WATER)) {
       pokemons += 1;
     } else if (c instanceof TrainerCard && (c.trainerType === TrainerType.ITEM || (format === Format.SWSH && c.trainerType === TrainerType.TOOL))) {
       itemsOrTools += 1;

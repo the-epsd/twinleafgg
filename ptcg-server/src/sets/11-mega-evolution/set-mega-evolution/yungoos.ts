@@ -6,7 +6,7 @@ import { DRAW_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs
 
 export class Yungoos extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [C];

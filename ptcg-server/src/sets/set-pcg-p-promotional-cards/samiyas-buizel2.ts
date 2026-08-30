@@ -9,7 +9,7 @@ import { GameMessage } from '../../game';
 
 export class SamiyasBuizel2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 60;
   public weakness = [{ type: L }];
   public retreat = [C];

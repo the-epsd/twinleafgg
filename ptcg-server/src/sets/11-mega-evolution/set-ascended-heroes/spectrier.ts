@@ -7,7 +7,7 @@ import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
 
 export class Spectrier extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 120;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

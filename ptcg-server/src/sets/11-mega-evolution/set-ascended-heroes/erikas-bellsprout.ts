@@ -4,7 +4,7 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 export class ErikasBellsprout extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.ERIKAS];
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 60;
   public weakness = [{ type: R }];
   public resistance = [];

@@ -32,7 +32,7 @@ function* useDreamyRevelation(next: Function, store: StoreLike, state: State, ef
 
 export class Jirachi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType[] = [CardType.METAL];
   public hp: number = 70;
   public weakness = [{ type: CardType.FIRE }];
   public resistance = [{ type: CardType.GRASS, value: -30 }];

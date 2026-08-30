@@ -7,7 +7,7 @@ import { DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../../game/store/pr
 
 export class Camerupt extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
   public hp: number = 140;
   public weakness = [{ type: CardType.WATER }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];

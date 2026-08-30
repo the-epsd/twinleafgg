@@ -11,7 +11,7 @@ import { HEAL_X_DAMAGE_FROM_THIS_POKEMON, FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_M
 
 export class Corsola extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 70;
   public weakness = [{ type: G }];
   public retreat = [C];

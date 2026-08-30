@@ -7,7 +7,7 @@ import { DELTA_PLUS } from '../../../game/store/prefabs/prefabs';
 
 export class Swellow extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

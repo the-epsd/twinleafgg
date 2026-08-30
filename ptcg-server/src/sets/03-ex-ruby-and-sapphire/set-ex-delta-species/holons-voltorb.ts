@@ -31,7 +31,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class HolonsVoltorb extends PokemonCard implements EnergyCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.HOLONS];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 40;
   public weakness = [{ type: F }];
   public retreat = [C];

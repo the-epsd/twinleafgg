@@ -16,7 +16,7 @@ export class OriginFormeDialgaVSTAR extends PokemonCard {
 
   public evolvesFrom = 'Origin Forme Dialga V';
 
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType[] = [CardType.METAL];
 
   public hp: number = 280;
 

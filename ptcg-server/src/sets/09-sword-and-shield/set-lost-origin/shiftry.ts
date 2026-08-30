@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store
 export class Shiftry extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Nuzleaf';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 160;
   public weakness = [{ type: R }];
   public retreat = [C, C];

@@ -11,7 +11,7 @@ export class HisuianArcanine extends PokemonCard {
 
   public evolvesFrom = 'Hisuian Growlithe';
 
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp: number = 130;
 

@@ -11,7 +11,7 @@ import { State, StoreLike } from '../../../game';
 export class Scolipede extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Whirlipede';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 160;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

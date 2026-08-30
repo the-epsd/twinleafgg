@@ -8,7 +8,7 @@ import { OPPONENT_CANNOT_PLAY_CARDS } from '../../../game/store/prefabs/effect-o
 export class Crobat extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public regulationMark: string = 'G';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 130;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

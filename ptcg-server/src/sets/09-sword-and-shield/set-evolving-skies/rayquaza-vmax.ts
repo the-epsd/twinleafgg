@@ -34,7 +34,7 @@ export class RayquazaVMAX extends PokemonCard {
 
   public evolvesFrom = 'Rayquaza V';
 
-  public cardType: CardType = CardType.DRAGON;
+  public cardType: CardType[] = [CardType.DRAGON];
 
   public hp: number = 320;
 

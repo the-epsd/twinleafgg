@@ -4,7 +4,7 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State } from '../../../game';
+import { StoreLike, State, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import {
@@ -13,7 +13,7 @@ import {
 
 export class Manaphy extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 70;
   public weakness = [{ type: G }];
   public retreat = [C];
@@ -63,7 +63,7 @@ export class Manaphy extends PokemonCard {
       const blocked: number[] = [];
       let waterPokemonCount = 0;
       player.discard.cards.forEach((card, index) => {
-        if (!(card instanceof PokemonCard) || card.cardType !== CardType.WATER) {
+        if (!(card instanceof PokemonCard) || !pokemonHasCardType(card, CardType.WATER)) {
           blocked.push(index);
         } else {
           waterPokemonCount++;

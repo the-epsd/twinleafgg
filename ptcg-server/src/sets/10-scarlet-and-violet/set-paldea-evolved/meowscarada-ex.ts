@@ -33,7 +33,7 @@ export class Meowscaradaex extends PokemonCard {
 
   protected _tags = [CardTag.POKEMON_ex];
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 310;
 

@@ -17,7 +17,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class TeamRocketsSneasel extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.TEAM_ROCKET];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 80;
   public weakness = [{ type: G }];
   public retreat = [C];

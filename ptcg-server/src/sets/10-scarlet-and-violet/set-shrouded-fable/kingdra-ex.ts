@@ -1,13 +1,11 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import {
-  StoreLike,
+import { StoreLike,
   State,
   PokemonCardList,
   Card,
   ChooseCardsPrompt,
-  GameMessage,
-} from '../../../game';
+  GameMessage, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
@@ -24,7 +22,7 @@ function* useKingsOrder(
   const max = Math.min(slots.length, 3);
 
   // const hasWaterPokemonInDiscard = player.discard.cards.some(c => {
-  //   return c instanceof PokemonCard && c.cardType === CardType.WATER;
+  //   return c instanceof PokemonCard && pokemonHasCardType(c, CardType.WATER);
   // });
   // if (!hasWaterPokemonInDiscard) {
   //   throw new GameError(GameMessage.CANNOT_USE_ATTACK);
@@ -34,7 +32,7 @@ function* useKingsOrder(
     const discardPokemon = player.discard.cards.filter(
       (card) => card.superType === SuperType.POKEMON,
     ) as PokemonCard[];
-    const waterDiscardPokemon = discardPokemon.filter((card) => card.cardType === CardType.WATER);
+    const waterDiscardPokemon = discardPokemon.filter((card) => pokemonHasCardType(card, CardType.WATER));
     return waterDiscardPokemon.length > 0;
   });
 
@@ -49,7 +47,7 @@ function* useKingsOrder(
       player,
       GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
       player.discard,
-      { superType: SuperType.POKEMON, cardType: CardType.WATER },
+      { superType: SuperType.POKEMON, cardType: [CardType.WATER] },
       { min: 1, max, allowCancel: false },
     ),
     (selected) => {
@@ -77,7 +75,7 @@ export class Kingdraex extends PokemonCard {
 
   public evolvesFrom = 'Seadra';
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp: number = 310;
 

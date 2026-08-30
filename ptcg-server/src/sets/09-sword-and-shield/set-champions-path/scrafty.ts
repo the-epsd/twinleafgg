@@ -6,7 +6,7 @@ import { BLOCK_RETREAT } from "../../../game/store/prefabs/effect-of-attack-pref
 export class Scrafty extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Scraggy';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 120;
   public weakness = [{ type: G }];
   public retreat = [C, C];

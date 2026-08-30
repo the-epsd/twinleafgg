@@ -6,7 +6,7 @@ import { IGNORE_ATTACK_COSTS_FOR_TYPES_DURING_YOUR_NEXT_TURN } from "../../../ga
 export class Sunflora extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Sunkern';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public retreat = [C];

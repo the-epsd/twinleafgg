@@ -41,7 +41,7 @@ function* useKingsOrder(next: Function, store: StoreLike, state: State,
 
 export class Duskull extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -20 }];

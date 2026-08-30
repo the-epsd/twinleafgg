@@ -4,7 +4,7 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { PlayerType, StoreLike, State, StateUtils } from '../../../game';
+import { PlayerType, StoreLike, State, StateUtils, pokemonHasCardType } from '../../../game';
 import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
@@ -17,7 +17,7 @@ import {
 export class DhelmiseV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 220;
   public weakness = [{ type: R }];
   public retreat = [C, C];
@@ -56,7 +56,7 @@ export class DhelmiseV extends PokemonCard {
       const damagedCard = effect.target.getPokemonCard();
       if (
         damagedCard &&
-        damagedCard.cardType === G &&
+        pokemonHasCardType(damagedCard, G) &&
         damagedCard.superType === SuperType.POKEMON
       ) {
         const owner = StateUtils.findOwner(state, effect.target);
@@ -71,7 +71,7 @@ export class DhelmiseV extends PokemonCard {
       const knockedOutCard = effect.target.getPokemonCard();
       if (
         knockedOutCard &&
-        knockedOutCard.cardType === G &&
+        pokemonHasCardType(knockedOutCard, G) &&
         effect.target.marker.hasMarker(this.GRASS_DAMAGED_BY_OPPONENT_MARKER, this)
       ) {
         const owner = StateUtils.findOwner(state, effect.target);

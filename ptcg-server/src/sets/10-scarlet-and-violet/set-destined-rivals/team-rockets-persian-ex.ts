@@ -119,7 +119,7 @@ export class TeamRocketsPersianex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = "Team Rocket's Meowth";
   protected _tags = [CardTag.TEAM_ROCKET, CardTag.POKEMON_ex];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 260;
   public weakness = [{ type: F }];
   public retreat = [C];

@@ -1,5 +1,4 @@
-import {
-  Card,
+import { Card,
   CardManager,
   CardTag,
   CardTarget,
@@ -16,8 +15,7 @@ import {
   State,
   StateUtils,
   StoreLike,
-  SuperType,
-} from '../../../game';
+  SuperType, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import {
   CheckPokemonPlayedTurnEffect,
@@ -55,7 +53,7 @@ function* useSuperGrowth(
     store.reduceEffect(state, playedTurnEffect);
     if (
       card.stage !== Stage.BASIC ||
-      card.cardType !== CardType.GRASS ||
+      !pokemonHasCardType(card, CardType.GRASS) ||
       playedTurnEffect.pokemonPlayedTurn === state.turn
     ) {
       return;
@@ -185,7 +183,7 @@ function* useSuperGrowth(
 export class RowletAlolanExeggutorGX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 270;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];

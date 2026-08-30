@@ -4,14 +4,14 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils } from '../../../game';
+import { StoreLike, State, StateUtils, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Vanillish extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Vanillite';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 80;
   public weakness = [{ type: M }];
   public retreat = [C, C];
@@ -40,7 +40,7 @@ export class Vanillish extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const defendingPokemon = opponent.active.getPokemonCard();
-      if (defendingPokemon && defendingPokemon.cardType === CardType.FIGHTING) {
+      if (defendingPokemon && pokemonHasCardType(defendingPokemon, CardType.FIGHTING)) {
         effect.damage += 30;
       }
     }

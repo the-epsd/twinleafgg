@@ -7,7 +7,7 @@ import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from "../../game/store/pre
 
 export class Mewtwo extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];

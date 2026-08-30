@@ -18,7 +18,7 @@ export class Nidoking extends PokemonCard {
   public setNumber: string = '11';
 
   public stage: Stage = Stage.STAGE_2;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: P }];
   public retreat: CardType[] = [C, C, C];

@@ -1,11 +1,11 @@
-import { PokemonCard, Stage, State, StoreLike } from '../../../game';
+import { CardType, PokemonCard, Stage, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Slugma extends PokemonCard {
   public stage = Stage.BASIC;
-  public cardType = R;
+  public cardType: CardType[] = [R];
   public hp = 70;
   public weakness = [{ type: W }];
   public retreat = [C, C];

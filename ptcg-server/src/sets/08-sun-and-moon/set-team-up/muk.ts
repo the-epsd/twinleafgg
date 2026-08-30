@@ -8,7 +8,7 @@ import { CheckSpecialConditionRemovalEffect } from '../../../game/store/effects/
 export class Muk extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Grimer';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 130;
   public weakness = [{ type: P }];
   public retreat = [C, C, C, C];

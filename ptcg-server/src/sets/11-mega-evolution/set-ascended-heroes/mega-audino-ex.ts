@@ -24,7 +24,7 @@ import {
 export class MegaAudinoex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 270;
   public weakness = [{ type: F }];
   public resistance = [];

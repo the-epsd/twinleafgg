@@ -1,5 +1,4 @@
-import {
-  PokemonCard,
+import { CardType, PokemonCard,
   Stage,
   PowerType,
   StoreLike,
@@ -11,8 +10,7 @@ import {
   PlayerType,
   SlotType,
   SuperType,
-  CardTag,
-} from '../../../game';
+  CardTag, } from '../../../game';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import {
   CheckProvidedEnergyEffect,
@@ -28,7 +26,7 @@ export class EthansMagcargo extends PokemonCard {
 
   protected _tags = [CardTag.ETHANS];
 
-  public cardType = R;
+  public cardType: CardType[] = [R];
 
   public hp = 130;
 

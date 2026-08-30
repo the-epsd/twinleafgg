@@ -17,7 +17,7 @@ export class ChesnaughtBreak extends PokemonCard {
   protected _tags = [CardTag.BREAK];
   public stage: Stage = Stage.BREAK;
   public evolvesFrom: string = 'Chesnaught';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 190;
   public retreat = [];
 

@@ -25,7 +25,7 @@ export class Quaquavalex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Quaxwell';
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 320;
   public weakness = [{ type: L }];
   public retreat = [C, C];

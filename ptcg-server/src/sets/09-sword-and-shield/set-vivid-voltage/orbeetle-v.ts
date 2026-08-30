@@ -16,7 +16,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class OrbeetleV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 180;
   public weakness = [{ type: R }];
   public retreat = [C];

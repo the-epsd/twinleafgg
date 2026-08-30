@@ -15,7 +15,7 @@ import {
 export class PincurchinV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 170;
   public weakness = [{ type: F }];
   public retreat = [C, C];

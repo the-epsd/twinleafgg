@@ -8,7 +8,7 @@ import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-
 
 export class Surskit extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 50;
   public weakness = [{ type: R }];
   public retreat = [C];

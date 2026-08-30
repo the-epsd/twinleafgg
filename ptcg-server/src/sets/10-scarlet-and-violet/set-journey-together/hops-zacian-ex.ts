@@ -16,7 +16,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class HopsZacianex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.HOPS, CardTag.POKEMON_ex];
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 230;
   public retreat = [C, C];
   public weakness = [{ type: R }];

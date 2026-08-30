@@ -6,7 +6,7 @@ import { ABILITY_USED, ADD_MARKER, DRAW_CARDS, HAS_MARKER, IS_POKEPOWER_BLOCKED,
 export class Ludicolo extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Lombre';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 100;
   public weakness = [{ type: L }];
   public retreat = [C, C];

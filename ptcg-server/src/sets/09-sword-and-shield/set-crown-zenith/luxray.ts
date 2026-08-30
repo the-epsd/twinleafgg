@@ -13,7 +13,7 @@ export class Luxray extends PokemonCard {
 
   public evolvesFrom = 'Luxio';
 
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
 
   public hp: number = 160;
 

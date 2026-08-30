@@ -28,7 +28,7 @@ export class Naganadel extends PokemonCard {
 
   public evolvesFrom = 'Poipole';
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 130;
 

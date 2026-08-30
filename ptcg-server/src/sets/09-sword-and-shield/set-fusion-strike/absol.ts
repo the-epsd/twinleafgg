@@ -13,7 +13,7 @@ import { AttackEffect } from '../../../game/store/effects/game-effects';
 
 export class Absol extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 100;
   public weakness = [{ type: G }];
   public retreat = [C];

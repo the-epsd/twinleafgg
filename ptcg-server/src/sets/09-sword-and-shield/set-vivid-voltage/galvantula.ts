@@ -5,7 +5,7 @@ import { WAS_ATTACK_USED, THIS_ATTACK_DOES_X_MORE_DAMAGE, ADD_PARALYZED_TO_PLAYE
 export class Galvantula extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Joltik';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];

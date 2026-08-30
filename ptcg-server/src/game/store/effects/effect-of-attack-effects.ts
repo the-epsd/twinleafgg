@@ -1,7 +1,7 @@
 import { PlayerType } from "../actions/play-card-action";
 import { Card } from "../card/card";
 import { Stage, CardType, SpecialCondition } from "../card/card-types";
-import { PokemonCard } from "../card/pokemon-card";
+import { PokemonCard, getPokemonCardTypes } from "../card/pokemon-card";
 import { PowerType, Attack } from "../card/pokemon-types";
 import { StateUtils } from "../state-utils";
 import { PendingEndOfTurnEffect } from "../state/pending-end-of-turn-effects";
@@ -33,7 +33,7 @@ function sourceMatchesPreventFilter(
   }
 
   if (filter.sourceCardTypes !== undefined
-    && !filter.sourceCardTypes.includes(sourceCard.cardType)) {
+    && !getPokemonCardTypes(sourceCard).some(t => filter.sourceCardTypes!.includes(t))) {
     return false;
   }
 

@@ -40,7 +40,7 @@ function* useScrapPickup(next: Function, store: StoreLike, state: State, self: T
 
 export class Tinkatink extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
   public hp: number = 60;
   public weakness = [{ type: CardType.METAL }];
   public retreat = [CardType.COLORLESS];

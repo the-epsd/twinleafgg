@@ -4,7 +4,7 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 export class Houndour extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.SINGLE_STRIKE];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 60;
   public weakness = [{ type: G }];
   public retreat = [C];

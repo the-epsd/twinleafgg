@@ -14,7 +14,7 @@ export class CrobatVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Crobat V';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 300;
   public weakness = [{ type: F }];
   public retreat = [C];

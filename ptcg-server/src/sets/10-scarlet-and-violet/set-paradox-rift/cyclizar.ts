@@ -11,7 +11,7 @@ export class Cyclizar extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp: number = 120;
 

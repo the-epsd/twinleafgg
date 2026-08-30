@@ -8,7 +8,7 @@ import { OPPONENT_CANNOT_PLAY_POKEMON_WITH_ABILITIES } from '../../../game/store
 
 export class Chimecho extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public weakness = [{ type: P }];
   public retreat = [C];

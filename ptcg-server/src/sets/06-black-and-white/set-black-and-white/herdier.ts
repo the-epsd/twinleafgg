@@ -6,7 +6,7 @@ export class Herdier extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Lillipup';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 80;
   public weakness: Weakness[] = [{ type: F }];
   public retreat: CardType[] = [C];

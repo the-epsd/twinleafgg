@@ -8,7 +8,7 @@ export class Octillery extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Remoraid';
   public hp: number = 110;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public weakness = [{ type: L }];
   public retreat = [C, C];
 

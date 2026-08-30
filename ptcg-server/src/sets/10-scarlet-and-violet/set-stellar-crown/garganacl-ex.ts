@@ -10,7 +10,7 @@ export class Garganaclex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Naclstack';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 340;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];

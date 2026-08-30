@@ -13,7 +13,7 @@ import {
 export class Golduck extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Psyduck';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 120;
   public weakness = [{ type: L }];
   public retreat = [C];

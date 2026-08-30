@@ -10,8 +10,7 @@ export class Blastoise extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Wartortle';
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = F;
-  public additionalCardTypes = [M];
+  public cardType: CardType[] = [F, M];
   public hp: number = 110;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];

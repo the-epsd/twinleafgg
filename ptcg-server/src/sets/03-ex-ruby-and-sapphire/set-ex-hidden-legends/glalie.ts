@@ -8,7 +8,7 @@ import { COIN_FLIP_PROMPT, IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../..
 export class Glalie extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Snorunt';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 80;
   public weakness = [{ type: M }];
   public retreat = [C];

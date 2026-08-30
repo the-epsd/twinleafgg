@@ -9,7 +9,7 @@ import { ADD_POISON_TO_PLAYER_ACTIVE, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from
 export class Glimmora extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Glimmet';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 130;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

@@ -8,7 +8,7 @@ import { THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN, WAS_ATTACK_USED } from '../../../
 export class Unfezant extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Tranquill';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 150;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

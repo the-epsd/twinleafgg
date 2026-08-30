@@ -28,7 +28,7 @@ export class RadiantEternatus extends PokemonCard {
 
   public stage = Stage.BASIC;
 
-  public cardType = CardType.DRAGON;
+  public cardType: CardType[] = [CardType.DRAGON];
 
   public hp = 170;
 

@@ -23,7 +23,7 @@ import {
 export class EeveeSnorlaxGX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 270;
   public weakness = [{ type: F }];
   public retreat = [C, C, C, C];

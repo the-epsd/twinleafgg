@@ -14,7 +14,7 @@ export class MCharizardEX extends PokemonCard {
 
   public evolvesFrom = 'Charizard-EX';
 
-  public cardType: CardType = CardType.DRAGON;
+  public cardType: CardType[] = [CardType.DRAGON];
 
   public hp: number = 230;
 

@@ -11,7 +11,7 @@ export class WhimsicottVSTAR extends PokemonCard {
   public stage: Stage = Stage.VSTAR;
   protected _tags = [CardTag.POKEMON_VSTAR];
   public evolvesFrom = 'Whimsicott V';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 250;
   public weakness = [{ type: M }];
   public retreat = [C];

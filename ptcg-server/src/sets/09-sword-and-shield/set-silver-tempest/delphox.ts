@@ -12,7 +12,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class Delphox extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Braixen';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 150;
   public weakness = [{ type: W }];
   public retreat = [C, C];

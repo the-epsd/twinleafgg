@@ -13,7 +13,7 @@ export class Polteageist extends PokemonCard {
 
   public evolvesFrom: string = 'Sinistea';
 
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
 
   public hp: number = 60;
 

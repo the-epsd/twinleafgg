@@ -16,7 +16,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 
 export class Eevee extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public retreat = [C, C];
@@ -80,7 +80,7 @@ export class Eevee extends PokemonCard {
             player,
             GameMessage.CHOOSE_CARD_TO_EVOLVE,
             player.deck,
-            { superType: SuperType.POKEMON, stage: Stage.STAGE_1, evolvesFrom: 'Eevee', cardType: eeveeloutionType },
+            { superType: SuperType.POKEMON, stage: Stage.STAGE_1, evolvesFrom: 'Eevee', cardType: [eeveeloutionType] },
             { min: 0, max: 1, allowCancel: false }
           ), selected => {
             cards = selected || [];

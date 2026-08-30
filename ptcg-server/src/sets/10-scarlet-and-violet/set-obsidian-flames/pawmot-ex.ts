@@ -16,7 +16,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Pawmotex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Pawmo';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   protected _tags = [CardTag.POKEMON_ex];
   public hp: number = 300;
   public weakness: Weakness[] = [{ type: F }];

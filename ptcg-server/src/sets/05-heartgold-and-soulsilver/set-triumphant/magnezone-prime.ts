@@ -28,7 +28,7 @@ export class Magnezone extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Magneton';
   protected _tags = [CardTag.PRIME];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 140;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

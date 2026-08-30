@@ -12,7 +12,7 @@ export class Dreepy extends PokemonCard {
 
   public regulationMark = 'F';
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 60;
 

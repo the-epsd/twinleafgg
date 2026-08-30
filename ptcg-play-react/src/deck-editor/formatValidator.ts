@@ -4,6 +4,7 @@ import {
   EnergyCard,
   EnergyType,
   Format,
+  getPrimaryCardType,
   PokemonCard,
   SuperType,
   ANY_PRINTING_ALLOWED,
@@ -108,7 +109,7 @@ export class FormatValidator {
       }
       // check for different type violation
       const pokemonCards = cards.filter((c) => c.superType === SuperType.POKEMON);
-      const pokemonTypeSet = new Set(pokemonCards.map((c) => (c as PokemonCard).cardType));
+      const pokemonTypeSet = new Set(pokemonCards.map((c) => getPrimaryCardType(c as PokemonCard)));
       if (pokemonTypeSet.size > 1) {
         formatList = formatList.filter((f: Format) => f !== Format.GLC);
       }

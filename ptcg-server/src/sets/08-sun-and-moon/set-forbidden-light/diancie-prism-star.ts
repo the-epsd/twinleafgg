@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, PlayerType } from '../../../game';
+import { PowerType, StoreLike, State, StateUtils, PlayerType, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { DealDamageEffect, HealTargetEffect } from '../../../game/store/effects/attack-effects';
@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class DianciePrismStar extends PokemonCard {
   protected _tags = [CardTag.PRISM_STAR];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 120;
   public weakness = [{ type: G }];
   public retreat = [C, C];
@@ -71,7 +71,7 @@ export class DianciePrismStar extends PokemonCard {
 
       if (
         damageSource &&
-        damageSource.cardType === CardType.FIGHTING &&
+        pokemonHasCardType(damageSource, CardType.FIGHTING) &&
         damageSource !== oppActive
       ) {
         effect.damage += 20;

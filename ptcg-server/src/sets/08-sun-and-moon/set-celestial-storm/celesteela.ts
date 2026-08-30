@@ -11,7 +11,7 @@ import { Effect } from '../../../game/store/effects/effect';
 export class Celesteela extends PokemonCard {
   protected _tags = [CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 140;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

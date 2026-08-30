@@ -8,7 +8,7 @@ export class Kakuna extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Weedle';
   protected _tags = [CardTag.SINGLE_STRIKE];
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];

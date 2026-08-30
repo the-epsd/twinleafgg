@@ -13,7 +13,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 
 export class Manaphy extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 70;
   public weakness = [{ type: L }];
   public retreat = [C];
@@ -105,7 +105,7 @@ export class Manaphy extends PokemonCard {
           player.discard,
           PlayerType.BOTTOM_PLAYER,
           [SlotType.BENCH],
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, cardType: CardType.WATER },
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, cardType: [CardType.WATER] },
           { allowCancel: false, min: count, max: count }
         ), transfers => {
           transfers = transfers || [];

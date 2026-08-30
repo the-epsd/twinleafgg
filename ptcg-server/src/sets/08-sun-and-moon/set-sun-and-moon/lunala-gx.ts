@@ -85,7 +85,7 @@ export class LunalaGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Cosmoem';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 250;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -20 }];

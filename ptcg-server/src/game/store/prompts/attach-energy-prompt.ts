@@ -8,7 +8,7 @@ import { CardList } from '../state/card-list';
 import { FilterType } from './choose-cards-prompt';
 import { SuperType, CardType } from '../card/card-types';
 import { EnergyCard } from '../card/energy-card';
-import { PokemonCard } from '../card/pokemon-card';
+import { PokemonCard, getPrimaryCardType } from '../card/pokemon-card';
 
 export const AttachEnergyPromptType = 'Attach energy';
 
@@ -178,7 +178,7 @@ export class AttachEnergyPrompt extends Prompt<CardAssign[]> {
     }
     if (card.superType === SuperType.POKEMON) {
       const pokemonCard = card as PokemonCard;
-      return pokemonCard.cardType;
+      return getPrimaryCardType(pokemonCard);
     }
     return CardType.NONE;
   }

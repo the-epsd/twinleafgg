@@ -11,7 +11,7 @@ import { CAN_APPLY_LOCKER_ABILITY, HANDLE_ABILITY_BLOCK, IS_ABILITY_LOCKER_IN_PL
 export class Muk extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Grimer';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: P }];
   public resistance = [];

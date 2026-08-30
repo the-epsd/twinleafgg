@@ -16,7 +16,7 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 export class MagikarpWailordGX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 300;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];

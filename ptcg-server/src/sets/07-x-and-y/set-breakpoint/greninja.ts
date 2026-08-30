@@ -7,7 +7,7 @@ import { OPPONENT_POKEMON_HAVE_NO_ABILITIES } from "../../../game/store/prefabs/
 export class Greninja extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Frogadier';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 130;
   public weakness = [{ type: G }];
   public retreat = [];

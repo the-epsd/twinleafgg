@@ -2,9 +2,8 @@ import { useVirtualizer } from '@tanstack/react-virtual';
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { CSSProperties } from 'react';
-import type { Card } from 'ptcg-server';
-import { CardType, SuperType } from 'ptcg-server';
-import type { PokemonCard } from 'ptcg-server';
+import type { Card, PokemonCard } from 'ptcg-server';
+import { CardType, getPrimaryCardType, SuperType } from 'ptcg-server';
 import { CardFace } from '../components/cards';
 import { DECK_CARD_AR, DECK_CARD_GAP_PX } from './deckCardLayout';
 import headerStyles from './DeckPaneHeader.module.css';
@@ -18,7 +17,7 @@ function typeBadgeColor(card: Card): string | null {
   if (card.superType !== SuperType.POKEMON) {
     return null;
   }
-  const t = (card as PokemonCard).cardType;
+  const t = getPrimaryCardType(card as PokemonCard);
   const map: Partial<Record<CardType, string>> = {
     [CardType.GRASS]: '#4caf50',
     [CardType.FIRE]: '#ff7043',

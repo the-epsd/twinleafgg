@@ -1,4 +1,4 @@
-import { CardTag, PokemonCard, Stage, State, StoreLike } from '../../../game';
+import { CardType, CardTag, PokemonCard, Stage, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
@@ -6,7 +6,7 @@ import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-pref
 export class Trapinch extends PokemonCard {
   public stage = Stage.BASIC;
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType = G;
+  public cardType: CardType[] = [G];
   public hp = 50;
   public weakness = [{ type: G }];
   public retreat = [C];

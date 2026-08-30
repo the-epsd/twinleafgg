@@ -21,8 +21,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class RayquazaAndDeoxysLegendTop extends PokemonCard {
   public stage: Stage = Stage.LEGEND;
   protected _tags = [CardTag.LEGEND, CardTag.DUAL_LEGEND];
-  public cardType = C;
-  public additionalCardTypes = [P];
+  public cardType: CardType[] = [C, P];
   public hp: number = 140;
   public weakness = [{ type: C }, { type: P }];
   public retreat = [C, C, C];

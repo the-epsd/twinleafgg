@@ -12,7 +12,7 @@ export class SnorlaxVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Snorlax V';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 340;
   public weakness = [{ type: F }];
   public retreat = [C, C, C, C];

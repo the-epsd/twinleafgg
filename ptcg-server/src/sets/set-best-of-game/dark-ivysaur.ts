@@ -1,5 +1,4 @@
-import {
-  PokemonCard,
+import { CardType, PokemonCard,
   Stage,
   StoreLike,
   State,
@@ -9,8 +8,7 @@ import {
   PlayerType,
   PutDamagePrompt,
   SlotType,
-  CardTag,
-} from '../../game';
+  CardTag, } from '../../game';
 import { PowerType } from '../../game';
 import { RetreatEffect } from '../../game/store/effects/game-effects';
 import { Attack } from '../../game/store/card/pokemon-types';
@@ -23,7 +21,7 @@ export class DarkIvysaur extends PokemonCard {
   public stage = Stage.STAGE_1;
   public evolvesFrom = 'Bulbasaur';
   protected _tags = [CardTag.DARK];
-  public cardType = G;
+  public cardType: CardType[] = [G];
   public hp = 50;
   public weakness = [{ type: R }];
   public retreat = [C, C];

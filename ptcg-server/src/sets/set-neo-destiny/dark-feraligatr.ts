@@ -28,7 +28,7 @@ export class DarkFeraligatr extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Dark Croconaw';
   protected _tags = [CardTag.DARK];
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 80;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

@@ -24,7 +24,7 @@ export class DarkraiEx extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
 
   public hp: number = 180;
 

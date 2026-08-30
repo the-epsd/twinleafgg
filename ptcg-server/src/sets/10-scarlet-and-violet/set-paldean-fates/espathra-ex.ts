@@ -10,7 +10,7 @@ export class Espathraex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Flittle';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 260;
   public weakness = [{ type: R }];
   public retreat = [C];

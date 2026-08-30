@@ -11,7 +11,7 @@ import { COIN_FLIP_PROMPT, MOVE_CARDS, IS_ABILITY_BLOCKED } from '../../../game/
 
 export class Chatot extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 70;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

@@ -7,7 +7,7 @@ import { HAS_CARD_IN_DISCARD, WAS_ATTACK_USED } from '../../../game/store/prefab
 export class Varoom extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 70;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C];

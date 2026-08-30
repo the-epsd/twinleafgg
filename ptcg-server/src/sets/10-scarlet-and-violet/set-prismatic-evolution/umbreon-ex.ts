@@ -25,7 +25,7 @@ export class Umbreonex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Eevee';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 280;
   public retreat = [C, C];
   public weakness = [{ type: G }];

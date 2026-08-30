@@ -10,7 +10,7 @@ export class Flygonex extends PokemonCard {
   protected _tags = [CardTag.DELTA_SPECIES, CardTag.POKEMON_ex];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Vibrava';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 150;
   public retreat = [C, C];
 

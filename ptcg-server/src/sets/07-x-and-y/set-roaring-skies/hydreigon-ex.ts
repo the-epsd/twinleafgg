@@ -4,7 +4,7 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, PlayerType } from '../../../game';
+import { PowerType, StoreLike, State, StateUtils, PlayerType, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckRetreatCostEffect } from '../../../game/store/effects/check-effects';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
@@ -13,7 +13,7 @@ import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../../game/stor
 export class HydreigonEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 180;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];
@@ -72,7 +72,7 @@ export class HydreigonEx extends PokemonCard {
 
       // Check if the retreating Pokemon is a Dragon type
       const pokemonCard = player.active.getPokemonCard();
-      if (pokemonCard && pokemonCard.cardType === CardType.DRAGON) {
+      if (pokemonCard && pokemonHasCardType(pokemonCard, CardType.DRAGON)) {
         // Remove up to 2 Colorless from cost
         for (let i = 0; i < 2; i++) {
           const index = effect.cost.indexOf(CardType.COLORLESS);

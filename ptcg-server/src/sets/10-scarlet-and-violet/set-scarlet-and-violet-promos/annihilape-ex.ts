@@ -70,7 +70,7 @@ export class Annihilapeex extends PokemonCard {
 
   protected _tags = [CardTag.POKEMON_ex];
 
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp: number = 320;
 

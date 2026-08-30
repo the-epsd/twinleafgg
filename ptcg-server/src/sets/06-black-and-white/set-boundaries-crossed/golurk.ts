@@ -13,7 +13,7 @@ import { DEVOLVE_DEFENDING_AFTER_ATTACK, WAS_ATTACK_USED } from '../../../game/s
 export class Golurk extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Golett';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 130;
   public weakness = [{ type: D }];
   public retreat = [C, C, C, C];

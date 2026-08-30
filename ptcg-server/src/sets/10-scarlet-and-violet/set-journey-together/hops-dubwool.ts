@@ -23,7 +23,7 @@ export class HopsDubwool extends PokemonCard {
 
   public evolvesFrom = "Hop's Wooloo";
 
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
 
   public hp: number = 120;
 

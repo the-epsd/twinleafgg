@@ -10,7 +10,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class Seaking extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Goldeen';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 110;
   public weakness = [{ type: L }];
   public retreat = [C];
