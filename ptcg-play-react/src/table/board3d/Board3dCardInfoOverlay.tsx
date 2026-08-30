@@ -19,6 +19,7 @@ import {
   getCardRuleText,
   getDisplayAttacks,
   getDisplayPowers,
+  getInPlayTransformCopy,
   isToolCardInList,
   powerTypeLabel,
 } from '../../card-info/cardInfoUtils';
@@ -80,6 +81,7 @@ function plateTransformStyle(
 export function Board3dCardInfoOverlay({
   card,
   cardList,
+  players,
   facedown = false,
   options = {},
   boardInteraction,
@@ -118,8 +120,12 @@ export function Board3dCardInfoOverlay({
   );
   const formattedText = (text: string) => formatCardText(text, CARD_INFO_ENERGY_ICON_SIZE);
 
-  const displayPowers = useMemo(() => getDisplayPowers(card, cardList), [card, cardList]);
-  const displayAttacks = useMemo(() => getDisplayAttacks(card, cardList), [card, cardList]);
+  const displayPowers = useMemo(() => getDisplayPowers(card, cardList, players), [card, cardList, players]);
+  const displayAttacks = useMemo(() => getDisplayAttacks(card, cardList, players), [card, cardList, players]);
+  const transformCopy = useMemo(
+    () => getInPlayTransformCopy(card, cardList, players),
+    [card, cardList, players],
+  );
   const ruleText = useMemo(() => getCardRuleText(card), [card]);
 
   const abilityUsedThisTurn =
@@ -156,6 +162,7 @@ export function Board3dCardInfoOverlay({
   const showRetreatPlate = !facedown && card.superType === SuperType.POKEMON;
   const enableTrainerPlay = !!options.enableTrainer;
   const pokemon = card as PokemonCard;
+  const displayPokemon = (transformCopy ?? pokemon) as PokemonCard;
 
   const hasTextContent =
     !facedown &&
@@ -308,10 +315,10 @@ export function Board3dCardInfoOverlay({
           >
             <span className={styles.retreatLabel}>Retreat</span>
             <div className={styles.retreatRow}>
-              {(pokemon.retreat ?? []).length === 0 ? (
+              {(displayPokemon.retreat ?? []).length === 0 ? (
                 <EnergyTypeIcon type={CardType.NONE} size="compact" />
               ) : (
-                (pokemon.retreat ?? []).map((cost, i) => (
+                (displayPokemon.retreat ?? []).map((cost, i) => (
                   <EnergyTypeIcon key={i} type={cost} size="compact" />
                 ))
               )}

@@ -732,6 +732,8 @@ export class Board3dController {
     const gameStateChanged = this.gameState !== next.gameState;
     const handChanged = this.bottomPlayerHand !== next.bottomPlayerHand;
     const topHandChanged = this.topPlayerHand !== next.topPlayerHand;
+    const topHandPublicChanged =
+      !!this.topPlayerHand?.isPublic !== !!next.topPlayerHand?.isPublic;
     const revealChanged =
       this.adminSpectatorReveal?.revealPrizes !== next.adminSpectatorReveal?.revealPrizes ||
       this.adminSpectatorReveal?.revealHands !== next.adminSpectatorReveal?.revealHands;
@@ -784,7 +786,7 @@ export class Board3dController {
       this.hasInitializedHand = true;
     }
 
-    if (this.scene && (topHandChanged || revealChanged || handChanged)) {
+    if (this.scene && (topHandChanged || topHandPublicChanged || revealChanged || handChanged)) {
       this.syncOpponentHand();
     }
   }
@@ -1802,7 +1804,7 @@ export class Board3dController {
     return this.adminSpectatorReveal?.revealHands ?? false;
   }
 
-  /** Far hand face-up when viewing as that player, replay, or admin reveal (matches 2D topHandFaceDown). */
+  /** Far hand face-up when viewing as that player, replay, admin reveal, or hand.isPublic (e.g. Clairvoyance). */
   private isOpponentHandVisibleToViewer(): boolean {
     if (!this.topPlayer) {
       return false;
@@ -1811,6 +1813,9 @@ export class Board3dController {
       return true;
     }
     if (this.isReplayOmniscient()) {
+      return true;
+    }
+    if (this.topPlayerHand?.isPublic || this.topPlayer.hand?.isPublic) {
       return true;
     }
     return this.adminSpectatorReveal?.revealHands ?? false;

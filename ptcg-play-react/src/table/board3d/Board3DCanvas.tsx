@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { PCFSoftShadowMap, SRGBColorSpace } from 'three';
 import type { Card, CardList, Player } from 'ptcg-server';
@@ -20,6 +20,7 @@ import {
 import { CardInfoPopup } from '../../card-info/CardInfoPopup';
 import { CardInfoListPopup } from '../../card-info/CardInfoListPopup';
 import type { Board3dCardInfoData, CardInfoPaneActionResult } from './board3dCardsAdapter';
+import { refreshInPlayCardInfoData } from './refreshInPlayCardInfoData';
 import styles from './Board3DCanvas.module.css';
 import { Board3dAbilityActivationOverlay } from './Board3dAbilityActivationOverlay';
 import { Board3dCardInfoOverlay } from './Board3dCardInfoOverlay';
@@ -128,6 +129,17 @@ export function Board3DCanvas(props: Board3DCanvasProps) {
       }),
     [maps, serverConfig?.scansUrl, serverConfig?.sleevesUrl, queueInfo, queueList],
   );
+
+  // Keep open card info in sync with board state (e.g. Fossil Ditto Transform).
+  useEffect(() => {
+    const players = [props.topPlayer, props.bottomPlayer];
+    setCardPrompt((prev) => {
+      if (!prev) {
+        return prev;
+      }
+      return { ...prev, data: refreshInPlayCardInfoData(prev.data, players) };
+    });
+  }, [props.gameState, props.topPlayer, props.bottomPlayer]);
 
   const runtime = useMemo(() => createBoard3dRuntime(cardsAdapter), [cardsAdapter]);
 

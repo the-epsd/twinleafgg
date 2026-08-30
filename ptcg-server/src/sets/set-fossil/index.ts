@@ -28,6 +28,7 @@ import { HitmonleeFO22 } from './other-prints';
 import { Horsea } from './horsea';
 import { Hypno } from './hypno';
 import { HypnoFO23 } from './other-prints';
+import { Kabuto } from './kabuto';
 import { Kabutops } from './kabutops';
 import { KabutopsFO24 } from './other-prints';
 import { Kingler } from './kingler';
@@ -43,6 +44,7 @@ import { MrFuji } from './mr-fuji';
 import { Muk } from './muk';
 import { MukFO28 } from './other-prints';
 import { MysteriousFossil } from './mysterious-fossil';
+import { Omanyte } from './omanyte';
 import { Omastar } from './omastar';
 import { Psyduck } from './psyduck';
 import { Raichu } from './raichu';
@@ -91,6 +93,7 @@ export const setFossil: Card[] = [
   new Horsea(),
   new Hypno(),
   new HypnoFO23(),
+  new Kabuto(),
   new Kabutops(),
   new KabutopsFO24(),
   new Kingler(),
@@ -106,6 +109,7 @@ export const setFossil: Card[] = [
   new Muk(),
   new MukFO28(),
   new MysteriousFossil(),
+  new Omanyte(),
   new Omastar(),
   new Psyduck(),
   new Raichu(),
