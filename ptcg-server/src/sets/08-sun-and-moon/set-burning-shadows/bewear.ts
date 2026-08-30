@@ -11,25 +11,22 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, DISCARD_TOP_X_CARDS_FROM_YOUR_DECK, 
 export class Bewear extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Stufful';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 120;
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Mix-Up',
-      cost: [C, C],
-      damage: 0,
-      text: 'Flip a coin. If heads, discard the top 3 cards of your opponent\'s deck.'
-    },
-    {
-      name: 'Tantrum',
-      cost: [C, C, C],
-      damage: 120,
-      text: 'This Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Mix-Up',
+    cost: [C, C],
+    damage: 0,
+    text: 'Flip a coin. If heads, discard the top 3 cards of your opponent\'s deck.'
+  }, {
+    name: 'Tantrum',
+    cost: [C, C, C],
+    damage: 120,
+    text: 'This Pokémon is now Confused.'
+  }];
 
   public set: string = 'BUS';
   public setNumber: string = '111';

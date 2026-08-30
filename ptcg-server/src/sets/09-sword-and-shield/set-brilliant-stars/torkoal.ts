@@ -10,28 +10,26 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 
 export class Torkoal extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 120;
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Firebreathing',
-      cost: [C, C],
-      damage: 30,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 30 more damage.'
-    },
-    {
-      name: 'Guard Press',
-      cost: [R, C, C],
-      damage: 90,
-      text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
-    }
-  ];
+  public attacks = [{
+    name: 'Firebreathing',
+    cost: [C, C],
+    damage: 30,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 30 more damage.'
+  }, {
+    name: 'Guard Press',
+    cost: [R, C, C],
+    damage: 90,
+    text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'BRS';
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';

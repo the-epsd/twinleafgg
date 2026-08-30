@@ -10,25 +10,22 @@ import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store
 
 export class Heracross extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 100;
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Horn Attack',
-      cost: [G],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Giga Horn',
-      cost: [G, G, C],
-      damage: 80,
-      text: 'Flip 2 coins. If both of them are tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Horn Attack',
+    cost: [G],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Giga Horn',
+    cost: [G, G, C],
+    damage: 80,
+    text: 'Flip 2 coins. If both of them are tails, this attack does nothing.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '8';

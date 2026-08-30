@@ -14,7 +14,8 @@ export class TeamAquaHideout extends TrainerCard {
   public setNumber: string = '78';
   public name: string = 'Team Aqua Hideout';
   public fullName: string = 'Team Aqua Hideout MA';
-  public text: string = 'Each Pokémon that does not have Team Aqua in its name pays [C] more to retreat.';
+  public text: string =
+    'Each Pokémon that does not have Team Aqua in its name pays [C] more to retreat.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckRetreatCostEffect && StateUtils.getStadiumCard(state) === this) {
@@ -25,7 +26,7 @@ export class TeamAquaHideout extends TrainerCard {
         return state;
       }
 
-      if (pokemonCard && !pokemonCard.tags.includes(CardTag.TEAM_AQUA)) {
+      if (pokemonCard && !pokemonCard.hasTag(CardTag.TEAM_AQUA)) {
         effect.cost.push(CardType.COLORLESS);
       }
     }
@@ -33,4 +34,3 @@ export class TeamAquaHideout extends TrainerCard {
     return state;
   }
 }
-

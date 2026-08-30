@@ -12,26 +12,23 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Weepinbell extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Bellsprout';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Growth',
-      cost: [C],
-      damage: 0,
-      text: 'Attach up to 2 [G] Energy cards from your hand to this Pokémon.'
-    },
-    {
-      name: 'Double Razor Leaf',
-      cost: [G, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 30 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Growth',
+    cost: [C],
+    damage: 0,
+    text: 'Attach up to 2 [G] Energy cards from your hand to this Pokémon.'
+  }, {
+    name: 'Double Razor Leaf',
+    cost: [G, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 30 damage for each heads.'
+  }];
 
   public set: string = 'CES';
   public setNumber: string = '2';

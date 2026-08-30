@@ -8,27 +8,24 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../../game/st
 export class Noivern extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Noibat';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 110;
   public weakness = [{ type: Y }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Second Bite',
-      cost: [C, C, C],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'This attack does 10 more damage for each damage counter on your opponent\'s Active Pokémon.'
-    },
-    {
-      name: 'Sonic Bazooka',
-      cost: [P, D, C],
-      damage: 60,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 30 more damage and your opponent\'s Active Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Second Bite',
+    cost: [C, C, C],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'This attack does 10 more damage for each damage counter on your opponent\'s Active Pokémon.'
+  }, {
+    name: 'Sonic Bazooka',
+    cost: [P, D, C],
+    damage: 60,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 30 more damage and your opponent\'s Active Pokémon is now Confused.'
+  }];
 
   public set: string = 'TK6N';
   public setNumber: string = '30';

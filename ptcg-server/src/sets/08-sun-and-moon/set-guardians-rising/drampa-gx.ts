@@ -1,5 +1,11 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, EnergyType, CardTag } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  SuperType,
+  EnergyType,
+  CardTag,
+} from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, Card, ChooseCardsPrompt } from '../../../game';
 import { ShuffleDeckPrompt } from '../../../game';
 import { PlayerType } from '../../../game';
@@ -9,41 +15,46 @@ import { GameMessage } from '../../../game/game-message';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
-function* useWhirlpool(next: Function, store: StoreLike, state: State,
-  effect: AttackEffect): IterableIterator<State> {
-
+function* useWhirlpool(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
   // Defending Pokemon has no energy cards attached
-  if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
+  if (!opponent.active.cards.some((c) => c.superType === SuperType.ENERGY)) {
     return state;
   }
 
   let cards: Card[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_DISCARD,
-    opponent.active,
-    { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
-    { min: 1, max: 1, allowCancel: true }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_DISCARD,
+      opponent.active,
+      { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
+      { min: 1, max: 1, allowCancel: true },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   const discardEnergy = new DiscardCardsEffect(effect, cards);
   return store.reduceEffect(state, discardEnergy);
 }
 
-
 export class DrampaGX extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
-  public tags: string[] = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp: number = 180;
 
@@ -56,21 +67,20 @@ export class DrampaGX extends PokemonCard {
       name: 'Righteous Edge',
       cost: [CardType.COLORLESS],
       damage: 20,
-      text: 'Discard a Special Energy from your opponent\'s Active Pokémon.'
+      text: "Discard a Special Energy from your opponent's Active Pokémon.",
     },
     {
       name: 'Berserk',
       cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 80,
-      text: 'If your Benched Pokémon have any damage counters on them, this attack does 70 more damage.'
+      text: 'If your Benched Pokémon have any damage counters on them, this attack does 70 more damage.',
     },
     {
       name: 'Big Wheel-GX',
       cost: [CardType.COLORLESS],
       damage: 0,
-      text: 'Shuffle your hand into your deck. Then, draw 10 cards. (You can\'t use more than 1 GX attack in a game.)'
+      text: "Shuffle your hand into your deck. Then, draw 10 cards. (You can't use more than 1 GX attack in a game.)",
     },
-
   ];
 
   public set: string = 'GRI';
@@ -118,7 +128,7 @@ export class DrampaGX extends PokemonCard {
       if (player.hand.cards.length > 0) {
         player.hand.moveCardsTo(player.hand.cards, player.deck);
 
-        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
           player.deck.applyOrder(order);
           while (player.hand.cards.length < 10) {
             if (player.deck.cards.length === 0) {
@@ -132,5 +142,4 @@ export class DrampaGX extends PokemonCard {
 
     return state;
   }
-
 }

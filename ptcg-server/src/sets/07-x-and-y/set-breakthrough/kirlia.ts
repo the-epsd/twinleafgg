@@ -12,26 +12,23 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, SEARCH_DISCARD_PILE_FOR_CA
 export class Kirlia extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Ralts';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Beckon',
-      cost: [P],
-      damage: 0,
-      text: 'Put a Supporter card from your discard pile into your hand.'
-    },
-    {
-      name: 'Quick Turn',
-      cost: [C, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Beckon',
+    cost: [P],
+    damage: 0,
+    text: 'Put a Supporter card from your discard pile into your hand.'
+  }, {
+    name: 'Quick Turn',
+    cost: [C, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '69';

@@ -17,28 +17,26 @@ import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, WAS_ATT
 export class Ampharos extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Flaaffy';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 160;
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Thunder Shock',
-      cost: [L],
-      damage: 50,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Searchlight Tail',
-      cost: [L, C],
-      damage: 90,
-      damageCalculation: '+',
-      text: 'Your opponent reveals their hand. If you find any Energy cards there, this attack does 90 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Thunder Shock',
+    cost: [L],
+    damage: 50,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Searchlight Tail',
+    cost: [L, C],
+    damage: 90,
+    damageCalculation: '+',
+    text: 'Your opponent reveals their hand. If you find any Energy cards there, this attack does 90 more damage.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'CRE';
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';

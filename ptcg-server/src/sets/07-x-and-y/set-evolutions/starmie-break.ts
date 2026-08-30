@@ -10,10 +10,10 @@ import { Effect } from '../../../game/store/effects/effect';
 import { BREAK_RULE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class StarmieBreak extends PokemonCard {
-  public tags = [CardTag.BREAK];
+  protected _tags = [CardTag.BREAK];
   public stage: Stage = Stage.BREAK;
   public evolvesFrom: string = 'Starmie';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 130;
   public retreat = [];
 
@@ -42,7 +42,7 @@ export class StarmieBreak extends PokemonCard {
       // Check all opponent Pokemon for BREAK tag
       // Active - use DealDamageEffect (applies weakness/resistance)
       const activePokemon = opponent.active.getPokemonCard();
-      if (activePokemon && activePokemon.tags.includes(CardTag.BREAK)) {
+      if (activePokemon && activePokemon.hasTag(CardTag.BREAK)) {
         const damage = new DealDamageEffect(effect, 100);
         damage.target = opponent.active;
         store.reduceEffect(state, damage);
@@ -52,7 +52,7 @@ export class StarmieBreak extends PokemonCard {
       opponent.bench.forEach((benched) => {
         if (benched.cards.length > 0) {
           const benchPokemon = benched.getPokemonCard();
-          if (benchPokemon && benchPokemon.tags.includes(CardTag.BREAK)) {
+          if (benchPokemon && benchPokemon.hasTag(CardTag.BREAK)) {
             const damage = new PutDamageEffect(effect, 100);
             damage.target = benched;
             store.reduceEffect(state, damage);

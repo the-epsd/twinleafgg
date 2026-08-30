@@ -13,7 +13,7 @@ export class Snorlax extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public regulationMark = 'F';
 

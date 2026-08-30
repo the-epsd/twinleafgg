@@ -9,25 +9,22 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Tangela extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Gentle Slap',
-      cost: [C, C],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Bind',
-      cost: [G, C, C],
-      damage: 40,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Gentle Slap',
+    cost: [C, C],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Bind',
+    cost: [G, C, C],
+    damage: 40,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'LOT';
   public setNumber: string = '1';

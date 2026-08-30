@@ -10,26 +10,23 @@ import { State, StoreLike } from '../../../game';
 export class Piloswine extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Swinub';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 100;
   public weakness = [{ type: M }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Ice Beam',
-      cost: [W, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Quintuple Headbutt',
-      cost: [W, W, C, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 5 coins. This attack does 40 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Ice Beam',
+    cost: [W, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Quintuple Headbutt',
+    cost: [W, W, C, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 5 coins. This attack does 40 damage times the number of heads.'
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '27';

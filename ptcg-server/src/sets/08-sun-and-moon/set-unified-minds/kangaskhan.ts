@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, DRAW_CARDS } from '../../../game/store/prefabs/prefabs
 
 export class Kangaskhan extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public retreat = [C, C];
@@ -20,15 +20,15 @@ export class Kangaskhan extends PokemonCard {
       name: 'Double Draw',
       cost: [C],
       damage: 0,
-      text: 'Draw 2 cards.'
+      text: 'Draw 2 cards.',
     },
     {
       name: 'Tag Impact',
       cost: [C, C, C, C],
       damage: 50,
       damageCalculation: 'x',
-      text: 'This attack does 50 damage for each of your TAG TEAM Pokémon in play.'
-    }
+      text: 'This attack does 50 damage for each of your TAG TEAM Pokémon in play.',
+    },
   ];
 
   public set: string = 'UNM';
@@ -51,7 +51,7 @@ export class Kangaskhan extends PokemonCard {
       let tagTeamCount = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         const pokemonCard = cardList.getPokemonCard();
-        if (pokemonCard && pokemonCard.tags.includes(CardTag.TAG_TEAM)) {
+        if (pokemonCard && pokemonCard.hasTag(CardTag.TAG_TEAM)) {
           tagTeamCount++;
         }
       });

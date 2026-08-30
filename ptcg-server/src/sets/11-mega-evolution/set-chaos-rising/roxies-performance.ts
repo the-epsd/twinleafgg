@@ -14,7 +14,7 @@ const ROXIE_POISONED_NO_RETREAT = 'ROXIE_POISONED_NO_RETREAT';
 export class RoxiesPerformance extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '81';
   public name: string = "Roxie's Performance";
@@ -28,7 +28,6 @@ export class RoxiesPerformance extends TrainerCard {
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

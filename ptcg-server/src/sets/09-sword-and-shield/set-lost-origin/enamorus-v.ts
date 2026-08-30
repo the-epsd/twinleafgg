@@ -3,35 +3,61 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, CardTag, EnergyType } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, AttachEnergyPrompt, PlayerType, SlotType, EnergyCard, PokemonCardList, Player } from '../../../game';
+import {
+  Stage,
+  CardType,
+  SuperType,
+  CardTag,
+  EnergyType,
+} from '../../../game/store/card/card-types';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  AttachEnergyPrompt,
+  PlayerType,
+  SlotType,
+  EnergyCard,
+  PokemonCardList,
+  Player,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
-import { AddSpecialConditionsPowerEffect, CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  MOVE_CARDS,
+} from '../../../game/store/prefabs/prefabs';
+import {
+  AddSpecialConditionsPowerEffect,
+  CheckProvidedEnergyEffect,
+} from '../../../game/store/effects/check-effects';
 import { EffectOfAbilityEffect } from '../../../game/store/effects/game-effects';
 import { GameMessage } from '../../../game/game-message';
 
 export class EnamorusV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 210;
   public weakness = [{ type: M }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Guardian of Love',
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all effects of your opponent\'s Pokémon\'s Abilities done to each of your Pokémon that has any [P] Energy attached, except any Enamorus V.'
-  }];
+  public powers = [
+    {
+      name: 'Guardian of Love',
+      powerType: PowerType.ABILITY,
+      text: "Prevent all effects of your opponent's Pokémon's Abilities done to each of your Pokémon that has any [P] Energy attached, except any Enamorus V.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Blossom Tail',
       cost: [P, C, C],
       damage: 100,
-      text: 'Attach up to 2 basic Energy cards from your discard pile to your Benched Pokémon in any way you like.'
-    }
+      text: 'Attach up to 2 basic Energy cards from your discard pile to your Benched Pokémon in any way you like.',
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -50,14 +76,21 @@ export class EnamorusV extends PokemonCard {
     //      set-astral-radiance/bastiodon.ts (passive ability isPokemonInPlay check)
 
     // Helper: check whether the guardian protection applies to a given target PokemonCardList
-    const shouldProtectTarget = (targetList: PokemonCardList, abilityOwnerPlayer: Player): boolean => {
+    const shouldProtectTarget = (
+      targetList: PokemonCardList,
+      abilityOwnerPlayer: Player,
+    ): boolean => {
       const targetPokemon = targetList.getPokemonCard();
-      if (!targetPokemon) { return false; }
-      if (targetPokemon.name === 'Enamorus V') { return false; }
+      if (!targetPokemon) {
+        return false;
+      }
+      if (targetPokemon.name === 'Enamorus V') {
+        return false;
+      }
       const checkEnergy = new CheckProvidedEnergyEffect(abilityOwnerPlayer, targetList);
       store.reduceEffect(state, checkEnergy);
-      return checkEnergy.energyMap.some(em =>
-        em.provides.includes(CardType.PSYCHIC) || em.provides.includes(CardType.ANY)
+      return checkEnergy.energyMap.some(
+        (em) => em.provides.includes(CardType.PSYCHIC) || em.provides.includes(CardType.ANY),
       );
     };
 
@@ -70,13 +103,21 @@ export class EnamorusV extends PokemonCard {
           break;
         }
       }
-      if (!enamorusPlayer) { return state; }
-      if (IS_ABILITY_BLOCKED(store, state, enamorusPlayer, this)) { return state; }
+      if (!enamorusPlayer) {
+        return state;
+      }
+      if (IS_ABILITY_BLOCKED(store, state, enamorusPlayer, this)) {
+        return state;
+      }
 
       try {
         const targetPlayer = StateUtils.findOwner(state, effect.target);
-        if (targetPlayer !== enamorusPlayer) { return state; }
-        if (effect.player === enamorusPlayer) { return state; }
+        if (targetPlayer !== enamorusPlayer) {
+          return state;
+        }
+        if (effect.player === enamorusPlayer) {
+          return state;
+        }
         if (shouldProtectTarget(effect.target, enamorusPlayer)) {
           effect.target = undefined;
         }
@@ -94,13 +135,21 @@ export class EnamorusV extends PokemonCard {
           break;
         }
       }
-      if (!enamorusPlayer) { return state; }
-      if (IS_ABILITY_BLOCKED(store, state, enamorusPlayer, this)) { return state; }
+      if (!enamorusPlayer) {
+        return state;
+      }
+      if (IS_ABILITY_BLOCKED(store, state, enamorusPlayer, this)) {
+        return state;
+      }
 
       try {
         const targetPlayer = StateUtils.findOwner(state, effect.target);
-        if (!targetPlayer || targetPlayer !== enamorusPlayer) { return state; }
-        if (effect.player === enamorusPlayer) { return state; }
+        if (!targetPlayer || targetPlayer !== enamorusPlayer) {
+          return state;
+        }
+        if (effect.player === enamorusPlayer) {
+          return state;
+        }
         if (shouldProtectTarget(effect.target, enamorusPlayer)) {
           effect.preventDefault = true;
         }
@@ -116,27 +165,34 @@ export class EnamorusV extends PokemonCard {
       const player = effect.player;
 
       const hasBasicEnergyInDiscard = player.discard.cards.some(
-        c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC
+        (c) => c instanceof EnergyCard && c.energyType === EnergyType.BASIC,
       );
       if (!hasBasicEnergyInDiscard) {
         return state;
       }
 
-      return store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_TO_BENCH,
-        player.discard,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { allowCancel: true, min: 0, max: 2 }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this });
-        }
-      });
+      return store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_TO_BENCH,
+          player.discard,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+          { allowCancel: true, min: 0, max: 2 },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            MOVE_CARDS(store, state, player.discard, target, {
+              cards: [transfer.card],
+              sourceCard: this,
+            });
+          }
+        },
+      );
     }
 
     return state;

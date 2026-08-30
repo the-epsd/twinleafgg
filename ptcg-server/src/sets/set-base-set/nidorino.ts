@@ -1,13 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { Attack } from '../../game/store/card/pokemon-types';
-import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 
 import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import { GameMessage } from '../../game';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Nidorino extends PokemonCard {
   public name = 'Nidorino';
@@ -16,7 +15,7 @@ export class Nidorino extends PokemonCard {
   public fullName = 'Nidorino BS';
   public cardImage: string = 'assets/cardback.png';
 
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public stage = Stage.STAGE_1;
   public evolvesFrom = 'Nidoran ♂';
   public hp = 60;
@@ -40,13 +39,7 @@ export class Nidorino extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      return store.prompt(
-        state,
-        [
-          new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP),
-          new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP),
-        ],
-        (results) => {
+      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 2, results => {
           const heads = results.filter((r) => !!r).length;
           effect.damage = heads * 30;
         },

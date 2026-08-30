@@ -9,7 +9,7 @@ import { GameMessage } from '../../game';
 
 export class SamiyasBuizel2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 60;
   public weakness = [{ type: L }];
   public retreat = [C];
@@ -19,8 +19,7 @@ export class SamiyasBuizel2 extends PokemonCard {
     cost: [C],
     damage: 20,
     text: 'Flip a coin. If tails, this attack does nothing.'
-  },
-  {
+  }, {
     name: 'Smash Turn',
     cost: [W, C],
     damage: 20,

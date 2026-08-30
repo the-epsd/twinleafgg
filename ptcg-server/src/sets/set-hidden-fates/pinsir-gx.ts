@@ -9,9 +9,9 @@ import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class PinsirGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 180;
   public weakness = [{ type: R }];
   public retreat = [C, C];
@@ -21,14 +21,14 @@ export class PinsirGx extends PokemonCard {
       name: 'Superpowered Horns',
       cost: [G, G, C],
       damage: 110,
-      text: ''
+      text: '',
     },
     {
       name: 'Guillotine-GX',
       cost: [G, G, C],
       damage: 160,
-      text: '(You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "(You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'HIF';

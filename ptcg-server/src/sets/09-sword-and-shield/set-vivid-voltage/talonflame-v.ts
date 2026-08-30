@@ -1,13 +1,22 @@
-import { Attack, CardTag, CardType, PokemonCard, Resistance, Stage, State, StoreLike, Weakness } from '../../../game';
+import {
+  Attack,
+  CardTag,
+  CardType,
+  PokemonCard,
+  Resistance,
+  Stage,
+  State,
+  StoreLike,
+  Weakness,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 import { DRAW_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class TalonflameV extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-  public tags: string[] = [CardTag.POKEMON_V];
-  public cardType: CardType = R;
+  protected _tags = [CardTag.POKEMON_V];
+  public cardType: CardType[] = [R];
   public hp: number = 190;
   public weakness: Weakness[] = [{ type: L }];
   public resistance: Resistance[] = [{ type: F, value: -30 }];
@@ -25,7 +34,7 @@ export class TalonflameV extends PokemonCard {
       name: 'Bright Wing',
       cost: [R, R, C],
       damage: 160,
-      text: 'Discard an Energy from this Pokémon.'
+      text: 'Discard an Energy from this Pokémon.',
     },
   ];
 
@@ -37,7 +46,6 @@ export class TalonflameV extends PokemonCard {
   public fullName: string = 'Talonflame V VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     const player = state.players[state.activePlayer];
 
     if (WAS_ATTACK_USED(effect, 0, this)) {

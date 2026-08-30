@@ -4,13 +4,13 @@ import { Stage, CardType, SuperType, EnergyType } from '../../../game/store/card
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { PowerType, StoreLike, State, GameError, GameMessage, AttachEnergyPrompt, PlayerType, SlotType, StateUtils, CardTarget } from '../../../game';
+import { PowerType, StoreLike, State, GameError, GameMessage, AttachEnergyPrompt, PlayerType, SlotType, StateUtils, CardTarget, pokemonHasCardType } from '../../../game';
 import { ABILITY_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Barbaracle extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Binacle';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 130;
   public weakness = [{ type: G }];
   public retreat = [C, C];
@@ -57,7 +57,7 @@ export class Barbaracle extends PokemonCard {
 
       const blocked2: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        if (card.cardType !== CardType.FIGHTING) {
+        if (!pokemonHasCardType(card, CardType.FIGHTING)) {
           blocked2.push(target);
         }
       });

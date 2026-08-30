@@ -4,36 +4,33 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { CoinFlipPrompt, GameMessage, StoreLike, State, StateUtils } from '../../../game';
+import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect, CheckRetreatCostEffect } from '../../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class AlolanGolem extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Alolan Graveler';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 160;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Electromagnetic Rock Wrecker',
-      cost: [L, C, C],
-      damage: 80,
-      damageCalculation: 'x',
-      text: 'Flip a coin for each [L] Energy attached to this Pokémon. This attack does 80 damage for each heads.'
-    },
-    {
-      name: 'Heavy Slam',
-      cost: [L, C, C, C],
-      damage: 200,
-      damageCalculation: '-',
-      text: 'This attack does 30 less damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
-    }
-  ];
+  public attacks = [{
+    name: 'Electromagnetic Rock Wrecker',
+    cost: [L, C, C],
+    damage: 80,
+    damageCalculation: 'x',
+    text: 'Flip a coin for each [L] Energy attached to this Pokémon. This attack does 80 damage for each heads.'
+  }, {
+    name: 'Heavy Slam',
+    cost: [L, C, C, C],
+    damage: 200,
+    damageCalculation: '-',
+    text: 'This attack does 30 less damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
+  }];
 
   public set: string = 'GRI';
   public setNumber: string = '42';
@@ -54,16 +51,12 @@ export class AlolanGolem extends PokemonCard {
         return sum + energy.provides.filter(p => p === CardType.LIGHTNING || p === CardType.ANY).length;
       }, 0);
 
-      effect.damage = 0;
-
-      for (let i = 0; i < lightningEnergyCount; i++) {
-        store.prompt(state, [
-          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-        ], result => {
-          if (result === true) {
-            effect.damage += 80;
-          }
+      if (lightningEnergyCount > 0) {
+        MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, lightningEnergyCount, results => {
+          effect.damage = results.filter(r => r).length * 80;
         });
+      } else {
+        effect.damage = 0;
       }
     }
 

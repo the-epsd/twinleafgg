@@ -11,26 +11,23 @@ import { HEAL_X_DAMAGE_FROM_THIS_POKEMON, MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK
 export class Serperior extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Servine';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 140;
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Double Slash',
-      cost: [G, C],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 50 damage times the number of heads.'
-    },
-    {
-      name: 'Mega Drain',
-      cost: [G, C, C],
-      damage: 70,
-      text: 'Heal 30 damage from this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Double Slash',
+    cost: [G, C],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 50 damage times the number of heads.'
+  }, {
+    name: 'Mega Drain',
+    cost: [G, C, C],
+    damage: 70,
+    text: 'Heal 30 damage from this Pokémon.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '13';

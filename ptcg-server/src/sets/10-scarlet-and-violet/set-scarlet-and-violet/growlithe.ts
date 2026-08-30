@@ -7,7 +7,7 @@ export class Growlithe extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
 
   public hp = 90;
 

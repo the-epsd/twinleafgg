@@ -4,14 +4,22 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { AttachEnergyPrompt, GameMessage, PlayerType, SlotType, StoreLike, State, StateUtils } from '../../../game';
+import {
+  AttachEnergyPrompt,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_MORE_DAMAGE_PER_HEADS } from '../../../game/store/prefabs/attack-effects';
 
 export class Meloetta extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 90;
   public weakness = [{ type: P }];
   public retreat = [C];
@@ -21,15 +29,15 @@ export class Meloetta extends PokemonCard {
       name: 'Tag Cheer',
       cost: [C],
       damage: 0,
-      text: 'Attach an Energy card from your hand to 1 of your TAG TEAM Pokémon.'
+      text: 'Attach an Energy card from your hand to 1 of your TAG TEAM Pokémon.',
     },
     {
       name: 'Shooting Star Pirouette',
       cost: [C, C],
       damage: 30,
       damageCalculation: '+',
-      text: 'Flip a coin until you get tails. This attack does 30 more damage for each heads.'
-    }
+      text: 'Flip a coin until you get tails. This attack does 30 more damage for each heads.',
+    },
   ];
 
   public set: string = 'UNM';
@@ -45,17 +53,17 @@ export class Meloetta extends PokemonCard {
       const player = effect.player;
 
       // Check if player has energy in hand
-      const hasEnergy = player.hand.cards.some(c => c.superType === SuperType.ENERGY);
+      const hasEnergy = player.hand.cards.some((c) => c.superType === SuperType.ENERGY);
 
       // Check if player has TAG TEAM Pokemon in play
       let hasTagTeam = false;
       const slots: SlotType[] = [];
-      if (player.active.getPokemonCard()?.tags.includes(CardTag.TAG_TEAM)) {
+      if (player.active.getPokemonCard()?.hasTag(CardTag.TAG_TEAM)) {
         hasTagTeam = true;
         slots.push(SlotType.ACTIVE);
       }
-      player.bench.forEach(b => {
-        if (b.cards.length > 0 && b.getPokemonCard()?.tags.includes(CardTag.TAG_TEAM)) {
+      player.bench.forEach((b) => {
+        if (b.cards.length > 0 && b.getPokemonCard()?.hasTag(CardTag.TAG_TEAM)) {
           hasTagTeam = true;
           if (!slots.includes(SlotType.BENCH)) {
             slots.push(SlotType.BENCH);
@@ -67,25 +75,29 @@ export class Meloetta extends PokemonCard {
         return state;
       }
 
-      store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_CARDS,
-        player.hand,
-        PlayerType.BOTTOM_PLAYER,
-        slots,
-        { superType: SuperType.ENERGY },
-        { allowCancel: false, min: 1, max: 1 }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          // Only allow attaching to TAG TEAM Pokemon
-          const targetCard = target.getPokemonCard();
-          if (targetCard && targetCard.tags.includes(CardTag.TAG_TEAM)) {
-            player.hand.moveCardTo(transfer.card, target);
+      store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_CARDS,
+          player.hand,
+          PlayerType.BOTTOM_PLAYER,
+          slots,
+          { superType: SuperType.ENERGY },
+          { allowCancel: false, min: 1, max: 1 },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            // Only allow attaching to TAG TEAM Pokemon
+            const targetCard = target.getPokemonCard();
+            if (targetCard && targetCard.hasTag(CardTag.TAG_TEAM)) {
+              player.hand.moveCardTo(transfer.card, target);
+            }
           }
-        }
-      });
+        },
+      );
     }
 
     // Attack 2: Shooting Star Pirouette

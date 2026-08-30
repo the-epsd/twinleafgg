@@ -7,26 +7,23 @@ import { AttackEffect } from '../../../game/store/effects/game-effects';
 
 export class Kricketot extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 60;
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Beat',
-      cost: [G],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Double Headbutt',
-      cost: [G, G],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 10 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Beat',
+    cost: [G],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Double Headbutt',
+    cost: [G, G],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 10 more damage for each heads.'
+  }];
 
   public set: string = 'NXD';
   public setNumber: string = '3';

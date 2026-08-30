@@ -10,7 +10,7 @@ import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_ATTACK_USED } from '.
 
 export class Bruxish extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 100;
   public weakness = [{ type: G }];
   public retreat = [C];
@@ -49,12 +49,15 @@ export class Bruxish extends PokemonCard {
 
       if (defendingPokemon.cards.length > 0) {
         const defendingCard = defendingPokemon.cards[0] as PokemonCard;
-        const defendingType = defendingCard.cardType;
+        const defendingTypes = defendingCard.cardType;
 
         opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
           if (cardList !== defendingPokemon && cardList.cards.length > 0) {
             const card = cardList.cards[0] as PokemonCard;
-            if (card.cardType === defendingType) {
+            if (
+              card.cardType.length === defendingTypes.length
+              && card.cardType.every((t, i) => t === defendingTypes[i])
+            ) {
               const damageEffect = new PutDamageEffect(effect, 20);
               damageEffect.target = cardList;
               state = store.reduceEffect(state, damageEffect);

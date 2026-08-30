@@ -10,20 +10,18 @@ import { COIN_FLIP_PROMPT, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_ATTACK_USED }
 
 export class Foongus extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 40;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Astonish',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, choose a random card from your opponent\'s hand. Your opponent reveals that card and shuffles it into his or her deck.'
-    }
-  ];
+  public attacks = [{
+    name: 'Astonish',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, choose a random card from your opponent\'s hand. Your opponent reveals that card and shuffles it into his or her deck.'
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '12';

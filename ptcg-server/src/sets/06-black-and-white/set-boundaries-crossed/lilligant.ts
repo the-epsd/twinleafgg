@@ -11,27 +11,24 @@ import { COIN_FLIP_PROMPT, DRAW_CARDS_UNTIL_CARDS_IN_HAND, HEAL_X_DAMAGE_FROM_TH
 export class Lilligant extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Petilil';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Return',
-      cost: [C],
-      damage: 20,
-      text: 'Draw cards until you have 6 cards in your hand.'
-    },
-    {
-      name: 'Magical Leaf',
-      cost: [G, C, C],
-      damage: 50,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 30 more damage and heal 30 damage from this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Return',
+    cost: [C],
+    damage: 20,
+    text: 'Draw cards until you have 6 cards in your hand.'
+  }, {
+    name: 'Magical Leaf',
+    cost: [G, C, C],
+    damage: 50,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 30 more damage and heal 30 damage from this Pokémon.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '17';

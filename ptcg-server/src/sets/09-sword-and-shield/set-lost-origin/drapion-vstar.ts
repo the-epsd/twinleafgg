@@ -1,15 +1,27 @@
 /* eslint-disable indent */
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition, BoardEffect } from '../../../game/store/card/card-types';
-import { GameError, GameMessage, PlayerType, PowerType, State, StateUtils, StoreLike } from '../../../game';
+import {
+  Stage,
+  CardType,
+  SpecialCondition,
+  BoardEffect,
+} from '../../../game/store/card/card-types';
+import {
+  GameError,
+  GameMessage,
+  PlayerType,
+  PowerType,
+  State,
+  StateUtils,
+  StoreLike,
+} from '../../../game';
 import { CardTag } from '../../../game/store/card/card-types';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class DrapionVSTAR extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_VSTAR];
+  protected _tags = [CardTag.POKEMON_VSTAR];
 
   public evolvesFrom = 'Drapion V';
 
@@ -17,7 +29,7 @@ export class DrapionVSTAR extends PokemonCard {
 
   public stage: Stage = Stage.VSTAR;
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp: number = 270;
 
@@ -25,12 +37,14 @@ export class DrapionVSTAR extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Hazard Star',
-    powerType: PowerType.ABILITY,
-    useWhenInPlay: true,
-    text: 'During your turn, you may make your opponent\'s Active Pokémon Paralyzed and Poisoned. During Pokémon Checkup, put 3 damage counters on that Pokémon instead of 1. (You can\'t use more than 1 VSTAR Power in a game.)'
-  }];
+  public powers = [
+    {
+      name: 'Hazard Star',
+      powerType: PowerType.ABILITY,
+      useWhenInPlay: true,
+      text: "During your turn, you may make your opponent's Active Pokémon Paralyzed and Poisoned. During Pokémon Checkup, put 3 damage counters on that Pokémon instead of 1. (You can't use more than 1 VSTAR Power in a game.)",
+    },
+  ];
 
   public attacks = [
     {
@@ -38,8 +52,8 @@ export class DrapionVSTAR extends PokemonCard {
       cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS],
       damage: 250,
       damageCalculation: '-',
-      text: 'This attack does 10 less damage for each damage counter on this Pokémon.'
-    }
+      text: 'This attack does 10 less damage for each damage counter on this Pokémon.',
+    },
   ];
 
   public set: string = 'LOR';
@@ -54,9 +68,7 @@ export class DrapionVSTAR extends PokemonCard {
 
   // Implement ability
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_POWER_USED(effect, 0, this)) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       if (player.usedVSTAR) {
@@ -65,7 +77,7 @@ export class DrapionVSTAR extends PokemonCard {
 
       player.usedVSTAR = true;
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         if (cardList.getPokemonCard() === this) {
           cardList.addBoardEffect(BoardEffect.ABILITY_USED);
         }

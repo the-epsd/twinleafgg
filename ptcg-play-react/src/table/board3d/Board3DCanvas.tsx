@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { PCFSoftShadowMap, SRGBColorSpace } from 'three';
 import type { Card, CardList, Player } from 'ptcg-server';
@@ -20,8 +20,10 @@ import {
 import { CardInfoPopup } from '../../card-info/CardInfoPopup';
 import { CardInfoListPopup } from '../../card-info/CardInfoListPopup';
 import type { Board3dCardInfoData, CardInfoPaneActionResult } from './board3dCardsAdapter';
+import { refreshInPlayCardInfoData } from './refreshInPlayCardInfoData';
 import styles from './Board3DCanvas.module.css';
 import { Board3dAbilityActivationOverlay } from './Board3dAbilityActivationOverlay';
+import { Board3dCardInfoOverlay } from './Board3dCardInfoOverlay';
 import { appConfig } from '../../env/config';
 
 const EMPTY_CATALOG: Card[] = [];
@@ -128,6 +130,17 @@ export function Board3DCanvas(props: Board3DCanvasProps) {
     [maps, serverConfig?.scansUrl, serverConfig?.sleevesUrl, queueInfo, queueList],
   );
 
+  // Keep open card info in sync with board state (e.g. Fossil Ditto Transform).
+  useEffect(() => {
+    const players = [props.topPlayer, props.bottomPlayer];
+    setCardPrompt((prev) => {
+      if (!prev) {
+        return prev;
+      }
+      return { ...prev, data: refreshInPlayCardInfoData(prev.data, players) };
+    });
+  }, [props.gameState, props.topPlayer, props.bottomPlayer]);
+
   const runtime = useMemo(() => createBoard3dRuntime(cardsAdapter), [cardsAdapter]);
 
   const controllerProps = useMemo(
@@ -190,24 +203,45 @@ export function Board3DCanvas(props: Board3DCanvasProps) {
       </div>
 
       {cardPrompt?.kind === 'info' && cardPrompt.data.card ? (
-        <CardInfoPopup
-          card={cardPrompt.data.card}
-          cardList={cardPrompt.data.cardList}
-          players={cardPrompt.data.players}
-          facedown={cardPrompt.data.facedown}
-          catalog={catalog}
-          getScanUrl={getScanUrl}
-          onClose={() => {
-            cardPrompt.resolve(undefined);
-            setCardPrompt(null);
-          }}
-          isInGame
-          options={cardPrompt.data.options}
-          onTableAction={(action) => {
-            cardPrompt.resolve(action);
-            setCardPrompt(null);
-          }}
-        />
+        cardPrompt.data.inspect3d ? (
+          <Board3dCardInfoOverlay
+            card={cardPrompt.data.card}
+            cardList={cardPrompt.data.cardList}
+            players={cardPrompt.data.players}
+            facedown={cardPrompt.data.facedown}
+            options={cardPrompt.data.options}
+            boardInteraction={props.boardInteraction}
+            onClose={() => {
+              cardPrompt.resolve(undefined);
+              setCardPrompt(null);
+              controllerRef.current?.exitCardInspect();
+            }}
+            onTableAction={(action) => {
+              cardPrompt.resolve(action);
+              setCardPrompt(null);
+              controllerRef.current?.exitCardInspect();
+            }}
+          />
+        ) : (
+          <CardInfoPopup
+            card={cardPrompt.data.card}
+            cardList={cardPrompt.data.cardList}
+            players={cardPrompt.data.players}
+            facedown={cardPrompt.data.facedown}
+            catalog={catalog}
+            getScanUrl={getScanUrl}
+            onClose={() => {
+              cardPrompt.resolve(undefined);
+              setCardPrompt(null);
+            }}
+            isInGame
+            options={cardPrompt.data.options}
+            onTableAction={(action) => {
+              cardPrompt.resolve(action);
+              setCardPrompt(null);
+            }}
+          />
+        )
       ) : null}
 
       {cardPrompt?.kind === 'list' && cardPrompt.data.cardList ? (

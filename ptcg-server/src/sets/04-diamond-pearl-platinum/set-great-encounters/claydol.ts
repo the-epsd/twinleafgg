@@ -2,7 +2,6 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, BoardEffect } from '../../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, PlayerType, PowerType, GameError, CardList, ChooseCardsPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
@@ -10,7 +9,7 @@ import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 export class Claydol extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Baltoy';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 80;
   public weakness = [{ type: G, value: +20 }];
   public retreat = [C, C];

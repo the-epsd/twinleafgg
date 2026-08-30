@@ -9,9 +9,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Hitmonchan extends PokemonCard {
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 110;
   public weakness = [{ type: P }];
   public retreat = [C];
@@ -22,14 +22,14 @@ export class Hitmonchan extends PokemonCard {
       cost: [F],
       damage: 20,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is an Evolution Pokémon, this attack does 50 more damage.'
+      text: "If your opponent's Active Pokémon is an Evolution Pokémon, this attack does 50 more damage.",
     },
     {
       name: 'Bullet Straight Punch',
       cost: [F, C],
       damage: 40,
-      text: 'This attack\'s damage isn\'t affected by Resistance.'
-    }
+      text: "This attack's damage isn't affected by Resistance.",
+    },
   ];
 
   public regulationMark: string = 'E';

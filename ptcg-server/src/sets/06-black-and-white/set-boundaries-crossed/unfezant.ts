@@ -12,26 +12,23 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 export class Unfezant extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Tranquill';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 130;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Wing Flick',
-      cost: [C, C],
-      damage: 40,
-      text: 'Your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon.'
-    },
-    {
-      name: 'Air Slash',
-      cost: [C, C, C],
-      damage: 80,
-      text: 'Flip a coin. If tails, discard an Energy attached to this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Wing Flick',
+    cost: [C, C],
+    damage: 40,
+    text: 'Your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon.'
+  }, {
+    name: 'Air Slash',
+    cost: [C, C, C],
+    damage: 80,
+    text: 'Flip a coin. If tails, discard an Energy attached to this Pokémon.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '125';

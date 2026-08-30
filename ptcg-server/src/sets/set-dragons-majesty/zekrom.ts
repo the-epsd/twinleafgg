@@ -11,25 +11,22 @@ import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../game/store/p
 
 export class Zekrom extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 130;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Shred',
-      cost: [L, C, C],
-      damage: 70,
-      text: 'This attack’s damage isn’t affected by any effects on your opponent’s Active Pokémon.'
-    },
-    {
-      name: 'Bolt Strike',
-      cost: [L, L, C, C],
-      damage: 150,
-      text: 'Flip a coin. If tails, this Pokémon does 50 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Shred',
+    cost: [L, C, C],
+    damage: 70,
+    text: 'This attack’s damage isn’t affected by any effects on your opponent’s Active Pokémon.'
+  }, {
+    name: 'Bolt Strike',
+    cost: [L, L, C, C],
+    damage: 150,
+    text: 'Flip a coin. If tails, this Pokémon does 50 damage to itself.'
+  }];
 
   public set: string = 'DRM';
   public setNumber: string = '46';

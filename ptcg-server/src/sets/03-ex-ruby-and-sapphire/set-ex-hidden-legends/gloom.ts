@@ -8,7 +8,7 @@ import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store
 export class Gloom extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Oddish';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public retreat = [C];
@@ -18,8 +18,7 @@ export class Gloom extends PokemonCard {
     cost: [G, C],
     damage: 20,
     text: 'After your attack, remove from Gloom the number of damage counters equal to the damage you did to the Defending Pokémon. If Gloom has fewer damage counters than that, remove all of them.'
-  },
-  {
+  }, {
     name: 'Double Razor Leaf',
     cost: [G, C, C],
     damage: 40,

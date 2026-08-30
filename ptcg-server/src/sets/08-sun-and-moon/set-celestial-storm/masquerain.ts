@@ -11,26 +11,23 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, MOVE_CARDS } from '../../.
 export class Masquerain extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Surskit';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Surprising Pattern',
-      cost: [G],
-      damage: 0,
-      text: 'Discard all Special Energy from each of your opponent\'s Pokémon.'
-    },
-    {
-      name: 'Hurricane Wing',
-      cost: [C, C, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 40 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Surprising Pattern',
+    cost: [G],
+    damage: 0,
+    text: 'Discard all Special Energy from each of your opponent\'s Pokémon.'
+  }, {
+    name: 'Hurricane Wing',
+    cost: [C, C, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 40 damage for each heads.'
+  }];
 
   public set: string = 'CES';
   public setNumber: string = '16';

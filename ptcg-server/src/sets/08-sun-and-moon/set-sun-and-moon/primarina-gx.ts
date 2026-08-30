@@ -12,10 +12,10 @@ import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/pr
 import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class PrimarinaGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Brionne';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 250;
   public weakness = [{ type: G }];
   public retreat = [C, C];
@@ -26,20 +26,20 @@ export class PrimarinaGx extends PokemonCard {
       cost: [C, C],
       damage: 10,
       damageCalculation: '+',
-      text: 'This attack does 20 more damage times the amount of [W] Energy attached to your Pokémon.'
+      text: 'This attack does 20 more damage times the amount of [W] Energy attached to your Pokémon.',
     },
     {
       name: 'Roaring Seas',
       cost: [W, W, W, C],
       damage: 120,
-      text: 'Discard an Energy from your opponent\'s Active Pokémon.'
+      text: "Discard an Energy from your opponent's Active Pokémon.",
     },
     {
       name: 'Grand Echo-GX',
       cost: [C, C],
       damage: 0,
-      text: 'Heal all damage from all of your Pokémon. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Heal all damage from all of your Pokémon. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'SUM';
@@ -58,8 +58,8 @@ export class PrimarinaGx extends PokemonCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         const checkEnergy = new CheckProvidedEnergyEffect(player, cardList);
         store.reduceEffect(state, checkEnergy);
-        checkEnergy.energyMap.forEach(em => {
-          em.provides.forEach(type => {
+        checkEnergy.energyMap.forEach((em) => {
+          em.provides.forEach((type) => {
             if (type === CardType.WATER || type === CardType.ANY) {
               waterEnergyCount++;
             }

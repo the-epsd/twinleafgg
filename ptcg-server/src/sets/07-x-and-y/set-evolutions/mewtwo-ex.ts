@@ -6,13 +6,16 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, EnergyCard } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  HEAL_X_DAMAGE_FROM_THIS_POKEMON,
+} from '../../../game/store/prefabs/prefabs';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 
 export class MewtwoEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 180;
   public weakness = [{ type: P }];
   public retreat = [C, C];
@@ -22,20 +25,20 @@ export class MewtwoEx extends PokemonCard {
       name: 'Energy Absorption',
       cost: [C],
       damage: 0,
-      text: 'Attach an Energy card from your discard pile to this Pokémon.'
+      text: 'Attach an Energy card from your discard pile to this Pokémon.',
     },
     {
       name: 'Regeneration',
       cost: [P],
       damage: 0,
-      text: 'Heal 60 damage from this Pokémon.'
+      text: 'Heal 60 damage from this Pokémon.',
     },
     {
       name: 'Psyburn',
       cost: [P, C, C, C],
       damage: 110,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'EVO';
@@ -49,21 +52,25 @@ export class MewtwoEx extends PokemonCard {
     // Ref: set-emerging-powers/klinklang.ts (Charge Beam)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      const hasEnergy = player.discard.cards.some(c => c instanceof EnergyCard);
+      const hasEnergy = player.discard.cards.some((c) => c instanceof EnergyCard);
 
       if (hasEnergy) {
-        return store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_ATTACH,
-          player.discard,
-          { superType: SuperType.ENERGY },
-          { min: 1, max: 1, allowCancel: false }
-        ), cards => {
-          cards = cards || [];
-          if (cards.length > 0) {
-            player.discard.moveCardsTo(cards, player.active);
-          }
-        });
+        return store.prompt(
+          state,
+          new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_CARD_TO_ATTACH,
+            player.discard,
+            { superType: SuperType.ENERGY },
+            { min: 1, max: 1, allowCancel: false },
+          ),
+          (cards) => {
+            cards = cards || [];
+            if (cards.length > 0) {
+              player.discard.moveCardsTo(cards, player.active);
+            }
+          },
+        );
       }
     }
 

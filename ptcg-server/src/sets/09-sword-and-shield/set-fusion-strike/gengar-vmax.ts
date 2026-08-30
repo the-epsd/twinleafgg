@@ -7,26 +7,28 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class GengarVMAX extends PokemonCard {
   public stage: Stage = Stage.VMAX;
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public evolvesFrom = 'Gengar V';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 320;
   public weakness = [{ type: F }];
   public resistance = [];
   public retreat = [C, C, C];
 
-  public attacks = [{
-    name: 'Fear and Panic',
-    cost: [D, D],
-    damage: 60,
-    text: 'This attack does 60 damage for each of your opponent\'s Pokémon V and Pokémon-GX in play.'
-  },
-  {
-    name: 'G-Max Swallow Up',
-    cost: [D, D, D],
-    damage: 250,
-    text: 'During your next turn, this Pokémon can\'t attack.'
-  }];
+  public attacks = [
+    {
+      name: 'Fear and Panic',
+      cost: [D, D],
+      damage: 60,
+      text: "This attack does 60 damage for each of your opponent's Pokémon V and Pokémon-GX in play.",
+    },
+    {
+      name: 'G-Max Swallow Up',
+      cost: [D, D, D],
+      damage: 250,
+      text: "During your next turn, this Pokémon can't attack.",
+    },
+  ];
 
   public set: string = 'FST';
 
@@ -41,20 +43,35 @@ export class GengarVMAX extends PokemonCard {
   public fullName: string = 'Gengar VMAX FST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const vPokemons = opponent.bench.filter(card => card instanceof PokemonCard && card.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX || CardTag.POKEMON_GX));
-      const vPokemons2 = opponent.active.getPokemons().filter(card => card.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX || CardTag.POKEMON_GX));
+      const vPokemons = opponent.bench.filter(
+        (card) =>
+          card instanceof PokemonCard &&
+          card.hasTag(
+            CardTag.POKEMON_V ||
+              CardTag.POKEMON_VSTAR ||
+              CardTag.POKEMON_VMAX ||
+              CardTag.POKEMON_GX,
+          ),
+      );
+      const vPokemons2 = opponent.active
+        .getPokemons()
+        .filter((card) =>
+          card.hasTag(
+            CardTag.POKEMON_V ||
+              CardTag.POKEMON_VSTAR ||
+              CardTag.POKEMON_VMAX ||
+              CardTag.POKEMON_GX,
+          ),
+        );
 
       const vPokes = vPokemons.length + vPokemons2.length;
       const damage = 60 * vPokes;
 
       effect.damage = damage;
-
     }
 
     // G-Max Swallow Up

@@ -7,18 +7,20 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Gumshoos extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Yungoos';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Alert Headbutt',
-    cost: [C, C],
-    damage: 90,
-    damageCalculation: '+',
-    text: 'If your opponent\'s Active Pokémon is a Pokémon-GX or Pokémon-EX, this attack\'s base damage is 30.'
-  }];
+  public attacks = [
+    {
+      name: 'Alert Headbutt',
+      cost: [C, C],
+      damage: 90,
+      damageCalculation: '+',
+      text: "If your opponent's Active Pokémon is a Pokémon-GX or Pokémon-EX, this attack's base damage is 30.",
+    },
+  ];
 
   public set: string = 'UNM';
   public cardImage: string = 'assets/cardback.png';
@@ -31,9 +33,10 @@ export class Gumshoos extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, effect.player);
       const opponentActive = opponent.active.getPokemonCard();
 
-      if (opponentActive &&
-        (opponentActive.tags.includes(CardTag.POKEMON_GX) ||
-          opponentActive.tags.includes(CardTag.POKEMON_EX))) {
+      if (
+        opponentActive &&
+        (opponentActive.hasTag(CardTag.POKEMON_GX) || opponentActive.hasTag(CardTag.POKEMON_EX))
+      ) {
         effect.damage = 30;
       }
     }
@@ -41,4 +44,3 @@ export class Gumshoos extends PokemonCard {
     return state;
   }
 }
-

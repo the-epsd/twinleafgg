@@ -7,13 +7,12 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import {
-  WAS_ATTACK_USED, BLOCK_RETREAT
-} from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 export class TrevenantEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 180;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
@@ -23,15 +22,15 @@ export class TrevenantEx extends PokemonCard {
       name: 'Dark Forest',
       cost: [G],
       damage: 20,
-      text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
+      text: "The Defending Pokémon can't retreat during your opponent's next turn.",
     },
     {
       name: 'Wood Blast',
       cost: [C, C, C],
       damage: 50,
       damageCalculation: '+',
-      text: 'This attack does 20 more damage for each [G] Energy attached to this Pokémon.'
-    }
+      text: 'This attack does 20 more damage for each [G] Energy attached to this Pokémon.',
+    },
   ];
 
   public set: string = 'PRC';
@@ -55,8 +54,8 @@ export class TrevenantEx extends PokemonCard {
       store.reduceEffect(state, checkEnergy);
 
       let grassCount = 0;
-      checkEnergy.energyMap.forEach(em => {
-        grassCount += em.provides.filter(t => t === CardType.GRASS || t === CardType.ANY).length;
+      checkEnergy.energyMap.forEach((em) => {
+        grassCount += em.provides.filter((t) => t === CardType.GRASS || t === CardType.ANY).length;
       });
 
       effect.damage += 20 * grassCount;

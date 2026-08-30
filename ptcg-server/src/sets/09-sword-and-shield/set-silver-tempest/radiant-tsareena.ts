@@ -8,18 +8,20 @@ import { PowerType } from '../../../game/store/card/pokemon-types';
 import { PlayerType } from '../../../game/store/actions/play-card-action';
 import { GameError, GameMessage, PokemonCardList } from '../../../game';
 import { RemoveSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
-import { REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
-
+import {
+  REMOVE_MARKER_AT_END_OF_TURN,
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class RadiantTsareena extends PokemonCard {
-
-  public tags = [CardTag.RADIANT];
+  protected _tags = [CardTag.RADIANT];
 
   public regulationMark = 'F';
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 140;
 
@@ -27,19 +29,23 @@ export class RadiantTsareena extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Elegant Heal',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may heal 20 damage from each of your Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Elegant Heal',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn, you may heal 20 damage from each of your Pokémon.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Aroma Shot',
-    cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
-    damage: 90,
-    text: 'This Pokémon recovers from all Special Conditions.'
-  }];
+  public attacks = [
+    {
+      name: 'Aroma Shot',
+      cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
+      damage: 90,
+      text: 'This Pokémon recovers from all Special Conditions.',
+    },
+  ];
 
   public set: string = 'SIT';
 
@@ -54,7 +60,6 @@ export class RadiantTsareena extends PokemonCard {
   public readonly ELEGANT_HEAL_MARKER = 'ELEGANT_HEAL_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 

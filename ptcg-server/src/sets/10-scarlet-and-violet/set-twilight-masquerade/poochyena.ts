@@ -6,7 +6,7 @@ import { WAS_ATTACK_USED, FLIP_UNTIL_TAILS_AND_COUNT_HEADS } from '../../../game
 
 export class Poochyena extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 70;
   public weakness = [{ type: G }];
   public resistance = [];
@@ -18,8 +18,7 @@ export class Poochyena extends PokemonCard {
     damage: 10,
     damageCalculation: 'x',
     text: 'Flip a coin until you get tails. This attack does 10 damage for each heads.'
-  },
-  {
+  }, {
     name: 'Darkness Fang',
     cost: [D, C],
     damage: 20,
@@ -27,6 +26,7 @@ export class Poochyena extends PokemonCard {
   }];
 
   public regulationMark = 'H';
+
   public set: string = 'TWM';
   public setNumber: string = '113';
   public cardImage: string = 'assets/cardback.png';

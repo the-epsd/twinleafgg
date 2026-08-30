@@ -7,27 +7,24 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Jolteon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Eevee';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Electrigun',
-      cost: [C],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'You may discard a [L] Energy attached to this Pokémon. If you do, this attack does 40 more damage.'
-    },
-    {
-      name: 'Pin Missile',
-      cost: [L, C, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 40 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Electrigun',
+    cost: [C],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'You may discard a [L] Energy attached to this Pokémon. If you do, this attack does 40 more damage.'
+  }, {
+    name: 'Pin Missile',
+    cost: [L, C, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 40 damage times the number of heads.'
+  }];
 
   public set: string = 'DEX';
   public setNumber: string = '37';

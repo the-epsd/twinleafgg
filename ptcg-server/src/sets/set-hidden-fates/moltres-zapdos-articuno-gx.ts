@@ -6,30 +6,36 @@ import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { AFTER_ATTACK, BLOCK_IF_GX_ATTACK_USED, DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import {
+  AFTER_ATTACK,
+  BLOCK_IF_GX_ATTACK_USED,
+  DAMAGE_OPPONENT_POKEMON,
+  WAS_ATTACK_USED,
+} from '../../game/store/prefabs/prefabs';
 import { SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK } from '../../game/store/prefabs/attack-effects';
 
 export class MoltresZapdosArticunoGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
-  public cardType: CardType = C;
+  protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
+  public cardType: CardType[] = [C];
   public hp: number = 300;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [{
-    name: 'Trinity Burn',
-    cost: [R, W, L, C],
-    damage: 210,
-    text: ''
-  },
-  {
-    name: 'Sky Legends-GX',
-    cost: [C],
-    damage: 0,
-    text: 'Shuffle this Pokémon and all cards attached to it into your deck. If this Pokémon has at least 1 extra [R], [W], and [L] Energy attached to it (in addition to this attack\'s cost), this attack does 110 damage to 3 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.) (You can\'t use more than 1 GX attack in a game.)'
-  }
+  public attacks = [
+    {
+      name: 'Trinity Burn',
+      cost: [R, W, L, C],
+      damage: 210,
+      text: '',
+    },
+    {
+      name: 'Sky Legends-GX',
+      cost: [C],
+      damage: 0,
+      text: "Shuffle this Pokémon and all cards attached to it into your deck. If this Pokémon has at least 1 extra [R], [W], and [L] Energy attached to it (in addition to this attack's cost), this attack does 110 damage to 3 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'HIF';
@@ -41,7 +47,6 @@ export class MoltresZapdosArticunoGX extends PokemonCard {
   private usedSkyLegends = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // Sky Legends-GX - check energy, select targets, and apply damage during attack
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
@@ -54,19 +59,26 @@ export class MoltresZapdosArticunoGX extends PokemonCard {
       const extraEffectCost: CardType[] = [R, W, L, C];
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       store.reduceEffect(state, checkProvidedEnergy);
-      const meetsExtraEffectCost = StateUtils.checkEnoughEnergy(checkProvidedEnergy.energyMap, extraEffectCost);
+      const meetsExtraEffectCost = StateUtils.checkEnoughEnergy(
+        checkProvidedEnergy.energyMap,
+        extraEffectCost,
+      );
 
       if (meetsExtraEffectCost) {
-        return store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-          PlayerType.TOP_PLAYER,
-          [SlotType.ACTIVE, SlotType.BENCH],
-          { min: 1, max: 3, allowCancel: false }
-        ), selected => {
-          const targets = selected || [];
-          DAMAGE_OPPONENT_POKEMON(store, state, effect, 110, targets);
-        });
+        return store.prompt(
+          state,
+          new ChoosePokemonPrompt(
+            player.id,
+            GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+            PlayerType.TOP_PLAYER,
+            [SlotType.ACTIVE, SlotType.BENCH],
+            { min: 1, max: 3, allowCancel: false },
+          ),
+          (selected) => {
+            const targets = selected || [];
+            DAMAGE_OPPONENT_POKEMON(store, state, effect, 110, targets);
+          },
+        );
       }
     }
 
@@ -84,4 +96,3 @@ export class MoltresZapdosArticunoGX extends PokemonCard {
     return state;
   }
 }
-

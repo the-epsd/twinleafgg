@@ -9,26 +9,23 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Magnemite extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 50;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Thunder Wave',
-      cost: [L],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pok\u00e9mon is now Paralyzed.'
-    },
-    {
-      name: 'Self-Destruct',
-      cost: [L, C],
-      damage: 50,
-      text: 'This Pok\u00e9mon does 50 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Thunder Wave',
+    cost: [L],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pok\u00e9mon is now Paralyzed.'
+  }, {
+    name: 'Self-Destruct',
+    cost: [L, C],
+    damage: 50,
+    text: 'This Pok\u00e9mon does 50 damage to itself.'
+  }];
 
   public set: string = 'EVO';
   public setNumber: string = '37';

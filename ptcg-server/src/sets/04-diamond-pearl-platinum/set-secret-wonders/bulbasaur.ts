@@ -6,7 +6,7 @@ import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK, MULTIPLE_COIN_FLIPS_PROMPT, W
 
 export class Bulbasaur extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 60;
   public weakness = [{ type: R, value: +10 }];
   public retreat = [C];
@@ -16,8 +16,7 @@ export class Bulbasaur extends PokemonCard {
     cost: [],
     damage: 0,
     text: 'The Defending Pokémon is now Asleep.'
-  },
-  {
+  }, {
     name: 'Bullet Seed',
     cost: [G, C],
     damage: 10,

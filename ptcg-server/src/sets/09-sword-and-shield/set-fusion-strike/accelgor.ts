@@ -6,8 +6,7 @@ import { CheckAttackCostEffect } from '../../../game/store/effects/check-effects
 import { MOVED_TO_ACTIVE_THIS_TURN } from '../../../game/store/prefabs/prefabs';
 
 export class Accelgor extends PokemonCard {
-
-  public tags = [CardTag.FUSION_STRIKE];
+  protected _tags = [CardTag.FUSION_STRIKE];
 
   public regulationMark = 'E';
 
@@ -15,7 +14,7 @@ export class Accelgor extends PokemonCard {
 
   public evolvesFrom = 'Shelmet';
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 90;
 
@@ -28,10 +27,9 @@ export class Accelgor extends PokemonCard {
       name: 'Grass Tornado',
       cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 120,
-      text: 'If this Pokémon moved from your Bench to the Active Spot this turn, this attack can be used for [G].'
-    }
+      text: 'If this Pokémon moved from your Bench to the Active Spot this turn, this attack can be used for [G].',
+    },
   ];
-
 
   public set: string = 'FST';
 
@@ -42,8 +40,6 @@ export class Accelgor extends PokemonCard {
   public name: string = 'Accelgor';
 
   public fullName: string = 'Accelgor FST';
-
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {

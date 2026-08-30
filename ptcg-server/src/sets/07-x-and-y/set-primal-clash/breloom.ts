@@ -12,26 +12,23 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../../game/st
 export class Breloom extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Shroomish';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 100;
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Dynamic Punch',
-      cost: [F, C],
-      damage: 40,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 more damage and your opponent\'s Active Pokémon is now Confused.'
-    },
-    {
-      name: 'Mega Kick',
-      cost: [F, F, C],
-      damage: 80,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Dynamic Punch',
+    cost: [F, C],
+    damage: 40,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 20 more damage and your opponent\'s Active Pokémon is now Confused.'
+  }, {
+    name: 'Mega Kick',
+    cost: [F, F, C],
+    damage: 80,
+    text: ''
+  }];
 
   public set: string = 'PRC';
   public setNumber: string = '16';

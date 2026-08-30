@@ -10,7 +10,7 @@ import { StoreLike } from '../../../game/store/store-like';
 export class Ditto extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 40;
   public weakness = [{ type: F }];
   public retreat = [C];

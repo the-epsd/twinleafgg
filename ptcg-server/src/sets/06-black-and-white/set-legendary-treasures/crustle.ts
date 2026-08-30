@@ -10,25 +10,22 @@ import { State, StoreLike } from '../../../game';
 export class Crustle extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Dwebble';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 100;
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Hard Press',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Hammer In',
-      cost: [G, C, C],
-      damage: 70,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Hard Press',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Hammer In',
+    cost: [G, C, C],
+    damage: 70,
+    text: ''
+  }];
 
   public set: string = 'LTR';
   public setNumber: string = '14';

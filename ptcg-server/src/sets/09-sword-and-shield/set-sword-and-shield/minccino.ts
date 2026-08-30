@@ -11,28 +11,26 @@ import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 
 export class Minccino extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Glance',
-      cost: [C],
-      damage: 0,
-      text: 'Look at the top card of your opponent\'s deck.'
-    },
-    {
-      name: 'Tail Slap',
-      cost: [C, C],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 20 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Glance',
+    cost: [C],
+    damage: 0,
+    text: 'Look at the top card of your opponent\'s deck.'
+  }, {
+    name: 'Tail Slap',
+    cost: [C, C],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 20 damage for each heads.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'SSH';
   public setNumber: string = '145';
   public cardImage: string = 'assets/cardback.png';

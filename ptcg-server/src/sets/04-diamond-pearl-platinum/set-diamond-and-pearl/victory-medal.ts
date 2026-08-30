@@ -1,6 +1,6 @@
 import { Card } from '../../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { CoinFlipPrompt } from '../../../game/store/prompts/coin-flip-prompt';
+
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
@@ -10,7 +10,7 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
-import { DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, MOVE_CARDS, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect, self: Card): IterableIterator<State> {
   const player = effect.player;
@@ -20,10 +20,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   let coinResults: boolean[] = [];
-  yield store.prompt(state, [
-    new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-    new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-  ], results => {
+  yield MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, results => {
     coinResults = results;
     next();
   });
@@ -64,13 +61,10 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 }
 
 export class VictoryMedal extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'DP';
-
   public name: string = 'Victory Medal';
-
   public fullName: string = 'Victory Medal PR';
 
   public text: string =

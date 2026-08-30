@@ -14,7 +14,7 @@ export class Metapod extends PokemonCard {
 
   public evolvesFrom = 'Caterpie';
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 80;
 

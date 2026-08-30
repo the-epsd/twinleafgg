@@ -11,7 +11,7 @@ export class Beheeyem extends PokemonCard {
 
   public evolvesFrom = 'Elgyem';
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 90;
 

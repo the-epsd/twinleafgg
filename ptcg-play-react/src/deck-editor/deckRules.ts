@@ -1,5 +1,5 @@
-import type { Card, EnergyCard, PokemonCard } from 'ptcg-server';
-import { CardTag, CardType, EnergyType, SuperType } from 'ptcg-server';
+import type { Card, EnergyCard, PokemonCard, TrainerCard } from 'ptcg-server';
+import { CardTag, CardType, EnergyType, getPrimaryCardType, Stage, SuperType, TrainerType } from 'ptcg-server';
 import type { DeckSlot } from './types';
 
 export function isBasicEnergy(card: Card): boolean {
@@ -13,19 +13,6 @@ export function getSameNameCount(slots: DeckSlot[], cardName: string): number {
 export type CanAddResult = { ok: true } | { ok: false; reason: string };
 
 export type AddCardResult = { ok: true; slots: DeckSlot[] } | { ok: false; reason: string };
-
-function compareSupertype(input: SuperType): number {
-  if (input === SuperType.POKEMON) {
-    return 1;
-  }
-  if (input === SuperType.TRAINER) {
-    return 2;
-  }
-  if (input === SuperType.ENERGY) {
-    return 3;
-  }
-  return Infinity;
-}
 
 function compareCardType(cardType: CardType): number {
   const order = [
@@ -44,23 +31,208 @@ function compareCardType(cardType: CardType): number {
   return order.indexOf(cardType);
 }
 
-/** Order slots like Angular pre-evolution pass: Pokémon (by type), Trainer, Energy; then name. */
+function compareTrainerType(input: TrainerType): number {
+  if (input === TrainerType.SUPPORTER) return 1;
+  if (input === TrainerType.ITEM) return 2;
+  if (input === TrainerType.TOOL) return 3;
+  if (input === TrainerType.STADIUM) return 4;
+  return Infinity;
+}
+
+function compareEnergyType(input: EnergyType): number {
+  if (input === EnergyType.BASIC) return 1;
+  if (input === EnergyType.SPECIAL) return 2;
+  return Infinity;
+}
+
+const STAGE_ORDER = [
+  Stage.BASIC,
+  Stage.STAGE_1,
+  Stage.STAGE_2,
+  Stage.VMAX,
+  Stage.VSTAR,
+  Stage.VUNION,
+  Stage.LEGEND,
+  Stage.MEGA,
+  Stage.BREAK,
+  Stage.RESTORED,
+  Stage.NONE,
+];
+
+/**
+ * Order deck slots by type, while keeping evolution lines together:
+ * chains sorted by the basic's type (then name), each chain Basic → Stage1 → …,
+ * then Trainers, then Energy. Cross-type evolutions (e.g. Psychic Frillish + Water
+ * Jellicent) stay in the basic's type group.
+ */
 export function sortDeckSlots(slots: DeckSlot[]): DeckSlot[] {
-  return slots.slice().sort((a, b) => {
-    const sup = compareSupertype(a.card.superType) - compareSupertype(b.card.superType);
-    if (sup !== 0) {
-      return sup;
+  const pokemonCards = slots.filter((d) => d.card.superType === SuperType.POKEMON);
+  const trainerCards = slots.filter((d) => d.card.superType === SuperType.TRAINER);
+  const energyCards = slots.filter((d) => d.card.superType === SuperType.ENERGY);
+
+  const evolutionChains = new Map<string, DeckSlot[]>();
+  const processedCards = new Set<string>();
+  const cardNameMap = new Map<string, DeckSlot[]>();
+
+  for (const item of pokemonCards) {
+    const pokemonCard = item.card as PokemonCard;
+    const name = pokemonCard.name;
+    const existing = cardNameMap.get(name);
+    if (existing) {
+      existing.push(item);
+    } else {
+      cardNameMap.set(name, [item]);
     }
-    if (a.card.superType === SuperType.POKEMON && b.card.superType === SuperType.POKEMON) {
-      const ta = (a.card as PokemonCard).cardType;
-      const tb = (b.card as PokemonCard).cardType;
-      const tc = compareCardType(ta) - compareCardType(tb);
-      if (tc !== 0) {
-        return tc;
+  }
+
+  const findBasicPokemon = (pokemonCard: PokemonCard, visited: Set<string> = new Set()): string | null => {
+    const cardName = pokemonCard.name;
+    if (visited.has(cardName)) {
+      return null;
+    }
+    visited.add(cardName);
+
+    if (pokemonCard.stage === Stage.BASIC && !pokemonCard.evolvesFrom) {
+      return cardName;
+    }
+
+    if (pokemonCard.evolvesFrom) {
+      const preEvolutionCards = cardNameMap.get(pokemonCard.evolvesFrom);
+      if (preEvolutionCards && preEvolutionCards.length > 0) {
+        const preEvoCard = preEvolutionCards[0].card as PokemonCard;
+        const basic = findBasicPokemon(preEvoCard, visited);
+        if (basic) {
+          return basic;
+        }
       }
     }
-    return a.card.fullName.localeCompare(b.card.fullName);
+
+    for (const [name, items] of cardNameMap.entries()) {
+      if (name === cardName) continue;
+      const otherCard = items[0].card as PokemonCard;
+      if (otherCard.evolvesFrom === cardName && pokemonCard.stage === Stage.BASIC) {
+        return cardName;
+      }
+    }
+
+    if (pokemonCard.stage === Stage.BASIC) {
+      return cardName;
+    }
+
+    return null;
+  };
+
+  const addToChain = (item: DeckSlot, chainKey: string): void => {
+    const fullName = item.card.fullName;
+    if (processedCards.has(fullName)) {
+      return;
+    }
+
+    let chain = evolutionChains.get(chainKey);
+    if (!chain) {
+      chain = [];
+      evolutionChains.set(chainKey, chain);
+    }
+
+    chain.push(item);
+    processedCards.add(fullName);
+
+    const pokemonCard = item.card as PokemonCard;
+
+    for (const card of cardNameMap.get(pokemonCard.name) || []) {
+      if (!processedCards.has(card.card.fullName)) {
+        chain.push(card);
+        processedCards.add(card.card.fullName);
+      }
+    }
+
+    for (const otherItem of pokemonCards) {
+      const otherPokemon = otherItem.card as PokemonCard;
+      if (otherPokemon.evolvesFrom === pokemonCard.name && !processedCards.has(otherItem.card.fullName)) {
+        addToChain(otherItem, chainKey);
+      }
+    }
+
+    if (pokemonCard.evolvesFrom) {
+      const preEvolutionCards = cardNameMap.get(pokemonCard.evolvesFrom);
+      if (preEvolutionCards) {
+        for (const preEvo of preEvolutionCards) {
+          if (!processedCards.has(preEvo.card.fullName)) {
+            addToChain(preEvo, chainKey);
+          }
+        }
+      }
+    }
+
+    if (pokemonCard.evolvesTo && pokemonCard.evolvesTo.length > 0) {
+      for (const evolutionName of pokemonCard.evolvesTo) {
+        const evolutionCards = cardNameMap.get(evolutionName);
+        if (evolutionCards) {
+          for (const evo of evolutionCards) {
+            if (!processedCards.has(evo.card.fullName)) {
+              addToChain(evo, chainKey);
+            }
+          }
+        }
+      }
+    }
+  };
+
+  for (const item of pokemonCards) {
+    if (processedCards.has(item.card.fullName)) {
+      continue;
+    }
+    const pokemonCard = item.card as PokemonCard;
+    const basicName = findBasicPokemon(pokemonCard);
+    addToChain(item, basicName || pokemonCard.name);
+  }
+
+  for (const chain of evolutionChains.values()) {
+    chain.sort((a, b) => {
+      const pokemonA = a.card as PokemonCard;
+      const pokemonB = b.card as PokemonCard;
+      const aStageIndex = STAGE_ORDER.indexOf(pokemonA.stage);
+      const bStageIndex = STAGE_ORDER.indexOf(pokemonB.stage);
+      const aIndex = aStageIndex === -1 ? Infinity : aStageIndex;
+      const bIndex = bStageIndex === -1 ? Infinity : bStageIndex;
+      if (aIndex !== bIndex) {
+        return aIndex - bIndex;
+      }
+      return pokemonA.name.localeCompare(pokemonB.name);
+    });
+  }
+
+  const chainSortType = (chain: DeckSlot[]): CardType => {
+    // Prefer the basic's type so cross-type evolutions stay in the basic's type group.
+    const basic = chain.find((s) => (s.card as PokemonCard).stage === Stage.BASIC);
+    return getPrimaryCardType((basic ?? chain[0]).card as PokemonCard);
+  };
+
+  const sortedChains = Array.from(evolutionChains.entries())
+    .sort(([aKey, aChain], [bKey, bChain]) => {
+      const typeCompare = compareCardType(chainSortType(aChain)) - compareCardType(chainSortType(bChain));
+      if (typeCompare !== 0) return typeCompare;
+      return aKey.localeCompare(bKey);
+    })
+    .flatMap(([, chain]) => chain);
+
+  const sortedTrainerCards = trainerCards.slice().sort((a, b) => {
+    const trainerA = a.card as TrainerCard;
+    const trainerB = b.card as TrainerCard;
+    const typeCompare = compareTrainerType(trainerA.trainerType) - compareTrainerType(trainerB.trainerType);
+    if (typeCompare !== 0) return typeCompare;
+    return trainerA.name.localeCompare(trainerB.name);
   });
+
+  const sortedEnergyCards = energyCards.slice().sort((a, b) => {
+    const energyA = a.card as EnergyCard;
+    const energyB = b.card as EnergyCard;
+    const typeCompare = compareEnergyType(energyA.energyType) - compareEnergyType(energyB.energyType);
+    if (typeCompare !== 0) return typeCompare;
+    return energyA.name.localeCompare(energyB.name);
+  });
+
+  return [...sortedChains, ...sortedTrainerCards, ...sortedEnergyCards];
 }
 
 export function canAddOne(slots: DeckSlot[], card: Card): CanAddResult {
@@ -91,27 +263,7 @@ export function canAddOne(slots: DeckSlot[], card: Card): CanAddResult {
 
 
 function insertOrdered(list: DeckSlot[], newSlot: DeckSlot): DeckSlot[] {
-  const sorted = sortDeckSlots(list);
-  let insertIndex = sorted.length;
-  for (let i = 0; i < sorted.length; i++) {
-    const result = compareSupertype(newSlot.card.superType) - compareSupertype(sorted[i].card.superType);
-    if (result < 0) {
-      insertIndex = i;
-      break;
-    }
-    if (result === 0 && newSlot.card.superType === SuperType.POKEMON) {
-      const itemCard = newSlot.card as PokemonCard;
-      const listCard = sorted[i].card as PokemonCard;
-      const typeCompare = compareCardType(itemCard.cardType) - compareCardType(listCard.cardType);
-      if (typeCompare < 0) {
-        insertIndex = i;
-        break;
-      }
-    }
-  }
-  const next = sorted.slice();
-  next.splice(insertIndex, 0, newSlot);
-  return sortDeckSlots(next);
+  return sortDeckSlots([...list, newSlot]);
 }
 
 export function addCardToDeck(slots: DeckSlot[], card: Card): AddCardResult {

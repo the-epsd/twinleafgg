@@ -6,25 +6,22 @@ import { State, StoreLike } from '../../../game';
 export class Swadloon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Sewaddle';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Tackle',
-      cost: [G],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'String Shot',
-      cost: [C, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tackle',
+    cost: [G],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'String Shot',
+    cost: [C, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'NVI';
   public cardImage: string = 'assets/cardback.png';

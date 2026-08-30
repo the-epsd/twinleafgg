@@ -7,10 +7,9 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class BlackKyuremEX extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_EX];
-  public cardType: CardType = N;
+  protected _tags = [CardTag.POKEMON_EX];
+  public cardType: CardType[] = [N];
   public hp: number = 180;
   public weakness = [{ type: N }];
   public retreat = [C, C, C];
@@ -21,8 +20,8 @@ export class BlackKyuremEX extends PokemonCard {
       name: 'Black Ballista',
       cost: [W, W, L, C],
       damage: 200,
-      text: 'Discard 3 Energy attached to this Pokémon.'
-    }
+      text: 'Discard 3 Energy attached to this Pokémon.',
+    },
   ];
 
   public set: string = 'PLS';
@@ -37,5 +36,4 @@ export class BlackKyuremEX extends PokemonCard {
 
     return state;
   }
-
 }

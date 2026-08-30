@@ -9,7 +9,7 @@ export class Meowth extends PokemonCard {
 
   public regulationMark = 'E';
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [C];

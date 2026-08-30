@@ -6,26 +6,23 @@ import {ADD_CONFUSION_TO_PLAYER_ACTIVE, COIN_FLIP_PROMPT, WAS_ATTACK_USED} from 
 
 export class Porygon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 40;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Conversion 1',
-      cost: [C],
-      damage: 0,
-      text: 'If the Defending Pokémon has a Weakness, you may change it to a type of your choice other than [C].'
-    },
-    {
-      name: 'Psybeam',
-      cost: [C, C, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Conversion 1',
+    cost: [C],
+    damage: 0,
+    text: 'If the Defending Pokémon has a Weakness, you may change it to a type of your choice other than [C].'
+  }, {
+    name: 'Psybeam',
+    cost: [C, C, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
+  }];
 
   public set: string = 'TR';
   public setNumber: string = '48';

@@ -17,16 +17,18 @@ import {
 
 export class Wobbuffet extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 110;
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Shady Tail',
-    powerType: PowerType.ABILITY,
-    text: 'As long as this Pokémon is on your Bench, ◇ (Prism Star) Pokémon in play (both yours and your opponent\'s) can\'t attack and have no Abilities.'
-  }];
+  public powers = [
+    {
+      name: 'Shady Tail',
+      powerType: PowerType.ABILITY,
+      text: "As long as this Pokémon is on your Bench, ◇ (Prism Star) Pokémon in play (both yours and your opponent's) can't attack and have no Abilities.",
+    },
+  ];
 
   public attacks = [
     {
@@ -34,8 +36,8 @@ export class Wobbuffet extends PokemonCard {
       cost: [P, C],
       damage: 30,
       damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 30 more damage.'
-    }
+      text: 'Flip a coin. If heads, this attack does 30 more damage.',
+    },
   ];
 
   public set: string = 'LOT';
@@ -46,8 +48,8 @@ export class Wobbuffet extends PokemonCard {
 
   private isOnBench(state: State): boolean {
     let onBench = false;
-    state.players.forEach(p => {
-      p.bench.forEach(b => {
+    state.players.forEach((p) => {
+      p.bench.forEach((b) => {
         if (b.getPokemonCard() === this) {
           onBench = true;
         }
@@ -57,22 +59,26 @@ export class Wobbuffet extends PokemonCard {
   }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    HANDLE_ABILITY_LOCK(effect, ({ card }) => {
-      if (!this.isOnBench(state)) {
-        return false;
-      }
+    HANDLE_ABILITY_LOCK(
+      effect,
+      ({ card }) => {
+        if (!this.isOnBench(state)) {
+          return false;
+        }
 
-      if (!card.tags.includes(CardTag.PRISM_STAR)) {
-        return false;
-      }
+        if (!card.hasTag(CardTag.PRISM_STAR)) {
+          return false;
+        }
 
-      const owner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
-      // Check + PowerEffect: Shady Tail must itself be usable (e.g. Path to the Peak).
-      return CAN_APPLY_LOCKER_ABILITY(store, state, owner, this, this.powers[0]);
-    }, {
-      allowUseFromDiscard: true,
-      error: GameMessage.BLOCKED_BY_ABILITY,
-    });
+        const owner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
+        // Check + PowerEffect: Shady Tail must itself be usable (e.g. Path to the Peak).
+        return CAN_APPLY_LOCKER_ABILITY(store, state, owner, this, this.powers[0]);
+      },
+      {
+        allowUseFromDiscard: true,
+        error: GameMessage.BLOCKED_BY_ABILITY,
+      },
+    );
 
     // Ability: Shady Tail - block Prism Star attacks
     if (effect instanceof AttackEffect) {
@@ -81,7 +87,7 @@ export class Wobbuffet extends PokemonCard {
       }
 
       const attacker = effect.player.active.getPokemonCard();
-      if (attacker && attacker.tags.includes(CardTag.PRISM_STAR)) {
+      if (attacker && attacker.hasTag(CardTag.PRISM_STAR)) {
         try {
           const owner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
           const powerEffect = new PowerEffect(owner, this.powers[0], this);

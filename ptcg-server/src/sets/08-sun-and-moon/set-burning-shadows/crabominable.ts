@@ -11,26 +11,23 @@ import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, MULTIPLE_COIN_FLIP
 export class Crabominable extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Crabrawler';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 140;
   public weakness = [{ type: P }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Gutsy Hammer',
-      cost: [F],
-      damage: 80,
-      text: 'This Pokémon does 10 damage to itself for each damage counter on it.'
-    },
-    {
-      name: 'Double Stomp',
-      cost: [F, F, F],
-      damage: 80,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 40 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Gutsy Hammer',
+    cost: [F],
+    damage: 80,
+    text: 'This Pokémon does 10 damage to itself for each damage counter on it.'
+  }, {
+    name: 'Double Stomp',
+    cost: [F, F, F],
+    damage: 80,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 40 more damage for each heads.'
+  }];
 
   public set: string = 'BUS';
   public setNumber: string = '74';

@@ -3,14 +3,15 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { GamePhase, State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { IS_ABILITY_BLOCKED, NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/attack-effects';
 import { PowerType, StateUtils } from '../../../game';
 import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
 import { EffectOfAbilityEffect } from '../../../game/store/effects/game-effects';
 
 export class Hitmonchan extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 120;
   public weakness = [{ type: P }];
   public retreat = [C];
@@ -35,11 +36,8 @@ export class Hitmonchan extends PokemonCard {
   public name: string = 'Hitmonchan';
   public fullName: string = 'Hitmonchan MEW';
 
-  public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'NEXT_TURN_MORE_DAMAGE_MARKER';
-  public readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Counterattack
     if (effect instanceof AfterDamageEffect && effect.target.getPokemonCard() === this && state.phase === GamePhase.ATTACK) {
       const player = StateUtils.findOwner(state, effect.target);
       const opponent = effect.player;
@@ -57,13 +55,11 @@ export class Hitmonchan extends PokemonCard {
       }
     }
 
-    // Refs: set-boundaries-crossed/watchog.ts (Psych Up), prefabs/prefabs.ts (NEXT_TURN_ATTACK_BONUS)
+    // Excited Punch
     NEXT_TURN_ATTACK_BONUS(effect, {
       attack: this.attacks[0],
       source: this,
-      bonusDamage: 60,
-      bonusMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER,
-      clearMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER_2
+      bonusDamage: 60
     });
 
     return state;

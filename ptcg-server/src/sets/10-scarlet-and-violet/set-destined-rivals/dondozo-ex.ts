@@ -3,13 +3,16 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, ConfirmPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { GameMessage } from '../../../game/game-message';
-import { THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Dondozoex extends PokemonCard {
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public regulationMark = 'I';
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 260;
   public weakness = [{ type: L }];
   public retreat = [C, C, C, C];
@@ -20,16 +23,15 @@ export class Dondozoex extends PokemonCard {
       cost: [W, C],
       damage: 30,
       damageCalculation: '+',
-      text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
+      text: 'This attack does 10 more damage for each damage counter on this Pokémon.',
     },
     {
       name: 'Dynamic Dive',
       cost: [W, W, C, C],
       damage: 120,
       damageCalculation: '+',
-      text: 'You may do 120 more damage. If you do, this Pokémon also does 50 damage to itself.'
+      text: 'You may do 120 more damage. If you do, this Pokémon also does 50 damage to itself.',
     },
-
   ];
 
   public set: string = 'DRI';
@@ -46,16 +48,17 @@ export class Dondozoex extends PokemonCard {
 
     // Dynamic Dive
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      state = store.prompt(state, new ConfirmPrompt(
-        effect.player.id,
-        GameMessage.WANT_TO_USE_ABILITY,
-      ), wantToUse => {
-        if (wantToUse) {
-          effect.damage += 120;
+      state = store.prompt(
+        state,
+        new ConfirmPrompt(effect.player.id, GameMessage.WANT_TO_USE_ABILITY),
+        (wantToUse) => {
+          if (wantToUse) {
+            effect.damage += 120;
 
-          THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, 50);
-        }
-      });
+            THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, 50);
+          }
+        },
+      );
     }
 
     return state;

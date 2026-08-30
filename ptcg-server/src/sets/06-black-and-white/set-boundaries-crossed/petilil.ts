@@ -9,20 +9,18 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Petilil extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 50;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Sleep Powder',
-      cost: [G],
-      damage: 10,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Asleep.'
-    }
-  ];
+  public attacks = [{
+    name: 'Sleep Powder',
+    cost: [G],
+    damage: 10,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Asleep.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '16';

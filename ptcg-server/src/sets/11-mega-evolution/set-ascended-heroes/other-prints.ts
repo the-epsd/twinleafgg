@@ -132,6 +132,7 @@ import { MegaMeganiumex as MegaMeganiumexASC10 } from './mega-meganium-ex';
 import { MegaEmboarex as MegaEmboarexASC31 } from './mega-emboar-ex';
 import { MegaFeraligatrex as MegaFeraligatrexASC43 } from './mega-feraligatr-ex';
 import { Pikachuex as PikachuexSSP57 } from '../../10-scarlet-and-violet/set-surging-sparks/pikachu-ex';
+import { Pikachuex as PikachuexPRSV106 } from '../../10-scarlet-and-violet/set-scarlet-and-violet-promos/pikachu-ex';
 import { IonosBelliboltex as IonosBelliboltexJTG53 } from '../../10-scarlet-and-violet/set-journey-together/ionos-bellibolt-ex';
 import { LilliesClefairyex as LilliesClefairyexJTG56 } from '../../10-scarlet-and-violet/set-journey-together/lillies-clefairy-ex';
 import { TeamRocketsMewtwoex as TeamRocketsMewtwoexDRI81 } from '../../10-scarlet-and-violet/set-destined-rivals/team-rockets-mewtwo-ex';
@@ -151,6 +152,13 @@ import { EnergySearch } from '../../10-scarlet-and-violet/set-scarlet-and-violet
 import { CrushingHammer } from '../../10-scarlet-and-violet/set-scarlet-and-violet/crushing-hammer';
 import { Potion } from '../../10-scarlet-and-violet/set-scarlet-and-violet/potion';
 import { PokemonCatcher } from '../../10-scarlet-and-violet/set-scarlet-and-violet/pokemon-catcher';
+import { Heliolisk } from './heliolisk';
+import { Vikavolt } from './vikavolt';
+import { Slurpuff } from './slurpuff';
+import { Hitmontop } from './hitmontop';
+import { Medicham } from './medicham';
+import { Mawile } from './mawile';
+import { Stunfiskex } from './stunfisk-ex';
 
 // Start Deck 100 Reprints
 export class SuperPotionMC extends SuperPotion {
@@ -815,6 +823,18 @@ export class Weavile2ASC extends WeavileSFA14 {
   public set = 'ASC';
 }
 
+export class HelioliskIR extends Heliolisk {
+  public setNumber = '229';
+  public fullName: string = 'HelioliskIR ASC';
+  public set = 'ASC';
+}
+
+export class VikavoltIR extends Vikavolt {
+  public setNumber = '230'
+  public fullName: string = 'VikavoltIR ASC';
+  public set = 'ASC';
+}
+
 export class IonosWattrel2ASC extends IonosWattrelJTG54 {
   public setNumber = '231';
   public fullName: string = 'Iono\'s Wattrel2 ASC';
@@ -845,15 +865,39 @@ export class Togekiss2ASC extends TogekissSSP72 {
   public set = 'ASC';
 }
 
+export class SlurpuffIR extends Slurpuff {
+  public setNumber = '236';
+  public fullName: string = 'SlurpuffIR ASC';
+  public set = 'ASC';
+}
+
 export class TeamRocketsMimikyu2ASC extends TeamRocketsMimikyuDRI87 {
   public setNumber = '238';
   public fullName: string = 'Team Rocket\'s Mimikyu2 ASC';
   public set = 'ASC';
 }
 
+export class HitmontopIR extends Hitmontop {
+  public setNumber = '240';
+  public fullName: string = 'HitmontopIR ASC';
+  public set = 'ASC';
+}
+
+export class MedichamIR extends Medicham {
+  public setNumber = '241';
+  public fullName: string = 'MedichamIR ASC'
+  public set = 'ASC';
+}
+
 export class CynthiasSpiritomb2ASC extends CynthiasSpiritombDRI129 {
   public setNumber = '244';
   public fullName: string = 'Cynthia\'s Spiritomb2 ASC';
+  public set = 'ASC';
+}
+
+export class MawileIR extends Mawile {
+  public setNumber = '246';
+  public fullName: string = 'MawileIR ASC';
   public set = 'ASC';
 }
 
@@ -878,6 +922,18 @@ export class LarrysStaraptor2ASC extends LarrysStaraptorASC170 {
 export class FanRotom2ASC extends FanRotomSCR118 {
   public setNumber = '250';
   public fullName: string = 'Fan Rotom2 ASC';
+  public set = 'ASC';
+}
+
+// export class SprigatitoexFA extends Sprigatitoex {
+//   public setNumber = '251';
+//   public fullName: string = 'Sprigatito ex FA'
+//   public set = 'ASC';
+// }
+
+export class StunfiskexFA extends Stunfiskex {
+  public setNumber = '252';
+  public fullName: string = 'Stunfisk ex FA ASC'
   public set = 'ASC';
 }
 
@@ -1010,6 +1066,12 @@ export class MegaFeraligatrex2ASC extends MegaFeraligatrexASC43 {
 export class MegaFroslassex3ASC extends MegaFroslassexASC47 {
   public setNumber = '275';
   public fullName: string = 'Mega Froslass ex3 ASC';
+  public set = 'ASC';
+}
+
+export class PikachuexSIR extends PikachuexPRSV106 {
+  public setNumber = '276';
+  public fullName: string = 'Pikachu ex SIR ASC';
   public set = 'ASC';
 }
 

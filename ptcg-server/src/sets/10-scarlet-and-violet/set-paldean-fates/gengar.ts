@@ -44,7 +44,7 @@ export class Gengar extends PokemonCard {
 
   public evolvesFrom = 'Haunter';
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp: number = 130;
 

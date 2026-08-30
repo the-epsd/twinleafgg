@@ -10,37 +10,36 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 
 export class Jynx extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 100;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Intense Kiss',
-      cost: [P],
-      damage: 0,
-      text: "At the end of your opponent's next turn, discard the Defending Pokémon and all attached cards.",
-    },
-    {
-      name: 'Psy Bolt',
-      cost: [P, C],
-      damage: 50,
-      text: "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed.",
-    },
-  ];
+  public attacks = [{
+    name: 'Intense Kiss',
+    cost: [P],
+    damage: 0,
+    text: "At the end of your opponent's next turn, discard the Defending Pokémon and all attached cards.",
+  }, {
+    name: 'Psy Bolt',
+    cost: [P, C],
+    damage: 50,
+    text: "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed.",
+  }];
 
   public set: string = 'PBL';
   public setNumber: string = '32';
+
   public regulationMark: string = 'J';
+
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jynx';
   public fullName: string = 'Jynx M5';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      DISCARD_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(effect, this);
+      DISCARD_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(store, state, effect, this);
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/pre
 export class Magnezone extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Magneton';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 150;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

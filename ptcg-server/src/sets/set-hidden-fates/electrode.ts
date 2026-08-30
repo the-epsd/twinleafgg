@@ -11,27 +11,24 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/pr
 export class Electrode extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Voltorb';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Lightning Ball',
-      cost: [L],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Electroblast',
-      cost: [L, C, C],
-      damage: 60,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 30 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Lightning Ball',
+    cost: [L],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Electroblast',
+    cost: [L, C, C],
+    damage: 60,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 30 more damage for each heads.'
+  }];
 
   public set: string = 'HIF';
   public setNumber: string = '22';

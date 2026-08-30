@@ -9,17 +9,12 @@ import { COIN_FLIP_PROMPT, SHUFFLE_CARDS_INTO_DECK } from '../../../game/store/p
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 
 export class HooligansJimAndCas extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'DEX';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '95';
-
   public name: string = 'Hooligans Jim & Cas';
-
   public fullName: string = 'Hooligans Jim & Cas DEX';
 
   public text: string =

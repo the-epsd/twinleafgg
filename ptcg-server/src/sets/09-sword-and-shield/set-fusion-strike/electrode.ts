@@ -6,13 +6,16 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Electrode extends PokemonCard {
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Voltorb';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -22,14 +25,14 @@ export class Electrode extends PokemonCard {
       name: 'Sonic Boom',
       cost: [C],
       damage: 40,
-      text: 'This attack\'s damage isn\'t affected by Weakness or Resistance.'
+      text: "This attack's damage isn't affected by Weakness or Resistance.",
     },
     {
       name: 'Explosion',
       cost: [C],
       damage: 120,
-      text: 'This Pokémon also does 90 damage to itself.'
-    }
+      text: 'This Pokémon also does 90 damage to itself.',
+    },
   ];
 
   public regulationMark: string = 'E';

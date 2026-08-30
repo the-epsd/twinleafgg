@@ -6,7 +6,7 @@ import { MOVED_FROM_ACTIVE_TO_BENCH_THIS_TURN, REMOVE_MARKER_AT_END_OF_TURN } fr
 export class Palafin extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Finizen';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 100;
   public weakness = [{ type: L }];
   public retreat = [C];

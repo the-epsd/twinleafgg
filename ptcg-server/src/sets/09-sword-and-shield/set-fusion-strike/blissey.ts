@@ -12,25 +12,27 @@ import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs
 export class Blissey extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Chansey';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Expert in Roundness',
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all damage done to each of your Pokémon that has the Let\'s All Rollout attack by attacks from your opponent\'s Pokémon VMAX.'
-  }];
+  public powers = [
+    {
+      name: 'Expert in Roundness',
+      powerType: PowerType.ABILITY,
+      text: "Prevent all damage done to each of your Pokémon that has the Let's All Rollout attack by attacks from your opponent's Pokémon VMAX.",
+    },
+  ];
 
   public attacks = [
     {
-      name: 'Let\'s All Rollout',
+      name: "Let's All Rollout",
       cost: [C, C, C],
       damage: 20,
       damageCalculation: 'x',
-      text: 'This attack does 20 damage for each of your Benched Pokémon that has the Let\'s All Rollout attack.'
-    }
+      text: "This attack does 20 damage for each of your Benched Pokémon that has the Let's All Rollout attack.",
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -46,7 +48,7 @@ export class Blissey extends PokemonCard {
     // Ref: set-unbroken-bonds/venomoth-gx.ts (DealDamageEffect/PutDamageEffect prevention pattern)
     if (effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) {
       const attackerCard = effect.source.getPokemonCard();
-      if (!attackerCard || !attackerCard.tags || !attackerCard.tags.includes(CardTag.POKEMON_VMAX)) {
+      if (!attackerCard || !attackerCard.hasTag(CardTag.POKEMON_VMAX)) {
         return state;
       }
 
@@ -58,7 +60,7 @@ export class Blissey extends PokemonCard {
 
       // Check if Blissey (this) is in play for the target owner
       let blisseyInPlay = false;
-      targetOwner.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      targetOwner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         if (cardList.getPokemonCard() === this) {
           blisseyInPlay = true;
         }
@@ -77,7 +79,7 @@ export class Blissey extends PokemonCard {
       if (!targetCard) {
         return state;
       }
-      const hasRollout = targetCard.attacks.some((a: any) => a.name === 'Let\'s All Rollout');
+      const hasRollout = targetCard.attacks.some((a: any) => a.name === "Let's All Rollout");
       if (!hasRollout) {
         return state;
       }
@@ -96,7 +98,7 @@ export class Blissey extends PokemonCard {
       const player = effect.player;
       const benchedWithRollout = player.bench.filter((b: any) => {
         const card = b.getPokemonCard();
-        return card && card.attacks.some((a: any) => a.name === 'Let\'s All Rollout');
+        return card && card.attacks.some((a: any) => a.name === "Let's All Rollout");
       }).length;
       effect.damage = 20 * benchedWithRollout;
     }

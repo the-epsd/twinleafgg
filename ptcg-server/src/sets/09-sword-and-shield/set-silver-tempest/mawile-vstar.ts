@@ -4,26 +4,42 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, BoardEffect } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, PlayerType, SlotType } from '../../../game';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  GameError,
+  GameMessage,
+  PlayerType,
+  SlotType,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { MOVED_TO_ACTIVE_THIS_TURN, WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import {
+  MOVED_TO_ACTIVE_THIS_TURN,
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+} from '../../../game/store/prefabs/prefabs';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 
 export class MawileVstar extends PokemonCard {
-  public tags = [CardTag.POKEMON_VSTAR];
+  protected _tags = [CardTag.POKEMON_VSTAR];
   public stage: Stage = Stage.VSTAR;
   public evolvesFrom: string = 'Mawile V';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 260;
   public weakness = [{ type: M }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Star Rondo',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'During your turn, if this Pokémon is on your Bench, you may switch it with your Active Pokémon. If you do, switch 1 of your opponent\'s Benched Pokémon with their Active Pokémon. (You can\'t use more than 1 VSTAR Power in a game.)'
-  }];
+  public powers = [
+    {
+      name: 'Star Rondo',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: "During your turn, if this Pokémon is on your Bench, you may switch it with your Active Pokémon. If you do, switch 1 of your opponent's Benched Pokémon with their Active Pokémon. (You can't use more than 1 VSTAR Power in a game.)",
+    },
+  ];
 
   public attacks = [
     {
@@ -31,8 +47,8 @@ export class MawileVstar extends PokemonCard {
       cost: [C, C],
       damage: 90,
       damageCalculation: '+',
-      text: 'If this Pokémon moved from your Bench to the Active Spot this turn, this attack does 90 more damage.'
-    }
+      text: 'If this Pokémon moved from your Bench to the Active Spot this turn, this attack does 90 more damage.',
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -70,14 +86,14 @@ export class MawileVstar extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      const opponentHasBench = opponent.bench.some(b => b.cards.length > 0);
+      const opponentHasBench = opponent.bench.some((b) => b.cards.length > 0);
       if (!opponentHasBench) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       player.usedVSTAR = true;
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         if (cardList.getPokemonCard() === this) {
           cardList.addBoardEffect(BoardEffect.ABILITY_USED);
         }
@@ -85,7 +101,7 @@ export class MawileVstar extends PokemonCard {
 
       // Switch this Pokemon from bench to active
       let thisBench: any = null;
-      player.bench.forEach(b => {
+      player.bench.forEach((b) => {
         if (b.getPokemonCard() === this) {
           thisBench = b;
         }
@@ -96,18 +112,22 @@ export class MawileVstar extends PokemonCard {
       }
 
       // Gust opponent's benched Pokemon to active
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-        PlayerType.TOP_PLAYER,
-        [SlotType.BENCH],
-        { allowCancel: false }
-      ), result => {
-        if (!result || result.length === 0) {
-          return;
-        }
-        opponent.switchPokemon(result[0]);
-      });
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+          PlayerType.TOP_PLAYER,
+          [SlotType.BENCH],
+          { allowCancel: false },
+        ),
+        (result) => {
+          if (!result || result.length === 0) {
+            return;
+          }
+          opponent.switchPokemon(result[0]);
+        },
+      );
     }
 
     // Attack 1: Sudden Eater

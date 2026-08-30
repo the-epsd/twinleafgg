@@ -1,20 +1,20 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, BoardEffect } from '../../../game/store/card/card-types';
-import { ChooseCardsPrompt, CoinFlipPrompt, EnergyCard, GameError, GameMessage, PlayerType, PowerType, State, StoreLike } from '../../../game';
+import { ChooseCardsPrompt, EnergyCard, GameError, GameMessage, PlayerType, PowerType, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Revavroom extends PokemonCard {
   public regulationMark = 'G';
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType[] = [M];
   public hp: number = 140;
-  public weakness = [{ type: CardType.FIRE }];
-  public resistance = [{ type: CardType.GRASS, value: -30 }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public resistance = [{ type: G, value: -30 }];
+  public retreat = [C, C];
   public evolvesFrom: string = 'Varoom';
 
   public powers = [{
@@ -26,7 +26,7 @@ export class Revavroom extends PokemonCard {
 
   public attacks = [{
     name: 'Knock Away',
-    cost: [CardType.METAL, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+    cost: [M, C, C, C],
     damage: 90,
     damageCalculation: '+',
     text: 'Flip a coin. If heads, this attack does 90 more damage.'
@@ -105,9 +105,7 @@ export class Revavroom extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
           effect.damage += 90;
         }

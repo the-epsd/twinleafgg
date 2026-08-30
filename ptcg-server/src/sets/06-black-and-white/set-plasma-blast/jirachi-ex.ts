@@ -1,15 +1,33 @@
 import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, TrainerType, SpecialCondition } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  TrainerType,
+  SpecialCondition,
+} from '../../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { PowerType, StoreLike, State, GameMessage, ChooseCardsPrompt, ShuffleDeckPrompt } from '../../../game';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  GameMessage,
+  ChooseCardsPrompt,
+  ShuffleDeckPrompt,
+} from '../../../game';
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
-
-function* useStellarGuidance(next: Function, store: StoreLike, state: State,
-  self: JirachiEX, effect: PlayPokemonEffect): IterableIterator<State> {
+function* useStellarGuidance(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: JirachiEX,
+  effect: PlayPokemonEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   if (player.deck.cards.length === 0) {
@@ -18,40 +36,47 @@ function* useStellarGuidance(next: Function, store: StoreLike, state: State,
 
   // Try to reduce PowerEffect, to check if something is blocking our ability
   try {
-    const stub = new PowerEffect(player, {
-      name: 'test',
-      powerType: PowerType.ABILITY,
-      text: ''
-    }, self);
+    const stub = new PowerEffect(
+      player,
+      {
+        name: 'test',
+        powerType: PowerType.ABILITY,
+        text: '',
+      },
+      self,
+    );
     store.reduceEffect(state, stub);
   } catch {
     return state;
   }
 
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.deck,
-    { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-    { min: 1, max: 1, allowCancel: true }
-  ), selected => {
-    const cards = selected || [];
-    player.deck.moveCardsTo(cards, player.hand);
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.deck,
+      { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
+      { min: 1, max: 1, allowCancel: true },
+    ),
+    (selected) => {
+      const cards = selected || [];
+      player.deck.moveCardsTo(cards, player.hand);
+      next();
+    },
+  );
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);
   });
 }
 
 export class JirachiEX extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType[] = [CardType.METAL];
 
   public hp: number = 90;
 
@@ -61,21 +86,24 @@ export class JirachiEX extends PokemonCard {
 
   public retreat = [CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Stellar Guidance',
-    powerType: PowerType.ABILITY,
-    text: 'When you play this Pokemon from your hand onto your Bench, ' +
-      'you may search your deck for a Supporter card, reveal it, and put it ' +
-      'into your hand. Shuffle your deck afterward.'
-  }];
+  public powers = [
+    {
+      name: 'Stellar Guidance',
+      powerType: PowerType.ABILITY,
+      text:
+        'When you play this Pokemon from your hand onto your Bench, ' +
+        'you may search your deck for a Supporter card, reveal it, and put it ' +
+        'into your hand. Shuffle your deck afterward.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Hypnostrike',
       cost: [CardType.METAL, CardType.COLORLESS, CardType.COLORLESS],
       damage: 60,
-      text: 'Both this Pokemon and the Defending Pokemon are now Asleep.'
-    }
+      text: 'Both this Pokemon and the Defending Pokemon are now Asleep.',
+    },
   ];
 
   public set: string = 'PLB';
@@ -89,7 +117,6 @@ export class JirachiEX extends PokemonCard {
   public setNumber: string = '60';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const generator = useStellarGuidance(() => generator.next(), store, state, this, effect);
       return generator.next().value;
@@ -107,5 +134,4 @@ export class JirachiEX extends PokemonCard {
 
     return state;
   }
-
 }

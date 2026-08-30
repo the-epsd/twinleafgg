@@ -11,26 +11,23 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/pr
 export class Dragonair extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Dratini';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 100;
   public weakness = [{ type: Y }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Dragon Tail',
-      cost: [C, C, C],
-      damage: 60,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 60 damage for each heads.'
-    },
-    {
-      name: 'Waterfall',
-      cost: [W, L, C, C],
-      damage: 80,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Dragon Tail',
+    cost: [C, C, C],
+    damage: 60,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 60 damage for each heads.'
+  }, {
+    name: 'Waterfall',
+    cost: [W, L, C, C],
+    damage: 80,
+    text: ''
+  }];
 
   public set: string = 'DRM';
   public setNumber: string = '36';

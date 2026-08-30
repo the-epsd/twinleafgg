@@ -8,7 +8,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/cos
 export class Charmeleon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Charmander';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 80;
   public weakness = [{ type: W }];
   public retreat = [C];
@@ -19,8 +19,7 @@ export class Charmeleon extends PokemonCard {
     damage: 20,
     damageCalculation: 'x',
     text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
-  },
-  {
+  }, {
     name: 'Flamethrower',
     cost: [R, C, C],
     damage: 50,

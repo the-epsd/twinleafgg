@@ -13,7 +13,7 @@ export class Cramorant extends PokemonCard {
 
   public regulationMark = 'F';
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp: number = 110;
 

@@ -1,19 +1,6 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import {
-  StoreLike,
-  State,
-  Card,
-  ChooseCardsPrompt,
-  GameMessage,
-  GameLog,
-  CardTarget,
-  PlayerType,
-  CardManager,
-  PokemonCardList,
-  ChoosePokemonPrompt,
-  SlotType,
-} from '../../../game';
+import { Card, CardManager, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameLog, GameMessage, PlayerType, PokemonCardList, SlotType, State, StoreLike, pokemonHasCardType, pokemonHasCardTypeOptional } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
@@ -40,7 +27,7 @@ function* useDarkAwakening(
   const evolutionNames: string[] = [];
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
     const valid = evolutions.filter(
-      (e) => e.evolvesFrom === card.name && e.cardType === CardType.DARK,
+      (e) => e.evolvesFrom === card.name && pokemonHasCardType(e, CardType.DARK),
     );
     valid.forEach((c) => {
       if (!evolutionNames.includes(c.name)) {
@@ -56,7 +43,7 @@ function* useDarkAwakening(
 
   const blocked2: CardTarget[] = [];
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-    if (list.getPokemonCard()?.cardType !== CardType.DARK) {
+    if (!pokemonHasCardTypeOptional(list.getPokemonCard(), CardType.DARK)) {
       blocked2.push(target);
     }
   });
@@ -136,8 +123,8 @@ function* useDarkAwakening(
 export class TeamRocketsNidorina extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = "Team Rocket's Nidoran ♀";
-  public tags = [CardTag.TEAM_ROCKET];
-  public cardType: CardType = D;
+  protected _tags = [CardTag.TEAM_ROCKET];
+  public cardType: CardType[] = [D];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C, C];

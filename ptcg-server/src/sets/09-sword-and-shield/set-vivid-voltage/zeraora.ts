@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Zeraora extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public retreat = [];
@@ -21,8 +21,8 @@ export class Zeraora extends PokemonCard {
       cost: [L, C],
       damage: 30,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is a Pokémon V or Pokémon-GX, this attack does 80 more damage.'
-    }
+      text: "If your opponent's Active Pokémon is a Pokémon V or Pokémon-GX, this attack does 80 more damage.",
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -39,12 +39,13 @@ export class Zeraora extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const opponentActive = opponent.active.getPokemonCard();
-      if (opponentActive && (
-        opponentActive.tags.includes(CardTag.POKEMON_V) ||
-        opponentActive.tags.includes(CardTag.POKEMON_VMAX) ||
-        opponentActive.tags.includes(CardTag.POKEMON_VSTAR) ||
-        opponentActive.tags.includes(CardTag.POKEMON_GX)
-      )) {
+      if (
+        opponentActive &&
+        (opponentActive.hasTag(CardTag.POKEMON_V) ||
+          opponentActive.hasTag(CardTag.POKEMON_VMAX) ||
+          opponentActive.hasTag(CardTag.POKEMON_VSTAR) ||
+          opponentActive.hasTag(CardTag.POKEMON_GX))
+      ) {
         effect.damage += 80;
       }
     }

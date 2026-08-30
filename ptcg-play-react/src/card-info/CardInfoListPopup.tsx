@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import type { Card, CardList, Player } from 'ptcg-server';
 import { SuperType as SuperTypeEnum } from 'ptcg-server';
 import { CardFace } from '../components/cards/CardFace';
+import { CheckboxField } from '../components/ui/CheckboxField';
 import { CARDBACK_ASSET_URL } from '../deck-editor/resolveScanUrl';
 import type { CardInfoPaneOptions, CardInfoTableAction } from './CardInfoPane';
 import { CardInfoPopup } from './CardInfoPopup';
@@ -77,23 +78,22 @@ export function CardInfoListPopup({
       <div className={styles.panel} role="dialog" aria-modal="true">
         <h2 className={styles.title}>{t('CARDS_LIST_OF_CARDS', 'Cards')}</h2>
         <div className={styles.sortRow}>
-          <label>
-            <input
-              type="checkbox"
-              checked={sortDiscards}
-              onChange={(e) => setSortDiscards(e.target.checked)}
-            />{' '}
+          <CheckboxField
+            plain
+            checked={sortDiscards}
+            onChange={(e) => setSortDiscards(e.target.checked)}
+          >
             Sort discard
-          </label>
+          </CheckboxField>
           {allowReveal ? (
-            <label className={styles.reveal}>
-              <input
-                type="checkbox"
-                checked={!faceDownState}
-                onChange={() => setFaceDownState((v) => !v)}
-              />{' '}
+            <CheckboxField
+              plain
+              className={styles.reveal}
+              checked={!faceDownState}
+              onChange={() => setFaceDownState((v) => !v)}
+            >
               {t('CARDS_REVEAL_CARDS')}
-            </label>
+            </CheckboxField>
           ) : null}
         </div>
         <div className={styles.grid}>

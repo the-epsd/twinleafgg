@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, SWITCH_ACTIVE_WITH_BENCHED, WAS_PO
 export class Vanilluxe extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Vanillish';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 130;
   public weakness = [{ type: M }];
   public retreat = [C, C];

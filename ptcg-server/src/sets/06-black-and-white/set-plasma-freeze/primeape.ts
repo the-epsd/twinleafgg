@@ -11,27 +11,24 @@ import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store
 export class Primeape extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Mankey';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 90;
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Fury Swipes',
-      cost: [C, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 30 damage times the number of heads.'
-    },
-    {
-      name: 'Karate Chop',
-      cost: [F, F],
-      damage: 80,
-      damageCalculation: '-',
-      text: 'Does 80 damage minus 10 damage for each damage counter on this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fury Swipes',
+    cost: [C, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 30 damage times the number of heads.'
+  }, {
+    name: 'Karate Chop',
+    cost: [F, F],
+    damage: 80,
+    damageCalculation: '-',
+    text: 'Does 80 damage minus 10 damage for each damage counter on this Pokémon.'
+  }];
 
   public set: string = 'PLF';
   public setNumber: string = '60';

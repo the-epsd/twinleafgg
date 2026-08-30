@@ -6,20 +6,19 @@ import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT } from '
 
 export class Marill extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [W];
   public hp: number = 60;
-  public retreat = [CardType.COLORLESS];
-  public weakness = [{ type: CardType.GRASS }];
+  public retreat = [C];
+  public weakness = [{ type: G }];
 
   public attacks = [{
     name: 'Bubble',
-    cost: [CardType.WATER],
+    cost: [W],
     damage: 0,
     text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-  },
-  {
+  }, {
     name: 'Rollout',
-    cost: [CardType.COLORLESS, CardType.COLORLESS],
+    cost: [C, C],
     damage: 20,
     text: ''
   }];

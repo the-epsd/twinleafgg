@@ -23,7 +23,7 @@ function mergeUsers(into: Record<number, UserInfo>, list: UserInfo[]): Record<nu
 
 export function SpectatePage() {
   const { t } = useTranslation();
-  const { games, clients, usersById, connected, error: socketError } = useCoreSession();
+  const { games, clients, usersById, error: socketError } = useCoreSession();
 
   const [matches, setMatches] = useState<MatchInfo[]>([]);
   const [matchUsers, setMatchUsers] = useState<Record<number, UserInfo>>({});
@@ -95,10 +95,8 @@ export function SpectatePage() {
 
   return (
     <div className={styles.page}>
-      {!connected ? (
-        <p className={styles.alert}>
-          {socketError ? t('REACT_SOCKET_PREFIX', { message: socketError }) : t('REACT_CONNECTING')}
-        </p>
+      {socketError ? (
+        <p className={styles.alert}>{t('REACT_SOCKET_PREFIX', { message: socketError })}</p>
       ) : null}
 
       <section aria-labelledby="spectate-active-heading">

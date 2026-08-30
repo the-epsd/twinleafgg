@@ -3,32 +3,30 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
-import { COPY_BENCH_ATTACK, MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { COPY_BENCH_ATTACK } from '../../../game/store/prefabs/attack-effects';
 
 export class Liepard extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Purrloin';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Assist',
-      cost: [D],
-      damage: 0,
-      copycatAttack: true,
-      text: 'Choose 1 of your Benched Pokémon\'s attacks and use it as this attack.'
-    },
-    {
-      name: 'Fury Swipes',
-      cost: [D, D, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 40 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Assist',
+    cost: [D],
+    damage: 0,
+    copycatAttack: true,
+    text: 'Choose 1 of your Benched Pokémon\'s attacks and use it as this attack.'
+  }, {
+    name: 'Fury Swipes',
+    cost: [D, D, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 40 damage times the number of heads.'
+  }];
 
   public set: string = 'BLW';
   public cardImage: string = 'assets/cardback.png';

@@ -16,25 +16,22 @@ import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT } from '../.
 
 export class AlolanVulpix extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 60;
   public weakness = [{ type: M }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Powder Snow',
-      cost: [],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Asleep.'
-    },
-    {
-      name: 'Icy Snow',
-      cost: [W, W],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Powder Snow',
+    cost: [],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Asleep.'
+  }, {
+    name: 'Icy Snow',
+    cost: [W, W],
+    damage: 30,
+    text: ''
+  }];
 
   public set: string = 'BUS';
   public setNumber: string = '27';

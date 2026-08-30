@@ -35,9 +35,10 @@ export class BotArbiter {
   }
 
   public resolvePrompt(state: State, prompt: Prompt<any>): ResolvePromptAction | undefined {
-    const player = state.players.find(p => p.id === prompt.playerId);
+    const actor = state.players.find(p => p.id === prompt.playerId);
+    const owner = state.players.find(p => p.id === prompt.getPerspectivePlayerId());
 
-    if (player === undefined) {
+    if (actor === undefined || owner === undefined) {
       return;
     }
 
@@ -45,15 +46,15 @@ export class BotArbiter {
       let result: number[] = [];
       switch (this.options.shuffleMode) {
         case BotShuffleMode.RANDOM:
-          result = this.shuffle(player.deck);
+          result = this.shuffle(owner.deck);
           return new ResolvePromptAction(prompt.id, result);
         case BotShuffleMode.REVERSE:
-          for (let i = player.deck.cards.length - 1; i >= 0; i--) {
+          for (let i = owner.deck.cards.length - 1; i >= 0; i--) {
             result.push(i);
           }
           return new ResolvePromptAction(prompt.id, result);
         default:
-          for (let i = 0; i < player.deck.cards.length; i++) {
+          for (let i = 0; i < owner.deck.cards.length; i++) {
             result.push(i);
           }
           return new ResolvePromptAction(prompt.id, result);

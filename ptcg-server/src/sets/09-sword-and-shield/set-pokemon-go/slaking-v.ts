@@ -8,12 +8,11 @@ import { GameError, GameMessage, PowerType } from '../../../game';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class SlakingV extends PokemonCard {
-
   public stage = Stage.BASIC;
 
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
 
-  public cardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp = 230;
 
@@ -21,19 +20,21 @@ export class SlakingV extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Kinda Lazy',
-    powerType: PowerType.ABILITY,
-    text: 'If you have exactly 2, 4, or 6 Prize cards remaining, this Pokémon can\'t attack.'
-  }];
+  public powers = [
+    {
+      name: 'Kinda Lazy',
+      powerType: PowerType.ABILITY,
+      text: "If you have exactly 2, 4, or 6 Prize cards remaining, this Pokémon can't attack.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Heavy Impact',
       cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 260,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'PGO';
@@ -49,7 +50,6 @@ export class SlakingV extends PokemonCard {
   public fullName: string = 'Slaking V LOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof UseAttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const prizes = effect.player.getPrizeLeft();

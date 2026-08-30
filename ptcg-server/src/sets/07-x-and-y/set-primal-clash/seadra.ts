@@ -11,26 +11,23 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Seadra extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Horsea';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 80;
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Knockout Needle',
-      cost: [W],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. If both of them are heads, this attack does 40 more damage.'
-    },
-    {
-      name: 'Water Gun',
-      cost: [W, C],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Knockout Needle',
+    cost: [W],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. If both of them are heads, this attack does 40 more damage.'
+  }, {
+    name: 'Water Gun',
+    cost: [W, C],
+    damage: 30,
+    text: ''
+  }];
 
   public set: string = 'PRC';
   public setNumber: string = '31';

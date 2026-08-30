@@ -10,7 +10,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { PowerType, State, StoreLike } from '../../../game';
 export class Voltorb extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 50;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
@@ -22,14 +22,12 @@ export class Voltorb extends PokemonCard {
     text: 'If this Pokémon has any Energy attached to it, it has no Retreat Cost.'
   }];
 
-  public attacks = [
-    {
-      name: 'Thunder Shock',
-      cost: [L, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Thunder Shock',
+    cost: [L, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'CES';
   public setNumber: string = '47';

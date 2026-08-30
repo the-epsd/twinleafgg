@@ -11,7 +11,7 @@ import { SlotType } from '../../../game/store/actions/play-card-action';
 export class Beautifly extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Silcoon';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public retreat = [C];

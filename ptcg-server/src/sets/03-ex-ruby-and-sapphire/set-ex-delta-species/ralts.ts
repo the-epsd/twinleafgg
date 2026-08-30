@@ -9,7 +9,7 @@ import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefa
 export class Ralts extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp = 70;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public weakness = [{ type: P }];
   public retreat = [C];
 

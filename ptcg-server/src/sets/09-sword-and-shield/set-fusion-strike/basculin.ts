@@ -6,14 +6,13 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Basculin extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
 
   public regulationMark = 'E';
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp: number = 80;
 
@@ -26,7 +25,7 @@ export class Basculin extends PokemonCard {
       name: 'Swarm the Wound',
       cost: [CardType.WATER, CardType.COLORLESS],
       damage: 30,
-      text: 'This attack does 10 more damage for each damage counter on your opponent\'s Active Pokémon.'
+      text: "This attack does 10 more damage for each damage counter on your opponent's Active Pokémon.",
     },
   ];
 
@@ -41,9 +40,7 @@ export class Basculin extends PokemonCard {
   public fullName: string = 'Basculin FST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

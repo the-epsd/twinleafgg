@@ -6,14 +6,19 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PlayerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { AbstractAttackEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import {
+  AbstractAttackEffect,
+  ApplyWeaknessEffect,
+  DealDamageEffect,
+  PutDamageEffect,
+} from '../../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class LatiosEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 170;
   public weakness = [{ type: Y }];
   public retreat = [C, C];
@@ -27,14 +32,14 @@ export class LatiosEx extends PokemonCard {
       cost: [P],
       damage: 40,
       canUseOnFirstTurn: true,
-      text: 'If you go first, you can use this attack on your first turn.'
+      text: 'If you go first, you can use this attack on your first turn.',
     },
     {
       name: 'Light Pulse',
       cost: [W, P, P, C],
       damage: 110,
-      text: 'Prevent all effects of your opponent\'s attacks, except damage, done to this Pok\u00e9mon during your opponent\'s next turn.'
-    }
+      text: "Prevent all effects of your opponent's attacks, except damage, done to this Pok\u00e9mon during your opponent's next turn.",
+    },
   ];
 
   public set: string = 'ROS';
@@ -58,10 +63,11 @@ export class LatiosEx extends PokemonCard {
     }
 
     // Prevent effects of attacks (except damage) done to this Pokemon
-    if (effect instanceof AbstractAttackEffect
-      && effect.target.cards.includes(this)
-      && effect.target.marker.hasMarker(this.PREVENT_EFFECTS_MARKER, this)) {
-
+    if (
+      effect instanceof AbstractAttackEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.marker.hasMarker(this.PREVENT_EFFECTS_MARKER, this)
+    ) {
       // Allow Weakness & Resistance
       if (effect instanceof ApplyWeaknessEffect) {
         return state;
@@ -80,7 +86,10 @@ export class LatiosEx extends PokemonCard {
     }
 
     // Cleanup
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_PREVENT_EFFECTS_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_PREVENT_EFFECTS_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_PREVENT_EFFECTS_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {

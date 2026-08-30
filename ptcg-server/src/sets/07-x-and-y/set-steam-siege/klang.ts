@@ -11,27 +11,24 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Klang extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Klink';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Vice Grip',
-      cost: [M, C],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Disorderly Flip',
-      cost: [M, M, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 30 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Vice Grip',
+    cost: [M, C],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Disorderly Flip',
+    cost: [M, M, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 30 damage times the number of heads.'
+  }];
 
   public set: string = 'STS';
   public setNumber: string = '72';

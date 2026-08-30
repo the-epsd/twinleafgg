@@ -12,10 +12,9 @@ import {
 } from '../../../game/store/prefabs/prefabs';
 
 export class Pawmot extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Pawmo';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 150;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -35,7 +34,7 @@ export class Pawmot extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'MEE';
+  public set: string = 'J-MEE';
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pawmot';
@@ -44,7 +43,7 @@ export class Pawmot extends PokemonCard {
   public readonly POWER_PLANT_TOUCH_MARKER = 'PAWMOT_MEE_POWER_PLANT_TOUCH_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-fusion-strike/flaaffy.ts (Dynamotor)
+    // Power Plant Touch
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 

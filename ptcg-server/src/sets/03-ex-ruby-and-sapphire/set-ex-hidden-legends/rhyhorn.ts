@@ -6,7 +6,7 @@ import { MULTIPLE_COIN_FLIPS_PROMPT, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATT
 
 export class Rhyhorn extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 60;
   public weakness = [{ type: W }];
   public retreat = [C];
@@ -17,8 +17,7 @@ export class Rhyhorn extends PokemonCard {
     damage: 10,
     damageCalculation: 'x',
     text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
-  },
-  {
+  }, {
     name: 'Take Down',
     cost: [F, C, C],
     damage: 50,

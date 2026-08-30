@@ -1,13 +1,39 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
-import { StoreLike, State, PlayerType, SlotType, GameMessage, ShuffleDeckPrompt, PowerType, GameError, AttachEnergyPrompt, StateUtils, CardTarget } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+} from '../../../game/store/card/card-types';
+import {
+  StoreLike,
+  State,
+  PlayerType,
+  SlotType,
+  GameMessage,
+  ShuffleDeckPrompt,
+  PowerType,
+  GameError,
+  AttachEnergyPrompt,
+  StateUtils,
+  CardTarget,
+} from '../../../game';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { ABILITY_USED, SEARCH_DECK_FOR_CARDS_TO_HAND, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ABILITY_USED,
+  SEARCH_DECK_FOR_CARDS_TO_HAND,
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
 
-function* useTrinityNova(next: Function, store: StoreLike, state: State,
-  effect: AttackEffect): IterableIterator<State> {
-
+function* useTrinityNova(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   if (player.deck.cards.length === 0) {
@@ -21,33 +47,34 @@ function* useTrinityNova(next: Function, store: StoreLike, state: State,
     }
   });
 
-  yield store.prompt(state, new AttachEnergyPrompt(
-    player.id,
-    GameMessage.ATTACH_ENERGY_TO_BENCH,
-    player.deck,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.BENCH, SlotType.ACTIVE],
-    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-    { allowCancel: false, min: 0, max: 3, blockedTo: blocked }
-  ), transfers => {
-    transfers = transfers || [];
-    for (const transfer of transfers) {
-      const target = StateUtils.getTarget(state, player, transfer.to);
-      player.deck.moveCardTo(transfer.card, target);
-      next();
-    }
-  });
+  yield store.prompt(
+    state,
+    new AttachEnergyPrompt(
+      player.id,
+      GameMessage.ATTACH_ENERGY_TO_BENCH,
+      player.deck,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.BENCH, SlotType.ACTIVE],
+      { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+      { allowCancel: false, min: 0, max: 3, blockedTo: blocked },
+    ),
+    (transfers) => {
+      transfers = transfers || [];
+      for (const transfer of transfers) {
+        const target = StateUtils.getTarget(state, player, transfer.to);
+        player.deck.moveCardTo(transfer.card, target);
+        next();
+      }
+    },
+  );
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);
-
   });
 }
 
-
 export class ArceusVSTAR extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_VSTAR];
+  protected _tags = [CardTag.POKEMON_VSTAR];
 
   public regulationMark = 'F';
 
@@ -55,7 +82,7 @@ export class ArceusVSTAR extends PokemonCard {
 
   public evolvesFrom = 'Arceus V';
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp: number = 280;
 
@@ -68,21 +95,24 @@ export class ArceusVSTAR extends PokemonCard {
       name: 'Trinity Nova',
       cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 200,
-      text: 'Search your deck for up to 3 basic energies and attach ' +
+      text:
+        'Search your deck for up to 3 basic energies and attach ' +
         'them to your Pokémon V in any way you like. Then, shuffle ' +
-        'your deck.'
-    }
+        'your deck.',
+    },
   ];
 
-  public powers = [{
-    name: 'Starbirth',
-    powerType: PowerType.ABILITY,
-    useWhenInPlay: true,
-    text: 'During your turn, you may search your deck for up to ' +
-      '2 cards and put them into your hand. Then, shuffle your ' +
-      'deck. (You can\'t use more than 1 VSTAR Power in a game.)'
-
-  }];
+  public powers = [
+    {
+      name: 'Starbirth',
+      powerType: PowerType.ABILITY,
+      useWhenInPlay: true,
+      text:
+        'During your turn, you may search your deck for up to ' +
+        '2 cards and put them into your hand. Then, shuffle your ' +
+        "deck. (You can't use more than 1 VSTAR Power in a game.)",
+    },
+  ];
 
   public set: string = 'BRS';
 
@@ -95,7 +125,6 @@ export class ArceusVSTAR extends PokemonCard {
   public fullName: string = 'Arceus VSTAR BRS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
@@ -106,7 +135,15 @@ export class ArceusVSTAR extends PokemonCard {
       ABILITY_USED(player, this);
 
       player.usedVSTAR = true;
-      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this, {}, { min: 0, max: 2, allowCancel: false }, this.powers[0]);
+      SEARCH_DECK_FOR_CARDS_TO_HAND(
+        store,
+        state,
+        player,
+        this,
+        {},
+        { min: 0, max: 2, allowCancel: false },
+        this.powers[0],
+      );
     }
 
     //     if (WAS_ATTACK_USED(effect, 0, this)) {
@@ -131,17 +168,17 @@ export class ArceusVSTAR extends PokemonCard {
 
     //           const target = StateUtils.getTarget(state, player, transfer.to);
 
-    //           if (!target.cards[0].tags.includes(CardTag.POKEMON_V) ||
-    //           !target.cards[0].tags.includes(CardTag.POKEMON_VSTAR) ||
-    //           !target.cards[0].tags.includes(CardTag.POKEMON_VMAX)) {
+    //           if (!target.cards[0].hasTag(CardTag.POKEMON_V) ||
+    //           !target.cards[0].hasTag(CardTag.POKEMON_VSTAR) ||
+    //           !target.cards[0].hasTag(CardTag.POKEMON_VMAX)) {
     //             throw new GameError(GameMessage.INVALID_TARGET);
     //           }
 
-    //           if (target.cards[0].tags.includes(CardTag.POKEMON_V) || 
-    //               target.cards[0].tags.includes(CardTag.POKEMON_VSTAR) ||
-    //               target.cards[0].tags.includes(CardTag.POKEMON_VMAX)) {
+    //           if (target.cards[0].hasTag(CardTag.POKEMON_V) ||
+    //               target.cards[0].hasTag(CardTag.POKEMON_VSTAR) ||
+    //               target.cards[0].hasTag(CardTag.POKEMON_VMAX)) {
 
-    //             player.deck.moveCardTo(transfer.card, target); 
+    //             player.deck.moveCardTo(transfer.card, target);
     //           }
 
     //         }

@@ -12,25 +12,22 @@ import { AFTER_ATTACK, COIN_FLIP_PROMPT, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_
 export class Lopunny extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Buneary';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Healing Melody',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, heal 60 damage from each of your Pokémon.'
-    },
-    {
-      name: 'Kick Away',
-      cost: [C, C, C],
-      damage: 60,
-      text: 'Your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Healing Melody',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, heal 60 damage from each of your Pokémon.'
+  }, {
+    name: 'Kick Away',
+    cost: [C, C, C],
+    damage: 60,
+    text: 'Your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '117';

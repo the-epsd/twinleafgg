@@ -4,25 +4,35 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, TrainerCard, GameError, GameMessage } from '../../../game';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  TrainerCard,
+  GameError,
+  GameMessage,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 import { AttachPokemonToolEffect } from '../../../game/store/effects/play-card-effects';
 
 export class ChandelureVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Chandelure V';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 320;
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Cursed Shimmer',
-    powerType: PowerType.ABILITY,
-    text: 'As long as this Pokémon is in the Active Spot, your opponent can\'t play any Pokémon Tool cards from their hand.'
-  }];
+  public powers = [
+    {
+      name: 'Cursed Shimmer',
+      powerType: PowerType.ABILITY,
+      text: "As long as this Pokémon is in the Active Spot, your opponent can't play any Pokémon Tool cards from their hand.",
+    },
+  ];
 
   public attacks = [
     {
@@ -30,8 +40,8 @@ export class ChandelureVmax extends PokemonCard {
       cost: [R, C],
       damage: 70,
       damageCalculation: 'x',
-      text: 'Your opponent reveals their hand. This attack does 70 damage for each Trainer card you find there.'
-    }
+      text: 'Your opponent reveals their hand. This attack does 70 damage for each Trainer card you find there.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -60,7 +70,7 @@ export class ChandelureVmax extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const trainerCount = opponent.hand.cards.filter(card => card instanceof TrainerCard).length;
+      const trainerCount = opponent.hand.cards.filter((card) => card instanceof TrainerCard).length;
       effect.damage = 70 * trainerCount;
     }
 

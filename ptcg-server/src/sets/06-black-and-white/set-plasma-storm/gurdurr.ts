@@ -12,26 +12,23 @@ import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/p
 export class Gurdurr extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Timburr';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 90;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Dynamic Punch',
-      cost: [F, C, C],
-      damage: 40,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 more damage and the Defending Pokémon is now Confused.'
-    },
-    {
-      name: 'Hammer In',
-      cost: [F, F, C, C],
-      damage: 80,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Dynamic Punch',
+    cost: [F, C, C],
+    damage: 40,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 20 more damage and the Defending Pokémon is now Confused.'
+  }, {
+    name: 'Hammer In',
+    cost: [F, F, C, C],
+    damage: 80,
+    text: ''
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '80';

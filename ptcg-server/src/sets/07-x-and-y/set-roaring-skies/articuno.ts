@@ -3,15 +3,14 @@ import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { GameMessage } from '../../../game/game-message';
-import { CoinFlipPrompt } from '../../../game/store/prompts/coin-flip-prompt';
+
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
-import { DELTA_PLUS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { DELTA_PLUS, WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Articuno extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 120;
   public weakness = [{ type: M }];
   public resistance = [{ type: F, value: -20 }];
@@ -21,7 +20,7 @@ export class Articuno extends PokemonCard {
     name: 'Delta Plus',
     powerType: PowerType.ANCIENT_TRAIT,
     text: 'If your opponent\'s Pokemon is Knocked Out by damage from an ' +
-      'attack of this Pokemon, take 1 more Prize card.'
+    'attack of this Pokemon, take 1 more Prize card.'
   }];
 
   public attacks = [{
@@ -29,8 +28,7 @@ export class Articuno extends PokemonCard {
     cost: [W],
     damage: 0,
     text: 'Your opponent\'s Active Pokemon is now Asleep.'
-  },
-  {
+  }, {
     name: 'Tri Edge',
     cost: [W, W, C],
     damage: 20,
@@ -52,11 +50,7 @@ export class Articuno extends PokemonCard {
     // Tri Edge
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
+      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 3, results => {
         let heads: number = 0;
         results.forEach(r => { heads += r ? 1 : 0; });
         effect.damage += 40 * heads;

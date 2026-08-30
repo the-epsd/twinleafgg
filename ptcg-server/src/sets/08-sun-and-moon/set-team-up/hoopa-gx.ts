@@ -4,15 +4,28 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, DamageMap, PutDamagePrompt } from '../../../game';
+import {
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  DamageMap,
+  PutDamagePrompt,
+} from '../../../game';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  BLOCK_IF_GX_ATTACK_USED,
+  SEARCH_DECK_FOR_CARDS_TO_HAND,
+} from '../../../game/store/prefabs/prefabs';
 
 export class HoopaGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 190;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];
@@ -23,20 +36,20 @@ export class HoopaGx extends PokemonCard {
       name: 'Rogue Ring',
       cost: [D],
       damage: 0,
-      text: 'Search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck.'
+      text: 'Search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck.',
     },
     {
       name: 'Dark Strike',
       cost: [D, D, D],
       damage: 160,
-      text: 'This Pokémon can\'t use Dark Strike during your next turn.'
+      text: "This Pokémon can't use Dark Strike during your next turn.",
     },
     {
       name: 'Devilish Hands-GX',
       cost: [D, D, D],
       damage: 0,
-      text: 'Choose 1 of your opponent\'s Pokémon-GX or Pokémon-EX 6 times. (You can choose the same Pokémon more than once.) For each time you chose a Pokémon, do 30 damage to it. This damage isn\'t affected by Weakness or Resistance. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Choose 1 of your opponent's Pokémon-GX or Pokémon-EX 6 times. (You can choose the same Pokémon more than once.) For each time you chose a Pokémon, do 30 damage to it. This damage isn't affected by Weakness or Resistance. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'TEU';
@@ -50,9 +63,13 @@ export class HoopaGx extends PokemonCard {
     // Ref: set-team-up/dana.ts (search deck for any cards)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this,
+      SEARCH_DECK_FOR_CARDS_TO_HAND(
+        store,
+        state,
+        player,
+        this,
         {},
-        { min: 0, max: 2, allowCancel: true }
+        { min: 0, max: 2, allowCancel: true },
       );
     }
 
@@ -75,7 +92,7 @@ export class HoopaGx extends PokemonCard {
       const hasGxExPokemon = (() => {
         let found = false;
         opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-          if (card.tags.includes(CardTag.POKEMON_GX) || card.tags.includes(CardTag.POKEMON_EX)) {
+          if (card.hasTag(CardTag.POKEMON_GX) || card.hasTag(CardTag.POKEMON_EX)) {
             found = true;
           }
         });
@@ -88,30 +105,34 @@ export class HoopaGx extends PokemonCard {
 
       const maxAllowedDamage: DamageMap[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (card.tags.includes(CardTag.POKEMON_GX) || card.tags.includes(CardTag.POKEMON_EX)) {
+        if (card.hasTag(CardTag.POKEMON_GX) || card.hasTag(CardTag.POKEMON_EX)) {
           maxAllowedDamage.push({ target, damage: 180 }); // max 6 * 30 = 180
         }
       });
 
       const totalDamage = 180; // 6 * 30
 
-      return store.prompt(state, new PutDamagePrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        totalDamage,
-        maxAllowedDamage,
-        { allowCancel: false, damageMultiple: 30 }
-      ), targets => {
-        const results = targets || [];
-        for (const result of results) {
-          const target = StateUtils.getTarget(state, player, result.target);
-          const damage = new PutDamageEffect(effect, result.damage);
-          damage.target = target;
-          store.reduceEffect(state, damage);
-        }
-      });
+      return store.prompt(
+        state,
+        new PutDamagePrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          totalDamage,
+          maxAllowedDamage,
+          { allowCancel: false, damageMultiple: 30 },
+        ),
+        (targets) => {
+          const results = targets || [];
+          for (const result of results) {
+            const target = StateUtils.getTarget(state, player, result.target);
+            const damage = new PutDamageEffect(effect, result.damage);
+            damage.target = target;
+            store.reduceEffect(state, damage);
+          }
+        },
+      );
     }
 
     return state;

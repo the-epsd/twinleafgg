@@ -11,28 +11,30 @@ import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Weezing extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Koffing';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 100;
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Aftermath',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'When this Pokémon is Knocked Out by damage from an opponent\'s attack, discard the top 3 cards of your opponent\'s deck.'
-  }];
+  public powers = [
+    {
+      name: 'Aftermath',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: "When this Pokémon is Knocked Out by damage from an opponent's attack, discard the top 3 cards of your opponent's deck.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Smogbank',
       cost: [P, C],
       damage: 0,
-      text: 'This attack does 20 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "This attack does 20 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public set: string = 'PLS';
@@ -77,7 +79,7 @@ export class Weezing extends PokemonCard {
       store.reduceEffect(state, damageActive);
 
       // 20 damage to each benched (use PutDamageEffect, no weakness/resistance)
-      opponent.bench.forEach(benched => {
+      opponent.bench.forEach((benched) => {
         if (benched.cards.length > 0) {
           const damage = new PutDamageEffect(effect, 20);
           damage.target = benched;

@@ -2,15 +2,26 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_BURN_TO_PLAYER_ACTIVE, AFTER_ATTACK, ATTACH_ENERGY_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { CardTag, CardType, EnergyType, Stage, SuperType } from '../../../game/store/card/card-types';
+import {
+  ADD_BURN_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  ATTACH_ENERGY_PROMPT,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
+import {
+  CardTag,
+  CardType,
+  EnergyType,
+  Stage,
+  SuperType,
+} from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayerType, SlotType, State, StoreLike } from '../../../game';
 export class FlareonV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V, CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.POKEMON_V, CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 210;
   public weakness = [{ type: W }];
   public retreat = [C, C];
@@ -20,14 +31,14 @@ export class FlareonV extends PokemonCard {
       name: 'Flaming Breath',
       cost: [C],
       damage: 20,
-      text: 'Search your deck for a [R] Energy card and attach it to this Pokémon. Then, shuffle your deck.'
+      text: 'Search your deck for a [R] Energy card and attach it to this Pokémon. Then, shuffle your deck.',
     },
     {
       name: 'Scorching Column',
       cost: [R, R, C],
       damage: 120,
-      text: 'Your opponent\'s Active Pokémon is now Burned.'
-    }
+      text: "Your opponent's Active Pokémon is now Burned.",
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -49,7 +60,7 @@ export class FlareonV extends PokemonCard {
         SlotType.DECK,
         [SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
-        { min: 1, max: 1, allowCancel: true }
+        { min: 1, max: 1, allowCancel: true },
       );
     }
 

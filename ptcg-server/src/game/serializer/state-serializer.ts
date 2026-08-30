@@ -45,6 +45,9 @@ export class StateSerializer {
       pathBuilder.goTo(this, key);
       const path = pathBuilder.getPath();
 
+      if (typeof value === 'function') {
+        return undefined;
+      }
       if (value instanceof Array) {
         return value;
       }
@@ -95,7 +98,6 @@ export class StateSerializer {
 
     const parsed = JSON.parse(serializedState, reviver);
 
-    // Restore Refs
     const pathBuilder = new PathBuilder();
     deepIterate(parsed, (holder, key, value) => {
       if (value instanceof Object && value._type === 'Ref') {
@@ -115,18 +117,25 @@ export class StateSerializer {
     if (base === undefined) {
       return this.serialize(state);
     }
-    const parsedBase = JSON.parse(base);
-
-    const players1 = parsedBase[0];
-    const state1 = parsedBase[1];
-
     const serialized2 = this.serialize(state);
-    const parsed2 = JSON.parse(serialized2);
-    const players2 = parsed2[0];
-    const state2 = parsed2[1];
+    return this.serializeDiffFromSerialized(base, serialized2);
+  }
+
+  public serializeDiffFromSerialized(
+    base: SerializedState | undefined,
+    next: SerializedState
+  ): SerializedState {
+    if (base === undefined) {
+      return next;
+    }
+    const parsedBase = JSON.parse(base);
+    const parsed2 = JSON.parse(next);
 
     const jsonPatch = new JsonPatch();
-    const diff = jsonPatch.diff([players1, state1], [players2, state2]);
+    const diff = jsonPatch.diff(
+      [parsedBase[0], parsedBase[1]],
+      [parsed2[0], parsed2[1]]
+    );
     return JSON.stringify([diff]);
   }
 

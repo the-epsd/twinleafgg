@@ -10,26 +10,23 @@ import { State, StoreLike } from '../../../game';
 export class Nidorina extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Nidoran ♀';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 90;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Poison Sting',
-      cost: [P, C],
-      damage: 20,
-      text: 'The Defending Pokémon is now Poisoned.'
-    },
-    {
-      name: 'Double Kick',
-      cost: [P, C, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 40 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Poison Sting',
+    cost: [P, C],
+    damage: 20,
+    text: 'The Defending Pokémon is now Poisoned.'
+  }, {
+    name: 'Double Kick',
+    cost: [P, C, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 40 damage times the number of heads.'
+  }];
 
   public set: string = 'PLF';
   public setNumber: string = '41';

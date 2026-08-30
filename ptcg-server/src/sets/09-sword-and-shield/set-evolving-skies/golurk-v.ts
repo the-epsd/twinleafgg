@@ -9,9 +9,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class GolurkV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V, CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.POKEMON_V, CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 220;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
@@ -22,14 +22,14 @@ export class GolurkV extends PokemonCard {
       name: 'Mega Punch',
       cost: [P, C, C],
       damage: 80,
-      text: ''
+      text: '',
     },
     {
       name: 'Rewind Beam',
       cost: [P, P, C, C],
       damage: 180,
-      text: 'If your opponent\'s Active Pokémon is an evolved Pokémon, devolve it by putting the highest Stage Evolution card on it into your opponent\'s hand.'
-    }
+      text: "If your opponent's Active Pokémon is an evolved Pokémon, devolve it by putting the highest Stage Evolution card on it into your opponent's hand.",
+    },
   ];
 
   public regulationMark: string = 'E';

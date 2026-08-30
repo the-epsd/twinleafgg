@@ -1,26 +1,21 @@
-import { GameMessage } from '../../game';
+
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Attack } from '../../game/store/card/pokemon-types';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 
-import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Pikachu extends PokemonCard {
-
   public name = 'Pikachu';
-
   public cardImage: string = 'assets/cardback.png';
-
   public set = 'BS';
-
   public setNumber = '58';
 
-  public cardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [L];
 
   public fullName = 'Pikachu BS';
 
@@ -29,21 +24,19 @@ export class Pikachu extends PokemonCard {
   public evolvesInto = ['Raichu', 'Alolan Raichu', 'Raichu-GX', 'Dark Raichu', 'Raichu ex'];
 
   public hp = 40;
-
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public retreat = [C];
 
   public attacks: Attack[] = [
     {
       name: 'Gnaw',
-      cost: [CardType.COLORLESS],
+      cost: [C],
       damage: 10,
       text: ''
     },
     {
       name: 'Thunder Jolt',
-      cost: [CardType.LIGHTNING, CardType.COLORLESS],
+      cost: [L, C],
       damage: 30,
       text: 'Flip a coin. If tails, Pikachu does 10 damage to itself.'
     }
@@ -51,7 +44,7 @@ export class Pikachu extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      return store.prompt(state, new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP), (heads) => {
+      return COIN_FLIP_PROMPT(store, state, effect.player, heads => {
         if (!heads) {
           const damage = new DealDamageEffect(effect, 10);
           damage.target = effect.player.active;

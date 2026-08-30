@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF }
 
 export class Entei2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 130;
   public weakness = [{ type: W }];
   public retreat = [C, C];
@@ -20,8 +20,7 @@ export class Entei2 extends PokemonCard {
     cost: [R, C],
     damage: 30,
     text: 'During your opponent\'s next turn, any damage done to this Pokémon by attacks is reduced by 30 (after applying Weakness and Resistance).'
-  },
-  {
+  }, {
     name: 'Heat Tackle',
     cost: [R, R, C, C],
     damage: 130,

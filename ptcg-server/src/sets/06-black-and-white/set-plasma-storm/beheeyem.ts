@@ -4,18 +4,27 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { CardTarget, DamageMap, GameMessage, PlayerType, SlotType, StoreLike, State, StateUtils } from '../../../game';
+import {
+  CardTarget,
+  DamageMap,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED, BLOCK_RETREAT } from '../../../game/store/prefabs/prefabs';
-import { } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { MoveDamagePrompt } from '../../../game/store/prompts/move-damage-prompt';
 
 export class Beheeyem extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Elgyem';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 90;
   public weakness = [{ type: P }];
   public retreat = [C];
@@ -25,14 +34,14 @@ export class Beheeyem extends PokemonCard {
       name: 'Lock Up',
       cost: [P],
       damage: 20,
-      text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
+      text: "The Defending Pokémon can't retreat during your opponent's next turn.",
     },
     {
       name: 'Damakinesis',
       cost: [P, C, C],
       damage: 0,
-      text: 'Move 6 damage counters from any of your Pokémon to the Defending Pokémon.'
-    }
+      text: 'Move 6 damage counters from any of your Pokémon to the Defending Pokémon.',
+    },
   ];
 
   public set: string = 'PLS';
@@ -89,43 +98,49 @@ export class Beheeyem extends PokemonCard {
         return state;
       }
 
-      const maxAllowedDamage: DamageMap[] = [{ target: opponentActiveTarget, damage: countersToMove * 10 }];
-      return store.prompt(state, new MoveDamagePrompt(
-        player.id,
-        GameMessage.MOVE_DAMAGE,
-        PlayerType.ANY,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        maxAllowedDamage,
-        {
-          min: countersToMove,
-          max: countersToMove,
-          allowCancel: false,
-          blockedFrom,
-          blockedTo,
-          singleDestinationTarget: true
-        }
-      ), transfers => {
-        if (!transfers) {
-          return;
-        }
-
-        // Each transfer moves one damage counter from one of your Pokemon.
-        let totalMoved = 0;
-        for (const transfer of transfers) {
-          const source = StateUtils.getTarget(state, player, transfer.from);
-          if (source.damage >= 10) {
-            source.damage -= 10;
-            totalMoved += 1;
+      const maxAllowedDamage: DamageMap[] = [
+        { target: opponentActiveTarget, damage: countersToMove * 10 },
+      ];
+      return store.prompt(
+        state,
+        new MoveDamagePrompt(
+          player.id,
+          GameMessage.MOVE_DAMAGE,
+          PlayerType.ANY,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          maxAllowedDamage,
+          {
+            min: countersToMove,
+            max: countersToMove,
+            allowCancel: false,
+            blockedFrom,
+            blockedTo,
+            singleDestinationTarget: true,
+          },
+        ),
+        (transfers) => {
+          if (!transfers) {
+            return;
           }
-        }
 
-        // Put damage counters on defending Pokemon
-        if (totalMoved > 0) {
-          const countersEffect = new PutCountersEffect(effect, totalMoved * 10);
-          countersEffect.target = opponent.active;
-          store.reduceEffect(state, countersEffect);
-        }
-      });
+          // Each transfer moves one damage counter from one of your Pokemon.
+          let totalMoved = 0;
+          for (const transfer of transfers) {
+            const source = StateUtils.getTarget(state, player, transfer.from);
+            if (source.damage >= 10) {
+              source.damage -= 10;
+              totalMoved += 1;
+            }
+          }
+
+          // Put damage counters on defending Pokemon
+          if (totalMoved > 0) {
+            const countersEffect = new PutCountersEffect(effect, totalMoved * 10);
+            countersEffect.target = opponent.active;
+            store.reduceEffect(state, countersEffect);
+          }
+        },
+      );
     }
 
     return state;

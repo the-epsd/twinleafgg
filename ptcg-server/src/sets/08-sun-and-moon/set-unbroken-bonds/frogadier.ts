@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, ADD_MARKER, CLEAR_MARKER_AND_OPPONEN
 export class Frogadier extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Froakie';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 80;
   public weakness = [{ type: G }];
   public retreat = [C];
@@ -20,14 +20,12 @@ export class Frogadier extends PokemonCard {
   public readonly AFTERIMAGE_MARKER = 'FROGADIER_UNB_AFTERIMAGE_MARKER';
   public readonly CLEAR_AFTERIMAGE_MARKER = 'FROGADIER_UNB_CLEAR_AFTERIMAGE_MARKER';
 
-  public attacks = [
-    {
-      name: 'Afterimage Strike',
-      cost: [C],
-      damage: 20,
-      text: 'If any damage is done to this Pokémon by attacks during your opponent\'s next turn, flip a coin. If heads, prevent that damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Afterimage Strike',
+    cost: [C],
+    damage: 20,
+    text: 'If any damage is done to this Pokémon by attacks during your opponent\'s next turn, flip a coin. If heads, prevent that damage.'
+  }];
 
   public set: string = 'UNB';
   public setNumber: string = '52';

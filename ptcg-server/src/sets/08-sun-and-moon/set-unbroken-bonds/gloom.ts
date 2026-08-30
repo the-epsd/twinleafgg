@@ -1,29 +1,29 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, CoinFlipPrompt, GameError, GameMessage, PokemonCardList, PowerType, State, StateUtils, StoreLike } from '../../../game';
+import { Card, ChooseCardsPrompt, GameError, GameMessage, PokemonCardList, PowerType, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_POWER_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Gloom extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Oddish';
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
-  public weakness = [{ type: CardType.FIRE }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Irresistible Aroma',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: ' Once during your turn (before your attack), if your opponent\'s Bench isn\'t full, you may flip a coin.'
-      + 'If heads, your opponent reveals their hand.Put a Basic Pokémon you find there onto their Bench. '
+    + 'If heads, your opponent reveals their hand.Put a Basic Pokémon you find there onto their Bench. '
   }];
 
   public attacks = [{
     name: 'Drool',
-    cost: [CardType.GRASS, CardType.COLORLESS],
+    cost: [G, C],
     damage: 30,
     text: ''
   }];
@@ -47,9 +47,7 @@ export class Gloom extends PokemonCard {
       }
 
       let cards: Card[] = [];
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
           store.prompt(state, new ChooseCardsPrompt(
             player,

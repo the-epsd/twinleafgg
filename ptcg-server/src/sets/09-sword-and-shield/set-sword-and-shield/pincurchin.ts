@@ -11,22 +11,21 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../../game/s
 
 export class Pincurchin extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Shocking Needles',
-      cost: [L, L],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 30 damage for each heads. If at least 2 of them are heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Shocking Needles',
+    cost: [L, L],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 30 damage for each heads. If at least 2 of them are heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'SSH';
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';

@@ -11,21 +11,19 @@ import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/s
 
 export class Carnivine extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Ambush Bite',
-      cost: [G, C],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 more damage and discard an Energy attached to the Defending Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Ambush Bite',
+    cost: [G, C],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 20 more damage and discard an Energy attached to the Defending Pokémon.'
+  }];
 
   public set: string = 'LTR';
   public setNumber: string = '5';

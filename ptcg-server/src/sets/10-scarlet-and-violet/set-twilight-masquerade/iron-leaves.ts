@@ -4,29 +4,34 @@ import { StoreLike, State, ChooseCardsPrompt } from '../../../game';
 
 import { Effect } from '../../../game/store/effects/effect';
 import { GameMessage } from '../../../game/game-message';
-import { WAS_ATTACK_USED, WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN,
+} from '../../../game/store/prefabs/prefabs';
 
 export class IronLeaves extends PokemonCard {
-  public tags = [CardTag.FUTURE];
+  protected _tags = [CardTag.FUTURE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Recovery Net',
-    cost: [G],
-    damage: 0,
-    text: 'Choose up to 2 Pokémon from your discard pile, reveal them, and put them into your hand.'
-  },
-  {
-    name: 'Avenging Edge',
-    cost: [G, C, C],
-    damage: 100,
-    damageCalculation: '+',
-    text: 'If any of your Pokémon were Knocked Out by damage from an attack during your opponent\'s last turn, this attack does 60 more damage.'
-  }];
+  public attacks = [
+    {
+      name: 'Recovery Net',
+      cost: [G],
+      damage: 0,
+      text: 'Choose up to 2 Pokémon from your discard pile, reveal them, and put them into your hand.',
+    },
+    {
+      name: 'Avenging Edge',
+      cost: [G, C, C],
+      damage: 100,
+      damageCalculation: '+',
+      text: "If any of your Pokémon were Knocked Out by damage from an attack during your opponent's last turn, this attack does 60 more damage.",
+    },
+  ];
 
   public regulationMark = 'H';
   public set: string = 'TWM';
@@ -40,7 +45,7 @@ export class IronLeaves extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const pokemonCount = player.discard.cards.filter(c => {
+      const pokemonCount = player.discard.cards.filter((c) => {
         return c instanceof PokemonCard;
       }).length;
 
@@ -50,22 +55,29 @@ export class IronLeaves extends PokemonCard {
 
       const max = Math.min(2, pokemonCount);
 
-      return store.prompt(state, [
-        new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_HAND,
-          player.discard,
-          { superType: SuperType.POKEMON },
-          { min: 1, max, allowCancel: false }
-        )], selected => {
+      return store.prompt(
+        state,
+        [
+          new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_CARD_TO_HAND,
+            player.discard,
+            { superType: SuperType.POKEMON },
+            { min: 1, max, allowCancel: false },
+          ),
+        ],
+        (selected) => {
           const cards = selected || [];
           player.discard.moveCardsTo(cards, player.hand);
-        });
+        },
+      );
     }
 
     // Avenging Edge
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      if (WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN(effect.player, { byAttackDamage: true })) {
+      if (
+        WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN(effect.player, { byAttackDamage: true })
+      ) {
         effect.damage += 60;
       }
     }

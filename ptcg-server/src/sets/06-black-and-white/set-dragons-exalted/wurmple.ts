@@ -11,19 +11,17 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP, YOUR_OPPPONENTS_ACTIVE_PO
 
 export class Wurmple extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 60;
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Sleep Poison',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Asleep and Poisoned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Sleep Poison',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Asleep and Poisoned.'
+  }];
 
   public set: string = 'DRX';
   public setNumber: string = '6';

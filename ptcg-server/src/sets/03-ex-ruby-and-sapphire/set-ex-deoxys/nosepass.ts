@@ -7,9 +7,8 @@ import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects
 import { ABILITY_USED, ADD_MARKER, COIN_FLIP_PROMPT, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Nosepass extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 60;
   public weakness = [{ type: W }];
   public retreat = [C];

@@ -10,7 +10,7 @@ export class Kingambit extends PokemonCard {
 
   public evolvesFrom = 'Bisharp';
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp: number = 170;
 

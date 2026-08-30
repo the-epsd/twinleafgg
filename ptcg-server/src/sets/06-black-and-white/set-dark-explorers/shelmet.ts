@@ -6,17 +6,11 @@ import { Effect } from '../../../game/store/effects/effect';
 import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 import { StateUtils } from '../../../game/store/state-utils';
 
-
 export class Shelmet extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = G;
-
+  public cardType: CardType[] = [G];
   public hp: number = 60;
-
   public weakness = [{ type: R }];
-
   public retreat = [C, C, C];
 
   public attacks = [{
@@ -27,13 +21,9 @@ export class Shelmet extends PokemonCard {
   }];
 
   public set: string = 'DEX';
-
   public name: string = 'Shelmet';
-
   public fullName: string = 'Shelmet DEX';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '10';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

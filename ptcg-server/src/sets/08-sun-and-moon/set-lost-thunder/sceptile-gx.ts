@@ -3,18 +3,34 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, PlayerType, SlotType, AttachEnergyPrompt, StoreLike, State, StateUtils, GameMessage } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+} from '../../../game/store/card/card-types';
+import {
+  Card,
+  ChooseCardsPrompt,
+  PlayerType,
+  SlotType,
+  AttachEnergyPrompt,
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+} from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { DiscardCardsEffect, HealTargetEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class SceptileGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Grovyle';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 230;
   public weakness = [{ type: R }];
   public retreat = [C];
@@ -24,20 +40,20 @@ export class SceptileGx extends PokemonCard {
       name: 'Mach Cut',
       cost: [G],
       damage: 60,
-      text: 'Discard a Special Energy from your opponent\'s Active Pok\u00e9mon.'
+      text: "Discard a Special Energy from your opponent's Active Pok\u00e9mon.",
     },
     {
       name: 'Leaf Cyclone',
       cost: [G, G],
       damage: 130,
-      text: 'Move a [G] Energy from this Pok\u00e9mon to 1 of your Benched Pok\u00e9mon.'
+      text: 'Move a [G] Energy from this Pok\u00e9mon to 1 of your Benched Pok\u00e9mon.',
     },
     {
       name: 'Jungle Heal-GX',
       cost: [G],
       damage: 0,
-      text: 'Heal all damage from each of your Pok\u00e9mon that has any [G] Energy attached to it. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Heal all damage from each of your Pok\u00e9mon that has any [G] Energy attached to it. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'LOT';
@@ -53,25 +69,29 @@ export class SceptileGx extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const hasSpecialEnergy = opponent.active.cards.some(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL
+      const hasSpecialEnergy = opponent.active.cards.some(
+        (c) => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL,
       );
 
       if (hasSpecialEnergy) {
-        store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_DISCARD,
-          opponent.active,
-          { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
-          { min: 1, max: 1, allowCancel: false }
-        ), selected => {
-          const cards: Card[] = selected || [];
-          if (cards.length > 0) {
-            const discardEnergy = new DiscardCardsEffect(effect, cards);
-            discardEnergy.target = opponent.active;
-            store.reduceEffect(state, discardEnergy);
-          }
-        });
+        store.prompt(
+          state,
+          new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_CARD_TO_DISCARD,
+            opponent.active,
+            { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
+            { min: 1, max: 1, allowCancel: false },
+          ),
+          (selected) => {
+            const cards: Card[] = selected || [];
+            if (cards.length > 0) {
+              const discardEnergy = new DiscardCardsEffect(effect, cards);
+              discardEnergy.target = opponent.active;
+              store.reduceEffect(state, discardEnergy);
+            }
+          },
+        );
       }
     }
 
@@ -79,27 +99,31 @@ export class SceptileGx extends PokemonCard {
     // Ref: set-burning-shadows/simipour.ts (Aqua Reflect - move energy to bench)
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      const hasBench = player.bench.some(b => b.cards.length > 0);
+      const hasBench = player.bench.some((b) => b.cards.length > 0);
 
       if (!hasBench) {
         return state;
       }
 
-      return store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_TO_BENCH,
-        player.active,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { superType: SuperType.ENERGY },
-        { allowCancel: false, min: 1, max: 1, validCardTypes: [CardType.GRASS] }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.active.moveCardTo(transfer.card, target);
-        }
-      });
+      return store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_TO_BENCH,
+          player.active,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          { superType: SuperType.ENERGY },
+          { allowCancel: false, min: 1, max: 1, validCardTypes: [CardType.GRASS] },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.active.moveCardTo(transfer.card, target);
+          }
+        },
+      );
     }
 
     // Attack 3: Jungle Heal-GX
@@ -111,8 +135,8 @@ export class SceptileGx extends PokemonCard {
 
       // Heal all damage from each Pokemon with Grass energy attached
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        const hasGrassEnergy = cardList.cards.some(c =>
-          c instanceof EnergyCard && c.provides.includes(CardType.GRASS)
+        const hasGrassEnergy = cardList.cards.some(
+          (c) => c instanceof EnergyCard && c.provides.includes(CardType.GRASS),
         );
         if (hasGrassEnergy && cardList.damage > 0) {
           const healEffect = new HealTargetEffect(effect, cardList.damage);

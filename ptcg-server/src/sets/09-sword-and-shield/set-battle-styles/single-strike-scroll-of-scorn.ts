@@ -16,30 +16,37 @@ import { AttackEffect } from '../../../game/store/effects/game-effects';
 
 export class SingleStrikeScrollOfScorn extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public regulationMark: string = 'E';
   public set: string = 'BST';
   public setNumber: string = '133';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Single Strike Scroll of Scorn';
   public fullName: string = 'Single Strike Scroll of Scorn BST';
-  public text: string = 'Attach a Pokémon Tool to 1 of your Pokémon that doesn\'t already have a Pokémon Tool attached. The Single Strike Pokémon this card is attached to can use the attack on this card. (You still need the necessary Energy to use this attack.) You may play any number of Item cards during your turn.';
+  public text: string =
+    "Attach a Pokémon Tool to 1 of your Pokémon that doesn't already have a Pokémon Tool attached. The Single Strike Pokémon this card is attached to can use the attack on this card. (You still need the necessary Energy to use this attack.) You may play any number of Item cards during your turn.";
 
-  public attacks: Attack[] = [{
-    name: 'Furious Anger',
-    cost: [CardType.FIGHTING],
-    damage: 10,
-    damageCalculation: '+',
-    text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
-  }];
+  public attacks: Attack[] = [
+    {
+      name: 'Furious Anger',
+      cost: [CardType.FIGHTING],
+      damage: 10,
+      damageCalculation: '+',
+      text: 'This attack does 10 more damage for each damage counter on this Pokémon.',
+    },
+  ];
 
   // Ref: set-battle-styles/rapid-strike-scroll-of-swirls.ts (tool attack pattern)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Add attack to Single Strike Pokemon that has this tool
-    if (effect instanceof CheckPokemonAttacksEffect && effect.player.active.getPokemonCard()?.tools.includes(this) &&
-      !effect.attacks.includes(this.attacks[0])) {
-
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
+    if (
+      effect instanceof CheckPokemonAttacksEffect &&
+      effect.player.active.getPokemonCard()?.tools.includes(this) &&
+      !effect.attacks.includes(this.attacks[0])
+    ) {
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+        return state;
+      }
 
       effect.attacks.push(this.attacks[0]);
     }
@@ -48,7 +55,11 @@ export class SingleStrikeScrollOfScorn extends TrainerCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
-      if (!player.active.cards.some(c => c instanceof PokemonCard && c.tags.includes(CardTag.SINGLE_STRIKE))) {
+      if (
+        !player.active.cards.some(
+          (c) => c instanceof PokemonCard && c.hasTag(CardTag.SINGLE_STRIKE),
+        )
+      ) {
         return state;
       }
 

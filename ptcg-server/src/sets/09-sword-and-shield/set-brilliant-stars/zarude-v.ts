@@ -10,9 +10,9 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class ZarudeV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 220;
   public weakness = [{ type: R }];
   public retreat = [C, C];
@@ -22,15 +22,15 @@ export class ZarudeV extends PokemonCard {
       name: 'Leap to Leap',
       cost: [G],
       damage: 30,
-      text: 'This attack also does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack also does 30 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Jungle Rage',
       cost: [G, G, C],
       damage: 120,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is a Pokémon V, this attack does 120 more damage.'
-    }
+      text: "If your opponent's Active Pokémon is a Pokémon V, this attack does 120 more damage.",
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -54,9 +54,12 @@ export class ZarudeV extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const defending = opponent.active.getPokemonCard();
-      if (defending && (defending.tags.includes(CardTag.POKEMON_V) ||
-        defending.tags.includes(CardTag.POKEMON_VMAX) ||
-        defending.tags.includes(CardTag.POKEMON_VSTAR))) {
+      if (
+        defending &&
+        (defending.hasTag(CardTag.POKEMON_V) ||
+          defending.hasTag(CardTag.POKEMON_VMAX) ||
+          defending.hasTag(CardTag.POKEMON_VSTAR))
+      ) {
         effect.damage += 120;
       }
     }

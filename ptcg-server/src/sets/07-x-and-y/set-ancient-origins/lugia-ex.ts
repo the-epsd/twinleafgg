@@ -7,12 +7,15 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED, DISCARD_A_STADIUM_CARD_IN_PLAY } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  DISCARD_A_STADIUM_CARD_IN_PLAY,
+} from '../../../game/store/prefabs/prefabs';
 
 export class LugiaEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 170;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
@@ -24,15 +27,15 @@ export class LugiaEx extends PokemonCard {
       cost: [C, C],
       damage: 20,
       damageCalculation: 'x',
-      text: 'This attack does 20 damage times the amount of Energy attached to both Active Pokémon.'
+      text: 'This attack does 20 damage times the amount of Energy attached to both Active Pokémon.',
     },
     {
       name: 'Deep Hurricane',
       cost: [C, C, C, C],
       damage: 80,
       damageCalculation: '+',
-      text: 'If there is any Stadium card in play, this attack does 70 more damage. Then, discard that Stadium card.'
-    }
+      text: 'If there is any Stadium card in play, this attack does 70 more damage. Then, discard that Stadium card.',
+    },
   ];
 
   public set: string = 'AOR';
@@ -50,13 +53,17 @@ export class LugiaEx extends PokemonCard {
 
       const playerProvidedEnergy = new CheckProvidedEnergyEffect(player);
       store.reduceEffect(state, playerProvidedEnergy);
-      const playerEnergyCount = playerProvidedEnergy.energyMap
-        .reduce((total, p) => total + p.provides.length, 0);
+      const playerEnergyCount = playerProvidedEnergy.energyMap.reduce(
+        (total, p) => total + p.provides.length,
+        0,
+      );
 
       const opponentProvidedEnergy = new CheckProvidedEnergyEffect(opponent);
       store.reduceEffect(state, opponentProvidedEnergy);
-      const opponentEnergyCount = opponentProvidedEnergy.energyMap
-        .reduce((total, p) => total + p.provides.length, 0);
+      const opponentEnergyCount = opponentProvidedEnergy.energyMap.reduce(
+        (total, p) => total + p.provides.length,
+        0,
+      );
 
       effect.damage = 20 * (playerEnergyCount + opponentEnergyCount);
     }

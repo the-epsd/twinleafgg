@@ -11,20 +11,22 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefabs/attack-effects';
 
 export class Sharpedo extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Carvanha';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: L }];
   public retreat = [];
 
-  public powers = [{
-    name: 'Rough Skin',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'If this Pokémon is your Active Pokémon and is damaged by an opponent\'s attack (even if this Pokémon is Knocked Out), put 2 damage counters on the Attacking Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Rough Skin',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: "If this Pokémon is your Active Pokémon and is damaged by an opponent's attack (even if this Pokémon is Knocked Out), put 2 damage counters on the Attacking Pokémon.",
+    },
+  ];
 
   public attacks = [
     {
@@ -32,8 +34,8 @@ export class Sharpedo extends PokemonCard {
       cost: [W, C],
       damage: 40,
       damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 more damage.'
-    }
+      text: 'Flip a coin. If heads, this attack does 20 more damage.',
+    },
   ];
 
   public set: string = 'PLS';

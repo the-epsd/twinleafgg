@@ -12,7 +12,7 @@ export class Bisharp extends PokemonCard {
 
   public evolvesFrom = 'Pawniard';
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp: number = 120;
 

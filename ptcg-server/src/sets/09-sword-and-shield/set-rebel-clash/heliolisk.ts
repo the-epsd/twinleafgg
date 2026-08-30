@@ -12,27 +12,25 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF }
 export class Heliolisk extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Helioptile';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 110;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Eerie Impulse',
-      cost: [L],
-      damage: 0,
-      text: 'Flip a coin. If heads, discard an Energy from 1 of your opponent\'s Pokémon.'
-    },
-    {
-      name: 'Thunder',
-      cost: [L, C],
-      damage: 120,
-      text: 'This Pokémon also does 30 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Eerie Impulse',
+    cost: [L],
+    damage: 0,
+    text: 'Flip a coin. If heads, discard an Energy from 1 of your opponent\'s Pokémon.'
+  }, {
+    name: 'Thunder',
+    cost: [L, C],
+    damage: 120,
+    text: 'This Pokémon also does 30 damage to itself.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'RCL';
   public setNumber: string = '64';
   public cardImage: string = 'assets/cardback.png';

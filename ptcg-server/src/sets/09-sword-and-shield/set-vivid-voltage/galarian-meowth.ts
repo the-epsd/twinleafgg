@@ -10,29 +10,27 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 
 export class GalarianMeowth extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Scratch',
-      cost: [M],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Fury Swipes',
-      cost: [M, C],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 20 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Scratch',
+    cost: [M],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Fury Swipes',
+    cost: [M, C],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 20 damage for each heads.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'VIV';
   public setNumber: string = '112';
   public cardImage: string = 'assets/cardback.png';

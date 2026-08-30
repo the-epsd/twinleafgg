@@ -5,9 +5,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class RayquazaEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 170;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
@@ -19,12 +19,13 @@ export class RayquazaEx extends PokemonCard {
       cost: [C],
       damage: 10,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is a Pokémon-EX, this attack does 50 more damage.'
-    }, {
+      text: "If your opponent's Active Pokémon is a Pokémon-EX, this attack does 50 more damage.",
+    },
+    {
       name: 'Dragon Pulse',
       cost: [C, C, C],
       damage: 100,
-      text: 'Discard the top 3 cards of your deck.'
+      text: 'Discard the top 3 cards of your deck.',
     },
   ];
 
@@ -37,7 +38,9 @@ export class RayquazaEx extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Intensifying Burn
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      if (effect.opponent.active.getPokemonCard()?.tags.includes(CardTag.POKEMON_EX)) { effect.damage += 50; }
+      if (effect.opponent.active.getPokemonCard()?.hasTag(CardTag.POKEMON_EX)) {
+        effect.damage += 50;
+      }
     }
 
     // Dragon Pulse
@@ -47,5 +50,4 @@ export class RayquazaEx extends PokemonCard {
 
     return state;
   }
-
 }

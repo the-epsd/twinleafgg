@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Scizor extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Scyther';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
@@ -24,14 +24,14 @@ export class Scizor extends PokemonCard {
       name: 'Steel Slash',
       cost: [C, C],
       damage: 40,
-      text: 'During your opponent\'s next turn, prevent all damage done to this Pokémon by attacks from Pokémon-EX.'
+      text: "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Pokémon-EX.",
     },
     {
       name: 'Slashing Strike',
       cost: [M, C, C],
       damage: 100,
-      text: 'This Pokémon can\'t use Slashing Strike during your next turn.'
-    }
+      text: "This Pokémon can't use Slashing Strike during your next turn.",
+    },
   ];
 
   public set: string = 'BCR';
@@ -52,17 +52,23 @@ export class Scizor extends PokemonCard {
       opponent.marker.addMarker(this.CLEAR_STEEL_SLASH_MARKER, this);
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.marker.hasMarker(this.STEEL_SLASH_MARKER, this)) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.marker.hasMarker(this.STEEL_SLASH_MARKER, this)
+    ) {
       const sourceCard = effect.source.getPokemonCard();
-      if (sourceCard?.tags.includes(CardTag.POKEMON_EX)) {
+      if (sourceCard?.hasTag(CardTag.POKEMON_EX)) {
         effect.preventDefault = true;
       }
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_STEEL_SLASH_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_STEEL_SLASH_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_STEEL_SLASH_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         cardList.marker.removeMarker(this.STEEL_SLASH_MARKER, this);
       });
     }

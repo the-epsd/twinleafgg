@@ -3,14 +3,16 @@ import { TrainerType, CardTag, CardType } from '../../../game/store/card/card-ty
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
+import {
+  CheckAttackCostEffect,
+  CheckProvidedEnergyEffect,
+} from '../../../game/store/effects/check-effects';
 import { ToolEffect } from '../../../game/store/effects/play-card-effects';
 
 export class SparklingCrystal extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.TOOL;
 
-  public tags = [CardTag.ACE_SPEC];
+  protected _tags = [CardTag.ACE_SPEC];
 
   public set: string = 'SCR';
 
@@ -28,7 +30,6 @@ export class SparklingCrystal extends TrainerCard {
     'When the Tera Pokémon this card is attached to uses an attack, that attack costs 1 Energy less. (The Energy can be of any type.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof CheckAttackCostEffect && effect.player.active.tools.includes(this)) {
       const pokemonCard = effect.player.active.getPokemonCard();
 
@@ -40,11 +41,11 @@ export class SparklingCrystal extends TrainerCard {
         return state;
       }
 
-      if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_TERA)) {
+      if (pokemonCard && pokemonCard.hasTag(CardTag.POKEMON_TERA)) {
         const checkEnergy = new CheckProvidedEnergyEffect(effect.player);
         store.reduceEffect(state, checkEnergy);
 
-        const availableEnergy = [...checkEnergy.energyMap.flatMap(e => e.provides)];
+        const availableEnergy = [...checkEnergy.energyMap.flatMap((e) => e.provides)];
 
         if (effect.cost.length > 0) {
           // A list of matched energies (one entry per printed cost slot we can cover).

@@ -6,12 +6,19 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, GameError, GameMessage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  USE_ABILITY_ONCE_PER_TURN,
+  ABILITY_USED,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  SWITCH_ACTIVE_WITH_BENCHED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Drifblim extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Drifloon';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 100;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -20 }];
@@ -19,20 +26,22 @@ export class Drifblim extends PokemonCard {
 
   public readonly TAG_TRANSPORT_MARKER = 'DRIFBLIM_UNM_TAG_TRANSPORT_MARKER';
 
-  public powers = [{
-    name: 'Tag Transport',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), you may switch your Active TAG TEAM Pokémon with 1 of your Benched Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Tag Transport',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn (before your attack), you may switch your Active TAG TEAM Pokémon with 1 of your Benched Pokémon.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Spinning Attack',
       cost: [C, C, C],
       damage: 70,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'UNM';
@@ -53,12 +62,12 @@ export class Drifblim extends PokemonCard {
 
       // Check that active is a TAG TEAM Pokemon
       const activePokemon = player.active.getPokemonCard();
-      if (!activePokemon || !activePokemon.tags.includes(CardTag.TAG_TEAM)) {
+      if (!activePokemon || !activePokemon.hasTag(CardTag.TAG_TEAM)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       // Check that there are benched Pokemon
-      if (!player.bench.some(b => b.cards.length > 0)) {
+      if (!player.bench.some((b) => b.cards.length > 0)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 

@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameMessage } from '../../../game';
+import { StoreLike, State, GameMessage, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
@@ -18,7 +18,7 @@ function* useFamilyRescue(
   const blocked: number[] = [];
   let psychicCount = 0;
   player.discard.cards.forEach((c, idx) => {
-    if (c instanceof PokemonCard && c.cardType === CardType.PSYCHIC) {
+    if (c instanceof PokemonCard && pokemonHasCardType(c, CardType.PSYCHIC)) {
       psychicCount++;
     } else {
       blocked.push(idx);
@@ -56,7 +56,7 @@ function* useFamilyRescue(
 export class Nidorina extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Nidoran ♀';
-  public cardType = P;
+  public cardType: CardType[] = [P];
   public hp = 90;
   public weakness = [{ type: P }];
   public resistance = [];

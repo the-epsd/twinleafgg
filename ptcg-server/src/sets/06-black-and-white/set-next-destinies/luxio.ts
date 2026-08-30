@@ -7,26 +7,23 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF }
 export class Luxio extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Shinx';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Jump On',
-      cost: [L],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 30 more damage.'
-    },
-    {
-      name: 'Wild Charge',
-      cost: [L, C, C],
-      damage: 60,
-      text: 'This Pokémon does 10 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Jump On',
+    cost: [L],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 30 more damage.'
+  }, {
+    name: 'Wild Charge',
+    cost: [L, C, C],
+    damage: 60,
+    text: 'This Pokémon does 10 damage to itself.'
+  }];
 
   public set: string = 'NXD';
   public setNumber: string = '44';

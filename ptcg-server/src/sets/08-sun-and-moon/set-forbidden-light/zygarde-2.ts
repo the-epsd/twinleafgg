@@ -9,26 +9,23 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Zygarde2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 130;
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Glare',
-      cost: [C, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Calm Strike',
-      cost: [F, C, C],
-      damage: 60,
-      damageCalculation: '+',
-      text: 'If you have used your GX attack, this attack does 60 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Glare',
+    cost: [C, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Calm Strike',
+    cost: [F, C, C],
+    damage: 60,
+    damageCalculation: '+',
+    text: 'If you have used your GX attack, this attack does 60 more damage.'
+  }];
 
   public set: string = 'FLI';
   public setNumber: string = '72';

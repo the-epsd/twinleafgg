@@ -10,26 +10,23 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 
 export class Dratini extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 50;
   public weakness = [{ type: Y }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Hook',
-      cost: [G],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Slam',
-      cost: [L, C],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Hook',
+    cost: [G],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Slam',
+    cost: [L, C],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
+  }];
 
   public set: string = 'ROS';
   public setNumber: string = '49';

@@ -12,7 +12,7 @@ import { IS_ABILITY_BLOCKED, JUST_EVOLVED, COIN_FLIP_PROMPT, ADD_PARALYZED_TO_PL
 export class Servine extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Snivy';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public retreat = [C];
@@ -23,14 +23,12 @@ export class Servine extends PokemonCard {
     text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon, you may flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
   }];
 
-  public attacks = [
-    {
-      name: 'Vine Whip',
-      cost: [G],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Vine Whip',
+    cost: [G],
+    damage: 20,
+    text: ''
+  }];
 
   public set: string = 'FCO';
   public setNumber: string = '6';

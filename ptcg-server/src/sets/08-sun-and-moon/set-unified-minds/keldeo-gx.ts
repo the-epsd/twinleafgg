@@ -1,24 +1,39 @@
-import { CardTag, CardType, PokemonCard, PowerType, Stage, State, StateUtils, StoreLike } from '../../../game';
+import {
+  CardTag,
+  CardType,
+  PokemonCard,
+  PowerType,
+  Stage,
+  State,
+  StateUtils,
+  StoreLike,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
-import { AbstractAttackEffect, AfterDamageEffect, ApplyWeaknessEffect } from '../../../game/store/effects/attack-effects';
+import {
+  AbstractAttackEffect,
+  AfterDamageEffect,
+  ApplyWeaknessEffect,
+} from '../../../game/store/effects/attack-effects';
 import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class KeldeoGX extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_GX];
-  public cardType: CardType = W;
+  protected _tags = [CardTag.POKEMON_GX];
+  public cardType: CardType[] = [W];
   public hp: number = 170;
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Pure Heart',
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all effects of attacks, including damage, done to this Pokemon ' +
-      'by your opponent\'s Pokemon-GX or Pokemon-EX.'
-  }];
+  public powers = [
+    {
+      name: 'Pure Heart',
+      powerType: PowerType.ABILITY,
+      text:
+        'Prevent all effects of attacks, including damage, done to this Pokemon ' +
+        "by your opponent's Pokemon-GX or Pokemon-EX.",
+    },
+  ];
 
   public attacks = [
     {
@@ -26,14 +41,15 @@ export class KeldeoGX extends PokemonCard {
       cost: [W, W, C],
       damage: 110,
       shredAttack: true,
-      text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokemon.'
+      text: "This attack's damage isn't affected by any effects on your opponent's Active Pokemon.",
     },
     {
       name: 'Resolute Blade-GX',
       cost: [W, W, C],
       damage: 0,
-      text: 'This attack does 50 damage for each of your opponent\'s Benched Pokemon. ' +
-        '(You can\'t use more than 1 GX attack in a game.)'
+      text:
+        "This attack does 50 damage for each of your opponent's Benched Pokemon. " +
+        "(You can't use more than 1 GX attack in a game.)",
     },
   ];
 
@@ -48,11 +64,14 @@ export class KeldeoGX extends PokemonCard {
     if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
       const pokemonCard = effect.target.getPokemonCard();
       const sourceCard = effect.source.getPokemonCard();
-      if (pokemonCard !== this) { return state; }
+      if (pokemonCard !== this) {
+        return state;
+      }
 
-      if (sourceCard &&
-        (sourceCard.tags.includes(CardTag.POKEMON_EX) ||
-          sourceCard.tags.includes(CardTag.POKEMON_GX))) {
+      if (
+        sourceCard &&
+        (sourceCard.hasTag(CardTag.POKEMON_EX) || sourceCard.hasTag(CardTag.POKEMON_GX))
+      ) {
         try {
           const player = StateUtils.findOwner(state, effect.target);
           const powerEffect = new PowerEffect(player, this.powers[0], this);
@@ -91,7 +110,7 @@ export class KeldeoGX extends PokemonCard {
       BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
       let benchCount = 0;
-      opponent.bench.forEach(b => benchCount += b.cards.length > 0 ? 1 : 0);
+      opponent.bench.forEach((b) => (benchCount += b.cards.length > 0 ? 1 : 0));
       effect.damage = 50 * benchCount;
     }
 

@@ -7,24 +7,25 @@ import { AfterDamageEffect, PutDamageEffect } from '../../../game/store/effects/
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class CornerstoneMaskOgerponex extends PokemonCard {
-
   public stage = Stage.BASIC;
 
-  public cardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp = 210;
 
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
   public weakness = [{ type: CardType.GRASS }];
 
   public retreat = [CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Cornerstone Stance',
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all damage from attacks done to this Pokémon by your opponent\'s Pokémon that have an Ability.'
-  }];
+  public powers = [
+    {
+      name: 'Cornerstone Stance',
+      powerType: PowerType.ABILITY,
+      text: "Prevent all damage from attacks done to this Pokémon by your opponent's Pokémon that have an Ability.",
+    },
+  ];
 
   public attacks = [
     {
@@ -32,8 +33,8 @@ export class CornerstoneMaskOgerponex extends PokemonCard {
       cost: [CardType.FIGHTING, CardType.COLORLESS, CardType.COLORLESS],
       damage: 140,
       shredAttack: true,
-      text: 'This attack\'s damage isn\'t affected by Weakness or Resistance, or by any effects on your opponent\'s Active Pokémon.'
-    }
+      text: "This attack's damage isn't affected by Weakness or Resistance, or by any effects on your opponent's Active Pokémon.",
+    },
   ];
 
   public set = 'TWM';
@@ -49,7 +50,6 @@ export class CornerstoneMaskOgerponex extends PokemonCard {
   public fullName = 'Cornerstone Mask Ogerpon ex TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -86,14 +86,17 @@ export class CornerstoneMaskOgerponex extends PokemonCard {
       }
 
       if (sourceCard.powers.length > 0) {
-
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
+          const stub = new PowerEffect(
+            player,
+            {
+              name: 'test',
+              powerType: PowerType.ABILITY,
+              text: '',
+            },
+            this,
+          );
           store.reduceEffect(state, stub);
         } catch {
           return state;
@@ -103,7 +106,11 @@ export class CornerstoneMaskOgerponex extends PokemonCard {
       }
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

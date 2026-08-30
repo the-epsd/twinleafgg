@@ -11,25 +11,22 @@ import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/ga
 
 export class Exeggcute extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 40;
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Loathe',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, switch this Pokémon with 1 of your Benched Pokémon.'
-    },
-    {
-      name: 'Ram',
-      cost: [G],
-      damage: 10,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Loathe',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, switch this Pokémon with 1 of your Benched Pokémon.'
+  }, {
+    name: 'Ram',
+    cost: [G],
+    damage: 10,
+    text: ''
+  }];
 
   public set: string = 'ROS';
   public setNumber: string = '1';
@@ -38,6 +35,7 @@ export class Exeggcute extends PokemonCard {
   public fullName: string = 'Exeggcute ROS';
 
   public usedLoathe = false;
+
   public loatheHeads = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

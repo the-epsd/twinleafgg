@@ -6,25 +6,22 @@ import { State, StoreLike } from '../../../game';
 export class Metang extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Beldum';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 90;
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Psy Bolt',
-      cost: [P],
-      damage: 10,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Psypunch',
-      cost: [P, C, C],
-      damage: 50,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Psy Bolt',
+    cost: [P],
+    damage: 10,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Psypunch',
+    cost: [P, C, C],
+    damage: 50,
+    text: ''
+  }];
 
   public set: string = 'PLF';
   public setNumber: string = '51';

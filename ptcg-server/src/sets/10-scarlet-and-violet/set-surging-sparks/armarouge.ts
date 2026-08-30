@@ -9,7 +9,7 @@ import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../
 export class Armarouge extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Charcadet';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 140;
   public weakness = [{ type: W }];
   public retreat = [C, C];

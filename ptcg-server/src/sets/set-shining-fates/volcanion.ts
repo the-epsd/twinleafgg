@@ -10,28 +10,26 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/pr
 
 export class Volcanion extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 130;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Hammer In',
-      cost: [W, C],
-      damage: 50,
-      text: ''
-    },
-    {
-      name: 'Dynamite Steam',
-      cost: [W, W, W, C],
-      damage: 120,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 120 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Hammer In',
+    cost: [W, C],
+    damage: 50,
+    text: ''
+  }, {
+    name: 'Dynamite Steam',
+    cost: [W, W, W, C],
+    damage: 120,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 120 damage for each heads.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'SHF';
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';

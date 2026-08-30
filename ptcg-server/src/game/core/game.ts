@@ -17,7 +17,12 @@ import { AppendLogAction } from '../store/actions/append-log-action';
 import { ChangeAvatarAction } from '../store/actions/change-avatar-action';
 import { Format } from '../store/card/card-types';
 import { CheckHpEffect } from '../store/effects/check-effects';
+import { ShuffleDeckPrompt } from '../store/prompts/shuffle-prompt';
 import { logger } from '../../utils/logger';
+
+function getBroadcaster(): typeof import('../../backend/socket/game-state-broadcaster') {
+  return require('../../backend/socket/game-state-broadcaster');
+}
 
 export interface DisconnectedPlayer {
   clientId: number;
@@ -40,6 +45,8 @@ export class Game implements StoreHandler {
   private lastActivity: number = Date.now();
   public format: Format = Format.STANDARD;
   private periodicSyncRef: NodeJS.Timeout | undefined;
+  private lastStateEmitAt: number = 0;
+  private readonly periodicSyncIntervalMs: number = 15000;
 
   // Reconnection-related properties
   private disconnectedPlayers: Map<number, DisconnectedPlayer> = new Map();
@@ -86,11 +93,7 @@ export class Game implements StoreHandler {
     }
     this.store.cleanup();
     this.arbiter.cleanup();
-
-    // Clear all disconnection timeouts
     this.clearAllDisconnectionTimeouts();
-
-    // Clear disconnected players tracking
     this.disconnectedPlayers.clear();
     this.isPaused = false;
     this.userIdToPlayerId.clear();
@@ -123,20 +126,28 @@ export class Game implements StoreHandler {
     }
 
     this.updateIsTimeRunning(state);
-
-    // Check if a player was added to the game
     const playerAdded = state.players.length > this.previousPlayerCount;
     this.previousPlayerCount = state.players.length;
+    this.setBonusHps(state);
 
-    // Notify clients that are in this game
-    this.clients.forEach(c => {
-      if (typeof c.onStateChange === 'function') {
+    const { GameStateBroadcaster, isSocketClient } = getBroadcaster();
+    const socketClients: Client[] = [];
+    for (const c of this.clients) {
+      if (isSocketClient(c)) {
+        socketClients.push(c);
+      } else if (typeof c.onStateChange === 'function') {
         c.onStateChange(this, state);
       }
-    });
+    }
 
-    // If a player was added, also notify all clients so that other browser windows
-    // of the same user can receive the game info update and auto-join
+    if (socketClients.length > 0) {
+      GameStateBroadcaster.broadcast(this, state);
+      for (const c of socketClients) {
+        c.onStateChange(this, state);
+      }
+    }
+    this.lastStateEmitAt = Date.now();
+
     if (playerAdded) {
       this.core.emit(c => {
         if (typeof c.onStateChange === 'function') {
@@ -145,7 +156,6 @@ export class Game implements StoreHandler {
       });
     }
 
-    // Clean up all disconnection timeouts if game is finished
     if (state.phase === GamePhase.FINISHED) {
       this.clearAllDisconnectionTimeouts();
     }
@@ -161,18 +171,21 @@ export class Game implements StoreHandler {
     if (state.phase === GamePhase.FINISHED) {
       this.stopTimer();
       this.stopPeriodicSync();
+      GameStateBroadcaster.clearGame(this.id);
       this.core.deleteGame(this);
     }
   }
 
   private handleArbiterPrompts(state: State): boolean {
     let resolved: { id: number, action: ResolvePromptAction } | undefined;
+    let resolvedPrompt = undefined as (typeof state.prompts)[number] | undefined;
     const unresolved = state.prompts.filter(item => item.result === undefined);
 
     for (let i = 0; i < unresolved.length; i++) {
       const action = this.arbiter.resolvePrompt(state, unresolved[i]);
       if (action !== undefined) {
         resolved = { id: unresolved[i].id, action };
+        resolvedPrompt = unresolved[i];
         break;
       }
     }
@@ -181,8 +194,20 @@ export class Game implements StoreHandler {
       return false;
     }
 
+    if (resolvedPrompt instanceof ShuffleDeckPrompt) {
+      this.emitDeckShuffle(resolvedPrompt.getPerspectivePlayerId());
+    }
+
     this.store.dispatch(resolved.action);
     return true;
+  }
+
+  private emitDeckShuffle(playerId: number): void {
+    this.core.emit((c: any) => {
+      if (typeof c.socket !== 'undefined') {
+        c.socket.emit(`game[${this.id}]:deckShuffle`, { playerId });
+      }
+    });
   }
 
   public dispatch(client: Client, action: Action): State {
@@ -213,7 +238,6 @@ export class Game implements StoreHandler {
 
     const player = state.players.find(p => p.id === client.id);
     if (player !== undefined) {
-      // Instead of immediately aborting, handle as disconnection for reconnection system
       this.handlePlayerDisconnection(client);
     }
   }
@@ -235,7 +259,6 @@ export class Game implements StoreHandler {
     return this.userIdToPlayerId.get(userId);
   }
 
-  /** Returns user ids of all players in this game (for GameInfo.playerUserIds). */
   public getPlayerUserIds(): number[] {
     return Array.from(this.userIdToPlayerId.keys());
   }
@@ -248,9 +271,6 @@ export class Game implements StoreHandler {
     return this.gameSettings.selfPlay === true && this.selfPlayUserId === userId;
   }
 
-  /**
-   * Handle player disconnection - preserve state and notify other players
-   */
   public handlePlayerDisconnection(client: Client): void {
     const state = this.store.state;
 
@@ -282,7 +302,6 @@ export class Game implements StoreHandler {
     const playerStats = this.playerStats.find(p => p.clientId === client.id);
     const wasActivePlayer = state.activePlayer !== undefined && state.players[state.activePlayer]?.id === client.id;
 
-    // Store disconnection info
     const disconnectedPlayer: DisconnectedPlayer = {
       clientId: client.id,
       disconnectedAt: Date.now(),
@@ -291,23 +310,17 @@ export class Game implements StoreHandler {
     };
 
     this.disconnectedPlayers.set(client.id, disconnectedPlayer);
-
-    // Remove client from active clients list but keep in playerStats
     this.clients = this.clients.filter(c => c.id !== client.id);
 
-    // Pause game if the disconnected player was the active player
     if (wasActivePlayer && !this.isPaused) {
       this.pauseGame();
     }
 
-    // Clear any existing timeout for this client before creating a new one
-    // This prevents memory leaks if handlePlayerDisconnection is called multiple times
     const existingTimeout = this.disconnectionTimeouts.get(client.id);
     if (existingTimeout) {
       clearTimeout(existingTimeout);
     }
 
-    // Schedule auto-forfeit timer (configurable, default 60s)
     const disconnectForfeitMs = this.core.getReconnectionManager().getCurrentConfig().disconnectForfeitMs ?? 60 * 1000;
     const timeout = setTimeout(() => {
       if (this.disconnectedPlayers.has(client.id) && this.state.phase !== GamePhase.FINISHED) {
@@ -318,15 +331,11 @@ export class Game implements StoreHandler {
 
     this.disconnectionTimeouts.set(client.id, timeout);
 
-    // Notify other players of disconnection
     this.notifyPlayersOfDisconnection(client);
 
     logger.log(`Player disconnected from game: gameId=${this.id}, playerId=${client.id}, playerName=${client.name}, wasActivePlayer=${wasActivePlayer}, gamePhase=${state.phase}`);
   }
 
-  /**
-   * Handle player reconnection - restore state and resume game
-   */
   public handlePlayerReconnection(client: Client): boolean {
     const disconnectedPlayer = this.disconnectedPlayers.get(client.id);
 
@@ -338,9 +347,7 @@ export class Game implements StoreHandler {
     const state = this.store.state;
 
     if (state.phase === GamePhase.FINISHED) {
-      // Game ended while player was disconnected
       this.disconnectedPlayers.delete(client.id);
-      // Clean up timeout if it exists
       const timeout = this.disconnectionTimeouts.get(client.id);
       if (timeout) {
         clearTimeout(timeout);
@@ -349,20 +356,16 @@ export class Game implements StoreHandler {
       return false;
     }
 
-    // Cancel auto-forfeit timeout if player reconnects before 15 seconds
     const timeout = this.disconnectionTimeouts.get(client.id);
     if (timeout) {
       clearTimeout(timeout);
       this.disconnectionTimeouts.delete(client.id);
     }
 
-    // Add client back to active clients
     this.clients.push(client);
 
-    // Restore player's time (accounting for time passed while disconnected)
     const playerStats = this.playerStats.find(p => p.clientId === client.id);
     if (playerStats) {
-      // If game was paused, restore original time; otherwise account for time passed
       if (this.isPaused) {
         playerStats.timeLeft = disconnectedPlayer.timeLeftWhenDisconnected;
       } else {
@@ -371,18 +374,12 @@ export class Game implements StoreHandler {
       }
     }
 
-    // Resume game if it was paused due to this player's disconnection
     if (this.isPaused && disconnectedPlayer.wasActivePlayer) {
       this.resumeGame();
     }
 
-    // Remove from disconnected players
     this.disconnectedPlayers.delete(client.id);
-
-    // Synchronize client with current game state
     this.synchronizeReconnectedPlayer(client);
-
-    // Notify other players of reconnection
     this.notifyPlayersOfReconnection(client);
 
     const disconnectionDuration = Date.now() - disconnectedPlayer.disconnectedAt;
@@ -391,24 +388,15 @@ export class Game implements StoreHandler {
     return true;
   }
 
-  /**
-   * Synchronize reconnected player with current game state
-   */
   private synchronizeReconnectedPlayer(client: Client): void {
-    // Send current state to reconnected client
     if (typeof client.onStateChange === 'function') {
       client.onStateChange(this, this.store.state);
     }
-
-    // Send current timer state
     if (typeof client.onTimerUpdate === 'function') {
       client.onTimerUpdate(this, this.playerStats);
     }
   }
 
-  /**
-   * Pause the game due to player disconnection
-   */
   private pauseGame(): void {
     if (this.isPaused) {
       return;
@@ -416,16 +404,11 @@ export class Game implements StoreHandler {
 
     this.isPaused = true;
     this.pausedAt = Date.now();
-
-    // Stop timer while paused
     this.stopTimer();
 
     logger.log(`Game paused due to player disconnection: gameId=${this.id}, gamePhase=${this.store.state.phase}`);
   }
 
-  /**
-   * Resume the game after player reconnection
-   */
   private resumeGame(): void {
     if (!this.isPaused) {
       return;
@@ -433,8 +416,6 @@ export class Game implements StoreHandler {
 
     this.isPaused = false;
     const pauseDuration = Date.now() - this.pausedAt;
-
-    // Restart timer
     if (this.store.state.phase !== GamePhase.FINISHED) {
       this.startTimer();
     }
@@ -442,65 +423,40 @@ export class Game implements StoreHandler {
     logger.log(`Game resumed after player reconnection: gameId=${this.id}, pauseDuration=${pauseDuration}, gamePhase=${this.store.state.phase}`);
   }
 
-  /**
-   * Notify other players of a disconnection
-   */
   private notifyPlayersOfDisconnection(disconnectedClient: Client): void {
     this.clients.forEach(client => {
       if (client.id !== disconnectedClient.id && typeof client.onPlayerDisconnected === 'function') {
         client.onPlayerDisconnected(this, disconnectedClient);
       }
     });
-
-    // Also send connection status update to all players
     this.notifyConnectionStatusUpdate();
   }
 
-  /**
-   * Notify other players of a reconnection
-   */
   private notifyPlayersOfReconnection(reconnectedClient: Client): void {
     this.clients.forEach(client => {
       if (client.id !== reconnectedClient.id && typeof client.onPlayerReconnected === 'function') {
         client.onPlayerReconnected(this, reconnectedClient);
       }
     });
-
-    // Also send connection status update to all players
     this.notifyConnectionStatusUpdate();
   }
 
-  /**
-   * Check if a player is currently disconnected
-   */
   public isPlayerDisconnected(clientId: number): boolean {
     return this.disconnectedPlayers.has(clientId);
   }
 
-  /**
-   * Get disconnected player info
-   */
   public getDisconnectedPlayerInfo(clientId: number): DisconnectedPlayer | undefined {
     return this.disconnectedPlayers.get(clientId);
   }
 
-  /**
-   * Get all disconnected players
-   */
   public getDisconnectedPlayers(): DisconnectedPlayer[] {
     return Array.from(this.disconnectedPlayers.values());
   }
 
-  /**
-   * Check if game is paused due to disconnections
-   */
   public isPausedForDisconnection(): boolean {
     return this.isPaused;
   }
 
-  /**
-   * Force abort game for players who exceed reconnection timeout
-   */
   public handleReconnectionTimeout(clientId: number): void {
     const disconnectedPlayer = this.disconnectedPlayers.get(clientId);
 
@@ -510,35 +466,24 @@ export class Game implements StoreHandler {
 
     const playerStats = this.playerStats.find(p => p.clientId === clientId);
     const playerName = playerStats ? this.state.players.find(p => p.id === clientId)?.name || 'Unknown' : 'Unknown';
-
-    // Notify other players about the timeout
     this.notifyPlayersOfReconnectionTimeout(clientId, playerName);
-
-    // Remove from disconnected players
     this.disconnectedPlayers.delete(clientId);
-
-    // Remove timeout reference (should already be cleaned up, but ensure it's gone)
     const timeout = this.disconnectionTimeouts.get(clientId);
     if (timeout) {
       clearTimeout(timeout);
       this.disconnectionTimeouts.delete(clientId);
     }
 
-    // Resume game if it was paused for this player
     if (this.isPaused && disconnectedPlayer.wasActivePlayer) {
       this.resumeGame();
     }
 
-    // Abort game for the disconnected player
     const action = new AbortGameAction(clientId, AbortGameReason.DISCONNECTED);
     this.store.dispatch(action);
 
     logger.log(`Player reconnection timeout - game aborted: gameId=${this.id}, playerId=${clientId}, disconnectionDuration=${Date.now() - disconnectedPlayer.disconnectedAt}`);
   }
 
-  /**
-   * Clear all disconnection timeouts
-   */
   private clearAllDisconnectionTimeouts(): void {
     for (const timeout of this.disconnectionTimeouts.values()) {
       clearTimeout(timeout);
@@ -546,9 +491,6 @@ export class Game implements StoreHandler {
     this.disconnectionTimeouts.clear();
   }
 
-  /**
-   * Get connection status for all players in the game
-   */
   public getConnectionStatuses(): Array<{ playerId: number, playerName: string, isConnected: boolean, disconnectedAt?: number }> {
     const statuses: Array<{ playerId: number, playerName: string, isConnected: boolean, disconnectedAt?: number }> = [];
 
@@ -567,9 +509,6 @@ export class Game implements StoreHandler {
     return statuses;
   }
 
-  /**
-   * Notify players about connection status updates
-   */
   public notifyConnectionStatusUpdate(): void {
     const connectionStatuses = this.getConnectionStatuses();
 
@@ -580,9 +519,6 @@ export class Game implements StoreHandler {
     });
   }
 
-  /**
-   * Notify players about reconnection timeout
-   */
   private notifyPlayersOfReconnectionTimeout(playerId: number, playerName: string): void {
     this.clients.forEach(client => {
       if (typeof (client as any).onReconnectionTimeout === 'function') {
@@ -591,9 +527,6 @@ export class Game implements StoreHandler {
     });
   }
 
-  /**
-   * Send timeout warning to disconnected player (if they reconnect)
-   */
   public sendTimeoutWarning(clientId: number, timeRemaining: number): void {
     const client = this.clients.find(c => c.id === clientId);
     if (client && typeof (client as any).onTimeoutWarning === 'function') {
@@ -642,7 +575,6 @@ export class Game implements StoreHandler {
       return state;
     }
 
-    // Action dispatched not by the player
     const isPlayer = state.players.some(p => p.id === playerId);
     if (isPlayer === false) {
       return state;
@@ -681,10 +613,6 @@ export class Game implements StoreHandler {
     });
   }
 
-  /**
-   * Returns playerIds that needs to make a move.
-   * Used to calculate their time left.
-   */
   private getTimeRunningPlayers(state: State): number[] {
     if (state.phase === GamePhase.WAITING_FOR_PLAYERS) {
       return [];
@@ -712,24 +640,20 @@ export class Game implements StoreHandler {
   private startTimer() {
     const intervalDelay = 1000; // 1 second
 
-    // Game time is set to unlimited
     if (this.gameSettings.timeLimit === 0) {
       return;
     }
 
-    // Don't start timer if game is paused
     if (this.isPaused) {
       return;
     }
 
     this.timeoutRef = setInterval(() => {
-      // Don't decrement time if game is paused
       if (this.isPaused) {
         return;
       }
 
       for (const stats of this.playerStats) {
-        // Only decrement time for connected players who are actively playing
         const isDisconnected = this.isPlayerDisconnected(stats.clientId);
 
         if (stats.isTimeRunning && !isDisconnected) {
@@ -742,7 +666,6 @@ export class Game implements StoreHandler {
         }
       }
 
-      // Emit timer update to all connected clients
       this.clients.forEach(client => {
         if (typeof client.onTimerUpdate === 'function') {
           client.onTimerUpdate(this, this.playerStats);
@@ -760,13 +683,12 @@ export class Game implements StoreHandler {
 
   private startPeriodicSync() {
     this.periodicSyncRef = setInterval(() => {
-      // Only notify clients that are actually in this game
-      this.clients.forEach(c => {
-        if (typeof c.onStateChange === 'function') {
-          c.onStateChange(this, this.state);
-        }
-      });
-    }, 5000);
+      if (Date.now() - this.lastStateEmitAt < this.periodicSyncIntervalMs) {
+        return;
+      }
+      getBroadcaster().GameStateBroadcaster.broadcast(this, this.state, { forceFull: true });
+      this.lastStateEmitAt = Date.now();
+    }, this.periodicSyncIntervalMs);
   }
 
   private stopPeriodicSync() {

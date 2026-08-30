@@ -7,10 +7,8 @@ import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
 import { StateUtils } from '../../../game/store/state-utils';
 import { IS_TOOL_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
-
 export class RockGuard extends TrainerCard {
-
-  public tags = [CardTag.ACE_SPEC];
+  protected _tags = [CardTag.ACE_SPEC];
 
   public trainerType: TrainerType = TrainerType.TOOL;
 
@@ -26,7 +24,7 @@ export class RockGuard extends TrainerCard {
 
   public text: string =
     'If the Pokemon this card is attached to is your Active Pokemon and is ' +
-    'damaged by an opponent\'s attack (even if that Pokemon is Knocked Out), ' +
+    "damaged by an opponent's attack (even if that Pokemon is Knocked Out), " +
     'put 6 damage counters on the Attacking Pokemon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -38,7 +36,9 @@ export class RockGuard extends TrainerCard {
         return state;
       }
 
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+        return state;
+      }
 
       if (state.phase === GamePhase.ATTACK) {
         effect.source.damage += 60;
@@ -47,5 +47,4 @@ export class RockGuard extends TrainerCard {
 
     return state;
   }
-
 }

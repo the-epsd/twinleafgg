@@ -12,25 +12,22 @@ import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/s
 export class Floatzel extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Buizel';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Rescue',
-      cost: [C],
-      damage: 0,
-      text: 'Shuffle 3 Pok\u00e9mon from your discard pile into your deck.'
-    },
-    {
-      name: 'Screw Tail',
-      cost: [W, W],
-      damage: 30,
-      text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pok\u00e9mon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Rescue',
+    cost: [C],
+    damage: 0,
+    text: 'Shuffle 3 Pok\u00e9mon from your discard pile into your deck.'
+  }, {
+    name: 'Screw Tail',
+    cost: [W, W],
+    damage: 30,
+    text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pok\u00e9mon.'
+  }];
 
   public set: string = 'FLF';
   public setNumber: string = '29';

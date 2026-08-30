@@ -11,7 +11,7 @@ import { IS_ABILITY_BLOCKED, CAN_EVOLVE_ON_FIRST_TURN_GOING_SECOND } from '../..
 
 export class Clamperl extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 50;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

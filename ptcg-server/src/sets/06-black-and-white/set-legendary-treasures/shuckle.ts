@@ -12,26 +12,23 @@ import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store
 
 export class Shuckle extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Share',
-      cost: [G],
-      damage: 0,
-      text: 'Heal 40 damage from 1 of your Benched Pokémon.'
-    },
-    {
-      name: 'Double Stab',
-      cost: [G, G, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 40 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Share',
+    cost: [G],
+    damage: 0,
+    text: 'Heal 40 damage from 1 of your Benched Pokémon.'
+  }, {
+    name: 'Double Stab',
+    cost: [G, G, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 40 damage times the number of heads.'
+  }];
 
   public set: string = 'LTR';
   public setNumber: string = '3';

@@ -1,38 +1,37 @@
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, BoardEffect } from '../../../game/store/card/card-types';
-import {
-  PowerType, StoreLike, State,
-  GameMessage, Card, ChooseCardsPrompt, ShuffleDeckPrompt, PokemonCardList, PlayerType,
-  GameError
-} from '../../../game';
-import { Effect } from '../../../game/store/effects/effect';
-import { PlayPokemonFromDeckEffect } from '../../../game/store/effects/play-card-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { PokemonCard, Stage, CardTag, CardType, PowerType, StoreLike, State, GameError, GameMessage, PokemonCardList, PlayerType, BoardEffect, Card, ChooseCardsPrompt, SuperType, ShuffleDeckPrompt } from "../../../game";
+import { Effect } from "../../../game/store/effects/effect";
+import { EndTurnEffect } from "../../../game/store/effects/game-phase-effects";
+import { PlayPokemonFromDeckEffect } from "../../../game/store/effects/play-card-effects";
+import { WAS_ATTACK_USED, THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN, WAS_POWER_USED } from "../../../game/store/prefabs/prefabs";
 
 export class Miraidonex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = L;
+  protected _tags = [CardTag.POKEMON_ex];
+  public cardType: CardType[] = [L];
   public hp: number = 220;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Tandem Unit',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may search your deck for up ' +
-      'to 2 Basic [L] Pokémon and put them onto your Bench. ' +
-      'Then, shuffle your deck.'
-  }];
+  public powers = [
+    {
+      name: 'Tandem Unit',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text:
+        'Once during your turn, you may search your deck for up ' +
+        'to 2 Basic [L] Pokémon and put them onto your Bench. ' +
+        'Then, shuffle your deck.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Photon Blaster',
-    cost: [L, L, C],
-    damage: 220,
-    text: 'During your next turn, this Pokémon can\'t attack.'
-  }];
+  public attacks = [
+    {
+      name: 'Photon Blaster',
+      cost: [L, L, C],
+      damage: 220,
+      text: "During your next turn, this Pokémon can't attack.",
+    },
+  ];
 
   public regulationMark = 'G';
   public set: string = 'SVI';
@@ -44,7 +43,6 @@ export class Miraidonex extends PokemonCard {
   public readonly TANDEM_UNIT_MARKER = 'TANDEM_UNIT_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.marker.removeMarker(this.TANDEM_UNIT_MARKER, this);
@@ -52,8 +50,7 @@ export class Miraidonex extends PokemonCard {
 
     // Photon Blaster
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      player.active.cannotAttackNextTurnPending = true;
+      THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN(effect.player);
     }
 
     if (WAS_POWER_USED(effect, 0, this)) {
@@ -62,13 +59,13 @@ export class Miraidonex extends PokemonCard {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
-      const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
+      const slots: PokemonCardList[] = player.bench.filter((b) => b.cards.length === 0);
 
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
       // Check if bench has open slots
-      const openSlots = player.bench.filter(b => b.cards.length === 0);
+      const openSlots = player.bench.filter((b) => b.cards.length === 0);
 
       if (openSlots.length === 0) {
         // No open slots, throw error
@@ -77,33 +74,39 @@ export class Miraidonex extends PokemonCard {
 
       player.marker.addMarker(this.TANDEM_UNIT_MARKER, this);
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         if (cardList.getPokemonCard() === this) {
           cardList.addBoardEffect(BoardEffect.ABILITY_USED);
         }
       });
 
       let cards: Card[] = [];
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-        player.deck,
-        { superType: SuperType.POKEMON, stage: Stage.BASIC, cardType: CardType.LIGHTNING },
-        { min: 0, max: 2, allowCancel: false }
-      ), selectedCards => {
-        cards = selectedCards || [];
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+          player.deck,
+          { superType: SuperType.POKEMON, stage: Stage.BASIC, cardType: [CardType.LIGHTNING] },
+          { min: 0, max: 2, allowCancel: false },
+        ),
+        (selectedCards) => {
+          cards = selectedCards || [];
 
+          cards.forEach((card, index) => {
+            store.reduceEffect(
+              state,
+              new PlayPokemonFromDeckEffect(player, card as PokemonCard, slots[index]),
+            );
 
-        cards.forEach((card, index) => {
-          store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card as PokemonCard, slots[index]));
+            return state;
+          });
 
-          return state;
-        });
-
-        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-        });
-      });
+          return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+            player.deck.applyOrder(order);
+          });
+        },
+      );
     }
 
     return state;

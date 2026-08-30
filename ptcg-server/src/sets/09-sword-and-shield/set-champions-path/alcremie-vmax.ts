@@ -3,7 +3,13 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  EnergyType,
+  SuperType,
+} from '../../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, PlayerType, SlotType, StateUtils } from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
@@ -13,10 +19,10 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 
 export class AlcremieVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Alcremie V';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 310;
   public weakness = [{ type: M }];
   public retreat = [C, C, C];
@@ -26,15 +32,15 @@ export class AlcremieVmax extends PokemonCard {
       name: 'Adornment',
       cost: [C],
       damage: 0,
-      text: 'For each of your Benched Pokémon, search your deck for a [P] Energy card and attach it to that Pokémon. Then, shuffle your deck.'
+      text: 'For each of your Benched Pokémon, search your deck for a [P] Energy card and attach it to that Pokémon. Then, shuffle your deck.',
     },
     {
       name: 'G-Max Whisk',
       cost: [P, P],
       damage: 60,
       damageCalculation: 'x',
-      text: 'Discard any amount of Energy from your Pokémon. This attack does 60 damage for each card you discarded in this way.'
-    }
+      text: 'Discard any amount of Energy from your Pokémon. This attack does 60 damage for each card you discarded in this way.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -52,7 +58,7 @@ export class AlcremieVmax extends PokemonCard {
 
       // Collect all benched Pokemon targets
       const benchTargets: any[] = [];
-      player.bench.forEach(benchSlot => {
+      player.bench.forEach((benchSlot) => {
         if (benchSlot.cards.length > 0) {
           benchTargets.push(benchSlot);
         }
@@ -63,8 +69,11 @@ export class AlcremieVmax extends PokemonCard {
       }
 
       // Count Psychic Energy available in deck
-      const psychicInDeck = player.deck.cards.filter(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.PSYCHIC)
+      const psychicInDeck = player.deck.cards.filter(
+        (c) =>
+          c instanceof EnergyCard &&
+          c.energyType === EnergyType.BASIC &&
+          c.provides.includes(CardType.PSYCHIC),
       ).length;
 
       if (psychicInDeck === 0) {
@@ -76,25 +85,33 @@ export class AlcremieVmax extends PokemonCard {
       // Build blocked list for deck search
       const blocked: number[] = [];
       player.deck.cards.forEach((card, index) => {
-        if (!(card instanceof EnergyCard) || card.energyType !== EnergyType.BASIC || !card.provides.includes(CardType.PSYCHIC)) {
+        if (
+          !(card instanceof EnergyCard) ||
+          card.energyType !== EnergyType.BASIC ||
+          !card.provides.includes(CardType.PSYCHIC)
+        ) {
           blocked.push(index);
         }
       });
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_ATTACH,
-        player.deck,
-        { superType: SuperType.ENERGY },
-        { min: 0, max: maxAttach, allowCancel: false, blocked }
-      ), selected => {
-        const cards = selected || [];
-        // Attach one energy to each bench Pokemon, in order
-        for (let i = 0; i < cards.length && i < benchTargets.length; i++) {
-          player.deck.moveCardTo(cards[i], benchTargets[i]);
-        }
-        return SHUFFLE_DECK(store, state, player);
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_ATTACH,
+          player.deck,
+          { superType: SuperType.ENERGY },
+          { min: 0, max: maxAttach, allowCancel: false, blocked },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          // Attach one energy to each bench Pokemon, in order
+          for (let i = 0; i < cards.length && i < benchTargets.length; i++) {
+            player.deck.moveCardTo(cards[i], benchTargets[i]);
+          }
+          return SHUFFLE_DECK(store, state, player);
+        },
+      );
     }
 
     // Attack 2: G-Max Whisk
@@ -106,7 +123,7 @@ export class AlcremieVmax extends PokemonCard {
       // Count all energy across all Pokemon
       let totalEnergy = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        totalEnergy += cardList.cards.filter(c => c.superType === SuperType.ENERGY).length;
+        totalEnergy += cardList.cards.filter((c) => c.superType === SuperType.ENERGY).length;
       });
 
       if (totalEnergy === 0) {
@@ -116,28 +133,32 @@ export class AlcremieVmax extends PokemonCard {
 
       effect.damage = 0;
 
-      return store.prompt(state, new DiscardEnergyPrompt(
-        player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY },
-        { allowCancel: false, min: 0, max: totalEnergy }
-      ), transfers => {
-        if (transfers === null || transfers.length === 0) {
-          return state;
-        }
+      return store.prompt(
+        state,
+        new DiscardEnergyPrompt(
+          player.id,
+          GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { superType: SuperType.ENERGY },
+          { allowCancel: false, min: 0, max: totalEnergy },
+        ),
+        (transfers) => {
+          if (transfers === null || transfers.length === 0) {
+            return state;
+          }
 
-        // Discard the selected energy cards
-        transfers.forEach(transfer => {
-          const source = StateUtils.getTarget(state, player, transfer.from);
-          const discardEffect = new DiscardCardsEffect(effect, [transfer.card]);
-          discardEffect.target = source;
-          store.reduceEffect(state, discardEffect);
-        });
+          // Discard the selected energy cards
+          transfers.forEach((transfer) => {
+            const source = StateUtils.getTarget(state, player, transfer.from);
+            const discardEffect = new DiscardCardsEffect(effect, [transfer.card]);
+            discardEffect.target = source;
+            store.reduceEffect(state, discardEffect);
+          });
 
-        effect.damage = transfers.length * 60;
-      });
+          effect.damage = transfers.length * 60;
+        },
+      );
     }
 
     return state;

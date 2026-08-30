@@ -13,26 +13,23 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, SEARCH_DISCARD_PILE_FOR_CA
 export class Shiftry extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Nuzleaf';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 140;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Roll Up',
-      cost: [D, C],
-      damage: 0,
-      text: 'Flip 3 coins. If any of them are heads, your opponent reveals his or her hand. Then, for each heads, discard a card from your opponent\'s hand.'
-    },
-    {
-      name: 'Otherworldly Return',
-      cost: [D, C, C],
-      damage: 60,
-      text: 'Put a Trainer card from your discard pile into your hand.'
-    }
-  ];
+  public attacks = [{
+    name: 'Roll Up',
+    cost: [D, C],
+    damage: 0,
+    text: 'Flip 3 coins. If any of them are heads, your opponent reveals his or her hand. Then, for each heads, discard a card from your opponent\'s hand.'
+  }, {
+    name: 'Otherworldly Return',
+    cost: [D, C, C],
+    damage: 60,
+    text: 'Put a Trainer card from your discard pile into your hand.'
+  }];
 
   public set: string = 'BKP';
   public setNumber: string = '73';

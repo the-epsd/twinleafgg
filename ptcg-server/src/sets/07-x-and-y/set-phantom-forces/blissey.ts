@@ -11,27 +11,24 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, CONFIRMATION_PROMPT, THIS_POKEMON_DO
 export class Blissey extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Chansey';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Tender Vengeance',
-      cost: [C, C, C],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip a coin. If heads, this attack does 10 damage times the number of damage counters on each of your Benched Pokémon.'
-    },
-    {
-      name: 'Charge Dash',
-      cost: [C, C, C, C],
-      damage: 60,
-      damageCalculation: '+',
-      text: 'You may do 20 more damage. If you do, this Pokémon does 20 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tender Vengeance',
+    cost: [C, C, C],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip a coin. If heads, this attack does 10 damage times the number of damage counters on each of your Benched Pokémon.'
+  }, {
+    name: 'Charge Dash',
+    cost: [C, C, C, C],
+    damage: 60,
+    damageCalculation: '+',
+    text: 'You may do 20 more damage. If you do, this Pokémon does 20 damage to itself.'
+  }];
 
   public set: string = 'PHF';
   public setNumber: string = '81';

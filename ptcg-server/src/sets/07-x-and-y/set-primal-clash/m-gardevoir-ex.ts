@@ -10,10 +10,10 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class MGardevoirEx extends PokemonCard {
-  public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
+  protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Gardevoir-EX';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 210;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];
@@ -25,8 +25,8 @@ export class MGardevoirEx extends PokemonCard {
       cost: [Y, C, C],
       damage: 30,
       damageCalculation: 'x',
-      text: 'This attack does 30 damage times the amount of [Y] Energy attached to all of your Pokémon.'
-    }
+      text: 'This attack does 30 damage times the amount of [Y] Energy attached to all of your Pokémon.',
+    },
   ];
 
   public set: string = 'PRC';
@@ -45,8 +45,8 @@ export class MGardevoirEx extends PokemonCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         const checkEnergy = new CheckProvidedEnergyEffect(player, cardList);
         store.reduceEffect(state, checkEnergy);
-        checkEnergy.energyMap.forEach(em => {
-          fairyEnergyCount += em.provides.filter(t => t === CardType.FAIRY).length;
+        checkEnergy.energyMap.forEach((em) => {
+          fairyEnergyCount += em.provides.filter((t) => t === CardType.FAIRY).length;
         });
       });
 

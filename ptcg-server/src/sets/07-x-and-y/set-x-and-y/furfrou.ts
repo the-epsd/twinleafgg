@@ -12,7 +12,7 @@ import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/s
 
 export class Furfrou extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -24,14 +24,12 @@ export class Furfrou extends PokemonCard {
     text: 'Any damage done to this Pokémon by attacks is reduced by 20 (after applying Weakness and Resistance).'
   }];
 
-  public attacks = [
-    {
-      name: 'Energy Cutoff',
-      cost: [C, C, C],
-      damage: 80,
-      text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Energy Cutoff',
+    cost: [C, C, C],
+    damage: 80,
+    text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
+  }];
 
   public set: string = 'XY';
   public setNumber: string = '114';

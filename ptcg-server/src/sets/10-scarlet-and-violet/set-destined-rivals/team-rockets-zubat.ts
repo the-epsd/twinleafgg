@@ -4,8 +4,8 @@ import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK } from '../../../game/store/p
 
 export class TeamRocketsZubat extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.TEAM_ROCKET];
-  public cardType: CardType = D;
+  protected _tags = [CardTag.TEAM_ROCKET];
+  public cardType: CardType[] = [D];
   public hp: number = 50;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];
@@ -16,16 +16,16 @@ export class TeamRocketsZubat extends PokemonCard {
       name: 'Poison Spray',
       cost: [D],
       damage: 0,
-      text: 'Your opponent\'s Active Pokémon is now Poisoned.'
-    }
+      text: "Your opponent's Active Pokémon is now Poisoned.",
+    },
   ];
 
   public regulationMark = 'I';
   public set: string = 'DRI';
   public setNumber: string = '120';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Team Rocket\'s Zubat';
-  public fullName: string = 'Team Rocket\'s Zubat DRI';
+  public name: string = "Team Rocket's Zubat";
+  public fullName: string = "Team Rocket's Zubat DRI";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (AFTER_ATTACK(effect, 0, this)) {
@@ -33,4 +33,4 @@ export class TeamRocketsZubat extends PokemonCard {
     }
     return state;
   }
-} 
+}

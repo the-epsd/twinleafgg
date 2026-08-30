@@ -480,7 +480,11 @@ export function resolveClickToPlayTarget(
     if (targets.length === 0) {
       return null;
     }
-    if (targets.length === 1) {
+    const pokemonOnBoard =
+      (bottomPlayer.active?.cards?.length ? 1 : 0) +
+      (bottomPlayer.bench?.filter((b) => (b?.cards?.length ?? 0) > 0).length ?? 0);
+    // With Active + Bench in play, always highlight every legal host (never silently prefer Active).
+    if (pokemonOnBoard <= 1) {
       return targets[0];
     }
     return targets;

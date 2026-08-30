@@ -8,6 +8,10 @@ import { Player } from '../state/player';
 import { WaitPrompt } from '../prompts/wait-prompt';
 import { ConfirmPrompt } from '../prompts/confirm-prompt';
 
+// =============================================================================
+// Types & constants
+// =============================================================================
+
 /** Shared once-per-turn marker for attack coin re-flip effects (Glimwood Tangle, Backtrack Badge, Trick Coin, etc.). */
 export const COIN_REFLIP_AGAIN_USED = 'COIN_REFLIP_AGAIN_USED';
 
@@ -20,6 +24,10 @@ export interface AttackCoinReflipConfig {
 }
 
 const COIN_FLIP_ANIMATION_WAIT_MS = 2000;
+
+// =============================================================================
+// Internal helpers
+// =============================================================================
 
 function shouldSkipReflipSource(
   effect: CoinFlipEffect | CoinFlipSequenceEffect,
@@ -71,27 +79,34 @@ function offerAttackCoinReflip(
   });
 }
 
+// =============================================================================
+// Marker cleanup
+// =============================================================================
+
 export function CLEAR_COIN_REFLIP_AGAIN_AT_END_OF_TURN(effect: Effect): void {
   if (effect instanceof EndTurnEffect) {
     effect.player.marker.removeMarker(COIN_REFLIP_AGAIN_USED);
   }
 }
 
+// =============================================================================
+// Coin flip resolution
+// =============================================================================
+
 /** Default coin flip resolution used by gameReducer when no card intercepts. */
 export function RESOLVE_COIN_FLIP_EFFECT(store: StoreLike, state: State, effect: CoinFlipEffect): State {
   const result = Math.random() < 0.5;
   effect.result = result;
   const player = effect.player;
-  const stateForCallback = state;
 
   emitCoinFlipAnimation(store, player, result);
+  store.log(
+    state,
+    result ? GameLog.LOG_PLAYER_FLIPS_HEADS : GameLog.LOG_PLAYER_FLIPS_TAILS,
+    { name: player.name },
+  );
 
   return store.prompt(state, new WaitPrompt(player.id, COIN_FLIP_ANIMATION_WAIT_MS, 'Coin flip animation'), () => {
-    store.log(
-      stateForCallback,
-      result ? GameLog.LOG_PLAYER_FLIPS_HEADS : GameLog.LOG_PLAYER_FLIPS_TAILS,
-      { name: player.name },
-    );
     effect.callback?.(result);
   });
 }
@@ -161,19 +176,19 @@ function resolveAttackCoinFlipWithReflipOption(
   const result = Math.random() < 0.5;
   effect.result = result;
   const player = effect.player;
-  const stateForCallback = state;
 
   emitCoinFlipAnimation(store, player, result);
 
+  store.log(
+    state,
+    result ? GameLog.LOG_PLAYER_FLIPS_HEADS : GameLog.LOG_PLAYER_FLIPS_TAILS,
+    { name: player.name },
+  );
+
   return store.prompt(state, new WaitPrompt(player.id, COIN_FLIP_ANIMATION_WAIT_MS, 'Coin flip animation'), () => {
-    store.log(
-      stateForCallback,
-      result ? GameLog.LOG_PLAYER_FLIPS_HEADS : GameLog.LOG_PLAYER_FLIPS_TAILS,
-      { name: player.name },
-    );
     offerAttackCoinReflip(
       store,
-      stateForCallback,
+      state,
       player,
       config,
       () => effect.callback?.(result),
@@ -181,11 +196,15 @@ function resolveAttackCoinFlipWithReflipOption(
         const reflip = new CoinFlipEffect(player, effect.callback);
         reflip.skipReflipStadium = true;
         reflip.skipReflipTool = true;
-        store.reduceEffect(stateForCallback, reflip);
+        store.reduceEffect(state, reflip);
       },
     );
   });
 }
+
+// =============================================================================
+// Card reduceEffect entry point
+// =============================================================================
 
 /** Card reduceEffect helper for stadium/tool attack coin re-flip effects. */
 export function ATTACK_COIN_REFLIP_REDUCE_EFFECT(
@@ -231,3 +250,4 @@ export function ATTACK_COIN_REFLIP_REDUCE_EFFECT(
 
   return state;
 }
+

@@ -15,7 +15,7 @@ export class Golbat extends PokemonCard {
 
   public evolvesFrom = 'Zubat';
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 70;
 

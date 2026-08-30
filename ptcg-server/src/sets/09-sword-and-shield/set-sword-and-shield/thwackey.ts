@@ -11,28 +11,26 @@ import { WAS_ATTACK_USED, GUST_OPPONENT_BENCHED_POKEMON, MULTIPLE_COIN_FLIPS_PRO
 export class Thwackey extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Grookey';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 100;
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Taunt',
-      cost: [C],
-      damage: 0,
-      text: 'Switch 1 of your opponent\'s Benched Pokémon with their Active Pokémon.'
-    },
-    {
-      name: 'Double Hit',
-      cost: [G, G, C],
-      damage: 60,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 60 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Taunt',
+    cost: [C],
+    damage: 0,
+    text: 'Switch 1 of your opponent\'s Benched Pokémon with their Active Pokémon.'
+  }, {
+    name: 'Double Hit',
+    cost: [G, G, C],
+    damage: 60,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 60 damage for each heads.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'SSH';
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';

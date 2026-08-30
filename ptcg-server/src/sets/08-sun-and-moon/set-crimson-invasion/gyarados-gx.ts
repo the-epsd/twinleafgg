@@ -4,16 +4,25 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, Card, ChooseCardsPrompt, PlayerType, PokemonCardList } from '../../../game';
+import {
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  Card,
+  ChooseCardsPrompt,
+  PlayerType,
+  PokemonCardList,
+} from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class GyaradosGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Magikarp';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 240;
   public weakness = [{ type: L }];
   public retreat = [C, C, C, C];
@@ -23,21 +32,21 @@ export class GyaradosGx extends PokemonCard {
       name: 'Waterfall',
       cost: [W, C, C],
       damage: 70,
-      text: ''
+      text: '',
     },
     {
       name: 'Draconic Disaster',
       cost: [W, C, C, C, C],
       damage: 100,
       damageCalculation: '+',
-      text: 'If there is any Stadium card in play, this attack does 100 more damage. Then, discard that Stadium card.'
+      text: 'If there is any Stadium card in play, this attack does 100 more damage. Then, discard that Stadium card.',
     },
     {
       name: 'Dread Storm-GX',
       cost: [W],
       damage: 0,
-      text: 'Discard an Energy from each of your opponent\'s Pokémon. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Discard an Energy from each of your opponent's Pokémon. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'CIN';
@@ -70,7 +79,7 @@ export class GyaradosGx extends PokemonCard {
       player.usedGX = true;
 
       // For each opponent Pokemon with energy, discard 1 energy
-      const pokemonWithEnergy: { cardList: PokemonCardList, energyCards: Card[] }[] = [];
+      const pokemonWithEnergy: { cardList: PokemonCardList; energyCards: Card[] }[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         const energyCards = cardList.cards.filter((c: Card) => c instanceof EnergyCard);
         if (energyCards.length > 0) {
@@ -82,18 +91,22 @@ export class GyaradosGx extends PokemonCard {
         if (energyCards.length === 1) {
           cardList.moveCardTo(energyCards[0], opponent.discard);
         } else {
-          store.prompt(state, new ChooseCardsPrompt(
-            player,
-            GameMessage.CHOOSE_CARD_TO_DISCARD,
-            cardList,
-            { superType: SuperType.ENERGY },
-            { min: 1, max: 1, allowCancel: false }
-          ), (selected: Card[]) => {
-            const cards = selected || [];
-            cards.forEach((card: Card) => {
-              cardList.moveCardTo(card, opponent.discard);
-            });
-          });
+          store.prompt(
+            state,
+            new ChooseCardsPrompt(
+              player,
+              GameMessage.CHOOSE_CARD_TO_DISCARD,
+              cardList,
+              { superType: SuperType.ENERGY },
+              { min: 1, max: 1, allowCancel: false },
+            ),
+            (selected: Card[]) => {
+              const cards = selected || [];
+              cards.forEach((card: Card) => {
+                cardList.moveCardTo(card, opponent.discard);
+              });
+            },
+          );
         }
       });
     }

@@ -10,10 +10,10 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED } from '../../../game/store/prefabs/attack-effects';
 
 export class CinderaceVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX, CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.POKEMON_VMAX, CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Cinderace V';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 320;
   public weakness = [{ type: W }];
   public retreat = [C, C];
@@ -23,8 +23,8 @@ export class CinderaceVmax extends PokemonCard {
       name: 'G-Max Fireball',
       cost: [R, C, C, C],
       damage: 230,
-      text: 'Your opponent\'s Active Pokémon is now Burned. During your next turn, this Pokémon can\'t attack.'
-    }
+      text: "Your opponent's Active Pokémon is now Burned. During your next turn, this Pokémon can't attack.",
+    },
   ];
 
   public regulationMark: string = 'E';

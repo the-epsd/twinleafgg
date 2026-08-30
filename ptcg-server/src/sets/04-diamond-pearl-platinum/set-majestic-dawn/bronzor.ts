@@ -5,7 +5,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Bronzor extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 50;
   public weakness = [{ type: P, value: +10 }];
   public resistance = [{ type: R, value: -20 }];
@@ -16,8 +16,7 @@ export class Bronzor extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'The Defending Pokémon is now Asleep.'
-  },
-  {
+  }, {
     name: 'Confuse Ray',
     cost: [P],
     damage: 10,

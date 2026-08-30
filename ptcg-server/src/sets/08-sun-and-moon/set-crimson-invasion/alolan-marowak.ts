@@ -14,26 +14,23 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED } from '../../../game/stor
 export class AlolanMarowak extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Cubone';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 100;
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Dance of Flames',
-      cost: [],
-      damage: 0,
-      text: 'For each Energy attached to your opponent\'s Pokémon, attach a [R] Energy card from your discard pile to your Pokémon in any way you like.'
-    },
-    {
-      name: 'Burning Bonemerang',
-      cost: [R, R, C],
-      damage: 70,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 70 damage for each heads. If either of them is heads, your opponent\'s Active Pokémon is now Burned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Dance of Flames',
+    cost: [],
+    damage: 0,
+    text: 'For each Energy attached to your opponent\'s Pokémon, attach a [R] Energy card from your discard pile to your Pokémon in any way you like.'
+  }, {
+    name: 'Burning Bonemerang',
+    cost: [R, R, C],
+    damage: 70,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 70 damage for each heads. If either of them is heads, your opponent\'s Active Pokémon is now Burned.'
+  }];
 
   public set: string = 'CIN';
   public setNumber: string = '12';

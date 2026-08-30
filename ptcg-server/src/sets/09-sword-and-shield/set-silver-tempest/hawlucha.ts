@@ -10,29 +10,27 @@ import { WAS_ATTACK_USED, DRAW_CARDS, MULTIPLE_COIN_FLIPS_PROMPT } from '../../.
 
 export class Hawlucha extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 80;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Allure',
-      cost: [C],
-      damage: 0,
-      text: 'Draw 2 cards.'
-    },
-    {
-      name: 'Acrobatics',
-      cost: [F, C],
-      damage: 30,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Allure',
+    cost: [C],
+    damage: 0,
+    text: 'Draw 2 cards.'
+  }, {
+    name: 'Acrobatics',
+    cost: [F, C],
+    damage: 30,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'SIT';
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';

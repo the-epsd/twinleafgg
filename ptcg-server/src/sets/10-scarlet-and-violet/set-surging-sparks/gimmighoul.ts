@@ -10,7 +10,7 @@ export class Gimmighoul extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
 
   public hp: number = 70;
 

@@ -5,19 +5,17 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Litwick extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: D }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Searing Flame',
-      cost: [C, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Burned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Searing Flame',
+    cost: [C, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Burned.'
+  }];
 
   public set: string = 'NVI';
   public cardImage: string = 'assets/cardback.png';

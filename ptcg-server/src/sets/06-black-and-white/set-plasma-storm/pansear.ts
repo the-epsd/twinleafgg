@@ -10,26 +10,23 @@ import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store
 
 export class Pansear extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 70;
   public weakness = [{ type: W }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Scratch',
-      cost: [C, C],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Double Fire',
-      cost: [R, R, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 40 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Scratch',
+    cost: [C, C],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Double Fire',
+    cost: [R, R, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 40 damage times the number of heads.'
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '19';

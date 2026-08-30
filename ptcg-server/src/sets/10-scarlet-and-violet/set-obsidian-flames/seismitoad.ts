@@ -4,23 +4,15 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CheckAttackCostEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
-import { NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/prefabs';
+import { NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/attack-effects';
 
 export class Seismitoad extends PokemonCard {
-
-  public regulationMark = 'G';
-
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom: string = 'Palpitoad';
-
-  public cardType: CardType = CardType.WATER;
-
+  public cardType: CardType[] = [W];
   public hp: number = 170;
-
-  public weakness = [{ type: CardType.LIGHTNING }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: L }];
+  public retreat = [C, C, C];
 
   public powers = [{
     name: 'Quaking Zone',
@@ -30,23 +22,17 @@ export class Seismitoad extends PokemonCard {
 
   public attacks = [{
     name: 'Echoed Voice',
-    cost: [CardType.WATER, CardType.WATER],
+    cost: [W, W],
     damage: 120,
     text: 'During your next turn, this Pokémon\'s Echoed Voice attack does 100 more damage (before applying Weakness and Resistance).'
   }];
 
+  public regulationMark = 'G';
   public set: string = 'OBF';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '52';
-
   public name: string = 'Seismitoad';
-
   public fullName: string = 'Seismitoad OBF';
-
-  public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'NEXT_TURN_MORE_DAMAGE_MARKER';
-  public readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -81,9 +67,7 @@ export class Seismitoad extends PokemonCard {
     NEXT_TURN_ATTACK_BONUS(effect, {
       attack: this.attacks[0],
       source: this,
-      bonusDamage: 100,
-      bonusMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER,
-      clearMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER_2
+      bonusDamage: 100
     });
     return state;
   }

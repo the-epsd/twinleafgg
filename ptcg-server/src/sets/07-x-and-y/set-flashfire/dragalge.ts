@@ -9,23 +9,17 @@ import { PowerType } from '../../../game/store/card/pokemon-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
-import { CoinFlipPrompt } from '../../../game/store/prompts/coin-flip-prompt';
+
 import { PlayerType } from '../../../game/store/actions/play-card-action';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Dragalge extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Skrelp';
-
-  public cardType: CardType = CardType.DRAGON;
-
+  public cardType: CardType[] = [N];
   public hp: number = 100;
-
-  public weakness = [{ type: CardType.FAIRY }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: Y }];
+  public retreat = [C];
 
   public powers = [{
     name: 'Poison Barrier',
@@ -35,20 +29,16 @@ export class Dragalge extends PokemonCard {
 
   public attacks = [{
     name: 'Poison Breath',
-    cost: [CardType.WATER, CardType.PSYCHIC, CardType.COLORLESS],
+    cost: [W, P, C],
     damage: 60,
     text: 'Flip a coin. If heads, your opponent\'s Active Pokemon ' +
-      'is now Poisoned.'
+    'is now Poisoned.'
   }];
 
   public set: string = 'FLF';
-
   public name: string = 'Dragalge';
-
   public fullName: string = 'Dragalge FLF';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '71';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -56,9 +46,7 @@ export class Dragalge extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
           const specialConditionEffect = new AddSpecialConditionsEffect(
             effect, [SpecialCondition.POISONED]

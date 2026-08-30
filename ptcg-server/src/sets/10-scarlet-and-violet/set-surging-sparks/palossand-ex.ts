@@ -6,30 +6,33 @@ import { Effect } from '../../../game/store/effects/effect';
 import { PlayerType } from '../../../game';
 
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED, BLOCK_RETREAT } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Palossandex extends PokemonCard {
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Sandygast';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 280;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C, C, C];
 
-  public attacks = [{
-    name: 'Sand Tomb',
-    cost: [C, C, C],
-    damage: 160,
-    text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
-  },
-  {
-    name: 'Barite Jail',
-    cost: [W, P, F],
-    damage: 0,
-    text: 'Put damage counters on each of your opponent\'s Benched Pokémon until its remaining HP is 100.'
-  }];
+  public attacks = [
+    {
+      name: 'Sand Tomb',
+      cost: [C, C, C],
+      damage: 160,
+      text: "During your opponent's next turn, the Defending Pokémon can't retreat.",
+    },
+    {
+      name: 'Barite Jail',
+      cost: [W, P, F],
+      damage: 0,
+      text: "Put damage counters on each of your opponent's Benched Pokémon until its remaining HP is 100.",
+    },
+  ];
 
   public regulationMark = 'H';
   public set: string = 'SSP';
@@ -49,7 +52,6 @@ export class Palossandex extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-
         if (cardList === opponent.active) {
           return state;
         }
@@ -57,8 +59,10 @@ export class Palossandex extends PokemonCard {
         const checkHpEffect = new CheckHpEffect(player, cardList);
         store.reduceEffect(state, checkHpEffect);
 
-        let resultingDamage = (checkHpEffect.hp - cardList.damage) - 100;
-        if (resultingDamage <= 0) { resultingDamage = 0; }
+        let resultingDamage = checkHpEffect.hp - cardList.damage - 100;
+        if (resultingDamage <= 0) {
+          resultingDamage = 0;
+        }
 
         const damageEffect = new PutCountersEffect(effect, resultingDamage);
         damageEffect.target = cardList;
@@ -66,7 +70,11 @@ export class Palossandex extends PokemonCard {
       });
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

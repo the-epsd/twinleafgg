@@ -6,13 +6,16 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, DISCARD_A_STADIUM_CARD_IN_PLAY } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  DISCARD_A_STADIUM_CARD_IN_PLAY,
+} from '../../../game/store/prefabs/prefabs';
 
 export class SingleStrikeUrshifu extends PokemonCard {
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Kubfu';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 140;
   public weakness = [{ type: G }];
   public retreat = [C, C];
@@ -22,15 +25,15 @@ export class SingleStrikeUrshifu extends PokemonCard {
       name: 'Field Crush',
       cost: [D, C],
       damage: 50,
-      text: 'If your opponent has a Stadium in play, discard it.'
+      text: 'If your opponent has a Stadium in play, discard it.',
     },
     {
       name: 'Fists of Strife',
       cost: [D, D, C],
       damage: 100,
       damageCalculation: '+',
-      text: 'If this Pokémon has any damage counters on it, this attack does 100 more damage.'
-    }
+      text: 'If this Pokémon has any damage counters on it, this attack does 100 more damage.',
+    },
   ];
 
   public regulationMark: string = 'E';

@@ -1,5 +1,12 @@
 /* eslint-disable indent */
-import { DamageMap, GameMessage, PlayerType, PutDamagePrompt, SlotType, StateUtils } from '../../../game';
+import {
+  DamageMap,
+  GameMessage,
+  PlayerType,
+  PutDamagePrompt,
+  SlotType,
+  StateUtils,
+} from '../../../game';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
@@ -11,14 +18,13 @@ import { StoreLike } from '../../../game/store/store-like';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class WalkingWake extends PokemonCard {
-
-  public tags = [CardTag.ANCIENT];
+  protected _tags = [CardTag.ANCIENT];
 
   public regulationMark = 'H';
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp: number = 130;
 
@@ -31,14 +37,14 @@ export class WalkingWake extends PokemonCard {
       name: 'Aurora Gain',
       cost: [CardType.WATER],
       damage: 20,
-      text: 'Heal 20 damage from this Pokémon.'
+      text: 'Heal 20 damage from this Pokémon.',
     },
     {
       name: 'Undulating Slice',
       cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
       damage: 0,
-      text: 'Put up to 9 damage counters on this Pokémon. This attack does 20 damage for each damage counter you placed in this way.'
-    }
+      text: 'Put up to 9 damage counters on this Pokémon. This attack does 20 damage for each damage counter you placed in this way.',
+    },
   ];
 
   public set: string = 'TWM';
@@ -52,7 +58,6 @@ export class WalkingWake extends PokemonCard {
   public fullName: string = 'Walking Wake TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
@@ -71,7 +76,12 @@ export class WalkingWake extends PokemonCard {
   }
 }
 
-function* attack(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
+function* attack(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   const maxAllowedDamage: DamageMap[] = [];
@@ -81,22 +91,26 @@ function* attack(next: Function, store: StoreLike, state: State, effect: AttackE
     maxAllowedDamage.push({ target, damage: checkHpEffect.hp + 90 });
   });
 
-  return store.prompt(state, new PutDamagePrompt(
-    effect.player.id,
-    GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.ACTIVE],
-    90,
-    maxAllowedDamage,
-    { allowCancel: false, allowPlacePartialDamage: true }
-  ), targets => {
-    const results = targets || [];
-    for (const result of results) {
-      const target = StateUtils.getTarget(state, player, result.target);
-      const putCountersEffect = new PutCountersEffect(effect, result.damage);
-      putCountersEffect.target = target;
-      store.reduceEffect(state, putCountersEffect);
-      effect.damage = result.damage * 2;
-    }
-  });
+  return store.prompt(
+    state,
+    new PutDamagePrompt(
+      effect.player.id,
+      GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.ACTIVE],
+      90,
+      maxAllowedDamage,
+      { allowCancel: false, allowPlacePartialDamage: true },
+    ),
+    (targets) => {
+      const results = targets || [];
+      for (const result of results) {
+        const target = StateUtils.getTarget(state, player, result.target);
+        const putCountersEffect = new PutCountersEffect(effect, result.damage);
+        putCountersEffect.target = target;
+        store.reduceEffect(state, putCountersEffect);
+        effect.damage = result.damage * 2;
+      }
+    },
+  );
 }

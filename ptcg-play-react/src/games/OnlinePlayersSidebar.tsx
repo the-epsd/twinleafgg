@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useId, useMemo, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import type { ServerConfig, UserInfo } from 'ptcg-server';
@@ -16,7 +17,9 @@ import styles from './OnlinePlayersSidebar.module.css';
 const MAX_ROWS = 20;
 
 export interface OnlinePlayersSidebarProps {
-  appearance?: 'light' | 'sandbox';
+  appearance?: 'light' | 'sandbox' | 'arena';
+  selfPlayOpen?: boolean;
+  onSelfPlayOpenChange?: (open: boolean) => void;
 }
 
 function otherFriendUserId(f: { user: UserInfo; friend: UserInfo }, myUserId: number): number {
@@ -31,7 +34,11 @@ function friendMenuKey(userId: number): string {
   return `friend-${userId}`;
 }
 
-export function OnlinePlayersSidebar({ appearance = 'light' }: OnlinePlayersSidebarProps) {
+export function OnlinePlayersSidebar({
+  appearance = 'light',
+  selfPlayOpen = false,
+  onSelfPlayOpenChange,
+}: OnlinePlayersSidebarProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { user, serverConfig } = useAuth();
@@ -43,7 +50,14 @@ export function OnlinePlayersSidebar({ appearance = 'light' }: OnlinePlayersSide
   const [pendingSentUserIds, setPendingSentUserIds] = useState<Set<number>>(() => new Set());
   const [openMenuKey, setOpenMenuKey] = useState<string | null>(null);
   const [inviteClientId, setInviteClientId] = useState<number | null>(null);
-  const [selfPlayOpen, setSelfPlayOpen] = useState(false);
+  const setSelfPlayOpenLocal = useCallback(
+    (value: boolean) => {
+      if (onSelfPlayOpenChange) {
+        onSelfPlayOpenChange(value);
+      }
+    },
+    [onSelfPlayOpenChange],
+  );
   const [friendActionUserId, setFriendActionUserId] = useState<number | null>(null);
 
   const friendsHeaderId = `${useId()}-friends`;
@@ -125,8 +139,9 @@ export function OnlinePlayersSidebar({ appearance = 'light' }: OnlinePlayersSide
       }
     }
     function onPointerDown(e: MouseEvent | PointerEvent) {
-      const el = document.querySelector(`[data-player-menu-root="${CSS.escape(menuKey)}"]`);
-      if (el && !el.contains(e.target as Node)) {
+      const triggerEl = document.querySelector(`[data-player-menu-root="${CSS.escape(menuKey)}"]`);
+      const menuEl = document.getElementById(`menu-${menuKey}`);
+      if ((!triggerEl || !triggerEl.contains(e.target as Node)) && (!menuEl || !menuEl.contains(e.target as Node))) {
         setOpenMenuKey(null);
       }
     }
@@ -171,17 +186,26 @@ export function OnlinePlayersSidebar({ appearance = 'light' }: OnlinePlayersSide
     [showSnackbar, t],
   );
 
-  const asideClass =
-    appearance === 'sandbox' ? `${styles.aside} ${styles.asideSandbox}` : styles.aside;
+  const isDark = appearance === 'sandbox' || appearance === 'arena';
+  const isArena = appearance === 'arena';
 
-  const menuClass =
-    appearance === 'sandbox' ? `${styles.playerMenu} ${styles.playerMenuSandbox}` : styles.playerMenu;
+  const asideClass = isArena
+    ? `${styles.aside} ${styles.asideArena}`
+    : appearance === 'sandbox'
+      ? `${styles.aside} ${styles.asideSandbox}`
+      : styles.aside;
 
-  const headerClass =
-    appearance === 'sandbox' ? `${styles.header} ${styles.headerSandbox}` : styles.header;
+  const menuClass = isDark
+    ? `${styles.playerMenu} ${styles.playerMenuSandbox}`
+    : styles.playerMenu;
 
-  const emptyClass =
-    appearance === 'sandbox' ? `${styles.empty} ${styles.emptySandbox}` : styles.empty;
+  const headerClass = isArena
+    ? `${styles.header} ${styles.headerArena}`
+    : appearance === 'sandbox'
+      ? `${styles.header} ${styles.headerSandbox}`
+      : styles.header;
+
+  const emptyClass = isDark ? `${styles.empty} ${styles.emptySandbox}` : styles.empty;
 
   const resolveFriendOnlineClientId = useCallback(
     (userId: number): number | null => {
@@ -270,7 +294,7 @@ export function OnlinePlayersSidebar({ appearance = 'light' }: OnlinePlayersSide
                         setOpenMenuKey(null);
                       }}
                       onSelfPlay={() => {
-                        setSelfPlayOpen(true);
+                        setSelfPlayOpenLocal(true);
                         setOpenMenuKey(null);
                       }}
                       onSendFriendRequest={() => void onSendFriendRequest(row.user.userId)}
@@ -291,7 +315,6 @@ export function OnlinePlayersSidebar({ appearance = 'light' }: OnlinePlayersSide
           onClose={() => setInviteClientId(null)}
         />
       ) : null}
-      {selfPlayOpen ? <SelfPlayGameDialog open onClose={() => setSelfPlayOpen(false)} /> : null}
     </aside>
   );
 }
@@ -299,7 +322,7 @@ export function OnlinePlayersSidebar({ appearance = 'light' }: OnlinePlayersSide
 type FriendPlayerRowProps = {
   user: UserInfo;
   onlineClientId: number | null;
-  appearance: 'light' | 'sandbox';
+  appearance: 'light' | 'sandbox' | 'arena';
   myClientId: number;
   menuOpen: boolean;
   menuKey: string;
@@ -312,6 +335,7 @@ type FriendPlayerRowProps = {
   onInvite: () => void;
   onBanToggle: () => void;
 };
+
 
 function FriendPlayerRow({
   user: u,
@@ -331,17 +355,40 @@ function FriendPlayerRow({
 }: FriendPlayerRowProps) {
   const { t } = useTranslation();
   const panelId = useId();
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const [menuPos, setMenuPos] = useState<{ top: number; right: number } | null>(null);
 
   const src = resolveAvatarUrl(u.avatarFile, serverConfig);
-  const rowClass = `${styles.rowButton}${appearance === 'sandbox' ? ` ${styles.rowSandbox}` : ''}`;
-  const avatarClass =
-    appearance === 'sandbox' ? `${styles.avatar} ${styles.avatarSandbox}` : styles.avatar;
+  const isDark = appearance === 'sandbox' || appearance === 'arena';
+  const rowClass = `${styles.rowButton}${isDark ? ` ${styles.rowSandbox}` : ''}${
+    appearance === 'arena' ? ` ${styles.rowArena}` : ''
+  }`;
+  const avatarClass = isDark
+    ? `${styles.avatar} ${styles.avatarSandbox}${appearance === 'arena' ? ` ${styles.avatarArena}` : ''}`
+    : styles.avatar;
 
   const showInvite = onlineClientId != null && onlineClientId !== myClientId;
+
+  useEffect(() => {
+    if (menuOpen && triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect();
+      setMenuPos({
+        top: rect.bottom - 4,
+        right: window.innerWidth - rect.right,
+      });
+    }
+  }, [menuOpen]);
+
+  useEffect(() => {
+    if (!menuOpen) {
+      setMenuPos(null);
+    }
+  }, [menuOpen]);
 
   return (
     <div className={styles.rowWrap} data-player-menu-root={menuKey}>
       <button
+        ref={triggerRef}
         type="button"
         className={`${styles.rowButton} ${rowClass}`}
         aria-expanded={menuOpen}
@@ -358,10 +405,10 @@ function FriendPlayerRow({
           {onlineClientId != null ? <span className={styles.dot} aria-hidden /> : null}
         </div>
         <div className={styles.meta}>
-          <span className={appearance === 'sandbox' ? `${styles.name} ${styles.nameSandbox}` : styles.name}>
+          <span className={isDark ? `${styles.name} ${styles.nameSandbox}` : styles.name}>
             {u.name}
           </span>
-          <span className={appearance === 'sandbox' ? `${styles.rank} ${styles.rankSandbox}` : styles.rank}>
+          <span className={isDark ? `${styles.rank} ${styles.rankSandbox}` : styles.rank}>
             {t('REACT_ONLINE_PLAYERS_RANK', { rank: u.ranking })}
           </span>
         </div>
@@ -370,65 +417,77 @@ function FriendPlayerRow({
         </span>
       </button>
 
-      {menuOpen ? (
-        <ul id={panelId} className={menuClass} role="menu">
-          <li role="none">
-            <button
-              type="button"
-              role="menuitem"
-              className={styles.menuItem}
-              onClick={() => {
-                onCloseMenu();
-                navigate(`/profile/${u.userId}`);
+      {menuOpen && menuPos
+        ? createPortal(
+            <ul
+              id={`menu-${menuKey}`}
+              className={menuClass}
+              role="menu"
+              style={{
+                position: 'fixed',
+                top: menuPos.top,
+                right: menuPos.right,
               }}
             >
-              {t('BUTTON_SHOW_PROFILE')}
-            </button>
-          </li>
-          <li role="none">
-            <button
-              type="button"
-              role="menuitem"
-              className={styles.menuItem}
-              onClick={() => {
-                onCloseMenu();
-                navigate(`/message/${u.userId}`);
-              }}
-            >
-              {t('BUTTON_SEND_MESSAGE')}
-            </button>
-          </li>
-          {showInvite ? (
-            <li role="none">
-              <button type="button" role="menuitem" className={styles.menuItem} onClick={onInvite}>
-                {t('BUTTON_INVITE')}
-              </button>
-            </li>
-          ) : null}
-          {isAdmin ? (
-            <li role="none">
-              <button
-                type="button"
-                role="menuitem"
-                className={`${styles.menuItem} ${u.roleId === 1 ? styles.menuItemWarn : styles.menuItemDanger}`}
-                onClick={() => {
-                  onCloseMenu();
-                  onBanToggle();
-                }}
-              >
-                {u.roleId === 1 ? t('PROFILE_UNBAN_USER') : t('PROFILE_BAN_USER')}
-              </button>
-            </li>
-          ) : null}
-        </ul>
-      ) : null}
+              <li role="none">
+                <button
+                  type="button"
+                  role="menuitem"
+                  className={styles.menuItem}
+                  onClick={() => {
+                    onCloseMenu();
+                    navigate(`/profile/${u.userId}`);
+                  }}
+                >
+                  {t('BUTTON_SHOW_PROFILE')}
+                </button>
+              </li>
+              <li role="none">
+                <button
+                  type="button"
+                  role="menuitem"
+                  className={styles.menuItem}
+                  onClick={() => {
+                    onCloseMenu();
+                    navigate(`/message/${u.userId}`);
+                  }}
+                >
+                  {t('BUTTON_SEND_MESSAGE')}
+                </button>
+              </li>
+              {showInvite ? (
+                <li role="none">
+                  <button type="button" role="menuitem" className={styles.menuItem} onClick={onInvite}>
+                    {t('BUTTON_INVITE')}
+                  </button>
+                </li>
+              ) : null}
+              {isAdmin ? (
+                <li role="none">
+                  <button
+                    type="button"
+                    role="menuitem"
+                    className={`${styles.menuItem} ${u.roleId === 1 ? styles.menuItemWarn : styles.menuItemDanger}`}
+                    onClick={() => {
+                      onCloseMenu();
+                      onBanToggle();
+                    }}
+                  >
+                    {u.roleId === 1 ? t('PROFILE_UNBAN_USER') : t('PROFILE_BAN_USER')}
+                  </button>
+                </li>
+              ) : null}
+            </ul>,
+            document.body,
+          )
+        : null}
     </div>
   );
 }
 
 type OnlinePlayerRowProps = {
   row: { clientId: number; user: UserInfo };
-  appearance: 'light' | 'sandbox';
+  appearance: 'light' | 'sandbox' | 'arena';
   isSelf: boolean;
   myClientId: number;
   menuOpen: boolean;
@@ -471,20 +530,43 @@ function OnlinePlayerRow({
 }: OnlinePlayerRowProps) {
   const { t } = useTranslation();
   const panelId = useId();
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const [menuPos, setMenuPos] = useState<{ top: number; right: number } | null>(null);
 
   const u = row.user;
   const src = resolveAvatarUrl(u.avatarFile, serverConfig);
-  const rowClass = `${styles.rowButton}${appearance === 'sandbox' ? ` ${styles.rowSandbox}` : ''}${isSelf ? ` ${styles.rowSelf}` : ''}`;
-  const avatarClass =
-    appearance === 'sandbox' ? `${styles.avatar} ${styles.avatarSandbox}` : styles.avatar;
+  const isDark = appearance === 'sandbox' || appearance === 'arena';
+  const rowClass = `${styles.rowButton}${isDark ? ` ${styles.rowSandbox}` : ''}${
+    appearance === 'arena' ? ` ${styles.rowArena}` : ''
+  }${isSelf ? ` ${styles.rowSelf}` : ''}`;
+  const avatarClass = isDark
+    ? `${styles.avatar} ${styles.avatarSandbox}${appearance === 'arena' ? ` ${styles.avatarArena}` : ''}`
+    : styles.avatar;
 
   const isFriend = friendUserIds.has(u.userId);
   const requestPending = pendingSentUserIds.has(u.userId);
   const showInvite = !isSelf && row.clientId !== myClientId;
 
+  useEffect(() => {
+    if (menuOpen && triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect();
+      setMenuPos({
+        top: rect.bottom - 4,
+        right: window.innerWidth - rect.right,
+      });
+    }
+  }, [menuOpen]);
+
+  useEffect(() => {
+    if (!menuOpen) {
+      setMenuPos(null);
+    }
+  }, [menuOpen]);
+
   return (
     <div className={styles.rowWrap} data-player-menu-root={menuKey}>
       <button
+        ref={triggerRef}
         type="button"
         className={`${styles.rowButton} ${rowClass}`}
         aria-expanded={menuOpen}
@@ -501,15 +583,15 @@ function OnlinePlayerRow({
           <span className={styles.dot} aria-hidden />
         </div>
         <div className={styles.meta}>
-          <span className={appearance === 'sandbox' ? `${styles.name} ${styles.nameSandbox}` : styles.name}>
+          <span className={isDark ? `${styles.name} ${styles.nameSandbox}` : styles.name}>
             {u.name}
             {isSelf ? (
-              <span className={appearance === 'sandbox' ? `${styles.you} ${styles.youSandbox}` : styles.you}>
+              <span className={isDark ? `${styles.you} ${styles.youSandbox}` : styles.you}>
                 {t('REACT_ONLINE_PLAYERS_YOU')}
               </span>
             ) : null}
           </span>
-          <span className={appearance === 'sandbox' ? `${styles.rank} ${styles.rankSandbox}` : styles.rank}>
+          <span className={isDark ? `${styles.rank} ${styles.rankSandbox}` : styles.rank}>
             {t('REACT_ONLINE_PLAYERS_RANK', { rank: u.ranking })}
           </span>
         </div>
@@ -518,93 +600,105 @@ function OnlinePlayerRow({
         </span>
       </button>
 
-      {menuOpen ? (
-        <ul id={panelId} className={menuClass} role="menu">
-          <li role="none">
-            <button
-              type="button"
-              role="menuitem"
-              className={styles.menuItem}
-              onClick={() => {
-                onCloseMenu();
-                navigate(`/profile/${u.userId}`);
+      {menuOpen && menuPos
+        ? createPortal(
+            <ul
+              id={`menu-${menuKey}`}
+              className={menuClass}
+              role="menu"
+              style={{
+                position: 'fixed',
+                top: menuPos.top,
+                right: menuPos.right,
               }}
             >
-              {t('BUTTON_SHOW_PROFILE')}
-            </button>
-          </li>
-          {!isSelf ? (
-            <li role="none">
-              <button
-                type="button"
-                role="menuitem"
-                className={styles.menuItem}
-                onClick={() => {
-                  onCloseMenu();
-                  navigate(`/message/${u.userId}`);
-                }}
-              >
-                {t('BUTTON_SEND_MESSAGE')}
-              </button>
-            </li>
-          ) : null}
-          {isSelf ? (
-            <li role="none">
-              <button type="button" role="menuitem" className={styles.menuItem} onClick={onSelfPlay}>
-                {t('REACT_MENU_SELF_PLAY')}
-              </button>
-            </li>
-          ) : null}
-          {!isSelf && showInvite ? (
-            <li role="none">
-              <button type="button" role="menuitem" className={styles.menuItem} onClick={onInvite}>
-                {t('BUTTON_INVITE')}
-              </button>
-            </li>
-          ) : null}
-          {!isSelf ? (
-            <li role="none">
-              {isFriend ? (
-                <button type="button" role="menuitem" className={styles.menuItem} disabled>
-                  {t('REACT_FRIEND_STATUS_FRIENDS')}
-                </button>
-              ) : requestPending ? (
-                <button type="button" role="menuitem" className={styles.menuItem} disabled>
-                  {t('REACT_FRIEND_REQUEST_PENDING')}
-                </button>
-              ) : (
+              <li role="none">
                 <button
                   type="button"
                   role="menuitem"
                   className={styles.menuItem}
-                  disabled={friendBusy}
                   onClick={() => {
                     onCloseMenu();
-                    onSendFriendRequest();
+                    navigate(`/profile/${u.userId}`);
                   }}
                 >
-                  {t('REACT_ADD_TO_FRIEND')}
+                  {t('BUTTON_SHOW_PROFILE')}
                 </button>
-              )}
-            </li>
-          ) : null}
-          {isAdmin && !isSelf ? (
-            <li role="none">
-              <button
-                type="button"
-                role="menuitem"
-                className={`${styles.menuItem} ${u.roleId === 1 ? styles.menuItemWarn : styles.menuItemDanger}`}
-                onClick={() => {
-                  onCloseMenu();
-                  onBanToggle();
-                }}
-              >
-                {u.roleId === 1 ? t('PROFILE_UNBAN_USER') : t('PROFILE_BAN_USER')}
-              </button>
-            </li>
-          ) : null}
-        </ul>
-      ) : null}
+              </li>
+              {!isSelf ? (
+                <li role="none">
+                  <button
+                    type="button"
+                    role="menuitem"
+                    className={styles.menuItem}
+                    onClick={() => {
+                      onCloseMenu();
+                      navigate(`/message/${u.userId}`);
+                    }}
+                  >
+                    {t('BUTTON_SEND_MESSAGE')}
+                  </button>
+                </li>
+              ) : null}
+              {isSelf ? (
+                <li role="none">
+                  <button type="button" role="menuitem" className={styles.menuItem} onClick={onSelfPlay}>
+                    {t('REACT_MENU_SELF_PLAY')}
+                  </button>
+                </li>
+              ) : null}
+              {!isSelf && showInvite ? (
+                <li role="none">
+                  <button type="button" role="menuitem" className={styles.menuItem} onClick={onInvite}>
+                    {t('BUTTON_INVITE')}
+                  </button>
+                </li>
+              ) : null}
+              {!isSelf ? (
+                <li role="none">
+                  {isFriend ? (
+                    <button type="button" role="menuitem" className={styles.menuItem} disabled>
+                      {t('REACT_FRIEND_STATUS_FRIENDS')}
+                    </button>
+                  ) : requestPending ? (
+                    <button type="button" role="menuitem" className={styles.menuItem} disabled>
+                      {t('REACT_FRIEND_REQUEST_PENDING')}
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      role="menuitem"
+                      className={styles.menuItem}
+                      disabled={friendBusy}
+                      onClick={() => {
+                        onCloseMenu();
+                        onSendFriendRequest();
+                      }}
+                    >
+                      {t('REACT_ADD_TO_FRIEND')}
+                    </button>
+                  )}
+                </li>
+              ) : null}
+              {isAdmin && !isSelf ? (
+                <li role="none">
+                  <button
+                    type="button"
+                    role="menuitem"
+                    className={`${styles.menuItem} ${u.roleId === 1 ? styles.menuItemWarn : styles.menuItemDanger}`}
+                    onClick={() => {
+                      onCloseMenu();
+                      onBanToggle();
+                    }}
+                  >
+                    {u.roleId === 1 ? t('PROFILE_UNBAN_USER') : t('PROFILE_BAN_USER')}
+                  </button>
+                </li>
+              ) : null}
+            </ul>,
+            document.body,
+          )
+        : null}
     </div>
   );
 }

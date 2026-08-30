@@ -9,28 +9,25 @@ import { SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK } from '../.
 export class Lopunny extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Buneary';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];
 
   public wantsToShuffle: boolean = false;
 
-  public attacks = [
-    {
-      name: 'Stompy Stomp',
-      cost: [C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 40 damage for each heads.'
-    },
-    {
-      name: 'Happy Turn',
-      cost: [C, C],
-      damage: 60,
-      text: 'You may shuffle this Pokémon and all cards attached to it into your deck.'
-    }
-  ];
+  public attacks = [{
+    name: 'Stompy Stomp',
+    cost: [C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 40 damage for each heads.'
+  }, {
+    name: 'Happy Turn',
+    cost: [C, C],
+    damage: 60,
+    text: 'You may shuffle this Pokémon and all cards attached to it into your deck.'
+  }];
 
   public set: string = 'UPR';
   public setNumber: string = '107';

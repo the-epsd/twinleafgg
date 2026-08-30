@@ -11,29 +11,27 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 
 export class Sigilyph extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 110;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Tri Recharge',
-      cost: [P],
-      damage: 0,
-      text: 'Flip 3 coins. Attach a number of basic Energy cards up to the number of heads from your discard pile to your Benched Pokémon in any way you like.'
-    },
-    {
-      name: 'Psychic',
-      cost: [P, C],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'This attack does 30 more damage for each Energy attached to your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tri Recharge',
+    cost: [P],
+    damage: 0,
+    text: 'Flip 3 coins. Attach a number of basic Energy cards up to the number of heads from your discard pile to your Benched Pokémon in any way you like.'
+  }, {
+    name: 'Psychic',
+    cost: [P, C],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'This attack does 30 more damage for each Energy attached to your opponent\'s Active Pokémon.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'BRS';
   public setNumber: string = '66';
   public cardImage: string = 'assets/cardback.png';

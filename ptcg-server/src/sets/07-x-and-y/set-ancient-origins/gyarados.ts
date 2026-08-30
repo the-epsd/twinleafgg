@@ -13,26 +13,23 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Gyarados extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Magikarp';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 130;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Berserker Splash',
-      cost: [W, C, C],
-      damage: 80,
-      text: 'This attack does 10 damage to each Benched Pokémon (both yours and your opponent\'s). (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    },
-    {
-      name: 'Aqua Tail',
-      cost: [W, C, C, C],
-      damage: 90,
-      damageCalculation: '+',
-      text: 'Flip a coin for each [W] Energy attached to this Pokémon. This attack does 30 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Berserker Splash',
+    cost: [W, C, C],
+    damage: 80,
+    text: 'This attack does 10 damage to each Benched Pokémon (both yours and your opponent\'s). (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }, {
+    name: 'Aqua Tail',
+    cost: [W, C, C, C],
+    damage: 90,
+    damageCalculation: '+',
+    text: 'Flip a coin for each [W] Energy attached to this Pokémon. This attack does 30 more damage for each heads.'
+  }];
 
   public set: string = 'AOR';
   public setNumber: string = '20';

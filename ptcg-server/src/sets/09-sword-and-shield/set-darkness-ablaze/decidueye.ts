@@ -4,7 +4,15 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { GameMessage, PlayerType, PowerType, SlotType, StoreLike, State, StateUtils } from '../../../game';
+import {
+  GameMessage,
+  PlayerType,
+  PowerType,
+  SlotType,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
@@ -15,24 +23,26 @@ import { DAMAGE_OPPONENT_POKEMON } from '../../../game/store/prefabs/prefabs';
 export class Decidueye extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Dartrix';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 140;
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Deep Forest Camo',
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all damage done to this Pokémon by attacks from your opponent\'s Pokémon V and Pokémon-GX.'
-  }];
+  public powers = [
+    {
+      name: 'Deep Forest Camo',
+      powerType: PowerType.ABILITY,
+      text: "Prevent all damage done to this Pokémon by attacks from your opponent's Pokémon V and Pokémon-GX.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Splitting Arrow',
       cost: [G, C],
       damage: 90,
-      text: 'This attack also does 20 damage to 2 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "This attack also does 20 damage to 2 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -65,7 +75,7 @@ export class Decidueye extends PokemonCard {
         return state;
       }
 
-      if (sourceCard.tags.includes(CardTag.POKEMON_V) || sourceCard.tags.includes(CardTag.POKEMON_GX)) {
+      if (sourceCard.hasTag(CardTag.POKEMON_V) || sourceCard.hasTag(CardTag.POKEMON_GX)) {
         // Check if ability is blocked
         if (IS_ABILITY_BLOCKED(store, state, player, this)) {
           return state;
@@ -81,19 +91,23 @@ export class Decidueye extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const benchCount = opponent.bench.filter(b => b.cards.length > 0).length;
+      const benchCount = opponent.bench.filter((b) => b.cards.length > 0).length;
       if (benchCount > 0) {
         const max = Math.min(2, benchCount);
-        store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-          PlayerType.TOP_PLAYER,
-          [SlotType.BENCH],
-          { min: max, max: max, allowCancel: false }
-        ), selected => {
-          const targets = selected || [];
-          DAMAGE_OPPONENT_POKEMON(store, state, effect, 20, targets);
-        });
+        store.prompt(
+          state,
+          new ChoosePokemonPrompt(
+            player.id,
+            GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+            PlayerType.TOP_PLAYER,
+            [SlotType.BENCH],
+            { min: max, max: max, allowCancel: false },
+          ),
+          (selected) => {
+            const targets = selected || [];
+            DAMAGE_OPPONENT_POKEMON(store, state, effect, 20, targets);
+          },
+        );
       }
     }
 

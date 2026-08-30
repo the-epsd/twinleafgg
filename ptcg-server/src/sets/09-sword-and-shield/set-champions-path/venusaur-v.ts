@@ -7,12 +7,15 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP, YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../../game/store/prefabs/attack-effects';
+import {
+  YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP,
+  YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED,
+} from '../../../game/store/prefabs/attack-effects';
 
 export class VenusaurV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 220;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
@@ -22,14 +25,14 @@ export class VenusaurV extends PokemonCard {
       name: 'Pollen Bomb',
       cost: [G, G, C],
       damage: 80,
-      text: 'Your opponent\'s Active Pokémon is now Asleep and Poisoned.'
+      text: "Your opponent's Active Pokémon is now Asleep and Poisoned.",
     },
     {
       name: 'Solar Typhoon',
       cost: [G, G, G, C],
       damage: 220,
-      text: 'During your next turn, this Pokémon can\'t use Solar Typhoon.'
-    }
+      text: "During your next turn, this Pokémon can't use Solar Typhoon.",
+    },
   ];
 
   public regulationMark: string = 'D';

@@ -6,9 +6,9 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class KyuremEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 180;
   public weakness = [{ type: M }];
   public retreat = [C, C, C];
@@ -19,14 +19,14 @@ export class KyuremEx extends PokemonCard {
       cost: [C, C],
       damage: 30,
       damageCalculation: '+',
-      text: 'Does 10 more damage for each damage counter on this Pok\u00e9mon.'
+      text: 'Does 10 more damage for each damage counter on this Pok\u00e9mon.',
     },
     {
       name: 'Giga Frost',
       cost: [W, W, C, C],
       damage: 150,
-      text: 'Discard 2 [W] Energy attached to this Pok\u00e9mon.'
-    }
+      text: 'Discard 2 [W] Energy attached to this Pok\u00e9mon.',
+    },
   ];
 
   public set: string = 'PLB';

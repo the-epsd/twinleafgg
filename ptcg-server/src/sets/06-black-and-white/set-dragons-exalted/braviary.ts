@@ -7,27 +7,24 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Braviary extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Rufflet';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 100;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Slash',
-      cost: [C],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Fury Attack',
-      cost: [C, C, C],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 50 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Slash',
+    cost: [C],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Fury Attack',
+    cost: [C, C, C],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 50 damage times the number of heads.'
+  }];
 
   public set: string = 'DRX';
   public setNumber: string = '112';

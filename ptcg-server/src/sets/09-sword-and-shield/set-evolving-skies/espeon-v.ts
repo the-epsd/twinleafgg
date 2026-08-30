@@ -1,17 +1,30 @@
-import { PokemonCard, Stage, CardTag, CardType, StoreLike, State, CardTarget, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils, GameError } from '../../../game';
+import {
+  PokemonCard,
+  Stage,
+  CardTag,
+  CardType,
+  StoreLike,
+  State,
+  CardTarget,
+  ChoosePokemonPrompt,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  StateUtils,
+  GameError,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class EspeonV extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
   public regulationMark = 'E';
 
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 200;
 
@@ -26,14 +39,14 @@ export class EspeonV extends PokemonCard {
       name: 'Zen Shot',
       cost: [CardType.PSYCHIC],
       damage: 0,
-      text: 'This attack does 60 damage to 1 of your opponent\'s Pokémon V. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack does 60 damage to 1 of your opponent's Pokémon V. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Super Psy Bolt',
       cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
       damage: 120,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'EVS';
@@ -47,7 +60,6 @@ export class EspeonV extends PokemonCard {
   public fullName: string = 'Espeon V EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -69,21 +81,24 @@ export class EspeonV extends PokemonCard {
       if (blocked.length) {
         // Opponent has damaged benched Pokemon
 
-        state = store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-          PlayerType.TOP_PLAYER,
-          [SlotType.BENCH, SlotType.ACTIVE],
-          { min: 1, max: 1, allowCancel: false, blocked: blocked }
-        ), selected => {
-          const targets = selected || [];
-          DAMAGE_OPPONENT_POKEMON(store, state, effect, 60, targets);
-        });
+        state = store.prompt(
+          state,
+          new ChoosePokemonPrompt(
+            player.id,
+            GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+            PlayerType.TOP_PLAYER,
+            [SlotType.BENCH, SlotType.ACTIVE],
+            { min: 1, max: 1, allowCancel: false, blocked: blocked },
+          ),
+          (selected) => {
+            const targets = selected || [];
+            DAMAGE_OPPONENT_POKEMON(store, state, effect, 60, targets);
+          },
+        );
       }
 
       return state;
     }
     return state;
   }
-
 }

@@ -7,12 +7,17 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, CONFIRMATION_PROMPT, SWITCH_ACTIVE_WITH_BENCHED, GET_PLAYER_PRIZES } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  CONFIRMATION_PROMPT,
+  SWITCH_ACTIVE_WITH_BENCHED,
+  GET_PLAYER_PRIZES,
+} from '../../../game/store/prefabs/prefabs';
 
 export class GalladeEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 170;
   public weakness = [{ type: P }];
   public retreat = [C, C];
@@ -25,15 +30,15 @@ export class GalladeEx extends PokemonCard {
       name: 'Swift Lunge',
       cost: [P, C],
       damage: 30,
-      text: 'You may have your opponent switch his or her Active Pok\u00e9mon with 1 of his or her Benched Pok\u00e9mon.'
+      text: 'You may have your opponent switch his or her Active Pok\u00e9mon with 1 of his or her Benched Pok\u00e9mon.',
     },
     {
       name: 'Piercing Prizes',
       cost: [P, P, P],
       damage: 50,
       damageCalculation: '+',
-      text: 'This attack does 20 more damage for each of your remaining Prize cards.'
-    }
+      text: 'This attack does 20 more damage for each of your remaining Prize cards.',
+    },
   ];
 
   public set: string = 'ROS';
@@ -48,11 +53,11 @@ export class GalladeEx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const hasBench = opponent.bench.some(b => b.cards.length > 0);
+      const hasBench = opponent.bench.some((b) => b.cards.length > 0);
 
       if (hasBench) {
         this.usedSwiftLunge = true;
-        CONFIRMATION_PROMPT(store, state, player, result => {
+        CONFIRMATION_PROMPT(store, state, player, (result) => {
           this.wantsToSwitch = result;
         });
       }
@@ -63,7 +68,7 @@ export class GalladeEx extends PokemonCard {
       if (this.wantsToSwitch) {
         this.wantsToSwitch = false;
         const opponent = StateUtils.getOpponent(state, effect.player);
-        if (opponent.bench.some(b => b.cards.length > 0)) {
+        if (opponent.bench.some((b) => b.cards.length > 0)) {
           SWITCH_ACTIVE_WITH_BENCHED(store, state, opponent);
         }
       }

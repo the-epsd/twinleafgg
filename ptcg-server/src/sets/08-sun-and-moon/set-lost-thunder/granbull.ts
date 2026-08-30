@@ -7,14 +7,11 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 // LOT Granbull 138 (https://limitlesstcg.com/cards/LOT/138)
 export class Granbull extends PokemonCard {
-
-  public tags = [];
-
   public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom = 'Snubbull';
 
-  public cardType: CardType = CardType.FAIRY;
+  public cardType: CardType[] = [CardType.FAIRY];
 
   public hp: number = 130;
 
@@ -29,15 +26,15 @@ export class Granbull extends PokemonCard {
       name: 'All Out',
       cost: [CardType.FAIRY],
       damage: 30,
-      text: 'If you have no cards in your hand, this attack does 130 more damage.'
+      text: 'If you have no cards in your hand, this attack does 130 more damage.',
     },
 
     {
       name: 'Giant Fangs',
       cost: [CardType.FAIRY, CardType.FAIRY, CardType.FAIRY],
       damage: 110,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'LOT';

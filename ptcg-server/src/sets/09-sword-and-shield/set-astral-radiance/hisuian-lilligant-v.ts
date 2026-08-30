@@ -10,9 +10,9 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DRAW_CARDS_UNTIL_YOU_HAVE_X_CARDS_IN_HAND } from '../../../game/store/prefabs/attack-effects';
 
 export class HisuianLilligantV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 200;
   public weakness = [{ type: R }];
   public retreat = [C, C];
@@ -22,14 +22,14 @@ export class HisuianLilligantV extends PokemonCard {
       name: 'Dance Gracefully',
       cost: [],
       damage: 0,
-      text: 'Draw cards until you have 6 cards in your hand.'
+      text: 'Draw cards until you have 6 cards in your hand.',
     },
     {
       name: 'Leaf Step',
       cost: [G, G, C],
       damage: 130,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'F';

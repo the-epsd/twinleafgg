@@ -4,16 +4,26 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { CardTarget, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, StoreLike, State, StateUtils } from '../../../game';
+import {
+  CardTarget,
+  ChoosePokemonPrompt,
+  GameError,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class KleavorVstar extends PokemonCard {
-  public tags = [CardTag.POKEMON_VSTAR];
+  protected _tags = [CardTag.POKEMON_VSTAR];
   public stage: Stage = Stage.VSTAR;
   public evolvesFrom: string = 'Kleavor V';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 270;
   public weakness = [{ type: G }];
   public retreat = [C, C];
@@ -23,15 +33,15 @@ export class KleavorVstar extends PokemonCard {
       name: 'Axe Break',
       cost: [F, C],
       damage: 120,
-      text: 'This attack also does 60 damage to 1 of your opponent\'s Benched Pokémon V. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack also does 60 damage to 1 of your opponent's Benched Pokémon V. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Rampaging Star',
       cost: [F],
       damage: 30,
       damageCalculation: 'x',
-      text: 'This attack does 30 damage for each Pokémon in your discard pile. (You can\'t use more than 1 VSTAR Power in a game.)'
-    }
+      text: "This attack does 30 damage for each Pokémon in your discard pile. (You can't use more than 1 VSTAR Power in a game.)",
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -50,13 +60,14 @@ export class KleavorVstar extends PokemonCard {
 
       // Check if opponent has any benched Pokemon V
       let hasBenchedV = false;
-      opponent.bench.forEach(benchSpot => {
+      opponent.bench.forEach((benchSpot) => {
         const card = benchSpot.getPokemonCard();
-        if (card && (
-          card.tags.includes(CardTag.POKEMON_V) ||
-          card.tags.includes(CardTag.POKEMON_VMAX) ||
-          card.tags.includes(CardTag.POKEMON_VSTAR)
-        )) {
+        if (
+          card &&
+          (card.hasTag(CardTag.POKEMON_V) ||
+            card.hasTag(CardTag.POKEMON_VMAX) ||
+            card.hasTag(CardTag.POKEMON_VSTAR))
+        ) {
           hasBenchedV = true;
         }
       });
@@ -67,27 +78,33 @@ export class KleavorVstar extends PokemonCard {
 
       const blocked: CardTarget[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (list, card, target) => {
-        if (!card.tags.includes(CardTag.POKEMON_V)
-          && !card.tags.includes(CardTag.POKEMON_VMAX)
-          && !card.tags.includes(CardTag.POKEMON_VSTAR)) {
+        if (
+          !card.hasTag(CardTag.POKEMON_V) &&
+          !card.hasTag(CardTag.POKEMON_VMAX) &&
+          !card.hasTag(CardTag.POKEMON_VSTAR)
+        ) {
           blocked.push(target);
         }
       });
 
-      state = store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false, blocked }
-      ), targets => {
-        if (!targets || targets.length === 0) {
-          return;
-        }
-        const damageEffect = new PutDamageEffect(effect, 60);
-        damageEffect.target = targets[0];
-        store.reduceEffect(state, damageEffect);
-      });
+      state = store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.BENCH],
+          { min: 1, max: 1, allowCancel: false, blocked },
+        ),
+        (targets) => {
+          if (!targets || targets.length === 0) {
+            return;
+          }
+          const damageEffect = new PutDamageEffect(effect, 60);
+          damageEffect.target = targets[0];
+          store.reduceEffect(state, damageEffect);
+        },
+      );
     }
 
     // Attack 2: Rampaging Star (VSTAR Power)
@@ -102,7 +119,9 @@ export class KleavorVstar extends PokemonCard {
 
       player.usedVSTAR = true;
 
-      const pokemonCount = player.discard.cards.filter(c => c.superType === SuperType.POKEMON).length;
+      const pokemonCount = player.discard.cards.filter(
+        (c) => c.superType === SuperType.POKEMON,
+      ).length;
       effect.damage = 30 * pokemonCount;
     }
 

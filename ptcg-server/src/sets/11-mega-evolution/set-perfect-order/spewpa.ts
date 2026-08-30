@@ -2,14 +2,14 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { CoinFlipPrompt } from '../../../game/store/prompts/coin-flip-prompt';
-import { GameMessage } from '../../../game';
-import { WAS_ATTACK_USED, PREVENT_DAMAGE } from '../../../game/store/prefabs/prefabs';
+
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Spewpa extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Scatterbug';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
@@ -22,6 +22,7 @@ export class Spewpa extends PokemonCard {
   }];
 
   public regulationMark = 'J';
+
   public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '8';
@@ -31,10 +32,7 @@ export class Spewpa extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      state = store.prompt(state, new CoinFlipPrompt(
-        player.id,
-        GameMessage.COIN_FLIP
-      ), result => {
+      state = COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
           PREVENT_DAMAGE(store, state, effect, this);
         }

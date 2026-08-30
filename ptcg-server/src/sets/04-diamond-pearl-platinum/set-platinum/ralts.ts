@@ -7,25 +7,22 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../../game/s
 
 export class Ralts extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: P, value: +10 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Future Sight',
-      cost: [],
-      damage: 0,
-      text: 'Look at the top 5 cards in either player\'s deck and put them back on top of that player\'s deck in any order.'
-    },
-    {
-      name: 'Hypnoblast',
-      cost: [P],
-      damage: 10,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Asleep.'
-    }
-  ];
+  public attacks = [{
+    name: 'Future Sight',
+    cost: [],
+    damage: 0,
+    text: 'Look at the top 5 cards in either player\'s deck and put them back on top of that player\'s deck in any order.'
+  }, {
+    name: 'Hypnoblast',
+    cost: [P],
+    damage: 10,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Asleep.'
+  }];
 
   public set: string = 'PL';
   public name: string = 'Ralts';
@@ -109,11 +106,11 @@ export class Ralts extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, (result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {
           YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
         }
-      }));
+      });
     }
 
     return state;

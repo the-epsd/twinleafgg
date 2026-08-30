@@ -9,6 +9,7 @@ import { Croagunk } from './croagunk';
 import { Darkrai } from './darkrai';
 import { Empoleon } from './empoleon';
 import { Eevee } from './eevee';
+import { Moltres } from './moltres';
 import { Prinplup } from './prinplup';
 import { QuickBall } from './quick-ball';
 import { Scizor } from './scizor';
@@ -30,6 +31,7 @@ export const setMajesticDawn: Card[] = [
   new Darkrai(),
   new Empoleon(),
   new Eevee(),
+  new Moltres(),
   new Prinplup(),
   new QuickBall(),
   new Scizor(),

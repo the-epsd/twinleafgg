@@ -11,26 +11,23 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Quilladin extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Chespin';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Tackle',
-      cost: [G, C],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Pin Missile',
-      cost: [G, G, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 40 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tackle',
+    cost: [G, C],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Pin Missile',
+    cost: [G, G, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 40 damage times the number of heads.'
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '10';

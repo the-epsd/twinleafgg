@@ -2,7 +2,12 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_CONFUSION_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  BLOCK_IF_GX_ATTACK_USED,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { CardTag, CardType, Stage, SuperType } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
@@ -14,10 +19,10 @@ import { Effect } from '../../../game/store/effects/effect';
 import { MoveEnergyPrompt, PlayerType, SlotType, State, StoreLike } from '../../../game';
 import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 export class AlolanExeggutorGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Exeggcute';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 220;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];
@@ -27,20 +32,20 @@ export class AlolanExeggutorGx extends PokemonCard {
       name: 'Tropical Head',
       cost: [G],
       damage: 0,
-      text: 'This attack does 20 damage times the amount of Energy attached to this Pokémon to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack does 20 damage times the amount of Energy attached to this Pokémon to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Dragon Hammer',
       cost: [G, C, C, C],
       damage: 120,
-      text: 'Your opponent\'s Active Pokémon is now Confused.'
+      text: "Your opponent's Active Pokémon is now Confused.",
     },
     {
       name: 'Tower-Go-Round-GX',
       cost: [G, C, C, C],
       damage: 180,
-      text: 'Move any number of Energy from your Pokémon to your other Pokémon in any way you like. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Move any number of Energy from your Pokémon to your other Pokémon in any way you like. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'CIN';
@@ -61,29 +66,33 @@ export class AlolanExeggutorGx extends PokemonCard {
       const checkEnergy = new CheckProvidedEnergyEffect(player, player.active);
       store.reduceEffect(state, checkEnergy);
       let energyCount = 0;
-      checkEnergy.energyMap.forEach(em => {
+      checkEnergy.energyMap.forEach((em) => {
         energyCount += em.provides.length;
       });
       const totalDamage = 20 * energyCount;
 
-      store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        const target = selected[0];
-        if (target === opponent.active) {
-          const damageEffect = new DealDamageEffect(effect, totalDamage);
-          damageEffect.target = target;
-          store.reduceEffect(state, damageEffect);
-        } else {
-          const damageEffect = new PutDamageEffect(effect, totalDamage);
-          damageEffect.target = target;
-          store.reduceEffect(state, damageEffect);
-        }
-      });
+      store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          const target = selected[0];
+          if (target === opponent.active) {
+            const damageEffect = new DealDamageEffect(effect, totalDamage);
+            damageEffect.target = target;
+            store.reduceEffect(state, damageEffect);
+          } else {
+            const damageEffect = new PutDamageEffect(effect, totalDamage);
+            damageEffect.target = target;
+            store.reduceEffect(state, damageEffect);
+          }
+        },
+      );
     }
 
     // Attack 2: Dragon Hammer
@@ -105,24 +114,28 @@ export class AlolanExeggutorGx extends PokemonCard {
       this.usedTowerGoRound = false;
       const player = effect.player;
 
-      store.prompt(state, new MoveEnergyPrompt(
-        player.id,
-        GameMessage.MOVE_ENERGY_CARDS,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY },
-        { allowCancel: true }
-      ), transfers => {
-        if (transfers === null) {
-          return;
-        }
+      store.prompt(
+        state,
+        new MoveEnergyPrompt(
+          player.id,
+          GameMessage.MOVE_ENERGY_CARDS,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { superType: SuperType.ENERGY },
+          { allowCancel: true },
+        ),
+        (transfers) => {
+          if (transfers === null) {
+            return;
+          }
 
-        for (const transfer of transfers) {
-          const source = StateUtils.getTarget(state, player, transfer.from);
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          source.moveCardTo(transfer.card, target);
-        }
-      });
+          for (const transfer of transfers) {
+            const source = StateUtils.getTarget(state, player, transfer.from);
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            source.moveCardTo(transfer.card, target);
+          }
+        },
+      );
     }
 
     if (effect instanceof EndTurnEffect) {

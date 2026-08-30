@@ -68,7 +68,7 @@ function* useSecretAttack(next: Function, store: StoreLike, state: State,
 export class Incineroar extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Torracat';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 170;
   public weakness = [{ type: W }];
   public retreat = [C, C, C];

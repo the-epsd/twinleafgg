@@ -1,44 +1,57 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PowerType } from '../../../game/store/card/pokemon-types';
-import { StoreLike, State, GameMessage, GameError, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType, PokemonCardList } from '../../../game';
+import {
+  StoreLike,
+  State,
+  GameMessage,
+  GameError,
+  StateUtils,
+  ChoosePokemonPrompt,
+  PlayerType,
+  SlotType,
+  PokemonCardList,
+} from '../../../game';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { CONFIRMATION_PROMPT, IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefabs/attack-effects';
 import {
-  HANDLE_ABILITY_BLOCK,
-  POKEPOWER_TYPES,
-} from '../../../game/store/prefabs/ability-lock';
+  CONFIRMATION_PROMPT,
+  IS_POKEBODY_BLOCKED,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
+import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefabs/attack-effects';
+import { HANDLE_ABILITY_BLOCK, POKEPOWER_TYPES } from '../../../game/store/prefabs/ability-lock';
 
 export class Ursaring extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Teddiursa';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 80;
   public retreat = [C, C];
   public weakness = [{ type: F }];
 
-  public powers = [{
-    name: 'Intimidating Ring',
-    powerType: PowerType.POKEBODY,
-    text: 'As long as Ursaring is your Active Pokémon, your opponent\'s Basic Pokémon can\'t attack or use any Poké-Powers.'
-  }];
+  public powers = [
+    {
+      name: 'Intimidating Ring',
+      powerType: PowerType.POKEBODY,
+      text: "As long as Ursaring is your Active Pokémon, your opponent's Basic Pokémon can't attack or use any Poké-Powers.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Drag Off',
       cost: [C, C],
       damage: 20,
-      text: 'Before doing damage, you may switch 1 of your opponent\'s Benched Pokémon with the Defending Pokémon. If you do, this attack does 20 damage to the new Defending Pokémon. Your opponent chooses the Defending Pokémon to switch.'
+      text: "Before doing damage, you may switch 1 of your opponent's Benched Pokémon with the Defending Pokémon. If you do, this attack does 20 damage to the new Defending Pokémon. Your opponent chooses the Defending Pokémon to switch.",
     },
     {
       name: 'Rock Smash',
       cost: [C, C, C],
       damage: 40,
       damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 40 damage plus 20 more damage.'
-    }
+      text: 'Flip a coin. If heads, this attack does 40 damage plus 20 more damage.',
+    },
   ];
 
   public set: string = 'UF';
@@ -48,7 +61,6 @@ export class Ursaring extends PokemonCard {
   public setNumber: string = '18';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof AttackEffect && effect.source.getPokemonCard()?.stage === Stage.BASIC) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -62,58 +74,72 @@ export class Ursaring extends PokemonCard {
       }
     }
 
-    HANDLE_ABILITY_BLOCK(effect, ({ player, card }) => {
-      const opponent = StateUtils.getOpponent(state, player);
+    HANDLE_ABILITY_BLOCK(
+      effect,
+      ({ player, card }) => {
+        const opponent = StateUtils.getOpponent(state, player);
 
-      if (IS_POKEBODY_BLOCKED(store, state, opponent, this)) {
-        return false;
-      }
-
-      if (opponent.active.getPokemonCard() !== this) {
-        return false;
-      }
-
-      if (card.tags.includes(CardTag.POKEMON_ex)) {
-        return false;
-      }
-
-      try {
-        const cardList = StateUtils.findCardList(state, card);
-        if (cardList instanceof PokemonCardList) {
-          return cardList.getPokemons().length === 1 || card.tags.includes(CardTag.LEGEND);
+        if (IS_POKEBODY_BLOCKED(store, state, opponent, this)) {
+          return false;
         }
-      } catch {
-        return false;
-      }
-      return card.stage === Stage.BASIC;
-    }, {
-      powerTypes: POKEPOWER_TYPES,
-      error: GameMessage.BLOCKED_BY_EFFECT,
-    });
+
+        if (opponent.active.getPokemonCard() !== this) {
+          return false;
+        }
+
+        if (card.hasTag(CardTag.POKEMON_ex)) {
+          return false;
+        }
+
+        try {
+          const cardList = StateUtils.findCardList(state, card);
+          if (cardList instanceof PokemonCardList) {
+            return cardList.getPokemons().length === 1 || card.hasTag(CardTag.LEGEND);
+          }
+        } catch {
+          return false;
+        }
+        return card.stage === Stage.BASIC;
+      },
+      {
+        powerTypes: POKEPOWER_TYPES,
+        error: GameMessage.BLOCKED_BY_EFFECT,
+      },
+    );
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const bench = opponent.bench.filter(bench => bench.cards.length > 0);
+      const bench = opponent.bench.filter((bench) => bench.cards.length > 0);
 
       if (bench.length === 0) {
         return state;
       }
 
-      CONFIRMATION_PROMPT(store, state, player, result => {
-        if (result) {
-          store.prompt(state, new ChoosePokemonPrompt(
-            player.id,
-            GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-            PlayerType.TOP_PLAYER,
-            [SlotType.BENCH],
-            { allowCancel: false }
-          ), result => {
-            const cardList = result[0];
-            opponent.switchPokemon(cardList);
-          });
-        }
-      }, GameMessage.WANT_TO_SWITCH_POKEMON);
+      CONFIRMATION_PROMPT(
+        store,
+        state,
+        player,
+        (result) => {
+          if (result) {
+            store.prompt(
+              state,
+              new ChoosePokemonPrompt(
+                player.id,
+                GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+                PlayerType.TOP_PLAYER,
+                [SlotType.BENCH],
+                { allowCancel: false },
+              ),
+              (result) => {
+                const cardList = result[0];
+                opponent.switchPokemon(cardList);
+              },
+            );
+          }
+        },
+        GameMessage.WANT_TO_SWITCH_POKEMON,
+      );
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
@@ -122,5 +148,4 @@ export class Ursaring extends PokemonCard {
 
     return state;
   }
-
 }

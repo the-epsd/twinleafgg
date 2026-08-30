@@ -8,15 +8,10 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { ABILITY_USED, BLOCK_IF_DECK_EMPTY, IS_ABILITY_BLOCKED, MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class MrMime extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = P;
-
+  public cardType: CardType[] = [P];
   public hp: number = 80;
-
   public weakness = [{ type: P }];
-
   public retreat = [C];
 
   public powers: Power[] = [{
@@ -36,13 +31,9 @@ export class MrMime extends PokemonCard {
   ];
 
   public set: string = 'DET';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '11';
-
   public name: string = 'Mr. Mime';
-
   public fullName: string = 'Mr. Mime DET';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

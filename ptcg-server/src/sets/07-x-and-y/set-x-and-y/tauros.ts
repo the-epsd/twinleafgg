@@ -10,26 +10,23 @@ import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, MULTIPLE_COIN_FLIP
 
 export class Tauros extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 110;
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Take Down',
-      cost: [C],
-      damage: 30,
-      text: 'This Pokémon does 10 damage to itself.'
-    },
-    {
-      name: 'Seething Anger',
-      cost: [C, C, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip a coin for each damage counter on this Pokémon. This attack does 30 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Take Down',
+    cost: [C],
+    damage: 30,
+    text: 'This Pokémon does 10 damage to itself.'
+  }, {
+    name: 'Seething Anger',
+    cost: [C, C, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip a coin for each damage counter on this Pokémon. This attack does 30 damage times the number of heads.'
+  }];
 
   public set: string = 'XY';
   public setNumber: string = '100';

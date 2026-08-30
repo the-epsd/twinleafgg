@@ -12,26 +12,23 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Tangrowth extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Tangela';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 140;
   public weakness = [{ type: R }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Giga Drain',
-      cost: [G],
-      damage: 30,
-      text: 'Heal from this Pokémon the same amount of damage you did to your opponent\'s Active Pokémon.'
-    },
-    {
-      name: 'Crosswise Whip',
-      cost: [C, C, C, C],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 50 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Giga Drain',
+    cost: [G],
+    damage: 30,
+    text: 'Heal from this Pokémon the same amount of damage you did to your opponent\'s Active Pokémon.'
+  }, {
+    name: 'Crosswise Whip',
+    cost: [C, C, C, C],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 50 damage for each heads.'
+  }];
 
   public set: string = 'BUS';
   public setNumber: string = '8';

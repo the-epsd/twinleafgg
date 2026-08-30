@@ -8,7 +8,7 @@ import { ABILITY_USED, ADD_PARALYZED_TO_PLAYER_ACTIVE, ADD_POISON_TO_PLAYER_ACTI
 export class Venomoth extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Venonat';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public retreat = [C];

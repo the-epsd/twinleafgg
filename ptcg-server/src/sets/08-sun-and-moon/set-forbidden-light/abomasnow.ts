@@ -13,7 +13,7 @@ import { AttachEnergyPrompt, EnergyCard, PlayerType, PowerType, SlotType, State,
 export class Abomasnow extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Snover';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 130;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];

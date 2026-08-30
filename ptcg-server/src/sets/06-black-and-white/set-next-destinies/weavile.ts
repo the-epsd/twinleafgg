@@ -8,27 +8,24 @@ import { AttackEffect } from '../../../game/store/effects/game-effects';
 export class Weavile extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Sneasel';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Dark Penalty',
-      cost: [D],
-      damage: 90,
-      text: 'If the Defending Pokémon has no Pokémon Tool card attached to it, this attack does nothing.'
-    },
-    {
-      name: 'Fury Swipes',
-      cost: [C, C, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 30 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Dark Penalty',
+    cost: [D],
+    damage: 90,
+    text: 'If the Defending Pokémon has no Pokémon Tool card attached to it, this attack does nothing.'
+  }, {
+    name: 'Fury Swipes',
+    cost: [C, C, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 30 damage times the number of heads.'
+  }];
 
   public set: string = 'NXD';
   public setNumber: string = '70';

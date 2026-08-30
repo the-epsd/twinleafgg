@@ -10,10 +10,10 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class CharizardVstar extends PokemonCard {
-  public tags = [CardTag.POKEMON_VSTAR];
+  protected _tags = [CardTag.POKEMON_VSTAR];
   public stage: Stage = Stage.VSTAR;
   public evolvesFrom: string = 'Charizard V';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 280;
   public weakness = [{ type: W }];
   public retreat = [C, C];
@@ -24,14 +24,14 @@ export class CharizardVstar extends PokemonCard {
       cost: [R, R, C],
       damage: 130,
       damageCalculation: '+',
-      text: 'If this Pokémon has any damage counters on it, this attack does 100 more damage.'
+      text: 'If this Pokémon has any damage counters on it, this attack does 100 more damage.',
     },
     {
       name: 'Star Blaze',
       cost: [R, R, R, C],
       damage: 320,
-      text: 'Discard 2 Energy from this Pokémon. (You can\'t use more than 1 VSTAR Power in a game.)'
-    }
+      text: "Discard 2 Energy from this Pokémon. (You can't use more than 1 VSTAR Power in a game.)",
+    },
   ];
 
   public regulationMark: string = 'F';

@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED, AFTER_ATTACK, COIN_FLIP_PROMPT, ADD_CONFUSION_TO_PLAYE
 export class Dusclops extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Duskull';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: D, value: +20 }];
   public resistance = [{ type: C, value: -20 }];
@@ -18,8 +18,7 @@ export class Dusclops extends PokemonCard {
     cost: [P, C],
     damage: 20,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
-  },
-  {
+  }, {
     name: 'Trick Room',
     cost: [P, C, C],
     damage: 40,

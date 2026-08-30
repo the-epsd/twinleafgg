@@ -7,7 +7,7 @@ import { CheckAttackCostEffect } from '../../../game/store/effects/check-effects
 export class Grapploct extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Clobbopus';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 140;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];

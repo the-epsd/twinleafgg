@@ -11,7 +11,7 @@ export class Flygon extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Vibrava';
   public hp: number = 150;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public weakness = [{ type: G }];
   public resistance = [];
   public retreat = [C];

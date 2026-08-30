@@ -12,26 +12,23 @@ import { Effect } from '../../../game/store/effects/effect';
 import { Card, EnergyCard, State, StoreLike } from '../../../game';
 export class Pachirisu extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Snuggly Generator',
-      cost: [L],
-      damage: 0,
-      text: 'For each of your Benched Pokémon that has the Nuzzle attack, search your deck for a [L] Energy card and attach it to that Pokémon. Then, shuffle your deck.'
-    },
-    {
-      name: 'Nuzzle',
-      cost: [L],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Snuggly Generator',
+    cost: [L],
+    damage: 0,
+    text: 'For each of your Benched Pokémon that has the Nuzzle attack, search your deck for a [L] Energy card and attach it to that Pokémon. Then, shuffle your deck.'
+  }, {
+    name: 'Nuzzle',
+    cost: [L],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'UPR';
   public setNumber: string = '49';

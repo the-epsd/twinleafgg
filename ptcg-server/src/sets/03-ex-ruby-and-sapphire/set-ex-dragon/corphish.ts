@@ -5,7 +5,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Corphish extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 40;
   public weakness = [{ type: L }];
   public retreat = [C];
@@ -15,8 +15,7 @@ export class Corphish extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Poisoned.'
-  },
-  {
+  }, {
     name: 'Bubble',
     cost: [W],
     damage: 10,

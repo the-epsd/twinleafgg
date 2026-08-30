@@ -10,9 +10,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Smeargle extends PokemonCard {
-  public tags = [CardTag.FUSION_STRIKE];
+  protected _tags = [CardTag.FUSION_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -22,14 +22,14 @@ export class Smeargle extends PokemonCard {
       name: 'Sketching Trash',
       cost: [C],
       damage: 0,
-      text: 'Put up to 2 Fusion Strike Trainer cards from your discard pile into your hand.'
+      text: 'Put up to 2 Fusion Strike Trainer cards from your discard pile into your hand.',
     },
     {
       name: 'Tail Whap',
       cost: [C, C, C],
       damage: 80,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -45,9 +45,11 @@ export class Smeargle extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const fusionTrainers = player.discard.cards.filter(c =>
-        c instanceof TrainerCard && c.superType === SuperType.TRAINER &&
-        c.tags && c.tags.includes(CardTag.FUSION_STRIKE)
+      const fusionTrainers = player.discard.cards.filter(
+        (c) =>
+          c instanceof TrainerCard &&
+          c.superType === SuperType.TRAINER &&
+          c.hasTag(CardTag.FUSION_STRIKE),
       );
       if (fusionTrainers.length === 0) {
         return state;
@@ -56,25 +58,30 @@ export class Smeargle extends PokemonCard {
       // Build blocked list for non-Fusion-Strike trainers
       const blocked: number[] = [];
       player.discard.cards.forEach((c, index) => {
-        const isFusionTrainer = c instanceof TrainerCard &&
+        const isFusionTrainer =
+          c instanceof TrainerCard &&
           c.superType === SuperType.TRAINER &&
-          c.tags && c.tags.includes(CardTag.FUSION_STRIKE);
+          c.hasTag(CardTag.FUSION_STRIKE);
         if (!isFusionTrainer) {
           blocked.push(index);
         }
       });
 
       const max = Math.min(2, fusionTrainers.length);
-      store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.discard,
-        { superType: SuperType.TRAINER },
-        { min: 0, max, allowCancel: false, blocked }
-      ), selected => {
-        const cards = selected || [];
-        player.discard.moveCardsTo(cards, player.hand);
-      });
+      store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.discard,
+          { superType: SuperType.TRAINER },
+          { min: 0, max, allowCancel: false, blocked },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          player.discard.moveCardsTo(cards, player.hand);
+        },
+      );
     }
 
     return state;

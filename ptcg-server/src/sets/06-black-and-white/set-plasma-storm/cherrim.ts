@@ -15,7 +15,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 export class Cherrim extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Cherubi';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -20 }];
@@ -28,15 +28,13 @@ export class Cherrim extends PokemonCard {
     text: 'Once during your turn (before your attack), you may heal 20 damage from 1 of your Pokémon that has any [G] Energy attached to it.'
   }];
 
-  public attacks = [
-    {
-      name: 'Random Peck',
-      cost: [G, C],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Random Peck',
+    cost: [G, C],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '7';

@@ -6,7 +6,7 @@ import { WAS_ATTACK_USED, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH, COIN_
 
 export class Eevee extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 50;
   public weakness = [{ type: F, value: +10 }];
   public retreat = [C];
@@ -16,8 +16,7 @@ export class Eevee extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Search your deck for as many Eevee as you like and put them onto your Bench. Shuffle your deck afterward.'
-  },
-  {
+  }, {
     name: 'Lunge',
     cost: [C],
     damage: 20,

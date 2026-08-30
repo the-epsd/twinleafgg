@@ -24,10 +24,13 @@ import { EnergySticker } from './energy-sticker';
 import { EreikasInvitation } from './erikas-invitation';
 import { Fearow } from './fearow';
 import { BulbasaurIR, IvysaurIR, CharmanderIR, CharmeleonIR, SquirtleIR, NidokingIR, VenusaurexFA, CharizardexFA, BlastoiseexFA, ArbokexFA, KangaskhanexFA, ZapdosexFA, MewexFA, ErikasInvitationFA, GiovannisCharismaFA, VenusaurexSIR, CharizardexSIR, BlastoiseexSIR, ZapdosexSIR, ErikasInvitationSIR, GiovannisCharismaSIR, MewexHR, SwitchHR, BasicPsychicEnergyHR, WartortleIR } from './full-art';
+import { Gastly } from './gastly';
+import { Gengar } from './gengar';
 import { GiovannisCharisma } from './giovannis-charisma';
 import { Gloom } from './gloom';
 import { Golbat } from './golbat';
 import { Grabber } from './grabber';
+import { Haunter } from './haunter';
 import { Hitmonchan } from './hitmonchan';
 import { Hitmonlee } from './hitmonlee';
 import { Ivysaur } from './ivysaur';
@@ -55,6 +58,7 @@ import { Pidgeotto } from './pidgeotto';
 import { Pidgey } from './pidgey';
 import { Ponyta } from './ponyta';
 import { ProtectiveGoggles } from './protective-goggles';
+import { Raichu } from './raichu';
 import { RigidBand } from './rigid-band';
 import { Sandshrew } from './sandshrew';
 import { Scyther } from './scyther';
@@ -99,10 +103,13 @@ export const setPokemon151: Card[] = [
   new EnergySticker(),
   new EreikasInvitation(),
   new Fearow(),
+  new Gastly(),
+  new Gengar(),
   new GiovannisCharisma(),
   new Gloom(),
   new Golbat(),
   new Grabber(),
+  new Haunter(),
   new Hitmonchan(),
   new Hitmonlee(),
   new Ivysaur(),
@@ -129,6 +136,7 @@ export const setPokemon151: Card[] = [
   new Pidgey(),
   new Ponyta(),
   new ProtectiveGoggles(),
+  new Raichu(),
   new RigidBand(),
   new Sandshrew(),
   new Scyther(),

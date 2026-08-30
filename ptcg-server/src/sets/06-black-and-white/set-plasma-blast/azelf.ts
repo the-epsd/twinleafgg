@@ -8,7 +8,7 @@ import { EnergyCard } from '../../../game/store/card/energy-card';
 
 export class Azelf extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: P }];
   public retreat = [C];

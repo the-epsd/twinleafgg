@@ -67,7 +67,7 @@ export class Dusknoir extends PokemonCard {
 
   public evolvesFrom = 'Dusclops';
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 130;
 

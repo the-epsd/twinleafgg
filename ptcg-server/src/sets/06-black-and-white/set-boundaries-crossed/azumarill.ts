@@ -11,25 +11,22 @@ import { HEAL_X_DAMAGE_FROM_THIS_POKEMON, MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK
 export class Azumarill extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Marill';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Deep Dive',
-      cost: [C, C],
-      damage: 0,
-      text: 'Flip 2 coins. For each heads, heal 40 damage from this Pokémon.'
-    },
-    {
-      name: 'Aqua Sonic',
-      cost: [W, W, C],
-      damage: 70,
-      text: 'This attack\'s damage isn\'t affected by Resistance.'
-    }
-  ];
+  public attacks = [{
+    name: 'Deep Dive',
+    cost: [C, C],
+    damage: 0,
+    text: 'Flip 2 coins. For each heads, heal 40 damage from this Pokémon.'
+  }, {
+    name: 'Aqua Sonic',
+    cost: [W, W, C],
+    damage: 70,
+    text: 'This attack\'s damage isn\'t affected by Resistance.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '37';

@@ -3,14 +3,14 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { BLOCK_RETREAT, MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED } from '../../../game/store/prefabs/attack-effects';
 export class Scovillainex extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Capsakid';
-  public tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = G;
+  protected _tags = [CardTag.POKEMON_ex];
+  public cardType: CardType[] = [G];
   public hp: number = 260;
   public weakness = [{ type: R }];
   public retreat = [C, C];
@@ -20,14 +20,14 @@ export class Scovillainex extends PokemonCard {
       name: 'Chili Snapper Bind',
       cost: [C],
       damage: 0,
-      text: 'Your opponent\'s Active Pokémon is now Burned. The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
+      text: "Your opponent's Active Pokémon is now Burned. The Defending Pokémon can't retreat during your opponent's next turn.",
     },
     {
       name: 'Two-Headed Crushing',
       cost: [G, G],
       damage: 140,
-      text: 'Discard a random card from your opponent\'s hand. Discard the top card of your opponent\'s deck.'
-    }
+      text: "Discard a random card from your opponent's hand. Discard the top card of your opponent's deck.",
+    },
   ];
 
   public regulationMark = 'G';
@@ -37,14 +37,13 @@ export class Scovillainex extends PokemonCard {
   public name: string = 'Scovillain ex';
   public fullName: string = 'Scovillain ex TEF';
 
-  public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Chili Snapper Bind
     if (WAS_ATTACK_USED(effect, 0, this)) {
       YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED(store, state, effect);
       return BLOCK_RETREAT(store, state, effect, this);
     }
+    // Two-Headed Crushing
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -54,9 +53,9 @@ export class Scovillainex extends PokemonCard {
         const randomCard = opponent.hand.cards[randomIndex];
         opponent.hand.moveCardTo(randomCard, opponent.discard);
       }
-
       MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: 1, sourceCard: this, sourceEffect: this.attacks[1] });
     }
+
     return state;
   }
 }

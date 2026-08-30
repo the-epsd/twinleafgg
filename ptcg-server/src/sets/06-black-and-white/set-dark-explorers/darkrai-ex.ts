@@ -1,20 +1,30 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PowerType, ChoosePokemonPrompt, PlayerType, SlotType, GameMessage } from '../../../game';
+import {
+  StoreLike,
+  State,
+  StateUtils,
+  PowerType,
+  ChoosePokemonPrompt,
+  PlayerType,
+  SlotType,
+  GameMessage,
+} from '../../../game';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { CheckRetreatCostEffect, CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
+import {
+  CheckRetreatCostEffect,
+  CheckProvidedEnergyEffect,
+} from '../../../game/store/effects/check-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
-
 export class DarkraiEx extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
 
   public hp: number = 180;
 
@@ -24,21 +34,23 @@ export class DarkraiEx extends PokemonCard {
 
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Dark Cloak',
-    powerType: PowerType.ABILITY,
-    text: 'Each of your Pokémon that has any [D] Energy attached to it ' +
-      'has no Retreat Cost.'
-  }];
+  public powers = [
+    {
+      name: 'Dark Cloak',
+      powerType: PowerType.ABILITY,
+      text: 'Each of your Pokémon that has any [D] Energy attached to it ' + 'has no Retreat Cost.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Night Spear',
       cost: [D, D, C],
       damage: 90,
-      text: 'Does 30 damage to 1 of your opponent\'s Benched Pokémon. ' +
-        '(Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text:
+        "Does 30 damage to 1 of your opponent's Benched Pokémon. " +
+        "(Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public set: string = 'DEX';
@@ -52,30 +64,33 @@ export class DarkraiEx extends PokemonCard {
   public setNumber: string = '63';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+      const hasBenched = opponent.bench.some((b) => b.cards.length > 0);
       if (!hasBenched) {
         return state;
       }
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.BENCH],
-        { allowCancel: false }
-      ), targets => {
-        if (!targets || targets.length === 0) {
-          return;
-        }
-        const damageEffect = new PutDamageEffect(effect, 30);
-        damageEffect.target = targets[0];
-        store.reduceEffect(state, damageEffect);
-      });
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.BENCH],
+          { allowCancel: false },
+        ),
+        (targets) => {
+          if (!targets || targets.length === 0) {
+            return;
+          }
+          const damageEffect = new PutDamageEffect(effect, 30);
+          damageEffect.target = targets[0];
+          store.reduceEffect(state, damageEffect);
+        },
+      );
     }
 
     if (effect instanceof CheckRetreatCostEffect) {
@@ -101,11 +116,15 @@ export class DarkraiEx extends PokemonCard {
       if (hasDarknessEnergy) {
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
+          const stub = new PowerEffect(
+            player,
+            {
+              name: 'test',
+              powerType: PowerType.ABILITY,
+              text: '',
+            },
+            this,
+          );
           store.reduceEffect(state, stub);
         } catch {
           return state;
@@ -119,5 +138,4 @@ export class DarkraiEx extends PokemonCard {
 
     return state;
   }
-
 }

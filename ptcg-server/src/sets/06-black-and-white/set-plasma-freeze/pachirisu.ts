@@ -10,25 +10,22 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Pachirisu extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Minor Errand-Running',
-      cost: [C],
-      damage: 0,
-      text: 'Search your deck for 2 basic Energy cards, reveal them, and put them into your hand. Shuffle your deck afterward.'
-    },
-    {
-      name: 'Electric Tail',
-      cost: [L],
-      damage: 10,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Minor Errand-Running',
+    cost: [C],
+    damage: 0,
+    text: 'Search your deck for 2 basic Energy cards, reveal them, and put them into your hand. Shuffle your deck afterward.'
+  }, {
+    name: 'Electric Tail',
+    cost: [L],
+    damage: 10,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'PLF';
   public setNumber: string = '37';

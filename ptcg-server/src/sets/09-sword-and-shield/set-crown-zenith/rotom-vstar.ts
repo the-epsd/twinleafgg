@@ -3,27 +3,50 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, TrainerType, BoardEffect } from '../../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, GameError, GameMessage, PlayerType, PowerType, StoreLike, State } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  TrainerType,
+  BoardEffect,
+} from '../../../game/store/card/card-types';
+import {
+  Card,
+  ChooseCardsPrompt,
+  GameError,
+  GameMessage,
+  PlayerType,
+  PowerType,
+  StoreLike,
+  State,
+} from '../../../game';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  DRAW_CARDS,
+} from '../../../game/store/prefabs/prefabs';
 
 export class RotomVstar extends PokemonCard {
-  public tags = [CardTag.POKEMON_VSTAR];
+  protected _tags = [CardTag.POKEMON_VSTAR];
   public stage: Stage = Stage.VSTAR;
   public evolvesFrom: string = 'Rotom V';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 250;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Conversion Star',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'During your turn, you may use this Ability. Discard any number of cards from your hand. Then, draw that many cards. (You can\'t use more than 1 VSTAR Power in a game.)'
-  }];
+  public powers = [
+    {
+      name: 'Conversion Star',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: "During your turn, you may use this Ability. Discard any number of cards from your hand. Then, draw that many cards. (You can't use more than 1 VSTAR Power in a game.)",
+    },
+  ];
 
   public attacks = [
     {
@@ -31,8 +54,8 @@ export class RotomVstar extends PokemonCard {
       cost: [L, L],
       damage: 80,
       damageCalculation: '+',
-      text: 'Put any number of Pokémon Tool cards from your discard pile in the Lost Zone. This attack does 40 more damage for each card you put in the Lost Zone in this way.'
-    }
+      text: 'Put any number of Pokémon Tool cards from your discard pile in the Lost Zone. This attack does 40 more damage for each card you put in the Lost Zone in this way.',
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -69,20 +92,24 @@ export class RotomVstar extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        player.hand,
-        {},
-        { min: 0, max: player.hand.cards.length, allowCancel: false }
-      ), (selected) => {
-        const cards: Card[] = selected || [];
-        const numDiscarded = cards.length;
-        if (numDiscarded > 0) {
-          cards.forEach(card => player.hand.moveCardTo(card, player.discard));
-        }
-        DRAW_CARDS(store, state, player, numDiscarded);
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          player.hand,
+          {},
+          { min: 0, max: player.hand.cards.length, allowCancel: false },
+        ),
+        (selected) => {
+          const cards: Card[] = selected || [];
+          const numDiscarded = cards.length;
+          if (numDiscarded > 0) {
+            cards.forEach((card) => player.hand.moveCardTo(card, player.discard));
+          }
+          DRAW_CARDS(store, state, player, numDiscarded);
+        },
+      );
     }
 
     // Attack 1: Scrap Pulse
@@ -91,27 +118,31 @@ export class RotomVstar extends PokemonCard {
       const player = effect.player;
 
       const hasTools = player.discard.cards.some(
-        c => c instanceof TrainerCard && c.trainerType === TrainerType.TOOL
+        (c) => c instanceof TrainerCard && c.trainerType === TrainerType.TOOL,
       );
 
       if (!hasTools) {
         return state;
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        player.discard,
-        { superType: SuperType.TRAINER, trainerType: TrainerType.TOOL },
-        { min: 0, max: player.discard.cards.length, allowCancel: false }
-      ), (selected) => {
-        const cards: Card[] = selected || [];
-        if (cards.length === 0) {
-          return;
-        }
-        player.discard.moveCardsTo(cards, player.lostzone);
-        effect.damage += cards.length * 40;
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          player.discard,
+          { superType: SuperType.TRAINER, trainerType: TrainerType.TOOL },
+          { min: 0, max: player.discard.cards.length, allowCancel: false },
+        ),
+        (selected) => {
+          const cards: Card[] = selected || [];
+          if (cards.length === 0) {
+            return;
+          }
+          player.discard.moveCardsTo(cards, player.lostzone);
+          effect.damage += cards.length * 40;
+        },
+      );
     }
 
     return state;

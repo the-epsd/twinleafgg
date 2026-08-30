@@ -10,7 +10,7 @@ export class Crobat extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Golbat';
   public hp: number = 90;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public weakness = [{ type: P }];
   public retreat = [];
 
@@ -19,8 +19,7 @@ export class Crobat extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, look at your opponent\'s hand and choose 1 card. Your opponent discards the card you chose.'
-  },
-  {
+  }, {
     name: 'Triple Poison',
     cost: [G, C],
     damage: 10,

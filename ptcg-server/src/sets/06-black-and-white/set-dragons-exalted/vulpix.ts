@@ -5,7 +5,7 @@ import { ADD_BURN_TO_PLAYER_ACTIVE, AFTER_ATTACK } from '../../../game/store/pre
 export class Vulpix extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 60;
   public weakness: Weakness[] = [{ type: W }];
   public retreat: CardType[] = [C];

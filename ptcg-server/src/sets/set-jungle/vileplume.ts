@@ -1,23 +1,18 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition, BoardEffect } from '../../game/store/card/card-types';
-import { CardTarget, ChoosePokemonPrompt, CoinFlipPrompt, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { CardTarget, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { HealEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Vileplume extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom = 'Gloom';
-
-  public cardType: CardType = CardType.GRASS;
-
+  public cardType: CardType[] = [G];
   public hp: number = 80;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Heal',
@@ -35,13 +30,9 @@ export class Vileplume extends PokemonCard {
   }];
 
   public set: string = 'JU';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '15';
-
   public name: string = 'Vileplume';
-
   public fullName: string = 'Vileplume JU';
 
   public readonly HEAL_MARKER = 'HEAL_MARKER';
@@ -112,11 +103,7 @@ export class Vileplume extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      state = store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
+      state = MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 3, results => {
         let heads: number = 0;
         results.forEach(r => { heads += r ? 1 : 0; });
         effect.damage = 40 * heads;

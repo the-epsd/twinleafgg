@@ -5,7 +5,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardType, EnergyType, TrainerType } from '../../../game/store/card/card-types';
-import { Card, CardList, ChooseCardsPrompt, EnergyCard, GameError, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../../game';
+import { Card, CardList, ChooseCardsPrompt, EnergyCard, GameError, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils, pokemonHasCardType } from '../../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Candice, effect: TrainerEffect): IterableIterator<State> {
@@ -32,7 +32,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   deckTop.cards.forEach((c, index) => {
     if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Water Energy') {
       energies += 1;
-    } else if (c instanceof PokemonCard && c.cardType === CardType.WATER) {
+    } else if (c instanceof PokemonCard && pokemonHasCardType(c, CardType.WATER)) {
       pokemons += 1;
     } else {
       blocked.push(index);

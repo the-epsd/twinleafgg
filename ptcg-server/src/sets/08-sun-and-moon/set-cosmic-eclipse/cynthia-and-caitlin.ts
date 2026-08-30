@@ -10,8 +10,13 @@ import { StoreLike } from '../../../game/store/store-like';
 import { SelectOptionPrompt } from '../../../game/store/prompts/select-option-prompt';
 import { DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: CynthiaAndCaitlin, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: CynthiaAndCaitlin,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const supporterTurn = player.supporterTurn;
 
@@ -20,10 +25,11 @@ function* playCard(next: Function, store: StoreLike, state: State,
   }
 
   // Check if there are any valid supporters in discard (excluding Cynthia & Caitlin)
-  const validSupportersInDiscard = player.discard.cards.filter(c =>
-    c instanceof TrainerCard &&
-    c.trainerType === TrainerType.SUPPORTER &&
-    c.name !== 'Cynthia & Caitlin'
+  const validSupportersInDiscard = player.discard.cards.filter(
+    (c) =>
+      c instanceof TrainerCard &&
+      c.trainerType === TrainerType.SUPPORTER &&
+      c.name !== 'Cynthia & Caitlin',
   );
 
   // If no valid supporters, just do the discard and draw effect
@@ -33,20 +39,30 @@ function* playCard(next: Function, store: StoreLike, state: State,
     }
 
     // Choose a card to discard
-    state = store.prompt(state, new ChooseCardsPrompt(
-      player,
-      GameMessage.CHOOSE_CARD_TO_DISCARD,
-      player.hand,
-      {},
-      { min: 1, max: 1, allowCancel: false }
-    ), discarded => {
-      if (discarded && discarded.length > 0) {
-        store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: discarded[0].name });
-        MOVE_CARDS(store, state, player.hand, player.discard, { cards: discarded, sourceCard: self });
-        // Draw 3 cards
-        DRAW_CARDS(store, state, player, 3);
-      }
-    });
+    state = store.prompt(
+      state,
+      new ChooseCardsPrompt(
+        player,
+        GameMessage.CHOOSE_CARD_TO_DISCARD,
+        player.hand,
+        {},
+        { min: 1, max: 1, allowCancel: false },
+      ),
+      (discarded) => {
+        if (discarded && discarded.length > 0) {
+          store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, {
+            name: player.name,
+            card: discarded[0].name,
+          });
+          MOVE_CARDS(store, state, player.hand, player.discard, {
+            cards: discarded,
+            sourceCard: self,
+          });
+          // Draw 3 cards
+          DRAW_CARDS(store, state, player, 3);
+        }
+      },
+    );
     return state;
   }
 
@@ -59,97 +75,121 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   // Show the options prompt
-  state = store.prompt(state, new SelectOptionPrompt(
-    player.id,
-    GameMessage.CHOOSE_OPTION,
-    [
-      'Put a Supporter card from your discard pile into your hand.',
-      'Put a Supporter card from your discard pile into your hand, and discard another card from your hand to draw 3 cards.'
-    ],
-    {
-      allowCancel: true,
-      defaultValue: 0
-    }
-  ), choice => {
-    if (choice === 0) {
-      // Option 1: Just recover a supporter
-      if (validSupportersInDiscard.length === 0) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      }
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.discard,
-        { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-        { min: 1, max: 1, allowCancel: false, blocked }
-      ), selected => {
-        if (selected && selected.length > 0) {
-          store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: selected[0].name });
-          MOVE_CARDS(store, state, player.discard, player.hand, { cards: selected, sourceCard: self });
+  state = store.prompt(
+    state,
+    new SelectOptionPrompt(
+      player.id,
+      GameMessage.CHOOSE_OPTION,
+      [
+        'Put a Supporter card from your discard pile into your hand.',
+        'Put a Supporter card from your discard pile into your hand, and discard another card from your hand to draw 3 cards.',
+      ],
+      {
+        allowCancel: true,
+        defaultValue: 0,
+      },
+    ),
+    (choice) => {
+      if (choice === 0) {
+        // Option 1: Just recover a supporter
+        if (validSupportersInDiscard.length === 0) {
+          throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
         }
-      });
-    } else if (choice === 1) {
-      // Option 2: Discard a card first, then recover a supporter and draw 3
-      if (player.hand.cards.length === 0) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      }
-
-      // First, choose a card to discard
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        player.hand,
-        {},
-        { min: 1, max: 1, allowCancel: false }
-      ), discarded => {
-        if (discarded && discarded.length > 0) {
-          const discardedCard = discarded[0];
-          store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: discardedCard.name });
-
-          // Then choose a supporter to recover
-          state = store.prompt(state, new ChooseCardsPrompt(
+        state = store.prompt(
+          state,
+          new ChooseCardsPrompt(
             player,
             GameMessage.CHOOSE_CARD_TO_HAND,
             player.discard,
             { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-            { min: 1, max: 1, allowCancel: false, blocked }
-          ), selected => {
+            { min: 1, max: 1, allowCancel: false, blocked },
+          ),
+          (selected) => {
             if (selected && selected.length > 0) {
-              store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: selected[0].name });
-              player.discard.moveCardsTo(selected, player.hand);
-              // Now move the discarded card to discard
-              player.hand.moveCardsTo(discarded, player.discard);
-              // Draw 3 cards
-              const drawnCards = player.deck.cards.slice(0, 3);
-              player.deck.moveCardsTo(drawnCards, player.hand);
-
+              store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, {
+                name: player.name,
+                card: selected[0].name,
+              });
+              MOVE_CARDS(store, state, player.discard, player.hand, {
+                cards: selected,
+                sourceCard: self,
+              });
             }
-          });
+          },
+        );
+      } else if (choice === 1) {
+        // Option 2: Discard a card first, then recover a supporter and draw 3
+        if (player.hand.cards.length === 0) {
+          throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
         }
-      });
-    }
-  });
+
+        // First, choose a card to discard
+        state = store.prompt(
+          state,
+          new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_CARD_TO_DISCARD,
+            player.hand,
+            {},
+            { min: 1, max: 1, allowCancel: false },
+          ),
+          (discarded) => {
+            if (discarded && discarded.length > 0) {
+              const discardedCard = discarded[0];
+              store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, {
+                name: player.name,
+                card: discardedCard.name,
+              });
+
+              // Then choose a supporter to recover
+              state = store.prompt(
+                state,
+                new ChooseCardsPrompt(
+                  player,
+                  GameMessage.CHOOSE_CARD_TO_HAND,
+                  player.discard,
+                  { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
+                  { min: 1, max: 1, allowCancel: false, blocked },
+                ),
+                (selected) => {
+                  if (selected && selected.length > 0) {
+                    store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, {
+                      name: player.name,
+                      card: selected[0].name,
+                    });
+                    player.discard.moveCardsTo(selected, player.hand);
+                    // Now move the discarded card to discard
+                    player.hand.moveCardsTo(discarded, player.discard);
+                    // Draw 3 cards
+                    const drawnCards = player.deck.cards.slice(0, 3);
+                    player.deck.moveCardsTo(drawnCards, player.hand);
+                  }
+                },
+              );
+            }
+          },
+        );
+      }
+    },
+  );
   return state;
 }
 
 export class CynthiaAndCaitlin extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'CEC';
-  public tags = [CardTag.TAG_TEAM];
+  protected _tags = [CardTag.TAG_TEAM];
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '189';
   public name: string = 'Cynthia & Caitlin';
   public fullName: string = 'Cynthia & Caitlin CEC';
 
-  public text: string =
-    `Put a Supporter card from your discard pile into your hand. You can't choose Cynthia & Caitlin or a card you discarded with the effect of this card.
+  public text: string = `Put a Supporter card from your discard pile into your hand. You can't choose Cynthia & Caitlin or a card you discarded with the effect of this card.
 
 When you play this card, you may discard another card from your hand. If you do, draw 3 cards.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
       const player = effect.player;
 
       // Check if DiscardToHandEffect is prevented

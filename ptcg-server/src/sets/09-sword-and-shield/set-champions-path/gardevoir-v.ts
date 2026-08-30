@@ -6,13 +6,18 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  ADD_MARKER,
+  HAS_MARKER,
+  REMOVE_MARKER_AT_END_OF_TURN,
+} from '../../../game/store/prefabs/prefabs';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 
 export class GardevoirV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 210;
   public weakness = [{ type: M }];
   public retreat = [C, C];
@@ -22,15 +27,15 @@ export class GardevoirV extends PokemonCard {
       name: 'Magical Shot',
       cost: [P],
       damage: 30,
-      text: ''
+      text: '',
     },
     {
       name: 'Swelling Pulse',
       cost: [P, P, C],
       damage: 120,
       damageCalculation: '+',
-      text: 'If this Pokémon was healed during this turn, this attack does 80 more damage.'
-    }
+      text: 'If this Pokémon was healed during this turn, this attack does 80 more damage.',
+    },
   ];
 
   public regulationMark: string = 'D';

@@ -4,7 +4,17 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, CardTarget, ChoosePokemonPrompt, GameError } from '../../../game';
+import {
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  CardTarget,
+  ChoosePokemonPrompt,
+  GameError,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
@@ -13,7 +23,7 @@ import { DRAW_CARDS_UNTIL_YOU_HAVE_X_CARDS_IN_HAND } from '../../../game/store/p
 export class Noivern extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Noibat';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 110;
   public retreat = [];
 
@@ -22,14 +32,14 @@ export class Noivern extends PokemonCard {
       name: 'Radiant Hunt',
       cost: [C, C],
       damage: 0,
-      text: 'Knock Out 1 of your opponent\'s Radiant Pokémon.'
+      text: "Knock Out 1 of your opponent's Radiant Pokémon.",
     },
     {
       name: 'Seventh Echo',
       cost: [P, D],
       damage: 70,
-      text: 'Draw cards until you have 7 cards in your hand.'
-    }
+      text: 'Draw cards until you have 7 cards in your hand.',
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -49,7 +59,11 @@ export class Noivern extends PokemonCard {
       // Find opponent's Radiant Pokemon (active or bench)
       const radiantTargets: CardTarget[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (cardList.cards.some(c => c instanceof PokemonCard && (c as PokemonCard).tags.includes(CardTag.RADIANT))) {
+        if (
+          cardList.cards.some(
+            (c) => c instanceof PokemonCard && (c as PokemonCard).hasTag(CardTag.RADIANT),
+          )
+        ) {
           radiantTargets.push(target);
         }
       });
@@ -61,23 +75,31 @@ export class Noivern extends PokemonCard {
       // Block all non-Radiant targets
       const blockedTo: CardTarget[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (!cardList.cards.some(c => c instanceof PokemonCard && (c as PokemonCard).tags.includes(CardTag.RADIANT))) {
+        if (
+          !cardList.cards.some(
+            (c) => c instanceof PokemonCard && (c as PokemonCard).hasTag(CardTag.RADIANT),
+          )
+        ) {
           blockedTo.push(target);
         }
       });
 
-      store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false, blocked: blockedTo }
-      ), target => {
-        if (target && target.length > 0) {
-          const knockOutEffect = new KnockOutEffect(player, target[0]);
-          store.reduceEffect(state, knockOutEffect);
-        }
-      });
+      store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { min: 1, max: 1, allowCancel: false, blocked: blockedTo },
+        ),
+        (target) => {
+          if (target && target.length > 0) {
+            const knockOutEffect = new KnockOutEffect(player, target[0]);
+            store.reduceEffect(state, knockOutEffect);
+          }
+        },
+      );
     }
 
     // Attack 2: Seventh Echo

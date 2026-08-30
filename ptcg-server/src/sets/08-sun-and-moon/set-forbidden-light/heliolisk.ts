@@ -10,26 +10,23 @@ import { State, StoreLike } from '../../../game';
 export class Heliolisk extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Helioptile';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Gnaw',
-      cost: [C],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Volt Wave',
-      cost: [C, C, C],
-      damage: 80,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Gnaw',
+    cost: [C],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Volt Wave',
+    cost: [C, C, C],
+    damage: 80,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'FLI';
   public setNumber: string = '38';

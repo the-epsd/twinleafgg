@@ -32,8 +32,8 @@ import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../
 export class GarchompCLvX extends PokemonCard {
   public stage: Stage = Stage.LV_X;
   public evolvesFrom: string = 'Garchomp C';
-  public cardType: CardType = C;
-  public tags = [CardTag.POKEMON_LV_X, CardTag.POKEMON_SP];
+  public cardType: CardType[] = [C];
+  protected _tags = [CardTag.POKEMON_LV_X, CardTag.POKEMON_SP];
   public hp: number = 110;
   public weakness = [{ type: C }];
   public retreat = [];
@@ -74,7 +74,7 @@ export class GarchompCLvX extends PokemonCard {
       CONFIRMATION_PROMPT(store, state, player, (result) => {
         if (result) {
           player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (card) => {
-            if (card.getPokemonCard()?.tags.includes(CardTag.POKEMON_SP)) {
+            if (card.getPokemonCard()?.hasTag(CardTag.POKEMON_SP)) {
               const healing = new HealEffect(player, card, card.damage);
               store.reduceEffect(state, healing);
             }

@@ -14,23 +14,25 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class HisuianGoodra extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Hisuian Sliggoo';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 160;
   public retreat = [C, C, C];
 
-  public powers = [{
-    name: 'Metal Lodging',
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all damage done to each of your Basic Pokémon that has any [M] Energy attached by attacks from your opponent\'s Pokémon V.'
-  }];
+  public powers = [
+    {
+      name: 'Metal Lodging',
+      powerType: PowerType.ABILITY,
+      text: "Prevent all damage done to each of your Basic Pokémon that has any [M] Energy attached by attacks from your opponent's Pokémon V.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Heavy Impact',
       cost: [W, M, C],
       damage: 140,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -78,9 +80,10 @@ export class HisuianGoodra extends PokemonCard {
         return state;
       }
 
-      const isV = sourceCard.tags.includes(CardTag.POKEMON_V) ||
-        sourceCard.tags.includes(CardTag.POKEMON_VMAX) ||
-        sourceCard.tags.includes(CardTag.POKEMON_VSTAR);
+      const isV =
+        sourceCard.hasTag(CardTag.POKEMON_V) ||
+        sourceCard.hasTag(CardTag.POKEMON_VMAX) ||
+        sourceCard.hasTag(CardTag.POKEMON_VSTAR);
 
       if (!isV) {
         return state;
@@ -95,8 +98,8 @@ export class HisuianGoodra extends PokemonCard {
       // Check if target has any M Energy attached
       const checkEnergy = new CheckProvidedEnergyEffect(targetPlayer, effect.target);
       store.reduceEffect(state, checkEnergy);
-      const hasMetal = checkEnergy.energyMap.some(em =>
-        em.provides.includes(CardType.METAL) || em.provides.includes(CardType.ANY)
+      const hasMetal = checkEnergy.energyMap.some(
+        (em) => em.provides.includes(CardType.METAL) || em.provides.includes(CardType.ANY),
       );
 
       if (hasMetal) {

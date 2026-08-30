@@ -7,7 +7,7 @@ import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, SEARCH_DECK_FOR_CARDS_TO_HAN
 export class Salazzle extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Salandit';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 110;
   public weakness = [{ type: P }];
   public retreat = [C];

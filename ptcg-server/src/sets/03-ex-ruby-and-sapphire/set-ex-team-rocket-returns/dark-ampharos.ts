@@ -1,35 +1,49 @@
-import { PokemonCard, Stage, CardType, CardTag, PowerType, StoreLike, State, StateUtils, PlayerType, GameLog } from '../../../game';
+import {
+  PokemonCard,
+  Stage,
+  CardType,
+  CardTag,
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  PlayerType,
+  GameLog,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { EvolveEffect } from '../../../game/store/effects/game-effects';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class DarkAmpharos extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
-  public cardType: CardType = L;
-  public additionalCardTypes = [D];
-  public tags = [CardTag.DARK];
+  public cardType: CardType[] = [L, D];
+  protected _tags = [CardTag.DARK];
   public hp: number = 120;
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Darkest Impulse',
-    powerType: PowerType.ABILITY,
-    text: 'As long as Dark Ampharos is in play, whenever your opponent plays an Evolution card from his or her hand to evolve 1 of his or her Pokémon, put 2 damage counters on that Pokémon. You can\'t use more than 1 Darkest Impulse Poké-Body each turn.'
-  }];
+  public powers = [
+    {
+      name: 'Darkest Impulse',
+      powerType: PowerType.ABILITY,
+      text: "As long as Dark Ampharos is in play, whenever your opponent plays an Evolution card from his or her hand to evolve 1 of his or her Pokémon, put 2 damage counters on that Pokémon. You can't use more than 1 Darkest Impulse Poké-Body each turn.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Ram',
-    cost: [C, C],
-    damage: 30,
-    text: ''
-  },
-  {
-    name: 'Shock Bolt',
-    cost: [L, C, C],
-    damage: 70,
-    text: 'Discard all [L] Energy attached to Dark Ampharos.'
-  }];
+  public attacks = [
+    {
+      name: 'Ram',
+      cost: [C, C],
+      damage: 30,
+      text: '',
+    },
+    {
+      name: 'Shock Bolt',
+      cost: [L, C, C],
+      damage: 70,
+      text: 'Discard all [L] Energy attached to Dark Ampharos.',
+    },
+  ];
 
   public set: string = 'TRR';
   public setNumber: string = '2';
@@ -44,19 +58,28 @@ export class DarkAmpharos extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (IS_ABILITY_BLOCKED(store, state, opponent, this)) { return state; }
-      if (effect.darkestImpulseSV) { return state; }
+      if (IS_ABILITY_BLOCKED(store, state, opponent, this)) {
+        return state;
+      }
+      if (effect.darkestImpulseSV) {
+        return state;
+      }
 
       // Check if Dark Ampharos is in play
       let isAmpharosInPlay = false;
-      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         if (cardList.getPokemonCard() === this) {
           isAmpharosInPlay = true;
         }
       });
-      if (!isAmpharosInPlay) { return state; }
+      if (!isAmpharosInPlay) {
+        return state;
+      }
 
-      store.log(state, GameLog.LOG_PLAYER_USES_ABILITY, { name: player.name, ability: this.powers[0].name });
+      store.log(state, GameLog.LOG_PLAYER_USES_ABILITY, {
+        name: player.name,
+        ability: this.powers[0].name,
+      });
 
       effect.target.damage += 20; // 2 damage counters = 20 damage
       effect.darkestImpulseSV = true;
@@ -75,4 +98,4 @@ export class DarkAmpharos extends PokemonCard {
 
     return state;
   }
-} 
+}

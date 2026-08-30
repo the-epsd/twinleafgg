@@ -12,19 +12,21 @@ import { GamePhase } from '../../../game/store/state/state';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefabs/attack-effects';
 
 export class DrednawVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Drednaw V';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 320;
   public weakness = [{ type: L }];
   public retreat = [C, C, C, C];
 
-  public powers = [{
-    name: 'Solid Shell',
-    powerType: PowerType.ABILITY,
-    text: 'This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: 'Solid Shell',
+      powerType: PowerType.ABILITY,
+      text: 'This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).',
+    },
+  ];
 
   public attacks = [
     {
@@ -32,8 +34,8 @@ export class DrednawVmax extends PokemonCard {
       cost: [W, W, C],
       damage: 160,
       damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 80 more damage.'
-    }
+      text: 'Flip a coin. If heads, this attack does 80 more damage.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -46,9 +48,11 @@ export class DrednawVmax extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Solid Shell (passive - reduce damage taken by 30)
     // Ref: set-rebel-clash/dubwool-v.ts (Cozy Wool - DealDamageEffect damage reduction)
-    if (effect instanceof DealDamageEffect
-      && effect.target.cards.includes(this)
-      && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof DealDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = StateUtils.findOwner(state, effect.target);
 
       if (IS_ABILITY_BLOCKED(store, state, player, this)) {

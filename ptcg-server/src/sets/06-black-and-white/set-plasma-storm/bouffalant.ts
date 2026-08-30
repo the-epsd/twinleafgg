@@ -11,9 +11,9 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { CardList } from '../../../game/store/state/card-list';
 
 export class Bouffalant extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public retreat = [C, C];
@@ -23,14 +23,14 @@ export class Bouffalant extends PokemonCard {
       name: 'Tool Breaker',
       cost: [C],
       damage: 0,
-      text: 'Discard a Pokémon Tool card attached to the Defending Pokémon.'
+      text: 'Discard a Pokémon Tool card attached to the Defending Pokémon.',
     },
     {
       name: 'Hammer In',
       cost: [C, C, C, C],
       damage: 70,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'PLS';
@@ -50,19 +50,23 @@ export class Bouffalant extends PokemonCard {
       } else if (opponent.active.tools.length > 1) {
         const toolList = new CardList();
         toolList.cards = [...opponent.active.tools];
-        return store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_DISCARD,
-          toolList,
-          { trainerType: TrainerType.TOOL },
-          { min: 1, max: 1, allowCancel: false }
-        ), selectedTools => {
-          if (selectedTools && selectedTools.length === 1) {
-            const tool = selectedTools[0];
-            opponent.active.moveCardTo(tool, opponent.discard);
-          }
-          return state;
-        });
+        return store.prompt(
+          state,
+          new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_CARD_TO_DISCARD,
+            toolList,
+            { trainerType: TrainerType.TOOL },
+            { min: 1, max: 1, allowCancel: false },
+          ),
+          (selectedTools) => {
+            if (selectedTools && selectedTools.length === 1) {
+              const tool = selectedTools[0];
+              opponent.active.moveCardTo(tool, opponent.discard);
+            }
+            return state;
+          },
+        );
       }
     }
 

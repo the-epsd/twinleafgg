@@ -2,19 +2,18 @@ import { Effect } from '../../../game/store/effects/effect';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { PowerType, StoreLike, State, StateUtils, GameError } from '../../../game';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { CoinFlipEffect, PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { GameLog, GameMessage } from '../../../game/game-message';
-import { AttackEffect } from '../../../game/store/effects/game-effects';
-import { ABILITY_USED, ADD_MARKER, ADD_POISON_TO_PLAYER_ACTIVE, HAS_MARKER, REMOVE_MARKER, SIMULATE_COIN_FLIP, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
+import { GameMessage } from '../../../game/game-message';
+import { ABILITY_USED, ADD_MARKER, ADD_POISON_TO_PLAYER_ACTIVE, HAS_MARKER, REMOVE_MARKER, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 export class SkuntankG extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
-  public tags = [CardTag.POKEMON_SP];
+  protected _tags = [CardTag.POKEMON_SP];
 
   public hp: number = 80;
 
@@ -22,19 +21,23 @@ export class SkuntankG extends PokemonCard {
 
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Poison Structure',
-    powerType: PowerType.POKEPOWER,
-    useWhenInPlay: true,
-    text: 'Once during your turn (before your attack), if you have a Stadium card in play, you may use this power. Each Active Pokémon (both yours and your opponent\'s) (excluding Pokémon SP) is now Poisoned. This power can\'t be used if Skuntank is affected by a Special Condition.'
-  }];
+  public powers = [
+    {
+      name: 'Poison Structure',
+      powerType: PowerType.POKEPOWER,
+      useWhenInPlay: true,
+      text: "Once during your turn (before your attack), if you have a Stadium card in play, you may use this power. Each Active Pokémon (both yours and your opponent's) (excluding Pokémon SP) is now Poisoned. This power can't be used if Skuntank is affected by a Special Condition.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Smokescreen',
-    cost: [CardType.COLORLESS, CardType.COLORLESS],
-    damage: 20,
-    text: 'If the Defending Pokémon tries to attack during your opponent\'s next turn, your opponent flips a coin. If tails, that attack does nothing.'
-  }];
+  public attacks = [
+    {
+      name: 'Smokescreen',
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
+      damage: 20,
+      text: "If the Defending Pokémon tries to attack during your opponent's next turn, your opponent flips a coin. If tails, that attack does nothing.",
+    },
+  ];
 
   public set: string = 'PL';
 
@@ -48,10 +51,7 @@ export class SkuntankG extends PokemonCard {
 
   public readonly POISON_STRUCTURE_MARKER = 'POISON_STRUCTURE_MARKER';
 
-  public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    //Poke-Power
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -76,11 +76,11 @@ export class SkuntankG extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      if (!player.active?.getPokemonCard()?.tags.includes(CardTag.POKEMON_SP)) {
+      if (!player.active?.getPokemonCard()?.hasTag(CardTag.POKEMON_SP)) {
         ADD_POISON_TO_PLAYER_ACTIVE(store, state, player, this);
       }
 
-      if (!opponent.active?.getPokemonCard()?.tags.includes(CardTag.POKEMON_SP)) {
+      if (!opponent.active?.getPokemonCard()?.hasTag(CardTag.POKEMON_SP)) {
         ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this);
       }
 
@@ -93,39 +93,14 @@ export class SkuntankG extends PokemonCard {
       REMOVE_MARKER(this.POISON_STRUCTURE_MARKER, player, this);
     }
 
-    //Attack
+    // Ref: DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK (Smokescreen)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      ADD_MARKER(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, opponent.active, this);
+      return DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK(store, state, effect, this);
     }
 
-    if (effect instanceof AttackEffect && HAS_MARKER(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, effect.player.active, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      try {
-        const coinFlip = new CoinFlipEffect(player);
-        store.reduceEffect(state, coinFlip);
-      } catch {
-        return state;
-      }
-
-      const coinFlipResult = SIMULATE_COIN_FLIP(store, state, player);
-
-      if (!coinFlipResult) {
-        effect.damage = 0;
-        store.log(state, GameLog.LOG_ABILITY_BLOCKS_DAMAGE, { name: opponent.name, pokemon: this.name });
-      }
-    }
-
-    //Marker remover
     if (effect instanceof EndTurnEffect) {
       if (HAS_MARKER(this.POISON_STRUCTURE_MARKER, effect.player, this)) {
         REMOVE_MARKER(this.POISON_STRUCTURE_MARKER, effect.player, this);
-      }
-      if (HAS_MARKER(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, effect.player.active, this)) {
-        REMOVE_MARKER(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, effect.player.active, this);
       }
     }
 

@@ -11,7 +11,7 @@ export class Zeraora extends PokemonCard {
 
   public regulationMark = 'F';
 
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [CardType.LIGHTNING];
 
   public hp: number = 110;
 

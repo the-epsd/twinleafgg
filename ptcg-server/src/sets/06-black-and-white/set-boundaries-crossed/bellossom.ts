@@ -11,28 +11,25 @@ import { ADD_CONFUSION_TO_PLAYER_ACTIVE, MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_
 export class Bellossom extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Gloom';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 110;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Grass Knot',
-      cost: [G],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'Does 20 more damage for each Colorless in the Defending Pokémon\'s Retreat Cost.'
-    },
-    {
-      name: 'Petal Dance',
-      cost: [G, C, C],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 50 damage times the number of heads. This Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Grass Knot',
+    cost: [G],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'Does 20 more damage for each Colorless in the Defending Pokémon\'s Retreat Cost.'
+  }, {
+    name: 'Petal Dance',
+    cost: [G, C, C],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 50 damage times the number of heads. This Pokémon is now Confused.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '4';

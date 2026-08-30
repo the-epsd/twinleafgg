@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, MULTIPLE_COIN_FLIPS_PROMPT } from 
 export class Crustle extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Dwebble';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
@@ -23,15 +23,13 @@ export class Crustle extends PokemonCard {
     text: 'This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
   }];
 
-  public attacks = [
-    {
-      name: 'Fury Cutter',
-      cost: [G, C, C],
-      damage: 50,
-      damageCalculation: '+',
-      text: 'Flip 3 coins. If 1 of them is heads, this attack does 40 more damage. If 2 of them are heads, this attack does 80 more damage. If all of them are heads, this attack does 150 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fury Cutter',
+    cost: [G, C, C],
+    damage: 50,
+    damageCalculation: '+',
+    text: 'Flip 3 coins. If 1 of them is heads, this attack does 40 more damage. If 2 of them are heads, this attack does 80 more damage. If all of them are heads, this attack does 150 more damage.'
+  }];
 
   public set: string = 'UNM';
   public setNumber: string = '11';

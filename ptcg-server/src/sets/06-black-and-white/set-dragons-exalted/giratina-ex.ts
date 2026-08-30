@@ -2,13 +2,16 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, DISCARD_TOP_X_CARDS_FROM_YOUR_DECK } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  DISCARD_TOP_X_CARDS_FROM_YOUR_DECK,
+} from '../../../game/store/prefabs/prefabs';
 import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../../game/store/prefabs/attack-effects';
 
 export class GiratinaEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 180;
   public weakness = [{ type: N }];
   public retreat = [C, C, C];
@@ -18,14 +21,14 @@ export class GiratinaEx extends PokemonCard {
       name: 'Shred',
       cost: [G, P, C],
       damage: 90,
-      text: 'This attack\'s damage isn\'t affected by any effects on the Defending Pokemon.'
+      text: "This attack's damage isn't affected by any effects on the Defending Pokemon.",
     },
     {
       name: 'Dragon Pulse',
       cost: [G, P, C, C],
       damage: 130,
-      text: 'Discard the top 3 cards of your deck.'
-    }
+      text: 'Discard the top 3 cards of your deck.',
+    },
   ];
 
   public set: string = 'DRX';

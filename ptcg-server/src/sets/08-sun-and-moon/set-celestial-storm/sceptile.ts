@@ -9,7 +9,7 @@ import { GET_TOTAL_ENERGY_ATTACHED_TO_PLAYERS_POKEMON, IS_ABILITY_BLOCKED, PREVE
 export class Sceptile extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Grovyle';
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
   public hp: number = 140;
   public weakness = [{ type: CardType.FIRE }];
   public retreat = [CardType.COLORLESS];

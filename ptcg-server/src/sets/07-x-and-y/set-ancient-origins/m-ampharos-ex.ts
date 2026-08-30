@@ -6,14 +6,18 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, CONFIRMATION_PROMPT, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  CONFIRMATION_PROMPT,
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+} from '../../../game/store/prefabs/prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../../game/store/prefabs/attack-effects';
 
 export class MAmpharosEx extends PokemonCard {
-  public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
+  protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Ampharos-EX';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 220;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
@@ -25,8 +29,8 @@ export class MAmpharosEx extends PokemonCard {
       cost: [L, L, C, C],
       damage: 120,
       damageCalculation: '+',
-      text: 'You may do 50 more damage and leave your opponent\'s Active Pokémon Paralyzed. If you do, this Pokémon does 30 damage to itself.'
-    }
+      text: "You may do 50 more damage and leave your opponent's Active Pokémon Paralyzed. If you do, this Pokémon does 30 damage to itself.",
+    },
   ];
 
   public set: string = 'AOR';
@@ -39,7 +43,7 @@ export class MAmpharosEx extends PokemonCard {
     // Attack 1: Exavolt
     // Refs: set-roaring-skies/gallade-ex.ts (CONFIRMATION_PROMPT), AGENTS-patterns.md (self-damage + paralysis)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      CONFIRMATION_PROMPT(store, state, effect.player, result => {
+      CONFIRMATION_PROMPT(store, state, effect.player, (result) => {
         if (result) {
           effect.damage += 50;
           YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);

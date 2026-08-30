@@ -3,18 +3,33 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
-import { AttachEnergyPrompt, GameMessage, PlayerType, SlotType, StoreLike, State, StateUtils } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+} from '../../../game/store/card/card-types';
+import {
+  AttachEnergyPrompt,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { CardTarget } from '../../../game/store/actions/play-card-action';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, BLOCK_RETREAT } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 
 export class ZarudeV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 210;
   public weakness = [{ type: R }];
   public retreat = [C];
@@ -24,14 +39,14 @@ export class ZarudeV extends PokemonCard {
       name: 'Bind Down',
       cost: [C, C],
       damage: 50,
-      text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
+      text: "During your opponent's next turn, the Defending Pokémon can't retreat.",
     },
     {
       name: 'Jungle Rising',
       cost: [G, G],
       damage: 100,
-      text: 'You may attach up to 2 basic Energy cards from your hand to your Benched Pokémon in any way you like. If you attached Energy to a Pokémon in this way, heal all damage from that Pokémon.'
-    }
+      text: 'You may attach up to 2 basic Energy cards from your hand to your Benched Pokémon in any way you like. If you attached Energy to a Pokémon in this way, heal all damage from that Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -52,14 +67,14 @@ export class ZarudeV extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      const hasBasicEnergyInHand = player.hand.cards.some(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC
+      const hasBasicEnergyInHand = player.hand.cards.some(
+        (c) => c instanceof EnergyCard && c.energyType === EnergyType.BASIC,
       );
       if (!hasBasicEnergyInHand) {
         return state;
       }
 
-      const hasBench = player.bench.some(b => b.cards.length > 0);
+      const hasBench = player.bench.some((b) => b.cards.length > 0);
       if (!hasBench) {
         return state;
       }
@@ -72,37 +87,41 @@ export class ZarudeV extends PokemonCard {
         }
       });
 
-      store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_CARDS,
-        player.hand,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { allowCancel: true, min: 0, max: 2, blockedTo }
-      ), transfers => {
-        transfers = transfers || [];
-        if (transfers.length === 0) {
-          return;
-        }
-
-        // Track which targets received energy
-        const healTargets = new Set<string>();
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.hand.moveCardTo(transfer.card, target);
-          healTargets.add(`${transfer.to.player}-${transfer.to.slot}-${transfer.to.index}`);
-        }
-
-        // Heal all damage from Pokemon that received energy
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          if (target.damage > 0) {
-            const healEffect = new HealEffect(player, target, target.damage);
-            store.reduceEffect(state, healEffect);
+      store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_CARDS,
+          player.hand,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+          { allowCancel: true, min: 0, max: 2, blockedTo },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          if (transfers.length === 0) {
+            return;
           }
-        }
-      });
+
+          // Track which targets received energy
+          const healTargets = new Set<string>();
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.hand.moveCardTo(transfer.card, target);
+            healTargets.add(`${transfer.to.player}-${transfer.to.slot}-${transfer.to.index}`);
+          }
+
+          // Heal all damage from Pokemon that received energy
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            if (target.damage > 0) {
+              const healEffect = new HealEffect(player, target, target.damage);
+              store.reduceEffect(state, healEffect);
+            }
+          }
+        },
+      );
     }
 
     return state;

@@ -6,45 +6,35 @@ import { Effect } from '../../../game/store/effects/effect';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { StateUtils } from '../../../game/store/state-utils';
-import { GameMessage } from '../../../game/game-message';
-import { CoinFlipPrompt } from '../../../game/store/prompts/coin-flip-prompt';
+
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Squirtle extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.WATER;
-
+  public cardType: CardType[] = [W];
   public hp: number = 60;
-
-  public weakness = [{ type: CardType.GRASS }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: G }];
+  public retreat = [C];
 
   public powers = [{
     name: 'Shell Shield',
     powerType: PowerType.ABILITY,
     text: 'As long as this Pokemon is on your Bench, prevent all damage ' +
-      'done to this Pokemon by attacks (both yours and your opponent\'s).'
+    'done to this Pokemon by attacks (both yours and your opponent\'s).'
   }];
 
   public attacks = [{
     name: 'Water Splash',
-    cost: [CardType.WATER, CardType.COLORLESS],
+    cost: [W, C],
     damage: 10,
     text: 'Flip a coin. If heads, this attack does 20 more damage.'
   }];
 
   public set: string = 'BCR';
-
   public name: string = 'Squirtle';
-
   public fullName: string = 'Squirtle BCR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '29';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -52,9 +42,7 @@ export class Squirtle extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
           effect.damage += 20;
         }

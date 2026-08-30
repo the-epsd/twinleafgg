@@ -46,7 +46,7 @@ function* useAscension(next: Function, store: StoreLike, state: State,
 export class Gabite extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Gible';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 80;
   public weakness = [{ type: G }];
   public retreat = [C];

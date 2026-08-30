@@ -13,24 +13,26 @@ import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs
 export class Vaporeon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Eevee';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 110;
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Vitality Cheer',
-    powerType: PowerType.ABILITY,
-    text: 'Your Pokémon-GX in play that evolve from Eevee get +60 HP. You can\'t apply more than 1 Vitality Cheer Ability at a time.'
-  }];
+  public powers = [
+    {
+      name: 'Vitality Cheer',
+      powerType: PowerType.ABILITY,
+      text: "Your Pokémon-GX in play that evolve from Eevee get +60 HP. You can't apply more than 1 Vitality Cheer Ability at a time.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Refreshing Rain',
       cost: [W, C, C],
       damage: 60,
-      text: 'Heal 30 damage from each of your Pokémon.'
-    }
+      text: 'Heal 30 damage from each of your Pokémon.',
+    },
   ];
 
   public set: string = 'CEC';
@@ -44,7 +46,7 @@ export class Vaporeon extends PokemonCard {
     // Refs: set-team-up/buff-padding.ts (CheckHpEffect pattern), set-celestial-storm/stakataka-gx.ts (passive ability for specific Pokemon)
     if (effect instanceof CheckHpEffect) {
       const targetCard = effect.target.getPokemonCard();
-      if (!targetCard || !targetCard.tags.includes(CardTag.POKEMON_GX)) {
+      if (!targetCard || !targetCard.hasTag(CardTag.POKEMON_GX)) {
         return state;
       }
       if (targetCard.evolvesFrom !== 'Eevee') {

@@ -32,29 +32,26 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../game/stor
 
 export class Rotom extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public powers = [
-    {
-      name: 'Roto Choice',
-      powerType: PowerType.ABILITY,
-      text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may search your deck for up to 2 Item cards that have the word "Rotom" in their name, reveal them, and put them into your hand. Then, shuffle your deck.',
-    },
-  ];
+  public powers = [{
+    name: 'Roto Choice',
+    powerType: PowerType.ABILITY,
+    text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may search your deck for up to 2 Item cards that have the word "Rotom" in their name, reveal them, and put them into your hand. Then, shuffle your deck.',
+  }];
 
-  public attacks = [
-    {
-      name: 'Thunder Shock',
-      cost: [L, C],
-      damage: 30,
-      text: "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed.",
-    },
-  ];
+  public attacks = [{
+    name: 'Thunder Shock',
+    cost: [L, C],
+    damage: 30,
+    text: "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed.",
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'SHF';
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';

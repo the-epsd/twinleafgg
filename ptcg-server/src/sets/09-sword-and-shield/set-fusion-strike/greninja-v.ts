@@ -9,9 +9,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class GreninjaV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 210;
   public weakness = [{ type: L }];
   public retreat = [C, C];
@@ -21,18 +21,19 @@ export class GreninjaV extends PokemonCard {
       name: 'Water Drip',
       cost: [W, C],
       damage: 40,
-      text: ''
+      text: '',
     },
     {
       name: 'Dancing Shuriken',
       cost: [W, W, C],
       damage: 80,
       damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 80 damage for each heads.'
-    }
+      text: 'Flip 3 coins. This attack does 80 damage for each heads.',
+    },
   ];
 
   public regulationMark: string = 'E';
+
   public set: string = 'FST';
   public setNumber: string = '73';
   public cardImage: string = 'assets/cardback.png';
@@ -44,8 +45,8 @@ export class GreninjaV extends PokemonCard {
     // Ref: AGENTS-patterns.md (Multiple Coin Flips - flip 3 coins, 80 per heads)
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 3, results => {
-        const heads = results.filter(r => r).length;
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 3, (results) => {
+        const heads = results.filter((r) => r).length;
         effect.damage = 80 * heads;
       });
     }

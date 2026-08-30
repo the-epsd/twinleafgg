@@ -3,15 +3,19 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, GameMessage, StateUtils, ConfirmPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN, IS_ABILITY_BLOCKED, MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN,
+  IS_ABILITY_BLOCKED,
+  MOVE_CARDS,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Durantex extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
 
   public hp: number = 190;
 
@@ -19,20 +23,24 @@ export class Durantex extends PokemonCard {
 
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Sudden Shearing',
-    useWhenInPlay: false,
-    powerType: PowerType.ABILITY,
-    text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may discard the top card of your opponent\'s deck.'
-  }];
+  public powers = [
+    {
+      name: 'Sudden Shearing',
+      useWhenInPlay: false,
+      powerType: PowerType.ABILITY,
+      text: "When you play this Pokémon from your hand onto your Bench during your turn, you may discard the top card of your opponent's deck.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Vengeful Crush',
-    cost: [G, C, C],
-    damage: 120,
-    damageCalculation: '+',
-    text: 'This attack does 30 more damage for each Prize card your opponent has taken.'
-  }];
+  public attacks = [
+    {
+      name: 'Vengeful Crush',
+      cost: [G, C, C],
+      damage: 120,
+      damageCalculation: '+',
+      text: 'This attack does 30 more damage for each Prize card your opponent has taken.',
+    },
+  ];
 
   public regulationMark = 'H';
 
@@ -57,14 +65,19 @@ export class Durantex extends PokemonCard {
         return state;
       }
 
-      state = store.prompt(state, new ConfirmPrompt(
-        effect.player.id,
-        GameMessage.WANT_TO_USE_ABILITY,
-      ), wantToUse => {
-        if (wantToUse) {
-          MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: 1, sourceCard: this, sourceEffect: this.powers[0] });
-        }
-      });
+      state = store.prompt(
+        state,
+        new ConfirmPrompt(effect.player.id, GameMessage.WANT_TO_USE_ABILITY),
+        (wantToUse) => {
+          if (wantToUse) {
+            MOVE_CARDS(store, state, opponent.deck, opponent.discard, {
+              count: 1,
+              sourceCard: this,
+              sourceEffect: this.powers[0],
+            });
+          }
+        },
+      );
       return state;
     }
 

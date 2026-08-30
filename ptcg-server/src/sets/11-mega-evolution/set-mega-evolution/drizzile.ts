@@ -7,7 +7,7 @@ import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store
 export class Drizzile extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Sobble';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 100;
   public weakness = [{ type: L }];
   public retreat = [C];
@@ -25,6 +25,7 @@ export class Drizzile extends PokemonCard {
   public setNumber: string = '40';
   public name: string = 'Drizzile';
   public fullName: string = 'Drizzile M1S';
+
   public regulationMark = 'I';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -10,31 +10,38 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 export class Salamenceex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Shelgon';
-  public cardType: CardType = C;
-  public tags = [CardTag.POKEMON_ex];
+  public cardType: CardType[] = [C];
+  protected _tags = [CardTag.POKEMON_ex];
   public hp: number = 160;
   public weakness = [{ type: C }];
-  public resistance = [{ type: R, value: -30 }, { type: F, value: -30 }];
+  public resistance = [
+    { type: R, value: -30 },
+    { type: F, value: -30 },
+  ];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Dragon Lift',
-    powerType: PowerType.POKEBODY,
-    text: 'The Retreat Cost for each of your Pokémon (excluding Pokémon-ex and Baby Pokémon) is 0.'
-  }];
+  public powers = [
+    {
+      name: 'Dragon Lift',
+      powerType: PowerType.POKEBODY,
+      text: 'The Retreat Cost for each of your Pokémon (excluding Pokémon-ex and Baby Pokémon) is 0.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Flame Jet',
-    cost: [R, C],
-    damage: 0,
-    text: 'Choose 1 of your opponent\'s Pokémon.This attack does 40 damage to that Pokémon. This attack\'s damage isn\'t affected by Weakness or Resistance.'
-  },
-  {
-    name: 'Bright Flame',
-    cost: [R, W, C, C],
-    damage: 120,
-    text: 'Discard 2 Energy attached to Salamence ex.'
-  }];
+  public attacks = [
+    {
+      name: 'Flame Jet',
+      cost: [R, C],
+      damage: 0,
+      text: "Choose 1 of your opponent's Pokémon.This attack does 40 damage to that Pokémon. This attack's damage isn't affected by Weakness or Resistance.",
+    },
+    {
+      name: 'Bright Flame',
+      cost: [R, W, C, C],
+      damage: 120,
+      text: 'Discard 2 Energy attached to Salamence ex.',
+    },
+  ];
 
   public set: string = 'DX';
   public setNumber: string = '103';
@@ -43,7 +50,6 @@ export class Salamenceex extends PokemonCard {
   public fullName: string = 'Salamence ex DX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof CheckRetreatCostEffect) {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
@@ -65,7 +71,11 @@ export class Salamenceex extends PokemonCard {
         return state;
       }
 
-      if (!IS_POKEBODY_BLOCKED(store, state, player, this) && !active.tags.includes(CardTag.POKEMON_ex) && !active.tags.includes(CardTag.BABY)) {
+      if (
+        !IS_POKEBODY_BLOCKED(store, state, player, this) &&
+        !active.hasTag(CardTag.POKEMON_ex) &&
+        !active.hasTag(CardTag.BABY)
+      ) {
         effect.cost = [];
       }
       return state;

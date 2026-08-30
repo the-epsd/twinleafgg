@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Falinks extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 100;
   public weakness = [{ type: P }];
   public retreat = [C];
@@ -21,14 +21,14 @@ export class Falinks extends PokemonCard {
       cost: [F],
       damage: 10,
       damageCalculation: '+',
-      text: 'This attack\'s damage isn\'t affected by Weakness. If your opponent\'s Active Pokémon is a Pokémon V, this attack does 50 more damage.'
+      text: "This attack's damage isn't affected by Weakness. If your opponent's Active Pokémon is a Pokémon V, this attack does 50 more damage.",
     },
     {
       name: 'Jet Headbutt',
       cost: [F, C, C],
       damage: 80,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -49,11 +49,12 @@ export class Falinks extends PokemonCard {
       effect.ignoreWeakness = true;
 
       const opponentActive = opponent.active.getPokemonCard();
-      if (opponentActive && (
-        opponentActive.tags.includes(CardTag.POKEMON_V) ||
-        opponentActive.tags.includes(CardTag.POKEMON_VMAX) ||
-        opponentActive.tags.includes(CardTag.POKEMON_VSTAR)
-      )) {
+      if (
+        opponentActive &&
+        (opponentActive.hasTag(CardTag.POKEMON_V) ||
+          opponentActive.hasTag(CardTag.POKEMON_VMAX) ||
+          opponentActive.hasTag(CardTag.POKEMON_VSTAR))
+      ) {
         effect.damage += 50;
       }
     }

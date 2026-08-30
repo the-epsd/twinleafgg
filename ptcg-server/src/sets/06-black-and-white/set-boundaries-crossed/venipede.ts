@@ -12,7 +12,7 @@ import { ADD_POISON_TO_PLAYER_ACTIVE, IS_ABILITY_BLOCKED } from '../../../game/s
 
 export class Venipede extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public weakness = [{ type: P }];
   public retreat = [C, C];

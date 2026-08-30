@@ -8,7 +8,7 @@ import { HEAL_X_DAMAGE_FROM_THIS_POKEMON, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_O
 export class Cradily extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Lileep';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -20 }];

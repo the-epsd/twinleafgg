@@ -7,14 +7,11 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 // LOR Hisuian Arcanine 84 (https://limitlesstcg.com/cards/LOR/84)
 export class HisuianArcanine extends PokemonCard {
-
-  public tags = [];
-
   public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom = 'Hisuian Growlithe';
 
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp: number = 130;
 
@@ -27,15 +24,15 @@ export class HisuianArcanine extends PokemonCard {
       name: 'Very Vulnerable',
       cost: [],
       damage: 10,
-      text: 'If you have no cards in your hand, this attack does 150 more damage.'
+      text: 'If you have no cards in your hand, this attack does 150 more damage.',
     },
 
     {
       name: 'Sharp Fang',
       cost: [CardType.FIGHTING, CardType.COLORLESS, CardType.COLORLESS],
       damage: 100,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'LOR';

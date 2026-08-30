@@ -10,10 +10,10 @@ import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/ga
 import { SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Scrafty extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Scraggy';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];
@@ -24,15 +24,15 @@ export class Scrafty extends PokemonCard {
       name: 'Kick Away',
       cost: [D, C],
       damage: 30,
-      text: 'Your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon.'
+      text: 'Your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon.',
     },
     {
       name: 'Reinforced Headbutt',
       cost: [D, D, C],
       damage: 50,
       damageCalculation: '+',
-      text: 'If this Pokémon has a Pokémon Tool card attached to it, this attack does 50 more damage.'
-    }
+      text: 'If this Pokémon has a Pokémon Tool card attached to it, this attack does 50 more damage.',
+    },
   ];
 
   public set: string = 'PLS';
@@ -54,7 +54,7 @@ export class Scrafty extends PokemonCard {
       this.usedKickAway = false;
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      if (opponent.bench.some(b => b.cards.length > 0)) {
+      if (opponent.bench.some((b) => b.cards.length > 0)) {
         SWITCH_ACTIVE_WITH_BENCHED(store, state, opponent);
       }
     }

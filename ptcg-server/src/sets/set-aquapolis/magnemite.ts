@@ -1,14 +1,14 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, PlayerType, CoinFlipPrompt, GameMessage } from '../../game';
+import { StoreLike, State, PowerType, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
-import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Magnemite extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 50;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -19,14 +19,12 @@ export class Magnemite extends PokemonCard {
     text: 'You pay [C] less to retreat Magnemite for each Magnemite on your Bench.'
   }];
 
-  public attacks = [
-    {
-      name: 'Magnetic Bomb',
-      cost: [L, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, this attack does 20 damage plus 10 more damage. If tails, Magnemite does 10 damage to itself.',
-    }
-  ];
+  public attacks = [{
+    name: 'Magnetic Bomb',
+    cost: [L, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, this attack does 20 damage plus 10 more damage. If tails, Magnemite does 10 damage to itself.',
+  }];
 
   public set: string = 'AQ';
   public cardImage: string = 'assets/cardback.png';
@@ -77,9 +75,7 @@ export class Magnemite extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
           effect.damage += 10;
         }

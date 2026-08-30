@@ -1,8 +1,22 @@
-import { Attack, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, StateUtils } from '../../../game';
+import {
+  Attack,
+  CardTarget,
+  ChooseCardsPrompt,
+  ChoosePokemonPrompt,
+  GameError,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  StateUtils,
+} from '../../../game';
 import { CardTag, CardType, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { ColorlessCostReducer } from '../../../game/store/card/pokemon-interface';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { CheckAttackCostEffect, CheckPokemonAttacksEffect, CheckTableStateEffect } from '../../../game/store/effects/check-effects';
+import {
+  CheckAttackCostEffect,
+  CheckPokemonAttacksEffect,
+  CheckTableStateEffect,
+} from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
@@ -14,25 +28,26 @@ import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class TeamMagmaTechnicalMachine01 extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
-  public tags = [CardTag.TECHNICAL_MACHINE];
+  protected _tags = [CardTag.TECHNICAL_MACHINE];
   public set: string = 'MA';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '84';
   public name: string = 'Team Magma Technical Machine 01';
   public fullName: string = 'Team Magma Technical Machine 01 MA';
 
-  public attacks: Attack[] = [{
-    name: 'Crushing Magma',
-    cost: [C],
-    damage: 10,
-    text: 'Choose an Energy card attached to the Defending Pokémon and put that card at the bottom of your opponent\'s deck.'
-  }];
+  public attacks: Attack[] = [
+    {
+      name: 'Crushing Magma',
+      cost: [C],
+      damage: 10,
+      text: "Choose an Energy card attached to the Defending Pokémon and put that card at the bottom of your opponent's deck.",
+    },
+  ];
 
   public text: string =
-    'Attach this card to 1 of your Pokémon that has Team Magma in its name. That Pokémon may use this card\'s attack instead of its own. At the end of your turn, discard Team Magma Technical Machine 01.';
+    "Attach this card to 1 of your Pokémon that has Team Magma in its name. That Pokémon may use this card's attack instead of its own. At the end of your turn, discard Team Magma Technical Machine 01.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
@@ -40,7 +55,7 @@ export class TeamMagmaTechnicalMachine01 extends TrainerCard {
       const blocked: CardTarget[] = [];
       let eligibleCount = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
-        if (!card.tags.includes(CardTag.TEAM_AQUA)) {
+        if (!card.hasTag(CardTag.TEAM_AQUA)) {
           blocked.push(index);
         } else {
           eligibleCount++;
@@ -52,15 +67,19 @@ export class TeamMagmaTechnicalMachine01 extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      state = store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE],
-        { min: 1, max: 1, allowCancel: false, blocked },
-      ), transfers => {
-        player.supporter.moveCardTo(effect.trainerCard, transfers[0]);
-      });
+      state = store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          { min: 1, max: 1, allowCancel: false, blocked },
+        ),
+        (transfers) => {
+          player.supporter.moveCardTo(effect.trainerCard, transfers[0]);
+        },
+      );
     }
 
     if (effect instanceof EndTurnEffect) {
@@ -69,21 +88,20 @@ export class TeamMagmaTechnicalMachine01 extends TrainerCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
         if (cardList.cards.includes(this)) {
           cardList.moveCardTo(this, player.discard);
-
         }
       });
     }
 
     if (effect instanceof CheckTableStateEffect) {
-      state.players.forEach(player => {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      state.players.forEach((player) => {
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
           if (!cardList.cards.includes(this)) {
             return;
           }
 
           const attachedTo = cardList.getPokemonCard();
 
-          if (!!attachedTo && !attachedTo.tags.includes(CardTag.TEAM_MAGMA)) {
+          if (!!attachedTo && !attachedTo.hasTag(CardTag.TEAM_MAGMA)) {
             cardList.moveCardTo(this, player.discard);
           }
         });
@@ -103,8 +121,11 @@ export class TeamMagmaTechnicalMachine01 extends TrainerCard {
       }
     }
 
-    if (effect instanceof CheckPokemonAttacksEffect && effect.player.active.cards.includes(this) &&
-      !effect.attacks.includes(this.attacks[0])) {
+    if (
+      effect instanceof CheckPokemonAttacksEffect &&
+      effect.player.active.cards.includes(this) &&
+      !effect.attacks.includes(this.attacks[0])
+    ) {
       effect.attacks.push(this.attacks[0]);
     }
 
@@ -112,22 +133,31 @@ export class TeamMagmaTechnicalMachine01 extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
+      if (!opponent.active.cards.some((c) => c.superType === SuperType.ENERGY)) {
         return state;
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_PUT_ON_BOTTOM,
-        opponent.active,
-        { superType: SuperType.ENERGY },
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        const card = selected[0];
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_PUT_ON_BOTTOM,
+          opponent.active,
+          { superType: SuperType.ENERGY },
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          const card = selected[0];
 
-        MOVE_CARDS(store, state, StateUtils.findCardList(state, card), opponent.deck, { cards: [card], sourceCard: this, sourceEffect: this.attacks[0], toBottom: true });
-        return state;
-      });
+          MOVE_CARDS(store, state, StateUtils.findCardList(state, card), opponent.deck, {
+            cards: [card],
+            sourceCard: this,
+            sourceEffect: this.attacks[0],
+            toBottom: true,
+          });
+          return state;
+        },
+      );
     }
 
     return state;

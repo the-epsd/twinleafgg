@@ -11,10 +11,10 @@ import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/ga
 
 export class Drakloak extends PokemonCard {
   public usedUturn = false;
-  public tags = [CardTag.FUSION_STRIKE];
+  protected _tags = [CardTag.FUSION_STRIKE];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Dreepy';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 90;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
@@ -25,14 +25,14 @@ export class Drakloak extends PokemonCard {
       name: 'Spooky Shot',
       cost: [P],
       damage: 20,
-      text: ''
+      text: '',
     },
     {
       name: 'U-turn',
       cost: [P, C],
       damage: 30,
-      text: 'Switch this Pokémon with 1 of your Benched Pokémon.'
-    }
+      text: 'Switch this Pokémon with 1 of your Benched Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'E';

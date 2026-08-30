@@ -8,7 +8,7 @@ import { AttackEffect } from '../../../game/store/effects/game-effects';
 export class Omastar extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Omanyte';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 100;
   public weakness = [{ type: L }];
   public retreat = [C];

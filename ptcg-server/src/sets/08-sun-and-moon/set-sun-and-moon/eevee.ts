@@ -8,23 +8,18 @@ import { GameMessage } from '../../../game/game-message';
 import { PowerType } from '../../../game';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { PlayerType } from '../../../game';
-import { CoinFlipPrompt } from '../../../game';
+
 import { Card } from '../../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { AttachEnergyEffect } from '../../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Eevee extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.COLORLESS;
-
+  public cardType: CardType[] = [C];
   public hp: number = 60;
-
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Energy Evolution',
@@ -34,19 +29,15 @@ export class Eevee extends PokemonCard {
 
   public attacks = [{
     name: 'Quick Draw',
-    cost: [CardType.COLORLESS],
+    cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, draw a card.'
   }];
 
   public set: string = 'SUM';
-
   public setNumber = '101';
-
   public cardImage = 'assets/cardback.png';
-
   public name: string = 'Eevee';
-
   public fullName: string = 'Eevee SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -89,7 +80,7 @@ export class Eevee extends PokemonCard {
             player,
             GameMessage.CHOOSE_CARD_TO_EVOLVE,
             player.deck,
-            { superType: SuperType.POKEMON, stage: Stage.STAGE_1, evolvesFrom: 'Eevee', cardType: eeveeloutionType },
+            { superType: SuperType.POKEMON, stage: Stage.STAGE_1, evolvesFrom: 'Eevee', cardType: [eeveeloutionType] },
             { min: 0, max: 1, allowCancel: false }
           ), selected => {
             cards = selected || [];
@@ -107,9 +98,7 @@ export class Eevee extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
           player.deck.moveTo(player.hand, 1);
         }

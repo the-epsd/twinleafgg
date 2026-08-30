@@ -9,10 +9,10 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class ScizorVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Scizor V';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 320;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
@@ -23,14 +23,14 @@ export class ScizorVmax extends PokemonCard {
       name: 'Hard Scissors',
       cost: [M, C],
       damage: 90,
-      text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
+      text: "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).",
     },
     {
       name: 'Max Steelspike',
       cost: [M, M, C],
       damage: 190,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -49,9 +49,7 @@ export class ScizorVmax extends PokemonCard {
 
     // Reduce damage taken
 
-
     // Cleanup at end of opponent's turn
-
 
     return state;
   }

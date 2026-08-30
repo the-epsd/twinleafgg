@@ -8,7 +8,7 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED, YOUR_OPPPONENTS_ACTIVE_
 
 export class Voltorb extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 40;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -18,8 +18,7 @@ export class Voltorb extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Discard an Energy card attached to Voltorb. The Defending Pokémon is now Confused.'
-  },
-  {
+  }, {
     name: 'Thunder Wave',
     cost: [C],
     damage: 10,

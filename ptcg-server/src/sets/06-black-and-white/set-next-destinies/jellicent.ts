@@ -10,7 +10,7 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 export class Jellicent extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Frillish';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 120;
   public weakness = [{ type: L }];
   public retreat = [C, C];

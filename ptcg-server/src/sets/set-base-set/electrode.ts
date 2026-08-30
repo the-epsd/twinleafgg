@@ -7,35 +7,27 @@ import { checkState } from '../../game/store/effect-reducers/check-effect';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
+
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Electrode extends PokemonCard implements EnergyCard {
-
   public name = 'Electrode';
-
   public set = 'BS';
-
   public fullName = 'Electrode BS';
 
   public stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Voltorb';
-
-  public cardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [L];
 
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '21';
 
   public hp = 80;
-
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public retreat = [C];
 
   public powers: Power[] = [
     {
@@ -46,24 +38,30 @@ export class Electrode extends PokemonCard implements EnergyCard {
     }
   ];
 
-  public attacks = [
-    {
-      name: 'Electric Shock',
-      cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.LIGHTNING],
-      damage: 50,
-      text: 'Flip a coin. If tails, Electrode does 10 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Electric Shock',
+    cost: [L, L, L],
+    damage: 50,
+    text: 'Flip a coin. If tails, Electrode does 10 damage to itself.'
+  }];
 
   // Which energies this provides when attached as an energy
+
   public provides: CardType[] = [];
+
   public energyType = EnergyType.SPECIAL;
+
   public chosenEnergyType: CardType | undefined;
   // EnergyCard interface properties
+
   public text: string = '';
+
   public isBlocked = false;
+
   public blendedEnergies: CardType[] = [];
+
   public blendedEnergyCount = 1;
+
   public energyEffect: any = undefined;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -155,9 +153,7 @@ export class Electrode extends PokemonCard implements EnergyCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      return store.prompt(state, new CoinFlipPrompt(
-        effect.player.id, GameMessage.FLIP_COIN
-      ), (result) => {
+      return COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (!result) {
           const selfDamage = new DealDamageEffect(effect, 10);
           selfDamage.target = effect.player.active;

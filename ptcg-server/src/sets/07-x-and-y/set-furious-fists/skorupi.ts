@@ -9,25 +9,22 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Skorupi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Poison Sting',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Poisoned.'
-    },
-    {
-      name: 'Pierce',
-      cost: [P, C, C],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Poison Sting',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Poisoned.'
+  }, {
+    name: 'Pierce',
+    cost: [P, C, C],
+    damage: 30,
+    text: ''
+  }];
 
   public set: string = 'FFI';
   public setNumber: string = '38';

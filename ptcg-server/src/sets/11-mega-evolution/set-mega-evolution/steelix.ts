@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Steelix extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Onix';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 200;
   public weakness = [{ type: W }];
   public retreat = [C, C];

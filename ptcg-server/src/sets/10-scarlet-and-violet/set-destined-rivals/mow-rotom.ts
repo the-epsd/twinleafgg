@@ -5,7 +5,7 @@ import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs
 export class MowRotom extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness: Weakness[] = [{ type: F }];
   public retreat: CardType[] = [C];

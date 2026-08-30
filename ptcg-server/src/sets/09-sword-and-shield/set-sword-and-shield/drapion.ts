@@ -15,27 +15,25 @@ import { ADD_PARALYZED_TO_PLAYER_ACTIVE, ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTA
 export class Drapion extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Skorupi';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 140;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Hard Press',
-      cost: [D, C, C],
-      damage: 80,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Toxic Strike',
-      cost: [D, D, C, C],
-      damage: 130,
-      text: 'Your opponent\'s Active Pokémon is now Poisoned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Hard Press',
+    cost: [D, C, C],
+    damage: 80,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Toxic Strike',
+    cost: [D, D, C, C],
+    damage: 130,
+    text: 'Your opponent\'s Active Pokémon is now Poisoned.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'SSH';
   public setNumber: string = '122';
   public cardImage: string = 'assets/cardback.png';

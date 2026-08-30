@@ -9,7 +9,7 @@ import { ChooseCardsPrompt, GameMessage } from '../../../game';
 
 export class Skitty extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 50;
   public weakness = [{ type: F }];
   public retreat = [C];

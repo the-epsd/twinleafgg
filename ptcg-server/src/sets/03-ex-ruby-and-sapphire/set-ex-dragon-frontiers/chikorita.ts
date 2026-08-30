@@ -7,25 +7,27 @@ import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK } from '../../../game/store/pr
 
 export class Chikorita extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = F;
+  protected _tags = [CardTag.DELTA_SPECIES];
+  public cardType: CardType[] = [F];
   public hp: number = 40;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -30 }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Sleep Powder',
-    cost: [C],
-    damage: 0,
-    text: 'The Defending Pokémon is now Asleep.'
-  },
-  {
-    name: 'Tackle',
-    cost: [C, C],
-    damage: 20,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Sleep Powder',
+      cost: [C],
+      damage: 0,
+      text: 'The Defending Pokémon is now Asleep.',
+    },
+    {
+      name: 'Tackle',
+      cost: [C, C],
+      damage: 20,
+      text: '',
+    },
+  ];
 
   public set: string = 'DF';
   public name: string = 'Chikorita';
@@ -34,12 +36,10 @@ export class Chikorita extends PokemonCard {
   public setNumber: string = '44';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (AFTER_ATTACK(effect, 0, this)) {
       ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     return state;
   }
-
 }

@@ -22,7 +22,7 @@ import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/pre
 export class Greninja extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Frogadier';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 130;
   public weakness = [{ type: G }];
   public retreat = [C];

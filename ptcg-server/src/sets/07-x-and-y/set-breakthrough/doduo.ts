@@ -10,26 +10,23 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, DRAW_CARDS } from '../../.
 
 export class Doduo extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 60;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Simultaneous Peck',
-      cost: [C],
-      damage: 30,
-      text: 'Flip 2 coins. If either of them is tails, this attack does nothing.'
-    },
-    {
-      name: 'Doduo Delivery',
-      cost: [C, C],
-      damage: 0,
-      text: 'Draw 2 cards.'
-    }
-  ];
+  public attacks = [{
+    name: 'Simultaneous Peck',
+    cost: [C],
+    damage: 30,
+    text: 'Flip 2 coins. If either of them is tails, this attack does nothing.'
+  }, {
+    name: 'Doduo Delivery',
+    cost: [C, C],
+    damage: 0,
+    text: 'Draw 2 cards.'
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '115';

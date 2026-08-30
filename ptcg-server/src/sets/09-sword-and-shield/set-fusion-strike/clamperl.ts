@@ -3,18 +3,20 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 
 export class Clamperl extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.FUSION_STRIKE];
-  public cardType: CardType = W;
+  protected _tags = [CardTag.FUSION_STRIKE];
+  public cardType: CardType[] = [W];
   public hp: number = 60;
   public weakness = [{ type: L }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Bursting Bubble',
-    cost: [C],
-    damage: 10,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Bursting Bubble',
+      cost: [C],
+      damage: 10,
+      text: '',
+    },
+  ];
 
   public regulationMark = 'E';
   public set: string = 'FST';

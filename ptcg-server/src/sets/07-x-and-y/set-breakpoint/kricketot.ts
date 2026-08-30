@@ -11,7 +11,7 @@ import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs
 
 export class Kricketot extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
   public hp: number = 60;
   public weakness = [{ type: CardType.FIRE }];
   public retreat = [CardType.COLORLESS];
@@ -36,7 +36,7 @@ export class Kricketot extends PokemonCard {
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
-        { superType: SuperType.POKEMON, cardType: CardType.GRASS },
+        { superType: SuperType.POKEMON, cardType: [CardType.GRASS] },
         { min: 0, max: 3, allowCancel: true }
       ), cards => {
         MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: this, sourceEffect: this.attacks[0] });

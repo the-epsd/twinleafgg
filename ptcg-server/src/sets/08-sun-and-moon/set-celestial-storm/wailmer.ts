@@ -11,19 +11,17 @@ import { WAS_ATTACK_USED, FLIP_UNTIL_TAILS_AND_COUNT_HEADS } from '../../../game
 
 export class Wailmer extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 120;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Wave Swallower',
-      cost: [W, W, W],
-      damage: 50,
-      text: 'Flip a coin until you get tails. For each heads, heal 50 damage from this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Wave Swallower',
+    cost: [W, W, W],
+    damage: 50,
+    text: 'Flip a coin until you get tails. For each heads, heal 50 damage from this Pokémon.'
+  }];
 
   public set: string = 'CES';
   public setNumber: string = '39';

@@ -11,7 +11,7 @@ import { WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_
 export class Vanilluxe extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Vanillish';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 150;
   public weakness = [{ type: M }];
   public retreat = [C, C];
@@ -23,16 +23,15 @@ export class Vanilluxe extends PokemonCard {
     text: 'Once during your turn, if this Pokémon is in the Active Spot, you may flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
   }];
 
-  public attacks = [
-    {
-      name: 'Frost Smash',
-      cost: [W, C],
-      damage: 90,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Frost Smash',
+    cost: [W, C],
+    damage: 90,
+    text: ''
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'DAA';
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';

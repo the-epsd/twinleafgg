@@ -14,7 +14,9 @@ import { StoreLike } from '../../game/store/store-like';
 export class EnergyStadium extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '99';
+
   public trainerType = TrainerType.STADIUM;
+
   public set = 'N4';
   public name = 'Energy Stadium';
   public fullName = 'Energy Stadium N4';

@@ -5,7 +5,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Eevee extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 50;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -15,8 +15,7 @@ export class Eevee extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Search your deck for a Basic Pokémon and put it onto your Bench. Shuffle your deck afterward.'
-  },
-  {
+  }, {
     name: 'Tickle',
     cost: [C, C],
     damage: 10,

@@ -11,28 +11,26 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Poliwhirl extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Poliwag';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: L }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Light Punch',
-      cost: [C, C],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Double Smash',
-      cost: [W, C, C],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 50 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Light Punch',
+    cost: [C, C],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Double Smash',
+    cost: [W, C, C],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 50 damage for each heads.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'LOR';
   public setNumber: string = '31';
   public cardImage: string = 'assets/cardback.png';

@@ -12,27 +12,24 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../../game/st
 export class Conkeldurr extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Gurdurr';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 140;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Wake-Up Slap',
-      cost: [F],
-      damage: 30,
-      damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is affected by a Special Condition, this attack does 60 more damage. Then, remove all Special Conditions from that Pokémon.'
-    },
-    {
-      name: 'Dynamic Punch',
-      cost: [F, F, C],
-      damage: 60,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 40 more damage and your opponent\'s Active Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Wake-Up Slap',
+    cost: [F],
+    damage: 30,
+    damageCalculation: '+',
+    text: 'If your opponent\'s Active Pokémon is affected by a Special Condition, this attack does 60 more damage. Then, remove all Special Conditions from that Pokémon.'
+  }, {
+    name: 'Dynamic Punch',
+    cost: [F, F, C],
+    damage: 60,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 40 more damage and your opponent\'s Active Pokémon is now Confused.'
+  }];
 
   public set: string = 'XY';
   public setNumber: string = '67';

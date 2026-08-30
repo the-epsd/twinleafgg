@@ -8,7 +8,7 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 export class Emolga extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [C];

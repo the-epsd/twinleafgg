@@ -2,12 +2,13 @@ import { PokemonCard, Stage, CardType, State, StoreLike, PowerType, StateUtils }
 import { AbstractAttackEffect } from '../../../game/store/effects/attack-effects';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { EnergyType } from '../../../game/store/card/card-types';
-import { WAS_ATTACK_USED, BLOCK_RETREAT } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Carracosta extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Tirtouga';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 180;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];

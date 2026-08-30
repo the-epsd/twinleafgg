@@ -13,26 +13,23 @@ import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store
 export class Leavanny extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Swadloon';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 140;
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Cleave',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip 2 coins. If both of them are heads, discard all Energy attached to the Defending Pokémon.'
-    },
-    {
-      name: 'Leaf Blade',
-      cost: [G, G, C],
-      damage: 70,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Cleave',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip 2 coins. If both of them are heads, discard all Energy attached to the Defending Pokémon.'
+  }, {
+    name: 'Leaf Blade',
+    cost: [G, G, C],
+    damage: 70,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 20 more damage.'
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '10';

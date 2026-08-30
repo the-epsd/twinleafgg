@@ -6,7 +6,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
-import { DRAW_CARDS, HAS_MARKER, REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN, MOVE_CARDS, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { HAS_MARKER, REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN, SHUFFLE_HAND_INTO_DECK_THEN_DRAW } from '../../../game/store/prefabs/prefabs';
 
 export class Bruno extends TrainerCard {
 
@@ -35,7 +35,6 @@ export class Bruno extends TrainerCard {
       const opponent = StateUtils.getOpponent(state, player);
       const duringTurn = [GamePhase.PLAYER_TURN, GamePhase.ATTACK].includes(state.phase);
 
-      // Do not activate between turns, or when it's not opponents turn.
       if (!duringTurn || state.players[state.activePlayer] !== opponent)
         return state;
 
@@ -49,17 +48,12 @@ export class Bruno extends TrainerCard {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
-      let cardsToDraw = 4;
-      if (HAS_MARKER(this.BRUNO_MARKER, player, this))
-        cardsToDraw = 7;
+      const cardsToDraw = HAS_MARKER(this.BRUNO_MARKER, player, this) ? 7 : 4;
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
-      // We will discard this card after prompt confirmation
-      effect.preventDefault = true;
-
-      MOVE_CARDS(store, state, player.hand, player.deck, { cards: player.hand.cards.filter(c => c !== this) });
-      SHUFFLE_DECK(store, state, player);
-      DRAW_CARDS(store, state, player, cardsToDraw);
+      return SHUFFLE_HAND_INTO_DECK_THEN_DRAW(store, state, player, {
+        excludeCard: this,
+        drawCount: cardsToDraw,
+      });
     }
 
     REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN(effect, this.BRUNO_MARKER, this);
@@ -67,4 +61,3 @@ export class Bruno extends TrainerCard {
     return state;
   }
 }
-

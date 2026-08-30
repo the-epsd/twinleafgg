@@ -3,34 +3,51 @@ import { Stage, CardType, SuperType } from '../../../game/store/card/card-types'
 import { StoreLike } from '../../../game/store/store-like';
 import { GamePhase, State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { AttachEnergyPrompt, GameError, GameMessage, PlayerType, PowerType, SlotType, StateUtils } from '../../../game';
+import {
+  AttachEnergyPrompt,
+  GameError,
+  GameMessage,
+  PlayerType,
+  PowerType,
+  SlotType,
+  StateUtils,
+} from '../../../game';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { ABILITY_USED, ADD_MARKER, HAS_MARKER, REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ABILITY_USED,
+  ADD_MARKER,
+  HAS_MARKER,
+  REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN,
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Minun extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-  public tags = [];
-  public cardType: CardType = CardType.LIGHTNING;
-  public weakness = [{ type: CardType.FIGHTING, value: +10 }];
-  public resistance = [{ type: CardType.METAL, value: -20 }];
+  public cardType: CardType[] = [L];
+  public weakness = [{ type: F, value: +10 }];
+  public resistance = [{ type: M, value: -20 }];
   public hp: number = 60;
   public retreat = [CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Minus Charge',
-    powerType: PowerType.POKEPOWER,
-    useWhenInPlay: true,
-    text: 'Once during your turn (before your attack), if any Pokémon were Knocked Out during your opponent\'s last turn, you may draw 2 cards. You can\'t use more than 1 Minus Charge Poké-Power each turn. This power can\'t be used if Minun is affected by a Special Condition.'
-  }];
+  public powers = [
+    {
+      name: 'Minus Charge',
+      powerType: PowerType.POKEPOWER,
+      useWhenInPlay: true,
+      text: "Once during your turn (before your attack), if any Pokémon were Knocked Out during your opponent's last turn, you may draw 2 cards. You can't use more than 1 Minus Charge Poké-Power each turn. This power can't be used if Minun is affected by a Special Condition.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Tag Play -',
-    cost: [CardType.LIGHTNING],
-    damage: 20,
-    text: 'If you have Plusle on your Bench, you may move an Energy card attached to Minun to 1 of your Benched Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'Tag Play -',
+      cost: [L],
+      damage: 20,
+      text: 'If you have Plusle on your Bench, you may move an Energy card attached to Minun to 1 of your Benched Pokémon.',
+    },
+  ];
 
   public set: string = 'SW';
   public setNumber: string = '32';
@@ -39,7 +56,6 @@ export class Minun extends PokemonCard {
   public fullName: string = 'Minun SW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
@@ -105,28 +121,32 @@ export class Minun extends PokemonCard {
 
       if (isPlusleInPlay) {
         const player = effect.player;
-        const hasBench = player.bench.some(b => b.cards.length > 0);
+        const hasBench = player.bench.some((b) => b.cards.length > 0);
 
         if (hasBench === false) {
           return state;
         }
 
         // Then prompt for energy movement
-        return store.prompt(state, new AttachEnergyPrompt(
-          player.id,
-          GameMessage.ATTACH_ENERGY_TO_BENCH,
-          player.active,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.BENCH],
-          { superType: SuperType.ENERGY },
-          { allowCancel: false, min: 0, max: 1 }
-        ), transfers => {
-          transfers = transfers || [];
-          for (const transfer of transfers) {
-            const target = StateUtils.getTarget(state, player, transfer.to);
-            player.active.moveCardTo(transfer.card, target);
-          }
-        });
+        return store.prompt(
+          state,
+          new AttachEnergyPrompt(
+            player.id,
+            GameMessage.ATTACH_ENERGY_TO_BENCH,
+            player.active,
+            PlayerType.BOTTOM_PLAYER,
+            [SlotType.BENCH],
+            { superType: SuperType.ENERGY },
+            { allowCancel: false, min: 0, max: 1 },
+          ),
+          (transfers) => {
+            transfers = transfers || [];
+            for (const transfer of transfers) {
+              const target = StateUtils.getTarget(state, player, transfer.to);
+              player.active.moveCardTo(transfer.card, target);
+            }
+          },
+        );
       }
       return state;
     }

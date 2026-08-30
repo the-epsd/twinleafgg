@@ -1,34 +1,45 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, PowerType, GamePhase, StateUtils, GameError } from '../../../game';
+import {
+  StoreLike,
+  State,
+  ChooseCardsPrompt,
+  PowerType,
+  GamePhase,
+  StateUtils,
+  GameError,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { GameMessage } from '../../../game/game-message';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
-
 export class Blastoiseex extends PokemonCard {
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Wartortle';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 330;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];
 
-  public powers = [{
-    name: 'Solid Shell',
-    powerType: PowerType.ABILITY,
-    text: 'This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: 'Solid Shell',
+      powerType: PowerType.ABILITY,
+      text: 'This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Twin Cannons',
-    cost: [W, W],
-    damage: 140,
-    damageCalculation: 'x',
-    text: 'Discard up to 2 Basic [W] Energies from your hand. This attack does 140 damage for each card you discarded in this way.'
-  }];
+  public attacks = [
+    {
+      name: 'Twin Cannons',
+      cost: [W, W],
+      damage: 140,
+      damageCalculation: 'x',
+      text: 'Discard up to 2 Basic [W] Energies from your hand. This attack does 140 damage for each card you discarded in this way.',
+    },
+  ];
 
   public regulationMark = 'G';
   public set: string = 'MEW';
@@ -39,36 +50,36 @@ export class Blastoiseex extends PokemonCard {
 
   // Implement power
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      const hasEnergyInHand = player.hand.cards.some(c => {
+      const hasEnergyInHand = player.hand.cards.some((c) => {
         return c.superType === SuperType.ENERGY;
       });
       if (!hasEnergyInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        player.hand,
-        { superType: SuperType.ENERGY },
-        { allowCancel: true, min: 1, max: 2 }
-      ), cards => {
-        cards = cards || [];
-        if (cards.length === 0) {
-          return;
-        }
-        const damage = cards.length * 140;
-        effect.damage = damage;
+      state = store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          player.hand,
+          { superType: SuperType.ENERGY },
+          { allowCancel: true, min: 1, max: 2 },
+        ),
+        (cards) => {
+          cards = cards || [];
+          if (cards.length === 0) {
+            return;
+          }
+          const damage = cards.length * 140;
+          effect.damage = damage;
 
-        player.hand.moveCardsTo(cards, player.discard);
+          player.hand.moveCardsTo(cards, player.discard);
 
-        return state;
-
-      });
-
+          return state;
+        },
+      );
     }
 
     // Reduce damage by 30

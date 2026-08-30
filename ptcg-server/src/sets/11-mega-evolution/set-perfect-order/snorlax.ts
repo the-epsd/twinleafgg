@@ -4,7 +4,7 @@ import { WAS_ATTACK_USED, FLIP_UNTIL_TAILS_AND_COUNT_HEADS } from '../../../game
 
 export class Snorlax extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 160;
   public weakness = [{ type: F }];
   public retreat = [C, C, C, C];
@@ -14,8 +14,7 @@ export class Snorlax extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin until you get tails. Search your deck for an amount of Basic Energy up to the number of heads and attach it to this Pokémon. Then, shuffle your deck.'
-  },
-  {
+  }, {
     name: 'Collapse',
     cost: [C, C, C, C],
     damage: 160,
@@ -23,6 +22,7 @@ export class Snorlax extends PokemonCard {
   }];
 
   public regulationMark = 'J';
+
   public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '63';

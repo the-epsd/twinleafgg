@@ -9,7 +9,7 @@ import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 export class Gengar extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Haunter';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public retreat = [C];

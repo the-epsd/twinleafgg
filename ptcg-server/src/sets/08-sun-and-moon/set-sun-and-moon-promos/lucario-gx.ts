@@ -7,14 +7,13 @@ import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/pr
 
 // SMP Lucario-GX 100 (https://limitlesstcg.com/cards/SMP/100)
 export class LucarioGX extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
 
   public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom = 'Riolu';
 
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp: number = 210;
 
@@ -27,20 +26,20 @@ export class LucarioGX extends PokemonCard {
       name: 'Aura Strike',
       cost: [CardType.FIGHTING],
       damage: 30,
-      text: 'If this Pokémon evolved from Riolu during this turn, this attack does 90 more damage.'
+      text: 'If this Pokémon evolved from Riolu during this turn, this attack does 90 more damage.',
     },
     {
       name: 'Cyclone Kick',
       cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS],
       damage: 130,
-      text: ''
+      text: '',
     },
     {
       name: 'Cantankerous Beatdown-GX',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 30,
-      text: 'This attack does 30 damage for each damage counter on this Pokémon. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "This attack does 30 damage for each damage counter on this Pokémon. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'SMP';

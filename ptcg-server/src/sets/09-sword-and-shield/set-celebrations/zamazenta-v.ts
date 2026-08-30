@@ -12,26 +12,28 @@ import { GamePhase } from '../../../game/store/state/state';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class ZamazentaV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 220;
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Growl of the Shield',
-    powerType: PowerType.ABILITY,
-    text: 'All of your Fighting Pokémon take 20 less damage from attacks from your opponent\'s Pokémon VMAX (after applying Weakness and Resistance). You can\'t apply more than 1 Growl of the Shield Ability at a time.'
-  }];
+  public powers = [
+    {
+      name: 'Growl of the Shield',
+      powerType: PowerType.ABILITY,
+      text: "All of your Fighting Pokémon take 20 less damage from attacks from your opponent's Pokémon VMAX (after applying Weakness and Resistance). You can't apply more than 1 Growl of the Shield Ability at a time.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Heavy Impact',
       cost: [F, F, C],
       damage: 150,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -63,7 +65,7 @@ export class ZamazentaV extends PokemonCard {
 
       // Check if attacker is a VMAX Pokemon
       const attackerCard = effect.source.getPokemonCard();
-      if (!attackerCard || !attackerCard.tags.includes(CardTag.POKEMON_VMAX)) {
+      if (!attackerCard || !attackerCard.hasTag(CardTag.POKEMON_VMAX)) {
         return state;
       }
 

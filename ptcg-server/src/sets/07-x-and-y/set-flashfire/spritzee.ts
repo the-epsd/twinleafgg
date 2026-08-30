@@ -10,26 +10,23 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 
 export class Spritzee extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 50;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Fairy Wind',
-      cost: [Y],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Fickle Attack',
-      cost: [Y, C],
-      damage: 30,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fairy Wind',
+    cost: [Y],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Fickle Attack',
+    cost: [Y, C],
+    damage: 30,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'FLF';
   public setNumber: string = '67';

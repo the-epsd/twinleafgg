@@ -6,7 +6,7 @@ export class Palpitoad extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Tympole';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 80;
   public weakness: Weakness[] = [{ type: G }];
   public retreat: CardType[] = [C, C];

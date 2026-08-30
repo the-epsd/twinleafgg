@@ -6,12 +6,15 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, ADD_CONFUSION_TO_PLAYER_ACTIVE } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  ADD_CONFUSION_TO_PLAYER_ACTIVE,
+} from '../../../game/store/prefabs/prefabs';
 
 export class MachampEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 180;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];
@@ -22,15 +25,15 @@ export class MachampEx extends PokemonCard {
       cost: [F, C],
       damage: 20,
       damageCalculation: 'x',
-      text: 'This attack does 20 damage times the number of damage counters on this Pokémon. This Pokémon is now Confused.'
+      text: 'This attack does 20 damage times the number of damage counters on this Pokémon. This Pokémon is now Confused.',
     },
     {
       name: 'Crazy Hammer',
       cost: [F, F, C],
       damage: 80,
       damageCalculation: '+',
-      text: 'If this Pokémon is affected by a Special Condition, this attack does 80 more damage. Then, remove all Special Conditions from this Pokémon.'
-    }
+      text: 'If this Pokémon is affected by a Special Condition, this attack does 80 more damage. Then, remove all Special Conditions from this Pokémon.',
+    },
   ];
 
   public set: string = 'AOR';

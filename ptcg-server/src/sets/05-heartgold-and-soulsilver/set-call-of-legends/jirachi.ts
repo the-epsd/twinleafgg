@@ -9,7 +9,7 @@ import { PowerEffect } from '../../../game/store/effects/game-effects';
 
 export class Jirachi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: P }];
   public retreat = [C];

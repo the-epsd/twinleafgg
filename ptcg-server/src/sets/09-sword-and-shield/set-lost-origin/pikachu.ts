@@ -9,7 +9,7 @@ import { COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../
 
 export class Pikachu extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -30,7 +30,9 @@ export class Pikachu extends PokemonCard {
   public set: string = 'LOR';
   public name: string = 'Pikachu';
   public fullName: string = 'Pikachu LOR';
+
   public regulationMark = 'F';
+
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '52';
 

@@ -16,26 +16,23 @@ import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT } from '
 
 export class Electabuzz extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Punch',
-      cost: [C, C],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Thunder Shock',
-      cost: [L, C, C],
-      damage: 40,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Punch',
+    cost: [C, C],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Thunder Shock',
+    cost: [L, C, C],
+    damage: 40,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'BUS';
   public setNumber: string = '42';

@@ -10,30 +10,27 @@ import { Effect } from '../../../game/store/effects/effect';
 import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Garbodor2 extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Trubbish';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 110;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Ensnarl',
-      cost: [C, C],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Does 20 damage times the number of Colorless in the Defending Pokémon\'s Retreat Cost.'
-    },
-    {
-      name: 'Double Ducts',
-      cost: [P, C, C, C],
-      damage: 80,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 80 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Ensnarl',
+    cost: [C, C],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Does 20 damage times the number of Colorless in the Defending Pokémon\'s Retreat Cost.'
+  }, {
+    name: 'Double Ducts',
+    cost: [P, C, C, C],
+    damage: 80,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 80 damage times the number of heads.'
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '67';
@@ -59,8 +56,8 @@ export class Garbodor2 extends PokemonCard {
     // Ref: set-noble-victories/conkeldurr.ts (Swing Around - multiple coin flips for damage)
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, results => {
-        const heads = results.filter(r => r).length;
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, (results) => {
+        const heads = results.filter((r) => r).length;
         effect.damage = 80 * heads;
       });
     }

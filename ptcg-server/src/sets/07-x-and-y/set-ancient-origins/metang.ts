@@ -11,27 +11,24 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Metang extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Beldum';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Metal Claw',
-      cost: [M, C],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Bullet Punch',
-      cost: [M, M, C],
-      damage: 50,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Metal Claw',
+    cost: [M, C],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Bullet Punch',
+    cost: [M, M, C],
+    damage: 50,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
+  }];
 
   public set: string = 'AOR';
   public setNumber: string = '48';

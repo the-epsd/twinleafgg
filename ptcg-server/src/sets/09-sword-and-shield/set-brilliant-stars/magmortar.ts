@@ -13,7 +13,7 @@ export class Magmortar extends PokemonCard {
 
   public evolvesFrom = 'Magmar';
 
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
 
   public hp: number = 140;
 

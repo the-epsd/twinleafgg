@@ -10,7 +10,7 @@ import { Card, PlayerType, PokemonCardList, State, StoreLike, TrainerCard, Train
 export class Gourgeist extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Pumpkaboo';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 120;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -20 }];

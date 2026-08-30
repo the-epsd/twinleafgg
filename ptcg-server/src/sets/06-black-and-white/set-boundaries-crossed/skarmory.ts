@@ -10,26 +10,23 @@ import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/p
 
 export class Skarmory extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Claw',
-      cost: [M],
-      damage: 20,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    },
-    {
-      name: 'Drill Peck',
-      cost: [M, C, C],
-      damage: 50,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Claw',
+    cost: [M],
+    damage: 20,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }, {
+    name: 'Drill Peck',
+    cost: [M, C, C],
+    damage: 50,
+    text: ''
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '95';

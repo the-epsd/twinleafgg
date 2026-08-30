@@ -10,9 +10,9 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { ConfirmPrompt } from '../../../game/store/prompts/confirm-prompt';
 
 export class PikachuV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 190;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -23,8 +23,8 @@ export class PikachuV extends PokemonCard {
       cost: [L, L, C],
       damage: 100,
       damageCalculation: '+',
-      text: 'You may discard all [L] Energy from this Pokémon. If you do, this attack does 120 more damage.'
-    }
+      text: 'You may discard all [L] Energy from this Pokémon. If you do, this attack does 120 more damage.',
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -41,27 +41,29 @@ export class PikachuV extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const lightningEnergies = player.active.cards.filter(c =>
-        c instanceof EnergyCard &&
-        c.energyType === EnergyType.BASIC &&
-        c.provides.includes(CardType.LIGHTNING)
+      const lightningEnergies = player.active.cards.filter(
+        (c) =>
+          c instanceof EnergyCard &&
+          c.energyType === EnergyType.BASIC &&
+          c.provides.includes(CardType.LIGHTNING),
       );
 
       if (lightningEnergies.length === 0) {
         return state;
       }
 
-      state = store.prompt(state, new ConfirmPrompt(
-        player.id,
-        GameMessage.WANT_TO_DISCARD_ENERGY
-      ), wantToDiscard => {
-        if (wantToDiscard) {
-          lightningEnergies.forEach(c => {
-            player.active.moveCardTo(c, player.discard);
-          });
-          effect.damage += 120;
-        }
-      });
+      state = store.prompt(
+        state,
+        new ConfirmPrompt(player.id, GameMessage.WANT_TO_DISCARD_ENERGY),
+        (wantToDiscard) => {
+          if (wantToDiscard) {
+            lightningEnergies.forEach((c) => {
+              player.active.moveCardTo(c, player.discard);
+            });
+            effect.damage += 120;
+          }
+        },
+      );
     }
 
     return state;

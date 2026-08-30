@@ -7,43 +7,32 @@ import { Effect } from '../../game/store/effects/effect';
 import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Magneton extends PokemonCard {
-
   public set = 'BS';
-
   public fullName = 'Magneton BS';
-
   public name = 'Magneton';
 
-  public cardType: CardType = CardType.LIGHTNING;
-
+  public cardType: CardType[] = [L];
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom: string = 'Magnemite';
 
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '9';
 
   public hp: number = 60;
+  public weakness = [{ type: F }];
+  public retreat = [C];
 
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public retreat = [CardType.COLORLESS];
-
-  public attacks = [
-    {
-      name: 'Thunder Wave',
-      cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS],
-      damage: 30,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Selfdestruct',
-      cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS],
-      damage: 80,
-      text: 'Does 20 damage to each Pokémon on each player\'s Bench. (Don\'t apply Weakness and Resistance for Benched Pokémon.) Magneton does 80 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Thunder Wave',
+    cost: [L, L, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Selfdestruct',
+    cost: [L, L, C, C],
+    damage: 80,
+    text: 'Does 20 damage to each Pokémon on each player\'s Bench. (Don\'t apply Weakness and Resistance for Benched Pokémon.) Magneton does 80 damage to itself.'
+  }];
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

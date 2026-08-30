@@ -6,9 +6,9 @@ import { BREAK_RULE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs
 
 export class XerneasBREAK extends PokemonCard {
   public stage: Stage = Stage.BREAK;
-  public tags = [CardTag.BREAK];
+  protected _tags = [CardTag.BREAK];
   public evolvesFrom = 'Xerneas';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 150;
 
   public attacks = [

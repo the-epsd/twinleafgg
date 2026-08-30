@@ -2,13 +2,13 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
-import { AFTER_ATTACK, COIN_FLIP_PROMPT, DRAW_UP_TO_X_CARDS, MOVE_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, DRAW_UP_TO_X_CARDS, MOVE_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 
 export class Exeggutor extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Exeggcute';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: P }];
   public retreat = [C, C];
@@ -18,8 +18,7 @@ export class Exeggutor extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Shuffle your hand into your deck. Draw up to 8 cards.'
-  },
-  {
+  }, {
     name: 'Big Eggsplosion',
     cost: [P, C],
     damage: 40,
@@ -55,13 +54,12 @@ export class Exeggutor extends PokemonCard {
         energyCount += em.provides.length;
       });
 
-      effect.damage = 0;
-      for (let i = 0; i < energyCount; i++) {
-        COIN_FLIP_PROMPT(store, state, player, result => {
-          if (result) {
-            effect.damage += 40;
-          }
+      if (energyCount > 0) {
+        MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, energyCount, results => {
+          effect.damage = results.filter(r => r).length * 40;
         });
+      } else {
+        effect.damage = 0;
       }
     }
 

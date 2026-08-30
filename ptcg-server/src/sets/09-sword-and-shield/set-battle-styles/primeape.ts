@@ -7,7 +7,7 @@ import { DISCARD_A_STADIUM_CARD_IN_PLAY, THIS_ATTACK_DOES_X_MORE_DAMAGE, WAS_ATT
 export class Primeape extends PokemonCard {
   public evolvesFrom = 'Mankey';
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 120;
   public weakness = [{ type: P }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];

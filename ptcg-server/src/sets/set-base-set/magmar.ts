@@ -16,7 +16,7 @@ export class Magmar extends PokemonCard {
 
   public fullName = 'Magmar BS';
 
-  public cardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
 
   public stage = Stage.BASIC;
 

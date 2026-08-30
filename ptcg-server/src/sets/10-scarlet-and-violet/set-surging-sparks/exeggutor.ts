@@ -1,21 +1,21 @@
-import { CoinFlipPrompt, GameMessage, State, StateUtils, StoreLike } from '../../../game';
+import { State, StateUtils, StoreLike } from '../../../game';
 import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Exeggutor extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Exeggcute';
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [G];
   public hp: number = 130;
-  public weakness = [{ type: CardType.FIRE }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public retreat = [C, C];
 
   public attacks = [{
     name: 'Barrage O\'Clock',
-    cost: [CardType.GRASS],
+    cost: [G],
     damage: 60,
     damageCalculation: 'x',
     text: 'Flip a coin for each Energy attached to both Active Pokémon. This attack does 60 damage for each heads.'
@@ -45,13 +45,13 @@ export class Exeggutor extends PokemonCard {
         (left, p) => left + p.provides.length, 0
       );
 
-      const coins = [];
-
-      for (let i = 0; i < opponentsEnergyCount + myEnergyCount; i++) {
-        coins.push(new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP));
+      const coinCount = opponentsEnergyCount + myEnergyCount;
+      if (coinCount === 0) {
+        effect.damage = 0;
+        return state;
       }
 
-      return store.prompt(state, coins, result => {
+      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, coinCount, result => {
         let heads = 0;
         result.forEach(r => {
           heads += r ? 1 : 0;

@@ -4,7 +4,17 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { CardTarget, GameError, GameMessage, PlayerType, PowerType, SlotType, StoreLike, State, StateUtils } from '../../../game';
+import {
+  CardTarget,
+  GameError,
+  GameMessage,
+  PlayerType,
+  PowerType,
+  SlotType,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { ToolEffect } from '../../../game/store/effects/play-card-effects';
@@ -13,26 +23,28 @@ import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs
 
 export class Yveltal extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 130;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Fright Night',
-    useWhenInPlay: false,
-    powerType: PowerType.ABILITY,
-    text: 'As long as this Pokémon is your Active Pokémon, each Pokémon Tool card in play has no effect.'
-  }];
+  public powers = [
+    {
+      name: 'Fright Night',
+      useWhenInPlay: false,
+      powerType: PowerType.ABILITY,
+      text: 'As long as this Pokémon is your Active Pokémon, each Pokémon Tool card in play has no effect.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Pitch-Black Spear',
       cost: [D, C, C],
       damage: 60,
-      text: 'This attack does 60 damage to 1 of your opponent\'s Benched Pokémon-EX. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "This attack does 60 damage to 1 of your opponent's Benched Pokémon-EX. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public set: string = 'BKT';
@@ -46,7 +58,7 @@ export class Yveltal extends PokemonCard {
     // Ref: set-roaring-skies/banette.ts (Tool Concealment - ToolEffect blocking)
     if (effect instanceof ToolEffect) {
       let owner: any = null;
-      state.players.forEach(p => {
+      state.players.forEach((p) => {
         if (p.active.getPokemonCard() === this) {
           owner = p;
         }
@@ -70,10 +82,12 @@ export class Yveltal extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Check if opponent has any Benched Pokemon-EX
-      const hasExOnBench = opponent.bench.some(b => {
-        if (b.cards.length === 0) { return false; }
+      const hasExOnBench = opponent.bench.some((b) => {
+        if (b.cards.length === 0) {
+          return false;
+        }
         const pokemon = b.getPokemonCard();
-        return pokemon !== undefined && pokemon.tags.includes(CardTag.POKEMON_EX);
+        return pokemon !== undefined && pokemon.hasTag(CardTag.POKEMON_EX);
       });
 
       if (hasExOnBench) {
@@ -84,24 +98,28 @@ export class Yveltal extends PokemonCard {
             return;
           }
           const pokemon = b.getPokemonCard();
-          if (!pokemon || !pokemon.tags.includes(CardTag.POKEMON_EX)) {
+          if (!pokemon || !pokemon.hasTag(CardTag.POKEMON_EX)) {
             blocked.push({ player: PlayerType.TOP_PLAYER, slot: SlotType.BENCH, index });
           }
         });
 
-        store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON,
-          PlayerType.TOP_PLAYER,
-          [SlotType.BENCH],
-          { min: 1, max: 1, allowCancel: false, blocked }
-        ), targets => {
-          if (targets && targets.length > 0) {
-            const damage = new PutDamageEffect(effect, 60);
-            damage.target = targets[0];
-            store.reduceEffect(state, damage);
-          }
-        });
+        store.prompt(
+          state,
+          new ChoosePokemonPrompt(
+            player.id,
+            GameMessage.CHOOSE_POKEMON,
+            PlayerType.TOP_PLAYER,
+            [SlotType.BENCH],
+            { min: 1, max: 1, allowCancel: false, blocked },
+          ),
+          (targets) => {
+            if (targets && targets.length > 0) {
+              const damage = new PutDamageEffect(effect, 60);
+              damage.target = targets[0];
+              store.reduceEffect(state, damage);
+            }
+          },
+        );
       }
     }
 

@@ -6,11 +6,12 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, BLOCK_RETREAT } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 export class Boltund extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Yamper';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -20,15 +21,15 @@ export class Boltund extends PokemonCard {
       name: 'Big Bite',
       cost: [C, C],
       damage: 50,
-      text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
+      text: "During your opponent's next turn, the Defending Pokémon can't retreat.",
     },
     {
       name: 'Fighting Fangs',
       cost: [L, C, C],
       damage: 90,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is a Pokémon V or Pokémon-GX, this attack does 90 more damage.'
-    }
+      text: "If your opponent's Active Pokémon is a Pokémon V or Pokémon-GX, this attack does 90 more damage.",
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -50,7 +51,10 @@ export class Boltund extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const defendingCard = opponent.active.getPokemonCard();
-      if (defendingCard && (defendingCard.tags.includes(CardTag.POKEMON_V) || defendingCard.tags.includes(CardTag.POKEMON_GX))) {
+      if (
+        defendingCard &&
+        (defendingCard.hasTag(CardTag.POKEMON_V) || defendingCard.hasTag(CardTag.POKEMON_GX))
+      ) {
         effect.damage += 90;
       }
     }

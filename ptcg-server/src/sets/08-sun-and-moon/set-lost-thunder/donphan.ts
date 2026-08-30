@@ -2,13 +2,13 @@ import { PowerType, State, StoreLike } from '../../../game';
 import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { NEXT_TURN_ATTACK_BONUS, SURVIVE_ON_TEN_IF_FULL_HP } from '../../../game/store/prefabs/prefabs';
+import { NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/attack-effects';
+import { SURVIVE_ON_TEN_IF_FULL_HP } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Donphan extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Phanpy';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 130;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
@@ -32,22 +32,17 @@ export class Donphan extends PokemonCard {
   public name: string = 'Donphan';
   public fullName: string = 'Donphan LOT';
 
-  public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'NEXT_TURN_MORE_DAMAGE_MARKER';
-  public readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Sturdy
     SURVIVE_ON_TEN_IF_FULL_HP(store, state, effect, {
       source: this,
       reason: this.powers[0].name
     });
-
+    // Rolling Spin
     NEXT_TURN_ATTACK_BONUS(effect, {
       attack: this.attacks[0],
       source: this,
-      bonusDamage: 70,
-      bonusMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER,
-      clearMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER_2
+      bonusDamage: 70
     });
 
     return state;

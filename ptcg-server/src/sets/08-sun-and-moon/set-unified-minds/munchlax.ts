@@ -1,13 +1,13 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { Card, CardList, ChooseCardsPrompt, CoinFlipPrompt, GameMessage, PowerType, ShowCardsPrompt, State, StateUtils, StoreLike } from '../../../game';
+import { Card, CardList, ChooseCardsPrompt, GameMessage, PowerType, ShowCardsPrompt, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { BLOCK_IF_DISCARD_EMPTY, IS_ABILITY_BLOCKED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_IF_DISCARD_EMPTY, IS_ABILITY_BLOCKED, WAS_POWER_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Munchlax extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [C];
   public hp: number = 60;
 
   public powers = [{
@@ -15,7 +15,7 @@ export class Munchlax extends PokemonCard {
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: ' Once during your turn (before your attack), you may flip a coin.'
-      + 'If heads, put a card from your discard pile on top of your deck. If you use this Ability, your turn ends. '
+    + 'If heads, put a card from your discard pile on top of your deck. If you use this Ability, your turn ends. '
   }];
 
   public set = 'UNM';
@@ -39,9 +39,7 @@ export class Munchlax extends PokemonCard {
         return state;
       }
 
-      store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      COIN_FLIP_PROMPT(store, state, player, result => {
 
         if (result) {
           const deckTop = new CardList();

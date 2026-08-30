@@ -5,14 +5,15 @@ import { PokemonCard, StoreLike, State, StateUtils } from '../../../game';
 import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED, BLOCK_RETREAT } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { GamePhase } from '../../../game/store/state/state';
 
 export class Chesnaught extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Quilladin';
   public hp: number = 180;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public weakness = [{ type: R }];
   public retreat = [C, C, C, C];
 

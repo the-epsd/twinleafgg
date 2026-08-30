@@ -11,9 +11,9 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class CentiskorchV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 210;
   public weakness = [{ type: W }];
   public retreat = [C, C, C];
@@ -23,14 +23,14 @@ export class CentiskorchV extends PokemonCard {
       name: 'Radiating Heat',
       cost: [R],
       damage: 20,
-      text: 'You may discard an Energy from this Pokémon. If you do, discard an Energy from your opponent\'s Active Pokémon.'
+      text: "You may discard an Energy from this Pokémon. If you do, discard an Energy from your opponent's Active Pokémon.",
     },
     {
       name: 'Burning Train',
       cost: [R, R, R, R],
       damage: 180,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -47,23 +47,24 @@ export class CentiskorchV extends PokemonCard {
       const player = effect.player;
 
       // Check if this Pokemon has any Energy to discard
-      const hasEnergy = player.active.cards.some(c => c.superType === SuperType.ENERGY);
+      const hasEnergy = player.active.cards.some((c) => c.superType === SuperType.ENERGY);
       if (!hasEnergy) {
         return state;
       }
 
-      store.prompt(state, new ConfirmPrompt(
-        player.id,
-        GameMessage.WANT_TO_USE_EFFECT_OF_ATTACK,
-      ), wantToUse => {
-        if (wantToUse) {
-          // Discard 1 energy from this Pokemon
-          DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1);
+      store.prompt(
+        state,
+        new ConfirmPrompt(player.id, GameMessage.WANT_TO_USE_EFFECT_OF_ATTACK),
+        (wantToUse) => {
+          if (wantToUse) {
+            // Discard 1 energy from this Pokemon
+            DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1);
 
-          // Then discard 1 energy from opponent's active
-          DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
-        }
-      });
+            // Then discard 1 energy from opponent's active
+            DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
+          }
+        },
+      );
     }
 
     return state;

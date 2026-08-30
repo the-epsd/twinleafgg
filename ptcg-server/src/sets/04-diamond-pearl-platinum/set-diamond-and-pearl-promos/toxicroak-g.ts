@@ -1,32 +1,55 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { GameError, GameMessage, PokemonCardList, PowerType, State, StateUtils, StoreLike } from '../../../game';
+import {
+  GameError,
+  GameMessage,
+  PokemonCardList,
+  PowerType,
+  State,
+  StateUtils,
+  StoreLike,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, COIN_FLIP_PROMPT, HAS_MARKER, MOVE_CARDS, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED, WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN } from '../../../game/store/prefabs/prefabs';
+import {
+  ABILITY_USED,
+  ADD_MARKER,
+  BLOCK_IF_HAS_SPECIAL_CONDITION,
+  COIN_FLIP_PROMPT,
+  HAS_MARKER,
+  MOVE_CARDS,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN,
+} from '../../../game/store/prefabs/prefabs';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 
 export class ToxicroakG extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_SP];
-  public cardType: CardType = F;
+  protected _tags = [CardTag.POKEMON_SP];
+  public cardType: CardType[] = [F];
   public hp: number = 90;
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Leap Away',
-    useWhenInPlay: true,
-    powerType: PowerType.POKEPOWER,
-    text: 'Once during your turn (before your attack), if Toxicroak G is your Active Pokémon, you may flip a coin. If heads, return Toxicroak G and all cards attached to it to your hand. This power can\'t be used if Toxicroak G is affected by a Special Condition.'
-  }];
+  public powers = [
+    {
+      name: 'Leap Away',
+      useWhenInPlay: true,
+      powerType: PowerType.POKEPOWER,
+      text: "Once during your turn (before your attack), if Toxicroak G is your Active Pokémon, you may flip a coin. If heads, return Toxicroak G and all cards attached to it to your hand. This power can't be used if Toxicroak G is affected by a Special Condition.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Poison Revenge',
-    cost: [P, C],
-    damage: 20,
-    damageCalculation: '+',
-    text: 'If any of your Pokémon were Knocked Out by damage from an opponent\'s attack during his or her last turn, this attack does 20 damage plus 40 more damage and the Defending Pokémon is now Poisoned.'
-  }];
+  public attacks = [
+    {
+      name: 'Poison Revenge',
+      cost: [P, C],
+      damage: 20,
+      damageCalculation: '+',
+      text: "If any of your Pokémon were Knocked Out by damage from an opponent's attack during his or her last turn, this attack does 20 damage plus 40 more damage and the Defending Pokémon is now Poisoned.",
+    },
+  ];
 
   public set: string = 'DPP';
   public cardImage: string = 'assets/cardback.png';
@@ -58,7 +81,7 @@ export class ToxicroakG extends PokemonCard {
 
       ADD_MARKER(this.LEAP_AWAY_MARKER, player, this);
       ABILITY_USED(player, this);
-      COIN_FLIP_PROMPT(store, state, player, result => {
+      COIN_FLIP_PROMPT(store, state, player, (result) => {
         if (result) {
           const pokemonCardList = cardList as PokemonCardList;
           const tentacoolCard = pokemonCardList.getPokemonCard();
@@ -67,10 +90,11 @@ export class ToxicroakG extends PokemonCard {
           }
 
           const pokemons = pokemonCardList.getPokemons();
-          const otherCards = cardList.cards.filter(card =>
-            !(card instanceof PokemonCard) &&
-            !pokemons.includes(card as PokemonCard) &&
-            (!pokemonCardList.tools || !pokemonCardList.tools.includes(card))
+          const otherCards = cardList.cards.filter(
+            (card) =>
+              !(card instanceof PokemonCard) &&
+              !pokemons.includes(card as PokemonCard) &&
+              (!pokemonCardList.tools || !pokemonCardList.tools.includes(card)),
           );
           const tools = [...pokemonCardList.tools];
 

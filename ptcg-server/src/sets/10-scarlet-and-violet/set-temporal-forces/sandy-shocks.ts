@@ -9,14 +9,13 @@ import { PlayerType } from '../../../game';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class SandyShocks extends PokemonCard {
-
   public regulationMark = 'H';
 
-  public tags = [CardTag.ANCIENT];
+  protected _tags = [CardTag.ANCIENT];
 
   public stage = Stage.BASIC;
 
-  public cardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp = 120;
 
@@ -30,14 +29,14 @@ export class SandyShocks extends PokemonCard {
       cost: [CardType.FIGHTING],
       damage: 20,
       damageCalculation: '+',
-      text: 'If you have 3 or more Energy in play, this attack does 70 more damage. This attack\'s damage isn\'t affected by Weakness.'
+      text: "If you have 3 or more Energy in play, this attack does 70 more damage. This attack's damage isn't affected by Weakness.",
     },
     {
       name: 'Power Gem',
       cost: [CardType.FIGHTING, CardType.COLORLESS],
       damage: 60,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'TEF';
@@ -51,16 +50,14 @@ export class SandyShocks extends PokemonCard {
   public fullName: string = 'Sandy Shocks TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       const player = effect.player;
       effect.ignoreWeakness = true;
       let energyCount = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, cardList);
         store.reduceEffect(state, checkProvidedEnergyEffect);
-        checkProvidedEnergyEffect.energyMap.forEach(energy => {
+        checkProvidedEnergyEffect.energyMap.forEach((energy) => {
           energyCount += energy.provides.length;
         });
       });
@@ -68,7 +65,6 @@ export class SandyShocks extends PokemonCard {
       if (energyCount >= 3) {
         effect.damage += 70;
       }
-
     }
     return state;
   }

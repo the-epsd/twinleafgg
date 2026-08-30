@@ -7,10 +7,9 @@ import { AttachEnergyEffect } from '../../../game/store/effects/play-card-effect
 import { DRAW_CARDS, IS_SPECIAL_ENERGY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class RichEnergy extends EnergyCard {
-
   public provides: CardType[] = [CardType.COLORLESS];
 
-  public tags = [CardTag.ACE_SPEC];
+  protected _tags = [CardTag.ACE_SPEC];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -32,7 +31,6 @@ export class RichEnergy extends EnergyCard {
     'When you attach this card from your hand to one of your Pokémon, draw 4 cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
       const player = effect.player;
       if (IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, effect.target)) {

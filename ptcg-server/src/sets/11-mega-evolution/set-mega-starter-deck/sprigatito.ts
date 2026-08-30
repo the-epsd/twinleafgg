@@ -6,9 +6,8 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefabs/attack-effects';
 
 export class Sprigatito extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public retreat = [C];
@@ -22,14 +21,14 @@ export class Sprigatito extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'MEM';
+  public set: string = 'J-MEM';
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sprigatito';
   public fullName: string = 'Sprigatito MEM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-celestial-storm/lombre.ts (Ambush)
+    // Play Rough
     if (WAS_ATTACK_USED(effect, 0, this)) {
       FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE(store, state, effect, 20);
     }

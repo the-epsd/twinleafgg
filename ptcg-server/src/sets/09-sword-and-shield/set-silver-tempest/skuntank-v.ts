@@ -4,18 +4,29 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { GameMessage, StoreLike, State, StateUtils, ChoosePokemonPrompt, SlotType, PlayerType } from '../../../game';
+import {
+  GameMessage,
+  StoreLike,
+  State,
+  StateUtils,
+  ChoosePokemonPrompt,
+  SlotType,
+  PlayerType,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { RetreatEffect } from '../../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED, YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../../game/store/prefabs/attack-effects';
+import {
+  YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED,
+  YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED,
+} from '../../../game/store/prefabs/attack-effects';
 
 export class SkuntankV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 210;
   public weakness = [{ type: F }];
   public retreat = [C, C];
@@ -35,14 +46,14 @@ export class SkuntankV extends PokemonCard {
       name: 'Pursuit Blast',
       cost: [C, C],
       damage: 0,
-      text: 'This attack does 30 damage to 1 of your opponent\'s Benched Pokémon. If that Pokémon retreated from the Active Spot during your opponent\'s last turn, this attack does 120 damage instead. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack does 30 damage to 1 of your opponent's Benched Pokémon. If that Pokémon retreated from the Active Spot during your opponent's last turn, this attack does 120 damage instead. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Shrieking Poison',
       cost: [D, C, C],
       damage: 90,
-      text: 'Your opponent\'s Active Pokémon is now Confused and Poisoned.'
-    }
+      text: "Your opponent's Active Pokémon is now Confused and Poisoned.",
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -69,8 +80,10 @@ export class SkuntankV extends PokemonCard {
     }
 
     // Clean up retreat tracking at end of the opponent's turn (the player who retreated)
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_RETREATED_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_RETREATED_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_RETREATED_MARKER, this);
       this.retreatedCard = null;
     }
@@ -81,31 +94,35 @@ export class SkuntankV extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+      const hasBenched = opponent.bench.some((b) => b.cards.length > 0);
       if (!hasBenched) {
         return state;
       }
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        if (!selected || selected.length === 0) {
-          return;
-        }
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.BENCH],
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          if (!selected || selected.length === 0) {
+            return;
+          }
 
-        const target = selected[0];
-        const hasRetreated = this.retreatedCard !== null &&
-          target.getPokemonCard() === this.retreatedCard;
-        const damage = hasRetreated ? 120 : 30;
+          const target = selected[0];
+          const hasRetreated =
+            this.retreatedCard !== null && target.getPokemonCard() === this.retreatedCard;
+          const damage = hasRetreated ? 120 : 30;
 
-        const putDamage = new PutDamageEffect(effect, damage);
-        putDamage.target = target;
-        store.reduceEffect(state, putDamage);
-      });
+          const putDamage = new PutDamageEffect(effect, damage);
+          putDamage.target = target;
+          store.reduceEffect(state, putDamage);
+        },
+      );
     }
 
     // Attack 2: Shrieking Poison

@@ -1,5 +1,24 @@
-import type { Attack, Card, CardList, EnergyCard, Player, PokemonCard, Power, TrainerCard } from 'ptcg-server';
-import { CardTag, CardType, EnergyType, PokemonCardList, PowerType, Stage, SuperType } from 'ptcg-server';
+import type {
+  Attack,
+  Card,
+  CardList,
+  EnergyCard,
+  Player,
+  PokemonCard,
+  Power,
+  TrainerCard,
+} from 'ptcg-server';
+import {
+  CardTag,
+  CardType,
+  EnergyType,
+  getPokemonCardTypes,
+  PokemonCardList,
+  PowerType,
+  SpecialCondition,
+  Stage,
+  SuperType,
+} from 'ptcg-server';
 import i18n from '../i18n/i18n';
 import styles from './CardInfoPane.module.css';
 
@@ -127,8 +146,7 @@ export function getCardGameplaySignature(card: Card): string {
     return JSON.stringify({
       ...base,
       hp: pokemon.hp,
-      cardType: pokemon.cardType,
-      additionalCardTypes: pokemon.additionalCardTypes ?? [],
+      cardType: getPokemonCardTypes(pokemon),
       stage: pokemon.stage,
       evolvesFrom: pokemon.evolvesFrom ?? '',
       weakness: pokemon.weakness ?? [],
@@ -196,7 +214,10 @@ function sortPrintings(cards: Card[], reference: Card): Card[] {
   return [...cards].sort((a, b) => comparePrintings(a, b, reference));
 }
 
-export function getGroupedAlternativePrintings(catalog: Card[], card: Card): GroupedAlternativePrintings {
+export function getGroupedAlternativePrintings(
+  catalog: Card[],
+  card: Card,
+): GroupedAlternativePrintings {
   const alternatives = catalog.filter((c) => c.name === card.name && c.fullName !== card.fullName);
   const otherPrints: Card[] = [];
   const sameNameOnly: Card[] = [];
@@ -256,6 +277,159 @@ function getMainPokemonCard(card: Card, cardList: CardList): Card {
   return pokemons[pokemons.length - 1] ?? card;
 }
 
+function isFossilDittoTransformCard(card: Card): card is PokemonCard {
+  if (card.superType !== SuperType.POKEMON) {
+    return false;
+  }
+  const pokemon = card as PokemonCard;
+  return (
+    pokemon.name === 'Ditto'
+    && pokemon.set === 'FO'
+    && pokemon.powers.some((p) => p.name === 'Transform')
+  );
+}
+
+function isBrocksNinetalesShapeshiftCard(card: Card): card is PokemonCard {
+  if (card.superType !== SuperType.POKEMON) {
+    return false;
+  }
+  const pokemon = card as PokemonCard;
+  return (
+    pokemon.name === "Brock's Ninetales"
+    && pokemon.powers.some((p) => p.name === 'Shapeshift')
+  );
+}
+
+/**
+ * Fossil Ditto Transform: while Active and not Asleep/Confused/Paralyzed,
+ * treat printed card info as the opponent's Active Pokémon.
+ */
+export function getFossilDittoTransformCopy(
+  card: Card,
+  cardList?: CardList,
+  players?: Player[],
+): PokemonCard | undefined {
+  if (!cardList || !players || players.length < 2) {
+    return undefined;
+  }
+  if (!(cardList instanceof PokemonCardList) && !('specialConditions' in cardList)) {
+    return undefined;
+  }
+
+  const main = cardList.cards?.length ? getMainPokemonCard(card, cardList) : card;
+  if (!isFossilDittoTransformCard(main)) {
+    return undefined;
+  }
+  // Only when viewing the in-play Ditto (not a lower stack card / tool).
+  if (card !== main && cardList.cards?.includes(card)) {
+    return undefined;
+  }
+
+  const owner = players.find(
+    (p) => p.active === cardList || p.bench?.some((b) => b === cardList),
+  );
+  if (!owner || owner.active !== cardList) {
+    return undefined;
+  }
+
+  const conditions =
+    cardList instanceof PokemonCardList
+      ? cardList.specialConditions
+      : ((cardList as unknown as { specialConditions?: SpecialCondition[] }).specialConditions ?? []);
+  if (
+    conditions.includes(SpecialCondition.ASLEEP)
+    || conditions.includes(SpecialCondition.CONFUSED)
+    || conditions.includes(SpecialCondition.PARALYZED)
+  ) {
+    return undefined;
+  }
+
+  const opponent = players.find((p) => p !== owner) ?? players.find((p) => p.id !== owner.id);
+  if (!opponent) {
+    return undefined;
+  }
+
+  const defending = opponent.active?.getPokemonCard?.()
+    ?? (opponent.active?.cards
+      ? ([...opponent.active.cards].reverse().find((c) => c.superType === SuperType.POKEMON) as PokemonCard | undefined)
+      : undefined);
+  if (!defending || defending === main) {
+    return undefined;
+  }
+
+  return defending;
+}
+
+/**
+ * Brock's Ninetales Shapeshift: Evolution cards attached under Ninetales (not Basics
+ * in the normal evolve stack) — treat card info as that Pokémon.
+ */
+export function getBrocksNinetalesShapeshiftCopy(
+  card: Card,
+  cardList?: CardList,
+  players?: Player[],
+): PokemonCard | undefined {
+  if (!cardList?.cards?.length) {
+    return undefined;
+  }
+  if (!(cardList instanceof PokemonCardList) && !('specialConditions' in cardList)) {
+    return undefined;
+  }
+
+  const main = getMainPokemonCard(card, cardList);
+  if (!isBrocksNinetalesShapeshiftCard(main)) {
+    return undefined;
+  }
+  // Only when viewing the in-play Ninetales (not a lower stack card / tool).
+  if (card !== main && cardList.cards.includes(card)) {
+    return undefined;
+  }
+
+  const conditions =
+    cardList instanceof PokemonCardList
+      ? cardList.specialConditions
+      : ((cardList as unknown as { specialConditions?: SpecialCondition[] }).specialConditions ?? []);
+  if (
+    conditions.includes(SpecialCondition.ASLEEP)
+    || conditions.includes(SpecialCondition.CONFUSED)
+    || conditions.includes(SpecialCondition.PARALYZED)
+  ) {
+    return undefined;
+  }
+
+  const tools = pokemonCardListTools(cardList);
+  // Shapeshift attaches Evolution cards (non-Basic). Basics under Ninetales are the
+  // normal evolve stack (e.g. Brock's Vulpix), not Shapeshift attachments.
+  const attached = cardList.cards.filter(
+    (c): c is PokemonCard =>
+      c.superType === SuperType.POKEMON
+      && c !== main
+      && !tools.includes(c)
+      && (c as PokemonCard).stage !== Stage.BASIC,
+  );
+  if (attached.length === 0) {
+    return undefined;
+  }
+
+  // Most recently attached Evolution (append order under Ninetales).
+  return attached[attached.length - 1];
+}
+
+/**
+ * Live "become that Pokémon" overlay for card info (Fossil Ditto Transform,
+ * Brock's Ninetales Shapeshift, etc.).
+ */
+export function getInPlayTransformCopy(
+  card: Card,
+  cardList?: CardList,
+  players?: Player[],
+): PokemonCard | undefined {
+  return (
+    getFossilDittoTransformCopy(card, cardList, players)
+    ?? getBrocksNinetalesShapeshiftCopy(card, cardList, players)
+  );
+}
+
 function addToolPowers(powers: Power[], tools: Card[]): Power[] {
   let out = powers;
   for (const tool of tools) {
@@ -284,8 +458,44 @@ function addToolAttacks(attacks: Attack[], tools: Card[]): Attack[] {
 /**
  * Powers shown in the card pane — matches Angular `CardInfoPaneComponent.getDisplayPowers`
  * (main Pokémon, evolution stages when enabled, attached trainers, and tool abilities).
+ * Fossil Ditto Transform merges the Defending Pokémon's powers while keeping Transform.
+ * Brock's Ninetales Shapeshift merges the attached Evolution's powers (except Pokémon Powers).
  */
-export function getDisplayPowers(card: Card, cardList?: CardList): Power[] {
+export function getDisplayPowers(card: Card, cardList?: CardList, players?: Player[]): Power[] {
+  const dittoCopy = getFossilDittoTransformCopy(card, cardList, players);
+  if (dittoCopy) {
+    const transformPower = cardPowers(card).filter((p) => p.name === 'Transform');
+    const copied = cardPowers(dittoCopy).filter((p) => p.name !== 'Transform');
+    const tools = cardList ? pokemonCardListTools(cardList) : [];
+    let powers = [...transformPower, ...copied];
+    if (cardList?.cards?.length) {
+      for (const c of cardList.cards) {
+        if (c.superType === SuperType.TRAINER) {
+          powers = [...powers, ...cardPowers(c)];
+        }
+      }
+    }
+    return addToolPowers(powers, tools);
+  }
+
+  const shapeshiftCopy = getBrocksNinetalesShapeshiftCopy(card, cardList, players);
+  if (shapeshiftCopy) {
+    const shapeshiftPower = cardPowers(card).filter((p) => p.name === 'Shapeshift');
+    const copied = cardPowers(shapeshiftCopy).filter(
+      (p) => p.powerType !== PowerType.POKEMON_POWER && p.name !== 'Shapeshift',
+    );
+    const tools = cardList ? pokemonCardListTools(cardList) : [];
+    let powers = [...shapeshiftPower, ...copied];
+    if (cardList?.cards?.length) {
+      for (const c of cardList.cards) {
+        if (c.superType === SuperType.TRAINER) {
+          powers = [...powers, ...cardPowers(c)];
+        }
+      }
+    }
+    return addToolPowers(powers, tools);
+  }
+
   if (card.superType === SuperType.POKEMON) {
     if (isToolCardInList(card, cardList)) {
       return cardPowers(card);
@@ -328,8 +538,23 @@ export function getDisplayPowers(card: Card, cardList?: CardList): Power[] {
 /**
  * Attacks shown in the card pane — matches Angular `CardInfoPaneComponent.getDisplayAttacks`
  * (main Pokémon, evolution stages when enabled, attached trainers, and tool attacks).
+ * Fossil Ditto Transform / Brock's Ninetales Shapeshift show the copied Pokémon's attacks.
  */
-export function getDisplayAttacks(card: Card, cardList?: CardList): Attack[] {
+export function getDisplayAttacks(card: Card, cardList?: CardList, players?: Player[]): Attack[] {
+  const transformCopy = getInPlayTransformCopy(card, cardList, players);
+  if (transformCopy) {
+    const tools = cardList ? pokemonCardListTools(cardList) : [];
+    let attacks = cardAttacks(transformCopy);
+    if (cardList?.cards?.length) {
+      for (const c of cardList.cards) {
+        if (c.superType === SuperType.TRAINER) {
+          attacks = [...attacks, ...cardAttacks(c)];
+        }
+      }
+    }
+    return addToolAttacks(attacks, tools);
+  }
+
   if (card.superType === SuperType.POKEMON) {
     if (isToolCardInList(card, cardList)) {
       return cardAttacks(card);
@@ -579,13 +804,30 @@ export function getDisplayRuleBoxes(card: Card, _?: CardList): RuleBox[] {
 /**
  * Max HP for a Pokémon in play, matching Angular `CardInfoPaneComponent.getComputedHp`:
  * printed HP on the viewed card plus {@link PokemonCardList.hpBonus} (tools, effects, etc.).
+ * Transform overlays (Fossil Ditto / Brock's Ninetales Shapeshift): prefer live hpBonus
+ * (server CheckHpEffect); fall back to the copied Pokémon's printed HP when bonus has not synced yet.
  */
-export function getComputedHp(card: Card, cardList?: CardList): number | null {
+export function getComputedHp(card: Card, cardList?: CardList, players?: Player[]): number | null {
   if (!card || card.superType !== SuperType.POKEMON) {
     return null;
   }
+
+  const inPlay =
+    cardList?.cards?.length && !isToolCardInList(card, cardList)
+      ? (getMainPokemonCard(card, cardList) as PokemonCard)
+      : (card as PokemonCard);
+
+  const transformCopy = getInPlayTransformCopy(inPlay, cardList, players);
+  if (transformCopy && cardList instanceof PokemonCardList) {
+    const viaBonus = inPlay.hp + (cardList.hpBonus || 0);
+    if (viaBonus === inPlay.hp && transformCopy.hp !== inPlay.hp) {
+      return transformCopy.hp;
+    }
+    return viaBonus;
+  }
+
   let hp = 0;
-  const printed = (card as PokemonCard).hp;
+  const printed = inPlay.hp;
   if (printed !== undefined && printed !== null) {
     const n = Number(printed);
     if (Number.isFinite(n)) {
@@ -602,8 +844,8 @@ export function getComputedHp(card: Card, cardList?: CardList): number | null {
  * Remaining HP, matching Angular `CardInfoPaneComponent.getCurrentHp`:
  * {@link getComputedHp} minus {@link PokemonCardList.damage}.
  */
-export function getCurrentHp(card: Card, cardList?: CardList): number | null {
-  const computed = getComputedHp(card, cardList);
+export function getCurrentHp(card: Card, cardList?: CardList, players?: Player[]): number | null {
+  const computed = getComputedHp(card, cardList, players);
   if (computed === null) {
     return null;
   }
@@ -709,18 +951,40 @@ export function getCardRuleText(card: Card): string {
   return typeof t === 'string' ? t : '';
 }
 
-export function getDisplayTagLabels(card: Card, showTags: boolean): string[] {
-  if (!showTags || card.superType !== SuperType.POKEMON) {
+export function getDisplayTagLabels(card: Card, showTags: boolean, cardList?: CardList): string[] {
+  if (!showTags || !card) {
     return [];
   }
-  const pokemon = card as PokemonCard;
-  if (pokemon.cardTag?.length) {
-    return pokemon.cardTag.map(String);
+
+  const labels = new Set<string>();
+
+  // Prefer canonical Card.tags; fall back to deprecated PokemonCard.cardTag.
+  if (card.tags.length) {
+    for (const tag of card.tags) {
+      labels.add(String(tag));
+    }
+  } else if (card.superType === SuperType.POKEMON) {
+    const pokemon = card as PokemonCard;
+    if (pokemon.cardTag?.length) {
+      for (const tag of pokemon.cardTag) {
+        labels.add(String(tag));
+      }
+    }
   }
-  if (card.tags?.length) {
-    return card.tags;
+
+  // Team Plasma Badge grants TEAM_PLASMA to the Pokémon it is attached to.
+  // Derive it from the in-play tool list so the pane updates even if runtime tag
+  // mutations have not been applied/serialized yet.
+  if (card.superType === SuperType.POKEMON && cardList && !isToolCardInList(card, cardList)) {
+    const hasPlasmaBadge = pokemonCardListTools(cardList).some(
+      (tool) => tool.name === 'Team Plasma Badge',
+    );
+    if (hasPlasmaBadge) {
+      labels.add(CardTag.TEAM_PLASMA);
+    }
   }
-  return [];
+
+  return [...labels];
 }
 
 export type DebugMarkerDisplay = {

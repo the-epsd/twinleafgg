@@ -8,21 +8,20 @@ import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, WAS_ATT
 
 export class Magneton extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [L];
   public hp: number = 80;
-  public weakness = [{ type: CardType.FIGHTING }];
-  public resistance = [{ type: CardType.METAL, value: -20 }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public resistance = [{ type: M, value: -20 }];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Static Shock',
-    cost: [CardType.LIGHTNING],
+    cost: [L],
     damage: 0,
     text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-  },
-  {
+  }, {
     name: 'Electro Ball',
-    cost: [CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS],
+    cost: [L, C, C],
     damage: 70,
     text: 'Discard an Energy attached to this Pokémon. '
   }];

@@ -9,7 +9,7 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../ga
 
 export class Swampert extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
   public hp: number = 170;
   public weakness = [{ type: CardType.LIGHTNING }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];

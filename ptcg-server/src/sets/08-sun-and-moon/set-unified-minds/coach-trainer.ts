@@ -16,7 +16,8 @@ export class CoachTrainer extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Coach Trainer';
   public fullName: string = 'Coach Trainer UNM';
-  public text: string = 'Draw 2 cards. If your Active Pokémon is a TAG TEAM Pokémon, draw 2 more cards. You may play only 1 Supporter card during your turn (before your attack).';
+  public text: string =
+    'Draw 2 cards. If your Active Pokémon is a TAG TEAM Pokémon, draw 2 more cards. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-unbroken-bonds/snorlax.ts (TAG_TEAM check pattern)
@@ -25,7 +26,7 @@ export class CoachTrainer extends TrainerCard {
       DRAW_CARDS(store, state, player, 2);
 
       const activePokemon = player.active.getPokemonCard();
-      if (activePokemon && activePokemon.tags.includes(CardTag.TAG_TEAM)) {
+      if (activePokemon && activePokemon.hasTag(CardTag.TAG_TEAM)) {
         DRAW_CARDS(store, state, player, 2);
       }
     }

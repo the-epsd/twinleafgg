@@ -10,24 +10,32 @@ import { SlotType } from '../../../game';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 
 import { TrainerCard, TrainerType } from '../../../game';
-import { ABILITY_USED, BLOCK_IF_HAS_SPECIAL_CONDITION, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ABILITY_USED,
+  BLOCK_IF_HAS_SPECIAL_CONDITION,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Banetteex extends PokemonCard {
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Shuppet';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 90;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Shady Move',
-    useWhenInPlay: true,
-    powerType: PowerType.POKEPOWER,
-    text: 'Once during your turn (before your attack), if Banette ex is your Active Pokémon, you may move 1 damage counter from either player\'s Pokémon to another Pokémon (yours or your opponent\'s). This power can\'t be used if Banette ex is affected by a Special Condition.'
-  }];
+  public powers = [
+    {
+      name: 'Shady Move',
+      useWhenInPlay: true,
+      powerType: PowerType.POKEPOWER,
+      text: "Once during your turn (before your attack), if Banette ex is your Active Pokémon, you may move 1 damage counter from either player's Pokémon to another Pokémon (yours or your opponent's). This power can't be used if Banette ex is affected by a Special Condition.",
+    },
+  ];
 
   public attacks = [
     {
@@ -35,8 +43,8 @@ export class Banetteex extends PokemonCard {
       cost: [P, C],
       damage: 30,
       damageCalculation: '+',
-      text: 'Does 30 damage plus 10 more damage for each Supporter card in your discard pile. You can\'t add more than 60 damage in this way.'
-    }
+      text: "Does 30 damage plus 10 more damage for each Supporter card in your discard pile. You can't add more than 60 damage in this way.",
+    },
   ];
 
   public set: string = 'LM';
@@ -85,29 +93,33 @@ export class Banetteex extends PokemonCard {
       }
 
       // doing the actual moving of cards
-      return store.prompt(state, new MoveDamagePrompt(
-        effect.player.id,
-        GameMessage.MOVE_DAMAGE,
-        PlayerType.ANY,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        maxAllowedDamage,
-        { min: 1, max: 1, allowCancel: false }
-      ), transfers => {
-        if (transfers === null) {
-          return;
-        }
-        player.marker.addMarker(this.SHADY_MARKER, this);
-        ABILITY_USED(player, this);
-
-        for (const transfer of transfers) {
-          const source = StateUtils.getTarget(state, player, transfer.from);
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          if (source.damage >= 10) {
-            source.damage -= 10;
-            target.damage += 10;
+      return store.prompt(
+        state,
+        new MoveDamagePrompt(
+          effect.player.id,
+          GameMessage.MOVE_DAMAGE,
+          PlayerType.ANY,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          maxAllowedDamage,
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (transfers) => {
+          if (transfers === null) {
+            return;
           }
-        }
-      });
+          player.marker.addMarker(this.SHADY_MARKER, this);
+          ABILITY_USED(player, this);
+
+          for (const transfer of transfers) {
+            const source = StateUtils.getTarget(state, player, transfer.from);
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            if (source.damage >= 10) {
+              source.damage -= 10;
+              target.damage += 10;
+            }
+          }
+        },
+      );
     }
 
     // Shadow Chant
@@ -115,7 +127,7 @@ export class Banetteex extends PokemonCard {
       const player = effect.player;
 
       let supportersInDiscard = 0;
-      player.discard.cards.forEach(c => {
+      player.discard.cards.forEach((c) => {
         if (c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER) {
           supportersInDiscard += 1;
         }

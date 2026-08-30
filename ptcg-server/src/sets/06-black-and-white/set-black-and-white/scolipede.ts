@@ -8,26 +8,23 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 export class Scolipede extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Whirlipede';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 140;
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Megahorn',
-      cost: [P, C, C],
-      damage: 70,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    },
-    {
-      name: 'Venoshock',
-      cost: [P, P, C, C],
-      damage: 50,
-      damageCalculation: '+',
-      text: 'If the Defending Pokémon is Poisoned, this attack does 60 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Megahorn',
+    cost: [P, C, C],
+    damage: 70,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }, {
+    name: 'Venoshock',
+    cost: [P, P, C, C],
+    damage: 50,
+    damageCalculation: '+',
+    text: 'If the Defending Pokémon is Poisoned, this attack does 60 more damage.'
+  }];
 
   public set: string = 'BLW';
   public cardImage: string = 'assets/cardback.png';

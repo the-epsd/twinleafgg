@@ -6,11 +6,14 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  SEARCH_DECK_FOR_CARDS_TO_HAND,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Eevee extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -20,14 +23,14 @@ export class Eevee extends PokemonCard {
       name: 'Vee-Search',
       cost: [C],
       damage: 0,
-      text: 'Search your deck for up to 3 Pokémon V, reveal them, and put them into your hand. Then, shuffle your deck.'
+      text: 'Search your deck for up to 3 Pokémon V, reveal them, and put them into your hand. Then, shuffle your deck.',
     },
     {
       name: 'Stampede',
       cost: [C, C],
       damage: 20,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -51,14 +54,18 @@ export class Eevee extends PokemonCard {
           return;
         }
         const pokemonCard = card as PokemonCard;
-        if (!pokemonCard.tags.includes(CardTag.POKEMON_V)) {
+        if (!pokemonCard.hasTag(CardTag.POKEMON_V)) {
           blocked.push(index);
         }
       });
 
-      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this,
+      SEARCH_DECK_FOR_CARDS_TO_HAND(
+        store,
+        state,
+        player,
+        this,
         { superType: SuperType.POKEMON },
-        { min: 0, max: 3, allowCancel: true, blocked }
+        { min: 0, max: 3, allowCancel: true, blocked },
       );
     }
 

@@ -3,8 +3,10 @@ import { DarkCroconaw } from './dark-croconaw';
 import { DarkFeraligatr } from './dark-feraligatr';
 import { EnergyStadium } from './energy-stadium';
 
+import { ShiningMewtwo } from './shining-mewtwo';
 export const setNeoDestiny: Card[] = [
   new DarkCroconaw(),
   new DarkFeraligatr(),
   new EnergyStadium(),
+  new ShiningMewtwo(),
 ];

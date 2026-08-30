@@ -7,12 +7,17 @@ import { Stage, CardType, CardTag, TrainerType } from '../../../game/store/card/
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  ADD_MARKER,
+  HAS_MARKER,
+  REMOVE_MARKER_AT_END_OF_TURN,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Seviper extends PokemonCard {
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 110;
   public weakness = [{ type: F }];
   public retreat = [C, C];
@@ -23,8 +28,8 @@ export class Seviper extends PokemonCard {
       cost: [D, D, C],
       damage: 90,
       damageCalculation: '+',
-      text: 'If you played a Single Strike Supporter card from your hand during this turn, this attack does 90 more damage.'
-    }
+      text: 'If you played a Single Strike Supporter card from your hand during this turn, this attack does 90 more damage.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -39,9 +44,11 @@ export class Seviper extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Track when a Single Strike Supporter is played this turn
     // Ref: set-vivid-voltage/hitmontop.ts (tracking specific supporter card played marker)
-    if (effect instanceof TrainerEffect
-      && effect.trainerCard.trainerType === TrainerType.SUPPORTER
-      && effect.trainerCard.tags.includes(CardTag.SINGLE_STRIKE)) {
+    if (
+      effect instanceof TrainerEffect &&
+      effect.trainerCard.trainerType === TrainerType.SUPPORTER &&
+      effect.trainerCard.hasTag(CardTag.SINGLE_STRIKE)
+    ) {
       ADD_MARKER(this.SINGLE_STRIKE_SUPPORTER_MARKER, effect.player, this);
     }
 

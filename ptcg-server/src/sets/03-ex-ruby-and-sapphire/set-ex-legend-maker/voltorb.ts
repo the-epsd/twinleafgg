@@ -7,25 +7,22 @@ import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, THIS_PO
 
 export class Voltorb extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 50;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Thunderwave',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Bouncing Ball',
-      cost: [L, C],
-      damage: 30,
-      text: 'Voltorb does 10 damage to itself.'
-    },
-  ];
+  public attacks = [{
+    name: 'Thunderwave',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Bouncing Ball',
+    cost: [L, C],
+    damage: 30,
+    text: 'Voltorb does 10 damage to itself.'
+  }];
 
   public set: string = 'LM';
   public name: string = 'Voltorb';

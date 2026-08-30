@@ -7,29 +7,34 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, PlayerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
-import { CheckTableStateEffect, CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
+import {
+  CheckTableStateEffect,
+  CheckProvidedEnergyEffect,
+} from '../../../game/store/effects/check-effects';
 
 export class VirizionV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 200;
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Verdant Wind',
-    powerType: PowerType.ABILITY,
-    text: 'Each of your Pokémon that has any [G] Energy attached to it can\'t be affected by any Special Conditions. (Remove any Special Conditions affecting those Pokémon.)'
-  }];
+  public powers = [
+    {
+      name: 'Verdant Wind',
+      powerType: PowerType.ABILITY,
+      text: "Each of your Pokémon that has any [G] Energy attached to it can't be affected by any Special Conditions. (Remove any Special Conditions affecting those Pokémon.)",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Emerald Blade',
       cost: [G, G, C],
       damage: 200,
-      text: 'During your next turn, this Pokémon can\'t attack.'
-    }
+      text: "During your next turn, this Pokémon can't attack.",
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -43,7 +48,7 @@ export class VirizionV extends PokemonCard {
     // Ability: Verdant Wind - passive, remove special conditions from Pokemon with G energy
     // Ref: set-plasma-blast/virizion-ex.ts (Verdant Wind - same ability, CheckTableStateEffect)
     if (effect instanceof CheckTableStateEffect) {
-      state.players.forEach(player => {
+      state.players.forEach((player) => {
         // Find if this Virizion V is in play on this player's side
         let virizionInPlay = false;
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
@@ -70,13 +75,13 @@ export class VirizionV extends PokemonCard {
           const checkEnergy = new CheckProvidedEnergyEffect(player, cardList);
           store.reduceEffect(state, checkEnergy);
 
-          const hasGrassEnergy = checkEnergy.energyMap.some(em =>
-            em.provides.includes(CardType.GRASS)
+          const hasGrassEnergy = checkEnergy.energyMap.some((em) =>
+            em.provides.includes(CardType.GRASS),
           );
 
           if (hasGrassEnergy) {
             const conditions = cardList.specialConditions.slice();
-            conditions.forEach(condition => {
+            conditions.forEach((condition) => {
               cardList.removeSpecialCondition(condition);
             });
           }

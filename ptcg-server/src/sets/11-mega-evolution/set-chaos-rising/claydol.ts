@@ -7,7 +7,7 @@ export class Claydol extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Baltoy';
   public hp: number = 120;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public weakness = [{ type: G }];
   public retreat = [C, C];
 

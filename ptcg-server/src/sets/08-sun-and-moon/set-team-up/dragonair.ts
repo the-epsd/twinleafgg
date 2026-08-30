@@ -12,19 +12,17 @@ import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/s
 export class Dragonair extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Dratini';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 90;
   public weakness = [{ type: Y }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Twister',
-      cost: [W, L],
-      damage: 30,
-      text: 'Flip 2 coins. For each heads, discard an Energy from your opponent\'s Active Pokémon. If both of them are tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Twister',
+    cost: [W, L],
+    damage: 30,
+    text: 'Flip 2 coins. For each heads, discard an Energy from your opponent\'s Active Pokémon. If both of them are tails, this attack does nothing.'
+  }];
 
   public set: string = 'TEU';
   public setNumber: string = '118';

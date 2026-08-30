@@ -11,15 +11,13 @@ import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-pr
 import { PlayerType, SlotType } from '../../../game/store/actions/play-card-action';
 import { StateUtils } from '../../../game/store/state-utils';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { ABILITY_USED, ADD_MARKER, COIN_FLIP_PROMPT, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
-import { PutCountersEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
+import { ABILITY_USED, ADD_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { FLIP_COIN_TO_PREVENT_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Dragonite extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Dragonair';
-  public cardType: CardType = L;
-  public additionalCardTypes = [M];
+  public cardType: CardType[] = [L, M];
   public hp: number = 100;
   public weakness = [{ type: C }];
   public resistance = [{ type: G, value: -30 }, { type: F, value: -30 }];
@@ -52,7 +50,6 @@ export class Dragonite extends PokemonCard {
   public setNumber: string = '3';
 
   public readonly DELTA_CHARGE_MARKER = 'DELTA_CHARGE_MARKER';
-  public readonly AGILITY_MARKER = 'AGILITY_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
@@ -106,23 +103,7 @@ export class Dragonite extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
-        if (result) {
-          this.marker.addMarker(this.AGILITY_MARKER, this);
-          ADD_MARKER(this.AGILITY_MARKER, effect.opponent, this);
-        }
-      });
-    }
-
-    if ((effect instanceof PutDamageEffect || effect instanceof PutCountersEffect) && effect.target.getPokemonCard() === this) {
-      if (this.marker.hasMarker(this.AGILITY_MARKER, this)) {
-        effect.preventDefault = true;
-      }
-    }
-
-    if (effect instanceof EndTurnEffect && HAS_MARKER(this.AGILITY_MARKER, effect.player, this)) {
-      REMOVE_MARKER(this.AGILITY_MARKER, effect.player, this);
-      this.marker.removeMarker(this.AGILITY_MARKER, this);
+      return FLIP_COIN_TO_PREVENT_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN(store, state, effect, this);
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.DELTA_CHARGE_MARKER, this);

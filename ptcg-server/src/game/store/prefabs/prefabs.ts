@@ -1,102 +1,97 @@
+import { GameError } from '../../game-error';
+import { GameMessage, GameLog } from '../../game-message';
+import { PlayerType, SlotType, CardTarget } from '../actions/play-card-action';
+import { Card } from '../card/card';
 import {
-  AttachEnergyOptions,
-  AttachEnergyPrompt,
-  Card,
-  CardList,
-  CardTarget,
-  ChooseCardsOptions,
-  ChooseCardsPrompt,
-  ChoosePokemonPrompt,
-  ChoosePrizePrompt,
-  ChooseEnergyPrompt,
-  ConfirmPrompt,
-  DamageMap,
-  EnergyCard,
-  GameError,
-  GameLog,
-  GameMessage,
-  MoveDamagePrompt,
-  Player,
-  PlayerType,
-  PokemonCardList,
-  PowerType,
-  SelectPrompt,
-  ShowCardsPrompt,
-  ShuffleDeckPrompt,
-  SlotType,
-  State,
-  StateUtils,
-  StoreLike,
-  TrainerCard,
-} from '../..';
-import {
-  TrainerEffect,
-  AttachEnergyEffect,
-  ToolEffect,
-  CoinFlipEffect,
-  CoinFlipSequenceEffect,
-  PlayPokemonFromDeckEffect,
-  PlayPokemonEffect,
-} from '../effects/play-card-effects';
-import {
+  CardType,
   BoardEffect,
   CardTag,
-  CardType,
-  EnergyType,
-  Format,
-  SpecialCondition,
-  Stage,
   SuperType,
-  TrainerType,
+  EnergyType,
+  Stage,
+  SpecialCondition,
 } from '../card/card-types';
-import { Attack, Power } from '../card/pokemon-types';
-import { GamePhase } from '../state/state';
-import { canPlayDualStadium } from '../dual-stadium-utils';
-import { canPlayDualLegend } from '../dual-legend-utils';
+import { EnergyCard } from '../card/energy-card';
 import { PokemonCard } from '../card/pokemon-card';
+import { Attack, Power, PowerType } from '../card/pokemon-types';
+import { TrainerCard } from '../card/trainer-card';
+import { canPlayDualLegend } from '../dual-legend-utils';
 import {
-  AbstractAttackEffect,
-  AddSpecialConditionsEffect,
-  AfterDamageEffect,
-  ApplyWeaknessEffect,
-  CardsToHandEffect,
   DealDamageEffect,
-  DiscardCardsEffect,
-  HealTargetEffect,
-  MoveCountersAttackEffect,
-  PutCountersEffect,
   PutDamageEffect,
+  HealTargetEffect,
+  ApplyWeaknessEffect,
+  AbstractAttackEffect,
+  MoveCountersAttackEffect,
+  AfterDamageEffect,
+  DiscardCardsEffect,
+  CardsToHandEffect,
   GustOpponentBenchEffect,
   SwitchOutOpponentsActiveEffect,
+  AddSpecialConditionsEffect,
 } from '../effects/attack-effects';
 import {
-  AddSpecialConditionsPowerEffect,
-  CheckHpEffect,
-  CheckPokemonAttacksEffect,
-  CheckPokemonPowersEffect,
-  CheckPokemonTypeEffect,
-  CheckPrizesDestinationEffect,
   CheckProvidedEnergyEffect,
+  CheckHpEffect,
+  CheckPrizesDestinationEffect,
+  AddSpecialConditionsPowerEffect,
   CheckTableStateEffect,
+  CheckPokemonPowersEffect,
+  CheckPokemonAttacksEffect,
 } from '../effects/check-effects';
 import { Effect } from '../effects/effect';
 import {
   AttackEffect,
-  DrawPrizesEffect,
+  PowerEffect,
   EvolveEffect,
   KnockOutEffect,
-  MoveCardsEffect,
   MoveDamageCountersEffect,
-  PowerEffect,
+  DrawPrizesEffect,
+  MoveCardsEffect,
   SpecialEnergyEffect,
 } from '../effects/game-effects';
-import { AfterAttackEffect, BeforeDoingDamageEffect, EndTurnEffect } from '../effects/game-phase-effects';
-import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
-import { preventRetreatEffect, preventDamageEffect, preventEffectsOfAttacksEffect, preventAttackEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect, defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect, PreventDamageOptions, shouldPreventAttackEffects } from '../effects/effect-of-attack-effects';
+import {
+  AfterAttackEffect,
+  BeforeDoingDamageEffect,
+  EndTurnEffect,
+} from '../effects/game-phase-effects';
+import {
+  PlayPokemonEffect,
+  AttachEnergyEffect,
+  PlayPokemonFromDeckEffect,
+  CoinFlipEffect,
+  CoinFlipSequenceEffect,
+  ToolEffect,
+} from '../effects/play-card-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
+import { AttachEnergyOptions, AttachEnergyPrompt } from '../prompts/attach-energy-prompt';
+import { ChooseCardsPrompt, ChooseCardsOptions } from '../prompts/choose-cards-prompt';
+import { ChooseEnergyPrompt } from '../prompts/choose-energy-prompt';
+import { ChoosePokemonPrompt } from '../prompts/choose-pokemon-prompt';
+import { ChoosePrizePrompt } from '../prompts/choose-prize-prompt';
+import { ConfirmPrompt } from '../prompts/confirm-prompt';
+import { DamageMap, MoveDamagePrompt } from '../prompts/move-damage-prompt';
+import { SelectPrompt } from '../prompts/select-prompt';
+import { ShowCardsPrompt } from '../prompts/show-cards-prompt';
+import { ShuffleDeckPrompt } from '../prompts/shuffle-prompt';
+import { WaitPrompt } from '../prompts/wait-prompt';
+import { StateUtils } from '../state-utils';
+import { CardList } from '../state/card-list';
+import { Player } from '../state/player';
+import { PokemonCardList } from '../state/pokemon-card-list';
+import { State, GamePhase } from '../state/state';
+import { StoreLike } from '../store-like';
+import {
+  BOARD_ANIMATION_GATE_TIMEOUT_MS,
+  DECK_SHUFFLE_ANIMATION_WAIT_MS,
+} from './deck-shuffle-animation';
+import { CAN_PLAY_TRAINER_CARD } from './trainer-prefabs';
+
+// =============================================================================
+// Effect type guards / turn hooks
+// =============================================================================
 
 /**
- *
  * A basic effect for checking the use of attacks.
  * @returns whether or not a specific attack was used.
  */
@@ -122,10 +117,7 @@ export function HAS_EXTRA_ENERGY_BEYOND_ATTACK_COST(
 ): boolean {
   const checkEnergy = new CheckProvidedEnergyEffect(player, source);
   store.reduceEffect(state, checkEnergy);
-  const requiredEnergy = [
-    ...attack.cost,
-    ...Array(extraEnergyCount).fill(CardType.COLORLESS),
-  ];
+  const requiredEnergy = [...attack.cost, ...Array(extraEnergyCount).fill(CardType.COLORLESS)];
   return StateUtils.checkEnoughEnergy(checkEnergy.energyMap, requiredEnergy);
 }
 
@@ -138,7 +130,6 @@ export function PUT_DAMAGE(effect: Effect): effect is PutDamageEffect {
 }
 
 /**
- *
  * A basic effect for checking the use of abilites.
  * @returns whether or not a specific ability was used.
  */
@@ -167,7 +158,6 @@ export const BEFORE_DAMAGE = (
 };
 
 /**
- *
  * Checks whether or not the Pokemon just evolved.
  * @returns whether or not `effect` is an evolve effect from this card.
  */
@@ -206,7 +196,6 @@ export function ABILITY_USED(player: Player, card: PokemonCard) {
 }
 
 /**
- *
  * A basic effect for checking whether or not a passive ability gets activated.
  * @returns whether or not a passive ability was activated.
  */
@@ -214,86 +203,9 @@ export function PASSIVE_ABILITY_ACTIVATED(effect: Effect, user: PokemonCard) {
   return effect instanceof KnockOutEffect && effect.target.cards.includes(user);
 }
 
-/**
- *
- * @param state is the game state.
- * @returns the game state after discarding a stadium card in play.
- */
-export function DISCARD_A_STADIUM_CARD_IN_PLAY(state: State) {
-  const stadiumCard = StateUtils.getStadiumCard(state);
-  if (stadiumCard !== undefined) {
-    const cardList = StateUtils.findCardList(state, stadiumCard);
-    const player = StateUtils.findOwner(state, cardList);
-    cardList.moveTo(player.discard);
-  }
-}
-
-/**
- * Search deck for Pokemon, show it to the opponent, put it into `player`'s hand, and shuffle `player`'s deck.
- * A `filter` can be provided for the prompt as well.
- */
-export function SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(
-  store: StoreLike,
-  state: State,
-  player: Player,
-  filter: Partial<PokemonCard> = {},
-  options: Partial<ChooseCardsOptions> = {},
-) {
-  BLOCK_IF_DECK_EMPTY(player);
-  const slots = GET_PLAYER_BENCH_SLOTS(player);
-  BLOCK_IF_NO_SLOTS(slots);
-  filter.superType = SuperType.POKEMON;
-
-  return store.prompt(
-    state,
-    new ChooseCardsPrompt(
-      player,
-      GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-      player.deck,
-      filter,
-      options,
-    ),
-    (selected) => {
-      const cards = selected || [];
-      cards.forEach((card, index) => {
-        const playPokemonFromDeckEffect = new PlayPokemonFromDeckEffect(
-          player,
-          card as any,
-          slots[index],
-        );
-        store.reduceEffect(state, playPokemonFromDeckEffect);
-      });
-      SHUFFLE_DECK(store, state, player);
-    },
-  );
-}
-
-/**
- * Search deck for Pokemon, show it to the opponent, put it into `player`'s hand, and shuffle `player`'s deck.
- * A `filter` can be provided for the prompt as well.
- */
-export function SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(
-  store: StoreLike,
-  state: State,
-  player: Player,
-  filter: Partial<PokemonCard> = {},
-  options: Partial<ChooseCardsOptions> = {},
-) {
-  BLOCK_IF_DECK_EMPTY(player);
-  const opponent = StateUtils.getOpponent(state, player);
-  filter.superType = SuperType.POKEMON;
-
-  return store.prompt(
-    state,
-    new ChooseCardsPrompt(player, GameMessage.CHOOSE_CARD_TO_HAND, player.deck, filter, options),
-    (selected) => {
-      const cards = selected || [];
-      SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-      cards.forEach((card) => MOVE_CARD_TO(state, card, player.hand));
-      SHUFFLE_DECK(store, state, player);
-    },
-  );
-}
+// =============================================================================
+// Damage & healing
+// =============================================================================
 
 export function THIS_ATTACK_DOES_X_MORE_DAMAGE(
   effect: AttackEffect,
@@ -303,499 +215,6 @@ export function THIS_ATTACK_DOES_X_MORE_DAMAGE(
 ) {
   effect.damage += damage;
   return state;
-}
-
-export interface NextTurnAttackBonusOptions {
-  attack: Attack;
-  source: Card;
-  bonusDamage: number;
-  bonusMarker: string;
-  clearMarker: string;
-}
-
-/**
- * Standard marker lifecycle for:
- * "During your next turn, this Pokemon's [Attack Name] attack does [N] more damage."
- *
- * Applies bonus when the same attack is used while marker is active and clears after that next turn.
- */
-export function NEXT_TURN_ATTACK_BONUS(effect: Effect, options: NextTurnAttackBonusOptions): void {
-  const { attack, source, bonusDamage, bonusMarker, clearMarker } = options;
-
-  if (effect instanceof AttackEffect && effect.attack === attack) {
-    // Guard against copied attacks: only apply when this source card is the attacker.
-    if (source instanceof PokemonCard && effect.source.getPokemonCard() !== source) {
-      return;
-    }
-
-    if (HAS_MARKER(bonusMarker, effect.player, source)) {
-      effect.damage += bonusDamage;
-    }
-    REMOVE_MARKER(clearMarker, effect.player, source);
-    ADD_MARKER(bonusMarker, effect.player, source);
-  }
-
-  if (effect instanceof EndTurnEffect && HAS_MARKER(bonusMarker, effect.player, source)) {
-    if (HAS_MARKER(clearMarker, effect.player, source)) {
-      REMOVE_MARKER(bonusMarker, effect.player, source);
-      REMOVE_MARKER(clearMarker, effect.player, source);
-    } else {
-      ADD_MARKER(clearMarker, effect.player, source);
-    }
-  }
-}
-
-export interface NextTurnAttackBaseDamageOptions {
-  setupAttack: Attack;
-  boostedAttack: Attack;
-  source: Card;
-  baseDamage: number;
-  bonusMarker: string;
-  clearMarker: string;
-}
-
-/**
- * Standard marker lifecycle for:
- * "During your next turn, this Pokemon's [Attack Name] attack's base damage is [N]."
- *
- * `setupAttack` is the attack that applies the marker and `boostedAttack` is the attack
- * whose base damage is overridden during the next turn.
- */
-export function NEXT_TURN_ATTACK_BASE_DAMAGE(
-  effect: Effect,
-  options: NextTurnAttackBaseDamageOptions,
-): void {
-  const { setupAttack, boostedAttack, source, baseDamage, bonusMarker, clearMarker } = options;
-
-  if (effect instanceof AttackEffect) {
-    // Guard against copied attacks: only apply when this source card is the attacker.
-    if (source instanceof PokemonCard && effect.source.getPokemonCard() !== source) {
-      return;
-    }
-
-    if (effect.attack === boostedAttack && HAS_MARKER(bonusMarker, effect.player, source)) {
-      effect.damage = baseDamage;
-    }
-
-    if (effect.attack === setupAttack) {
-      REMOVE_MARKER(clearMarker, effect.player, source);
-      ADD_MARKER(bonusMarker, effect.player, source);
-    }
-  }
-
-  if (effect instanceof EndTurnEffect && HAS_MARKER(bonusMarker, effect.player, source)) {
-    if (HAS_MARKER(clearMarker, effect.player, source)) {
-      REMOVE_MARKER(bonusMarker, effect.player, source);
-      REMOVE_MARKER(clearMarker, effect.player, source);
-    } else {
-      ADD_MARKER(clearMarker, effect.player, source);
-    }
-  }
-}
-
-export interface CopyBenchAttackOptions {
-  allowCancel?: boolean;
-  throwIfNoBenchedPokemon?: boolean;
-  disallowCopycatAttack?: boolean;
-}
-
-function* copyBenchAttackGenerator(
-  next: Function,
-  store: StoreLike,
-  state: State,
-  effect: AttackEffect,
-  options: CopyBenchAttackOptions,
-): IterableIterator<State> {
-  const player = effect.player;
-  const opponent = StateUtils.getOpponent(state, player);
-  const {
-    allowCancel = false,
-    throwIfNoBenchedPokemon = true,
-    disallowCopycatAttack = true,
-  } = options;
-
-  const hasBenchedPokemon = player.bench.some((b) => b.cards.length > 0);
-  if (!hasBenchedPokemon) {
-    if (throwIfNoBenchedPokemon) {
-      throw new GameError(GameMessage.CANNOT_USE_ATTACK);
-    }
-    return state;
-  }
-
-  let targets: PokemonCardList[] = [];
-  yield store.prompt(
-    state,
-    new ChoosePokemonPrompt(
-      player.id,
-      GameMessage.CHOOSE_POKEMON,
-      PlayerType.BOTTOM_PLAYER,
-      [SlotType.BENCH],
-      { allowCancel },
-    ),
-    (results) => {
-      targets = results || [];
-      next();
-    },
-  );
-
-  if (targets.length === 0) {
-    return state;
-  }
-
-  const benchedPokemon = targets[0];
-  const benchedCard = benchedPokemon.getPokemonCard();
-  if (benchedCard === undefined || benchedCard.attacks.length === 0) {
-    return state;
-  }
-
-  let selected: Attack | null = null;
-  yield store.prompt(
-    state,
-    new ChooseAttackPrompt(player.id, GameMessage.CHOOSE_ATTACK_TO_COPY, [benchedCard], {
-      allowCancel,
-    }),
-    (result) => {
-      selected = result;
-      next();
-    },
-  );
-
-  const copiedAttack = selected as Attack | null;
-  if (copiedAttack === null) {
-    return state;
-  }
-
-  if (disallowCopycatAttack && copiedAttack.copycatAttack === true) {
-    return state;
-  }
-
-  store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
-    name: player.name,
-    attack: copiedAttack.name,
-  });
-
-  const attackEffect = new AttackEffect(player, opponent, copiedAttack);
-  store.reduceEffect(state, attackEffect);
-
-  if (store.hasPrompts()) {
-    yield store.waitPrompt(state, () => next());
-  }
-
-  if (attackEffect.damage > 0) {
-    const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
-    state = store.reduceEffect(state, dealDamage);
-  }
-
-  return state;
-}
-
-/**
- * Generic implementation for:
- * "Choose 1 of your Benched Pokemon's attacks and use it as this attack."
- *
- * Call this inside your WAS_ATTACK_USED(...) block (optionally coin-gated).
- */
-export function COPY_BENCH_ATTACK(
-  store: StoreLike,
-  state: State,
-  effect: AttackEffect,
-  options: CopyBenchAttackOptions = {},
-): State {
-  const generator = copyBenchAttackGenerator(() => generator.next(), store, state, effect, options);
-  return generator.next().value;
-}
-
-/**
- * "Choose 1 of your opponent's Active Pokemon's attacks and use it as this attack."
- * Used by: Zoroark (Foul Play), Krookodile (Foul Play), Mew ex (Genome Hacking), etc.
- */
-function* copyOpponentActiveAttackGenerator(
-  next: Function,
-  store: StoreLike,
-  state: State,
-  effect: AttackEffect,
-): IterableIterator<State> {
-  const player = effect.player;
-  const opponent = StateUtils.getOpponent(state, player);
-  const pokemonCard = opponent.active.getPokemonCard();
-
-  if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
-    return state;
-  }
-
-  let selected: any;
-  yield store.prompt(
-    state,
-    new ChooseAttackPrompt(player.id, GameMessage.CHOOSE_ATTACK_TO_COPY, [pokemonCard], {
-      allowCancel: false,
-    }),
-    (result) => {
-      selected = result;
-      next();
-    },
-  );
-
-  const attack: Attack | null = selected;
-
-  if (attack === null || attack.copycatAttack === true) {
-    return state;
-  }
-
-  store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
-    name: player.name,
-    attack: attack.name,
-  });
-
-  const attackEffect = new AttackEffect(player, opponent, attack);
-  state = store.reduceEffect(state, attackEffect);
-
-  if (store.hasPrompts()) {
-    yield store.waitPrompt(state, () => next());
-  }
-
-  if (attackEffect.damage > 0) {
-    const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
-    state = store.reduceEffect(state, dealDamage);
-  }
-
-  return state;
-}
-
-export function COPY_OPPONENT_ACTIVE_ATTACK(
-  store: StoreLike,
-  state: State,
-  effect: AttackEffect,
-): State {
-  const generator = copyOpponentActiveAttackGenerator(() => generator.next(), store, state, effect);
-  return generator.next().value;
-}
-
-/**
- * "If your opponent's Pokemon used an attack during their last turn, use it as this attack."
- * Used by: Mimikyu (Copycat), Sudowoodo (Watch and Learn), etc.
- */
-function* copyOpponentsLastAttackGenerator(
-  next: Function,
-  store: StoreLike,
-  state: State,
-  effect: AttackEffect,
-): IterableIterator<State> {
-  const player = effect.player;
-  const opponent = StateUtils.getOpponent(state, player);
-
-  const lastAttackInfo = state.playerLastAttack[opponent.id];
-
-  if (!lastAttackInfo) {
-    return state;
-  }
-
-  const { attack: lastAttack, sourceCard } = lastAttackInfo;
-
-  if (lastAttack.copycatAttack === true || lastAttack.gxAttack === true) {
-    return state;
-  }
-
-  store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
-    name: player.name,
-    attack: lastAttack.name,
-  });
-
-  const copiedAttackEffect = new AttackEffect(player, opponent, lastAttack);
-  copiedAttackEffect.source = player.active;
-  copiedAttackEffect.target = opponent.active;
-
-  // Call the source card's reduceEffect directly so attack logic runs even if card is not in play
-  state = sourceCard.reduceEffect(store, state, copiedAttackEffect);
-
-  if (store.hasPrompts()) {
-    yield store.waitPrompt(state, () => next());
-  }
-
-  if (copiedAttackEffect.damage > 0) {
-    const dealDamage = new DealDamageEffect(copiedAttackEffect, copiedAttackEffect.damage);
-    state = store.reduceEffect(state, dealDamage);
-  }
-
-  const afterAttackEffect = new AfterAttackEffect(player, opponent, lastAttack);
-  state = store.reduceEffect(state, afterAttackEffect);
-
-  if (store.hasPrompts()) {
-    yield store.waitPrompt(state, () => next());
-  }
-
-  return state;
-}
-
-export function COPY_OPPONENTS_LAST_ATTACK(
-  store: StoreLike,
-  state: State,
-  effect: AttackEffect,
-): State {
-  const generator = copyOpponentsLastAttackGenerator(() => generator.next(), store, state, effect);
-  return generator.next().value;
-}
-
-export interface ToolActiveDamageBonusOptions {
-  damageBonus: number;
-  sourcePokemonName?: string;
-  sourceCardType?: CardType;
-  sourceCardTag?: CardTag;
-}
-
-/**
- * Standard Tool damage hook for text like:
- * "If this card is attached to [condition], each of its attacks does [N] more damage
- * to the Active Pokemon (before applying Weakness and Resistance)."
- */
-export function TOOL_ACTIVE_DAMAGE_BONUS(
-  store: StoreLike,
-  state: State,
-  effect: Effect,
-  tool: TrainerCard,
-  options: ToolActiveDamageBonusOptions,
-): void {
-  if (!(effect instanceof DealDamageEffect) || !effect.source.tools.includes(tool)) {
-    return;
-  }
-
-  if (IS_TOOL_BLOCKED(store, state, effect.player, tool)) {
-    return;
-  }
-
-  const sourcePokemon = effect.source.getPokemonCard();
-  if (sourcePokemon === undefined) {
-    return;
-  }
-
-  if (options.sourcePokemonName !== undefined && sourcePokemon.name !== options.sourcePokemonName) {
-    return;
-  }
-
-  if (options.sourceCardTag !== undefined && !sourcePokemon.tags.includes(options.sourceCardTag)) {
-    return;
-  }
-
-  if (options.sourceCardType !== undefined) {
-    const checkPokemonTypeEffect = new CheckPokemonTypeEffect(effect.source);
-    store.reduceEffect(state, checkPokemonTypeEffect);
-    if (!checkPokemonTypeEffect.cardTypes.includes(options.sourceCardType)) {
-      return;
-    }
-  }
-
-  const opponent = StateUtils.getOpponent(state, effect.player);
-  if (effect.target !== opponent.active || effect.damage <= 0) {
-    return;
-  }
-
-  effect.damage += options.damageBonus;
-}
-
-export interface ToolSetHpIfOptions {
-  hp: number;
-  sourcePokemonName?: string;
-  sourceCardType?: CardType;
-  sourceCardTag?: CardTag;
-}
-
-/**
- * Standard Tool HP hook for text like:
- * "If this card is attached to [condition], its maximum HP is [N]."
- */
-export function TOOL_SET_HP_IF(
-  store: StoreLike,
-  state: State,
-  effect: Effect,
-  tool: TrainerCard,
-  options: ToolSetHpIfOptions,
-): void {
-  if (!(effect instanceof CheckHpEffect) || !effect.target.tools.includes(tool)) {
-    return;
-  }
-
-  if (IS_TOOL_BLOCKED(store, state, effect.player, tool)) {
-    return;
-  }
-
-  const sourcePokemon = effect.target.getPokemonCard();
-  if (sourcePokemon === undefined) {
-    return;
-  }
-
-  if (options.sourcePokemonName !== undefined && sourcePokemon.name !== options.sourcePokemonName) {
-    return;
-  }
-
-  if (options.sourceCardTag !== undefined && !sourcePokemon.tags.includes(options.sourceCardTag)) {
-    return;
-  }
-
-  if (options.sourceCardType !== undefined) {
-    const checkPokemonTypeEffect = new CheckPokemonTypeEffect(effect.target);
-    store.reduceEffect(state, checkPokemonTypeEffect);
-    if (!checkPokemonTypeEffect.cardTypes.includes(options.sourceCardType)) {
-      return;
-    }
-  }
-
-  effect.hp = options.hp;
-}
-
-/**
- * Spirit Link: skip the Mega Evolution end-turn rule when evolving into the named Mega Pokemon.
- * Call from the Spirit Link tool's reduceEffect with the target Mega's name.
- */
-export function SPIRIT_LINK_SKIP_MEGA_EVOLUTION_END_TURN(
-  store: StoreLike,
-  state: State,
-  effect: Effect,
-  tool: TrainerCard,
-  megaPokemonName: string,
-): void {
-  if (!(effect instanceof PlayPokemonEffect)
-    || !effect.target.tools.includes(tool)
-    || effect.pokemonCard.name !== megaPokemonName) {
-    return;
-  }
-
-  if (IS_TOOL_BLOCKED(store, state, effect.player, tool)) {
-    return;
-  }
-
-  effect.skipMegaEvolutionEndTurn = true;
-}
-
-/**
- * Mega Evolution Rule: end the turn when this Pokemon is played to evolve,
- * unless a Spirit Link set skipMegaEvolutionEndTurn on the PlayPokemonEffect.
- */
-export function MEGA_EVOLUTION_END_TURN(
-  store: StoreLike,
-  state: State,
-  effect: Effect,
-  card: PokemonCard,
-): void {
-  if (effect instanceof PlayPokemonEffect && effect.pokemonCard === card
-    && !effect.skipMegaEvolutionEndTurn) {
-    store.reduceEffect(state, new EndTurnEffect(effect.player));
-  }
-}
-
-export function GET_TOTAL_ENERGY_ATTACHED_TO_PLAYERS_POKEMON(
-  player: Player,
-  store: StoreLike,
-  state: State,
-) {
-  let totalEnergy = 0;
-  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-    const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, cardList);
-    store.reduceEffect(state, checkProvidedEnergyEffect);
-    checkProvidedEnergyEffect.energyMap.forEach((energy) => {
-      totalEnergy += 1;
-    });
-  });
-
-  return totalEnergy;
 }
 
 export function DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG(
@@ -808,7 +227,7 @@ export function DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG(
   const opponentActive = opponent.active.getPokemonCard();
   let includesAnyTags = false;
   for (const tag of cardTags) {
-    if (opponentActive && opponentActive.tags.includes(tag)) {
+    if (opponentActive && opponentActive.hasTag(tag)) {
       includesAnyTags = true;
     }
   }
@@ -852,342 +271,6 @@ export function THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT(
   // Check if source Pokemon has damage
   const damage = source.damage;
   return damage > 0;
-}
-
-export function YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK(
-  effect: Effect,
-  state: State,
-): effect is KnockOutEffect {
-  // TODO: this shouldn't work for attacks with damage counters, but I think it will
-  return effect instanceof KnockOutEffect;
-}
-
-export interface TakeSpecificPrizesOptions {
-  destination?: CardList;
-  skipReduce?: boolean;
-}
-
-export interface TakeXPrizesOptions extends TakeSpecificPrizesOptions {
-  promptOptions?: {
-    allowCancel?: boolean;
-    blocked?: number[];
-  };
-}
-
-export function TAKE_SPECIFIC_PRIZES(
-  store: StoreLike,
-  state: State,
-  player: Player,
-  prizes: CardList[],
-  options: TakeSpecificPrizesOptions = {},
-): void {
-  let { destination = player.hand } = options;
-  const { skipReduce = false } = options;
-  let preventDefault: boolean = false;
-
-  if (!skipReduce) {
-    const drawPrizesEffect = new DrawPrizesEffect(player, prizes, destination);
-
-    // Reduce the prizes destination for effects that override it and take place before any
-    // DrawPrizesEffect is processed (e.g. Barbaracle LOR)
-    const prizesDestinationEffect = new CheckPrizesDestinationEffect(
-      player,
-      drawPrizesEffect.destination,
-    );
-    store.reduceEffect(state, prizesDestinationEffect);
-
-    // If nothing prevented the override, apply the new destination
-    if (!prizesDestinationEffect.preventDefault) {
-      drawPrizesEffect.destination = prizesDestinationEffect.destination;
-    }
-
-    // Process the actual DrawPrizesEffect
-    store.reduceEffect(state, drawPrizesEffect);
-
-    preventDefault = drawPrizesEffect.preventDefault;
-    destination = drawPrizesEffect.destination;
-  } else {
-    destination = player.hand;
-  }
-
-  if (!preventDefault) {
-    let prizesTakenCount = 0;
-    prizes.forEach((prize) => {
-      if (player.prizes.includes(prize)) {
-        prize.moveTo(destination);
-
-        if (destination === player.hand) {
-          // If the destination is the hand, we've "taken" a prize
-          player.prizesTaken += 1;
-          player.prizesTakenThisTurn += 1;
-          prizesTakenCount += 1;
-        }
-      }
-    });
-
-    // Track accurate prize count using GameStatsTracker
-    if (prizesTakenCount > 0) {
-      GameStatsTracker.trackPrizeTaken(player, prizesTakenCount);
-    }
-  }
-}
-
-export function TAKE_X_PRIZES(
-  store: StoreLike,
-  state: State,
-  player: Player,
-  count: number,
-  options: TakeXPrizesOptions = {},
-  callback?: (chosenPrizes: CardList[]) => void,
-): State {
-  const { promptOptions = {}, ...takeOptions } = options;
-  const prizeLeft = player.getPrizeLeft();
-  const takeCount = Math.min(count, prizeLeft);
-
-  if (takeCount <= 0) {
-    return state;
-  }
-
-  // Taking all remaining prizes — auto-resolve so clients never get an unsolvable prompt
-  // (e.g. KO awards 2 prizes with only 1 left). checkState/checkWinner will end the game.
-  if (count >= prizeLeft) {
-    const prizes = player.prizes.filter(p => p.cards.length > 0).slice(0, takeCount);
-    TAKE_SPECIFIC_PRIZES(store, state, player, prizes, takeOptions);
-    if (callback) {
-      callback(prizes);
-    }
-    return state;
-  }
-
-  state = store.prompt(
-    state,
-    new ChoosePrizePrompt(player.id, GameMessage.CHOOSE_PRIZE_CARD, {
-      count: takeCount,
-      allowCancel: false,
-      ...promptOptions,
-    }),
-    (result) => {
-      TAKE_SPECIFIC_PRIZES(store, state, player, result, takeOptions);
-      if (callback) callback(result);
-    },
-  );
-
-  return state;
-}
-
-export function TAKE_X_MORE_PRIZE_CARDS(effect: KnockOutEffect, state: State) {
-  effect.prizeCount += 1;
-  return state;
-}
-
-export interface TakeMorePrizesOnKnockOutOptions {
-  /** Only award bonus prizes if this attack was used (via state.playerLastAttack). */
-  attackName?: string;
-  /** Check IS_ABILITY_BLOCKED on the attacker before awarding (for Abilities like Overflow). */
-  checkAbilityBlocked?: boolean;
-  /** Check IS_POKEBODY_BLOCKED on the attacker before awarding (for Poké-Bodies like Space Virus). */
-  checkPokebodyBlocked?: boolean;
-  /** Extra validation after standard checks pass. */
-  validate?: (
-    store: StoreLike,
-    state: State,
-    effect: KnockOutEffect,
-    attacker: Player,
-    knockedOutOwner: Player,
-  ) => boolean;
-  /** Number of extra prizes to award (default 1). Ignored when getExtraPrizes is set. */
-  extraPrizes?: number;
-  /** Dynamic prize bonus; overrides extraPrizes when provided. */
-  getExtraPrizes?: (
-    store: StoreLike,
-    state: State,
-    effect: KnockOutEffect,
-    attacker: Player,
-    knockedOutOwner: Player,
-  ) => number;
-  /** Called after bonus prizes are added to effect.prizeCount. */
-  onAwarded?: (
-    store: StoreLike,
-    state: State,
-    effect: KnockOutEffect,
-    attacker: Player,
-    knockedOutOwner: Player,
-    extraPrizesAwarded: number,
-  ) => void;
-}
-
-/**
- * If your opponent's Pokemon is Knocked Out by damage from an attack of this Pokemon,
- * take more Prize card(s). Valid for Active or Bench KOs.
- *
- * Use `attackName` for attack-specific bonus prizes (uses playerLastAttack, not boolean flags).
- * Use `checkAbilityBlocked` for Ability-based versions (e.g. Lugia-EX Overflow).
- */
-export function IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES(
-  store: StoreLike,
-  state: State,
-  effect: Effect,
-  source: PokemonCard,
-  options: TakeMorePrizesOnKnockOutOptions = {},
-): State {
-  if (!(effect instanceof KnockOutEffect)) {
-    return state;
-  }
-
-  const {
-    attackName,
-    checkAbilityBlocked = false,
-    checkPokebodyBlocked = false,
-    validate,
-    extraPrizes = 1,
-    getExtraPrizes,
-    onAwarded,
-  } = options;
-
-  const knockedOutOwner = effect.player;
-  const attacker = StateUtils.getOpponent(state, knockedOutOwner);
-
-  const isDefendingPokemon = knockedOutOwner.active === effect.target ||
-    knockedOutOwner.bench.includes(effect.target);
-
-  if (!isDefendingPokemon) {
-    return state;
-  }
-
-  if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== attacker) {
-    return state;
-  }
-
-  if (!knockedOutOwner.marker.hasMarker(knockedOutOwner.DAMAGE_DEALT_MARKER)) {
-    return state;
-  }
-
-  const lastAttackInfo = state.playerLastAttack?.[attacker.id];
-  if (!lastAttackInfo || lastAttackInfo.sourceCard !== source) {
-    return state;
-  }
-
-  if (attackName !== undefined && lastAttackInfo.attack.name !== attackName) {
-    return state;
-  }
-
-  if (checkAbilityBlocked && IS_ABILITY_BLOCKED(store, state, attacker, source)) {
-    return state;
-  }
-
-  if (checkPokebodyBlocked && IS_POKEBODY_BLOCKED(store, state, attacker, source)) {
-    return state;
-  }
-
-  if (validate && !validate(store, state, effect, attacker, knockedOutOwner)) {
-    return state;
-  }
-
-  if (effect.prizeCount > 0) {
-    const prizeBonus = getExtraPrizes
-      ? getExtraPrizes(store, state, effect, attacker, knockedOutOwner)
-      : extraPrizes;
-
-    if (prizeBonus > 0) {
-      effect.prizeCount += prizeBonus;
-      onAwarded?.(store, state, effect, attacker, knockedOutOwner, prizeBonus);
-    }
-  }
-
-  return state;
-}
-
-/** Delta Plus Ancient Trait: take 1 more Prize card when you KO an opponent's Pokemon with this Pokemon's attack. */
-export function DELTA_PLUS(
-  store: StoreLike,
-  state: State,
-  effect: Effect,
-  source: PokemonCard,
-): State {
-  return IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES(store, state, effect, source);
-}
-
-export function PLAY_POKEMON_FROM_HAND_TO_BENCH(
-  state: State,
-  player: Player,
-  card: Card,
-  benchSlot?: PokemonCardList,
-) {
-  const slot = benchSlot ?? GET_FIRST_PLAYER_BENCH_SLOT(player);
-  if (slot.cards.length > 0) {
-    throw new GameError(GameMessage.INVALID_TARGET);
-  }
-  player.hand.moveCardTo(card, slot);
-  slot.pokemonPlayedTurn = state.turn;
-}
-
-export function DEVOLVE_POKEMON(
-  store: StoreLike,
-  state: State,
-  target: PokemonCardList,
-  destination: CardList,
-) {
-  const pokemons = target.getPokemons();
-  const pokemonCard = target.getPokemonCard();
-
-  // Weird ass lv.x stuff (yes this is actually the way it works: https://www.pokebeach.com/forums/threads/devolving-lvl-x.34943/)
-  if (pokemonCard?.tags.includes(CardTag.POKEMON_LV_X)) {
-    // The lv.x is on a basic -> do nothing
-    if (pokemons.length === 2 && pokemons.some((p) => p.stage === Stage.BASIC)) {
-      return state;
-    } else {
-      const cardsToDevolve = pokemons.filter((p) => p.name === pokemonCard.name);
-      MOVE_CARDS(store, state, target, destination, { cards: cardsToDevolve });
-      target.clearEffects();
-      target.pokemonPlayedTurn = state.turn;
-    }
-    return state;
-  }
-
-  // Handle normal devolutions
-  if (
-    pokemons.length > 1 &&
-    !pokemonCard?.tags.includes(CardTag.POKEMON_VUNION) &&
-    !pokemonCard?.tags.includes(CardTag.LEGEND)
-  ) {
-    MOVE_CARD_TO(state, pokemonCard as Card, destination);
-    target.clearEffects();
-    target.pokemonPlayedTurn = state.turn;
-  }
-}
-
-export type DevolutionDestination = 'hand' | 'deck' | 'discard' | 'lostzone';
-
-/**
- * Compound helper for text like:
- * "Devolve the Defending Pokemon and put the highest Stage Evolution card on it into your opponent's hand/deck/discard/Lost Zone."
- */
-export function DEVOLVE_DEFENDING_AFTER_ATTACK(
-  store: StoreLike,
-  state: State,
-  effect: Effect,
-  index: number,
-  user: PokemonCard,
-  destination: DevolutionDestination = 'hand',
-): State {
-  if (!AFTER_ATTACK(effect, index, user)) {
-    return state;
-  }
-
-  const player = effect.player;
-  const opponent = StateUtils.getOpponent(state, player);
-
-  let destinationList: CardList = opponent.hand;
-  if (destination === 'deck') {
-    destinationList = opponent.deck;
-  } else if (destination === 'discard') {
-    destinationList = opponent.discard;
-  } else if (destination === 'lostzone') {
-    destinationList = opponent.lostzone;
-  }
-
-  DEVOLVE_POKEMON(store, state, opponent.active, destinationList);
-  return state;
 }
 
 export function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON(
@@ -1297,6 +380,266 @@ export function DAMAGE_OPPONENT_POKEMON(
       store.reduceEffect(state, damageEffect);
     }
   });
+}
+
+export interface MoveDamageCountersOptions {
+  playerType?: PlayerType;
+  slots?: SlotType[];
+  min?: number;
+  max?: number;
+  allowCancel?: boolean;
+  blockedFrom?: CardTarget[];
+  blockedTo?: CardTarget[];
+  singleSourceTarget?: boolean;
+  singleDestinationTarget?: boolean;
+  damageMultiple?: number;
+}
+
+/**
+ * Generic helper for text like:
+ * "Move X damage counters from Y to Z."
+ */
+export function MOVE_DAMAGE_COUNTERS(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  options: MoveDamageCountersOptions = {},
+): State {
+  const moveEffect = new MoveDamageCountersEffect(player);
+  state = store.reduceEffect(state, moveEffect);
+  if (moveEffect.preventDefault) {
+    return state;
+  }
+  const {
+    playerType = PlayerType.BOTTOM_PLAYER,
+    slots = [SlotType.ACTIVE, SlotType.BENCH],
+    min = 1,
+    max = undefined,
+    allowCancel = false,
+    blockedFrom = [],
+    blockedTo = [],
+    singleSourceTarget = false,
+    singleDestinationTarget = false,
+    damageMultiple = 10,
+  } = options;
+
+  const opponent = StateUtils.getOpponent(state, player);
+  const maxAllowedDamage: DamageMap[] = [];
+  const computedBlockedFrom: CardTarget[] = [...blockedFrom];
+
+  const collectTargets = (targetPlayer: Player, targetPlayerType: PlayerType) => {
+    targetPlayer.forEachPokemon(targetPlayerType, (cardList, card, target) => {
+      maxAllowedDamage.push({ target, damage: 9999 });
+      if (cardList.damage === 0) {
+        computedBlockedFrom.push(target);
+      }
+    });
+  };
+
+  if (playerType === PlayerType.BOTTOM_PLAYER || playerType === PlayerType.ANY) {
+    collectTargets(player, PlayerType.BOTTOM_PLAYER);
+  }
+  if (playerType === PlayerType.TOP_PLAYER || playerType === PlayerType.ANY) {
+    collectTargets(opponent, PlayerType.TOP_PLAYER);
+  }
+
+  if (maxAllowedDamage.length === 0) {
+    return state;
+  }
+
+  return store.prompt(
+    state,
+    new MoveDamagePrompt(player.id, GameMessage.MOVE_DAMAGE, playerType, slots, maxAllowedDamage, {
+      allowCancel,
+      min,
+      max,
+      blockedFrom: computedBlockedFrom,
+      blockedTo,
+      singleSourceTarget,
+      singleDestinationTarget,
+      damageMultiple,
+    }),
+    (transfers) => {
+      transfers = transfers || [];
+      for (const transfer of transfers) {
+        const source = StateUtils.getTarget(state, player, transfer.from);
+        const target = StateUtils.getTarget(state, player, transfer.to);
+        if (source.damage < damageMultiple) {
+          continue;
+        }
+        source.damage -= damageMultiple;
+        target.damage += damageMultiple;
+      }
+    },
+  );
+}
+
+/**
+ * Fixed (no move-UI) attack helper for text like:
+ * "Move all damage counters from 1 of your Benched Pokemon to your opponent's Active Pokemon."
+ *
+ * Prompts for 1 damaged Benched Pokemon, then moves ALL of its damage onto the
+ * opponent's Active Pokemon. Respects "damage counters can't be moved" effects
+ * (via MoveDamageCountersEffect) and lets other cards intercept the move via
+ * MoveCountersAttackEffect.
+ */
+export function MOVE_DAMAGE_FROM_YOUR_BENCH_TO_OPPONENTS_ACTIVE(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect | AbstractAttackEffect,
+): State {
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+
+  const blocked: CardTarget[] = [];
+  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+    if (cardList === player.active || cardList.damage === 0) {
+      blocked.push(target);
+    }
+  });
+
+  const hasDamagedBench = player.bench.some((b) => b.cards.length > 0 && b.damage > 0);
+  if (!hasDamagedBench) {
+    return state;
+  }
+
+  return store.prompt(
+    state,
+    new ChoosePokemonPrompt(
+      player.id,
+      GameMessage.CHOOSE_POKEMON,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.BENCH],
+      { min: 1, max: 1, allowCancel: false, blocked },
+    ),
+    (selected) => {
+      if (!selected || selected.length === 0) {
+        return;
+      }
+      const source = selected[0];
+      const damageToMove = source.damage;
+      if (damageToMove <= 0) {
+        return;
+      }
+
+      // "Damage counters can't be moved" (e.g. Patrat) cancels the whole move:
+      // the counters stay on the source Pokemon and nothing is placed.
+      const moveCheck = new MoveDamageCountersEffect(player);
+      state = store.reduceEffect(state, moveCheck);
+      if (moveCheck.preventDefault) {
+        return;
+      }
+
+      const moveEffect = new MoveCountersAttackEffect(
+        effect,
+        source,
+        opponent.active,
+        damageToMove,
+      );
+      state = store.reduceEffect(state, moveEffect);
+
+      // The counters always leave the source Pokemon once the move is allowed...
+      moveEffect.source.damage -= moveEffect.damage;
+      if (moveEffect.source.damage < 0) {
+        moveEffect.source.damage = 0;
+      }
+
+      // ...but a target that prevents effects of attacks (e.g. Mist Energy)
+      // does not receive them.
+      if (!moveEffect.preventDefault) {
+        moveEffect.target.damage += moveEffect.damage;
+      }
+    },
+  );
+}
+
+/**
+ * Checks if the a Pokemon is at full HP and that the damage dealt is enough to knock it out.
+ * TODO: This doesn't work if the an attack changes the result of a CheckHpEffect (e.g. discards an hp-modifying stadium)
+ */
+export function DAMAGED_FROM_FULL_HP(
+  store: StoreLike,
+  state: State,
+  effect: PutDamageEffect,
+  player: Player,
+  target: PokemonCardList,
+): boolean {
+  if (effect.target.damage != 0) {
+    return false;
+  }
+  const checkHpEffect = new CheckHpEffect(player, target);
+  store.reduceEffect(state, checkHpEffect);
+  return effect.damage >= checkHpEffect.hp;
+}
+
+export interface OnDamagedByOpponentAttackEvenIfKnockedOutOptions {
+  source: PokemonCard;
+  requireActiveSpot?: boolean;
+  requireAttackPhase?: boolean;
+}
+
+/**
+ * Compound helper for text like:
+ * "If this Pokémon is in the Active Spot and is damaged by an opponent's attack
+ * (even if this Pokémon is Knocked Out)..."
+ */
+export function ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(
+  state: State,
+  effect: Effect,
+  options: OnDamagedByOpponentAttackEvenIfKnockedOutOptions,
+): effect is AfterDamageEffect {
+  if (!(effect instanceof AfterDamageEffect)) {
+    return false;
+  }
+
+  const { source, requireActiveSpot = true, requireAttackPhase = true } = options;
+
+  if (effect.damage <= 0 || !effect.target.cards.includes(source)) {
+    return false;
+  }
+
+  const targetOwner = StateUtils.findOwner(state, effect.target);
+  if (targetOwner === effect.player) {
+    return false;
+  }
+
+  if (requireActiveSpot && targetOwner.active !== effect.target) {
+    return false;
+  }
+
+  if (requireAttackPhase && state.phase !== GamePhase.ATTACK) {
+    return false;
+  }
+
+  return true;
+}
+
+// =============================================================================
+// Energy
+// =============================================================================
+
+export function GET_TOTAL_ENERGY_ATTACHED_TO_PLAYERS_POKEMON(
+  player: Player,
+  store: StoreLike,
+  state: State,
+) {
+  let totalEnergy = 0;
+  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+    const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, cardList);
+    store.reduceEffect(state, checkProvidedEnergyEffect);
+    checkProvidedEnergyEffect.energyMap.forEach((energy) => {
+      totalEnergy += 1;
+    });
+  });
+
+  return totalEnergy;
+}
+
+/**
+ * Checks whether a Pokémon has any Energy card attached.
+ */
+export function THIS_POKEMON_HAS_ANY_ENERGY_ATTACHED(target: PokemonCardList): boolean {
+  return target.cards.some((card) => card instanceof EnergyCard);
 }
 
 export function ATTACH_ENERGY_PROMPT(
@@ -1734,6 +1077,366 @@ export function ATTACH_UP_TO_X_ENERGY_FROM_DECK_TO_Y_OF_YOUR_POKEMON(
   );
 }
 
+// =============================================================================
+// Prizes & KO prize bonuses
+// =============================================================================
+
+export function YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK(
+  effect: Effect,
+  state: State,
+): effect is KnockOutEffect {
+  // TODO: this shouldn't work for attacks with damage counters, but I think it will
+  return effect instanceof KnockOutEffect;
+}
+
+export interface TakeSpecificPrizesOptions {
+  destination?: CardList;
+  skipReduce?: boolean;
+}
+
+export interface TakeXPrizesOptions extends TakeSpecificPrizesOptions {
+  promptOptions?: {
+    allowCancel?: boolean;
+    blocked?: number[];
+  };
+}
+
+export function TAKE_SPECIFIC_PRIZES(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  prizes: CardList[],
+  options: TakeSpecificPrizesOptions = {},
+): void {
+  let { destination = player.hand } = options;
+  const { skipReduce = false } = options;
+  let preventDefault: boolean = false;
+
+  if (!skipReduce) {
+    const drawPrizesEffect = new DrawPrizesEffect(player, prizes, destination);
+
+    // Reduce the prizes destination for effects that override it and take place before any
+    // DrawPrizesEffect is processed (e.g. Barbaracle LOR)
+    const prizesDestinationEffect = new CheckPrizesDestinationEffect(
+      player,
+      drawPrizesEffect.destination,
+    );
+    store.reduceEffect(state, prizesDestinationEffect);
+
+    // If nothing prevented the override, apply the new destination
+    if (!prizesDestinationEffect.preventDefault) {
+      drawPrizesEffect.destination = prizesDestinationEffect.destination;
+    }
+
+    // Process the actual DrawPrizesEffect
+    store.reduceEffect(state, drawPrizesEffect);
+
+    preventDefault = drawPrizesEffect.preventDefault;
+    destination = drawPrizesEffect.destination;
+  } else {
+    destination = player.hand;
+  }
+
+  if (!preventDefault) {
+    let prizesTakenCount = 0;
+    prizes.forEach((prize) => {
+      if (player.prizes.includes(prize)) {
+        prize.moveTo(destination);
+
+        if (destination === player.hand) {
+          // If the destination is the hand, we've "taken" a prize
+          player.prizesTaken += 1;
+          player.prizesTakenThisTurn += 1;
+          prizesTakenCount += 1;
+        }
+      }
+    });
+
+    // Track accurate prize count using GameStatsTracker
+    if (prizesTakenCount > 0) {
+      GameStatsTracker.trackPrizeTaken(player, prizesTakenCount);
+    }
+  }
+}
+
+export function TAKE_X_PRIZES(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  count: number,
+  options: TakeXPrizesOptions = {},
+  callback?: (chosenPrizes: CardList[]) => void,
+): State {
+  const { promptOptions = {}, ...takeOptions } = options;
+  const prizeLeft = player.getPrizeLeft();
+  const takeCount = Math.min(count, prizeLeft);
+
+  if (takeCount <= 0) {
+    return state;
+  }
+
+  // Taking all remaining prizes — auto-resolve so clients never get an unsolvable prompt
+  // (e.g. KO awards 2 prizes with only 1 left). checkState/checkWinner will end the game.
+  if (count >= prizeLeft) {
+    const prizes = player.prizes.filter((p) => p.cards.length > 0).slice(0, takeCount);
+    TAKE_SPECIFIC_PRIZES(store, state, player, prizes, takeOptions);
+    if (callback) {
+      callback(prizes);
+    }
+    return state;
+  }
+
+  state = store.prompt(
+    state,
+    new ChoosePrizePrompt(player.id, GameMessage.CHOOSE_PRIZE_CARD, {
+      count: takeCount,
+      allowCancel: false,
+      ...promptOptions,
+    }),
+    (result) => {
+      TAKE_SPECIFIC_PRIZES(store, state, player, result, takeOptions);
+      if (callback) callback(result);
+    },
+  );
+
+  return state;
+}
+
+export function TAKE_X_MORE_PRIZE_CARDS(effect: KnockOutEffect, state: State) {
+  effect.prizeCount += 1;
+  return state;
+}
+
+export interface TakeMorePrizesOnKnockOutOptions {
+  /** Only award bonus prizes if this attack was used (via state.playerLastAttack). */
+  attackName?: string;
+  /** Check IS_ABILITY_BLOCKED on the attacker before awarding (for Abilities like Overflow). */
+  checkAbilityBlocked?: boolean;
+  /** Check IS_POKEBODY_BLOCKED on the attacker before awarding (for Poké-Bodies like Space Virus). */
+  checkPokebodyBlocked?: boolean;
+  /** Extra validation after standard checks pass. */
+  validate?: (
+    store: StoreLike,
+    state: State,
+    effect: KnockOutEffect,
+    attacker: Player,
+    knockedOutOwner: Player,
+  ) => boolean;
+  /** Number of extra prizes to award (default 1). Ignored when getExtraPrizes is set. */
+  extraPrizes?: number;
+  /** Dynamic prize bonus; overrides extraPrizes when provided. */
+  getExtraPrizes?: (
+    store: StoreLike,
+    state: State,
+    effect: KnockOutEffect,
+    attacker: Player,
+    knockedOutOwner: Player,
+  ) => number;
+  /** Called after bonus prizes are added to effect.prizeCount. */
+  onAwarded?: (
+    store: StoreLike,
+    state: State,
+    effect: KnockOutEffect,
+    attacker: Player,
+    knockedOutOwner: Player,
+    extraPrizesAwarded: number,
+  ) => void;
+}
+
+/**
+ * If your opponent's Pokemon is Knocked Out by damage from an attack of this Pokemon,
+ * take more Prize card(s). Valid for Active or Bench KOs.
+ *
+ * Use `attackName` for attack-specific bonus prizes (uses playerLastAttack, not boolean flags).
+ * Use `checkAbilityBlocked` for Ability-based versions (e.g. Lugia-EX Overflow).
+ */
+export function IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES(
+  store: StoreLike,
+  state: State,
+  effect: Effect,
+  source: PokemonCard,
+  options: TakeMorePrizesOnKnockOutOptions = {},
+): State {
+  if (!(effect instanceof KnockOutEffect)) {
+    return state;
+  }
+
+  const {
+    attackName,
+    checkAbilityBlocked = false,
+    checkPokebodyBlocked = false,
+    validate,
+    extraPrizes = 1,
+    getExtraPrizes,
+    onAwarded,
+  } = options;
+
+  const knockedOutOwner = effect.player;
+  const attacker = StateUtils.getOpponent(state, knockedOutOwner);
+
+  const isDefendingPokemon =
+    knockedOutOwner.active === effect.target || knockedOutOwner.bench.includes(effect.target);
+
+  if (!isDefendingPokemon) {
+    return state;
+  }
+
+  if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== attacker) {
+    return state;
+  }
+
+  if (!knockedOutOwner.marker.hasMarker(knockedOutOwner.DAMAGE_DEALT_MARKER)) {
+    return state;
+  }
+
+  const lastAttackInfo = state.playerLastAttack?.[attacker.id];
+  if (!lastAttackInfo || lastAttackInfo.sourceCard !== source) {
+    return state;
+  }
+
+  if (attackName !== undefined && lastAttackInfo.attack.name !== attackName) {
+    return state;
+  }
+
+  if (checkAbilityBlocked && IS_ABILITY_BLOCKED(store, state, attacker, source)) {
+    return state;
+  }
+
+  if (checkPokebodyBlocked && IS_POKEBODY_BLOCKED(store, state, attacker, source)) {
+    return state;
+  }
+
+  if (validate && !validate(store, state, effect, attacker, knockedOutOwner)) {
+    return state;
+  }
+
+  if (effect.prizeCount > 0) {
+    const prizeBonus = getExtraPrizes
+      ? getExtraPrizes(store, state, effect, attacker, knockedOutOwner)
+      : extraPrizes;
+
+    if (prizeBonus > 0) {
+      effect.prizeCount += prizeBonus;
+      onAwarded?.(store, state, effect, attacker, knockedOutOwner, prizeBonus);
+    }
+  }
+
+  return state;
+}
+
+/** Delta Plus Ancient Trait: take 1 more Prize card when you KO an opponent's Pokemon with this Pokemon's attack. */
+export function DELTA_PLUS(
+  store: StoreLike,
+  state: State,
+  effect: Effect,
+  source: PokemonCard,
+): State {
+  return IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES(store, state, effect, source);
+}
+
+/**
+ * A getter for the player's prize slots.
+ * @returns A list of card lists containing the player's prize slots.
+ */
+export function GET_PLAYER_PRIZES(player: Player): CardList[] {
+  return player.prizes.filter((p) => p.cards.length > 0);
+}
+
+/**
+ * A getter for all of a player's prizes.
+ * @returns A Card[] of all the player's prize cards.
+ */
+export function GET_PRIZES_AS_CARD_ARRAY(player: Player): Card[] {
+  const prizes = player.prizes.filter((p) => p.cards.length > 0);
+  const allPrizeCards: Card[] = [];
+  prizes.forEach((p) => allPrizeCards.push(...p.cards));
+  return allPrizeCards;
+}
+
+// =============================================================================
+// Search / deck / discard / draw / shuffle
+// =============================================================================
+
+/**
+ * @param state is the game state.
+ * @returns the game state after discarding a stadium card in play.
+ */
+export function DISCARD_A_STADIUM_CARD_IN_PLAY(state: State) {
+  const stadiumCard = StateUtils.getStadiumCard(state);
+  if (stadiumCard !== undefined) {
+    const cardList = StateUtils.findCardList(state, stadiumCard);
+    const player = StateUtils.findOwner(state, cardList);
+    cardList.moveTo(player.discard);
+  }
+}
+
+/**
+ * Search deck for Pokemon, show it to the opponent, put it into `player`'s hand, and shuffle `player`'s deck.
+ * A `filter` can be provided for the prompt as well.
+ */
+export function SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  filter: Partial<PokemonCard> = {},
+  options: Partial<ChooseCardsOptions> = {},
+) {
+  BLOCK_IF_DECK_EMPTY(player);
+  const slots = GET_PLAYER_BENCH_SLOTS(player);
+  BLOCK_IF_NO_SLOTS(slots);
+  filter.superType = SuperType.POKEMON;
+
+  return store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+      player.deck,
+      filter,
+      options,
+    ),
+    (selected) => {
+      const cards = selected || [];
+      cards.forEach((card, index) => {
+        const playPokemonFromDeckEffect = new PlayPokemonFromDeckEffect(
+          player,
+          card as any,
+          slots[index],
+        );
+        store.reduceEffect(state, playPokemonFromDeckEffect);
+      });
+      SHUFFLE_DECK(store, state, player);
+    },
+  );
+}
+
+/**
+ * Search deck for Pokemon, show it to the opponent, put it into `player`'s hand, and shuffle `player`'s deck.
+ * A `filter` can be provided for the prompt as well.
+ */
+export function SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  filter: Partial<PokemonCard> = {},
+  options: Partial<ChooseCardsOptions> = {},
+) {
+  BLOCK_IF_DECK_EMPTY(player);
+  const opponent = StateUtils.getOpponent(state, player);
+  filter.superType = SuperType.POKEMON;
+
+  return store.prompt(
+    state,
+    new ChooseCardsPrompt(player, GameMessage.CHOOSE_CARD_TO_HAND, player.deck, filter, options),
+    (selected) => {
+      const cards = selected || [];
+      SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+      cards.forEach((card) => MOVE_CARD_TO(state, card, player.hand));
+      SHUFFLE_DECK(store, state, player);
+    },
+  );
+}
+
 /**
  * Discards the top `amount` cards of a player's deck.
  */
@@ -1749,6 +1452,30 @@ export function DISCARD_TOP_X_CARDS_FROM_YOUR_DECK(
     count: amount,
     sourceCard: card,
     sourceEffect,
+  });
+}
+
+/**
+ * Discards the top `amount` cards of the opponent's deck (commonly called "milling").
+ * @param player The player ***using*** this effect. Their opponent will be milled.
+ * @param amount The number of cards to discard.
+ * @param card The card causing the effect.
+ * @param sourceEffect The attack or ability causing the effect.
+ */
+export function DISCARD_TOP_X_OF_OPPONENTS_DECK(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  amount: number,
+  card: Card,
+  sourceEffect: any,
+) {
+  const opponent = StateUtils.getOpponent(state, player);
+
+  MOVE_CARDS(store, state, opponent.deck, opponent.discard, {
+    count: amount,
+    sourceCard: card,
+    sourceEffect: sourceEffect,
   });
 }
 
@@ -1780,86 +1507,158 @@ export function COUNT_MATCHING_CARDS_IN_ZONE(
 }
 
 /**
- * Checks whether a Pokémon has any Energy card attached.
+ * Checks whether the player has at least one card in their discard pile matching the given filter and/or predicate.
+ *
+ * The `filter` is a partial card match (e.g. `{ superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' }`
+ * for a basic Fire Energy, or `{ superType: SuperType.POKEMON }` for any Pokémon, or `{ superType: SuperType.TRAINER }` for any Trainer).
+ * A custom `predicate` can be supplied for more complex matching that the partial filter can't express.
+ *
+ * @param player The player whose discard pile to check.
+ * @param filter A partial card filter to match against.
+ * @param predicate An optional custom predicate for additional matching logic.
+ * @returns `true` if at least one matching card exists in the discard pile, `false` otherwise.
  */
-export function THIS_POKEMON_HAS_ANY_ENERGY_ATTACHED(target: PokemonCardList): boolean {
-  return target.cards.some((card) => card instanceof EnergyCard);
-}
-
-/**
- * Convenience guard for cards that can only be used if your VSTAR Power is still available.
- */
-export function BLOCK_IF_VSTAR_POWER_USED(player: Player) {
-  if (player.usedVSTAR === true) {
-    throw new GameError(GameMessage.LABEL_VSTAR_USED);
-  }
-}
-
-/**
- * Returns true if the given player has already used their VSTAR Power this game.
- */
-export function PLAYER_HAS_USED_VSTAR_POWER(player: Player): boolean {
-  return player.usedVSTAR === true;
-}
-
-/**
- * Returns true if your opponent has already used their VSTAR Power this game.
- */
-export function OPPONENT_HAS_USED_VSTAR_POWER(state: State, player: Player): boolean {
-  const opponent = StateUtils.getOpponent(state, player);
-  return opponent.usedVSTAR === true;
-}
-
-/**
- * Discards the top `amount` cards of the opponent's deck (commonly called "milling").
- * @param player The player ***using*** this effect. Their opponent will be milled.
- * @param amount The number of cards to discard.
- * @param card The card causing the effect.
- * @param sourceEffect The attack or ability causing the effect.
- */
-export function DISCARD_TOP_X_OF_OPPONENTS_DECK(
-  store: StoreLike,
-  state: State,
+export function HAS_CARD_IN_DISCARD(
   player: Player,
-  amount: number,
-  card: Card,
-  sourceEffect: any,
-) {
-  const opponent = StateUtils.getOpponent(state, player);
-
-  MOVE_CARDS(store, state, opponent.deck, opponent.discard, {
-    count: amount,
-    sourceCard: card,
-    sourceEffect: sourceEffect,
+  filter: Partial<Card> = {},
+  predicate: (card: Card) => boolean = () => true,
+): boolean {
+  return player.discard.cards.some((card) => {
+    for (const key in filter) {
+      if ((card as any)[key] !== (filter as any)[key]) {
+        return false;
+      }
+    }
+    return predicate(card);
   });
 }
 
 /**
- * A getter for the player's prize slots.
- * @returns A list of card lists containing the player's prize slots.
- */
-export function GET_PLAYER_PRIZES(player: Player): CardList[] {
-  return player.prizes.filter((p) => p.cards.length > 0);
-}
-
-/**
- * A getter for all of a player's prizes.
- * @returns A Card[] of all the player's prize cards.
- */
-export function GET_PRIZES_AS_CARD_ARRAY(player: Player): Card[] {
-  const prizes = player.prizes.filter((p) => p.cards.length > 0);
-  const allPrizeCards: Card[] = [];
-  prizes.forEach((p) => allPrizeCards.push(...p.cards));
-  return allPrizeCards;
-}
-
-/**
  * Shuffles the player's deck.
+ * After order is applied, a silent WaitPrompt gates follow-up draws so the 3D
+ * shuffle animation (triggered via Game arbiter socket emit) can finish.
  */
 export function SHUFFLE_DECK(store: StoreLike, state: State, player: Player): State {
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) =>
-    player.deck.applyOrder(order),
-  );
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+    player.deck.applyOrder(order);
+    store.prompt(
+      state,
+      new WaitPrompt(player.id, DECK_SHUFFLE_ANIMATION_WAIT_MS, 'Deck shuffle animation', false),
+      () => {},
+    );
+  });
+}
+
+/**
+ * Shuffle hand into deck, then draw. Uses MOVE_CARDS / DRAW_CARDS so the board
+ * animation framework sees normal hand diffs. Sequencing WaitPrompts live here
+ * (not on individual cards); clients resolve hand→deck / shuffle waits when
+ * animations finish (server duration is a safety timeout except shuffle).
+ */
+export function SHUFFLE_HAND_INTO_DECK_THEN_DRAW(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  options: {
+    excludeCard?: Card;
+    /** Override which cards leave the hand (default: all except excludeCard). */
+    cards?: Card[];
+    sourceCard?: Card;
+    drawCount?: number;
+    /** Custom draw step after shuffle (e.g. coin flip). Overrides drawCount. */
+    resolveDraw?: (store: StoreLike, state: State, player: Player) => void;
+    /** Runs after the draw (e.g. end turn / next player's sequence). */
+    afterDraw?: (store: StoreLike, state: State, player: Player) => void;
+  },
+): State {
+  const exclude = options.excludeCard;
+  const cards = options.cards ?? player.hand.cards.filter((c) => c !== exclude);
+
+  const shuffleThenDraw = (): void => {
+    store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+      player.deck.applyOrder(order);
+      store.prompt(
+        state,
+        new WaitPrompt(player.id, DECK_SHUFFLE_ANIMATION_WAIT_MS, 'Deck shuffle animation', false),
+        () => {
+          if (options.resolveDraw) {
+            options.resolveDraw(store, state, player);
+          } else {
+            DRAW_CARDS(store, state, player, options.drawCount ?? 0);
+            options.afterDraw?.(store, state, player);
+          }
+        },
+      );
+    });
+  };
+
+  if (cards.length > 0) {
+    const moveEffect = new MoveCardsEffect(player.hand, player.deck, {
+      cards,
+      sourceCard: options.sourceCard,
+    });
+    state = store.reduceEffect(state, moveEffect);
+    if (moveEffect.preventDefault) {
+      return state;
+    }
+    return store.prompt(
+      state,
+      new WaitPrompt(player.id, BOARD_ANIMATION_GATE_TIMEOUT_MS, 'Hand to deck animation', false),
+      () => shuffleThenDraw(),
+    );
+  }
+
+  shuffleThenDraw();
+  return state;
+}
+
+/**
+ * Put hand cards onto the deck (append = bottom), wait for hand→deck animation,
+ * then draw. No deck shuffle — Iono / Marnie style.
+ */
+export function MOVE_HAND_TO_DECK_THEN_DRAW(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  options: {
+    cards: Card[];
+    drawCount: number;
+    sourceCard?: Card;
+    /** If the hand move is prevented, skip draw (and afterDraw). Default true. */
+    skipDrawIfMovePrevented?: boolean;
+    afterDraw?: (store: StoreLike, state: State, player: Player) => void;
+    /** Called when the hand move is prevented (e.g. still draw the other player). */
+    onMovePrevented?: (store: StoreLike, state: State, player: Player) => void;
+  },
+): State {
+  const doDraw = (): void => {
+    DRAW_CARDS(store, state, player, options.drawCount);
+    options.afterDraw?.(store, state, player);
+  };
+
+  if (options.cards.length > 0) {
+    const moveEffect = new MoveCardsEffect(player.hand, player.deck, {
+      cards: options.cards,
+      sourceCard: options.sourceCard,
+    });
+    state = store.reduceEffect(state, moveEffect);
+    if (moveEffect.preventDefault) {
+      if (options.skipDrawIfMovePrevented === false) {
+        doDraw();
+      } else {
+        options.onMovePrevented?.(store, state, player);
+      }
+      return state;
+    }
+    return store.prompt(
+      state,
+      new WaitPrompt(player.id, BOARD_ANIMATION_GATE_TIMEOUT_MS, 'Hand to deck animation', false),
+      () => doDraw(),
+    );
+  }
+
+  doDraw();
+  return state;
 }
 
 /**
@@ -1984,17 +1783,6 @@ export function SEARCH_DECK_FOR_CARDS_TO_HAND(
   );
 }
 
-// Made this so that we can easily change behavior for older formats in the future
-export function CLEAN_UP_SUPPORTER(store: StoreLike, effect: TrainerEffect, player: Player) {
-  const format = (store as any).handler.format;
-  if (
-    !(format === Format.RSPK || format === Format.RETRO) ||
-    effect.trainerCard.trainerType !== TrainerType.SUPPORTER
-  ) {
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  }
-}
-
 /**
  * Search discard pile for card, show it to the opponent, put it into `player`'s hand.
  * A `filter` can be provided for the prompt as well.
@@ -2052,617 +1840,36 @@ export function GET_CARDS_ON_BOTTOM_OF_DECK(player: Player, amount: number = 1):
 }
 
 /**
- * Checks if abilities are blocked on `card` for `player`.
- * @returns `true` if the ability is blocked, `false` if the ability is able to go thru.
- *
- * Ability-locking cards (Hex Maniac, Silent Lab, Garbodor, etc.) should implement their
- * lock via `HANDLE_ABILITY_LOCK` in `prefabs/ability-lock.ts` so Check + PowerEffect stay in sync.
- * Ability owners must still call this before applying ability effects.
- */
-export function IS_ABILITY_BLOCKED(
-  store: StoreLike,
-  state: State,
-  player: Player,
-  card: PokemonCard,
-  /** When probing a specific power (e.g. useFromHand), pass it so allowUseFromHand locks match. */
-  power?: Partial<Power>,
-): boolean {
-  // Try to reduce PowerEffect, to check if something is blocking our ability
-  try {
-    store.reduceEffect(
-      state,
-      new PowerEffect(
-        player,
-        {
-          name: 'test',
-          powerType: power?.powerType ?? PowerType.ABILITY,
-          text: '',
-          exemptFromAbilityLock: power?.exemptFromAbilityLock,
-          exemptFromInitialize: power?.exemptFromInitialize,
-          knocksOutSelf: power?.knocksOutSelf,
-          useFromHand: power?.useFromHand,
-          useFromDiscard: power?.useFromDiscard,
-        },
-        card,
-      ),
-    );
-  } catch {
-    return true;
-  }
-  return false;
-}
-
-/**
- * Checks if pokebodies are blocked on `card` for `player`.
- * @returns `true` if the pokebody is blocked, `false` if the pokebody is able to go thru.
- */
-export function IS_POKEBODY_BLOCKED(
-  store: StoreLike,
-  state: State,
-  player: Player,
-  card: PokemonCard,
-): boolean {
-  // Try to reduce PowerEffect, to check if something is blocking our pokebody
-  try {
-    store.reduceEffect(
-      state,
-      new PowerEffect(
-        player,
-        {
-          name: 'test',
-          powerType: PowerType.POKEBODY,
-          text: '',
-        },
-        card,
-      ),
-    );
-  } catch {
-    return true;
-  }
-  try {
-    store.reduceEffect(
-      state,
-      new PowerEffect(
-        player,
-        {
-          name: 'test',
-          powerType: PowerType.POKEMON_POWER,
-          text: '',
-        },
-        card,
-      ),
-    );
-  } catch {
-    return true;
-  }
-  return false;
-}
-
-/**
- * Checks if pokepowers are blocked on `card` for `player`.
- * @returns `true` if the pokepower is blocked, `false` if the pokepower is able to go thru.
- */
-export function IS_POKEPOWER_BLOCKED(
-  store: StoreLike,
-  state: State,
-  player: Player,
-  card: PokemonCard,
-): boolean {
-  // Try to reduce PowerEffect, to check if something is blocking our pokepower
-  try {
-    store.reduceEffect(
-      state,
-      new PowerEffect(
-        player,
-        {
-          name: 'test',
-          powerType: PowerType.POKEPOWER,
-          text: '',
-        },
-        card,
-      ),
-    );
-  } catch {
-    return true;
-  }
-  try {
-    store.reduceEffect(
-      state,
-      new PowerEffect(
-        player,
-        {
-          name: 'test',
-          powerType: PowerType.POKEMON_POWER,
-          text: '',
-        },
-        card,
-      ),
-    );
-  } catch {
-    return true;
-  }
-  return false;
-}
-
-/**
- * Checks if pokemon powers are blocked on `card` for `player`.
- * @returns `true` if the pokemon power is blocked, `false` if the pokepower is able to go thru.
- */
-export function IS_POKEMON_POWER_BLOCKED(
-  store: StoreLike,
-  state: State,
-  player: Player,
-  card: PokemonCard,
-): boolean {
-  // Try to reduce PowerEffect for POKEMON_POWER
-  try {
-    store.reduceEffect(
-      state,
-      new PowerEffect(
-        player,
-        {
-          name: 'test',
-          powerType: PowerType.POKEMON_POWER,
-          text: '',
-        },
-        card,
-      ),
-    );
-  } catch {
-    return true;
-  }
-  // Try both POKEPOWER and POKEBODY, return true only if BOTH are blocked
-  let pokePowerBlocked = false;
-  let pokeBodyBlocked = false;
-  try {
-    store.reduceEffect(
-      state,
-      new PowerEffect(
-        player,
-        {
-          name: 'test',
-          powerType: PowerType.POKEPOWER,
-          text: '',
-        },
-        card,
-      ),
-    );
-  } catch {
-    pokePowerBlocked = true;
-  }
-  try {
-    store.reduceEffect(
-      state,
-      new PowerEffect(
-        player,
-        {
-          name: 'test',
-          powerType: PowerType.POKEBODY,
-          text: '',
-        },
-        card,
-      ),
-    );
-  } catch {
-    pokeBodyBlocked = true;
-  }
-  // Return true only if both POKEPOWER and POKEBODY are blocked
-  return pokePowerBlocked && pokeBodyBlocked;
-  // Ruling: if both pokePower and pokeBody are blocked, then the pokemon power is blocked.
-}
-
-/**
- * Checks if a tool's effect is being blocked
- * @returns `true` if the tool's effect is blocked, `false` if the tool's effect is able to activate.
- */
-export function IS_TOOL_BLOCKED(
-  store: StoreLike,
-  state: State,
-  player: Player,
-  card: TrainerCard,
-): boolean {
-  // Try to reduce ToolEffect, to check if something is blocking the tool from working
-  try {
-    const stub = new ToolEffect(player, card);
-    store.reduceEffect(state, stub);
-  } catch {
-    return true;
-  }
-  return false;
-}
-
-export { IS_STADIUM_EFFECT_BLOCKED } from './stadium-effect';
-
-/**
- * True when an attack effect originated from the target owner's opponent's Pokémon.
- * Used for text like "Prevent effects of attacks from your opponent's Pokémon done to …"
- */
-export function IS_ATTACK_EFFECT_FROM_OPPONENTS_POKEMON(
-  state: State,
-  effect: AbstractAttackEffect,
-): boolean {
-  const targetOwner = StateUtils.findOwner(state, effect.target);
-  const sourceOwner = StateUtils.findOwner(state, effect.source);
-  return sourceOwner === StateUtils.getOpponent(state, targetOwner);
-}
-
-/**
- * Checks if a special energy's effect is being blocked for the given player and Pokemon it is attached to. Do not use in CheckProvidedEnergyEffect.
- * @returns `true` if the special energy's effect is blocked, `false` if the special energy's effect is able to activate.
- */
-export function IS_SPECIAL_ENERGY_BLOCKED(
-  store: StoreLike,
-  state: State,
-  player: Player,
-  card: EnergyCard,
-  attachedTo: PokemonCardList,
-  exemptFromOpponentsSpecialEnergyBlockingAbility = false,
-): boolean {
-  // Try to reduce SpecialEnergyEffect, to check if something is blocking the effect
-  try {
-    const stub = new SpecialEnergyEffect(
-      player,
-      card,
-      attachedTo,
-      exemptFromOpponentsSpecialEnergyBlockingAbility,
-    );
-    store.reduceEffect(state, stub);
-  } catch {
-    return true;
-  }
-  return false;
-}
-
-export function CAN_EVOLVE_ON_FIRST_TURN_GOING_SECOND(
-  state: State,
-  player: Player,
-  pokemon: PokemonCardList,
-) {
-  if (state.turn === 2) {
-    player.canEvolve = true;
-    pokemon.pokemonPlayedTurn = state.turn - 1;
-  }
-}
-
-/**
  * Finds `card` and moves it from its current CardList to `destination`.
  */
 export function MOVE_CARD_TO(state: State, card: Card, destination: CardList) {
   StateUtils.findCardList(state, card).moveCardTo(card, destination);
 }
 
-export function SWITCH_ACTIVE_WITH_BENCHED(store: StoreLike, state: State, player: Player) {
-  const hasBenched = player.bench.some((b) => b.cards.length > 0);
-  if (!hasBenched) return state;
+//#endregion
 
-  store.prompt(
-    state,
-    new ChoosePokemonPrompt(
-      player.id,
-      GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
-      PlayerType.BOTTOM_PLAYER,
-      [SlotType.BENCH],
-      { allowCancel: false },
-    ),
-    (selected) => {
-      if (!selected || selected.length === 0) return state;
-      const target = selected[0];
-      player.switchPokemon(target, store, state);
-    },
-  );
-}
-
-export interface SwitchInOpponentBenchedPokemonOptions {
-  allowCancel?: boolean;
-  blocked?: CardTarget[];
-  onSwitched?: (target: PokemonCardList) => void;
-  sourceEffect?: AttackEffect | AfterAttackEffect;
-}
-
-/**
- * Compound helper for "switch in" effects:
- * "Switch 1 of your opponent's Benched Pokémon with their Active Pokémon."
- */
-export function SWITCH_IN_OPPONENT_BENCHED_POKEMON(
+export function MOVE_CARDS(
   store: StoreLike,
   state: State,
-  player: Player,
-  options: SwitchInOpponentBenchedPokemonOptions = {},
+  source: CardList | PokemonCardList,
+  destination: CardList | PokemonCardList,
+  options: {
+    cards?: Card[];
+    count?: number;
+    toTop?: boolean;
+    toBottom?: boolean;
+    skipCleanup?: boolean;
+    sourceCard?: Card;
+    sourceEffect?: any;
+  } = {},
 ): State {
-  const { allowCancel = false, blocked = [], onSwitched, sourceEffect } = options;
-  const opponent = StateUtils.getOpponent(state, player);
-  const hasBenchedPokemon = opponent.bench.some((bench) => bench.cards.length > 0);
-  if (!hasBenchedPokemon) {
-    return state;
-  }
-
-  return store.prompt(
-    state,
-    new ChoosePokemonPrompt(
-      player.id,
-      GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-      PlayerType.TOP_PLAYER,
-      [SlotType.BENCH],
-      { min: 1, max: 1, allowCancel, blocked },
-    ),
-    (selected) => {
-      if (!selected || selected.length === 0) {
-        return;
-      }
-      if (sourceEffect) {
-        const gustEffect = new GustOpponentBenchEffect(sourceEffect, selected[0]);
-        store.reduceEffect(state, gustEffect);
-        if (!gustEffect.preventDefault && onSwitched !== undefined) {
-          onSwitched(selected[0]);
-        }
-      } else {
-        opponent.switchPokemon(selected[0], store, state);
-        if (onSwitched !== undefined) {
-          onSwitched(selected[0]);
-        }
-      }
-    },
-  );
+  return store.reduceEffect(state, new MoveCardsEffect(source, destination, options));
 }
 
-export interface SwitchOutOpponentActivePokemonOptions {
-  allowCancel?: boolean;
-  blocked?: CardTarget[];
-  onSwitched?: (target: PokemonCardList) => void;
-  sourceEffect?: AttackEffect | AfterAttackEffect;
-}
-
-/**
- * Compound helper for text like:
- * "Switch out your opponent's Active Pokémon to the Bench.
- * (Your opponent chooses the new Active Pokémon.)"
- *
- * Common on effects like Repel and the opponent-facing part of Escape Rope.
- */
-export function SWITCH_OUT_OPPONENT_ACTIVE_POKEMON(
-  store: StoreLike,
-  state: State,
-  player: Player,
-  options: SwitchOutOpponentActivePokemonOptions = {},
-): State {
-  const { allowCancel = false, blocked = [], onSwitched, sourceEffect } = options;
-  const opponent = StateUtils.getOpponent(state, player);
-  const hasBenchedPokemon = opponent.bench.some((bench) => bench.cards.length > 0);
-  if (!hasBenchedPokemon) {
-    return state;
-  }
-
-  if (sourceEffect) {
-    const switchOutEffect = new SwitchOutOpponentsActiveEffect(sourceEffect);
-    store.reduceEffect(state, switchOutEffect);
-    if (switchOutEffect.preventDefault) {
-      return state;
-    }
-  }
-
-  return store.prompt(
-    state,
-    new ChoosePokemonPrompt(
-      opponent.id,
-      GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-      PlayerType.BOTTOM_PLAYER,
-      [SlotType.BENCH],
-      { min: 1, max: 1, allowCancel, blocked },
-    ),
-    (selected) => {
-      if (!selected || selected.length === 0) {
-        return;
-      }
-      if (sourceEffect) {
-        const switchOutEffect = new SwitchOutOpponentsActiveEffect(sourceEffect);
-        switchOutEffect.benchTarget = selected[0];
-        store.reduceEffect(state, switchOutEffect);
-        if (!switchOutEffect.preventDefault && onSwitched !== undefined) {
-          onSwitched(selected[0]);
-        }
-      } else {
-        opponent.switchPokemon(selected[0], store, state);
-        if (onSwitched !== undefined) {
-          onSwitched(selected[0]);
-        }
-      }
-    },
-  );
-}
-
-/**
- * Backward-compatible alias for `SWITCH_OUT_OPPONENT_ACTIVE_POKEMON`.
- */
-export function OPPONENT_SWITCHES_THEIR_ACTIVE_POKEMON(
-  store: StoreLike,
-  state: State,
-  player: Player,
-  options: SwitchOutOpponentActivePokemonOptions = {},
-): State {
-  return SWITCH_OUT_OPPONENT_ACTIVE_POKEMON(store, state, player, options);
-}
-
-/**
- * Backward-compatible alias for `SwitchInOpponentBenchedPokemonOptions`.
- */
-export type GustOpponentBenchedPokemonOptions = SwitchInOpponentBenchedPokemonOptions;
-
-/**
- * Backward-compatible alias for `SWITCH_IN_OPPONENT_BENCHED_POKEMON`.
- */
-export function GUST_OPPONENT_BENCHED_POKEMON(
-  store: StoreLike,
-  state: State,
-  player: Player,
-  options: SwitchInOpponentBenchedPokemonOptions = {},
-): State {
-  return SWITCH_IN_OPPONENT_BENCHED_POKEMON(store, state, player, options);
-}
-
-/**
- * Backward-compatible alias for `SwitchOutOpponentActivePokemonOptions`.
- */
-export type OpponentSwitchesTheirActivePokemonOptions = SwitchOutOpponentActivePokemonOptions;
-
-export interface MoveDamageCountersOptions {
-  playerType?: PlayerType;
-  slots?: SlotType[];
-  min?: number;
-  max?: number;
-  allowCancel?: boolean;
-  blockedFrom?: CardTarget[];
-  blockedTo?: CardTarget[];
-  singleSourceTarget?: boolean;
-  singleDestinationTarget?: boolean;
-  damageMultiple?: number;
-}
-
-/**
- * Generic helper for text like:
- * "Move X damage counters from Y to Z."
- */
-export function MOVE_DAMAGE_COUNTERS(
-  store: StoreLike,
-  state: State,
-  player: Player,
-  options: MoveDamageCountersOptions = {},
-): State {
-  const moveEffect = new MoveDamageCountersEffect(player);
-  state = store.reduceEffect(state, moveEffect);
-  if (moveEffect.preventDefault) {
-    return state;
-  }
-  const {
-    playerType = PlayerType.BOTTOM_PLAYER,
-    slots = [SlotType.ACTIVE, SlotType.BENCH],
-    min = 1,
-    max = undefined,
-    allowCancel = false,
-    blockedFrom = [],
-    blockedTo = [],
-    singleSourceTarget = false,
-    singleDestinationTarget = false,
-    damageMultiple = 10,
-  } = options;
-
-  const opponent = StateUtils.getOpponent(state, player);
-  const maxAllowedDamage: DamageMap[] = [];
-  const computedBlockedFrom: CardTarget[] = [...blockedFrom];
-
-  const collectTargets = (targetPlayer: Player, targetPlayerType: PlayerType) => {
-    targetPlayer.forEachPokemon(targetPlayerType, (cardList, card, target) => {
-      maxAllowedDamage.push({ target, damage: 9999 });
-      if (cardList.damage === 0) {
-        computedBlockedFrom.push(target);
-      }
-    });
-  };
-
-  if (playerType === PlayerType.BOTTOM_PLAYER || playerType === PlayerType.ANY) {
-    collectTargets(player, PlayerType.BOTTOM_PLAYER);
-  }
-  if (playerType === PlayerType.TOP_PLAYER || playerType === PlayerType.ANY) {
-    collectTargets(opponent, PlayerType.TOP_PLAYER);
-  }
-
-  if (maxAllowedDamage.length === 0) {
-    return state;
-  }
-
-  return store.prompt(
-    state,
-    new MoveDamagePrompt(player.id, GameMessage.MOVE_DAMAGE, playerType, slots, maxAllowedDamage, {
-      allowCancel,
-      min,
-      max,
-      blockedFrom: computedBlockedFrom,
-      blockedTo,
-      singleSourceTarget,
-      singleDestinationTarget,
-      damageMultiple,
-    }),
-    (transfers) => {
-      transfers = transfers || [];
-      for (const transfer of transfers) {
-        const source = StateUtils.getTarget(state, player, transfer.from);
-        const target = StateUtils.getTarget(state, player, transfer.to);
-        if (source.damage < damageMultiple) {
-          continue;
-        }
-        source.damage -= damageMultiple;
-        target.damage += damageMultiple;
-      }
-    },
-  );
-}
-
-/**
- * Fixed (no move-UI) attack helper for text like:
- * "Move all damage counters from 1 of your Benched Pokemon to your opponent's Active Pokemon."
- *
- * Prompts for 1 damaged Benched Pokemon, then moves ALL of its damage onto the
- * opponent's Active Pokemon. Respects "damage counters can't be moved" effects
- * (via MoveDamageCountersEffect) and lets other cards intercept the move via
- * MoveCountersAttackEffect.
- */
-export function MOVE_DAMAGE_FROM_YOUR_BENCH_TO_OPPONENTS_ACTIVE(
-  store: StoreLike,
-  state: State,
-  effect: AttackEffect | AbstractAttackEffect,
-): State {
-  const player = effect.player;
-  const opponent = StateUtils.getOpponent(state, player);
-
-  const blocked: CardTarget[] = [];
-  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-    if (cardList === player.active || cardList.damage === 0) {
-      blocked.push(target);
-    }
-  });
-
-  const hasDamagedBench = player.bench.some(b => b.cards.length > 0 && b.damage > 0);
-  if (!hasDamagedBench) {
-    return state;
-  }
-
-  return store.prompt(state, new ChoosePokemonPrompt(
-    player.id,
-    GameMessage.CHOOSE_POKEMON,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.BENCH],
-    { min: 1, max: 1, allowCancel: false, blocked },
-  ), selected => {
-    if (!selected || selected.length === 0) {
-      return;
-    }
-    const source = selected[0];
-    const damageToMove = source.damage;
-    if (damageToMove <= 0) {
-      return;
-    }
-
-    // "Damage counters can't be moved" (e.g. Patrat) cancels the whole move:
-    // the counters stay on the source Pokemon and nothing is placed.
-    const moveCheck = new MoveDamageCountersEffect(player);
-    state = store.reduceEffect(state, moveCheck);
-    if (moveCheck.preventDefault) {
-      return;
-    }
-
-    const moveEffect = new MoveCountersAttackEffect(effect, source, opponent.active, damageToMove);
-    state = store.reduceEffect(state, moveEffect);
-
-    // The counters always leave the source Pokemon once the move is allowed...
-    moveEffect.source.damage -= moveEffect.damage;
-    if (moveEffect.source.damage < 0) {
-      moveEffect.source.damage = 0;
-    }
-
-    // ...but a target that prevents effects of attacks (e.g. Mist Energy)
-    // does not receive them.
-    if (!moveEffect.preventDefault) {
-      moveEffect.target.damage += moveEffect.damage;
-    }
+export function MOVE_CARDS_TO_HAND(store: StoreLike, state: State, player: Player, cards: Card[]) {
+  cards.forEach((card, index) => {
+    player.deck.moveCardTo(card, player.hand);
+    store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
   });
 }
 
@@ -3036,12 +2243,294 @@ export function LOOK_AT_TOPDECK_AND_DISCARD_OR_RETURN(
   }
 }
 
-export function MOVE_CARDS_TO_HAND(store: StoreLike, state: State, player: Player, cards: Card[]) {
-  cards.forEach((card, index) => {
-    player.deck.moveCardTo(card, player.hand);
-    store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-  });
+// =============================================================================
+// Play Pokemon / devolve / evolve
+// =============================================================================
+
+export function PLAY_POKEMON_FROM_HAND_TO_BENCH(
+  state: State,
+  player: Player,
+  card: Card,
+  benchSlot?: PokemonCardList,
+) {
+  const slot = benchSlot ?? GET_FIRST_PLAYER_BENCH_SLOT(player);
+  if (slot.cards.length > 0) {
+    throw new GameError(GameMessage.INVALID_TARGET);
+  }
+  player.hand.moveCardTo(card, slot);
+  slot.pokemonPlayedTurn = state.turn;
 }
+
+export function DEVOLVE_POKEMON(
+  store: StoreLike,
+  state: State,
+  target: PokemonCardList,
+  destination: CardList,
+) {
+  const pokemons = target.getPokemons();
+  const pokemonCard = target.getPokemonCard();
+
+  // Weird ass lv.x stuff (yes this is actually the way it works: https://www.pokebeach.com/forums/threads/devolving-lvl-x.34943/)
+  if (pokemonCard?.hasTag(CardTag.POKEMON_LV_X)) {
+    // The lv.x is on a basic -> do nothing
+    if (pokemons.length === 2 && pokemons.some((p) => p.stage === Stage.BASIC)) {
+      return state;
+    } else {
+      const cardsToDevolve = pokemons.filter((p) => p.name === pokemonCard.name);
+      MOVE_CARDS(store, state, target, destination, { cards: cardsToDevolve });
+      target.clearEffects();
+      target.pokemonPlayedTurn = state.turn;
+    }
+    return state;
+  }
+
+  // Handle normal devolutions
+  if (
+    pokemons.length > 1 &&
+    !pokemonCard?.hasTag(CardTag.POKEMON_VUNION) &&
+    !pokemonCard?.hasTag(CardTag.LEGEND)
+  ) {
+    MOVE_CARD_TO(state, pokemonCard as Card, destination);
+    target.clearEffects();
+    target.pokemonPlayedTurn = state.turn;
+  }
+}
+
+export type DevolutionDestination = 'hand' | 'deck' | 'discard' | 'lostzone';
+
+/**
+ * Compound helper for text like:
+ * "Devolve the Defending Pokemon and put the highest Stage Evolution card on it into your opponent's hand/deck/discard/Lost Zone."
+ */
+export function DEVOLVE_DEFENDING_AFTER_ATTACK(
+  store: StoreLike,
+  state: State,
+  effect: Effect,
+  index: number,
+  user: PokemonCard,
+  destination: DevolutionDestination = 'hand',
+): State {
+  if (!AFTER_ATTACK(effect, index, user)) {
+    return state;
+  }
+
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+
+  let destinationList: CardList = opponent.hand;
+  if (destination === 'deck') {
+    destinationList = opponent.deck;
+  } else if (destination === 'discard') {
+    destinationList = opponent.discard;
+  } else if (destination === 'lostzone') {
+    destinationList = opponent.lostzone;
+  }
+
+  DEVOLVE_POKEMON(store, state, opponent.active, destinationList);
+  return state;
+}
+
+export function CAN_EVOLVE_ON_FIRST_TURN_GOING_SECOND(
+  state: State,
+  player: Player,
+  pokemon: PokemonCardList,
+) {
+  if (state.turn === 2) {
+    player.canEvolve = true;
+    pokemon.pokemonPlayedTurn = state.turn - 1;
+  }
+}
+
+// =============================================================================
+// Switching / gust
+// =============================================================================
+
+export function SWITCH_ACTIVE_WITH_BENCHED(store: StoreLike, state: State, player: Player) {
+  const hasBenched = player.bench.some((b) => b.cards.length > 0);
+  if (!hasBenched) return state;
+
+  store.prompt(
+    state,
+    new ChoosePokemonPrompt(
+      player.id,
+      GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.BENCH],
+      { allowCancel: false },
+    ),
+    (selected) => {
+      if (!selected || selected.length === 0) return state;
+      const target = selected[0];
+      player.switchPokemon(target, store, state);
+    },
+  );
+}
+
+export interface SwitchInOpponentBenchedPokemonOptions {
+  allowCancel?: boolean;
+  blocked?: CardTarget[];
+  onSwitched?: (target: PokemonCardList) => void;
+  sourceEffect?: AttackEffect | AfterAttackEffect;
+}
+
+/**
+ * Compound helper for "switch in" effects:
+ * "Switch 1 of your opponent's Benched Pokémon with their Active Pokémon."
+ */
+export function SWITCH_IN_OPPONENT_BENCHED_POKEMON(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  options: SwitchInOpponentBenchedPokemonOptions = {},
+): State {
+  const { allowCancel = false, blocked = [], onSwitched, sourceEffect } = options;
+  const opponent = StateUtils.getOpponent(state, player);
+  const hasBenchedPokemon = opponent.bench.some((bench) => bench.cards.length > 0);
+  if (!hasBenchedPokemon) {
+    return state;
+  }
+
+  return store.prompt(
+    state,
+    new ChoosePokemonPrompt(
+      player.id,
+      GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+      PlayerType.TOP_PLAYER,
+      [SlotType.BENCH],
+      { min: 1, max: 1, allowCancel, blocked },
+    ),
+    (selected) => {
+      if (!selected || selected.length === 0) {
+        return;
+      }
+      if (sourceEffect) {
+        const gustEffect = new GustOpponentBenchEffect(sourceEffect, selected[0]);
+        store.reduceEffect(state, gustEffect);
+        if (!gustEffect.preventDefault && onSwitched !== undefined) {
+          onSwitched(selected[0]);
+        }
+      } else {
+        opponent.switchPokemon(selected[0], store, state);
+        if (onSwitched !== undefined) {
+          onSwitched(selected[0]);
+        }
+      }
+    },
+  );
+}
+
+export interface SwitchOutOpponentActivePokemonOptions {
+  allowCancel?: boolean;
+  blocked?: CardTarget[];
+  onSwitched?: (target: PokemonCardList) => void;
+  sourceEffect?: AttackEffect | AfterAttackEffect;
+}
+
+/**
+ * Compound helper for text like:
+ * "Switch out your opponent's Active Pokémon to the Bench.
+ * (Your opponent chooses the new Active Pokémon.)"
+ *
+ * Common on effects like Repel and the opponent-facing part of Escape Rope.
+ */
+export function SWITCH_OUT_OPPONENT_ACTIVE_POKEMON(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  options: SwitchOutOpponentActivePokemonOptions = {},
+): State {
+  const { allowCancel = false, blocked = [], onSwitched, sourceEffect } = options;
+  const opponent = StateUtils.getOpponent(state, player);
+  const hasBenchedPokemon = opponent.bench.some((bench) => bench.cards.length > 0);
+  if (!hasBenchedPokemon) {
+    return state;
+  }
+
+  if (sourceEffect) {
+    const switchOutEffect = new SwitchOutOpponentsActiveEffect(sourceEffect);
+    store.reduceEffect(state, switchOutEffect);
+    if (switchOutEffect.preventDefault) {
+      return state;
+    }
+  }
+
+  return store.prompt(
+    state,
+    new ChoosePokemonPrompt(
+      opponent.id,
+      GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.BENCH],
+      { min: 1, max: 1, allowCancel, blocked },
+    ),
+    (selected) => {
+      if (!selected || selected.length === 0) {
+        return;
+      }
+      if (sourceEffect) {
+        const switchOutEffect = new SwitchOutOpponentsActiveEffect(sourceEffect);
+        switchOutEffect.benchTarget = selected[0];
+        store.reduceEffect(state, switchOutEffect);
+        if (!switchOutEffect.preventDefault && onSwitched !== undefined) {
+          onSwitched(selected[0]);
+        }
+      } else {
+        opponent.switchPokemon(selected[0], store, state);
+        if (onSwitched !== undefined) {
+          onSwitched(selected[0]);
+        }
+      }
+    },
+  );
+}
+
+/**
+ * Backward-compatible alias for `SWITCH_OUT_OPPONENT_ACTIVE_POKEMON`.
+ */
+export function OPPONENT_SWITCHES_THEIR_ACTIVE_POKEMON(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  options: SwitchOutOpponentActivePokemonOptions = {},
+): State {
+  return SWITCH_OUT_OPPONENT_ACTIVE_POKEMON(store, state, player, options);
+}
+
+/**
+ * Backward-compatible alias for `SwitchInOpponentBenchedPokemonOptions`.
+ */
+export type GustOpponentBenchedPokemonOptions = SwitchInOpponentBenchedPokemonOptions;
+
+/**
+ * Backward-compatible alias for `SWITCH_IN_OPPONENT_BENCHED_POKEMON`.
+ */
+export function GUST_OPPONENT_BENCHED_POKEMON(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  options: SwitchInOpponentBenchedPokemonOptions = {},
+): State {
+  return SWITCH_IN_OPPONENT_BENCHED_POKEMON(store, state, player, options);
+}
+
+/**
+ * Backward-compatible alias for `SwitchOutOpponentActivePokemonOptions`.
+ */
+export type OpponentSwitchesTheirActivePokemonOptions = SwitchOutOpponentActivePokemonOptions;
+
+export function GET_FIRST_PLAYER_BENCH_SLOT(player: Player): PokemonCardList {
+  const slots = GET_PLAYER_BENCH_SLOTS(player);
+  BLOCK_IF_NO_SLOTS(slots);
+  return slots[0];
+}
+
+export function GET_PLAYER_BENCH_SLOTS(player: Player): PokemonCardList[] {
+  return player.bench.filter((b) => b.cards.length === 0);
+}
+
+// =============================================================================
+// Prompts & coin flips
+// =============================================================================
 
 export function SHOW_CARDS_TO_PLAYER(
   store: StoreLike,
@@ -3141,22 +2630,9 @@ export function FLIP_UNTIL_TAILS_AND_COUNT_HEADS(
   return store.reduceEffect(state, sequenceEffect);
 }
 
-export function SIMULATE_COIN_FLIP(store: StoreLike, state: State, player: Player): boolean {
-  const result = Math.random() < 0.5;
-  const gameMessage = result ? GameLog.LOG_PLAYER_FLIPS_HEADS : GameLog.LOG_PLAYER_FLIPS_TAILS;
-  store.log(state, gameMessage, { name: player.name });
-  return result;
-}
-
-export function GET_FIRST_PLAYER_BENCH_SLOT(player: Player): PokemonCardList {
-  const slots = GET_PLAYER_BENCH_SLOTS(player);
-  BLOCK_IF_NO_SLOTS(slots);
-  return slots[0];
-}
-
-export function GET_PLAYER_BENCH_SLOTS(player: Player): PokemonCardList[] {
-  return player.bench.filter((b) => b.cards.length === 0);
-}
+// =============================================================================
+// Guards / block helpers
+// =============================================================================
 
 export function BLOCK_IF_NO_SLOTS(slots: PokemonCardList[]) {
   if (slots.length === 0) throw new GameError(GameMessage.NO_BENCH_SLOTS_AVAILABLE);
@@ -3172,6 +2648,43 @@ export function BLOCK_IF_DISCARD_EMPTY(player: Player) {
 
 export function BLOCK_IF_GX_ATTACK_USED(player: Player) {
   if (player.usedGX === true) throw new GameError(GameMessage.LABEL_GX_USED);
+}
+
+/**
+ * Convenience guard for cards that can only be used if your VSTAR Power is still available.
+ */
+export function BLOCK_IF_VSTAR_POWER_USED(player: Player) {
+  if (player.usedVSTAR === true) {
+    throw new GameError(GameMessage.LABEL_VSTAR_USED);
+  }
+}
+
+/**
+ * Returns true if the given player has already used their VSTAR Power this game.
+ */
+export function PLAYER_HAS_USED_VSTAR_POWER(player: Player): boolean {
+  return player.usedVSTAR === true;
+}
+
+/**
+ * Returns true if your opponent has already used their VSTAR Power this game.
+ */
+export function OPPONENT_HAS_USED_VSTAR_POWER(state: State, player: Player): boolean {
+  const opponent = StateUtils.getOpponent(state, player);
+  return opponent.usedVSTAR === true;
+}
+
+export function BLOCK_IF_HAS_SPECIAL_CONDITION(player: Player, source: Card) {
+  if (player.active.getPokemonCard() === source && player.active.specialConditions.length > 0)
+    throw new GameError(GameMessage.CANNOT_USE_POWER);
+}
+
+export function BLOCK_IF_ASLEEP_CONFUSED_PARALYZED(player: Player, source: Card) {
+  // "any Pokemon Power on any Pokemon that says it stops working if the Pokemon is Paralyzed, Asleep, or Confused,
+  // now should ALSO include Poisoned, or Burned as well." - (Jan 17, 2002 WotC Chat, Q1278 & Q1284)
+  // I was unaware of this errata when I originally made this and BLOCK_IF_HAS_SPECIAL_CONDITION, so I updated it to do the same thing.
+  if (player.active.getPokemonCard() === source && player.active.specialConditions.length > 0)
+    throw new GameError(GameMessage.CANNOT_USE_POWER);
 }
 
 /**
@@ -3198,18 +2711,9 @@ export function THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN(player: Player) {
   player.active.cannotAttackNextTurnPending = true;
 }
 
-export function BLOCK_IF_HAS_SPECIAL_CONDITION(player: Player, source: Card) {
-  if (player.active.getPokemonCard() === source && player.active.specialConditions.length > 0)
-    throw new GameError(GameMessage.CANNOT_USE_POWER);
-}
-
-export function BLOCK_IF_ASLEEP_CONFUSED_PARALYZED(player: Player, source: Card) {
-  // "any Pokemon Power on any Pokemon that says it stops working if the Pokemon is Paralyzed, Asleep, or Confused,
-  // now should ALSO include Poisoned, or Burned as well." - (Jan 17, 2002 WotC Chat, Q1278 & Q1284)
-  // I was unaware of this errata when I originally made this and BLOCK_IF_HAS_SPECIAL_CONDITION, so I updated it to do the same thing.
-  if (player.active.getPokemonCard() === source && player.active.specialConditions.length > 0)
-    throw new GameError(GameMessage.CANNOT_USE_POWER);
-}
+// =============================================================================
+// Special conditions
+// =============================================================================
 
 //#region Special Conditions
 export function ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE(
@@ -3362,9 +2866,10 @@ export function PREVENT_AND_CLEAR_SPECIAL_CONDITIONS(
     });
   }
 }
-//#endregion
 
-//#region Markers
+// =============================================================================
+// Markers & tags
+// =============================================================================
 
 export function ADD_MARKER(
   marker: string,
@@ -3415,12 +2920,8 @@ export function PREVENT_DAMAGE_IF_TARGET_HAS_MARKER(effect: Effect, marker: stri
     effect.preventDefault = true;
 }
 
-export function PREVENT_DAMAGE_IF_SOURCE_HAS_TAG(effect: Effect, tag: string, source: Card) {
-  if (effect instanceof PutDamageEffect && HAS_TAG(tag, source)) effect.preventDefault = true;
-}
-
-export function HAS_TAG(tag: string, source: Card): boolean {
-  return source.tags.includes(tag);
+export function PREVENT_DAMAGE_IF_SOURCE_HAS_TAG(effect: Effect, tag: CardTag, source: Card) {
+  if (effect instanceof PutDamageEffect && source.hasTag(tag)) effect.preventDefault = true;
 }
 
 export function REMOVE_MARKER_AT_END_OF_TURN(effect: Effect, marker: string, source: Card) {
@@ -3448,8 +2949,8 @@ export function WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN(
   }
 
   if (filter?.tags?.length) {
-    return player.pokemonKnockedOutLastTurnEntries.some(entry =>
-      filter.tags!.every(tag => entry.includes(tag))
+    return player.pokemonKnockedOutLastTurnEntries.some((entry) =>
+      filter.tags!.every((tag) => entry.includes(tag)),
     );
   }
 
@@ -3519,329 +3020,273 @@ export function CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(
   }
 }
 
-//#endregion
-
-export function MOVE_CARDS(
-  store: StoreLike,
-  state: State,
-  source: CardList | PokemonCardList,
-  destination: CardList | PokemonCardList,
-  options: {
-    cards?: Card[];
-    count?: number;
-    toTop?: boolean;
-    toBottom?: boolean;
-    skipCleanup?: boolean;
-    sourceCard?: Card;
-    sourceEffect?: any;
-  } = {},
-): State {
-  return store.reduceEffect(state, new MoveCardsEffect(source, destination, options));
-}
-
-// export function REMOVE_TOOL(store: StoreLike, state: State, source: PokemonCardList, tool: Card, destinationSlot: SlotType): State {
-//   if (!source.cards.includes(tool)) {
-//     return state;
-//   }
-//   const owner = StateUtils.findOwner(state, source);
-//   state = MOVE_CARDS(store, state, source, owner.getSlot(destinationSlot), { cards: [tool] });
-//   source.removeTool(tool);
-//   return state;
-// }
-
-// export function REMOVE_TOOLS_FROM_POKEMON_PROMPT(store: StoreLike, state: State, player: Player, target: PokemonCardList, destinationSlot: SlotType, min: number, max: number): State {
-//   if (target.tools.length === 0) {
-//     return state;
-//   }
-//   if (target.tools.length === 1) {
-//     return REMOVE_TOOL(store, state, target, target.tools[0], destinationSlot);
-//   } else {
-//     const blocked: number[] = [];
-//     target.cards.forEach((card, index) => {
-//       if (!target.tools.includes(card)) {
-//         blocked.push(index);
-//       }
-//     });
-//     let tools: Card[] = [];
-//     return store.prompt(state, new ChooseCardsPrompt(
-//       player,
-//       GameMessage.CHOOSE_CARD_TO_DISCARD,
-//       target,
-//       {},
-//       { min, max, allowCancel: false, blocked }
-//     ), selected => {
-//       tools = selected || [];
-//       for (const tool of tools) {
-//         return REMOVE_TOOL(store, state, target, tool, destinationSlot);
-//       }
-//     });
-//   }
-// }
-
-// export function CHOOSE_TOOLS_TO_REMOVE_PROMPT(store: StoreLike, state: State, player: Player, playerType: PlayerType, destinationSlot: SlotType, min: number, max: number): State {
-//   const opponent = StateUtils.getOpponent(state, player);
-
-//   let hasPokemonWithTool = false;
-//   let players: Player[] = [];
-//   switch (playerType) {
-//     case PlayerType.TOP_PLAYER:
-//       players = [opponent];
-//       break;
-//     case PlayerType.BOTTOM_PLAYER:
-//       players = [player];
-//       break;
-//     case PlayerType.ANY:
-//       players = [player, opponent];
-//       break;
-//   }
-//   const blocked: CardTarget[] = [];
-
-//   for (const p of players) {
-//     let pt: PlayerType = PlayerType.BOTTOM_PLAYER;
-//     if (p === opponent) {
-//       pt = PlayerType.TOP_PLAYER;
-//     }
-//     p.forEachPokemon(pt, (cardList, card, target) => {
-//       if (cardList.tools.length > 0) {
-//         hasPokemonWithTool = true;
-//       } else {
-//         blocked.push(target);
-//       }
-//     });
-//   }
-
-//   if (!hasPokemonWithTool) {
-//     return state;
-//   }
-
-//   let targets: PokemonCardList[] = [];
-//   return store.prompt(state, new ChoosePokemonPrompt(
-//     player.id,
-//     GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
-//     playerType,
-//     [SlotType.ACTIVE, SlotType.BENCH],
-//     { min, max, allowCancel: false, blocked }
-//   ), results => {
-//     targets = results || [];
-//     if (targets.length === 0) {
-//       return state;
-//     }
-//     let toolsRemoved = 0;
-//     for (const target of targets) {
-//       if (target.tools.length === 0 || toolsRemoved >= max) {
-//         continue;
-//       }
-//       if (target.tools.length === 1) {
-//         REMOVE_TOOL(store, state, target, target.tools[0], destinationSlot);
-//         toolsRemoved += 1;
-//       } else {
-//         const blocked: number[] = [];
-//         target.cards.forEach((card, index) => {
-//           if (!target.tools.includes(card)) {
-//             blocked.push(index);
-//           }
-//         });
-//         let tools: Card[] = [];
-//         return store.prompt(state, new ChooseCardsPrompt(
-//           player,
-//           GameMessage.CHOOSE_CARD_TO_DISCARD,
-//           target,
-//           {},
-//           { min: Math.min(min, max - toolsRemoved), max: max - toolsRemoved, allowCancel: false, blocked }
-//         ), selected => {
-//           tools = selected || [];
-//           for (const tool of tools) {
-//             REMOVE_TOOL(store, state, target, tool, destinationSlot);
-//             toolsRemoved += 1;
-//           }
-//         });
-//       }
-//     }
-//   });
+// =============================================================================
+// Ability / power / tool / energy blocked checks & play-card guards
+// =============================================================================
 
 /**
- * Validates if a supporter card can be played under current game conditions
- * @param store The store instance
- * @param state The current game state
- * @param player The player attempting to play the card
- * @param trainerCard The supporter card to validate
- * @param bypassSupporterTurn If true, temporarily bypasses the supporterTurn check (for abilities that copy supporters)
- * @returns true if the card can be played, false otherwise
+ * Checks if abilities are blocked on `card` for `player`.
+ * @returns `true` if the ability is blocked, `false` if the ability is able to go thru.
+ *
+ * Ability-locking cards (Hex Maniac, Silent Lab, Garbodor, etc.) should implement their
+ * lock via `HANDLE_ABILITY_LOCK` in `prefabs/ability-lock.ts` so Check + PowerEffect stay in sync.
+ * Ability owners must still call this before applying ability effects.
  */
-export function CAN_PLAY_SUPPORTER_CARD(
+export function IS_ABILITY_BLOCKED(
   store: StoreLike,
   state: State,
   player: Player,
-  trainerCard: TrainerCard,
-  bypassSupporterTurn: boolean = false,
+  card: PokemonCard,
+  /** When probing a specific power (e.g. useFromHand), pass it so allowUseFromHand locks match. */
+  power?: Partial<Power>,
 ): boolean {
+  // Try to reduce PowerEffect, to check if something is blocking our ability
   try {
-    // Store original supporterTurn value if bypassing
-    const originalSupporterTurn = bypassSupporterTurn ? player.supporterTurn : undefined;
-
-    // Temporarily set supporterTurn to 0 if bypassing the check
-    if (bypassSupporterTurn) {
-      player.supporterTurn = 0;
-    }
-
-    try {
-      // Create a temporary TrainerEffect to test if the card can be played
-      const testEffect = new TrainerEffect(player, trainerCard);
-
-      // Try to reduce the effect to see if it throws an error
-      // We need to catch the error to prevent the game from crashing
-      try {
-        store.reduceEffect(state, testEffect);
-        return true;
-      } catch (error) {
-        return false;
-      }
-    } finally {
-      // Restore original supporterTurn value if we bypassed it
-      if (bypassSupporterTurn && originalSupporterTurn !== undefined) {
-        player.supporterTurn = originalSupporterTurn;
-      }
-    }
-  } catch (error) {
-    return false;
+    store.reduceEffect(
+      state,
+      new PowerEffect(
+        player,
+        {
+          name: 'test',
+          powerType: power?.powerType ?? PowerType.ABILITY,
+          text: '',
+          exemptFromAbilityLock: power?.exemptFromAbilityLock,
+          exemptFromInitialize: power?.exemptFromInitialize,
+          knocksOutSelf: power?.knocksOutSelf,
+          useFromHand: power?.useFromHand,
+          useFromDiscard: power?.useFromDiscard,
+        },
+        card,
+      ),
+    );
+  } catch {
+    return true;
   }
+  return false;
 }
 
 /**
- * Validates if a trainer card can be played under current game conditions
- * Dynamically checks by attempting to execute the card's logic and catching GameError
- * @param store The store instance
- * @param state The current game state
- * @param player The player attempting to play the card
- * @param trainerCard The trainer card to validate
- * @returns true if the card can be played, false otherwise
+ * Checks if pokebodies are blocked on `card` for `player`.
+ * @returns `true` if the pokebody is blocked, `false` if the pokebody is able to go thru.
  */
-export function CAN_PLAY_TRAINER_CARD(
+export function IS_POKEBODY_BLOCKED(
   store: StoreLike,
   state: State,
   player: Player,
-  trainerCard: TrainerCard,
+  card: PokemonCard,
 ): boolean {
+  // Try to reduce PowerEffect, to check if something is blocking our pokebody
   try {
-    // Only check during player's turn
-    if (
-      state.phase !== GamePhase.PLAYER_TURN ||
-      state.players[state.activePlayer].id !== player.id
-    ) {
-      return false;
-    }
-
-    // Check basic trainer type restrictions first (fast path)
-    switch (trainerCard.trainerType) {
-      case TrainerType.SUPPORTER:
-        // Can't play supporter on turn 1 unless card allows it
-        if (state.turn === 1 && !trainerCard.firstTurn) {
-          return false;
-        }
-        // Can't play supporter if one already played this turn
-        // Check supporterTurn (incremented when supporter is played) and supporter.cards (card in play area)
-        if (player.supporterTurn > 0) {
-          return false;
-        }
-        break;
-      case TrainerType.STADIUM: {
-        if (trainerCard.tags.includes(CardTag.DUAL_STADIUM)) {
-          return canPlayDualStadium(store, state, player, trainerCard);
-        }
-        const stadium = StateUtils.getStadiumCard(state);
-        const isHyperrogueOverPrismTower =
-          trainerCard.name === 'Hyperrogue Ange Floette' && stadium?.name === 'Prism Tower';
-        // Can't play stadium if one already played this turn (unless Hyperrogue Ange Floette over Prism Tower)
-        if (player.stadiumPlayedTurn === state.turn && !isHyperrogueOverPrismTower) {
-          return false;
-        }
-        // Can't play same stadium already in play
-        if (stadium && stadium.name === trainerCard.name) {
-          return false;
-        }
-        break;
-      }
-      case TrainerType.TOOL: {
-        // Cards with canPlay (e.g. tools that attach to opponent's Pokemon) use that instead
-        if (!trainerCard.canPlay) {
-          let canAttachTool = false;
-          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
-            if (Array.isArray(cardList.tools) && cardList.tools.length < pokemonCard.maxTools) {
-              canAttachTool = true;
-            }
-          });
-          if (!canAttachTool) {
-            return false;
-          }
-        }
-        break;
-      }
-      // Items have no basic restrictions beyond being in player's turn
-    }
-
-    // Check for Item/Tool blocking effects directly (no cloning needed)
-    if (trainerCard.trainerType === TrainerType.ITEM) {
-      // Check for marker-based blocks (Budew, etc.)
-      if (player.marker.hasMarker('OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER')) {
-        return false;
-      }
-
-      // Check for ability-based blocks (Jellicent ex, etc.)
-      const opponent = StateUtils.getOpponent(state, player);
-      const opponentActive = opponent.active.getPokemonCard();
-      if (opponentActive && opponentActive.name === 'Jellicent ex') {
-        // Check if ability is blocked
-        if (!IS_ABILITY_BLOCKED(store, state, opponent, opponentActive)) {
-          return false; // Blocked by ability
-        }
-      }
-
-      // Check for ATTACK_EFFECT_ITEM_LOCK marker
-      if (player.marker.hasMarker(player.ATTACK_EFFECT_ITEM_LOCK)) {
-        return false;
-      }
-    }
-
-    if (trainerCard.trainerType === TrainerType.TOOL) {
-      // Check for ability-based blocks (Jellicent ex, etc.)
-      const opponent = StateUtils.getOpponent(state, player);
-      const opponentActive = opponent.active.getPokemonCard();
-      if (opponentActive && opponentActive.name === 'Jellicent ex') {
-        // Check if ability is blocked
-        if (!IS_ABILITY_BLOCKED(store, state, opponent, opponentActive)) {
-          return false; // Blocked by ability
-        }
-      }
-
-      // Check for ATTACK_EFFECT_TOOL_LOCK marker
-      if (player.marker.hasMarker(player.ATTACK_EFFECT_TOOL_LOCK)) {
-        return false;
-      }
-    }
-
-    // Rely on canPlay method for card-specific validation
-    if (trainerCard.canPlay) {
-      const canPlayResult = trainerCard.canPlay(store, state, player);
-      if (canPlayResult !== undefined) {
-        return canPlayResult; // Use canPlay result
-      }
-    }
-
-    // If canPlay is not implemented or returns undefined
-    // For Tool and Stadium cards, if we've passed all basic checks, return true
-    // (Stadium checks already done: stadiumPlayedTurn, same-name stadium in play)
-    if (trainerCard.trainerType === TrainerType.TOOL) {
-      return true; // Tool cards can be played if Pokemon can accept them
-    }
-    if (trainerCard.trainerType === TrainerType.STADIUM) {
-      return true; // Stadiums are playable unless already played one this turn (checked above)
-    }
-    // For other trainer types, err on the side of caution
-    // We can't validate card-specific requirements without canPlay
-    return false;
-  } catch (error) {
-    return false;
+    store.reduceEffect(
+      state,
+      new PowerEffect(
+        player,
+        {
+          name: 'test',
+          powerType: PowerType.POKEBODY,
+          text: '',
+        },
+        card,
+      ),
+    );
+  } catch {
+    return true;
   }
+  try {
+    store.reduceEffect(
+      state,
+      new PowerEffect(
+        player,
+        {
+          name: 'test',
+          powerType: PowerType.POKEMON_POWER,
+          text: '',
+        },
+        card,
+      ),
+    );
+  } catch {
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Checks if pokepowers are blocked on `card` for `player`.
+ * @returns `true` if the pokepower is blocked, `false` if the pokepower is able to go thru.
+ */
+export function IS_POKEPOWER_BLOCKED(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  card: PokemonCard,
+): boolean {
+  // Try to reduce PowerEffect, to check if something is blocking our pokepower
+  try {
+    store.reduceEffect(
+      state,
+      new PowerEffect(
+        player,
+        {
+          name: 'test',
+          powerType: PowerType.POKEPOWER,
+          text: '',
+        },
+        card,
+      ),
+    );
+  } catch {
+    return true;
+  }
+  try {
+    store.reduceEffect(
+      state,
+      new PowerEffect(
+        player,
+        {
+          name: 'test',
+          powerType: PowerType.POKEMON_POWER,
+          text: '',
+        },
+        card,
+      ),
+    );
+  } catch {
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Checks if pokemon powers are blocked on `card` for `player`.
+ * @returns `true` if the pokemon power is blocked, `false` if the pokepower is able to go thru.
+ */
+export function IS_POKEMON_POWER_BLOCKED(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  card: PokemonCard,
+): boolean {
+  // Try to reduce PowerEffect for POKEMON_POWER
+  try {
+    store.reduceEffect(
+      state,
+      new PowerEffect(
+        player,
+        {
+          name: 'test',
+          powerType: PowerType.POKEMON_POWER,
+          text: '',
+        },
+        card,
+      ),
+    );
+  } catch {
+    return true;
+  }
+  // Try both POKEPOWER and POKEBODY, return true only if BOTH are blocked
+  let pokePowerBlocked = false;
+  let pokeBodyBlocked = false;
+  try {
+    store.reduceEffect(
+      state,
+      new PowerEffect(
+        player,
+        {
+          name: 'test',
+          powerType: PowerType.POKEPOWER,
+          text: '',
+        },
+        card,
+      ),
+    );
+  } catch {
+    pokePowerBlocked = true;
+  }
+  try {
+    store.reduceEffect(
+      state,
+      new PowerEffect(
+        player,
+        {
+          name: 'test',
+          powerType: PowerType.POKEBODY,
+          text: '',
+        },
+        card,
+      ),
+    );
+  } catch {
+    pokeBodyBlocked = true;
+  }
+  // Return true only if both POKEPOWER and POKEBODY are blocked
+  return pokePowerBlocked && pokeBodyBlocked;
+  // Ruling: if both pokePower and pokeBody are blocked, then the pokemon power is blocked.
+}
+
+/**
+ * Checks if a tool's effect is being blocked
+ * @returns `true` if the tool's effect is blocked, `false` if the tool's effect is able to activate.
+ */
+export function IS_TOOL_BLOCKED(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  card: TrainerCard,
+): boolean {
+  if (state.players.some((p) => p.stadiumAndToolHaveNoEffectTurnsRemaining > 0)) {
+    return true;
+  }
+  // Try to reduce ToolEffect, to check if something is blocking the tool from working
+  try {
+    const stub = new ToolEffect(player, card);
+    store.reduceEffect(state, stub);
+  } catch {
+    return true;
+  }
+  return false;
+}
+
+export { IS_STADIUM_EFFECT_BLOCKED } from './stadium-effect';
+
+/**
+ * True when an attack effect originated from the target owner's opponent's Pokémon.
+ * Used for text like "Prevent effects of attacks from your opponent's Pokémon done to …"
+ */
+export function IS_ATTACK_EFFECT_FROM_OPPONENTS_POKEMON(
+  state: State,
+  effect: AbstractAttackEffect,
+): boolean {
+  const targetOwner = StateUtils.findOwner(state, effect.target);
+  const sourceOwner = StateUtils.findOwner(state, effect.source);
+  return sourceOwner === StateUtils.getOpponent(state, targetOwner);
+}
+
+/**
+ * Checks if a special energy's effect is being blocked for the given player and Pokemon it is attached to. Do not use in CheckProvidedEnergyEffect.
+ * @returns `true` if the special energy's effect is blocked, `false` if the special energy's effect is able to activate.
+ */
+export function IS_SPECIAL_ENERGY_BLOCKED(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  card: EnergyCard,
+  attachedTo: PokemonCardList,
+  exemptFromOpponentsSpecialEnergyBlockingAbility = false,
+): boolean {
+  // Try to reduce SpecialEnergyEffect, to check if something is blocking the effect
+  try {
+    const stub = new SpecialEnergyEffect(
+      player,
+      card,
+      attachedTo,
+      exemptFromOpponentsSpecialEnergyBlockingAbility,
+    );
+    store.reduceEffect(state, stub);
+  } catch {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -3865,6 +3310,13 @@ export function CAN_PLAY_ENERGY_CARD(
       state.phase !== GamePhase.PLAYER_TURN ||
       state.players[state.activePlayer].id !== player.id
     ) {
+      return false;
+    }
+
+    if (player.cannotPlayEnergyCards) {
+      return false;
+    }
+    if (energyCard.energyType === EnergyType.SPECIAL && player.cannotPlaySpecialEnergyCards) {
       return false;
     }
 
@@ -3903,7 +3355,7 @@ export function CAN_USE_FROM_HAND_TO_BENCH_POWER(
   pokemonCard: PokemonCard,
 ): boolean {
   try {
-    const power = pokemonCard.powers?.find(p => p.useFromHandToBench === true);
+    const power = pokemonCard.powers?.find((p) => p.useFromHandToBench === true);
     if (!power) {
       return false;
     }
@@ -3915,7 +3367,7 @@ export function CAN_USE_FROM_HAND_TO_BENCH_POWER(
       return false;
     }
 
-    const benchCount = player.bench.filter(b => b.cards.length > 0).length;
+    const benchCount = player.bench.filter((b) => b.cards.length > 0).length;
     if (benchCount >= player.bench.length) {
       return false;
     }
@@ -3929,7 +3381,7 @@ export function CAN_USE_FROM_HAND_TO_BENCH_POWER(
     // Remove-mode locks strip the power from discovery — treat as unusable for canPlay.
     const powersEffect = new CheckPokemonPowersEffect(player, pokemonCard);
     store.reduceEffect(state, powersEffect);
-    if (!powersEffect.powers.some(p => p.name === power.name && p.useFromHandToBench === true)) {
+    if (!powersEffect.powers.some((p) => p.name === power.name && p.useFromHandToBench === true)) {
       return false;
     }
 
@@ -3967,6 +3419,16 @@ export function CAN_PLAY_POKEMON_CARD(
       return false;
     }
 
+    if (player.cannotPlayPokemonCards) {
+      return false;
+    }
+    if (
+      player.cannotPlayPokemonWithAbilities &&
+      pokemonCard.powers.some((power) => power.powerType === PowerType.ABILITY)
+    ) {
+      return false;
+    }
+
     // Check if there's space on bench (capacity follows stadiums like Area Zero → 8)
     const benchCount = player.bench.filter((b) => b.cards.length > 0).length;
     const benchCapacity = player.bench.length;
@@ -3987,7 +3449,7 @@ export function CAN_PLAY_POKEMON_CARD(
 
     if (canPlayDualLegend(store, state, player, pokemonCard)) {
       const legendPower = pokemonCard.powers?.find(
-        p => p.useFromHand === true && p.powerType === PowerType.LEGEND_ASSEMBLY,
+        (p) => p.useFromHand === true && p.powerType === PowerType.LEGEND_ASSEMBLY,
       );
       if (!IS_ABILITY_BLOCKED(store, state, player, pokemonCard, legendPower)) {
         return true;
@@ -4072,425 +3534,9 @@ export function CAN_PLAY_CARD(store: StoreLike, state: State, player: Player, ca
   }
 }
 
-/**
- * Creates and reduces a prevent retreat effect for the given source card.
- * This is commonly used in Pokemon card effects that prevent the defending Pokemon from retreating.
- * @param store The store instance
- * @param state The current game state
- * @param effect The original attack effect that triggered this
- * @param source The source card that created this effect
- * @returns The updated game state
- */
-export function BLOCK_RETREAT(
-  store: StoreLike,
-  state: State,
-  effect: AttackEffect,
-  source: Card,
-): State {
-  const retreatEffect = preventRetreatEffect(effect, source);
-  return store.reduceEffect(state, retreatEffect);
-}
-
-/**
- * Causes the defending Pokemon to take extra damage from attacks during the
- * attacking player's next turn (after applying Weakness and Resistance).
- */
-export function DEFENDING_POKEMON_TAKES_MORE_DAMAGE_DURING_YOUR_NEXT_TURN(
-  store: StoreLike,
-  state: State,
-  effect: AttackEffect,
-  source: Card,
-  damageBonus: number,
-): State {
-  const bonusEffect = defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect(effect, source, damageBonus);
-  return store.reduceEffect(state, bonusEffect);
-}
-
-/**
- * During the opponent's next turn, whenever they attach an Energy card from their hand
- * to the Defending Pokémon, place damage counters on that Pokémon.
- * @param damage Total HP to place as damage counters via PutCountersEffect (e.g. 80 for 8 counters).
- */
-export function DEFENDING_POKEMON_TAKES_DAMAGE_ON_ENERGY_ATTACH_FROM_HAND_NEXT_TURN(
-  store: StoreLike,
-  state: State,
-  effect: AttackEffect,
-  source: Card,
-  damage: number,
-): State {
-  const attachEffect = defendingPokemonTakesDamageOnEnergyAttachFromHandNextTurnEffect(effect, source, damage);
-  return store.reduceEffect(state, attachEffect);
-}
-
-/**
- * During the opponent's next turn, the Defending Pokémon can't use attacks.
- */
-export function DEFENDING_POKEMON_CANNOT_ATTACK(
-  store: StoreLike,
-  state: State,
-  effect: AttackEffect,
-  source: Card,
-): State {
-  const attackEffect = preventAttackEffect(effect, source);
-  return store.reduceEffect(state, attackEffect);
-}
-
-/**
- * Prompts the player to choose one of the opponent's Active Pokemon's attacks to disable
- * during the opponent's next turn.
- */
-export function OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK(
-  store: StoreLike,
-  state: State,
-  effect: AttackEffect,
-  source: Card,
-): State {
-  const player = effect.player;
-  const opponent = effect.opponent;
-  const pokemonCard = opponent.active.getPokemonCard();
-
-  if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
-    return state;
-  }
-
-  return store.prompt(state, new ChooseAttackPrompt(
-    player.id,
-    GameMessage.CHOOSE_ATTACK_TO_DISABLE,
-    [pokemonCard],
-    { allowCancel: false }
-  ), result => {
-    if (!result) {
-      return state;
-    }
-
-    store.log(state, GameLog.LOG_PLAYER_DISABLES_ATTACK, {
-      name: player.name,
-      attack: result.name
-    });
-
-    const disableEffect = opponentPokemonCannotUseAttackEffect(effect, source, result);
-    return store.reduceEffect(state, disableEffect);
-  });
-}
-
-/**
- * Creates and reduces a prevent damage effect for the given source card.
- * This is commonly used in Pokemon card effects that prevent damage during the opponent's next turn.
- * @param store The store instance
- * @param state The current game state
- * @param effect The original attack effect that triggered this
- * @param source The source card that created this effect
- * @returns The updated game state
- */
-export function PREVENT_DAMAGE(
-  store: StoreLike,
-  state: State,
-  effect: AttackEffect,
-  source: Card,
-  options?: PreventDamageOptions,
-): State {
-  const damageEffect = preventDamageEffect(effect, source, options);
-  return store.reduceEffect(state, damageEffect);
-}
-
-/**
- * During the opponent's next turn, prevents effects of attacks done to this Pokémon.
- * Damage is not an effect — pair with {@link PREVENT_DAMAGE} when card text blocks both.
- * Enforcement uses the same rules as Mist Energy and is handled by the attack reducer.
- */
-export function PREVENT_EFFECTS_OF_ATTACKS(
-  store: StoreLike,
-  state: State,
-  effect: AttackEffect,
-  source: Card,
-): State {
-  const effectsEffect = preventEffectsOfAttacksEffect(effect, source);
-  return store.reduceEffect(state, effectsEffect);
-}
-
-/**
- * Blocks non-damage attack effects on a Pokémon that has
- * {@link PokemonCardList.preventEffectsOfAttacksNextTurn} active.
- * Ref: set-temporal-forces/mist-energy.ts
- */
-export function BLOCK_EFFECTS_OF_ATTACKS_IF_PREVENTED(state: State, effect: Effect): boolean {
-  return shouldPreventAttackEffects(state, effect);
-}
-
-/**
- * Checks if the a Pokemon is at full HP and that the damage dealt is enough to knock it out.
- * TODO: This doesn't work if the an attack changes the result of a CheckHpEffect (e.g. discards an hp-modifying stadium)
- */
-export function DAMAGED_FROM_FULL_HP(
-  store: StoreLike,
-  state: State,
-  effect: PutDamageEffect,
-  player: Player,
-  target: PokemonCardList,
-): boolean {
-  if (effect.target.damage != 0) {
-    return false;
-  }
-  const checkHpEffect = new CheckHpEffect(player, target);
-  store.reduceEffect(state, checkHpEffect);
-  return effect.damage >= checkHpEffect.hp;
-}
-
-export interface OnDamagedByOpponentAttackEvenIfKnockedOutOptions {
-  source: PokemonCard;
-  requireActiveSpot?: boolean;
-  requireAttackPhase?: boolean;
-}
-
-/**
- * Compound helper for text like:
- * "If this Pokémon is in the Active Spot and is damaged by an opponent's attack
- * (even if this Pokémon is Knocked Out)..."
- */
-export function ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(
-  state: State,
-  effect: Effect,
-  options: OnDamagedByOpponentAttackEvenIfKnockedOutOptions,
-): effect is AfterDamageEffect {
-  if (!(effect instanceof AfterDamageEffect)) {
-    return false;
-  }
-
-  const { source, requireActiveSpot = true, requireAttackPhase = true } = options;
-
-  if (effect.damage <= 0 || !effect.target.cards.includes(source)) {
-    return false;
-  }
-
-  const targetOwner = StateUtils.findOwner(state, effect.target);
-  if (targetOwner === effect.player) {
-    return false;
-  }
-
-  if (requireActiveSpot && targetOwner.active !== effect.target) {
-    return false;
-  }
-
-  if (requireAttackPhase && state.phase !== GamePhase.ATTACK) {
-    return false;
-  }
-
-  return true;
-}
-
-export interface BenchProtectionOptions {
-  owner: Player;
-  source?: PokemonCard | TrainerCard;
-  includeSourcePokemon?: boolean;
-  targetFilter?: (target: PokemonCardList, pokemonCard: PokemonCard | undefined) => boolean;
-  checkBlocked?: boolean;
-}
-
-function isProtectionSourceInPlay(
-  state: State,
-  owner: Player,
-  source?: PokemonCard | TrainerCard,
-): boolean {
-  if (source === undefined) {
-    return true;
-  }
-
-  if (source instanceof PokemonCard) {
-    let inPlay = false;
-    owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard) => {
-      if (pokemonCard === source) {
-        inPlay = true;
-      }
-    });
-    return inPlay;
-  }
-
-  if (source.trainerType === TrainerType.STADIUM) {
-    return StateUtils.getStadiumCard(state) === source;
-  }
-
-  if (source.trainerType === TrainerType.TOOL) {
-    let attached = false;
-    owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-      if (cardList.tools.includes(source)) {
-        attached = true;
-      }
-    });
-    return attached;
-  }
-
-  return false;
-}
-
-function isBenchProtectionBlocked(
-  store: StoreLike,
-  state: State,
-  owner: Player,
-  source?: PokemonCard | TrainerCard,
-  checkBlocked: boolean = true,
-): boolean {
-  if (!checkBlocked || source === undefined) {
-    return false;
-  }
-
-  if (source instanceof PokemonCard) {
-    return IS_ABILITY_BLOCKED(store, state, owner, source);
-  }
-
-  if (source.trainerType === TrainerType.TOOL) {
-    return IS_TOOL_BLOCKED(store, state, owner, source);
-  }
-
-  return false;
-}
-
-function isProtectedBenchedTarget(
-  state: State,
-  effect: AbstractAttackEffect,
-  options: BenchProtectionOptions,
-): boolean {
-  const { owner, source, includeSourcePokemon = false, targetFilter } = options;
-
-  if (!owner.bench.includes(effect.target)) {
-    return false;
-  }
-
-  const attackerOwner = StateUtils.findOwner(state, effect.source);
-  if (attackerOwner === owner) {
-    return false;
-  }
-
-  if (
-    !includeSourcePokemon &&
-    source instanceof PokemonCard &&
-    effect.target.cards.includes(source)
-  ) {
-    return false;
-  }
-
-  const targetPokemon = effect.target.getPokemonCard();
-  if (targetFilter && !targetFilter(effect.target, targetPokemon)) {
-    return false;
-  }
-
-  return true;
-}
-
-/**
- * Compound helper for text like:
- * "Prevent all damage done to your other Benched Pokémon by attacks from your opponent's Pokémon."
- */
-export function PREVENT_DAMAGE_TO_YOUR_BENCHED_POKEMON_FROM_OPPONENT_ATTACKS(
-  store: StoreLike,
-  state: State,
-  effect: Effect,
-  options: BenchProtectionOptions,
-): void {
-  if (!(effect instanceof PutDamageEffect) && !(effect instanceof PutCountersEffect)) {
-    return;
-  }
-
-  if (!isProtectionSourceInPlay(state, options.owner, options.source)) {
-    return;
-  }
-
-  if (isBenchProtectionBlocked(store, state, options.owner, options.source, options.checkBlocked)) {
-    return;
-  }
-
-  if (!isProtectedBenchedTarget(state, effect, options)) {
-    return;
-  }
-
-  effect.preventDefault = true;
-}
-
-/**
- * Compound helper for text like:
- * "Prevent all effects of attacks done to your other Benched Pokémon
- * by attacks from your opponent's Pokémon. (Damage is not an effect.)"
- */
-export function PREVENT_EFFECTS_TO_YOUR_BENCHED_POKEMON_FROM_OPPONENT_ATTACKS(
-  store: StoreLike,
-  state: State,
-  effect: Effect,
-  options: BenchProtectionOptions,
-): void {
-  if (!(effect instanceof AbstractAttackEffect)) {
-    return;
-  }
-
-  if (
-    effect instanceof DealDamageEffect ||
-    effect instanceof PutDamageEffect ||
-    effect instanceof PutCountersEffect ||
-    effect instanceof ApplyWeaknessEffect ||
-    effect instanceof AfterDamageEffect
-  ) {
-    return;
-  }
-
-  if (!isProtectionSourceInPlay(state, options.owner, options.source)) {
-    return;
-  }
-
-  if (isBenchProtectionBlocked(store, state, options.owner, options.source, options.checkBlocked)) {
-    return;
-  }
-
-  if (!isProtectedBenchedTarget(state, effect, options)) {
-    return;
-  }
-
-  effect.preventDefault = true;
-}
-
-export interface SurviveOnTenIfFullHpOptions {
-  reason: string;
-  source: PokemonCard | TrainerCard;
-  checkBlocked?: boolean;
-}
-
-/**
- * Compound helper for text like:
- * "If this Pokemon has full HP and would be Knocked Out by damage from an attack,
- * this Pokemon is not Knocked Out and its remaining HP becomes 10 instead."
- */
-export function SURVIVE_ON_TEN_IF_FULL_HP(
-  store: StoreLike,
-  state: State,
-  effect: Effect,
-  options: SurviveOnTenIfFullHpOptions,
-): void {
-  if (!(effect instanceof PutDamageEffect)) {
-    return;
-  }
-
-  const { reason, source, checkBlocked = true } = options;
-  const player = StateUtils.findOwner(state, effect.target);
-
-  if (source instanceof PokemonCard) {
-    if (!effect.target.cards.includes(source)) {
-      return;
-    }
-    if (checkBlocked && IS_ABILITY_BLOCKED(store, state, player, source)) {
-      return;
-    }
-  } else if (source instanceof TrainerCard) {
-    if (!effect.target.tools.includes(source)) {
-      return;
-    }
-    if (checkBlocked && IS_TOOL_BLOCKED(store, state, player, source)) {
-      return;
-    }
-  } else {
-    return;
-  }
-
-  if (DAMAGED_FROM_FULL_HP(store, state, effect, player, effect.target)) {
-    effect.surviveOnTenHPReason = reason;
-  }
-}
+// =============================================================================
+// Misc rules
+// =============================================================================
 
 /**
  * Tera Rule: Prevents damage effects from being applied to non-active Pokémon.
@@ -4635,3 +3681,127 @@ export function BREAK_RULE(effect: Effect, state: State, source: PokemonCard): S
   }
   return state;
 }
+
+//#endregion
+
+//#region Markers
+
+// export function REMOVE_TOOL(store: StoreLike, state: State, source: PokemonCardList, tool: Card, destinationSlot: SlotType): State {
+//   if (!source.cards.includes(tool)) {
+//     return state;
+//   }
+//   const owner = StateUtils.findOwner(state, source);
+//   state = MOVE_CARDS(store, state, source, owner.getSlot(destinationSlot), { cards: [tool] });
+//   source.removeTool(tool);
+//   return state;
+// }
+
+// export function REMOVE_TOOLS_FROM_POKEMON_PROMPT(store: StoreLike, state: State, player: Player, target: PokemonCardList, destinationSlot: SlotType, min: number, max: number): State {
+//   if (target.tools.length === 0) {
+//     return state;
+//   }
+//   if (target.tools.length === 1) {
+//     return REMOVE_TOOL(store, state, target, target.tools[0], destinationSlot);
+//   } else {
+//     const blocked: number[] = [];
+//     target.cards.forEach((card, index) => {
+//       if (!target.tools.includes(card)) {
+//         blocked.push(index);
+//       }
+//     });
+//     let tools: Card[] = [];
+//     return store.prompt(state, new ChooseCardsPrompt(
+//       player,
+//       GameMessage.CHOOSE_CARD_TO_DISCARD,
+//       target,
+//       {},
+//       { min, max, allowCancel: false, blocked }
+//     ), selected => {
+//       tools = selected || [];
+//       for (const tool of tools) {
+//         return REMOVE_TOOL(store, state, target, tool, destinationSlot);
+//       }
+//     });
+//   }
+// }
+
+// export function CHOOSE_TOOLS_TO_REMOVE_PROMPT(store: StoreLike, state: State, player: Player, playerType: PlayerType, destinationSlot: SlotType, min: number, max: number): State {
+//   const opponent = StateUtils.getOpponent(state, player);
+
+//   let hasPokemonWithTool = false;
+//   let players: Player[] = [];
+//   switch (playerType) {
+//     case PlayerType.TOP_PLAYER:
+//       players = [opponent];
+//       break;
+//     case PlayerType.BOTTOM_PLAYER:
+//       players = [player];
+//       break;
+//     case PlayerType.ANY:
+//       players = [player, opponent];
+//       break;
+//   }
+//   const blocked: CardTarget[] = [];
+
+//   for (const p of players) {
+//     let pt: PlayerType = PlayerType.BOTTOM_PLAYER;
+//     if (p === opponent) {
+//       pt = PlayerType.TOP_PLAYER;
+//     }
+//     p.forEachPokemon(pt, (cardList, card, target) => {
+//       if (cardList.tools.length > 0) {
+//         hasPokemonWithTool = true;
+//       } else {
+//         blocked.push(target);
+//       }
+//     });
+//   }
+
+//   if (!hasPokemonWithTool) {
+//     return state;
+//   }
+
+//   let targets: PokemonCardList[] = [];
+//   return store.prompt(state, new ChoosePokemonPrompt(
+//     player.id,
+//     GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
+//     playerType,
+//     [SlotType.ACTIVE, SlotType.BENCH],
+//     { min, max, allowCancel: false, blocked }
+//   ), results => {
+//     targets = results || [];
+//     if (targets.length === 0) {
+//       return state;
+//     }
+//     let toolsRemoved = 0;
+//     for (const target of targets) {
+//       if (target.tools.length === 0 || toolsRemoved >= max) {
+//         continue;
+//       }
+//       if (target.tools.length === 1) {
+//         REMOVE_TOOL(store, state, target, target.tools[0], destinationSlot);
+//         toolsRemoved += 1;
+//       } else {
+//         const blocked: number[] = [];
+//         target.cards.forEach((card, index) => {
+//           if (!target.tools.includes(card)) {
+//             blocked.push(index);
+//           }
+//         });
+//         let tools: Card[] = [];
+//         return store.prompt(state, new ChooseCardsPrompt(
+//           player,
+//           GameMessage.CHOOSE_CARD_TO_DISCARD,
+//           target,
+//           {},
+//           { min: Math.min(min, max - toolsRemoved), max: max - toolsRemoved, allowCancel: false, blocked }
+//         ), selected => {
+//           tools = selected || [];
+//           for (const tool of tools) {
+//             REMOVE_TOOL(store, state, target, tool, destinationSlot);
+//             toolsRemoved += 1;
+//           }
+//         });
+//       }
+//     }
+//   });

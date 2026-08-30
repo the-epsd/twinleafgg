@@ -13,25 +13,22 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 export class Watchog extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Patrat';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Held-Item Inspection',
-      cost: [C],
-      damage: 0,
-      text: 'Your opponent reveals his or her hand. Choose an Item card you find there. Your opponent shuffles that card into his or her deck.'
-    },
-    {
-      name: 'Thorough Crunch',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip 2 coins. For each heads, discard an Energy attached to your opponent\'s Active Pok\u00e9mon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Held-Item Inspection',
+    cost: [C],
+    damage: 0,
+    text: 'Your opponent reveals his or her hand. Choose an Item card you find there. Your opponent shuffles that card into his or her deck.'
+  }, {
+    name: 'Thorough Crunch',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip 2 coins. For each heads, discard an Energy attached to your opponent\'s Active Pok\u00e9mon.'
+  }];
 
   public set: string = 'FFI';
   public setNumber: string = '85';

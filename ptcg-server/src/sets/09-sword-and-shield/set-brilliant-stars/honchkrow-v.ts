@@ -4,32 +4,41 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameMessage, ShowCardsPrompt } from '../../../game';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  ShowCardsPrompt,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class HonchkrowV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 200;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Boss Pockets',
-    powerType: PowerType.ABILITY,
-    text: 'This Pokémon may have up to 4 Pokémon Tools attached to it. If it loses this Ability, discard Pokémon Tools from it until only 1 remains.'
-  }];
+  public powers = [
+    {
+      name: 'Boss Pockets',
+      powerType: PowerType.ABILITY,
+      text: 'This Pokémon may have up to 4 Pokémon Tools attached to it. If it loses this Ability, discard Pokémon Tools from it until only 1 remains.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Fearsome Shadow',
       cost: [D, D, C],
       damage: 130,
-      text: 'Your opponent reveals their hand.'
-    }
+      text: 'Your opponent reveals their hand.',
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -53,11 +62,15 @@ export class HonchkrowV extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       if (opponent.hand.cards.length > 0) {
-        store.prompt(state, new ShowCardsPrompt(
-          player.id,
-          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-          opponent.hand.cards
-        ), () => { });
+        store.prompt(
+          state,
+          new ShowCardsPrompt(
+            player.id,
+            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+            opponent.hand.cards,
+          ),
+          () => {},
+        );
       }
     }
 

@@ -10,19 +10,21 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class DiancieEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 150;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Sparkle Veil',
-    powerType: PowerType.ABILITY,
-    text: 'As long as this Pokémon is your Active Pokémon, any damage done to your Pokémon by an opponent\'s attack is reduced by 30 (after applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: 'Sparkle Veil',
+      powerType: PowerType.ABILITY,
+      text: "As long as this Pokémon is your Active Pokémon, any damage done to your Pokémon by an opponent's attack is reduced by 30 (after applying Weakness and Resistance).",
+    },
+  ];
 
   public attacks = [
     {
@@ -30,8 +32,8 @@ export class DiancieEx extends PokemonCard {
       cost: [Y, C, C],
       damage: 60,
       damageCalculation: '+',
-      text: 'If there is any Stadium card in play, this attack does 50 more damage.'
-    }
+      text: 'If there is any Stadium card in play, this attack does 50 more damage.',
+    },
   ];
 
   public set: string = 'FCO';
@@ -45,21 +47,27 @@ export class DiancieEx extends PokemonCard {
     // Ref: set-primal-clash/rhyperior-2.ts (Rock Wall - reduce damage to your Pokemon)
     if (effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) {
       const targetCard = effect.target.getPokemonCard();
-      if (!targetCard) { return state; }
+      if (!targetCard) {
+        return state;
+      }
 
       // Find the owner of the target
       let targetOwner: any = null;
-      state.players.forEach(p => {
+      state.players.forEach((p) => {
         p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
           if (cardList === effect.target) {
             targetOwner = p;
           }
         });
       });
-      if (!targetOwner) { return state; }
+      if (!targetOwner) {
+        return state;
+      }
 
       // Check if Diancie-EX is the active Pokemon for the target owner
-      if (targetOwner.active.getPokemonCard() !== this) { return state; }
+      if (targetOwner.active.getPokemonCard() !== this) {
+        return state;
+      }
 
       if (IS_ABILITY_BLOCKED(store, state, targetOwner, this)) {
         return state;
@@ -67,7 +75,9 @@ export class DiancieEx extends PokemonCard {
 
       // Only reduce damage from opponent's attacks
       const sourceOwner = effect.player;
-      if (sourceOwner === targetOwner) { return state; }
+      if (sourceOwner === targetOwner) {
+        return state;
+      }
 
       effect.damage = Math.max(0, effect.damage - 30);
     }

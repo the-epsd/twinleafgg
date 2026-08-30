@@ -8,30 +8,29 @@ import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH } from '../../../game/s
 
 export class Bombirdier extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 100;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Challenging Delivery',
-      cost: [C, C],
-      damage: 0,
-      text: 'Flip 2 coins. If both of them are heads, search your deck for a Pokémon and put it onto your Bench. Then, shuffle your deck.',
-    },
-    {
-      name: 'Speed Wing',
-      cost: [C, C, C],
-      damage: 100,
-      text: '',
-    },
-  ];
+  public attacks = [{
+    name: 'Challenging Delivery',
+    cost: [C, C],
+    damage: 0,
+    text: 'Flip 2 coins. If both of them are heads, search your deck for a Pokémon and put it onto your Bench. Then, shuffle your deck.',
+  }, {
+    name: 'Speed Wing',
+    cost: [C, C, C],
+    damage: 100,
+    text: '',
+  }];
 
   public set: string = 'PBL';
   public setNumber: string = '71';
+
   public regulationMark: string = 'J';
+
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bombirdier';
   public fullName: string = 'Bombirdier M5';

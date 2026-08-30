@@ -42,7 +42,7 @@ export class Swanna extends PokemonCard {
 
   public evolvesFrom: string = 'Ducklett';
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp: number = 110;
 

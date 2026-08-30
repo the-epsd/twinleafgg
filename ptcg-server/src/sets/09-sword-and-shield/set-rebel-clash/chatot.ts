@@ -11,7 +11,7 @@ import { COIN_FLIP_PROMPT, MOVE_CARDS, IS_ABILITY_BLOCKED } from '../../../game/
 
 export class Chatot extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 70;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];
@@ -23,16 +23,15 @@ export class Chatot extends PokemonCard {
     text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may flip a coin. If heads, put a Supporter card from your discard pile into your hand.'
   }];
 
-  public attacks = [
-    {
-      name: 'Glide',
-      cost: [C, C],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Glide',
+    cost: [C, C],
+    damage: 30,
+    text: ''
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'RCL';
   public setNumber: string = '142';
   public cardImage: string = 'assets/cardback.png';

@@ -9,25 +9,22 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Bagon2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 60;
   public weakness = [{ type: Y }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Leer',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Almost Flight',
-      cost: [R, W],
-      damage: 30,
-      text: 'This Pokémon does 10 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Leer',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Almost Flight',
+    cost: [R, W],
+    damage: 30,
+    text: 'This Pokémon does 10 damage to itself.'
+  }];
 
   public set: string = 'ROS';
   public setNumber: string = '55';

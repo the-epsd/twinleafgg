@@ -12,26 +12,23 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Golurk2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Golett';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 130;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Dig Out',
-      cost: [C],
-      damage: 20,
-      text: 'Discard the top card of your deck. If that card is a [F] Energy card, attach it to this Pokémon.'
-    },
-    {
-      name: 'Double Lariat',
-      cost: [F, C, C, C],
-      damage: 90,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 90 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Dig Out',
+    cost: [C],
+    damage: 20,
+    text: 'Discard the top card of your deck. If that card is a [F] Energy card, attach it to this Pokémon.'
+  }, {
+    name: 'Double Lariat',
+    cost: [F, C, C, C],
+    damage: 90,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 90 damage times the number of heads.'
+  }];
 
   public set: string = 'AOR';
   public setNumber: string = '41';

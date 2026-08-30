@@ -11,26 +11,23 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 
 export class Woobat extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Odor Sleuth',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, put a card from your discard pile into your hand.'
-    },
-    {
-      name: 'Psyshot',
-      cost: [P],
-      damage: 10,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Odor Sleuth',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, put a card from your discard pile into your hand.'
+  }, {
+    name: 'Psyshot',
+    cost: [P],
+    damage: 10,
+    text: ''
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '71';

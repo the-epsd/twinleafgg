@@ -13,7 +13,7 @@ export class Groudon extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp: number = 130;
 

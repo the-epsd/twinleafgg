@@ -3,23 +3,28 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, PowerType, PlayerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckRetreatCostEffect } from '../../../game/store/effects/check-effects';
-import { IS_POKEBODY_BLOCKED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  IS_POKEBODY_BLOCKED,
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Beldum extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = L;
+  protected _tags = [CardTag.DELTA_SPECIES];
+  public cardType: CardType[] = [L];
   public hp: number = 50;
   public weakness = [{ type: F }];
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Conductive Body',
-    powerType: PowerType.POKEBODY,
-    text: 'As long as Beldum is your Active Pokémon, you pay [C] less to retreat Beldum for each Beldum on your Bench.'
-  }];
+  public powers = [
+    {
+      name: 'Conductive Body',
+      powerType: PowerType.POKEBODY,
+      text: 'As long as Beldum is your Active Pokémon, you pay [C] less to retreat Beldum for each Beldum on your Bench.',
+    },
+  ];
 
   public attacks = [
     {
@@ -27,7 +32,7 @@ export class Beldum extends PokemonCard {
       cost: [L, C],
       damage: 30,
       text: 'Beldum does 10 damage to itself.',
-    }
+    },
   ];
 
   public set: string = 'DS';
@@ -37,8 +42,10 @@ export class Beldum extends PokemonCard {
   public fullName: string = 'Beldum DS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof CheckRetreatCostEffect && effect.player.active.getPokemonCard() === this) {
+    if (
+      effect instanceof CheckRetreatCostEffect &&
+      effect.player.active.getPokemonCard() === this
+    ) {
       const player = effect.player;
 
       let isBeldumInPlay = false;

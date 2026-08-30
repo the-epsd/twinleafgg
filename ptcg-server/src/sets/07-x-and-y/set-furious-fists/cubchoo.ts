@@ -10,26 +10,23 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 
 export class Cubchoo extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 70;
   public weakness = [{ type: M }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Fury Swipes',
-      cost: [W],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 10 damage times the number of heads.'
-    },
-    {
-      name: 'Frost Breath',
-      cost: [W, W, C],
-      damage: 40,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Fury Swipes',
+    cost: [W],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 10 damage times the number of heads.'
+  }, {
+    name: 'Frost Breath',
+    cost: [W, W, C],
+    damage: 40,
+    text: ''
+  }];
 
   public set: string = 'FFI';
   public setNumber: string = '21';

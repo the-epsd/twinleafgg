@@ -8,7 +8,7 @@ export class Gothitelle extends PokemonCard {
   public regulationMark = 'G';
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Gothorita';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 150;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

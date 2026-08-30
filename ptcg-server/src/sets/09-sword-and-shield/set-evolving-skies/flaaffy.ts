@@ -16,7 +16,7 @@ export class Flaaffy extends PokemonCard {
 
   public evolvesFrom = 'Mareep';
 
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [CardType.LIGHTNING];
 
   public hp: number = 90;
 

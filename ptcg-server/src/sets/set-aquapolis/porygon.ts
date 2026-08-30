@@ -6,7 +6,7 @@ import { COIN_FLIP_PROMPT, MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_A
 
 export class Porygon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 40;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -16,8 +16,7 @@ export class Porygon extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, choose a Trainer card from your discard pile, show it to your opponent, and then shuffle it into your deck.'
-  },
-  {
+  }, {
     name: 'Peck',
     cost: [C],
     damage: 10,

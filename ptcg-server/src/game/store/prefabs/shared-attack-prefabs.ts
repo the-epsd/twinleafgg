@@ -3,10 +3,19 @@ import { PokemonCard } from '../card/pokemon-card';
 import { AttackEffect } from '../effects/game-effects';
 import { SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from './prefabs';
 
+// =============================================================================
+// Bug Out constants
+// =============================================================================
+
 export const BUG_OUT_ATTACK_NAME = 'Bug Out';
 
 const BUG_OUT_REVEAL_COUNT = 7;
+
 const BUG_OUT_DAMAGE_PER_POKEMON = 50;
+
+// =============================================================================
+// Bug Out helpers
+// =============================================================================
 
 function revealBottomDeckCards(deck: { cards: Card[] }, count: number): Card[] {
   const revealCount = Math.min(count, deck.cards.length);
@@ -25,6 +34,10 @@ function revealBottomDeckCards(deck: { cards: Card[] }, count: number): Card[] {
 function hasAttackNamed(card: Card, attackName: string): boolean {
   return card instanceof PokemonCard && card.attacks.some(attack => attack.name === attackName);
 }
+
+// =============================================================================
+// Bug Out attack
+// =============================================================================
 
 /**
  * Reveal the bottom 7 cards of your deck. This attack does 50 damage for each Pokémon
@@ -53,3 +66,4 @@ export function BUG_OUT(
     .forEach(card => player.discard.cards.push(card));
   SHUFFLE_DECK(store, state, player);
 }
+

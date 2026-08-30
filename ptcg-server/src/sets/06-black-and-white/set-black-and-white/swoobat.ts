@@ -7,26 +7,23 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, SHUFFLE_DECK } from '../../../game/s
 export class Swoobat extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Woobat';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Gust',
-      cost: [C, C],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Heart Stamp',
-      cost: [P, C, C],
-      damage: 60,
-      text: 'Flip a coin. If heads, your opponent shuffles his or her hand into his or her deck.'
-    }
-  ];
+  public attacks = [{
+    name: 'Gust',
+    cost: [C, C],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Heart Stamp',
+    cost: [P, C, C],
+    damage: 60,
+    text: 'Flip a coin. If heads, your opponent shuffles his or her hand into his or her deck.'
+  }];
 
   public set: string = 'BLW';
   public cardImage: string = 'assets/cardback.png';

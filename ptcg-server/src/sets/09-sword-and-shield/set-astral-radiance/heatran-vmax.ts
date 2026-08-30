@@ -3,7 +3,15 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { HealEffect } from '../../../game/store/effects/game-effects';
-import { ADD_BURN_TO_PLAYER_ACTIVE, ADD_MARKER, AFTER_ATTACK, HAS_MARKER, IS_ABILITY_BLOCKED, REMOVE_MARKER_AT_END_OF_TURN, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_BURN_TO_PLAYER_ACTIVE,
+  ADD_MARKER,
+  AFTER_ATTACK,
+  HAS_MARKER,
+  IS_ABILITY_BLOCKED,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
@@ -12,28 +20,30 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { BoardEffect, PlayerType, PowerType, State, StoreLike } from '../../../game';
 export class HeatranVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Heatran V';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 330;
   public weakness = [{ type: W }];
   public retreat = [C, C, C, C];
 
-  public powers = [{
-    name: 'Magma Gain',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, if you have a Stadium in play, you may heal 50 damage from this Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Magma Gain',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn, if you have a Stadium in play, you may heal 50 damage from this Pokémon.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Max Heat Burst',
       cost: [R, R, C],
       damage: 180,
-      text: 'Your opponent\'s Active Pokémon is now Burned.'
-    }
+      text: "Your opponent's Active Pokémon is now Burned.",
+    },
   ];
 
   public regulationMark: string = 'F';

@@ -143,6 +143,7 @@ import { Impidimp } from '../09-sword-and-shield/set-rebel-clash/impidimp';
 import { Cinccino } from '../09-sword-and-shield/set-sword-and-shield/cinccino';
 import { Skwovet } from '../09-sword-and-shield/set-rebel-clash/skwovet';
 import { Rookidee } from '../09-sword-and-shield/set-sword-and-shield/rookidee';
+import { Ducklett } from '../09-sword-and-shield/set-darkness-ablaze/ducklett';
 
 // MARK: Normal frame reprints
 
@@ -912,7 +913,7 @@ export class CinccinoSHF extends Cinccino {
   public fullName: string = 'Cinccino SHF';
 }
 
-export class DucklettSHF extends Swanna {
+export class DucklettSHF extends Ducklett {
   public set: string = 'SHF';
   public setNumber: string = 'SV95';
   public fullName: string = 'Ducklett SHF';

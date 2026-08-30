@@ -10,7 +10,7 @@ import { State, StoreLike, TrainerCard, TrainerType } from '../../../game';
 export class Garbodor extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Trubbish';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 120;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

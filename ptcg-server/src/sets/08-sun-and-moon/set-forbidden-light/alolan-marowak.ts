@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, ATTACH_UP_TO_X_ENERGY_FROM_DECK_TO_Y_OF_YOUR_POKEMON }
 export class AlolanMarowak extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Cubone';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 120;
   public weakness: Weakness[] = [{ type: W }];
   public retreat = [C, C];

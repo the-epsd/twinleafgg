@@ -13,26 +13,23 @@ import { State, StoreLike } from '../../../game';
 export class Xatu extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Natu';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Creepy Wind',
-      cost: [P],
-      damage: 0,
-      text: 'Your opponent\'s Active Pokémon is now Confused.'
-    },
-    {
-      name: 'Life Drain',
-      cost: [P, C],
-      damage: 0,
-      text: 'Flip a coin. If heads, put damage counters on your opponent\'s Active Pokémon until its remaining HP is 10.'
-    }
-  ];
+  public attacks = [{
+    name: 'Creepy Wind',
+    cost: [P],
+    damage: 0,
+    text: 'Your opponent\'s Active Pokémon is now Confused.'
+  }, {
+    name: 'Life Drain',
+    cost: [P, C],
+    damage: 0,
+    text: 'Flip a coin. If heads, put damage counters on your opponent\'s Active Pokémon until its remaining HP is 10.'
+  }];
 
   public set: string = 'CEC';
   public setNumber: string = '79';

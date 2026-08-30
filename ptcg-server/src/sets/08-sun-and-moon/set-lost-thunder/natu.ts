@@ -1,15 +1,14 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State/*, CardTag*/ } from '../../../game';
+import { StoreLike, State /*, CardTag*/ } from '../../../game';
 
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Natu extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 40;
 
@@ -22,8 +21,8 @@ export class Natu extends PokemonCard {
       name: 'Lost March',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 20,
-      text: 'This attack does 20 damage for each of your Pokémon, except Prism Star (Prism Star) Pokémon, in the Lost Zone.'
-    }
+      text: 'This attack does 20 damage for each of your Pokémon, except Prism Star (Prism Star) Pokémon, in the Lost Zone.',
+    },
   ];
 
   public set: string = 'LOT';
@@ -41,8 +40,8 @@ export class Natu extends PokemonCard {
       const player = effect.player;
 
       let pokemonCount = 0;
-      player.lostzone.cards.forEach(c => {
-        if (c instanceof PokemonCard /*&& !c.tags.includes(CardTag.PRISM_STAR)*/) {
+      player.lostzone.cards.forEach((c) => {
+        if (c instanceof PokemonCard /*&& !c.hasTag(CardTag.PRISM_STAR)*/) {
           pokemonCount += 1;
         }
       });
@@ -52,5 +51,4 @@ export class Natu extends PokemonCard {
 
     return state;
   }
-
 }

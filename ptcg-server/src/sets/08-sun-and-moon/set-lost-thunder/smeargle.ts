@@ -10,25 +10,22 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 
 export class Smeargle extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Stunning Likeness',
-      cost: [C],
-      damage: 0,
-      text: 'Your opponent reveals their hand. You may use the effect of a Supporter card you find there as the effect of this attack.'
-    },
-    {
-      name: 'Tail Smash',
-      cost: [C],
-      damage: 30,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Stunning Likeness',
+    cost: [C],
+    damage: 0,
+    text: 'Your opponent reveals their hand. You may use the effect of a Supporter card you find there as the effect of this attack.'
+  }, {
+    name: 'Tail Smash',
+    cost: [C],
+    damage: 30,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'LOT';
   public setNumber: string = '157';

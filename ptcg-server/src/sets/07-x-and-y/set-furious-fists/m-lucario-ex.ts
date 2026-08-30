@@ -10,10 +10,10 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class MLucarioEx extends PokemonCard {
-  public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
+  protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Lucario-EX';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 220;
   public weakness = [{ type: P }];
   public retreat = [C, C];
@@ -23,8 +23,8 @@ export class MLucarioEx extends PokemonCard {
       name: 'Rising Fist',
       cost: [F, F, F],
       damage: 140,
-      text: 'Discard an Energy attached to your opponent\'s Active Pok\u00e9mon.'
-    }
+      text: "Discard an Energy attached to your opponent's Active Pok\u00e9mon.",
+    },
   ];
 
   public set: string = 'FFI';

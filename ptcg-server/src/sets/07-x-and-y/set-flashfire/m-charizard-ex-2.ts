@@ -6,13 +6,16 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, DISCARD_TOP_X_CARDS_FROM_YOUR_DECK } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  DISCARD_TOP_X_CARDS_FROM_YOUR_DECK,
+} from '../../../game/store/prefabs/prefabs';
 
 export class MCharizardEx2 extends PokemonCard {
-  public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
+  protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Charizard-EX';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 230;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];
@@ -22,8 +25,8 @@ export class MCharizardEx2 extends PokemonCard {
       name: 'Wild Blaze',
       cost: [R, R, D, C, C],
       damage: 300,
-      text: 'Discard the top 5 cards of your deck.'
-    }
+      text: 'Discard the top 5 cards of your deck.',
+    },
   ];
 
   public set: string = 'FLF';

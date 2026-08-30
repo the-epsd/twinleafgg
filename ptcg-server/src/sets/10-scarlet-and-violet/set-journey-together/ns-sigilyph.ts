@@ -6,9 +6,9 @@ import { endGame } from '../../../game/store/effect-reducers/check-effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class NsSigilyph extends PokemonCard {
-  public tags = [CardTag.NS];
+  protected _tags = [CardTag.NS];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 110;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

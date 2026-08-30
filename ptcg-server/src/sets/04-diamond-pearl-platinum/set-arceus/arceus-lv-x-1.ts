@@ -26,8 +26,8 @@ import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 export class ArceusLvX1 extends PokemonCard {
   public stage: Stage = Stage.LV_X;
   public evolvesFrom = 'Arceus';
-  public cardType: CardType = C;
-  public tags = [CardTag.POKEMON_LV_X, CardTag.ARCEUS];
+  public cardType: CardType[] = [C];
+  protected _tags = [CardTag.POKEMON_LV_X, CardTag.ARCEUS];
   public hp: number = 120;
   public retreat = [C];
 
@@ -65,7 +65,10 @@ export class ArceusLvX1 extends PokemonCard {
 
       effect.target.cards.forEach((card) => {
         if (card instanceof PokemonCard && card.name === 'Arceus' && card !== this) {
-          effect.target.getPokemonCard()?.cardType === card.cardType;
+          const pokemon = effect.target.getPokemonCard();
+          if (pokemon) {
+            pokemon.cardType = [...card.cardType];
+          }
         }
       });
     }

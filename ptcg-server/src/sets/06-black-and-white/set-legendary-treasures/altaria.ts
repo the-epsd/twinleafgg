@@ -12,25 +12,22 @@ import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store
 export class Altaria extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Swablu';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 80;
   public weakness = [{ type: N }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Speed Dive',
-      cost: [C, C],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Cleave',
-      cost: [W, M, C],
-      damage: 40,
-      text: 'Flip 2 coins. If both of them are heads, discard all Energy attached to the Defending Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Speed Dive',
+    cost: [C, C],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Cleave',
+    cost: [W, M, C],
+    damage: 40,
+    text: 'Flip 2 coins. If both of them are heads, discard all Energy attached to the Defending Pokémon.'
+  }];
 
   public set: string = 'LTR';
   public setNumber: string = '92';

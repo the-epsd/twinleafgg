@@ -18,6 +18,12 @@ export interface GameInfo {
   players: PlayerInfo[];
   /** User ids of players in this game (so client can recognize "I am in this game" after reload). */
   playerUserIds?: number[];
+  /** Match format for lobby / My Games cards. */
+  format?: Format;
+  /** True while an Invite player prompt is unresolved in WAITING_FOR_PLAYERS. */
+  pendingInvite?: boolean;
+  /** Client id of the player who must resolve the invite prompt. */
+  inviteeClientId?: number;
 }
 
 export interface ClientInfo {

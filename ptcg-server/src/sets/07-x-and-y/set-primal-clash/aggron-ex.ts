@@ -10,9 +10,9 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefabs/attack-effects';
 
 export class AggronEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 180;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
@@ -24,15 +24,15 @@ export class AggronEx extends PokemonCard {
       cost: [M, C, C],
       damage: 50,
       damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 30 more damage.'
+      text: 'Flip a coin. If heads, this attack does 30 more damage.',
     },
     {
       name: 'Raging Hammer',
       cost: [M, M, C, C],
       damage: 60,
       damageCalculation: '+',
-      text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
-    }
+      text: 'This attack does 10 more damage for each damage counter on this Pokémon.',
+    },
   ];
 
   public set: string = 'PRC';

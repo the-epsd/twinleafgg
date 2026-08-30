@@ -8,26 +8,23 @@ import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefa
 export class Zebstrika extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Blitzle';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Quick Attack',
-      cost: [C],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 more damage.'
-    },
-    {
-      name: 'Shock Bolt',
-      cost: [L, L, C],
-      damage: 90,
-      text: 'Flip a coin. If tails, discard all [L] Energy attached to this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Quick Attack',
+    cost: [C],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 20 more damage.'
+  }, {
+    name: 'Shock Bolt',
+    cost: [L, L, C],
+    damage: 90,
+    text: 'Flip a coin. If tails, discard all [L] Energy attached to this Pokémon.'
+  }];
 
   public set: string = 'NVI';
   public cardImage: string = 'assets/cardback.png';

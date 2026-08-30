@@ -4,53 +4,42 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 
-import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
-import { GameMessage } from '../../game/game-message';
 import { PutDamageEffect, HealTargetEffect } from '../../game/store/effects/attack-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { PlayerType } from '../../game/store/actions/play-card-action';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Gabite extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom: string = 'Gible';
-
-  public cardType: CardType = CardType.COLORLESS;
-
+  public cardType: CardType[] = [C];
   public hp: number = 80;
-
   public weakness = [{
-    type: CardType.COLORLESS,
+    type: C,
     value: 20
   }];
-
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Burrow',
-    cost: [CardType.COLORLESS],
+    cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, prevent all damage done to Gabite by ' +
-      'attacks during your opponent\'s next turn.'
+    'attacks during your opponent\'s next turn.'
   }, {
     name: 'Distorted Wave',
-    cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+    cost: [C, C, C],
     damage: 60,
     text: 'Before doing damage, remove 2 damage counters from the Defending ' +
-      'Pokemon.'
+    'Pokemon.'
   }];
 
   public set: string = 'OP9';
-
   public name: string = 'Gabite';
-
   public fullName: string = 'Gabite OP9';
 
   public readonly CLEAR_BURROW_MARKER = 'CLEAR_DEFENSE_CURL_MARKER';
-
   public readonly BURROW_MARKER = 'DEFENSE_CURL_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -58,9 +47,7 @@ export class Gabite extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      return store.prompt(state, new CoinFlipPrompt(
-        player.id, GameMessage.COIN_FLIP
-      ), flipResult => {
+      return COIN_FLIP_PROMPT(store, state, player, flipResult => {
         if (flipResult) {
           player.active.marker.addMarker(this.BURROW_MARKER, this);
           opponent.marker.addMarker(this.CLEAR_BURROW_MARKER, this);

@@ -11,29 +11,27 @@ import { COIN_FLIP_PROMPT, ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_ATT
 export class Beautifly extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Silcoon';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 130;
   public weakness = [{ type: R }];
   public resistance = [];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Stun Spore',
-      cost: [G],
-      damage: 40,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Energy Straw',
-      cost: [G],
-      damage: 80,
-      damageCalculation: 'x',
-      text: 'Your opponent reveals their hand, and this attack does 80 damage for each Energy card you find there.'
-    }
-  ];
+  public attacks = [{
+    name: 'Stun Spore',
+    cost: [G],
+    damage: 40,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Energy Straw',
+    cost: [G],
+    damage: 80,
+    damageCalculation: 'x',
+    text: 'Your opponent reveals their hand, and this attack does 80 damage for each Energy card you find there.'
+  }];
 
   public regulationMark = 'I';
+
   public set: string = 'ASC';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '13';

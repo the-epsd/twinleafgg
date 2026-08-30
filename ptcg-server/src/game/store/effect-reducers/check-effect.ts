@@ -2,8 +2,9 @@ import { GameError } from '../../game-error';
 import { GameLog, GameMessage } from '../../game-message';
 import { PlayerType, SlotType } from '../actions/play-card-action';
 import { EnergyCard } from '../card/energy-card';
+import { CardType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
-import { CheckHpEffect, CheckProvidedEnergyEffect, CheckTableStateEffect } from '../effects/check-effects';
+import { CheckHpEffect, CheckAttackCostEffect, CheckProvidedEnergyEffect, CheckTableStateEffect, CheckRetreatCostEffect, CheckPokemonTypeEffect } from '../effects/check-effects';
 import { Effect } from '../effects/effect';
 import { KnockOutEffect, MovedToActiveEffect } from '../effects/game-effects';
 import { TAKE_SPECIFIC_PRIZES, MOVE_CARDS } from '../prefabs/prefabs';
@@ -15,6 +16,7 @@ import { setupGame } from '../reducers/setup-reducer';
 import { CardList } from '../state/card-list';
 import { Player } from '../state/player';
 import { PokemonCardList } from '../state/pokemon-card-list';
+import { StateUtils } from '../state-utils';
 import { GamePhase, GameWinner, State } from '../state/state';
 import { StoreLike } from '../store-like';
 
@@ -546,6 +548,39 @@ export function checkState(store: StoreLike, state: State, onComplete?: () => vo
 }
 
 export function checkStateReducer(store: StoreLike, state: State, effect: Effect): State {
+
+  if (effect instanceof CheckAttackCostEffect) {
+    const active = effect.player.active;
+    const sourceCard = active.attackCostIncreaseWhileActiveSourceCard;
+    const sourceOwner = StateUtils.getOpponent(state, effect.player);
+
+    if (sourceCard && sourceOwner.active.getPokemonCard() === sourceCard) {
+      const attackCostIncrease = active.attackCostIncreaseWhileActive;
+      for (let i = 0; i < attackCostIncrease; i++) {
+        effect.cost.push(CardType.COLORLESS);
+      }
+    } else {
+      active.attackCostIncreaseWhileActive = 0;
+      active.attackCostIncreaseWhileActiveSourceCard = undefined;
+    }
+
+    const ignoreTypes = effect.player.ignoreAttackCostCardTypes;
+    if (ignoreTypes !== null && effect.player.ignoreAttackCostTurnsRemaining > 0) {
+      const checkType = new CheckPokemonTypeEffect(active);
+      store.reduceEffect(state, checkType);
+      if (ignoreTypes.some(t => checkType.cardTypes.includes(t))) {
+        effect.cost = [];
+      }
+    }
+    return state;
+  }
+
+  if (effect instanceof CheckRetreatCostEffect) {
+    if (effect.player.active.zeroRetreatCostNextTurn) {
+      effect.cost = [];
+    }
+    return state;
+  }
 
   if (effect instanceof CheckProvidedEnergyEffect) {
     // Check regular energy cards in main cards array

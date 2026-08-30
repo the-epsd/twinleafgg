@@ -1,4 +1,14 @@
-import { PokemonCard, Stage, StoreLike, State, StateUtils, GameMessage, DamageMap, PlayerType, PutDamagePrompt, SlotType, CardTag } from '../../game';
+import { CardType, PokemonCard,
+  Stage,
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  DamageMap,
+  PlayerType,
+  PutDamagePrompt,
+  SlotType,
+  CardTag, } from '../../game';
 import { PowerType } from '../../game';
 import { RetreatEffect } from '../../game/store/effects/game-effects';
 import { Attack } from '../../game/store/card/pokemon-types';
@@ -8,27 +18,28 @@ import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-pro
 import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class DarkIvysaur extends PokemonCard {
-
   public stage = Stage.STAGE_1;
   public evolvesFrom = 'Bulbasaur';
-  public tags = [CardTag.DARK];
-  public cardType = G;
+  protected _tags = [CardTag.DARK];
+  public cardType: CardType[] = [G];
   public hp = 50;
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Vine Pull',
-    powerType: PowerType.POKEBODY,
-    text: 'Once during your turn when Dark Ivysaur retreats, choose 1 of your opponent\'s Benched Pokémon and switch it with his or her Active Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Vine Pull',
+      powerType: PowerType.POKEBODY,
+      text: "Once during your turn when Dark Ivysaur retreats, choose 1 of your opponent's Benched Pokémon and switch it with his or her Active Pokémon.",
+    },
+  ];
 
   public attacks: Attack[] = [
     {
       name: 'Fury Strikes',
       cost: [G, G],
       damage: 0,
-      text: 'Your opponent puts 3 markers onto his or her Pokémon (divided as he or she chooses). (More than 1 marker can be put on the same Pokémon.) Then, this attack does 10 damage to each Pokémon for each marker on it. Don\'t apply Weakness and Resistance. Remove the markers at the end of the turn.'
+      text: "Your opponent puts 3 markers onto his or her Pokémon (divided as he or she chooses). (More than 1 marker can be put on the same Pokémon.) Then, this attack does 10 damage to each Pokémon for each marker on it. Don't apply Weakness and Resistance. Remove the markers at the end of the turn.",
     },
   ];
 
@@ -39,29 +50,35 @@ export class DarkIvysaur extends PokemonCard {
   public fullName = 'Dark Ivysaur BP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof RetreatEffect && effect.player.active.cards.includes(this) && !IS_POKEBODY_BLOCKED(store, state, effect.player, this)) {
+    if (
+      effect instanceof RetreatEffect &&
+      effect.player.active.cards.includes(this) &&
+      !IS_POKEBODY_BLOCKED(store, state, effect.player, this)
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const hasBench = opponent.bench.some(b => b.cards.length > 0);
+      const hasBench = opponent.bench.some((b) => b.cards.length > 0);
 
       if (!hasBench) {
         return state;
       }
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-        PlayerType.TOP_PLAYER,
-        [SlotType.BENCH],
-        { allowCancel: false }
-      ), result => {
-        const cardList = result[0];
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+          PlayerType.TOP_PLAYER,
+          [SlotType.BENCH],
+          { allowCancel: false },
+        ),
+        (result) => {
+          const cardList = result[0];
 
-        if (cardList) {
-          opponent.switchPokemon(cardList);
-        }
-      }
+          if (cardList) {
+            opponent.switchPokemon(cardList);
+          }
+        },
       );
     }
 
@@ -76,27 +93,30 @@ export class DarkIvysaur extends PokemonCard {
 
       const damage = 30;
 
-      return store.prompt(state, new PutDamagePrompt(
-        effect.opponent.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        damage,
-        maxAllowedDamage,
-        { allowCancel: false, damageMultiple: 10 }
-      ), targets => {
-        const results = targets || [];
-        for (const result of results) {
-          const target = StateUtils.getTarget(state, player, result.target);
-          const putDamageEffect = new PutDamageEffect(effect, result.damage);
-          putDamageEffect.target = target;
-          effect.ignoreResistance = true;
-          effect.ignoreWeakness = true;
-          store.reduceEffect(state, putDamageEffect);
-        }
-      });
+      return store.prompt(
+        state,
+        new PutDamagePrompt(
+          effect.opponent.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          damage,
+          maxAllowedDamage,
+          { allowCancel: false, damageMultiple: 10 },
+        ),
+        (targets) => {
+          const results = targets || [];
+          for (const result of results) {
+            const target = StateUtils.getTarget(state, player, result.target);
+            const putDamageEffect = new PutDamageEffect(effect, result.damage);
+            putDamageEffect.target = target;
+            effect.ignoreResistance = true;
+            effect.ignoreWeakness = true;
+            store.reduceEffect(state, putDamageEffect);
+          }
+        },
+      );
     }
     return state;
   }
-
 }

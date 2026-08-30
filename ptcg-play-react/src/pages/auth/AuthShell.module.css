@@ -2,15 +2,13 @@
   --auth-font-ui: 'Urbanist', system-ui, sans-serif;
   --auth-font-display: 'Orbitron', system-ui, sans-serif;
   --auth-cyan: #3ec7c9;
-  --auth-green: #459058;
+  --auth-green: #548c5c;
   --auth-gold: #fbbf24;
   --auth-text-muted: #a0a1a5;
   --auth-halftone:
     radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.04) 1.2px, transparent 1.2px),
     radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.03) 1.2px, transparent 1.2px);
   --auth-sunburst: radial-gradient(ellipse 80% 70% at 50% 45%, #1a3a5c 0%, #0c1a2e 42%, #06101f 100%);
-  --auth-play: linear-gradient(180deg, #9ae06a 0%, #6fc243 35%, #459058 78%, #2f6b3e 100%);
-  --auth-play-glow: 0 0 28px rgba(111, 194, 67, 0.45), 0 8px 24px rgba(0, 0, 0, 0.4);
 
   position: relative;
   min-height: 100dvh;
@@ -58,7 +56,9 @@
   background-position:
     0 0,
     5px 5px;
-  opacity: 0.5;
+  opacity: 0.7;
+  filter: blur(1.5px);
+  transform: scale(1.03);
   pointer-events: none;
   z-index: 0;
 }
@@ -124,14 +124,12 @@
   width: 220%;
   aspect-ratio: 1;
   translate: -50% -50%;
-  background: repeating-conic-gradient(
-    from 0deg at 50% 50%,
-    rgba(100, 180, 255, 0.07) 0deg 8deg,
-    transparent 8deg 16deg
-  );
+  background: repeating-conic-gradient(from 0deg at 50% 50%,
+      rgba(100, 180, 255, 0.07) 0deg 8deg,
+      transparent 8deg 16deg);
   border-radius: 50%;
-  opacity: 0.7;
-  animation: sunSpin 80s linear infinite;
+  opacity: 0.35;
+  animation: sunSpin 200s linear infinite;
   pointer-events: none;
 }
 
@@ -271,53 +269,21 @@
   font-size: 0.85rem;
 }
 
-.submit {
-  margin-top: 6px;
-  width: 100%;
-  padding: 14px 20px;
-  border: none;
-  border-radius: 0;
-  clip-path: polygon(0 0, 100% 0, 100% 70%, 94% 100%, 0 100%);
-  font-family: var(--auth-font-display);
-  font-weight: 800;
-  font-size: 1rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #0f1a0c;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
-  background: var(--auth-play);
-  box-shadow: var(--auth-play-glow);
-  transition:
-    transform 0.15s ease,
-    filter 0.15s ease,
-    box-shadow 0.15s ease;
-}
-
-.submit:hover:not(:disabled) {
-  filter: brightness(1.08);
-  transform: translateY(-2px);
-  box-shadow:
-    0 0 36px rgba(111, 194, 67, 0.55),
-    0 10px 28px rgba(0, 0, 0, 0.4);
-}
-
-.submit:active:not(:disabled) {
-  transform: translateY(0);
-}
-
-.submitSecondary {
-  background: linear-gradient(180deg, #ffe082 0%, #fbbf24 40%, #d4a017 100%);
-  color: #1a1203;
-  box-shadow:
-    0 0 24px rgba(251, 191, 36, 0.4),
-    0 8px 20px rgba(0, 0, 0, 0.35);
-}
-
 .footer {
   margin: 4px 0 0;
   text-align: center;
   font-size: 0.85rem;
   color: var(--auth-text-muted);
+}
+
+.loginFooter {
+  /* Center the Sign In button between password field and the footer link. */
+  margin-top: 4px;
+}
+
+.signInButton {
+  /* Push the button down a bit relative to the password field. */
+  margin-top: 6px;
 }
 
 .footer a {
@@ -333,19 +299,58 @@
 .langRow {
   display: flex;
   justify-content: center;
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
-.langSelect {
-  appearance: none;
-  background: rgba(4, 10, 20, 0.7)
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%23a0a1a5'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E")
-    no-repeat right 10px center;
-  border: 1px solid rgba(62, 199, 201, 0.25);
-  border-radius: 999px;
-  padding: 6px 28px 6px 12px;
-  font-size: 0.75rem;
-  color: #c8d0dc;
+.langSelector {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  width: fit-content;
+}
+
+.langLabel {
+  padding-left: 2px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--auth-text-muted);
+}
+
+.langTrigger {
+  width: fit-content;
+  min-width: 132px !important;
+  justify-content: center !important;
+  padding: 7px 12px !important;
+  border-radius: 8px;
+  border-color: rgba(62, 199, 201, 0.22);
+  background: rgba(10, 20, 36, 0.82);
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.langTrigger:hover,
+.langTrigger[data-open='true'] {
+  border-color: rgba(62, 199, 201, 0.42);
+  background: rgba(12, 26, 46, 0.9);
+}
+
+.langTriggerValue {
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-align: center;
+}
+
+.langPanel {
+  min-width: 132px !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%);
 }
 
 @keyframes authRise {
@@ -353,6 +358,7 @@
     opacity: 0;
     transform: translateY(16px) scale(0.98);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);

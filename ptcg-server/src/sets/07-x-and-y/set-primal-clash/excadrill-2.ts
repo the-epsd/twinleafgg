@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../../game/store/prefabs/prefa
 export class Excadrill2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Drilbur';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 110;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

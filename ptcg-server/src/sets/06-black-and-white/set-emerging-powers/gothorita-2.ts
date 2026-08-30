@@ -10,25 +10,22 @@ import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 export class Gothorita2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Gothita';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Deleting Glare',
-      cost: [P],
-      damage: 0,
-      text: 'Flip a coin. If heads, discard an Energy attached to 1 of your opponent\'s Pokémon.'
-    },
-    {
-      name: 'Super Psy Bolt',
-      cost: [P, C, C],
-      damage: 50,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Deleting Glare',
+    cost: [P],
+    damage: 0,
+    text: 'Flip a coin. If heads, discard an Energy attached to 1 of your opponent\'s Pokémon.'
+  }, {
+    name: 'Super Psy Bolt',
+    cost: [P, C, C],
+    damage: 50,
+    text: ''
+  }];
 
   public set: string = 'EPO';
   public cardImage: string = 'assets/cardback.png';

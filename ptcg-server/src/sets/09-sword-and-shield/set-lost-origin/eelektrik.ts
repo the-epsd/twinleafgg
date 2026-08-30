@@ -12,7 +12,7 @@ import { ADD_PARALYZED_TO_PLAYER_ACTIVE, COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED } 
 export class Eelektrik extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Tynamo';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public retreat = [C, C];
@@ -23,16 +23,15 @@ export class Eelektrik extends PokemonCard {
     text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
   }];
 
-  public attacks = [
-    {
-      name: 'Static Shock',
-      cost: [L],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Static Shock',
+    cost: [L],
+    damage: 30,
+    text: ''
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'LOR';
   public setNumber: string = '60';
   public cardImage: string = 'assets/cardback.png';

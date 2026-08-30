@@ -11,7 +11,7 @@ import { PutDamageEffect, DealDamageEffect } from '../../../game/store/effects/a
 
 export class Pincurchin extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public retreat = [C];

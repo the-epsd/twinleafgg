@@ -10,6 +10,7 @@ import { GameMessage } from '../../game';
 
 export class ChaosGym extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
+
   public set: string = 'G2';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '102';

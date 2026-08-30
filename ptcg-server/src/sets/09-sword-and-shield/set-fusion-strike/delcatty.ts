@@ -11,28 +11,26 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, SHOW_CARDS_TO_PLAYER } fro
 export class Delcatty extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Skitty';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Willful Busybody',
-      cost: [C],
-      damage: 0,
-      text: 'Your opponent reveals their hand. Choose a card you find there and put it on the bottom of their deck.'
-    },
-    {
-      name: 'Double Slap',
-      cost: [C, C],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 50 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Willful Busybody',
+    cost: [C],
+    damage: 0,
+    text: 'Your opponent reveals their hand. Choose a card you find there and put it on the bottom of their deck.'
+  }, {
+    name: 'Double Slap',
+    cost: [C, C],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 50 damage for each heads.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'FST';
   public setNumber: string = '211';
   public cardImage: string = 'assets/cardback.png';

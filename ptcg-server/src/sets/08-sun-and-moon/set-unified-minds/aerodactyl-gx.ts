@@ -6,38 +6,47 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  CheckAttackCostEffect,
+  CheckProvidedEnergyEffect,
+} from '../../../game/store/effects/check-effects';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  BLOCK_IF_GX_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class AerodactylGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Unidentified Fossil';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 210;
   public weakness = [{ type: G }];
   public retreat = [];
 
-  public powers = [{
-    name: 'Primal Winds',
-    powerType: PowerType.ABILITY,
-    text: 'As long as this Pokémon is your Active Pokémon, your opponent\'s Basic Pokémon\'s attacks cost Colorless more.'
-  }];
+  public powers = [
+    {
+      name: 'Primal Winds',
+      powerType: PowerType.ABILITY,
+      text: "As long as this Pokémon is your Active Pokémon, your opponent's Basic Pokémon's attacks cost Colorless more.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Boulder Crush',
       cost: [F, C, C],
       damage: 120,
-      text: ''
+      text: '',
     },
     {
       name: 'Wild Dive-GX',
       cost: [F],
       damage: 50,
       damageCalculation: 'x',
-      text: 'This attack does 50 damage times the amount of Energy attached to your opponent\'s Active Pokémon. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "This attack does 50 damage times the amount of Energy attached to your opponent's Active Pokémon. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'UNM';
@@ -81,7 +90,7 @@ export class AerodactylGx extends PokemonCard {
       const checkEnergy = new CheckProvidedEnergyEffect(opponent, opponent.active);
       store.reduceEffect(state, checkEnergy);
       let energyCount = 0;
-      checkEnergy.energyMap.forEach(em => {
+      checkEnergy.energyMap.forEach((em) => {
         energyCount += em.provides.length;
       });
       effect.damage = 50 * energyCount;

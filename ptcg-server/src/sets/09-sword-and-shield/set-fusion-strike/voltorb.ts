@@ -9,9 +9,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Voltorb extends PokemonCard {
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -21,11 +21,12 @@ export class Voltorb extends PokemonCard {
       name: 'Single Shot Blast',
       cost: [C],
       damage: 30,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
+      text: 'Flip a coin. If tails, this attack does nothing.',
+    },
   ];
 
   public regulationMark: string = 'E';
+
   public set: string = 'FST';
   public setNumber: string = '87';
   public cardImage: string = 'assets/cardback.png';
@@ -37,7 +38,7 @@ export class Voltorb extends PokemonCard {
     // Ref: set-plasma-storm/pansear.ts (Surprise Attack)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      COIN_FLIP_PROMPT(store, state, player, result => {
+      COIN_FLIP_PROMPT(store, state, player, (result) => {
         if (!result) {
           effect.damage = 0;
         }

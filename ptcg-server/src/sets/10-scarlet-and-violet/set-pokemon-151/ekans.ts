@@ -1,22 +1,22 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, CoinFlipPrompt, Card, ChooseCardsPrompt, GameMessage } from '../../../game';
+import { StoreLike, State, StateUtils, Card, ChooseCardsPrompt, GameMessage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Ekans extends PokemonCard {
   public regulationMark = 'G';
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [D];
   public hp: number = 70;
-  public weakness = [{ type: CardType.FIGHTING }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public retreat = [C, C];
 
   public attacks = [{
     name: 'Acid Spray',
-    cost: [CardType.DARK, CardType.DARK],
+    cost: [D, D],
     damage: 30,
     text: ' Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
   }];
@@ -38,9 +38,7 @@ export class Ekans extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, new CoinFlipPrompt(
-        player.id, GameMessage.COIN_FLIP
-      ), result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
           let cards: Card[] = [];
           return store.prompt(state, new ChooseCardsPrompt(

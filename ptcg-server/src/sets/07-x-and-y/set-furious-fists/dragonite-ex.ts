@@ -3,8 +3,27 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameMessage, ConfirmPrompt, MoveEnergyPrompt, PlayerType, SlotType, StateUtils, PokemonCardList, EnergyCard, CardTarget } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+} from '../../../game/store/card/card-types';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  GameMessage,
+  ConfirmPrompt,
+  MoveEnergyPrompt,
+  PlayerType,
+  SlotType,
+  StateUtils,
+  PokemonCardList,
+  EnergyCard,
+  CardTarget,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
@@ -12,19 +31,21 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class DragoniteEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 180;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];
 
-  public powers = [{
-    name: 'Bust In',
-    powerType: PowerType.ABILITY,
-    exemptFromInitialize: true,
-    text: 'When you play this Pokémon from your hand onto your Bench, you may move any number of basic Energy attached to your Pokémon to this Pokémon. If you do, switch this Pokémon with your Active Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Bust In',
+      powerType: PowerType.ABILITY,
+      exemptFromInitialize: true,
+      text: 'When you play this Pokémon from your hand onto your Bench, you may move any number of basic Energy attached to your Pokémon to this Pokémon. If you do, switch this Pokémon with your Active Pokémon.',
+    },
+  ];
 
   public attacks = [
     {
@@ -32,8 +53,8 @@ export class DragoniteEx extends PokemonCard {
       cost: [G, G, L],
       damage: 80,
       damageCalculation: '+',
-      text: 'You may discard an Energy attached to this Pokémon. If you do, this attack does 40 more damage.'
-    }
+      text: 'You may discard an Energy attached to this Pokémon. If you do, this attack does 40 more damage.',
+    },
   ];
 
   public set: string = 'FFI';
@@ -48,75 +69,88 @@ export class DragoniteEx extends PokemonCard {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
 
-      state = store.prompt(state, new ConfirmPrompt(
-        player.id,
-        GameMessage.WANT_TO_USE_ABILITY,
-      ), wantToUse => {
-        if (wantToUse) {
-          // Check if ability is blocked
-          try {
-            const stub = new PowerEffect(player, {
-              name: 'test',
-              powerType: PowerType.ABILITY,
-              text: ''
-            }, this);
-            store.reduceEffect(state, stub);
-          } catch {
-            return state;
-          }
-
-          // Find this Pokemon's card list on bench
-          const cardList = StateUtils.findCardList(state, this);
-          const benchIndex = player.bench.indexOf(cardList as PokemonCardList);
-
-          if (benchIndex === -1) {
-            return state;
-          }
-
-          // Check if there is any basic energy on other Pokemon
-          let hasEnergyOnOtherPokemon = false;
-          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (pokemonCardList) => {
-            if (pokemonCardList === player.bench[benchIndex]) {
-              return;
+      state = store.prompt(
+        state,
+        new ConfirmPrompt(player.id, GameMessage.WANT_TO_USE_ABILITY),
+        (wantToUse) => {
+          if (wantToUse) {
+            // Check if ability is blocked
+            try {
+              const stub = new PowerEffect(
+                player,
+                {
+                  name: 'test',
+                  powerType: PowerType.ABILITY,
+                  text: '',
+                },
+                this,
+              );
+              store.reduceEffect(state, stub);
+            } catch {
+              return state;
             }
-            if (pokemonCardList.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC)) {
-              hasEnergyOnOtherPokemon = true;
+
+            // Find this Pokemon's card list on bench
+            const cardList = StateUtils.findCardList(state, this);
+            const benchIndex = player.bench.indexOf(cardList as PokemonCardList);
+
+            if (benchIndex === -1) {
+              return state;
             }
-          });
 
-          if (hasEnergyOnOtherPokemon) {
-            // Move any number of basic Energy from other Pokemon to this Pokemon
-            const blockedTo: CardTarget[] = [];
-            const blockedFrom: CardTarget[] = [];
-
-            player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (pokemonCardList, card, target) => {
+            // Check if there is any basic energy on other Pokemon
+            let hasEnergyOnOtherPokemon = false;
+            player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (pokemonCardList) => {
               if (pokemonCardList === player.bench[benchIndex]) {
-                blockedFrom.push(target);
                 return;
               }
-              blockedTo.push(target);
-            });
-
-            store.prompt(state, new MoveEnergyPrompt(
-              player.id,
-              GameMessage.MOVE_ENERGY_CARDS,
-              PlayerType.BOTTOM_PLAYER,
-              [SlotType.ACTIVE, SlotType.BENCH],
-              { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-              { allowCancel: true, blockedFrom, blockedTo }
-            ), transfers => {
-              if (transfers && transfers.length > 0) {
-                for (const transfer of transfers) {
-                  const source = StateUtils.getTarget(state, player, transfer.from);
-                  source.moveCardTo(transfer.card, player.bench[benchIndex]);
-                }
-                // Switch this Pokemon with Active
-                player.switchPokemon(player.bench[benchIndex]);
+              if (
+                pokemonCardList.cards.some(
+                  (c) => c instanceof EnergyCard && c.energyType === EnergyType.BASIC,
+                )
+              ) {
+                hasEnergyOnOtherPokemon = true;
               }
             });
+
+            if (hasEnergyOnOtherPokemon) {
+              // Move any number of basic Energy from other Pokemon to this Pokemon
+              const blockedTo: CardTarget[] = [];
+              const blockedFrom: CardTarget[] = [];
+
+              player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (pokemonCardList, card, target) => {
+                if (pokemonCardList === player.bench[benchIndex]) {
+                  blockedFrom.push(target);
+                  return;
+                }
+                blockedTo.push(target);
+              });
+
+              store.prompt(
+                state,
+                new MoveEnergyPrompt(
+                  player.id,
+                  GameMessage.MOVE_ENERGY_CARDS,
+                  PlayerType.BOTTOM_PLAYER,
+                  [SlotType.ACTIVE, SlotType.BENCH],
+                  { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+                  { allowCancel: true, blockedFrom, blockedTo },
+                ),
+                (transfers) => {
+                  if (transfers && transfers.length > 0) {
+                    for (const transfer of transfers) {
+                      const source = StateUtils.getTarget(state, player, transfer.from);
+                      source.moveCardTo(transfer.card, player.bench[benchIndex]);
+                    }
+                    // Switch this Pokemon with Active
+                    player.switchPokemon(player.bench[benchIndex]);
+                  }
+                },
+              );
+            }
           }
-        }
-      });
+        },
+      );
     }
 
     // Attack 1: Jet Sonic
@@ -124,17 +158,18 @@ export class DragoniteEx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const hasEnergy = player.active.cards.some(c => c instanceof EnergyCard);
+      const hasEnergy = player.active.cards.some((c) => c instanceof EnergyCard);
       if (hasEnergy) {
-        state = store.prompt(state, new ConfirmPrompt(
-          player.id,
-          GameMessage.WANT_TO_USE_ABILITY,
-        ), wantToDiscard => {
-          if (wantToDiscard) {
-            DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1);
-            effect.damage += 40;
-          }
-        });
+        state = store.prompt(
+          state,
+          new ConfirmPrompt(player.id, GameMessage.WANT_TO_USE_ABILITY),
+          (wantToDiscard) => {
+            if (wantToDiscard) {
+              DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1);
+              effect.damage += 40;
+            }
+          },
+        );
       }
     }
 

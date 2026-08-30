@@ -10,25 +10,22 @@ import { State, StoreLike } from '../../../game';
 export class Spewpa extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Scatterbug';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Bug Bite',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Stun Spore',
-      cost: [G, C, C],
-      damage: 40,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Bug Bite',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Stun Spore',
+    cost: [G, C, C],
+    damage: 40,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'XY';
   public setNumber: string = '16';

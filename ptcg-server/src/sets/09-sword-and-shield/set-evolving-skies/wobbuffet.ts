@@ -4,15 +4,24 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, StoreLike, State, StateUtils } from '../../../game';
+import {
+  ChoosePokemonPrompt,
+  GameError,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Wobbuffet extends PokemonCard {
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 120;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
@@ -23,14 +32,14 @@ export class Wobbuffet extends PokemonCard {
       name: 'Mirror Pain',
       cost: [C, C],
       damage: 0,
-      text: 'Put damage counters on your opponent\'s Active Pokémon equal to the number of damage counters on 1 of your Benched Pokémon.'
+      text: "Put damage counters on your opponent's Active Pokémon equal to the number of damage counters on 1 of your Benched Pokémon.",
     },
     {
       name: 'Headbutt Bounce',
       cost: [P, C, C],
       damage: 70,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -51,28 +60,32 @@ export class Wobbuffet extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Check if player has any benched Pokemon
-      const hasBenched = player.bench.some(b => b.cards.length > 0);
+      const hasBenched = player.bench.some((b) => b.cards.length > 0);
       if (!hasBenched) {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);
       }
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        if (!selected || selected.length === 0) return;
-        const benchedCardList = selected[0];
-        // damage on cardList is in units (10 per counter)
-        const damageCounters = Math.floor(benchedCardList.damage / 10);
-        if (damageCounters > 0) {
-          const damageEffect = new PutCountersEffect(effect, damageCounters * 10);
-          damageEffect.target = opponent.active;
-          store.reduceEffect(state, damageEffect);
-        }
-      });
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          if (!selected || selected.length === 0) return;
+          const benchedCardList = selected[0];
+          // damage on cardList is in units (10 per counter)
+          const damageCounters = Math.floor(benchedCardList.damage / 10);
+          if (damageCounters > 0) {
+            const damageEffect = new PutCountersEffect(effect, damageCounters * 10);
+            damageEffect.target = opponent.active;
+            store.reduceEffect(state, damageEffect);
+          }
+        },
+      );
     }
 
     return state;

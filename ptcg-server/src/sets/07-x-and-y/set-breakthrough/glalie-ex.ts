@@ -2,34 +2,36 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_PARALYZED_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  COIN_FLIP_PROMPT,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { State, StateUtils, StoreLike } from '../../../game';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 export class GlalieEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 170;
   public weakness = [{ type: M }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Ice Breath',
-      cost: [W],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Instant Freeze',
-      cost: [W, C, C],
-      damage: 50,
-      damageCalculation: '+',
-      text: 'If you have the same number of cards in your hand as your opponent, this attack does 100 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Ice Breath',
+    cost: [W],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Instant Freeze',
+    cost: [W, C, C],
+    damage: 50,
+    damageCalculation: '+',
+    text: 'If you have the same number of cards in your hand as your opponent, this attack does 100 more damage.'
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '34';
@@ -41,7 +43,7 @@ export class GlalieEx extends PokemonCard {
     // Attack 1: Ice Breath
     // Ref: set-primal-clash/vulpix.ts (coin flip paralysis pattern)
     if (AFTER_ATTACK(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (result) {
           ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
         }

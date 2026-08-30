@@ -6,13 +6,16 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  SEARCH_DECK_FOR_CARDS_TO_HAND,
+} from '../../../game/store/prefabs/prefabs';
 
 export class TogekissVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Togekiss V';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 310;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];
@@ -23,8 +26,8 @@ export class TogekissVmax extends PokemonCard {
       name: 'Max Glide',
       cost: [C, C],
       damage: 120,
-      text: 'You may search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck.'
-    }
+      text: 'You may search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -39,7 +42,14 @@ export class TogekissVmax extends PokemonCard {
     // Ref: set-darkness-ablaze/thievul.ts (Nasty Plot - SEARCH_DECK_FOR_CARDS_TO_HAND any card, max 2)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this, {}, { min: 0, max: 2, allowCancel: true });
+      SEARCH_DECK_FOR_CARDS_TO_HAND(
+        store,
+        state,
+        player,
+        this,
+        {},
+        { min: 0, max: 2, allowCancel: true },
+      );
     }
 
     return state;

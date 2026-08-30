@@ -6,12 +6,16 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, CONFIRMATION_PROMPT, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  CONFIRMATION_PROMPT,
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+} from '../../../game/store/prefabs/prefabs';
 
 export class HeracrossEx2 extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 170;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
@@ -21,15 +25,15 @@ export class HeracrossEx2 extends PokemonCard {
       name: 'Guard Press',
       cost: [G, C],
       damage: 40,
-      text: 'During your opponent\'s next turn, any damage done to this Pok\u00e9mon by attacks is reduced by 20 (after applying Weakness and Resistance).'
+      text: "During your opponent's next turn, any damage done to this Pok\u00e9mon by attacks is reduced by 20 (after applying Weakness and Resistance).",
     },
     {
       name: 'Giga Power',
       cost: [G, G, C],
       damage: 80,
       damageCalculation: '+',
-      text: 'You may do 40 more damage. If you do, this Pok\u00e9mon does 20 damage to itself.'
-    }
+      text: 'You may do 40 more damage. If you do, this Pok\u00e9mon does 20 damage to itself.',
+    },
   ];
 
   public set: string = 'FFI';
@@ -48,7 +52,7 @@ export class HeracrossEx2 extends PokemonCard {
     // Attack 2: Giga Power
     // Ref: set-x-and-y/gogoat.ts (Charge Dash)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      CONFIRMATION_PROMPT(store, state, effect.player, result => {
+      CONFIRMATION_PROMPT(store, state, effect.player, (result) => {
         if (result) {
           effect.damage += 40;
           THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, 20);

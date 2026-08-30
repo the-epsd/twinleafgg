@@ -2,7 +2,14 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, IS_ABILITY_BLOCKED, REMOVE_MARKER_AT_END_OF_TURN, USE_ABILITY_ONCE_PER_TURN, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_CONFUSION_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  IS_ABILITY_BLOCKED,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  USE_ABILITY_ONCE_PER_TURN,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 import { PlayerType, SlotType, CardTarget } from '../../../game/store/actions/play-card-action';
 import { MoveDamagePrompt, DamageMap } from '../../../game/store/prompts/move-damage-prompt';
@@ -15,29 +22,31 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { BoardEffect, PowerType, State, StoreLike } from '../../../game';
 export class HattereneVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Hatterene V';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 320;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Witch\'s Domain',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may move up to 2 damage counters from your Pokémon to your opponent\'s Active Pokémon.'
-  }];
+  public powers = [
+    {
+      name: "Witch's Domain",
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: "Once during your turn, you may move up to 2 damage counters from your Pokémon to your opponent's Active Pokémon.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'G-Max Smite',
       cost: [P, C, C],
       damage: 150,
-      text: 'Your opponent\'s Active Pokémon is now Confused.'
-    }
+      text: "Your opponent's Active Pokémon is now Confused.",
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -63,7 +72,7 @@ export class HattereneVmax extends PokemonCard {
       // Check that player has at least one Pokemon with damage
       const damagedOwnPokemon = [
         ...(player.active.damage > 0 ? [player.active] : []),
-        ...player.bench.filter(b => b.cards.length > 0 && b.damage > 0)
+        ...player.bench.filter((b) => b.cards.length > 0 && b.damage > 0),
       ];
 
       if (damagedOwnPokemon.length === 0) {
@@ -95,33 +104,37 @@ export class HattereneVmax extends PokemonCard {
         }
       });
 
-      return store.prompt(state, new MoveDamagePrompt(
-        player.id,
-        GameMessage.MOVE_DAMAGE,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        maxAllowedDamage,
-        { min: 1, max: 2, allowCancel: true, blockedTo }
-      ), transfers => {
-        if (!transfers || transfers.length === 0) {
-          return;
-        }
-
-        for (const transfer of transfers) {
-          const source = StateUtils.getTarget(state, player, transfer.from);
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          if (source.damage >= 10) {
-            source.damage -= 10;
-            target.damage += 10;
+      return store.prompt(
+        state,
+        new MoveDamagePrompt(
+          player.id,
+          GameMessage.MOVE_DAMAGE,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          maxAllowedDamage,
+          { min: 1, max: 2, allowCancel: true, blockedTo },
+        ),
+        (transfers) => {
+          if (!transfers || transfers.length === 0) {
+            return;
           }
-        }
 
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (cardList.getPokemonCard() === this) {
-            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+          for (const transfer of transfers) {
+            const source = StateUtils.getTarget(state, player, transfer.from);
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            if (source.damage >= 10) {
+              source.damage -= 10;
+              target.damage += 10;
+            }
           }
-        });
-      });
+
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+            if (cardList.getPokemonCard() === this) {
+              cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+            }
+          });
+        },
+      );
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.WITCHS_DOMAIN_MARKER, this);

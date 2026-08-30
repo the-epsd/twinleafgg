@@ -4,7 +4,17 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { CardTarget, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, StoreLike, State, StateUtils } from '../../../game';
+import {
+  CardTarget,
+  ChoosePokemonPrompt,
+  GameError,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
@@ -12,10 +22,10 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class LycanrocVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Lycanroc V';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 320;
   public weakness = [{ type: G }];
   public retreat = [C];
@@ -25,14 +35,14 @@ export class LycanrocVmax extends PokemonCard {
       name: 'Hunting Claw',
       cost: [F],
       damage: 0,
-      text: 'Knock Out 1 of your opponent\'s Pokémon in play that has 60 HP or less remaining.'
+      text: "Knock Out 1 of your opponent's Pokémon in play that has 60 HP or less remaining.",
     },
     {
       name: 'Max Edge',
       cost: [F, F, C],
       damage: 190,
-      text: 'This attack also does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "This attack also does 30 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -74,18 +84,22 @@ export class LycanrocVmax extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);
       }
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false, blocked }
-      ), selected => {
-        if (!selected || selected.length === 0) return;
-        const target = selected[0];
-        const koEffect = new KnockOutEffect(opponent, target);
-        store.reduceEffect(state, koEffect);
-      });
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { min: 1, max: 1, allowCancel: false, blocked },
+        ),
+        (selected) => {
+          if (!selected || selected.length === 0) return;
+          const target = selected[0];
+          const koEffect = new KnockOutEffect(opponent, target);
+          store.reduceEffect(state, koEffect);
+        },
+      );
     }
 
     // Attack 2: Max Edge
@@ -94,7 +108,7 @@ export class LycanrocVmax extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      if (opponent.bench.some(b => b.cards.length > 0)) {
+      if (opponent.bench.some((b) => b.cards.length > 0)) {
         THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON(30, effect, store, state);
       }
     }

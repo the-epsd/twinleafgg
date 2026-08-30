@@ -9,7 +9,7 @@ import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 export class Vanilluxe extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Vanillish';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 150;
   public weakness = [{ type: M }];
   public retreat = [C, C];

@@ -3,17 +3,43 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, EnergyCard, GameMessage, GameError, PokemonCardList, PowerType, StoreLike, State, StateUtils } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+} from '../../../game/store/card/card-types';
+import {
+  Card,
+  ChooseCardsPrompt,
+  EnergyCard,
+  GameMessage,
+  GameError,
+  PokemonCardList,
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, ABILITY_USED, USE_ABILITY_ONCE_PER_TURN, REMOVE_MARKER_AT_END_OF_TURN, BLOCK_IF_GX_ATTACK_USED, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  ABILITY_USED,
+  USE_ABILITY_ONCE_PER_TURN,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  BLOCK_IF_GX_ATTACK_USED,
+  SHUFFLE_DECK,
+} from '../../../game/store/prefabs/prefabs';
 
 export class IncineroarGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Torracat';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 250;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];
@@ -21,27 +47,29 @@ export class IncineroarGx extends PokemonCard {
 
   public readonly SCAR_CHARGE_MARKER = 'INCINEROAR_GX_SCAR_CHARGE_MARKER';
 
-  public powers = [{
-    name: 'Scar Charge',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), you may put 3 damage counters on this Pokémon. If you do, search your deck for up to 3 [D] Energy cards and attach them to this Pokémon. Then, shuffle your deck.'
-  }];
+  public powers = [
+    {
+      name: 'Scar Charge',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn (before your attack), you may put 3 damage counters on this Pokémon. If you do, search your deck for up to 3 [D] Energy cards and attach them to this Pokémon. Then, shuffle your deck.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Crushing Punch',
       cost: [C, C, C],
       damage: 130,
-      text: 'Discard a Special Energy from your opponent\'s Active Pokémon.'
+      text: "Discard a Special Energy from your opponent's Active Pokémon.",
     },
     {
       name: 'Darkest Tornado-GX',
       cost: [C, C, C],
       damage: 10,
       damageCalculation: '+',
-      text: 'This attack does 50 more damage for each damage counter on this Pokémon. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "This attack does 50 more damage for each damage counter on this Pokémon. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'TEU';
@@ -68,24 +96,31 @@ export class IncineroarGx extends PokemonCard {
       cardList.damage += 30;
 
       // Search deck for up to 3 [D] Energy and attach to this Pokemon
-      const hasEnergy = player.deck.cards.some(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.DARK)
+      const hasEnergy = player.deck.cards.some(
+        (c) =>
+          c instanceof EnergyCard &&
+          c.energyType === EnergyType.BASIC &&
+          c.provides.includes(CardType.DARK),
       );
 
       if (hasEnergy) {
-        state = store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_HAND,
-          player.deck,
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Darkness Energy' },
-          { allowCancel: true, min: 0, max: 3 }
-        ), (selected: Card[] | null) => {
-          const cards = selected || [];
-          cards.forEach(c => {
-            player.deck.moveCardTo(c, cardList);
-          });
-          SHUFFLE_DECK(store, state, player);
-        });
+        state = store.prompt(
+          state,
+          new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_CARD_TO_HAND,
+            player.deck,
+            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Darkness Energy' },
+            { allowCancel: true, min: 0, max: 3 },
+          ),
+          (selected: Card[] | null) => {
+            const cards = selected || [];
+            cards.forEach((c) => {
+              player.deck.moveCardTo(c, cardList);
+            });
+            SHUFFLE_DECK(store, state, player);
+          },
+        );
       } else {
         SHUFFLE_DECK(store, state, player);
       }
@@ -99,25 +134,29 @@ export class IncineroarGx extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const hasSpecialEnergy = opponent.active.cards.some(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL
+      const hasSpecialEnergy = opponent.active.cards.some(
+        (c) => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL,
       );
 
       if (hasSpecialEnergy) {
-        store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_DISCARD,
-          opponent.active,
-          { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
-          { min: 1, max: 1, allowCancel: false }
-        ), selected => {
-          const cards: Card[] = selected || [];
-          if (cards.length > 0) {
-            const discardEnergy = new DiscardCardsEffect(effect, cards);
-            discardEnergy.target = opponent.active;
-            store.reduceEffect(state, discardEnergy);
-          }
-        });
+        store.prompt(
+          state,
+          new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_CARD_TO_DISCARD,
+            opponent.active,
+            { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
+            { min: 1, max: 1, allowCancel: false },
+          ),
+          (selected) => {
+            const cards: Card[] = selected || [];
+            if (cards.length > 0) {
+              const discardEnergy = new DiscardCardsEffect(effect, cards);
+              discardEnergy.target = opponent.active;
+              store.reduceEffect(state, discardEnergy);
+            }
+          },
+        );
       }
     }
 

@@ -13,27 +13,24 @@ import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/att
 export class Floette extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Flabébé';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 70;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Aromatherapy',
-      cost: [Y],
-      damage: 0,
-      text: 'Heal 30 damage from each of your Pokémon.'
-    },
-    {
-      name: 'Magical Leaf',
-      cost: [Y, Y],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 more damage and heal 20 damage from this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Aromatherapy',
+    cost: [Y],
+    damage: 0,
+    text: 'Heal 30 damage from each of your Pokémon.'
+  }, {
+    name: 'Magical Leaf',
+    cost: [Y, Y],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 20 more damage and heal 20 damage from this Pokémon.'
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '102';

@@ -1,16 +1,17 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage } from '../../game/store/card/card-types';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { Attack } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import { COIN_FLIP_PROMPT, OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK } from '../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Poliwhirl extends PokemonCard {
   public stage = Stage.STAGE_1;
   public evolvesFrom = 'Poliwag';
   public hp = 60;
-  public cardType = W;
+  public cardType: CardType[] = [W];
   public weakness = [{ type: G }];
   public retreat = [C];
 

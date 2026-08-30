@@ -3,25 +3,18 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { ConfirmPrompt, GameMessage, PokemonCardList, PowerType, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { DrewTopdeckEffect } from '../../../game/store/effects/game-phase-effects';
-import { IS_ABILITY_BLOCKED, NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/attack-effects';
 
 export class Metagross extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom = 'Metang';
-
-  public regulationMark = 'F';
-
-  public cardType: CardType = CardType.METAL;
-
+  public cardType: CardType[] = [M];
   public hp: number = 170;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public resistance = [{ type: CardType.GRASS, value: -30 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public resistance = [{ type: G, value: -30 }];
+  public retreat = [C, C, C];
 
   public powers = [{
     name: 'Emergency Entry',
@@ -30,30 +23,22 @@ export class Metagross extends PokemonCard {
     text: 'Once during your turn, if you drew this Pokémon from your deck at the beginning of your turn and your Bench isn\'t full, before you put it into your hand, you may put it onto your Bench. If you do, draw 3 cards.'
   }];
 
-  public attacks = [
-    {
-      name: 'Meteor Mash',
-      cost: [CardType.METAL, CardType.COLORLESS],
-      damage: 100,
-      text: 'During your next turn, this Pokémon\'s Meteor Mash attack does 100 more damage (before applying Weakness and Resistance).'
-    }
-  ];
+  public attacks = [{
+    name: 'Meteor Mash',
+    cost: [M, C],
+    damage: 100,
+    text: 'During your next turn, this Pokémon\'s Meteor Mash attack does 100 more damage (before applying Weakness and Resistance).'
+  }];
 
+  public regulationMark = 'F';
   public set: string = 'SIT';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '119';
-
   public name: string = 'Metagross';
-
   public fullName: string = 'Metagross SIT';
 
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Emergency Entry
     if (effect instanceof DrewTopdeckEffect && effect.handCard === this) {
       const player = effect.player;
       const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
@@ -66,6 +51,7 @@ export class Metagross extends PokemonCard {
       if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
+
       state = store.prompt(state, new ConfirmPrompt(
         effect.player.id,
         GameMessage.WANT_TO_USE_ABILITY,
@@ -83,15 +69,13 @@ export class Metagross extends PokemonCard {
       });
     }
 
-
-    // Refs: set-boundaries-crossed/meloetta.ts (Echoed Voice), prefabs/prefabs.ts (NEXT_TURN_ATTACK_BONUS)
+    // Meteor Mash
     NEXT_TURN_ATTACK_BONUS(effect, {
       attack: this.attacks[0],
       source: this,
       bonusDamage: 100,
-      bonusMarker: this.ATTACK_USED_MARKER,
-      clearMarker: this.ATTACK_USED_2_MARKER
     });
+
     return state;
   }
 }

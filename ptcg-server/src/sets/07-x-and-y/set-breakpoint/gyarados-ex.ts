@@ -3,35 +3,42 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+} from '../../../game/store/card/card-types';
 import { ChooseCardsPrompt, GameMessage, StoreLike, State } from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, FLIP_UNTIL_TAILS_AND_COUNT_HEADS, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  FLIP_UNTIL_TAILS_AND_COUNT_HEADS,
+  SHUFFLE_DECK,
+} from '../../../game/store/prefabs/prefabs';
 
 export class GyaradosEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 180;
   public weakness = [{ type: L }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Stormy Seas',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin until you get tails. For each heads, search your deck for a [W] Energy card and attach it to this Pokémon. Shuffle your deck afterward.'
-    },
-    {
-      name: 'Splash Burn',
-      cost: [W, W, C, C],
-      damage: 130,
-      text: 'This attack does 10 damage to each of your Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
-  ];
+  public attacks = [{
+    name: 'Stormy Seas',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin until you get tails. For each heads, search your deck for a [W] Energy card and attach it to this Pokémon. Shuffle your deck afterward.'
+  }, {
+    name: 'Splash Burn',
+    cost: [W, W, C, C],
+    damage: 130,
+    text: 'This attack does 10 damage to each of your Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }];
 
   public set: string = 'BKP';
   public setNumber: string = '26';
@@ -45,41 +52,59 @@ export class GyaradosEx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return FLIP_UNTIL_TAILS_AND_COUNT_HEADS(store, state, player, heads => {
+      return FLIP_UNTIL_TAILS_AND_COUNT_HEADS(store, state, player, (heads) => {
         if (heads <= 0 || player.deck.cards.length === 0) {
           return;
         }
 
-        const maxAttach = Math.min(heads, player.deck.cards.filter(c =>
-          c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.WATER)
-        ).length);
+        const maxAttach = Math.min(
+          heads,
+          player.deck.cards.filter(
+            (c) =>
+              c instanceof EnergyCard &&
+              c.energyType === EnergyType.BASIC &&
+              c.provides.includes(CardType.WATER),
+          ).length,
+        );
 
         if (maxAttach <= 0) {
           SHUFFLE_DECK(store, state, player);
           return;
         }
 
-        store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_ATTACH,
-          player.deck,
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-          {
-            min: 0, max: heads, allowCancel: false,
-            blocked: player.deck.cards.reduce<number[]>((blocked, c, i) => {
-              if (!(c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.WATER))) {
-                blocked.push(i);
-              }
-              return blocked;
-            }, [])
-          }
-        ), selected => {
-          const cards = selected || [];
-          cards.forEach(card => {
-            player.deck.moveCardTo(card, player.active);
-          });
-          SHUFFLE_DECK(store, state, player);
-        });
+        store.prompt(
+          state,
+          new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_CARD_TO_ATTACH,
+            player.deck,
+            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+            {
+              min: 0,
+              max: heads,
+              allowCancel: false,
+              blocked: player.deck.cards.reduce<number[]>((blocked, c, i) => {
+                if (
+                  !(
+                    c instanceof EnergyCard &&
+                    c.energyType === EnergyType.BASIC &&
+                    c.provides.includes(CardType.WATER)
+                  )
+                ) {
+                  blocked.push(i);
+                }
+                return blocked;
+              }, []),
+            },
+          ),
+          (selected) => {
+            const cards = selected || [];
+            cards.forEach((card) => {
+              player.deck.moveCardTo(card, player.active);
+            });
+            SHUFFLE_DECK(store, state, player);
+          },
+        );
       });
     }
 
@@ -88,7 +113,7 @@ export class GyaradosEx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      player.bench.forEach(benched => {
+      player.bench.forEach((benched) => {
         if (benched.cards.length > 0) {
           const damage = new PutDamageEffect(effect, 10);
           damage.target = benched;

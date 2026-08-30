@@ -10,21 +10,20 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 
 export class Krabby2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 80;
   public weakness = [{ type: L }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Super Slice',
-      cost: [C, C],
-      damage: 120,
-      text: 'Flip 2 coins. If either of them is tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Super Slice',
+    cost: [C, C],
+    damage: 120,
+    text: 'Flip 2 coins. If either of them is tails, this attack does nothing.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'SSH';
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';

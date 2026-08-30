@@ -9,26 +9,23 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class AlolanGrimer extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Melt',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Nasty Goo',
-      cost: [D, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Melt',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Nasty Goo',
+    cost: [D, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'CEC';
   public setNumber: string = '130';

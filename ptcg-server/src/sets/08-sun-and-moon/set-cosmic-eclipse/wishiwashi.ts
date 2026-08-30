@@ -1,17 +1,17 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PowerType } from '../../../game/store/card/pokemon-types';
-import { StoreLike, State, StateUtils, PlayerType, CoinFlipPrompt, GameMessage, ShuffleDeckPrompt } from '../../../game';
+import { StoreLike, State, StateUtils, PlayerType, ShuffleDeckPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { BeginTurnEffect, EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { IS_ABILITY_BLOCKED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, MOVE_CARDS, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Wishiwashi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [W];
   public hp: number = 180;
-  public weakness = [{ type: CardType.LIGHTNING }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: L }];
+  public retreat = [C, C, C];
 
   public powers = [{
     name: 'Scatter',
@@ -21,7 +21,7 @@ export class Wishiwashi extends PokemonCard {
 
   public attacks = [{
     name: 'Hydro Splash',
-    cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
+    cost: [W, W, C],
     damage: 130,
     text: ''
   }];
@@ -53,9 +53,7 @@ export class Wishiwashi extends PokemonCard {
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
         if (cardList.getPokemonCard() === this) {
           if (cardList.damage > 0) {
-            return store.prompt(state, [
-              new CoinFlipPrompt(opponent.id, GameMessage.COIN_FLIP)
-            ], result => {
+            return COIN_FLIP_PROMPT(store, state, opponent, result => {
               if (result === false) {
                 const pokemons = cardList.getPokemons();
                 const otherCards = cardList.cards.filter(card =>

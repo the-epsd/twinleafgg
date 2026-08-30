@@ -11,27 +11,25 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, GUST_OPPONENT_BENCHED_POKEMON } from
 
 export class Rockruff extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 60;
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Invite Out',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, switch 1 of your opponent\'s Benched Pokémon with their Active Pokémon.'
-    },
-    {
-      name: 'Smash Kick',
-      cost: [F, C],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Invite Out',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, switch 1 of your opponent\'s Benched Pokémon with their Active Pokémon.'
+  }, {
+    name: 'Smash Kick',
+    cost: [F, C],
+    damage: 20,
+    text: ''
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'CRZ';
   public setNumber: string = '73';
   public cardImage: string = 'assets/cardback.png';

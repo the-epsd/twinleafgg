@@ -10,25 +10,22 @@ import { State, StoreLike } from '../../../game';
 export class Gyarados extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Magikarp';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 130;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Bubble Beam',
-      cost: [W, W, W],
-      damage: 50,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Dragon Rage',
-      cost: [W, W, W, W],
-      damage: 180,
-      text: 'Flip 2 coins. If either of them is tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Bubble Beam',
+    cost: [W, W, W],
+    damage: 50,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Dragon Rage',
+    cost: [W, W, W, W],
+    damage: 180,
+    text: 'Flip 2 coins. If either of them is tails, this attack does nothing.'
+  }];
 
   public set: string = 'EVO';
   public setNumber: string = '34';

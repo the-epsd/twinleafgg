@@ -13,27 +13,24 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Cacturne extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Cacnea';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Derail',
-      cost: [D],
-      damage: 30,
-      text: 'Discard a Special Energy attached to your opponent\'s Active Pokémon.'
-    },
-    {
-      name: 'Pin Missile',
-      cost: [C, C, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 40 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Derail',
+    cost: [D],
+    damage: 30,
+    text: 'Discard a Special Energy attached to your opponent\'s Active Pokémon.'
+  }, {
+    name: 'Pin Missile',
+    cost: [C, C, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 40 damage times the number of heads.'
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '88';

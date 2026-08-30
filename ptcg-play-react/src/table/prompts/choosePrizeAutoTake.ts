@@ -1,5 +1,6 @@
 import type { ChoosePrizePrompt, Player } from 'ptcg-server';
 import type { LocalGameState } from '../types/localGameState';
+import { getPromptPerspectivePlayerId } from './promptPerspective';
 
 function opponentHasNoPokemonInPlay(opponent: Player | undefined): boolean {
   if (!opponent) {
@@ -15,12 +16,13 @@ function prizeTargetPlayer(
   state: LocalGameState['state'],
   prompt: ChoosePrizePrompt,
 ): Player | undefined {
-  const taker = state.players.find((p) => p.id === prompt.playerId);
+  const perspectiveId = getPromptPerspectivePlayerId(prompt);
+  const taker = state.players.find((p) => p.id === perspectiveId);
   if (!taker) {
     return undefined;
   }
   if (prompt.options.useOpponentPrizes) {
-    return state.players.find((p) => p.id !== prompt.playerId);
+    return state.players.find((p) => p.id !== perspectiveId);
   }
   return taker;
 }
@@ -31,7 +33,8 @@ export function shouldAutoTakeChoosePrize(
   prompt: ChoosePrizePrompt,
 ): boolean {
   const state = localGame.state;
-  const taker = state.players.find((p) => p.id === prompt.playerId);
+  const perspectiveId = getPromptPerspectivePlayerId(prompt);
+  const taker = state.players.find((p) => p.id === perspectiveId);
   if (!taker) {
     return false;
   }
@@ -51,7 +54,7 @@ export function shouldAutoTakeChoosePrize(
     return true;
   }
 
-  const takerIndex = state.players.findIndex((p) => p.id === prompt.playerId);
+  const takerIndex = state.players.findIndex((p) => p.id === perspectiveId);
   const opponent = state.players[takerIndex === 0 ? 1 : 0];
   return opponentHasNoPokemonInPlay(opponent);
 }

@@ -3,7 +3,13 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+} from '../../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, PlayerType, SlotType, EnergyCard } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
@@ -12,9 +18,9 @@ import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../../game/store/prefabs/prefa
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class PalkiaEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 180;
   public weakness = [{ type: G }];
   public retreat = [C, C];
@@ -24,14 +30,14 @@ export class PalkiaEx extends PokemonCard {
       name: 'Aqua Turbo',
       cost: [W, W],
       damage: 40,
-      text: 'Search your deck for 2 [W] Energy cards and attach them to 1 of your Benched Pokémon. Shuffle your deck afterward.'
+      text: 'Search your deck for 2 [W] Energy cards and attach them to 1 of your Benched Pokémon. Shuffle your deck afterward.',
     },
     {
       name: 'Pearl Hurricane',
       cost: [W, W, W, W],
       damage: 120,
-      text: 'This attack does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "This attack does 30 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public set: string = 'BKP';
@@ -46,9 +52,12 @@ export class PalkiaEx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const hasBenched = player.bench.some(b => b.cards.length > 0);
-      const hasWaterEnergy = player.deck.cards.some(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.WATER)
+      const hasBenched = player.bench.some((b) => b.cards.length > 0);
+      const hasWaterEnergy = player.deck.cards.some(
+        (c) =>
+          c instanceof EnergyCard &&
+          c.energyType === EnergyType.BASIC &&
+          c.provides.includes(CardType.WATER),
       );
 
       if (!hasBenched || !hasWaterEnergy) {
@@ -56,30 +65,38 @@ export class PalkiaEx extends PokemonCard {
       }
 
       // First, choose target benched Pokemon
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false }
-      ), selectedTargets => {
-        const target = selectedTargets[0];
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selectedTargets) => {
+          const target = selectedTargets[0];
 
-        // Then search deck for up to 2 Water Energy
-        return store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_ATTACH,
-          player.deck,
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
-          { min: 0, max: 2, allowCancel: false }
-        ), (cards) => {
-          cards = cards || [];
-          cards.forEach(card => {
-            player.deck.moveCardTo(card, target);
-          });
-          return SHUFFLE_DECK(store, state, player);
-        });
-      });
+          // Then search deck for up to 2 Water Energy
+          return store.prompt(
+            state,
+            new ChooseCardsPrompt(
+              player,
+              GameMessage.CHOOSE_CARD_TO_ATTACH,
+              player.deck,
+              { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
+              { min: 0, max: 2, allowCancel: false },
+            ),
+            (cards) => {
+              cards = cards || [];
+              cards.forEach((card) => {
+                player.deck.moveCardTo(card, target);
+              });
+              return SHUFFLE_DECK(store, state, player);
+            },
+          );
+        },
+      );
     }
 
     // Attack 2: Pearl Hurricane

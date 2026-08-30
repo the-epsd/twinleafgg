@@ -10,9 +10,9 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE } from '../../../game/store/prefabs/attack-effects';
 
 export class AlakazamV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 190;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
@@ -23,15 +23,15 @@ export class AlakazamV extends PokemonCard {
       name: 'Zen Spoon',
       cost: [P],
       damage: 0,
-      text: 'Put 3 damage counters on your opponent\'s Pokémon in any way you like.'
+      text: "Put 3 damage counters on your opponent's Pokémon in any way you like.",
     },
     {
       name: 'Mind Ruler',
       cost: [P, P],
       damage: 30,
       damageCalculation: 'x',
-      text: 'This attack does 30 damage for each card in your opponent\'s hand.'
-    }
+      text: "This attack does 30 damage for each card in your opponent's hand.",
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -45,7 +45,10 @@ export class AlakazamV extends PokemonCard {
     // Attack 1: Zen Spoon
     // Ref: set-champions-path/galarian-cursola-v.ts (Hollow Missile - PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      return PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE(3, store, state, effect, [SlotType.ACTIVE, SlotType.BENCH]);
+      return PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE(3, store, state, effect, [
+        SlotType.ACTIVE,
+        SlotType.BENCH,
+      ]);
     }
 
     // Attack 2: Mind Ruler

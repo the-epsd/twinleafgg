@@ -12,26 +12,23 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, ADD_CONFUSION_TO_PLAYER_AC
 export class Lilligant extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Petilil';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Petal Blizzard',
-      cost: [C],
-      damage: 0,
-      text: 'This attack does 10 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    },
-    {
-      name: 'Petal Dance',
-      cost: [G, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 40 damage for each heads. This Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Petal Blizzard',
+    cost: [C],
+    damage: 0,
+    text: 'This attack does 10 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }, {
+    name: 'Petal Dance',
+    cost: [G, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 40 damage for each heads. This Pokémon is now Confused.'
+  }];
 
   public set: string = 'GRI';
   public setNumber: string = '5';

@@ -11,21 +11,19 @@ import { WAS_ATTACK_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, 
 
 export class Psyduck extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 60;
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
   public readonly HEADACHE_MARKER = 'PSYDUCK_TEU_HEADACHE_MARKER';
 
-  public attacks = [
-    {
-      name: 'Headache',
-      cost: [C],
-      damage: 10,
-      text: 'Flip a coin. If heads, your opponent can\'t play any Trainer cards from their hand during their next turn.'
-    }
-  ];
+  public attacks = [{
+    name: 'Headache',
+    cost: [C],
+    damage: 10,
+    text: 'Flip a coin. If heads, your opponent can\'t play any Trainer cards from their hand during their next turn.'
+  }];
 
   public set: string = 'TEU';
   public setNumber: string = '26';
@@ -34,6 +32,7 @@ export class Psyduck extends PokemonCard {
   public fullName: string = 'Psyduck TEU';
 
   // Refs: set-unified-minds/beheeyem.ts (Item block with markers), set-x-and-y/trevenant.ts (trainer block)
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Headache
     if (WAS_ATTACK_USED(effect, 0, this)) {

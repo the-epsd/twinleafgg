@@ -8,14 +8,13 @@ import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class SalazzleGX extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
 
   public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom = 'Salandit';
 
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
 
   public hp: number = 200;
 
@@ -28,21 +27,21 @@ export class SalazzleGX extends PokemonCard {
       name: 'Diabolical Claws',
       cost: [R, R],
       damage: 50,
-      text: ' This attack does 50 damage for each Prize card you have taken.'
+      text: ' This attack does 50 damage for each Prize card you have taken.',
     },
     {
       name: 'Heat Blast',
       cost: [R, R],
       damage: 110,
-      text: ''
+      text: '',
     },
     {
-      name: 'Queen\'s Haze-GX',
+      name: "Queen's Haze-GX",
       cost: [R, R],
       damage: 0,
       gxAttack: true,
-      text: 'Discard all Energy from your opponent\'s Active Pokémon. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Discard all Energy from your opponent's Active Pokémon. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'BUS';
@@ -78,7 +77,7 @@ export class SalazzleGX extends PokemonCard {
 
       const oppCards: Card[] = [];
 
-      opponentEnergy.energyMap.forEach(em => {
+      opponentEnergy.energyMap.forEach((em) => {
         oppCards.push(em.card);
       });
 

@@ -13,7 +13,7 @@ export class Wailord extends PokemonCard {
   public regulationMark = 'F';
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Wailmer';
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
   public hp: number = 200;
   public weakness = [{ type: CardType.LIGHTNING }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];

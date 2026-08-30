@@ -11,26 +11,23 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Watchog extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Patrat';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Scrutinize',
-      cost: [C],
-      damage: 0,
-      text: 'Look at the top 2 cards of your opponent\'s deck, discard 1 of them, and put the other card back.'
-    },
-    {
-      name: 'Slam',
-      cost: [C, C, C],
-      damage: 60,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 60 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Scrutinize',
+    cost: [C],
+    damage: 0,
+    text: 'Look at the top 2 cards of your opponent\'s deck, discard 1 of them, and put the other card back.'
+  }, {
+    name: 'Slam',
+    cost: [C, C, C],
+    damage: 60,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 60 damage for each heads.'
+  }];
 
   public set: string = 'GRI';
   public setNumber: string = '108';

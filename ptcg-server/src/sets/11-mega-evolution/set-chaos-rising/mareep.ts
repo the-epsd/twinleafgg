@@ -10,20 +10,19 @@ import {
 export class Mareep extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 70;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Thunder Wave',
-      cost: [L, C],
-      damage: 20,
-      text: "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed.",
-    },
-  ];
+  public attacks = [{
+    name: 'Thunder Wave',
+    cost: [L, C],
+    damage: 20,
+    text: "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed.",
+  }];
 
   public regulationMark = 'J';
+
   public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '27';

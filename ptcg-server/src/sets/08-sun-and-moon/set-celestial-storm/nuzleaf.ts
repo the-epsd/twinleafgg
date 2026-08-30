@@ -8,7 +8,7 @@ import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs
 export class Nuzleaf extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Seedot';
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
   public hp: number = 90;
   public weakness = [{ type: CardType.FIRE }];
   public retreat = [CardType.COLORLESS];

@@ -15,7 +15,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Delibird extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 90;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public weakness = [{ type: M }];
   public retreat = [C];
 

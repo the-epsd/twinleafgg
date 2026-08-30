@@ -11,10 +11,10 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { StateUtils } from '../../../game';
 
 export class SurfingPikachuVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Surfing Pikachu V';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 310;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -24,8 +24,8 @@ export class SurfingPikachuVmax extends PokemonCard {
       name: 'Max Surfer',
       cost: [W, W, W],
       damage: 160,
-      text: 'This attack also does 30 damage to each of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "This attack also does 30 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -42,7 +42,7 @@ export class SurfingPikachuVmax extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      opponent.bench.forEach(benched => {
+      opponent.bench.forEach((benched) => {
         if (benched.cards.length > 0) {
           const damage = new PutDamageEffect(effect, 30);
           damage.target = benched;

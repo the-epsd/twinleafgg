@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, JUST_EVOLVED, IS_ABILITY_BLOCKED, SEARCH_YOUR_DECK_FOR
 export class Ninjask extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Nincada';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 60;
   public weakness = [{ type: R }];
   public retreat = [];

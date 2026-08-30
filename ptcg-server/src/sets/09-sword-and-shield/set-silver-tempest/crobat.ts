@@ -8,7 +8,7 @@ import { DAMAGE_OPPONENT_POKEMON, IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_
 export class Crobat extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public regulationMark: string = 'F';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public retreat = [];

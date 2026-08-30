@@ -13,27 +13,25 @@ import { SelectOptionPrompt } from '../../../game/store/prompts/select-option-pr
 export class Venomoth extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Venonat';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Miracle Powder',
-      cost: [G],
-      damage: 30,
-      text: 'Flip a coin. If heads, choose a Special Condition. Your opponent\'s Active Pokémon is now affected by that Special Condition.'
-    },
-    {
-      name: 'Gust',
-      cost: [G, C],
-      damage: 70,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Miracle Powder',
+    cost: [G],
+    damage: 30,
+    text: 'Flip a coin. If heads, choose a Special Condition. Your opponent\'s Active Pokémon is now affected by that Special Condition.'
+  }, {
+    name: 'Gust',
+    cost: [G, C],
+    damage: 70,
+    text: ''
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'SIT';
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';

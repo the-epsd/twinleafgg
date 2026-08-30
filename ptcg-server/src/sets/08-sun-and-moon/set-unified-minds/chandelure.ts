@@ -4,14 +4,14 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, ConfirmPrompt, GameMessage } from '../../../game';
+import { StoreLike, State, ConfirmPrompt, GameMessage, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Chandelure extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Lampent';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 140;
   public weakness = [{ type: W }];
   public retreat = [C, C];
@@ -54,7 +54,7 @@ export class Chandelure extends PokemonCard {
 
       // Find Fire Pokemon among the discarded
       const firePokemon = discardedPokemon.filter(p =>
-        p.cardType === CardType.FIRE && p.stage === Stage.BASIC
+        pokemonHasCardType(p, CardType.FIRE) && p.stage === Stage.BASIC
       );
 
       // Put any number of Fire Basic Pokemon onto bench

@@ -11,23 +11,23 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, GUST_OPPONENT_BENCHED_POKEMON } from
 
 export class GalarianSlowpoke extends PokemonCard {
   public usedTantailizing = false;
+
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Tantailizing',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, switch 1 of your opponent\'s Benched Pokémon with their Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tantailizing',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, switch 1 of your opponent\'s Benched Pokémon with their Active Pokémon.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'BST';
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';

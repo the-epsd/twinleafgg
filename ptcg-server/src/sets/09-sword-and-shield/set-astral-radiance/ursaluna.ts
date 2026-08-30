@@ -16,7 +16,7 @@ export class Ursaluna extends PokemonCard {
 
   public evolvesFrom = 'Ursaring';
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp: number = 180;
 

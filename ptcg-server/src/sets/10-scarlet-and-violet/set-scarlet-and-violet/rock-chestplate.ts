@@ -2,7 +2,7 @@ import { CardType, TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State, GamePhase } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { StateUtils, TrainerCard } from '../../../game';
+import { StateUtils, TrainerCard, pokemonHasCardTypeOptional } from '../../../game';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { IS_TOOL_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
@@ -41,7 +41,7 @@ export class RockChestplate extends TrainerCard {
         return state;
       }
 
-      if (sourceCard?.cardType == CardType.FIGHTING) {
+      if (pokemonHasCardTypeOptional(sourceCard, CardType.FIGHTING)) {
 
         // Check if damage target is owned by this card's owner 
         const targetPlayer = StateUtils.findOwner(state, effect.target);

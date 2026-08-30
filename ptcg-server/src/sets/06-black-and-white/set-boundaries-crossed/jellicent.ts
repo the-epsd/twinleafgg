@@ -12,7 +12,7 @@ import { PowerType, State, StoreLike } from '../../../game';
 export class Jellicent extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Frillish';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 100;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];
@@ -24,14 +24,12 @@ export class Jellicent extends PokemonCard {
     text: 'The Retreat Cost of each of your opponent\'s Pokémon in play is Colorless more.'
   }];
 
-  public attacks = [
-    {
-      name: 'Eerie Light',
-      cost: [W, C, C],
-      damage: 40,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Eerie Light',
+    cost: [W, C, C],
+    damage: 40,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '45';

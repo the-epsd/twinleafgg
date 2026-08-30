@@ -4,15 +4,27 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { AttachEnergyPrompt, GameMessage, PlayerType, ShuffleDeckPrompt, SlotType, StoreLike, State, StateUtils } from '../../../game';
+import {
+  AttachEnergyPrompt,
+  GameMessage,
+  PlayerType,
+  ShuffleDeckPrompt,
+  SlotType,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+} from '../../../game/store/prefabs/prefabs';
 
 export class KinglerVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Kingler V';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 330;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];
@@ -22,14 +34,14 @@ export class KinglerVmax extends PokemonCard {
       name: 'Bubbles Galore',
       cost: [W],
       damage: 0,
-      text: 'Search your deck for up to 5 [W] Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck.'
+      text: 'Search your deck for up to 5 [W] Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck.',
     },
     {
       name: 'G-Max Pincer',
       cost: [W, W, C],
       damage: 240,
-      text: 'This Pokémon also does 30 damage to itself.'
-    }
+      text: 'This Pokémon also does 30 damage to itself.',
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -49,24 +61,28 @@ export class KinglerVmax extends PokemonCard {
         return state;
       }
 
-      store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_TO_BENCH,
-        player.deck,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY, name: 'Water Energy' },
-        { allowCancel: false, min: 0, max: 5 }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.deck.moveCardTo(transfer.card, target);
-        }
-        store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-        });
-      });
+      store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_TO_BENCH,
+          player.deck,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { superType: SuperType.ENERGY, name: 'Water Energy' },
+          { allowCancel: false, min: 0, max: 5 },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.deck.moveCardTo(transfer.card, target);
+          }
+          store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+            player.deck.applyOrder(order);
+          });
+        },
+      );
     }
 
     // Attack 2: G-Max Pincer

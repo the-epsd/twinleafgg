@@ -11,25 +11,22 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Heatmor extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 110;
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Odor Sleuth',
-      cost: [C, C],
-      damage: 0,
-      text: 'Flip 2 coins. For each heads, put a card from your discard pile into your hand.'
-    },
-    {
-      name: 'Searing Flame',
-      cost: [R, C, C],
-      damage: 60,
-      text: 'Your opponent\'s Active Pokémon is now Burned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Odor Sleuth',
+    cost: [C, C],
+    damage: 0,
+    text: 'Flip 2 coins. For each heads, put a card from your discard pile into your hand.'
+  }, {
+    name: 'Searing Flame',
+    cost: [R, C, C],
+    damage: 60,
+    text: 'Your opponent\'s Active Pokémon is now Burned.'
+  }];
 
   public set: string = 'BUS';
   public setNumber: string = '24';

@@ -8,9 +8,9 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Sizzlipede2 extends PokemonCard {
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 70;
   public weakness = [{ type: W }];
   public retreat = [C, C];
@@ -20,8 +20,8 @@ export class Sizzlipede2 extends PokemonCard {
       name: 'Singe',
       cost: [R],
       damage: 0,
-      text: 'Your opponent\'s Active Pokémon is now Burned.'
-    }
+      text: "Your opponent's Active Pokémon is now Burned.",
+    },
   ];
 
   public regulationMark: string = 'E';

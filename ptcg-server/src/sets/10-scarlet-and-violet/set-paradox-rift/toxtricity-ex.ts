@@ -7,10 +7,10 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 
 export class Toxtricityex extends PokemonCard {
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Toxel';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 260;
   public weakness = [{ type: G }];
   public retreat = [C, C];
@@ -20,14 +20,14 @@ export class Toxtricityex extends PokemonCard {
       name: 'Knocking Hammer',
       cost: [L, L],
       damage: 70,
-      text: 'Discard the top card of your opponent\'s deck.'
+      text: "Discard the top card of your opponent's deck.",
     },
     {
       name: 'Gaia Punk',
       cost: [L, L, L],
       damage: 270,
-      text: 'Discard 3 [L] Energy from your Pokémon.'
-    }
+      text: 'Discard 3 [L] Energy from your Pokémon.',
+    },
   ];
 
   public set: string = 'PAR';
@@ -40,7 +40,11 @@ export class Toxtricityex extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Knocking Hammer
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      MOVE_CARDS(store, state, effect.opponent.deck, effect.opponent.discard, { count: 1, sourceCard: this, sourceEffect: this.attacks[0] });
+      MOVE_CARDS(store, state, effect.opponent.deck, effect.opponent.discard, {
+        count: 1,
+        sourceCard: this,
+        sourceEffect: this.attacks[0],
+      });
     }
 
     // Gaia Punk
@@ -48,7 +52,11 @@ export class Toxtricityex extends PokemonCard {
       DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 3, L);
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

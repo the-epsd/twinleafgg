@@ -7,7 +7,6 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { ToolEffect } from '../../../game/store/effects/play-card-effects';
 
-
 export class LightBall extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'ASC';
@@ -16,10 +15,10 @@ export class LightBall extends TrainerCard {
   public name: string = 'Light Ball';
   public fullName: string = 'Light Ball M2a';
   public regulationMark = 'I';
-  public text: string = 'Attacks used by the Pikachu ex this card is attached to do 50 more damage to your opponent\'s Active Pokémon ex (before applying Weakness and Resistance).';
+  public text: string =
+    "Attacks used by the Pikachu ex this card is attached to do 50 more damage to your opponent's Active Pokémon ex (before applying Weakness and Resistance).";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof DealDamageEffect && effect.source.tools.includes(this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
 
@@ -43,7 +42,7 @@ export class LightBall extends TrainerCard {
       }
 
       const targetCard = effect.target.getPokemonCard();
-      if (targetCard && targetCard.tags.includes(CardTag.POKEMON_ex) && effect.damage > 0) {
+      if (targetCard && targetCard.hasTag(CardTag.POKEMON_ex) && effect.damage > 0) {
         effect.damage += 50;
       }
     }

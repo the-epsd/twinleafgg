@@ -9,10 +9,10 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class GalarianSirfetchd extends PokemonCard {
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.STAGE_1;
-  public evolvesFrom: string = 'Galarian Farfetch\'d';
-  public cardType: CardType = F;
+  public evolvesFrom: string = "Galarian Farfetch'd";
+  public cardType: CardType[] = [F];
   public hp: number = 130;
   public weakness = [{ type: P }];
   public retreat = [C, C];
@@ -22,23 +22,23 @@ export class GalarianSirfetchd extends PokemonCard {
       name: 'Peck',
       cost: [F],
       damage: 40,
-      text: ''
+      text: '',
     },
     {
       name: 'Leek Strike',
       cost: [F, C, C],
       damage: 70,
       damageCalculation: '+',
-      text: 'If this Pokémon has a Pokémon Tool attached, this attack does 90 more damage, and this attack\'s damage isn\'t affected by Resistance.'
-    }
+      text: "If this Pokémon has a Pokémon Tool attached, this attack does 90 more damage, and this attack's damage isn't affected by Resistance.",
+    },
   ];
 
   public regulationMark: string = 'E';
   public set: string = 'CRE';
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Galarian Sirfetch\'d';
-  public fullName: string = 'Galarian Sirfetch\'d CRE';
+  public name: string = "Galarian Sirfetch'd";
+  public fullName: string = "Galarian Sirfetch'd CRE";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Leek Strike

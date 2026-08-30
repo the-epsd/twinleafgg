@@ -1,22 +1,16 @@
 import { CardType, Stage, SuperType } from '../../../game/store/card/card-types';
-import { Attack, Card, ChooseCardsPrompt, CoinFlipPrompt, GameMessage, PokemonCard, Power, PowerType, State, StateUtils, StoreLike } from '../../../game';
+import { Attack, Card, ChooseCardsPrompt, GameMessage, PokemonCard, Power, PowerType, State, StateUtils, StoreLike } from '../../../game';
 
 import { Effect } from '../../../game/store/effects/effect';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Goldeen extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
   public regulationMark = 'H';
-
-  public cardType: CardType = W;
-
+  public cardType: CardType[] = [W];
   public hp: number = 50;
-
   public weakness = [{ type: L }];
-
   public retreat = [C];
 
   public powers: Power[] = [{
@@ -33,13 +27,9 @@ export class Goldeen extends PokemonCard {
   }];
 
   public set: string = 'TWM';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '44';
-
   public name: string = 'Goldeen';
-
   public fullName: string = 'Goldeen TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -52,9 +42,7 @@ export class Goldeen extends PokemonCard {
         return state;
       }
 
-      state = store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      state = COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
 
           let card: Card;

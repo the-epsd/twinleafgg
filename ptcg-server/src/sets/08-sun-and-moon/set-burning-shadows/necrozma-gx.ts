@@ -1,18 +1,27 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, PlayerType, GamePhase, EnergyCard } from '../../../game';
+import { PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  PlayerType,
+  GamePhase,
+  EnergyCard, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { DiscardCardsEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { BLOCK_IF_GX_ATTACK_USED, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  BLOCK_IF_GX_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 // BUS Necrozma-GX 63 (https://limitlesstcg.com/cards/BUS/63)
 export class NecrozmaGX extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 180;
 
@@ -20,19 +29,21 @@ export class NecrozmaGX extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Light\'s End',
-    useWhenInPlay: false,
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all damage done to this Pokémon by attacks from [C] Pokémon.'
-  }];
+  public powers = [
+    {
+      name: "Light's End",
+      useWhenInPlay: false,
+      powerType: PowerType.ABILITY,
+      text: 'Prevent all damage done to this Pokémon by attacks from [C] Pokémon.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Prismatic Burst',
       cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 10,
-      text: 'Discard all basic [P] Energy from this Pokémon. This attack does 60 more damage for each card you discarded in this way.'
+      text: 'Discard all basic [P] Energy from this Pokémon. This attack does 60 more damage for each card you discarded in this way.',
     },
 
     {
@@ -40,8 +51,8 @@ export class NecrozmaGX extends PokemonCard {
       cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 0,
       gxAttack: true,
-      text: 'This attack does 100 damage to each of your opponent\'s Pokémon-GX and Pokémon-EX. This damage isn\'t affected by Weakness or Resistance. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "This attack does 100 damage to each of your opponent's Pokémon-GX and Pokémon-EX. This damage isn't affected by Weakness or Resistance. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'BUS';
@@ -65,7 +76,7 @@ export class NecrozmaGX extends PokemonCard {
       }
 
       // It's not an attack or a Pokemon that isn't colorless attacks
-      if (state.phase !== GamePhase.ATTACK || pokemonCard.cardType !== CardType.COLORLESS) {
+      if (state.phase !== GamePhase.ATTACK || !pokemonHasCardType(pokemonCard, CardType.COLORLESS)) {
         return state;
       }
 
@@ -83,8 +94,8 @@ export class NecrozmaGX extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const psychicEnergy = player.active.cards.filter(card =>
-        card instanceof EnergyCard && card.name === 'Psychic Energy'
+      const psychicEnergy = player.active.cards.filter(
+        (card) => card instanceof EnergyCard && card.name === 'Psychic Energy',
       );
 
       const discardEnergy = new DiscardCardsEffect(effect, psychicEnergy);
@@ -105,7 +116,7 @@ export class NecrozmaGX extends PokemonCard {
       player.usedGX = true;
 
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card.tags.includes(CardTag.POKEMON_GX) || card.tags.includes(CardTag.POKEMON_EX)) {
+        if (card.hasTag(CardTag.POKEMON_GX) || card.hasTag(CardTag.POKEMON_EX)) {
           if (cardList === opponent.active) {
             return;
           }

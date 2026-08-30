@@ -4,18 +4,20 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 export class Lopunny extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Buneary';
-  public tags = [CardTag.RAPID_STRIKE];
-  public cardType: CardType = C;
+  protected _tags = [CardTag.RAPID_STRIKE];
+  public cardType: CardType[] = [C];
   public hp: number = 110;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Hopping Shot',
-    cost: [C, C],
-    damage: 70,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Hopping Shot',
+      cost: [C, C],
+      damage: 70,
+      text: '',
+    },
+  ];
 
   public regulationMark = 'E';
   public set: string = 'FST';

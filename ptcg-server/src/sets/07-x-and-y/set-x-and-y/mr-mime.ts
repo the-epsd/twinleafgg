@@ -12,27 +12,24 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 
 export class MrMime extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 80;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Massage',
-      cost: [Y, C],
-      damage: 0,
-      text: 'Heal 60 damage from 1 of your Benched Pokémon.'
-    },
-    {
-      name: 'Slap Down',
-      cost: [Y, C, C],
-      damage: 40,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Massage',
+    cost: [Y, C],
+    damage: 0,
+    text: 'Heal 60 damage from 1 of your Benched Pokémon.'
+  }, {
+    name: 'Slap Down',
+    cost: [Y, C, C],
+    damage: 40,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
+  }];
 
   public set: string = 'XY';
   public setNumber: string = '91';

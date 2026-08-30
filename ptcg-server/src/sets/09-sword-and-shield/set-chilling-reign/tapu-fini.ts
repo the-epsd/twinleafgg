@@ -4,16 +4,27 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { Card, ChooseEnergyPrompt, ConfirmPrompt, GameMessage, StoreLike, State } from '../../../game';
+import {
+  Card,
+  ChooseEnergyPrompt,
+  ConfirmPrompt,
+  GameMessage,
+  StoreLike,
+  State,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  SWITCH_ACTIVE_WITH_BENCHED,
+  MOVE_CARDS,
+} from '../../../game/store/prefabs/prefabs';
 
 export class TapuFini extends PokemonCard {
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 120;
   public weakness = [{ type: L }];
   public retreat = [C];
@@ -23,14 +34,14 @@ export class TapuFini extends PokemonCard {
       name: 'Smash Turn',
       cost: [W],
       damage: 30,
-      text: 'You may switch this Pokémon with 1 of your Benched Pokémon.'
+      text: 'You may switch this Pokémon with 1 of your Benched Pokémon.',
     },
     {
       name: 'Ocean Loop',
       cost: [W, W, C],
       damage: 120,
-      text: 'Put an Energy attached to this Pokémon into your hand.'
-    }
+      text: 'Put an Energy attached to this Pokémon into your hand.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -47,7 +58,7 @@ export class TapuFini extends PokemonCard {
     // Ref: set-dark-explorers/kyogre-ex.ts (Smash Turn - optional self-switch with ConfirmPrompt in AfterAttackEffect)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      const hasBench = player.bench.some(b => b.cards.length > 0);
+      const hasBench = player.bench.some((b) => b.cards.length > 0);
       if (hasBench) {
         this.usedSmashTurn = true;
       }
@@ -56,14 +67,15 @@ export class TapuFini extends PokemonCard {
     if (effect instanceof AfterAttackEffect && this.usedSmashTurn) {
       this.usedSmashTurn = false;
       const player = effect.player;
-      return store.prompt(state, new ConfirmPrompt(
-        player.id,
-        GameMessage.WANT_TO_SWITCH_POKEMON
-      ), wantToSwitch => {
-        if (wantToSwitch) {
-          SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
-        }
-      });
+      return store.prompt(
+        state,
+        new ConfirmPrompt(player.id, GameMessage.WANT_TO_SWITCH_POKEMON),
+        (wantToSwitch) => {
+          if (wantToSwitch) {
+            SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
+          }
+        },
+      );
     }
 
     if (effect instanceof EndTurnEffect) {
@@ -75,23 +87,31 @@ export class TapuFini extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      if (!player.active.cards.some(c => c.superType === SuperType.ENERGY)) {
+      if (!player.active.cards.some((c) => c.superType === SuperType.ENERGY)) {
         return state;
       }
 
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
-      state = store.prompt(state, new ChooseEnergyPrompt(
-        player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_HAND,
-        checkProvidedEnergy.energyMap,
-        [CardType.COLORLESS],
-        { allowCancel: false }
-      ), energy => {
-        const cards: Card[] = (energy || []).map(e => e.card);
-        MOVE_CARDS(store, state, player.active, player.hand, { cards, sourceCard: this, sourceEffect: this.attacks[1] });
-      });
+      state = store.prompt(
+        state,
+        new ChooseEnergyPrompt(
+          player.id,
+          GameMessage.CHOOSE_ENERGIES_TO_HAND,
+          checkProvidedEnergy.energyMap,
+          [CardType.COLORLESS],
+          { allowCancel: false },
+        ),
+        (energy) => {
+          const cards: Card[] = (energy || []).map((e) => e.card);
+          MOVE_CARDS(store, state, player.active, player.hand, {
+            cards,
+            sourceCard: this,
+            sourceEffect: this.attacks[1],
+          });
+        },
+      );
     }
 
     return state;

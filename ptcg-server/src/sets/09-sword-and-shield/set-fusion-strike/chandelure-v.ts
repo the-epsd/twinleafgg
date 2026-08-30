@@ -2,21 +2,21 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, SHOW_CARDS_TO_PLAYER, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import {
-  CardTag,
-  CardType,
-  Stage,
-  SuperType
-} from '../../../game/store/card/card-types';
+  ADD_CONFUSION_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  SHOW_CARDS_TO_PLAYER,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
+import { CardTag, CardType, Stage, SuperType } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class ChandelureV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 200;
   public weakness = [{ type: W }];
   public retreat = [C, C];
@@ -26,15 +26,15 @@ export class ChandelureV extends PokemonCard {
       name: 'Confuse Ray',
       cost: [R],
       damage: 0,
-      text: 'Your opponent\'s Active Pokémon is now Confused.'
+      text: "Your opponent's Active Pokémon is now Confused.",
     },
     {
       name: 'Poltergeist',
       cost: [R, C],
       damage: 40,
       damageCalculation: 'x',
-      text: 'Your opponent reveals their hand. This attack does 40 damage for each Trainer card you find there.'
-    }
+      text: 'Your opponent reveals their hand. This attack does 40 damage for each Trainer card you find there.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -60,7 +60,7 @@ export class ChandelureV extends PokemonCard {
       SHOW_CARDS_TO_PLAYER(store, state, player, opponent.hand.cards);
 
       const trainerCount = opponent.hand.cards.filter(
-        card => card.superType === SuperType.TRAINER
+        (card) => card.superType === SuperType.TRAINER,
       ).length;
       effect.damage = 40 * trainerCount;
     }

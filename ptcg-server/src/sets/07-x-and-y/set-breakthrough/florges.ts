@@ -15,7 +15,7 @@ export class Florges extends PokemonCard {
 
   public evolvesFrom = 'Floette';
 
-  public cardType: CardType = CardType.FAIRY;
+  public cardType: CardType[] = [CardType.FAIRY];
 
   public hp: number = 110;
 

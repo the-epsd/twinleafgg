@@ -1,50 +1,70 @@
-import { Attack, CardTarget, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
+import {
+  Attack,
+  CardTarget,
+  ChoosePokemonPrompt,
+  GameMessage,
+  PlayerType,
+  SlotType,
+} from '../../game';
 import { CardTag, CardType, TrainerType } from '../../game/store/card/card-types';
 import { ColorlessCostReducer } from '../../game/store/card/pokemon-interface';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { CheckAttackCostEffect, CheckPokemonAttacksEffect } from '../../game/store/effects/check-effects';
+import {
+  CheckAttackCostEffect,
+  CheckPokemonAttacksEffect,
+} from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { DEVOLVE_POKEMON, DRAW_CARDS, MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import {
+  DEVOLVE_POKEMON,
+  DRAW_CARDS,
+  MOVE_CARDS,
+  SHUFFLE_DECK,
+} from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
 export class MysteryPlateGamma extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
-  public tags = [CardTag.TECHNICAL_MACHINE];
+  protected _tags = [CardTag.TECHNICAL_MACHINE];
   public set: string = 'SK';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '135';
   public name: string = 'Mystery Plate γ';
   public fullName: string = 'Mystery Plate γ SK';
 
-  public attacks: Attack[] = [{
-    name: 'Retro Cave',
-    cost: [C],
-    damage: 0,
-    text: 'If your opponent has 5 or more Prizes, shuffle your hand into your deck and then draw 6 cards. If your opponent has exactly 2 Prizes, choose 1 of your opponent\'s Evolved Pokémon. Your opponent puts the top card on that Evolved Pokémon on the bottom of his or her deck. (This counts as devolving that Pokémon.)'
-  }];
+  public attacks: Attack[] = [
+    {
+      name: 'Retro Cave',
+      cost: [C],
+      damage: 0,
+      text: "If your opponent has 5 or more Prizes, shuffle your hand into your deck and then draw 6 cards. If your opponent has exactly 2 Prizes, choose 1 of your opponent's Evolved Pokémon. Your opponent puts the top card on that Evolved Pokémon on the bottom of his or her deck. (This counts as devolving that Pokémon.)",
+    },
+  ];
 
   public text: string =
-    'Attach this card to 1 of your Pokémon in play. That Pokémon may use this card\'s attack instead of its own. At the end of your turn, discard Mystery Plate γ.';
+    "Attach this card to 1 of your Pokémon in play. That Pokémon may use this card's attack instead of its own. At the end of your turn, discard Mystery Plate γ.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
-      state = store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE],
-        { min: 1, max: 1, allowCancel: false },
-      ), transfers => {
-        player.supporter.moveCardTo(effect.trainerCard, transfers[0]);
-      });
+      state = store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (transfers) => {
+          player.supporter.moveCardTo(effect.trainerCard, transfers[0]);
+        },
+      );
     }
 
     if (effect instanceof EndTurnEffect) {
@@ -53,7 +73,6 @@ export class MysteryPlateGamma extends TrainerCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
         if (cardList.cards.includes(this)) {
           cardList.moveCardTo(this, player.discard);
-
         }
       });
     }
@@ -71,8 +90,11 @@ export class MysteryPlateGamma extends TrainerCard {
       }
     }
 
-    if (effect instanceof CheckPokemonAttacksEffect && effect.player.active.cards.includes(this) &&
-      !effect.attacks.includes(this.attacks[0])) {
+    if (
+      effect instanceof CheckPokemonAttacksEffect &&
+      effect.player.active.cards.includes(this) &&
+      !effect.attacks.includes(this.attacks[0])
+    ) {
       effect.attacks.push(this.attacks[0]);
     }
 
@@ -99,20 +121,22 @@ export class MysteryPlateGamma extends TrainerCard {
           return state;
         }
 
-        return store.prompt(state, new ChoosePokemonPrompt(
-          effect.player.id,
-          GameMessage.CHOOSE_POKEMON,
-          PlayerType.TOP_PLAYER,
-          [SlotType.ACTIVE, SlotType.BENCH],
-          { allowCancel: false, min: 1, max: 1, blocked }
-        ),
+        return store.prompt(
+          state,
+          new ChoosePokemonPrompt(
+            effect.player.id,
+            GameMessage.CHOOSE_POKEMON,
+            PlayerType.TOP_PLAYER,
+            [SlotType.ACTIVE, SlotType.BENCH],
+            { allowCancel: false, min: 1, max: 1, blocked },
+          ),
           (results) => {
             if (results && results.length > 0) {
               DEVOLVE_POKEMON(store, state, results[0], effect.opponent.deck);
             }
 
             return state;
-          }
+          },
         );
       }
     }

@@ -2,16 +2,20 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_BURN_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_BURN_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class HeatranV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 220;
   public weakness = [{ type: W }];
   public retreat = [C, C, C];
@@ -21,15 +25,15 @@ export class HeatranV extends PokemonCard {
       name: 'Heat Burn',
       cost: [R, C],
       damage: 30,
-      text: 'Your opponent\'s Active Pokémon is now Burned.'
+      text: "Your opponent's Active Pokémon is now Burned.",
     },
     {
       name: 'Magma Fall',
       cost: [R, R, C],
       damage: 90,
       damageCalculation: '+',
-      text: 'If you have a Stadium in play, this attack does 90 more damage.'
-    }
+      text: 'If you have a Stadium in play, this attack does 90 more damage.',
+    },
   ];
 
   public regulationMark: string = 'F';

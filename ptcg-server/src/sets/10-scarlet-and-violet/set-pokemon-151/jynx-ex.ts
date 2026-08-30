@@ -8,24 +8,26 @@ import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/
 
 export class Jynxex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = W;
+  protected _tags = [CardTag.POKEMON_ex];
+  public cardType: CardType[] = [W];
   public hp: number = 200;
   public weakness = [{ type: M }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Heart-Stopping Kiss',
-    cost: [W, C, C],
-    damage: 0,
-    text: 'If your opponent\'s Active Pokémon is Asleep, it is Knocked Out.'
-  },
-  {
-    name: 'Icy Wind',
-    cost: [W, W, W],
-    damage: 120,
-    text: 'Your opponent\'s Active Pokémon is now Asleep.'
-  }];
+  public attacks = [
+    {
+      name: 'Heart-Stopping Kiss',
+      cost: [W, C, C],
+      damage: 0,
+      text: "If your opponent's Active Pokémon is Asleep, it is Knocked Out.",
+    },
+    {
+      name: 'Icy Wind',
+      cost: [W, W, W],
+      damage: 120,
+      text: "Your opponent's Active Pokémon is now Asleep.",
+    },
+  ];
 
   public regulationMark = 'G';
   public set: string = 'MEW';
@@ -52,5 +54,4 @@ export class Jynxex extends PokemonCard {
 
     return state;
   }
-
 }

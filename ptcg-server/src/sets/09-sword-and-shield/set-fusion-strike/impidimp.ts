@@ -10,9 +10,9 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefabs/attack-effects';
 
 export class Impidimp extends PokemonCard {
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 70;
   public weakness = [{ type: G }];
   public retreat = [C];
@@ -23,8 +23,8 @@ export class Impidimp extends PokemonCard {
       cost: [D],
       damage: 10,
       damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 30 more damage.'
-    }
+      text: 'Flip a coin. If heads, this attack does 30 more damage.',
+    },
   ];
 
   public regulationMark: string = 'E';

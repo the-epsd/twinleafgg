@@ -7,28 +7,25 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 
 export class Sigilyph2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 90;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Quick Turn',
-      cost: [P],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
-    },
-    {
-      name: 'Psychic Assault',
-      cost: [C, C, C],
-      damage: 40,
-      damageCalculation: '+',
-      text: 'Does 10 more damage for each damage counter on the Defending Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Quick Turn',
+    cost: [P],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
+  }, {
+    name: 'Psychic Assault',
+    cost: [C, C, C],
+    damage: 40,
+    damageCalculation: '+',
+    text: 'Does 10 more damage for each damage counter on the Defending Pokémon.'
+  }];
 
   public set: string = 'EPO';
   public cardImage: string = 'assets/cardback.png';

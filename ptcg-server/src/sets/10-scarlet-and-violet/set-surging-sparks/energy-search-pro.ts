@@ -12,7 +12,12 @@ import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { EnergyCard, Player, StateUtils } from '../../../game';
 import { SHOW_CARDS_TO_PLAYER } from '../../../game/store/prefabs/prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
@@ -21,41 +26,42 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   const uniqueBasicEnergies = player.deck.cards
-    .filter(c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC)
-    .map(e => (e as EnergyCard).provides[0])
-    .filter((value, index, self) => self.indexOf(value) === index)
-    .length;
+    .filter((c) => c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC)
+    .map((e) => (e as EnergyCard).provides[0])
+    .filter((value, index, self) => self.indexOf(value) === index).length;
 
   let cards: Card[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.deck,
-    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-    { min: 0, max: uniqueBasicEnergies, allowCancel: false, differentTypes: true }
-  ), selected => {
-    cards = selected || [];
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.deck,
+      { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+      { min: 0, max: uniqueBasicEnergies, allowCancel: false, differentTypes: true },
+    ),
+    (selected) => {
+      cards = selected || [];
 
-    if (selected.length > 1) {
-      if (selected[0].name === selected[1].name) {
-        throw new GameError(GameMessage.CAN_ONLY_SELECT_TWO_DIFFERENT_ENERGY_TYPES);
+      if (selected.length > 1) {
+        if (selected[0].name === selected[1].name) {
+          throw new GameError(GameMessage.CAN_ONLY_SELECT_TWO_DIFFERENT_ENERGY_TYPES);
+        }
       }
-    }
 
-    SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+      SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
 
-    player.deck.moveCardsTo(cards, player.hand);
+      player.deck.moveCardsTo(cards, player.hand);
+    },
+  );
 
-  });
-
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);
   });
 }
 
 export class EnergySearchPro extends TrainerCard {
-
-  public tags = [CardTag.ACE_SPEC];
+  protected _tags = [CardTag.ACE_SPEC];
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
@@ -74,7 +80,6 @@ export class EnergySearchPro extends TrainerCard {
   public text: string =
     'Search your deck for any number of Basic Energy cards of different types, reveal them, and put them into your hand. Then, shuffle your deck.';
 
-
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     if (player.deck.cards.length === 0) {
       return false;
@@ -82,9 +87,7 @@ export class EnergySearchPro extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
@@ -92,5 +95,4 @@ export class EnergySearchPro extends TrainerCard {
 
     return state;
   }
-
 }

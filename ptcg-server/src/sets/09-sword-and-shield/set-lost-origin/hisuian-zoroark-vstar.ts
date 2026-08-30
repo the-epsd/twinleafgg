@@ -7,16 +7,15 @@ import { GameError, GameMessage, PlayerType, PokemonCard, PowerType } from '../.
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class HisuianZoroarkVSTAR extends PokemonCard {
-
   public stage: Stage = Stage.VSTAR;
 
   public evolvesFrom = 'Hisuian Zoroark V';
 
-  public tags = [CardTag.POKEMON_VSTAR];
+  protected _tags = [CardTag.POKEMON_VSTAR];
 
   public regulationMark = 'F';
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp: number = 270;
 
@@ -24,12 +23,14 @@ export class HisuianZoroarkVSTAR extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Phantom Star',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'During your turn, you may discard your hand and draw 7 cards. (You can\'t use more than 1 VSTAR Power in a game.)'
-  }];
+  public powers = [
+    {
+      name: 'Phantom Star',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: "During your turn, you may discard your hand and draw 7 cards. (You can't use more than 1 VSTAR Power in a game.)",
+    },
+  ];
 
   public attacks = [
     {
@@ -37,8 +38,8 @@ export class HisuianZoroarkVSTAR extends PokemonCard {
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 50,
       damageCalculator: 'x',
-      text: 'This attack does 50 damage for each of your Pokémon that has any damage counters on it.'
-    }
+      text: 'This attack does 50 damage for each of your Pokémon that has any damage counters on it.',
+    },
   ];
 
   public set: string = 'LOR';
@@ -52,7 +53,6 @@ export class HisuianZoroarkVSTAR extends PokemonCard {
   public fullName: string = 'Hisuian Zoroark VSTAR LOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
@@ -64,7 +64,7 @@ export class HisuianZoroarkVSTAR extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      const cards = player.hand.cards.filter(c => c !== this);
+      const cards = player.hand.cards.filter((c) => c !== this);
       player.hand.moveCardsTo(cards, player.discard);
       player.deck.moveTo(player.hand, 7);
       player.usedVSTAR = true;
@@ -73,7 +73,7 @@ export class HisuianZoroarkVSTAR extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const hasBenched = player.bench.some(b => b.cards.length > 0);
+      const hasBenched = player.bench.some((b) => b.cards.length > 0);
       if (!hasBenched) {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);
       }
@@ -87,10 +87,8 @@ export class HisuianZoroarkVSTAR extends PokemonCard {
       });
 
       effect.damage = benchPokemonWithDamage * 50;
-
     }
 
     return state;
   }
 }
-

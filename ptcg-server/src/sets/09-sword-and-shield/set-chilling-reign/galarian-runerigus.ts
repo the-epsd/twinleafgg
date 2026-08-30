@@ -7,21 +7,27 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
+} from '../../../game/store/prefabs/prefabs';
 
 export class GalarianRunerigus extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Galarian Yamask';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 120;
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Spiteful Slate',
-    powerType: PowerType.ABILITY,
-    text: 'If this Pokémon is in the Active Spot and is damaged by an attack from your opponent\'s Pokémon VMAX (even if this Pokémon is Knocked Out), put damage counters on the Attacking Pokémon equal to the damage done to this Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Spiteful Slate',
+      powerType: PowerType.ABILITY,
+      text: "If this Pokémon is in the Active Spot and is damaged by an attack from your opponent's Pokémon VMAX (even if this Pokémon is Knocked Out), put damage counters on the Attacking Pokémon equal to the damage done to this Pokémon.",
+    },
+  ];
 
   public attacks = [
     {
@@ -29,8 +35,8 @@ export class GalarianRunerigus extends PokemonCard {
       cost: [C, C, C],
       damage: 60,
       damageCalculation: '+',
-      text: 'This attack does 20 more damage for each Energy attached to your opponent\'s Active Pokémon.'
-    }
+      text: "This attack does 20 more damage for each Energy attached to your opponent's Active Pokémon.",
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -52,7 +58,7 @@ export class GalarianRunerigus extends PokemonCard {
 
       // Only trigger if the attacking Pokemon is a VMAX
       const attackerCard = effect.source.getPokemonCard();
-      if (!attackerCard || !attackerCard.tags.includes(CardTag.POKEMON_VMAX)) {
+      if (!attackerCard || !attackerCard.hasTag(CardTag.POKEMON_VMAX)) {
         return state;
       }
 

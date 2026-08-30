@@ -4,7 +4,7 @@ import { StateUtils } from '../../game/store/state-utils';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { EnergyType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { UseStadiumEffect } from '../../game/store/effects/game-effects';
-import { Card, ChooseCardsPrompt, EnergyCard, PokemonCard, PokemonCardList, ShuffleDeckPrompt } from '../../game';
+import { Card, ChooseCardsPrompt, EnergyCard, PokemonCard, PokemonCardList, ShuffleDeckPrompt, pokemonHasCardType } from '../../game';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -14,7 +14,9 @@ import { COIN_FLIP_PROMPT, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 export class ApricornForest extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '118';
+
   public trainerType = TrainerType.STADIUM;
+
   public set = 'AQ';
   public name = 'Apricorn Forest';
   public fullName = 'Apricorn Forest AQ';
@@ -57,7 +59,7 @@ export class ApricornForest extends TrainerCard {
                 if (!(card instanceof PokemonCard)) {
                   blocked.push(index);
                 }
-                if (card instanceof PokemonCard && card.cardType !== energyColor) {
+                if (card instanceof PokemonCard && !pokemonHasCardType(card, energyColor)) {
                   blocked.push(index);
                 }
               });

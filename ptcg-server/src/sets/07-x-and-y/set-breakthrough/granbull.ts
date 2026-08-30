@@ -11,26 +11,23 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, 
 export class Granbull extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Snubbull';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 120;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Startling Bark',
-      cost: [C, C],
-      damage: 0,
-      text: 'Flip a coin. If heads, choose 3 random cards from your opponent\'s hand. Your opponent reveals those cards and shuffles them into his or her deck.'
-    },
-    {
-      name: 'Tantrum',
-      cost: [Y, C, C],
-      damage: 120,
-      text: 'This Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Startling Bark',
+    cost: [C, C],
+    damage: 0,
+    text: 'Flip a coin. If heads, choose 3 random cards from your opponent\'s hand. Your opponent reveals those cards and shuffles them into his or her deck.'
+  }, {
+    name: 'Tantrum',
+    cost: [Y, C, C],
+    damage: 120,
+    text: 'This Pokémon is now Confused.'
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '99';

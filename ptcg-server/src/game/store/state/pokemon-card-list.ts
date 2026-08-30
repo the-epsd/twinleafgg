@@ -1,18 +1,61 @@
 import { Card } from '../card/card';
-import { BoardEffect, CardTag, SpecialCondition, Stage, SuperType } from '../card/card-types';
+import { BoardEffect, CardTag, CardType, SpecialCondition, Stage, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { Power, Attack } from '../card/pokemon-types';
 import { CardList } from './card-list';
 import { Marker } from './card-marker';
-import { PendingEnergyAttachDamageCounters } from './pending-energy-attach-effects';
+import { PendingEnergyAttachDamageCounters, PendingEnergyAttachFromHandConsequence } from './pending-energy-attach-effects';
 import { State } from './state';
 import { StateUtils } from '../state-utils';
 
 /** Filters for {@link PokemonCardList.preventDamageNextTurn} attack damage prevention. */
 export interface PreventDamageFilter {
+  /** Only prevent damage at or below this amount after Weakness/Resistance. */
+  maxDamage?: number;
   sourceStage?: Stage;
+  /** When true, only Evolution Pokémon (stage !== BASIC) match. */
+  sourceIsEvolution?: boolean;
   sourceTags?: CardTag[];
+  sourceCardTypes?: CardType[];
+  sourceHasAbility?: boolean;
 }
+
+export interface NextTurnAttackDamageBonus {
+  attackName: string;
+  bonusDamage: number;
+  sourceCardName: string;
+}
+
+export interface NextTurnAttackBaseDamage {
+  setupAttackName: string;
+  attackName: string;
+  baseDamage: number;
+  sourceCardName: string;
+}
+
+/** Survive-at-10 during opponent's next turn (Endure / Bide / Gritty Claws). */
+export interface SurviveOnTenHpOptions {
+  requireFullHp?: boolean;
+  /** Flip a coin when this Pokémon would be KO'd; only survive on heads (Strong-Willed). */
+  coinFlipOnWouldKo?: boolean;
+}
+
+/**
+ * Revenge trap: fixed HP damage or reflect damage taken.
+ * When `coinFlipPrevent` is true (Reflect Shield): on damage during the opponent's
+ * next turn, flip a coin; if heads, prevent that damage and still deal `damage` to
+ * the attacker; if tails, take the damage (no revenge).
+ */
+export type RetaliateOnDamageOptions =
+  | { damage: number; coinFlipPrevent?: boolean }
+  | { reflect: true };
+
+/** Armed revenge trap with attack attribution (so Mist Energy / effects-of-attacks can block). */
+export type StoredRetaliateOnDamage = RetaliateOnDamageOptions & {
+  attack: Attack;
+  sourceCard: PokemonCard;
+  attackerPlayerId: number;
+};
 
 export class PokemonCardList extends CardList {
   public damage: number = 0;
@@ -42,72 +85,137 @@ export class PokemonCardList extends CardList {
   public showBasicAnimation: boolean = false;
   public triggerAttackAnimation: boolean = false;
   public damageReductionNextTurn: number = 0;
+  /** Optional source filter for {@link damageReductionNextTurn} (e.g. Evolution-only). */
+  public damageReductionNextTurnFilter: PreventDamageFilter | null = null;
+  public damageReductionBeforeWeaknessNextTurn: number = 0;
   public preventDamageNextTurn: PreventDamageFilter | null = null;
   public preventDamageNextTurnPending: PreventDamageFilter | null = null;
-  public preventEffectsOfAttacksNextTurn: boolean = false;
-  public preventEffectsOfAttacksNextTurnPending: boolean = false;
+  public preventEffectsOfAttacksNextTurn: PreventDamageFilter | null = null;
+  public preventEffectsOfAttacksNextTurnPending: PreventDamageFilter | null = null;
+  public cannotBeHealedNextTurn: boolean = false;
+  /** True if this Pokémon had damage counters removed by a HealEffect this turn. */
+  public healedThisTurn: boolean = false;
+  /** During the opponent's next turn, this Pokémon has no Weakness. */
+  public noWeaknessNextTurn: boolean = false;
+  public noWeaknessNextTurnPending: boolean = false;
+  /** During the owner's next turn, this Pokémon has no Retreat Cost. */
+  public zeroRetreatCostNextTurn: boolean = false;
+  public zeroRetreatCostNextTurnPending: boolean = false;
   public defendingPokemonExtraDamageNextTurn: number = 0;
   public defendingPokemonExtraDamageAttackerId: number | undefined = undefined;
   public defendingPokemonExtraDamagePending: boolean = false;
   public defendingPokemonExtraDamageRearmAfterAttack: boolean = false;
+  public attackCostIncreaseNextTurn = 0;
+  public attackCostIncreaseNextTurnPending = 0;
+  public attackCostIncreaseNextTurnAttackerId: number | undefined;
+  public attackCostIncreaseWhileActive: number = 0;
+  public attackCostIncreaseWhileActiveSourceCard: PokemonCard | undefined;
+  public retreatCostIncreaseNextTurn = 0;
+  public retreatCostIncreaseNextTurnPending = 0;
+  public retreatCostIncreaseNextTurnAttackerId: number | undefined;
+  public cannotRetreatWhileActive: boolean = false;
+  public cannotRetreatWhileActiveSourceCard: PokemonCard | undefined;
+  public nextTurnAttackDamageBonus: NextTurnAttackDamageBonus | null = null;
+  public nextTurnAttackDamageBonusPending: NextTurnAttackDamageBonus | null = null;
+  public nextTurnAttackBaseDamage: NextTurnAttackBaseDamage | null = null;
+  public nextTurnAttackBaseDamagePending: NextTurnAttackBaseDamage | null = null;
+  public weaknessOverrideType: CardType | undefined = undefined;
+  public weaknessOverrideAttackerId: number | undefined = undefined;
+  public weaknessOverrideClearArmed: boolean = false;
+
+  /**
+   * Hangman / ticking KO: during the attacker's next turn, if this Pokémon is
+   * damaged by an attack (optionally filtered), it is Knocked Out.
+   */
+  public knockOutIfDamagedNextTurn: boolean = false;
+  public knockOutIfDamagedNextTurnPending: boolean = false;
+  public knockOutIfDamagedNextTurnAttackerId: number | undefined = undefined;
+  public knockOutIfDamagedNextTurnFilter: PreventDamageFilter | null = null;
+  /** Attack attribution for Mist-blockable hangman KO application. */
+  public knockOutIfDamagedNextTurnAttack: Attack | undefined = undefined;
+  public knockOutIfDamagedNextTurnSourceCard: PokemonCard | undefined = undefined;
+
+  /** Survive at 10 HP during opponent's next turn (Endure / Bide / Gritty Claws). */
+  public surviveOnTenHpNextTurn: SurviveOnTenHpOptions | null = null;
+  public surviveOnTenHpNextTurnPending: SurviveOnTenHpOptions | null = null;
+
+  /** Revenge trap during opponent's next turn (Shell Trap / Counter Press). */
+  public retaliateOnDamageNextTurn: StoredRetaliateOnDamage | null = null;
+  public retaliateOnDamageNextTurnPending: StoredRetaliateOnDamage | null = null;
+
+  /**
+   * Extra prizes if this (Defending) Pokémon is Knocked Out during the
+   * attacker's next turn.
+   */
+  public extraPrizesIfKnockedOutNextTurn: number = 0;
+  public extraPrizesIfKnockedOutNextTurnPending: boolean = false;
+  public extraPrizesIfKnockedOutNextTurnAttackerId: number | undefined = undefined;
+
+  /** If this Pokémon is Knocked Out during opponent's next turn, deny prizes. */
+  public denyPrizesIfKnockedOutNextTurn: boolean = false;
+  public denyPrizesIfKnockedOutNextTurnPending: boolean = false;
+
+  /** If this Pokémon is Knocked Out during opponent's next turn, discard Energy from attacker. */
+  public discardAttackerEnergyIfKnockedOutNextTurn: boolean = false;
+  public discardAttackerEnergyIfKnockedOutNextTurnPending: boolean = false;
+  public discardAttackerEnergyIfKnockedOutNextTurnAttack: Attack | undefined = undefined;
+  public discardAttackerEnergyIfKnockedOutNextTurnSourceCard: PokemonCard | undefined = undefined;
+  public discardAttackerEnergyIfKnockedOutNextTurnAttackerId: number | undefined = undefined;
+
   public cannotAttackNextTurn: boolean = false;
   public cannotAttackNextTurnPending: boolean = false;
   public cannotUseAttacksNextTurn: string[] = [];
   public cannotUseAttacksNextTurnPending: string[] = [];
+  /**
+   * Smokescreen / Sand-Attack style: when this Pokémon tries to attack, its owner
+   * flips this many coins. If any is tails, that attack does nothing.
+   * `0` = inactive. Set on the Defending Pokémon for the opponent's next turn.
+   */
+  public coinFlipCancelAttackNextTurn: number = 0;
+  /**
+   * Growl / Daunt style: this Pokémon's attacks do this many less damage
+   * (before Weakness and Resistance). `0` = inactive.
+   * Set on the Defending Pokémon for the opponent's next turn.
+   */
+  public attackDamageReductionNextTurn: number = 0;
+  /**
+   * Snarl style: this Pokémon's attacks do this many less damage
+   * after Weakness and Resistance. `0` = inactive.
+   * Set on the Defending Pokémon for the opponent's next turn.
+   */
+  public attackDamageReductionAfterWeaknessNextTurn: number = 0;
   public cannotRetreatNextTurn: boolean = false;
   public cannotRetreatNextTurnPending: boolean = false;
+  /**
+   * During the owner's next turn, Energy can't be attached from their hand to this Pokémon.
+   * Set on the Defending Pokémon by Sand Tomb / Spit Glue / etc.
+   */
+  public cannotAttachEnergyFromHandNextTurn: boolean = false;
   public pendingEnergyAttachDamageCounters: PendingEnergyAttachDamageCounters | null = null;
+  /** Asleep / end-turn consequences when Energy is attached from hand (Boo-Hoo / Lazy Howl). */
+  public pendingEnergyAttachFromHandConsequence: PendingEnergyAttachFromHandConsequence | null = null;
+  public pendingEnergyReturnToHand: Card[] = [];
   public blockedAttackNameNextTurn: string | undefined = undefined;
+  public blockedAttackNameUntilLeavesActive: string | undefined = undefined;
+  /**
+   * Encore: during the owner's next turn, this Pokémon can only use this attack.
+   */
+  public onlyAllowedAttackNameNextTurn: string | undefined = undefined;
+  /**
+   * During the owner's next turn, Pokémon can't be played from hand to evolve this Pokémon.
+   */
+  public cannotEvolveNextTurn: boolean = false;
+  /**
+   * The Defending Pokémon has no Abilities until the end of the attacker's next turn
+   * (Gastro Acid). Cleared with a two-phase arm on the attacker's EndTurns.
+   */
+  public noAbilities: boolean = false;
+  public noAbilitiesAttackerId: number | undefined = undefined;
+  public noAbilitiesClearArmed: boolean = false;
   public _preservedConditionsDuringEvolution?: SpecialCondition[];
 
-  public static readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public static readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
   public static readonly CLEAR_KNOCKOUT_MARKER = 'CLEAR_KNOCKOUT_MARKER';
-  public static readonly CLEAR_KNOCKOUT_MARKER_2 = 'CLEAR_KNOCKOUT_MARKER_2';
   public static readonly KNOCKOUT_MARKER = 'KNOCKOUT_MARKER';
-  public static readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'NEXT_TURN_MORE_DAMAGE_MARKER';
-  public static readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';
-  public static readonly PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN =
-    'PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN';
-  public static readonly CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN =
-    'CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN';
-  public static readonly PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN =
-    'PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN';
-  public static readonly CLEAR_PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN =
-    'CLEAR_PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN';
-  public static readonly OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER =
-    'OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER';
-  public static readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER =
-    'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
-  public static readonly PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER =
-    'PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
-  public static readonly CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER =
-    'CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
-  public static readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER =
-    'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
-  public static readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER =
-    'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
-  public static readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER =
-    'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
-  public static readonly DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER =
-    'DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER';
-  public static readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER =
-    'CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER';
-  public static readonly PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER: string =
-    'PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER';
-  public static readonly CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER: string =
-    'CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER';
-  public static readonly PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER =
-    'PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER';
-  public static readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER =
-    'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
-  public static readonly PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER =
-    'PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER';
-  public static readonly CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER =
-    'CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER';
-
-  public static readonly UNRELENTING_ONSLAUGHT_MARKER = 'UNRELENTING_ONSLAUGHT_MARKER';
-  public static readonly UNRELENTING_ONSLAUGHT_2_MARKER = 'UNRELENTING_ONSLAUGHT_2_MARKER';
 
   public getPokemons(): PokemonCard[] {
     const result: PokemonCard[] = [];
@@ -141,6 +249,8 @@ export class PokemonCardList extends CardList {
       } else if (card.name === 'Antique Jaw Fossil') {
         result.push(card as PokemonCard);
       } else if (card.name === 'Antique Sail Fossil') {
+        result.push(card as PokemonCard);
+      } else if (card.name === 'Antique Root Fossil') {
         result.push(card as PokemonCard);
       } else if (card.name === 'Claw Fossil') {
         result.push(card as PokemonCard);
@@ -205,19 +315,76 @@ export class PokemonCardList extends CardList {
     this.cannotAttackNextTurnPending = false;
     this.cannotUseAttacksNextTurn = [];
     this.cannotUseAttacksNextTurnPending = [];
+    this.coinFlipCancelAttackNextTurn = 0;
+    this.attackDamageReductionNextTurn = 0;
+    this.attackDamageReductionAfterWeaknessNextTurn = 0;
     this.cannotRetreatNextTurn = false;
     this.cannotRetreatNextTurnPending = false;
+    this.cannotAttachEnergyFromHandNextTurn = false;
     this.pendingEnergyAttachDamageCounters = null;
+    this.pendingEnergyAttachFromHandConsequence = null;
+    this.pendingEnergyReturnToHand = [];
     this.blockedAttackNameNextTurn = undefined;
+    this.blockedAttackNameUntilLeavesActive = undefined;
+    this.onlyAllowedAttackNameNextTurn = undefined;
+    this.cannotEvolveNextTurn = false;
+    this.noAbilities = false;
+    this.noAbilitiesAttackerId = undefined;
+    this.noAbilitiesClearArmed = false;
     this.damageReductionNextTurn = 0;
+    this.damageReductionNextTurnFilter = null;
+    this.damageReductionBeforeWeaknessNextTurn = 0;
     this.preventDamageNextTurn = null;
     this.preventDamageNextTurnPending = null;
-    this.preventEffectsOfAttacksNextTurn = false;
-    this.preventEffectsOfAttacksNextTurnPending = false;
+    this.preventEffectsOfAttacksNextTurn = null;
+    this.preventEffectsOfAttacksNextTurnPending = null;
+    this.cannotBeHealedNextTurn = false;
+    this.healedThisTurn = false;
+    this.noWeaknessNextTurn = false;
+    this.noWeaknessNextTurnPending = false;
+    this.zeroRetreatCostNextTurn = false;
+    this.zeroRetreatCostNextTurnPending = false;
     this.defendingPokemonExtraDamageNextTurn = 0;
     this.defendingPokemonExtraDamageAttackerId = undefined;
     this.defendingPokemonExtraDamagePending = false;
     this.defendingPokemonExtraDamageRearmAfterAttack = false;
+    this.attackCostIncreaseNextTurn = 0;
+    this.attackCostIncreaseNextTurnPending = 0;
+    this.attackCostIncreaseNextTurnAttackerId = undefined;
+    this.attackCostIncreaseWhileActive = 0;
+    this.attackCostIncreaseWhileActiveSourceCard = undefined;
+    this.retreatCostIncreaseNextTurn = 0;
+    this.retreatCostIncreaseNextTurnPending = 0;
+    this.retreatCostIncreaseNextTurnAttackerId = undefined;
+    this.cannotRetreatWhileActive = false;
+    this.cannotRetreatWhileActiveSourceCard = undefined;
+    this.nextTurnAttackDamageBonus = null;
+    this.nextTurnAttackDamageBonusPending = null;
+    this.nextTurnAttackBaseDamage = null;
+    this.nextTurnAttackBaseDamagePending = null;
+    this.weaknessOverrideType = undefined;
+    this.weaknessOverrideAttackerId = undefined;
+    this.weaknessOverrideClearArmed = false;
+    this.knockOutIfDamagedNextTurn = false;
+    this.knockOutIfDamagedNextTurnPending = false;
+    this.knockOutIfDamagedNextTurnAttackerId = undefined;
+    this.knockOutIfDamagedNextTurnFilter = null;
+    this.knockOutIfDamagedNextTurnAttack = undefined;
+    this.knockOutIfDamagedNextTurnSourceCard = undefined;
+    this.surviveOnTenHpNextTurn = null;
+    this.surviveOnTenHpNextTurnPending = null;
+    this.retaliateOnDamageNextTurn = null;
+    this.retaliateOnDamageNextTurnPending = null;
+    this.extraPrizesIfKnockedOutNextTurn = 0;
+    this.extraPrizesIfKnockedOutNextTurnPending = false;
+    this.extraPrizesIfKnockedOutNextTurnAttackerId = undefined;
+    this.denyPrizesIfKnockedOutNextTurn = false;
+    this.denyPrizesIfKnockedOutNextTurnPending = false;
+    this.discardAttackerEnergyIfKnockedOutNextTurn = false;
+    this.discardAttackerEnergyIfKnockedOutNextTurnPending = false;
+    this.discardAttackerEnergyIfKnockedOutNextTurnAttack = undefined;
+    this.discardAttackerEnergyIfKnockedOutNextTurnSourceCard = undefined;
+    this.discardAttackerEnergyIfKnockedOutNextTurnAttackerId = undefined;
   }
 
   clearEffects(): void {
@@ -248,22 +415,65 @@ export class PokemonCardList extends CardList {
     this.burnDamage = 20;
     this.confusionDamage = 30;
     this.damageReductionNextTurn = 0;
+    this.damageReductionNextTurnFilter = null;
+    this.damageReductionBeforeWeaknessNextTurn = 0;
+    this.attackDamageReductionAfterWeaknessNextTurn = 0;
     this.preventDamageNextTurn = null;
     this.preventDamageNextTurnPending = null;
-    this.preventEffectsOfAttacksNextTurn = false;
-    this.preventEffectsOfAttacksNextTurnPending = false;
+    this.preventEffectsOfAttacksNextTurn = null;
+    this.preventEffectsOfAttacksNextTurnPending = null;
+    this.cannotBeHealedNextTurn = false;
+    this.healedThisTurn = false;
+    this.noWeaknessNextTurn = false;
+    this.noWeaknessNextTurnPending = false;
+    this.zeroRetreatCostNextTurn = false;
+    this.zeroRetreatCostNextTurnPending = false;
     this.defendingPokemonExtraDamageNextTurn = 0;
     this.defendingPokemonExtraDamageAttackerId = undefined;
     this.defendingPokemonExtraDamagePending = false;
     this.defendingPokemonExtraDamageRearmAfterAttack = false;
+    this.weaknessOverrideType = undefined;
+    this.weaknessOverrideAttackerId = undefined;
+    this.weaknessOverrideClearArmed = false;
+    this.knockOutIfDamagedNextTurn = false;
+    this.knockOutIfDamagedNextTurnPending = false;
+    this.knockOutIfDamagedNextTurnAttackerId = undefined;
+    this.knockOutIfDamagedNextTurnFilter = null;
+    this.knockOutIfDamagedNextTurnAttack = undefined;
+    this.knockOutIfDamagedNextTurnSourceCard = undefined;
+    this.surviveOnTenHpNextTurn = null;
+    this.surviveOnTenHpNextTurnPending = null;
+    this.retaliateOnDamageNextTurn = null;
+    this.retaliateOnDamageNextTurnPending = null;
+    this.extraPrizesIfKnockedOutNextTurn = 0;
+    this.extraPrizesIfKnockedOutNextTurnPending = false;
+    this.extraPrizesIfKnockedOutNextTurnAttackerId = undefined;
+    this.denyPrizesIfKnockedOutNextTurn = false;
+    this.denyPrizesIfKnockedOutNextTurnPending = false;
+    this.discardAttackerEnergyIfKnockedOutNextTurn = false;
+    this.discardAttackerEnergyIfKnockedOutNextTurnPending = false;
+    this.discardAttackerEnergyIfKnockedOutNextTurnAttack = undefined;
+    this.discardAttackerEnergyIfKnockedOutNextTurnSourceCard = undefined;
+    this.discardAttackerEnergyIfKnockedOutNextTurnAttackerId = undefined;
     this.cannotAttackNextTurn = false;
     this.cannotAttackNextTurnPending = false;
     this.cannotUseAttacksNextTurn = [];
     this.cannotUseAttacksNextTurnPending = [];
+    this.coinFlipCancelAttackNextTurn = 0;
+    this.attackDamageReductionNextTurn = 0;
     this.cannotRetreatNextTurn = false;
     this.cannotRetreatNextTurnPending = false;
+    this.cannotAttachEnergyFromHandNextTurn = false;
     this.pendingEnergyAttachDamageCounters = null;
+    this.pendingEnergyAttachFromHandConsequence = null;
+    this.pendingEnergyReturnToHand = [];
     this.blockedAttackNameNextTurn = undefined;
+    this.blockedAttackNameUntilLeavesActive = undefined;
+    this.onlyAllowedAttackNameNextTurn = undefined;
+    this.cannotEvolveNextTurn = false;
+    this.noAbilities = false;
+    this.noAbilitiesAttackerId = undefined;
+    this.noAbilitiesClearArmed = false;
     // if (this.cards.length === 0) {
     //   this.damage = 0;
     // }
@@ -354,6 +564,10 @@ export class PokemonCardList extends CardList {
 
   exPokemon(): boolean {
     return this.cards.some((c) => c.tags.includes(CardTag.POKEMON_ex));
+  }
+
+  EXPokemon(): boolean {
+    return this.cards.some((c) => c.tags.includes(CardTag.POKEMON_EX));
   }
 
   isTera(): boolean {

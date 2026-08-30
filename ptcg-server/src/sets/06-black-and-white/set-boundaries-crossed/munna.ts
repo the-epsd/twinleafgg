@@ -8,47 +8,38 @@ import { PowerType } from '../../../game/store/card/pokemon-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
-import { CoinFlipPrompt } from '../../../game/store/prompts/coin-flip-prompt';
+
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_POWER_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Munna extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.PSYCHIC;
-
+  public cardType: CardType[] = [P];
   public hp: number = 60;
-
-  public weakness = [{ type: CardType.PSYCHIC }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: P }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Long-Distance Hypnosis',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'Once during your turn (before your attack), you may flip a coin. ' +
-      'If heads, your opponent\'s Active Pokemon is now Asleep. ' +
-      'If tails, your Active Pokemon is now Asleep.'
+    'If heads, your opponent\'s Active Pokemon is now Asleep. ' +
+    'If tails, your Active Pokemon is now Asleep.'
   }];
 
   public attacks = [{
     name: 'Psyshot',
-    cost: [CardType.PSYCHIC, CardType.COLORLESS],
+    cost: [P, C],
     damage: 20,
     text: ''
   }];
 
   public set: string = 'BCR';
-
   public name: string = 'Munna';
-
   public fullName: string = 'Munna BCR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '68';
 
   public readonly LONG_DISTANCE_HYPNOSIS_MARKER = 'LONG_DISTANCE_HYPNOSIS_MARKER';
@@ -69,10 +60,7 @@ export class Munna extends PokemonCard {
       }
       player.marker.addMarker(this.LONG_DISTANCE_HYPNOSIS_MARKER, this);
 
-      return store.prompt(state, new CoinFlipPrompt(
-        player.id,
-        GameMessage.COIN_FLIP
-      ), result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
           opponent.active.addSpecialCondition(SpecialCondition.ASLEEP);
         } else {

@@ -11,10 +11,9 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class SingleStrikeStyleMustard extends TrainerCard {
-
   public regulationMark = 'E';
 
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
@@ -28,8 +27,7 @@ export class SingleStrikeStyleMustard extends TrainerCard {
 
   public fullName: string = 'Single Strike Style Mustard BST';
 
-  public text: string =
-    `You can play this card only when it is the last card in your hand.
+  public text: string = `You can play this card only when it is the last card in your hand.
 
 Search your deck for a Single Strike Pokémon and put it onto your Bench. Then, shuffle your deck. If you searched your deck in this way, draw 5 cards.`;
 
@@ -47,43 +45,45 @@ Search your deck for a Single Strike Pokémon and put it onto your Bench. Then, 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      const cards = player.hand.cards.filter(c => c !== this);
+      const cards = player.hand.cards.filter((c) => c !== this);
 
       const blocked: number[] = [];
       player.deck.cards.forEach((card, index) => {
-        if (card instanceof PokemonCard && !card.tags.includes(CardTag.SINGLE_STRIKE)) {
+        if (card instanceof PokemonCard && !card.hasTag(CardTag.SINGLE_STRIKE)) {
           blocked.push(index);
         }
       });
 
-      const slot = player.bench.find(b => b.cards.length === 0);
+      const slot = player.bench.find((b) => b.cards.length === 0);
       const hasEffect = slot || player.deck.cards.length > 0;
 
       if (cards.length !== 0 || !hasEffect) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-        player.deck,
-        { superType: SuperType.POKEMON },
-        { min: 1, max: 1, allowCancel: false, blocked: blocked }
-      ), selected => {
-        const cards = selected || [];
-        player.deck.moveCardsTo(cards, slot!);
-        slot!.pokemonPlayedTurn = state.turn;
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+          player.deck,
+          { superType: SuperType.POKEMON },
+          { min: 1, max: 1, allowCancel: false, blocked: blocked },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          player.deck.moveCardsTo(cards, slot!);
+          slot!.pokemonPlayedTurn = state.turn;
 
-        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
+          return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+            player.deck.applyOrder(order);
 
-          player.deck.moveTo(player.hand, 5);
-
-        });
-      });
+            player.deck.moveTo(player.hand, 5);
+          });
+        },
+      );
     }
 
     return state;
   }
-
 }

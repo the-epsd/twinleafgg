@@ -8,12 +8,11 @@ import { BetweenTurnsEffect } from '../../../game/store/effects/game-phase-effec
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class RadiantHisuianSneasler extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
-  public tags = [CardTag.RADIANT];
+  protected _tags = [CardTag.RADIANT];
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp: number = 130;
 
@@ -21,18 +20,22 @@ export class RadiantHisuianSneasler extends PokemonCard {
 
   public retreat = [CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Poison Peak',
-    powerType: PowerType.ABILITY,
-    text: 'During Pokémon Checkup, put 2 more damage counters on your opponent\'s Poisoned Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Poison Peak',
+      powerType: PowerType.ABILITY,
+      text: "During Pokémon Checkup, put 2 more damage counters on your opponent's Poisoned Pokémon.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Poison Jab',
-    cost: [D, C, C],
-    damage: 90,
-    text: 'Your opponent\'s Active Pokémon is now Poisoned.'
-  }];
+  public attacks = [
+    {
+      name: 'Poison Jab',
+      cost: [D, C, C],
+      damage: 90,
+      text: "Your opponent's Active Pokémon is now Poisoned.",
+    },
+  ];
 
   public set: string = 'LOR';
 
@@ -49,13 +52,12 @@ export class RadiantHisuianSneasler extends PokemonCard {
   // private POISON_MODIFIER_MARKER = 'POISON_MODIFIER_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof BetweenTurnsEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       let sneaslerOwner = null;
-      [player, opponent].forEach(p => {
+      [player, opponent].forEach((p) => {
         p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
           if (card === this) {
             sneaslerOwner = p;
@@ -68,34 +70,36 @@ export class RadiantHisuianSneasler extends PokemonCard {
       }
 
       try {
-        const stub = new PowerEffect(sneaslerOwner, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
+        const stub = new PowerEffect(
+          sneaslerOwner,
+          {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: '',
+          },
+          this,
+        );
         store.reduceEffect(state, stub);
       } catch {
         return state;
       }
 
       const sneaslerOpponent = StateUtils.getOpponent(state, sneaslerOwner);
-      if (effect.player === sneaslerOpponent && sneaslerOpponent.active.specialConditions.includes(SpecialCondition.POISONED)) {
+      if (
+        effect.player === sneaslerOpponent &&
+        sneaslerOpponent.active.specialConditions.includes(SpecialCondition.POISONED)
+      ) {
         effect.poisonDamage += 20;
         console.log('sneasler:', effect.poisonDamage);
       }
     }
 
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.POISONED]);
       store.reduceEffect(state, specialCondition);
 
       return state;
-
     }
     return state;
   }
 }
-
-

@@ -30,6 +30,7 @@ export class ReconnectionCleanupService {
   private maintenanceInterval: NodeJS.Timeout | null = null;
   private isShuttingDown = false;
   private activeCleanupPromises: Promise<void>[] = [];
+  private scheduledCleanupInProgress = false;
 
   private metrics: CleanupMetrics = {
     expiredSessionsRemoved: 0,
@@ -148,6 +149,11 @@ export class ReconnectionCleanupService {
    * Perform scheduled cleanup of expired sessions
    */
   public async performScheduledCleanup(): Promise<void> {
+    if (this.scheduledCleanupInProgress) {
+      return;
+    }
+
+    this.scheduledCleanupInProgress = true;
     const startTime = Date.now();
     const operationId = `cleanup-${Date.now()}`;
 
@@ -201,6 +207,8 @@ export class ReconnectionCleanupService {
         data: { operationId, durationMs: duration },
         error: error as Error
       });
+    } finally {
+      this.scheduledCleanupInProgress = false;
     }
   }
 
@@ -225,8 +233,6 @@ export class ReconnectionCleanupService {
           // Remove the session record
           await session.remove();
           cleanedCount++;
-
-          logger.logSessionExpiry(session.userId, session.gameId);
         } catch (error) {
           logger.logStructured({
             level: LogLevel.ERROR,
@@ -240,6 +246,18 @@ export class ReconnectionCleanupService {
             error: error as Error
           });
         }
+      }
+
+      if (cleanedCount > 0) {
+        logger.logStructured({
+          level: LogLevel.INFO,
+          category: 'session-management',
+          message: 'Disconnected sessions expired',
+          data: {
+            expiredSessionCount: cleanedCount,
+            timestamp: Date.now()
+          }
+        });
       }
 
       const duration = Date.now() - startTime;
@@ -267,10 +285,8 @@ export class ReconnectionCleanupService {
     const startTime = Date.now();
 
     try {
-      // This would typically involve checking for preserved states that don't have
-      // corresponding active sessions. Since GameStatePreserver handles this internally,
-      // we'll delegate to it.
-      const cleanedCount = await this.gameStatePreserver.cleanupExpiredSessions();
+      // Safety net for any expired rows missed by the primary cleanup pass.
+      const cleanedCount = await this.gameStatePreserver.cleanupExpiredSessions({ logEachSession: false });
 
       const duration = Date.now() - startTime;
       logger.logCleanupOperation('orphaned-game-states', cleanedCount, duration);

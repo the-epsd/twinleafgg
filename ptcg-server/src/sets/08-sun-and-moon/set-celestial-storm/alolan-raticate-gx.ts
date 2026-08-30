@@ -3,43 +3,51 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, TrainerType } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  TrainerType,
+} from '../../../game/store/card/card-types';
 import { ChooseCardsPrompt, GameMessage, StoreLike, State, StateUtils } from '../../../game';
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, BLOCK_IF_GX_ATTACK_USED, BLOCK_IF_DECK_EMPTY, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  COIN_FLIP_PROMPT,
+  BLOCK_IF_GX_ATTACK_USED,
+  BLOCK_IF_DECK_EMPTY,
+  SHUFFLE_DECK,
+} from '../../../game/store/prefabs/prefabs';
 
 export class AlolanRaticateGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Alolan Rattata';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 200;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Chuck Away',
-      cost: [],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Discard up to 2 cards from your hand. This attack does 40 damage for each card you discarded in this way.'
-    },
-    {
-      name: 'Hyper Fang',
-      cost: [D, C, C],
-      damage: 150,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    },
-    {
-      name: 'Item Maniac-GX',
-      cost: [],
-      damage: 0,
-      text: 'Search your deck for up to 6 Item cards, reveal them, and put them into your hand. Then, shuffle your deck. (You can\'t use more than 1 GX attack in a game.)'
-    }
-  ];
+  public attacks = [{
+    name: 'Chuck Away',
+    cost: [],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Discard up to 2 cards from your hand. This attack does 40 damage for each card you discarded in this way.'
+  }, {
+    name: 'Hyper Fang',
+    cost: [D, C, C],
+    damage: 150,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }, {
+    name: 'Item Maniac-GX',
+    cost: [],
+    damage: 0,
+    text: 'Search your deck for up to 6 Item cards, reveal them, and put them into your hand. Then, shuffle your deck. (You can\'t use more than 1 GX attack in a game.)'
+  }];
 
   public set: string = 'CES';
   public setNumber: string = '85';
@@ -58,23 +66,27 @@ export class AlolanRaticateGx extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        player.hand,
-        {},
-        { allowCancel: true, min: 0, max: 2 }
-      ), cards => {
-        cards = cards || [];
-        effect.damage = cards.length * 40;
-        player.hand.moveCardsTo(cards, player.discard);
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          player.hand,
+          {},
+          { allowCancel: true, min: 0, max: 2 },
+        ),
+        (cards) => {
+          cards = cards || [];
+          effect.damage = cards.length * 40;
+          player.hand.moveCardsTo(cards, player.discard);
+        },
+      );
     }
 
     // Attack 2: Hyper Fang
     // Ref: AGENTS-patterns.md (coin flip tails does nothing)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (!result) {
           effect.damage = 0;
         }
@@ -91,26 +103,30 @@ export class AlolanRaticateGx extends PokemonCard {
       player.usedGX = true;
       BLOCK_IF_DECK_EMPTY(player);
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
-        { min: 0, max: 6, allowCancel: false }
-      ), selected => {
-        const cards = selected || [];
-        if (cards.length > 0) {
-          store.prompt(state, new ShowCardsPrompt(
-            opponent.id,
-            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-            cards
-          ), () => { });
-          cards.forEach(card => {
-            player.deck.moveCardTo(card, player.hand);
-          });
-        }
-        SHUFFLE_DECK(store, state, player);
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.deck,
+          { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
+          { min: 0, max: 6, allowCancel: false },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          if (cards.length > 0) {
+            store.prompt(
+              state,
+              new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+              () => {},
+            );
+            cards.forEach((card) => {
+              player.deck.moveCardTo(card, player.hand);
+            });
+          }
+          SHUFFLE_DECK(store, state, player);
+        },
+      );
     }
 
     return state;

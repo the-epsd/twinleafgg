@@ -11,29 +11,26 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class MoltresEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX, CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.POKEMON_EX, CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 170;
   public weakness = [{ type: W }];
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Destructive Flame',
-      cost: [R, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokémon.'
-    },
-    {
-      name: 'Power Flame',
-      cost: [R, R, C, C],
-      damage: 80,
-      damageCalculation: '+',
-      text: 'If this Pokémon has any Plasma Energy attached to it, this attack does 40 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Destructive Flame',
+    cost: [R, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, discard an Energy attached to the Defending Pokémon.'
+  }, {
+    name: 'Power Flame',
+    cost: [R, R, C, C],
+    damage: 80,
+    damageCalculation: '+',
+    text: 'If this Pokémon has any Plasma Energy attached to it, this attack does 40 more damage.'
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '14';
@@ -45,7 +42,7 @@ export class MoltresEx extends PokemonCard {
     // Attack 1: Destructive Flame
     // Ref: AGENTS-patterns.md (coin flip discard energy from opponent)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (result) {
           DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
         }
@@ -60,8 +57,8 @@ export class MoltresEx extends PokemonCard {
       const checkEnergy = new CheckProvidedEnergyEffect(player, player.active);
       store.reduceEffect(state, checkEnergy);
 
-      const hasPlasmaEnergy = checkEnergy.energyMap.some(em =>
-        em.card.superType === SuperType.ENERGY && em.card.name === 'Plasma Energy'
+      const hasPlasmaEnergy = checkEnergy.energyMap.some(
+        (em) => em.card.superType === SuperType.ENERGY && em.card.name === 'Plasma Energy',
       );
 
       if (hasPlasmaEnergy) {

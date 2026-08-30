@@ -10,19 +10,17 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 
 export class Magikarp extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 30;
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Enter the Dragon',
-      cost: [W],
-      damage: 0,
-      text: 'Flip a coin. If heads, put a card that evolves from this Pokémon from your discard pile onto this Pokémon to evolve it.'
-    }
-  ];
+  public attacks = [{
+    name: 'Enter the Dragon',
+    cost: [W],
+    damage: 0,
+    text: 'Flip a coin. If heads, put a card that evolves from this Pokémon from your discard pile onto this Pokémon to evolve it.'
+  }];
 
   public set: string = 'TEU';
   public setNumber: string = '29';

@@ -22,8 +22,8 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs
 export class Slakingex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Vigoroth';
-  public tags: string[] = [CardTag.POKEMON_ex];
-  public cardType: CardType = C;
+  protected _tags = [CardTag.POKEMON_ex];
+  public cardType: CardType[] = [C];
   public hp: number = 340;
   public weakness = [{ type: F }];
   public retreat = [C, C, C, C];
@@ -61,11 +61,11 @@ export class Slakingex extends PokemonCard {
       let hasSpecialPokemon = false;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
         if (
-          card.tags.includes(CardTag.POKEMON_ex) ||
-          card.tags.includes(CardTag.POKEMON_V) ||
-          card.tags.includes(CardTag.POKEMON_VMAX) ||
-          card.tags.includes(CardTag.POKEMON_VSTAR) ||
-          card.tags.includes(CardTag.POKEMON_VUNION)
+          card.hasTag(CardTag.POKEMON_ex) ||
+          card.hasTag(CardTag.POKEMON_V) ||
+          card.hasTag(CardTag.POKEMON_VMAX) ||
+          card.hasTag(CardTag.POKEMON_VSTAR) ||
+          card.hasTag(CardTag.POKEMON_VUNION)
         ) {
           hasSpecialPokemon = true;
         }

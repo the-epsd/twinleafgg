@@ -8,33 +8,42 @@ import { GameError, GameMessage, PowerType, StoreLike, State, StateUtils } from 
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  USE_ABILITY_ONCE_PER_TURN,
+  ABILITY_USED,
+  REMOVE_MARKER_AT_END_OF_TURN,
+} from '../../../game/store/prefabs/prefabs';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON } from '../../../game/store/prefabs/attack-effects';
 import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
 
 export class HoOhEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 180;
   public weakness = [{ type: W }];
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Purifying Fire',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), if this Pokémon has any basic [R] Energy attached to it, you may heal 50 damage from it.'
-  }];
+  public powers = [
+    {
+      name: 'Purifying Fire',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn (before your attack), if this Pokémon has any basic [R] Energy attached to it, you may heal 50 damage from it.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Elemental Feather',
       cost: [G, W, L],
       damage: 130,
-      text: 'This attack does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon).'
-    }
+      text: "This attack does 30 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon).",
+    },
   ];
 
   public set: string = 'BKP';
@@ -58,8 +67,11 @@ export class HoOhEx extends PokemonCard {
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
 
       // Check if has basic Fire Energy
-      const hasFireEnergy = cardList.cards.some(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.FIRE)
+      const hasFireEnergy = cardList.cards.some(
+        (c) =>
+          c instanceof EnergyCard &&
+          c.energyType === EnergyType.BASIC &&
+          c.provides.includes(CardType.FIRE),
       );
 
       if (!hasFireEnergy) {

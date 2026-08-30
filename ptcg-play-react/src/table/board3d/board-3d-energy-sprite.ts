@@ -12,6 +12,7 @@ import {
 } from 'three';
 import { Card, CardList } from 'ptcg-server';
 import { getCustomEnergyIconPath } from './energy-icons.utils';
+import { isUnderInspectingCard } from './board3dInspectingCard';
 
 const MAX_VISIBLE_ENERGIES = 8;
 const ENERGY_SPRITE_HEIGHT = 0.6;
@@ -116,8 +117,13 @@ export class Board3dEnergySprite {
   }
 
   updateBillboards(camera: PerspectiveCamera): void {
-    camera.getWorldQuaternion(Board3dEnergySprite._qCam);
     for (const mesh of this.energyMeshes) {
+      if (isUnderInspectingCard(mesh)) {
+        // Lie flat on the card face while inspecting (no camera billboard).
+        mesh.quaternion.identity();
+        continue;
+      }
+      camera.getWorldQuaternion(Board3dEnergySprite._qCam);
       const parent = mesh.parent;
       if (!parent) {
         mesh.quaternion.copy(Board3dEnergySprite._qCam).multiply(Board3dEnergySprite._qFlip);

@@ -8,7 +8,7 @@ import { COIN_FLIP_PROMPT, IS_POKEBODY_BLOCKED, MOVE_CARDS, WAS_ATTACK_USED } fr
 
 export class Moltres extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 80;
   public weakness = [{ type: W }];
   public resistance = [{ type: F, value: -30 }];
@@ -25,8 +25,7 @@ export class Moltres extends PokemonCard {
     cost: [C],
     damage: 10,
     text: 'If there are any [R] Energy cards in your discard pile, flip a coin. If heads, attach 1 of them to Moltres.'
-  },
-  {
+  }, {
     name: 'Burning Tail',
     cost: [R, R, C, C],
     damage: 60,

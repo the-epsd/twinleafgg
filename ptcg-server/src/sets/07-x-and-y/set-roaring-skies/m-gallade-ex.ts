@@ -10,10 +10,10 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class MGalladeEx extends PokemonCard {
-  public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
+  protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Gallade-EX';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 220;
   public weakness = [{ type: P }];
   public retreat = [C, C];
@@ -23,8 +23,8 @@ export class MGalladeEx extends PokemonCard {
       name: 'Unwavering Blade',
       cost: [P, P, C],
       damage: 110,
-      text: 'This attack does 30 damage to each of your opponent\'s Benched Pok\u00e9mon that has any damage counters on it. (Don\'t apply Weakness and Resistance for Benched Pok\u00e9mon.)'
-    }
+      text: "This attack does 30 damage to each of your opponent's Benched Pok\u00e9mon that has any damage counters on it. (Don't apply Weakness and Resistance for Benched Pok\u00e9mon.)",
+    },
   ];
 
   public set: string = 'ROS';
@@ -40,7 +40,7 @@ export class MGalladeEx extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      opponent.bench.forEach(benched => {
+      opponent.bench.forEach((benched) => {
         if (benched.cards.length > 0 && benched.damage > 0) {
           const damage = new PutDamageEffect(effect, 30);
           damage.target = benched;

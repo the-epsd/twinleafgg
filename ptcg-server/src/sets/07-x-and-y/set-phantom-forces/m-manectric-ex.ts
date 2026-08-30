@@ -3,18 +3,32 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
-import { Card, EnergyCard, GameMessage, PlayerType, SlotType, StoreLike, State } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+} from '../../../game/store/card/card-types';
+import {
+  Card,
+  EnergyCard,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  StoreLike,
+  State,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class MManectricEx extends PokemonCard {
-  public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
+  protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Manectric-EX';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 210;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
@@ -25,8 +39,8 @@ export class MManectricEx extends PokemonCard {
       name: 'Turbo Bolt',
       cost: [L, C],
       damage: 110,
-      text: 'Attach 2 basic Energy cards from your discard pile to 1 of your Benched Pokémon.'
-    }
+      text: 'Attach 2 basic Energy cards from your discard pile to 1 of your Benched Pokémon.',
+    },
   ];
 
   public set: string = 'PHF';
@@ -41,13 +55,13 @@ export class MManectricEx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const hasBench = player.bench.some(b => b.cards.length > 0);
+      const hasBench = player.bench.some((b) => b.cards.length > 0);
       if (!hasBench) {
         return state;
       }
 
-      const basicEnergyInDiscard = player.discard.cards.filter(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC
+      const basicEnergyInDiscard = player.discard.cards.filter(
+        (c) => c instanceof EnergyCard && c.energyType === EnergyType.BASIC,
       );
 
       if (basicEnergyInDiscard.length === 0) {
@@ -55,43 +69,51 @@ export class MManectricEx extends PokemonCard {
       }
 
       // Choose a Benched Pokemon first
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false }
-      ), targets => {
-        if (!targets || targets.length === 0) {
-          return state;
-        }
-
-        const target = targets[0];
-
-        // Then choose up to 2 basic Energy from discard
-        const blocked: number[] = [];
-        player.discard.cards.forEach((card, index) => {
-          if (!(card instanceof EnergyCard) || card.energyType !== EnergyType.BASIC) {
-            blocked.push(index);
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (targets) => {
+          if (!targets || targets.length === 0) {
+            return state;
           }
-        });
 
-        const availableCount = basicEnergyInDiscard.length;
-        const count = Math.min(2, availableCount);
+          const target = targets[0];
 
-        return store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_ATTACH,
-          player.discard,
-          { superType: SuperType.ENERGY },
-          { min: count, max: count, allowCancel: false, blocked }
-        ), (selected: Card[]) => {
-          const cards = selected || [];
-          cards.forEach(card => {
-            player.discard.moveCardTo(card, target);
+          // Then choose up to 2 basic Energy from discard
+          const blocked: number[] = [];
+          player.discard.cards.forEach((card, index) => {
+            if (!(card instanceof EnergyCard) || card.energyType !== EnergyType.BASIC) {
+              blocked.push(index);
+            }
           });
-        });
-      });
+
+          const availableCount = basicEnergyInDiscard.length;
+          const count = Math.min(2, availableCount);
+
+          return store.prompt(
+            state,
+            new ChooseCardsPrompt(
+              player,
+              GameMessage.CHOOSE_CARD_TO_ATTACH,
+              player.discard,
+              { superType: SuperType.ENERGY },
+              { min: count, max: count, allowCancel: false, blocked },
+            ),
+            (selected: Card[]) => {
+              const cards = selected || [];
+              cards.forEach((card) => {
+                player.discard.moveCardTo(card, target);
+              });
+            },
+          );
+        },
+      );
     }
 
     return state;

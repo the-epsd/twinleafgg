@@ -16,7 +16,7 @@ export class Tinkatuff extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 80;
 

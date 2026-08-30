@@ -4,23 +4,27 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { PlayerType, StoreLike, State, StateUtils } from '../../../game';
+import { PlayerType, StoreLike, State, StateUtils, pokemonHasCardType } from '../../../game';
 import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN,
+} from '../../../game/store/prefabs/prefabs';
 
 export class DhelmiseV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 220;
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
   public readonly GRASS_KO_MARKER = 'DHELMISE_V_SSH_GRASS_KO_MARKER';
-  public readonly GRASS_DAMAGED_BY_OPPONENT_MARKER = 'DHELMISE_V_SSH_GRASS_DAMAGED_BY_OPPONENT_MARKER';
+  public readonly GRASS_DAMAGED_BY_OPPONENT_MARKER =
+    'DHELMISE_V_SSH_GRASS_DAMAGED_BY_OPPONENT_MARKER';
 
   public attacks = [
     {
@@ -28,14 +32,14 @@ export class DhelmiseV extends PokemonCard {
       cost: [G],
       damage: 30,
       damageCalculation: '+',
-      text: 'If any of your Grass Pokémon were Knocked Out by damage from an opponent\'s attack during their last turn, this attack does 90 more damage.'
+      text: "If any of your Grass Pokémon were Knocked Out by damage from an opponent's attack during their last turn, this attack does 90 more damage.",
     },
     {
       name: 'Giga Hammer',
       cost: [G, G, C],
       damage: 200,
-      text: 'During your next turn, this Pokémon can\'t use Giga Hammer.'
-    }
+      text: "During your next turn, this Pokémon can't use Giga Hammer.",
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -50,7 +54,11 @@ export class DhelmiseV extends PokemonCard {
     // Ref: set-plasma-blast/accelgor.ts (ESCAVALIER_KO_MARKER pattern)
     if (effect instanceof AfterDamageEffect && effect.damage > 0) {
       const damagedCard = effect.target.getPokemonCard();
-      if (damagedCard && damagedCard.cardType === G && damagedCard.superType === SuperType.POKEMON) {
+      if (
+        damagedCard &&
+        pokemonHasCardType(damagedCard, G) &&
+        damagedCard.superType === SuperType.POKEMON
+      ) {
         const owner = StateUtils.findOwner(state, effect.target);
         if (owner !== effect.player) {
           effect.target.marker.addMarker(this.GRASS_DAMAGED_BY_OPPONENT_MARKER, this);
@@ -61,8 +69,11 @@ export class DhelmiseV extends PokemonCard {
     // Track when a Grass Pokemon is KO'd by opponent's attack
     if (effect instanceof KnockOutEffect) {
       const knockedOutCard = effect.target.getPokemonCard();
-      if (knockedOutCard && knockedOutCard.cardType === G
-        && effect.target.marker.hasMarker(this.GRASS_DAMAGED_BY_OPPONENT_MARKER, this)) {
+      if (
+        knockedOutCard &&
+        pokemonHasCardType(knockedOutCard, G) &&
+        effect.target.marker.hasMarker(this.GRASS_DAMAGED_BY_OPPONENT_MARKER, this)
+      ) {
         const owner = StateUtils.findOwner(state, effect.target);
         owner.marker.addMarker(this.GRASS_KO_MARKER, this);
       }
@@ -86,7 +97,7 @@ export class DhelmiseV extends PokemonCard {
     // Marker cleanup
     if (effect instanceof EndTurnEffect) {
       effect.player.marker.removeMarker(this.GRASS_KO_MARKER, this);
-      state.players.forEach(player => {
+      state.players.forEach((player) => {
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
           cardList.marker.removeMarker(this.GRASS_DAMAGED_BY_OPPONENT_MARKER, this);
         });

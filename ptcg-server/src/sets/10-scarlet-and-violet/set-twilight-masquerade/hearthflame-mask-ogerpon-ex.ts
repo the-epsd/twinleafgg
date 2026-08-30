@@ -8,14 +8,13 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class HearthflameMaskOgerponex extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
   public regulationMark = 'H';
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
 
   public hp: number = 210;
 
@@ -29,15 +28,15 @@ export class HearthflameMaskOgerponex extends PokemonCard {
       cost: [CardType.FIRE, CardType.COLORLESS, CardType.COLORLESS],
       damage: 20,
       damageCalculation: 'x',
-      text: 'This attack does 20 damage for each damage counter on this Pokémon.'
+      text: 'This attack does 20 damage for each damage counter on this Pokémon.',
     },
     {
       name: 'Dynamic Blaze',
       cost: [CardType.FIRE, CardType.FIRE, CardType.FIRE],
       damage: 140,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is an Evolution Pokémon, this attack does 140 more damage, and discard all Energy from this Pokémon.'
-    }
+      text: "If your opponent's Active Pokémon is an Evolution Pokémon, this attack does 140 more damage, and discard all Energy from this Pokémon.",
+    },
   ];
 
   public set: string = 'TWM';
@@ -51,7 +50,6 @@ export class HearthflameMaskOgerponex extends PokemonCard {
   public fullName: string = 'Hearthflame Mask Ogerpon ex TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       effect.damage = effect.player.active.damage * 2;
       return state;
@@ -68,14 +66,17 @@ export class HearthflameMaskOgerponex extends PokemonCard {
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
-      const cards: Card[] = checkProvidedEnergy.energyMap.map(e => e.card);
+      const cards: Card[] = checkProvidedEnergy.energyMap.map((e) => e.card);
       const discardEnergy = new DiscardCardsEffect(effect, cards);
       discardEnergy.target = player.active;
       store.reduceEffect(state, discardEnergy);
-
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

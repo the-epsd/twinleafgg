@@ -13,27 +13,25 @@ import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/s
 export class Seaking extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Goldeen';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 110;
   public weakness = [{ type: L }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Ripping Horn',
-      cost: [W],
-      damage: 0,
-      text: 'Flip 3 coins. For each heads, discard an Energy from your opponent\'s Active Pokémon.'
-    },
-    {
-      name: 'Pierce',
-      cost: [C, C],
-      damage: 50,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Ripping Horn',
+    cost: [W],
+    damage: 0,
+    text: 'Flip 3 coins. For each heads, discard an Energy from your opponent\'s Active Pokémon.'
+  }, {
+    name: 'Pierce',
+    cost: [C, C],
+    damage: 50,
+    text: ''
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'SSH';
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';

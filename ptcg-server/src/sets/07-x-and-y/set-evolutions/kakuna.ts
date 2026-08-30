@@ -10,25 +10,22 @@ import { State, StoreLike } from '../../../game';
 export class Kakuna extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Weedle';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Stiffen',
-      cost: [C, C],
-      damage: 0,
-      text: 'During your opponent\'s next turn, any damage done to this Pokémon by attacks is reduced by 40 (after applying Weakness and Resistance).'
-    },
-    {
-      name: 'Poison Powder',
-      cost: [G, G],
-      damage: 20,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Poisoned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Stiffen',
+    cost: [C, C],
+    damage: 0,
+    text: 'During your opponent\'s next turn, any damage done to this Pokémon by attacks is reduced by 40 (after applying Weakness and Resistance).'
+  }, {
+    name: 'Poison Powder',
+    cost: [G, G],
+    damage: 20,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Poisoned.'
+  }];
 
   public set: string = 'EVO';
   public setNumber: string = '6';

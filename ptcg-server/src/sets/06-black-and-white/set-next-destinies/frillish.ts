@@ -6,25 +6,22 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Frillish extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 80;
   public weakness = [{ type: L }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Bubble',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Spit Poison',
-      cost: [W, C],
-      damage: 0,
-      text: 'The Defending Pokémon is now Poisoned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Bubble',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Spit Poison',
+    cost: [W, C],
+    damage: 0,
+    text: 'The Defending Pokémon is now Poisoned.'
+  }];
 
   public set: string = 'NXD';
   public setNumber: string = '34';

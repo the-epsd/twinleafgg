@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 import type { Card } from 'ptcg-server';
 import { getCardsAll } from '../../api/cardsApi';
 import { CardFace } from '../../components/cards/CardFace';
+import { CheckboxField } from '../../components/ui/CheckboxField';
 import { CardInfoPopup } from '../../card-info/CardInfoPopup';
 import { useAuth } from '../../context/AuthContext';
 import { useDeckCardScanUrl } from '../../context/CardImagesContext';
 import { ABILITY_LOCK_CARDS, type AbilityLockCardEntry, type AbilityLockMode } from './abilityLockCards';
+import { readFlaggedCards, toggleFlaggedCard } from './abilityLockFlaggedStorage';
 import { readTestedCards, toggleTestedCard } from './abilityLockTestedStorage';
 import styles from './AbilityLockPage.module.css';
 
@@ -50,8 +52,10 @@ export function AbilityLockPage() {
   const getScanUrl = useDeckCardScanUrl(serverConfig?.scansUrl);
   const [filter, setFilter] = useState<FilterId>('all');
   const [catalog, setCatalog] = useState<Card[]>(() => cardsInfo?.cards ?? []);
-  const [infoCard, setInfoCard] = useState<Card | null>(null);
+  const [infoFullName, setInfoFullName] = useState<string | null>(null);
+  const [swappedCard, setSwappedCard] = useState<Card | null>(null);
   const [tested, setTested] = useState<Set<string>>(() => readTestedCards());
+  const [flagged, setFlagged] = useState<Set<string>>(() => readFlaggedCards());
 
   const testedCount = useMemo(
     () => ABILITY_LOCK_CARDS.filter((c) => tested.has(c.fullName)).length,
@@ -97,6 +101,43 @@ export function AbilityLockPage() {
     return ABILITY_LOCK_CARDS.filter((c) => c.mode === filter || c.mode === 'both');
   }, [filter]);
 
+  const infoIndex = infoFullName
+    ? cards.findIndex((c) => c.fullName === infoFullName)
+    : -1;
+  const infoEntry = infoIndex >= 0 ? cards[infoIndex] : undefined;
+  const infoCard = infoEntry
+    ? (swappedCard ?? resolveCatalogCard(infoEntry, byFullName, bySetId))
+    : null;
+
+  useEffect(() => {
+    if (infoFullName && infoIndex < 0) {
+      setInfoFullName(null);
+      setSwappedCard(null);
+    }
+  }, [infoFullName, infoIndex]);
+
+  const openEntry = (entry: AbilityLockCardEntry) => {
+    setInfoFullName(entry.fullName);
+    setSwappedCard(null);
+  };
+
+  const closeInfo = () => {
+    setInfoFullName(null);
+    setSwappedCard(null);
+  };
+
+  const navigateInfo = (delta: number) => {
+    if (infoIndex < 0) {
+      return;
+    }
+    const next = infoIndex + delta;
+    if (next < 0 || next >= cards.length) {
+      return;
+    }
+    setInfoFullName(cards[next].fullName);
+    setSwappedCard(null);
+  };
+
   return (
     <div className={styles.page}>
       <header className={styles.header}>
@@ -130,27 +171,23 @@ export function AbilityLockPage() {
         {cards.map((entry) => {
           const card = resolveCatalogCard(entry, byFullName, bySetId);
           const isTested = tested.has(entry.fullName);
+          const isFlagged = flagged.has(entry.fullName);
           return (
             <article
               key={entry.fullName}
               className={`${styles.card} ${isTested ? styles.cardTested : ''}`}
             >
               <div className={styles.faceWrap}>
-                <label
+                <CheckboxField
+                  plain
                   className={styles.check}
-                  title={isTested ? 'Mark as not tested' : 'Mark as tested & working'}
-                >
-                  <input
-                    type="checkbox"
-                    checked={isTested}
-                    onChange={() => setTested(toggleTestedCard(entry.fullName))}
-                    aria-label={`${entry.name}: tested and working`}
-                  />
-                </label>
+                  checked={isTested}
+                  onChange={() => setTested(toggleTestedCard(entry.fullName))}
+                />
                 <button
                   type="button"
                   className={styles.faceBtn}
-                  onClick={() => setInfoCard(card)}
+                  onClick={() => openEntry(entry)}
                   aria-label={`Open ${entry.name} card info`}
                 >
                   <CardFace
@@ -160,6 +197,11 @@ export function AbilityLockPage() {
                     card={card}
                   />
                 </button>
+                {isFlagged && (
+                  <div className={styles.flagBadge} aria-hidden>
+                    <span>!</span>
+                  </div>
+                )}
               </div>
               <div className={styles.meta}>
                 <p className={styles.name} title={entry.fullName}>
@@ -181,14 +223,23 @@ export function AbilityLockPage() {
         })}
       </div>
 
-      {infoCard && (
+      {infoCard && infoEntry && (
         <CardInfoPopup
           card={infoCard}
           catalog={catalog}
           getScanUrl={getScanUrl}
           isInGame={false}
-          onClose={() => setInfoCard(null)}
-          onCardSwap={({ replacementCard }) => setInfoCard(replacementCard)}
+          onClose={closeInfo}
+          onCardSwap={({ replacementCard }) => setSwappedCard(replacementCard)}
+          onNavigatePrev={infoIndex > 0 ? () => navigateInfo(-1) : undefined}
+          onNavigateNext={infoIndex < cards.length - 1 ? () => navigateInfo(1) : undefined}
+          tested={tested.has(infoEntry.fullName)}
+          onToggleTested={() => setTested(toggleTestedCard(infoEntry.fullName))}
+          testedLabel={`${infoEntry.name}: tested and working`}
+          flagged={flagged.has(infoEntry.fullName)}
+          onToggleFlagged={() => setFlagged(toggleFlaggedCard(infoEntry.fullName))}
+          flaggedLabel={`${infoEntry.name}: flag`}
+          hideSwapButton
         />
       )}
     </div>

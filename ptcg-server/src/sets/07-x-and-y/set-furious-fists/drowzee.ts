@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 
 export class Drowzee extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public weakness = [{ type: P }];
   public retreat = [C, C];

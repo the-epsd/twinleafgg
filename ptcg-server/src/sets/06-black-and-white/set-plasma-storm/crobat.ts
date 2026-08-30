@@ -6,33 +6,42 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED, DRAW_CARDS, ABILITY_USED, USE_ABILITY_ONCE_PER_TURN, REMOVE_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  DRAW_CARDS,
+  ABILITY_USED,
+  USE_ABILITY_ONCE_PER_TURN,
+  REMOVE_MARKER_AT_END_OF_TURN,
+} from '../../../game/store/prefabs/prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../../game/store/prefabs/attack-effects';
 
 export class Crobat extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Golbat';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 130;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
   public retreat = [];
 
-  public powers = [{
-    name: 'Night Sight',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), you may draw a card.'
-  }];
+  public powers = [
+    {
+      name: 'Night Sight',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn (before your attack), you may draw a card.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Ultra-Toxic Fang',
       cost: [P, C, C],
       damage: 40,
-      text: 'The Defending Pokémon is now Poisoned. Put 4 damage counters instead of 1 on this Pokémon between turns.'
-    }
+      text: 'The Defending Pokémon is now Poisoned. Put 4 damage counters instead of 1 on this Pokémon between turns.',
+    },
   ];
 
   public set: string = 'PLS';

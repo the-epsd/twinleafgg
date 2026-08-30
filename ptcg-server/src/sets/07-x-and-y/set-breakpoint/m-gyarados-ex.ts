@@ -7,13 +7,17 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, CONFIRMATION_PROMPT, DISCARD_TOP_X_CARDS_FROM_YOUR_DECK } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  CONFIRMATION_PROMPT,
+  DISCARD_TOP_X_CARDS_FROM_YOUR_DECK,
+} from '../../../game/store/prefabs/prefabs';
 
 export class MGyaradosEx extends PokemonCard {
-  public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
+  protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Gyarados-EX';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 240;
   public weakness = [{ type: L }];
   public retreat = [C, C];
@@ -24,8 +28,8 @@ export class MGyaradosEx extends PokemonCard {
       cost: [C, C, C, C],
       damage: 120,
       damageCalculation: '+',
-      text: 'You may do 20 more damage for each [W] Energy attached to this Pokémon. If you do, discard the top 2 cards of your deck.'
-    }
+      text: 'You may do 20 more damage for each [W] Energy attached to this Pokémon. If you do, discard the top 2 cards of your deck.',
+    },
   ];
 
   public set: string = 'BKP';
@@ -44,12 +48,12 @@ export class MGyaradosEx extends PokemonCard {
       const checkEnergy = new CheckProvidedEnergyEffect(player, player.active);
       store.reduceEffect(state, checkEnergy);
       let waterCount = 0;
-      checkEnergy.energyMap.forEach(em => {
-        waterCount += em.provides.filter(t => t === CardType.WATER).length;
+      checkEnergy.energyMap.forEach((em) => {
+        waterCount += em.provides.filter((t) => t === CardType.WATER).length;
       });
 
       if (waterCount > 0) {
-        CONFIRMATION_PROMPT(store, state, player, result => {
+        CONFIRMATION_PROMPT(store, state, player, (result) => {
           if (result) {
             effect.damage += 20 * waterCount;
             DISCARD_TOP_X_CARDS_FROM_YOUR_DECK(store, state, player, 2, this, effect);

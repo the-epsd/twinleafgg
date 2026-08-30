@@ -1,19 +1,14 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import {
-  StoreLike, State, StateUtils,
-  PlayerType,
-  GamePhase
-} from '../../../game';
+import { StoreLike, State, StateUtils, PlayerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Jumpluff extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Skiploom';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public resistance = [{ type: F, value: -20 }];
@@ -39,8 +34,6 @@ export class Jumpluff extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '6';
 
-  public readonly LEAF_GUARD_MARKER = 'LEAF_GUARD_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
@@ -53,22 +46,7 @@ export class Jumpluff extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      ADD_MARKER(this.LEAF_GUARD_MARKER, effect.player, this);
-    }
-
-    if (effect instanceof PutDamageEffect
-      && HAS_MARKER(this.LEAF_GUARD_MARKER, StateUtils.getOpponent(state, effect.player), this)
-      && effect.target.getPokemonCard() === this) {
-
-      if (state.phase !== GamePhase.ATTACK) {
-        return state;
-      }
-
-      effect.damage -= 30;
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player !== StateUtils.findOwner(state, StateUtils.findCardList(state, this))) {
-      REMOVE_MARKER(this.LEAF_GUARD_MARKER, StateUtils.getOpponent(state, effect.player), this);
+      return THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN(store, state, effect, 30);
     }
 
     return state;

@@ -11,14 +11,15 @@ import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class WelcomingLantern extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public regulationMark: string = 'E';
   public set: string = 'CRE';
   public setNumber: string = '156';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Welcoming Lantern';
   public fullName: string = 'Welcoming Lantern CRE';
-  public text: string = 'Put a Single Strike Supporter card from your discard pile into your hand. You may play any number of Item cards during your turn.';
+  public text: string =
+    'Put a Single Strike Supporter card from your discard pile into your hand. You may play any number of Item cards during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-chilling-reign/skwovet.ts (retrieve from discard),
@@ -29,9 +30,13 @@ export class WelcomingLantern extends TrainerCard {
       // Build blocked list: block all cards that are not Single Strike Supporters
       const blocked: number[] = [];
       player.discard.cards.forEach((card, index) => {
-        if (!(card instanceof TrainerCard
-          && card.trainerType === TrainerType.SUPPORTER
-          && card.tags.includes(CardTag.SINGLE_STRIKE))) {
+        if (
+          !(
+            card instanceof TrainerCard &&
+            card.trainerType === TrainerType.SUPPORTER &&
+            card.hasTag(CardTag.SINGLE_STRIKE)
+          )
+        ) {
           blocked.push(index);
         }
       });
@@ -40,17 +45,24 @@ export class WelcomingLantern extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.discard,
-        { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-        { min: 1, max: 1, allowCancel: false, blocked }
-      ), selected => {
-        if (selected && selected.length > 0) {
-          MOVE_CARDS(store, state, player.discard, player.hand, { cards: selected, sourceCard: this });
-        }
-      });
+      state = store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.discard,
+          { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
+          { min: 1, max: 1, allowCancel: false, blocked },
+        ),
+        (selected) => {
+          if (selected && selected.length > 0) {
+            MOVE_CARDS(store, state, player.discard, player.hand, {
+              cards: selected,
+              sourceCard: this,
+            });
+          }
+        },
+      );
     }
 
     return state;

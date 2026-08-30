@@ -4,40 +4,56 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType } from '../../../game/store/card/card-types';
-import { CardList, PowerType, StoreLike, State, StateUtils, GameMessage, ShowCardsPrompt, ChooseCardsPrompt } from '../../../game';
+import {
+  CardList,
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  ShowCardsPrompt,
+  ChooseCardsPrompt,
+} from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, BLOCK_IF_GX_ATTACK_USED, DISCARD_TOP_X_CARDS_FROM_YOUR_DECK } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  BLOCK_IF_GX_ATTACK_USED,
+  DISCARD_TOP_X_CARDS_FROM_YOUR_DECK,
+} from '../../../game/store/prefabs/prefabs';
 
 export class XurkitreeGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
+  protected _tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 180;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Flashing Head',
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all damage done to this Pokémon by attacks from your opponent\'s Pokémon that have any Special Energy attached to them.'
-  }];
+  public powers = [
+    {
+      name: 'Flashing Head',
+      powerType: PowerType.ABILITY,
+      text: "Prevent all damage done to this Pokémon by attacks from your opponent's Pokémon that have any Special Energy attached to them.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Rumbling Wires',
       cost: [L, L, C],
       damage: 100,
-      text: 'Discard the top card of your opponent\'s deck.'
+      text: "Discard the top card of your opponent's deck.",
     },
     {
       name: 'Lighting-GX',
       cost: [L],
       damage: 0,
-      text: 'Your opponent reveals their hand. Add a card you find there to their Prize cards face down. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Your opponent reveals their hand. Add a card you find there to their Prize cards face down. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'UPR';
@@ -62,8 +78,8 @@ export class XurkitreeGx extends PokemonCard {
       }
 
       // Check if the attacking Pokemon has any Special Energy attached
-      const hasSpecialEnergy = effect.source.cards.some(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL
+      const hasSpecialEnergy = effect.source.cards.some(
+        (c) => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL,
       );
 
       if (hasSpecialEnergy) {
@@ -95,29 +111,37 @@ export class XurkitreeGx extends PokemonCard {
       }
 
       // Show opponent's hand to player
-      store.prompt(state, new ShowCardsPrompt(
-        player.id,
-        GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-        opponent.hand.cards
-      ), () => { });
+      store.prompt(
+        state,
+        new ShowCardsPrompt(
+          player.id,
+          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+          opponent.hand.cards,
+        ),
+        () => {},
+      );
 
       // Choose a card from opponent's hand
-      store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        opponent.hand,
-        {},
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        if (selected && selected.length > 0) {
-          // Add the card to opponent's prize cards
-          const card = selected[0];
-          const newPrize = new CardList();
-          newPrize.isSecret = true;
-          opponent.hand.moveCardTo(card, newPrize);
-          opponent.prizes.push(newPrize);
-        }
-      });
+      store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          opponent.hand,
+          {},
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          if (selected && selected.length > 0) {
+            // Add the card to opponent's prize cards
+            const card = selected[0];
+            const newPrize = new CardList();
+            newPrize.isSecret = true;
+            opponent.hand.moveCardTo(card, newPrize);
+            opponent.prizes.push(newPrize);
+          }
+        },
+      );
     }
 
     return state;

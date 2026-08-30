@@ -2,12 +2,12 @@ import { CardType, PokemonCard, Stage, PowerType, State, StateUtils, StoreLike, 
 import { Effect } from '../../../game/store/effects/effect';
 import { AddSpecialConditionsEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
-import { CoinFlipPrompt, GameMessage } from '../../../game';
+import { GameMessage } from '../../../game';
 import { COIN_FLIP_PROMPT, IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Hoppip extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 30;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -30 }];
@@ -49,10 +49,7 @@ export class Hoppip extends PokemonCard {
 
       if (effect.damage >= checkHpEffect.hp) {
         // Flip a coin to see if we survive
-        return store.prompt(state, new CoinFlipPrompt(
-          player.id,
-          GameMessage.COIN_FLIP
-        ), result => {
+        return COIN_FLIP_PROMPT(store, state, player, result => {
           if (result === true) {
             // If heads, prevent knockout and set HP to 10
             effect.surviveOnTenHPReason = this.powers[0].name;

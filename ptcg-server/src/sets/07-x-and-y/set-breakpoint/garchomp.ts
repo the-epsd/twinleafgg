@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, ATTACH_ENERGY_PROMPT, DEAL_MORE_DAMAGE_IF_OPPONENT_ACT
 export class Garchomp extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Gabite';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 130;
   public weakness = [{ type: G }];
   public retreat = [];

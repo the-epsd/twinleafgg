@@ -8,27 +8,24 @@ import { AttackEffect } from '../../../game/store/effects/game-effects';
 export class Simisage extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Pansage';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Seed Bomb',
-      cost: [G],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Fury Swipes',
-      cost: [C, C, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 40 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Seed Bomb',
+    cost: [G],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Fury Swipes',
+    cost: [C, C, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 40 damage times the number of heads.'
+  }];
 
   public set: string = 'BLW';
   public cardImage: string = 'assets/cardback.png';

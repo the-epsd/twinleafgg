@@ -18,6 +18,7 @@ import {
 import { findItemByTarget, patchDamageForTarget, targetsEqual, cardTargetKey } from './removeDamagePromptModel';
 import { buildPokemonPromptRows, mapPokemonItems } from './pokemonPromptRows';
 import type { PokemonRow } from './pokemonPromptRows';
+import { getPromptPerspectivePlayerId } from './promptPerspective';
 import styles from './TablePromptLayer.module.css';
 
 export type PutDamageOverlayProps = {
@@ -80,7 +81,7 @@ export function PutDamageOverlay(props: PutDamageOverlayProps) {
   useEffect(() => {
     const nextRows = buildPokemonPromptRows(
       localGame.state,
-      prompt.playerId,
+      getPromptPerspectivePlayerId(prompt),
       prompt.playerType,
       prompt.slots,
     );
@@ -112,7 +113,7 @@ export function PutDamageOverlay(props: PutDamageOverlayProps) {
         }
         const delta = item.cardList.damage - initial.damage;
         if (delta > 0) {
-          m.set(cardTargetKey(item.target), delta);
+          m.set(cardTargetKey(boardInteraction.toVisualCardTarget(item.target)), delta);
         }
       }
     }
@@ -120,7 +121,7 @@ export function PutDamageOverlay(props: PutDamageOverlayProps) {
   }, [rows, initialDamageMap, boardInteraction]);
 
   const boardSelected = useMemo(() => {
-    const list = boardInteraction.getSelectedTargets();
+    const list = boardInteraction.getPromptSelectedTargets();
     return list[0];
   }, [boardInteraction, boardTick]);
 
@@ -155,7 +156,7 @@ export function PutDamageOverlay(props: PutDamageOverlayProps) {
   );
 
   const removeDamage = useCallback(() => {
-    const tSel = boardInteraction.getSelectedTargets()[0];
+    const tSel = boardInteraction.getPromptSelectedTargets()[0];
     if (tSel === undefined) {
       return;
     }
@@ -177,7 +178,7 @@ export function PutDamageOverlay(props: PutDamageOverlayProps) {
   }, [boardInteraction, initialDamageMap, damageMultiple]);
 
   const addDamage = useCallback(() => {
-    const tSel = boardInteraction.getSelectedTargets()[0];
+    const tSel = boardInteraction.getPromptSelectedTargets()[0];
     if (tSel === undefined) {
       return;
     }

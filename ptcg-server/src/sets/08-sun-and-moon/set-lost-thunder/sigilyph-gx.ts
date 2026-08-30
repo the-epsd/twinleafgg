@@ -8,37 +8,43 @@ import { PowerType, StoreLike, State, StateUtils, GamePhase } from '../../../gam
 import { Effect } from '../../../game/store/effects/effect';
 import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  BLOCK_IF_GX_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class SigilyphGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 170;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Mirror Counter',
-    powerType: PowerType.ABILITY,
-    text: 'If this Pokémon is your Active Pokémon and is damaged by an attack from your opponent\'s Pokémon-GX or Pokémon-EX (even if this Pokémon is Knocked Out), put damage counters on the Attacking Pokémon equal to the damage done to this Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Mirror Counter',
+      powerType: PowerType.ABILITY,
+      text: "If this Pokémon is your Active Pokémon and is damaged by an attack from your opponent's Pokémon-GX or Pokémon-EX (even if this Pokémon is Knocked Out), put damage counters on the Attacking Pokémon equal to the damage done to this Pokémon.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Sonic Wing',
       cost: [P, C, C],
       damage: 80,
-      text: 'This attack\'s damage isn\'t affected by Resistance.'
+      text: "This attack's damage isn't affected by Resistance.",
     },
     {
       name: 'Intercept-GX',
       cost: [P, C, C],
       damage: 60,
       damageCalculation: 'x',
-      text: 'This attack does 60 damage times the amount of Energy attached to your opponent\'s Active Pokémon. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "This attack does 60 damage times the amount of Energy attached to your opponent's Active Pokémon. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'LOT';
@@ -73,7 +79,10 @@ export class SigilyphGx extends PokemonCard {
 
       // Must be from GX or EX
       const sourceCard = effect.source.getPokemonCard();
-      if (!sourceCard || !(sourceCard.tags.includes(CardTag.POKEMON_GX) || sourceCard.tags.includes(CardTag.POKEMON_EX))) {
+      if (
+        !sourceCard ||
+        !(sourceCard.hasTag(CardTag.POKEMON_GX) || sourceCard.hasTag(CardTag.POKEMON_EX))
+      ) {
         return state;
       }
 

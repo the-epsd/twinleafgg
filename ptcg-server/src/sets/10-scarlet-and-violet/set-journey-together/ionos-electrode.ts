@@ -1,39 +1,42 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, CoinFlipPrompt, GameMessage } from '../../../game';
+import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class IonosElectrode extends PokemonCard {
-  public tags = [CardTag.IONOS];
+  protected _tags = [CardTag.IONOS];
   public stage: Stage = Stage.STAGE_1;
-  public evolvesFrom: string = 'Iono\'s Voltorb';
-  public cardType: CardType = L;
+  public evolvesFrom: string = "Iono's Voltorb";
+  public cardType: CardType[] = [L];
   public hp: number = 100;
   public weakness = [{ type: F }];
 
-  public attacks = [{
-    name: 'Thump-Thump Boom',
-    cost: [L, L],
-    damage: 0,
-    text: 'This Pokémon does 100 damage to itself. Flip a coin. If heads, your opponent\'s Active Pokémon is Knocked Out.'
-  },
-  {
-    name: 'Electric Ball',
-    cost: [L, L, C],
-    damage: 100,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Thump-Thump Boom',
+      cost: [L, L],
+      damage: 0,
+      text: "This Pokémon does 100 damage to itself. Flip a coin. If heads, your opponent's Active Pokémon is Knocked Out.",
+    },
+    {
+      name: 'Electric Ball',
+      cost: [L, L, C],
+      damage: 100,
+      text: '',
+    },
+  ];
 
   public regulationMark = 'I';
+
   public cardImage: string = 'assets/cardback.png';
   public set: string = 'JTG';
   public setNumber = '48';
-  public name: string = 'Iono\'s Electrode';
-  public fullName: string = 'Iono\'s Electrode JTG';
+  public name: string = "Iono's Electrode";
+  public fullName: string = "Iono's Electrode JTG";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Thump-Thump Boom
@@ -44,9 +47,7 @@ export class IonosElectrode extends PokemonCard {
       dealDamage.target = player.active;
       store.reduceEffect(state, dealDamage);
 
-      return store.prompt(state, new CoinFlipPrompt(
-        effect.player.id, GameMessage.FLIP_COIN
-      ), (result) => {
+      return COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (!result) {
           KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
         }

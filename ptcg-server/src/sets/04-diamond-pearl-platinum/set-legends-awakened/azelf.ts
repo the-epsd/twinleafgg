@@ -3,20 +3,16 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { PowerType, StoreLike, State, ConfirmPrompt, GameMessage, CardList, ChooseCardsPrompt, ShowCardsPrompt, StateUtils } from '../../../game';
-import { BLOCK_RETREAT, IS_POKEPOWER_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { IS_POKEPOWER_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
 
 export class Azelf extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.PSYCHIC;
-
+  public cardType: CardType[] = [P];
   public hp: number = 70;
-
-  public weakness = [{ type: CardType.PSYCHIC, value: +20 }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: P, value: +20 }];
+  public retreat = [C];
 
   public powers = [{
     name: 'Time Walk',
@@ -24,29 +20,21 @@ export class Azelf extends PokemonCard {
     text: 'Once during your turn, when you put Azelf from your hand onto your Bench, you may look at all of your face-down Prize cards. If you do, you may choose 1 Pokémon you find there, show it to your opponent, and put it into your hand. Then, choose 1 card in your hand and put it as a Prize card face down.'
   }];
 
-  public attacks = [
-    {
-      name: 'Lock Up',
-      cost: [CardType.PSYCHIC],
-      damage: 20,
-      text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
-    }
-  ];
+  public attacks = [{
+    name: 'Lock Up',
+    cost: [P],
+    damage: 20,
+    text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
+  }];
 
   public set: string = 'LA';
-
   public setNumber: string = '19';
-
   public cardImage: string = 'assets/cardback.png';
-
   public name: string = 'Azelf';
-
   public fullName: string = 'Azelf LA';
 
-  public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Time Walk
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
 
@@ -121,7 +109,7 @@ export class Azelf extends PokemonCard {
       }
       );
     }
-
+    // Lock Up
     if (WAS_ATTACK_USED(effect, 0, this)) {
       return BLOCK_RETREAT(store, state, effect, this);
     }

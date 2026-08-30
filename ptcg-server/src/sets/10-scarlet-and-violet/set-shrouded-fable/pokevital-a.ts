@@ -5,10 +5,23 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { CardTarget, GameError, GameMessage, Player, PlayerType, PokemonCardList, SlotType } from '../../../game';
+import {
+  CardTarget,
+  GameError,
+  GameMessage,
+  Player,
+  PlayerType,
+  PokemonCardList,
+  SlotType,
+} from '../../../game';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   const blocked: CardTarget[] = [];
@@ -29,22 +42,26 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   effect.preventDefault = true;
 
   let targets: PokemonCardList[] = [];
-  yield store.prompt(state, new ChoosePokemonPrompt(
-    player.id,
-    GameMessage.CHOOSE_POKEMON_TO_HEAL,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.ACTIVE, SlotType.BENCH],
-    { allowCancel: false, blocked }
-  ), results => {
-    targets = results || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChoosePokemonPrompt(
+      player.id,
+      GameMessage.CHOOSE_POKEMON_TO_HEAL,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.ACTIVE, SlotType.BENCH],
+      { allowCancel: false, blocked },
+    ),
+    (results) => {
+      targets = results || [];
+      next();
+    },
+  );
 
   if (targets.length === 0) {
     return state;
   }
 
-  targets.forEach(target => {
+  targets.forEach((target) => {
     // Heal Pokemon
     const healEffect = new HealEffect(player, target, 150);
     store.reduceEffect(state, healEffect);
@@ -54,18 +71,16 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 }
 
 export class PokeVitalA extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.ITEM;
   public regulationMark = 'H';
-  public tags = [CardTag.ACE_SPEC];
+  protected _tags = [CardTag.ACE_SPEC];
   public set: string = 'SFA';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '62';
   public name: string = 'Poké Vital A';
   public fullName: string = 'PokéVital A SFA';
 
-  public text: string =
-    `Heal 150 damage from 1 of your Pokémon.
+  public text: string = `Heal 150 damage from 1 of your Pokémon.
 
 If this card is in your discard pile, it can't be put into your deck or hand.`;
 
@@ -82,7 +97,6 @@ If this card is in your discard pile, it can't be put into your deck or hand.`;
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const generator = playCard(() => generator.next(), store, state, effect);
@@ -90,5 +104,4 @@ If this card is in your discard pile, it can't be put into your deck or hand.`;
     }
     return state;
   }
-
 }

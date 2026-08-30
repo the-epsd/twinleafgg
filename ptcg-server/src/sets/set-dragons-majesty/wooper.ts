@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 
 export class Wooper extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 70;
   public weakness = [{ type: G }];
   public retreat = [C];

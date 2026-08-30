@@ -4,10 +4,9 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { CardList, GameError, GameMessage } from '../../../game';
+import { Card, GameError, GameMessage } from '../../../game';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { MoveCardsEffect } from '../../../game/store/effects/game-effects';
-
+import { DRAW_CARDS, MOVE_HAND_TO_DECK_THEN_DRAW } from '../../../game/store/prefabs/prefabs';
 
 export class Marnie extends TrainerCard {
 
@@ -28,52 +27,70 @@ export class Marnie extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const supporterTurn = player.supporterTurn;
-
-      if (supporterTurn > 0) {
+      if (player.supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
-      // We will discard this card after prompt confirmation
-      effect.preventDefault = true;
+      const playerCards = player.hand.cards.filter(c => c !== this);
+      const opponentCards = [...opponent.hand.cards];
 
-      const cards = player.hand.cards.filter(c => c !== this);
-      const deckBottom = new CardList();
-      const opponentDeckBottom = new CardList();
-
-      if (cards.length === 0 && player.deck.cards.length === 0) {
+      if (playerCards.length === 0 && player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      if (player.hand.cards.length === 0 && opponent.hand.cards.length === 0) {
+      if (playerCards.length === 0 && opponentCards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      const playerMoveEffect = new MoveCardsEffect(player.hand, deckBottom, { cards, sourceCard: this });
-      state = store.reduceEffect(state, playerMoveEffect);
+      this.shuffleCards(playerCards);
+      this.shuffleCards(opponentCards);
 
-      const opponentMoveEffect = new MoveCardsEffect(opponent.hand, opponentDeckBottom, { sourceCard: this });
-      state = store.reduceEffect(state, opponentMoveEffect);
+      const runOpponent = (): void => {
+        if (opponentCards.length > 0) {
+          MOVE_HAND_TO_DECK_THEN_DRAW(store, state, opponent, {
+            cards: opponentCards,
+            drawCount: 4,
+            sourceCard: this,
+          });
+          return;
+        }
+        if (playerCards.length > 0) {
+          DRAW_CARDS(store, state, opponent, 4);
+        }
+      };
 
-      deckBottom.moveTo(player.deck);
-      opponentDeckBottom.moveTo(opponent.deck);
-
-      player.deck.moveTo(player.hand, Math.min(5, player.deck.cards.length));
-
-      // Check if moving cards from opponent's hand was prevented
-      if (!opponentMoveEffect.preventDefault) {
-        opponent.deck.moveTo(opponent.hand, Math.min(4, opponent.deck.cards.length));
+      if (playerCards.length > 0) {
+        return MOVE_HAND_TO_DECK_THEN_DRAW(store, state, player, {
+          cards: playerCards,
+          drawCount: 5,
+          sourceCard: this,
+          afterDraw: () => runOpponent(),
+        });
       }
 
-
-
+      return MOVE_HAND_TO_DECK_THEN_DRAW(store, state, opponent, {
+        cards: opponentCards,
+        drawCount: 4,
+        sourceCard: this,
+        afterDraw: () => {
+          DRAW_CARDS(store, state, player, 5);
+        },
+        onMovePrevented: () => {
+          DRAW_CARDS(store, state, player, 5);
+        },
+      });
     }
 
     return state;
+  }
+
+  private shuffleCards(cards: Card[]): void {
+    for (let i = cards.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [cards[i], cards[j]] = [cards[j], cards[i]];
+    }
   }
 }

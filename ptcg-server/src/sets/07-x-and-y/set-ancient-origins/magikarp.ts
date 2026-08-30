@@ -10,19 +10,17 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 
 export class Magikarp extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 30;
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Epic Splash',
-      cost: [W],
-      damage: 30,
-      text: 'Flip 2 coins. If either of them is tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Epic Splash',
+    cost: [W],
+    damage: 30,
+    text: 'Flip 2 coins. If either of them is tails, this attack does nothing.'
+  }];
 
   public set: string = 'AOR';
   public setNumber: string = '19';

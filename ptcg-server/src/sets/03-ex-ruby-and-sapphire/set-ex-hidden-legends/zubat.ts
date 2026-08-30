@@ -6,7 +6,7 @@ import { State, StateUtils, StoreLike } from '../../../game';
 
 export class Zubat extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 50;
   public weakness = [{ type: P }];
   public retreat = [C];
@@ -17,8 +17,7 @@ export class Zubat extends PokemonCard {
     damage: 10,
     damageCalculation: 'x',
     text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
-  },
-  {
+  }, {
     name: 'Surprise',
     cost: [G],
     damage: 0,

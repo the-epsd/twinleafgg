@@ -9,7 +9,7 @@ import { AFTER_ATTACK, COIN_FLIP_PROMPT, SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND, 
 export class Gabite extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Gible';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 80;
   public weakness = [{ type: C, value: +20 }];
   public retreat = [C];
@@ -19,8 +19,7 @@ export class Gabite extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Search your discard pile for up to 2 Energy cards, show them to your opponent, and put them into your hand.'
-  },
-  {
+  }, {
     name: 'Marvelous Shine',
     cost: [C, C],
     damage: 0,

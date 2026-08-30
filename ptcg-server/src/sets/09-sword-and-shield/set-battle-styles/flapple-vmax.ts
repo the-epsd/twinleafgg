@@ -8,16 +8,15 @@ import { CardTag } from '../../../game/store/card/card-types';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class FlappleVMAX extends PokemonCard {
-
   public stage: Stage = Stage.VMAX;
 
   public evolvesFrom = 'Flapple V';
 
   public regulationMark = 'E';
 
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 320;
 
@@ -27,13 +26,14 @@ export class FlappleVMAX extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
-  public attacks = [{
-    name: 'G-Max Rolling',
-    cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
-    damage: 250,
-    text: 'This attack does 10 less damage for each damage counter ' +
-      'on this Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'G-Max Rolling',
+      cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
+      damage: 250,
+      text: 'This attack does 10 less damage for each damage counter ' + 'on this Pokémon.',
+    },
+  ];
 
   public set: string = 'BST';
 
@@ -54,4 +54,3 @@ export class FlappleVMAX extends PokemonCard {
     return state;
   }
 }
-

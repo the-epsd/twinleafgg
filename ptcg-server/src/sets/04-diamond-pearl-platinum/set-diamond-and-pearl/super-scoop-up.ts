@@ -6,14 +6,14 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { PlayerType, SlotType, CoinFlipPrompt, PokemonCard } from '../../../game';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { PlayerType, SlotType, PokemonCard } from '../../../game';
+import { MOVE_CARDS, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
 
   let coinResult: boolean = false;
-  yield store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), result => {
+  yield COIN_FLIP_PROMPT(store, state, player, result => {
     coinResult = result;
     next();
   });
@@ -60,17 +60,12 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 }
 
 export class SuperScoopUp extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'DP';
-
   public name: string = 'Super Scoop Up';
-
   public fullName: string = 'Super Scoop Up DP';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '115';
 
   public text: string =

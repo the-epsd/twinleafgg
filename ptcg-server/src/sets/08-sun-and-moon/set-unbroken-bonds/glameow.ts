@@ -4,14 +4,26 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, PlayerType, ChoosePokemonPrompt, SlotType } from '../../../game';
+import {
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  PlayerType,
+  ChoosePokemonPrompt,
+  SlotType,
+} from '../../../game';
 import { DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, DRAW_CARDS, ADD_SLEEP_TO_PLAYER_ACTIVE } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  DRAW_CARDS,
+  ADD_SLEEP_TO_PLAYER_ACTIVE,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Glameow extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -21,14 +33,14 @@ export class Glameow extends PokemonCard {
       name: 'Caturday',
       cost: [C],
       damage: 0,
-      text: 'Draw a card. If you do, this Pokémon is now Asleep.'
+      text: 'Draw a card. If you do, this Pokémon is now Asleep.',
     },
     {
       name: 'Boing Boing Tail',
       cost: [C, C, C],
       damage: 0,
-      text: 'This attack does 60 damage to 1 of your opponent\'s Pokémon-GX or Pokémon-EX. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "This attack does 60 damage to 1 of your opponent's Pokémon-GX or Pokémon-EX. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public set: string = 'UNB';
@@ -56,7 +68,7 @@ export class Glameow extends PokemonCard {
       const hasGxExPokemon = (() => {
         let found = false;
         opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-          if (card.tags.includes(CardTag.POKEMON_GX) || card.tags.includes(CardTag.POKEMON_EX)) {
+          if (card.hasTag(CardTag.POKEMON_GX) || card.hasTag(CardTag.POKEMON_EX)) {
             found = true;
           }
         });
@@ -67,33 +79,40 @@ export class Glameow extends PokemonCard {
         return state;
       }
 
-      store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        if (!selected || selected.length === 0) {
-          return;
-        }
-        const target = selected[0];
-        const targetCard = target.getPokemonCard();
+      store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          if (!selected || selected.length === 0) {
+            return;
+          }
+          const target = selected[0];
+          const targetCard = target.getPokemonCard();
 
-        if (!targetCard || !(targetCard.tags.includes(CardTag.POKEMON_GX) || targetCard.tags.includes(CardTag.POKEMON_EX))) {
-          return;
-        }
+          if (
+            !targetCard ||
+            !(targetCard.hasTag(CardTag.POKEMON_GX) || targetCard.hasTag(CardTag.POKEMON_EX))
+          ) {
+            return;
+          }
 
-        if (target === opponent.active) {
-          const dealDamage = new DealDamageEffect(effect, 60);
-          dealDamage.target = target;
-          store.reduceEffect(state, dealDamage);
-        } else {
-          const putDamage = new PutDamageEffect(effect, 60);
-          putDamage.target = target;
-          store.reduceEffect(state, putDamage);
-        }
-      });
+          if (target === opponent.active) {
+            const dealDamage = new DealDamageEffect(effect, 60);
+            dealDamage.target = target;
+            store.reduceEffect(state, dealDamage);
+          } else {
+            const putDamage = new PutDamageEffect(effect, 60);
+            putDamage.target = target;
+            store.reduceEffect(state, putDamage);
+          }
+        },
+      );
     }
 
     return state;

@@ -4,15 +4,23 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, GameMessage, ShowCardsPrompt, StoreLike, State, StateUtils } from '../../../game';
+import {
+  Card,
+  ChooseCardsPrompt,
+  GameMessage,
+  ShowCardsPrompt,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class MalamarVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Malamar V';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 310;
   public weakness = [{ type: G }];
   public retreat = [C, C];
@@ -22,8 +30,8 @@ export class MalamarVmax extends PokemonCard {
       name: 'Max Jammer',
       cost: [D, D, C],
       damage: 180,
-      text: 'Your opponent reveals their hand. Choose a card you find there and put it on the bottom of their deck.'
-    }
+      text: 'Your opponent reveals their hand. Choose a card you find there and put it on the bottom of their deck.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -44,30 +52,38 @@ export class MalamarVmax extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, new ShowCardsPrompt(
-        player.id,
-        GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-        opponent.hand.cards
-      ), () => {
-        return store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_DECK,
-          opponent.hand,
-          {},
-          { min: 1, max: 1, allowCancel: false }
-        ), (selected: Card[]) => {
-          if (selected && selected.length > 0) {
-            // Move to deck first, then reposition to bottom
-            opponent.hand.moveCardsTo(selected, opponent.deck);
-            const card = selected[0];
-            const index = opponent.deck.cards.indexOf(card);
-            if (index > -1) {
-              opponent.deck.cards.splice(index, 1);
-              opponent.deck.cards.push(card);  // bottom of deck
-            }
-          }
-        });
-      });
+      return store.prompt(
+        state,
+        new ShowCardsPrompt(
+          player.id,
+          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+          opponent.hand.cards,
+        ),
+        () => {
+          return store.prompt(
+            state,
+            new ChooseCardsPrompt(
+              player,
+              GameMessage.CHOOSE_CARD_TO_DECK,
+              opponent.hand,
+              {},
+              { min: 1, max: 1, allowCancel: false },
+            ),
+            (selected: Card[]) => {
+              if (selected && selected.length > 0) {
+                // Move to deck first, then reposition to bottom
+                opponent.hand.moveCardsTo(selected, opponent.deck);
+                const card = selected[0];
+                const index = opponent.deck.cards.indexOf(card);
+                if (index > -1) {
+                  opponent.deck.cards.splice(index, 1);
+                  opponent.deck.cards.push(card); // bottom of deck
+                }
+              }
+            },
+          );
+        },
+      );
     }
 
     return state;

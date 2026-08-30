@@ -11,27 +11,24 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/pr
 export class Golurk extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Golett';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 140;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Triple Smash',
-      cost: [P, C, C],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'Flip 3 coins. This attack does 60 more damage for each heads.'
-    },
-    {
-      name: 'Golurk Hammer',
-      cost: [P, C, C, C],
-      damage: 120,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Triple Smash',
+    cost: [P, C, C],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'Flip 3 coins. This attack does 60 more damage for each heads.'
+  }, {
+    name: 'Golurk Hammer',
+    cost: [P, C, C, C],
+    damage: 120,
+    text: ''
+  }];
 
   public set: string = 'SLG';
   public setNumber: string = '44';

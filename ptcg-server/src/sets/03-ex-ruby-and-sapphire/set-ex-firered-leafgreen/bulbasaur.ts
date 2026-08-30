@@ -6,7 +6,7 @@ import { State, StoreLike } from '../../../game';
 
 export class Bulbasaur extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 50;
   public weakness = [{ type: R }];
   public retreat = [C];
@@ -16,8 +16,7 @@ export class Bulbasaur extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Asleep and Poisoned.'
-  },
-  {
+  }, {
     name: 'Razor Leaf',
     cost: [C, C],
     damage: 20,

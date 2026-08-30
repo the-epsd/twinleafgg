@@ -14,7 +14,7 @@ import { ADD_BURN_TO_PLAYER_ACTIVE, MOVE_CARDS, WAS_POWER_USED } from '../../../
 export class Volcarona extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Larvesta';
-  public cardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 120;
   public weakness = [{ type: W }];
   public retreat = [C];

@@ -8,7 +8,7 @@ export class Marshtomp extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
-  public cardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp = 90;
 

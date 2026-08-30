@@ -1,15 +1,21 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardTag } from '../../../game/store/card/card-types';
-import { GameError, GameMessage, PokemonCardList, PowerType, State, StoreLike } from '../../../game';
+import { CardType, Stage, CardTag } from '../../../game/store/card/card-types';
+import {
+  GameError,
+  GameMessage,
+  PokemonCardList,
+  PowerType,
+  State,
+  StoreLike,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { KyogreAndGroudonLegendTop } from './kyogre-and-groudon-legend-top';
 import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class KyogreAndGroudonLegendBottom extends PokemonCard {
   public stage: Stage = Stage.LEGEND;
-  public tags = [CardTag.LEGEND, CardTag.DUAL_LEGEND];
-  public cardType = W;
-  public additionalCardTypes = [F];
+  protected _tags = [CardTag.LEGEND, CardTag.DUAL_LEGEND];
+  public cardType: CardType[] = [W, F];
   public hp: number = 150;
   public weakness = [{ type: G }, { type: L }];
   public retreat = [C, C, C];
@@ -29,14 +35,14 @@ export class KyogreAndGroudonLegendBottom extends PokemonCard {
       name: 'Mega Tidal Wave',
       cost: [W, W, C, C],
       damage: 0,
-      text: 'Discard the top 5 cards from your opponent\'s deck. This attack does 30 damage times the number of Energy cards you discarded to each of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "Discard the top 5 cards from your opponent's deck. This attack does 30 damage times the number of Energy cards you discarded to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Massive Eruption',
       cost: [F, F, C, C],
       damage: 100,
       damageCalculation: 'x',
-      text: 'Discard the top 5 cards from your deck. This attack does 100 damage times the number of Energy cards you discarded.'
+      text: 'Discard the top 5 cards from your deck. This attack does 100 damage times the number of Energy cards you discarded.',
     },
   ];
 
@@ -50,7 +56,7 @@ export class KyogreAndGroudonLegendBottom extends PokemonCard {
     // assemblin the avengers
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
-      const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
+      const slots: PokemonCardList[] = player.bench.filter((b) => b.cards.length === 0);
 
       if (slots.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -61,7 +67,7 @@ export class KyogreAndGroudonLegendBottom extends PokemonCard {
       let topCard: KyogreAndGroudonLegendTop | null = null;
       let bottomCard: KyogreAndGroudonLegendBottom | null = null;
 
-      player.hand.cards.forEach(card => {
+      player.hand.cards.forEach((card) => {
         if (card instanceof KyogreAndGroudonLegendTop && !topPiece) {
           topPiece = true;
           topCard = card;

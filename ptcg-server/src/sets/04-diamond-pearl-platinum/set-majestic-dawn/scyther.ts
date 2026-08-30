@@ -6,7 +6,7 @@ import { MULTIPLE_COIN_FLIPS_PROMPT, THIS_ATTACK_DOES_X_MORE_DAMAGE, WAS_ATTACK_
 
 export class Scyther extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: R, value: +20 }];
   public resistance = [{ type: F, value: -20 }];
@@ -17,8 +17,7 @@ export class Scyther extends PokemonCard {
     cost: [C],
     damage: 10,
     text: ''
-  },
-  {
+  }, {
     name: 'Fury Cutter',
     cost: [G, C],
     damage: 10,

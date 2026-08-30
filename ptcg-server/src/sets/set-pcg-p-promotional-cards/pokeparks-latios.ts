@@ -9,7 +9,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/cos
 
 export class PokeParksLatios extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: P }];
   public retreat = [C, C];
@@ -19,8 +19,7 @@ export class PokeParksLatios extends PokemonCard {
     cost: [G, C],
     damage: 30,
     text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.If tails, this attack does nothing.'
-  },
-  {
+  }, {
     name: 'Luster Purge',
     cost: [L, C, C],
     damage: 60,

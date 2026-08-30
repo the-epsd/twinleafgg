@@ -11,26 +11,23 @@ import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/s
 
 export class AlolanMeowth extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Swagger',
-      cost: [D],
-      damage: 0,
-      text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
-    },
-    {
-      name: 'Hook',
-      cost: [C, C],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Swagger',
+    cost: [D],
+    damage: 0,
+    text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
+  }, {
+    name: 'Hook',
+    cost: [C, C],
+    damage: 20,
+    text: ''
+  }];
 
   public set: string = 'CEC';
   public setNumber: string = '128';

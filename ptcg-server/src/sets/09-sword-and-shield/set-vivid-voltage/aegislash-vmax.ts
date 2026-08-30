@@ -9,10 +9,10 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class AegislashVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Aegislash V';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 320;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
@@ -24,8 +24,8 @@ export class AegislashVmax extends PokemonCard {
       cost: [M, M, C],
       damage: 160,
       damageCalculation: '+',
-      text: 'This attack does 30 more damage for each Prize card you have taken.'
-    }
+      text: 'This attack does 30 more damage for each Prize card you have taken.',
+    },
   ];
 
   public regulationMark: string = 'D';

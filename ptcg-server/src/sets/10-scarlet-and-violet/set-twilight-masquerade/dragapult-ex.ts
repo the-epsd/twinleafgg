@@ -10,16 +10,15 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE } from '../../../game/store/prefabs/attack-effects';
 
 export class Dragapultex extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_2;
 
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
   public evolvesFrom = 'Drakloak';
 
   public regulationMark = 'H';
 
-  public cardType: CardType = CardType.DRAGON;
+  public cardType: CardType[] = [CardType.DRAGON];
 
   public hp: number = 320;
 
@@ -29,17 +28,20 @@ export class Dragapultex extends PokemonCard {
 
   public retreat = [CardType.COLORLESS];
 
-  public attacks = [{
-    name: 'Jet Headbutt',
-    cost: [CardType.COLORLESS],
-    damage: 70,
-    text: ''
-  }, {
-    name: 'Phantom Dive',
-    cost: [CardType.FIRE, CardType.PSYCHIC],
-    damage: 200,
-    text: 'Put 6 damage counters on your opponent\'s Benched Pokemon in any way you like.'
-  }];
+  public attacks = [
+    {
+      name: 'Jet Headbutt',
+      cost: [CardType.COLORLESS],
+      damage: 70,
+      text: '',
+    },
+    {
+      name: 'Phantom Dive',
+      cost: [CardType.FIRE, CardType.PSYCHIC],
+      damage: 200,
+      text: "Put 6 damage counters on your opponent's Benched Pokemon in any way you like.",
+    },
+  ];
 
   public set: string = 'TWM';
 
@@ -52,12 +54,15 @@ export class Dragapultex extends PokemonCard {
   public fullName: string = 'Dragapult ex TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 1, this)) {
       PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE(6, store, state, effect, [SlotType.BENCH]);
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

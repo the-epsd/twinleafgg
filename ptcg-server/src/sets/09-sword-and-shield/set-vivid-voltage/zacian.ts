@@ -6,11 +6,14 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, SlotType, PlayerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Zacian extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 110;
   public weakness = [{ type: M }];
   public retreat = [C, C];
@@ -20,15 +23,15 @@ export class Zacian extends PokemonCard {
       name: 'Metal Armament',
       cost: [C],
       damage: 30,
-      text: 'Attach a basic Energy card from your discard pile to this Pokémon.'
+      text: 'Attach a basic Energy card from your discard pile to this Pokémon.',
     },
     {
       name: 'Amazing Sword',
       cost: [G, P, M],
       damage: 150,
       damageCalculation: '+',
-      text: 'If your opponent has any Pokémon VMAX in play, this attack does 150 more damage.'
-    }
+      text: 'If your opponent has any Pokémon VMAX in play, this attack does 150 more damage.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -43,14 +46,11 @@ export class Zacian extends PokemonCard {
     // Ref: set-burning-shadows/turtonator.ts (ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON, active only, basic energy)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON(
-        store, state, player, 1, undefined,
-        {
-          destinationSlots: [SlotType.ACTIVE],
-          energyFilter: { energyType: EnergyType.BASIC },
-          min: 0
-        }
-      );
+      ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON(store, state, player, 1, undefined, {
+        destinationSlots: [SlotType.ACTIVE],
+        energyFilter: { energyType: EnergyType.BASIC },
+        min: 0,
+      });
     }
 
     // Attack 2: Amazing Sword
@@ -62,7 +62,7 @@ export class Zacian extends PokemonCard {
 
       let hasVMAX = false;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card.tags.includes(CardTag.POKEMON_VMAX)) {
+        if (card.hasTag(CardTag.POKEMON_VMAX)) {
           hasVMAX = true;
         }
       });

@@ -19,7 +19,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { Card, EnergyCard, PowerType, State, StoreLike } from '../../../game';
 export class Giratina extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 130;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -20 }];

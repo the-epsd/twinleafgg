@@ -7,14 +7,13 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class DeoxysV extends PokemonCard {
-
   public stage = Stage.BASIC;
 
-  public cardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp = 210;
 
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
 
   public weakness = [{ type: CardType.DARK }];
 
@@ -28,13 +27,13 @@ export class DeoxysV extends PokemonCard {
       cost: [CardType.PSYCHIC, CardType.COLORLESS],
       damage: 30,
       damageCalculation: '+',
-      text: 'This attack does 30 more damage for each Energy attached to your opponent\'s Active Pokémon.'
+      text: "This attack does 30 more damage for each Energy attached to your opponent's Active Pokémon.",
     },
     {
       name: 'Power Edge',
       cost: [CardType.PSYCHIC, CardType.PSYCHIC, CardType.COLORLESS],
       damage: 140,
-      text: ''
+      text: '',
     },
   ];
 
@@ -51,16 +50,16 @@ export class DeoxysV extends PokemonCard {
   public fullName = 'Deoxys V SWSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(opponent);
       store.reduceEffect(state, checkProvidedEnergyEffect);
-      const energyCount = checkProvidedEnergyEffect.energyMap
-        .reduce((left, p) => left + p.provides.length, 0);
+      const energyCount = checkProvidedEnergyEffect.energyMap.reduce(
+        (left, p) => left + p.provides.length,
+        0,
+      );
 
       effect.damage += energyCount * 20;
     }

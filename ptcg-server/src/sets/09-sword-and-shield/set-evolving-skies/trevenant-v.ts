@@ -10,9 +10,9 @@ import { WAS_ATTACK_USED, MOVE_CARDS, AFTER_ATTACK } from '../../../game/store/p
 import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class TrevenantV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 210;
   public weakness = [{ type: R }];
   public retreat = [C, C];
@@ -22,14 +22,14 @@ export class TrevenantV extends PokemonCard {
       name: 'Absorb Life',
       cost: [G, C],
       damage: 30,
-      text: 'Heal 30 damage from this Pokémon.'
+      text: 'Heal 30 damage from this Pokémon.',
     },
     {
       name: 'Shadow Claw',
       cost: [G, G, C],
       damage: 120,
-      text: 'Discard a random card from your opponent\'s hand.'
-    }
+      text: "Discard a random card from your opponent's hand.",
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -58,7 +58,11 @@ export class TrevenantV extends PokemonCard {
 
       const randomIndex = Math.floor(Math.random() * opponent.hand.cards.length);
       const randomCard = opponent.hand.cards[randomIndex];
-      MOVE_CARDS(store, state, opponent.hand, opponent.discard, { cards: [randomCard], sourceCard: this, sourceEffect: this.attacks[1] });
+      MOVE_CARDS(store, state, opponent.hand, opponent.discard, {
+        cards: [randomCard],
+        sourceCard: this,
+        sourceEffect: this.attacks[1],
+      });
     }
 
     return state;

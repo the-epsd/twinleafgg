@@ -14,26 +14,23 @@ export class Maractus extends PokemonCard {
   public readonly CLEAR_EXCITING_SHAKE_MARKER = 'MARACTUS_CLEAR_EXCITING_SHAKE_MARKER';
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Exciting Shake',
-      cost: [G],
-      damage: 0,
-      text: 'During your next turn, flip 6 coins instead of 2 for this Pokémon\'s Prickly Needles attack.'
-    },
-    {
-      name: 'Prickly Needles',
-      cost: [C, C],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Exciting Shake',
+    cost: [G],
+    damage: 0,
+    text: 'During your next turn, flip 6 coins instead of 2 for this Pokémon\'s Prickly Needles attack.'
+  }, {
+    name: 'Prickly Needles',
+    cost: [C, C],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
+  }];
 
   public set: string = 'FLF';
   public setNumber: string = '10';

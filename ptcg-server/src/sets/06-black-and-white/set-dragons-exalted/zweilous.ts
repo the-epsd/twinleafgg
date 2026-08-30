@@ -1,11 +1,11 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, CoinFlipPrompt, Card, ChooseCardsPrompt } from '../../../game';
+import { StoreLike, State, StateUtils, Card, ChooseCardsPrompt } from '../../../game';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { GameMessage } from '../../../game/game-message';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 function* useWhirlpool(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -19,9 +19,7 @@ function* useWhirlpool(next: Function, store: StoreLike, state: State,
   }
 
   let flipResult = false;
-  yield store.prompt(state, new CoinFlipPrompt(
-    player.id, GameMessage.COIN_FLIP
-  ), result => {
+  yield COIN_FLIP_PROMPT(store, state, player, result => {
     flipResult = result;
     next();
   });
@@ -46,45 +44,31 @@ function* useWhirlpool(next: Function, store: StoreLike, state: State,
   return store.reduceEffect(state, discardEnergy);
 }
 
-
 export class Zweilous extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Deino';
-
-  public cardType: CardType = CardType.DRAGON;
-
+  public cardType: CardType[] = [N];
   public hp: number = 80;
+  public weakness = [{ type: N }];
+  public retreat = [C, C];
 
-  public weakness = [{ type: CardType.DRAGON }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
-
-  public attacks = [
-    {
-      name: 'Crunch',
-      cost: [CardType.COLORLESS, CardType.COLORLESS],
-      damage: 30,
-      text: 'Flip a coin. If heads, discard an Energy attached to ' +
-        'the Defending Pokemon.'
-    },
-    {
-      name: 'Dragon Claw',
-      cost: [CardType.PSYCHIC, CardType.DARK, CardType.DARK],
-      damage: 80,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Crunch',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, discard an Energy attached to ' +
+    'the Defending Pokemon.'
+  }, {
+    name: 'Dragon Claw',
+    cost: [P, D, D],
+    damage: 80,
+    text: ''
+  }];
 
   public set: string = 'DRX';
-
   public name: string = 'Zweilous';
-
   public fullName: string = 'Zweilous DRX';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '95';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -12,10 +12,10 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class Rillaboom extends PokemonCard {
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Thwackey';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 180;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
@@ -25,15 +25,15 @@ export class Rillaboom extends PokemonCard {
       name: 'Wood Drain',
       cost: [G, C],
       damage: 60,
-      text: 'Heal 30 damage from this Pokémon.'
+      text: 'Heal 30 damage from this Pokémon.',
     },
     {
       name: 'Raging Repeated Strike',
       cost: [G, G, C],
       damage: 120,
       damageCalculation: '+',
-      text: 'Discard any amount of Energy from your Pokémon. This attack does 30 more damage for each card you discarded in this way.'
-    }
+      text: 'Discard any amount of Energy from your Pokémon. This attack does 30 more damage for each card you discarded in this way.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -58,34 +58,38 @@ export class Rillaboom extends PokemonCard {
       // Count all energy across all Pokemon
       let totalEnergy = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        totalEnergy += cardList.cards.filter(c => c.superType === SuperType.ENERGY).length;
+        totalEnergy += cardList.cards.filter((c) => c.superType === SuperType.ENERGY).length;
       });
 
       if (totalEnergy === 0) {
         return state;
       }
 
-      return store.prompt(state, new DiscardEnergyPrompt(
-        player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY },
-        { allowCancel: false, min: 0, max: totalEnergy }
-      ), transfers => {
-        if (transfers === null || transfers.length === 0) {
-          return state;
-        }
+      return store.prompt(
+        state,
+        new DiscardEnergyPrompt(
+          player.id,
+          GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { superType: SuperType.ENERGY },
+          { allowCancel: false, min: 0, max: totalEnergy },
+        ),
+        (transfers) => {
+          if (transfers === null || transfers.length === 0) {
+            return state;
+          }
 
-        transfers.forEach(transfer => {
-          const source = StateUtils.getTarget(state, player, transfer.from);
-          const discardEffect = new DiscardCardsEffect(effect, [transfer.card]);
-          discardEffect.target = source;
-          store.reduceEffect(state, discardEffect);
-        });
+          transfers.forEach((transfer) => {
+            const source = StateUtils.getTarget(state, player, transfer.from);
+            const discardEffect = new DiscardCardsEffect(effect, [transfer.card]);
+            discardEffect.target = source;
+            store.reduceEffect(state, discardEffect);
+          });
 
-        effect.damage += transfers.length * 30;
-      });
+          effect.damage += transfers.length * 30;
+        },
+      );
     }
 
     return state;

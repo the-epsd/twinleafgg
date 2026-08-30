@@ -7,6 +7,16 @@ import type { Board3dCardsAdapter } from '../board3dCardsAdapter';
 import { apply3dCardHolo } from '../board-3d-holo-apply';
 import type { Board3dHandSlotSnapshot } from '../board3dSceneModel';
 
+/** Bottom (near) player hand row Z — behind bottom bench at Z=24. */
+export const BOARD3D_PLAYER_HAND_Z = 30;
+/**
+ * Top (far) player hand row Z — behind top bench at Z=4 by the same +6 offset.
+ * Leaves the far hand in the top viewport margin after camera framing.
+ */
+export const BOARD3D_OPPONENT_HAND_Z = -2;
+/** Hand cards sit just above the board plane. */
+export const BOARD3D_HAND_Y = 0.1;
+
 export type PrepareDrawFlightResult = {
   flyingCard: Object3D;
   handSlotWorld: Vector3;
@@ -14,8 +24,11 @@ export type PrepareDrawFlightResult = {
 
 export class Board3dHandService {
   private handCards: Map<number, Board3dCard> = new Map();
+  private opponentHandCards: Map<number, Board3dCard> = new Map();
   private handGroup: Group;
+  private opponentHandGroup: Group;
   private isUpdating: boolean = false;
+  private isUpdatingOpponent: boolean = false;
   /** When true, hand card groups are parented via R3F (portal); defer dispose until drain. */
   private r3fDeclarativeHand = false;
   private pendingR3fHandDisposals: Board3dCard[] = [];
@@ -24,17 +37,20 @@ export class Board3dHandService {
 
   // Hand positioning (straight row) - positioned where old bench used to be
   private cardSpacing = 3.5;         // Space between cards (card width is ~2.75 with scale)
-  private handDistance = 30;         // Z position (where old bench used to be)
-  private handHeight = 0.1;          // Height in world space (just above board)
 
   constructor(
     private assetLoader: Board3dAssetLoaderService,
     private cardsAdapter: Board3dCardsAdapter
   ) {
     this.handGroup = new Group();
-    this.handGroup.position.set(0, this.handHeight, this.handDistance);
+    this.handGroup.position.set(0, BOARD3D_HAND_Y, BOARD3D_PLAYER_HAND_Z);
     // Cards flat on board surface (no tilt)
     this.handGroup.rotation.set(0, 0, 0);
+
+    this.opponentHandGroup = new Group();
+    this.opponentHandGroup.position.set(0, BOARD3D_HAND_Y, BOARD3D_OPPONENT_HAND_Z);
+    // Match top-player board cards / 2D opponent hand: face the near player.
+    this.opponentHandGroup.rotation.set(0, Math.PI, 0);
   }
 
   setR3fDeclarativeHand(enabled: boolean): void {
@@ -113,6 +129,56 @@ export class Board3dHandService {
       await Promise.all(cardPromises);
     } finally {
       this.isUpdating = false;
+    }
+  }
+
+  /**
+   * Rebuild the far (top) player's hand row. Non-interactive; face-up when {@link isVisible}.
+   */
+  async updateOpponentHand(
+    hand: CardList,
+    isVisible: boolean,
+    attachRoot: Object3D,
+  ): Promise<void> {
+    if (this.isUpdatingOpponent) {
+      return;
+    }
+
+    this.isUpdatingOpponent = true;
+
+    try {
+      const cards = hand.cards;
+
+      if (isVisible && cards.length > 0) {
+        const urls = cards
+          .map(c => this.cardsAdapter.getScanUrlFor3D(c, hand))
+          .filter((url): url is string => !!url && !!url.trim());
+        this.assetLoader.preloadCardTextures(urls);
+      }
+
+      if (!attachRoot.children.includes(this.opponentHandGroup)) {
+        attachRoot.add(this.opponentHandGroup);
+      }
+
+      this.clearOpponentHand();
+
+      const cardPromises = cards.map((card, index) =>
+        this.createHandCard(
+          card,
+          index,
+          cards.length,
+          isVisible,
+          false,
+          hand,
+          false,
+          true,
+          index,
+          true,
+        ),
+      );
+      await Promise.all(cardPromises);
+    } finally {
+      this.isUpdatingOpponent = false;
     }
   }
 
@@ -268,6 +334,7 @@ export class Board3dHandService {
     deferProgressiveFrontLoad = false,
     addToHandGroup = true,
     layoutVisualIndex?: number,
+    forOpponent = false,
   ): Promise<void> {
     const positionIndex = layoutVisualIndex ?? index;
     const position = this.calculateCardPosition(positionIndex, totalCards);
@@ -277,6 +344,8 @@ export class Board3dHandService {
     const scanUrl = this.cardsAdapter.getScanUrlFor3D(card, hand);
     const isFaceDown = !isOwner;
     const hasScan = !!(scanUrl && scanUrl.trim());
+    const cardMap = forOpponent ? this.opponentHandCards : this.handCards;
+    const targetGroup = forOpponent ? this.opponentHandGroup : this.handGroup;
 
     // Progressive loading: show card-back immediately, load front texture in background
     const [backTexture, maskTexture] = await Promise.all([
@@ -298,7 +367,7 @@ export class Board3dHandService {
           frontTexture = placeholder;
           awaitingHandScan = true;
           this.assetLoader.loadCardTexture(scanUrl).then(loadedFront => {
-            const handCard = this.handCards.get(index);
+            const handCard = cardMap.get(index);
             if (handCard && handCard.getGroup().userData.cardData?.id === card.id) {
               handCard.updateTexture(loadedFront, backTexture, maskTexture);
               void apply3dCardHolo(this.assetLoader, handCard, card, false);
@@ -329,20 +398,26 @@ export class Board3dHandService {
     cardGroup.rotation.y = 0;
     cardGroup.rotation.z = 0;
 
-    // Store metadata
-    cardGroup.userData.isHandCard = true;
-    cardGroup.userData.handIndex = index;
-    cardGroup.userData.cardData = card;
+    // Store metadata — opponent cards must not set isHandCard (drag/selection).
+    if (forOpponent) {
+      cardGroup.userData.isOpponentHandCard = true;
+      cardGroup.userData.handIndex = index;
+      cardGroup.userData.cardData = card;
+    } else {
+      cardGroup.userData.isHandCard = true;
+      cardGroup.userData.handIndex = index;
+      cardGroup.userData.cardData = card;
+    }
 
     // Add green outline for playable cards (matches 2D board's green-400 color)
-    if (isPlayable) {
+    if (isPlayable && !forOpponent) {
       cardMesh.setOutline(true, 0x4ade80);
     }
 
     if (addToHandGroup && !this.r3fDeclarativeHand) {
-      this.handGroup.add(cardMesh.getGroup());
+      targetGroup.add(cardMesh.getGroup());
     }
-    this.handCards.set(index, cardMesh);
+    cardMap.set(index, cardMesh);
 
     if (isFaceDown) {
       void apply3dCardHolo(this.assetLoader, cardMesh, card, true);
@@ -551,6 +626,28 @@ export class Board3dHandService {
     this.handCards.clear();
   }
 
+  private clearOpponentHand(): void {
+    this.opponentHandCards.forEach(card => {
+      const cardGroup = card.getGroup();
+      gsap.killTweensOf(cardGroup.position);
+      gsap.killTweensOf(cardGroup.rotation);
+      gsap.killTweensOf(cardGroup.scale);
+
+      if (cardGroup.parent === this.opponentHandGroup) {
+        this.opponentHandGroup.remove(cardGroup);
+      } else if (cardGroup.parent) {
+        cardGroup.removeFromParent();
+      }
+
+      if (this.r3fDeclarativeHand) {
+        this.pendingR3fHandDisposals.push(card);
+      } else {
+        card.dispose();
+      }
+    });
+    this.opponentHandCards.clear();
+  }
+
   /**
    * Remove a specific card by index (after it's played)
    */
@@ -634,11 +731,101 @@ export class Board3dHandService {
     attachRoot.attach(cardGroup);
     cardGroup.userData.isHandCard = false;
     cardGroup.userData.playingToBoard = true;
-    delete cardGroup.userData.handIndex;
+    // Keep original server hand index for failed-play return / playCardAction.
+    cardGroup.userData.handIndex = index;
+    cardGroup.userData.detachedFromHandIndex = index;
 
     this.handCards.delete(index);
     this.repositionRemainingCards();
     return board3d;
+  }
+
+  /**
+   * Smoothly return a card detached via {@link detachCardForBoardPlay} after the server rejects the play.
+   * Restores server hand indices (undoes the visual reindex from detach).
+   */
+  returnDetachedCardToHand(
+    board3dCard: Board3dCard,
+    handIndex: number,
+    options?: { isPlayable?: boolean },
+  ): Promise<void> {
+    const cardGroup = board3dCard.getGroup();
+    gsap.killTweensOf(cardGroup.position);
+    gsap.killTweensOf(cardGroup.rotation);
+    gsap.killTweensOf(cardGroup.scale);
+
+    delete cardGroup.userData.playingToBoard;
+    delete cardGroup.userData.detachedFromHandIndex;
+    cardGroup.userData.isHandCard = true;
+    cardGroup.userData.handIndex = handIndex;
+
+    const remapped = new Map<number, Board3dCard>();
+    for (const [visualIdx, card] of this.handCards.entries()) {
+      const serverIdx = visualIdx < handIndex ? visualIdx : visualIdx + 1;
+      remapped.set(serverIdx, card);
+      card.getGroup().userData.handIndex = serverIdx;
+    }
+    remapped.set(handIndex, board3dCard);
+    this.handCards = remapped;
+
+    const total = this.handCards.size;
+    const handScale = 1.1;
+
+    // Preserve world transform while re-parenting into the hand fan.
+    this.handGroup.attach(cardGroup);
+
+    if (options?.isPlayable) {
+      board3dCard.setOutline(true, 0x4ade80);
+    } else {
+      board3dCard.setOutline(false);
+    }
+
+    const cardData = cardGroup.userData.cardData as Card | undefined;
+    if (cardData) {
+      void apply3dCardHolo(this.assetLoader, board3dCard, cardData, false);
+    }
+
+    const animations: Promise<void>[] = [];
+    for (const [idx, card] of this.handCards.entries()) {
+      const group = card.getGroup();
+      if (group.parent !== this.handGroup) {
+        continue;
+      }
+      gsap.killTweensOf(group.position);
+      const target = this.calculateCardPosition(idx, total);
+      const isReturning = idx === handIndex;
+      const duration = isReturning ? 0.4 : 0.25;
+      animations.push(
+        new Promise<void>((resolve) => {
+          gsap.to(group.position, {
+            x: target.x,
+            y: target.y,
+            z: target.z,
+            duration,
+            ease: 'power2.out',
+            onComplete: () => resolve(),
+          });
+        }),
+      );
+      if (isReturning) {
+        gsap.to(group.rotation, {
+          x: 0,
+          y: 0,
+          z: 0,
+          duration,
+          ease: 'power2.out',
+        });
+        gsap.to(group.scale, {
+          x: handScale,
+          y: handScale,
+          z: handScale,
+          duration,
+          ease: 'power2.out',
+        });
+      }
+    }
+
+    return Promise.all(animations).then(() => undefined);
   }
 
   /**
@@ -762,6 +949,11 @@ export class Board3dHandService {
     return this.handGroup;
   }
 
+  /** Far-player hand row group (non-interactive). */
+  getOpponentHandGroup(): Group {
+    return this.opponentHandGroup;
+  }
+
   /**
    * Get card at hand index
    */
@@ -774,16 +966,24 @@ export class Board3dHandService {
    */
   dispose(attachRoot: Object3D): void {
     this.clearHand(attachRoot);
+    this.clearOpponentHand();
     this.drainPendingR3fHandDisposals();
     if (attachRoot.children.includes(this.handGroup)) {
       attachRoot.remove(this.handGroup);
     }
+    if (attachRoot.children.includes(this.opponentHandGroup)) {
+      attachRoot.remove(this.opponentHandGroup);
+    }
 
-    // Recreate handGroup for next component instance
+    // Recreate hand groups for next component instance
     this.handGroup = new Group();
-    this.handGroup.position.set(0, this.handHeight, this.handDistance);
+    this.handGroup.position.set(0, BOARD3D_HAND_Y, BOARD3D_PLAYER_HAND_Z);
     this.handGroup.rotation.set(0, 0, 0);
+    this.opponentHandGroup = new Group();
+    this.opponentHandGroup.position.set(0, BOARD3D_HAND_Y, BOARD3D_OPPONENT_HAND_Z);
+    this.opponentHandGroup.rotation.set(0, Math.PI, 0);
     this.batchDrawPrepareDepth = 0;
     this.isUpdating = false;
+    this.isUpdatingOpponent = false;
   }
 }

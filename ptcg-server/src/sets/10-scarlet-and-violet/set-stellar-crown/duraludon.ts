@@ -9,7 +9,7 @@ export class Duraludon extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
 
   public hp: number = 130;
 

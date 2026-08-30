@@ -9,27 +9,24 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Clefairy extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 60;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Sing',
-      cost: [Y],
-      damage: 0,
-      text: 'Your opponent\'s Active Pokémon is now Asleep.'
-    },
-    {
-      name: 'Double Slap',
-      cost: [C, C],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Sing',
+    cost: [Y],
+    damage: 0,
+    text: 'Your opponent\'s Active Pokémon is now Asleep.'
+  }, {
+    name: 'Double Slap',
+    cost: [C, C],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
+  }];
 
   public set: string = 'BKP';
   public setNumber: string = '81';

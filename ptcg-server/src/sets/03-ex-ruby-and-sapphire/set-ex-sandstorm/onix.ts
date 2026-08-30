@@ -6,7 +6,7 @@ import { ADD_PARALYZED_TO_PLAYER_ACTIVE, COIN_FLIP_PROMPT, WAS_ATTACK_USED } fro
 
 export class Onix extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 80;
   public weakness = [{ type: W }];
   public retreat = [C, C, C];
@@ -16,8 +16,7 @@ export class Onix extends PokemonCard {
     cost: [C, C],
     damage: 10,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-  },
-  {
+  }, {
     name: 'Rage',
     cost: [F, C, C],
     damage: 10,

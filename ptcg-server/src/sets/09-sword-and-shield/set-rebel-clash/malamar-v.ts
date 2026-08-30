@@ -2,7 +2,12 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, GUST_OPPONENT_BENCHED_POKEMON, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_CONFUSION_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  GUST_OPPONENT_BENCHED_POKEMON,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { StateUtils } from '../../../game/store/state-utils';
 
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
@@ -11,9 +16,9 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { PokemonCardList, State, StoreLike } from '../../../game';
 export class MalamarV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 210;
   public weakness = [{ type: G }];
   public retreat = [C, C];
@@ -23,14 +28,14 @@ export class MalamarV extends PokemonCard {
       name: 'Drag Off',
       cost: [D, C],
       damage: 0,
-      text: 'Switch 1 of your opponent\'s Benched Pokémon with their Active Pokémon. This attack does 30 damage to the new Active Pokémon.'
+      text: "Switch 1 of your opponent's Benched Pokémon with their Active Pokémon. This attack does 30 damage to the new Active Pokémon.",
     },
     {
       name: 'Brain Shake',
       cost: [D, D, C],
       damage: 130,
-      text: 'Your opponent\'s Active Pokémon is now Confused.'
-    }
+      text: "Your opponent's Active Pokémon is now Confused.",
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -54,7 +59,7 @@ export class MalamarV extends PokemonCard {
           const dealDamage = new DealDamageEffect(effect, 30);
           dealDamage.target = newActive;
           store.reduceEffect(state, dealDamage);
-        }
+        },
       });
     }
 

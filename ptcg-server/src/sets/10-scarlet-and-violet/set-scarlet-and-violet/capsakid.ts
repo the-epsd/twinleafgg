@@ -5,7 +5,7 @@ import { SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefa
 
 export class Capsakid extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
   public hp: number = 70;
   public weakness = [{ type: CardType.FIRE }];
   public resistance: Resistance[] = [];

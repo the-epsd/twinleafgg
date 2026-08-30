@@ -14,7 +14,7 @@ import { EvolveEffect } from '../../../game/store/effects/game-effects';
 export class Clefable extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Clefairy';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -26,20 +26,19 @@ export class Clefable extends PokemonCard {
     text: 'Once during your turn (before your attack), you may flip a coin. If heads, search your deck for a card that evolves from 1 of your Pokémon and put it onto that Pokémon. (This counts as evolving that Pokémon.) Shuffle your deck afterward.'
   }];
 
-  public attacks = [
-    {
-      name: 'Moon Impact',
-      cost: [C, C, C],
-      damage: 50,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Moon Impact',
+    cost: [C, C, C],
+    damage: 50,
+    text: ''
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Clefable';
   public fullName: string = 'Clefable PLS';
+
   public readonly MOON_GUIDANCE_MARKER = 'MOON_GUIDANCE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

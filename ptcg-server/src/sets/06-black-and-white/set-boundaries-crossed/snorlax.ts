@@ -10,26 +10,23 @@ import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store
 
 export class Snorlax extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Double Lariat',
-      cost: [C, C, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 40 damage times the number of heads.'
-    },
-    {
-      name: 'Rollout',
-      cost: [C, C, C, C],
-      damage: 60,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Double Lariat',
+    cost: [C, C, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 40 damage times the number of heads.'
+  }, {
+    name: 'Rollout',
+    cost: [C, C, C, C],
+    damage: 60,
+    text: ''
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '109';

@@ -11,28 +11,26 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Crabominable extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Crabrawler';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 150;
   public weakness = [{ type: P }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Double Lariat',
-      cost: [F, C, C],
-      damage: 90,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 90 damage for each heads.'
-    },
-    {
-      name: 'Crabhammer',
-      cost: [F, C, C, C],
-      damage: 130,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Double Lariat',
+    cost: [F, C, C],
+    damage: 90,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 90 damage for each heads.'
+  }, {
+    name: 'Crabhammer',
+    cost: [F, C, C, C],
+    damage: 130,
+    text: ''
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'CRE';
   public setNumber: string = '85';
   public cardImage: string = 'assets/cardback.png';

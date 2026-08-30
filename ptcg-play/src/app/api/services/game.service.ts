@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
-  ClientInfo, GameState, State, CardTarget, StateLog, Replay,
+  ClientInfo, GameState, State, CardTarget, Replay,
   Base64, StateSerializer, PlayerStats, GamePhase
 } from 'ptcg-server';
 import { Observable, throwError } from 'rxjs';
@@ -59,7 +59,7 @@ export class GameService {
     this.boardInteractionService.endBoardSelection();
 
     return new Observable<GameState>(observer => {
-      this.socketService.emit('game:join', gameId)
+      this.socketService.emit<number, GameState>('game:join', gameId)
         .pipe(finalize(() => observer.complete()))
         .subscribe((gameState: GameState) => {
           this.appendGameState(gameState);
@@ -91,10 +91,9 @@ export class GameService {
     const games = this.sessionService.session.gameStates;
     const index = games.findIndex(g => g.gameId === gameId && g.deleted === false);
     if (index === -1) {
-      const logs: StateLog[] = [];
       let lastGameId = this.sessionService.session.lastGameId || 0;
       lastGameId++;
-      const state = this.decodeStateData(gameState.stateData);
+      const { state, serializedBase } = this.decodeStateData(gameState.stateData)!;
       const enhancedPlayerStats = this.extractPlayerGameStats(state);
 
       const localGameState: LocalGameState = {
@@ -105,10 +104,11 @@ export class GameService {
         switchSide: false,
         promptMinimized: false,
         state,
-        logs,
+        logs: [...state.logs],
         replayPosition: 1,
         replay,
         enhancedPlayerStats: enhancedPlayerStats,
+        serializedBase,
       };
       const gameStates = [...games, localGameState];
       this.startListening(gameState.gameId);
@@ -267,8 +267,12 @@ export class GameService {
   private startListening(id: number) {
     this.socketService.on(`game[${id}]:join`, (clientId: number) => this.onJoin(id, clientId));
     this.socketService.on(`game[${id}]:leave`, (clientId: number) => this.onLeave(id, clientId));
-    this.socketService.on(`game[${id}]:stateChange`, (data: { stateData: string, playerStats: PlayerStats[] }) =>
-      this.onStateChange(id, data.stateData, data.playerStats));
+    this.socketService.on(`game[${id}]:stateChange`, (data: {
+      stateData: string;
+      playerStats: PlayerStats[];
+      isDiff?: boolean;
+      viewKey?: string;
+    }) => this.onStateChange(id, data.stateData, data.playerStats, data.isDiff, data.viewKey));
     this.socketService.on(`game[${id}]:timerUpdate`, (data: { playerStats: PlayerStats[] }) =>
       this.onTimerUpdate(id, data.playerStats));
 
@@ -338,8 +342,13 @@ export class GameService {
     this.socketService.off(`game[${id}]:attachEnergy`);
   }
 
-  private onStateChange(gameId: number, stateData: string, playerStats: PlayerStats[]) {
-    const state = this.decodeStateData(stateData);
+  private onStateChange(
+    gameId: number,
+    stateData: string,
+    playerStats: PlayerStats[],
+    isDiff?: boolean,
+    viewKey?: string
+  ) {
     const games = this.sessionService.session.gameStates;
     // Prefer the active table, but still accept updates after core:deleteGame marked it deleted
     // (FINISHED often arrives in the same tick as deleteGame).
@@ -349,23 +358,41 @@ export class GameService {
     }
     if (index !== -1) {
       const gameStates = this.sessionService.session.gameStates.slice();
-      const logs = [...gameStates[index].logs, ...state.logs];
+      const prev = gameStates[index];
+
+      // Diffs are only valid against the same sanitized view (self-play focus / seat).
+      if (isDiff && viewKey && prev.viewKey && viewKey !== prev.viewKey) {
+        return;
+      }
+
+      const decoded = this.decodeStateData(stateData, {
+        isDiff: isDiff === true,
+        base: prev.serializedBase,
+      });
+      if (!decoded) {
+        return;
+      }
+
+      // Server sends full log history with shared views; replace rather than append.
+      const logs = [...decoded.state.logs];
 
       // Extract enhanced player statistics if available from the state
-      const enhancedPlayerStats = this.extractPlayerGameStats(state);
+      const enhancedPlayerStats = this.extractPlayerGameStats(decoded.state);
 
       gameStates[index] = {
-        ...gameStates[index],
-        state,
+        ...prev,
+        state: decoded.state,
         logs,
         enhancedPlayerStats: enhancedPlayerStats,
-        playerStats
+        playerStats,
+        serializedBase: decoded.serializedBase,
+        viewKey: viewKey ?? prev.viewKey,
       };
       this.sessionService.set({ gameStates });
       this.boardInteractionService.updateGameLogs(logs);
 
       // Clear game ID for reconnection tracking if game has finished
-      if (state.phase === GamePhase.FINISHED) {
+      if (decoded.state.phase === GamePhase.FINISHED) {
         this.socketService.clearGameId();
       }
     }
@@ -453,11 +480,62 @@ export class GameService {
     }
   }
 
-  private decodeStateData(stateData: string): State {
+  private decodeStateData(
+    stateData: string,
+    options: { isDiff?: boolean; base?: string } = {}
+  ): { state: State; serializedBase: string } | null {
     const base64 = new Base64();
-    const serializedState = base64.decode(stateData);
+    const encoded = base64.decode(stateData);
     const serializer = new StateSerializer();
-    return serializer.deserialize(serializedState);
+
+    let looksLikeDiff = false;
+    try {
+      const parsed = JSON.parse(encoded);
+      looksLikeDiff = Array.isArray(parsed) && parsed.length === 1;
+    } catch {
+      looksLikeDiff = false;
+    }
+
+    const treatAsDiff = options.isDiff === true || looksLikeDiff;
+    if (treatAsDiff) {
+      if (!options.base) {
+        return null;
+      }
+      try {
+        const serializedBase = serializer.applyDiff(options.base, encoded);
+        const state = serializer.deserialize(serializedBase);
+        if (!this.isPlausibleGameState(state)) {
+          return null;
+        }
+        return { state, serializedBase };
+      } catch {
+        return null;
+      }
+    }
+
+    try {
+      const state = serializer.deserialize(encoded);
+      if (!this.isPlausibleGameState(state)) {
+        return null;
+      }
+      return { state, serializedBase: encoded };
+    } catch {
+      return null;
+    }
+  }
+
+  private isPlausibleGameState(state: State): boolean {
+    if (!state || !Array.isArray(state.players) || state.players.length < 1) {
+      return false;
+    }
+    return state.players.every(p =>
+      !!p
+      && !!p.hand
+      && Array.isArray(p.hand.cards)
+      && Array.isArray(p.bench)
+      && !!p.deck
+      && Array.isArray(p.prizes)
+    );
   }
 
   private handleError(error: ApiError): void {

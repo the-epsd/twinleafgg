@@ -6,15 +6,25 @@ import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardTag, TrainerType } from '../../../game/store/card/card-types';
 import {
-  ChoosePokemonPrompt, GameError, GameMessage, Player, PlayerType,
-  PokemonCardList, SlotType
+  ChoosePokemonPrompt,
+  GameError,
+  GameMessage,
+  Player,
+  PlayerType,
+  PokemonCardList,
+  SlotType,
 } from '../../../game';
 import { AbstractAttackEffect } from '../../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { ADD_MARKER } from '../../../game/store/prefabs/prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: AcerolasMischief, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: AcerolasMischief,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
@@ -27,16 +37,20 @@ function* playCard(next: Function, store: StoreLike, state: State,
   }
 
   let targets: PokemonCardList[] = [];
-  yield store.prompt(state, new ChoosePokemonPrompt(
-    player.id,
-    GameMessage.CHOOSE_POKEMON,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.ACTIVE, SlotType.BENCH],
-    { min: 1, max: 1, allowCancel: false }
-  ), results => {
-    targets = results || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChoosePokemonPrompt(
+      player.id,
+      GameMessage.CHOOSE_POKEMON,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.ACTIVE, SlotType.BENCH],
+      { min: 1, max: 1, allowCancel: false },
+    ),
+    (results) => {
+      targets = results || [];
+      next();
+    },
+  );
 
   if (targets.length === 0) {
     return state;
@@ -54,11 +68,11 @@ export class AcerolasMischief extends TrainerCard {
   public regulationMark = 'I';
   public setNumber: string = '113';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Acerola\'s Mischief';
-  public fullName: string = 'Acerola\'s Mischief MEG';
+  public name: string = "Acerola's Mischief";
+  public fullName: string = "Acerola's Mischief MEG";
   public text: string =
     'You can use this card only if your opponent has 2 or fewer Prize cards remaining.\n\n' +
-    'Choose 1 of your Pokémon in play. During your opponent\'s next turn, prevent all damage from and effects of attacks done to that Pokémon by your opponent\'s Pokémon ex.';
+    "Choose 1 of your Pokémon in play. During your opponent's next turn, prevent all damage from and effects of attacks done to that Pokémon by your opponent's Pokémon ex.";
 
   public readonly MISCHIEF_MARKER = 'ACEROLAS_MISCHIEF_MARKER';
   public readonly CLEAR_MISCHIEF_MARKER = 'ACEROLAS_MISCHIEF_CLEAR_MARKER';
@@ -80,24 +94,26 @@ export class AcerolasMischief extends TrainerCard {
       return generator.next().value;
     }
 
-    if (effect instanceof AbstractAttackEffect
-      && effect.target.marker.hasMarker(this.MISCHIEF_MARKER, this)) {
+    if (
+      effect instanceof AbstractAttackEffect &&
+      effect.target.marker.hasMarker(this.MISCHIEF_MARKER, this)
+    ) {
       const targetOwner = StateUtils.findOwner(state, effect.target);
       const sourceCard = effect.source.getPokemonCard();
 
-      if (effect.player !== targetOwner
-        && sourceCard
-        && sourceCard.tags.includes(CardTag.POKEMON_ex)) {
+      if (effect.player !== targetOwner && sourceCard && sourceCard.hasTag(CardTag.POKEMON_ex)) {
         effect.preventDefault = true;
         return state;
       }
     }
 
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_MISCHIEF_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_MISCHIEF_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_MISCHIEF_MARKER, this);
       const player = StateUtils.getOpponent(state, effect.player);
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         cardList.marker.removeMarker(this.MISCHIEF_MARKER, this);
       });
     }

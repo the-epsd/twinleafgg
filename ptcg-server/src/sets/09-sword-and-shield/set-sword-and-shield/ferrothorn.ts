@@ -11,29 +11,27 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, CONFIRMATION_PROMPT } from
 export class Ferrothorn extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Ferroseed';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 130;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Triple Smash',
-      cost: [C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 30 damage for each heads.'
-    },
-    {
-      name: 'Energy Slap',
-      cost: [M, M, C],
-      damage: 100,
-      text: 'You may move all Energy from this Pokémon to 1 of your Benched Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Triple Smash',
+    cost: [C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 30 damage for each heads.'
+  }, {
+    name: 'Energy Slap',
+    cost: [M, M, C],
+    damage: 100,
+    text: 'You may move all Energy from this Pokémon to 1 of your Benched Pokémon.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'SSH';
   public setNumber: string = '131';
   public cardImage: string = 'assets/cardback.png';

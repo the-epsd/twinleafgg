@@ -14,7 +14,7 @@ import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../
 export class Marowak extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Cubone';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 100;
   public weakness = [{ type: G }];
   public retreat = [C, C];
@@ -24,14 +24,14 @@ export class Marowak extends PokemonCard {
       name: 'Sharpshooting',
       cost: [F],
       damage: 0,
-      text: 'This attack does 30 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack does 30 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Bone Windmill',
       cost: [F, C],
       damage: 60,
-      text: 'If your opponent\'s Active Pokémon is a Pokémon-EX, switch this Pokémon with 1 of your Benched Pokémon.'
-    }
+      text: "If your opponent's Active Pokémon is a Pokémon-EX, switch this Pokémon with 1 of your Benched Pokémon.",
+    },
   ];
 
   public set: string = 'BKT';
@@ -56,14 +56,14 @@ export class Marowak extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       const opponentActive = opponent.active.getPokemonCard();
 
-      if (opponentActive && opponentActive.tags.includes(CardTag.POKEMON_EX)) {
+      if (opponentActive && opponentActive.hasTag(CardTag.POKEMON_EX)) {
         this.usedBoneWindmill = true;
       }
     }
 
     if (effect instanceof AfterAttackEffect && this.usedBoneWindmill) {
       this.usedBoneWindmill = false;
-      if (effect.player.bench.some(b => b.cards.length > 0)) {
+      if (effect.player.bench.some((b) => b.cards.length > 0)) {
         SWITCH_ACTIVE_WITH_BENCHED(store, state, effect.player);
       }
     }

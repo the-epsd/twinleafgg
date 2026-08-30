@@ -12,25 +12,22 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike, TrainerType } from '../../../game';
 export class Hoopa extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Hyperspace Ring',
-      cost: [P],
-      damage: 0,
-      text: 'Search your deck for up to 2 Item cards, reveal them, and put them into your hand. Then, shuffle your deck.'
-    },
-    {
-      name: 'Psy Bolt',
-      cost: [P],
-      damage: 10,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Hyperspace Ring',
+    cost: [P],
+    damage: 0,
+    text: 'Search your deck for up to 2 Item cards, reveal them, and put them into your hand. Then, shuffle your deck.'
+  }, {
+    name: 'Psy Bolt',
+    cost: [P],
+    damage: 10,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'FLI';
   public setNumber: string = '54';

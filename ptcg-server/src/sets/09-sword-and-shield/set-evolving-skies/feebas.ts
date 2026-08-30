@@ -9,9 +9,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Feebas extends PokemonCard {
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 30;
   public weakness = [{ type: L }];
   public retreat = [C];
@@ -22,11 +22,12 @@ export class Feebas extends PokemonCard {
       cost: [W],
       damage: 10,
       damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 10 damage for each heads.'
-    }
+      text: 'Flip 3 coins. This attack does 10 damage for each heads.',
+    },
   ];
 
   public regulationMark: string = 'E';
+
   public set: string = 'EVS';
   public setNumber: string = '37';
   public cardImage: string = 'assets/cardback.png';
@@ -38,8 +39,8 @@ export class Feebas extends PokemonCard {
     // Ref: set-battle-styles/falinks.ts (multiple coin flips for damage)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 3, results => {
-        const heads = results.filter(r => r).length;
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 3, (results) => {
+        const heads = results.filter((r) => r).length;
         effect.damage = 10 * heads;
       });
     }

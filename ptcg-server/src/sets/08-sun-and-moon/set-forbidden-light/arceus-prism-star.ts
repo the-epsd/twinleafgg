@@ -28,9 +28,9 @@ import {
 } from '../../../game/store/prefabs/prefabs';
 
 export class ArceusPrismStar extends PokemonCard {
-  public tags = [CardTag.PRISM_STAR];
+  protected _tags = [CardTag.PRISM_STAR];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 160;
   public weakness = [{ type: F }];
   public retreat = [C];

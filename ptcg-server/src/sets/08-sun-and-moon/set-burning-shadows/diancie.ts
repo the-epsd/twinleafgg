@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameError, GameMessage, CardManager, PlayerType, CardTarget, PokemonCardList, ChoosePokemonPrompt, SlotType, Card, ChooseCardsPrompt, ShuffleDeckPrompt } from '../../../game';
+import { StoreLike, State, GameError, GameMessage, CardManager, PlayerType, CardTarget, PokemonCardList, ChoosePokemonPrompt, SlotType, Card, ChooseCardsPrompt, ShuffleDeckPrompt, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { HealTargetEffect } from '../../../game/store/effects/attack-effects';
@@ -101,7 +101,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Attac
 
 export class Diancie extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 90;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];
@@ -137,7 +137,7 @@ export class Diancie extends PokemonCard {
       const player = effect.player;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card.cardType === Y) {
+        if (pokemonHasCardType(card, Y)) {
           const healTargetEffect = new HealTargetEffect(effect, 30);
           healTargetEffect.target = cardList;
           state = store.reduceEffect(state, healTargetEffect);

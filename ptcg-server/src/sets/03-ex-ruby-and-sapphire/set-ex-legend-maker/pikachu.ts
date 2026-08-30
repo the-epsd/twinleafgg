@@ -4,34 +4,28 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { CoinFlipPrompt } from '../../../game/store/prompts/coin-flip-prompt';
-import { GameMessage } from '../../../game';
-import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, WAS_ATTACK_USED, FLIP_UNTIL_TAILS_AND_COUNT_HEADS } from '../../../game/store/prefabs/prefabs';
 
 export class Pikachu extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = M;
+  protected _tags = [CardTag.DELTA_SPECIES];
+  public cardType: CardType[] = [M];
   public hp: number = 40;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Thunder Wave',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Iron Tail',
-      cost: [M, C],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Flip a coin until you get tails. This attack does 20 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Thunder Wave',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Iron Tail',
+    cost: [M, C],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Flip a coin until you get tails. This attack does 20 damage times the number of heads.'
+  }];
 
   public set: string = 'LM';
   public setNumber: string = '93';
@@ -51,18 +45,9 @@ export class Pikachu extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      const flipCoin = (heads: number = 0): State => {
-        return store.prompt(state, [
-          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-        ], result => {
-          if (result === true) {
-            return flipCoin(heads + 1);
-          }
-          effect.damage = 20 * heads;
-          return state;
-        });
-      };
-      return flipCoin();
+      return FLIP_UNTIL_TAILS_AND_COUNT_HEADS(store, state, player, heads => {
+      effect.damage = 20 * heads;
+    });
     }
 
     return state;

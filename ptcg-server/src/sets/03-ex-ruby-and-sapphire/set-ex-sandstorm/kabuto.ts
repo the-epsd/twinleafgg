@@ -8,7 +8,7 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 export class Kabuto extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Mysterious Fossil';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 60;
   public weakness = [{ type: G }];
   public retreat = [C, C];

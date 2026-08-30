@@ -4,34 +4,44 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { PowerType as PowerTypeEnum, StoreLike, State, StateUtils, PokemonCardList, PlayerType, Player } from '../../../game';
+import {
+  PowerType as PowerTypeEnum,
+  StoreLike,
+  State,
+  StateUtils,
+  PokemonCardList,
+  PlayerType,
+  Player,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/attack-effects';
 import { HANDLE_ABILITY_LOCK } from '../../../game/store/prefabs/ability-lock';
 
 export class Gorebyss extends PokemonCard {
-  public tags = [CardTag.FUSION_STRIKE];
+  protected _tags = [CardTag.FUSION_STRIKE];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Clamperl';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 110;
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Rapid Strike Canceler',
-    powerType: PowerTypeEnum.ABILITY,
-    text: 'Your opponent\'s Rapid Strike Pokémon in play have no Abilities.'
-  }];
+  public powers = [
+    {
+      name: 'Rapid Strike Canceler',
+      powerType: PowerTypeEnum.ABILITY,
+      text: "Your opponent's Rapid Strike Pokémon in play have no Abilities.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Draining Kiss',
       cost: [W, C],
       damage: 50,
-      text: 'Heal 30 damage from this Pokémon.'
-    }
+      text: 'Heal 30 damage from this Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -42,49 +52,53 @@ export class Gorebyss extends PokemonCard {
   public fullName: string = 'Gorebyss FST 67';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    HANDLE_ABILITY_LOCK(effect, ({ card }) => {
-      if (!card.tags?.includes(CardTag.RAPID_STRIKE)) {
-        return false;
-      }
+    HANDLE_ABILITY_LOCK(
+      effect,
+      ({ card }) => {
+        if (!card.hasTag(CardTag.RAPID_STRIKE)) {
+          return false;
+        }
 
-      let gorebyssOwner: Player | null = null;
-      state.players.forEach(p => {
-        p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList: PokemonCardList) => {
-          if (cardList.getPokemonCard() === this) {
-            gorebyssOwner = p;
-          }
+        let gorebyssOwner: Player | null = null;
+        state.players.forEach((p) => {
+          p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList: PokemonCardList) => {
+            if (cardList.getPokemonCard() === this) {
+              gorebyssOwner = p;
+            }
+          });
         });
-      });
-      if (!gorebyssOwner) {
-        return false;
-      }
+        if (!gorebyssOwner) {
+          return false;
+        }
 
-      let targetPlayer: Player | null = null;
-      state.players.forEach(p => {
-        p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList: PokemonCardList, pokemon) => {
-          if (pokemon === card) {
-            targetPlayer = p;
-          }
+        let targetPlayer: Player | null = null;
+        state.players.forEach((p) => {
+          p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList: PokemonCardList, pokemon) => {
+            if (pokemon === card) {
+              targetPlayer = p;
+            }
+          });
         });
-      });
 
-      if (!targetPlayer || targetPlayer === gorebyssOwner) {
-        return false;
-      }
+        if (!targetPlayer || targetPlayer === gorebyssOwner) {
+          return false;
+        }
 
-      if (IS_ABILITY_BLOCKED(store, state, gorebyssOwner, this)) {
-        return false;
-      }
+        if (IS_ABILITY_BLOCKED(store, state, gorebyssOwner, this)) {
+          return false;
+        }
 
-      try {
-        return StateUtils.findCardList(state, card) instanceof PokemonCardList;
-      } catch {
-        return false;
-      }
-    }, {
-      allowUseFromHand: true,
-      allowUseFromDiscard: true,
-    });
+        try {
+          return StateUtils.findCardList(state, card) instanceof PokemonCardList;
+        } catch {
+          return false;
+        }
+      },
+      {
+        allowUseFromHand: true,
+        allowUseFromDiscard: true,
+      },
+    );
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       HEAL_X_DAMAGE_FROM_THIS_POKEMON(30, effect, store, state);

@@ -1,4 +1,8 @@
-import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_SLEEP_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-prompt';
 
 import { CardTag, CardType, Stage, SuperType } from '../../../game/store/card/card-types';
@@ -9,10 +13,10 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayerType, SlotType, State, StoreLike } from '../../../game';
 export class Glalie extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Snorunt';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 100;
   public weakness = [{ type: M }];
   public retreat = [C, C];
@@ -22,14 +26,14 @@ export class Glalie extends PokemonCard {
       name: 'Powder Snow',
       cost: [W, C],
       damage: 30,
-      text: 'The Defending Pok\u00e9mon is now Asleep.'
+      text: 'The Defending Pok\u00e9mon is now Asleep.',
     },
     {
       name: 'Reflect Energy',
       cost: [W, C, C],
       damage: 60,
-      text: 'Move a [W] Energy from this Pok\u00e9mon to 1 of your Benched Pok\u00e9mon.'
-    }
+      text: 'Move a [W] Energy from this Pok\u00e9mon to 1 of your Benched Pok\u00e9mon.',
+    },
   ];
 
   public set: string = 'PLB';
@@ -46,14 +50,16 @@ export class Glalie extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      const hasBench = player.bench.some(b => b.cards.length > 0);
+      const hasBench = player.bench.some((b) => b.cards.length > 0);
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, player.active);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
-      const waterProvidingCards = new Set<typeof checkProvidedEnergy.energyMap[0]['card']>();
-      checkProvidedEnergy.energyMap.forEach(em => {
-        if (em.card.superType === SuperType.ENERGY
-          && (em.provides.includes(CardType.WATER) || em.provides.includes(CardType.ANY))) {
+      const waterProvidingCards = new Set<(typeof checkProvidedEnergy.energyMap)[0]['card']>();
+      checkProvidedEnergy.energyMap.forEach((em) => {
+        if (
+          em.card.superType === SuperType.ENERGY &&
+          (em.provides.includes(CardType.WATER) || em.provides.includes(CardType.ANY))
+        ) {
           waterProvidingCards.add(em.card);
         }
       });
@@ -66,22 +72,26 @@ export class Glalie extends PokemonCard {
       });
 
       if (blocked.length !== player.active.cards.length && hasBench) {
-        return store.prompt(state, new AttachEnergyPrompt(
-          player.id,
-          GameMessage.ATTACH_ENERGY_TO_BENCH,
-          player.active,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.BENCH],
-          { superType: SuperType.ENERGY },
-          { min: 1, max: 1, allowCancel: false, blocked }
-        ), transfers => {
-          if (transfers && transfers.length > 0) {
-            for (const transfer of transfers) {
-              const target = StateUtils.getTarget(state, player, transfer.to);
-              player.active.moveCardTo(transfer.card, target);
+        return store.prompt(
+          state,
+          new AttachEnergyPrompt(
+            player.id,
+            GameMessage.ATTACH_ENERGY_TO_BENCH,
+            player.active,
+            PlayerType.BOTTOM_PLAYER,
+            [SlotType.BENCH],
+            { superType: SuperType.ENERGY },
+            { min: 1, max: 1, allowCancel: false, blocked },
+          ),
+          (transfers) => {
+            if (transfers && transfers.length > 0) {
+              for (const transfer of transfers) {
+                const target = StateUtils.getTarget(state, player, transfer.to);
+                player.active.moveCardTo(transfer.card, target);
+              }
             }
-          }
-        });
+          },
+        );
       }
     }
 

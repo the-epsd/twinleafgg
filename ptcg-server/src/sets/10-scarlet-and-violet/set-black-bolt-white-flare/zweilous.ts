@@ -1,13 +1,13 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage } from '../../../game/store/card/card-types';
-import { StoreLike, State, CoinFlipPrompt, GameMessage } from '../../../game';
+import { CardType, Stage } from '../../../game/store/card/card-types';
+import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Zweilous extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Deino';
-  public cardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 110;
   public weakness = [{ type: G }];
   public resistance = [];
@@ -19,8 +19,7 @@ export class Zweilous extends PokemonCard {
     damage: 40,
     damageCalculation: 'x',
     text: 'Flip 2 coins. This attack does 40 damage for each heads.'
-  },
-  {
+  }, {
     name: 'Pitch-Black Fangs',
     cost: [D, D, C, C],
     damage: 100,
@@ -28,7 +27,9 @@ export class Zweilous extends PokemonCard {
   }];
 
   public set: string = 'WHT';
+
   public regulationMark: string = 'I';
+
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '66';
   public name: string = 'Zweilous';
@@ -37,10 +38,7 @@ export class Zweilous extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-      ], results => {
+      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, results => {
         let heads: number = 0;
         results.forEach(r => { heads += r ? 1 : 0; });
         effect.damage = 40 * heads;

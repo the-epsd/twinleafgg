@@ -10,25 +10,22 @@ import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, COIN_FLIP_PROMPT }
 
 export class Eevee2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Curiosity',
-      cost: [C],
-      damage: 0,
-      text: 'Your opponent reveals their hand.'
-    },
-    {
-      name: 'Spin Tackle',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip a coin. If tails, this Pokémon does 10 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Curiosity',
+    cost: [C],
+    damage: 0,
+    text: 'Your opponent reveals their hand.'
+  }, {
+    name: 'Spin Tackle',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip a coin. If tails, this Pokémon does 10 damage to itself.'
+  }];
 
   public set: string = 'HIF';
   public setNumber: string = '48';

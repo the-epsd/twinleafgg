@@ -11,7 +11,7 @@ export class AlolanDugtrio extends PokemonCard {
 
   public evolvesFrom = 'Alolan Diglett';
 
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType[] = [CardType.METAL];
 
   public hp: number = 110;
 

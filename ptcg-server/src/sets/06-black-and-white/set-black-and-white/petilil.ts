@@ -8,21 +8,19 @@ import { HealEffect } from '../../../game/store/effects/game-effects';
 
 export class Petilil extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 50;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Magical Leaf',
-      cost: [G],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 10 more damage and heal 10 damage from this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Magical Leaf',
+    cost: [G],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 10 more damage and heal 10 damage from this Pokémon.'
+  }];
 
   public set: string = 'BLW';
   public cardImage: string = 'assets/cardback.png';

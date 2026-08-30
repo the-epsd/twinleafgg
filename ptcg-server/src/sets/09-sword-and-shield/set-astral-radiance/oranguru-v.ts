@@ -1,20 +1,39 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { Stage, CardType, CardTag, TrainerType, SuperType, BoardEffect } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameMessage, GameError, TrainerCard, PlayerType } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  TrainerType,
+  SuperType,
+  BoardEffect,
+} from '../../../game/store/card/card-types';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  GameMessage,
+  GameError,
+  TrainerCard,
+  PlayerType,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { StateUtils } from '../../../game/store/state-utils';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { IS_ABILITY_BLOCKED, SEARCH_DECK_FOR_CARDS_TO_HAND, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  IS_ABILITY_BLOCKED,
+  SEARCH_DECK_FOR_CARDS_TO_HAND,
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class OranguruV extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
 
   public hp: number = 210;
 
@@ -22,12 +41,14 @@ export class OranguruV extends PokemonCard {
 
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Back Order',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, if this Pokémon is in the Active Spot, you may search your deck for up to 2 Pokémon Tool cards, reveal them, and put them into your hand. Then, shuffle your deck.'
-  }];
+  public powers = [
+    {
+      name: 'Back Order',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn, if this Pokémon is in the Active Spot, you may search your deck for up to 2 Pokémon Tool cards, reveal them, and put them into your hand. Then, shuffle your deck.',
+    },
+  ];
 
   public attacks = [
     {
@@ -35,8 +56,8 @@ export class OranguruV extends PokemonCard {
       cost: [C, C, C],
       damage: 30,
       damageCalculation: '+',
-      text: 'This attack does 50 more damage for each Energy attached to your opponent\'s Active Pokémon.'
-    }
+      text: "This attack does 50 more damage for each Energy attached to your opponent's Active Pokémon.",
+    },
   ];
 
   public regulationMark = 'F';
@@ -81,7 +102,7 @@ export class OranguruV extends PokemonCard {
 
       player.marker.addMarker(this.BACK_ORDER_MARKER, this);
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         if (cardList.getPokemonCard() === this) {
           cardList.addBoardEffect(BoardEffect.ABILITY_USED);
         }
@@ -94,7 +115,15 @@ export class OranguruV extends PokemonCard {
         }
       });
 
-      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this, { superType: SuperType.TRAINER }, { min: 0, max: 2, allowCancel: false, blocked }, this.powers[0]);
+      SEARCH_DECK_FOR_CARDS_TO_HAND(
+        store,
+        state,
+        player,
+        this,
+        { superType: SuperType.TRAINER },
+        { min: 0, max: 2, allowCancel: false, blocked },
+        this.powers[0],
+      );
     }
 
     // Psychic
@@ -104,14 +133,19 @@ export class OranguruV extends PokemonCard {
 
       const opponentProvidedEnergy = new CheckProvidedEnergyEffect(opponent);
       store.reduceEffect(state, opponentProvidedEnergy);
-      const opponentEnergyCount = opponentProvidedEnergy.energyMap
-        .reduce((left, p) => left + p.provides.length, 0);
+      const opponentEnergyCount = opponentProvidedEnergy.energyMap.reduce(
+        (left, p) => left + p.provides.length,
+        0,
+      );
 
       effect.damage += opponentEnergyCount * 50;
     }
 
     // Remove once-per-turn marker at end of turn
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.BACK_ORDER_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.BACK_ORDER_MARKER, this)
+    ) {
       const player = effect.player;
       player.marker.removeMarker(this.BACK_ORDER_MARKER, this);
     }

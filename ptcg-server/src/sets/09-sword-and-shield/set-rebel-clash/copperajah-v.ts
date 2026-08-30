@@ -9,9 +9,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class CopperajahV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 220;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
@@ -22,14 +22,14 @@ export class CopperajahV extends PokemonCard {
       name: 'Adamantine Press',
       cost: [M, M, C],
       damage: 90,
-      text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
+      text: "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).",
     },
     {
       name: 'Wrack Down',
       cost: [M, M, M, C],
       damage: 180,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -48,9 +48,7 @@ export class CopperajahV extends PokemonCard {
 
     // Reduce damage taken
 
-
     // Cleanup at end of opponent's turn
-
 
     return state;
   }

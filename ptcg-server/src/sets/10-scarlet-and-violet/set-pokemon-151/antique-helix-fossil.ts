@@ -31,13 +31,13 @@ export class AntiqueHelixFossil extends TrainerCard {
   public superType = SuperType.TRAINER;
   public regulationMark = 'G';
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
   public hp: number = 60;
   public movedToActiveThisTurn = false;
   public pokemonType = PokemonType.NORMAL;
   public evolvesFrom = '';
   public cardTag = [];
-  public tags = [CardTag.ANTIQUE];
+  protected _tags = [CardTag.ANTIQUE];
   public tools = [];
   public archetype = [];
   public weakness = [];

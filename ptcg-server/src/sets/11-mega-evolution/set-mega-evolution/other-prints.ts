@@ -41,6 +41,8 @@ import { MegaKangaskhanex } from './mega-kangaskhan-ex';
 import { MegaLucarioex } from './mega-lucario-ex';
 import { MegaVenusaurEx } from './mega-venusaur-ex';
 import { PokemonCenterLady } from '../../07-x-and-y/set-flashfire/pokemon-center-lady';
+import { AcerolasMischief } from './acerolas-mischief';
+import { Shuckle } from './shuckle';
 
 export class BulbasaurM1S extends Bulbasaur {
   public fullName = 'Bulbasaur M1S 64';
@@ -259,6 +261,12 @@ export class MegaKangaskhanex2MEG extends MegaKangaskhanexMEG104 {
   public set = 'MEG';
 }
 
+export class AcerolasMischiefFA extends AcerolasMischief {
+  public setNumber = '165';
+  public fullName: string = 'Acerola\'s Mischief FA MEG';
+  public set = 'MEG';
+}
+
 export class AirBalloonMEG extends AirBalloon {
   public setNumber = '166';
   public fullName: string = 'Air Balloon MEG';
@@ -357,6 +365,12 @@ export class MegaKangaskhanex3MEG extends MegaKangaskhanexMEG104 {
   public set = 'MEG';
 }
 
+export class AcerolasMischiefSIR extends AcerolasMischief {
+  public setNumber = '183';
+  public fullName: string = 'Acerola\'s Mischief SIR MEG';
+  public set = 'MEG';
+}
+
 export class LilliesDetermination3MEG extends LilliesDeterminationMEG119 {
   public setNumber = '184';
   public fullName: string = 'Lillie\'s Determination3 MEG';
@@ -378,5 +392,12 @@ export class MegaGardevoirex4MEG extends MegaGardevoirexMEG60 {
 export class MegaLucarioex4MEG extends MegaLucarioexMEG77 {
   public setNumber = '188';
   public fullName: string = 'Mega Lucario ex4 MEG';
+  public set = 'MEG';
+}
+
+export class ShuckleMEG136 extends Shuckle {
+  public regulationMark = 'I';
+  public setNumber = '136';
+  public fullName = 'ShuckleIR MEG';
   public set = 'MEG';
 }

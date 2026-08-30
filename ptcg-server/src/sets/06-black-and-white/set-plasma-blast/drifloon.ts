@@ -6,7 +6,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Drifloon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public weakness = [{ type: D }];
   public retreat = [C, C];
@@ -16,8 +16,7 @@ export class Drifloon extends PokemonCard {
     cost: [P],
     damage: 0,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
-  },
-  {
+  }, {
     name: 'Wind Blast',
     cost: [C, C, C],
     damage: 0,

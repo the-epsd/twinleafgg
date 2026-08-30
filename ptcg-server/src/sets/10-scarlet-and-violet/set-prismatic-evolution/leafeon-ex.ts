@@ -10,14 +10,13 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Leafeonex extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
   public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom = 'Eevee';
 
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
 
   public hp: number = 270;
 
@@ -30,14 +29,14 @@ export class Leafeonex extends PokemonCard {
       name: 'Verdant Storm',
       cost: [G, C],
       damage: 60,
-      text: 'This attack foes 60 damage for each Energy attached to all of your opponent\'s Pokémon.'
+      text: "This attack foes 60 damage for each Energy attached to all of your opponent's Pokémon.",
     },
     {
       name: 'Moss Agate',
       cost: [G, R, W],
       damage: 230,
-      text: 'Heal 100 damage from each of your Benched Pokemon.'
-    }
+      text: 'Heal 100 damage from each of your Benched Pokemon.',
+    },
   ];
 
   public regulationMark: string = 'H';
@@ -57,7 +56,7 @@ export class Leafeonex extends PokemonCard {
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
         const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(opponent, cardList);
         store.reduceEffect(state, checkProvidedEnergyEffect);
-        checkProvidedEnergyEffect.energyMap.forEach(energy => {
+        checkProvidedEnergyEffect.energyMap.forEach((energy) => {
           energies++;
         });
       });
@@ -80,7 +79,11 @@ export class Leafeonex extends PokemonCard {
       });
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

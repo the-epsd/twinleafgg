@@ -10,7 +10,12 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
@@ -19,58 +24,63 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }, 0);
 
   if (benchCount > 0) {
-
-    return store.prompt(state, new ChoosePokemonPrompt(
-      player.id,
-      GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-      PlayerType.TOP_PLAYER,
-      [SlotType.BENCH],
-      { allowCancel: false }
-    ), targets => {
-      if (!targets || targets.length === 0) {
-        return;
-      }
-      opponent.active.clearEffects();
-      opponent.switchPokemon(targets[0]);
-      next();
-
-      const hasBench = player.bench.some(b => b.cards.length > 0);
-
-      if (!hasBench) {
-
-        return state;
-      }
-
-      let target: PokemonCardList[] = [];
-      return store.prompt(state, new ChoosePokemonPrompt(
+    return store.prompt(
+      state,
+      new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-        PlayerType.BOTTOM_PLAYER,
+        PlayerType.TOP_PLAYER,
         [SlotType.BENCH],
-        { allowCancel: false }
-      ), results => {
-        target = results || [];
+        { allowCancel: false },
+      ),
+      (targets) => {
+        if (!targets || targets.length === 0) {
+          return;
+        }
+        opponent.active.clearEffects();
+        opponent.switchPokemon(targets[0]);
         next();
 
-        if (target.length === 0) {
+        const hasBench = player.bench.some((b) => b.cards.length > 0);
+
+        if (!hasBench) {
           return state;
         }
 
-        // Discard trainer only when user selected a Pokemon
-        player.active.clearEffects();
-        player.switchPokemon(target[0]);
+        let target: PokemonCardList[] = [];
+        return store.prompt(
+          state,
+          new ChoosePokemonPrompt(
+            player.id,
+            GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+            PlayerType.BOTTOM_PLAYER,
+            [SlotType.BENCH],
+            { allowCancel: false },
+          ),
+          (results) => {
+            target = results || [];
+            next();
 
-        return state;
-      });
-    });
+            if (target.length === 0) {
+              return state;
+            }
+
+            // Discard trainer only when user selected a Pokemon
+            player.active.clearEffects();
+            player.switchPokemon(target[0]);
+
+            return state;
+          },
+        );
+      },
+    );
   }
 }
 
 export class PrimeCatcher extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public tags = [CardTag.ACE_SPEC];
+  protected _tags = [CardTag.ACE_SPEC];
 
   public regulationMark = 'H';
 
@@ -85,16 +95,15 @@ export class PrimeCatcher extends TrainerCard {
   public fullName: string = 'Prime Catcher TEF';
 
   public text: string =
-    'Switch in 1 of your opponent\'s Benched Pokémon to the Active Spot. If you do, switch your Active Pokémon with 1 of your Benched Pokémon.';
+    "Switch in 1 of your opponent's Benched Pokémon to the Active Spot. If you do, switch your Active Pokémon with 1 of your Benched Pokémon.";
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     const opponent = StateUtils.getOpponent(state, player);
-    if (!opponent.bench.some(b => b.cards.length > 0)) {
+    if (!opponent.bench.some((b) => b.cards.length > 0)) {
       return false;
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -104,5 +113,4 @@ export class PrimeCatcher extends TrainerCard {
 
     return state;
   }
-
 }

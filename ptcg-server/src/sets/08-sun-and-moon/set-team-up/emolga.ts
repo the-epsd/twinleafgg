@@ -12,7 +12,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { Card, PowerType, State, StoreLike } from '../../../game';
 export class Emolga extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 60;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
@@ -27,14 +27,12 @@ export class Emolga extends PokemonCard {
     text: 'Once during your turn (before your attack), you may search your deck for a Pokémon that has the Nuzzle attack, reveal it, and put it into your hand. Then, shuffle your deck.'
   }];
 
-  public attacks = [
-    {
-      name: 'Nuzzle',
-      cost: [L],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Nuzzle',
+    cost: [L],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'TEU';
   public setNumber: string = '46';

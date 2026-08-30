@@ -12,7 +12,7 @@ import { CardList } from '../../../game/store/state/card-list';
 export class Raticate extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Rattata';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public retreat = [];

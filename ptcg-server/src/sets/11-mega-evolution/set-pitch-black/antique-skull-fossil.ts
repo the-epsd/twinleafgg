@@ -31,13 +31,13 @@ import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 export class AntiqueSkullFossil extends TrainerCard {
   public trainerType = TrainerType.ITEM;
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
   public cardTypez: CardType = CardType.COLORLESS;
   public movedToActiveThisTurn = false;
   public pokemonType = PokemonType.NORMAL;
   public evolvesFrom = '';
   public cardTag = [];
-  public tags = [CardTag.ANTIQUE];
+  protected _tags = [CardTag.ANTIQUE];
   public tools = [];
   public evolvesTo = ['Cranidos'];
   public evolvesToStage = [];

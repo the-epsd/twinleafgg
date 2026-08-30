@@ -12,25 +12,27 @@ import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 export class Jolteon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Eevee';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Speed Cheer',
-    powerType: PowerType.ABILITY,
-    text: 'The attacks of your Pokémon-GX in play that evolve from Eevee cost Colorless less. You can\'t apply more than 1 Speed Cheer Ability at a time.'
-  }];
+  public powers = [
+    {
+      name: 'Speed Cheer',
+      powerType: PowerType.ABILITY,
+      text: "The attacks of your Pokémon-GX in play that evolve from Eevee cost Colorless less. You can't apply more than 1 Speed Cheer Ability at a time.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Head Bolt',
       cost: [L, C],
       damage: 70,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'CEC';
@@ -65,9 +67,13 @@ export class Jolteon extends PokemonCard {
       let firstJolteon: PokemonCard | undefined;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         const pokemonCard = cardList.getPokemonCard();
-        if (pokemonCard && pokemonCard instanceof Jolteon
-          && pokemonCard.powers.length > 0 && pokemonCard.powers[0].name === 'Speed Cheer'
-          && !firstJolteon) {
+        if (
+          pokemonCard &&
+          pokemonCard instanceof Jolteon &&
+          pokemonCard.powers.length > 0 &&
+          pokemonCard.powers[0].name === 'Speed Cheer' &&
+          !firstJolteon
+        ) {
           firstJolteon = pokemonCard;
         }
       });
@@ -78,8 +84,11 @@ export class Jolteon extends PokemonCard {
 
       // Check if the active Pokemon is a GX that evolves from Eevee
       const activePokemon = player.active.getPokemonCard();
-      if (activePokemon && activePokemon.tags.includes(CardTag.POKEMON_GX)
-        && activePokemon.evolvesFrom === 'Eevee') {
+      if (
+        activePokemon &&
+        activePokemon.hasTag(CardTag.POKEMON_GX) &&
+        activePokemon.evolvesFrom === 'Eevee'
+      ) {
         // Remove 1 Colorless from the attack cost
         const index = effect.cost.indexOf(CardType.COLORLESS);
         if (index !== -1) {

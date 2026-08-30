@@ -14,7 +14,7 @@ import { GameError } from '../../../game/game-error';
 export class Metapod extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Caterpie';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
@@ -28,14 +28,12 @@ export class Metapod extends PokemonCard {
     text: 'Once during your turn (before your attack), you may flip a coin. If heads, search your deck for a card that evolves from this Pokémon and put it onto this Pokémon to evolve it. Then, shuffle your deck.'
   }];
 
-  public attacks = [
-    {
-      name: 'Bug Bite',
-      cost: [G, C, C],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Bug Bite',
+    cost: [G, C, C],
+    damage: 30,
+    text: ''
+  }];
 
   public set: string = 'UNB';
   public setNumber: string = '3';

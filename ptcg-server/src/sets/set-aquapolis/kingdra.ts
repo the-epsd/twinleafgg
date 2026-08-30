@@ -1,13 +1,14 @@
-import { CardTarget, ChooseCardsPrompt, GameMessage, MoveEnergyPrompt, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { CardTarget, GameMessage, MoveEnergyPrompt, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { COIN_FLIP_PROMPT, MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
 
 export class Kingdra extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Seadra';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 120;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];
@@ -82,24 +83,11 @@ export class Kingdra extends PokemonCard {
         return state;
       }
 
-      if (opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
-        COIN_FLIP_PROMPT(store, state, player, result => {
-          if (result) {
-            store.prompt(state, new ChooseCardsPrompt(
-              player,
-              GameMessage.CHOOSE_CARD_TO_DISCARD,
-              opponent.active,
-              { superType: SuperType.ENERGY },
-              { min: 1, max: 1, allowCancel: false }
-            ), selected => {
-              const card = selected[0];
-
-              MOVE_CARDS(store, state, StateUtils.findCardList(state, card), opponent.discard, { cards: [card], sourceCard: this, sourceEffect: this.attacks[0] });
-              return state;
-            });
-          }
-        });
-      }
+      COIN_FLIP_PROMPT(store, state, player, result => {
+        if (result) {
+          DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
+        }
+      });
     }
 
     return state;

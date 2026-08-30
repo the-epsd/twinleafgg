@@ -12,7 +12,8 @@ export class TeamMagmaHideout extends TrainerCard {
   public set = 'MA';
   public name = 'Team Magma Hideout';
   public fullName = 'Team Magma Hideout MA';
-  public text = 'Whenever any player plays a Basic Pokémon that doesn\'t have Team Magma in its name from his or her hand, that player puts 1 damage counter on that Pokémon.';
+  public text =
+    "Whenever any player plays a Basic Pokémon that doesn't have Team Magma in its name from his or her hand, that player puts 1 damage counter on that Pokémon.";
 
   reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && StateUtils.getStadiumCard(state) === this) {
@@ -22,11 +23,16 @@ export class TeamMagmaHideout extends TrainerCard {
         return state;
       }
 
-      if (effect.target.cards.length > 0 || effect.pokemonCard.tags.includes(CardTag.TEAM_MAGMA)) {
+      if (effect.target.cards.length > 0 || effect.pokemonCard.hasTag(CardTag.TEAM_MAGMA)) {
         return state;
       }
 
-      store.log(state, GameLog.LOG_PLAYER_PLACES_DAMAGE_COUNTERS, { name: owner.name, damage: 10, target: effect.pokemonCard.name, effect: this.name });
+      store.log(state, GameLog.LOG_PLAYER_PLACES_DAMAGE_COUNTERS, {
+        name: owner.name,
+        damage: 10,
+        target: effect.pokemonCard.name,
+        effect: this.name,
+      });
 
       effect.target.damage += 10;
       return state;

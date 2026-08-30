@@ -7,14 +7,13 @@ import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class ZacianV extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
 
   public regulationMark = 'F';
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType[] = [CardType.METAL];
 
   public hp: number = 220;
 
@@ -29,14 +28,14 @@ export class ZacianV extends PokemonCard {
       name: 'Piercing Strike',
       cost: [CardType.METAL],
       damage: 40,
-      text: 'This attack\'s damage isn\'t affected by Weakness or Resistance, or by any effects on your opponent\'s Active Pokémon.'
+      text: "This attack's damage isn't affected by Weakness or Resistance, or by any effects on your opponent's Active Pokémon.",
     },
     {
       name: 'Behemoth Blade',
       cost: [CardType.METAL, CardType.METAL, CardType.COLORLESS],
       damage: 100,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is a Pokémon VMAX, this attack does 160 more damage.'
+      text: "If your opponent's Active Pokémon is a Pokémon VMAX, this attack does 160 more damage.",
     },
   ];
 
@@ -51,12 +50,11 @@ export class ZacianV extends PokemonCard {
   public fullName: string = 'Zacian V CRZ';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const damage = 40;  // Fixed damage without weakness/resistance
+      const damage = 40; // Fixed damage without weakness/resistance
       effect.ignoreResistance = true;
       effect.ignoreWeakness = true;
 
@@ -73,7 +71,7 @@ export class ZacianV extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const opponentActive = opponent.active.getPokemonCard();
-      if (opponentActive && opponentActive.tags.includes(CardTag.POKEMON_VMAX)) {
+      if (opponentActive && opponentActive.hasTag(CardTag.POKEMON_VMAX)) {
         effect.damage += 160;
       }
     }

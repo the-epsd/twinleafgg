@@ -13,7 +13,7 @@ import { IS_POKEBODY_BLOCKED, THIS_ATTACK_DOES_X_MORE_DAMAGE, WAS_ATTACK_USED } 
 export class Rhydon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Rhyhorn';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 90;
   public weakness = [{ type: W }];
   public retreat = [C, C];

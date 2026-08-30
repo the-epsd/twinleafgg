@@ -3,20 +3,31 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  EnergyType,
+  SuperType,
+} from '../../../game/store/card/card-types';
 import { GameMessage, PlayerType, SlotType, StateUtils, StoreLike, State } from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttachEnergyEffect } from '../../../game/store/effects/play-card-effects';
 import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-prompt';
 import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED, SHUFFLE_DECK, CONFIRMATION_PROMPT } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  SWITCH_ACTIVE_WITH_BENCHED,
+  SHUFFLE_DECK,
+  CONFIRMATION_PROMPT,
+} from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class EmolgaEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 110;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
@@ -27,15 +38,15 @@ export class EmolgaEx extends PokemonCard {
       name: 'Energy Glide',
       cost: [C],
       damage: 0,
-      text: 'Search your deck for a [L] Energy card and attach it to this Pokémon. Shuffle your deck afterward. If you attached Energy in this way, switch this Pokémon with 1 of your Benched Pokémon.'
+      text: 'Search your deck for a [L] Energy card and attach it to this Pokémon. Shuffle your deck afterward. If you attached Energy in this way, switch this Pokémon with 1 of your Benched Pokémon.',
     },
     {
       name: 'Electron Crush',
       cost: [L, C, C],
       damage: 60,
       damageCalculation: '+',
-      text: 'You may discard an Energy attached to this Pokémon. If you do, this attack does 30 more damage.'
-    }
+      text: 'You may discard an Energy attached to this Pokémon. If you do, this attack does 30 more damage.',
+    },
   ];
 
   public set: string = 'XY';
@@ -52,30 +63,44 @@ export class EmolgaEx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const filter: Partial<EnergyCard> = { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' };
+      const filter: Partial<EnergyCard> = {
+        superType: SuperType.ENERGY,
+        energyType: EnergyType.BASIC,
+        name: 'Lightning Energy',
+      };
 
-      state = store.prompt(state, new AttachEnergyPrompt(
-        player.id, GameMessage.ATTACH_ENERGY_CARDS, player.deck, PlayerType.BOTTOM_PLAYER, [SlotType.ACTIVE], filter, { min: 0, max: 1, allowCancel: true }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          const energyCard = transfer.card as EnergyCard;
-          const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
-          store.reduceEffect(state, attachEnergyEffect);
-        }
-        // Only mark for switch if energy was actually attached
-        if (transfers.length > 0) {
-          this.usedEnergyGlide = true;
-        }
-        SHUFFLE_DECK(store, state, player);
-      });
+      state = store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_CARDS,
+          player.deck,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE],
+          filter,
+          { min: 0, max: 1, allowCancel: true },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            const energyCard = transfer.card as EnergyCard;
+            const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
+            store.reduceEffect(state, attachEnergyEffect);
+          }
+          // Only mark for switch if energy was actually attached
+          if (transfers.length > 0) {
+            this.usedEnergyGlide = true;
+          }
+          SHUFFLE_DECK(store, state, player);
+        },
+      );
     }
 
     if (effect instanceof AfterAttackEffect && this.usedEnergyGlide) {
       this.usedEnergyGlide = false;
       const player = effect.player;
-      if (player.bench.some(b => b.cards.length > 0)) {
+      if (player.bench.some((b) => b.cards.length > 0)) {
         SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
       }
     }
@@ -88,10 +113,10 @@ export class EmolgaEx extends PokemonCard {
     // Ref: set-mega-evolution/mega-manectric-ex.ts (Riotous Blasting)
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      const hasEnergy = player.active.cards.some(c => c instanceof EnergyCard);
+      const hasEnergy = player.active.cards.some((c) => c instanceof EnergyCard);
 
       if (hasEnergy) {
-        CONFIRMATION_PROMPT(store, state, player, result => {
+        CONFIRMATION_PROMPT(store, state, player, (result) => {
           if (result) {
             effect.damage += 30;
             DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1);

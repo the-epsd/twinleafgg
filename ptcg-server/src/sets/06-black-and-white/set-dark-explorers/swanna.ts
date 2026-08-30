@@ -8,27 +8,24 @@ import { WAS_ATTACK_USED, FLIP_UNTIL_TAILS_AND_COUNT_HEADS } from '../../../game
 export class Swanna extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Ducklett';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Healing Dance',
-      cost: [W],
-      damage: 0,
-      text: 'Heal 30 damage from each of your Pokémon.'
-    },
-    {
-      name: 'Incessant Peck',
-      cost: [W, W, C],
-      damage: 60,
-      damageCalculation: '+',
-      text: 'Flip a coin until you get tails. This attack does 20 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Healing Dance',
+    cost: [W],
+    damage: 0,
+    text: 'Heal 30 damage from each of your Pokémon.'
+  }, {
+    name: 'Incessant Peck',
+    cost: [W, W, C],
+    damage: 60,
+    damageCalculation: '+',
+    text: 'Flip a coin until you get tails. This attack does 20 more damage for each heads.'
+  }];
 
   public set: string = 'DEX';
   public setNumber: string = '36';

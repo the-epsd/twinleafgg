@@ -10,27 +10,24 @@ import { WAS_ATTACK_USED, DRAW_CARDS, MULTIPLE_COIN_FLIPS_PROMPT } from '../../g
 
 export class MrMime extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 90;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Happy Mime',
-      cost: [Y],
-      damage: 0,
-      text: 'Each player draws a card.'
-    },
-    {
-      name: 'Double Slap',
-      cost: [Y, Y],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 40 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Happy Mime',
+    cost: [Y],
+    damage: 0,
+    text: 'Each player draws a card.'
+  }, {
+    name: 'Double Slap',
+    cost: [Y, Y],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 40 damage for each heads.'
+  }];
 
   public set: string = 'HIF';
   public setNumber: string = '43';

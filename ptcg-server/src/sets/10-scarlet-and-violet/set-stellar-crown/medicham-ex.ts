@@ -10,16 +10,15 @@ import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Medichamex extends PokemonCard {
-
   public regulationMark = 'G';
 
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
 
   public stage = Stage.STAGE_1;
 
   public evolvesFrom = 'Meditite';
 
-  public cardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp = 260;
 
@@ -32,14 +31,14 @@ export class Medichamex extends PokemonCard {
       name: 'Chi-Atsu',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 0,
-      text: 'Put damage counters on your opponent\'s Active Pokémon until its remaining HP is 50.'
+      text: "Put damage counters on your opponent's Active Pokémon until its remaining HP is 50.",
     },
     {
       name: 'Yoga Kick',
       cost: [CardType.FIGHTING, CardType.COLORLESS, CardType.COLORLESS],
       damage: 190,
-      text: 'This attack\'s damage isn\'t affected by Weakness or Resistance.'
-    }
+      text: "This attack's damage isn't affected by Weakness or Resistance.",
+    },
   ];
 
   public set: string = 'SCR';
@@ -53,7 +52,6 @@ export class Medichamex extends PokemonCard {
   public fullName: string = 'Medicham ex SCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

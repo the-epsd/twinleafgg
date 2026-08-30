@@ -17,7 +17,7 @@ export class Scovillain extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 110;
 

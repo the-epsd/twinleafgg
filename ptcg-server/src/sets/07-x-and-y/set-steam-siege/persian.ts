@@ -11,27 +11,24 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Persian extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Meowth';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Raid',
-      cost: [C],
-      damage: 30,
-      damageCalculation: '+',
-      text: 'If this Pok\u00e9mon evolved from Meowth during this turn, this attack does 30 more damage.'
-    },
-    {
-      name: 'Fury Swipes',
-      cost: [C, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 30 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Raid',
+    cost: [C],
+    damage: 30,
+    damageCalculation: '+',
+    text: 'If this Pok\u00e9mon evolved from Meowth during this turn, this attack does 30 more damage.'
+  }, {
+    name: 'Fury Swipes',
+    cost: [C, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 30 damage times the number of heads.'
+  }];
 
   public set: string = 'STS';
   public setNumber: string = '89';

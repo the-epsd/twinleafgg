@@ -7,38 +7,44 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  BLOCK_IF_GX_ATTACK_USED,
+} from '../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../game/store/prefabs/attack-effects';
 
 export class SalamenceGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Shelgon';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 250;
   public weakness = [{ type: Y }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Dragon Lift',
-    powerType: PowerType.ABILITY,
-    text: 'Your Pokémon in play have no Retreat Cost, except Pokémon-GX and Pokémon-EX.'
-  }];
+  public powers = [
+    {
+      name: 'Dragon Lift',
+      powerType: PowerType.ABILITY,
+      text: 'Your Pokémon in play have no Retreat Cost, except Pokémon-GX and Pokémon-EX.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Bright Flame',
       cost: [R, W, C, C],
       damage: 200,
-      text: 'Discard 2 Energy from this Pokémon.'
+      text: 'Discard 2 Energy from this Pokémon.',
     },
     {
       name: 'Flame Jet GX',
       cost: [R, C, C],
       damage: 0,
-      text: 'This attack does 120 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.) (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "This attack does 120 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'DRM';
@@ -71,9 +77,11 @@ export class SalamenceGx extends PokemonCard {
         return state;
       }
 
-      if (!IS_ABILITY_BLOCKED(store, state, player, this)
-        && !active.tags.includes(CardTag.POKEMON_GX)
-        && !active.tags.includes(CardTag.POKEMON_EX)) {
+      if (
+        !IS_ABILITY_BLOCKED(store, state, player, this) &&
+        !active.hasTag(CardTag.POKEMON_GX) &&
+        !active.hasTag(CardTag.POKEMON_EX)
+      ) {
         effect.cost = [];
       }
       return state;

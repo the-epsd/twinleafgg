@@ -1,4 +1,4 @@
-import { GameError, PokemonCard, Player } from '../../../game';
+import { GameError, PokemonCard, Player, pokemonHasCardType } from '../../../game';
 import { GameMessage } from '../../../game/game-message';
 import { Card } from '../../../game/store/card/card';
 import { CardType, EnergyType, SuperType, TrainerType } from '../../../game/store/card/card-types';
@@ -32,7 +32,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Tarrago
   player.discard.cards.forEach((c, index) => {
     if (c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC && c.name === 'Fighting Energy') {
       energies += 1;
-    } else if (c instanceof PokemonCard && c.cardType === CardType.FIGHTING) {
+    } else if (c instanceof PokemonCard && pokemonHasCardType(c, CardType.FIGHTING)) {
       pokemons += 1;
     } else {
       blocked.push(index);

@@ -10,26 +10,23 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF }
 
 export class Pikachu extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Gnaw',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Thunder Jolt',
-      cost: [L, C],
-      damage: 30,
-      text: 'Flip a coin. If tails, this Pokémon does 10 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Gnaw',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Thunder Jolt',
+    cost: [L, C],
+    damage: 30,
+    text: 'Flip a coin. If tails, this Pokémon does 10 damage to itself.'
+  }];
 
   public set: string = 'EVO';
   public setNumber: string = '35';

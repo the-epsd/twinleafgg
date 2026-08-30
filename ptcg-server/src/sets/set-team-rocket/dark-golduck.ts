@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, StoreLike, State, CardTag } from '../../game';
+import { CardType, PokemonCard, Stage, StoreLike, State, CardTag } from '../../game';
 import { Attack } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
 import { DRAW_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -7,24 +7,26 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/cos
 export class DarkGolduck extends PokemonCard {
   public stage = Stage.STAGE_1;
   public evolvesFrom = 'Psyduck';
-  public tags = [CardTag.DARK];
-  public cardType = W;
+  protected _tags = [CardTag.DARK];
+  public cardType: CardType[] = [W];
   public hp = 60;
   public weakness = [{ type: L }];
   public retreat = [C, C];
 
-  public attacks: Attack[] = [{
-    name: 'Third Eye',
-    cost: [P],
-    damage: 0,
-    text: 'Discard 1 Energy card attached to Dark Golduck in order to draw up to 3 cards.'
-  },
-  {
-    name: 'Super Psy',
-    cost: [P, P, C],
-    damage: 50,
-    text: ''
-  }];
+  public attacks: Attack[] = [
+    {
+      name: 'Third Eye',
+      cost: [P],
+      damage: 0,
+      text: 'Discard 1 Energy card attached to Dark Golduck in order to draw up to 3 cards.',
+    },
+    {
+      name: 'Super Psy',
+      cost: [P, P, C],
+      damage: 50,
+      text: '',
+    },
+  ];
 
   public set = 'TR';
   public setNumber: string = '37';
@@ -33,7 +35,6 @@ export class DarkGolduck extends PokemonCard {
   public fullName = 'Dark Golduck TR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1);
       DRAW_CARDS(store, state, effect.player, 3);
@@ -41,5 +42,4 @@ export class DarkGolduck extends PokemonCard {
 
     return state;
   }
-
 }

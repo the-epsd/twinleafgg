@@ -12,7 +12,7 @@ import { BetweenTurnsEffect } from '../../../game/store/effects/game-phase-effec
 export class Infernape extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Monferno';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 130;
   public weakness = [{ type: P }];
   public retreat = [C];

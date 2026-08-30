@@ -1,12 +1,12 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, GameMessage, PowerType, CoinFlipPrompt } from '../../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State, PowerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckRetreatCostEffect, CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Lombre extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Lotad';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 70;
   public weakness = [{ type: L }];
   public retreat = [C];
@@ -17,15 +17,13 @@ export class Lombre extends PokemonCard {
     text: 'If Lombre has any [W] Energy attached to it, the Retreat Cost for Lombre is 0.'
   }];
 
-  public attacks = [
-    {
-      name: 'Ambush',
-      cost: [C, C],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 damage plus 20 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Ambush',
+    cost: [C, C],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 20 damage plus 20 more damage.'
+  }];
 
   public set: string = 'DX';
   public setNumber: string = '33';
@@ -34,7 +32,7 @@ export class Lombre extends PokemonCard {
   public fullName: string = 'Lombre DX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Handle Aqua Lift Poké-Body
+    // Aqua Lift
     if (effect instanceof CheckRetreatCostEffect && effect.player.active.cards.includes(this)) {
       const player = effect.player;
       const pokemonCard = player.active.getPokemonCard();
@@ -61,15 +59,12 @@ export class Lombre extends PokemonCard {
       }
     }
 
-    // Handle Ambush attack
+    // Ambush
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       // Flip a coin
-      state = store.prompt(state, new CoinFlipPrompt(
-        player.id,
-        GameMessage.FLIP_COIN
-      ), result => {
+      state = COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
           effect.damage += 20; // 20 base + 20 for heads
         }

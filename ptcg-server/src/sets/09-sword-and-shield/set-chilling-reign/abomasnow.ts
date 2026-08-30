@@ -10,27 +10,29 @@ import { Effect } from '../../../game/store/effects/effect';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Abomasnow extends PokemonCard {
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Snover';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 140;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
 
-  public powers = [{
-    name: 'Toughness Boost',
-    powerType: PowerType.ABILITY,
-    text: 'Your Single Strike Pokémon in play, except any Abomasnow, get +50 HP. You can\'t apply more than 1 Toughness Boost Ability at a time.'
-  }];
+  public powers = [
+    {
+      name: 'Toughness Boost',
+      powerType: PowerType.ABILITY,
+      text: "Your Single Strike Pokémon in play, except any Abomasnow, get +50 HP. You can't apply more than 1 Toughness Boost Ability at a time.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Mega Punch',
       cost: [G, C, C],
       damage: 90,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -49,7 +51,7 @@ export class Abomasnow extends PokemonCard {
       if (!targetCard) return state;
 
       // Must be Single Strike but NOT Abomasnow
-      if (!targetCard.tags.includes(CardTag.SINGLE_STRIKE)) return state;
+      if (!targetCard.hasTag(CardTag.SINGLE_STRIKE)) return state;
       if (targetCard.name === 'Abomasnow') return state;
 
       // Find which player owns the target
@@ -59,7 +61,10 @@ export class Abomasnow extends PokemonCard {
         p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
           if (cardList === effect.target) found = true;
         });
-        if (found) { ownerPlayer = p; break; }
+        if (found) {
+          ownerPlayer = p;
+          break;
+        }
       }
 
       if (!ownerPlayer) return state;
@@ -73,9 +78,12 @@ export class Abomasnow extends PokemonCard {
           abomasnowInPlay = true;
         }
         // "Can't apply more than 1 Toughness Boost" - only first unblocked Abomasnow applies
-        if (card !== this && card.name === 'Abomasnow'
-          && card.powers.some(p => p.name === 'Toughness Boost')
-          && !IS_ABILITY_BLOCKED(store, state, owner, card)) {
+        if (
+          card !== this &&
+          card.name === 'Abomasnow' &&
+          card.powers.some((p) => p.name === 'Toughness Boost') &&
+          !IS_ABILITY_BLOCKED(store, state, owner, card)
+        ) {
           if (!abomasnowInPlay) {
             isFirstAbomasnow = false;
           }

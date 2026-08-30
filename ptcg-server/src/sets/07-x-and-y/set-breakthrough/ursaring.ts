@@ -14,26 +14,23 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Ursaring extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Teddiursa';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Drag Off',
-      cost: [C, C, C],
-      damage: 0,
-      text: 'Switch 1 of your opponent\'s Benched Pokémon with his or her Active Pokémon. This attack does 50 damage to the new Active Pokémon.'
-    },
-    {
-      name: 'Swing Around',
-      cost: [C, C, C, C],
-      damage: 80,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 40 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Drag Off',
+    cost: [C, C, C],
+    damage: 0,
+    text: 'Switch 1 of your opponent\'s Benched Pokémon with his or her Active Pokémon. This attack does 50 damage to the new Active Pokémon.'
+  }, {
+    name: 'Swing Around',
+    cost: [C, C, C, C],
+    damage: 80,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 40 more damage for each heads.'
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '122';

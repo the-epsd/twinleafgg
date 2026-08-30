@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, CONFIRMATION_PROMPT, DRAW_CARDS, MOVE_CARDS, SHUFFLE_D
 
 export class ShiningMagikarp extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 30;
   public weakness = [{ type: L }];
   public retreat = [C];

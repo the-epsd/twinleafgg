@@ -10,7 +10,7 @@ import { ABILITY_USED, DRAW_CARDS, WAS_POWER_USED } from '../../../game/store/pr
 export class Lunatone extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public regulationMark = 'I';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public weakness = [{ type: G }];
   public hp: number = 110;
   public retreat = [C];

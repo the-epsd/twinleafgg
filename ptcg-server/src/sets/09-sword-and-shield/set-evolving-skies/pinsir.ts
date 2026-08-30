@@ -10,26 +10,28 @@ import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Pinsir extends PokemonCard {
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Vise Coach',
-    powerType: PowerType.ABILITY,
-    text: 'Damage from your Single Strike Pokémon\'s attacks isn\'t affected by your opponent\'s Active Pokémon\'s Resistance.'
-  }];
+  public powers = [
+    {
+      name: 'Vise Coach',
+      powerType: PowerType.ABILITY,
+      text: "Damage from your Single Strike Pokémon's attacks isn't affected by your opponent's Active Pokémon's Resistance.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Seismic Toss',
       cost: [G, G, C],
       damage: 110,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -57,7 +59,8 @@ export class Pinsir extends PokemonCard {
 
       // Check if the source Pokemon is a Single Strike Pokemon
       const sourcePokemonCard = effect.source.getPokemonCard();
-      const sourceIsSingleStrike = sourcePokemonCard && sourcePokemonCard.tags.includes(CardTag.SINGLE_STRIKE);
+      const sourceIsSingleStrike =
+        sourcePokemonCard && sourcePokemonCard.hasTag(CardTag.SINGLE_STRIKE);
 
       if (sourceIsSingleStrike) {
         effect.ignoreResistance = true;

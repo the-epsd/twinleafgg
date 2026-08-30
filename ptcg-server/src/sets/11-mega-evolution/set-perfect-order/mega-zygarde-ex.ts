@@ -6,24 +6,26 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class MegaZygardeex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
-  public cardType: CardType = F;
+  protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
+  public cardType: CardType[] = [F];
   public hp: number = 310;
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Gaia Wave',
-    cost: [F, F, F],
-    damage: 200,
-    text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).',
-  },
-  {
-    name: 'Nullifying Zero',
-    cost: [F, F, F, F, F],
-    damage: 0,
-    text: 'For each of your opponent\'s Pokémon, flip a coin. If heads, this attack does 150 damage to that Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)',
-  }];
+  public attacks = [
+    {
+      name: 'Gaia Wave',
+      cost: [F, F, F],
+      damage: 200,
+      text: "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).",
+    },
+    {
+      name: 'Nullifying Zero',
+      cost: [F, F, F, F, F],
+      damage: 0,
+      text: "For each of your opponent's Pokémon, flip a coin. If heads, this attack does 150 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
+  ];
 
   public regulationMark: string = 'J';
   public set: string = 'POR';
@@ -45,7 +47,10 @@ export class MegaZygardeex extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Collect all opponent Pokemon (active + bench)
-      const allOpponentPokemon = [opponent.active, ...opponent.bench.filter(b => b.cards.length > 0)];
+      const allOpponentPokemon = [
+        opponent.active,
+        ...opponent.bench.filter((b) => b.cards.length > 0),
+      ];
 
       // Flip coins sequentially for each Pokemon
       let currentIndex = 0;

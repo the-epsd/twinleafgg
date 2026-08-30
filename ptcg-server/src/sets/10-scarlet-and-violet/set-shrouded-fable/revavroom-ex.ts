@@ -7,16 +7,15 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { MOVED_TO_ACTIVE_THIS_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Revavroomex extends PokemonCard {
-
   public regulationMark = 'H';
 
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
   public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom = 'Varoom';
 
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [CardType.LIGHTNING];
 
   public hp: number = 280;
 
@@ -30,13 +29,13 @@ export class Revavroomex extends PokemonCard {
       cost: [CardType.METAL],
       damage: 20,
       damageCalculation: '+',
-      text: 'If this Pokémon moved from your Bench to the Active Spot this turn, this attack does 120 more damage.'
+      text: 'If this Pokémon moved from your Bench to the Active Spot this turn, this attack does 120 more damage.',
     },
     {
       name: 'Shattering Speed',
       cost: [CardType.METAL, CardType.METAL, CardType.METAL],
       damage: 250,
-      text: 'Discard this Pokémon and all attached cards.'
+      text: 'Discard this Pokémon and all attached cards.',
     },
   ];
 
@@ -69,7 +68,11 @@ export class Revavroomex extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

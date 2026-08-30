@@ -10,18 +10,20 @@ import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class DubwoolV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 210;
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Soft Wool',
-    powerType: PowerType.ABILITY,
-    text: 'This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: 'Soft Wool',
+      powerType: PowerType.ABILITY,
+      text: 'This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).',
+    },
+  ];
 
   public attacks = [
     {
@@ -29,8 +31,8 @@ export class DubwoolV extends PokemonCard {
       cost: [C, C, C],
       damage: 120,
       damageCalculation: '+',
-      text: 'This attack does 30 more damage for each Prize card your opponent has taken.'
-    }
+      text: 'This attack does 30 more damage for each Prize card your opponent has taken.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -43,9 +45,11 @@ export class DubwoolV extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Soft Wool (passive - reduces incoming attack damage by 30)
     // Ref: set-plasma-blast/reuniclus.ts (Barrier Attack - DealDamageEffect reduction)
-    if (effect instanceof DealDamageEffect
-      && effect.target.cards.includes(this)
-      && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof DealDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const owner = StateUtils.findOwner(state, effect.target);
 
       if (IS_ABILITY_BLOCKED(store, state, owner, this)) {

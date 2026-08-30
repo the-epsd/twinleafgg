@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Rampardos extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Cranidos';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 170;
   public weakness = [{ type: G }];
   public retreat = [C, C];

@@ -5,14 +5,13 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Gyaradosex extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom = 'Magikarp';
 
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
-  public cardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp = 300;
 
@@ -25,14 +24,20 @@ export class Gyaradosex extends PokemonCard {
       name: 'Waterfall',
       cost: [CardType.WATER, CardType.WATER, CardType.WATER],
       damage: 100,
-      text: ''
+      text: '',
     },
     {
       name: 'Tyrannical Tail',
-      cost: [CardType.WATER, CardType.WATER, CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [
+        CardType.WATER,
+        CardType.WATER,
+        CardType.WATER,
+        CardType.COLORLESS,
+        CardType.COLORLESS,
+      ],
       damage: 180,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 180 more damage.'
+      text: "If your opponent's Active Pokémon already has any damage counters on it, this attack does 180 more damage.",
     },
   ];
 
@@ -49,7 +54,6 @@ export class Gyaradosex extends PokemonCard {
   public fullName: string = 'Gyarados ex SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -58,7 +62,11 @@ export class Gyaradosex extends PokemonCard {
       }
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

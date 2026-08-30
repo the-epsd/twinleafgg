@@ -5,18 +5,20 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { Effect } from '../../../game/store/effects/effect';
 import { StateUtils } from '../../../game';
-import { DealDamageEffect, AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
+import {
+  DealDamageEffect,
+  AddSpecialConditionsEffect,
+} from '../../../game/store/effects/attack-effects';
 import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class SlitherWing extends PokemonCard {
-
   public regulationMark = 'G';
 
-  public tags = [CardTag.ANCIENT];
+  protected _tags = [CardTag.ANCIENT];
 
   public stage = Stage.BASIC;
 
-  public cardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp = 140;
 
@@ -29,14 +31,14 @@ export class SlitherWing extends PokemonCard {
       name: 'Stomp Off',
       cost: [CardType.FIGHTING],
       damage: 0,
-      text: 'Discard the top card of your opponent\'s deck.'
+      text: "Discard the top card of your opponent's deck.",
     },
     {
       name: 'Burning Turbulence',
       cost: [CardType.FIGHTING, CardType.FIGHTING],
       damage: 120,
-      text: 'This Pokémon also does 90 damage to itself. Your opponent\'s Active Pokémon is now Burned.'
-    }
+      text: "This Pokémon also does 90 damage to itself. Your opponent's Active Pokémon is now Burned.",
+    },
   ];
 
   public set: string = 'PAR';
@@ -50,26 +52,28 @@ export class SlitherWing extends PokemonCard {
   public fullName: string = 'Slither Wing PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // Discard 2 cards from opponent's deck 
-      MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: 1, sourceCard: this, sourceEffect: this.attacks[0] });
-
+      // Discard 2 cards from opponent's deck
+      MOVE_CARDS(store, state, opponent.deck, opponent.discard, {
+        count: 1,
+        sourceCard: this,
+        sourceEffect: this.attacks[0],
+      });
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-
       const player = effect.player;
 
       const dealDamage = new DealDamageEffect(effect, 90);
       dealDamage.target = player.active;
-      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.BURNED]);
+      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [
+        SpecialCondition.BURNED,
+      ]);
       store.reduceEffect(state, specialConditionEffect);
       return store.reduceEffect(state, dealDamage);
-
     }
     return state;
   }

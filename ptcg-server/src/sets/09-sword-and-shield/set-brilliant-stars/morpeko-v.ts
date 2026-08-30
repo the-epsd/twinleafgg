@@ -8,12 +8,17 @@ import { StoreLike, State, GameMessage, ConfirmPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED, ADD_MARKER, HAS_MARKER } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  SWITCH_ACTIVE_WITH_BENCHED,
+  ADD_MARKER,
+  HAS_MARKER,
+} from '../../../game/store/prefabs/prefabs';
 
 export class MorpekoV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 190;
   public weakness = [{ type: G }];
   public retreat = [C];
@@ -23,15 +28,15 @@ export class MorpekoV extends PokemonCard {
       name: 'Gnaw and Run',
       cost: [C, C],
       damage: 30,
-      text: 'You may switch this Pokémon with 1 of your Benched Pokémon.'
+      text: 'You may switch this Pokémon with 1 of your Benched Pokémon.',
     },
     {
       name: 'Hangry Spike',
       cost: [D, D, C],
       damage: 120,
       damageCalculation: '+',
-      text: 'If you played Marnie\'s Pride from your hand during this turn, this attack does 120 more damage.'
-    }
+      text: "If you played Marnie's Pride from your hand during this turn, this attack does 120 more damage.",
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -47,12 +52,15 @@ export class MorpekoV extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Track if Marnie's Pride was played this turn
     // Ref: set-unbroken-bonds/gligar.ts (Shinobi Strike - track supporter by name)
-    if (effect instanceof TrainerEffect && effect.trainerCard.name === 'Marnie\'s Pride') {
+    if (effect instanceof TrainerEffect && effect.trainerCard.name === "Marnie's Pride") {
       const player = effect.player;
       ADD_MARKER(this.MARNIES_PRIDE_MARKER, player, this);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.MARNIES_PRIDE_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.MARNIES_PRIDE_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.MARNIES_PRIDE_MARKER, this);
     }
 
@@ -61,7 +69,7 @@ export class MorpekoV extends PokemonCard {
     // Ref: set-steam-siege/hawlucha.ts (optional switch via ConfirmPrompt)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      const hasBench = player.bench.some(b => b.cards.length > 0);
+      const hasBench = player.bench.some((b) => b.cards.length > 0);
       if (hasBench) {
         this.usedGnawAndRun = true;
       }
@@ -70,16 +78,17 @@ export class MorpekoV extends PokemonCard {
     if (effect instanceof AfterAttackEffect && this.usedGnawAndRun) {
       this.usedGnawAndRun = false;
       const player = effect.player;
-      const hasBench = player.bench.some(b => b.cards.length > 0);
+      const hasBench = player.bench.some((b) => b.cards.length > 0);
       if (hasBench) {
-        state = store.prompt(state, new ConfirmPrompt(
-          player.id,
-          GameMessage.WANT_TO_SWITCH_POKEMON
-        ), (wantToSwitch: boolean) => {
-          if (wantToSwitch) {
-            SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
-          }
-        });
+        state = store.prompt(
+          state,
+          new ConfirmPrompt(player.id, GameMessage.WANT_TO_SWITCH_POKEMON),
+          (wantToSwitch: boolean) => {
+            if (wantToSwitch) {
+              SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
+            }
+          },
+        );
       }
     }
 

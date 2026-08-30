@@ -7,7 +7,7 @@ import { FLIP_UNTIL_TAILS_AND_COUNT_HEADS, WAS_ATTACK_USED } from '../../../game
 
 export class Jigglypuff extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -20,6 +20,7 @@ export class Jigglypuff extends PokemonCard {
   }];
 
   public regulationMark = 'I';
+
   public set: string = 'PFL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '76';

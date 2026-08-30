@@ -4,16 +4,24 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType, GameMessage } from '../../../game';
+import {
+  StoreLike,
+  State,
+  StateUtils,
+  ChoosePokemonPrompt,
+  PlayerType,
+  SlotType,
+  GameMessage,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, DAMAGE_OPPONENT_POKEMON } from '../../../game/store/prefabs/prefabs';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 
 export class RillaboomVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX, CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.POKEMON_VMAX, CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Rillaboom V';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 330;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
@@ -23,8 +31,8 @@ export class RillaboomVmax extends PokemonCard {
       name: 'G-Max Drum Solo',
       cost: [G, C, C, C],
       damage: 180,
-      text: 'This attack also does 40 damage to 2 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "This attack also does 40 damage to 2 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -41,7 +49,7 @@ export class RillaboomVmax extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const benchedPokemon = opponent.bench.filter(b => b.cards.length > 0);
+      const benchedPokemon = opponent.bench.filter((b) => b.cards.length > 0);
       if (benchedPokemon.length === 0) {
         return state;
       }
@@ -49,16 +57,20 @@ export class RillaboomVmax extends PokemonCard {
       const max = Math.min(2, benchedPokemon.length);
       const attackEffect = effect as AttackEffect;
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.BENCH],
-        { min: max, max, allowCancel: false }
-      ), selected => {
-        const targets = selected || [];
-        DAMAGE_OPPONENT_POKEMON(store, state, attackEffect, 40, targets);
-      });
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.BENCH],
+          { min: max, max, allowCancel: false },
+        ),
+        (selected) => {
+          const targets = selected || [];
+          DAMAGE_OPPONENT_POKEMON(store, state, attackEffect, 40, targets);
+        },
+      );
     }
 
     return state;

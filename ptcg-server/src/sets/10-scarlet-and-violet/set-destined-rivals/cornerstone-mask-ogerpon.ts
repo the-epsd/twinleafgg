@@ -5,7 +5,7 @@ import { ATTACH_ENERGY_PROMPT, MOVE_CARDS, WAS_ATTACK_USED } from '../../../game
 export class CornerstoneMaskOgerpon extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 110;
   public weakness: Weakness[] = [{ type: G }];
   public retreat: CardType[] = [C];

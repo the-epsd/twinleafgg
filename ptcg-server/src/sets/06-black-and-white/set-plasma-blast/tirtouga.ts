@@ -8,7 +8,7 @@ import { IS_ABILITY_BLOCKED, MULTIPLE_COIN_FLIPS_PROMPT, USE_ABILITY_ONCE_PER_TU
 export class Tirtouga extends PokemonCard {
   public stage: Stage = Stage.RESTORED;
   public evolvesFrom: string = 'Cover Fossil';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
@@ -20,15 +20,13 @@ export class Tirtouga extends PokemonCard {
     text: 'Once during your turn (before your attack), if this Pokémon is in your discard pile, you may put this Pokémon on the bottom of your deck.'
   }];
 
-  public attacks = [
-    {
-      name: 'Slam',
-      cost: [W, C, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Slam',
+    cost: [W, C, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
+  }];
 
   public set: string = 'PLB';
   public setNumber: string = '27';

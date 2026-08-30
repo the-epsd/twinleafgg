@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, SHOW_CARDS_TO_PLAYER, MOVE_CARDS, THIS_POKEMON_DOES_DA
 export class Luxray extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Luxio';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 140;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

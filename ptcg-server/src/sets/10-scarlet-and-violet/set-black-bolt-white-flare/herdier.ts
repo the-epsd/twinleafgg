@@ -7,7 +7,7 @@ import { AFTER_ATTACK, SWITCH_OUT_OPPONENT_ACTIVE_POKEMON } from '../../../game/
 export class Herdier extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Lillipup';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];

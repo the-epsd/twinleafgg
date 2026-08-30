@@ -10,19 +10,17 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF }
 
 export class Meowth extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Exhausted Tackle',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, this attack does 30 damage to your opponent\'s Active Pokémon. If tails, this Pokémon does 30 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Exhausted Tackle',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, this attack does 30 damage to your opponent\'s Active Pokémon. If tails, this Pokémon does 30 damage to itself.'
+  }];
 
   public set: string = 'BKT';
   public setNumber: string = '114';

@@ -11,10 +11,11 @@ import { Effect } from '../../../game/store/effects/effect';
 import { COIN_FLIP_PROMPT, CONFIRMATION_PROMPT, MOVE_CARD_TO, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 
 export class PokemonContestHall extends TrainerCard {
-
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '93';
+
   public trainerType = TrainerType.STADIUM;
+
   public set = 'RR';
   public name = 'Pokémon Contest Hall';
   public fullName = 'Pokémon Contest Hall RR';

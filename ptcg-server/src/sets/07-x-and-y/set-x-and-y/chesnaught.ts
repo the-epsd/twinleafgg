@@ -12,7 +12,7 @@ import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/att
 export class Chesnaught extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Quilladin';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 160;
   public weakness = [{ type: R }];
   public retreat = [C, C, C, C];
@@ -24,14 +24,12 @@ export class Chesnaught extends PokemonCard {
     text: 'If this Pokémon is your Active Pokémon and is damaged by an opponent\'s attack (even if this Pokémon is Knocked Out), put 3 damage counters on the Attacking Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Touchdown',
-      cost: [G, G, C, C],
-      damage: 90,
-      text: 'Heal 20 damage from this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Touchdown',
+    cost: [G, G, C, C],
+    damage: 90,
+    text: 'Heal 20 damage from this Pokémon.'
+  }];
 
   public set: string = 'XY';
   public setNumber: string = '14';
@@ -43,7 +41,12 @@ export class Chesnaught extends PokemonCard {
     // Ability: Spiky Shield
     // Ref: set-noble-victories/druddigon.ts (Rough Skin)
     if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
+      const player = effect.player;
       const targetPlayer = StateUtils.findOwner(state, effect.target);
+
+      if (player.active.cards[0] !== this) {
+        return state;
+      }
 
       if (IS_ABILITY_BLOCKED(store, state, targetPlayer, this)) {
         return state;

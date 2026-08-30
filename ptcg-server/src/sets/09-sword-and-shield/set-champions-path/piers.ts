@@ -1,9 +1,10 @@
-import { GameError, PokemonCard } from '../../../game';
+import { GameError, PokemonCard, pokemonHasCardType } from '../../../game';
 import { GameLog, GameMessage } from '../../../game/game-message';
 import { Card } from '../../../game/store/card/card';
 import { CardType, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
+import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
@@ -35,7 +36,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   player.deck.cards.forEach((c, index) => {
     if (c.superType === SuperType.ENERGY) {
       energy += 1;
-    } else if (c instanceof PokemonCard && c.cardType === CardType.DARK) {
+    } else if (c instanceof PokemonCard && pokemonHasCardType(c, CardType.DARK)) {
       pokemon += 1;
     } else {
       blocked.push(index);
@@ -61,6 +62,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     next();
   });
 
+  player.playedPiers = true;
   MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: self });
 
   cards.forEach((card, index) => {
@@ -81,23 +83,14 @@ function* playCard(next: Function, store: StoreLike, state: State,
 }
 
 export class Piers extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public regulationMark = 'D';
-
   public set: string = 'CPA';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '58';
-
   public name: string = 'Piers';
-
   public fullName: string = 'Piers CPA';
-
-  public text: string =
-    'Search your deck for an Energy card and a [D] Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.';
+  public text: string = 'Search your deck for an Energy card and a [D] Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -106,7 +99,10 @@ export class Piers extends TrainerCard {
       return generator.next().value;
     }
 
+    if (effect instanceof EndTurnEffect) {
+      effect.player.playedPiers = false;
+    }
+
     return state;
   }
-
 }

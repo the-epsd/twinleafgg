@@ -12,25 +12,22 @@ import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/ga
 export class Butterfree extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Metapod';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 130;
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Psy Bolt',
-      cost: [C],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Whirlwind',
-      cost: [C, C, C],
-      damage: 80,
-      text: 'Your opponent switches their Active Pokémon with 1 of their Benched Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Psy Bolt',
+    cost: [C],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Whirlwind',
+    cost: [C, C, C],
+    damage: 80,
+    text: 'Your opponent switches their Active Pokémon with 1 of their Benched Pokémon.'
+  }];
 
   public set: string = 'SUM';
   public setNumber: string = '3';

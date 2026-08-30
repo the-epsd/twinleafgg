@@ -11,9 +11,9 @@ import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/ga
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class BoltundV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 200;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -23,14 +23,14 @@ export class BoltundV extends PokemonCard {
       name: 'Smash Turn',
       cost: [L],
       damage: 30,
-      text: 'You may switch this Pokémon with 1 of your Benched Pokémon.'
+      text: 'You may switch this Pokémon with 1 of your Benched Pokémon.',
     },
     {
       name: 'Electrobullet',
       cost: [L, L, C],
       damage: 120,
-      text: 'This attack also does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "This attack also does 30 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -47,7 +47,7 @@ export class BoltundV extends PokemonCard {
     // Ref: set-chilling-reign/tapu-fini.ts (Smash Turn - optional self-switch)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      const hasBench = player.bench.some(b => b.cards.length > 0);
+      const hasBench = player.bench.some((b) => b.cards.length > 0);
       if (hasBench) {
         this.usedSmashTurn = true;
       }
@@ -56,14 +56,15 @@ export class BoltundV extends PokemonCard {
     if (effect instanceof AfterAttackEffect && this.usedSmashTurn) {
       this.usedSmashTurn = false;
       const player = effect.player;
-      return store.prompt(state, new ConfirmPrompt(
-        player.id,
-        GameMessage.WANT_TO_SWITCH_POKEMON
-      ), wantToSwitch => {
-        if (wantToSwitch) {
-          SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
-        }
-      });
+      return store.prompt(
+        state,
+        new ConfirmPrompt(player.id, GameMessage.WANT_TO_SWITCH_POKEMON),
+        (wantToSwitch) => {
+          if (wantToSwitch) {
+            SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
+          }
+        },
+      );
     }
 
     if (effect instanceof EndTurnEffect) {

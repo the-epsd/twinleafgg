@@ -8,7 +8,7 @@ import { ABILITY_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS
 
 export class Reshiram extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public weakness: Weakness[] = [{ type: Y }];
   public hp: number = 130;
   public retreat = [C, C];

@@ -7,14 +7,13 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Deoxys extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
-  public tags = [CardTag.FUSION_STRIKE, CardTag.SINGLE_STRIKE, CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.FUSION_STRIKE, CardTag.SINGLE_STRIKE, CardTag.RAPID_STRIKE];
 
   public regulationMark = 'E';
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 120;
 
@@ -29,7 +28,7 @@ export class Deoxys extends PokemonCard {
       name: 'Photon Boost',
       cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 80,
-      text: 'If this Pokémon has any Fusion Strike Energy attached, this attack does 80 more damage.'
+      text: 'If this Pokémon has any Fusion Strike Energy attached, this attack does 80 more damage.',
     },
   ];
 
@@ -44,16 +43,14 @@ export class Deoxys extends PokemonCard {
   public fullName: string = 'Deoxys FST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       const player = effect.player;
       const pokemon = player.active;
 
       const checkEnergy = new CheckProvidedEnergyEffect(player, pokemon);
       store.reduceEffect(state, checkEnergy);
 
-      checkEnergy.energyMap.forEach(em => {
+      checkEnergy.energyMap.forEach((em) => {
         const energyCard = em.card;
 
         if (energyCard instanceof EnergyCard && energyCard.name == 'Fusion Strike Energy')

@@ -71,7 +71,7 @@ function* useCleaningUp(next: Function, store: StoreLike, state: State, effect: 
 
 export class Purrloin extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
   public hp: number = 70;
   public weakness = [{ type: CardType.FIGHTING }];
   public resistance = [{ type: CardType.PSYCHIC, value: -20 }];

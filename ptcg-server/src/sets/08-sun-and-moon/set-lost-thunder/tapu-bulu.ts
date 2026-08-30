@@ -10,26 +10,23 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF }
 
 export class TapuBulu extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 130;
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Heavy Punch',
-      cost: [G, C],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'This attack does 20 damage for each of your opponent\'s Benched Pokémon.'
-    },
-    {
-      name: 'Wild Tackle',
-      cost: [G, G, C],
-      damage: 120,
-      text: 'Flip a coin. If tails, this Pokémon does 30 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Heavy Punch',
+    cost: [G, C],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'This attack does 20 damage for each of your opponent\'s Benched Pokémon.'
+  }, {
+    name: 'Wild Tackle',
+    cost: [G, G, C],
+    damage: 120,
+    text: 'Flip a coin. If tails, this Pokémon does 30 damage to itself.'
+  }];
 
   public set: string = 'LOT';
   public setNumber: string = '37';

@@ -3,8 +3,25 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../../game/store/card/card-types';
-import { Card, CardTarget, ChooseCardsPrompt, GameMessage, PlayerType, PokemonCardList, SlotType, StoreLike, State, StateUtils } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  EnergyType,
+  SuperType,
+} from '../../../game/store/card/card-types';
+import {
+  Card,
+  CardTarget,
+  ChooseCardsPrompt,
+  GameMessage,
+  PlayerType,
+  PokemonCardList,
+  SlotType,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
@@ -14,9 +31,9 @@ import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-
 import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class ReshiramAndZekromGx extends PokemonCard {
-  public tags = [CardTag.TAG_TEAM, CardTag.POKEMON_GX];
+  protected _tags = [CardTag.TAG_TEAM, CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 270;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];
@@ -29,14 +46,14 @@ export class ReshiramAndZekromGx extends PokemonCard {
       cost: [R, L],
       damage: 90,
       damageCalculation: 'x',
-      text: 'Discard up to 3 in any combination of basic Fire and basic [L] Energy cards from your Benched Pokémon. This attack does 90 damage for each card you discarded in this way.'
+      text: 'Discard up to 3 in any combination of basic Fire and basic [L] Energy cards from your Benched Pokémon. This attack does 90 damage for each card you discarded in this way.',
     },
     {
       name: 'Cross Break-GX',
       cost: [R, R, L, L],
       damage: 0,
-      text: 'This attack does 170 damage to 1 of your opponent\'s Benched Pokémon. If you played N\'s Resolve from your hand during this turn, this attack also does 170 damage to 1 of your opponent\'s other Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.) (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "This attack does 170 damage to 1 of your opponent's Benched Pokémon. If you played N's Resolve from your hand during this turn, this attack also does 170 damage to 1 of your opponent's other Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'CEC';
@@ -48,7 +65,7 @@ export class ReshiramAndZekromGx extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Track when N's Resolve is played
     // Ref: set-cosmic-eclipse/sylveon.ts (TAG TEAM supporter tracking via TrainerEffect)
-    if (effect instanceof TrainerEffect && effect.trainerCard.name === 'N\'s Resolve') {
+    if (effect instanceof TrainerEffect && effect.trainerCard.name === "N's Resolve") {
       effect.player.marker.addMarker(this.NS_RESOLVE_PLAYED_MARKER, this);
     }
 
@@ -60,10 +77,15 @@ export class ReshiramAndZekromGx extends PokemonCard {
       // Collect all basic Fire and Lightning energy from benched Pokemon
       const benchEnergyCards: Card[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        if (cardList === player.active) { return; }
-        cardList.cards.forEach(c => {
-          if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC
-            && (c.provides.includes(CardType.FIRE) || c.provides.includes(CardType.LIGHTNING))) {
+        if (cardList === player.active) {
+          return;
+        }
+        cardList.cards.forEach((c) => {
+          if (
+            c instanceof EnergyCard &&
+            c.energyType === EnergyType.BASIC &&
+            (c.provides.includes(CardType.FIRE) || c.provides.includes(CardType.LIGHTNING))
+          ) {
             benchEnergyCards.push(c);
           }
         });
@@ -79,10 +101,12 @@ export class ReshiramAndZekromGx extends PokemonCard {
       // Create a temporary card list for selecting from
       // We need to let the player choose from all bench energy cards
       // Build blocked indices for bench energy prompt
-      const allBenchCards: { card: Card, cardList: PokemonCardList }[] = [];
+      const allBenchCards: { card: Card; cardList: PokemonCardList }[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        if (cardList === player.active) { return; }
-        cardList.cards.forEach(c => {
+        if (cardList === player.active) {
+          return;
+        }
+        cardList.cards.forEach((c) => {
           allBenchCards.push({ card: c, cardList });
         });
       });
@@ -94,33 +118,42 @@ export class ReshiramAndZekromGx extends PokemonCard {
       const cardSourceMap = new Map<Card, PokemonCardList>();
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        if (cardList === player.active) { return; }
-        cardList.cards.forEach(c => {
-          if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC
-            && (c.provides.includes(CardType.FIRE) || c.provides.includes(CardType.LIGHTNING))) {
+        if (cardList === player.active) {
+          return;
+        }
+        cardList.cards.forEach((c) => {
+          if (
+            c instanceof EnergyCard &&
+            c.energyType === EnergyType.BASIC &&
+            (c.provides.includes(CardType.FIRE) || c.provides.includes(CardType.LIGHTNING))
+          ) {
             tempList.cards.push(c);
             cardSourceMap.set(c, cardList);
           }
         });
       });
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        tempList,
-        { superType: SuperType.ENERGY },
-        { min: 1, max: maxDiscard, allowCancel: false }
-      ), selected => {
-        const cards = selected || [];
-        effect.damage = 90 * cards.length;
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+          tempList,
+          { superType: SuperType.ENERGY },
+          { min: 1, max: maxDiscard, allowCancel: false },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          effect.damage = 90 * cards.length;
 
-        cards.forEach(card => {
-          const source = cardSourceMap.get(card);
-          if (source) {
-            source.moveCardTo(card, player.discard);
-          }
-        });
-      });
+          cards.forEach((card) => {
+            const source = cardSourceMap.get(card);
+            if (source) {
+              source.moveCardTo(card, player.discard);
+            }
+          });
+        },
+      );
     }
 
     // Attack 2: Cross Break-GX
@@ -132,7 +165,7 @@ export class ReshiramAndZekromGx extends PokemonCard {
       BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
 
-      const hasBench = opponent.bench.some(b => b.cards.length > 0);
+      const hasBench = opponent.bench.some((b) => b.cards.length > 0);
       if (!hasBench) {
         return state;
       }
@@ -140,47 +173,55 @@ export class ReshiramAndZekromGx extends PokemonCard {
       const playedNsResolve = player.marker.hasMarker(this.NS_RESOLVE_PLAYED_MARKER, this);
 
       // Choose first benched Pokemon target
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false }
-      ), targets1 => {
-        const target1 = targets1[0];
-        const damageEffect1 = new PutDamageEffect(effect, 170);
-        damageEffect1.target = target1;
-        store.reduceEffect(state, damageEffect1);
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.BENCH],
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (targets1) => {
+          const target1 = targets1[0];
+          const damageEffect1 = new PutDamageEffect(effect, 170);
+          damageEffect1.target = target1;
+          store.reduceEffect(state, damageEffect1);
 
-        if (playedNsResolve) {
-          // Choose a second, different benched Pokemon
-          const blocked: CardTarget[] = [];
-          opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-            if (cardList === target1 || cardList === opponent.active) {
-              blocked.push(target);
+          if (playedNsResolve) {
+            // Choose a second, different benched Pokemon
+            const blocked: CardTarget[] = [];
+            opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
+              if (cardList === target1 || cardList === opponent.active) {
+                blocked.push(target);
+              }
+            });
+
+            const hasOtherBenched = opponent.bench.some((b) => b.cards.length > 0 && b !== target1);
+            if (!hasOtherBenched) {
+              return;
             }
-          });
 
-          const hasOtherBenched = opponent.bench.some(b => b.cards.length > 0 && b !== target1);
-          if (!hasOtherBenched) {
-            return;
+            store.prompt(
+              state,
+              new ChoosePokemonPrompt(
+                player.id,
+                GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+                PlayerType.TOP_PLAYER,
+                [SlotType.BENCH],
+                { min: 1, max: 1, allowCancel: false, blocked },
+              ),
+              (targets2) => {
+                if (targets2 && targets2.length > 0) {
+                  const damageEffect2 = new PutDamageEffect(effect, 170);
+                  damageEffect2.target = targets2[0];
+                  store.reduceEffect(state, damageEffect2);
+                }
+              },
+            );
           }
-
-          store.prompt(state, new ChoosePokemonPrompt(
-            player.id,
-            GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-            PlayerType.TOP_PLAYER,
-            [SlotType.BENCH],
-            { min: 1, max: 1, allowCancel: false, blocked }
-          ), targets2 => {
-            if (targets2 && targets2.length > 0) {
-              const damageEffect2 = new PutDamageEffect(effect, 170);
-              damageEffect2.target = targets2[0];
-              store.reduceEffect(state, damageEffect2);
-            }
-          });
-        }
-      });
+        },
+      );
     }
 
     // Clean up N's Resolve marker at end of turn

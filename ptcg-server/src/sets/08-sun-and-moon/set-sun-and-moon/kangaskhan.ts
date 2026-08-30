@@ -10,27 +10,24 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 
 export class Kangaskhan extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Cross-Cut',
-      cost: [C],
-      damage: 30,
-      damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is an Evolution Pokémon, this attack does 30 more damage.'
-    },
-    {
-      name: 'Hurricane Punch',
-      cost: [C, C, C, C],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 50 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Cross-Cut',
+    cost: [C],
+    damage: 30,
+    damageCalculation: '+',
+    text: 'If your opponent\'s Active Pokémon is an Evolution Pokémon, this attack does 30 more damage.'
+  }, {
+    name: 'Hurricane Punch',
+    cost: [C, C, C, C],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 50 damage for each heads.'
+  }];
 
   public set: string = 'SUM';
   public setNumber: string = '99';

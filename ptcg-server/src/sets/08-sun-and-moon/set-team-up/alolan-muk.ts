@@ -14,7 +14,7 @@ export class AlolanMuk extends PokemonCard {
 
   public evolvesFrom = 'Alolan Grimer';
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp: number = 120;
 

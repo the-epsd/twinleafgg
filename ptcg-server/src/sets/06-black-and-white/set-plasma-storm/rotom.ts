@@ -3,17 +3,27 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  EnergyType,
+  SuperType,
+} from '../../../game/store/card/card-types';
 import { EnergyCard, GameMessage, StateUtils, StoreLike, State } from '../../../game';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { DRAW_CARDS, SHOW_CARDS_TO_PLAYER, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  DRAW_CARDS,
+  SHOW_CARDS_TO_PLAYER,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Rotom extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -23,15 +33,15 @@ export class Rotom extends PokemonCard {
       name: 'Electribonus',
       cost: [C],
       damage: 0,
-      text: 'Discard a [L] Energy card from your hand. If you do, draw 3 cards.'
+      text: 'Discard a [L] Energy card from your hand. If you do, draw 3 cards.',
     },
     {
       name: 'Poltergeist',
       cost: [L, C],
       damage: 20,
       damageCalculation: 'x',
-      text: 'Your opponent reveals his or her hand. This attack does 20 damage times the number of Trainer cards in your opponent\'s hand.'
-    }
+      text: "Your opponent reveals his or her hand. This attack does 20 damage times the number of Trainer cards in your opponent's hand.",
+    },
   ];
 
   public set: string = 'PLS';
@@ -46,8 +56,10 @@ export class Rotom extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const lightningEnergyInHand = player.hand.cards.filter(card =>
-        card.superType === SuperType.ENERGY && (card as EnergyCard).provides.includes(CardType.LIGHTNING)
+      const lightningEnergyInHand = player.hand.cards.filter(
+        (card) =>
+          card.superType === SuperType.ENERGY &&
+          (card as EnergyCard).provides.includes(CardType.LIGHTNING),
       );
 
       if (lightningEnergyInHand.length === 0) {
@@ -56,24 +68,31 @@ export class Rotom extends PokemonCard {
 
       const blocked: number[] = [];
       player.hand.cards.forEach((c, index) => {
-        if (c.superType !== SuperType.ENERGY || !(c as EnergyCard).provides.includes(CardType.LIGHTNING)) {
+        if (
+          c.superType !== SuperType.ENERGY ||
+          !(c as EnergyCard).provides.includes(CardType.LIGHTNING)
+        ) {
           blocked.push(index);
         }
       });
 
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        player.hand,
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { min: 1, max: 1, allowCancel: false, blocked }
-      ), cards => {
-        cards = cards || [];
-        if (cards.length > 0) {
-          player.hand.moveCardsTo(cards, player.discard);
-          DRAW_CARDS(store, state, player, 3);
-        }
-      });
+      state = store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          player.hand,
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+          { min: 1, max: 1, allowCancel: false, blocked },
+        ),
+        (cards) => {
+          cards = cards || [];
+          if (cards.length > 0) {
+            player.hand.moveCardsTo(cards, player.discard);
+            DRAW_CARDS(store, state, player, 3);
+          }
+        },
+      );
     }
 
     // Attack 2: Poltergeist
@@ -84,7 +103,7 @@ export class Rotom extends PokemonCard {
 
       SHOW_CARDS_TO_PLAYER(store, state, player, opponent.hand.cards);
 
-      const trainerCount = opponent.hand.cards.filter(card => card instanceof TrainerCard).length;
+      const trainerCount = opponent.hand.cards.filter((card) => card instanceof TrainerCard).length;
       effect.damage = 20 * trainerCount;
     }
 

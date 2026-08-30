@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Zorua extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 70;
   public weakness = [{ type: G }];
   public retreat = [C];
@@ -22,7 +22,7 @@ export class Zorua extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'MEZ';
+  public set: string = 'J-MEZ';
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zorua';

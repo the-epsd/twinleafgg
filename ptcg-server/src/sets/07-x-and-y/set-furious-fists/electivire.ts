@@ -13,28 +13,25 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../../game/s
 export class Electivire extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Electabuzz';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 120;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Tag Team Spark',
-      cost: [L],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'This attack does 20 more damage for each Energy attached to your Magmortar.'
-    },
-    {
-      name: 'Gigavolt',
-      cost: [L, C, C],
-      damage: 60,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 30 more damage. If tails, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tag Team Spark',
+    cost: [L],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'This attack does 20 more damage for each Energy attached to your Magmortar.'
+  }, {
+    name: 'Gigavolt',
+    cost: [L, C, C],
+    damage: 60,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 30 more damage. If tails, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'FFI';
   public setNumber: string = '30';

@@ -15,7 +15,7 @@ export class Eevee extends PokemonCard {
 
   public stage = Stage.BASIC;
 
-  public cardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp = 70;
 

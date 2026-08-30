@@ -11,7 +11,7 @@ import { DRAW_CARDS, MOVE_CARDS, WAS_POWER_USED } from '../../../game/store/pref
 
 export class Swampert extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
   public hp: number = 160;
   public weakness = [{ type: CardType.GRASS }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];

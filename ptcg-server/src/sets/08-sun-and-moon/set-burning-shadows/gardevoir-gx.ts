@@ -1,31 +1,57 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, CardTag, BoardEffect } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, PlayerType, SlotType, AttachEnergyPrompt, Card, ShuffleDeckPrompt, ChooseCardsPrompt } from '../../../game';
+import {
+  Stage,
+  CardType,
+  SuperType,
+  CardTag,
+  BoardEffect,
+} from '../../../game/store/card/card-types';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  GameError,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  AttachEnergyPrompt,
+  Card,
+  ShuffleDeckPrompt,
+  ChooseCardsPrompt,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { BLOCK_IF_DISCARD_EMPTY, BLOCK_IF_GX_ATTACK_USED, MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  BLOCK_IF_DISCARD_EMPTY,
+  BLOCK_IF_GX_ATTACK_USED,
+  MOVE_CARDS,
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 // BUS Gardevoir-GX 93 (https://limitlesstcg.com/cards/BUS/93)
 export class GardevoirGX extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Kirlia';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 230;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Secret Spring',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), you may attach a [Y] Energy card from your hand to 1 of your Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Secret Spring',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn (before your attack), you may attach a [Y] Energy card from your hand to 1 of your Pokémon.',
+    },
+  ];
 
   public attacks = [
     {
@@ -33,7 +59,7 @@ export class GardevoirGX extends PokemonCard {
       cost: [Y],
       damage: 30,
       damageCalculation: '+',
-      text: 'This attack does 30 damage times the amount of Energy attached to both Active Pokémon.'
+      text: 'This attack does 30 damage times the amount of Energy attached to both Active Pokémon.',
     },
 
     {
@@ -41,8 +67,8 @@ export class GardevoirGX extends PokemonCard {
       cost: [Y],
       damage: 0,
       gxAttack: true,
-      text: 'Shuffle 10 cards from your discard pile into your deck. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Shuffle 10 cards from your discard pile into your deck. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'BUS';
@@ -54,13 +80,15 @@ export class GardevoirGX extends PokemonCard {
   public readonly SPRING_MARKER = 'SPRING_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       player.marker.removeMarker(this.SPRING_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.SPRING_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.SPRING_MARKER, this)
+    ) {
       const player = effect.player;
       player.marker.removeMarker(this.SPRING_MARKER, this);
     }
@@ -69,7 +97,7 @@ export class GardevoirGX extends PokemonCard {
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const hasEnergyInHand = player.hand.cards.some(c => {
+      const hasEnergyInHand = player.hand.cards.some((c) => {
         return c.superType === SuperType.ENERGY && c.name === 'Fairy Energy';
       });
       if (!hasEnergyInHand) {
@@ -80,29 +108,37 @@ export class GardevoirGX extends PokemonCard {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
-      return store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_TO_BENCH,
-        player.hand,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY, name: 'Fairy Energy' },
-        { allowCancel: false, min: 1, max: 1 }
-      ), transfers => {
-        transfers = transfers || [];
-        player.marker.addMarker(this.SPRING_MARKER, this);
+      return store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_TO_BENCH,
+          player.hand,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { superType: SuperType.ENERGY, name: 'Fairy Energy' },
+          { allowCancel: false, min: 1, max: 1 },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          player.marker.addMarker(this.SPRING_MARKER, this);
 
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (cardList.getPokemonCard() === this) {
-            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+            if (cardList.getPokemonCard() === this) {
+              cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+            }
+          });
+
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            MOVE_CARDS(store, state, player.hand, target, {
+              cards: [transfer.card],
+              sourceCard: this,
+              sourceEffect: this.powers[0],
+            });
           }
-        });
-
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          MOVE_CARDS(store, state, player.hand, target, { cards: [transfer.card], sourceCard: this, sourceEffect: this.powers[0] });
-        }
-      });
+        },
+      );
     }
 
     // Infinite Force
@@ -112,13 +148,17 @@ export class GardevoirGX extends PokemonCard {
 
       const playerProvidedEnergy = new CheckProvidedEnergyEffect(player);
       store.reduceEffect(state, playerProvidedEnergy);
-      const playerEnergyCount = playerProvidedEnergy.energyMap
-        .reduce((left, p) => left + p.provides.length, 0);
+      const playerEnergyCount = playerProvidedEnergy.energyMap.reduce(
+        (left, p) => left + p.provides.length,
+        0,
+      );
 
       const opponentProvidedEnergy = new CheckProvidedEnergyEffect(opponent);
       store.reduceEffect(state, opponentProvidedEnergy);
-      const opponentEnergyCount = opponentProvidedEnergy.energyMap
-        .reduce((left, p) => left + p.provides.length, 0);
+      const opponentEnergyCount = opponentProvidedEnergy.energyMap.reduce(
+        (left, p) => left + p.provides.length,
+        0,
+      );
 
       effect.damage = (playerEnergyCount + opponentEnergyCount) * 30;
     }
@@ -134,19 +174,23 @@ export class GardevoirGX extends PokemonCard {
       player.usedGX = true;
 
       let cards: Card[] = [];
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DECK,
-        player.discard,
-        {},
-        { min: 1, max: 10, allowCancel: false }
-      ), selected => {
-        cards = selected || [];
-      });
+      state = store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DECK,
+          player.discard,
+          {},
+          { min: 1, max: 10, allowCancel: false },
+        ),
+        (selected) => {
+          cards = selected || [];
+        },
+      );
 
       player.discard.moveCardsTo(cards, player.deck);
 
-      return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+      return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
         player.deck.applyOrder(order);
       });
     }

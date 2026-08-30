@@ -6,9 +6,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class NsPurrloin extends PokemonCard {
-  public tags = [CardTag.NS];
+  protected _tags = [CardTag.NS];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
   public hp: number = 70;
   public weakness = [{ type: CardType.GRASS }];
   public retreat = [CardType.COLORLESS];
@@ -18,16 +18,16 @@ export class NsPurrloin extends PokemonCard {
       name: 'Pilfer',
       cost: [CardType.DARK, CardType.COLORLESS],
       damage: 30,
-      text: 'Your opponent reveals their hand. Put a card you find there on the bottom of their deck.'
-    }
+      text: 'Your opponent reveals their hand. Put a card you find there on the bottom of their deck.',
+    },
   ];
 
   public set: string = 'JTG';
   public regulationMark = 'I';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '96';
-  public name: string = 'N\'s Purrloin';
-  public fullName: string = 'N\'s Purrloin JTG';
+  public name: string = "N's Purrloin";
+  public fullName: string = "N's Purrloin JTG";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
@@ -40,19 +40,22 @@ export class NsPurrloin extends PokemonCard {
       }
 
       let cards: Card[] = [];
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DECK,
-        opponent.hand,
-        {},
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        cards = selected || [];
-        opponent.hand.moveCardsTo(cards, opponent.deck);
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DECK,
+          opponent.hand,
+          {},
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          cards = selected || [];
+          opponent.hand.moveCardsTo(cards, opponent.deck);
+        },
+      );
     }
 
     return state;
   }
-
 }

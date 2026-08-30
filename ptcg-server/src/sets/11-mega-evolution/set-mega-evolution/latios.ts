@@ -8,7 +8,7 @@ import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
 
 export class Latios extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 130;
   public retreat = [C];
 

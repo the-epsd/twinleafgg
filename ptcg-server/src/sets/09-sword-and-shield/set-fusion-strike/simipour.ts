@@ -11,7 +11,7 @@ import { State, StoreLike, TrainerCard, TrainerType } from '../../../game';
 export class Simipour extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Panpour';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 100;
   public weakness = [{ type: L }];
   public retreat = [C];

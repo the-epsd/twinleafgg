@@ -1,34 +1,35 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, CoinFlipPrompt, GameMessage, StateUtils, AttachEnergyPrompt, PlayerType, SlotType } from '../../../game';
+import { StoreLike, State, GameMessage, StateUtils, AttachEnergyPrompt, PlayerType, SlotType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Toedscruel extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [G];
   public hp: number = 120;
-  public weakness = [{ type: CardType.FIRE }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public retreat = [C, C];
   public evolvesFrom = 'Toedscool';
 
   public attacks = [{
     name: 'Eerie Tentacles',
-    cost: [CardType.GRASS],
+    cost: [G],
     damage: 30,
     text: ' You may move an Energy from your opponent\'s Active Pokémon to 1 of their Benched Pokémon.'
-  },
-  {
+  }, {
     name: 'Triple Smash',
-    cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
+    cost: [G, C, C],
     damage: 80,
     damageCalculation: 'x',
     text: ' Flip 3 coins. This attack does 80 damage for each heads. '
   }];
 
   public set: string = 'SVI';
+
   public regulationMark = 'G';
+
   public cardImage: string = 'assets/cardback.png';
   public fullName: string = 'Toedscruel SVI';
   public name: string = 'Toedscruel';
@@ -65,11 +66,7 @@ export class Toedscruel extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      state = store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
+      state = MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 3, results => {
         let heads: number = 0;
         results.forEach(r => { heads += r ? 1 : 0; });
         effect.damage = 80 * heads;

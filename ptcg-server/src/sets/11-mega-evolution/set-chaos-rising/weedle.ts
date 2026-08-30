@@ -6,20 +6,19 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 export class Weedle extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 50;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Surprise Attack',
-      cost: [G],
-      damage: 30,
-      text: 'Flip a coin. If tails, this attack does nothing.',
-    },
-  ];
+  public attacks = [{
+    name: 'Surprise Attack',
+    cost: [G],
+    damage: 30,
+    text: 'Flip a coin. If tails, this attack does nothing.',
+  }];
 
   public regulationMark = 'J';
+
   public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '1';

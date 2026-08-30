@@ -10,10 +10,10 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class MSteelixEx extends PokemonCard {
-  public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
+  protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Steelix-EX';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 240;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
@@ -24,8 +24,8 @@ export class MSteelixEx extends PokemonCard {
       name: 'Canyon Axe',
       cost: [M, C, C, C, C],
       damage: 160,
-      text: 'This attack does 10 damage to each of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "This attack does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public set: string = 'STS';
@@ -41,7 +41,7 @@ export class MSteelixEx extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      opponent.bench.forEach(benched => {
+      opponent.bench.forEach((benched) => {
         if (benched.cards.length > 0) {
           const damage = new PutDamageEffect(effect, 10);
           damage.target = benched;

@@ -13,7 +13,7 @@ export class Munkidori extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 110;
 

@@ -7,12 +7,16 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS, YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED, YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../game/store/prefabs/attack-effects';
+import {
+  THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS,
+  YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED,
+  YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED,
+} from '../../game/store/prefabs/attack-effects';
 
 export class WhiteKyuremGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 190;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];
@@ -22,21 +26,21 @@ export class WhiteKyuremGx extends PokemonCard {
       name: 'Shred',
       cost: [R],
       damage: 40,
-      text: 'This attack\u2019s damage isn\u2019t affected by any effects on your opponent\u2019s Active Pok\u00e9mon.'
+      text: 'This attack\u2019s damage isn\u2019t affected by any effects on your opponent\u2019s Active Pok\u00e9mon.',
     },
     {
       name: 'Raging Blade',
       cost: [R, W, C],
       damage: 80,
       damageCalculation: '+',
-      text: 'If this Pok\u00e9mon has any damage counters on it, this attack does 80 more damage.'
+      text: 'If this Pok\u00e9mon has any damage counters on it, this attack does 80 more damage.',
     },
     {
       name: 'Dragon Nova GX',
       cost: [R, R, W, C],
       damage: 200,
-      text: 'Your opponent\u2019s Active Pok\u00e9mon is now Burned and Paralyzed. (You can\u2019t use more than 1 GX attack in a game.)'
-    }
+      text: 'Your opponent\u2019s Active Pok\u00e9mon is now Burned and Paralyzed. (You can\u2019t use more than 1 GX attack in a game.)',
+    },
   ];
 
   public set: string = 'DRM';

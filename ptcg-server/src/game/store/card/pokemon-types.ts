@@ -1,7 +1,8 @@
 import { CardType } from './card-types';
 import { StoreLike } from '../store-like';
 import { State } from '../state/state';
-import { AttackEffect, PowerEffect } from '../effects/game-effects';
+import { Effect } from '../effects/effect';
+import { PowerEffect } from '../effects/game-effects';
 
 export interface Weakness {
   type: CardType;
@@ -25,7 +26,9 @@ export interface Attack {
   name: string;
   text: string;
   barrage?: boolean;
-  effect?: (store: StoreLike, state: State, effect: AttackEffect) => void;
+  effect?:
+  | ((store: StoreLike, state: State, effect: Effect) => State | void)
+  | ((state: State) => State | void);
 }
 
 export enum PowerType {
@@ -54,7 +57,6 @@ export interface Power {
   effect?: (store: StoreLike, state: State, effect: PowerEffect) => State;
   useWhenInPlay?: boolean;
   useFromHand?: boolean;
-  /** When true with useFromHand, the Pokémon can be played onto an open Bench slot via drag/click (not only via the ability button). */
   useFromHandToBench?: boolean;
   useFromDiscard?: boolean;
   exemptFromAbilityLock?: boolean;

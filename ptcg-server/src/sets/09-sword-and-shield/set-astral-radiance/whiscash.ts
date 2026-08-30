@@ -11,28 +11,26 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF }
 export class Whiscash extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Barboach';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 120;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Mud Shot',
-      cost: [W, C, C],
-      damage: 80,
-      text: ''
-    },
-    {
-      name: 'Thrash',
-      cost: [W, C, C, C],
-      damage: 120,
-      damageCalculation: '+',
-      text: 'Flip a coin. If tails, this Pokémon also does 60 damage to itself. If heads, this attack does 60 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Mud Shot',
+    cost: [W, C, C],
+    damage: 80,
+    text: ''
+  }, {
+    name: 'Thrash',
+    cost: [W, C, C, C],
+    damage: 120,
+    damageCalculation: '+',
+    text: 'Flip a coin. If tails, this Pokémon also does 60 damage to itself. If heads, this attack does 60 more damage.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'ASR';
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';

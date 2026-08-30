@@ -24,7 +24,7 @@ export class Haunter extends PokemonCard {
 
   public setNumber: string = '29';
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp = 60;
 

@@ -3,15 +3,17 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, SlotType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE, THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../../game/store/prefabs/attack-effects';
+import {
+  PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE,
+  THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS,
+} from '../../../game/store/prefabs/attack-effects';
 
 export class DragapultVMAX extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public regulationMark = 'D';
   public stage: Stage = Stage.VMAX;
   public evolvesFrom = 'Dragapult V';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 320;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
@@ -23,14 +25,14 @@ export class DragapultVMAX extends PokemonCard {
       cost: [P],
       damage: 60,
       shredAttack: true,
-      text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
+      text: "This attack's damage isn't affected by any effects on your opponent's Active Pokémon.",
     },
     {
       name: 'Max Phantom',
       cost: [P, P],
       damage: 130,
-      text: 'Put 5 damage counters on your opponent\'s Benched Pokémon in any way you like.'
-    }
+      text: "Put 5 damage counters on your opponent's Benched Pokémon in any way you like.",
+    },
   ];
 
   public set: string = 'RCL';
@@ -40,7 +42,6 @@ export class DragapultVMAX extends PokemonCard {
   public fullName: string = 'Dragapult VMAX RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS(store, state, effect, 60);
     }

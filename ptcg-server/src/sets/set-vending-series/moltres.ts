@@ -1,48 +1,34 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { ChooseCardsPrompt, ChoosePokemonPrompt, CoinFlipPrompt, GameMessage, PlayerType, SlotType, State, StoreLike } from '../../game';
+import { ChooseCardsPrompt, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Moltres extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = R;
-
+  public cardType: CardType[] = [R];
   public hp: number = 80;
-
   public weakness = [];
-
   public resistance = [{ type: F, value: -30 }];
-
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Dry Up',
-      cost: [R, R],
-      damage: 0,
-      text: 'Choose 1 of your opponent\'s Pokémon and flip a coin until you get tails. For each heads, discard 1 Water Energy card attached to that Pokémon, if any.'
-    },
-    {
-      name: 'Fire Wing',
-      cost: [R, R, R, C],
-      damage: 50,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Dry Up',
+    cost: [R, R],
+    damage: 0,
+    text: 'Choose 1 of your opponent\'s Pokémon and flip a coin until you get tails. For each heads, discard 1 Water Energy card attached to that Pokémon, if any.'
+  }, {
+    name: 'Fire Wing',
+    cost: [R, R, R, C],
+    damage: 50,
+    text: ''
+  }];
 
   public set: string = 'VS2';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '14';
-
   public name: string = 'Moltres';
-
   public fullName: string = 'Moltres VS2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -52,9 +38,7 @@ export class Moltres extends PokemonCard {
 
       let numFlips = 0;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
           numFlips++;
           return this.reduceEffect(store, state, effect);

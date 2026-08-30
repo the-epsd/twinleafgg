@@ -11,27 +11,24 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, ADD_CONFUSION_TO_PLAYER_AC
 export class Scrafty extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Scraggy';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Low Kick',
-      cost: [C, C],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Machine Gun Headbutt',
-      cost: [D, D],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 50 damage times the number of heads. This Pok\u00e9mon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Low Kick',
+    cost: [C, C],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Machine Gun Headbutt',
+    cost: [D, D],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 50 damage times the number of heads. This Pok\u00e9mon is now Confused.'
+  }];
 
   public set: string = 'FFI';
   public setNumber: string = '67';

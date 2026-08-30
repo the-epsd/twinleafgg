@@ -1,52 +1,41 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, PokemonCardList, GameError, GameMessage, CoinFlipPrompt, ChooseCardsPrompt, TrainerCard } from '../../../game';
+import { PowerType, StoreLike, State, StateUtils, PokemonCardList, GameError, GameMessage, ChooseCardsPrompt, TrainerCard } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonEffect, TrainerEffect } from '../../../game/store/effects/play-card-effects';
 
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Smeargle extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.COLORLESS;
-
+  public cardType: CardType[] = [C];
   public hp: number = 70;
-
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public retreat = [C];
 
   public powers = [{
     name: 'Portrait',
     useWhenInPlay: true,
     powerType: PowerType.POKEPOWER,
     text: 'Once during your turn (before your attack), if Smeargle is your ' +
-      'Active Pokemon, you may look at your opponent\'s hand. If you do, ' +
-      'choose a Support card you find there and use the effect of that card ' +
-      'as the effect of this power. This power can\'t be used if Smeargle ' +
-      'is affected by a Special Condition.'
+    'Active Pokemon, you may look at your opponent\'s hand. If you do, ' +
+    'choose a Support card you find there and use the effect of that card ' +
+    'as the effect of this power. This power can\'t be used if Smeargle ' +
+    'is affected by a Special Condition.'
   }];
 
-  public attacks = [
-    {
-      name: 'Tail Rap',
-      cost: [CardType.COLORLESS, CardType.COLORLESS],
-      damage: 20,
-      text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tail Rap',
+    cost: [C, C],
+    damage: 20,
+    text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
+  }];
 
   public set: string = 'UD';
-
   public name: string = 'Smeargle';
-
   public fullName: string = 'Smeargle UD';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '8';
 
   public readonly PORTRAIT_MARKER: string = 'PORTRAIT_MARKER';
@@ -91,10 +80,7 @@ export class Smeargle extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
+      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, results => {
         let heads: number = 0;
         results.forEach(r => { heads += r ? 1 : 0; });
         effect.damage = 20 * heads;

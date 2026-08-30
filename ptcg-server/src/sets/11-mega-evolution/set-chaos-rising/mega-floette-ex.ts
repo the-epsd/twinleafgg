@@ -20,8 +20,8 @@ import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../../game/store/prefabs/prefa
 
 export class MegaFloetteex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
-  public cardType: CardType = P;
+  protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
+  public cardType: CardType[] = [P];
   public hp: number = 250;
   public weakness = [{ type: M }];
   public retreat = [C];

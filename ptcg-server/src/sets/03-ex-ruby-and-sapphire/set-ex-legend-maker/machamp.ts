@@ -8,7 +8,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class Machamp extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Machoke';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 120;
   public weakness = [{ type: P }];
   public retreat = [C, C];

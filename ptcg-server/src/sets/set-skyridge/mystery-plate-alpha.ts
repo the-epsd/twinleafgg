@@ -1,13 +1,28 @@
-import { Attack, Card, ChooseCardsPrompt, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
+import {
+  Attack,
+  Card,
+  ChooseCardsPrompt,
+  ChoosePokemonPrompt,
+  GameMessage,
+  PlayerType,
+  SlotType,
+} from '../../game';
 import { CardTag, CardType, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { ColorlessCostReducer } from '../../game/store/card/pokemon-interface';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { CheckAttackCostEffect, CheckPokemonAttacksEffect } from '../../game/store/effects/check-effects';
+import {
+  CheckAttackCostEffect,
+  CheckPokemonAttacksEffect,
+} from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED, YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED, YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../game/store/prefabs/attack-effects';
+import {
+  YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED,
+  YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED,
+  YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED,
+} from '../../game/store/prefabs/attack-effects';
 import { SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 import { State } from '../../game/store/state/state';
@@ -15,37 +30,42 @@ import { StoreLike } from '../../game/store/store-like';
 
 export class MysteryPlateAlpha extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
-  public tags = [CardTag.TECHNICAL_MACHINE];
+  protected _tags = [CardTag.TECHNICAL_MACHINE];
   public set: string = 'SK';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '133';
   public name: string = 'Mystery Plate α';
   public fullName: string = 'Mystery Plate α SK';
 
-  public attacks: Attack[] = [{
-    name: 'Desert Burn',
-    cost: [C],
-    damage: 0,
-    text: 'If your opponent has 5 or more Prizes, search your deck for a Trainer card, show it to your opponent, and put it into your hand. If your opponent has only 1 Prize, the Defending Pokémon is now Burned, Paralyzed, and Poisoned.'
-  }];
+  public attacks: Attack[] = [
+    {
+      name: 'Desert Burn',
+      cost: [C],
+      damage: 0,
+      text: 'If your opponent has 5 or more Prizes, search your deck for a Trainer card, show it to your opponent, and put it into your hand. If your opponent has only 1 Prize, the Defending Pokémon is now Burned, Paralyzed, and Poisoned.',
+    },
+  ];
 
   public text: string =
-    'Attach this card to 1 of your Pokémon in play. That Pokémon may use this card\'s attack instead of its own. At the end of your turn, discard Mystery Plate α.';
+    "Attach this card to 1 of your Pokémon in play. That Pokémon may use this card's attack instead of its own. At the end of your turn, discard Mystery Plate α.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
-      state = store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE],
-        { min: 1, max: 1, allowCancel: false },
-      ), transfers => {
-        player.supporter.moveCardTo(effect.trainerCard, transfers[0]);
-      });
+      state = store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (transfers) => {
+          player.supporter.moveCardTo(effect.trainerCard, transfers[0]);
+        },
+      );
     }
 
     if (effect instanceof EndTurnEffect) {
@@ -54,7 +74,6 @@ export class MysteryPlateAlpha extends TrainerCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
         if (cardList.cards.includes(this)) {
           cardList.moveCardTo(this, player.discard);
-
         }
       });
     }
@@ -72,8 +91,11 @@ export class MysteryPlateAlpha extends TrainerCard {
       }
     }
 
-    if (effect instanceof CheckPokemonAttacksEffect && effect.player.active.cards.includes(this) &&
-      !effect.attacks.includes(this.attacks[0])) {
+    if (
+      effect instanceof CheckPokemonAttacksEffect &&
+      effect.player.active.cards.includes(this) &&
+      !effect.attacks.includes(this.attacks[0])
+    ) {
       effect.attacks.push(this.attacks[0]);
     }
 
@@ -83,18 +105,22 @@ export class MysteryPlateAlpha extends TrainerCard {
 
       if (opponent.getPrizeLeft() >= 5) {
         let cards: Card[] = [];
-        store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_HAND,
-          player.deck,
-          { superType: SuperType.TRAINER },
-          { min: 0, max: 1, allowCancel: false }
-        ), selected => {
-          cards = selected || [];
-          player.deck.moveCardsTo(cards, player.hand);
-          SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-          SHUFFLE_DECK(store, state, player);
-        });
+        store.prompt(
+          state,
+          new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_CARD_TO_HAND,
+            player.deck,
+            { superType: SuperType.TRAINER },
+            { min: 0, max: 1, allowCancel: false },
+          ),
+          (selected) => {
+            cards = selected || [];
+            player.deck.moveCardsTo(cards, player.hand);
+            SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+            SHUFFLE_DECK(store, state, player);
+          },
+        );
       } else if (opponent.getPrizeLeft() === 1) {
         YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
         YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED(store, state, effect);

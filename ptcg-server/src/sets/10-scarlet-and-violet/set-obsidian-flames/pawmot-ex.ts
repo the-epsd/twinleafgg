@@ -1,15 +1,23 @@
-import { Attack, CardTag, CardType, PokemonCard, Stage, State, StoreLike, Weakness } from '../../../game';
+import {
+  Attack,
+  CardTag,
+  CardType,
+  PokemonCard,
+  Stage,
+  State,
+  StoreLike,
+  Weakness,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../../game/store/prefabs/attack-effects';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Pawmotex extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Pawmo';
-  public cardType: CardType = L;
-  public tags: string[] = [CardTag.POKEMON_ex];
+  public cardType: CardType[] = [L];
+  protected _tags = [CardTag.POKEMON_ex];
   public hp: number = 300;
   public weakness: Weakness[] = [{ type: F }];
   public retreat: CardType[] = [];
@@ -20,8 +28,9 @@ export class Pawmotex extends PokemonCard {
       name: 'Levin Strike',
       cost: [L, L],
       damage: 0,
-      text: 'Discard 2 [L] Energy from this Pokémon. This attack does 220 damage to 1 of your opponent\'s Pokémon. ' +
-        '(Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text:
+        "Discard 2 [L] Energy from this Pokémon. This attack does 220 damage to 1 of your opponent's Pokémon. " +
+        "(Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
   ];
 

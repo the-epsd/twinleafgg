@@ -7,7 +7,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike, TrainerType } from '../../../game';
 export class Rotom extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -17,8 +17,7 @@ export class Rotom extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Put an Item card from your discard pile into your hand.'
-  },
-  {
+  }, {
     name: 'Thunder Shock',
     cost: [L],
     damage: 20,
@@ -26,7 +25,9 @@ export class Rotom extends PokemonCard {
   }];
 
   public set: string = 'SVI';
+
   public regulationMark: string = 'G';
+
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '70';
   public name: string = 'Rotom';

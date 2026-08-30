@@ -4,13 +4,13 @@ export function isDualLegendHalf(card: Card | undefined | null): boolean {
   if (!card) {
     return false;
   }
-  return !!card.tags?.includes(CardTag.DUAL_LEGEND);
+  return !!card.tags.includes(CardTag.DUAL_LEGEND);
 }
 
 /** Both distinct halves of the same dual LEGEND must be in hand. */
 export function getDualLegendHalvesInHand(handCards: readonly Card[], card: Card): Card[] {
   const halves = handCards.filter(
-    c => c.name === card.name && c.tags?.includes(CardTag.DUAL_LEGEND),
+    (c) => c.name === card.name && c.tags.includes(CardTag.DUAL_LEGEND),
   );
   const bySetNumber = new Map<string, Card>();
   for (const half of halves) {

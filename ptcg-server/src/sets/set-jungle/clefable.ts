@@ -69,7 +69,7 @@ export class Clefable extends PokemonCard {
 
   public evolvesFrom = 'Clefairy';
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp: number = 70;
 

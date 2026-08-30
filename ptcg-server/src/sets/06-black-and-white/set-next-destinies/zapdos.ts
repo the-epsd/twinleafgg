@@ -8,26 +8,23 @@ import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-
 
 export class Zapdos extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 120;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Thunder Claw',
-      cost: [L, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, this attack does 20 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    },
-    {
-      name: 'Random Spark',
-      cost: [L, L, C],
-      damage: 50,
-      text: 'This attack does 50 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
-  ];
+  public attacks = [{
+    name: 'Thunder Claw',
+    cost: [L, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, this attack does 20 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }, {
+    name: 'Random Spark',
+    cost: [L, L, C],
+    damage: 50,
+    text: 'This attack does 50 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }];
 
   public set: string = 'NXD';
   public setNumber: string = '41';

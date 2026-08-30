@@ -39,7 +39,7 @@ function* useAscension(next: Function, store: StoreLike, state: State,
 
 export class Vulpix extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 50;
   public weakness = [{ type: W }];
   public retreat = [C];

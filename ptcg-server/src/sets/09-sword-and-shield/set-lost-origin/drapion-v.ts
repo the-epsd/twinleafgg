@@ -1,7 +1,17 @@
 /* eslint-disable indent */
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { ChoosePokemonPrompt, GameMessage, Player, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../../game';
+import {
+  ChoosePokemonPrompt,
+  GameMessage,
+  Player,
+  PlayerType,
+  PowerType,
+  SlotType,
+  State,
+  StateUtils,
+  StoreLike,
+} from '../../../game';
 import { CardTag } from '../../../game/store/card/card-types';
 import { CheckAttackCostEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
@@ -10,14 +20,13 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class DrapionV extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
 
   public regulationMark = 'F';
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp: number = 210;
 
@@ -25,19 +34,21 @@ export class DrapionV extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Wild Style',
-    powerType: PowerType.ABILITY,
-    text: 'This Pokémon\'s attacks cost [C] less for each of your opponent\'s Single Strike, Rapid Strike, and Fusion Strike Pokémon in play.'
-  }];
+  public powers = [
+    {
+      name: 'Wild Style',
+      powerType: PowerType.ABILITY,
+      text: "This Pokémon's attacks cost [C] less for each of your opponent's Single Strike, Rapid Strike, and Fusion Strike Pokémon in play.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Dynamic Tail',
       cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 190,
-      text: 'This attack also does 60 damage to 1 of your Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "This attack also does 60 damage to 1 of your Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public set: string = 'LOR';
@@ -52,7 +63,6 @@ export class DrapionV extends PokemonCard {
 
   // Implement ability
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -64,14 +74,14 @@ export class DrapionV extends PokemonCard {
 
         // Check active Pokémon
         const activePokemon = player.active.getPokemonCard();
-        if (activePokemon && specialTags.some(tag => activePokemon.tags.includes(tag))) {
+        if (activePokemon && specialTags.some((tag) => activePokemon.hasTag(tag))) {
           count++;
         }
 
         // Check bench Pokémon
-        player.bench.forEach(slot => {
+        player.bench.forEach((slot) => {
           const benchPokemon = slot.getPokemonCard();
-          if (benchPokemon && specialTags.some(tag => benchPokemon.tags.includes(tag))) {
+          if (benchPokemon && specialTags.some((tag) => benchPokemon.hasTag(tag))) {
             count++;
           }
         });
@@ -80,11 +90,15 @@ export class DrapionV extends PokemonCard {
       };
 
       try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
+        const stub = new PowerEffect(
+          player,
+          {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: '',
+          },
+          this,
+        );
         store.reduceEffect(state, stub);
       } catch {
         console.log(effect.cost);
@@ -112,29 +126,33 @@ export class DrapionV extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const hasBenched = player.bench.some(b => b.cards.length > 0);
+      const hasBenched = player.bench.some((b) => b.cards.length > 0);
       if (!hasBenched) {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
           if (cardList.getPokemonCard() === this) {
             cardList.damage += 60;
           }
         });
       }
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE],
-        { allowCancel: false }
-      ), targets => {
-        if (!targets || targets.length === 0) {
-          return;
-        }
-        const damageEffect = new PutDamageEffect(effect, 60);
-        damageEffect.target = targets[0];
-        store.reduceEffect(state, damageEffect);
-      });
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          { allowCancel: false },
+        ),
+        (targets) => {
+          if (!targets || targets.length === 0) {
+            return;
+          }
+          const damageEffect = new PutDamageEffect(effect, 60);
+          damageEffect.target = targets[0];
+          store.reduceEffect(state, damageEffect);
+        },
+      );
     }
     return state;
   }

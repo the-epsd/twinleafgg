@@ -3,34 +3,42 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+} from '../../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, ChooseCardsPrompt, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, SHUFFLE_DECK, SHOW_CARDS_TO_PLAYER } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  COIN_FLIP_PROMPT,
+  SHUFFLE_DECK,
+  SHOW_CARDS_TO_PLAYER,
+} from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class CharizardEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 180;
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Stoke',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, search your deck for up to 3 basic Energy cards and attach them to this Pokémon. Shuffle your deck afterward.'
-    },
-    {
-      name: 'Fire Blast',
-      cost: [R, C, C, C],
-      damage: 120,
-      text: 'Discard an Energy attached to this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Stoke',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, search your deck for up to 3 basic Energy cards and attach them to this Pokémon. Shuffle your deck afterward.'
+  }, {
+    name: 'Fire Blast',
+    cost: [R, C, C, C],
+    damage: 120,
+    text: 'Discard an Energy attached to this Pokémon.'
+  }];
 
   public set: string = 'FLF';
   public setNumber: string = '11';
@@ -44,10 +52,10 @@ export class CharizardEx extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      COIN_FLIP_PROMPT(store, state, player, result => {
+      COIN_FLIP_PROMPT(store, state, player, (result) => {
         if (result) {
           const basicEnergyCount = player.deck.cards.filter(
-            c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC
+            (c) => c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC,
           ).length;
 
           if (basicEnergyCount === 0) {
@@ -57,24 +65,28 @@ export class CharizardEx extends PokemonCard {
 
           const maxToAttach = Math.min(3, basicEnergyCount);
 
-          store.prompt(state, new ChooseCardsPrompt(
-            player,
-            GameMessage.CHOOSE_CARD_TO_ATTACH,
-            player.deck,
-            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-            { min: 0, max: maxToAttach, allowCancel: false }
-          ), selected => {
-            const cards = selected || [];
+          store.prompt(
+            state,
+            new ChooseCardsPrompt(
+              player,
+              GameMessage.CHOOSE_CARD_TO_ATTACH,
+              player.deck,
+              { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+              { min: 0, max: maxToAttach, allowCancel: false },
+            ),
+            (selected) => {
+              const cards = selected || [];
 
-            if (cards.length > 0) {
-              SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-              cards.forEach(card => {
-                player.deck.moveCardTo(card, player.active);
-              });
-            }
+              if (cards.length > 0) {
+                SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+                cards.forEach((card) => {
+                  player.deck.moveCardTo(card, player.active);
+                });
+              }
 
-            SHUFFLE_DECK(store, state, player);
-          });
+              SHUFFLE_DECK(store, state, player);
+            },
+          );
         }
       });
     }

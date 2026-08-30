@@ -3,12 +3,30 @@ import { CardTag, Stage, SuperType, TrainerType } from '../../../game/store/card
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { GameError, GameMessage, CardManager, PokemonCard, PlayerType, CardTarget, PokemonCardList, ChoosePokemonPrompt, SlotType, Card, ChooseCardsPrompt, StateUtils } from '../../../game';
+import {
+  GameError,
+  GameMessage,
+  CardManager,
+  PokemonCard,
+  PlayerType,
+  CardTarget,
+  PokemonCardList,
+  ChoosePokemonPrompt,
+  SlotType,
+  Card,
+  ChooseCardsPrompt,
+  StateUtils,
+} from '../../../game';
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
 import { CheckPokemonPlayedTurnEffect } from '../../../game/store/effects/check-effects';
 import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 
-function* useStadium(next: Function, store: StoreLike, state: State, effect: UseStadiumEffect): IterableIterator<State> {
+function* useStadium(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: UseStadiumEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   if (player.deck.cards.length === 0) {
@@ -17,7 +35,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
 
   // Look through all known cards to find out if Pokemon can evolve
   const cm = CardManager.getInstance();
-  const evolutions = cm.getAllCards().filter(c => {
+  const evolutions = cm.getAllCards().filter((c) => {
     return c instanceof PokemonCard && c.stage !== Stage.BASIC;
   }) as PokemonCard[];
 
@@ -29,14 +47,13 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
     if (card.stage !== Stage.BASIC || playedTurnEffect.pokemonPlayedTurn === state.turn) {
       return;
     }
-    const valid = evolutions.filter(e => e.evolvesFrom === card.name);
-    valid.forEach(c => {
+    const valid = evolutions.filter((e) => e.evolvesFrom === card.name);
+    valid.forEach((c) => {
       if (!evolutionNames.includes(c.name)) {
         evolutionNames.push(c.name);
       }
     });
   });
-
 
   // There is nothing that can evolve
   if (evolutionNames.length === 0) {
@@ -57,16 +74,20 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
   });
 
   let targets: PokemonCardList[] = [];
-  yield store.prompt(state, new ChoosePokemonPrompt(
-    player.id,
-    GameMessage.CHOOSE_POKEMON_TO_EVOLVE,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.BENCH, SlotType.ACTIVE],
-    { min: 1, max: 1, allowCancel: false, blocked: blocked2 }
-  ), selection => {
-    targets = selection || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChoosePokemonPrompt(
+      player.id,
+      GameMessage.CHOOSE_POKEMON_TO_EVOLVE,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.BENCH, SlotType.ACTIVE],
+      { min: 1, max: 1, allowCancel: false, blocked: blocked2 },
+    ),
+    (selection) => {
+      targets = selection || [];
+      next();
+    },
+  );
 
   if (targets.length === 0) {
     SHUFFLE_DECK(store, state, player);
@@ -81,7 +102,10 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
 
   const targetPlayedTurnEffect = new CheckPokemonPlayedTurnEffect(player, target);
   store.reduceEffect(state, targetPlayedTurnEffect);
-  if (pokemonCard.stage !== Stage.BASIC || targetPlayedTurnEffect.pokemonPlayedTurn === state.turn) {
+  if (
+    pokemonCard.stage !== Stage.BASIC ||
+    targetPlayedTurnEffect.pokemonPlayedTurn === state.turn
+  ) {
     return state;
   }
 
@@ -94,16 +118,20 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
   });
 
   let cards: Card[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_EVOLVE,
-    player.deck,
-    { superType: SuperType.POKEMON, stage: Stage.STAGE_1, evolvesFrom: pokemonCard.name },
-    { min: 1, max: 1, allowCancel: true, blocked }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_EVOLVE,
+      player.deck,
+      { superType: SuperType.POKEMON, stage: Stage.STAGE_1, evolvesFrom: pokemonCard.name },
+      { min: 1, max: 1, allowCancel: true, blocked },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   // Canceled by user, he didn't find the card in the deck
   if (cards.length === 0) {
@@ -119,7 +147,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
   target.pokemonPlayedTurn = state.turn;
 
   // Check if there's a Stage 2 evolution available
-  const stage2Evolutions = evolutions.filter(e => e.evolvesFrom === evolution.name);
+  const stage2Evolutions = evolutions.filter((e) => e.evolvesFrom === evolution.name);
   if (stage2Evolutions.length > 0) {
     // Blocking pokemon cards, that cannot be valid evolutions
     const blockedStage2: number[] = [];
@@ -130,16 +158,20 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
     });
 
     let stage2Cards: Card[] = [];
-    yield store.prompt(state, new ChooseCardsPrompt(
-      player,
-      GameMessage.CHOOSE_CARD_TO_EVOLVE,
-      player.deck,
-      { superType: SuperType.POKEMON, stage: Stage.STAGE_2, evolvesFrom: evolution.name },
-      { min: 1, max: 1, allowCancel: true, blocked: blockedStage2 }
-    ), selected => {
-      stage2Cards = selected || [];
-      next();
-    });
+    yield store.prompt(
+      state,
+      new ChooseCardsPrompt(
+        player,
+        GameMessage.CHOOSE_CARD_TO_EVOLVE,
+        player.deck,
+        { superType: SuperType.POKEMON, stage: Stage.STAGE_2, evolvesFrom: evolution.name },
+        { min: 1, max: 1, allowCancel: true, blocked: blockedStage2 },
+      ),
+      (selected) => {
+        stage2Cards = selected || [];
+        next();
+      },
+    );
 
     if (stage2Cards.length > 0) {
       const stage2Evolution = stage2Cards[0] as PokemonCard;
@@ -152,12 +184,10 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
   SHUFFLE_DECK(store, state, player);
 }
 
-
 export class GreatTree extends TrainerCard {
-
   public trainerType = TrainerType.STADIUM;
 
-  public tags = [CardTag.ACE_SPEC];
+  protected _tags = [CardTag.ACE_SPEC];
 
   public set = 'SCR';
 
@@ -171,7 +201,8 @@ export class GreatTree extends TrainerCard {
 
   public fullName = 'Great Tree SCR';
 
-  public text = 'Once during each player\'s turn, that player may search their deck for a Stage 1 Pokémon that evolves from 1 of their Basic Pokémon and put it onto that Pokémon to evolve it.If that Pokémon was evolved in this way, that player may search their deck for a Stage 2 Pokémon that evolves from that Pokémon and put it onto that Pokémon to evolve it.Then, that player shuffles their deck. (Players can\'t evolve a Basic Pokémon during their first turn or a Basic Pokémon that was put into play this turn.)';
+  public text =
+    "Once during each player's turn, that player may search their deck for a Stage 1 Pokémon that evolves from 1 of their Basic Pokémon and put it onto that Pokémon to evolve it.If that Pokémon was evolved in this way, that player may search their deck for a Stage 2 Pokémon that evolves from that Pokémon and put it onto that Pokémon to evolve it.Then, that player shuffles their deck. (Players can't evolve a Basic Pokémon during their first turn or a Basic Pokémon that was put into play this turn.)";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
@@ -181,5 +212,4 @@ export class GreatTree extends TrainerCard {
 
     return state;
   }
-
 }

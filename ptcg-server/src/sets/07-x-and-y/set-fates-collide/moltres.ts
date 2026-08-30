@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, CONFIRMATION_PROMPT, THIS_POKEMON_DOES_DAMAGE_TO_ITSEL
 
 export class Moltres extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 120;
   public weakness = [{ type: W }];
   public resistance = [{ type: F, value: -20 }];

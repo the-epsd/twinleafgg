@@ -7,19 +7,17 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 
 export class Larvesta2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 70;
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Ember',
-      cost: [R],
-      damage: 20,
-      text: 'Flip a coin. If tails, discard an Energy attached to this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Ember',
+    cost: [R],
+    damage: 20,
+    text: 'Flip a coin. If tails, discard an Energy attached to this Pokémon.'
+  }];
 
   public set: string = 'NVI';
   public cardImage: string = 'assets/cardback.png';

@@ -12,13 +12,18 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: UltraReconSquad, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: UltraReconSquad,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   // Check that the player has Ultra Beast cards in hand
-  const ultraBeastInHand = player.hand.cards.filter(c =>
-    c instanceof PokemonCard && c.tags.includes(CardTag.ULTRA_BEAST)
+  const ultraBeastInHand = player.hand.cards.filter(
+    (c) => c instanceof PokemonCard && c.hasTag(CardTag.ULTRA_BEAST),
   );
 
   if (ultraBeastInHand.length === 0) {
@@ -30,27 +35,31 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   // Filter hand without self to prevent discarding the supporter
   const handTemp = new CardList();
-  handTemp.cards = player.hand.cards.filter(c => c !== self);
+  handTemp.cards = player.hand.cards.filter((c) => c !== self);
 
   // Block non-Ultra Beast cards
   const blocked: number[] = [];
   handTemp.cards.forEach((c, index) => {
-    if (!(c instanceof PokemonCard && c.tags.includes(CardTag.ULTRA_BEAST))) {
+    if (!(c instanceof PokemonCard && c.hasTag(CardTag.ULTRA_BEAST))) {
       blocked.push(index);
     }
   });
 
   let cards: Card[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_DISCARD,
-    handTemp,
-    {},
-    { min: 1, max: 2, allowCancel: false, blocked }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_DISCARD,
+      handTemp,
+      {},
+      { min: 1, max: 2, allowCancel: false, blocked },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   if (cards.length === 0) {
     return state;
@@ -72,7 +81,8 @@ export class UltraReconSquad extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ultra Recon Squad';
   public fullName: string = 'Ultra Recon Squad FLI';
-  public text: string = 'Discard up to 2 Ultra Beast cards from your hand. Draw 3 cards for each card you discarded in this way. You may play only 1 Supporter card during your turn (before your attack).';
+  public text: string =
+    'Discard up to 2 Ultra Beast cards from your hand. Draw 3 cards for each card you discarded in this way. You may play only 1 Supporter card during your turn (before your attack).';
 
   // Ref: set-forbidden-light/crasher-wake.ts (Crasher Wake - generator supporter pattern)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

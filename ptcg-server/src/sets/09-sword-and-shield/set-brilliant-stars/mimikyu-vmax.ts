@@ -13,10 +13,10 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { AcerolasPremonition } from './acerolas-premonition';
 
 export class MimikyuVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Mimikyu V';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 300;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
@@ -27,14 +27,14 @@ export class MimikyuVmax extends PokemonCard {
       name: 'Ominous Numbers',
       cost: [C, C],
       damage: 0,
-      text: 'Put 4 damage counters on your opponent\'s Pokémon in any way you like. If you played Acerola\'s Premonition from your hand during this turn, place 13 damage counters instead.'
+      text: "Put 4 damage counters on your opponent's Pokémon in any way you like. If you played Acerola's Premonition from your hand during this turn, place 13 damage counters instead.",
     },
     {
       name: 'Max Shadow',
       cost: [P, P],
       damage: 120,
-      text: 'Discard a random card from your opponent\'s hand.'
-    }
+      text: "Discard a random card from your opponent's hand.",
+    },
   ];
 
   public regulationMark: string = 'E';

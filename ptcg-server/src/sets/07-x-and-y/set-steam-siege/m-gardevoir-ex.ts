@@ -4,28 +4,37 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, PlayerType, ChoosePokemonPrompt, GameMessage, SlotType } from '../../../game';
+import {
+  StoreLike,
+  State,
+  PlayerType,
+  ChoosePokemonPrompt,
+  GameMessage,
+  SlotType,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { MEGA_EVOLUTION_END_TURN, MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { MEGA_EVOLUTION_END_TURN } from '../../../game/store/prefabs/tool-prefabs';
 
 export class MGardevoirEx extends PokemonCard {
-  public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
+  protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Gardevoir-EX';
-  public cardType: CardType = Y;
-  public additionalCardTypes = [P];
+  public cardType: CardType[] = [Y, P];
   public hp: number = 210;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Despair Ray',
-    cost: [Y, C],
-    damage: 110,
-    damageCalculation: '+',
-    text: 'Discard as many of your Benched Pok\u00e9mon as you like. This attack does 10 more damage for each Benched Pok\u00e9mon you discarded in this way.'
-  }];
+  public attacks = [
+    {
+      name: 'Despair Ray',
+      cost: [Y, C],
+      damage: 110,
+      damageCalculation: '+',
+      text: 'Discard as many of your Benched Pok\u00e9mon as you like. This attack does 10 more damage for each Benched Pok\u00e9mon you discarded in this way.',
+    },
+  ];
 
   public set: string = 'STS';
   public setNumber: string = '79';

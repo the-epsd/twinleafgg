@@ -12,7 +12,7 @@ import { AttachEnergyEffect } from '../../../game/store/effects/play-card-effect
 export class Goodra extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Sliggoo';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 160;
   public retreat = [C, C, C];
 
@@ -22,16 +22,15 @@ export class Goodra extends PokemonCard {
     text: 'As long as this Pokémon is in the Active Spot, whenever your opponent tries to attach an Energy card from their hand to a Pokémon, they must flip a coin. If tails, your opponent discards that Energy card instead of attaching it, and this doesn\'t use up their Energy attachment for the turn.'
   }];
 
-  public attacks = [
-    {
-      name: 'Buster Tail',
-      cost: [W, P],
-      damage: 120,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Buster Tail',
+    cost: [W, P],
+    damage: 120,
+    text: ''
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'FST';
   public setNumber: string = '197';
   public cardImage: string = 'assets/cardback.png';

@@ -1,25 +1,34 @@
-import { Card, ChooseCardsPrompt, GameError, GameMessage, PokemonCard, StateUtils } from '../../../game';
+import {
+  Card,
+  ChooseCardsPrompt,
+  GameError,
+  GameMessage,
+  PokemonCard,
+  StateUtils,
+} from '../../../game';
 import { CardTag, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { MOVE_CARDS_TO_HAND, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {
+  MOVE_CARDS_TO_HAND,
+  SHOW_CARDS_TO_PLAYER,
+  SHUFFLE_DECK,
+} from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_CARDS_FROM_YOUR_HAND } from '../../../game/store/prefabs/trainer-prefabs';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class HolonResearcher extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-  public tags = [CardTag.DELTA_SPECIES];
+  protected _tags = [CardTag.DELTA_SPECIES];
   public set: string = 'DS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '95';
   public name: string = 'Holon Researcher';
   public fullName: string = 'Holon Researcher DS';
 
-  public text: string =
-    `Discard a card from your hand. If you can't discard a card from your hand, you can't play this card.
+  public text: string = `Discard a card from your hand. If you can't discard a card from your hand, you can't play this card.
     
 Search your deck for a [M] Energy card or a Basic Pokémon (or Evolution card) that has delta on its card, show it to your opponent, and put it into your hand. Shuffle your deck afterward.`;
 
@@ -40,7 +49,7 @@ Search your deck for a [M] Energy card or a Basic Pokémon (or Evolution card) t
 
       const blocked: number[] = [];
       player.deck.cards.forEach((c, index) => {
-        if (c instanceof PokemonCard && c.tags.includes(CardTag.DELTA_SPECIES)) {
+        if (c instanceof PokemonCard && c.hasTag(CardTag.DELTA_SPECIES)) {
           return;
         } else if (c.superType === SuperType.ENERGY && c.name === 'Metal Energy') {
           return;
@@ -50,19 +59,23 @@ Search your deck for a [M] Energy card or a Basic Pokémon (or Evolution card) t
       });
 
       let cards: Card[] = [];
-      store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        {},
-        { min: 0, max: 1, allowCancel: false, blocked }
-      ), selected => {
-        cards = selected || [];
+      store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.deck,
+          {},
+          { min: 0, max: 1, allowCancel: false, blocked },
+        ),
+        (selected) => {
+          cards = selected || [];
 
-        SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-        MOVE_CARDS_TO_HAND(store, state, player, cards);
-        SHUFFLE_DECK(store, state, player);
-      });
+          SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+          MOVE_CARDS_TO_HAND(store, state, player, cards);
+          SHUFFLE_DECK(store, state, player);
+        },
+      );
       return state;
     }
 

@@ -8,7 +8,7 @@ export class Braixen extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Fennekin';
   public hp: number = 100;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public weakness = [{ type: W }];
   public retreat = [C];
 

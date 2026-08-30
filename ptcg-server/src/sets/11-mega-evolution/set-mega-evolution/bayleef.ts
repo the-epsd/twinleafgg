@@ -7,7 +7,7 @@ import { Effect } from '../../../game/store/effects/effect';
 export class Bayleef extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Chikorita';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 110;
   public weakness = [{ type: R }];
   public retreat = [C, C];

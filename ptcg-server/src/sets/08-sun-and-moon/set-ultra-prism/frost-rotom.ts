@@ -9,7 +9,7 @@ import { EnergyCard } from '../../../game/store/card/energy-card';
 
 export class FrostRotom extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: M }];
   public retreat = [C];

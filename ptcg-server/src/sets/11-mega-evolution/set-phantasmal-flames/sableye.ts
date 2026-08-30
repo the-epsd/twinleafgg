@@ -1,10 +1,10 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, PlayerType } from '../../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State, PlayerType, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Sableye extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 80;
   public weakness = [{ type: G }];
   public retreat = [C];
@@ -30,7 +30,7 @@ export class Sableye extends PokemonCard {
       let hasStage2Dark = false;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         const pokemon = cardList.getPokemonCard();
-        if (pokemon && pokemon.stage === Stage.STAGE_2 && pokemon.cardType === CardType.DARK) {
+        if (pokemon && pokemon.stage === Stage.STAGE_2 && pokemonHasCardType(pokemon, CardType.DARK)) {
           hasStage2Dark = true;
         }
       });

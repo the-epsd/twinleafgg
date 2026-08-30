@@ -6,19 +6,17 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 
 export class Victini3 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'V-blast',
-      cost: [P],
-      damage: 120,
-      text: 'Flip 2 coins. If either of them is tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'V-blast',
+    cost: [P],
+    damage: 120,
+    text: 'Flip 2 coins. If either of them is tails, this attack does nothing.'
+  }];
 
   public set: string = 'NVI';
   public setNumber: string = '43';

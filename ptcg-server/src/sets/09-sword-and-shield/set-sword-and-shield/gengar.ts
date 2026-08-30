@@ -10,11 +10,11 @@ import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { PlayerType, PowerType, State, StoreLike } from '../../../game';
+import { PlayerType, PowerType, State, StoreLike, pokemonHasCardType } from '../../../game';
 export class Gengar extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Haunter';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 110;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
@@ -57,7 +57,7 @@ export class Gengar extends PokemonCard {
       const blockedFrom: any[] = [];
       const blockedTo: any[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (card.cardType !== CardType.PSYCHIC) {
+        if (!pokemonHasCardType(card, CardType.PSYCHIC)) {
           blockedFrom.push(target);
           blockedTo.push(target);
         }

@@ -14,7 +14,7 @@ import { CardList } from '../../../game/store/state/card-list';
 
 export class Phione extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 70;
   public weakness = [{ type: L }];
   public retreat = [C];

@@ -8,10 +8,9 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Hawlucha extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp: number = 70;
 
@@ -21,20 +20,22 @@ export class Hawlucha extends PokemonCard {
 
   public retreat = [];
 
-  public powers = [{
-    name: 'Shining Spirit',
-    powerType: PowerType.ABILITY,
-    text: 'Damage from this Pokémon\'s attacks isn\'t affected by ' +
-      'Weakness or Resistance.'
-  }];
+  public powers = [
+    {
+      name: 'Shining Spirit',
+      powerType: PowerType.ABILITY,
+      text: "Damage from this Pokémon's attacks isn't affected by " + 'Weakness or Resistance.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Flying Press',
-    cost: [CardType.FIGHTING],
-    damage: 60,
-    text: 'If your opponent\'s Active Pokemon isn\'t a Pokemon-EX, ' +
-      'this attack does nothing.'
-  }];
+  public attacks = [
+    {
+      name: 'Flying Press',
+      cost: [CardType.FIGHTING],
+      damage: 60,
+      text: "If your opponent's Active Pokemon isn't a Pokemon-EX, " + 'this attack does nothing.',
+    },
+  ];
 
   public set: string = 'FFI';
 
@@ -47,13 +48,12 @@ export class Hawlucha extends PokemonCard {
   public setNumber: string = '63';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       const defending = opponent.active.getPokemonCard();
-      if (!defending || !defending.tags.includes(CardTag.POKEMON_EX)) {
+      if (!defending || !defending.hasTag(CardTag.POKEMON_EX)) {
         effect.damage = 0;
         return state;
       }
@@ -70,5 +70,4 @@ export class Hawlucha extends PokemonCard {
 
     return state;
   }
-
 }

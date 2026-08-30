@@ -16,7 +16,8 @@ export class BeastBringer extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Beast Bringer';
   public fullName: string = 'Beast Bringer UNB';
-  public text: string = 'If you have exactly 6 Prize cards remaining, and if your opponent\'s Active Pokémon-GX or Pokémon-EX is Knocked Out by damage from an attack of the Ultra Beast this card is attached to, take 1 more Prize card.';
+  public text: string =
+    "If you have exactly 6 Prize cards remaining, and if your opponent's Active Pokémon-GX or Pokémon-EX is Knocked Out by damage from an attack of the Ultra Beast this card is attached to, take 1 more Prize card.";
 
   // Ref: set-team-up/black-market.ts (Black Market - KnockOutEffect prize modification)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -34,14 +35,14 @@ export class BeastBringer extends TrainerCard {
       }
 
       // Check if tool owner has exactly 6 prize cards remaining
-      const prizeCount = toolOwner.prizes.filter(p => p.cards.length > 0).length;
+      const prizeCount = toolOwner.prizes.filter((p) => p.cards.length > 0).length;
       if (prizeCount !== 6) {
         return state;
       }
 
       // Check if the attached Pokemon is an Ultra Beast
       const attachedPokemon = attachedTo.getPokemonCard();
-      if (!attachedPokemon || !attachedPokemon.tags.includes(CardTag.ULTRA_BEAST)) {
+      if (!attachedPokemon || !attachedPokemon.hasTag(CardTag.ULTRA_BEAST)) {
         return state;
       }
 
@@ -51,7 +52,7 @@ export class BeastBringer extends TrainerCard {
         return state;
       }
 
-      if (!targetCard.tags.includes(CardTag.POKEMON_GX) && !targetCard.tags.includes(CardTag.POKEMON_EX)) {
+      if (!targetCard.hasTag(CardTag.POKEMON_GX) && !targetCard.hasTag(CardTag.POKEMON_EX)) {
         return state;
       }
 

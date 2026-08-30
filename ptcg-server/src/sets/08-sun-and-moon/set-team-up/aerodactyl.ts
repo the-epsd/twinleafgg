@@ -2,7 +2,11 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_CONFUSION_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -10,7 +14,7 @@ import { State, StoreLike } from '../../../game';
 export class Aerodactyl extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Unidentified Fossil';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 130;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
@@ -21,15 +25,15 @@ export class Aerodactyl extends PokemonCard {
       name: 'Supersonic',
       cost: [C],
       damage: 0,
-      text: 'Your opponent\'s Active Pokémon is now Confused.'
+      text: "Your opponent's Active Pokémon is now Confused.",
     },
     {
       name: 'Fossil Fangs',
       cost: [C, C, C],
       damage: 90,
       damageCalculation: '+',
-      text: 'If you don\'t have any Pokémon-GX or Pokémon-EX on your Bench, this attack does 90 more damage.'
-    }
+      text: "If you don't have any Pokémon-GX or Pokémon-EX on your Bench, this attack does 90 more damage.",
+    },
   ];
 
   public set: string = 'TEU';
@@ -50,10 +54,13 @@ export class Aerodactyl extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       let hasGxOrEx = false;
-      player.bench.forEach(b => {
+      player.bench.forEach((b) => {
         if (b.cards.length > 0) {
           const pokemonCard = b.getPokemonCard();
-          if (pokemonCard && (pokemonCard.tags.includes(CardTag.POKEMON_GX) || pokemonCard.tags.includes(CardTag.POKEMON_EX))) {
+          if (
+            pokemonCard &&
+            (pokemonCard.hasTag(CardTag.POKEMON_GX) || pokemonCard.hasTag(CardTag.POKEMON_EX))
+          ) {
             hasGxOrEx = true;
           }
         }

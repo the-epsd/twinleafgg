@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Smoliv extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 60;
   public weakness = [{ type: R }];
   public retreat = [C];
@@ -16,7 +16,7 @@ export class Smoliv extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'MEM';
+  public set: string = 'J-MEM';
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Smoliv';

@@ -10,9 +10,9 @@ import { WAS_ATTACK_USED, SHOW_CARDS_TO_PLAYER } from '../../../game/store/prefa
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class InteleonV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 200;
   public weakness = [{ type: L }];
   public retreat = [C, C];
@@ -22,14 +22,14 @@ export class InteleonV extends PokemonCard {
       name: 'Snipe Shot',
       cost: [W],
       damage: 0,
-      text: 'This attack does 40 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack does 40 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Aqua Report',
       cost: [W, W, C],
       damage: 130,
-      text: 'Your opponent reveals their hand.'
-    }
+      text: 'Your opponent reveals their hand.',
+    },
   ];
 
   public regulationMark: string = 'D';

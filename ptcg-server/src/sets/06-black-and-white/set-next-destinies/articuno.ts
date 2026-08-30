@@ -7,26 +7,23 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../../game/s
 
 export class Articuno extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 120;
   public weakness = [{ type: M }];
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Ice Beam',
-      cost: [W, C, C],
-      damage: 50,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Ice Wing',
-      cost: [W, C, C, C],
-      damage: 80,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Ice Beam',
+    cost: [W, C, C],
+    damage: 50,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Ice Wing',
+    cost: [W, C, C, C],
+    damage: 80,
+    text: ''
+  }];
 
   public set: string = 'NXD';
   public setNumber: string = '27';

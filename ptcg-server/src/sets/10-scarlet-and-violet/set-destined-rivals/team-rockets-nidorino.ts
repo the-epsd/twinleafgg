@@ -7,8 +7,8 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class TeamRocketsNidorino extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = "Team Rocket's Nidoran ♂";
-  public tags = [CardTag.TEAM_ROCKET];
-  public cardType: CardType = D;
+  protected _tags = [CardTag.TEAM_ROCKET];
+  public cardType: CardType[] = [D];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public retreat = [C, C];

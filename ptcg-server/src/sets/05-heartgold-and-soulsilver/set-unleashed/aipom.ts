@@ -6,7 +6,7 @@ import { AFTER_ATTACK, COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/s
 
 export class Aipom extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 50;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -16,8 +16,7 @@ export class Aipom extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Move an Energy card attached to the Defending Pokémon to another of your opponent\'s Pokémon.'
-  },
-  {
+  }, {
     name: 'Tail Smash',
     cost: [C, C],
     damage: 30,

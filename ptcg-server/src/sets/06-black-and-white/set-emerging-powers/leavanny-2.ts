@@ -8,26 +8,23 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Leavanny2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Swadloon';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 130;
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Slash',
-      cost: [C],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Triple Cutter',
-      cost: [G, G, C],
-      damage: 60,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 60 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Slash',
+    cost: [C],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Triple Cutter',
+    cost: [G, G, C],
+    damage: 60,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 60 damage times the number of heads.'
+  }];
 
   public set: string = 'EPO';
   public cardImage: string = 'assets/cardback.png';

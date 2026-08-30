@@ -10,25 +10,22 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, FLIP_UNTIL_TAILS_AND_COUNT_HEADS, SE
 
 export class Delibird extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: M }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'All the Presents',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin until you get tails. For each heads, you may search your deck for a card and put it into your hand. Then, shuffle your deck.'
-    },
-    {
-      name: 'Surprise Attack',
-      cost: [W],
-      damage: 40,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'All the Presents',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin until you get tails. For each heads, you may search your deck for a card and put it into your hand. Then, shuffle your deck.'
+  }, {
+    name: 'Surprise Attack',
+    cost: [W],
+    damage: 40,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'GRI';
   public setNumber: string = '26';

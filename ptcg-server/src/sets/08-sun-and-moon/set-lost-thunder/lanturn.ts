@@ -16,7 +16,7 @@ export class Lanturn extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Chinchou';
   public hp: number = 110;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -30 }];
   public retreat = [C, C];

@@ -6,7 +6,7 @@ import { DAMAGE_OPPONENT_POKEMON, MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } 
 
 export class ShiningVolcanion extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 130;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];
@@ -16,8 +16,7 @@ export class ShiningVolcanion extends PokemonCard {
     cost: [W, W, W],
     damage: 0,
     text: 'This attack does 50 damage to 2 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-  },
-  {
+  }, {
     name: 'Quad Smash',
     cost: [C, C, C, C],
     damage: 50,

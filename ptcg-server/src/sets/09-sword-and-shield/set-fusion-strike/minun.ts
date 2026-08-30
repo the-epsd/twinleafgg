@@ -8,12 +8,17 @@ import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH, REMOVE_MARKER_AT_END_OF_TURN, REPLACE_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  REPLACE_MARKER_AT_END_OF_TURN,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Minun extends PokemonCard {
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -27,14 +32,14 @@ export class Minun extends PokemonCard {
       name: 'Call for Family',
       cost: [C],
       damage: 0,
-      text: 'Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck.'
+      text: 'Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck.',
     },
     {
       name: 'Static Shock',
       cost: [L],
       damage: 20,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -54,13 +59,24 @@ export class Minun extends PokemonCard {
     // 2-phase marker cleanup
     if (effect instanceof EndTurnEffect) {
       REMOVE_MARKER_AT_END_OF_TURN(effect, this.CLEAR_MINUN_ATTACKED_MARKER, this);
-      REPLACE_MARKER_AT_END_OF_TURN(effect, this.MINUN_ATTACKED_MARKER, this.CLEAR_MINUN_ATTACKED_MARKER, this);
+      REPLACE_MARKER_AT_END_OF_TURN(
+        effect,
+        this.MINUN_ATTACKED_MARKER,
+        this.CLEAR_MINUN_ATTACKED_MARKER,
+        this,
+      );
     }
 
     // Attack 1: Call for Family
     // Ref: set-sword-and-shield/grookey.ts (Call for Family - search for up to 2 Basic Pokemon to bench)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, effect.player, { stage: Stage.BASIC }, { min: 0, max: 2 });
+      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(
+        store,
+        state,
+        effect.player,
+        { stage: Stage.BASIC },
+        { min: 0, max: 2 },
+      );
     }
 
     return state;

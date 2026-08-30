@@ -9,9 +9,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Kartana extends PokemonCard {
-  public tags = [CardTag.ULTRA_BEAST];
+  protected _tags = [CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 60;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
@@ -23,8 +23,8 @@ export class Kartana extends PokemonCard {
       cost: [M, M],
       damage: 40,
       damageCalculation: '+',
-      text: 'If your opponent has exactly 6 Prize cards remaining, this attack does 90 more damage.'
-    }
+      text: 'If your opponent has exactly 6 Prize cards remaining, this attack does 90 more damage.',
+    },
   ];
 
   public set: string = 'CES';

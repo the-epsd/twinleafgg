@@ -6,9 +6,9 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class GardevoirEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 170;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];
@@ -20,12 +20,13 @@ export class GardevoirEx extends PokemonCard {
       cost: [Y, C],
       damage: 30,
       damageCalculation: '+',
-      text: 'If this Pokémon and your opponent\'s Active Pokémon have the same amount of Energy attached to them, this attack does 70 more damage.'
-    }, {
+      text: "If this Pokémon and your opponent's Active Pokémon have the same amount of Energy attached to them, this attack does 70 more damage.",
+    },
+    {
       name: 'Luminous Blade',
       cost: [Y, Y, C],
       damage: 120,
-      text: 'Discard an Energy attached to this Pokémon.'
+      text: 'Discard an Energy attached to this Pokémon.',
     },
   ];
 
@@ -41,8 +42,12 @@ export class GardevoirEx extends PokemonCard {
       const player = effect.player;
       const opponent = effect.opponent;
 
-      const playerActiveEnergy = player.active.cards.filter(card => card.superType === SuperType.ENERGY);
-      const opponentActiveEnergy = opponent.active.cards.filter(card => card.superType === SuperType.ENERGY);
+      const playerActiveEnergy = player.active.cards.filter(
+        (card) => card.superType === SuperType.ENERGY,
+      );
+      const opponentActiveEnergy = opponent.active.cards.filter(
+        (card) => card.superType === SuperType.ENERGY,
+      );
 
       if (playerActiveEnergy.length === opponentActiveEnergy.length) {
         effect.damage += 70;
@@ -56,5 +61,4 @@ export class GardevoirEx extends PokemonCard {
 
     return state;
   }
-
 }

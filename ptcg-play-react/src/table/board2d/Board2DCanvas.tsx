@@ -9,6 +9,7 @@ import type { Board3dGameActions } from '../board3d/board3dGameActions';
 import { createBoard3dCardsAdapter } from '../board3d/createBoard3dCardsAdapter';
 import type { Board3dCardsAdapter } from '../board3d/board3dCardsAdapter';
 import type { Board3dCardInfoData, CardInfoPaneActionResult } from '../board3d/board3dCardsAdapter';
+import { refreshInPlayCardInfoData } from '../board3d/refreshInPlayCardInfoData';
 import { CardInfoPopup } from '../../card-info/CardInfoPopup';
 import { CardInfoListPopup } from '../../card-info/CardInfoListPopup';
 import { appConfig } from '../../env/config';
@@ -99,6 +100,17 @@ export function Board2DCanvas(props: Board2DCanvasProps) {
       }),
     [maps, serverConfig?.scansUrl, serverConfig?.sleevesUrl, queueInfo, queueList],
   );
+
+  // Keep open card info in sync with board state (e.g. Fossil Ditto Transform).
+  useEffect(() => {
+    const players = [props.topPlayer, props.bottomPlayer];
+    setCardPrompt((prev) => {
+      if (!prev) {
+        return prev;
+      }
+      return { ...prev, data: refreshInPlayCardInfoData(prev.data, players) };
+    });
+  }, [props.gameState, props.topPlayer, props.bottomPlayer]);
 
   // No KO flight on 2D — keep prize prompts unblocked.
   useEffect(() => {

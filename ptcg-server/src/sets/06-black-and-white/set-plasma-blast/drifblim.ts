@@ -1,7 +1,16 @@
 /* eslint-disable indent */
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, GameMessage, Player, PowerType, State, StateUtils, StoreLike } from '../../../game';
+import {
+  Card,
+  ChooseCardsPrompt,
+  GameMessage,
+  Player,
+  PowerType,
+  State,
+  StateUtils,
+  StoreLike,
+} from '../../../game';
 import { CardTag } from '../../../game/store/card/card-types';
 import { CheckAttackCostEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
@@ -11,23 +20,27 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs
 export class Drifblim extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Drifloon';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 100;
   public weakness = [{ type: D }];
   public retreat = [];
 
-  public powers = [{
-    name: 'Drifting Balloon',
-    powerType: PowerType.ABILITY,
-    text: 'This Pokémon\'s attacks cost [C] less for each of your opponent\'s Team Plasma Pokémon in play.'
-  }];
+  public powers = [
+    {
+      name: 'Drifting Balloon',
+      powerType: PowerType.ABILITY,
+      text: "This Pokémon's attacks cost [C] less for each of your opponent's Team Plasma Pokémon in play.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Derail',
-    cost: [C, C, C],
-    damage: 70,
-    text: 'Discard a Special Energy attached to the Defending Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'Derail',
+      cost: [C, C, C],
+      damage: 70,
+      text: 'Discard a Special Energy attached to the Defending Pokémon.',
+    },
+  ];
 
   public set: string = 'PLB';
   public cardImage: string = 'assets/cardback.png';
@@ -36,9 +49,11 @@ export class Drifblim extends PokemonCard {
   public fullName: string = 'Drifblim PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof CheckAttackCostEffect && (effect.attack === this.attacks[0]
-      || this.tools.some(tool => tool.attacks && tool.attacks.includes(effect.attack)))) {
+    if (
+      effect instanceof CheckAttackCostEffect &&
+      (effect.attack === this.attacks[0] ||
+        this.tools.some((tool) => tool.attacks && tool.attacks.includes(effect.attack)))
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -49,14 +64,14 @@ export class Drifblim extends PokemonCard {
 
         // Check active Pokémon
         const activePokemon = player.active.getPokemonCard();
-        if (activePokemon && specialTags.some(tag => activePokemon.tags.includes(tag))) {
+        if (activePokemon && specialTags.some((tag) => activePokemon.hasTag(tag))) {
           count++;
         }
 
         // Check bench Pokémon
-        player.bench.forEach(slot => {
+        player.bench.forEach((slot) => {
           const benchPokemon = slot.getPokemonCard();
-          if (benchPokemon && specialTags.some(tag => benchPokemon.tags.includes(tag))) {
+          if (benchPokemon && specialTags.some((tag) => benchPokemon.hasTag(tag))) {
             count++;
           }
         });
@@ -91,7 +106,12 @@ export class Drifblim extends PokemonCard {
 
       let hasPokemonWithEnergy = false;
 
-      if (activePokemonCard && activeCardList.energies.cards.some(c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.SPECIAL)) {
+      if (
+        activePokemonCard &&
+        activeCardList.energies.cards.some(
+          (c) => c.superType === SuperType.ENERGY && c.energyType === EnergyType.SPECIAL,
+        )
+      ) {
         hasPokemonWithEnergy = true;
       }
 
@@ -100,15 +120,19 @@ export class Drifblim extends PokemonCard {
       }
 
       let cards: Card[] = [];
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        opponent.active,
-        { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
-        { min: 1, max: 1, allowCancel: false },
-      ), selected => {
-        cards = selected || [];
-      });
+      state = store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          opponent.active,
+          { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          cards = selected || [];
+        },
+      );
       const discardEnergy = new DiscardCardsEffect(effect, cards);
       return store.reduceEffect(state, discardEnergy);
     }

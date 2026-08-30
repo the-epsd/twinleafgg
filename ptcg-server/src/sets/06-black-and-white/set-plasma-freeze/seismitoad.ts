@@ -7,10 +7,10 @@ import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/ga
 import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store/prefabs/prefabs';
 
 export class Seismitoad extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Palpitoad';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 140;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
@@ -20,14 +20,14 @@ export class Seismitoad extends PokemonCard {
       name: 'Seismic Punch',
       cost: [C, C],
       damage: 30,
-      text: 'Does 30 damage to each Benched Pokémon (both yours and your opponent\'s). (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "Does 30 damage to each Benched Pokémon (both yours and your opponent's). (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Splashing Turn',
       cost: [W, W, C, C],
       damage: 80,
-      text: 'Switch this Pokémon with 1 of your Benched Pokémon.'
-    }
+      text: 'Switch this Pokémon with 1 of your Benched Pokémon.',
+    },
   ];
 
   public set: string = 'PLF';
@@ -75,7 +75,7 @@ export class Seismitoad extends PokemonCard {
     if (effect instanceof AfterAttackEffect && this.usedSplashingTurn) {
       this.usedSplashingTurn = false;
       const player = effect.player;
-      const hasBenched = player.bench.some(b => b.cards.length > 0);
+      const hasBenched = player.bench.some((b) => b.cards.length > 0);
 
       if (hasBenched) {
         SWITCH_ACTIVE_WITH_BENCHED(store, state, player);

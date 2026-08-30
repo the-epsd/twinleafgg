@@ -6,48 +6,37 @@ import { Effect } from '../../../game/store/effects/effect';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { StateUtils } from '../../../game/store/state-utils';
-import { GameMessage } from '../../../game/game-message';
-import { CoinFlipPrompt } from '../../../game/store/prompts/coin-flip-prompt';
+
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Bidoof extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
   public regulationMark = 'F';
-
-  public cardType: CardType = CardType.COLORLESS;
-
+  public cardType: CardType[] = [C];
   public hp: number = 60;
-
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public retreat = [C];
 
   public powers = [{
     name: 'Carefree Countenance',
     powerType: PowerType.ABILITY,
     text: 'As long as this Pokemon is on your Bench, prevent all ' +
-      'damage done to this Pokemon by attacks (both yours and ' +
-      'your opponent\'s).'
+    'damage done to this Pokemon by attacks (both yours and ' +
+    'your opponent\'s).'
   }];
 
   public attacks = [{
     name: 'Hyper Fang',
-    cost: [CardType.COLORLESS, CardType.COLORLESS],
+    cost: [C, C],
     damage: 30,
     text: 'Flip a coin. If tails, this attack does nothing.'
   }];
 
   public set: string = 'CRZ';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '111';
-
   public name: string = 'Bidoof';
-
   public fullName: string = 'Bidoof CRZ';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -55,9 +44,7 @@ export class Bidoof extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === false) {
           effect.damage = 0;
         }

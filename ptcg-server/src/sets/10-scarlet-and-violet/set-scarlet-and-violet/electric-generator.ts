@@ -4,7 +4,7 @@ import { CardType, EnergyType, TrainerType } from '../../../game/store/card/card
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { GameError, GameMessage, SlotType, Player } from '../../../game';
+import { GameError, GameMessage, SlotType, Player, pokemonHasCardType } from '../../../game';
 import { LOOK_AT_TOP_X_CARDS_AND_ATTACH_UP_TO_Y_ENERGY } from '../../../game/store/prefabs/prefabs';
 
 export class ElectricGenerator extends TrainerCard {
@@ -34,7 +34,7 @@ export class ElectricGenerator extends TrainerCard {
 
     player.bench.forEach(benchSpot => {
       const card = benchSpot.getPokemonCard();
-      if (card && card.cardType === CardType.LIGHTNING) {
+      if (card && pokemonHasCardType(card, CardType.LIGHTNING)) {
         lightningPokemonOnBench = true;
       }
     });
@@ -57,7 +57,7 @@ export class ElectricGenerator extends TrainerCard {
 
       player.bench.forEach(benchSpot => {
         const card = benchSpot.getPokemonCard();
-        if (card && card.cardType === CardType.LIGHTNING) {
+        if (card && pokemonHasCardType(card, CardType.LIGHTNING)) {
           lightningPokemonOnBench = true;
         }
       });
@@ -82,7 +82,7 @@ export class ElectricGenerator extends TrainerCard {
         2,
         {
           destinationSlots: [SlotType.BENCH],
-          targetFilter: (_target, pokemonCard) => pokemonCard.cardType === CardType.LIGHTNING,
+          targetFilter: (_target, pokemonCard) => pokemonHasCardType(pokemonCard, CardType.LIGHTNING),
           energyFilter: { energyType: EnergyType.BASIC, name: 'Lightning Energy' },
           remainderDestination: 'shuffle'
         }

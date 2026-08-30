@@ -7,14 +7,17 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
 import { SpecialCondition } from '../../../game/store/card/card-types';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { BLOCK_IF_GX_ATTACK_USED, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  BLOCK_IF_GX_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 export class ShuckleGX extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 170;
 
@@ -22,27 +25,29 @@ export class ShuckleGX extends PokemonCard {
 
   public retreat = [CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Protective Shell',
-    useWhenInPlay: false,
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all damage done to this Pokémon by attacks from your opponent\'s Pokémon that have 2 or fewer Energy attached to them.'
-  }];
+  public powers = [
+    {
+      name: 'Protective Shell',
+      useWhenInPlay: false,
+      powerType: PowerType.ABILITY,
+      text: "Prevent all damage done to this Pokémon by attacks from your opponent's Pokémon that have 2 or fewer Energy attached to them.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Triple Poison',
       cost: [CardType.COLORLESS],
       damage: 0,
-      text: 'Your opponent\'s Active Pokémon is now Poisoned. Put 3 damage counters instead of 1 on that Pokémon between turns. '
+      text: "Your opponent's Active Pokémon is now Poisoned. Put 3 damage counters instead of 1 on that Pokémon between turns. ",
     },
     {
       name: 'Wrap-GX',
       cost: [CardType.COLORLESS],
       damage: 40,
       gxAttack: true,
-      text: 'Your opponent\'s Active Pokémon is now Paralyzed. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Your opponent's Active Pokémon is now Paralyzed. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'LOT';
@@ -81,8 +86,10 @@ export class ShuckleGX extends PokemonCard {
       // Checking if the opponent has more than 2 energy attached
       const opponentProvidedEnergy = new CheckProvidedEnergyEffect(opponent);
       store.reduceEffect(state, opponentProvidedEnergy);
-      const opponentEnergyCount = opponentProvidedEnergy.energyMap
-        .reduce((left, p) => left + p.provides.length, 0);
+      const opponentEnergyCount = opponentProvidedEnergy.energyMap.reduce(
+        (left, p) => left + p.provides.length,
+        0,
+      );
 
       if (opponentEnergyCount > 2) {
         return state;

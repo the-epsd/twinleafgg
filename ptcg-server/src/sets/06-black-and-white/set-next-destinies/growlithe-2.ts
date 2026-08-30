@@ -7,26 +7,23 @@ import { AttackEffect } from '../../../game/store/effects/game-effects';
 
 export class Growlithe2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 80;
   public weakness = [{ type: W }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Stoke',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, search your deck for a [R] Energy card and attach it to this Pokémon. Shuffle your deck afterward.'
-    },
-    {
-      name: 'Firebreathing',
-      cost: [R, C],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Stoke',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, search your deck for a [R] Energy card and attach it to this Pokémon. Shuffle your deck afterward.'
+  }, {
+    name: 'Firebreathing',
+    cost: [R, C],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 20 more damage.'
+  }];
 
   public set: string = 'NXD';
   public setNumber: string = '10';

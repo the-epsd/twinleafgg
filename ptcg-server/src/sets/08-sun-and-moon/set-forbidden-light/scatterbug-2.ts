@@ -12,19 +12,17 @@ import { StateUtils } from '../../../game/store/state-utils';
 
 export class Scatterbug2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 40;
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Ultra Evolution',
-      cost: [G],
-      damage: 0,
-      text: 'Flip a coin. If heads, search your deck for Vivillon and put it onto this Scatterbug to evolve it. Then, shuffle your deck.'
-    }
-  ];
+  public attacks = [{
+    name: 'Ultra Evolution',
+    cost: [G],
+    damage: 0,
+    text: 'Flip a coin. If heads, search your deck for Vivillon and put it onto this Scatterbug to evolve it. Then, shuffle your deck.'
+  }];
 
   public set: string = 'FLI';
   public setNumber: string = '6';

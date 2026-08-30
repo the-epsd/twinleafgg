@@ -3,16 +3,20 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { CheckRetreatCostEffect } from '../../../game/store/effects/check-effects';
-import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_SLEEP_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class MiloticV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 210;
   public weakness = [{ type: L }];
   public retreat = [C, C];
@@ -23,14 +27,14 @@ export class MiloticV extends PokemonCard {
       cost: [W, C, C],
       damage: 10,
       damageCalculation: '+',
-      text: 'This attack does 50 more damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
+      text: "This attack does 50 more damage for each Colorless in your opponent's Active Pokémon's Retreat Cost.",
     },
     {
       name: 'Hypno Splash',
       cost: [W, C, C, C],
       damage: 150,
-      text: 'Your opponent\'s Active Pokémon is now Asleep.'
-    }
+      text: "Your opponent's Active Pokémon is now Asleep.",
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -50,7 +54,7 @@ export class MiloticV extends PokemonCard {
       const checkRetreat = new CheckRetreatCostEffect(opponent);
       store.reduceEffect(state, checkRetreat);
 
-      const colorlessCount = checkRetreat.cost.filter(c => c === CardType.COLORLESS).length;
+      const colorlessCount = checkRetreat.cost.filter((c) => c === CardType.COLORLESS).length;
       effect.damage += 50 * colorlessCount;
     }
 

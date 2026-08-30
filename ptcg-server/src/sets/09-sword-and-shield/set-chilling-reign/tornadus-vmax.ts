@@ -6,13 +6,16 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, DISCARD_A_STADIUM_CARD_IN_PLAY } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  DISCARD_A_STADIUM_CARD_IN_PLAY,
+} from '../../../game/store/prefabs/prefabs';
 
 export class TornadusVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX, CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.POKEMON_VMAX, CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Tornadus V';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 320;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];
@@ -23,15 +26,15 @@ export class TornadusVmax extends PokemonCard {
       name: 'Blasting Wind',
       cost: [C, C],
       damage: 60,
-      text: ''
+      text: '',
     },
     {
       name: 'Max Wind Spirit',
       cost: [C, C, C, C],
       damage: 120,
       damageCalculation: '+',
-      text: 'If a Stadium is in play, this attack does 120 more damage. Then, discard that Stadium.'
-    }
+      text: 'If a Stadium is in play, this attack does 120 more damage. Then, discard that Stadium.',
+    },
   ];
 
   public regulationMark: string = 'E';

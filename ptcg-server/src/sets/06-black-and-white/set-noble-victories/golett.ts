@@ -8,27 +8,24 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../../game/st
 
 export class Golett extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: W }];
   public resistance = [{ type: L, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Pound',
-      cost: [F],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Mega Punch',
-      cost: [P, C],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 more damage and the Defending Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Pound',
+    cost: [F],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Mega Punch',
+    cost: [P, C],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 20 more damage and the Defending Pokémon is now Confused.'
+  }];
 
   public set: string = 'NVI';
   public cardImage: string = 'assets/cardback.png';

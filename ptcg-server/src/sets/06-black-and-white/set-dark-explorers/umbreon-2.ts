@@ -7,26 +7,23 @@ import { State, StoreLike } from '../../../game';
 export class Umbreon2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Eevee';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Confuse Ray',
-      cost: [C],
-      damage: 20,
-      text: 'The Defending Pokémon is now Confused.'
-    },
-    {
-      name: 'Shadow Shutdown',
-      cost: [D, C, C],
-      damage: 60,
-      text: 'Flip 2 coins. If both of them are heads, discard all Energy attached to the Defending Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Confuse Ray',
+    cost: [C],
+    damage: 20,
+    text: 'The Defending Pokémon is now Confused.'
+  }, {
+    name: 'Shadow Shutdown',
+    cost: [D, C, C],
+    damage: 60,
+    text: 'Flip 2 coins. If both of them are heads, discard all Energy attached to the Defending Pokémon.'
+  }];
 
   public set: string = 'DEX';
   public setNumber: string = '61';

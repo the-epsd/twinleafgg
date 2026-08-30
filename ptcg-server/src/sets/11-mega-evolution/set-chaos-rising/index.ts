@@ -1,4 +1,5 @@
 import { Card } from '../../../game/store/card/card';
+import { AdversityPolicy } from './adversity-policy';
 import { Ampharos } from './ampharos';
 import { Avalugg } from './avalugg';
 import { AzsTranquility } from './azs-tranquility';
@@ -27,6 +28,7 @@ import { Espurr } from './espurr';
 import { Fennekin } from './fennekin';
 import { Ferroseed } from './ferroseed';
 import { Ferrothorn } from './ferrothorn';
+import { KrookodileEx } from './krookodile-ex';
 import { TransformationTome } from './transformation-tome';
 import { Cinccinoex } from './cinccino-ex';
 import { Emma } from './emma';
@@ -172,6 +174,8 @@ export const setChaosRising: Card[] = [
   new Donphan(), // 45
   new Baltoy(), // 46
   new Claydol(), // 47
+  new AdversityPolicy(),
+  new KrookodileEx(),
   new MegaGalladeex(),
   new Zubat(), // 48
   new Golbat(), // 49

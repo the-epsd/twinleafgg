@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef, type KeyboardEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import type { MessageInfo, UserInfo } from 'ptcg-server';
@@ -7,6 +7,10 @@ import { getMessages } from '../api/messagesApi';
 import { useAuth } from '../context/AuthContext';
 import { useMessages } from '../context/MessagesContext';
 import { ApiError } from '../api/apiError';
+import { Avatar } from '../components/Avatar';
+import { cn } from '../utils/cn';
+import { playSfx } from '../sfx';
+import styles from './MessagesPage.module.css';
 
 function getPeerId(c: ConversationInfo, me: number): number {
   return c.user1Id === me ? c.user2Id : c.user1Id;
@@ -23,6 +27,26 @@ function sanitizeMessageText(text: string): string {
     .join('');
 }
 
+function formatTimestamp(timestamp: number): string {
+  const now = Date.now();
+  const diff = now - timestamp;
+  const date = new Date(timestamp);
+
+  if (diff < 60_000) {
+    return 'now';
+  }
+  if (diff < 3_600_000) {
+    return `${Math.floor(diff / 60_000)}m`;
+  }
+  if (diff < 86_400_000) {
+    return `${Math.floor(diff / 3_600_000)}h`;
+  }
+  if (diff < 604_800_000) {
+    return `${Math.floor(diff / 86_400_000)}d`;
+  }
+  return `${date.getMonth() + 1}/${date.getDate()}`;
+}
+
 export function MessagesPage() {
   const { t } = useTranslation();
   const { userId: userIdParam } = useParams();
@@ -31,6 +55,7 @@ export function MessagesPage() {
   const peerId = Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
   const { user } = useAuth();
   const loggedUserId = user?.userId ?? 0;
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const {
     conversations,
@@ -49,14 +74,24 @@ export function MessagesPage() {
   const [draft, setDraft] = useState('');
   const [sending, setSending] = useState(false);
 
-  const displayUser = useCallback(
+  const resolveUser = useCallback(
+    (uid: number): UserInfo | undefined => {
+      if (uid === loggedUserId) {
+        return user ?? undefined;
+      }
+      return messageUsers[uid] ?? extraUsers[uid];
+    },
+    [loggedUserId, user, messageUsers, extraUsers],
+  );
+
+  const displayName = useCallback(
     (uid: number) => {
       if (uid === loggedUserId) {
         return user?.name ?? t('MESSAGES_YOU');
       }
-      return messageUsers[uid]?.name ?? extraUsers[uid]?.name ?? t('MESSAGES_USER_FALLBACK', { id: uid });
+      return resolveUser(uid)?.name ?? t('MESSAGES_USER_FALLBACK', { id: uid });
     },
-    [loggedUserId, user?.name, messageUsers, extraUsers, t]
+    [loggedUserId, user?.name, resolveUser, t],
   );
 
   const loadThread = useCallback(
@@ -87,7 +122,7 @@ export function MessagesPage() {
         setThreadLoading(false);
       }
     },
-    [loggedUserId, readMessages, t]
+    [loggedUserId, readMessages, t],
   );
 
   useEffect(() => {
@@ -98,8 +133,11 @@ export function MessagesPage() {
     void loadThread(peerId);
   }, [peerId, loggedUserId, loadThread]);
 
-  const firstPeer =
-    conversations.length > 0 ? getPeerId(conversations[0], loggedUserId) : 0;
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, threadLoading, peerId]);
+
+  const firstPeer = conversations.length > 0 ? getPeerId(conversations[0], loggedUserId) : 0;
 
   if (loggedUserId && !peerId && conversations.length > 0 && firstPeer) {
     return <Navigate to={`/message/${firstPeer}`} replace />;
@@ -112,6 +150,7 @@ export function MessagesPage() {
     }
     setSending(true);
     setThreadError(null);
+    playSfx('uiButton');
     try {
       const ack = await sendMessage(peerId, text);
       setDraft('');
@@ -138,140 +177,179 @@ export function MessagesPage() {
     }
   }
 
-  function onKeyDown(e: React.KeyboardEvent) {
+  function onKeyDown(e: KeyboardEvent<HTMLTextAreaElement>) {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       void onSend();
     }
   }
 
-  return (
-    <div
-      style={{
-        display: 'flex',
-        flex: 1,
-        minHeight: 0,
-        gap: 16,
-        alignItems: 'stretch',
-        width: '100%',
-        maxWidth: 960,
-        margin: '0 auto',
-      }}
-    >
-      <aside style={{ width: 280, flexShrink: 0, borderRight: '1px solid #ddd', paddingRight: 12, overflowY: 'auto' }}>
-        <h2 style={{ marginTop: 0 }}>{t('MESSAGES_CONVERSATIONS_ASIDE')}</h2>
-        {listError && <p style={{ color: 'crimson', fontSize: 14 }}>{listError}</p>}
-        {listLoading && <p>{t('MESSAGES_LOADING_LIST')}</p>}
-        <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-          {conversations.map((c) => {
-            const pid = getPeerId(c, loggedUserId);
-            const active = pid === peerId;
-            return (
-              <li key={`${c.user1Id}-${c.user2Id}`} style={{ marginBottom: 8 }}>
-                <Link
-                  to={`/message/${pid}`}
-                  style={{
-                    fontWeight: active ? 700 : 400,
-                    display: 'block',
-                    padding: 8,
-                    background: active ? '#e8f4ff' : '#f5f5f5',
-                    borderRadius: 4,
-                    textDecoration: 'none',
-                    color: 'inherit',
-                  }}
-                >
-                  {displayUser(pid)}
-                  {c.lastMessage && !c.lastMessage.isRead && c.lastMessage.senderId === pid && (
-                    <span style={{ color: 'crimson', marginLeft: 6 }}>●</span>
-                  )}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </aside>
+  const peerUser = peerId ? resolveUser(peerId) : undefined;
+  const canSend = !!sanitizeMessageText(draft) && !sending && !threadLoading;
 
-      <section style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
-        {!peerId ? (
-          <p>{t('MESSAGES_HINT_SELECT')}</p>
-        ) : (
-          <>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
-              <h1 style={{ margin: 0 }}>{displayUser(peerId)}</h1>
-              <button type="button" onClick={() => void onDelete(peerId)}>
-                {t('MESSAGES_DELETE_CONVERSATION')}
-              </button>
-            </div>
-            {threadError && <p style={{ color: 'crimson' }}>{threadError}</p>}
-            {threadLoading ? (
-              <p>{t('MESSAGES_LOADING_THREAD')}</p>
-            ) : (
-            <div
-              style={{
-                flex: 1,
-                minHeight: 180,
-                border: '1px solid #ddd',
-                borderRadius: 4,
-                padding: 12,
-                overflowY: 'auto',
-                marginBottom: 12,
-                background: '#fafafa',
-              }}
-            >
-                {messages.map((m) => (
-                  <div
-                    key={m.messageId}
-                    style={{
-                      marginBottom: 8,
-                      textAlign: m.senderId === loggedUserId ? 'right' : 'left',
-                    }}
+  return (
+    <div className={styles.screen}>
+      <div className={styles.layout}>
+        <aside className={styles.sidebar}>
+          <div className={styles.sidebarHeader}>
+            <h2 className={styles.sidebarTitle}>{t('MESSAGES_TITLE')}</h2>
+          </div>
+
+          {listError ? <p className={styles.listAlert}>{listError}</p> : null}
+          {listLoading ? <p className={styles.listStatus}>{t('MESSAGES_LOADING_LIST')}</p> : null}
+
+          <ul className={styles.conversationList}>
+            {conversations.map((c) => {
+              const pid = getPeerId(c, loggedUserId);
+              const active = pid === peerId;
+              const peer = resolveUser(pid);
+              const unread =
+                !!c.lastMessage && !c.lastMessage.isRead && c.lastMessage.senderId === pid;
+              return (
+                <li key={`${c.user1Id}-${c.user2Id}`}>
+                  <Link
+                    to={`/message/${pid}`}
+                    className={cn(
+                      styles.contact,
+                      active && styles.contactActive,
+                      unread && styles.contactUnread,
+                    )}
+                    onClick={() => playSfx('uiNavslide')}
                   >
-                    <span
-                      style={{
-                        display: 'inline-block',
-                        padding: '6px 10px',
-                        borderRadius: 8,
-                        background: m.senderId === loggedUserId ? '#0b57d0' : '#e0e0e0',
-                        color: m.senderId === loggedUserId ? '#fff' : '#111',
-                        maxWidth: '85%',
-                        wordBreak: 'break-word',
-                      }}
-                    >
-                      {m.text}
-                    </span>
-                    <div style={{ fontSize: 11, opacity: 0.6, marginTop: 2 }}>
-                      {new Date(m.created).toLocaleString()}
+                    <div className={styles.avatarWrap}>
+                      <Avatar
+                        avatarFile={peer?.avatarFile}
+                        className={styles.contactAvatar}
+                        alt={displayName(pid)}
+                      />
+                      {unread ? <span className={styles.unreadDot} aria-hidden /> : null}
                     </div>
-                  </div>
-                ))}
+                    <div className={styles.contactBody}>
+                      <div className={styles.contactTop}>
+                        <p className={styles.contactName}>{displayName(pid)}</p>
+                        {c.lastMessage?.created ? (
+                          <span className={styles.contactTime}>
+                            {formatTimestamp(c.lastMessage.created)}
+                          </span>
+                        ) : null}
+                      </div>
+                      <p className={styles.contactPreview}>{c.lastMessage?.text || ' '}</p>
+                    </div>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </aside>
+
+        <section className={styles.main}>
+          {!peerId ? (
+            <div className={styles.emptyState}>
+              <div className={styles.emptyCard}>
+                <div className={styles.emptyIcon} aria-hidden>
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z" />
+                  </svg>
+                </div>
+                <p className={styles.emptyText}>{t('MESSAGES_NO_CONVERSATION_SELECTED')}</p>
               </div>
-            )}
-            <div style={{ display: 'flex', gap: 8, flexShrink: 0, alignItems: 'flex-end' }}>
-              <textarea
-                value={draft}
-                onChange={(e) => setDraft(e.target.value)}
-                onKeyDown={onKeyDown}
-                rows={3}
-                placeholder={t('MESSAGES_PLACEHOLDER_COMPOSER')}
-                style={{
-                  flex: 1,
-                  resize: 'vertical',
-                  minHeight: 72,
-                  maxHeight: 200,
-                  fontFamily: 'inherit',
-                  fontSize: 14,
-                  padding: '8px 10px',
-                  borderRadius: 6,
-                  border: '1px solid #ccc',
-                }}
-              />
-              <button type="button" disabled={sending} onClick={() => void onSend()}>
-                {t('MESSAGES_SEND_MESSAGE')}
-              </button>
             </div>
-          </>
-        )}
-      </section>
+          ) : (
+            <div className={styles.thread}>
+              <header className={styles.threadHeader}>
+                <h1 className={styles.threadTitle}>{displayName(peerId)}</h1>
+                <button type="button" className={styles.deleteBtn} onClick={() => void onDelete(peerId)}>
+                  {t('MESSAGES_DELETE_CONVERSATION')}
+                </button>
+              </header>
+
+              {threadError ? <p className={styles.threadAlert}>{threadError}</p> : null}
+
+              <div className={styles.messages}>
+                {threadLoading ? (
+                  <p className={styles.threadLoading}>{t('MESSAGES_LOADING_THREAD')}</p>
+                ) : (
+                  messages.map((m) => {
+                    const mine = m.senderId === loggedUserId;
+                    const sender = resolveUser(m.senderId);
+                    return (
+                      <div
+                        key={m.messageId}
+                        className={cn(styles.entry, mine && styles.entryMine)}
+                      >
+                        {!mine ? (
+                          <Avatar
+                            avatarFile={sender?.avatarFile ?? peerUser?.avatarFile}
+                            className={styles.messageAvatar}
+                            alt={displayName(m.senderId)}
+                          />
+                        ) : null}
+                        <div className={styles.entryBody}>
+                          {!mine ? (
+                            <div className={styles.entryMeta}>
+                              <Link className={styles.senderLink} to={`/profile/${m.senderId}`}>
+                                {displayName(m.senderId)}
+                              </Link>
+                              <span className={styles.timestamp}>{formatTimestamp(m.created)}</span>
+                            </div>
+                          ) : null}
+                          <div className={cn(styles.bubble, mine && styles.bubbleMine)}>
+                            <p className={styles.bubbleText}>{m.text}</p>
+                            {mine ? (
+                              <div
+                                className={cn(styles.readMark, m.isRead && styles.readMarkRead)}
+                                aria-hidden
+                              >
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                                </svg>
+                              </div>
+                            ) : null}
+                          </div>
+                          {mine ? (
+                            <div className={styles.entryMeta}>
+                              <span className={styles.timestamp}>{formatTimestamp(m.created)}</span>
+                            </div>
+                          ) : null}
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
+                <div ref={messagesEndRef} />
+              </div>
+
+              <div className={styles.composer}>
+                <div className={styles.composerRow}>
+                  <textarea
+                    className={styles.composerInput}
+                    value={draft}
+                    onChange={(e) => setDraft(e.target.value)}
+                    onKeyDown={onKeyDown}
+                    rows={1}
+                    maxLength={2048}
+                    disabled={threadLoading}
+                    placeholder={t('MESSAGES_ENTER_MESSAGE')}
+                    aria-label={t('MESSAGES_ENTER_MESSAGE')}
+                  />
+                  <button
+                    type="button"
+                    className={styles.sendBtn}
+                    disabled={!canSend}
+                    onClick={() => void onSend()}
+                    aria-label={t('MESSAGES_SEND_MESSAGE')}
+                    title={t('MESSAGES_SEND_MESSAGE')}
+                  >
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                      <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </section>
+      </div>
     </div>
   );
 }

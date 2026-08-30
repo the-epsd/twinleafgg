@@ -12,10 +12,10 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class Luxray extends PokemonCard {
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Luxio';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 150;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -25,15 +25,15 @@ export class Luxray extends PokemonCard {
       name: 'Electrostep',
       cost: [L],
       damage: 0,
-      text: 'This attack does 40 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.) Switch this Pokémon with 1 of your Benched Pokémon.'
+      text: "This attack does 40 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) Switch this Pokémon with 1 of your Benched Pokémon.",
     },
     {
       name: 'Scar Strikes',
       cost: [L, C],
       damage: 100,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 100 more damage.'
-    }
+      text: "If your opponent's Active Pokémon already has any damage counters on it, this attack does 100 more damage.",
+    },
   ];
 
   public regulationMark: string = 'E';

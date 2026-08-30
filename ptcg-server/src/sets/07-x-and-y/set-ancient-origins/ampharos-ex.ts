@@ -6,31 +6,36 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { SlotType, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, LOOK_AT_TOP_X_CARDS_AND_ATTACH_UP_TO_Y_ENERGY } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  LOOK_AT_TOP_X_CARDS_AND_ATTACH_UP_TO_Y_ENERGY,
+} from '../../../game/store/prefabs/prefabs';
 import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../../game/store/prefabs/attack-effects';
 
 export class AmpharosEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 170;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Thunder Rod',
-    cost: [C],
-    damage: 0,
-    text: 'Look at the top 4 cards of your deck and attach as many [L] Energy cards you find there as you like to this Pokémon. Shuffle the other cards back into your deck.'
-  },
-  {
-    name: 'Sparkling Tail',
-    cost: [L, L, C, C],
-    damage: 100,
-    shredAttack: true,
-    text: 'This attack\'s damage isn\'t affected by Weakness, Resistance, or any other effects on your opponent\'s Active Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'Thunder Rod',
+      cost: [C],
+      damage: 0,
+      text: 'Look at the top 4 cards of your deck and attach as many [L] Energy cards you find there as you like to this Pokémon. Shuffle the other cards back into your deck.',
+    },
+    {
+      name: 'Sparkling Tail',
+      cost: [L, L, C, C],
+      damage: 100,
+      shredAttack: true,
+      text: "This attack's damage isn't affected by Weakness, Resistance, or any other effects on your opponent's Active Pokémon.",
+    },
+  ];
 
   public set: string = 'AOR';
   public setNumber: string = '27';
@@ -47,14 +52,14 @@ export class AmpharosEx extends PokemonCard {
         store,
         state,
         player,
-        4,  // top 4 cards
-        4,  // max 4 energy to attach
+        4, // top 4 cards
+        4, // max 4 energy to attach
         {
           validCardTypes: [CardType.LIGHTNING],
           remainderDestination: 'shuffle',
           destinationSlots: [SlotType.ACTIVE],
-          sameTarget: true
-        }
+          sameTarget: true,
+        },
       );
     }
 

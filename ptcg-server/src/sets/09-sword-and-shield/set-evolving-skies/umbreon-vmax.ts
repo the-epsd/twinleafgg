@@ -1,16 +1,23 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import {
-  StoreLike, State, StateUtils, GameError, GameMessage,
-  PlayerType, PowerType, ChoosePokemonPrompt, ConfirmPrompt, SlotType
+  StoreLike,
+  State,
+  StateUtils,
+  GameError,
+  GameMessage,
+  PlayerType,
+  PowerType,
+  ChoosePokemonPrompt,
+  ConfirmPrompt,
+  SlotType,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class UmbreonVMAX extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_VMAX, CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.POKEMON_VMAX, CardTag.SINGLE_STRIKE];
 
   public stage: Stage = Stage.VMAX;
 
@@ -18,7 +25,7 @@ export class UmbreonVMAX extends PokemonCard {
 
   public evolvesFrom = 'Umbreon V';
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp: number = 310;
 
@@ -26,21 +33,25 @@ export class UmbreonVMAX extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Dark Signal',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'When you play this Pokémon from your hand to evolve 1 of ' +
-      'your Pokémon during your turn, you may switch 1 of your ' +
-      'opponent\'s Benched Pokémon with their Active Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Dark Signal',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text:
+        'When you play this Pokémon from your hand to evolve 1 of ' +
+        'your Pokémon during your turn, you may switch 1 of your ' +
+        "opponent's Benched Pokémon with their Active Pokémon.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Max Darkness',
-    cost: [CardType.DARK, CardType.COLORLESS, CardType.COLORLESS],
-    damage: 160,
-    text: ''
-  }
+  public attacks = [
+    {
+      name: 'Max Darkness',
+      cost: [CardType.DARK, CardType.COLORLESS, CardType.COLORLESS],
+      damage: 160,
+      text: '',
+    },
   ];
 
   public set: string = 'EVS';
@@ -54,7 +65,6 @@ export class UmbreonVMAX extends PokemonCard {
   public fullName: string = 'Umbreon VMAX EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
 
@@ -62,34 +72,39 @@ export class UmbreonVMAX extends PokemonCard {
       if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
-      state = store.prompt(state, new ConfirmPrompt(
-        effect.player.id,
-        GameMessage.WANT_TO_USE_ABILITY,
-      ), wantToUse => {
-        if (wantToUse) {
-          const player = effect.player;
-          const opponent = StateUtils.getOpponent(state, player);
-          const hasBench = opponent.bench.some(b => b.cards.length > 0);
+      state = store.prompt(
+        state,
+        new ConfirmPrompt(effect.player.id, GameMessage.WANT_TO_USE_ABILITY),
+        (wantToUse) => {
+          if (wantToUse) {
+            const player = effect.player;
+            const opponent = StateUtils.getOpponent(state, player);
+            const hasBench = opponent.bench.some((b) => b.cards.length > 0);
 
-          if (!hasBench) {
-            throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-          }
+            if (!hasBench) {
+              throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
 
-          return store.prompt(state, new ChoosePokemonPrompt(
-            player.id,
-            GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-            PlayerType.TOP_PLAYER,
-            [SlotType.BENCH],
-            { allowCancel: false }
-          ), result => {
-            const cardList = result[0];
-            opponent.switchPokemon(cardList);
+            return store.prompt(
+              state,
+              new ChoosePokemonPrompt(
+                player.id,
+                GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+                PlayerType.TOP_PLAYER,
+                [SlotType.BENCH],
+                { allowCancel: false },
+              ),
+              (result) => {
+                const cardList = result[0];
+                opponent.switchPokemon(cardList);
+                return state;
+              },
+            );
+          } else {
             return state;
-          });
-        } else {
-          return state;
-        }
-      });
+          }
+        },
+      );
     }
     return state;
   }

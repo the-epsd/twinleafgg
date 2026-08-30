@@ -5,26 +5,28 @@ import { MOVED_TO_ACTIVE_THIS_TURN, WAS_ATTACK_USED } from '../../../game/store/
 
 export class Keldeoex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = W;
+  protected _tags = [CardTag.POKEMON_ex];
+  public cardType: CardType[] = [W];
   public hp: number = 210;
   public weakness = [{ type: L }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Gale Thrust',
-    cost: [W, C],
-    damage: 30,
-    damageCalculation: '+',
-    text: 'If this Pokémon moved from the Bench to the Active Spot this turn, this attack does 90 more damage.'
-  },
-  {
-    name: 'Sonic Edge',
-    cost: [W, C, C],
-    damage: 120,
-    shredAttack: true,
-    text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'Gale Thrust',
+      cost: [W, C],
+      damage: 30,
+      damageCalculation: '+',
+      text: 'If this Pokémon moved from the Bench to the Active Spot this turn, this attack does 90 more damage.',
+    },
+    {
+      name: 'Sonic Edge',
+      cost: [W, C, C],
+      damage: 120,
+      shredAttack: true,
+      text: "This attack's damage isn't affected by any effects on your opponent's Active Pokémon.",
+    },
+  ];
 
   public regulationMark = 'I';
   public set: string = 'WHT';
@@ -58,4 +60,4 @@ export class Keldeoex extends PokemonCard {
     }
     return state;
   }
-} 
+}

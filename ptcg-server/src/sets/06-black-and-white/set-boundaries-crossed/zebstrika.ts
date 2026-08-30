@@ -11,25 +11,22 @@ import { ATTACH_ENERGY_PROMPT, COIN_FLIP_PROMPT, THIS_POKEMON_DOES_DAMAGE_TO_ITS
 export class Zebstrika extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Blitzle';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Flame Charge',
-      cost: [C],
-      damage: 0,
-      text: 'Search your deck for a [R] Energy card and attach it to this Pokémon. Shuffle your deck afterward.'
-    },
-    {
-      name: 'Thunder',
-      cost: [L, C, C],
-      damage: 90,
-      text: 'Flip a coin. If tails, this Pokémon does 30 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Flame Charge',
+    cost: [C],
+    damage: 0,
+    text: 'Search your deck for a [R] Energy card and attach it to this Pokémon. Shuffle your deck afterward.'
+  }, {
+    name: 'Thunder',
+    cost: [L, C, C],
+    damage: 90,
+    text: 'Flip a coin. If tails, this Pokémon does 30 damage to itself.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '57';

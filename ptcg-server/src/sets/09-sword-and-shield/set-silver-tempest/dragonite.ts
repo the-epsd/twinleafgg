@@ -13,7 +13,7 @@ export class Dragonite extends PokemonCard {
 
   public evolvesFrom = 'Dragonair';
 
-  public cardType: CardType = CardType.DRAGON;
+  public cardType: CardType[] = [CardType.DRAGON];
 
   public hp: number = 160;
 

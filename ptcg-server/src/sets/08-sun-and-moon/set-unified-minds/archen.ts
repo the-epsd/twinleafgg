@@ -7,7 +7,7 @@ import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store
 export class Archen extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Unidentified Fossil';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 80;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

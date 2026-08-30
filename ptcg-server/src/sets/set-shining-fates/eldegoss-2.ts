@@ -12,27 +12,25 @@ import { HealTargetEffect } from '../../game/store/effects/attack-effects';
 export class Eldegoss2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Gossifleur';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Enriching Seeds',
-      cost: [C],
-      damage: 0,
-      text: 'Heal all damage from 1 of your Benched Pokémon.'
-    },
-    {
-      name: 'Surprise Attack',
-      cost: [G],
-      damage: 50,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Enriching Seeds',
+    cost: [C],
+    damage: 0,
+    text: 'Heal all damage from 1 of your Benched Pokémon.'
+  }, {
+    name: 'Surprise Attack',
+    cost: [G],
+    damage: 50,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'SHF';
   public setNumber: string = '15';
   public cardImage: string = 'assets/cardback.png';

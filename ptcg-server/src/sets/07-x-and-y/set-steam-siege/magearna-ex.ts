@@ -3,30 +3,35 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, PowerType, PlayerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { IS_ABILITY_BLOCKED, NEXT_TURN_ATTACK_BASE_DAMAGE } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { NEXT_TURN_ATTACK_BASE_DAMAGE } from '../../../game/store/prefabs/attack-effects';
 import { AbstractAttackEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
 
 export class MagearnaEX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_EX];
-  public cardType: CardType = M;
+  protected _tags = [CardTag.POKEMON_EX];
+  public cardType: CardType[] = [M];
   public hp: number = 160;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Mystic Heart',
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all effects of your opponent\'s attacks, except damage, done to each of your Pokémon that has any [M] Energy attached to it. (Existing effects are not removed.)'
-  }];
+  public powers = [
+    {
+      name: 'Mystic Heart',
+      powerType: PowerType.ABILITY,
+      text: "Prevent all effects of your opponent's attacks, except damage, done to each of your Pokémon that has any [M] Energy attached to it. (Existing effects are not removed.)",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Soul Blaster',
-    cost: [M, C, C],
-    damage: 120,
-    text: 'During your next turn, this Pokémon\'s Soul Blaster attack\'s base damage is 60.'
-  }];
+  public attacks = [
+    {
+      name: 'Soul Blaster',
+      cost: [M, C, C],
+      damage: 120,
+      text: "During your next turn, this Pokémon's Soul Blaster attack's base damage is 60.",
+    },
+  ];
 
   public set: string = 'STS';
   public setNumber: string = '75';
@@ -38,7 +43,6 @@ export class MagearnaEX extends PokemonCard {
   public readonly SOUL_BLASER_CLEAR_MARKER = 'SOUL_BLASER_CLEAR_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof AbstractAttackEffect) {
       const player = StateUtils.findOwner(state, effect.target);
 
@@ -88,10 +92,9 @@ export class MagearnaEX extends PokemonCard {
       source: this,
       baseDamage: 60,
       bonusMarker: this.SOUL_BLASER_MARKER,
-      clearMarker: this.SOUL_BLASER_CLEAR_MARKER
+      clearMarker: this.SOUL_BLASER_CLEAR_MARKER,
     });
 
     return state;
   }
-
 }

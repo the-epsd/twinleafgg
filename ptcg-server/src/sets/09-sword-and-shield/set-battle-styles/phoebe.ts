@@ -20,7 +20,8 @@ export class Phoebe extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Phoebe';
   public fullName: string = 'Phoebe BST';
-  public text: string = 'During this turn, damage from your Pokémon VMAX\'s attacks isn\'t affected by any effects on your opponent\'s Active Pokémon. You may play only 1 Supporter card during your turn.';
+  public text: string =
+    "During this turn, damage from your Pokémon VMAX's attacks isn't affected by any effects on your opponent's Active Pokémon. You may play only 1 Supporter card during your turn.";
 
   public readonly PHOEBE_MARKER = 'PHOEBE_MARKER';
 
@@ -34,7 +35,7 @@ export class Phoebe extends TrainerCard {
     // When a VMAX attacks, make damage bypass effects on opponent's Active
     if (effect instanceof AttackEffect && HAS_MARKER(this.PHOEBE_MARKER, effect.player, this)) {
       const sourceCard = effect.player.active.getPokemonCard();
-      if (sourceCard && sourceCard.tags.includes(CardTag.POKEMON_VMAX)) {
+      if (sourceCard && sourceCard.hasTag(CardTag.POKEMON_VMAX)) {
         const opponent = StateUtils.getOpponent(state, effect.player);
 
         const applyWeakness = new ApplyWeaknessEffect(effect, effect.damage);

@@ -1,5 +1,4 @@
-import {
-  PokemonCard,
+import { CardType, PokemonCard,
   Stage,
   ChooseCardsPrompt,
   GameError,
@@ -9,15 +8,14 @@ import {
   StateUtils,
   StoreLike,
   SuperType,
-  ShuffleDeckPrompt,
-} from '../../../game';
+  ShuffleDeckPrompt, } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Nidorina extends PokemonCard {
   public stage = Stage.STAGE_1;
   public evolvesFrom = 'Nidoran ♀';
-  public cardType = D;
+  public cardType: CardType[] = [D];
   public hp = 90;
   public weakness = [{ type: F }];
   public retreat = [C, C];

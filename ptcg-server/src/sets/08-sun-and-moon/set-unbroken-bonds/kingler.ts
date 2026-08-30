@@ -10,25 +10,22 @@ import { State, StoreLike } from '../../../game';
 export class Kingler extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Krabby';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 130;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Bubble Beam',
-      cost: [W, C, C],
-      damage: 80,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Massive Rend',
-      cost: [W, C, C, C],
-      damage: 130,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Bubble Beam',
+    cost: [W, C, C],
+    damage: 80,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Massive Rend',
+    cost: [W, C, C, C],
+    damage: 130,
+    text: ''
+  }];
 
   public set: string = 'UNB';
   public setNumber: string = '47';

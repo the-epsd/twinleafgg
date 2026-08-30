@@ -10,7 +10,7 @@ import { EnergyCard, State, StoreLike } from '../../../game';
 export class Frosmoth extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Snom';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: M }];
   public retreat = [C];

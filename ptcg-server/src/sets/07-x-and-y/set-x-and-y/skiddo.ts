@@ -10,25 +10,22 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SH
 
 export class Skiddo extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Lead',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, search your deck for a Supporter card, reveal it, and put it into your hand. Shuffle your deck afterward.'
-    },
-    {
-      name: 'Tackle',
-      cost: [G, C, C],
-      damage: 40,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Lead',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, search your deck for a Supporter card, reveal it, and put it into your hand. Shuffle your deck afterward.'
+  }, {
+    name: 'Tackle',
+    cost: [G, C, C],
+    damage: 40,
+    text: ''
+  }];
 
   public set: string = 'XY';
   public setNumber: string = '18';

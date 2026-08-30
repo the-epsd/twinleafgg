@@ -1,13 +1,13 @@
-import { Attack, CardType, CoinFlipPrompt, GameMessage, PokemonCard, Power, PowerType, Stage, State, StateUtils, StoreLike } from '../../../game';
+import { Attack, CardType, PokemonCard, Power, PowerType, Stage, State, StateUtils, StoreLike } from '../../../game';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { EffectOfAbilityEffect } from '../../../game/store/effects/game-effects';
-import { ADD_PARALYZED_TO_PLAYER_ACTIVE, CONFIRMATION_PROMPT, IS_POKEPOWER_BLOCKED, JUST_EVOLVED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { ADD_PARALYZED_TO_PLAYER_ACTIVE, CONFIRMATION_PROMPT, IS_POKEPOWER_BLOCKED, JUST_EVOLVED, WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Azumarill extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Marill';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 80;
   public weakness = [{ type: L }];
   public retreat = [C];
@@ -60,22 +60,14 @@ export class Azumarill extends PokemonCard {
         }
       });
 
-      // Flip coins equal to Water energy count
-      let heads = 0;
-      for (let i = 0; i < waterEnergyCount; i++) {
-        state = store.prompt(state, new CoinFlipPrompt(
-          player.id,
-          GameMessage.FLIP_COIN
-        ), result => {
-          if (result) {
-            heads++;
-          }
-          if (i === waterEnergyCount - 1) {
-            effect.damage = 20 + (20 * heads);
-          }
-          return state;
-        });
+      if (waterEnergyCount === 0) {
+        return state;
       }
+
+      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, waterEnergyCount, results => {
+        const heads = results.filter(r => r).length;
+        effect.damage = 20 + (20 * heads);
+      });
     }
     return state;
   }

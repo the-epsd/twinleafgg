@@ -2,30 +2,36 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { AFTER_ATTACK, SEARCH_DECK_FOR_CARDS_TO_HAND, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  AFTER_ATTACK,
+  SEARCH_DECK_FOR_CARDS_TO_HAND,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../../game/store/prefabs/attack-effects';
 
 export class HisuianDecidueyeV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 220;
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Mountain Hunt',
-    cost: [F],
-    damage: 0,
-    text: 'Search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck.'
-  },
-  {
-    name: 'Close-Quarters Shooting',
-    cost: [F, C, C],
-    damage: 100,
-    shredAttack: true,
-    text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'Mountain Hunt',
+      cost: [F],
+      damage: 0,
+      text: 'Search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck.',
+    },
+    {
+      name: 'Close-Quarters Shooting',
+      cost: [F, C, C],
+      damage: 100,
+      shredAttack: true,
+      text: "This attack's damage isn't affected by any effects on your opponent's Active Pokémon.",
+    },
+  ];
 
   public set: string = 'ASR';
   public regulationMark = 'F';
@@ -35,9 +41,16 @@ export class HisuianDecidueyeV extends PokemonCard {
   public fullName: string = 'Hisuian Decidueye V ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (AFTER_ATTACK(effect, 0, this)) {
-      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, effect.player, this, {}, { min: 0, max: 2 }, this.attacks[0]);
+      SEARCH_DECK_FOR_CARDS_TO_HAND(
+        store,
+        state,
+        effect.player,
+        this,
+        {},
+        { min: 0, max: 2 },
+        this.attacks[0],
+      );
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
@@ -46,5 +59,4 @@ export class HisuianDecidueyeV extends PokemonCard {
 
     return state;
   }
-
 }

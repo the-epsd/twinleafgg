@@ -1,14 +1,20 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  EnergyType,
+  SuperType,
+} from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 
 export class KyuremEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 180;
   public weakness = [{ type: M }];
   public retreat = [C, C, C];
@@ -18,14 +24,14 @@ export class KyuremEx extends PokemonCard {
       name: 'Frozen Wings',
       cost: [W, C, C],
       damage: 60,
-      text: 'Discard a Special Energy attached to the Defending Pokémon.'
+      text: 'Discard a Special Energy attached to the Defending Pokémon.',
     },
     {
       name: 'Hail Blizzard',
       cost: [W, W, C, C],
       damage: 120,
-      text: 'This Pokémon can\'t use Hail Blizzard during your next turn.'
-    }
+      text: "This Pokémon can't use Hail Blizzard during your next turn.",
+    },
   ];
 
   public set: string = 'NXD';
@@ -41,8 +47,8 @@ export class KyuremEx extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Find special energy on defender
-      const specialEnergy = opponent.active.cards.filter(card =>
-        card.superType === SuperType.ENERGY && card.energyType === EnergyType.SPECIAL
+      const specialEnergy = opponent.active.cards.filter(
+        (card) => card.superType === SuperType.ENERGY && card.energyType === EnergyType.SPECIAL,
       );
 
       if (specialEnergy.length > 0) {

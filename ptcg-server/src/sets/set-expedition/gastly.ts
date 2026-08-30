@@ -7,7 +7,7 @@ import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/pref
 
 export class Gastly extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 40;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
@@ -19,7 +19,6 @@ export class Gastly extends PokemonCard {
     damage: 0,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Asleep. If tails, the Defending Pokémon is now Confused.'
   }];
-
 
   public set: string = 'EX';
   public cardImage: string = 'assets/cardback.png';

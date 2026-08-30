@@ -9,19 +9,17 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class NidoranF extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Poison Sting',
-      cost: [P, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Poisoned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Poison Sting',
+    cost: [P, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Poisoned.'
+  }];
 
   public set: string = 'PLF';
   public setNumber: string = '40';

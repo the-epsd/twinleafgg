@@ -2,21 +2,20 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import {
-  CardTag,
-  CardType,
-  SpecialCondition,
-  Stage
-} from '../../../game/store/card/card-types';
+  ADD_POISON_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
+import { CardTag, CardType, SpecialCondition, Stage } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class ToxtricityV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 210;
   public weakness = [{ type: F }];
   public retreat = [C, C];
@@ -26,15 +25,15 @@ export class ToxtricityV extends PokemonCard {
       name: 'Poison Jab',
       cost: [L],
       damage: 20,
-      text: 'Your opponent\'s Active Pokémon is now Poisoned.'
+      text: "Your opponent's Active Pokémon is now Poisoned.",
     },
     {
       name: 'Electric Riot',
       cost: [L, L, C],
       damage: 90,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is Poisoned, this attack does 90 more damage.'
-    }
+      text: "If your opponent's Active Pokémon is Poisoned, this attack does 90 more damage.",
+    },
   ];
 
   public regulationMark: string = 'D';

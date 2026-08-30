@@ -19,10 +19,10 @@ export class GraniteCave extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Granite Cave';
   public fullName: string = 'Granite Cave DRI';
-  public text: string = 'Steven\'s Pokémon (both yours and your opponent\'s) take 30 less damage from attacks from the opponent\'s Pokémon (after applying Weakness and Resistance).';
+  public text: string =
+    "Steven's Pokémon (both yours and your opponent's) take 30 less damage from attacks from the opponent's Pokémon (after applying Weakness and Resistance).";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof PutDamageEffect && StateUtils.getStadiumCard(state) === this) {
       const owner = StateUtils.findOwner(state, effect.target);
       const card = effect.target.getPokemonCard() as PokemonCard;
@@ -31,7 +31,7 @@ export class GraniteCave extends TrainerCard {
         return state;
       }
 
-      if (card.tags.includes(CardTag.STEVENS)) {
+      if (card.hasTag(CardTag.STEVENS)) {
         effect.damage = Math.max(0, effect.damage - 30);
       }
     }

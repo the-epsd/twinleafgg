@@ -6,8 +6,8 @@ import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs
 
 export class LuxrayGL extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
-  public tags = [CardTag.POKEMON_SP];
+  public cardType: CardType[] = [L];
+  protected _tags = [CardTag.POKEMON_SP];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
@@ -18,14 +18,14 @@ export class LuxrayGL extends PokemonCard {
       name: 'Bite',
       cost: [C, C],
       damage: 30,
-      text: ''
+      text: '',
     },
     {
       name: 'Trash Bolt',
       cost: [L, C, C],
       damage: 70,
-      text: 'Discard an Energy card from your hand. (If you can\'t discard a card from your hand, this attack does nothing.)'
-    }
+      text: "Discard an Energy card from your hand. (If you can't discard a card from your hand, this attack does nothing.)",
+    },
   ];
 
   public set: string = 'RR';
@@ -38,23 +38,27 @@ export class LuxrayGL extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      // Prompt player to choose cards to discard 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        player.hand,
-        { superType: SuperType.ENERGY },
-        { allowCancel: false, min: 0, max: 1 }
-      ), cards => {
-        cards = cards || [];
-        if (cards.length === 0) {
-          effect.damage = 0;
-          return state;
-        }
+      // Prompt player to choose cards to discard
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          player.hand,
+          { superType: SuperType.ENERGY },
+          { allowCancel: false, min: 0, max: 1 },
+        ),
+        (cards) => {
+          cards = cards || [];
+          if (cards.length === 0) {
+            effect.damage = 0;
+            return state;
+          }
 
-        MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards });
-        return state;
-      });
+          MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards });
+          return state;
+        },
+      );
     }
 
     return state;

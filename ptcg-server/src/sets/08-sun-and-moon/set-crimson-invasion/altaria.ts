@@ -11,26 +11,23 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT
 export class Altaria extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Swablu';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Draco Melody',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, search your deck for a Dragon Pokémon and put it onto your Bench. Then, shuffle your deck.'
-    },
-    {
-      name: 'Cotton Guard',
-      cost: [C],
-      damage: 30,
-      text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
-    }
-  ];
+  public attacks = [{
+    name: 'Draco Melody',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, search your deck for a Dragon Pokémon and put it onto your Bench. Then, shuffle your deck.'
+  }, {
+    name: 'Cotton Guard',
+    cost: [C],
+    damage: 30,
+    text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
+  }];
 
   public set: string = 'CIN';
   public setNumber: string = '80';
@@ -45,7 +42,7 @@ export class Altaria extends PokemonCard {
       const player = effect.player;
       COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
-          SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, player, { cardType: CardType.DRAGON }, { max: 1, min: 0, allowCancel: true });
+          SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, player, { cardType: [CardType.DRAGON] }, { max: 1, min: 0, allowCancel: true });
         }
       });
     }

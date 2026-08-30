@@ -12,27 +12,25 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Slurpuff extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Swirlix';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 110;
   public weakness = [{ type: M }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Follow the Scent',
-      cost: [C, C],
-      damage: 0,
-      text: 'Flip 3 coins. Put a number of cards up to the number of heads from your discard pile into your hand.'
-    },
-    {
-      name: 'Fairy Wind',
-      cost: [C, C, C],
-      damage: 80,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Follow the Scent',
+    cost: [C, C],
+    damage: 0,
+    text: 'Flip 3 coins. Put a number of cards up to the number of heads from your discard pile into your hand.'
+  }, {
+    name: 'Fairy Wind',
+    cost: [C, C, C],
+    damage: 80,
+    text: ''
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'CRE';
   public setNumber: string = '68';
   public cardImage: string = 'assets/cardback.png';

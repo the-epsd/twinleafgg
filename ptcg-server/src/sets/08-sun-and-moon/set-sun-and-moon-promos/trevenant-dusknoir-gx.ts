@@ -12,8 +12,8 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class TrevenantDusknoirGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.TAG_TEAM, CardTag.POKEMON_GX];
-  public cardType: CardType = P;
+  protected _tags = [CardTag.TAG_TEAM, CardTag.POKEMON_GX];
+  public cardType: CardType[] = [P];
   public hp: number = 270;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -20 }];
@@ -84,7 +84,7 @@ export class TrevenantDusknoirGX extends PokemonCard {
       }
       player.usedGX = true;
 
-      KNOCK_OUT_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(effect, this);
+      KNOCK_OUT_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(store, state, effect, this);
 
       const extraEffectCost: CardType[] = [P, P, C];
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);

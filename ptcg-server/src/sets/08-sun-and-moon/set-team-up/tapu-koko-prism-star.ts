@@ -1,5 +1,11 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType, CardTag } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  EnergyType,
+  SuperType,
+  CardTag,
+} from '../../../game/store/card/card-types';
 import {
   AttachEnergyPrompt,
   EnergyCard,
@@ -14,12 +20,16 @@ import {
   StoreLike,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { IS_ABILITY_BLOCKED, MOVE_CARDS, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  IS_ABILITY_BLOCKED,
+  MOVE_CARDS,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class TapuKokoPrismStar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
-  public tags = [CardTag.PRISM_STAR];
+  public cardType: CardType[] = [L];
+  protected _tags = [CardTag.PRISM_STAR];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

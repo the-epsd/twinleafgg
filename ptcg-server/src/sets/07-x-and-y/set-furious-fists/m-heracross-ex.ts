@@ -9,10 +9,10 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class MHeracrossEx extends PokemonCard {
-  public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
+  protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Heracross-EX';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 220;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
@@ -23,8 +23,8 @@ export class MHeracrossEx extends PokemonCard {
       cost: [G, G, C],
       damage: 180,
       damageCalculation: '-',
-      text: 'This attack does 180 damage minus 10 damage for each damage counter on this Pok\u00e9mon.'
-    }
+      text: 'This attack does 180 damage minus 10 damage for each damage counter on this Pok\u00e9mon.',
+    },
   ];
 
   public set: string = 'FFI';

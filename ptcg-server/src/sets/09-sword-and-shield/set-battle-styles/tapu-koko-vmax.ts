@@ -7,8 +7,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class TapuKokoVMAX extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
 
   public regulationMark = 'E';
 
@@ -16,7 +15,7 @@ export class TapuKokoVMAX extends PokemonCard {
 
   public evolvesFrom = 'Tapu Koko V';
 
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [CardType.LIGHTNING];
 
   public hp: number = 320;
 
@@ -29,9 +28,10 @@ export class TapuKokoVMAX extends PokemonCard {
       name: 'Max Shock',
       cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS],
       damage: 180,
-      text: 'If you have more Prize cards remaining than your ' +
-        'opponent, their Active Pokémon is now Paralyzed.'
-    }
+      text:
+        'If you have more Prize cards remaining than your ' +
+        'opponent, their Active Pokémon is now Paralyzed.',
+    },
   ];
 
   public set: string = 'BST';
@@ -49,13 +49,12 @@ export class TapuKokoVMAX extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       if (player.getPrizeLeft() >= opponent.getPrizeLeft()) {
-        const specialConditionEffect = new AddSpecialConditionsEffect(
-          effect, [SpecialCondition.PARALYZED]
-        );
+        const specialConditionEffect = new AddSpecialConditionsEffect(effect, [
+          SpecialCondition.PARALYZED,
+        ]);
         store.reduceEffect(state, specialConditionEffect);
       }
     }
     return state;
   }
-
 }

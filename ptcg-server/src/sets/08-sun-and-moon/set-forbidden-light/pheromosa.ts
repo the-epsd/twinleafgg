@@ -9,9 +9,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Pheromosa extends PokemonCard {
-  public tags = [CardTag.ULTRA_BEAST];
+  protected _tags = [CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 110;
   public weakness = [{ type: R }];
   public retreat = [];
@@ -21,15 +21,15 @@ export class Pheromosa extends PokemonCard {
       name: 'High Jump Kick',
       cost: [C],
       damage: 20,
-      text: ''
+      text: '',
     },
     {
       name: 'White Ray',
       cost: [G, G, C],
       damage: 90,
       damageCalculation: '+',
-      text: 'If you have only 1 Prize card remaining, this attack does 90 more damage.'
-    }
+      text: 'If you have only 1 Prize card remaining, this attack does 90 more damage.',
+    },
   ];
 
   public set: string = 'FLI';

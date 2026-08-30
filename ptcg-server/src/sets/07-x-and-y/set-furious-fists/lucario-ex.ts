@@ -7,12 +7,11 @@ import { GameMessage } from '../../../game/game-message';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class LucarioEx extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp: number = 180;
 
@@ -25,18 +24,20 @@ export class LucarioEx extends PokemonCard {
       name: 'Missile Jab',
       cost: [CardType.FIGHTING],
       damage: 30,
-      text: 'This attack\'s damage isn\'t affected by Resistance.'
-    }, {
+      text: "This attack's damage isn't affected by Resistance.",
+    },
+    {
       name: 'Corkscrew Smash',
       cost: [CardType.FIGHTING, CardType.FIGHTING],
       damage: 60,
-      text: 'You may draw cards until you have 6 cards in your hand.'
-    }, {
+      text: 'You may draw cards until you have 6 cards in your hand.',
+    },
+    {
       name: 'Somersault Kick',
       cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.FIGHTING],
       damage: 100,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'FFI';
@@ -50,7 +51,6 @@ export class LucarioEx extends PokemonCard {
   public setNumber: string = '54';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       effect.ignoreResistance = true;
     }
@@ -63,17 +63,17 @@ export class LucarioEx extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, new ConfirmPrompt(
-        effect.player.id,
-        GameMessage.WANT_TO_DRAW_CARDS
-      ), result => {
-        if (result) {
-          player.deck.moveTo(player.hand, cardsToDraw);
-        }
-      });
+      return store.prompt(
+        state,
+        new ConfirmPrompt(effect.player.id, GameMessage.WANT_TO_DRAW_CARDS),
+        (result) => {
+          if (result) {
+            player.deck.moveTo(player.hand, cardsToDraw);
+          }
+        },
+      );
     }
 
     return state;
   }
-
 }

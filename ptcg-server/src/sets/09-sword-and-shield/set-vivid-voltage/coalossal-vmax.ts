@@ -11,10 +11,10 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class CoalossalVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Coalossal V';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 330;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];
@@ -25,14 +25,14 @@ export class CoalossalVmax extends PokemonCard {
       cost: [F],
       damage: 40,
       damageCalculation: '+',
-      text: 'Discard the top card of your deck. If that card is an Energy card, this attack does 90 more damage, and attach that card to this Pokémon.'
+      text: 'Discard the top card of your deck. If that card is an Energy card, this attack does 90 more damage, and attach that card to this Pokémon.',
     },
     {
       name: 'G-Max Boulder',
       cost: [F, F, F, C],
       damage: 240,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'D';

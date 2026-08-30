@@ -11,9 +11,9 @@ import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class MewtwoGx2 extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 180;
   public weakness = [{ type: P }];
   public retreat = [C, C];
@@ -23,14 +23,14 @@ export class MewtwoGx2 extends PokemonCard {
       name: 'Super Psy Bolt',
       cost: [P, P, C],
       damage: 110,
-      text: ''
+      text: '',
     },
     {
       name: 'Psycrush-GX',
       cost: [P, P, C],
       damage: 120,
-      text: 'Discard all Energy from your opponent\'s Active Pokémon. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Discard all Energy from your opponent's Active Pokémon. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'HIF';
@@ -52,7 +52,7 @@ export class MewtwoGx2 extends PokemonCard {
       const opponentEnergy = new CheckProvidedEnergyEffect(opponent, opponent.active);
       state = store.reduceEffect(state, opponentEnergy);
 
-      const oppCards: Card[] = opponentEnergy.energyMap.map(em => em.card);
+      const oppCards: Card[] = opponentEnergy.energyMap.map((em) => em.card);
 
       const discardEnergy = new DiscardCardsEffect(effect, oppCards);
       discardEnergy.target = opponent.active;

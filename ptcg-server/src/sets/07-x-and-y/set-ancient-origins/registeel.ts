@@ -8,11 +8,14 @@ import { StoreLike, State, StateUtils } from '../../../game';
 import { CardTag } from '../../../game/store/card/card-types';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_DAMAGE_PER_HEADS, DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
+import {
+  FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_DAMAGE_PER_HEADS,
+  DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON,
+} from '../../../game/store/prefabs/attack-effects';
 
 export class Registeel extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
@@ -24,14 +27,14 @@ export class Registeel extends PokemonCard {
       cost: [M, C],
       damage: 30,
       damageCalculation: 'x',
-      text: 'Flip a coin until you get tails. This attack does 30 damage times the number of heads.'
+      text: 'Flip a coin until you get tails. This attack does 30 damage times the number of heads.',
     },
     {
       name: 'Forbidden Iron Hammer',
       cost: [M, C, C],
       damage: 70,
-      text: 'If your opponent\'s Active Pokémon is a Pokémon-EX, discard an Energy attached to that Pokémon.'
-    }
+      text: "If your opponent's Active Pokémon is a Pokémon-EX, discard an Energy attached to that Pokémon.",
+    },
   ];
 
   public set: string = 'AOR';
@@ -54,7 +57,7 @@ export class Registeel extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       const opponentPokemon = opponent.active.getPokemonCard();
 
-      if (opponentPokemon && opponentPokemon.tags.includes(CardTag.POKEMON_EX)) {
+      if (opponentPokemon && opponentPokemon.hasTag(CardTag.POKEMON_EX)) {
         DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
       }
     }

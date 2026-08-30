@@ -3,17 +3,27 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+} from '../../../game/store/card/card-types';
 import { ChooseCardsPrompt, GameMessage, Card, StoreLike, State } from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  BLOCK_IF_GX_ATTACK_USED,
+  SHUFFLE_DECK,
+} from '../../../game/store/prefabs/prefabs';
 
 export class AmpharosGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Flaaffy';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 240;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
@@ -24,20 +34,20 @@ export class AmpharosGx extends PokemonCard {
       name: 'Power Recharge',
       cost: [L],
       damage: 30,
-      text: 'Put all Electropower cards from your discard pile into your hand.'
+      text: 'Put all Electropower cards from your discard pile into your hand.',
     },
     {
       name: 'Impact Bolt',
       cost: [L, L],
       damage: 150,
-      text: 'Discard all [L] Energy from this Pokémon.'
+      text: 'Discard all [L] Energy from this Pokémon.',
     },
     {
       name: 'Electrical-GX',
       cost: [L],
       damage: 0,
-      text: 'Search your deck for up to 7 Pokémon, reveal them, and put them into your hand. Then, shuffle your deck. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Search your deck for up to 7 Pokémon, reveal them, and put them into your hand. Then, shuffle your deck. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'TEU';
@@ -52,8 +62,8 @@ export class AmpharosGx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const electropowerCards = player.discard.cards.filter(c => c.name === 'Electropower');
-      electropowerCards.forEach(c => {
+      const electropowerCards = player.discard.cards.filter((c) => c.name === 'Electropower');
+      electropowerCards.forEach((c) => {
         player.discard.moveCardTo(c, player.hand);
       });
     }
@@ -62,8 +72,15 @@ export class AmpharosGx extends PokemonCard {
     // Ref: set-primal-clash/manectric.ts (discard all type energy)
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      const cards = player.active.cards.filter(c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.LIGHTNING));
-      cards.forEach(c => { player.active.moveCardTo(c, player.discard); });
+      const cards = player.active.cards.filter(
+        (c) =>
+          c instanceof EnergyCard &&
+          c.energyType === EnergyType.BASIC &&
+          c.provides.includes(CardType.LIGHTNING),
+      );
+      cards.forEach((c) => {
+        player.active.moveCardTo(c, player.discard);
+      });
     }
 
     // Attack 3: Electrical-GX
@@ -77,17 +94,23 @@ export class AmpharosGx extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        { superType: SuperType.POKEMON },
-        { min: 0, max: 7, allowCancel: false }
-      ), selected => {
-        const cards: Card[] = selected || [];
-        cards.forEach(c => { player.deck.moveCardTo(c, player.hand); });
-        return SHUFFLE_DECK(store, state, player);
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.deck,
+          { superType: SuperType.POKEMON },
+          { min: 0, max: 7, allowCancel: false },
+        ),
+        (selected) => {
+          const cards: Card[] = selected || [];
+          cards.forEach((c) => {
+            player.deck.moveCardTo(c, player.hand);
+          });
+          return SHUFFLE_DECK(store, state, player);
+        },
+      );
     }
 
     return state;

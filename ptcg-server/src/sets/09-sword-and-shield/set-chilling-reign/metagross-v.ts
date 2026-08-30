@@ -10,9 +10,9 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class MetagrossV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V, CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.POKEMON_V, CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 220;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
@@ -24,18 +24,19 @@ export class MetagrossV extends PokemonCard {
       cost: [M],
       damage: 20,
       damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
+      text: 'Flip 2 coins. This attack does 20 more damage for each heads.',
     },
     {
       name: 'Synchro Hammer',
       cost: [M, C],
       damage: 60,
       damageCalculation: '+',
-      text: 'If this Pokémon and your opponent\'s Active Pokémon have the same amount of Energy attached, this attack does 90 more damage.'
-    }
+      text: "If this Pokémon and your opponent's Active Pokémon have the same amount of Energy attached, this attack does 90 more damage.",
+    },
   ];
 
   public regulationMark: string = 'E';
+
   public set: string = 'CRE';
   public setNumber: string = '112';
   public cardImage: string = 'assets/cardback.png';
@@ -47,8 +48,8 @@ export class MetagrossV extends PokemonCard {
     // Ref: set-champions-path/malamar.ts (MULTIPLE_COIN_FLIPS_PROMPT for damage per heads)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, results => {
-        const heads = results.filter(r => r).length;
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, (results) => {
+        const heads = results.filter((r) => r).length;
         effect.damage += 20 * heads;
       });
     }
@@ -61,11 +62,17 @@ export class MetagrossV extends PokemonCard {
 
       const playerEnergyCheck = new CheckProvidedEnergyEffect(player, player.active);
       store.reduceEffect(state, playerEnergyCheck);
-      const playerEnergyCount = playerEnergyCheck.energyMap.reduce((sum, em) => sum + em.provides.length, 0);
+      const playerEnergyCount = playerEnergyCheck.energyMap.reduce(
+        (sum, em) => sum + em.provides.length,
+        0,
+      );
 
       const opponentEnergyCheck = new CheckProvidedEnergyEffect(opponent, opponent.active);
       store.reduceEffect(state, opponentEnergyCheck);
-      const opponentEnergyCount = opponentEnergyCheck.energyMap.reduce((sum, em) => sum + em.provides.length, 0);
+      const opponentEnergyCount = opponentEnergyCheck.energyMap.reduce(
+        (sum, em) => sum + em.provides.length,
+        0,
+      );
 
       if (playerEnergyCount === opponentEnergyCount) {
         effect.damage += 90;

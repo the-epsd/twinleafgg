@@ -10,7 +10,7 @@ import { StateUtils } from '../../../game';
 
 export class Cinderace extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
   public hp: number = 170;
   public weakness = [{ type: CardType.WATER }];
   public retreat = [CardType.COLORLESS];

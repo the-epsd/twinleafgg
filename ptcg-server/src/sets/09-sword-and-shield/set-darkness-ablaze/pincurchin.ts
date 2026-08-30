@@ -16,27 +16,25 @@ import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, DRAW_CA
 
 export class Pincurchin extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Double Draw',
-      cost: [L],
-      damage: 0,
-      text: 'Draw 2 cards.'
-    },
-    {
-      name: 'Zing Zap',
-      cost: [L, C, C],
-      damage: 50,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Double Draw',
+    cost: [L],
+    damage: 0,
+    text: 'Draw 2 cards.'
+  }, {
+    name: 'Zing Zap',
+    cost: [L, C, C],
+    damage: 50,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'DAA';
   public setNumber: string = '64';
   public cardImage: string = 'assets/cardback.png';

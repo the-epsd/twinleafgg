@@ -16,11 +16,11 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class LugiaVSTAR extends PokemonCard {
-  public tags = [CardTag.POKEMON_VSTAR];
+  protected _tags = [CardTag.POKEMON_VSTAR];
   public regulationMark = 'F';
   public stage: Stage = Stage.VSTAR;
   public evolvesFrom = 'Lugia V';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 280;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];
@@ -75,7 +75,7 @@ export class LugiaVSTAR extends PokemonCard {
           player,
           GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
           player.discard,
-          { superType: SuperType.POKEMON, cardType: CardType.COLORLESS },
+          { superType: SuperType.POKEMON, cardType: [CardType.COLORLESS] },
           { min: 1, max, allowCancel: true, blocked },
         ),
         (selected) => {

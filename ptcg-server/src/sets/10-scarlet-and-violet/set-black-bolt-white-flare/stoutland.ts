@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Stoutland extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Herdier';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 160;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
@@ -19,8 +19,7 @@ export class Stoutland extends PokemonCard {
     cost: [C, C],
     damage: 0,
     text: 'Flip 3 coins. Put a number of cards up to the number of heads from your discard pile into your hand.'
-  },
-  {
+  }, {
     name: 'Special Fang',
     cost: [C, C, C, C],
     damage: 100,
@@ -29,6 +28,7 @@ export class Stoutland extends PokemonCard {
   }];
 
   public regulationMark = 'I';
+
   public set: string = 'WHT';
   public setNumber: string = '76';
   public cardImage: string = 'assets/cardback.png';

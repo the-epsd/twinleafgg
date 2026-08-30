@@ -15,10 +15,10 @@ import {
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class HydreigonBreak extends PokemonCard {
-  public tags = [CardTag.BREAK];
+  protected _tags = [CardTag.BREAK];
   public stage: Stage = Stage.BREAK;
   public evolvesFrom: string = 'Hydreigon';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 190;
   public retreat = [];
 

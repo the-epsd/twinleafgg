@@ -12,7 +12,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PlayerType, PowerType, State, StoreLike } from '../../game';
 export class Phione extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 70;
   public weakness = [{ type: G }];
   public retreat = [C];

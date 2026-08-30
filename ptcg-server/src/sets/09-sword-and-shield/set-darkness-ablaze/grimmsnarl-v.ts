@@ -10,9 +10,9 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 
 export class GrimmsnarlV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 220;
   public weakness = [{ type: G }];
   public retreat = [C, C];
@@ -22,14 +22,14 @@ export class GrimmsnarlV extends PokemonCard {
       name: 'Bite',
       cost: [D],
       damage: 40,
-      text: ''
+      text: '',
     },
     {
       name: 'Spiky Knuckle',
       cost: [D, D, D],
       damage: 200,
-      text: 'Put 2 [D] Energy attached to this Pokémon into your hand.'
-    }
+      text: 'Put 2 [D] Energy attached to this Pokémon into your hand.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -49,8 +49,8 @@ export class GrimmsnarlV extends PokemonCard {
       state = store.reduceEffect(state, checkEnergy);
 
       // Filter only Dark energy in the energy map
-      const darkEnergyMap = checkEnergy.energyMap.filter(em =>
-        em.provides.includes(CardType.DARK) || em.provides.includes(CardType.ANY)
+      const darkEnergyMap = checkEnergy.energyMap.filter(
+        (em) => em.provides.includes(CardType.DARK) || em.provides.includes(CardType.ANY),
       );
 
       if (darkEnergyMap.length === 0) {
@@ -59,18 +59,22 @@ export class GrimmsnarlV extends PokemonCard {
 
       const count = Math.min(2, darkEnergyMap.length);
 
-      state = store.prompt(state, new ChooseEnergyPrompt(
-        player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_HAND,
-        darkEnergyMap,
-        [CardType.COLORLESS, CardType.COLORLESS],
-        { allowCancel: false }
-      ), energy => {
-        const cards: Card[] = (energy || []).slice(0, count).map(e => e.card);
-        if (cards.length > 0) {
-          player.active.moveCardsTo(cards, player.hand);
-        }
-      });
+      state = store.prompt(
+        state,
+        new ChooseEnergyPrompt(
+          player.id,
+          GameMessage.CHOOSE_ENERGIES_TO_HAND,
+          darkEnergyMap,
+          [CardType.COLORLESS, CardType.COLORLESS],
+          { allowCancel: false },
+        ),
+        (energy) => {
+          const cards: Card[] = (energy || []).slice(0, count).map((e) => e.card);
+          if (cards.length > 0) {
+            player.active.moveCardsTo(cards, player.hand);
+          }
+        },
+      );
     }
 
     return state;

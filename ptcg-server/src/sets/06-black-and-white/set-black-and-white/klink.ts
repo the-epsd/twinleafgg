@@ -7,26 +7,23 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 
 export class Klink extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 60;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Charge Beam',
-      cost: [M],
-      damage: 10,
-      text: 'Flip a coin. If heads, attach an Energy card from your discard pile to this Pokémon.'
-    },
-    {
-      name: 'Bind',
-      cost: [M, C, C],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Charge Beam',
+    cost: [M],
+    damage: 10,
+    text: 'Flip a coin. If heads, attach an Energy card from your discard pile to this Pokémon.'
+  }, {
+    name: 'Bind',
+    cost: [M, C, C],
+    damage: 30,
+    text: ''
+  }];
 
   public set: string = 'BLW';
   public cardImage: string = 'assets/cardback.png';

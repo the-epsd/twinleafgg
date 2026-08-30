@@ -5,7 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { State, StoreLike } from '../../game';
 export class Onix extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 90;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
@@ -16,8 +16,7 @@ export class Onix extends PokemonCard {
     damage: 20,
     damageCalculation: 'x',
     text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
-  },
-  {
+  }, {
     name: 'Body Slam',
     cost: [F, F, F, F],
     damage: 40,

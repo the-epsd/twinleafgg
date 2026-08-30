@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Heracross extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 130;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
@@ -20,15 +20,15 @@ export class Heracross extends PokemonCard {
       name: 'Lunge Out',
       cost: [G],
       damage: 20,
-      text: ''
+      text: '',
     },
     {
       name: 'Riled Horn',
       cost: [C, C, C],
       damage: 50,
       damageCalculation: '+',
-      text: 'If your opponent has any TAG TEAM Pokémon in play, this attack does 70 more damage.'
-    }
+      text: 'If your opponent has any TAG TEAM Pokémon in play, this attack does 70 more damage.',
+    },
   ];
 
   public set: string = 'CEC';
@@ -45,7 +45,7 @@ export class Heracross extends PokemonCard {
       let hasTagTeam = false;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         const pokemonCard = cardList.getPokemonCard();
-        if (pokemonCard && pokemonCard.tags.includes(CardTag.TAG_TEAM)) {
+        if (pokemonCard && pokemonCard.hasTag(CardTag.TAG_TEAM)) {
           hasTagTeam = true;
         }
       });

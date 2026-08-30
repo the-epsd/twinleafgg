@@ -7,7 +7,7 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 
 export class Mew extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 50;
   public weakness = [{ type: P }];
   public retreat = [C];
@@ -18,8 +18,7 @@ export class Mew extends PokemonCard {
     damage: 10,
     damageCalculation: 'x',
     text: 'Does 10 damage times the amount of Energy attached to the Defending Pokémon.'
-  },
-  {
+  }, {
     name: 'Devolution Beam',
     cost: [P],
     damage: 0,

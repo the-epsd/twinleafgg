@@ -86,7 +86,6 @@ export class UsePowerEffect implements Effect {
   public power: Power;
   public card: PokemonCard;
   public target: CardTarget;
-  /** When playing from hand onto a chosen Bench slot, the open bench to receive the Pokémon. */
   public benchTarget?: PokemonCardList;
 
   constructor(
@@ -234,20 +233,12 @@ export class KnockOutEffect implements Effect {
   }
 }
 
-// how many prizes when target Pokemon is KO
-export class KnockOutAttackEffect implements Effect {
-  readonly type: string = GameEffects.KNOCK_OUT_EFFECT;
-  public preventDefault = false;
-  public player: Player;
-  public target: PokemonCardList;
+export class KnockOutAttackEffect extends KnockOutEffect {
   public attack: Attack;
-  public prizeCount: number;
 
   constructor(player: Player, target: PokemonCardList, attack: Attack) {
-    this.player = player;
-    this.target = target;
+    super(player, target);
     this.attack = attack;
-    this.prizeCount = 1;
   }
 }
 

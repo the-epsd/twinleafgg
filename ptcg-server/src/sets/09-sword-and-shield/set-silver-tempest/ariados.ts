@@ -12,24 +12,26 @@ import { CheckAttackCostEffect } from '../../../game/store/effects/check-effects
 export class Ariados extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Spinarak';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Hidden Threads',
-    powerType: PowerType.ABILITY,
-    text: 'Your opponent\'s Pokémon VSTAR\'s attacks cost Colorless more. You can\'t apply more than 1 Hidden Threads Ability at a time.'
-  }];
+  public powers = [
+    {
+      name: 'Hidden Threads',
+      powerType: PowerType.ABILITY,
+      text: "Your opponent's Pokémon VSTAR's attacks cost Colorless more. You can't apply more than 1 Hidden Threads Ability at a time.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Pierce',
       cost: [G, C],
       damage: 50,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -47,7 +49,7 @@ export class Ariados extends PokemonCard {
     if (effect instanceof CheckAttackCostEffect) {
       // Only apply to opponent's VSTAR Pokemon attacking
       const attackingPokemonCard = effect.player.active.getPokemonCard();
-      if (!attackingPokemonCard || !attackingPokemonCard.tags.includes(CardTag.POKEMON_VSTAR)) {
+      if (!attackingPokemonCard || !attackingPokemonCard.hasTag(CardTag.POKEMON_VSTAR)) {
         return state;
       }
 
@@ -59,17 +61,25 @@ export class Ariados extends PokemonCard {
           break;
         }
       }
-      if (!ariadosPlayer) { return state; }
+      if (!ariadosPlayer) {
+        return state;
+      }
 
       // This should only affect the opponent of the Ariados owner
-      if (effect.player === ariadosPlayer) { return state; }
+      if (effect.player === ariadosPlayer) {
+        return state;
+      }
 
-      if (IS_ABILITY_BLOCKED(store, state, ariadosPlayer, this)) { return state; }
+      if (IS_ABILITY_BLOCKED(store, state, ariadosPlayer, this)) {
+        return state;
+      }
 
       // Ensure only one Hidden Threads ability applies at a time
       // If cost has already been increased by another Ariados, skip
       const alreadyApplied = (effect as any).__hiddenThreadsApplied;
-      if (alreadyApplied) { return state; }
+      if (alreadyApplied) {
+        return state;
+      }
       (effect as any).__hiddenThreadsApplied = true;
 
       effect.cost.push(CardType.COLORLESS);

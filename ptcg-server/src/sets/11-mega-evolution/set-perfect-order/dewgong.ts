@@ -9,7 +9,7 @@ import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 export class Dewgong extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Seel';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 130;
   public weakness = [{ type: L }];
   public retreat = [C, C];

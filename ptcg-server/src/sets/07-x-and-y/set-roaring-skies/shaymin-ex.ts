@@ -2,13 +2,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import {
-  PowerType,
-  StoreLike,
-  State,
-  ConfirmPrompt,
-  GameMessage,
-} from '../../../game';
+import { PowerType, StoreLike, State, ConfirmPrompt, GameMessage } from '../../../game';
 import { PUT_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_HAND } from '../../../game/store/prefabs/attack-effects';
 import {
   ABILITY_USED,
@@ -17,9 +11,9 @@ import {
 } from '../../../game/store/prefabs/prefabs';
 
 export class ShayminEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 110;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
@@ -77,11 +71,7 @@ export class ShayminEx extends PokemonCard {
     }
 
     if (AFTER_ATTACK(effect, 0, this)) {
-      PUT_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_HAND(
-        store,
-        state,
-        effect,
-      );
+      PUT_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_HAND(store, state, effect);
       return state;
     }
 

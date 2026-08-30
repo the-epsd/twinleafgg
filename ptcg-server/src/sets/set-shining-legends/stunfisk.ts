@@ -9,25 +9,22 @@ import { Effect } from '../../game/store/effects/effect';
 import { State, StoreLike } from '../../game';
 export class Stunfisk extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 110;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Thunder Shock',
-      cost: [L, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Head Bolt',
-      cost: [L, C, C],
-      damage: 70,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Thunder Shock',
+    cost: [L, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Head Bolt',
+    cost: [L, C, C],
+    damage: 70,
+    text: ''
+  }];
 
   public set: string = 'SLG';
   public setNumber: string = '46';

@@ -17,9 +17,9 @@ import { BREAK_RULE, MOVE_CARDS, WAS_POWER_USED } from '../../../game/store/pref
 
 export class GreninjaBREAK extends PokemonCard {
   public stage: Stage = Stage.BREAK;
-  public tags = [CardTag.BREAK];
+  protected _tags = [CardTag.BREAK];
   public evolvesFrom = 'Greninja';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 170;
 
   public powers = [

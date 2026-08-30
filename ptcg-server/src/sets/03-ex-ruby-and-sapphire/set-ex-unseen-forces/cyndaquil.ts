@@ -9,7 +9,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 
 export class Cyndaquil extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 50;
   public weakness = [{ type: W }];
   public retreat = [C];
@@ -19,8 +19,7 @@ export class Cyndaquil extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-  },
-  {
+  }, {
     name: 'Fireworks',
     cost: [R, C],
     damage: 30,

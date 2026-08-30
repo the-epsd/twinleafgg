@@ -4,12 +4,11 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { DEFENDING_POKEMON_DOES_LESS_DAMAGE_AFTER_WEAKNESS_AND_RESISTANCE } from '../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class RotasMimeJr2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 50;
   public weakness = [{ type: P }];
   public retreat = [C];
@@ -32,20 +31,9 @@ export class RotasMimeJr2 extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const opponent = effect.opponent;
-
-      opponent.marker.addMarker(this.BARRIER_ATTACK_MARKER, this);
-    }
-
-    if (effect instanceof DealDamageEffect && effect.player.marker.hasMarker(this.BARRIER_ATTACK_MARKER, this)) {
-      if (effect.target.getPokemonCard() === this) { effect.damage -= 10; }
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.BARRIER_ATTACK_MARKER, this)) {
-      effect.player.marker.removeMarker(this.BARRIER_ATTACK_MARKER, this);
+      return DEFENDING_POKEMON_DOES_LESS_DAMAGE_AFTER_WEAKNESS_AND_RESISTANCE(store, state, effect, this, 30);
     }
 
     return state;
   }
-
 }

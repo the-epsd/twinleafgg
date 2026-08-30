@@ -10,27 +10,25 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 
 export class Drilbur extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 70;
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Scratch',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Focus Fist',
-      cost: [C, C],
-      damage: 50,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Scratch',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Focus Fist',
+    cost: [C, C],
+    damage: 50,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'VIV';
   public setNumber: string = '91';
   public cardImage: string = 'assets/cardback.png';

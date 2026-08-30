@@ -11,7 +11,7 @@ export class Porygon2 extends PokemonCard {
 
   public evolvesFrom = 'Porygon';
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp: number = 80;
 

@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 export class Arbok extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Ekans';
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
   public hp: number = 60;
   public weakness = [{ type: CardType.PSYCHIC }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];

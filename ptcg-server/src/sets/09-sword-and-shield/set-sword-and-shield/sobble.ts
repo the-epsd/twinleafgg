@@ -6,7 +6,7 @@ import { Effect } from '../../../game/store/effects/effect';
 export class Sobble extends PokemonCard {
   public regulationMark = 'D';
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 70;
   public weakness = [{ type: L }];
   public retreat = [C];

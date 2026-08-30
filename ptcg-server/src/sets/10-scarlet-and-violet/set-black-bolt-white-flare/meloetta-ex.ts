@@ -1,34 +1,39 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardTag } from '../../../game/store/card/card-types';
+import { CardType, Stage, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { UseAttackEffect } from '../../../game/store/effects/game-effects';
-import { IS_ABILITY_BLOCKED, NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/attack-effects';
 // Energy type constants (P, C, D, F) are assumed to be globally available as in other SV11B cards
 
 export class Meloettaex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex];
-  public cardType = P;
+  protected _tags = [CardTag.POKEMON_ex];
+  public cardType: CardType[] = [P];
   public hp: number = 200;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Live Debut',
-    powerType: PowerType.ABILITY,
-    text: 'If you go first, this Pokémon can attack on your first turn.'
-  }];
+  public powers = [
+    {
+      name: 'Live Debut',
+      powerType: PowerType.ABILITY,
+      text: 'If you go first, this Pokémon can attack on your first turn.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Echoed Voice',
-    cost: [P],
-    damage: 30,
-    text: 'During your next turn, this Pokémon\'s Echoed Voice attack does 80 more damage (before applying Weakness and Resistance).'
-  }];
+  public attacks = [
+    {
+      name: 'Echoed Voice',
+      cost: [P],
+      damage: 30,
+      text: "During your next turn, this Pokémon's Echoed Voice attack does 80 more damage (before applying Weakness and Resistance).",
+    },
+  ];
 
   public regulationMark = 'I';
   public set: string = 'BLK';
@@ -37,10 +42,8 @@ export class Meloettaex extends PokemonCard {
   public name: string = 'Meloetta ex';
   public fullName: string = 'Meloetta ex SV11B';
 
-  public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'NEXT_TURN_MORE_DAMAGE_MARKER';
-  public readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Live Debut
     if (effect instanceof UseAttackEffect && effect.player.active.cards.includes(this) && state.turn === 1) {
       if (IS_ABILITY_BLOCKED(store, state, effect.player, this)) {
         return state;
@@ -48,14 +51,13 @@ export class Meloettaex extends PokemonCard {
       effect.attack.canUseOnFirstTurn = true;
     }
 
-    // Refs: set-boundaries-crossed/meloetta.ts (Echoed Voice), prefabs/prefabs.ts (NEXT_TURN_ATTACK_BONUS)
+    // Echoed Voice
     NEXT_TURN_ATTACK_BONUS(effect, {
       attack: this.attacks[0],
       source: this,
-      bonusDamage: 80,
-      bonusMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER,
-      clearMarker: this.NEXT_TURN_MORE_DAMAGE_MARKER_2
+      bonusDamage: 80
     });
+
     return state;
   }
 }

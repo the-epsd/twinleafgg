@@ -3,7 +3,13 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  EnergyType,
+  SuperType,
+} from '../../../game/store/card/card-types';
 import { ConfirmPrompt, GameMessage, PlayerType, StoreLike, State } from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -12,10 +18,10 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 import { SlotType } from '../../../game/store/actions/play-card-action';
 
 export class CentiskorchVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Centiskorch V';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 320;
   public weakness = [{ type: W }];
   public retreat = [C, C, C];
@@ -26,8 +32,8 @@ export class CentiskorchVmax extends PokemonCard {
       cost: [C, C],
       damage: 40,
       damageCalculation: '+',
-      text: 'This attack does 40 more damage for each [R] Energy attached to this Pokémon. If you did any damage with this attack, you may attach a [R] Energy card from your discard pile to this Pokémon.'
-    }
+      text: 'This attack does 40 more damage for each [R] Energy attached to this Pokémon. If you did any damage with this attack, you may attach a [R] Energy card from your discard pile to this Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -47,31 +53,41 @@ export class CentiskorchVmax extends PokemonCard {
       const checkEnergy = new CheckProvidedEnergyEffect(player, player.active);
       store.reduceEffect(state, checkEnergy);
 
-      const fireCount = checkEnergy.energyMap.reduce((sum, em) =>
-        sum + em.provides.filter(t => t === CardType.FIRE || t === CardType.ANY).length, 0);
+      const fireCount = checkEnergy.energyMap.reduce(
+        (sum, em) =>
+          sum + em.provides.filter((t) => t === CardType.FIRE || t === CardType.ANY).length,
+        0,
+      );
 
       effect.damage += 40 * fireCount;
 
       // If we did any damage, offer energy attachment from discard
-      const hasFireInDiscard = player.discard.cards.some(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.FIRE)
+      const hasFireInDiscard = player.discard.cards.some(
+        (c) =>
+          c instanceof EnergyCard &&
+          c.energyType === EnergyType.BASIC &&
+          c.provides.includes(CardType.FIRE),
       );
 
       if (hasFireInDiscard) {
-        state = store.prompt(state, new ConfirmPrompt(
-          player.id,
-          GameMessage.WANT_TO_USE_ABILITY
-        ), wantToAttach => {
-          if (wantToAttach) {
-            ATTACH_ENERGY_PROMPT(
-              store, state, player,
-              PlayerType.BOTTOM_PLAYER, SlotType.DISCARD,
-              [SlotType.ACTIVE],
-              { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
-              { min: 1, max: 1, allowCancel: false }
-            );
-          }
-        });
+        state = store.prompt(
+          state,
+          new ConfirmPrompt(player.id, GameMessage.WANT_TO_USE_ABILITY),
+          (wantToAttach) => {
+            if (wantToAttach) {
+              ATTACH_ENERGY_PROMPT(
+                store,
+                state,
+                player,
+                PlayerType.BOTTOM_PLAYER,
+                SlotType.DISCARD,
+                [SlotType.ACTIVE],
+                { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
+                { min: 1, max: 1, allowCancel: false },
+              );
+            }
+          },
+        );
       }
     }
 

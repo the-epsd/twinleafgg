@@ -7,7 +7,7 @@ import { SEARCH_DECK_FOR_CARDS_TO_HAND, WAS_ATTACK_USED } from '../../../game/st
 export class Milcery extends PokemonCard {
   public regulationMark: string = 'E';
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 50;
   public weakness = [{ type: M }];
   public retreat = [C];

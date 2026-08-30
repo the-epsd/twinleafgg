@@ -9,26 +9,23 @@ import { OrderCardsPrompt } from '../../../game/store/prompts/order-cards-prompt
 export class Watchog extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Patrat';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Watcheck',
-      cost: [C],
-      damage: 0,
-      text: 'Look at the top 5 cards of your opponent\'s deck and put them back on top of his or her deck in any order.'
-    },
-    {
-      name: 'Quick Tail Smash',
-      cost: [C, C],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'Before doing damage, you may flip a coin. If heads, this attack does 60 more damage. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Watcheck',
+    cost: [C],
+    damage: 0,
+    text: 'Look at the top 5 cards of your opponent\'s deck and put them back on top of his or her deck in any order.'
+  }, {
+    name: 'Quick Tail Smash',
+    cost: [C, C],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Before doing damage, you may flip a coin. If heads, this attack does 60 more damage. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'EPO';
   public cardImage: string = 'assets/cardback.png';

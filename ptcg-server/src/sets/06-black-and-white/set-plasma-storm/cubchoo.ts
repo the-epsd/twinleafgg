@@ -11,25 +11,22 @@ import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/p
 
 export class Cubchoo extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 70;
   public weakness = [{ type: M }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Hail',
-      cost: [W],
-      damage: 0,
-      text: 'Flip a coin. If heads, this attack does 10 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    },
-    {
-      name: 'Icy Snow',
-      cost: [C, C, C],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Hail',
+    cost: [W],
+    damage: 0,
+    text: 'Flip a coin. If heads, this attack does 10 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }, {
+    name: 'Icy Snow',
+    cost: [C, C, C],
+    damage: 30,
+    text: ''
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '40';

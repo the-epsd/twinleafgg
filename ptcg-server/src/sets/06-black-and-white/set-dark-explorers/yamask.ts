@@ -12,7 +12,6 @@ import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { GameMessage } from '../../../game/game-message';
 import { COIN_FLIP_PROMPT, MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
-
 function* useAstonish(next: Function, store: StoreLike, state: State,
   effect: AttackEffect, self: Card): IterableIterator<State> {
 
@@ -47,9 +46,8 @@ function* useAstonish(next: Function, store: StoreLike, state: State,
 }
 
 export class Yamask extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: D }];
   public retreat = [C];
@@ -59,7 +57,7 @@ export class Yamask extends PokemonCard {
     cost: [C],
     damage: 10,
     text: 'Flip a coin. If heads, choose a card at random from your opponent\'s hand. ' +
-      'Your opponent reveals that card and shuffles it into his or her deck.'
+    'Your opponent reveals that card and shuffles it into his or her deck.'
   }];
 
   public set: string = 'DEX';

@@ -8,7 +8,7 @@ import { ABILITY_USED, ADD_MARKER, HAS_MARKER, MULTIPLE_COIN_FLIPS_PROMPT, REMOV
 export class Dragonite extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Dragonair';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 100;
   public retreat = [C, C];
 

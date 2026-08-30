@@ -12,25 +12,22 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 export class Dragonite extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Dragonair';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 160;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Dragon Wave',
-      cost: [G, L],
-      damage: 130,
-      text: 'Discard a [G] Energy and a [L] Energy from this Pokémon.'
-    },
-    {
-      name: 'Giant Tail',
-      cost: [C, C, C, C, C],
-      damage: 200,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Dragon Wave',
+    cost: [G, L],
+    damage: 130,
+    text: 'Discard a [G] Energy and a [L] Energy from this Pokémon.'
+  }, {
+    name: 'Giant Tail',
+    cost: [C, C, C, C, C],
+    damage: 200,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'SUM';
   public setNumber: string = '96';

@@ -12,27 +12,25 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 export class Magcargo extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Slugma';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 130;
   public weakness = [{ type: W }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Rock Throw',
-      cost: [C, C],
-      damage: 40,
-      text: ''
-    },
-    {
-      name: 'Body Splash',
-      cost: [R, R, C],
-      damage: 150,
-      text: 'Flip 3 coins. For each tails, discard an Energy from this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Rock Throw',
+    cost: [C, C],
+    damage: 40,
+    text: ''
+  }, {
+    name: 'Body Splash',
+    cost: [R, R, C],
+    damage: 150,
+    text: 'Flip 3 coins. For each tails, discard an Energy from this Pokémon.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'FST';
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';

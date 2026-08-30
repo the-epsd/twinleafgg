@@ -10,25 +10,22 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 
 export class Bidoof extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Tackle',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Hyper Fang',
-      cost: [C, C, C],
-      damage: 60,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tackle',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Hyper Fang',
+    cost: [C, C, C],
+    damage: 60,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'UNM';
   public setNumber: string = '171';

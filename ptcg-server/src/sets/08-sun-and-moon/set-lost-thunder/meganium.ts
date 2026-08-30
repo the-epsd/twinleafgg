@@ -109,7 +109,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Power
 }
 export class Meganium extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
   public hp: number = 150;
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
   public weakness = [{ type: CardType.FIRE }];

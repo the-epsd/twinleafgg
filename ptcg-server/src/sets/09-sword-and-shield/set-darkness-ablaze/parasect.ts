@@ -10,27 +10,25 @@ import { State, StoreLike } from '../../../game';
 export class Parasect extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Paras';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Mushroom Tackle',
-      cost: [G],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Solar Beam',
-      cost: [G, G, C],
-      damage: 110,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Mushroom Tackle',
+    cost: [G],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Solar Beam',
+    cost: [G, G, C],
+    damage: 110,
+    text: ''
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'DAA';
   public setNumber: string = '4';
   public cardImage: string = 'assets/cardback.png';

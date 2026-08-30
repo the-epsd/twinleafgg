@@ -1,54 +1,31 @@
-// ptcg-server\src\sets\set-base-set\Jirachi.ts
-
-import {
-  StoreLike,
-  State,
-  StateUtils,
-  GameMessage,
-  Card,
-  PlayerType,
-  PokemonCardList,
-  CardTarget,
-  ChooseCardsPrompt,
-} from '../../../game';
-import {
-  CardType,
-  EnergyType,
-  SpecialCondition,
-  Stage,
-  SuperType,
-} from '../../../game/store/card/card-types';
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Attack } from '../../../game/store/card/pokemon-types';
-import { AbstractAttackEffect, DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
-import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { Effect } from '../../../game/store/effects/effect';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from '../../../game/store/prefabs/attack-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { Attack, Card, CardTarget, CardType, ChooseCardsPrompt, EnergyType, GameMessage, PlayerType, PokemonCard, SpecialCondition, Stage, State, StateUtils, StoreLike, SuperType } from "../../../game";
+import { DiscardCardsEffect } from "../../../game/store/effects/attack-effects";
+import { CheckProvidedEnergyEffect } from "../../../game/store/effects/check-effects";
+import { Effect } from "../../../game/store/effects/effect";
+import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from "../../../game/store/prefabs/attack-effects";
+import { WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class Jirachi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 60;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
   public retreat: CardType[] = [C];
 
-  public attacks: Attack[] = [
-    {
-      name: 'Stardust',
-      cost: [C],
-      damage: 10,
-      text: "Discard a Special Energy attached to your opponent's Active Pokémon. If you do, prevent all effects of attacks, including damage, done to this Pokémon during your opponent's next turn.",
-    },
-    {
-      name: 'Dream Dance',
-      cost: [M, C],
-      text: 'Both Active Pokémon are now Asleep.',
-      damage: 20,
-    },
-  ];
+  public attacks: Attack[] = [{
+    name: 'Stardust',
+    cost: [C],
+    damage: 10,
+    text: "Discard a Special Energy attached to your opponent's Active Pokémon. If you do, prevent all effects of attacks, including damage, done to this Pokémon during your opponent's next turn.",
+  },
+  {
+    name: 'Dream Dance',
+    cost: [M, C],
+    text: 'Both Active Pokémon are now Asleep.',
+    damage: 20,
+  }];
 
   public set: string = 'XYP';
   public cardImage: string = 'assets/cardback.png';
@@ -57,6 +34,7 @@ export class Jirachi extends PokemonCard {
   public fullName: string = 'Jirachi XYP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Stardust
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -75,8 +53,6 @@ export class Jirachi extends PokemonCard {
       });
 
       if (!hasPokemonWithEnergy) {
-        const endTurnEffect = new EndTurnEffect(player);
-        store.reduceEffect(state, endTurnEffect);
         return state;
       }
 
@@ -95,66 +71,17 @@ export class Jirachi extends PokemonCard {
           discardEnergy.target = opponent.active;
           store.reduceEffect(state, discardEnergy);
 
-          player.active.marker.addMarker(
-            PokemonCardList.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN,
-            this,
-          );
-          opponent.marker.addMarker(
-            PokemonCardList.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN,
-            this,
-          );
+          PREVENT_DAMAGE(store, state, effect, this);
+          PREVENT_EFFECTS_OF_ATTACKS(store, state, effect, this);
         },
       );
     }
-
+    // Dream Dance
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(store, state, effect);
       player.active.addSpecialCondition(SpecialCondition.ASLEEP);
-    }
-
-    if (
-      effect instanceof EndTurnEffect &&
-      effect.player.marker.hasMarker(
-        PokemonCardList.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN,
-        this,
-      )
-    ) {
-      effect.player.marker.removeMarker(
-        PokemonCardList.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN,
-        this,
-      );
-
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(
-          PokemonCardList.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN,
-          this,
-        );
-      });
-    }
-
-    if (
-      effect instanceof AbstractAttackEffect &&
-      effect.target.cards.includes(this) &&
-      effect.target.marker.hasMarker(
-        PokemonCardList.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN,
-        this,
-      )
-    ) {
-      const pokemonCard = effect.target.getPokemonCard();
-      const sourceCard = effect.source.getPokemonCard();
-
-      if (pokemonCard !== this) {
-        return state;
-      }
-
-      if (sourceCard) {
-        effect.preventDefault = true;
-      }
-
-      return state;
     }
 
     return state;

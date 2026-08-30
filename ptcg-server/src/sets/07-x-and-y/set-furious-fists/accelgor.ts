@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 export class Accelgor extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Shelmet';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public retreat = [];
@@ -21,21 +21,18 @@ export class Accelgor extends PokemonCard {
   public readonly AFTERIMAGE_MARKER = 'ACCELGOR_FFI_AFTERIMAGE_MARKER';
   public readonly CLEAR_AFTERIMAGE_MARKER = 'ACCELGOR_FFI_CLEAR_AFTERIMAGE_MARKER';
 
-  public attacks = [
-    {
-      name: 'Raid',
-      cost: [C],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'If this Pokémon evolved from Shelmet during this turn, this attack does 40 more damage.'
-    },
-    {
-      name: 'Afterimage Strike',
-      cost: [G, C],
-      damage: 40,
-      text: 'If any damage is done to this Pokémon by attacks during your opponent\'s next turn, flip a coin. If heads, prevent that damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Raid',
+    cost: [C],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'If this Pokémon evolved from Shelmet during this turn, this attack does 40 more damage.'
+  }, {
+    name: 'Afterimage Strike',
+    cost: [G, C],
+    damage: 40,
+    text: 'If any damage is done to this Pokémon by attacks during your opponent\'s next turn, flip a coin. If heads, prevent that damage.'
+  }];
 
   public set: string = 'FFI';
   public setNumber: string = '9';

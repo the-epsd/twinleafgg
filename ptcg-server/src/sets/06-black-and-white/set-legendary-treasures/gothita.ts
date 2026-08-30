@@ -5,26 +5,23 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Gothita extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Hypnotic Gaze',
-      cost: [C],
-      damage: 0,
-      text: 'The Defending Pokémon is now Asleep.'
-    },
-    {
-      name: 'Double Slap',
-      cost: [C, C],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Hypnotic Gaze',
+    cost: [C],
+    damage: 0,
+    text: 'The Defending Pokémon is now Asleep.'
+  }, {
+    name: 'Double Slap',
+    cost: [C, C],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
+  }];
 
   public set: string = 'LTR';
   public setNumber: string = '69';

@@ -12,7 +12,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { Card, EnergyCard, State, StoreLike } from '../../../game';
 export class Manaphy extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 70;
   public weakness = [{ type: G }];
   public retreat = [C];

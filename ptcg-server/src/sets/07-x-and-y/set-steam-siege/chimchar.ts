@@ -11,25 +11,22 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 
 export class Chimchar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 60;
   public weakness = [{ type: W }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Scratch',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Ember',
-      cost: [R, C],
-      damage: 30,
-      text: 'Flip a coin. If tails, discard a [R] Energy attached to this Pok\u00e9mon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Scratch',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Ember',
+    cost: [R, C],
+    damage: 30,
+    text: 'Flip a coin. If tails, discard a [R] Energy attached to this Pok\u00e9mon.'
+  }];
 
   public set: string = 'STS';
   public setNumber: string = '18';

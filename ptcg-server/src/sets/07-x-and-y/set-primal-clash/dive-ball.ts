@@ -27,7 +27,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
-    { superType: SuperType.POKEMON, cardType: CardType.WATER },
+    { superType: SuperType.POKEMON, cardType: [CardType.WATER] },
     { min: 0, max: 1, allowCancel: true }
   ), selected => {
     cards = selected || [];

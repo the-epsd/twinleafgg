@@ -10,9 +10,9 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class ManectricEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 170;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
@@ -23,15 +23,15 @@ export class ManectricEx extends PokemonCard {
       name: 'Overrun',
       cost: [C],
       damage: 20,
-      text: 'This attack does 20 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Assault Laser',
       cost: [L, C],
       damage: 60,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon has a Pokémon Tool card attached to it, this attack does 60 more damage.'
-    }
+      text: "If your opponent's Active Pokémon has a Pokémon Tool card attached to it, this attack does 60 more damage.",
+    },
   ];
 
   public set: string = 'PHF';

@@ -13,10 +13,10 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 
 export class DhelmiseVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Dhelmise V';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 330;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
@@ -26,14 +26,14 @@ export class DhelmiseVmax extends PokemonCard {
       name: 'Swinging Chain',
       cost: [G],
       damage: 0,
-      text: 'This attack does 30 damage to 1 of your opponent\'s Pokémon for each [G] Energy attached to this Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack does 30 damage to 1 of your opponent's Pokémon for each [G] Energy attached to this Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Max Anchor',
       cost: [G, G, C],
       damage: 240,
-      text: 'During your next turn, this Pokémon can\'t use Max Anchor.'
-    }
+      text: "During your next turn, this Pokémon can't use Max Anchor.",
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -55,9 +55,9 @@ export class DhelmiseVmax extends PokemonCard {
       store.reduceEffect(state, checkEnergy);
 
       let energyCount = 0;
-      checkEnergy.energyMap.forEach(em => {
-        energyCount += em.provides.filter(cardType =>
-          cardType === CardType.GRASS || cardType === CardType.ANY
+      checkEnergy.energyMap.forEach((em) => {
+        energyCount += em.provides.filter(
+          (cardType) => cardType === CardType.GRASS || cardType === CardType.ANY,
         ).length;
       });
 
@@ -66,28 +66,32 @@ export class DhelmiseVmax extends PokemonCard {
       }
 
       const totalDamage = 30 * energyCount;
-      const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+      const hasBenched = opponent.bench.some((b) => b.cards.length > 0);
 
-      store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        hasBenched ? [SlotType.ACTIVE, SlotType.BENCH] : [SlotType.ACTIVE],
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        if (!selected || selected.length === 0) return;
-        const target = selected[0];
-        // Apply Weakness/Resistance for the active; bypass it for benched Pokemon
-        if (target === opponent.active) {
-          const dealDamage = new DealDamageEffect(effect, totalDamage);
-          dealDamage.target = target;
-          store.reduceEffect(state, dealDamage);
-        } else {
-          const putDamage = new PutDamageEffect(effect, totalDamage);
-          putDamage.target = target;
-          store.reduceEffect(state, putDamage);
-        }
-      });
+      store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          hasBenched ? [SlotType.ACTIVE, SlotType.BENCH] : [SlotType.ACTIVE],
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          if (!selected || selected.length === 0) return;
+          const target = selected[0];
+          // Apply Weakness/Resistance for the active; bypass it for benched Pokemon
+          if (target === opponent.active) {
+            const dealDamage = new DealDamageEffect(effect, totalDamage);
+            dealDamage.target = target;
+            store.reduceEffect(state, dealDamage);
+          } else {
+            const putDamage = new PutDamageEffect(effect, totalDamage);
+            putDamage.target = target;
+            store.reduceEffect(state, putDamage);
+          }
+        },
+      );
     }
 
     // Attack 2: Max Anchor

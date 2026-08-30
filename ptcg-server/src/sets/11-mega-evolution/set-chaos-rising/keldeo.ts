@@ -17,7 +17,7 @@ import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-pr
 export class Keldeo extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 110;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public weakness = [{ type: L }];
   public retreat = [C];
 

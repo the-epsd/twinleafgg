@@ -1,11 +1,11 @@
-import { PokemonCard, Stage, StoreLike, State, ChooseCardsPrompt, GameMessage } from '../../../game';
+import { CardType, PokemonCard, Stage, StoreLike, State, ChooseCardsPrompt, GameMessage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Snubbull extends PokemonCard {
   public stage = Stage.BASIC;
-  public cardType = Y;
+  public cardType: CardType[] = [Y];
   public hp = 70;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

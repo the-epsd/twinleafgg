@@ -1,5 +1,9 @@
 import { Format, Archetype } from '../card/card-types';
 
+// =============================================================================
+// Theme deck definitions
+// =============================================================================
+
 export const THEME_DECKS = [
   {
     id: -1,
@@ -81,3 +85,4 @@ export const THEME_DECKS = [
     manualArchetype2: Archetype.AMPHAROS,
   }
 ]; 
+

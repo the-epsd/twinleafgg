@@ -2,7 +2,7 @@ import { GameSettings, StateSerializer, coerceGameSettings } from '../../game';
 import { Client } from '../../game/client/client.interface';
 import { Game } from '../../game/core/game';
 import { isActiveListGame } from '../../game/core/game-list-utils';
-import { State } from '../../game/store/state/state';
+import { GamePhase, State } from '../../game/store/state/state';
 import { User } from '../../storage';
 import { Core } from '../../game/core/core';
 import { CoreInfo, GameInfo, PlayerInfo, GameState, UserInfo } from '../interfaces/core.interface';
@@ -11,6 +11,7 @@ import { SocketWrapper, Response } from './socket-wrapper';
 import { deepCompare } from '../../utils/utils';
 import { Base64 } from '../../utils';
 import { ApiErrorEnum } from '../common/errors';
+import { GameStateBroadcaster, isSocketClient, viewerFromSocketClient } from './game-state-broadcaster';
 
 export class CoreSocket {
 
@@ -132,7 +133,7 @@ export class CoreSocket {
     }
 
     const game = this.core.createGame(this.client, params.deck, gameSettings, invited, params.deckId, undefined, params.sleeveImagePath);
-    response('ok', CoreSocket.buildGameState(game));
+    response('ok', CoreSocket.buildGameState(game, this.client));
   }
 
   private createSelfPlayGame(
@@ -162,7 +163,7 @@ export class CoreSocket {
       params.sleeveImagePath,
       params.secondSleeveImagePath
     );
-    response('ok', CoreSocket.buildGameState(game));
+    response('ok', CoreSocket.buildGameState(game, this.client));
   }
 
   public static buildUserInfo(user: User, connected: boolean = true): UserInfo {
@@ -189,27 +190,42 @@ export class CoreSocket {
       prizes: player.prizes.reduce((sum, cardList) => sum + cardList.cards.length, 0),
       deck: player.deck.cards.length
     }));
+    const invitePrompt = state.prompts.find(
+      p => p.type === 'Invite player' && p.result === undefined
+    );
+    const pendingInvite =
+      state.phase === GamePhase.WAITING_FOR_PLAYERS && invitePrompt !== undefined;
     return {
       gameId: game.id,
       phase: state.phase,
       turn: state.turn,
       activePlayer: state.activePlayer,
       players,
-      playerUserIds: game.getPlayerUserIds()
+      playerUserIds: game.getPlayerUserIds(),
+      format: game.format,
+      pendingInvite: pendingInvite || undefined,
+      inviteeClientId: pendingInvite ? invitePrompt!.playerId : undefined
     };
   }
 
-  public static buildGameState(game: Game): GameState {
-    const serializer = new StateSerializer();
-    const serializedState = serializer.serialize(game.state);
-    const stateObj = JSON.parse(serializedState);
-    const finalSerializedState = JSON.stringify(stateObj);
-    const base64 = new Base64();
-    const stateData = base64.encode(finalSerializedState);
+  public static buildGameState(game: Game, client?: Client): GameState {
+    let stateData: string;
+    if (client && isSocketClient(client)) {
+      stateData = GameStateBroadcaster.buildSanitizedStateData(
+        game,
+        viewerFromSocketClient(client)
+      );
+      GameStateBroadcaster.joinRooms(client, game);
+    } else {
+      const serializer = new StateSerializer();
+      const serializedState = serializer.serialize(game.state);
+      const base64 = new Base64();
+      stateData = base64.encode(serializedState);
+    }
     return {
       gameId: game.id,
       stateData,
-      clientIds: game.clients.map(client => client.id),
+      clientIds: game.clients.map(c => c.id),
       recordingEnabled: game.gameSettings.recordingEnabled,
       timeLimit: game.gameSettings.timeLimit,
       playerStats: game.playerStats,
@@ -227,5 +243,4 @@ export class CoreSocket {
     // Check if the client has bot-specific methods
     return 'isFormatAllowed' in client && 'getAllowedFormats' in client;
   }
-
 }

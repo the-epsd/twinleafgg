@@ -9,13 +9,13 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import {
   YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED,
-  YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED
+  YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED,
 } from '../../../game/store/prefabs/attack-effects';
 
 export class ButterfreeV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 190;
   public weakness = [{ type: R }];
   public retreat = [C];
@@ -25,14 +25,14 @@ export class ButterfreeV extends PokemonCard {
       name: 'Dizzying Poison',
       cost: [G],
       damage: 0,
-      text: 'Your opponent\'s Active Pokémon is now Confused and Poisoned.'
+      text: "Your opponent's Active Pokémon is now Confused and Poisoned.",
     },
     {
       name: 'Blasting Wind',
       cost: [G, G, C],
       damage: 130,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'D';

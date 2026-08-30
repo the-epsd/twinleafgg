@@ -12,7 +12,7 @@ import { IS_ABILITY_BLOCKED, WAS_POWER_USED, USE_ABILITY_ONCE_PER_TURN, ABILITY_
 
 export class Scatterbug extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 30;
   public weakness = [{ type: R }];
   public retreat = [C];

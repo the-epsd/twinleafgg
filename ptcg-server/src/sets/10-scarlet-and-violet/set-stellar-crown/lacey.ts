@@ -3,41 +3,9 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
+import { SHUFFLE_HAND_INTO_DECK_THEN_DRAW } from '../../../game/store/prefabs/prefabs';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
-
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: Lacey, effect: TrainerEffect): IterableIterator<State> {
-
-  const player = effect.player;
-  const cards = player.hand.cards.filter(c => c !== self);
-
-  const supporterTurn = player.supporterTurn;
-
-  if (supporterTurn > 0) {
-    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
-  }
-
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
-  effect.preventDefault = true;
-
-  if (cards.length > 0) {
-    player.hand.moveCardsTo(cards, player.deck);
-
-    yield store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-      player.deck.applyOrder(order);
-      next();
-    });
-  }
-
-  const opponent = StateUtils.getOpponent(state, player);
-  const cardsToDraw = opponent.getPrizeLeft() > 3 ? 4 : 8;
-  player.deck.moveTo(player.hand, cardsToDraw);
-
-
-  return state;
-}
 
 export class Lacey extends TrainerCard {
 
@@ -65,11 +33,20 @@ export class Lacey extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, this, effect);
-      return generator.next().value;
+      const player = effect.player;
+
+      if (player.supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      const opponent = StateUtils.getOpponent(state, player);
+      const cardsToDraw = opponent.getPrizeLeft() > 3 ? 4 : 8;
+      return SHUFFLE_HAND_INTO_DECK_THEN_DRAW(store, state, player, {
+        excludeCard: this,
+        drawCount: cardsToDraw,
+      });
     }
 
     return state;

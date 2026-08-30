@@ -8,15 +8,22 @@ import { PowerType, StoreLike, State, StateUtils, PlayerType } from '../../../ga
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  ADD_MARKER,
+  HAS_MARKER,
+  REMOVE_MARKER,
+} from '../../../game/store/prefabs/prefabs';
 import { GameError, GameMessage } from '../../../game';
 import { GamePhase } from '../../../game/store/state/state';
 
 export class ZamazentaVstar extends PokemonCard {
-  public tags = [CardTag.POKEMON_VSTAR];
+  protected _tags = [CardTag.POKEMON_VSTAR];
   public stage: Stage = Stage.VSTAR;
   public evolvesFrom: string = 'Zamazenta V';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 270;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
@@ -25,20 +32,22 @@ export class ZamazentaVstar extends PokemonCard {
   public readonly SHIELD_STAR_REDUCE_MARKER = 'ZAMAZENTA_VSTAR_SHIELD_STAR_REDUCE_MARKER';
   public readonly SHIELD_STAR_CLEAR_MARKER = 'ZAMAZENTA_VSTAR_SHIELD_STAR_CLEAR_MARKER';
 
-  public powers = [{
-    name: 'Shield Star',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'During your turn, you may use this Ability. During your opponent\'s next turn, all of your Pokémon take 100 less damage from attacks from your opponent\'s Pokémon (after applying Weakness and Resistance). (This includes Pokémon that come into play during this turn or during your opponent\'s next turn.) (You can\'t use more than 1 VSTAR Power in a game.)'
-  }];
+  public powers = [
+    {
+      name: 'Shield Star',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: "During your turn, you may use this Ability. During your opponent's next turn, all of your Pokémon take 100 less damage from attacks from your opponent's Pokémon (after applying Weakness and Resistance). (This includes Pokémon that come into play during this turn or during your opponent's next turn.) (You can't use more than 1 VSTAR Power in a game.)",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Giga Impact',
       cost: [M, M, C],
       damage: 220,
-      text: 'During your next turn, this Pokémon can\'t attack.'
-    }
+      text: "During your next turn, this Pokémon can't attack.",
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -101,7 +110,10 @@ export class ZamazentaVstar extends PokemonCard {
     }
 
     // Cleanup at end of opponent's turn
-    if (effect instanceof EndTurnEffect && HAS_MARKER(this.SHIELD_STAR_CLEAR_MARKER, effect.player, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      HAS_MARKER(this.SHIELD_STAR_CLEAR_MARKER, effect.player, this)
+    ) {
       REMOVE_MARKER(this.SHIELD_STAR_CLEAR_MARKER, effect.player, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {

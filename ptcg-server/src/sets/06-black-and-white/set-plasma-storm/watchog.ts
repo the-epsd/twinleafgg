@@ -10,10 +10,10 @@ import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefa
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Watchog extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Patrat';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -23,15 +23,15 @@ export class Watchog extends PokemonCard {
       name: 'Fast Swipe',
       cost: [C],
       damage: 0,
-      text: 'Discard a random card from your opponent\'s hand.'
+      text: "Discard a random card from your opponent's hand.",
     },
     {
       name: 'Biting Fang',
       cost: [C, C],
       damage: 30,
       damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 more damage.'
-    }
+      text: 'Flip a coin. If heads, this attack does 20 more damage.',
+    },
   ];
 
   public set: string = 'PLS';

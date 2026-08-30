@@ -11,9 +11,9 @@ import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-
 import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class BeedrillV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 210;
   public weakness = [{ type: R }];
   public retreat = [C];
@@ -24,17 +24,18 @@ export class BeedrillV extends PokemonCard {
       cost: [G],
       damage: 40,
       damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 40 damage for each heads.'
+      text: 'Flip 2 coins. This attack does 40 damage for each heads.',
     },
     {
       name: 'Swarming Sting',
       cost: [G, G, C],
       damage: 0,
-      text: 'This attack does 50 damage to 1 of your opponent\'s Pokémon for each of your Beedrill V in play. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "This attack does 50 damage to 1 of your opponent's Pokémon for each of your Beedrill V in play. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public regulationMark: string = 'F';
+
   public set: string = 'ASR';
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';
@@ -46,8 +47,8 @@ export class BeedrillV extends PokemonCard {
     // Ref: set-phantom-forces/munna.ts (Double Headbutt - multiple coin flips)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, results => {
-        const heads = results.filter(r => r).length;
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, (results) => {
+        const heads = results.filter((r) => r).length;
         effect.damage = 40 * heads;
       });
     }
@@ -74,27 +75,31 @@ export class BeedrillV extends PokemonCard {
 
       const damagePerHit = 50 * beedrillCount;
 
-      store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        if (!selected || selected.length === 0) {
-          return;
-        }
-        const target = selected[0];
-        // Use DealDamageEffect for active (applies W/R), PutDamageEffect for bench
-        let damageEffect: DealDamageEffect | PutDamageEffect;
-        if (target === opponent.active) {
-          damageEffect = new DealDamageEffect(effect, damagePerHit);
-        } else {
-          damageEffect = new PutDamageEffect(effect, damagePerHit);
-        }
-        damageEffect.target = target;
-        store.reduceEffect(state, damageEffect);
-      });
+      store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          if (!selected || selected.length === 0) {
+            return;
+          }
+          const target = selected[0];
+          // Use DealDamageEffect for active (applies W/R), PutDamageEffect for bench
+          let damageEffect: DealDamageEffect | PutDamageEffect;
+          if (target === opponent.active) {
+            damageEffect = new DealDamageEffect(effect, damagePerHit);
+          } else {
+            damageEffect = new PutDamageEffect(effect, damagePerHit);
+          }
+          damageEffect.target = target;
+          store.reduceEffect(state, damageEffect);
+        },
+      );
     }
 
     return state;

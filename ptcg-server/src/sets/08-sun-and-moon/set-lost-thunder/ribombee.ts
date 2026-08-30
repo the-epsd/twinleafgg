@@ -7,7 +7,7 @@ import { TrainerTargetEffect } from '../../../game/store/effects/play-card-effec
 export class Ribombee extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Cutiefly';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 60;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

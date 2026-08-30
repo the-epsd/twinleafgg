@@ -12,27 +12,29 @@ import { BetweenTurnsEffect, EndTurnEffect } from '../../../game/store/effects/g
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class CresseliaEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 170;
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Sparkling Particles',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'At any time between turns, heal 10 damage from this Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Sparkling Particles',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'At any time between turns, heal 10 damage from this Pokémon.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Psychic Protection',
       cost: [P, C, C, C],
       damage: 90,
-      text: 'During your opponent\'s next turn, this Pokémon has no Weakness.'
-    }
+      text: "During your opponent's next turn, this Pokémon has no Weakness.",
+    },
   ];
 
   public set: string = 'BCR';
@@ -48,7 +50,7 @@ export class CresseliaEx extends PokemonCard {
     // Refs: set-ex-sandstorm/lotad.ts (between-turn healing), set-black-and-white/serperior2.ts (ability lock check)
     if (effect instanceof BetweenTurnsEffect) {
       const player = effect.player;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         if (cardList.getPokemonCard() === this && !IS_ABILITY_BLOCKED(store, state, player, this)) {
           const healEffect = new HealEffect(player, cardList, 10);
           state = store.reduceEffect(state, healEffect);
@@ -72,11 +74,13 @@ export class CresseliaEx extends PokemonCard {
       }
     }
 
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_PSYCHIC_PROTECTION_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_PSYCHIC_PROTECTION_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_PSYCHIC_PROTECTION_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         cardList.marker.removeMarker(this.PSYCHIC_PROTECTION_MARKER, this);
       });
     }

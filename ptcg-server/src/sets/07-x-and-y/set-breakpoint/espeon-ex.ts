@@ -6,26 +6,28 @@ import { DEVOLVE_POKEMON, WAS_ATTACK_USED } from '../../../game/store/prefabs/pr
 import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../../game/store/prefabs/attack-effects';
 
 export class EspeonEX extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 170;
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Miraculous Shine',
-    cost: [C],
-    damage: 0,
-    text: 'Devolve each of your opponent\'s evolved Pokémon and put the highest Stage Evolution card on it into your opponent\'s hand.'
-  }, {
-    name: 'Psyshock',
-    cost: [P, C, C],
-    damage: 70,
-    shredAttack: true,
-    text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'Miraculous Shine',
+      cost: [C],
+      damage: 0,
+      text: "Devolve each of your opponent's evolved Pokémon and put the highest Stage Evolution card on it into your opponent's hand.",
+    },
+    {
+      name: 'Psyshock',
+      cost: [P, C, C],
+      damage: 70,
+      shredAttack: true,
+      text: "This attack's damage isn't affected by any effects on your opponent's Active Pokémon.",
+    },
+  ];
 
   public set: string = 'BKP';
   public cardImage: string = 'assets/cardback.png';
@@ -34,7 +36,6 @@ export class EspeonEX extends PokemonCard {
   public fullName: string = 'Espeon-EX BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // Miraculous Shine
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
@@ -47,8 +48,7 @@ export class EspeonEX extends PokemonCard {
         }
       }
 
-
-      opponent.bench.forEach(benchSpot => {
+      opponent.bench.forEach((benchSpot) => {
         if (benchSpot.getPokemonCard()) {
           const benchPokemon = benchSpot.getPokemons();
           if (benchPokemon.length > 0) {

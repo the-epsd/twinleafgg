@@ -1,28 +1,27 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, Card, ChooseCardsPrompt, GameMessage, CoinFlipPrompt } from '../../../game';
+import { StoreLike, State, StateUtils, Card, ChooseCardsPrompt, GameMessage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Persian extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [C];
   public hp: number = 100;
-  public weakness = [{ type: CardType.FIGHTING }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public retreat = [C];
   public evolvesFrom = 'Meowth';
 
   public attacks = [{
     name: 'Make \'Em Pay',
-    cost: [CardType.COLORLESS],
+    cost: [C],
     damage: 20,
     text: ' If your opponent has 4 or more cards in their hand, they reveal their hand.'
-      + 'Discard cards you find there until your opponent has exactly 4 cards in their hand. '
-  },
-  {
+    + 'Discard cards you find there until your opponent has exactly 4 cards in their hand. '
+  }, {
     name: 'Sharp Claws',
-    cost: [CardType.COLORLESS, CardType.COLORLESS],
+    cost: [C, C],
     damage: 30,
     text: ' Flip a coin. If heads, this attack does 60 more damage.'
   }];
@@ -60,9 +59,7 @@ export class Persian extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
           effect.damage += 60;
         }

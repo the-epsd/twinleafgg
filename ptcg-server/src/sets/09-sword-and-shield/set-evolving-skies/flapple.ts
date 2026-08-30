@@ -7,10 +7,9 @@ import { CheckPokemonPowersEffect } from '../../../game/store/effects/check-effe
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Flapple extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
 
-  public cardType: CardType = CardType.DRAGON;
+  public cardType: CardType[] = [CardType.DRAGON];
 
   public hp: number = 80;
 
@@ -21,14 +20,14 @@ export class Flapple extends PokemonCard {
       name: 'Acidic Mucus',
       cost: [CardType.COLORLESS],
       damage: 0,
-      text: 'This attack does 50 damage for each of your opponent\'s Pokémon in play that has an Ability.'
+      text: "This attack does 50 damage for each of your opponent's Pokémon in play that has an Ability.",
     },
     {
       name: 'Fighting Tackle',
       cost: [CardType.GRASS, CardType.FIRE],
       damage: 80,
-      text: 'If your opponent\'s Active Pokémon is a Pokémon V, this attack does 80 more damage.'
-    }
+      text: "If your opponent's Active Pokémon is a Pokémon V, this attack does 80 more damage.",
+    },
   ];
 
   public set: string = 'EVS';
@@ -47,7 +46,6 @@ export class Flapple extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -56,7 +54,7 @@ export class Flapple extends PokemonCard {
         if (cardList.getPokemonCard()) {
           const powersEffect = new CheckPokemonPowersEffect(opponent, card);
           state = store.reduceEffect(state, powersEffect);
-          if (powersEffect.powers.some(power => power.powerType === PowerType.ABILITY)) {
+          if (powersEffect.powers.some((power) => power.powerType === PowerType.ABILITY)) {
             abilityCount++;
           }
         }
@@ -69,10 +67,12 @@ export class Flapple extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (opponent.active.getPokemonCard() &&
-        (opponent.active.getPokemonCard()!.tags.includes(CardTag.POKEMON_V) ||
-          opponent.active.getPokemonCard()!.tags.includes(CardTag.POKEMON_VMAX) ||
-          opponent.active.getPokemonCard()!.tags.includes(CardTag.POKEMON_VSTAR))) {
+      if (
+        opponent.active.getPokemonCard() &&
+        (opponent.active.getPokemonCard()!.hasTag(CardTag.POKEMON_V) ||
+          opponent.active.getPokemonCard()!.hasTag(CardTag.POKEMON_VMAX) ||
+          opponent.active.getPokemonCard()!.hasTag(CardTag.POKEMON_VSTAR))
+      ) {
         effect.damage += 80;
       }
 
@@ -81,5 +81,4 @@ export class Flapple extends PokemonCard {
 
     return state;
   }
-
 }

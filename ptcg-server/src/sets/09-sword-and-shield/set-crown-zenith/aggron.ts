@@ -1,12 +1,14 @@
-import { Attack, CardType, GamePhase, PokemonCard, PokemonCardList, Stage, State, StateUtils, StoreLike } from '../../../game';
-import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../../game/store/card/card-types';
+import { StoreLike, State, Attack } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { ADD_MARKER, CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN, HAS_MARKER, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { THIS_POKEMON_RETALIATES_ON_DAMAGE_DURING_OPPONENTS_NEXT_TURN } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Aggron extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Lairon';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 180;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
@@ -32,23 +34,10 @@ export class Aggron extends PokemonCard {
   public name: string = 'Aggron';
   public fullName: string = 'Aggron CRZ';
 
-  public readonly COUNTER_PRESS_MARKER = 'COUNTER_PRESS_MARKER';
-  public readonly CLEAR_COUNTER_PRESS_MARKER = 'CLEAR_COUNTER_PRESS_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
-      ADD_MARKER(this.COUNTER_PRESS_MARKER, cardList, this);
-      ADD_MARKER(this.CLEAR_COUNTER_PRESS_MARKER, opponent, this);
+      return THIS_POKEMON_RETALIATES_ON_DAMAGE_DURING_OPPONENTS_NEXT_TURN(store, state, effect, this, { reflect: true });
     }
-
-    if ((effect instanceof PutDamageEffect) && HAS_MARKER(this.COUNTER_PRESS_MARKER, effect.target, this) && state.phase === GamePhase.ATTACK) {
-      effect.source.damage += effect.damage;
-    }
-
-    CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(state, effect, this.CLEAR_COUNTER_PRESS_MARKER, this.COUNTER_PRESS_MARKER, this);
 
     return state;
   }

@@ -4,7 +4,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 export class GalarianLinoone extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Galarian Zigzagoon';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 60;
   public weakness = [{ type: G }];
   public retreat = [C];

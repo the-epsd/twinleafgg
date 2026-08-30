@@ -11,7 +11,7 @@ import { getSocketManager } from '../socket/socketManager';
 import { ApiError, formatUnknownError } from '../api/apiError';
 import { useSnackbar } from '../context/SnackbarContext';
 import { translateGameSocketError } from '../i18n/translateGameSocketError';
-import { buildLocalGameFromMatchReplay } from '../api/replayApi';
+import { buildLocalGameFromMatchReplay, buildLocalGameFromSavedReplay } from '../api/replayApi';
 import type { LocalGameState } from '../table/types/localGameState';
 import { shouldCancelCoinFlipAnimation } from '../table/coin-flip-animation';
 import { gameStateToLocal, mergeStateChange } from '../table/gameSessionUtils';
@@ -28,6 +28,7 @@ import { MatchResultsSplash } from '../table/end-game/MatchResultsSplash';
 import { SandboxControlPanel } from '../table/sandbox/SandboxControlPanel';
 import { ShellButton } from '../components/ui/ShellButton';
 import { selfPlayFocusPlayerId } from '../table/selfPlayFocusPlayerId';
+import { playAttackSfx, playSfx, useTableSfx } from '../sfx';
 import promptStyles from '../table/prompts/TablePromptLayer.module.css';
 
 const RECONNECT_GAME_ID_KEY = 'ptcg_reconnect_gameId';
@@ -64,9 +65,10 @@ type TableView = {
 export function TablePage() {
   const { t } = useTranslation();
   const { showSnackbar } = useSnackbar();
-  const { gameId: gameIdParam, matchId: matchIdParam } = useParams<{
+  const { gameId: gameIdParam, matchId: matchIdParam, replayId: replayIdParam } = useParams<{
     gameId?: string;
     matchId?: string;
+    replayId?: string;
   }>();
   const navigate = useNavigate();
   const { cardsInfo, serverConfig, user } = useAuth();
@@ -75,10 +77,13 @@ export function TablePage() {
   const { clientId, connected: coreConnected } = useCoreSession();
   const { use3dBoardDefault } = useSettings();
 
-  const hasReplayParam = matchIdParam != null && matchIdParam !== '';
-  const replayMatchId = hasReplayParam ? Number(matchIdParam) : NaN;
+  const isMatchReplayRoute = matchIdParam != null && matchIdParam !== '';
+  const isSavedReplayRoute = replayIdParam != null && replayIdParam !== '';
+  const replayMatchId = isMatchReplayRoute ? Number(matchIdParam) : NaN;
+  const savedReplayId = isSavedReplayRoute ? Number(replayIdParam) : NaN;
   const serverGameId = gameIdParam != null && gameIdParam !== '' ? Number(gameIdParam) : NaN;
-  const isReplayRoute = hasReplayParam;
+  const isReplayRoute = isMatchReplayRoute || isSavedReplayRoute;
+  const replayExitPath = isSavedReplayRoute ? '/replays' : '/spectate';
   const isLiveRoute = Number.isFinite(serverGameId);
   const [localGame, setLocalGame] = useState<LocalGameState | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -138,6 +143,8 @@ export function TablePage() {
         .then(() => undefined)
         .catch((e: unknown) => {
           onGameSocketError(e);
+          // Re-throw so board optimistic flights can animate the card back to hand.
+          return Promise.reject(e);
         });
     return {
       playCardAction: (gameId, handIndex, target) =>
@@ -196,10 +203,21 @@ export function TablePage() {
       const socket = getSocketManager();
       const raw = socket.raw;
 
-      const onState = (data: { stateData: string; playerStats?: import('ptcg-server').PlayerStats[] }) => {
+      const onState = (data: {
+        stateData: string;
+        playerStats?: import('ptcg-server').PlayerStats[];
+        isDiff?: boolean;
+        viewKey?: string;
+      }) => {
         setLocalGame((g) => {
           if (!g || g.gameId !== gameId) return g;
-          const next = mergeStateChange(g, data.stateData, data.playerStats);
+          const next = mergeStateChange(
+            g,
+            data.stateData,
+            data.playerStats,
+            data.isDiff,
+            data.viewKey,
+          );
           if (shouldCancelCoinFlipAnimation(g, next)) {
             boardInteraction.cancelCoinFlipAnimation();
           }
@@ -218,6 +236,7 @@ export function TablePage() {
         index?: number;
       }) => {
         boardInteraction.triggerBasicAnimation(data);
+        playSfx('pokemonplay');
       };
       const onEvo = (data: {
         playerId: number;
@@ -226,6 +245,7 @@ export function TablePage() {
         index?: number;
       }) => {
         boardInteraction.triggerEvolutionAnimation(data);
+        playSfx('evolution');
       };
       const onAttack = (data: {
         playerId: number;
@@ -233,10 +253,12 @@ export function TablePage() {
         slot: string;
         index?: number;
         cardType?: number;
+        damage?: number;
         opponentId?: number;
       }) => {
         boardInteraction.triggerAttackAnimation(data);
         if (data.cardType !== undefined && data.opponentId !== undefined) {
+          playAttackSfx(data.cardType as CardType, data.damage ?? 0);
           boardInteraction.triggerAttackEffect({
             playerId: data.playerId,
             cardId: data.cardId,
@@ -258,6 +280,13 @@ export function TablePage() {
       };
       const onCoin = (data: { playerId: number; result: boolean }) => {
         boardInteraction.triggerCoinFlipAnimation(data.result, data.playerId);
+        playSfx('coinflip');
+      };
+      const onDeckShuffle = (data: { playerId: number }) => {
+        boardInteraction.triggerDeckShuffleAnimation(data.playerId);
+      };
+      const onAttachEnergy = () => {
+        playSfx('energyattach');
       };
 
       raw.on(`game[${gameId}]:stateChange`, onState);
@@ -266,6 +295,8 @@ export function TablePage() {
       raw.on(`game[${gameId}]:attack`, onAttack);
       raw.on(`game[${gameId}]:ability`, onAbility);
       raw.on(`game[${gameId}]:coinFlip`, onCoin);
+      raw.on(`game[${gameId}]:deckShuffle`, onDeckShuffle);
+      raw.on(`game[${gameId}]:attachEnergy`, onAttachEnergy);
 
       return () => {
         raw.off(`game[${gameId}]:stateChange`, onState);
@@ -274,11 +305,27 @@ export function TablePage() {
         raw.off(`game[${gameId}]:attack`, onAttack);
         raw.off(`game[${gameId}]:ability`, onAbility);
         raw.off(`game[${gameId}]:coinFlip`, onCoin);
+        raw.off(`game[${gameId}]:deckShuffle`, onDeckShuffle);
+        raw.off(`game[${gameId}]:attachEnergy`, onAttachEnergy);
       };
     },
     [boardInteraction],
   );
 
+  // Clear reconnect tracking only when leaving this game route (not on transient disconnect).
+  useEffect(() => {
+    if (isReplayRoute || !Number.isFinite(serverGameId)) {
+      return;
+    }
+    return () => {
+      clearPersistedGameId();
+    };
+  }, [isReplayRoute, serverGameId]);
+
+  // Initial attach only — do not re-run on coreConnected or the table remounts mid-game
+  // and a failed rejoin/join replaces the board with ERROR_UNKNOWN.
+  // Always use game:join here: game:rejoin is for seat restore after a drop and rejects
+  // (or mis-handles) self-play / already-seated clients, which surfaces ERROR_UNKNOWN.
   useEffect(() => {
     if (isReplayRoute) {
       return;
@@ -302,6 +349,7 @@ export function TablePage() {
         if (cancelled) return;
         const local = gameStateToLocal(gs);
         setLocalGame(local);
+        setError(null);
         boardInteraction.updateGameLogs(local.logs);
         const isPlayer = local.state.players.some((p) => p.id === clientIdRef.current);
         if (isPlayer) {
@@ -320,15 +368,88 @@ export function TablePage() {
       cancelled = true;
       unregister?.();
       boardInteraction.endBoardSelection();
-      clearPersistedGameId();
     };
   }, [isReplayRoute, serverGameId, cardsInfo, boardInteraction, registerGameSocket, t]);
+
+  // Soft restore after socket drop: keep the board mounted; never flip to the error screen
+  // if we already have local game state. CoreSession also rejoins seats; this reapplies
+  // a full snapshot when listeners may have missed the server push.
+  const prevCoreConnectedRef = useRef<boolean | null>(null);
+  const localGameRef = useRef(localGame);
+  localGameRef.current = localGame;
+
+  useEffect(() => {
+    if (isReplayRoute || !Number.isFinite(serverGameId) || !cardsInfo) {
+      return;
+    }
+
+    const prevConnected = prevCoreConnectedRef.current;
+    prevCoreConnectedRef.current = coreConnected;
+
+    // Skip first run and any non-reconnect transition.
+    if (prevConnected === null || prevConnected !== false || coreConnected !== true) {
+      return;
+    }
+
+    const existing = localGameRef.current;
+    if (!existing || existing.gameId !== serverGameId) {
+      return;
+    }
+
+    // Self-play aborts on disconnect — don't try to rejoin a dead game into an error path.
+    if (existing.state.gameSettings?.selfPlay === true) {
+      return;
+    }
+
+    let cancelled = false;
+    void (async () => {
+      try {
+        const socket = getSocketManager();
+        let gs: import('ptcg-server').GameState;
+        try {
+          gs = await socket.emit<{ gameId: number }, import('ptcg-server').GameState>('game:rejoin', {
+            gameId: serverGameId,
+          });
+        } catch {
+          gs = await socket.emit<number, import('ptcg-server').GameState>('game:join', serverGameId);
+        }
+        if (cancelled) {
+          return;
+        }
+        const local = gameStateToLocal(gs);
+        setLocalGame((prev) => {
+          if (!prev || prev.gameId !== serverGameId) {
+            return local;
+          }
+          return {
+            ...local,
+            localId: prev.localId,
+            switchSide: prev.switchSide,
+            promptMinimized: prev.promptMinimized,
+          };
+        });
+        setError(null);
+        boardInteraction.updateGameLogs(local.logs);
+        const isPlayer = local.state.players.some((p) => p.id === clientIdRef.current);
+        if (isPlayer) {
+          persistGameId(serverGameId);
+        }
+      } catch {
+        // Keep the existing board; connection snackbar already covers the drop.
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isReplayRoute, serverGameId, cardsInfo, coreConnected, boardInteraction]);
 
   useEffect(() => {
     if (!isReplayRoute) {
       return;
     }
-    if (!Number.isFinite(replayMatchId)) {
+    const loadId = isSavedReplayRoute ? savedReplayId : replayMatchId;
+    if (!Number.isFinite(loadId)) {
       setError(t('REACT_INVALID_GAME', 'Invalid game'));
       return;
     }
@@ -339,7 +460,9 @@ export function TablePage() {
     let cancelled = false;
     void (async () => {
       try {
-        const local = await buildLocalGameFromMatchReplay(replayMatchId);
+        const local = isSavedReplayRoute
+          ? await buildLocalGameFromSavedReplay(loadId)
+          : await buildLocalGameFromMatchReplay(loadId);
         if (!cancelled) {
           setLocalGame(local);
           boardInteraction.updateGameLogs(local.logs);
@@ -356,7 +479,15 @@ export function TablePage() {
       cancelled = true;
       boardInteraction.endBoardSelection();
     };
-  }, [isReplayRoute, replayMatchId, cardsInfo, boardInteraction, t]);
+  }, [
+    isReplayRoute,
+    isSavedReplayRoute,
+    replayMatchId,
+    savedReplayId,
+    cardsInfo,
+    boardInteraction,
+    t,
+  ]);
 
   useEffect(() => {
     if (!localGame || localGame.replay || !clientId) {
@@ -374,7 +505,7 @@ export function TablePage() {
   useEffect(() => {
     setEndFlowStage(null);
     setLeaveConfirmKind(null);
-  }, [isReplayRoute, replayMatchId, serverGameId]);
+  }, [isReplayRoute, replayMatchId, savedReplayId, serverGameId]);
 
   useEffect(() => {
     if (!localGame) {
@@ -415,6 +546,8 @@ export function TablePage() {
     }
     return clientId;
   }, [localGame, clientId]);
+
+  useTableSfx({ localGame, clientId: tableClientId ?? clientId ?? 0 });
 
   const tableView = useMemo((): TableView | null => {
     if (!localGame || tableClientId == null) {
@@ -490,7 +623,7 @@ export function TablePage() {
       return;
     }
     if (kind === 'replay') {
-      navigate('/spectate');
+      navigate(replayExitPath);
       return;
     }
     if (localGame?.deleted) {
@@ -503,7 +636,14 @@ export function TablePage() {
     void getSocketManager()
       .emit('game:concede', { gameId: serverGameId })
       .catch(onGameSocketError);
-  }, [leaveConfirmKind, localGame?.deleted, navigate, onGameSocketError, serverGameId]);
+  }, [
+    leaveConfirmKind,
+    localGame?.deleted,
+    navigate,
+    onGameSocketError,
+    replayExitPath,
+    serverGameId,
+  ]);
 
   const onSendChat = useCallback(
     (message: string) => {
@@ -527,11 +667,11 @@ export function TablePage() {
 
   const onGameOverConfirm = useCallback(() => {
     clearPersistedGameId();
-    navigate(localGame?.replay != null ? '/spectate' : '/games');
-  }, [localGame?.replay, navigate]);
+    navigate(localGame?.replay != null ? replayExitPath : '/games');
+  }, [localGame?.replay, navigate, replayExitPath]);
 
   if (error) {
-    const backTarget = isReplayRoute ? '/spectate' : '/games';
+    const backTarget = isReplayRoute ? replayExitPath : '/games';
     return (
       <div style={{ padding: 24 }}>
         <p>{error}</p>

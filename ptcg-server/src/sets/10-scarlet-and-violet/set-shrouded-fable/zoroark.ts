@@ -8,14 +8,13 @@ import { PlayerType, StateUtils } from '../../../game';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Zoroark extends PokemonCard {
-
   public regulationMark = 'H';
 
   public stage = Stage.STAGE_1;
 
   public evolvesFrom = 'Zorua';
 
-  public cardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp = 120;
 
@@ -29,14 +28,14 @@ export class Zoroark extends PokemonCard {
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 60,
       damageCalculation: 'x',
-      text: 'This attack does 60 damage for each of your opponent\'s Pokémon ex and Pokémon V in play.'
+      text: "This attack does 60 damage for each of your opponent's Pokémon ex and Pokémon V in play.",
     },
     {
       name: 'Claw Slash',
       cost: [CardType.DARK, CardType.COLORLESS, CardType.COLORLESS],
       damage: 110,
-      text: 'Discard 2 Energy from this Pokémon.'
-    }
+      text: 'Discard 2 Energy from this Pokémon.',
+    },
   ];
 
   public set: string = 'SFA';
@@ -50,23 +49,22 @@ export class Zoroark extends PokemonCard {
   public fullName: string = 'Zoroark SFA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       let opponentExOrV = 0;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (card.tags.includes(CardTag.POKEMON_ex)) {
+        if (card.hasTag(CardTag.POKEMON_ex)) {
           opponentExOrV++;
         }
-        if (card.tags.includes(CardTag.POKEMON_V)) {
+        if (card.hasTag(CardTag.POKEMON_V)) {
           opponentExOrV++;
         }
-        if (card.tags.includes(CardTag.POKEMON_VMAX)) {
+        if (card.hasTag(CardTag.POKEMON_VMAX)) {
           opponentExOrV++;
         }
-        if (card.tags.includes(CardTag.POKEMON_VSTAR)) {
+        if (card.hasTag(CardTag.POKEMON_VSTAR)) {
           opponentExOrV++;
         }
       });

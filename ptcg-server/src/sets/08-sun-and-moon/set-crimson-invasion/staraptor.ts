@@ -8,14 +8,15 @@ import { StoreLike, State, StateUtils, GamePhase } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
-import { WAS_ATTACK_USED, BLOCK_RETREAT, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 export class Staraptor extends PokemonCard {
 
   public usedSkyHunting = false;
 
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Staravia';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 140;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

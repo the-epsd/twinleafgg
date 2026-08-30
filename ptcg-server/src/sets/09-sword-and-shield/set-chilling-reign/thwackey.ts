@@ -9,10 +9,10 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Thwackey extends PokemonCard {
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Grookey';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 100;
   public weakness = [{ type: R }];
   public retreat = [C, C];
@@ -22,8 +22,8 @@ export class Thwackey extends PokemonCard {
       name: 'Knock Off',
       cost: [G, C],
       damage: 30,
-      text: 'Discard a random card from your opponent\'s hand.'
-    }
+      text: "Discard a random card from your opponent's hand.",
+    },
   ];
 
   public regulationMark: string = 'E';

@@ -12,26 +12,23 @@ import { State, StoreLike } from '../../../game';
 export class Galvantula extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Joltik';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Discharge',
-      cost: [L],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Discard all [L] Energy attached to this Pokémon. This attack does 30 damage times the number of Energy cards you discarded.'
-    },
-    {
-      name: 'Signal Beam',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Discharge',
+    cost: [L],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Discard all [L] Energy attached to this Pokémon. This attack does 30 damage times the number of Energy cards you discarded.'
+  }, {
+    name: 'Signal Beam',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '51';

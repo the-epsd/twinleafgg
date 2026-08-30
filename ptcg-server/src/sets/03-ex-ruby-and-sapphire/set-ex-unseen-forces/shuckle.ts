@@ -4,30 +4,37 @@ import { StoreLike } from '../../../game/store/store-like';
 import { GamePhase, State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { PowerType, StateUtils } from '../../../game';
-import { AddSpecialConditionsEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import {
+  AddSpecialConditionsEffect,
+  PutDamageEffect,
+} from '../../../game/store/effects/attack-effects';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Shuckle extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 60;
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Extra-tight',
-    useWhenInPlay: false,
-    powerType: PowerType.POKEBODY,
-    text: 'Prevent all damage done to Shuckle by attacks from your opponent\'s Pokémon-ex.'
-  }];
+  public powers = [
+    {
+      name: 'Extra-tight',
+      useWhenInPlay: false,
+      powerType: PowerType.POKEBODY,
+      text: "Prevent all damage done to Shuckle by attacks from your opponent's Pokémon-ex.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Toxic',
-    cost: [G, C],
-    damage: 0,
-    text: 'The Defending Pokémon is now Poisoned. Put 2 damage counters instead of 1 on the Defending Pokémon between turns.'
-  }];
+  public attacks = [
+    {
+      name: 'Toxic',
+      cost: [G, C],
+      damage: 0,
+      text: 'The Defending Pokémon is now Poisoned. Put 2 damage counters instead of 1 on the Defending Pokémon between turns.',
+    },
+  ];
 
   public set: string = 'UF';
   public cardImage: string = 'assets/cardback.png';
@@ -58,8 +65,7 @@ export class Shuckle extends PokemonCard {
         return state;
       }
 
-      if (sourceCard.tags.includes(CardTag.POKEMON_ex)) {
-
+      if (sourceCard.hasTag(CardTag.POKEMON_ex)) {
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
           const powerEffect = new PowerEffect(player, this.powers[0], this);
@@ -74,12 +80,13 @@ export class Shuckle extends PokemonCard {
 
     // Toxic
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const addSpecialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.POISONED]);
+      const addSpecialCondition = new AddSpecialConditionsEffect(effect, [
+        SpecialCondition.POISONED,
+      ]);
       addSpecialCondition.poisonDamage = 20; // 2 damage counters = 20 damage
       store.reduceEffect(state, addSpecialCondition);
     }
 
     return state;
   }
-
 }

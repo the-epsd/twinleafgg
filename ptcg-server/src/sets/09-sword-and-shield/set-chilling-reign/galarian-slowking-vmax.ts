@@ -10,10 +10,10 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../../game/store/prefabs/attack-effects';
 
 export class GalarianSlowkingVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX, CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.POKEMON_VMAX, CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Galarian Slowking V';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 320;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
@@ -23,8 +23,8 @@ export class GalarianSlowkingVmax extends PokemonCard {
       name: 'Max Toxify',
       cost: [D, C],
       damage: 10,
-      text: 'Your opponent\'s Active Pokémon is now Poisoned. During Pokémon Checkup, put 12 damage counters on that Pokémon instead of 1.'
-    }
+      text: "Your opponent's Active Pokémon is now Poisoned. During Pokémon Checkup, put 12 damage counters on that Pokémon instead of 1.",
+    },
   ];
 
   public regulationMark: string = 'E';

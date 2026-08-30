@@ -11,9 +11,9 @@ import { DRAW_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs
 import { Card } from '../../../game/store/card/card';
 
 export class Skarmory extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
@@ -24,14 +24,14 @@ export class Skarmory extends PokemonCard {
       name: 'Cargo Jet',
       cost: [C],
       damage: 0,
-      text: 'Discard a Team Plasma card from your hand. if you do, draw 3 cards.'
+      text: 'Discard a Team Plasma card from your hand. if you do, draw 3 cards.',
     },
     {
       name: 'Steel Wing',
       cost: [M, M, C],
       damage: 40,
-      text: 'During your opponent\'s next turn, any damage done to this Pokémon by attacks is reduced by 20 (after applying Weakness and Resistance).'
-    }
+      text: "During your opponent's next turn, any damage done to this Pokémon by attacks is reduced by 20 (after applying Weakness and Resistance).",
+    },
   ];
 
   public set: string = 'PLS';
@@ -45,9 +45,7 @@ export class Skarmory extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const plasmaCards = player.hand.cards.filter(card =>
-        card.tags && card.tags.includes(CardTag.TEAM_PLASMA)
-      );
+      const plasmaCards = player.hand.cards.filter((card) => card.hasTag(CardTag.TEAM_PLASMA));
 
       if (plasmaCards.length === 0) {
         return state;
@@ -55,24 +53,28 @@ export class Skarmory extends PokemonCard {
 
       const blocked: number[] = [];
       player.hand.cards.forEach((c, index) => {
-        if (!c.tags || !c.tags.includes(CardTag.TEAM_PLASMA)) {
+        if (!c.hasTag(CardTag.TEAM_PLASMA)) {
           blocked.push(index);
         }
       });
 
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        player.hand,
-        {},
-        { min: 1, max: 1, allowCancel: false, blocked }
-      ), (cards: Card[] | null) => {
-        cards = cards || [];
-        if (cards.length > 0) {
-          player.hand.moveCardsTo(cards, player.discard);
-          DRAW_CARDS(store, state, player, 3);
-        }
-      });
+      state = store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          player.hand,
+          {},
+          { min: 1, max: 1, allowCancel: false, blocked },
+        ),
+        (cards: Card[] | null) => {
+          cards = cards || [];
+          if (cards.length > 0) {
+            player.hand.moveCardsTo(cards, player.discard);
+            DRAW_CARDS(store, state, player, 3);
+          }
+        },
+      );
     }
 
     // Attack 2: Steel Wing

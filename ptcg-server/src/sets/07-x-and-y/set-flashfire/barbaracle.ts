@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs
 export class Barbaracle extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Binacle';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 110;
   public weakness = [{ type: G }];
   public retreat = [C, C];
@@ -57,7 +57,7 @@ export class Barbaracle extends PokemonCard {
         player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         player.hand,
-        { superType: SuperType.ENERGY, cardType: CardType.FIGHTING },
+        { superType: SuperType.ENERGY, cardType: [CardType.FIGHTING] },
         { min: 0, max: fightingEnergyInHand, allowCancel: true }
       ), transfers => {
         if (!transfers || transfers.length === 0) {

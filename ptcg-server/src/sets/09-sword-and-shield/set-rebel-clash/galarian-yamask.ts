@@ -7,7 +7,7 @@ import { THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../../ga
 export class GalarianYamask extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public regulationMark = 'D';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 70;
   public weakness = [{ type: G }];
   public retreat = [C, C];

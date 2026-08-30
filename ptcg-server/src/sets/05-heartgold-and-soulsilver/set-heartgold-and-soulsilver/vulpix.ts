@@ -8,29 +8,24 @@ import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED } from '../../../game/store/prefabs/attack-effects';
 
-
 export class Vulpix extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 50;
   public weakness = [{ type: W }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Singe',
-      cost: [R],
-      damage: 0,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Burned.'
-    },
-    {
-      name: 'Ember',
-      cost: [R, C],
-      damage: 30,
-      text: 'Flip a coin. If tails, discard a [R] Energy attached to Vulpix.'
-    }
-  ];
+  public attacks = [{
+    name: 'Singe',
+    cost: [R],
+    damage: 0,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Burned.'
+  }, {
+    name: 'Ember',
+    cost: [R, C],
+    damage: 30,
+    text: 'Flip a coin. If tails, discard a [R] Energy attached to Vulpix.'
+  }];
 
   public set: string = 'HS';
   public name: string = 'Vulpix';
@@ -40,15 +35,15 @@ export class Vulpix extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, (result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {
           YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED(store, state, effect);
         }
-      }));
+      });
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, (result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {
           const player = effect.player;
 
@@ -68,7 +63,7 @@ export class Vulpix extends PokemonCard {
             store.reduceEffect(state, discardEnergy);
           });
         }
-      }));
+      });
     }
 
     return state;

@@ -11,27 +11,24 @@ import { ADD_CONFUSION_TO_PLAYER_ACTIVE, MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_
 export class Dodrio extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Doduo';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Raging Pecks',
-      cost: [C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 30 damage times the number of heads. This Pokémon is now Confused.'
-    },
-    {
-      name: 'Drill Peck',
-      cost: [C, C, C],
-      damage: 60,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Raging Pecks',
+    cost: [C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 30 damage times the number of heads. This Pokémon is now Confused.'
+  }, {
+    name: 'Drill Peck',
+    cost: [C, C, C],
+    damage: 60,
+    text: ''
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '100';

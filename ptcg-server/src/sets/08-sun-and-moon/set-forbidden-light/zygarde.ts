@@ -11,16 +11,18 @@ import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs
 
 export class Zygarde extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 90;
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Earthen Aura',
-    powerType: PowerType.ABILITY,
-    text: 'Damage from this Pokémon\'s attacks isn\'t affected by Weakness or Resistance.'
-  }];
+  public powers = [
+    {
+      name: 'Earthen Aura',
+      powerType: PowerType.ABILITY,
+      text: "Damage from this Pokémon's attacks isn't affected by Weakness or Resistance.",
+    },
+  ];
 
   public attacks = [
     {
@@ -28,8 +30,8 @@ export class Zygarde extends PokemonCard {
       cost: [F],
       damage: 30,
       damageCalculation: '+',
-      text: 'If your opponent has an Ultra Beast in play, this attack does 30 more damage.'
-    }
+      text: 'If your opponent has an Ultra Beast in play, this attack does 30 more damage.',
+    },
   ];
 
   public set: string = 'FLI';
@@ -58,7 +60,7 @@ export class Zygarde extends PokemonCard {
 
       let hasUltraBeast = false;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card.tags && card.tags.includes(CardTag.ULTRA_BEAST)) {
+        if (card.hasTag(CardTag.ULTRA_BEAST)) {
           hasUltraBeast = true;
         }
       });

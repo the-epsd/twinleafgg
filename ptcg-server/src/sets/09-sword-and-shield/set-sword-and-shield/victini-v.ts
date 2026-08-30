@@ -3,7 +3,13 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  EnergyType,
+  SuperType,
+} from '../../../game/store/card/card-types';
 
 import { PlayerType, StoreLike, State, StateUtils } from '../../../game';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
@@ -12,9 +18,9 @@ import { WAS_ATTACK_USED, ATTACH_ENERGY_PROMPT } from '../../../game/store/prefa
 import { SlotType } from '../../../game/store/actions/play-card-action';
 
 export class VictiniV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 190;
   public weakness = [{ type: W }];
   public retreat = [C, C];
@@ -24,15 +30,15 @@ export class VictiniV extends PokemonCard {
       name: 'Spreading Flames',
       cost: [C],
       damage: 0,
-      text: 'Attach up to 3 [R] Energy cards from your discard pile to your Pokémon in any way you like.'
+      text: 'Attach up to 3 [R] Energy cards from your discard pile to your Pokémon in any way you like.',
     },
     {
       name: 'Energy Burst',
       cost: [R, R],
       damage: 30,
       damageCalculation: 'x',
-      text: 'This attack does 30 damage for each Energy attached to both Active Pokémon.'
-    }
+      text: 'This attack does 30 damage for each Energy attached to both Active Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -49,11 +55,14 @@ export class VictiniV extends PokemonCard {
       const player = effect.player;
 
       ATTACH_ENERGY_PROMPT(
-        store, state, player,
-        PlayerType.BOTTOM_PLAYER, SlotType.DISCARD,
+        store,
+        state,
+        player,
+        PlayerType.BOTTOM_PLAYER,
+        SlotType.DISCARD,
         [SlotType.ACTIVE, SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
-        { min: 0, max: 3, allowCancel: false }
+        { min: 0, max: 3, allowCancel: false },
       );
     }
 
@@ -65,11 +74,17 @@ export class VictiniV extends PokemonCard {
 
       const checkPlayerEnergy = new CheckProvidedEnergyEffect(player, player.active);
       store.reduceEffect(state, checkPlayerEnergy);
-      const playerEnergyCount = checkPlayerEnergy.energyMap.reduce((sum, em) => sum + em.provides.length, 0);
+      const playerEnergyCount = checkPlayerEnergy.energyMap.reduce(
+        (sum, em) => sum + em.provides.length,
+        0,
+      );
 
       const checkOpponentEnergy = new CheckProvidedEnergyEffect(opponent, opponent.active);
       store.reduceEffect(state, checkOpponentEnergy);
-      const opponentEnergyCount = checkOpponentEnergy.energyMap.reduce((sum, em) => sum + em.provides.length, 0);
+      const opponentEnergyCount = checkOpponentEnergy.energyMap.reduce(
+        (sum, em) => sum + em.provides.length,
+        0,
+      );
 
       effect.damage = 30 * (playerEnergyCount + opponentEnergyCount);
     }

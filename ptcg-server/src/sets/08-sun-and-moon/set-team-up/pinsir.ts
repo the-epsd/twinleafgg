@@ -7,28 +7,26 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
-import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, BLOCK_RETREAT } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 export class Pinsir extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Grip and Squeeze',
-      cost: [C, C],
-      damage: 30,
-      text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
-    },
-    {
-      name: 'Guillotine Hug',
-      cost: [G, C, C],
-      damage: 0,
-      text: 'Flip 2 coins. If both of them are heads, your opponent\'s Active Pokémon is Knocked Out.'
-    }
-  ];
+  public attacks = [{
+    name: 'Grip and Squeeze',
+    cost: [C, C],
+    damage: 30,
+    text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
+  }, {
+    name: 'Guillotine Hug',
+    cost: [G, C, C],
+    damage: 0,
+    text: 'Flip 2 coins. If both of them are heads, your opponent\'s Active Pokémon is Knocked Out.'
+  }];
 
   public set: string = 'TEU';
   public setNumber: string = '9';

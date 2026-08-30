@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_P
 export class Vileplume extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Gloom';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 140;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
@@ -24,14 +24,12 @@ export class Vileplume extends PokemonCard {
     text: 'Once during your turn (before your attack), you may flip a coin. If heads, choose Asleep, Burned, Confused, or Poisoned. Your opponent\'s Active Pokémon is now affected by that Special Condition.'
   }];
 
-  public attacks = [
-    {
-      name: 'Giant Bloom',
-      cost: [G, G, C],
-      damage: 90,
-      text: 'Heal 30 damage from this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Giant Bloom',
+    cost: [G, G, C],
+    damage: 90,
+    text: 'Heal 30 damage from this Pokémon.'
+  }];
 
   public set: string = 'UNB';
   public setNumber: string = '8';

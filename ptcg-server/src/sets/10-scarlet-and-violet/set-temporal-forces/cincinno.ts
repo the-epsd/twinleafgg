@@ -13,7 +13,7 @@ export class Cinccino extends PokemonCard {
 
   public evolvesFrom = 'Minccino';
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp: number = 110;
 

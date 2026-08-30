@@ -1,33 +1,30 @@
-import { Card, ChooseCardsPrompt, GameLog, PokemonCard, Stage, CardType, GameMessage, CoinFlipPrompt } from '../../../game';
+import { Card, ChooseCardsPrompt, GameLog, PokemonCard, Stage, CardType, GameMessage } from '../../../game';
 import { EnergyType } from '../../../game/store/card/card-types';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { StateUtils } from '../../../game/store/state-utils';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Slowpoke extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 50;
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Fishing Tail',
-      cost: [C],
-      damage: 0,
-      text: 'Search your discard pile for a Basic Pokémon, Evolution card, or basic Energy card, show it to your opponent, and put it into your hand.'
-    },
-    {
-      name: 'Trip Over',
-      cost: [C, C],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 damage plus 10 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fishing Tail',
+    cost: [C],
+    damage: 0,
+    text: 'Search your discard pile for a Basic Pokémon, Evolution card, or basic Energy card, show it to your opponent, and put it into your hand.'
+  }, {
+    name: 'Trip Over',
+    cost: [C, C],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 20 damage plus 10 more damage.'
+  }];
 
   public set: string = 'UF';
   public name: string = 'Slowpoke';
@@ -89,10 +86,7 @@ export class Slowpoke extends PokemonCard {
       const player = effect.player;
 
       // Flip a coin
-      state = store.prompt(state, new CoinFlipPrompt(
-        player.id,
-        GameMessage.FLIP_COIN
-      ), result => {
+      state = COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
           effect.damage += 10; // 20 base + 10 for heads
         }

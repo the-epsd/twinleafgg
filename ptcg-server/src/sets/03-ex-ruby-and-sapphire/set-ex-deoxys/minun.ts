@@ -9,7 +9,7 @@ import { BLOCK_IF_DISCARD_EMPTY, MOVE_CARDS, WAS_ATTACK_USED } from '../../../ga
 
 export class Minun extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public retreat = [C];

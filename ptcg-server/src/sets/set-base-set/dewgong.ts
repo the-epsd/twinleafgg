@@ -8,39 +8,31 @@ import { StateUtils } from '../../game';
 import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Dewgong extends PokemonCard {
-
   public name = 'Dewgong';
-
   public set = 'BS';
-
   public fullName = 'Dewgong BS';
 
-  public cardType: CardType = CardType.WATER;
-
+  public cardType: CardType[] = [W];
   public stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Seel';
 
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '25';
 
   public hp = 80;
-
-  public weakness = [{ type: CardType.LIGHTNING }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: L }];
+  public retreat = [C, C, C];
 
   public attacks: Attack[] = [
     {
       name: 'Aurora Beam',
-      cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
+      cost: [W, W, C],
       damage: 50,
       text: ''
     },
     {
       name: 'Ice Beam',
-      cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [W, W, C, C],
       damage: 30,
       text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
     }

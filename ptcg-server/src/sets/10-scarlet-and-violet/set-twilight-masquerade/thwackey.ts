@@ -16,7 +16,7 @@ export class Thwackey extends PokemonCard {
 
   public evolvesFrom = 'Grookey';
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 100;
 

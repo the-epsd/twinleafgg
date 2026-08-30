@@ -1,20 +1,8 @@
-import { Player } from '../../../game/store/state/player';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { TrainerType, CardType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
-import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { GameError } from '../../../game/game-error';
-import { GameMessage } from '../../../game/game-message';
-import { Card } from '../../../game/store/card/card';
-import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { CardList } from '../../../game/store/state/card-list';
-import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
-import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
-import { StateUtils } from '../../../game/store/state-utils';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { StoreLike, State, StateUtils, GameError, GameMessage, CardList, ChooseCardsPrompt, PokemonCard, CardType, ShowCardsPrompt, ShuffleDeckPrompt, TrainerCard, TrainerType, Player, Card, pokemonHasCardType } from '../../../game';
+import { Effect } from "../../../game/store/effects/effect";
+import { EndTurnEffect } from "../../../game/store/effects/game-phase-effects";
+import { TrainerEffect } from "../../../game/store/effects/play-card-effects";
+import { MOVE_CARDS } from "../../../game/store/prefabs/prefabs";
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Canari, effect: TrainerEffect): IterableIterator<State> {
@@ -63,7 +51,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   let lightningPokemonCount = 0;
   const blocked: number[] = [];
   player.deck.cards.forEach((card, index) => {
-    if (card instanceof PokemonCard && card.cardType === CardType.LIGHTNING) {
+    if (card instanceof PokemonCard && pokemonHasCardType(card, CardType.LIGHTNING)) {
       lightningPokemonCount += 1;
     } else {
       blocked.push(index);
@@ -108,7 +96,6 @@ export class Canari extends TrainerCard {
   public setNumber: string = '185';
   public name: string = 'Canari';
   public fullName: string = 'Canari M2a';
-
   public text: string = `You can use this card only if you discard another card from your hand.
   
   Search your deck for up to 4 [L] Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.`;
@@ -124,12 +111,17 @@ export class Canari extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+      effect.player.playedCanari = true;
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
+
+    if (effect instanceof EndTurnEffect) {
+      effect.player.playedCanari = false;
+    }
+
     return state;
   }
 }

@@ -7,7 +7,7 @@ import { DISCARD_ALL_ENERGY_FROM_POKEMON, PLAY_POKEMON_FROM_HAND_TO_BENCH, WAS_A
 export class Klinklang extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Klang';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 140;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

@@ -6,11 +6,14 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Sigilyph extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 100;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];
@@ -21,14 +24,14 @@ export class Sigilyph extends PokemonCard {
       name: 'Warning',
       cost: [C],
       damage: 0,
-      text: 'Search your deck for a Basic Pokémon and put it onto your Bench. Then, shuffle your deck. If your opponent\'s Active Pokémon is a Pokémon V, you may put up to 5 Basic Pokémon onto your Bench in this way instead.'
+      text: "Search your deck for a Basic Pokémon and put it onto your Bench. Then, shuffle your deck. If your opponent's Active Pokémon is a Pokémon V, you may put up to 5 Basic Pokémon onto your Bench in this way instead.",
     },
     {
       name: 'Cutting Wind',
       cost: [P, C, C],
       damage: 70,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -46,18 +49,27 @@ export class Sigilyph extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const opponentActiveCard = opponent.active.getPokemonCard();
-      const isOpponentActiveV = opponentActiveCard !== undefined &&
-        (opponentActiveCard.tags.includes(CardTag.POKEMON_V) ||
-          opponentActiveCard.tags.includes(CardTag.POKEMON_VMAX) ||
-          opponentActiveCard.tags.includes(CardTag.POKEMON_VSTAR));
+      const isOpponentActiveV =
+        opponentActiveCard !== undefined &&
+        (opponentActiveCard.hasTag(CardTag.POKEMON_V) ||
+          opponentActiveCard.hasTag(CardTag.POKEMON_VMAX) ||
+          opponentActiveCard.hasTag(CardTag.POKEMON_VSTAR));
 
       if (isOpponentActiveV) {
         return SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(
-          store, state, player, { stage: Stage.BASIC }, { min: 0, max: 5 }
+          store,
+          state,
+          player,
+          { stage: Stage.BASIC },
+          { min: 0, max: 5 },
         );
       } else {
         return SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(
-          store, state, player, { stage: Stage.BASIC }, { min: 0, max: 1 }
+          store,
+          state,
+          player,
+          { stage: Stage.BASIC },
+          { min: 0, max: 1 },
         );
       }
     }

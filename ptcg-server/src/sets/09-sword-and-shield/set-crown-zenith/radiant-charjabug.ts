@@ -8,33 +8,32 @@ import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { AttachEnergyEffect } from '../../../game/store/effects/play-card-effects';
-import {
-  WAS_ATTACK_USED,
-  IS_ABILITY_BLOCKED
-} from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class RadiantCharjabug extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.RADIANT];
-  public cardType: CardType = L;
+  protected _tags = [CardTag.RADIANT];
+  public cardType: CardType[] = [L];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Shocking Block',
-    powerType: PowerType.ABILITY,
-    text: 'Whenever any player attaches an Energy card from their hand to 1 of their Pokémon V, put 2 damage counters on that Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Shocking Block',
+      powerType: PowerType.ABILITY,
+      text: 'Whenever any player attaches an Energy card from their hand to 1 of their Pokémon V, put 2 damage counters on that Pokémon.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Linear Attack',
       cost: [L],
       damage: 0,
-      text: 'This attack does 30 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "This attack does 30 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -58,11 +57,12 @@ export class RadiantCharjabug extends PokemonCard {
       }
 
       // Only trigger if attached to a Pokemon V (includes V, VMAX, VSTAR)
-      if (!targetCard || (
-        !targetCard.tags.includes(CardTag.POKEMON_V) &&
-        !targetCard.tags.includes(CardTag.POKEMON_VMAX) &&
-        !targetCard.tags.includes(CardTag.POKEMON_VSTAR)
-      )) {
+      if (
+        !targetCard ||
+        (!targetCard.hasTag(CardTag.POKEMON_V) &&
+          !targetCard.hasTag(CardTag.POKEMON_VMAX) &&
+          !targetCard.hasTag(CardTag.POKEMON_VSTAR))
+      ) {
         return state;
       }
 

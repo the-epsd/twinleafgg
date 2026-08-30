@@ -12,27 +12,25 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED, DISCARD_AN_ENERGY_FROM
 export class Araquanid extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Dewpider';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 120;
   public weakness = [{ type: L }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Drowning Ball',
-      cost: [W],
-      damage: 20,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed, and discard an Energy from that Pokémon.'
-    },
-    {
-      name: 'Headbutt Bounce',
-      cost: [W, C],
-      damage: 60,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Drowning Ball',
+    cost: [W],
+    damage: 20,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed, and discard an Energy from that Pokémon.'
+  }, {
+    name: 'Headbutt Bounce',
+    cost: [W, C],
+    damage: 60,
+    text: ''
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'SIT';
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';

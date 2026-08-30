@@ -2,12 +2,12 @@ import { CardType, GamePhase, PokemonCard, PowerType, Stage, State, StateUtils, 
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { BLOCK_RETREAT, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Maractus extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 110;
   public weakness = [{ type: R }];
   public retreat = [C, C];
@@ -32,10 +32,8 @@ export class Maractus extends PokemonCard {
   public name: string = 'Maractus';
   public fullName: string = 'Maractus JTG';
 
-  public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER: string = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Explosive Needle
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const player = StateUtils.findOwner(state, effect.target);
       const pokemonCard = effect.target.getPokemonCard();
@@ -52,7 +50,7 @@ export class Maractus extends PokemonCard {
         effect.source.damage += 60;
       }
     }
-
+    // Corner
     if (WAS_ATTACK_USED(effect, 0, this)) {
       return BLOCK_RETREAT(store, state, effect, this);
     }

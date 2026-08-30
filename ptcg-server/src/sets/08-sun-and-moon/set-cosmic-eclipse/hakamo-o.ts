@@ -12,24 +12,26 @@ import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects
 export class HakamoO extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Jangmo-o';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 80;
   public weakness = [{ type: Y }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Fighter\'s Roar',
-    powerType: PowerType.ABILITY,
-    text: 'If your opponent\'s Active Pokémon is a Pokémon-GX or Pokémon-EX, this Pokémon can evolve during the turn you play it.'
-  }];
+  public powers = [
+    {
+      name: "Fighter's Roar",
+      powerType: PowerType.ABILITY,
+      text: "If your opponent's Active Pokémon is a Pokémon-GX or Pokémon-EX, this Pokémon can evolve during the turn you play it.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Dragonslice',
       cost: [L, F],
       damage: 30,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'CEC';
@@ -50,9 +52,12 @@ export class HakamoO extends PokemonCard {
       }
 
       const opponentActive = opponent.active.getPokemonCard();
-      if (opponentActive && (opponentActive.tags.includes(CardTag.POKEMON_GX) || opponentActive.tags.includes(CardTag.POKEMON_EX))) {
+      if (
+        opponentActive &&
+        (opponentActive.hasTag(CardTag.POKEMON_GX) || opponentActive.hasTag(CardTag.POKEMON_EX))
+      ) {
         player.canEvolve = true;
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
           if (cardList.getPokemonCard() === this) {
             cardList.pokemonPlayedTurn = state.turn - 1;
           }

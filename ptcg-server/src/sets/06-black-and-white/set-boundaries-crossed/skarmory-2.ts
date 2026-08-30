@@ -9,26 +9,23 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Skarmory2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 100;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Metal Sound',
-      cost: [M],
-      damage: 0,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
-    },
-    {
-      name: 'Swift',
-      cost: [C, C, C],
-      damage: 70,
-      text: 'This attack\'s damage isn\'t affected by Weakness, Resistance, or any other effects on the Defending Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Metal Sound',
+    cost: [M],
+    damage: 0,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
+  }, {
+    name: 'Swift',
+    cost: [C, C, C],
+    damage: 70,
+    text: 'This attack\'s damage isn\'t affected by Weakness, Resistance, or any other effects on the Defending Pokémon.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '96';

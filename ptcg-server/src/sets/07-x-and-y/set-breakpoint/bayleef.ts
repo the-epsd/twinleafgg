@@ -6,21 +6,20 @@ import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT } from '
 
 export class Bayleef extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
-  public weakness = [{ type: CardType.FIRE }];
+  public retreat = [C, C];
+  public weakness = [{ type: R }];
   public evolvesFrom: string = 'Chikorita';
 
   public attacks = [{
     name: 'Body Slam',
-    cost: [CardType.COLORLESS],
+    cost: [C],
     damage: 20,
     text: 'Flip a coin. If heads, your opponent\'s Active Pokemon is now Paralyzed'
-  },
-  {
+  }, {
     name: 'Vine Whip',
-    cost: [CardType.GRASS, CardType.COLORLESS],
+    cost: [G, C],
     damage: 30,
     text: ''
   }];

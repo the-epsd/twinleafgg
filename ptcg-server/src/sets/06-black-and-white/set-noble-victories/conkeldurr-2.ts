@@ -11,7 +11,7 @@ import { PlayPokemonEffect, CoinFlipSequenceEffect } from '../../../game/store/e
 export class Conkeldurr2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Gurdurr';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 140;
   public weakness = [{ type: P }];
   public retreat = [C, C, C, C];

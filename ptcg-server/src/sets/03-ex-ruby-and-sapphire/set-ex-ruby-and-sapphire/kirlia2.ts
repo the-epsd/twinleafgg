@@ -9,7 +9,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 export class Kirlia2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Ralts';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public weakness = [{ type: P }];
   public retreat = [C];
@@ -19,8 +19,7 @@ export class Kirlia2 extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, each Defending Pokémon is now Confused.'
-  },
-  {
+  }, {
     name: 'Life Drain',
     cost: [P],
     damage: 0,

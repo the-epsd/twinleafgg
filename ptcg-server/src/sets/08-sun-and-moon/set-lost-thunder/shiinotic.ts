@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN
 export class Shiinotic extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Morelull';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 100;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

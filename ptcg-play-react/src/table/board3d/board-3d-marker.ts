@@ -12,6 +12,7 @@ import {
 import { PokemonCardList, SpecialCondition } from 'ptcg-server';
 import { Board3dAssetLoaderService } from './services/board-3d-asset-loader.service';
 import { MARKER_SIZE, markerOverlayPosition, markerStackIndexForFile, resolveMarkerStack } from './board-3d-overlay-layout';
+import { isUnderInspectingCard } from './board3dInspectingCard';
 
 /** Map SpecialCondition to marker image filenames in assets/status-conditions/. */
 export const STATUS_CONDITION_MARKER_FILES: { [key: number]: string } = {
@@ -189,8 +190,12 @@ export class Board3dMarker {
 
   /** Face the camera each frame (same pattern as {@link Board3dEnergySprite}). */
   updateBillboards(camera: PerspectiveCamera): void {
-    camera.getWorldQuaternion(Board3dMarker._qCam);
     for (const mesh of this.markerMeshes) {
+      if (isUnderInspectingCard(mesh)) {
+        mesh.quaternion.identity();
+        continue;
+      }
+      camera.getWorldQuaternion(Board3dMarker._qCam);
       const parent = mesh.parent;
       if (!parent) {
         mesh.quaternion.copy(Board3dMarker._qCam).multiply(Board3dMarker._qFlip);

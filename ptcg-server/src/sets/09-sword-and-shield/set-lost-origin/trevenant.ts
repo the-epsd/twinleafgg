@@ -14,24 +14,26 @@ import { GamePhase } from '../../../game/store/state/state';
 export class Trevenant extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Phantump';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
 
-  public powers = [{
-    name: 'Elder Tree Barrier',
-    powerType: PowerType.ABILITY,
-    text: 'If this Pokémon is Knocked Out by damage from an attack from your opponent\'s Pokémon V, your opponent can\'t take any Prize cards for it.'
-  }];
+  public powers = [
+    {
+      name: 'Elder Tree Barrier',
+      powerType: PowerType.ABILITY,
+      text: "If this Pokémon is Knocked Out by damage from an attack from your opponent's Pokémon V, your opponent can't take any Prize cards for it.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Giga Impact',
       cost: [G, G, C],
       damage: 150,
-      text: 'During your next turn, this Pokémon can\'t attack.'
-    }
+      text: "During your next turn, this Pokémon can't attack.",
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -68,7 +70,7 @@ export class Trevenant extends PokemonCard {
       const attacker = StateUtils.getOpponent(state, owner);
       const attackerCard = attacker.active.getPokemonCard();
 
-      if (attackerCard && attackerCard.tags.includes(CardTag.POKEMON_V)) {
+      if (attackerCard && attackerCard.hasTag(CardTag.POKEMON_V)) {
         effect.prizeCount = 0;
       }
     }

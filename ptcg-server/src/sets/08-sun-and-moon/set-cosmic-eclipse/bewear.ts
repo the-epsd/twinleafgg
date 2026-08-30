@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED } from '../../../
 export class Bewear extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Stufful';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 120;
   public weakness = [{ type: F }];
   public retreat = [C, C];
@@ -23,14 +23,12 @@ export class Bewear extends PokemonCard {
     text: 'As long as this Pokémon is on your Bench, your Active Pokémon\'s Retreat Cost is ColorlessColorless less.'
   }];
 
-  public attacks = [
-    {
-      name: 'Lariat',
-      cost: [C, C, C],
-      damage: 120,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Lariat',
+    cost: [C, C, C],
+    damage: 120,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'CEC';
   public setNumber: string = '182';

@@ -1,17 +1,17 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { CoinFlipPrompt, GameError, GameMessage, PowerType, State, StateUtils, StoreLike } from '../../../game';
+import { GameError, GameMessage, PowerType, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlaySupporterEffect } from '../../../game/store/effects/play-card-effects';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Stoutland extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [C];
   public hp: number = 140;
-  public weakness = [{ type: CardType.FIGHTING }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public retreat = [C, C, C];
   public evolvesFrom = 'Herdier';
 
   public powers = [{
@@ -22,7 +22,7 @@ export class Stoutland extends PokemonCard {
 
   public attacks = [{
     name: 'Wild Tackle',
-    cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+    cost: [C, C, C],
     damage: 90,
     text: 'Flip a coin. If tails, this Pokémon does 20 damage to itself.'
   }];
@@ -56,9 +56,7 @@ export class Stoutland extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (!result) {
           const dealDamage = new DealDamageEffect(effect, 10);
           dealDamage.target = player.active;

@@ -10,9 +10,9 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class LucarioV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 210;
   public weakness = [{ type: P }];
   public retreat = [C, C];
@@ -22,14 +22,14 @@ export class LucarioV extends PokemonCard {
       name: 'Aura Sphere',
       cost: [F],
       damage: 40,
-      text: 'This attack also does 20 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack also does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Beatdown Smash',
       cost: [F, F, C],
       damage: 180,
-      text: 'During your next turn, this Pokémon can\'t use Beatdown Smash.'
-    }
+      text: "During your next turn, this Pokémon can't use Beatdown Smash.",
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -45,7 +45,7 @@ export class LucarioV extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+      const hasBenched = opponent.bench.some((b) => b.cards.length > 0);
       if (hasBenched) {
         THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON(20, effect, store, state);
       }

@@ -11,7 +11,7 @@ import { ABILITY_USED, ADD_MARKER, DRAW_CARDS, HAS_MARKER, MOVE_CARDS, WAS_ATTAC
 
 export class Aipom extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 50;
   public weakness = [{ type: F }];
   public retreat = [C];

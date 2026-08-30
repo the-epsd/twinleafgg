@@ -7,7 +7,7 @@ import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, GET_PLA
 export class Omanyte extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Mysterious Fossil';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 70;
   public weakness = [{ type: L }];
   public retreat = [C];
@@ -17,8 +17,7 @@ export class Omanyte extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Search your deck for Omanyte, Kabuto, or any Basic Pokémon and put as many of them as you like onto your Bench. Shuffle your deck afterward. Treat the new Benched Pokémon as Basic Pokémon.'
-  },
-  {
+  }, {
     name: 'Bind',
     cost: [C, C],
     damage: 20,

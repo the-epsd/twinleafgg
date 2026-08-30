@@ -10,7 +10,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
-import { PokemonCard } from '../../../game';
+import { PokemonCard, pokemonHasCardType } from '../../../game';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect, self: Card): IterableIterator<State> {
@@ -24,7 +24,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   player.deck.cards.forEach((c, index) => {
     if (c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC && c.name === 'Psychic Energy') {
       trainers += 1;
-    } else if (c instanceof PokemonCard && c.cardType === CardType.PSYCHIC && c.stage === Stage.BASIC) {
+    } else if (c instanceof PokemonCard && pokemonHasCardType(c, CardType.PSYCHIC) && c.stage === Stage.BASIC) {
       pokemons += 1;
     } else {
       blocked.push(index);

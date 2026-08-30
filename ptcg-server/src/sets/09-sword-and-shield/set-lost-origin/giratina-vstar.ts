@@ -11,24 +11,26 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class GiratinaVSTAR extends PokemonCard {
   public stage: Stage = Stage.VSTAR;
-  public tags = [CardTag.POKEMON_VSTAR];
+  protected _tags = [CardTag.POKEMON_VSTAR];
   public evolvesFrom = 'Giratina V';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 280;
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Lost Impact',
-    cost: [G, P, C],
-    damage: 280,
-    text: 'Put 2 Energy attached to your Pokémon in the Lost Zone.'
-  },
-  {
-    name: 'Star Requium',
-    cost: [G, P],
-    damage: 0,
-    text: 'You can use this attack only if you have 10 or more cards in the Lost Zone. Your opponent\'s Active Pokémon is Knocked Out. (You can\'t use more than 1 VSTAR Power in a game.)'
-  }];
+  public attacks = [
+    {
+      name: 'Lost Impact',
+      cost: [G, P, C],
+      damage: 280,
+      text: 'Put 2 Energy attached to your Pokémon in the Lost Zone.',
+    },
+    {
+      name: 'Star Requium',
+      cost: [G, P],
+      damage: 0,
+      text: "You can use this attack only if you have 10 or more cards in the Lost Zone. Your opponent's Active Pokémon is Knocked Out. (You can't use more than 1 VSTAR Power in a game.)",
+    },
+  ];
 
   public regulationMark = 'F';
   public set: string = 'LOR';
@@ -42,27 +44,28 @@ export class GiratinaVSTAR extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(state, new DiscardEnergyPrompt(
-        player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],// Card source is target Pokemon
-        { superType: SuperType.ENERGY },
-        { min: 2, max: 2, allowCancel: false }
-      ), transfers => {
+      return store.prompt(
+        state,
+        new DiscardEnergyPrompt(
+          player.id,
+          GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH], // Card source is target Pokemon
+          { superType: SuperType.ENERGY },
+          { min: 2, max: 2, allowCancel: false },
+        ),
+        (transfers) => {
+          if (transfers === null) {
+            return;
+          }
 
-        if (transfers === null) {
-          return;
-        }
-
-        for (const transfer of transfers) {
-
-          const source = StateUtils.getTarget(state, player, transfer.from);
-          const target = player.lostzone;
-          source.moveCardTo(transfer.card, target);
-
-        }
-      });
+          for (const transfer of transfers) {
+            const source = StateUtils.getTarget(state, player, transfer.from);
+            const target = player.lostzone;
+            source.moveCardTo(transfer.card, target);
+          }
+        },
+      );
     }
 
     // Star Requium

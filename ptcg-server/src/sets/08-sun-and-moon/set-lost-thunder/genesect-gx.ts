@@ -9,33 +9,35 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class GenesectGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 180;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Double Drive',
-    powerType: PowerType.ABILITY,
-    text: 'This Pok\u00e9mon may have up to 2 Pok\u00e9mon Tool cards attached to it. If it loses this Ability, discard Pok\u00e9mon Tool cards from it until only 1 remains.'
-  }];
+  public powers = [
+    {
+      name: 'Double Drive',
+      powerType: PowerType.ABILITY,
+      text: 'This Pok\u00e9mon may have up to 2 Pok\u00e9mon Tool cards attached to it. If it loses this Ability, discard Pok\u00e9mon Tool cards from it until only 1 remains.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Burst Shot',
       cost: [M, M, C],
       damage: 130,
-      text: ''
+      text: '',
     },
     {
       name: 'Break Buster-GX',
       cost: [M, M, C],
       damage: 190,
-      text: 'This attack\'s damage isn\'t affected by Resistance. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "This attack's damage isn't affected by Resistance. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'LOT';

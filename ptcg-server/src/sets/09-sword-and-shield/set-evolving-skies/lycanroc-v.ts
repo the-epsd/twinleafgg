@@ -9,9 +9,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class LycanrocV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 200;
   public weakness = [{ type: G }];
   public retreat = [C];
@@ -21,14 +21,14 @@ export class LycanrocV extends PokemonCard {
       name: 'Rock Throw',
       cost: [F],
       damage: 40,
-      text: ''
+      text: '',
     },
     {
       name: 'Crashing Fangs',
       cost: [F, F, C],
       damage: 200,
-      text: 'During your next turn, this Pokémon can\'t attack.'
-    }
+      text: "During your next turn, this Pokémon can't attack.",
+    },
   ];
 
   public regulationMark: string = 'E';

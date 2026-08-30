@@ -7,20 +7,22 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Sylveonex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public evolvesFrom: string = 'Eevee';
   public hp: number = 270;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public weakness = [{ type: M }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Colorful Harmony',
-    cost: [P, C, C],
-    damage: 50,
-    damageCalculation: 'x',
-    text: 'This attack does 50 damage for each type of Basic Energy attached to all of your Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'Colorful Harmony',
+      cost: [P, C, C],
+      damage: 50,
+      damageCalculation: 'x',
+      text: 'This attack does 50 damage for each type of Basic Energy attached to all of your Pokémon.',
+    },
+  ];
 
   public regulationMark: string = 'J';
   public set: string = '30C';
@@ -34,10 +36,10 @@ export class Sylveonex extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const uniqueTypes = new Set<CardType>();
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, pokemon => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (pokemon) => {
         const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, pokemon);
         store.reduceEffect(state, checkProvidedEnergyEffect);
-        checkProvidedEnergyEffect.energyMap.forEach(em => {
+        checkProvidedEnergyEffect.energyMap.forEach((em) => {
           if (em.card.energyType === EnergyType.BASIC && em.provides.length > 0) {
             if (em.provides.includes(CardType.ANY)) {
               [
@@ -49,10 +51,10 @@ export class Sylveonex extends PokemonCard {
                 CardType.FIGHTING,
                 CardType.DARK,
                 CardType.METAL,
-                CardType.FAIRY
-              ].forEach(type => uniqueTypes.add(type));
+                CardType.FAIRY,
+              ].forEach((type) => uniqueTypes.add(type));
             } else {
-              em.provides.forEach(type => uniqueTypes.add(type));
+              em.provides.forEach((type) => uniqueTypes.add(type));
             }
           }
         });

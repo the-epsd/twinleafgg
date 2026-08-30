@@ -6,12 +6,11 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class AlolanVulpixV extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp: number = 190;
 
@@ -25,14 +24,14 @@ export class AlolanVulpixV extends PokemonCard {
       cost: [],
       damage: 10,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is a Pokémon V, this attack does 50 more damage.'
+      text: "If your opponent's Active Pokémon is a Pokémon V, this attack does 50 more damage.",
     },
     {
       name: 'Frost Smash',
       cost: [CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
       damage: 110,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'SIT';
@@ -53,7 +52,10 @@ export class AlolanVulpixV extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const defending = opponent.active.getPokemonCard();
-      if (!defending || defending.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX)) {
+      if (
+        !defending ||
+        defending.hasTag(CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX)
+      ) {
         effect.damage += 50;
         return state;
       }

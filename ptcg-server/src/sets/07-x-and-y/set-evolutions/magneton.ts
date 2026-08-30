@@ -10,26 +10,23 @@ import { State, StoreLike } from '../../../game';
 export class Magneton extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Magnemite';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Thunder Wave',
-      cost: [L, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pok\u00e9mon is now Paralyzed.'
-    },
-    {
-      name: 'Self-Destruct',
-      cost: [L, C, C],
-      damage: 80,
-      text: 'This Pok\u00e9mon does 80 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Thunder Wave',
+    cost: [L, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pok\u00e9mon is now Paralyzed.'
+  }, {
+    name: 'Self-Destruct',
+    cost: [L, C, C],
+    damage: 80,
+    text: 'This Pok\u00e9mon does 80 damage to itself.'
+  }];
 
   public set: string = 'EVO';
   public setNumber: string = '38';

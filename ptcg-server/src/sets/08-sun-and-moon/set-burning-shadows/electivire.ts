@@ -11,27 +11,24 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF }
 export class Electivire extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Electabuzz';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 140;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Thunder Punch',
-      cost: [L, C, C],
-      damage: 60,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 60 more damage. If tails, this Pokémon does 20 damage to itself.'
-    },
-    {
-      name: 'Giga Impact',
-      cost: [L, L, C, C],
-      damage: 170,
-      text: 'This Pokémon can\'t attack during your next turn.'
-    }
-  ];
+  public attacks = [{
+    name: 'Thunder Punch',
+    cost: [L, C, C],
+    damage: 60,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 60 more damage. If tails, this Pokémon does 20 damage to itself.'
+  }, {
+    name: 'Giga Impact',
+    cost: [L, L, C, C],
+    damage: 170,
+    text: 'This Pokémon can\'t attack during your next turn.'
+  }];
 
   public set: string = 'BUS';
   public setNumber: string = '43';

@@ -11,10 +11,10 @@ import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/s
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class LycanrocGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Rockruff';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 200;
   public weakness = [{ type: G }];
   public retreat = [C];
@@ -24,21 +24,21 @@ export class LycanrocGx extends PokemonCard {
       name: 'Crunch',
       cost: [F, C],
       damage: 30,
-      text: 'Discard an Energy from your opponent\'s Active Pokémon.'
+      text: "Discard an Energy from your opponent's Active Pokémon.",
     },
     {
       name: 'Accelerock',
       cost: [F, F, C],
       damage: 120,
-      text: ''
+      text: '',
     },
     {
       name: 'Lycanfang-GX',
       cost: [F, F, C],
       damage: 200,
       gxAttack: true,
-      text: 'Discard 2 Energy from this Pokémon. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Discard 2 Energy from this Pokémon. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'BUS';

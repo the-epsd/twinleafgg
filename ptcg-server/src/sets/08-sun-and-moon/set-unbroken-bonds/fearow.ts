@@ -12,20 +12,18 @@ import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/s
 export class Fearow extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Spearow';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 100;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Drill Run Double',
-      cost: [C, C],
-      damage: 70,
-      text: 'Flip a coin. If heads, discard 2 Energy from your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Drill Run Double',
+    cost: [C, C],
+    damage: 70,
+    text: 'Flip a coin. If heads, discard 2 Energy from your opponent\'s Active Pokémon.'
+  }];
 
   public set: string = 'UNB';
   public setNumber: string = '146';

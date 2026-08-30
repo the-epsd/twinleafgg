@@ -8,7 +8,7 @@ import { AFTER_ATTACK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 export class Mewtwo extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
   public hp: number = 130;
   public weakness = [{ type: CardType.DARK }];
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];

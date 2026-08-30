@@ -4,12 +4,21 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, Card, ChooseCardsPrompt, GameMessage, StateUtils, ShowCardsPrompt } from '../../../game';
+import {
+  StoreLike,
+  State,
+  Card,
+  ChooseCardsPrompt,
+  GameMessage,
+  StateUtils,
+  ShowCardsPrompt,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, BLOCK_IF_DECK_EMPTY, SHUFFLE_DECK, BLOCK_RETREAT } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, BLOCK_IF_DECK_EMPTY, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 export class Mawile extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
@@ -20,14 +29,14 @@ export class Mawile extends PokemonCard {
       name: 'Dual Calling',
       cost: [C],
       damage: 0,
-      text: 'Search your deck for up to 2 TAG TEAM cards, reveal them, and put them into your hand. Then, shuffle your deck.'
+      text: 'Search your deck for up to 2 TAG TEAM cards, reveal them, and put them into your hand. Then, shuffle your deck.',
     },
     {
       name: 'Dark Clamp',
       cost: [C],
       damage: 20,
-      text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
-    }
+      text: "The Defending Pokémon can't retreat during your opponent's next turn.",
+    },
   ];
 
   public set: string = 'CEC';
@@ -48,29 +57,35 @@ export class Mawile extends PokemonCard {
       // Block cards that are not TAG TEAM cards
       const blocked: number[] = [];
       player.deck.cards.forEach((card, index) => {
-        if (!card.tags.includes(CardTag.TAG_TEAM)) {
+        if (!card.hasTag(CardTag.TAG_TEAM)) {
           blocked.push(index);
         }
       });
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        {},
-        { min: 0, max: 2, allowCancel: true, blocked }
-      ), selected => {
-        const cards: Card[] = selected || [];
-        if (cards.length > 0) {
-          store.prompt(state, new ShowCardsPrompt(
-            opponent.id,
-            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-            cards
-          ), () => { });
-          cards.forEach(c => { player.deck.moveCardTo(c, player.hand); });
-        }
-        return SHUFFLE_DECK(store, state, player);
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.deck,
+          {},
+          { min: 0, max: 2, allowCancel: true, blocked },
+        ),
+        (selected) => {
+          const cards: Card[] = selected || [];
+          if (cards.length > 0) {
+            store.prompt(
+              state,
+              new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+              () => {},
+            );
+            cards.forEach((c) => {
+              player.deck.moveCardTo(c, player.hand);
+            });
+          }
+          return SHUFFLE_DECK(store, state, player);
+        },
+      );
     }
 
     // Attack 2: Dark Clamp

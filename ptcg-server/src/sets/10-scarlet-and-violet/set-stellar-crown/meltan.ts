@@ -7,7 +7,7 @@ import { SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../ga
 export class Meltan extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public evolvesFrom: string = 'Meltan';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

@@ -10,9 +10,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class GranbullV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 210;
   public weakness = [{ type: M }];
   public retreat = [C, C];
@@ -23,14 +23,14 @@ export class GranbullV extends PokemonCard {
       cost: [C, C],
       damage: 30,
       damageCalculation: '+',
-      text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
+      text: 'This attack does 10 more damage for each damage counter on this Pokémon.',
     },
     {
       name: 'Bull Dash',
       cost: [P, P, C],
       damage: 190,
-      text: 'This Pokémon also does 30 damage to itself.'
-    }
+      text: 'This Pokémon also does 30 damage to itself.',
+    },
   ];
 
   public regulationMark: string = 'F';

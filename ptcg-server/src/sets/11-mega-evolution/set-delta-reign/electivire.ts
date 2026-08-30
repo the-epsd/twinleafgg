@@ -6,7 +6,7 @@ import { ADD_PARALYZED_TO_PLAYER_ACTIVE, COIN_FLIP_PROMPT, WAS_ATTACK_USED } fro
 export class Electivire extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Electabuzz';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 140;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
@@ -16,8 +16,7 @@ export class Electivire extends PokemonCard {
     cost: [C, C],
     damage: 30,
     text: 'Flip a coin. If heads, your opponent\'s Active Pokemon is now Paralyzed.'
-  },
-  {
+  }, {
     name: 'Voltage Hammer',
     cost: [L, L, C, C],
     damage: 60,
@@ -26,6 +25,7 @@ export class Electivire extends PokemonCard {
   }];
 
   public regulationMark: string = 'J';
+
   public set: string = 'M6';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '23';

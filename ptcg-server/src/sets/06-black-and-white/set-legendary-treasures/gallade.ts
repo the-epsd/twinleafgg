@@ -10,26 +10,23 @@ import { PlayerType, State, StoreLike } from '../../../game';
 export class Gallade extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Kirlia';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 140;
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Nerve Shot',
-      cost: [F],
-      damage: 30,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Pandemonium Blade',
-      cost: [F, C, C],
-      damage: 60,
-      damageCalculation: '+',
-      text: 'Does 20 more damage for each of your Benched Pokémon that has any damage counters on it.'
-    }
-  ];
+  public attacks = [{
+    name: 'Nerve Shot',
+    cost: [F],
+    damage: 30,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Pandemonium Blade',
+    cost: [F, C, C],
+    damage: 60,
+    damageCalculation: '+',
+    text: 'Does 20 more damage for each of your Benched Pokémon that has any damage counters on it.'
+  }];
 
   public set: string = 'LTR';
   public setNumber: string = '81';

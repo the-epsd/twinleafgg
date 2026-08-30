@@ -11,26 +11,23 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 export class Fletchinder extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Fletchling';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 70;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Flap',
-      cost: [C],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Razor Wind',
-      cost: [C, C],
-      damage: 40,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Flap',
+    cost: [C],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Razor Wind',
+    cost: [C, C],
+    damage: 40,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'GRI';
   public setNumber: string = '110';

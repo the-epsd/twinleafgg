@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage } from '../../../game/store/card/card-types';
+import { CardType, Stage } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Farfetchd extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType = C;
+  public cardType: CardType[] = [C];
   public hp = 80;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

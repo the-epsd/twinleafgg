@@ -9,10 +9,10 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class SnorlaxVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Snorlax V';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 340;
   public weakness = [{ type: F }];
   public retreat = [C, C, C, C];
@@ -23,8 +23,8 @@ export class SnorlaxVmax extends PokemonCard {
       cost: [C, C, C],
       damage: 60,
       damageCalculation: '+',
-      text: 'This attack does 30 more damage for each of your Benched Pokémon.'
-    }
+      text: 'This attack does 30 more damage for each of your Benched Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -39,7 +39,7 @@ export class SnorlaxVmax extends PokemonCard {
     // Ref: AGENTS-patterns.md (damage per benched Pokémon)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      const benchCount = player.bench.filter(b => b.cards.length > 0).length;
+      const benchCount = player.bench.filter((b) => b.cards.length > 0).length;
       effect.damage += 30 * benchCount;
     }
 

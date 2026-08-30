@@ -11,7 +11,7 @@ import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
 
 export class Spiritomb extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 60;
   public weakness = [{ type: G }];
   public retreat = [C, C];

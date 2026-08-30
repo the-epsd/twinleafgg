@@ -6,7 +6,7 @@ import { State, StoreLike } from '../../game';
 
 export class Whismur extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 50;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -16,8 +16,7 @@ export class Whismur extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
-  },
-  {
+  }, {
     name: 'Pound',
     cost: [C],
     damage: 10,

@@ -6,12 +6,15 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, DISCARD_TOP_X_CARDS_FROM_YOUR_DECK } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  DISCARD_TOP_X_CARDS_FROM_YOUR_DECK,
+} from '../../../game/store/prefabs/prefabs';
 
 export class CrabominableV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 220;
   public weakness = [{ type: M }];
   public retreat = [C, C, C, C];
@@ -21,15 +24,15 @@ export class CrabominableV extends PokemonCard {
       name: 'Trigger Avalanche',
       cost: [W],
       damage: 0,
-      text: 'Discard the top 2 cards of your opponent\'s deck.'
+      text: "Discard the top 2 cards of your opponent's deck.",
     },
     {
       name: 'Destroyer Punch',
       cost: [W, W, C],
       damage: 90,
       damageCalculation: '+',
-      text: 'This attack does 60 more damage for each damage counter on your opponent\'s Active Pokémon.'
-    }
+      text: "This attack does 60 more damage for each damage counter on your opponent's Active Pokémon.",
+    },
   ];
 
   public regulationMark: string = 'E';

@@ -1,72 +1,66 @@
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, PlayerType, SlotType, PowerType, GameError } from '../../../game';
-import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { PokemonCardList } from '../../../game';
-import { AbstractAttackEffect } from '../../../game/store/effects/attack-effects';
-import { StateUtils } from '../../../game';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
+import {
+  CardTag,
+  CardType,
+  GameError,
+  GameMessage,
+  PlayerType,
+  PokemonCard,
+  PokemonCardList,
+  PowerType,
+  SlotType,
+  Stage,
+  State,
+  StateUtils,
+  StoreLike,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-
+import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
+import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
-// UPR Dawn Wings Necrozma-GX 63 (https://limitlesstcg.com/cards/UPR/63)
 export class DawnWingsNecrozmaGX extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
-
+  protected _tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.PSYCHIC;
-
+  public cardType: CardType[] = [P];
   public hp: number = 180;
+  public weakness = [{ type: D }];
+  public resistance = [{ type: F, value: -20 }];
+  public retreat = [C, C];
 
-  public weakness = [{ type: CardType.DARK }];
-
-  public resistance = [{ type: CardType.FIGHTING, value: -20 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
-
-  public powers = [{
-    name: 'Invasion',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), if this Pokémon is on your Bench, you may switch it with your Active Pokémon.'
-  }];
-
-  public attacks = [
+  public powers = [
     {
-      name: 'Dark Flash',
-      cost: [CardType.PSYCHIC, CardType.PSYCHIC, CardType.PSYCHIC],
-      damage: 120,
-      text: 'This attack\'s damage isn\'t affected by Resistance.'
+      name: 'Invasion',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn (before your attack), if this Pokémon is on your Bench, you may switch it with your Active Pokémon.',
     },
-    {
-      name: 'Moon\'s Eclipse-GX',
-      cost: [CardType.PSYCHIC, CardType.PSYCHIC, CardType.PSYCHIC],
-      damage: 180,
-      text: 'You can use this attack only if you have more Prize cards remaining than your opponent. Prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn. (You can\'t use more than 1 GX attack in a game.)'
-    }
   ];
 
-  public readonly INVASION_MARKER = 'INVASION_MARKER';
-  public readonly ECLIPSE_MARKER = 'ECLIPSE_MARKER';
-  public readonly CLEAR_ECLIPSE_MARKER = 'CLEAR_ECLIPSE_MARKER';
+  public attacks = [{
+    name: 'Dark Flash',
+    cost: [P, P, P],
+    damage: 120,
+    text: 'This attack\'s damage isn\'t affected by Resistance.'
+  },
+  {
+    name: 'Moon\'s Eclipse-GX',
+    cost: [P, P, P],
+    damage: 180,
+    text: 'You can use this attack only if you have more Prize cards remaining than your opponent. Prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn. (You can\'t use more than 1 GX attack in a game.)'
+  }];
 
   public set: string = 'UPR';
-
-  public setNumber = '63';
-
-  public cardImage = 'assets/cardback.png';
-
+  public setNumber: string = '63';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dawn Wings Necrozma-GX';
-
   public fullName: string = 'Dawn Wings Necrozma-GX UPR';
+
+  public readonly INVASION_MARKER = 'INVASION_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      player.marker.removeMarker(this.INVASION_MARKER, this);
+      effect.player.marker.removeMarker(this.INVASION_MARKER, this);
     }
 
     if (WAS_POWER_USED(effect, 0, this)) {
@@ -95,7 +89,6 @@ export class DawnWingsNecrozmaGX extends PokemonCard {
     // Dark Flash
     if (WAS_ATTACK_USED(effect, 0, this)) {
       effect.ignoreResistance = true;
-      return state;
     }
 
     // Moon's Eclipse-GX
@@ -107,34 +100,19 @@ export class DawnWingsNecrozmaGX extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      // Check if player has used GX attack
       BLOCK_IF_GX_ATTACK_USED(player);
-      // set GX attack as used for game
       player.usedGX = true;
-
-      player.active.marker.addMarker(this.ECLIPSE_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_ECLIPSE_MARKER, this);
+      PREVENT_DAMAGE(store, state, effect, this);
+      PREVENT_EFFECTS_OF_ATTACKS(store, state, effect, this);
     }
 
-    if (effect instanceof AbstractAttackEffect
-      && effect.target.marker.hasMarker(this.ECLIPSE_MARKER)) {
-      effect.preventDefault = true;
-      return state;
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.INVASION_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.INVASION_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.INVASION_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_ECLIPSE_MARKER, this)) {
-
-      effect.player.marker.removeMarker(this.CLEAR_ECLIPSE_MARKER, this);
-
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.ECLIPSE_MARKER, this);
-      });
-    }
     return state;
   }
 }

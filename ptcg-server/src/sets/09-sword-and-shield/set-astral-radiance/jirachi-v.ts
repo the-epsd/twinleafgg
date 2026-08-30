@@ -3,38 +3,50 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+} from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils, GameMessage, GamePhase } from '../../../game';
 import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-prompt';
 import { PlayerType, SlotType, CardTarget } from '../../../game/store/actions/play-card-action';
 import { Effect } from '../../../game/store/effects/effect';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
-import { WAS_ATTACK_USED, ADD_SLEEP_TO_PLAYER_ACTIVE, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  ADD_SLEEP_TO_PLAYER_ACTIVE,
+  IS_ABILITY_BLOCKED,
+} from '../../../game/store/prefabs/prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from '../../../game/store/prefabs/attack-effects';
 import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
 
 export class JirachiV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 180;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Wish Connector',
-    powerType: PowerType.ABILITY,
-    text: 'When 1 of your Basic Pokémon V is Knocked Out by damage from an attack from your opponent\'s Pokémon, you may move a basic Energy card from that Pokémon to another of your Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Wish Connector',
+      powerType: PowerType.ABILITY,
+      text: "When 1 of your Basic Pokémon V is Knocked Out by damage from an attack from your opponent's Pokémon, you may move a basic Energy card from that Pokémon to another of your Pokémon.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Hypnostrike',
       cost: [P, C],
       damage: 60,
-      text: 'Both Active Pokémon are now Asleep.'
-    }
+      text: 'Both Active Pokémon are now Asleep.',
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -61,13 +73,17 @@ export class JirachiV extends PokemonCard {
 
       // The KO'd Pokemon must be a Basic Pokemon V
       const pokemonCard = target.getPokemonCard();
-      if (!pokemonCard || !pokemonCard.tags.includes(CardTag.POKEMON_V) || pokemonCard.stage !== Stage.BASIC) {
+      if (
+        !pokemonCard ||
+        !pokemonCard.hasTag(CardTag.POKEMON_V) ||
+        pokemonCard.stage !== Stage.BASIC
+      ) {
         return state;
       }
 
       // Jirachi V must be on the player's bench (and not the one being KO'd)
-      const isJirachiBenched = player.bench.some(b =>
-        b.getPokemonCard() === this && b !== target
+      const isJirachiBenched = player.bench.some(
+        (b) => b.getPokemonCard() === this && b !== target,
       );
 
       // Also check if Jirachi V is in the active (if it's not the one being KO'd)
@@ -87,8 +103,8 @@ export class JirachiV extends PokemonCard {
       }
 
       // Check if there are basic energy on the KO'd Pokemon
-      const hasBasicEnergy = target.cards.some(c =>
-        c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC
+      const hasBasicEnergy = target.cards.some(
+        (c) => c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC,
       );
 
       if (!hasBasicEnergy) {
@@ -110,22 +126,26 @@ export class JirachiV extends PokemonCard {
         }
       });
 
-      state = store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_TO_BENCH,
-        targetCopy,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { allowCancel: true, min: 0, max: 1, differentTargets: false, blockedTo }
-      ), transfers => {
-        transfers = transfers || [];
-        target.marker.removeMarker(this.WISH_CONNECTOR_MARKER, this);
-        for (const transfer of transfers) {
-          const t = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, t);
-        }
-      });
+      state = store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_TO_BENCH,
+          targetCopy,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+          { allowCancel: true, min: 0, max: 1, differentTargets: false, blockedTo },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          target.marker.removeMarker(this.WISH_CONNECTOR_MARKER, this);
+          for (const transfer of transfers) {
+            const t = StateUtils.getTarget(state, player, transfer.to);
+            player.discard.moveCardTo(transfer.card, t);
+          }
+        },
+      );
     }
 
     // Attack 1: Hypnostrike

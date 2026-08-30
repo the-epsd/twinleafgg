@@ -324,9 +324,30 @@ export function Board2D(props: Board2DProps) {
       boardInteraction.abilityAnimation$.subscribe(() => {
         boardInteraction.setPendingAbilityAnimationPromise(Promise.resolve());
       }),
+      boardInteraction.deckShuffleAnimation$.subscribe(() => {
+        boardInteraction.setPendingDeckShuffleAnimationPromise(Promise.resolve());
+      }),
     ];
     return () => subs.forEach((s) => s.unsubscribe());
   }, [boardInteraction]);
+
+  // Settle silent animation WaitPrompts that 3D would await via pending promises.
+  useEffect(() => {
+    const prompts = gameState.state?.prompts ?? [];
+    for (const p of prompts) {
+      if (p.type !== 'WaitPrompt' || p.result !== undefined) {
+        continue;
+      }
+      const msg = String((p as { message?: string }).message ?? '').toLowerCase();
+      if (msg.includes('hand to deck animation')) {
+        boardInteraction.setPendingHandToDeckAnimationPromise(Promise.resolve());
+      } else if (msg.includes('deck shuffle animation')) {
+        boardInteraction.setPendingDeckShuffleAnimationPromise(Promise.resolve());
+      } else if (msg.includes('draw animation')) {
+        boardInteraction.setPendingDrawAnimationPromise(Promise.resolve());
+      }
+    }
+  }, [gameState.state?.prompts, boardInteraction]);
 
   const ctx: Board2dActionContext = useMemo(
     () => ({
@@ -363,7 +384,9 @@ export function Board2D(props: Board2DProps) {
     gameState.state.players[gameState.state.activePlayer]?.id === bottomPlayer.id;
 
   const topHandFaceDown =
-    !(adminSpectatorReveal?.hands) && topPlayer?.id !== clientId;
+    !(adminSpectatorReveal?.hands) &&
+    topPlayer?.id !== clientId &&
+    !(topPlayerHand?.isPublic || topPlayer?.hand?.isPublic);
   const topCards = topPlayerHand?.cards ?? topPlayer?.hand?.cards ?? [];
   const bottomCards = bottomPlayerHand?.cards ?? bottomPlayer?.hand?.cards ?? [];
 

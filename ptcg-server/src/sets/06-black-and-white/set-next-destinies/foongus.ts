@@ -7,27 +7,24 @@ import { AttackEffect } from '../../../game/store/effects/game-effects';
 
 export class Foongus extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 40;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Find a Friend',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, search your deck for a Pokémon, reveal it, and put it into your hand. Shuffle your deck afterward.'
-    },
-    {
-      name: 'Rising Lunge',
-      cost: [G, C],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Find a Friend',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, search your deck for a Pokémon, reveal it, and put it into your hand. Shuffle your deck afterward.'
+  }, {
+    name: 'Rising Lunge',
+    cost: [G, C],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 20 more damage.'
+  }];
 
   public set: string = 'NXD';
   public setNumber: string = '8';

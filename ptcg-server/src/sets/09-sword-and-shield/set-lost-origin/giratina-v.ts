@@ -11,14 +11,13 @@ import { ApplyWeaknessEffect, AfterDamageEffect } from '../../../game/store/effe
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class GiratinaV extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
 
   public regulationMark = 'F';
 
-  public cardType: CardType = CardType.DRAGON;
+  public cardType: CardType[] = [CardType.DRAGON];
 
   public hp: number = 220;
 
@@ -29,15 +28,15 @@ export class GiratinaV extends PokemonCard {
       name: 'Abyss Seeking',
       cost: [CardType.COLORLESS],
       damage: 0,
-      text: 'Look at the top 4 cards of your deck and put 2 of them into your hand. Put the other cards in the Lost Zone.'
+      text: 'Look at the top 4 cards of your deck and put 2 of them into your hand. Put the other cards in the Lost Zone.',
     },
     {
       name: 'Shred',
       cost: [CardType.GRASS, CardType.PSYCHIC, CardType.COLORLESS],
       damage: 160,
       shredAttack: true,
-      text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
-    }
+      text: "This attack's damage isn't affected by any effects on your opponent's Active Pokémon.",
+    },
   ];
 
   public set: string = 'LOR';
@@ -53,25 +52,27 @@ export class GiratinaV extends PokemonCard {
   public readonly FLOWER_SELECTING_MARKER = 'FLOWER_SELECTING_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       const player = effect.player;
 
       const deckTop = new CardList();
       player.deck.moveTo(deckTop, 4);
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        deckTop,
-        {},
-        { min: 2, max: 2, allowCancel: true }
-      ), selected => {
-        deckTop.moveCardsTo(selected, player.hand);
-        deckTop.moveTo(player.lostzone);
-        return state;
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          deckTop,
+          {},
+          { min: 2, max: 2, allowCancel: true },
+        ),
+        (selected) => {
+          deckTop.moveCardsTo(selected, player.hand);
+          deckTop.moveTo(player.lostzone);
+          return state;
+        },
+      );
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

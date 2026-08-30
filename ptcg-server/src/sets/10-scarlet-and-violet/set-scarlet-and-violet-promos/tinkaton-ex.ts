@@ -8,14 +8,13 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 // PAL Tinkaton ex 262 (https://limitlesstcg.com/cards/PAL/262)
 export class Tinkatonex extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
 
   public stage: Stage = Stage.STAGE_2;
 
   public evolvesFrom = 'Tinkatuff';
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 300;
 
@@ -28,7 +27,7 @@ export class Tinkatonex extends PokemonCard {
       name: 'Big Hammer',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 30,
-      text: 'This attack does 30 damage for each card in your hand.'
+      text: 'This attack does 30 damage for each card in your hand.',
     },
 
     {
@@ -36,8 +35,8 @@ export class Tinkatonex extends PokemonCard {
       cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
       damage: 140,
       shredAttack: true,
-      text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
-    }
+      text: "This attack's damage isn't affected by any effects on your opponent's Active Pokémon.",
+    },
   ];
 
   public set: string = 'SVP';

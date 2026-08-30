@@ -10,25 +10,22 @@ import { State, StoreLike } from '../../../game';
 export class Palpitoad extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Tympole';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Vibration',
-      cost: [C, C],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Suspicious Soundwave',
-      cost: [W, C, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Vibration',
+    cost: [C, C],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Suspicious Soundwave',
+    cost: [W, C, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
+  }];
 
   public set: string = 'PLF';
   public setNumber: string = '25';

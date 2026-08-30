@@ -7,18 +7,20 @@ import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
 
 export class TeamRocketsArticuno extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.TEAM_ROCKET];
-  public cardType: CardType = W;
+  protected _tags = [CardTag.TEAM_ROCKET];
+  public cardType: CardType[] = [W];
   public hp: number = 120;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Repelling Veil',
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all effects of attacks used by your opponent\'s Pokémon done to your Basic Team Rocket\'s Pokémon. (Existing effects are not removed. Damage is not an effect.)'
-  }];
+  public powers = [
+    {
+      name: 'Repelling Veil',
+      powerType: PowerType.ABILITY,
+      text: "Prevent all effects of attacks used by your opponent's Pokémon done to your Basic Team Rocket's Pokémon. (Existing effects are not removed. Damage is not an effect.)",
+    },
+  ];
 
   public attacks = [
     {
@@ -26,16 +28,16 @@ export class TeamRocketsArticuno extends PokemonCard {
       cost: [W, C, C],
       damage: 60,
       damageCalculation: '+',
-      text: 'If this Pokémon has any Team Rocket\'s Energy attached, this attack does 60 more damage.'
-    }
+      text: "If this Pokémon has any Team Rocket's Energy attached, this attack does 60 more damage.",
+    },
   ];
 
   public regulationMark = 'I';
   public set: string = 'DRI';
   public setNumber: string = '51';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Team Rocket\'s Articuno';
-  public fullName: string = 'Team Rocket\'s Articuno DRI';
+  public name: string = "Team Rocket's Articuno";
+  public fullName: string = "Team Rocket's Articuno DRI";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Resistant Veil
@@ -43,16 +45,21 @@ export class TeamRocketsArticuno extends PokemonCard {
       const opponent = effect.opponent;
 
       let isArticunoInPlay = false;
-      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
+      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (card) => {
         if (card.getPokemonCard() === this) {
           isArticunoInPlay = true;
         }
       });
-      if (!isArticunoInPlay) { return state; }
+      if (!isArticunoInPlay) {
+        return state;
+      }
 
       if (state.phase === GamePhase.ATTACK) {
         const target = effect.target;
-        if (target.getPokemonCard()?.stage === Stage.BASIC && target.getPokemonCard()?.tags.includes(CardTag.TEAM_ROCKET)) {
+        if (
+          target.getPokemonCard()?.stage === Stage.BASIC &&
+          target.getPokemonCard()?.hasTag(CardTag.TEAM_ROCKET)
+        ) {
           effect.preventDefault = true;
         }
       }
@@ -60,7 +67,13 @@ export class TeamRocketsArticuno extends PokemonCard {
 
     // Dark Frost
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      if (effect.player.active.cards.some(c => c.superType === SuperType.ENERGY && c.name === 'Team Rocket Energy')) { effect.damage += 60; }
+      if (
+        effect.player.active.cards.some(
+          (c) => c.superType === SuperType.ENERGY && c.name === 'Team Rocket Energy',
+        )
+      ) {
+        effect.damage += 60;
+      }
     }
 
     return state;

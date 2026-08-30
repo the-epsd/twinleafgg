@@ -3,8 +3,23 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, AttachEnergyPrompt, PlayerType, SlotType, CardList } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+} from '../../../game/store/card/card-types';
+import {
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  AttachEnergyPrompt,
+  PlayerType,
+  SlotType,
+  CardList,
+} from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttachEnergyEffect } from '../../../game/store/effects/play-card-effects';
@@ -13,9 +28,9 @@ import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store
 import { OrderCardsPrompt } from '../../../game/store/prompts/order-cards-prompt';
 
 export class HattereneV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 200;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
@@ -26,14 +41,14 @@ export class HattereneV extends PokemonCard {
       name: 'Horoscope',
       cost: [P],
       damage: 0,
-      text: 'Look at the top 3 cards of your deck. You may attach any number of Energy cards you find there to this Pokémon. Put the other cards back in any order.'
+      text: 'Look at the top 3 cards of your deck. You may attach any number of Energy cards you find there to this Pokémon. Put the other cards back in any order.',
     },
     {
       name: 'Teleportation Burst',
       cost: [P, C, C],
       damage: 80,
-      text: 'Switch this Pokémon with 1 of your Benched Pokémon.'
-    }
+      text: 'Switch this Pokémon with 1 of your Benched Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -60,68 +75,74 @@ export class HattereneV extends PokemonCard {
       const count = Math.min(3, player.deck.cards.length);
       player.deck.moveTo(topCards, count);
 
-      const energyCards = topCards.cards.filter(c => c instanceof EnergyCard);
+      const energyCards = topCards.cards.filter((c) => c instanceof EnergyCard);
 
       if (energyCards.length === 0) {
         // No energy found - put all cards back in any order
-        return store.prompt(state, new OrderCardsPrompt(
-          player.id,
-          GameMessage.CHOOSE_CARDS_ORDER,
-          topCards,
-          { allowCancel: false }
-        ), order => {
-          if (order !== null) {
-            topCards.applyOrder(order);
-          }
-          topCards.moveToTopOfDestination(player.deck);
-        });
-      }
-
-      // Prompt to attach energy, then put remaining back in any order
-      return store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_CARDS,
-        topCards,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE],
-        { superType: SuperType.ENERGY },
-        { allowCancel: false, min: 0, max: energyCards.length }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          const energyCard = transfer.card as EnergyCard;
-          if (energyCard.energyType === EnergyType.SPECIAL) {
-            // For special energy, just move the card
-            topCards.moveCardTo(energyCard, target);
-          } else {
-            const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
-            store.reduceEffect(state, attachEnergyEffect);
-          }
-        }
-
-        // Put remaining cards back in any order
-        if (topCards.cards.length > 0) {
-          store.prompt(state, new OrderCardsPrompt(
-            player.id,
-            GameMessage.CHOOSE_CARDS_ORDER,
-            topCards,
-            { allowCancel: false }
-          ), order => {
+        return store.prompt(
+          state,
+          new OrderCardsPrompt(player.id, GameMessage.CHOOSE_CARDS_ORDER, topCards, {
+            allowCancel: false,
+          }),
+          (order) => {
             if (order !== null) {
               topCards.applyOrder(order);
             }
             topCards.moveToTopOfDestination(player.deck);
-          });
-        }
-      });
+          },
+        );
+      }
+
+      // Prompt to attach energy, then put remaining back in any order
+      return store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_CARDS,
+          topCards,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE],
+          { superType: SuperType.ENERGY },
+          { allowCancel: false, min: 0, max: energyCards.length },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            const energyCard = transfer.card as EnergyCard;
+            if (energyCard.energyType === EnergyType.SPECIAL) {
+              // For special energy, just move the card
+              topCards.moveCardTo(energyCard, target);
+            } else {
+              const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
+              store.reduceEffect(state, attachEnergyEffect);
+            }
+          }
+
+          // Put remaining cards back in any order
+          if (topCards.cards.length > 0) {
+            store.prompt(
+              state,
+              new OrderCardsPrompt(player.id, GameMessage.CHOOSE_CARDS_ORDER, topCards, {
+                allowCancel: false,
+              }),
+              (order) => {
+                if (order !== null) {
+                  topCards.applyOrder(order);
+                }
+                topCards.moveToTopOfDestination(player.deck);
+              },
+            );
+          }
+        },
+      );
     }
 
     // Attack 2: Teleportation Burst
     // Ref: set-chilling-reign/tapu-fini.ts (Smash Turn - switch after attack in AfterAttackEffect)
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      const hasBench = player.bench.some(b => b.cards.length > 0);
+      const hasBench = player.bench.some((b) => b.cards.length > 0);
       if (hasBench) {
         this.usedTeleportationBurst = true;
       }

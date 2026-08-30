@@ -4,8 +4,8 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { SpecialCondition, TrainerType } from '../../../game/store/card/card-types';
-import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { GameError, GameMessage, Player, StateUtils } from '../../../game';
+import { SHUFFLE_HAND_INTO_DECK_THEN_DRAW } from '../../../game/store/prefabs/prefabs';
 
 export class Atticus extends TrainerCard {
 
@@ -39,42 +39,23 @@ export class Atticus extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
       const player = effect.player;
-      const cards = player.hand.cards.filter(c => c !== this);
       const opponent = StateUtils.getOpponent(state, player);
 
-      const isPoisoned = opponent.active.specialConditions.includes(SpecialCondition.POISONED);
-
-      if (!isPoisoned) {
+      if (!opponent.active.specialConditions.includes(SpecialCondition.POISONED)) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      const supporterTurn = player.supporterTurn;
-
-      if (supporterTurn > 0) {
+      if (player.supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
-      // We will discard this card after prompt confirmation
-      effect.preventDefault = true;
-
-      if (cards.length > 0) {
-        player.hand.moveCardsTo(cards, player.deck);
-
-        store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-        });
-      }
-
-      player.deck.moveTo(player.hand, 7);
-
-
-      return state;
+      return SHUFFLE_HAND_INTO_DECK_THEN_DRAW(store, state, player, {
+        excludeCard: this,
+        drawCount: 7,
+      });
     }
     return state;
   }

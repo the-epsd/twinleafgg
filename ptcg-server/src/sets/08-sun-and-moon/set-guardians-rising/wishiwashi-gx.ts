@@ -3,8 +3,23 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, EnergyCard, Card } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+} from '../../../game/store/card/card-types';
+import {
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  EnergyCard,
+  Card,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-prompt';
@@ -12,9 +27,9 @@ import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/ga
 import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class WishiwashiGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 210;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];
@@ -24,20 +39,20 @@ export class WishiwashiGx extends PokemonCard {
       name: 'Water Gun',
       cost: [W],
       damage: 20,
-      text: ''
+      text: '',
     },
     {
       name: 'Torrential Vortex',
       cost: [W, W, W, C, C],
       damage: 120,
-      text: 'Discard a Special Energy from your opponent\'s Active Pokémon.'
+      text: "Discard a Special Energy from your opponent's Active Pokémon.",
     },
     {
       name: 'Blue Surge-GX',
       cost: [W, W, W, C, C],
       damage: 220,
-      text: 'Move all Energy from this Pokémon to your Benched Pokémon in any way you like. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Move all Energy from this Pokémon to your Benched Pokémon in any way you like. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'GRI';
@@ -57,26 +72,30 @@ export class WishiwashiGx extends PokemonCard {
       const opponentActive = opponent.active;
 
       let hasSpecialEnergy = false;
-      opponentActive.cards.forEach(c => {
+      opponentActive.cards.forEach((c) => {
         if (c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL) {
           hasSpecialEnergy = true;
         }
       });
 
       if (hasSpecialEnergy) {
-        state = store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-          opponentActive,
-          { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
-          { min: 1, max: 1, allowCancel: false }
-        ), (selected: Card[]) => {
-          const cards = selected || [];
-          if (cards.length > 0) {
-            opponentActive.moveCardsTo(cards, opponent.discard);
-          }
-          return state;
-        });
+        state = store.prompt(
+          state,
+          new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+            opponentActive,
+            { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
+            { min: 1, max: 1, allowCancel: false },
+          ),
+          (selected: Card[]) => {
+            const cards = selected || [];
+            if (cards.length > 0) {
+              opponentActive.moveCardsTo(cards, opponent.discard);
+            }
+            return state;
+          },
+        );
       }
     }
 
@@ -92,12 +111,12 @@ export class WishiwashiGx extends PokemonCard {
       this.usedBlueSurge = false;
       const player = effect.player;
 
-      const hasBench = player.bench.some(b => b.cards.length > 0);
+      const hasBench = player.bench.some((b) => b.cards.length > 0);
       if (!hasBench) {
         return state;
       }
 
-      const attachedEnergies = player.active.cards.filter(card => {
+      const attachedEnergies = player.active.cards.filter((card) => {
         return card.superType === SuperType.ENERGY;
       });
 
@@ -105,21 +124,25 @@ export class WishiwashiGx extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_TO_BENCH,
-        player.active,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { superType: SuperType.ENERGY },
-        { allowCancel: false, min: attachedEnergies.length, max: attachedEnergies.length }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.active.moveCardTo(transfer.card, target);
-        }
-      });
+      return store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_TO_BENCH,
+          player.active,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          { superType: SuperType.ENERGY },
+          { allowCancel: false, min: attachedEnergies.length, max: attachedEnergies.length },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.active.moveCardTo(transfer.card, target);
+          }
+        },
+      );
     }
 
     if (effect instanceof EndTurnEffect) {

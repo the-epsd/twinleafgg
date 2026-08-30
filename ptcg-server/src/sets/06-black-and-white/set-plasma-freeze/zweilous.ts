@@ -10,26 +10,23 @@ import { State, StoreLike } from '../../../game';
 export class Zweilous extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Deino';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Bite',
-      cost: [D, C],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Body Slam',
-      cost: [D, C, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Bite',
+    cost: [D, C],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Body Slam',
+    cost: [D, C, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'PLF';
   public setNumber: string = '77';

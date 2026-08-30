@@ -4,7 +4,7 @@
 
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils } from '../../../game';
+import { StoreLike, State, StateUtils, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { IS_TOOL_BLOCKED } from '../../../game/store/prefabs/prefabs';
@@ -38,7 +38,7 @@ export class SpongyGloves extends TrainerCard {
 
       // Check if the target is a Water Pokemon
       const targetCard = opponent.active.getPokemonCard();
-      if (targetCard && targetCard.cardType === CardType.WATER) {
+      if (targetCard && pokemonHasCardType(targetCard, CardType.WATER)) {
         const attack = effect.attack;
         if (attack && attack.damage > 0) {
           effect.damage += 30;

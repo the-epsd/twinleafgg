@@ -51,5 +51,4 @@ Prevent all effects of attacks from your opponent's Pokémon done to the Pokémo
 
     return state;
   }
-
 }

@@ -1,33 +1,34 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, CoinFlipPrompt, GameMessage } from '../../../game';
+import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Maractus extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [G];
   public hp: number = 110;
-  public weakness = [{ type: CardType.FIRE }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public retreat = [C, C];
 
   public attacks = [{
     name: 'Zzzt',
-    cost: [CardType.COLORLESS],
+    cost: [C],
     damage: 20,
     text: ''
-  },
-  {
+  }, {
     name: 'Powerful Needles',
-    cost: [CardType.GRASS, CardType.COLORLESS],
+    cost: [G, C],
     damage: 60,
     text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 60 damage for each heads. '
   }];
 
   public set: string = 'SSH';
+
   public regulationMark = 'D';
+
   public cardImage: string = 'assets/cardback.png';
   public fullName: string = 'Maractus SSH';
   public name: string = 'Maractus';
@@ -46,17 +47,13 @@ export class Maractus extends PokemonCard {
         energyCount++;
       });
 
-      for (let i = 0; i < energyCount; i++) {
-        store.prompt(state, [
-          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-        ], result => {
-          if (result === true) {
-            effect.damage += 60;
-          }
+      if (energyCount > 0) {
+        MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, energyCount, results => {
+          effect.damage = results.filter(r => r).length * 60;
         });
+      } else {
+        effect.damage = 0;
       }
-
-      effect.damage -= 60;
 
     }
 

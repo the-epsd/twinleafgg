@@ -6,7 +6,7 @@ import { ADD_BURN_TO_PLAYER_ACTIVE, AFTER_ATTACK } from '../../../game/store/pre
 
 export class Combusken extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
   public hp: number = 90;
   public weakness = [{ type: CardType.WATER }];
   public retreat = [CardType.COLORLESS];

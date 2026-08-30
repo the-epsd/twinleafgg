@@ -4,17 +4,25 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PlayerType, SlotType, GameMessage, AttachEnergyPrompt } from '../../game';
+import {
+  StoreLike,
+  State,
+  StateUtils,
+  PlayerType,
+  SlotType,
+  GameMessage,
+  AttachEnergyPrompt,
+} from '../../game';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class StarmieGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Staryu';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 190;
   public weakness = [{ type: G }];
   public retreat = [];
@@ -24,21 +32,21 @@ export class StarmieGx extends PokemonCard {
       name: 'Star Stream',
       cost: [W],
       damage: 40,
-      text: 'Attach 2 [W] Energy cards from your discard pile to 1 of your Pokémon.'
+      text: 'Attach 2 [W] Energy cards from your discard pile to 1 of your Pokémon.',
     },
     {
       name: 'Spinning Attack',
       cost: [C, C, C],
       damage: 100,
-      text: ''
+      text: '',
     },
     {
       name: 'Hydro Pump-GX',
       cost: [C],
       damage: 40,
       damageCalculation: '+',
-      text: 'This attack does 40 more damage times the amount of [W] Energy attached to this Pokémon. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "This attack does 40 more damage times the amount of [W] Energy attached to this Pokémon. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'HIF';
@@ -53,8 +61,11 @@ export class StarmieGx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const waterEnergyCards = player.discard.cards.filter(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.WATER)
+      const waterEnergyCards = player.discard.cards.filter(
+        (c) =>
+          c instanceof EnergyCard &&
+          c.energyType === EnergyType.BASIC &&
+          c.provides.includes(CardType.WATER),
       );
 
       if (waterEnergyCards.length === 0) {
@@ -63,21 +74,25 @@ export class StarmieGx extends PokemonCard {
 
       const maxToAttach = Math.min(2, waterEnergyCards.length);
 
-      state = store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_CARDS,
-        player.discard,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
-        { min: maxToAttach, max: maxToAttach, allowCancel: false, sameTarget: true }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
-        }
-      });
+      state = store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_CARDS,
+          player.discard,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
+          { min: maxToAttach, max: maxToAttach, allowCancel: false, sameTarget: true },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.discard.moveCardTo(transfer.card, target);
+          }
+        },
+      );
     }
 
     // Attack 3: Hydro Pump-GX
@@ -91,8 +106,8 @@ export class StarmieGx extends PokemonCard {
       store.reduceEffect(state, checkEnergy);
 
       let waterCount = 0;
-      checkEnergy.energyMap.forEach(em => {
-        em.provides.forEach(type => {
+      checkEnergy.energyMap.forEach((em) => {
+        em.provides.forEach((type) => {
           if (type === CardType.WATER || type === CardType.ANY) {
             waterCount++;
           }

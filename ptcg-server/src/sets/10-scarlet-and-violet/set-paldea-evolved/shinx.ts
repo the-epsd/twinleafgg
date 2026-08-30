@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, BoardEffect } from '../../../game/store/card/card-types';
+import { CardType, Stage, BoardEffect } from '../../../game/store/card/card-types';
 import { GameError, GameMessage, PlayerType, PowerType, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
@@ -9,7 +9,7 @@ import { SWITCH_OUT_OPPONENT_ACTIVE_POKEMON, WAS_POWER_USED } from '../../../gam
 
 export class Shinx extends PokemonCard {
   public stage = Stage.BASIC;
-  public cardType = L;
+  public cardType: CardType[] = [L];
   public hp = 40;
   public weakness = [{ type: F }];
   public retreat = [C];

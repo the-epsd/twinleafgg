@@ -10,9 +10,9 @@ import { WAS_ATTACK_USED, DAMAGE_OPPONENT_POKEMON } from '../../../game/store/pr
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 
 export class KyogreV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 230;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];
@@ -22,14 +22,14 @@ export class KyogreV extends PokemonCard {
       name: 'Dual Splash',
       cost: [W, C, C],
       damage: 0,
-      text: 'This attack does 50 damage to 2 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack does 50 damage to 2 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Aqua Typhoon',
       cost: [W, C, C, C],
       damage: 210,
-      text: 'During your next turn, this Pokémon can\'t use Aqua Typhoon.'
-    }
+      text: "During your next turn, this Pokémon can't use Aqua Typhoon.",
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -46,7 +46,9 @@ export class KyogreV extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const opponentTargets = [opponent.active, ...opponent.bench].filter(p => p.cards.length > 0);
+      const opponentTargets = [opponent.active, ...opponent.bench].filter(
+        (p) => p.cards.length > 0,
+      );
       const numTargets = opponentTargets.length;
       const minMax = Math.min(numTargets, 2);
 
@@ -54,16 +56,20 @@ export class KyogreV extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { min: minMax, max: minMax, allowCancel: false }
-      ), selected => {
-        const targets = selected || [];
-        DAMAGE_OPPONENT_POKEMON(store, state, effect, 50, targets);
-      });
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { min: minMax, max: minMax, allowCancel: false },
+        ),
+        (selected) => {
+          const targets = selected || [];
+          DAMAGE_OPPONENT_POKEMON(store, state, effect, 50, targets);
+        },
+      );
     }
 
     // Attack 2: Aqua Typhoon

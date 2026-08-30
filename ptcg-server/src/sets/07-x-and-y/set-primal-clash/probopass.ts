@@ -12,28 +12,25 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Probopass extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Nosepass';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 110;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Triple Smash',
-      cost: [M],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 30 damage times the number of heads.'
-    },
-    {
-      name: 'Reinforced Nose',
-      cost: [M, M, C],
-      damage: 50,
-      damageCalculation: '+',
-      text: 'If this Pokémon has a Pokémon Tool card attached to it, this attack does 50 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Triple Smash',
+    cost: [M],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 30 damage times the number of heads.'
+  }, {
+    name: 'Reinforced Nose',
+    cost: [M, M, C],
+    damage: 50,
+    damageCalculation: '+',
+    text: 'If this Pokémon has a Pokémon Tool card attached to it, this attack does 50 more damage.'
+  }];
 
   public set: string = 'PRC';
   public setNumber: string = '95';

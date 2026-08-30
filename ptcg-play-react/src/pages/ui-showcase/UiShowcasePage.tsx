@@ -4,6 +4,7 @@ import {
   Avatar,
   BattleStatusBadge,
   DeckValidityBadge,
+  DropdownMenu,
   EmptyBattlefield,
   FormatTabButton,
   FriendActionButton,
@@ -17,6 +18,7 @@ import {
   TwinleafNextButton,
   TwinleafPlayButton,
   TwinleafPreviousButton,
+  TwinleafCtaButton,
   type TwinleafFormField,
 } from '../../components';
 import { CardFace } from '../../components/cards/CardFace';
@@ -96,7 +98,6 @@ const FORMAT_CARD_STYLE = {
   width: 200,
   maxWidth: 200,
   flex: '0 0 200px',
-  '--format-card-w': '200px',
 } as CSSProperties;
 
 export function UiShowcasePage() {
@@ -108,10 +109,22 @@ export function UiShowcasePage() {
   const [playLoading, setPlayLoading] = useState(false);
   const [inQueue, setInQueue] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
+  const [partyMenuOpen, setPartyMenuOpen] = useState(true);
 
   const loginFields = useMemo(() => SHOWCASE_LOGIN_FIELDS, []);
   const futuristicFields = useMemo(() => SHOWCASE_FUTURISTIC_FIELDS, []);
   const minimalFields = useMemo(() => SHOWCASE_MINIMAL_FIELDS, []);
+  const partyMenuItems = useMemo(
+    () => [
+      { id: 'summary', label: 'Check summary', onSelect: () => showSnackbar('Check summary') },
+      { id: 'heal', label: 'Restore health', onSelect: () => showSnackbar('Restore health') },
+      { id: 'moves', label: 'Change moves', onSelect: () => showSnackbar('Change moves') },
+      { id: 'swap', label: 'Swap Pokémon', onSelect: () => showSnackbar('Swap Pokémon') },
+      { id: 'item', label: 'Give an item to hold', onSelect: () => showSnackbar('Give an item to hold') },
+      { id: 'cancel', label: 'Cancel' },
+    ],
+    [showSnackbar],
+  );
 
   function onDemoClick(label: string) {
     showSnackbar(`${label} clicked`);
@@ -163,8 +176,23 @@ export function UiShowcasePage() {
             </p>
 
             <div className={`${styles.group} ${styles.darkPanel}`}>
+              <h3 className={styles.groupTitle}>TwinleafCtaButton</h3>
+              <p className={styles.groupDesc}>Shared matchmaking / auth CTA (solid brand fill, low glow).</p>
+              <div className={styles.row}>
+                <TwinleafCtaButton onClick={() => onDemoClick('CTA primary')}>Begin Matchmaking</TwinleafCtaButton>
+                <TwinleafCtaButton variant="muted" onClick={() => onDemoClick('CTA muted')}>
+                  Leave queue
+                </TwinleafCtaButton>
+                <TwinleafCtaButton variant="gold" onClick={() => onDemoClick('CTA gold')}>
+                  Register
+                </TwinleafCtaButton>
+                <TwinleafCtaButton disabled>Disabled</TwinleafCtaButton>
+              </div>
+            </div>
+
+            <div className={`${styles.group} ${styles.darkPanel}`}>
               <h3 className={styles.groupTitle}>TwinleafPlayButton</h3>
-              <p className={styles.groupDesc}>Matchmaking primary CTA with clip-path styling.</p>
+              <p className={styles.groupDesc}>Legacy matchmaking CTA with loading / cooldown helpers.</p>
               <div className={styles.row}>
                 <TwinleafPlayButton
                   loading={playLoading}
@@ -358,7 +386,7 @@ export function UiShowcasePage() {
                 {MOCK_SHOWCASE_FORMATS.map((format) => (
                   <div
                     key={format.label}
-                    className={`${lobbyStyles.formatBox} ${styles.formatCardFixed}`}
+                    className={`${lobbyStyles.largeCard} ${styles.formatCardFixed}`}
                     style={FORMAT_CARD_STYLE}
                     role="button"
                     tabIndex={0}
@@ -374,14 +402,14 @@ export function UiShowcasePage() {
                         {format.queueCount} players in queue
                       </QueueOverlayBanner>
                     ) : null}
-                    <div className={lobbyStyles.artwork}>
-                      <div className={lobbyStyles.artworkInner}>
+                    <div className={lobbyStyles.largeArt}>
+                      <div className={lobbyStyles.largeArtInner}>
                         <ArchetypeIcon archetypes={format.archetype} scale={2.5} />
                       </div>
                     </div>
-                    <div className={lobbyStyles.info}>
-                      <div className={lobbyStyles.formatName}>{format.label}</div>
-                      <div className={lobbyStyles.deckName}>{format.deckName}</div>
+                    <div className={lobbyStyles.largeMeta}>
+                      <div className={lobbyStyles.largeTitle}>{format.label}</div>
+                      <div className={lobbyStyles.largeSubtitle}>{format.deckName}</div>
                     </div>
                   </div>
                 ))}
@@ -529,7 +557,38 @@ export function UiShowcasePage() {
             <h2 id="showcase-interactive" className={styles.sectionTitle}>
               Interactive elements
             </h2>
-            <p className={styles.sectionDesc}>Archetype sprites, energy icons, and card faces.</p>
+            <p className={styles.sectionDesc}>Archetype sprites, energy icons, menus, and card faces.</p>
+
+            <div className={styles.group}>
+              <h3 className={styles.groupTitle}>DropdownMenu</h3>
+              <p className={styles.groupDesc}>
+                Proprietary action menu — navy panel, white highlight row, lime caret. Arrow keys, Enter, Escape,
+                and outside click.
+              </p>
+              <div className={styles.row} style={{ alignItems: 'flex-start', gap: 32 }}>
+                <DropdownMenu
+                  trigger="Party options"
+                  items={partyMenuItems}
+                  onSelect={(item) => {
+                    if (item.id === 'cancel') {
+                      showSnackbar('Cancelled');
+                    }
+                  }}
+                />
+                <DropdownMenu
+                  open={partyMenuOpen}
+                  onOpenChange={setPartyMenuOpen}
+                  closeOnSelect={false}
+                  items={partyMenuItems}
+                  aria-label="Party options panel"
+                />
+                {!partyMenuOpen ? (
+                  <ShellButton variant="secondary" onClick={() => setPartyMenuOpen(true)}>
+                    Reopen panel
+                  </ShellButton>
+                ) : null}
+              </div>
+            </div>
 
             <div className={styles.group}>
               <h3 className={styles.groupTitle}>ArchetypeIcon</h3>

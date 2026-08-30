@@ -1,4 +1,4 @@
-import { GameLog } from '../../../game';
+import { GameLog, pokemonHasCardTypeOptional } from '../../../game';
 import { CardType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -26,7 +26,7 @@ export class BacktrackBadge extends TrainerCard {
         st.players[st.activePlayer] === player &&
         player.active.tools.includes(this) &&
         !IS_TOOL_BLOCKED(s, st, player, this) &&
-        player.active.getPokemonCard()?.cardType === CardType.COLORLESS,
+        pokemonHasCardTypeOptional(player.active.getPokemonCard(), CardType.COLORLESS),
       reflipLog: GameLog.LOG_PLAYER_REFLIPS_WITH_BACKTRACK_BADGE,
     });
   }

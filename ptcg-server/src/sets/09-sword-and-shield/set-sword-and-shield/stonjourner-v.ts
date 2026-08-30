@@ -6,8 +6,8 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class StonjournerV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_V];
-  public cardType: CardType = F;
+  protected _tags = [CardTag.POKEMON_V];
+  public cardType: CardType[] = [F];
   public hp: number = 220;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
@@ -17,13 +17,13 @@ export class StonjournerV extends PokemonCard {
       name: 'Guard Press',
       cost: [F],
       damage: 40,
-      text: 'During your opponent\'s next turn, this Pokémon takes 20 less damage from attacks (after applying Weakness and Resistance).'
+      text: "During your opponent's next turn, this Pokémon takes 20 less damage from attacks (after applying Weakness and Resistance).",
     },
     {
       name: 'Mega Kick',
       cost: [F, F, F],
       damage: 150,
-      text: ''
+      text: '',
     },
   ];
 

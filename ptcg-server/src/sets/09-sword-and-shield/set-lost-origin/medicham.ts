@@ -11,7 +11,7 @@ export class Medicham extends PokemonCard {
 
   public evolvesFrom = 'Meditite';
 
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp: number = 110;
 

@@ -13,24 +13,26 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 export class Flareon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Eevee';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 110;
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Power Cheer',
-    powerType: PowerType.ABILITY,
-    text: 'The attacks of your Pokémon-GX in play that evolve from Eevee do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance). You can\'t apply more than 1 Power Cheer Ability at a time.'
-  }];
+  public powers = [
+    {
+      name: 'Power Cheer',
+      powerType: PowerType.ABILITY,
+      text: "The attacks of your Pokémon-GX in play that evolve from Eevee do 30 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance). You can't apply more than 1 Power Cheer Ability at a time.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Flamethrower',
       cost: [R, C, C],
       damage: 90,
-      text: 'Discard an Energy from this Pokémon.'
-    }
+      text: 'Discard an Energy from this Pokémon.',
+    },
   ];
 
   public set: string = 'CEC';
@@ -45,7 +47,11 @@ export class Flareon extends PokemonCard {
     if (effect instanceof DealDamageEffect && effect.source.cards.includes(this) === false) {
       // Check if the attacking Pokemon is a GX that evolves from Eevee
       const sourceCard = effect.source.getPokemonCard();
-      if (!sourceCard || !sourceCard.tags.includes(CardTag.POKEMON_GX) || sourceCard.evolvesFrom !== 'Eevee') {
+      if (
+        !sourceCard ||
+        !sourceCard.hasTag(CardTag.POKEMON_GX) ||
+        sourceCard.evolvesFrom !== 'Eevee'
+      ) {
         return state;
       }
 

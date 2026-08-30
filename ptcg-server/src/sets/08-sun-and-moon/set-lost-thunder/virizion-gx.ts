@@ -4,14 +4,25 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, PlayerType, ChoosePokemonPrompt, SlotType } from '../../../game';
+import {
+  StoreLike,
+  State,
+  GameMessage,
+  PlayerType,
+  ChoosePokemonPrompt,
+  SlotType,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, DRAW_CARDS, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  DRAW_CARDS,
+  BLOCK_IF_GX_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class VirizionGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 170;
   public weakness = [{ type: R }];
   public retreat = [C];
@@ -21,21 +32,21 @@ export class VirizionGx extends PokemonCard {
       name: 'Double Draw',
       cost: [C],
       damage: 0,
-      text: 'Draw 2 cards.'
+      text: 'Draw 2 cards.',
     },
     {
       name: 'Sensitive Blade',
       cost: [G, G],
       damage: 50,
       damageCalculation: '+',
-      text: 'If you played a Supporter card from your hand during this turn, this attack does 80 more damage.'
+      text: 'If you played a Supporter card from your hand during this turn, this attack does 80 more damage.',
     },
     {
       name: 'Breeze Away-GX',
       cost: [C],
       damage: 0,
-      text: 'Put any number of your Pokémon in play and all cards attached to them into your hand. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Put any number of your Pokémon in play and all cards attached to them into your hand. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'LOT';
@@ -69,26 +80,32 @@ export class VirizionGx extends PokemonCard {
       player.usedGX = true;
 
       // Let the player choose any number of their Benched Pokemon
-      const hasBench = player.bench.some(b => b.cards.length > 0);
+      const hasBench = player.bench.some((b) => b.cards.length > 0);
       if (hasBench) {
-        store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.BENCH],
-          { min: 0, max: 5, allowCancel: false }
-        ), selected => {
-          if (selected && selected.length > 0) {
-            selected.forEach(target => {
-              // Move tools first
-              const tools = target.tools.slice();
-              tools.forEach(t => { target.moveCardTo(t, player.hand); });
-              // Move all cards (Pokemon + energy) to hand
-              target.moveTo(player.hand);
-              target.clearEffects();
-            });
-          }
-        });
+        store.prompt(
+          state,
+          new ChoosePokemonPrompt(
+            player.id,
+            GameMessage.CHOOSE_POKEMON,
+            PlayerType.BOTTOM_PLAYER,
+            [SlotType.BENCH],
+            { min: 0, max: 5, allowCancel: false },
+          ),
+          (selected) => {
+            if (selected && selected.length > 0) {
+              selected.forEach((target) => {
+                // Move tools first
+                const tools = target.tools.slice();
+                tools.forEach((t) => {
+                  target.moveCardTo(t, player.hand);
+                });
+                // Move all cards (Pokemon + energy) to hand
+                target.moveTo(player.hand);
+                target.clearEffects();
+              });
+            }
+          },
+        );
       }
     }
 

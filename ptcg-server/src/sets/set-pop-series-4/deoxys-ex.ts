@@ -1,39 +1,53 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-types';
 import {
-  StoreLike, State, StateUtils, GameMessage,
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
   PowerType,
   PokemonCardList,
   GameError,
   ChooseCardsPrompt,
-  GameLog
+  GameLog,
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SHUFFLE_DECK, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import {
+  ADD_MARKER,
+  HAS_MARKER,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  SHUFFLE_DECK,
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+} from '../../game/store/prefabs/prefabs';
 import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../game/store/prefabs/attack-effects';
 
 export class Deoxysex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = P;
+  protected _tags = [CardTag.POKEMON_ex];
+  public cardType: CardType[] = [P];
   public hp: number = 110;
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Form Change',
-    powerType: PowerType.POKEPOWER,
-    useWhenInPlay: true,
-    text: 'Once during your turn (before your attack), you may search your deck for another Deoxys ex and switch it with Deoxys ex. (Any cards attached to Deoxys ex, damage counters, Special Conditions, and effects on it are now on the new Pokémon.) If you do, put Deoxys ex on top of your deck. Shuffle your deck afterward. You can\'t use more than 1 Form Change Poké-Power each turn.'
-  }];
+  public powers = [
+    {
+      name: 'Form Change',
+      powerType: PowerType.POKEPOWER,
+      useWhenInPlay: true,
+      text: "Once during your turn (before your attack), you may search your deck for another Deoxys ex and switch it with Deoxys ex. (Any cards attached to Deoxys ex, damage counters, Special Conditions, and effects on it are now on the new Pokémon.) If you do, put Deoxys ex on top of your deck. Shuffle your deck afterward. You can't use more than 1 Form Change Poké-Power each turn.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Fastwave',
-    cost: [C, C, C],
-    damage: 50,
-    shredAttack: true,
-    text: 'This attack\'s damage isn\'t affected by Resistance, Poké-Powers, Poké-Bodies, or any other effects on the Defending Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'Fastwave',
+      cost: [C, C, C],
+      damage: 50,
+      shredAttack: true,
+      text: "This attack's damage isn't affected by Resistance, Poké-Powers, Poké-Bodies, or any other effects on the Defending Pokémon.",
+    },
+  ];
 
   public set: string = 'P4';
   public cardImage: string = 'assets/cardback.png';
@@ -44,7 +58,6 @@ export class Deoxysex extends PokemonCard {
   public readonly FORME_CHANGE_MARKER = 'FORME_CHANGE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.FORME_CHANGE_MARKER, this);
 
     if (WAS_POWER_USED(effect, 0, this)) {
@@ -66,34 +79,38 @@ export class Deoxysex extends PokemonCard {
         }
       });
 
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-        player.deck,
-        { superType: SuperType.POKEMON },
-        { min: 1, max: 1, allowCancel: true, blocked },
-      ), (selection) => {
-        if (selection.length <= 0) {
-          return state;
-        }
+      state = store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+          player.deck,
+          { superType: SuperType.POKEMON },
+          { min: 1, max: 1, allowCancel: true, blocked },
+        ),
+        (selection) => {
+          if (selection.length <= 0) {
+            return state;
+          }
 
-        const pokemonCard = selection[0];
+          const pokemonCard = selection[0];
 
-        if (!(pokemonCard instanceof PokemonCard)) {
-          return state;
-        }
-        store.log(state, GameLog.LOG_PLAYER_TRANSFORMS_INTO_POKEMON, {
-          name: player.name,
-          pokemon: this.name,
-          card: pokemonCard.name,
-          effect: effect.power.name,
-        });
-        player.deck.moveCardTo(pokemonCard, targetCardList);
-        targetCardList.moveCardTo(this, player.deck);
+          if (!(pokemonCard instanceof PokemonCard)) {
+            return state;
+          }
+          store.log(state, GameLog.LOG_PLAYER_TRANSFORMS_INTO_POKEMON, {
+            name: player.name,
+            pokemon: this.name,
+            card: pokemonCard.name,
+            effect: effect.power.name,
+          });
+          player.deck.moveCardTo(pokemonCard, targetCardList);
+          targetCardList.moveCardTo(this, player.deck);
 
-        SHUFFLE_DECK(store, state, player);
-        ADD_MARKER(this.FORME_CHANGE_MARKER, player, this);
-      });
+          SHUFFLE_DECK(store, state, player);
+          ADD_MARKER(this.FORME_CHANGE_MARKER, player, this);
+        },
+      );
     }
 
     // Fastwave

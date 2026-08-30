@@ -9,27 +9,24 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Maractus extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Stun Needle',
-      cost: [G, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Reinforced Needle',
-      cost: [G, C, C],
-      damage: 40,
-      damageCalculation: '+',
-      text: 'If this Pokémon has a Pokémon Tool card attached to it, this attack does 40 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Stun Needle',
+    cost: [G, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
+  }, {
+    name: 'Reinforced Needle',
+    cost: [G, C, C],
+    damage: 40,
+    damageCalculation: '+',
+    text: 'If this Pokémon has a Pokémon Tool card attached to it, this attack does 40 more damage.'
+  }];
 
   public set: string = 'DRX';
   public setNumber: string = '16';

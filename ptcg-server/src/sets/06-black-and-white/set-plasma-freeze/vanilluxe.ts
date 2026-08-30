@@ -1,33 +1,35 @@
-import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK, MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_SLEEP_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  MULTIPLE_COIN_FLIPS_PROMPT,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Vanilluxe extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Vanillish';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 130;
   public weakness = [{ type: M }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'ChillMAX',
-      cost: [C],
-      damage: 60,
-      damageCalculation: 'x',
-      text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 60 damage for each heads.'
-    },
-    {
-      name: 'Cold Breath',
-      cost: [W, C],
-      damage: 40,
-      text: 'The Defending Pokémon is now Asleep.'
-    }
-  ];
+  public attacks = [{
+    name: 'ChillMAX',
+    cost: [C],
+    damage: 60,
+    damageCalculation: 'x',
+    text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 60 damage for each heads.'
+  }, {
+    name: 'Cold Breath',
+    cost: [W, C],
+    damage: 40,
+    text: 'The Defending Pokémon is now Asleep.'
+  }];
 
   public set: string = 'PLF';
   public setNumber: string = '29';
@@ -50,8 +52,8 @@ export class Vanilluxe extends PokemonCard {
         return state;
       }
 
-      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, energyCount, results => {
-        const heads = results.filter(r => r).length;
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, energyCount, (results) => {
+        const heads = results.filter((r) => r).length;
         effect.damage = 60 * heads;
       });
     }

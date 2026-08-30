@@ -12,26 +12,23 @@ import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/att
 export class Dragonair extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Dratini';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 80;
   public weakness = [{ type: Y }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Shed Skin',
-      cost: [G],
-      damage: 0,
-      text: 'Heal 30 damage from this Pokémon.'
-    },
-    {
-      name: 'Slam',
-      cost: [G, L, C],
-      damage: 60,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 60 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Shed Skin',
+    cost: [G],
+    damage: 0,
+    text: 'Heal 30 damage from this Pokémon.'
+  }, {
+    name: 'Slam',
+    cost: [G, L, C],
+    damage: 60,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 60 damage times the number of heads.'
+  }];
 
   public set: string = 'ROS';
   public setNumber: string = '50';

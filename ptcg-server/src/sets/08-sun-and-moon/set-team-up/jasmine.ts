@@ -5,7 +5,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardType, SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { ChooseCardsPrompt, PokemonCard, StateUtils } from '../../../game';
+import { ChooseCardsPrompt, PokemonCard, StateUtils, pokemonHasCardType } from '../../../game';
 import { MOVE_CARDS_TO_HAND, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 
 export class Jasmine extends TrainerCard {
@@ -28,7 +28,7 @@ export class Jasmine extends TrainerCard {
 
       const blocked: number[] = [];
       player.deck.cards.forEach((card, index) => {
-        if (!(card instanceof PokemonCard && card.cardType === CardType.METAL)) {
+        if (!(card instanceof PokemonCard && pokemonHasCardType(card, CardType.METAL))) {
           blocked.push(index);
         }
       });

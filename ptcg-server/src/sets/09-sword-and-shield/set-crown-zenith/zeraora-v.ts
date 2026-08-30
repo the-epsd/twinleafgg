@@ -4,24 +4,26 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class ZeraoraV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_V];
-  public cardType: CardType = L;
+  protected _tags = [CardTag.POKEMON_V];
+  public cardType: CardType[] = [L];
   public hp: number = 210;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Claw Slash',
-    cost: [L, C],
-    damage: 50,
-    text: ''
-  },
-  {
-    name: 'Thunderous Bolt',
-    cost: [L, L, C],
-    damage: 190,
-    text: 'During your next turn, this Pokémon can\'t attack.'
-  }];
+  public attacks = [
+    {
+      name: 'Claw Slash',
+      cost: [L, C],
+      damage: 50,
+      text: '',
+    },
+    {
+      name: 'Thunderous Bolt',
+      cost: [L, L, C],
+      damage: 190,
+      text: "During your next turn, this Pokémon can't attack.",
+    },
+  ];
 
   public regulationMark = 'F';
   public set: string = 'CRZ';

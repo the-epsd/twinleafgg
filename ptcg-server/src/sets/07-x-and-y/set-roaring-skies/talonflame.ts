@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, DRAW_CARDS, SWITCH_ACTIVE_WITH_BENCHED, THIS_POKEMON_D
 export class Talonflame extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Fletchinder';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 130;
   public weakness = [{ type: W }];
   public retreat = [];

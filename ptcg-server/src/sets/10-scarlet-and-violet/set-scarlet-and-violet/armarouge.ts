@@ -16,7 +16,7 @@ export class Armarouge extends PokemonCard {
 
   public evolvesFrom = 'Charcadet';
 
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
 
   public hp: number = 130;
 

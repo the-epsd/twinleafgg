@@ -7,7 +7,7 @@ import { AFTER_ATTACK, COIN_FLIP_PROMPT, SHUFFLE_DECK, THIS_POKEMON_DOES_DAMAGE_
 export class Flaaffy extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Mareep';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 80;
   public weakness = [{ type: F, value: +20 }];
   public resistance = [{ type: M, value: -20 }];
@@ -18,8 +18,7 @@ export class Flaaffy extends PokemonCard {
     cost: [C],
     damage: 10,
     text: 'Search your deck for a [L] Energy card and attach it to 1 of your Pokémon. Shuffle your deck afterward.'
-  },
-  {
+  }, {
     name: 'Electromagnetic Kick',
     cost: [L, L, C],
     damage: 60,

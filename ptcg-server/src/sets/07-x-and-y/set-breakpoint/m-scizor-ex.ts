@@ -3,18 +3,28 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+} from '../../../game/store/card/card-types';
 import { Card, ChooseCardsPrompt, GameMessage, StoreLike, State, StateUtils } from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, CONFIRMATION_PROMPT, DISCARD_A_STADIUM_CARD_IN_PLAY } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  CONFIRMATION_PROMPT,
+  DISCARD_A_STADIUM_CARD_IN_PLAY,
+} from '../../../game/store/prefabs/prefabs';
 
 export class MScizorEx extends PokemonCard {
-  public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
+  protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Scizor-EX';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 220;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
@@ -25,8 +35,8 @@ export class MScizorEx extends PokemonCard {
       name: 'Iron Crusher',
       cost: [M, M],
       damage: 120,
-      text: 'You may discard a Special Energy attached to your opponent\'s Active Pokémon or a Stadium card in play.'
-    }
+      text: "You may discard a Special Energy attached to your opponent's Active Pokémon or a Stadium card in play.",
+    },
   ];
 
   public set: string = 'BKP';
@@ -42,8 +52,8 @@ export class MScizorEx extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const hasSpecialEnergy = opponent.active.cards.some(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL
+      const hasSpecialEnergy = opponent.active.cards.some(
+        (c) => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL,
       );
       const hasStadium = StateUtils.getStadiumCard(state) !== undefined;
 
@@ -52,20 +62,26 @@ export class MScizorEx extends PokemonCard {
       }
 
       // "You may" - ask if they want to use the effect
-      CONFIRMATION_PROMPT(store, state, player, wantsToUse => {
+      CONFIRMATION_PROMPT(store, state, player, (wantsToUse) => {
         if (!wantsToUse) {
           return;
         }
 
         // If both options are available, choose which one
         if (hasSpecialEnergy && hasStadium) {
-          CONFIRMATION_PROMPT(store, state, player, chooseEnergy => {
-            if (chooseEnergy) {
-              this.discardSpecialEnergy(store, state, effect, player, opponent);
-            } else {
-              DISCARD_A_STADIUM_CARD_IN_PLAY(state);
-            }
-          }, GameMessage.WANT_TO_USE_ABILITY);
+          CONFIRMATION_PROMPT(
+            store,
+            state,
+            player,
+            (chooseEnergy) => {
+              if (chooseEnergy) {
+                this.discardSpecialEnergy(store, state, effect, player, opponent);
+              } else {
+                DISCARD_A_STADIUM_CARD_IN_PLAY(state);
+              }
+            },
+            GameMessage.WANT_TO_USE_ABILITY,
+          );
         } else if (hasSpecialEnergy) {
           this.discardSpecialEnergy(store, state, effect, player, opponent);
         } else {
@@ -77,20 +93,30 @@ export class MScizorEx extends PokemonCard {
     return state;
   }
 
-  private discardSpecialEnergy(store: StoreLike, state: State, effect: any, player: any, opponent: any): void {
-    store.prompt(state, new ChooseCardsPrompt(
-      player,
-      GameMessage.CHOOSE_CARD_TO_DISCARD,
-      opponent.active,
-      { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
-      { min: 1, max: 1, allowCancel: false }
-    ), selected => {
-      const cards: Card[] = selected || [];
-      if (cards.length > 0) {
-        const discardEnergy = new DiscardCardsEffect(effect, cards);
-        discardEnergy.target = opponent.active;
-        store.reduceEffect(state, discardEnergy);
-      }
-    });
+  private discardSpecialEnergy(
+    store: StoreLike,
+    state: State,
+    effect: any,
+    player: any,
+    opponent: any,
+  ): void {
+    store.prompt(
+      state,
+      new ChooseCardsPrompt(
+        player,
+        GameMessage.CHOOSE_CARD_TO_DISCARD,
+        opponent.active,
+        { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
+        { min: 1, max: 1, allowCancel: false },
+      ),
+      (selected) => {
+        const cards: Card[] = selected || [];
+        if (cards.length > 0) {
+          const discardEnergy = new DiscardCardsEffect(effect, cards);
+          discardEnergy.target = opponent.active;
+          store.reduceEffect(state, discardEnergy);
+        }
+      },
+    );
   }
 }

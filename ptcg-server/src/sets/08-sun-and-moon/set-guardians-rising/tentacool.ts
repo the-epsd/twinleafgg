@@ -4,15 +4,14 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { PlayerType, StoreLike, State, StateUtils } from '../../../game';
+import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { HealEffect } from '../../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_HEALING_ON_DEFENDING_POKEMON_DURING_OPPONENTS_NEXT_TURN } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Tentacool extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 60;
   public weakness = [{ type: G }];
   public retreat = [C];
@@ -32,32 +31,11 @@ export class Tentacool extends PokemonCard {
   public name: string = 'Tentacool';
   public fullName: string = 'Tentacool GRI';
 
-  public readonly HEAL_BLOCK_MARKER = 'TENTACOOL_GRI_HEAL_BLOCK_MARKER';
-  public readonly CLEAR_HEAL_BLOCK_MARKER = 'TENTACOOL_GRI_CLEAR_HEAL_BLOCK_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sludge Shock
-    // Ref: set-next-destinies/bronzong.ts (Heal Block), set-fates-collide/altaria-ex.ts (marker pattern)
+    // Ref: effect-of-attack pattern (Mist Energy-blockable)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      opponent.active.marker.addMarker(this.HEAL_BLOCK_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_HEAL_BLOCK_MARKER, this);
-    }
-
-    // Block healing on marked Pokemon
-    if (effect instanceof HealEffect && effect.target.marker.hasMarker(this.HEAL_BLOCK_MARKER, this)) {
-      effect.preventDefault = true;
-      return state;
-    }
-
-    // Cleanup at end of opponent's turn
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_HEAL_BLOCK_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_HEAL_BLOCK_MARKER, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.HEAL_BLOCK_MARKER, this);
-      });
+      return BLOCK_HEALING_ON_DEFENDING_POKEMON_DURING_OPPONENTS_NEXT_TURN(store, state, effect, this);
     }
 
     return state;

@@ -11,26 +11,23 @@ import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/s
 
 export class Sandile extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Gnaw',
-      cost: [C, C],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Crunch',
-      cost: [D, D, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Gnaw',
+    cost: [C, C],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Crunch',
+    cost: [D, D, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
+  }];
 
   public set: string = 'SUM';
   public setNumber: string = '83';

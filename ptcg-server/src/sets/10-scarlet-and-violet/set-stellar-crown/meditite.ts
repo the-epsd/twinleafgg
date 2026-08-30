@@ -11,7 +11,7 @@ export class Meditite extends PokemonCard {
 
   public regulationMark = 'H';
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 70;
   public retreat = [C];
   public weakness = [{ type: P }];

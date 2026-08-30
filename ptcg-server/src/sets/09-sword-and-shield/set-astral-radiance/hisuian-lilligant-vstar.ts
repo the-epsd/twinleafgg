@@ -3,29 +3,43 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameMessage, GameError } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+} from '../../../game/store/card/card-types';
+import { PowerType, StoreLike, State, StateUtils, GameMessage, GameError, pokemonHasCardType } from '../../../game';
 import { Card } from '../../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  MOVE_CARDS,
+  SHOW_CARDS_TO_PLAYER,
+  SHUFFLE_DECK,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class HisuianLilligantVstar extends PokemonCard {
-  public tags = [CardTag.POKEMON_VSTAR];
+  protected _tags = [CardTag.POKEMON_VSTAR];
   public stage: Stage = Stage.VSTAR;
   public evolvesFrom: string = 'Hisuian Lilligant V';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 260;
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Star Perfume',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'During your turn, you may search your deck for up to 5 in any combination of Grass Pokémon and [G] Energy cards, reveal them, and put them into your hand. Then, shuffle your deck. (You can\'t use more than 1 VSTAR Power in a game.)'
-  }];
+  public powers = [
+    {
+      name: 'Star Perfume',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: "During your turn, you may search your deck for up to 5 in any combination of Grass Pokémon and [G] Energy cards, reveal them, and put them into your hand. Then, shuffle your deck. (You can't use more than 1 VSTAR Power in a game.)",
+    },
+  ];
 
   public attacks = [
     {
@@ -33,8 +47,8 @@ export class HisuianLilligantVstar extends PokemonCard {
       cost: [G, G, C],
       damage: 130,
       damageCalculation: '+',
-      text: 'You may put an Energy attached to this Pokémon into your hand. If you do, this attack does 100 more damage.'
-    }
+      text: 'You may put an Energy attached to this Pokémon into your hand. If you do, this attack does 100 more damage.',
+    },
   ];
 
   public regulationMark: string = 'F';
@@ -65,31 +79,36 @@ export class HisuianLilligantVstar extends PokemonCard {
       // Build blocked list: block cards that are not Grass Pokemon or [G] basic Energy
       const blocked: number[] = [];
       player.deck.cards.forEach((c, index) => {
-        const isGrassPokemon = c instanceof PokemonCard && c.cardType === CardType.GRASS;
-        const isGrassEnergy = c.superType === SuperType.ENERGY
-          && c.energyType === EnergyType.BASIC
-          && c.name === 'Grass Energy';
+        const isGrassPokemon = c instanceof PokemonCard && pokemonHasCardType(c, CardType.GRASS);
+        const isGrassEnergy =
+          c.superType === SuperType.ENERGY &&
+          c.energyType === EnergyType.BASIC &&
+          c.name === 'Grass Energy';
         if (!isGrassPokemon && !isGrassEnergy) {
           blocked.push(index);
         }
       });
 
       let cards: Card[] = [];
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        {},
-        { min: 0, max: 5, allowCancel: false, blocked }
-      ), selected => {
-        cards = selected || [];
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.deck,
+          {},
+          { min: 0, max: 5, allowCancel: false, blocked },
+        ),
+        (selected) => {
+          cards = selected || [];
 
-        if (cards.length > 0) {
-          SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-          MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: this });
-        }
-        SHUFFLE_DECK(store, state, player);
-      });
+          if (cards.length > 0) {
+            SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+            MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: this });
+          }
+          SHUFFLE_DECK(store, state, player);
+        },
+      );
     }
 
     // Attack 1: Parallel Spin
@@ -98,26 +117,30 @@ export class HisuianLilligantVstar extends PokemonCard {
       const player = effect.player;
 
       // Check if this Pokemon has any energy attached
-      const energyCards = player.active.cards.filter(c => c.superType === SuperType.ENERGY);
+      const energyCards = player.active.cards.filter((c) => c.superType === SuperType.ENERGY);
       if (energyCards.length === 0) {
         return state;
       }
 
       let cards: Card[] = [];
-      store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.active,
-        { superType: SuperType.ENERGY },
-        { min: 0, max: 1, allowCancel: false }
-      ), selected => {
-        cards = selected || [];
+      store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.active,
+          { superType: SuperType.ENERGY },
+          { min: 0, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          cards = selected || [];
 
-        if (cards.length > 0) {
-          MOVE_CARDS(store, state, player.active, player.hand, { cards, sourceCard: this });
-          effect.damage += 100;
-        }
-      });
+          if (cards.length > 0) {
+            MOVE_CARDS(store, state, player.active, player.hand, { cards, sourceCard: this });
+            effect.damage += 100;
+          }
+        },
+      );
     }
 
     return state;

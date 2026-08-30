@@ -1,12 +1,12 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, PowerType, CoinFlipPrompt, GameMessage, GamePhase } from '../../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, PowerType, GamePhase } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
-import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Togekiss extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Togetic';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 140;
   public weakness = [{ type: M }];
   public retreat = [C];
@@ -17,16 +17,15 @@ export class Togekiss extends PokemonCard {
     text: 'Whenever your opponent\'s Active Pokémon gets Knocked Out, flip a coin. If heads, take 1 more Prize card for that Knock Out. This Ability does not stack.'
   }];
 
-  public attacks = [
-    {
-      name: 'Speed Wing',
-      cost: [C, C, C],
-      damage: 140,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Speed Wing',
+    cost: [C, C, C],
+    damage: 140,
+    text: ''
+  }];
 
   public regulationMark = 'H';
+
   public set: string = 'SSP';
   public setNumber: string = '72';
   public cardImage: string = 'assets/cardback.png';
@@ -63,9 +62,7 @@ export class Togekiss extends PokemonCard {
       // Mark ability as used for this knockout
       knockedOutOwner.marker.addMarkerToState('TOGEKISS_KNOCKOUT_FLIP');
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(attacker.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, attacker, result => {
         if (result === true) {
           //If Heads, take 1 more Prize card for that Knock Out
           if (effect.prizeCount > 0) {

@@ -7,7 +7,7 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class Moltres extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 100;
   public weakness = [];
   public resistance = [{ type: F, value: -30 }];
@@ -16,7 +16,7 @@ export class Moltres extends PokemonCard {
   public powers = [{
     name: 'Firegiver',
     powerType: PowerType.POKEMON_POWER,
-    text: 'When you put Moltres into play during your turn (not during set-up), put from 1 to 4 (chosen at random) Fire Energy cards from your deck into your hand. Shuffle your deck afterward.'
+    text: 'When you put Moltres into play during your turn (not during set-up), put from 1 to 4 (chosen at random) [R] Energy cards from your deck into your hand. Shuffle your deck afterward.'
   }];
 
   public attacks = [{

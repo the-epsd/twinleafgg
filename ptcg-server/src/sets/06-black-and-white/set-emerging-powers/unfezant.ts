@@ -4,32 +4,30 @@ import { StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType } from 
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-prompt';
 
 export class Unfezant extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Tranquill';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 120;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Tailwind',
-      cost: [C],
-      damage: 0,
-      text: 'Attach an Energy from your hand to 1 of your Pokémon.'
-    },
-    {
-      name: 'Feather Strike',
-      cost: [C, C, C],
-      damage: 40,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 40 more damage. If tails, discard an Energy attached to the Defending Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tailwind',
+    cost: [C],
+    damage: 0,
+    text: 'Attach an Energy from your hand to 1 of your Pokémon.'
+  }, {
+    name: 'Feather Strike',
+    cost: [C, C, C],
+    damage: 40,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 40 more damage. If tails, discard an Energy attached to the Defending Pokémon.'
+  }];
 
   public set: string = 'EPO';
   public cardImage: string = 'assets/cardback.png';
@@ -65,16 +63,12 @@ export class Unfezant extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
       COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
           (effect as AttackEffect).damage += 40;
         } else {
-          const energyCards = opponent.active.cards.filter(c => c.superType === SuperType.ENERGY);
-          if (energyCards.length > 0) {
-            opponent.active.moveCardTo(energyCards[0], opponent.discard);
-          }
+          DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
         }
       });
     }

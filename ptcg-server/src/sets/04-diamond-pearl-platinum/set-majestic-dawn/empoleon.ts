@@ -8,7 +8,7 @@ import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/p
 export class Empoleon extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Prinplup';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 130;
   public weakness = [{ type: L, value: +30 }];
   public retreat = [C, C];
@@ -18,8 +18,7 @@ export class Empoleon extends PokemonCard {
     cost: [W, C],
     damage: 0,
     text: 'Choose 2 of your opponent\'s Pokémon. This attack does 30 damage to each of them. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-  },
-  {
+  }, {
     name: 'Aqua Jet',
     cost: [W, W, C],
     damage: 50,

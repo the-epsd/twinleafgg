@@ -12,7 +12,7 @@ export class Aegislash extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
 
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType[] = [CardType.METAL];
 
   public hp: number = 140;
 

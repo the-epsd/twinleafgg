@@ -9,7 +9,7 @@ import { AFTER_ATTACK, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store/pr
 export class Magneton extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Magnemite';
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType[] = [CardType.METAL];
   public regulationMark = 'F';
   public hp: number = 90;
   public weakness = [{ type: CardType.FIRE }];

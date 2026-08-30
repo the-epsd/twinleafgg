@@ -10,10 +10,10 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class MMewtwoEx2 extends PokemonCard {
-  public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
+  protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Mewtwo-EX';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 210;
   public weakness = [{ type: P }];
   public retreat = [C, C];
@@ -24,8 +24,8 @@ export class MMewtwoEx2 extends PokemonCard {
       cost: [C, C],
       damage: 10,
       damageCalculation: '+',
-      text: 'This attack does 30 more damage times the amount of Energy attached to both Active Pokémon. This attack\'s damage isn\'t affected by Weakness.'
-    }
+      text: "This attack does 30 more damage times the amount of Energy attached to both Active Pokémon. This attack's damage isn't affected by Weakness.",
+    },
   ];
 
   public set: string = 'BKT';
@@ -45,7 +45,7 @@ export class MMewtwoEx2 extends PokemonCard {
       const checkMyEnergy = new CheckProvidedEnergyEffect(player);
       store.reduceEffect(state, checkMyEnergy);
       let myEnergyCount = 0;
-      checkMyEnergy.energyMap.forEach(em => {
+      checkMyEnergy.energyMap.forEach((em) => {
         myEnergyCount += em.provides.length;
       });
 
@@ -53,7 +53,7 @@ export class MMewtwoEx2 extends PokemonCard {
       const checkOppEnergy = new CheckProvidedEnergyEffect(opponent);
       store.reduceEffect(state, checkOppEnergy);
       let oppEnergyCount = 0;
-      checkOppEnergy.energyMap.forEach(em => {
+      checkOppEnergy.energyMap.forEach((em) => {
         oppEnergyCount += em.provides.length;
       });
 

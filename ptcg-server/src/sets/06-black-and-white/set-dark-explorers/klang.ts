@@ -7,26 +7,23 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 export class Klang extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Klink';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Charge Beam',
-      cost: [C, C],
-      damage: 20,
-      text: 'Flip a coin. If heads, attach an Energy card from your discard pile to this Pokémon.'
-    },
-    {
-      name: 'Vice Grip',
-      cost: [M, C, C],
-      damage: 50,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Charge Beam',
+    cost: [C, C],
+    damage: 20,
+    text: 'Flip a coin. If heads, attach an Energy card from your discard pile to this Pokémon.'
+  }, {
+    name: 'Vice Grip',
+    cost: [M, C, C],
+    damage: 50,
+    text: ''
+  }];
 
   public set: string = 'DEX';
   public setNumber: string = '76';

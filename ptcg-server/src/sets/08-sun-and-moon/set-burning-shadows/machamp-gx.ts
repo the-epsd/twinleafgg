@@ -6,13 +6,17 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED, DISCARD_A_STADIUM_CARD_IN_PLAY } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  BLOCK_IF_GX_ATTACK_USED,
+  DISCARD_A_STADIUM_CARD_IN_PLAY,
+} from '../../../game/store/prefabs/prefabs';
 
 export class MachampGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Machoke';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 250;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];
@@ -23,21 +27,21 @@ export class MachampGx extends PokemonCard {
       cost: [F, F],
       damage: 60,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is an Evolution Pokémon, this attack does 60 more damage.'
+      text: "If your opponent's Active Pokémon is an Evolution Pokémon, this attack does 60 more damage.",
     },
     {
       name: 'Bedrock Breaker',
       cost: [F, F, F],
       damage: 130,
-      text: 'Discard any Stadium card in play.'
+      text: 'Discard any Stadium card in play.',
     },
     {
       name: 'Muscle Punch-GX',
       cost: [F, F, F],
       damage: 180,
       gxAttack: true,
-      text: 'This attack\'s damage isn\'t affected by Resistance. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "This attack's damage isn't affected by Resistance. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'BUS';

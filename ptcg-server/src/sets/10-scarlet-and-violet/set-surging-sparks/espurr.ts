@@ -6,12 +6,11 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Espurr extends PokemonCard {
-
-  public tags = [];
+  protected _tags = [];
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 60;
 
@@ -26,14 +25,14 @@ export class Espurr extends PokemonCard {
       name: 'See Through',
       cost: [CardType.COLORLESS],
       damage: 0,
-      text: 'Your opponent reveals their hand.'
+      text: 'Your opponent reveals their hand.',
     },
 
     {
       name: 'Psyshot',
       cost: [CardType.PSYCHIC, CardType.COLORLESS],
       damage: 20,
-      text: ''
+      text: '',
     },
   ];
 
@@ -55,11 +54,11 @@ export class Espurr extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      return store.prompt(state, new ShowCardsPrompt(
-        player.id,
-        GameMessage.CARDS_SHOWED_BY_EFFECT,
-        opponent.hand.cards,
-      ), () => { });
+      return store.prompt(
+        state,
+        new ShowCardsPrompt(player.id, GameMessage.CARDS_SHOWED_BY_EFFECT, opponent.hand.cards),
+        () => {},
+      );
     }
 
     return state;

@@ -4,7 +4,8 @@ import { StoreLike, State, StateUtils, ChooseAttackPrompt } from '../../../game'
 import { Effect } from '../../../game/store/effects/effect';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { GameLog, GameMessage } from '../../../game/game-message';
-import { MEGA_EVOLUTION_END_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { MEGA_EVOLUTION_END_TURN } from '../../../game/store/prefabs/tool-prefabs';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 
 function* usePhantomGate(
@@ -70,10 +71,10 @@ function* usePhantomGate(
 }
 
 export class MGengarEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX, CardTag.MEGA];
+  protected _tags = [CardTag.POKEMON_EX, CardTag.MEGA];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom = 'Gengar-EX';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 220;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -20 }];

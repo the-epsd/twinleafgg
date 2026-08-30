@@ -6,7 +6,7 @@ import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT } from '../
 
 export class Oddish extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 50;
   public weakness = [{ type: R }];
   public retreat = [C];
@@ -16,8 +16,7 @@ export class Oddish extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Poisoned.'
-  },
-  {
+  }, {
     name: 'Razor Leaf',
     cost: [G],
     damage: 10,

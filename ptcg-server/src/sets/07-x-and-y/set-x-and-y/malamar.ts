@@ -12,26 +12,23 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP, YOUR_OPPPONENTS_ACTIVE_PO
 export class Malamar extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Inkay';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Mental Trash',
-      cost: [D],
-      damage: 0,
-      text: 'Your opponent flips 4 coins. For each tails, he or she discards a card from his or her hand.'
-    },
-    {
-      name: 'Distortion Beam',
-      cost: [D, C, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Asleep. If tails, your opponent\'s Active Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Mental Trash',
+    cost: [D],
+    damage: 0,
+    text: 'Your opponent flips 4 coins. For each tails, he or she discards a card from his or her hand.'
+  }, {
+    name: 'Distortion Beam',
+    cost: [D, C, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Asleep. If tails, your opponent\'s Active Pokémon is now Confused.'
+  }];
 
   public set: string = 'XY';
   public setNumber: string = '76';

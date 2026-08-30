@@ -4,13 +4,18 @@ import { PlayerType, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  ADD_MARKER,
+  HAS_MARKER,
+  REMOVE_MARKER,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Ursaring extends PokemonCard {
-  public tags = [CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Teddiursa';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
@@ -20,14 +25,14 @@ export class Ursaring extends PokemonCard {
       name: 'Adrenalash',
       cost: [C, C, C],
       damage: 50,
-      text: 'During your next turn, each of this Pokémon\'s attacks does 50 more damage (before applying Weakness and Resistance).'
+      text: "During your next turn, each of this Pokémon's attacks does 50 more damage (before applying Weakness and Resistance).",
     },
     {
       name: 'Strength',
       cost: [C, C, C, C],
       damage: 80,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'PLB';

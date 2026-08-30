@@ -1,41 +1,20 @@
-import {
-  TrainerCard,
-  TrainerType,
-  Stage,
-  CardType,
-  PokemonType,
-  Power,
-  PowerType,
-  StoreLike,
-  State,
-  GameLog,
-  StateUtils,
-  GameError,
-  GameMessage,
-  GamePhase,
-  Player,
-  CardTag,
-  PokemonCard,
-} from '../../../game';
-import { Effect } from '../../../game/store/effects/effect';
-import { RetreatEffect } from '../../../game/store/effects/game-effects';
-import { PlayItemEffect, PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import {
-  AddSpecialConditionsEffect,
-  PutDamageEffect,
-} from '../../../game/store/effects/attack-effects';
-import { IS_ABILITY_BLOCKED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { TrainerCard, TrainerType, Stage, CardType, PokemonType, CardTag, Power, PowerType, StoreLike, State, Player, GameLog, StateUtils, GameError, GameMessage, PokemonCard, GamePhase } from "../../../game";
+import { AddSpecialConditionsEffect, PutDamageEffect } from "../../../game/store/effects/attack-effects";
+import { Effect } from "../../../game/store/effects/effect";
+import { RetreatEffect } from "../../../game/store/effects/game-effects";
+import { PlayItemEffect, PlayPokemonEffect } from "../../../game/store/effects/play-card-effects";
+import { WAS_POWER_USED, IS_ABILITY_BLOCKED } from "../../../game/store/prefabs/prefabs";
 
 export class AntiqueJawFossil extends TrainerCard {
   public trainerType = TrainerType.ITEM;
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
   public cardTypez: CardType = CardType.COLORLESS;
   public movedToActiveThisTurn = false;
   public pokemonType = PokemonType.NORMAL;
   public evolvesFrom = '';
   public cardTag = [];
-  public tags = [CardTag.ANTIQUE];
+  protected _tags = [CardTag.ANTIQUE];
   public tools = [];
   public evolvesTo = [];
   public evolvesToStage = [];
@@ -51,21 +30,19 @@ export class AntiqueJawFossil extends TrainerCard {
   public evolvesFromBase: string[] = [];
   public maxTools: number = 1;
 
-  public powers: Power[] = [
-    {
-      name: 'Antique Jaw Fossil',
-      text: "Play this card as a 60 HP Basic [C] Pokémon. This card can't be affected by Special Conditions and can't retreat. At any time during your turn, you may discard this card from play.",
-      useWhenInPlay: true,
-      exemptFromAbilityLock: true,
-      isFossil: true,
-      powerType: PowerType.TRAINER_ABILITY,
-    },
-    {
-      name: 'Intimidating Jaw',
-      powerType: PowerType.ABILITY,
-      text: "As long as this Pokémon is in the Active Spot, attacks used by your opponent's Active Pokémon do 30 less damage (before applying Weakness and Resistance).",
-    },
-  ];
+  public powers: Power[] = [{
+    name: 'Antique Jaw Fossil',
+    text: "Play this card as a 60 HP Basic [C] Pokémon. This card can't be affected by Special Conditions and can't retreat. At any time during your turn, you may discard this card from play.",
+    useWhenInPlay: true,
+    exemptFromAbilityLock: true,
+    isFossil: true,
+    powerType: PowerType.TRAINER_ABILITY,
+  },
+  {
+    name: 'Intimidating Jaw',
+    powerType: PowerType.ABILITY,
+    text: "As long as this Pokémon is in the Active Spot, attacks used by your opponent's Active Pokémon do 30 less damage (before applying Weakness and Resistance).",
+  }];
 
   public regulationMark = 'J';
   public set: string = 'POR';

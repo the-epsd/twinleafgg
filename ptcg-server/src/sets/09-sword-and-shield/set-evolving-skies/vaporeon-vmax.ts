@@ -3,8 +3,14 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
-import { GameMessage, PokemonCardList, StoreLike, State, StateUtils } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+} from '../../../game/store/card/card-types';
+import { GameMessage, PokemonCardList, StoreLike, State, StateUtils, pokemonHasCardType } from '../../../game';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, ATTACH_ENERGY_PROMPT } from '../../../game/store/prefabs/prefabs';
@@ -12,10 +18,10 @@ import { PlayerType, SlotType } from '../../../game/store/actions/play-card-acti
 import { EnergyCard } from '../../../game/store/card/energy-card';
 
 export class VaporeonVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX, CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.POKEMON_VMAX, CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Vaporeon V';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 320;
   public weakness = [{ type: L }];
   public retreat = [C, C];
@@ -25,15 +31,15 @@ export class VaporeonVmax extends PokemonCard {
       name: 'Bubble Pod',
       cost: [C],
       damage: 0,
-      text: 'Put a Water Pokémon from your discard pile onto your Bench. If you do, attach up to 3 [W] Energy cards from your discard pile to that Pokémon.'
+      text: 'Put a Water Pokémon from your discard pile onto your Bench. If you do, attach up to 3 [W] Energy cards from your discard pile to that Pokémon.',
     },
     {
       name: 'Max Torrent',
       cost: [W, C, C],
       damage: 100,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 100 more damage.'
-    }
+      text: "If your opponent's Active Pokémon already has any damage counters on it, this attack does 100 more damage.",
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -51,14 +57,14 @@ export class VaporeonVmax extends PokemonCard {
       const player = effect.player;
 
       // Check for open bench slots
-      const openSlots = player.bench.filter(b => b.cards.length === 0);
+      const openSlots = player.bench.filter((b) => b.cards.length === 0);
       if (openSlots.length === 0) {
         return state;
       }
 
       // Check for Water Pokemon in discard
-      const waterPokemonInDiscard = player.discard.cards.filter(c =>
-        c instanceof PokemonCard && c.cardType === CardType.WATER
+      const waterPokemonInDiscard = player.discard.cards.filter(
+        (c) => c instanceof PokemonCard && pokemonHasCardType(c, CardType.WATER),
       );
 
       if (waterPokemonInDiscard.length === 0) {
@@ -66,46 +72,62 @@ export class VaporeonVmax extends PokemonCard {
       }
 
       // Let player choose which Water Pokemon to bench
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-        player.discard,
-        { superType: SuperType.POKEMON, cardType: CardType.WATER },
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        const cards = selected || [];
-        if (cards.length === 0) {
-          return;
-        }
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+          player.discard,
+          { superType: SuperType.POKEMON, cardType: [CardType.WATER] },
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          if (cards.length === 0) {
+            return;
+          }
 
-        // Put chosen Pokemon onto bench
-        const benchSlot = openSlots[0];
-        player.discard.moveCardTo(cards[0], benchSlot);
-        (benchSlot as PokemonCardList).pokemonPlayedTurn = state.turn;
+          // Put chosen Pokemon onto bench
+          const benchSlot = openSlots[0];
+          player.discard.moveCardTo(cards[0], benchSlot);
+          (benchSlot as PokemonCardList).pokemonPlayedTurn = state.turn;
 
-        // Attach up to 3 W energy from discard to that Pokemon
-        const waterEnergyInDiscard = player.discard.cards.filter(c =>
-          c instanceof EnergyCard && c.energyType === EnergyType.BASIC &&
-          c.provides.includes(CardType.WATER)
-        );
-
-        if (waterEnergyInDiscard.length > 0) {
-          // Find bench index for the placed Pokemon
-          const benchIndex = player.bench.indexOf(benchSlot as PokemonCardList);
-
-          ATTACH_ENERGY_PROMPT(
-            store, state, player,
-            PlayerType.BOTTOM_PLAYER, SlotType.DISCARD,
-            [SlotType.BENCH],
-            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
-            {
-              min: 0, max: 3, allowCancel: false, blockedTo: player.bench
-                .map((b, i) => ({ player: PlayerType.BOTTOM_PLAYER, slot: SlotType.BENCH, index: i }))
-                .filter(t => t.index !== benchIndex)
-            }
+          // Attach up to 3 W energy from discard to that Pokemon
+          const waterEnergyInDiscard = player.discard.cards.filter(
+            (c) =>
+              c instanceof EnergyCard &&
+              c.energyType === EnergyType.BASIC &&
+              c.provides.includes(CardType.WATER),
           );
-        }
-      });
+
+          if (waterEnergyInDiscard.length > 0) {
+            // Find bench index for the placed Pokemon
+            const benchIndex = player.bench.indexOf(benchSlot as PokemonCardList);
+
+            ATTACH_ENERGY_PROMPT(
+              store,
+              state,
+              player,
+              PlayerType.BOTTOM_PLAYER,
+              SlotType.DISCARD,
+              [SlotType.BENCH],
+              { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
+              {
+                min: 0,
+                max: 3,
+                allowCancel: false,
+                blockedTo: player.bench
+                  .map((b, i) => ({
+                    player: PlayerType.BOTTOM_PLAYER,
+                    slot: SlotType.BENCH,
+                    index: i,
+                  }))
+                  .filter((t) => t.index !== benchIndex),
+              },
+            );
+          }
+        },
+      );
     }
 
     // Attack 2: Max Torrent

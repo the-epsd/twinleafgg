@@ -3,14 +3,14 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { COIN_FLIP_PROMPT, MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/prefabs/prefabs';
 import { Card, CardTarget, ChooseEnergyPrompt, ChoosePokemonPrompt, GameError, GameLog, GameMessage, PlayerType, PowerType, SlotType } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class Espeon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Eevee';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: P }];
   public retreat = [];
@@ -118,11 +118,9 @@ export class Espeon extends PokemonCard {
       // Count only energies that provide [W]
       const counterCount = effect.opponent.active.damage / 10;
 
-      for (let i = 0; i < counterCount; i++) {
-        COIN_FLIP_PROMPT(store, state, player, result => {
-          if (result) {
-            effect.damage += 10;
-          }
+      if (counterCount > 0) {
+        MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, counterCount, results => {
+          effect.damage += results.filter(r => r).length * 10;
         });
       }
     }

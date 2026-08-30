@@ -5,14 +5,17 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SpecialCondition } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
-import { HealTargetEffect, AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
+import {
+  HealTargetEffect,
+  AddSpecialConditionsEffect,
+} from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class SnorlaxV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 220;
   public weakness = [{ type: F }];
   public retreat = [C, C, C, C];
@@ -22,14 +25,14 @@ export class SnorlaxV extends PokemonCard {
       name: 'Swallow',
       cost: [C, C, C],
       damage: 60,
-      text: 'Heal from this Pokémon the same amount of damage you did to your opponent\'s Active Pokémon.'
+      text: "Heal from this Pokémon the same amount of damage you did to your opponent's Active Pokémon.",
     },
     {
       name: 'Falling Down',
       cost: [C, C, C, C],
       damage: 170,
-      text: 'This Pokémon is now Asleep.'
-    }
+      text: 'This Pokémon is now Asleep.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -52,7 +55,9 @@ export class SnorlaxV extends PokemonCard {
     // Ref: set-dragons-exalted/dustox.ts (YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP applied to self)
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
+      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [
+        SpecialCondition.ASLEEP,
+      ]);
       specialConditionEffect.target = player.active;
       store.reduceEffect(state, specialConditionEffect);
     }

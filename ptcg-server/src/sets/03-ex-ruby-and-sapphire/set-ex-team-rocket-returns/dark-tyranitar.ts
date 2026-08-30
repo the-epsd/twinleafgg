@@ -6,20 +6,21 @@ import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefab
 import { BetweenTurnsEffect } from '../../../game/store/effects/game-phase-effects';
 
 export class DarkTyranitar extends PokemonCard {
-  public tags = [CardTag.DARK];
+  protected _tags = [CardTag.DARK];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Dark Pupitar';
-  public cardType: CardType = F;
-  public additionalCardTypes = [D];
+  public cardType: CardType[] = [F, D];
   public hp: number = 120;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
 
-  public powers = [{
-    name: 'Sand Damage',
-    powerType: PowerType.POKEBODY,
-    text: 'As long as Dark Tyranitar is your Active Pokémon, put 1 damage counter on each of your opponent\'s Benched Basic Pokémon between turns. You can\'t use more than 1 Sand Damage Poké-Body between turns.'
-  }];
+  public powers = [
+    {
+      name: 'Sand Damage',
+      powerType: PowerType.POKEBODY,
+      text: "As long as Dark Tyranitar is your Active Pokémon, put 1 damage counter on each of your opponent's Benched Basic Pokémon between turns. You can't use more than 1 Sand Damage Poké-Body between turns.",
+    },
+  ];
 
   public attacks = [
     {
@@ -27,8 +28,8 @@ export class DarkTyranitar extends PokemonCard {
       cost: [F, C, C],
       damage: 50,
       damageCalculation: '+',
-      text: 'If the Defending Pokémon already has at least 2 damage counters on it, this attack does 50 damage plus 20 more damage.'
-    }
+      text: 'If the Defending Pokémon already has at least 2 damage counters on it, this attack does 50 damage plus 20 more damage.',
+    },
   ];
 
   public set: string = 'TRR';
@@ -38,7 +39,6 @@ export class DarkTyranitar extends PokemonCard {
   public fullName: string = 'Dark Tyranitar TRR 20';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // Sand Damage
     if (effect instanceof BetweenTurnsEffect && effect.player.active.getPokemonCard() === this) {
       const player = effect.player;
@@ -55,7 +55,7 @@ export class DarkTyranitar extends PokemonCard {
 
         // ex era ruling is that this should mean unevolved
         if (!cardList.isEvolved()) {
-          cardList.damage += (10);
+          cardList.damage += 10;
         }
       });
     }
@@ -69,4 +69,4 @@ export class DarkTyranitar extends PokemonCard {
 
     return state;
   }
-} 
+}

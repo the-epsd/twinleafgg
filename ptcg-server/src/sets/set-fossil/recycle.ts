@@ -1,18 +1,16 @@
-import { Card, CardList, ChooseCardsPrompt, CoinFlipPrompt, GameError, GameMessage, OrderCardsPrompt, ShowCardsPrompt, State, StateUtils, StoreLike, TrainerCard, TrainerType } from '../../game';
+import { Card, CardList, ChooseCardsPrompt, GameError, GameMessage, OrderCardsPrompt, ShowCardsPrompt, State, StateUtils, StoreLike, TrainerCard, TrainerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect, TrainerToDeckEffect } from '../../game/store/effects/play-card-effects';
+
+import { COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Recycle extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'FO';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '61';
-
   public name: string = 'Recycle';
-
   public fullName: string = 'Recycle FO';
 
   public text: string = 'Flip a coin. If heads, put a card in your discard pile on top of your deck.';
@@ -33,9 +31,7 @@ export class Recycle extends TrainerCard {
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
+      return COIN_FLIP_PROMPT(store, state, player, results => {
 
         if (results) {
           const deckTop = new CardList();
@@ -79,7 +75,6 @@ export class Recycle extends TrainerCard {
                 deckTop.applyOrder(order);
                 deckTop.moveToTopOfDestination(player.deck);
 
-
                 if (cardsToMove.length > 0) {
                   return store.prompt(state, new ShowCardsPrompt(
                     opponent.id,
@@ -91,7 +86,6 @@ export class Recycle extends TrainerCard {
                 return state;
               });
             }
-
 
             return state;
           });

@@ -4,7 +4,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 export class Amaura extends PokemonCard {
   public stage: Stage = Stage.RESTORED;
   public evolvesFrom = 'Sail Fossil';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: M }];
   public retreat = [C, C, C];

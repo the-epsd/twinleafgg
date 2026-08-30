@@ -6,29 +6,32 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN,
+} from '../../../game/store/prefabs/prefabs';
 
 export class DracovishV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 220;
   public retreat = [C, C, C];
 
   public attacks = [
     {
-      name: 'Slosh \'n\' Crash',
+      name: "Slosh 'n' Crash",
       cost: [G, W],
       damage: 60,
       damageCalculation: '+',
-      text: 'Before doing damage, discard all Pokémon Tools from your opponent\'s Active Pokémon. If you discarded a Pokémon Tool in this way, this attack does 120 more damage.'
+      text: "Before doing damage, discard all Pokémon Tools from your opponent's Active Pokémon. If you discarded a Pokémon Tool in this way, this attack does 120 more damage.",
     },
     {
       name: 'Dragon Strike',
       cost: [G, W, W],
       damage: 210,
-      text: 'During your next turn, this Pokémon can\'t use Dragon Strike.'
-    }
+      text: "During your next turn, this Pokémon can't use Dragon Strike.",
+    },
   ];
 
   public regulationMark: string = 'E';

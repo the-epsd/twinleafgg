@@ -11,28 +11,26 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Hippowdon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Hippopotas';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 150;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Triple Smash',
-      cost: [F, F, C],
-      damage: 80,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 80 damage for each heads.'
-    },
-    {
-      name: 'Land Crush',
-      cost: [F, F, F, C],
-      damage: 150,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Triple Smash',
+    cost: [F, F, C],
+    damage: 80,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 80 damage for each heads.'
+  }, {
+    name: 'Land Crush',
+    cost: [F, F, F, C],
+    damage: 150,
+    text: ''
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'DAA';
   public setNumber: string = '94';
   public cardImage: string = 'assets/cardback.png';

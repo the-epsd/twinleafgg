@@ -24,7 +24,7 @@ export class Poliwrath extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp: number = 90;
 

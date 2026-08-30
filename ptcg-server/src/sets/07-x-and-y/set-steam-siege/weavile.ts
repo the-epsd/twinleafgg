@@ -68,7 +68,7 @@ function* useTearAway(next: Function, store: StoreLike, state: State, effect: Po
 export class Weavile extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Sneasel';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

@@ -11,25 +11,22 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 export class Rhydon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Rhyhorn';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 110;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Rock Tumble',
-      cost: [F, F, C],
-      damage: 80,
-      text: 'This attack\'s damage isn\'t affected by Resistance.'
-    },
-    {
-      name: 'Megahorn',
-      cost: [F, F, F, C],
-      damage: 120,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Rock Tumble',
+    cost: [F, F, C],
+    damage: 80,
+    text: 'This attack\'s damage isn\'t affected by Resistance.'
+  }, {
+    name: 'Megahorn',
+    cost: [F, F, F, C],
+    damage: 120,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'BUS';
   public setNumber: string = '66';

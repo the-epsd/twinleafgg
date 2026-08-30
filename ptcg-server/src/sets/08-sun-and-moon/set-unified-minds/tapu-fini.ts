@@ -6,7 +6,7 @@ import { Effect } from '../../../game/store/effects/effect';
 
 export class TapuFini extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 120;
   public weakness = [{ type: G }];
   public retreat = [C];
@@ -16,14 +16,14 @@ export class TapuFini extends PokemonCard {
       name: 'Razor Fin',
       cost: [W],
       damage: 20,
-      text: ''
+      text: '',
     },
     {
       name: 'Nature Wave',
       cost: [W, W, C],
       damage: 100,
-      text: 'If your opponent has any Ultra Beasts in play, this attack can be used for Colorless.'
-    }
+      text: 'If your opponent has any Ultra Beasts in play, this attack can be used for Colorless.',
+    },
   ];
 
   public set: string = 'UNM';
@@ -41,7 +41,7 @@ export class TapuFini extends PokemonCard {
 
       let hasUltraBeast = false;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card.tags.includes(CardTag.ULTRA_BEAST)) {
+        if (card.hasTag(CardTag.ULTRA_BEAST)) {
           hasUltraBeast = true;
         }
       });

@@ -9,9 +9,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class WhiteKyuremEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 180;
   public weakness = [{ type: N }];
   public retreat = [C, C, C];
@@ -21,15 +21,15 @@ export class WhiteKyuremEx extends PokemonCard {
       name: 'Slash',
       cost: [C, C, C],
       damage: 60,
-      text: ''
+      text: '',
     },
     {
       name: 'White Inferno',
       cost: [R, R, W, C],
       damage: 100,
       damageCalculation: '+',
-      text: 'Does 10 more damage for each damage counter on this Pokémon.'
-    }
+      text: 'Does 10 more damage for each damage counter on this Pokémon.',
+    },
   ];
 
   public set: string = 'PLS';

@@ -6,25 +6,27 @@ import { TERA_RULE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs'
 
 export class Miraidonex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
-  public cardType: CardType = L;
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  public cardType: CardType[] = [L];
   public hp: number = 220;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Slashing Claw',
-    cost: [L],
-    damage: 40,
-    text: ''
-  },
-  {
-    name: 'Hadron Spark',
-    cost: [L, L, C],
-    damage: 120,
-    damageCalculation: '+',
-    text: 'If your opponent\'s Active Pokémon is a Pokémon ex, this attack does 120 more damage.'
-  }];
+  public attacks = [
+    {
+      name: 'Slashing Claw',
+      cost: [L],
+      damage: 40,
+      text: '',
+    },
+    {
+      name: 'Hadron Spark',
+      cost: [L, L, C],
+      damage: 120,
+      damageCalculation: '+',
+      text: "If your opponent's Active Pokémon is a Pokémon ex, this attack does 120 more damage.",
+    },
+  ];
 
   public set: string = 'ASC';
   public cardImage: string = 'assets/cardback.png';
@@ -33,9 +35,8 @@ export class Miraidonex extends PokemonCard {
   public fullName: string = 'Miraidon ex ASC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      if (effect.opponent.active.getPokemonCard()?.tags.includes(CardTag.POKEMON_ex)) {
+      if (effect.opponent.active.getPokemonCard()?.hasTag(CardTag.POKEMON_ex)) {
         effect.damage += 20;
       }
     }

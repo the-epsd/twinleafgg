@@ -1,4 +1,4 @@
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { PokemonCard, getPokemonCardTypes } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State, PlayerType, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Enamorus extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 120;
   public weakness = [{ type: M }];
   public resistance = [];
@@ -50,10 +50,7 @@ export class Enamorus extends PokemonCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList: PokemonCardList) => {
         if (cardList.cards.length > 0) {
           const pokemonCard = cardList.cards[0] as PokemonCard;
-          playerTypes.add(pokemonCard.cardType);
-          if (pokemonCard.additionalCardTypes) {
-            pokemonCard.additionalCardTypes.forEach(type => playerTypes.add(type));
-          }
+          getPokemonCardTypes(pokemonCard).forEach(type => playerTypes.add(type));
         }
       });
 
@@ -61,10 +58,7 @@ export class Enamorus extends PokemonCard {
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList: PokemonCardList) => {
         if (cardList.cards.length > 0) {
           const pokemonCard = cardList.cards[0] as PokemonCard;
-          opponentTypes.add(pokemonCard.cardType);
-          if (pokemonCard.additionalCardTypes) {
-            pokemonCard.additionalCardTypes.forEach(type => opponentTypes.add(type));
-          }
+          getPokemonCardTypes(pokemonCard).forEach(type => opponentTypes.add(type));
         }
       });
 

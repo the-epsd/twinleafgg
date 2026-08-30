@@ -1,4 +1,14 @@
-import { PokemonCard, Stage, CardType, CardTag, StoreLike, State, PlayerType, StateUtils, PowerType } from '../../../game';
+import {
+  PokemonCard,
+  Stage,
+  CardType,
+  CardTag,
+  StoreLike,
+  State,
+  PlayerType,
+  StateUtils,
+  PowerType,
+} from '../../../game';
 import { CheckPokemonPowersEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
@@ -7,8 +17,8 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class ZeraoraVMAX extends PokemonCard {
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Zeraora V';
-  public tags = [CardTag.POKEMON_VMAX];
-  public cardType: CardType = L;
+  protected _tags = [CardTag.POKEMON_VMAX];
+  public cardType: CardType[] = [L];
   public hp: number = 320;
   public weakness = [{ type: F }];
   public retreat = [C, C];
@@ -19,14 +29,14 @@ export class ZeraoraVMAX extends PokemonCard {
       cost: [L, L],
       damage: 60,
       damageCalculation: 'x',
-      text: 'This attack does 60 damage for each of your opponent\'s Pokémon in play that has an Ability.'
+      text: "This attack does 60 damage for each of your opponent's Pokémon in play that has an Ability.",
     },
     {
       name: 'Max Fist',
       cost: [L, L, C],
       damage: 240,
-      text: 'Discard 2 Energy from this Pokémon.'
-    }
+      text: 'Discard 2 Energy from this Pokémon.',
+    },
   ];
 
   public regulationMark = 'F';
@@ -36,9 +46,7 @@ export class ZeraoraVMAX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '54';
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -46,7 +54,7 @@ export class ZeraoraVMAX extends PokemonCard {
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
         const powersEffect = new CheckPokemonPowersEffect(opponent, card);
         state = store.reduceEffect(state, powersEffect);
-        if (powersEffect.powers.some(power => power.powerType === PowerType.ABILITY)) {
+        if (powersEffect.powers.some((power) => power.powerType === PowerType.ABILITY)) {
           numOpPokemonWithAbilities++;
         }
       });

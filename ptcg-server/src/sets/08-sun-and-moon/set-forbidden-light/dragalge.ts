@@ -14,7 +14,7 @@ import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/s
 export class Dragalge extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Skrelp';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 120;
   public weakness = [{ type: P }];
   public retreat = [C];
@@ -25,14 +25,12 @@ export class Dragalge extends PokemonCard {
     text: 'If this Pokémon is your Active Pokémon and is damaged by an opponent\'s attack (even if this Pokémon is Knocked Out), the Attacking Pokémon is now Poisoned.'
   }];
 
-  public attacks = [
-    {
-      name: 'Twister',
-      cost: [P, C],
-      damage: 60,
-      text: 'Flip 2 coins. For each heads, discard an Energy from your opponent\'s Active Pokémon. If both of them are tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Twister',
+    cost: [P, C],
+    damage: 60,
+    text: 'Flip 2 coins. For each heads, discard an Energy from your opponent\'s Active Pokémon. If both of them are tails, this attack does nothing.'
+  }];
 
   public set: string = 'FLI';
   public setNumber: string = '53';

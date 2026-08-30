@@ -6,7 +6,7 @@ import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store
 
 export class Sneasel extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];
@@ -18,8 +18,7 @@ export class Sneasel extends PokemonCard {
     damage: 10,
     damageCalculation: 'x',
     text: 'Flip 3 coins. This attack does 10 damage times the number of heads.'
-  },
-  {
+  }, {
     name: 'Beat Up',
     cost: [D, D],
     damage: 20,

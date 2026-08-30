@@ -6,17 +6,19 @@ import { StoreLike } from '../../../game/store/store-like';
 import { Effect } from '../../../game/store/effects/effect';
 import { ConfirmPrompt, GameMessage, StateUtils } from '../../../game';
 import { KnockOutOpponentEffect } from '../../../game/store/effects/attack-effects';
-import { THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class RoaringMoonex extends PokemonCard {
-
   public regulationMark = 'G';
 
-  public tags = [CardTag.POKEMON_ex, CardTag.ANCIENT];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.ANCIENT];
 
   public stage = Stage.BASIC;
 
-  public cardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp = 230;
 
@@ -29,15 +31,15 @@ export class RoaringMoonex extends PokemonCard {
       name: 'Frenzied Gouging',
       cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS],
       damage: 0,
-      text: 'Knock Out your opponent\'s Active Pokémon. If your opponent\'s Active Pokémon is Knocked Out in this way, this Pokémon does 200 damage to itself.'
+      text: "Knock Out your opponent's Active Pokémon. If your opponent's Active Pokémon is Knocked Out in this way, this Pokémon does 200 damage to itself.",
     },
     {
       name: 'Calamity Storm',
       cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS],
       damage: 100,
       damageCalculation: '+',
-      text: 'You may discard a Stadium in play. If you do, this attack does 120 more damage.'
-    }
+      text: 'You may discard a Stadium in play. If you do, this attack does 120 more damage.',
+    },
   ];
 
   public set: string = 'PAR';
@@ -51,7 +53,6 @@ export class RoaringMoonex extends PokemonCard {
   public fullName: string = 'Roaring Moon ex PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -72,22 +73,23 @@ export class RoaringMoonex extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const stadiumCard = StateUtils.getStadiumCard(state);
       if (stadiumCard) {
-        state = store.prompt(state, new ConfirmPrompt(
-          effect.player.id,
-          GameMessage.CALAMITY_STORM,
-        ), wantToUse => {
-          if (wantToUse) {
-            // Discard Stadium
-            const cardList = StateUtils.findCardList(state, stadiumCard);
-            if (cardList) {
-              const player = StateUtils.findOwner(state, cardList);
-              cardList.moveTo(player.discard);
+        state = store.prompt(
+          state,
+          new ConfirmPrompt(effect.player.id, GameMessage.CALAMITY_STORM),
+          (wantToUse) => {
+            if (wantToUse) {
+              // Discard Stadium
+              const cardList = StateUtils.findCardList(state, stadiumCard);
+              if (cardList) {
+                const player = StateUtils.findOwner(state, cardList);
+                cardList.moveTo(player.discard);
+              }
+              effect.damage += 120;
+              return state;
             }
-            effect.damage += 120;
             return state;
-          }
-          return state;
-        });
+          },
+        );
         return state;
       }
       return state;

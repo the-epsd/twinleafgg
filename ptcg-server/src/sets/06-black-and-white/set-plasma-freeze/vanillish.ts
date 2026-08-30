@@ -7,20 +7,18 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Vanillish extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Vanillite';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 80;
   public weakness = [{ type: M }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Surefire Spin',
-      cost: [C, C],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. If both of them are heads, this attack does 40 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Surefire Spin',
+    cost: [C, C],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. If both of them are heads, this attack does 40 more damage.'
+  }];
 
   public set: string = 'PLF';
   public setNumber: string = '28';

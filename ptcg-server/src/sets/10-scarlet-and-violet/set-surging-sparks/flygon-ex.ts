@@ -1,5 +1,15 @@
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
-import { ChoosePokemonPrompt, ConfirmPrompt, GameMessage, PlayerType, PokemonCard, SlotType, State, StateUtils, StoreLike } from '../../../game';
+import {
+  ChoosePokemonPrompt,
+  ConfirmPrompt,
+  GameMessage,
+  PlayerType,
+  PokemonCard,
+  SlotType,
+  State,
+  StateUtils,
+  StoreLike,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
@@ -7,16 +17,15 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Flygonex extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_2;
 
   public evolvesFrom = 'Vibrava';
 
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
   public regulationMark = 'H';
 
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp: number = 310;
 
@@ -29,14 +38,14 @@ export class Flygonex extends PokemonCard {
       name: 'Storm Bug',
       cost: [CardType.FIGHTING],
       damage: 130,
-      text: 'You may switch this Pokémon with a Pokémon on your Bench.'
+      text: 'You may switch this Pokémon with a Pokémon on your Bench.',
     },
     {
       name: 'Peridot Sonic',
       cost: [CardType.WATER, CardType.FIGHTING, CardType.METAL],
       damage: 0,
-      text: 'This attack does 100 damage to each of your opponent\'s Pokémon ex and Pokémon V. (Don\'t apply Weakness or Resistance for this damage.)'
-    }
+      text: "This attack does 100 damage to each of your opponent's Pokémon ex and Pokémon V. (Don't apply Weakness or Resistance for this damage.)",
+    },
   ];
 
   public set: string = 'SSP';
@@ -52,14 +61,13 @@ export class Flygonex extends PokemonCard {
   public stormBug: boolean = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       this.stormBug = true;
     }
 
     if (effect instanceof EndTurnEffect && this.stormBug == true) {
       const player = effect.player;
-      const hasBenched = player.bench.some(b => b.cards.length > 0);
+      const hasBenched = player.bench.some((b) => b.cards.length > 0);
 
       if (!hasBenched) {
         return state;
@@ -67,41 +75,50 @@ export class Flygonex extends PokemonCard {
 
       this.stormBug = false;
 
-      state = store.prompt(state, new ConfirmPrompt(
-        effect.player.id,
-        GameMessage.WANT_TO_SWITCH_POKEMON,
-      ), wantToUse => {
-        if (wantToUse) {
-
-          return store.prompt(state, new ChoosePokemonPrompt(
-            player.id,
-            GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
-            PlayerType.BOTTOM_PLAYER,
-            [SlotType.BENCH],
-            { allowCancel: false },
-          ), selected => {
-            if (!selected || selected.length === 0) {
-              return state;
-            }
-            const target = selected[0];
-            player.switchPokemon(target);
-          });
-        }
-      });
+      state = store.prompt(
+        state,
+        new ConfirmPrompt(effect.player.id, GameMessage.WANT_TO_SWITCH_POKEMON),
+        (wantToUse) => {
+          if (wantToUse) {
+            return store.prompt(
+              state,
+              new ChoosePokemonPrompt(
+                player.id,
+                GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
+                PlayerType.BOTTOM_PLAYER,
+                [SlotType.BENCH],
+                { allowCancel: false },
+              ),
+              (selected) => {
+                if (!selected || selected.length === 0) {
+                  return state;
+                }
+                const target = selected[0];
+                player.switchPokemon(target);
+              },
+            );
+          }
+        },
+      );
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const targetTags = [CardTag.POKEMON_V, CardTag.POKEMON_VSTAR, CardTag.POKEMON_VMAX, CardTag.POKEMON_ex];
+      const targetTags = [
+        CardTag.POKEMON_V,
+        CardTag.POKEMON_VSTAR,
+        CardTag.POKEMON_VMAX,
+        CardTag.POKEMON_ex,
+      ];
 
-      const damageTargets = [opponent.active, ...opponent.bench].filter(pokemon => {
+      const damageTargets = [opponent.active, ...opponent.bench].filter((pokemon) => {
         const card = pokemon.getPokemonCard();
-        return card && targetTags.some(tag => card.tags.includes(tag));
+        return card && targetTags.some((tag) => card.hasTag(tag));
       });
 
-      damageTargets.forEach(target => {
+      damageTargets.forEach((target) => {
         const damageEffect = new PutDamageEffect(effect, 100);
         damageEffect.target = target;
         effect.ignoreWeakness = true;
@@ -112,7 +129,11 @@ export class Flygonex extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

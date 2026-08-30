@@ -11,28 +11,26 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Mienshao extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Mienfoo';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 90;
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Pound',
-      cost: [F],
-      damage: 30,
-      text: ''
-    },
-    {
-      name: 'Double Smash',
-      cost: [F, C],
-      damage: 70,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 70 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Pound',
+    cost: [F],
+    damage: 30,
+    text: ''
+  }, {
+    name: 'Double Smash',
+    cost: [F, C],
+    damage: 70,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 70 damage for each heads.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'LOR';
   public setNumber: string = '104';
   public cardImage: string = 'assets/cardback.png';

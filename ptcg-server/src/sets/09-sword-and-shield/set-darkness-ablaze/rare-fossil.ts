@@ -11,7 +11,7 @@ export class RareFossil extends TrainerCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
   public cardTypez: CardType = CardType.COLORLESS;
 
   public movedToActiveThisTurn = false;

@@ -11,10 +11,16 @@ import styles from './SnackbarHost.module.css';
 
 export type SnackbarVariant = 'info' | 'error';
 
+export type SnackbarAction = {
+  label: string;
+  onClick: () => void;
+};
+
 export type ShowSnackbarOptions = {
   variant?: SnackbarVariant;
   /** Defaults to 3000 (Angular AlertService.toast). */
   durationMs?: number;
+  action?: SnackbarAction;
 };
 
 type SnackbarContextValue = {
@@ -24,7 +30,11 @@ type SnackbarContextValue = {
 const SnackbarContext = createContext<SnackbarContextValue | null>(null);
 
 export function SnackbarProvider({ children }: { children: ReactNode }) {
-  const [toast, setToast] = useState<{ message: string; variant: SnackbarVariant } | null>(null);
+  const [toast, setToast] = useState<{
+    message: string;
+    variant: SnackbarVariant;
+    action?: SnackbarAction;
+  } | null>(null);
   const timerRef = useRef<ReturnType<typeof window.setTimeout> | undefined>(undefined);
 
   const clearTimer = () => {
@@ -38,7 +48,7 @@ export function SnackbarProvider({ children }: { children: ReactNode }) {
     const variant = options?.variant ?? 'info';
     const durationMs = options?.durationMs ?? 3000;
     clearTimer();
-    setToast({ message, variant });
+    setToast({ message, variant, action: options?.action });
     timerRef.current = window.setTimeout(() => {
       setToast(null);
       timerRef.current = undefined;
@@ -52,10 +62,23 @@ export function SnackbarProvider({ children }: { children: ReactNode }) {
       {children}
       {toast ? (
         <div
-          className={`${styles.snackbar} ${toast.variant === 'error' ? styles.error : styles.info}`}
+          className={`${styles.snackbar} ${toast.variant === 'error' ? styles.error : styles.info} ${toast.action ? styles.withAction : ''}`}
           role="status"
         >
-          {toast.message}
+          <span>{toast.message}</span>
+          {toast.action ? (
+            <button
+              type="button"
+              className={styles.action}
+              onClick={() => {
+                toast.action?.onClick();
+                clearTimer();
+                setToast(null);
+              }}
+            >
+              {toast.action.label}
+            </button>
+          ) : null}
         </div>
       ) : null}
     </SnackbarContext.Provider>

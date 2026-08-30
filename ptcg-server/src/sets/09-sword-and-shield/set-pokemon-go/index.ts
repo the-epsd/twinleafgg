@@ -1,3 +1,5 @@
+import { Aipom } from './aipom';
+import { Ambipom } from './ambipom';
 import { RareCandyPGO, ConkeldurrV2PGO, ConkeldurrV3PGO, SlakingV2PGO, ProfessorsResearchPGO, ProfessorsResearch2PGO, LureModule2PGO } from './other-prints';
 import { Card } from '../../../game/store/card/card';
 import { AlolanRaticate } from './alolan-raticate';
@@ -28,7 +30,9 @@ import { Zapdos } from './zapdos';
 import { RadiantCharizardPGO } from './other-prints';
 
 export const setPokemonGO: Card[] = [
+  new Aipom(),
   new AlolanRaticate(),
+  new Ambipom(),
   new Blastoise(),
   new Camerupt(),
   new Charmander(),

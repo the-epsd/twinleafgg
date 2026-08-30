@@ -1,4 +1,19 @@
-import { PokemonCard, Stage, CardType, CardTag, StoreLike, State, GameError, GameMessage, EnergyType, PlayerType, SuperType, PowerType, StateUtils, ChooseCardsPrompt } from '../../../game';
+import {
+  PokemonCard,
+  Stage,
+  CardType,
+  CardTag,
+  StoreLike,
+  State,
+  GameError,
+  GameMessage,
+  EnergyType,
+  PlayerType,
+  SuperType,
+  PowerType,
+  StateUtils,
+  ChooseCardsPrompt,
+} from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
@@ -7,9 +22,9 @@ import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/pre
 export class TeamRocketsSpidops extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
 
-  public evolvesFrom = 'Team Rocket\'s Tarountula';
+  public evolvesFrom = "Team Rocket's Tarountula";
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 130;
 
@@ -17,12 +32,14 @@ export class TeamRocketsSpidops extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Charge Up',
-    powerType: PowerType.ABILITY,
-    useWhenInPlay: true,
-    text: 'Once during your turn, you may attach 1 Basic Energy from your discard pile to this Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Charge Up',
+      powerType: PowerType.ABILITY,
+      useWhenInPlay: true,
+      text: 'Once during your turn, you may attach 1 Basic Energy from your discard pile to this Pokémon.',
+    },
+  ];
 
   public attacks = [
     {
@@ -30,11 +47,11 @@ export class TeamRocketsSpidops extends PokemonCard {
       cost: [CardType.GRASS, CardType.COLORLESS],
       damage: 30,
       damageCalculation: 'x',
-      text: 'This attack does 30 damage for each of your Team Rocket\'s Pokemon in play.'
-    }
+      text: "This attack does 30 damage for each of your Team Rocket's Pokemon in play.",
+    },
   ];
 
-  public tags = [CardTag.TEAM_ROCKET];
+  protected _tags = [CardTag.TEAM_ROCKET];
 
   public set: string = 'DRI';
 
@@ -44,9 +61,9 @@ export class TeamRocketsSpidops extends PokemonCard {
 
   public setNumber: string = '20';
 
-  public name: string = 'Team Rocket\'s Spidops';
+  public name: string = "Team Rocket's Spidops";
 
-  public fullName: string = 'Team Rocket\'s Spidops DRI';
+  public fullName: string = "Team Rocket's Spidops DRI";
 
   public readonly CHARGE_UP_MARKER = 'CHARGE_UP_MARKER';
 
@@ -59,9 +76,8 @@ export class TeamRocketsSpidops extends PokemonCard {
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const hasEnergyInDiscard = player.discard.cards.some(c => {
-        return c instanceof EnergyCard
-          && c.energyType === EnergyType.BASIC;
+      const hasEnergyInDiscard = player.discard.cards.some((c) => {
+        return c instanceof EnergyCard && c.energyType === EnergyType.BASIC;
       });
 
       if (!hasEnergyInDiscard) {
@@ -77,19 +93,23 @@ export class TeamRocketsSpidops extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_ATTACH,
-        player.discard,
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { min: 1, max: 1, allowCancel: false }
-      ), cards => {
-        cards = cards || [];
-        if (cards.length > 0) {
-          player.marker.addMarker(this.CHARGE_UP_MARKER, this);
-          player.discard.moveCardsTo(cards, cardList);
-        }
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_ATTACH,
+          player.discard,
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (cards) => {
+          cards = cards || [];
+          if (cards.length > 0) {
+            player.marker.addMarker(this.CHARGE_UP_MARKER, this);
+            player.discard.moveCardsTo(cards, cardList);
+          }
+        },
+      );
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
@@ -98,7 +118,7 @@ export class TeamRocketsSpidops extends PokemonCard {
       let teamRocketCount = 0;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card) => {
-        if (card.tags.includes(CardTag.TEAM_ROCKET)) {
+        if (card.hasTag(CardTag.TEAM_ROCKET)) {
           teamRocketCount++;
         }
       });

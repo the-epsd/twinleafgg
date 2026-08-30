@@ -5,19 +5,17 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
-import { CoinFlipPrompt } from '../../../game/store/prompts/coin-flip-prompt';
+
 import { SelectPrompt } from '../../../game/store/prompts/select-prompt';
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 function* useMiraclePowder(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
 
   let flip = false;
-  yield store.prompt(state, [
-    new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-  ], result => {
+  yield COIN_FLIP_PROMPT(store, state, player, result => {
     flip = result;
     next();
   });
@@ -50,35 +48,25 @@ function* useMiraclePowder(next: Function, store: StoreLike, state: State,
 }
 
 export class Gloom extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Oddish';
-
-  public cardType: CardType = CardType.GRASS;
-
+  public cardType: CardType[] = [G];
   public hp: number = 80;
-
-  public weakness = [{ type: CardType.PSYCHIC }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: P }];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Miracle Powder',
-    cost: [CardType.GRASS, CardType.COLORLESS],
+    cost: [G, C],
     damage: 30,
     text: 'Flip a coin. If heads, choose 1 Special Condition. ' +
-      'The Defending Pokemon is now affected by that Special Condition.'
+    'The Defending Pokemon is now affected by that Special Condition.'
   }];
 
   public set: string = 'UD';
-
   public name: string = 'Gloom';
-
   public fullName: string = 'Gloom UD';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '27';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -2,6 +2,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
   type ReactNode,
@@ -21,6 +22,7 @@ import {
   writeDebugMarkersEnabled,
   type ClientSettingsSnapshot,
 } from '../settings/settingsStorage';
+import { configureSfx } from '../sfx';
 
 export type SettingsDraftCommit = Pick<
   ClientSettingsSnapshot,
@@ -50,6 +52,10 @@ const SettingsContext = createContext<SettingsContextValue | null>(null);
 
 export function SettingsProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<ClientSettingsSnapshot>(() => readClientSettingsSnapshot());
+
+  useEffect(() => {
+    configureSfx({ enabled: state.sfxEnabled, volume: state.sfxVolume });
+  }, [state.sfxEnabled, state.sfxVolume]);
 
   const setCardSize = useCallback((size: number) => {
     writeCardSize(size);

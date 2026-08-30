@@ -9,6 +9,7 @@ import { Mary } from './mary';
 import { Natu } from './natu';
 import { Noctowl } from './noctowl';
 import { Pichu } from './pichu';
+import { PokemonMarch } from './pokemon-march';
 import { ProfessorElm } from './professor-elm';
 import { Sneasel } from './sneasel';
 import { Steelix } from './steelix';
@@ -32,6 +33,7 @@ export const setNeoGenesis: Card[] = [
   new Natu(),
   new Noctowl(),
   new Pichu(),
+  new PokemonMarch(),
   new ProfessorElm(),
   new Sneasel(),
   new Steelix(),

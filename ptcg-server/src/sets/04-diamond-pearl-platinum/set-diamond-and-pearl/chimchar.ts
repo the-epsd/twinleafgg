@@ -8,7 +8,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 
 export class Chimchar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 50;
   public weakness = [{ type: W, value: +10 }];
   public retreat = [C];
@@ -18,8 +18,7 @@ export class Chimchar extends PokemonCard {
     cost: [],
     damage: 10,
     text: ''
-  },
-  {
+  }, {
     name: 'Ember',
     cost: [R, C],
     damage: 30,

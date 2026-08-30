@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, DRAW_CARDS_UNTIL_CARDS_IN_HAND, IS_ABILITY_BLOCKED } f
 
 export class Castform extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [];

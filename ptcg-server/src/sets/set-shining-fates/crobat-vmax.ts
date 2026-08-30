@@ -11,10 +11,10 @@ import { AfterAttackEffect, EndTurnEffect } from '../../game/store/effects/game-
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../game/store/prefabs/attack-effects';
 
 export class CrobatVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Crobat V';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 300;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -24,14 +24,14 @@ export class CrobatVmax extends PokemonCard {
       name: 'Stealth Poison',
       cost: [D, C],
       damage: 70,
-      text: 'Your opponent\'s Active Pokémon is now Poisoned. Switch this Pokémon with 1 of your Benched Pokémon.'
+      text: "Your opponent's Active Pokémon is now Poisoned. Switch this Pokémon with 1 of your Benched Pokémon.",
     },
     {
       name: 'Max Cutter',
       cost: [D, D, C],
       damage: 180,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -53,7 +53,7 @@ export class CrobatVmax extends PokemonCard {
 
     if (effect instanceof AfterAttackEffect && this.usedStealthPoison) {
       const player = effect.player;
-      if (player.bench.some(b => b.cards.length > 0)) {
+      if (player.bench.some((b) => b.cards.length > 0)) {
         SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
       }
     }

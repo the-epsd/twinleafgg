@@ -6,7 +6,7 @@ import { Effect } from '../../../game/store/effects/effect';
 export class Zorua extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 70;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public weakness = [{ type: G }];
   public retreat = [C];
   public attacks = [{

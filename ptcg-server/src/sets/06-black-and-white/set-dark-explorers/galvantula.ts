@@ -8,27 +8,24 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Galvantula extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Joltik';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Quick Turn',
-      cost: [L],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
-    },
-    {
-      name: 'Electrisilk',
-      cost: [L, C],
-      damage: 30,
-      damageCalculation: '+',
-      text: 'If the Defending Pokémon has no Retreat Cost, this attack does 40 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Quick Turn',
+    cost: [L],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
+  }, {
+    name: 'Electrisilk',
+    cost: [L, C],
+    damage: 30,
+    damageCalculation: '+',
+    text: 'If the Defending Pokémon has no Retreat Cost, this attack does 40 more damage.'
+  }];
 
   public set: string = 'DEX';
   public setNumber: string = '43';

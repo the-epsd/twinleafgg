@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED, MOVE_CARDS, SHUFFLE_DECK, DISCARD_ALL_ENERGY_FROM_POKE
 
 export class Jirachi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
@@ -67,7 +67,7 @@ export class Jirachi extends PokemonCard {
     // Attack 2: Doom Desire
     if (WAS_ATTACK_USED(effect, 1, this)) {
       DISCARD_ALL_ENERGY_FROM_POKEMON(store, state, effect, effect.player.active.getPokemonCard()!);
-      KNOCK_OUT_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(effect, this);
+      KNOCK_OUT_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(store, state, effect, this);
     }
 
     return state;

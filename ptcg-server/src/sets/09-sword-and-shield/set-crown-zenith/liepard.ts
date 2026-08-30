@@ -11,28 +11,26 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Liepard extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Purrloin';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 100;
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Fury Swipes',
-      cost: [C, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 40 damage for each heads.'
-    },
-    {
-      name: 'Claw Slash',
-      cost: [D, D, C],
-      damage: 110,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Fury Swipes',
+    cost: [C, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 40 damage for each heads.'
+  }, {
+    name: 'Claw Slash',
+    cost: [D, D, C],
+    damage: 110,
+    text: ''
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'CRZ';
   public setNumber: string = '78';
   public cardImage: string = 'assets/cardback.png';

@@ -11,11 +11,13 @@ import { COIN_FLIP_PROMPT, DRAW_CARDS } from '../../../game/store/prefabs/prefab
 
 export class Ilima extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
+
   public set: string = 'SUM';
   public setNumber: string = '121';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ilima';
   public fullName: string = 'Ilima SUM';
+
   public text: string = 'Each player shuffles their hand into their deck and flips a coin. If heads, that player draws 6 cards. If tails, they draw 3 cards. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

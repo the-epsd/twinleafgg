@@ -8,14 +8,19 @@ import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, REPLACE_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  HAS_MARKER,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  REPLACE_MARKER_AT_END_OF_TURN,
+} from '../../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_DAMAGE_PER_HEADS } from '../../../game/store/prefabs/attack-effects';
 
 export class Zebstrika extends PokemonCard {
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Blitzle';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 120;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -30,15 +35,15 @@ export class Zebstrika extends PokemonCard {
       cost: [C],
       damage: 30,
       damageCalculation: '+',
-      text: 'If 1 of your other Rapid Strike Pokémon used an attack during your last turn, this attack does 90 more damage.'
+      text: 'If 1 of your other Rapid Strike Pokémon used an attack during your last turn, this attack does 90 more damage.',
     },
     {
       name: 'Spark Rush',
       cost: [L, C, C],
       damage: 90,
       damageCalculation: 'x',
-      text: 'Flip a coin until you get tails. This attack does 90 damage for each heads.'
-    }
+      text: 'Flip a coin until you get tails. This attack does 90 damage for each heads.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -55,7 +60,7 @@ export class Zebstrika extends PokemonCard {
       const player = effect.player;
       const attacker = player.active.getPokemonCard();
       // Only set marker if it's a different Rapid Strike Pokemon (not this Zebstrika)
-      if (attacker && attacker !== this && attacker.tags.includes(CardTag.RAPID_STRIKE)) {
+      if (attacker && attacker !== this && attacker.hasTag(CardTag.RAPID_STRIKE)) {
         player.marker.addMarker(this.RS_USED_LAST_TURN_MARKER, this);
       }
     }
@@ -63,15 +68,22 @@ export class Zebstrika extends PokemonCard {
     // 2-phase marker cleanup
     if (effect instanceof EndTurnEffect) {
       REMOVE_MARKER_AT_END_OF_TURN(effect, this.CLEAR_RS_USED_LAST_TURN_MARKER, this);
-      REPLACE_MARKER_AT_END_OF_TURN(effect, this.RS_USED_LAST_TURN_MARKER, this.CLEAR_RS_USED_LAST_TURN_MARKER, this);
+      REPLACE_MARKER_AT_END_OF_TURN(
+        effect,
+        this.RS_USED_LAST_TURN_MARKER,
+        this.CLEAR_RS_USED_LAST_TURN_MARKER,
+        this,
+      );
     }
 
     // Attack 1: Coordinated Bolt
     // Ref: set-vivid-voltage/grapploct.ts (check both phase markers for "used last turn")
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      if (HAS_MARKER(this.RS_USED_LAST_TURN_MARKER, player, this) ||
-        HAS_MARKER(this.CLEAR_RS_USED_LAST_TURN_MARKER, player, this)) {
+      if (
+        HAS_MARKER(this.RS_USED_LAST_TURN_MARKER, player, this) ||
+        HAS_MARKER(this.CLEAR_RS_USED_LAST_TURN_MARKER, player, this)
+      ) {
         effect.damage += 90;
       }
     }

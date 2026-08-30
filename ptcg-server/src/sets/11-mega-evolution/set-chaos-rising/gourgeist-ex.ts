@@ -7,8 +7,8 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Gourgeistex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Pumpkaboo';
-  public tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = P;
+  protected _tags = [CardTag.POKEMON_ex];
+  public cardType: CardType[] = [P];
   public hp: number = 270;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

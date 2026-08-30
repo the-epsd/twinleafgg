@@ -1,61 +1,46 @@
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../../game/store/card/card-types';
-import { PlayerType, PokemonCardList, StoreLike, State, StateUtils } from '../../../game';
-import { AbstractAttackEffect } from '../../../game/store/effects/attack-effects';
-import { Effect } from '../../../game/store/effects/effect';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PokemonCard, Stage, CardType, StoreLike, State } from "../../../game";
+import { Effect } from "../../../game/store/effects/effect";
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from "../../../game/store/prefabs/prefabs";
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class Cherubi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
+  public cardType: CardType[] = [G];
   public hp: number = 40;
-  public cardType: CardType = G;
   public weakness = [{ type: R }];
   public retreat = [C];
+
   public attacks = [{
     name: 'Hide',
     cost: [C],
     damage: 0,
-    text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage and effects done to this Pokémon by attacks.'
-  },
-  {
+    text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage from and effects of attacks done to this Pokémon.'
+  }, {
     name: 'Flop',
     cost: [G],
     damage: 10,
     text: ''
   }];
+
   public regulationMark: string = 'J';
-  public set: string = 'MF';
+
+  public set: string = '30C';
+  public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '2';
   public name: string = 'Cherubi';
-  public fullName: string = 'Cherubi MF';
+  public fullName: string = 'Cherubi 30C';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-x-and-y-promos/jirachi.ts (Stardust — prevent all damage and effects next turn)
+    // Hide
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      COIN_FLIP_PROMPT(store, state, player, result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {
-          player.active.marker.addMarker(PokemonCardList.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this);
-          opponent.marker.addMarker(PokemonCardList.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this);
+          PREVENT_DAMAGE(store, state, effect, this);
+          PREVENT_EFFECTS_OF_ATTACKS(store, state, effect, this);
         }
       });
     }
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(PokemonCardList.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this)) {
-      effect.player.marker.removeMarker(PokemonCardList.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
-        cardList.marker.removeMarker(PokemonCardList.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this);
-      });
-    }
-    if (effect instanceof AbstractAttackEffect
-      && effect.target.cards.includes(this)
-      && effect.target.getPokemonCard() === this
-      && effect.target.marker.hasMarker(PokemonCardList.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this)
-      && effect.source.getPokemonCard()) {
-      effect.preventDefault = true;
-    }
+
     return state;
   }
 }

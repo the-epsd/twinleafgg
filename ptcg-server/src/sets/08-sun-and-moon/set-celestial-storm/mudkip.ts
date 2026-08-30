@@ -7,7 +7,7 @@ export class Mudkip extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp = 60;
 

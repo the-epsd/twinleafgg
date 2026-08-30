@@ -8,27 +8,24 @@ import { AttackEffect } from '../../../game/store/effects/game-effects';
 
 export class Maractus extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Mega Drain',
-      cost: [G],
-      damage: 20,
-      text: 'Heal 20 damage from this Pokémon.'
-    },
-    {
-      name: 'Pin Missile',
-      cost: [G, G, C],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 20 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Mega Drain',
+    cost: [G],
+    damage: 20,
+    text: 'Heal 20 damage from this Pokémon.'
+  }, {
+    name: 'Pin Missile',
+    cost: [G, G, C],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 20 damage times the number of heads.'
+  }];
 
   public set: string = 'BLW';
   public cardImage: string = 'assets/cardback.png';

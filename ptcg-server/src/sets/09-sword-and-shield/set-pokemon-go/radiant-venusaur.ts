@@ -1,4 +1,16 @@
-import { PokemonCard, CardTag, Stage, CardType, PowerType, StoreLike, State, ConfirmPrompt, GameMessage, SpecialCondition, PlayerType } from '../../../game';
+import {
+  PokemonCard,
+  CardTag,
+  Stage,
+  CardType,
+  PowerType,
+  StoreLike,
+  State,
+  ConfirmPrompt,
+  GameMessage,
+  SpecialCondition,
+  PlayerType,
+} from '../../../game';
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 
@@ -6,12 +18,11 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class RadiantVenusaur extends PokemonCard {
-
-  public tags = [CardTag.RADIANT];
+  protected _tags = [CardTag.RADIANT];
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 150;
 
@@ -19,19 +30,23 @@ export class RadiantVenusaur extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Sunny Bloom',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once at the end of your turn (after your attack), you may use this Ability. Draw cards until you have 4 cards in your hand.'
-  }];
+  public powers = [
+    {
+      name: 'Sunny Bloom',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once at the end of your turn (after your attack), you may use this Ability. Draw cards until you have 4 cards in your hand.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Pollen Hazard',
-    cost: [CardType.GRASS, CardType.GRASS, CardType.COLORLESS],
-    damage: 90,
-    text: 'Your opponent\'s Active Pokémon is now Burned, Confused, and Poisoned.'
-  }];
+  public attacks = [
+    {
+      name: 'Pollen Hazard',
+      cost: [CardType.GRASS, CardType.GRASS, CardType.COLORLESS],
+      damage: 90,
+      text: "Your opponent's Active Pokémon is now Burned, Confused, and Poisoned.",
+    },
+  ];
 
   public regulationMark = 'F';
 
@@ -46,15 +61,16 @@ export class RadiantVenusaur extends PokemonCard {
   public fullName: string = 'Radiant Venusaur PGO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
-      const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.BURNED, SpecialCondition.CONFUSED, SpecialCondition.POISONED]);
+      const specialCondition = new AddSpecialConditionsEffect(effect, [
+        SpecialCondition.BURNED,
+        SpecialCondition.CONFUSED,
+        SpecialCondition.POISONED,
+      ]);
       store.reduceEffect(state, specialCondition);
     }
 
     if (effect instanceof EndTurnEffect) {
-
       const player = effect.player;
 
       let hasVenusaurInPlay = false;
@@ -70,26 +86,24 @@ export class RadiantVenusaur extends PokemonCard {
       }
 
       if (hasVenusaurInPlay) {
-
         if (player.hand.cards.length < 4) {
+          state = store.prompt(
+            state,
+            new ConfirmPrompt(effect.player.id, GameMessage.WANT_TO_USE_ABILITY),
+            (wantToUse) => {
+              if (wantToUse) {
+                const player = effect.player;
 
-          state = store.prompt(state, new ConfirmPrompt(
-            effect.player.id,
-            GameMessage.WANT_TO_USE_ABILITY,
-          ), wantToUse => {
-            if (wantToUse) {
-
-              const player = effect.player;
-
-              while (player.hand.cards.length < 4) {
-                if (player.deck.cards.length === 0) {
-                  break;
+                while (player.hand.cards.length < 4) {
+                  if (player.deck.cards.length === 0) {
+                    break;
+                  }
+                  player.deck.moveTo(player.hand, 1);
                 }
-                player.deck.moveTo(player.hand, 1);
+                return state;
               }
-              return state;
-            }
-          });
+            },
+          );
         }
         return state;
       }

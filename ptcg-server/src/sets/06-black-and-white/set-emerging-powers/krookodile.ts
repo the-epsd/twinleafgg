@@ -10,29 +10,25 @@ import { WAS_ATTACK_USED, WAS_POWER_USED, COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED, 
 export class Krookodile extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Krokorok';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 140;
   public weakness = [{ type: W }];
   public resistance = [{ type: L, value: -20 }];
   public retreat = [C, C, C];
 
-  public powers = [
-    {
-      name: 'Black Eyes',
-      powerType: PowerType.ABILITY,
-      text: 'Once during your turn (before your attack), if this Pokémon is your Active Pokémon, you may flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
-    }
-  ];
+  public powers = [{
+    name: 'Black Eyes',
+    powerType: PowerType.ABILITY,
+    text: 'Once during your turn (before your attack), if this Pokémon is your Active Pokémon, you may flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
+  }];
 
-  public attacks = [
-    {
-      name: 'Thrash',
-      cost: [F, F, C],
-      damage: 70,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 more damage. If tails, this Pokémon does 20 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Thrash',
+    cost: [F, F, C],
+    damage: 70,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 20 more damage. If tails, this Pokémon does 20 damage to itself.'
+  }];
 
   public set: string = 'EPO';
   public cardImage: string = 'assets/cardback.png';

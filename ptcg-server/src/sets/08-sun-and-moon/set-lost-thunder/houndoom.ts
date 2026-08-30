@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, BLOCK_IF_DECK_EMPTY, SEARCH_DECK_FOR_CARDS_TO_HAND } f
 export class Houndoom extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Houndour';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 110;
   public weakness = [{ type: W }];
   public retreat = [C];

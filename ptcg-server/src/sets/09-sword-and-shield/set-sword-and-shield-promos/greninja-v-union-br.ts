@@ -1,6 +1,13 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { GameError, GameMessage, PokemonCardList, PowerType, State, StoreLike } from '../../../game';
+import {
+  GameError,
+  GameMessage,
+  PokemonCardList,
+  PowerType,
+  State,
+  StoreLike,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { GreninjaVUNIONTopLeft } from './greninja-v-union-tl';
@@ -10,8 +17,8 @@ import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class GreninjaVUNIONBottomRight extends PokemonCard {
   public stage: Stage = Stage.VUNION;
-  public tags = [CardTag.POKEMON_VUNION];
-  public cardType: CardType = W;
+  protected _tags = [CardTag.POKEMON_VUNION];
+  public cardType: CardType[] = [W];
   public hp: number = 300;
   public weakness = [{ type: L }];
   public retreat = [C, C];
@@ -27,19 +34,19 @@ export class GreninjaVUNIONBottomRight extends PokemonCard {
     {
       name: 'Ninja Body',
       text: 'Whenever your opponent plays an Item card from their hand, prevent all effects of that card done to this Pokémon.',
-      powerType: PowerType.ABILITY
+      powerType: PowerType.ABILITY,
     },
     {
       name: 'Antidote Jutsu',
-      text: 'This Pokémon can\'t be Poisoned.',
-      powerType: PowerType.ABILITY
+      text: "This Pokémon can't be Poisoned.",
+      powerType: PowerType.ABILITY,
     },
     {
       name: 'Feel the Way',
       text: 'Once during your turn, you may have your opponent reveal their hand.',
       useWhenInPlay: true,
-      powerType: PowerType.ABILITY
-    }
+      powerType: PowerType.ABILITY,
+    },
   ];
 
   public attacks = [
@@ -47,26 +54,26 @@ export class GreninjaVUNIONBottomRight extends PokemonCard {
       name: 'Union Gain',
       cost: [C],
       damage: 0,
-      text: 'Attach up to 2 [W] Energy cards from your discard pile to this Pokémon.'
+      text: 'Attach up to 2 [W] Energy cards from your discard pile to this Pokémon.',
     },
     {
       name: 'Aqua Edge',
       cost: [W],
       damage: 130,
-      text: ''
+      text: '',
     },
     {
       name: 'Twister Shuriken',
       cost: [W, W, C],
       damage: 0,
-      text: 'This attack does 100 damage to each of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack does 100 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Waterfall Bind',
       cost: [W, W, C],
       damage: 180,
-      text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
-    }
+      text: "During your opponent's next turn, the Defending Pokémon can't retreat.",
+    },
   ];
 
   public set: string = 'SWSH';
@@ -80,7 +87,7 @@ export class GreninjaVUNIONBottomRight extends PokemonCard {
     // assemblin the v-union
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
-      const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
+      const slots: PokemonCardList[] = player.bench.filter((b) => b.cards.length === 0);
 
       if (player.assembledVUNIONs.includes(this.name)) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -93,20 +100,44 @@ export class GreninjaVUNIONBottomRight extends PokemonCard {
       let topRightPiece = false;
       let bottomLeftPiece = false;
       let bottomRightPiece = false;
-      player.discard.cards.forEach(card => {
-        if (card instanceof GreninjaVUNIONTopLeft) { topLeftPiece = true; }
-        if (card instanceof GreninjaVUNIONTopRight) { topRightPiece = true; }
-        if (card instanceof GreninjaVUNIONBottomLeft) { bottomLeftPiece = true; }
-        if (card instanceof GreninjaVUNIONBottomRight) { bottomRightPiece = true; }
+      player.discard.cards.forEach((card) => {
+        if (card instanceof GreninjaVUNIONTopLeft) {
+          topLeftPiece = true;
+        }
+        if (card instanceof GreninjaVUNIONTopRight) {
+          topRightPiece = true;
+        }
+        if (card instanceof GreninjaVUNIONBottomLeft) {
+          bottomLeftPiece = true;
+        }
+        if (card instanceof GreninjaVUNIONBottomRight) {
+          bottomRightPiece = true;
+        }
       });
 
       if (topLeftPiece && topRightPiece && bottomLeftPiece && bottomRightPiece) {
         if (slots.length > 0) {
-          player.discard.cards.forEach(card => { if (card instanceof GreninjaVUNIONTopRight) { player.discard.moveCardTo(card, slots[0]); } });
-          player.discard.cards.forEach(card => { if (card instanceof GreninjaVUNIONBottomLeft) { player.discard.moveCardTo(card, slots[0]); } });
-          player.discard.cards.forEach(card => { if (card instanceof GreninjaVUNIONBottomRight) { player.discard.moveCardTo(card, slots[0]); } });
+          player.discard.cards.forEach((card) => {
+            if (card instanceof GreninjaVUNIONTopRight) {
+              player.discard.moveCardTo(card, slots[0]);
+            }
+          });
+          player.discard.cards.forEach((card) => {
+            if (card instanceof GreninjaVUNIONBottomLeft) {
+              player.discard.moveCardTo(card, slots[0]);
+            }
+          });
+          player.discard.cards.forEach((card) => {
+            if (card instanceof GreninjaVUNIONBottomRight) {
+              player.discard.moveCardTo(card, slots[0]);
+            }
+          });
           // gotta make sure the actual mon ends up on top
-          player.discard.cards.forEach(card => { if (card instanceof GreninjaVUNIONTopLeft) { player.discard.moveCardTo(card, slots[0]); } });
+          player.discard.cards.forEach((card) => {
+            if (card instanceof GreninjaVUNIONTopLeft) {
+              player.discard.moveCardTo(card, slots[0]);
+            }
+          });
           player.assembledVUNIONs.push(this.name);
           slots[0].pokemonPlayedTurn = state.turn;
         }

@@ -14,7 +14,7 @@ export class Trumbeak extends PokemonCard {
 
   public evolvesFrom = 'Pikipek';
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp: number = 80;
 

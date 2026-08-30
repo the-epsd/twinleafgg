@@ -6,7 +6,7 @@ import { State, StoreLike } from '../../../game';
 export class Marshtomp extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Mudkip';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 70;
   public weakness = [{ type: L }];
   public retreat = [C];
@@ -16,8 +16,7 @@ export class Marshtomp extends PokemonCard {
     cost: [W],
     damage: 10,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-  },
-  {
+  }, {
     name: 'Slash',
     cost: [C, C, C],
     damage: 40,

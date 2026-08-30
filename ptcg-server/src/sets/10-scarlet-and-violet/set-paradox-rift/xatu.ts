@@ -17,7 +17,7 @@ export class Xatu extends PokemonCard {
 
   public evolvesFrom = 'Natu';
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 100;
 

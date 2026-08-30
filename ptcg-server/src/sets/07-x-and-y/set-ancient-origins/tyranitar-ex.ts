@@ -10,9 +10,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class TyranitarEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 180;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];
@@ -23,14 +23,14 @@ export class TyranitarEx extends PokemonCard {
       name: 'Hammer In',
       cost: [D, C, C],
       damage: 60,
-      text: ''
+      text: '',
     },
     {
       name: 'Break Ground',
       cost: [D, D, C, C],
       damage: 130,
-      text: 'This attack does 10 damage to each of your Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "This attack does 10 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public set: string = 'AOR';

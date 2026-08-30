@@ -9,10 +9,10 @@ import { Effect } from '../../../game/store/effects/effect';
 import { BREAK_RULE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class TalonflameBreak extends PokemonCard {
-  public tags = [CardTag.BREAK];
+  protected _tags = [CardTag.BREAK];
   public stage: Stage = Stage.BREAK;
   public evolvesFrom: string = 'Talonflame';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 170;
   public retreat = [];
 

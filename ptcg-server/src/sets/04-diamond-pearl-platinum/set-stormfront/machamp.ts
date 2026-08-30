@@ -6,10 +6,9 @@ import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store
 import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class Machamp extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Machoke';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 130;
   public weakness = [{ type: P, value: 30 }];
   public retreat = [C, C];
@@ -19,15 +18,13 @@ export class Machamp extends PokemonCard {
     cost: [F],
     damage: 40,
     text: 'If the Defending Pokémon isn\'t an Evolved Pokémon, that Pokémon is Knocked Out instead of damaged by this attack.',
-  },
-  {
+  }, {
     name: 'Hurricane Punch',
     cost: [C, C],
     damage: 30,
     damageCalculation: 'x',
     text: 'Flip 4 coins. This attack does 30 damage times the number of heads.',
-  },
-  {
+  }, {
     name: 'Rage',
     cost: [F, F, C, C],
     damage: 60,

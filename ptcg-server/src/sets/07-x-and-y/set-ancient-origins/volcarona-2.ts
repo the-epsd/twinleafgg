@@ -12,26 +12,23 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, SWITCH_ACTIVE_WITH_BENCHED
 export class Volcarona2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Larvesta';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 110;
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Burning Scales',
-      cost: [R],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
-    },
-    {
-      name: 'Wind Wheel',
-      cost: [R, C, C],
-      damage: 80,
-      text: 'Your opponent switches his or her Active Pokémon with 1 of his or her Benched Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Burning Scales',
+    cost: [R],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
+  }, {
+    name: 'Wind Wheel',
+    cost: [R, C, C],
+    damage: 80,
+    text: 'Your opponent switches his or her Active Pokémon with 1 of his or her Benched Pokémon.'
+  }];
 
   public set: string = 'AOR';
   public setNumber: string = '18';

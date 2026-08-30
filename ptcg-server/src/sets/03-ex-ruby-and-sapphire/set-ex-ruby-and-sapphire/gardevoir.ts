@@ -8,7 +8,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class Gardevoir extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Kirlia';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 10;
   public weakness = [{ type: P }];
   public retreat = [C, C];

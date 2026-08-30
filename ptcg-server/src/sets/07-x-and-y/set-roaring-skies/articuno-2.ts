@@ -9,27 +9,24 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Articuno2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 120;
   public weakness = [{ type: M }];
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Chilling Sigh',
-      cost: [W],
-      damage: 0,
-      text: 'Your opponent\'s Active Pokémon is now Asleep.'
-    },
-    {
-      name: 'Tri Edge',
-      cost: [W, W, C],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'Flip 3 coins. This attack does 40 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Chilling Sigh',
+    cost: [W],
+    damage: 0,
+    text: 'Your opponent\'s Active Pokémon is now Asleep.'
+  }, {
+    name: 'Tri Edge',
+    cost: [W, W, C],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'Flip 3 coins. This attack does 40 more damage for each heads.'
+  }];
 
   public set: string = 'ROS';
   public setNumber: string = '17';

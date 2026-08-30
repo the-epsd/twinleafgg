@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_P
 export class Blissey extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Chansey';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 160;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
@@ -24,15 +24,13 @@ export class Blissey extends PokemonCard {
     text: 'Once during your turn (before your attack), you may remove a Special Condition from your Active Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Powerful Slap',
-      cost: [C, C, C],
-      damage: 80,
-      damageCalculation: 'x',
-      text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 80 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Powerful Slap',
+    cost: [C, C, C],
+    damage: 80,
+    damageCalculation: 'x',
+    text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 80 damage for each heads.'
+  }];
 
   public set: string = 'LOT';
   public setNumber: string = '153';

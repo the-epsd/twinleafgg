@@ -4,6 +4,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from 'react';
@@ -16,6 +17,9 @@ import { appConfig } from '../env/config';
 import { ApiError } from '../api/apiError';
 import type { ClientUserData } from './coreTypes';
 import { ConnectionStatusSnackbar } from '../components/ConnectionStatusSnackbar';
+import { InviteAwareness } from '../components/InviteAwareness';
+import { isPlayerInGame } from '../games/myGamesClassify';
+import { LoadingSessionScreen } from '../pages/auth/LoadingSessionScreen';
 
 export type ConnectionBanner =
   | { type: 'reconnecting'; attempt: number }
@@ -82,20 +86,54 @@ function mergeUsers(list: UserInfo[]): Record<number, UserInfo> {
 }
 
 export function CoreSessionProvider({ children }: { children: ReactNode }) {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const [core, setCore] = useState<CoreSessionState>(initialCore);
+  const loggedUserIdRef = useRef(user?.userId ?? 0);
+  const clientIdRef = useRef(0);
+  const autoJoinedRef = useRef<Set<number>>(new Set());
+
+  useEffect(() => {
+    loggedUserIdRef.current = user?.userId ?? 0;
+  }, [user?.userId]);
 
   useEffect(() => {
     const authToken = getStoredToken();
     if (!isAuthenticated || !authToken) {
       getSocketManager().disable();
       setCore(initialCore);
+      autoJoinedRef.current.clear();
+      clientIdRef.current = 0;
       return;
     }
 
     const socket = getSocketManager();
     let cancelled = false;
     let sessionReady = false;
+    // Captured when listeners attach so teardown offs the same Manager instance.
+    let manager: ReturnType<typeof getSocketManager>['raw']['io'] | undefined;
+
+    const autoJoinGame = async (game: GameInfo, sessionClientId: number): Promise<void> => {
+      if (autoJoinedRef.current.has(game.gameId)) {
+        return;
+      }
+      const userId = loggedUserIdRef.current;
+      // Seat owners (by clientId or userId) must rejoin so the server runs
+      // handlePlayerReconnection after a drop. Observers join via TablePage.
+      if (!isPlayerInGame(game, sessionClientId, userId)) {
+        return;
+      }
+      autoJoinedRef.current.add(game.gameId);
+      try {
+        await socket.emit<{ gameId: number }, GameState>('game:rejoin', { gameId: game.gameId });
+      } catch {
+        // Not disconnected (or rejoin rejected) — fall back to a normal join.
+        try {
+          await socket.emit<number, GameState>('game:join', game.gameId);
+        } catch {
+          autoJoinedRef.current.delete(game.gameId);
+        }
+      }
+    };
 
     const onJoin = (data: ClientUserData) => {
       setCore((c) => {
@@ -115,6 +153,7 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
     const onGameInfo = (game: GameInfo) => {
       setCore((c) => {
         if (!isActiveListGameInfo(game)) {
+          autoJoinedRef.current.delete(game.gameId);
           return { ...c, games: c.games.filter((g) => g.gameId !== game.gameId) };
         }
         const games = c.games.slice();
@@ -126,6 +165,9 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
         }
         return { ...c, games };
       });
+      if (sessionReady) {
+        void autoJoinGame(game, clientIdRef.current);
+      }
     };
 
     const onUsersInfo = (infos: UserInfo[]) => {
@@ -145,9 +187,13 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
         }
         return { ...c, games: [...c.games, game] };
       });
+      if (sessionReady && isActiveListGameInfo(game)) {
+        void autoJoinGame(game, clientIdRef.current);
+      }
     };
 
     const onDeleteGame = (gameId: number) => {
+      autoJoinedRef.current.delete(gameId);
       setCore((c) => ({
         ...c,
         games: c.games.filter((g) => g.gameId !== gameId),
@@ -172,26 +218,58 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
       socket.raw.off('core:deleteGame', onDeleteGame);
     };
 
-    async function refreshCoreInfo(): Promise<void> {
+    async function refreshCoreInfo(options?: { rejoinGames?: boolean }): Promise<void> {
+      const rejoinGames = options?.rejoinGames !== false;
       const info = await socket.emit<void, CoreInfo>('core:getInfo', undefined);
       if (cancelled) {
+        return;
+      }
+      clientIdRef.current = info.clientId;
+      const activeGames = info.games.filter(isActiveListGameInfo);
+      if (rejoinGames) {
+        // Join/rejoin before marking connected so TablePage doesn't attach with a
+        // temporary post-reconnect clientId (seat restore may rewrite client.id).
+        await Promise.all(activeGames.map((game) => autoJoinGame(game, info.clientId)));
+        if (cancelled) {
+          return;
+        }
+        const after = await socket.emit<void, CoreInfo>('core:getInfo', undefined);
+        if (cancelled) {
+          return;
+        }
+        clientIdRef.current = after.clientId;
+        setCore({
+          clientId: after.clientId,
+          clients: after.clients,
+          usersById: mergeUsers(after.users),
+          games: after.games.filter(isActiveListGameInfo),
+          connected: true,
+          error: null,
+          connectionBanner: null,
+        });
         return;
       }
       setCore({
         clientId: info.clientId,
         clients: info.clients,
         usersById: mergeUsers(info.users),
-        games: info.games.filter(isActiveListGameInfo),
+        games: activeGames,
         connected: true,
         error: null,
         connectionBanner: null,
       });
     }
 
+    async function restoreSessionAfterReconnect(): Promise<void> {
+      await refreshCoreInfo({ rejoinGames: true });
+    }
+
     const onDisconnect = (reason: string) => {
       if (cancelled || socket.wasIntentionalDisconnect || !sessionReady) {
         return;
       }
+      // Allow post-reconnect refreshCoreInfo to rejoin games on the new socket session.
+      autoJoinedRef.current.clear();
       // Server kicked us — socket.io will not auto-reconnect unless we call connect()
       if (reason === 'io server disconnect') {
         socket.markReconnecting();
@@ -217,12 +295,14 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
       }));
     };
 
-    const onReconnect = () => {
+    // Socket.IO v4: Manager emits reconnect*; Socket emits connect on both first
+    // connect and successful reconnect (including manual connect after server kick).
+    const onSocketReconnect = () => {
       if (cancelled || !sessionReady) {
         return;
       }
       socket.clearReconnectingQuery();
-      void refreshCoreInfo().catch((e) => {
+      void restoreSessionAfterReconnect().catch((e) => {
         if (cancelled) {
           return;
         }
@@ -282,11 +362,13 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
         sessionReady = true;
         bindCoreListeners();
 
+        // Attach after first connect so Socket `connect` only runs for restores.
+        manager = socket.raw.io;
         socket.raw.on('disconnect', onDisconnect);
-        socket.raw.on('reconnect_attempt', onReconnectAttempt);
-        socket.raw.on('reconnect', onReconnect);
-        socket.raw.on('reconnect_failed', onReconnectFailed);
+        socket.raw.on('connect', onSocketReconnect);
         socket.raw.on('connect_error', onConnectError);
+        manager.on('reconnect_attempt', onReconnectAttempt);
+        manager.on('reconnect_failed', onReconnectFailed);
       } catch (e) {
         if (!cancelled) {
           const msg = e instanceof ApiError ? e.message : String(e);
@@ -307,10 +389,10 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
       sessionReady = false;
       unbindCoreListeners();
       socket.raw.off('disconnect', onDisconnect);
-      socket.raw.off('reconnect_attempt', onReconnectAttempt);
-      socket.raw.off('reconnect', onReconnect);
-      socket.raw.off('reconnect_failed', onReconnectFailed);
+      socket.raw.off('connect', onSocketReconnect);
       socket.raw.off('connect_error', onConnectError);
+      manager?.off('reconnect_attempt', onReconnectAttempt);
+      manager?.off('reconnect_failed', onReconnectFailed);
     };
   }, [isAuthenticated]);
 
@@ -416,10 +498,16 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
     [core, createGame, createSelfPlayGame, joinMatchmaking, leaveMatchmaking]
   );
 
+  // Keep the auth-style loading screen up through the first socket connect so
+  // pages never flash a brief "Connecting…" alert between auth-ready and online.
+  const awaitingInitialConnect =
+    !core.connected && core.error == null && core.connectionBanner == null;
+
   return (
     <CoreSessionContext.Provider value={value}>
-      {children}
+      {awaitingInitialConnect ? <LoadingSessionScreen /> : children}
       <ConnectionStatusSnackbar />
+      <InviteAwareness />
     </CoreSessionContext.Provider>
   );
 }

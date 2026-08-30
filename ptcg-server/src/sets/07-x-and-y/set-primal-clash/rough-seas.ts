@@ -6,6 +6,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, CardType } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
+import { pokemonHasCardType } from '../../../game';
 import { UseStadiumEffect, HealEffect } from '../../../game/store/effects/game-effects';
 import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 import { PlayerType } from '../../../game/store/actions/play-card-action';
@@ -26,7 +27,7 @@ export class RoughSeas extends TrainerCard {
 
       const targets: PokemonCardList[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if ([CardType.WATER, CardType.LIGHTNING].includes(card.cardType) && cardList.damage > 0) {
+        if ((pokemonHasCardType(card, CardType.WATER) || pokemonHasCardType(card, CardType.LIGHTNING)) && cardList.damage > 0) {
           targets.push(cardList);
         }
       });

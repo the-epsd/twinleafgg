@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Card, CardList, EnergyCard, Player, PokemonCard, TrainerCard } from 'ptcg-server';
-import { CardType, BoardEffect, EnergyType, PokemonCardList, PowerType, SuperType, TrainerType, CardTag } from 'ptcg-server';
+import { CardType, BoardEffect, EnergyType, getPokemonCardTypes, PokemonCardList, PowerType, SuperType, TrainerType, CardTag } from 'ptcg-server';
 import { CardSwapDialog } from './CardSwapDialog';
 import { EnergyTypeIcon } from './EnergyTypeIcon';
 import { isFavoriteCard, toggleFavoriteCard } from './favoriteCardsStorage';
@@ -15,6 +15,7 @@ import {
   getDisplayPowers,
   getDisplayRuleBoxes,
   getDisplayTagLabels,
+  getInPlayTransformCopy,
   isToolCardInList,
   parseCardName,
   powerTypeLabel,
@@ -103,6 +104,8 @@ export function CardInfoPane({
   const { t } = useTranslation();
   const settings = useOptionalSettings();
   const debugMarkersEnabled = settings?.debugMarkersEnabled ?? false;
+  const showTagsEnabled = settings?.showTags ?? showTags;
+  const kerningPx = settings?.cardTextKerning ?? cardTextKerning;
   const [localSwapOpen, setLocalSwapOpen] = useState(false);
   const swapOpen = omitScanColumn ? (swapOpenProp ?? false) : localSwapOpen;
   const setSwapOpen = omitScanColumn
@@ -126,12 +129,16 @@ export function CardInfoPane({
     }
   }
 
-  const kerningStyle = { letterSpacing: `${cardTextKerning}px` } as const;
+  const kerningStyle = { letterSpacing: `${kerningPx}px` } as const;
   const formattedText = (text: string) => formatCardText(text, CARD_INFO_ENERGY_ICON_SIZE);
 
-  const displayPowers = useMemo(() => getDisplayPowers(card, cardList), [card, cardList]);
-  const displayAttacks = useMemo(() => getDisplayAttacks(card, cardList), [card, cardList]);
+  const displayPowers = useMemo(() => getDisplayPowers(card, cardList, players), [card, cardList, players]);
+  const displayAttacks = useMemo(() => getDisplayAttacks(card, cardList, players), [card, cardList, players]);
   const displayRuleBoxes = useMemo(() => getDisplayRuleBoxes(card, cardList), [card, cardList]);
+  const transformCopy = useMemo(
+    () => getInPlayTransformCopy(card, cardList, players),
+    [card, cardList, players],
+  );
 
   const abilityUsedThisTurn =
     cardList instanceof PokemonCardList &&
@@ -151,7 +158,7 @@ export function CardInfoPane({
         e.useFromHand &&
         power.useFromHand &&
         power.powerType === PowerType.LEGEND_ASSEMBLY &&
-        card.tags?.includes(CardTag.DUAL_LEGEND)
+        card.tags.includes(CardTag.DUAL_LEGEND)
       ) {
         ok = hasBothDualLegendHalvesInHand(cardList?.cards ?? [], card);
       }
@@ -168,10 +175,25 @@ export function CardInfoPane({
 
   const parsed = parseCardName(card.name);
   const pokemon = card as PokemonCard;
+  const displayPokemon = (transformCopy ?? pokemon) as PokemonCard;
   const trainer = card as TrainerCard;
   const energy = card as EnergyCard;
 
-  const tagLabels = getDisplayTagLabels(card, showTags);
+  const tagLabels = getDisplayTagLabels(transformCopy ?? card, showTagsEnabled, cardList);
+
+  const subtitleTagPills =
+    tagLabels.length > 0 ? (
+      <>
+        <div className={styles.subtitleTags}>
+          {tagLabels.map((tag) => (
+            <span key={tag} className={styles.tag}>
+              {tag}
+            </span>
+          ))}
+        </div>
+        <div className={styles.spacer} />
+      </>
+    ) : null;
   const debugMarkers = useMemo(
     () => getDisplayDebugMarkers(card, cardList, players, debugMarkersEnabled),
     [card, cardList, players, debugMarkersEnabled],
@@ -231,17 +253,11 @@ export function CardInfoPane({
               <div className={styles.subtitleHp}>
                 <span className={styles.subtitleHpUnit}>{t('CARDS_HP')}</span>
                 <span className={styles.subtitleHpValue}>
-                  {getCurrentHp(card, cardList) ?? '—'}/{getComputedHp(card, cardList) ?? '—'}
+                  {getCurrentHp(card, cardList, players) ?? '—'}/{getComputedHp(card, cardList, players) ?? '—'}
                 </span>
               </div>
               <div className={styles.subtitleCardType}>
-                <EnergyTypeIcon
-                  type={pokemon.cardType}
-                  size="compact"
-                  collapseLayout={false}
-                  className={styles.titleTypeIcon}
-                />
-                {pokemon.additionalCardTypes?.map((t) => (
+                {getPokemonCardTypes(displayPokemon).map((t: CardType) => (
                   <EnergyTypeIcon
                     key={String(t)}
                     type={t}
@@ -254,24 +270,16 @@ export function CardInfoPane({
             </div>
           </div>
           <div className={styles.subtitle}>
-            <div className={styles.subtitleStage}>{stageLabel(pokemon)}</div>
+            <div className={styles.subtitleStage}>{stageLabel(displayPokemon)}</div>
             <div className={styles.spacer} />
-            {tagLabels.length > 0 && (
-              <>
-                <div className={styles.subtitleTags}>
-                  {tagLabels.map((tag) => (
-                    <span key={tag} className={styles.tag}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <div className={styles.spacer} />
-              </>
-            )}
-            {pokemon.evolvesFrom ? (
+            {subtitleTagPills}
+            {transformCopy ? (
+              <div className={styles.subtitleEvolvesFrom}>as {transformCopy.name}</div>
+            ) : null}
+            {!transformCopy && pokemon.evolvesFrom ? (
               <div className={styles.subtitleEvolvesFrom}>{t('CARDS_EVOLVES_FROM', { name: pokemon.evolvesFrom })}</div>
             ) : null}
-            {pokemon.evolvesTo && pokemon.evolvesTo.length > 0 ? (
+            {!transformCopy && pokemon.evolvesTo && pokemon.evolvesTo.length > 0 ? (
               <div className={styles.subtitleEvolvesTo}>Evolves into {pokemon.evolvesTo.join(', ')}</div>
             ) : null}
           </div>
@@ -392,7 +400,7 @@ export function CardInfoPane({
           <div className={styles.stats}>
             <div className={styles.statsItem}>
               <div className={styles.statsItemHeader}>{t('CARDS_WEAKNESS')}</div>
-              {(pokemon.weakness ?? []).map((w, i) => (
+              {(displayPokemon.weakness ?? []).map((w, i) => (
                 <div key={i} className={styles.statsItemValue}>
                   <div className={styles.statsItemValueType}>
                     <EnergyTypeIcon type={w.type} size="compact" style={{ transform: 'translateY(4px)' }} />
@@ -403,7 +411,7 @@ export function CardInfoPane({
             </div>
             <div className={styles.statsItem}>
               <div className={styles.statsItemHeader}>{t('CARDS_RESISTANCE')}</div>
-              {(pokemon.resistance ?? []).map((r, i) => (
+              {(displayPokemon.resistance ?? []).map((r, i) => (
                 <div key={i} className={styles.statsItemValue}>
                   <div className={styles.statsItemValueType}>
                     <EnergyTypeIcon type={r.type} size="compact" style={{ transform: 'translateY(4px)' }} />
@@ -425,7 +433,7 @@ export function CardInfoPane({
                 <div className={styles.statsItemHeader}>{t('CARDS_RETREAT_COST')}</div>
                 <div className={styles.statsItemValue}>
                   <div className={styles.statsItemValueType}>
-                    {(pokemon.retreat ?? []).map((cost, i) => (
+                    {(displayPokemon.retreat ?? []).map((cost, i) => (
                       <EnergyTypeIcon key={i} type={cost} size="compact" style={{ transform: 'translateY(4px)' }} />
                     ))}
                   </div>
@@ -466,6 +474,7 @@ export function CardInfoPane({
               {energy.energyType === EnergyType.BASIC ? t('CARDS_BASIC_ENERGY') : t('CARDS_SPECIAL_ENERGY')}
             </div>
             <div className={styles.spacer} />
+            {subtitleTagPills}
             <div className={styles.subtitleCardType}>
               <TrainerTypeStrip className={styles.trainerStripCompact} />
             </div>
@@ -547,6 +556,7 @@ export function CardInfoPane({
           <div className={styles.subtitle}>
             <div className={styles.subtitleStage}>{trainerSubtitle(trainer.trainerType)}</div>
             <div className={styles.spacer} />
+            {subtitleTagPills}
             <div className={styles.subtitleCardType}>
               <TrainerTypeStrip type={trainer.trainerType} className={styles.trainerStripCompact} />
             </div>

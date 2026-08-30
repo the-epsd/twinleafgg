@@ -11,19 +11,17 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, SWITCH_ACTIVE_WITH_BENCHED } from '.
 
 export class Froakie extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 50;
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Bounce',
-      cost: [W],
-      damage: 10,
-      text: 'Flip a coin. If heads, switch this Pokémon with 1 of your Benched Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Bounce',
+    cost: [W],
+    damage: 10,
+    text: 'Flip a coin. If heads, switch this Pokémon with 1 of your Benched Pokémon.'
+  }];
 
   public set: string = 'XY';
   public setNumber: string = '39';

@@ -4,27 +4,28 @@ import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
-
 export class Stonjourner extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.SINGLE_STRIKE];
-  public cardType: CardType = F;
+  protected _tags = [CardTag.SINGLE_STRIKE];
+  public cardType: CardType[] = [F];
   public hp: number = 130;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
 
-  public attacks = [{
-    name: 'Land\'s Pulse',
-    cost: [F, C],
-    damage: 60,
-    text: 'If a Stadium is in play, this attack does 30 more damage.'
-  },
-  {
-    name: 'Giga Hammer',
-    cost: [F, F, C],
-    damage: 120,
-    text: 'During your next turn, this Pokémon can\'t use Giga Hammer.'
-  }];
+  public attacks = [
+    {
+      name: "Land's Pulse",
+      cost: [F, C],
+      damage: 60,
+      text: 'If a Stadium is in play, this attack does 30 more damage.',
+    },
+    {
+      name: 'Giga Hammer',
+      cost: [F, F, C],
+      damage: 120,
+      text: "During your next turn, this Pokémon can't use Giga Hammer.",
+    },
+  ];
 
   public regulationMark = 'E';
   public set: string = 'BST';
@@ -34,7 +35,6 @@ export class Stonjourner extends PokemonCard {
   public fullName: string = 'Stonjourner BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const stadiumCard = StateUtils.getStadiumCard(state);
       if (stadiumCard !== undefined) {

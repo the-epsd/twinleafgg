@@ -7,7 +7,7 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../../game/s
 
 export class Rattata extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 40;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -17,8 +17,7 @@ export class Rattata extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Search your deck for a Basic Pokémon and put it onto your Bench. Shuffle your deck afterward.'
-  },
-  {
+  }, {
     name: 'Snarl',
     cost: [C],
     damage: 0,

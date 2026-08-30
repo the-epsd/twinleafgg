@@ -7,7 +7,7 @@ import { CheckAttackCostEffect } from '../../../game/store/effects/check-effects
 export class Crawdaunt extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Corphish';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 130;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

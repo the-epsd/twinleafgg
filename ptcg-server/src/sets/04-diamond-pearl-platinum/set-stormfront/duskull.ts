@@ -9,7 +9,7 @@ import { PUT_X_DAMAGE_COUNTERS_ON_YOUR_OPPONENTS_ACTIVE_POKEMON } from '../../..
 
 export class Duskull extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: D, value: +10 }];
   public resistance = [{ type: C, value: -20 }];
@@ -20,14 +20,12 @@ export class Duskull extends PokemonCard {
     cost: [],
     damage: 0,
     text: 'Put up to 3 damage counters on Duskull. Then, put that many damage counters on the Defending Pokémon.'
-  },
-  {
+  }, {
     name: 'Ram',
     cost: [P],
     damage: 10,
     text: ''
-  },
-  {
+  }, {
     name: 'Night Bind',
     cost: [P, C],
     damage: 20,

@@ -9,7 +9,7 @@ import { DRAW_CARDS, WAS_ATTACK_USED, CONFIRMATION_PROMPT, SWITCH_ACTIVE_WITH_BE
 export class Combee extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 50;
   public weakness = [{ type: R, value: +10 }];
   public resistance = [{ type: F, value: -20 }];

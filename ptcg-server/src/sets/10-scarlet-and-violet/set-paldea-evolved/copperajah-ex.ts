@@ -7,27 +7,31 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Copperajahex extends PokemonCard {
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Cufant';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 300;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C, C, C];
 
-  public powers = [{
-    name: 'Bronze Body',
-    powerType: PowerType.ABILITY,
-    text: 'This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: 'Bronze Body',
+      powerType: PowerType.ABILITY,
+      text: 'This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Nosequake',
-    cost: [M, M, C],
-    damage: 260,
-    text: 'This attack also does 30 damage to each of your Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-  }];
+  public attacks = [
+    {
+      name: 'Nosequake',
+      cost: [M, M, C],
+      damage: 260,
+      text: "This attack also does 30 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
+  ];
 
   public set: string = 'PAL';
   public regulationMark = 'G';
@@ -37,15 +41,18 @@ export class Copperajahex extends PokemonCard {
   public fullName: string = 'Copperajah ex PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof PutDamageEffect && effect.target.getPokemonCard() === this) {
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {
-        const stub = new PowerEffect(effect.player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
+        const stub = new PowerEffect(
+          effect.player,
+          {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: '',
+          },
+          this,
+        );
         store.reduceEffect(state, stub);
       } catch {
         return state;

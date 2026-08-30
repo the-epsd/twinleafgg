@@ -5,40 +5,28 @@ import { Effect } from '../../../game/store/effects/effect';
 import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND } from '../../../game/store/prefabs/prefabs';
 
 export class Sableye extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = D;
-
+  public cardType: CardType[] = [D];
   public hp: number = 70;
-
   public weakness = [];
-
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Confuse Ray',
-      cost: [C],
-      damage: 10,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
-    },
-    {
-      name: 'Junk Hunt',
-      cost: [D],
-      damage: 0,
-      text: 'Put 2 Item cards from your discard pile into your hand.'
-    }
-  ];
+  public attacks = [{
+    name: 'Confuse Ray',
+    cost: [C],
+    damage: 10,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
+  }, {
+    name: 'Junk Hunt',
+    cost: [D],
+    damage: 0,
+    text: 'Put 2 Item cards from your discard pile into your hand.'
+  }];
 
   public set: string = 'DEX';
-
   public name: string = 'Sableye';
-
   public fullName: string = 'Sableye DEX';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '62';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

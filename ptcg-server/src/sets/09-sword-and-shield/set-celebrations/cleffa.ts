@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, MOVE_CARDS, SHUFFLE_DECK, DRAW_CARDS } from '../../../
 
 export class Cleffa extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 30;
   public retreat = [];
 

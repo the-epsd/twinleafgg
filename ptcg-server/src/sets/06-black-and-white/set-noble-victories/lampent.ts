@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Lampent extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Litwick';
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
   public hp: number = 80;
   public weakness = [{ type: CardType.DARK }];
   public retreat = [CardType.COLORLESS];

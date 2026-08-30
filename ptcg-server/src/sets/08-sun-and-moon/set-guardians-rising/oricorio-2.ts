@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../../game/store/card/card-types';
+import { CardType, Stage } from '../../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, PlayerType, SlotType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { DamageMap } from '../../../game';
@@ -12,44 +12,32 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 // GRI Oricorio 56 (https://limitlesstcg.com/cards/GRI/56)
 export class Oricorio2 extends PokemonCard {
-
-  public tags = [];
-
-  public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.PSYCHIC;
-
-  public hp: number = 90;
-
-  public weakness = [{ type: CardType.DARK }];
-
-  public resistance = [{ type: CardType.FIGHTING, value: -20 }];
-
-  public retreat = [CardType.COLORLESS];
+  public stage = Stage.BASIC;
+  public cardType: CardType[] = [P];
+  public hp = 90;
+  public weakness = [{ type: D }];
+  public resistance = [{ type: F, value: -20 }];
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Supernatural Dance',
-      cost: [CardType.COLORLESS],
+      cost: [C],
       damage: 0,
-      text: 'For each Pokémon in your opponent\'s discard pile, put 1 damage counter on your opponent\'s Pokémon in any way you like. '
+      text: "For each Pokémon in your opponent's discard pile, put 1 damage counter on your opponent's Pokémon in any way you like. ",
     },
     {
       name: 'Revelation Dance',
-      cost: [CardType.COLORLESS],
+      cost: [C],
       damage: 30,
-      text: 'If there is no Stadium card in play, this attack does nothing.'
-    }
+      text: 'If there is no Stadium card in play, this attack does nothing.',
+    },
   ];
 
   public set: string = 'GRI';
-
   public setNumber = '56';
-
   public cardImage = 'assets/cardback.png';
-
   public name: string = 'Oricorio';
-
   public fullName: string = 'Oricorio GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -59,7 +47,7 @@ export class Oricorio2 extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       let pokemonCount = 0;
-      opponent.discard.cards.forEach(c => {
+      opponent.discard.cards.forEach((c) => {
         if (c instanceof PokemonCard) {
           pokemonCount += 10;
         }
@@ -80,23 +68,27 @@ export class Oricorio2 extends PokemonCard {
 
       const damage = Math.min(pokemonCount, damageLeft);
 
-      return store.prompt(state, new PutDamagePrompt(
-        effect.player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        damage,
-        maxAllowedDamage,
-        { allowCancel: false }
-      ), targets => {
-        const results = targets || [];
-        for (const result of results) {
-          const target = StateUtils.getTarget(state, player, result.target);
-          const putCountersEffect = new PutCountersEffect(effect, result.damage);
-          putCountersEffect.target = target;
-          store.reduceEffect(state, putCountersEffect);
-        }
-      });
+      return store.prompt(
+        state,
+        new PutDamagePrompt(
+          effect.player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          damage,
+          maxAllowedDamage,
+          { allowCancel: false },
+        ),
+        (targets) => {
+          const results = targets || [];
+          for (const result of results) {
+            const target = StateUtils.getTarget(state, player, result.target);
+            const putCountersEffect = new PutCountersEffect(effect, result.damage);
+            putCountersEffect.target = target;
+            store.reduceEffect(state, putCountersEffect);
+          }
+        },
+      );
     }
 
     // Revelation Dance

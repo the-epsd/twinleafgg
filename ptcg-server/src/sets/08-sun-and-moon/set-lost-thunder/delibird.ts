@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED, SHUFFLE_DECK, MOVE_CARD_TO } from '../../../game/store
 
 export class Delibird extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: M }];
   public retreat = [C];

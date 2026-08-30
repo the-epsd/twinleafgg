@@ -17,34 +17,40 @@ import { AttackEffect } from '../../../game/store/effects/game-effects';
 
 export class RapidStrikeScrollOfTheFlyingDragon extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public regulationMark: string = 'E';
   public set: string = 'EVS';
   public setNumber: string = '153';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rapid Strike Scroll of the Flying Dragon';
   public fullName: string = 'Rapid Strike Scroll of the Flying Dragon EVS';
-  public text: string = 'The Rapid Strike Pokémon this card is attached to can use the attack on this card. (You still need the necessary Energy to use this attack.) You may play any number of Item cards during your turn. Attach a Pokémon Tool to 1 of your Pokémon that doesn\'t already have a Pokémon Tool attached.';
+  public text: string =
+    "The Rapid Strike Pokémon this card is attached to can use the attack on this card. (You still need the necessary Energy to use this attack.) You may play any number of Item cards during your turn. Attach a Pokémon Tool to 1 of your Pokémon that doesn't already have a Pokémon Tool attached.";
 
-  public attacks: Attack[] = [{
-    name: 'Meteor',
-    cost: [CardType.FIRE, CardType.LIGHTNING],
-    damage: 0,
-    text: 'Discard 2 Energy from this Pokémon. This attack does 90 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-  }];
+  public attacks: Attack[] = [
+    {
+      name: 'Meteor',
+      cost: [CardType.FIRE, CardType.LIGHTNING],
+      damage: 0,
+      text: "Discard 2 Energy from this Pokémon. This attack does 90 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
+  ];
 
   // Ref: set-battle-styles/single-strike-scroll-of-scorn.ts (tool attack pattern)
   //      set-battle-styles/rapid-strike-scroll-of-swirls.ts (Rapid Strike tool attack pattern)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Add Meteor attack to Rapid Strike Pokemon with this tool
-    if (effect instanceof CheckPokemonAttacksEffect &&
+    if (
+      effect instanceof CheckPokemonAttacksEffect &&
       effect.player.active.getPokemonCard()?.tools.includes(this) &&
-      !effect.attacks.includes(this.attacks[0])) {
-
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
+      !effect.attacks.includes(this.attacks[0])
+    ) {
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+        return state;
+      }
 
       const activePokemon = effect.player.active.getPokemonCard();
-      if (activePokemon && activePokemon.tags.includes(CardTag.RAPID_STRIKE)) {
+      if (activePokemon && activePokemon.hasTag(CardTag.RAPID_STRIKE)) {
         effect.attacks.push(this.attacks[0]);
       }
     }
@@ -54,7 +60,9 @@ export class RapidStrikeScrollOfTheFlyingDragon extends TrainerCard {
       const player = effect.player;
 
       // Only usable by Rapid Strike Pokemon with this tool
-      if (!player.active.cards.some(c => c instanceof PokemonCard && c.tags.includes(CardTag.RAPID_STRIKE))) {
+      if (
+        !player.active.cards.some((c) => c instanceof PokemonCard && c.hasTag(CardTag.RAPID_STRIKE))
+      ) {
         return state;
       }
 

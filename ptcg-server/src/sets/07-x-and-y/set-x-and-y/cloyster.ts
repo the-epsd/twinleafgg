@@ -12,26 +12,23 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED, DISCARD_AN_ENERGY_FROM
 export class Cloyster extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Shellder';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 100;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Clamp Crush',
-      cost: [W, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed and discard an Energy attached to that Pokémon.'
-    },
-    {
-      name: 'Spike Cannon',
-      cost: [W, W, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 5 coins. This attack does 30 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Clamp Crush',
+    cost: [W, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed and discard an Energy attached to that Pokémon.'
+  }, {
+    name: 'Spike Cannon',
+    cost: [W, W, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 5 coins. This attack does 30 damage times the number of heads.'
+  }];
 
   public set: string = 'XY';
   public setNumber: string = '32';

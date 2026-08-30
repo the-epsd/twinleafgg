@@ -13,8 +13,17 @@ import { Player } from '../state/player';
 import { PlayerType, SlotType } from '../actions/play-card-action';
 import { PokemonCardList } from '../state/pokemon-card-list';
 
-function assertCanRetreat(player: Player): void {
-  if (player.active.cannotRetreatNextTurn) {
+function assertCanRetreat(player: Player, state: State): void {
+  const active = player.active;
+  const sourceCard = active.cannotRetreatWhileActiveSourceCard;
+  const opponent = StateUtils.getOpponent(state, player);
+
+  if (sourceCard && opponent.active.getPokemonCard() !== sourceCard) {
+    active.cannotRetreatWhileActive = false;
+    active.cannotRetreatWhileActiveSourceCard = undefined;
+  }
+
+  if (active.cannotRetreatNextTurn || active.cannotRetreatWhileActive) {
     throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
   }
 }
@@ -66,7 +75,7 @@ export function retreatReducer(store: StoreLike, state: State, effect: Effect): 
   if (effect instanceof RetreatStartEffect) {
     const player = effect.player;
 
-    assertCanRetreat(player);
+    assertCanRetreat(player, state);
 
     const hasBenchPokemon = player.bench.some(b => b.cards.length > 0);
     if (!hasBenchPokemon) {
@@ -137,7 +146,7 @@ export function retreatReducer(store: StoreLike, state: State, effect: Effect): 
   if (effect instanceof RetreatEffect) {
     const player = effect.player;
 
-    assertCanRetreat(player);
+    assertCanRetreat(player, state);
 
     if (player.bench[effect.benchIndex].cards.length === 0) {
       throw new GameError(GameMessage.INVALID_TARGET);

@@ -3,7 +3,8 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { BLOCK_RETREAT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../../game/store/prefabs/attack-effects';
 import { PlayerType, StateUtils } from '../../../game';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
@@ -11,31 +12,33 @@ import { HealEffect } from '../../../game/store/effects/game-effects';
 export class Sceptileex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Grovyle';
-  public tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = G;
+  protected _tags = [CardTag.POKEMON_ex];
+  public cardType: CardType[] = [G];
   public hp: number = 150;
   public weakness = [{ type: G }, { type: R }];
   public resistance = [{ type: W, value: -30 }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Green Heal',
-    cost: [G],
-    damage: 0,
-    text: 'Remove 4 damage counters from each of your Pokémon that has [G] Energy attached. If that Pokémon has less than 4 damage counters, remove all of them.'
-  },
-  {
-    name: 'Poison Ring',
-    cost: [G, C, C],
-    damage: 40,
-    text: 'The Defending Pokémon is now Poisoned. The Defending Pokémon can\'t retreat until the end of your opponent\'s next turn.'
-  },
-  {
-    name: 'Slashing Strike',
-    cost: [G, G, C, C, C],
-    damage: 100,
-    text: 'Sceptile ex can\'t use Slashing Strike during your next turn.'
-  }];
+  public attacks = [
+    {
+      name: 'Green Heal',
+      cost: [G],
+      damage: 0,
+      text: 'Remove 4 damage counters from each of your Pokémon that has [G] Energy attached. If that Pokémon has less than 4 damage counters, remove all of them.',
+    },
+    {
+      name: 'Poison Ring',
+      cost: [G, C, C],
+      damage: 40,
+      text: "The Defending Pokémon is now Poisoned. The Defending Pokémon can't retreat until the end of your opponent's next turn.",
+    },
+    {
+      name: 'Slashing Strike',
+      cost: [G, G, C, C, C],
+      damage: 100,
+      text: "Sceptile ex can't use Slashing Strike during your next turn.",
+    },
+  ];
 
   public set: string = 'MA';
   public cardImage: string = 'assets/cardback.png';
@@ -46,7 +49,6 @@ export class Sceptileex extends PokemonCard {
   public readonly POISON_RING_MARKER: string = 'POISON_RING_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 

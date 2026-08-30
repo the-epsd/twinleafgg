@@ -10,10 +10,10 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 
 export class LaprasVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Lapras V';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 320;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];
@@ -24,8 +24,8 @@ export class LaprasVmax extends PokemonCard {
       cost: [C, C, C],
       damage: 90,
       damageCalculation: '+',
-      text: 'This attack does 30 more damage for each [W] Energy attached to this Pokémon.'
-    }
+      text: 'This attack does 30 more damage for each [W] Energy attached to this Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -42,8 +42,11 @@ export class LaprasVmax extends PokemonCard {
       const player = effect.player;
       const checkEnergy = new CheckProvidedEnergyEffect(player);
       store.reduceEffect(state, checkEnergy);
-      const waterCount = checkEnergy.energyMap.reduce((sum, em) =>
-        sum + em.provides.filter(t => t === CardType.WATER || t === CardType.ANY).length, 0);
+      const waterCount = checkEnergy.energyMap.reduce(
+        (sum, em) =>
+          sum + em.provides.filter((t) => t === CardType.WATER || t === CardType.ANY).length,
+        0,
+      );
       effect.damage += waterCount * 30;
     }
 

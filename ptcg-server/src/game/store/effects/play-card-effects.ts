@@ -47,7 +47,6 @@ export class AttachEnergyEffect implements Effect {
 export class PlayPokemonEffect implements Effect {
   readonly type: string = PlayCardEffects.PLAY_POKEMON_EFFECT;
   public preventDefault = false;
-  /** Set by Spirit Link tools when mega evolution should not end the turn. */
   public skipMegaEvolutionEndTurn = false;
   public player: Player;
   public pokemonCard: PokemonCard;
@@ -159,22 +158,12 @@ export class ToolEffect implements Effect {
   }
 }
 
-/**
- * Probe effect for whether stadium effects done to a Pokémon are prevented
- * (e.g. Lunatone OBF New Moon). Stadiums that affect Pokémon should call
- * IS_STADIUM_EFFECT_BLOCKED before applying their effect.
- */
 export class StadiumEffect implements Effect {
   readonly type: string = PlayCardEffects.STADIUM_EFFECT;
   public preventDefault = false;
   public player: Player;
   public target: PokemonCardList;
   public stadium?: TrainerCard;
-  /**
-   * When true, New Moon (and similar) skip IS_ABILITY_BLOCKED. Used for nested
-   * probes from stadium ability-locks so New Moon outprioritizes Silent Lab /
-   * Path to the Peak / etc., while the outer probe still honors Garbotoxin.
-   */
   public skipAbilityLockCheck = false;
 
   constructor(player: Player, target: PokemonCardList, stadium?: TrainerCard) {
@@ -203,9 +192,7 @@ export class CoinFlipEffect implements Effect {
   public player: Player;
   public callback?: (result: boolean) => void;
   public result?: boolean;
-  /** When true, stadiums like Glimwood Tangle will not intercept (used for reflips). */
   public skipReflipStadium?: boolean;
-  /** When true, tools like Backtrack Badge will not intercept (used for reflips / sequence flips). */
   public skipReflipTool?: boolean;
 
   constructor(player: Player, callback?: (result: boolean) => void) {
@@ -218,12 +205,9 @@ export class CoinFlipSequenceEffect implements Effect {
   readonly type: string = PlayCardEffects.COIN_FLIP_SEQUENCE_EFFECT;
   public preventDefault = false;
   public player: Player;
-  /** 'untilTails' or fixed count */
   public mode: 'untilTails' | number;
   public callback: (results: boolean[]) => void;
-  /** When true, stadiums like Glimwood Tangle will not intercept (used for reflips). */
   public skipReflipStadium?: boolean;
-  /** When true, skip tool-based coin re-flip prompts (used when re-flipping a sequence). */
   public skipReflipTool?: boolean;
 
   constructor(player: Player, mode: 'untilTails' | number, callback: (results: boolean[]) => void) {

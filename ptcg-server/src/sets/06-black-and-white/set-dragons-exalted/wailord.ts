@@ -12,26 +12,23 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, THIS_POKEMON_CANNOT_USE_THIS_ATTACK_
 export class Wailord extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Wailmer';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 200;
   public weakness = [{ type: L }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Water Cannon',
-      cost: [W],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip a coin. If heads, this attack does 30 damage times the amount of [W] Energy attached to this Pokémon.'
-    },
-    {
-      name: 'Giant Wave',
-      cost: [W, C, C, C],
-      damage: 80,
-      text: 'This Pokémon can\'t use Giant Wave during your next turn.'
-    }
-  ];
+  public attacks = [{
+    name: 'Water Cannon',
+    cost: [W],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip a coin. If heads, this attack does 30 damage times the amount of [W] Energy attached to this Pokémon.'
+  }, {
+    name: 'Giant Wave',
+    cost: [W, C, C, C],
+    damage: 80,
+    text: 'This Pokémon can\'t use Giant Wave during your next turn.'
+  }];
 
   public set: string = 'DRX';
   public setNumber: string = '26';

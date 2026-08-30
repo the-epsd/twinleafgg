@@ -8,7 +8,7 @@ import { ADD_BURN_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, DISCARD_ALL_
 export class Magmortar extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Magmar';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 100;
   public weakness = [{ type: W }];
   public retreat = [C, C];
@@ -18,8 +18,7 @@ export class Magmortar extends PokemonCard {
     cost: [R],
     damage: 0,
     text: 'For each [R] Energy attached to Magmortar, discard the top card from your opponent\'s deck. Then, flip a coin. If tails, discard all [R] Energy attached to Magmortar.'
-  },
-  {
+  }, {
     name: 'Burst Punch',
     cost: [R, R, C],
     damage: 60,

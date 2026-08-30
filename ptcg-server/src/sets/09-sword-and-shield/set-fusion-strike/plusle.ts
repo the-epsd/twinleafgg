@@ -10,9 +10,9 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { Minun } from './minun';
 
 export class Plusle extends PokemonCard {
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -23,8 +23,8 @@ export class Plusle extends PokemonCard {
       cost: [C],
       damage: 20,
       damageCalculation: '+',
-      text: 'If 1 of your Minun used an attack during your last turn, this attack does 100 more damage.'
-    }
+      text: 'If 1 of your Minun used an attack during your last turn, this attack does 100 more damage.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -44,12 +44,14 @@ export class Plusle extends PokemonCard {
       // The marker is set on player.marker with the Minun card instance as source.
       // Check all bench slots for Minun cards and their markers.
       let minunAttackedLastTurn = false;
-      player.bench.forEach(benchSlot => {
+      player.bench.forEach((benchSlot) => {
         if (benchSlot.cards.length > 0) {
           const benchCard = benchSlot.getPokemonCard();
           if (benchCard instanceof Minun) {
-            if (player.marker.hasMarker(benchCard.MINUN_ATTACKED_MARKER, benchCard) ||
-              player.marker.hasMarker(benchCard.CLEAR_MINUN_ATTACKED_MARKER, benchCard)) {
+            if (
+              player.marker.hasMarker(benchCard.MINUN_ATTACKED_MARKER, benchCard) ||
+              player.marker.hasMarker(benchCard.CLEAR_MINUN_ATTACKED_MARKER, benchCard)
+            ) {
               minunAttackedLastTurn = true;
             }
           }

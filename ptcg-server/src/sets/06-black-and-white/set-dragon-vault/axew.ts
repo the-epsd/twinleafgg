@@ -6,25 +6,22 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT
 
 export class Axew extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 40;
   public weakness = [{ type: N }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Signs of Evolution',
-      cost: [F],
-      damage: 0,
-      text: 'Flip a coin. If heads, search your deck for Fraxure, reveal it, and put it into your hand. Shuffle your deck afterward.'
-    },
-    {
-      name: 'Scratch',
-      cost: [M],
-      damage: 10,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Signs of Evolution',
+    cost: [F],
+    damage: 0,
+    text: 'Flip a coin. If heads, search your deck for Fraxure, reveal it, and put it into your hand. Shuffle your deck afterward.'
+  }, {
+    name: 'Scratch',
+    cost: [M],
+    damage: 10,
+    text: ''
+  }];
 
   public set: string = 'DRV';
   public setNumber: string = '12';

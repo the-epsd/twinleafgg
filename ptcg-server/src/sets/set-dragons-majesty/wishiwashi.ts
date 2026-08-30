@@ -12,24 +12,26 @@ import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Wishiwashi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 30;
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public powers = [  {
-    name: 'Meet Up',
-    powerType: PowerType.ABILITY,
-    text: 'Your Wishiwashi-GX in play get +20 HP, and their attacks do 20 more damage to your opponent\u2019s Active Pok\u00e9mon (before applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: 'Meet Up',
+      powerType: PowerType.ABILITY,
+      text: 'Your Wishiwashi-GX in play get +20 HP, and their attacks do 20 more damage to your opponent\u2019s Active Pok\u00e9mon (before applying Weakness and Resistance).',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Water Gun',
       cost: [W],
       damage: 20,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'DRM';
@@ -45,7 +47,11 @@ export class Wishiwashi extends PokemonCard {
     // HP boost for Wishiwashi-GX
     if (effect instanceof CheckHpEffect) {
       const targetCard = effect.target.getPokemonCard();
-      if (!targetCard || targetCard.name !== 'Wishiwashi-GX' || !targetCard.tags.includes(CardTag.POKEMON_GX)) {
+      if (
+        !targetCard ||
+        targetCard.name !== 'Wishiwashi-GX' ||
+        !targetCard.hasTag(CardTag.POKEMON_GX)
+      ) {
         return state;
       }
 
@@ -77,9 +83,16 @@ export class Wishiwashi extends PokemonCard {
     }
 
     // Damage boost for Wishiwashi-GX attacks
-    if (effect instanceof DealDamageEffect && effect.target === StateUtils.getOpponent(state, effect.player).active) {
+    if (
+      effect instanceof DealDamageEffect &&
+      effect.target === StateUtils.getOpponent(state, effect.player).active
+    ) {
       const attackerCard = effect.source.getPokemonCard();
-      if (!attackerCard || attackerCard.name !== 'Wishiwashi-GX' || !attackerCard.tags.includes(CardTag.POKEMON_GX)) {
+      if (
+        !attackerCard ||
+        attackerCard.name !== 'Wishiwashi-GX' ||
+        !attackerCard.hasTag(CardTag.POKEMON_GX)
+      ) {
         return state;
       }
 

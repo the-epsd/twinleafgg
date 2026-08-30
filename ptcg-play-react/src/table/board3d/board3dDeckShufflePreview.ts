@@ -3,17 +3,23 @@ import type { Euler, Group, Vector3 } from 'three';
 import { Board3dStackService } from './services/board-3d-stack.service';
 import type { Board3dCard } from './board-3d-card';
 
-export type PlayDeckShufflePreviewOpts = {
+export type PlayDeckShuffleAnimationOpts = {
   stackService: Board3dStackService;
   getCardById: (id: string) => Board3dCard | undefined;
   stackId: string;
 };
 
+/** @deprecated Prefer {@link PlayDeckShuffleAnimationOpts} / {@link playDeckShuffleAnimation}. */
+export type PlayDeckShufflePreviewOpts = PlayDeckShuffleAnimationOpts;
+
 const UD_TL = 'deckShufflePreviewTl';
 const UD_RESTORE = 'deckShufflePreviewRestorePack';
 
-/** Total preview length (seconds). */
-const SHUFFLE_DURATION = 1.48;
+/** Total shuffle length (seconds). Keep in sync with BOARD_DECK_SHUFFLE_SERVER_WAIT_MS. */
+const SHUFFLE_DURATION = 0.64;
+
+/** How many Indian-strip cycles to run. */
+const CYCLE_COUNT = 3;
 
 type BulkTransformCapture = {
   pos: Vector3;
@@ -67,54 +73,76 @@ function smoothstep(edge0: number, edge1: number, x: number): number {
 }
 
 /**
- * Riffle-style shuffle (visual only): two halves fan apart, lift, quick mid-air flutter, square up.
- * Uses pile split by index (bottom vs top half); `_top` follows the upper pile cap.
+ * One Indian (Hindu) shuffle cycle progress `c` ∈ [0,1]:
+ * middle strip slides out, dips, lifts above the deck, then squares on top.
  */
-function riffleShuffleDeltas(
-  u: number,
-  cardIndex: number,
-  bulkLen: number,
+function indianCyclePose(
+  c: number,
+  inStrip: boolean,
+  stripLocalIndex: number,
+  stripLen: number,
+  stayHeightY: number,
+  liftClearanceY: number,
 ): { dx: number; dy: number; dz: number; rz: number } {
-  if (bulkLen <= 0) {
-    const w = Math.sin(u * Math.PI * 3.2) * 0.026;
+  if (!inStrip) {
+    // Remaining packet: slight settle / compress while the strip leaves and returns.
+    const compress = smoothstep(0.08, 0.35, c) * (1 - smoothstep(0.72, 1, c));
     return {
-      dx: w,
-      dy: smoothstep(0.15, 0.82, u) * 0.042 - smoothstep(0, 0.12, u) * 0.014,
+      dx: 0,
+      dy: -0.004 * compress,
       dz: 0,
-      rz: w * 2,
+      rz: 0,
     };
   }
 
-  const mid = Math.ceil(bulkLen / 2);
-  const side = cardIndex < mid ? -1 : 1;
+  const extract = smoothstep(0, 0.22, c);
+  const holdOut = 1 - smoothstep(0.68, 0.92, c);
+  const out = extract * holdOut;
 
-  const splitOpen = smoothstep(0, 0.13, u);
-  const splitClose = smoothstep(0.66, 1, u);
-  const split = splitOpen * (1 - splitClose);
+  const dip = smoothstep(0.12, 0.38, c) * (1 - smoothstep(0.42, 0.58, c));
+  const lift = smoothstep(0.4, 0.62, c);
+  const place = smoothstep(0.68, 0.95, c);
 
-  const liftOpen = smoothstep(0.06, 0.2, u);
-  const liftClose = smoothstep(0.48, 0.68, u);
-  const lift = liftOpen * (1 - liftClose);
+  // Strip fans slightly so it reads as a packet, not a single card.
+  const fan = (stripLocalIndex - (stripLen - 1) * 0.5) * 0.004;
 
-  const riffleCore = smoothstep(0.16, 0.52, u);
-  const riffleTail = 1 - smoothstep(0.46, 0.62, u);
-  const riffle = riffleCore * riffleTail;
-
-  const flutter = Math.sin(u * Math.PI * 28 + cardIndex * 0.82) * 0.026 * riffle;
-  const weave = Math.sin(u * Math.PI * 14 + cardIndex * 0.38) * 0.013 * riffle * side;
-
-  const dx = side * 0.5 * split + weave;
-  const dy = 0.135 * lift - 0.036 * split * (1 - liftOpen * 0.5);
-  const dz = flutter + Math.sin(cardIndex * 0.55 + u * 17) * 0.015 * riffle;
-  const rz = side * (-0.16 * split + 0.068 * lift) + flutter * 11.5;
+  const dx = 0.55 * out;
+  const dy =
+    -0.07 * dip +
+    liftClearanceY * lift * (1 - place * 0.85) +
+    stayHeightY * place +
+    fan * 0.3;
+  const dz = fan * out;
+  const rz = -0.08 * out + 0.03 * dip;
 
   return { dx, dy, dz, rz };
 }
 
 /**
- * Deck shuffle preview: riffle — halves separate, lift, flutter together, square and settle.
+ * Pick a contiguous middle strip for cycle `cycleIndex` (varies slightly each cycle).
  */
-export function playDeckShufflePreview(opts: PlayDeckShufflePreviewOpts): gsap.core.Timeline | null {
+function stripRange(bulkLen: number, cycleIndex: number): { start: number; end: number } {
+  if (bulkLen <= 0) {
+    return { start: 0, end: 0 };
+  }
+  if (bulkLen === 1) {
+    return { start: 0, end: 1 };
+  }
+
+  const stripLen = Math.max(2, Math.min(bulkLen - 1, Math.ceil(bulkLen * 0.38)));
+  // Bias the window so successive cycles grab a slightly different packet.
+  const bias = (cycleIndex % 3) - 1; // -1, 0, 1
+  const maxStart = Math.max(0, bulkLen - stripLen);
+  const midStart = Math.floor((bulkLen - stripLen) / 2);
+  const start = Math.min(maxStart, Math.max(0, midStart + bias));
+  return { start, end: start + stripLen };
+}
+
+/**
+ * Deck shuffle animation: Indian (Hindu) strip — pull a middle packet out, down, then onto the top.
+ * Runs {@link CYCLE_COUNT} quick cycles, then restores rest poses (visual only).
+ */
+export function playDeckShuffleAnimation(opts: PlayDeckShuffleAnimationOpts): Promise<void> {
   const anchor = opts.stackService.getDeckAnchor(opts.stackId);
   const bulkGroups = opts.stackService.getDeckBulkGroups(opts.stackId);
   const topId = `${opts.stackId}_top`;
@@ -122,8 +150,13 @@ export function playDeckShufflePreview(opts: PlayDeckShufflePreviewOpts): gsap.c
   const topGroup = topBridge?.getGroup();
 
   if (!anchor || !topGroup) {
-    return null;
+    return Promise.resolve();
   }
+
+  let resolveComplete!: () => void;
+  const done = new Promise<void>((resolve) => {
+    resolveComplete = resolve;
+  });
 
   const prevTl = anchor.userData[UD_TL] as gsap.core.Timeline | undefined;
   if (prevTl) {
@@ -150,33 +183,52 @@ export function playDeckShufflePreview(opts: PlayDeckShufflePreviewOpts): gsap.c
 
   const baseTopPos = restorePack.topPos;
   const baseTopRotZ = restorePack.topRot.z;
-
   const bulkLen = bulkGroups.length;
   const inc = Board3dStackService.STACK_HEIGHT_INCREMENT;
-  /** Extra lift so the face card clears the bulk cap during the riffle. */
-  const topExtraY = bulkLen > 0 ? inc * 3.1 : 0;
+
+  /** How high the strip must clear to read as landing on top of the remaining packet. */
+  const liftClearanceY = Math.max(inc * 6, (bulkLen + 2) * inc * 0.55);
+  /** Final resting lift while the strip is “on top” mid-cycle (before global restore). */
+  const stayHeightY = Math.max(inc * 4, bulkLen * inc * 0.35);
 
   const prog = { u: 0 };
 
   const apply = (): void => {
-    const u = prog.u;
+    const u = Math.min(1, Math.max(0, prog.u));
+    const cycleFloat = u * CYCLE_COUNT;
+    const cycleIndex = Math.min(CYCLE_COUNT - 1, Math.floor(cycleFloat));
+    // Local cycle progress; ease so each cycle starts/ends settled.
+    const cRaw = cycleFloat - cycleIndex;
+    const c = smoothstep(0, 1, cRaw);
+
+    const { start, end } = stripRange(bulkLen, cycleIndex);
+    const stripLen = Math.max(1, end - start);
+
+    // Top card: travels with the strip when the upper packet is pulled, otherwise stays with the stay pile.
+    const topInStrip = bulkLen === 0 || end >= bulkLen;
+    const topStripLocal = topInStrip ? stripLen - 1 : 0;
 
     for (let i = 0; i < bulkLen; i++) {
       const g = bulkGroups[i];
       const base = restorePack.bulk[i];
-      const d = riffleShuffleDeltas(u, i, bulkLen);
+      const inStrip = i >= start && i < end;
+      const stripLocal = inStrip ? i - start : 0;
+      const d = indianCyclePose(c, inStrip, stripLocal, stripLen, stayHeightY, liftClearanceY);
       g.position.set(base.pos.x + d.dx, base.pos.y + d.dy, base.pos.z + d.dz);
       g.rotation.copy(base.rot);
       g.rotation.z = base.rot.z + d.rz;
     }
 
-    const td = bulkLen > 0 ? riffleShuffleDeltas(u, bulkLen - 1, bulkLen) : riffleShuffleDeltas(u, 0, 0);
-    topGroup.position.set(
-      baseTopPos.x + td.dx * 0.94,
-      baseTopPos.y + td.dy + topExtraY * smoothstep(0.05, 0.28, u) * (1 - smoothstep(0.52, 0.82, u)),
-      baseTopPos.z + td.dz * 0.88,
+    const td = indianCyclePose(
+      c,
+      topInStrip,
+      topStripLocal,
+      Math.max(1, stripLen),
+      stayHeightY + inc * 1.2,
+      liftClearanceY + inc,
     );
-    topGroup.rotation.z = baseTopRotZ + td.rz * 0.93;
+    topGroup.position.set(baseTopPos.x + td.dx, baseTopPos.y + td.dy, baseTopPos.z + td.dz);
+    topGroup.rotation.z = baseTopRotZ + td.rz;
   };
 
   apply();
@@ -186,6 +238,7 @@ export function playDeckShufflePreview(opts: PlayDeckShufflePreviewOpts): gsap.c
       restoreTopAndBulk(topGroup, restorePack, bulkGroups);
       delete anchor.userData[UD_TL];
       delete anchor.userData[UD_RESTORE];
+      resolveComplete();
     },
   });
 
@@ -194,9 +247,12 @@ export function playDeckShufflePreview(opts: PlayDeckShufflePreviewOpts): gsap.c
   tl.to(prog, {
     u: 1,
     duration: SHUFFLE_DURATION,
-    ease: 'power1.inOut',
+    ease: 'none',
     onUpdate: apply,
   });
 
-  return tl;
+  return done;
 }
+
+/** @deprecated Prefer {@link playDeckShuffleAnimation}. */
+export const playDeckShufflePreview = playDeckShuffleAnimation;

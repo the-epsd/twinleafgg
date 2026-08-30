@@ -9,26 +9,23 @@ import { AttackEffect } from '../../../game/store/effects/game-effects';
 export class Wigglytuff extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Jigglypuff';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Round',
-      cost: [C, C],
-      damage: 20,
-      damageCalculation: 'x',
-      text: 'Does 20 damage times the number of your Pokémon that have the Round attack.'
-    },
-    {
-      name: 'Hypnoblast',
-      cost: [C, C, C],
-      damage: 60,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Asleep.'
-    }
-  ];
+  public attacks = [{
+    name: 'Round',
+    cost: [C, C],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Does 20 damage times the number of your Pokémon that have the Round attack.'
+  }, {
+    name: 'Hypnoblast',
+    cost: [C, C, C],
+    damage: 60,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Asleep.'
+  }];
 
   public set: string = 'NXD';
   public setNumber: string = '79';

@@ -1,17 +1,28 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, ConfirmPrompt, GameMessage, ChoosePokemonPrompt, PlayerType, SlotType } from '../../../game';
+import {
+  StoreLike,
+  State,
+  ConfirmPrompt,
+  GameMessage,
+  ChoosePokemonPrompt,
+  PlayerType,
+  SlotType,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED, DAMAGE_OPPONENT_POKEMON } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  SWITCH_ACTIVE_WITH_BENCHED,
+  DAMAGE_OPPONENT_POKEMON,
+} from '../../../game/store/prefabs/prefabs';
 import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 export class KyogreEx extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
 
   public hp: number = 170;
 
@@ -24,14 +35,14 @@ export class KyogreEx extends PokemonCard {
       name: 'Smash Turn',
       cost: [W, C],
       damage: 30,
-      text: 'You may switch this Pokémon with 1 of your Benched Pokémon.'
+      text: 'You may switch this Pokémon with 1 of your Benched Pokémon.',
     },
     {
       name: 'Dual Splash',
       cost: [W, W, C],
       damage: 0,
-      text: 'This attack does 50 damage to 2 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "This attack does 50 damage to 2 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public set: string = 'DEX';
@@ -47,7 +58,6 @@ export class KyogreEx extends PokemonCard {
   private usedSmashTurn: boolean = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // Smash Turn - set flag to switch after attack
     if (WAS_ATTACK_USED(effect, 0, this)) {
       this.usedSmashTurn = true;
@@ -57,33 +67,38 @@ export class KyogreEx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { min: 2, max: 2, allowCancel: false }
-      ), selected => {
-        const targets = selected || [];
-        DAMAGE_OPPONENT_POKEMON(store, state, effect, 50, targets);
-      });
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { min: 2, max: 2, allowCancel: false },
+        ),
+        (selected) => {
+          const targets = selected || [];
+          DAMAGE_OPPONENT_POKEMON(store, state, effect, 50, targets);
+        },
+      );
     }
 
     // After Smash Turn, optionally switch self
     if (effect instanceof AfterAttackEffect && this.usedSmashTurn) {
       this.usedSmashTurn = false;
       const player = effect.player;
-      const hasBenched = player.bench.some(b => b.cards.length > 0);
+      const hasBenched = player.bench.some((b) => b.cards.length > 0);
 
       if (hasBenched) {
-        return store.prompt(state, new ConfirmPrompt(
-          player.id,
-          GameMessage.WANT_TO_SWITCH_POKEMON
-        ), wantToSwitch => {
-          if (wantToSwitch) {
-            SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
-          }
-        });
+        return store.prompt(
+          state,
+          new ConfirmPrompt(player.id, GameMessage.WANT_TO_SWITCH_POKEMON),
+          (wantToSwitch) => {
+            if (wantToSwitch) {
+              SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
+            }
+          },
+        );
       }
     }
 
@@ -94,5 +109,4 @@ export class KyogreEx extends PokemonCard {
 
     return state;
   }
-
 }

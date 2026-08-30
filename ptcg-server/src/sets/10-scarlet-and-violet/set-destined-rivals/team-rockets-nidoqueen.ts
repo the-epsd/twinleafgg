@@ -6,9 +6,9 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class TeamRocketsNidoqueen extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
-  public evolvesFrom = 'Team Rocket\'s Nidorina';
-  public tags = [CardTag.TEAM_ROCKET];
-  public cardType: CardType = D;
+  public evolvesFrom = "Team Rocket's Nidorina";
+  protected _tags = [CardTag.TEAM_ROCKET];
+  public cardType: CardType[] = [D];
   public hp: number = 170;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
@@ -19,22 +19,22 @@ export class TeamRocketsNidoqueen extends PokemonCard {
       cost: [D],
       damage: 60,
       damageCalculation: '+',
-      text: 'If you have any Benched Pokémon with Nidoking in its name, this attack does 120 more damage.'
+      text: 'If you have any Benched Pokémon with Nidoking in its name, this attack does 120 more damage.',
     },
     {
       name: 'Mega Kick',
       cost: [D, D],
       damage: 130,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark = 'I';
   public set: string = 'DRI';
   public setNumber: string = '116';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Team Rocket\'s Nidoqueen';
-  public fullName: string = 'Team Rocket\'s Nidoqueen DRI';
+  public name: string = "Team Rocket's Nidoqueen";
+  public fullName: string = "Team Rocket's Nidoqueen DRI";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Love Impact
@@ -42,13 +42,15 @@ export class TeamRocketsNidoqueen extends PokemonCard {
       const player = effect.player;
 
       let isNidokingInPlay = false;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (card) => {
         if (card.getPokemonCard()?.name.includes('Nidoking')) {
           isNidokingInPlay = true;
         }
       });
 
-      if (isNidokingInPlay) { effect.damage += 120; }
+      if (isNidokingInPlay) {
+        effect.damage += 120;
+      }
     }
 
     return state;

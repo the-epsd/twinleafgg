@@ -12,26 +12,23 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 export class Ursaring extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Teddiursa';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Picnic Weather',
-      cost: [C, C],
-      damage: 0,
-      text: 'Put a Teddiursa from your discard pile onto your Bench. Then, attach an Energy card from your discard pile to that Pokémon.'
-    },
-    {
-      name: 'Fury Swipes',
-      cost: [C, C, C, C],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 50 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Picnic Weather',
+    cost: [C, C],
+    damage: 0,
+    text: 'Put a Teddiursa from your discard pile onto your Bench. Then, attach an Energy card from your discard pile to that Pokémon.'
+  }, {
+    name: 'Fury Swipes',
+    cost: [C, C, C, C],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 50 damage times the number of heads.'
+  }];
 
   public set: string = 'LTR';
   public setNumber: string = 'RC16';

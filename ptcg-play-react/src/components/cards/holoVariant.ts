@@ -1,7 +1,12 @@
 import { Card, CardTag } from 'ptcg-server';
 
 /** CSS class names aligned with Angular `ptcg-card` / `getCardClass()`. */
-export type HoloVariant = 'holo' | 'trainer-holo' | 'fullart-holo' | 'radiant-holo' | 'ace-spec-holo';
+export type HoloVariant =
+  | 'holo'
+  | 'trainer-holo'
+  | 'fullart-holo'
+  | 'radiant-holo'
+  | 'ace-spec-holo';
 
 const HOLO_BY_FULL_NAME: ReadonlySet<string> = new Set([
   'Armarouge SVI',
@@ -92,7 +97,7 @@ const TRAINER_HOLO_BY_FULL_NAME: ReadonlySet<string> = new Set([
  */
 export function getHoloVariant(
   card: Card | null | undefined,
-  holoEnabled: boolean
+  holoEnabled: boolean,
 ): HoloVariant | null {
   if (!holoEnabled || !card) {
     return null;
@@ -136,7 +141,7 @@ export function getHoloVariant(
  */
 export function getHoloVariantForPreview(
   card: { fullName: string; tags: CardTag[] } | null | undefined,
-  holoEnabled: boolean
+  holoEnabled: boolean,
 ): HoloVariant | null {
   if (!holoEnabled || !card) {
     return null;
@@ -147,7 +152,7 @@ export function getHoloVariantForPreview(
   if (TRAINER_HOLO_BY_FULL_NAME.has(card.fullName)) {
     return 'trainer-holo';
   }
-  if (!card.tags?.length) {
+  if (!card.tags.length) {
     return null;
   }
   if (

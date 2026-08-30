@@ -6,12 +6,11 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Falinks extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
 
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp: number = 110;
 
@@ -19,12 +18,14 @@ export class Falinks extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
-  public attacks = [{
-    name: 'Rapid Strike Squad',
-    cost: [CardType.FIGHTING, CardType.COLORLESS],
-    damage: 20,
-    text: 'This attack does 20 damage for each of your Rapid Strike Pokémon in play.'
-  }];
+  public attacks = [
+    {
+      name: 'Rapid Strike Squad',
+      cost: [CardType.FIGHTING, CardType.COLORLESS],
+      damage: 20,
+      text: 'This attack does 20 damage for each of your Rapid Strike Pokémon in play.',
+    },
+  ];
 
   public set = 'BST';
 
@@ -39,21 +40,21 @@ export class Falinks extends PokemonCard {
   public fullName = 'Falinks BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       const player = effect.player;
 
-      const vPokemons = player.bench.filter(card => card instanceof PokemonCard && card.tags.includes(CardTag.RAPID_STRIKE));
-      const vPokemons2 = player.active.getPokemons().filter(card => card.tags.includes(CardTag.RAPID_STRIKE));
+      const vPokemons = player.bench.filter(
+        (card) => card instanceof PokemonCard && card.hasTag(CardTag.RAPID_STRIKE),
+      );
+      const vPokemons2 = player.active
+        .getPokemons()
+        .filter((card) => card.hasTag(CardTag.RAPID_STRIKE));
 
       const vPokes = vPokemons.length + vPokemons2.length;
       const damage = 20 * vPokes;
 
       effect.damage = damage;
-
     }
     return state;
   }
 }
-

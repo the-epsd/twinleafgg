@@ -11,28 +11,25 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Azumarill2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Marill';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 100;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Tail Rap',
-      cost: [Y, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
-    },
-    {
-      name: 'Dwindling Wave',
-      cost: [Y, C, C],
-      damage: 100,
-      damageCalculation: '-',
-      text: 'This attack does 100 damage minus 10 damage for each damage counter on this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tail Rap',
+    cost: [Y, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
+  }, {
+    name: 'Dwindling Wave',
+    cost: [Y, C, C],
+    damage: 100,
+    damageCalculation: '-',
+    text: 'This attack does 100 damage minus 10 damage for each damage counter on this Pokémon.'
+  }];
 
   public set: string = 'PRC';
   public setNumber: string = '104';

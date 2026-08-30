@@ -12,7 +12,7 @@ import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE, HEAL_X_DAMAGE_FROM_THIS_POKEMON 
 export class Kabutops extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Kabuto';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 150;
   public weakness = [{ type: G }];
   public retreat = [C, C];

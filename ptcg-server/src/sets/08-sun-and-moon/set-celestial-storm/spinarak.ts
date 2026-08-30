@@ -6,7 +6,7 @@ import { ADD_PARALYZED_TO_PLAYER_ACTIVE, ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTA
 
 export class Spinarak extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 50;
   public weakness = [{ type: P }];
   public retreat = [C];
@@ -16,8 +16,7 @@ export class Spinarak extends PokemonCard {
     cost: [G],
     damage: 0,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed and Poisoned.'
-  },
-  {
+  }, {
     name: 'Pierce',
     cost: [C, C],
     damage: 20,

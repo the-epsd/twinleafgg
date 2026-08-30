@@ -281,7 +281,8 @@ export class GameStatePreserver {
   /**
    * Clean up expired sessions
    */
-  public async cleanupExpiredSessions(): Promise<number> {
+  public async cleanupExpiredSessions(options?: { logEachSession?: boolean }): Promise<number> {
+    const logEachSession = options?.logEachSession ?? false;
     const startTime = Date.now();
 
     try {
@@ -292,7 +293,9 @@ export class GameStatePreserver {
 
       let cleanedCount = 0;
       for (const session of expiredSessions) {
-        logger.logSessionExpiry(session.userId, session.gameId);
+        if (logEachSession) {
+          logger.logSessionExpiry(session.userId, session.gameId);
+        }
         await session.remove();
         cleanedCount++;
       }

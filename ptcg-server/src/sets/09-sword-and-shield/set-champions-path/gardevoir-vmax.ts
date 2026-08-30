@@ -10,10 +10,10 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class GardevoirVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Gardevoir V';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 320;
   public weakness = [{ type: M }];
   public retreat = [C, C];
@@ -23,8 +23,8 @@ export class GardevoirVmax extends PokemonCard {
       name: 'Max Cure',
       cost: [P, P, C],
       damage: 180,
-      text: 'Heal 50 damage from this Pokémon.'
-    }
+      text: 'Heal 50 damage from this Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'D';

@@ -20,6 +20,7 @@ import {
 } from './removeDamagePromptModel';
 import { buildPokemonPromptRows, mapPokemonItems } from './pokemonPromptRows';
 import type { PokemonRow } from './pokemonPromptRows';
+import { getPromptPerspectivePlayerId } from './promptPerspective';
 import styles from './TablePromptLayer.module.css';
 
 export type MoveDamageOverlayProps = {
@@ -81,7 +82,7 @@ export function MoveDamageOverlay(props: MoveDamageOverlayProps) {
   useEffect(() => {
     const nextRows = buildPokemonPromptRows(
       localGame.state,
-      prompt.playerId,
+      getPromptPerspectivePlayerId(prompt),
       prompt.playerType,
       prompt.slots,
     );
@@ -99,7 +100,7 @@ export function MoveDamageOverlay(props: MoveDamageOverlayProps) {
   }, [prompt.id]);
 
   const boardSelected = useMemo(() => {
-    const list = boardInteraction.getSelectedTargets();
+    const list = boardInteraction.getPromptSelectedTargets();
     return list[0];
   }, [boardInteraction, boardTick]);
 
@@ -159,7 +160,7 @@ export function MoveDamageOverlay(props: MoveDamageOverlayProps) {
   );
 
   const removeDamage = useCallback(() => {
-    const tSel = boardInteraction.getSelectedTargets()[0];
+    const tSel = boardInteraction.getPromptSelectedTargets()[0];
     if (tSel === undefined) {
       return;
     }
@@ -177,7 +178,7 @@ export function MoveDamageOverlay(props: MoveDamageOverlayProps) {
   }, [boardInteraction, prompt.options.blockedFrom, damageMultiple]);
 
   const addDamage = useCallback(() => {
-    const tSel = boardInteraction.getSelectedTargets()[0];
+    const tSel = boardInteraction.getPromptSelectedTargets()[0];
     if (tSel === undefined) {
       return;
     }

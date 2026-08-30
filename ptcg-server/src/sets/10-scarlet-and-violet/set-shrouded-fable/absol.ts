@@ -11,7 +11,7 @@ export class Absol extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp: number = 110;
 

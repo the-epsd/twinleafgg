@@ -1,15 +1,28 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { StoreLike, State, StateUtils, CardTag, CardType, Stage, EnergyCard, SpecialCondition, CardList } from '../../../game';
+import {
+  StoreLike,
+  State,
+  StateUtils,
+  CardTag,
+  CardType,
+  Stage,
+  EnergyCard,
+  SpecialCondition,
+  CardList,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { AddSpecialConditionsEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import {
+  AddSpecialConditionsEffect,
+  PutDamageEffect,
+} from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Magcargoex extends PokemonCard {
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Slugma';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 270;
   public weakness = [{ type: W }];
   public retreat = [C, C, C];
@@ -19,15 +32,15 @@ export class Magcargoex extends PokemonCard {
       name: 'Hot Magma',
       cost: [R, C],
       damage: 70,
-      text: 'Your opponent\'s Active Pokémon is now Burned.'
+      text: "Your opponent's Active Pokémon is now Burned.",
     },
     {
       name: 'Ground Burn',
       cost: [R, R, C],
       damage: 140,
       damageCalculation: '+',
-      text: 'Discard the top card of each player\'s deck. This attack does 140 more damage for each Energy card discarded in this way.'
-    }
+      text: "Discard the top card of each player's deck. This attack does 140 more damage for each Energy card discarded in this way.",
+    },
   ];
 
   public set: string = 'TWM';
@@ -63,13 +76,17 @@ export class Magcargoex extends PokemonCard {
         damageScaling++;
       }
 
-      effect.damage += (140 * damageScaling);
+      effect.damage += 140 * damageScaling;
 
       playerTopDeck.moveTo(player.discard);
       opponentTopDeck.moveTo(opponent.discard);
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

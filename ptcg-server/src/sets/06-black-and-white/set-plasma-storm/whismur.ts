@@ -10,25 +10,22 @@ import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/p
 
 export class Whismur extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Shout',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, discard a random card from your opponent\'s hand.'
-    },
-    {
-      name: 'Hyper Voice',
-      cost: [C, C, C],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Shout',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, discard a random card from your opponent\'s hand.'
+  }, {
+    name: 'Hyper Voice',
+    cost: [C, C, C],
+    damage: 30,
+    text: ''
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '105';

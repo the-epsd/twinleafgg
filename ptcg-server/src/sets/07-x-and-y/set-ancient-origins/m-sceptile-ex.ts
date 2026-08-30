@@ -4,16 +4,25 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { AttachEnergyPrompt, EnergyCard, GameMessage, PlayerType, SlotType, StoreLike, State, StateUtils } from '../../../game';
+import {
+  AttachEnergyPrompt,
+  EnergyCard,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class MSceptileEx extends PokemonCard {
-  public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
+  protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Sceptile-EX';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 220;
   public weakness = [{ type: R }];
   public retreat = [C, C];
@@ -23,8 +32,8 @@ export class MSceptileEx extends PokemonCard {
       name: 'Jagged Saber',
       cost: [G, C],
       damage: 100,
-      text: 'You may attach up to 2 [G] Energy cards from your hand to your Benched Pokémon in any way you like. If you attached Energy to a Pokémon in this way, heal all damage from that Pokémon.'
-    }
+      text: 'You may attach up to 2 [G] Energy cards from your hand to your Benched Pokémon in any way you like. If you attached Energy to a Pokémon in this way, heal all damage from that Pokémon.',
+    },
   ];
 
   public set: string = 'AOR';
@@ -39,52 +48,56 @@ export class MSceptileEx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const hasGrassEnergy = player.hand.cards.some(c =>
-        c instanceof EnergyCard && c.provides.includes(CardType.GRASS)
+      const hasGrassEnergy = player.hand.cards.some(
+        (c) => c instanceof EnergyCard && c.provides.includes(CardType.GRASS),
       );
 
       if (!hasGrassEnergy) {
         return state;
       }
 
-      const hasBench = player.bench.some(b => b.cards.length > 0);
+      const hasBench = player.bench.some((b) => b.cards.length > 0);
       if (!hasBench) {
         return state;
       }
 
-      return store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_TO_BENCH,
-        player.hand,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { superType: SuperType.ENERGY, cardType: CardType.GRASS },
-        { allowCancel: true, min: 0, max: 2 }
-      ), transfers => {
-        transfers = transfers || [];
-        if (transfers.length === 0) {
-          return;
-        }
+      return store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_TO_BENCH,
+          player.hand,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          { superType: SuperType.ENERGY, cardType: [CardType.GRASS] },
+          { allowCancel: true, min: 0, max: 2 },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          if (transfers.length === 0) {
+            return;
+          }
 
-        // Track which targets received energy
-        const healedTargets = new Set<string>();
+          // Track which targets received energy
+          const healedTargets = new Set<string>();
 
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.hand.moveCardTo(transfer.card, target);
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.hand.moveCardTo(transfer.card, target);
 
-          const targetKey = JSON.stringify(transfer.to);
-          if (!healedTargets.has(targetKey)) {
-            healedTargets.add(targetKey);
+            const targetKey = JSON.stringify(transfer.to);
+            if (!healedTargets.has(targetKey)) {
+              healedTargets.add(targetKey);
 
-            // Heal all damage from that Pokemon
-            if (target.damage > 0) {
-              const healEffect = new HealEffect(player, target, target.damage);
-              store.reduceEffect(state, healEffect);
+              // Heal all damage from that Pokemon
+              if (target.damage > 0) {
+                const healEffect = new HealEffect(player, target, target.damage);
+                store.reduceEffect(state, healEffect);
+              }
             }
           }
-        }
-      });
+        },
+      );
     }
 
     return state;

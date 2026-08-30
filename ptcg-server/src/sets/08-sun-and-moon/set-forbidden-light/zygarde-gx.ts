@@ -3,7 +3,13 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+} from '../../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, StateUtils, PlayerType, EnergyCard } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
@@ -12,9 +18,9 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class ZygardeGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 200;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
@@ -24,21 +30,21 @@ export class ZygardeGx extends PokemonCard {
       name: 'Cell Connector',
       cost: [C, C],
       damage: 50,
-      text: 'Attach 2 [F] Energy cards from your discard pile to this Pokémon.'
+      text: 'Attach 2 [F] Energy cards from your discard pile to this Pokémon.',
     },
     {
-      name: 'Land\'s Wrath',
+      name: "Land's Wrath",
       cost: [F, F, C, C],
       damage: 130,
-      text: ''
+      text: '',
     },
     {
       name: 'Verdict-GX',
       cost: [F, F, C, C],
       damage: 150,
       gxAttack: true,
-      text: 'Prevent all damage done to this Pokémon by attacks from Pokémon-GX and Pokémon-EX during your opponent\'s next turn. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Prevent all damage done to this Pokémon by attacks from Pokémon-GX and Pokémon-EX during your opponent's next turn. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'FLI';
@@ -56,25 +62,32 @@ export class ZygardeGx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const fightingEnergy = player.discard.cards.filter(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Fighting Energy'
+      const fightingEnergy = player.discard.cards.filter(
+        (c) =>
+          c instanceof EnergyCard &&
+          c.energyType === EnergyType.BASIC &&
+          c.name === 'Fighting Energy',
       );
 
       if (fightingEnergy.length > 0) {
         const maxAttach = Math.min(2, fightingEnergy.length);
 
-        store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_ATTACH,
-          player.discard,
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fighting Energy' },
-          { min: maxAttach, max: maxAttach, allowCancel: false }
-        ), cards => {
-          cards = cards || [];
-          cards.forEach(card => {
-            player.discard.moveCardTo(card, player.active);
-          });
-        });
+        store.prompt(
+          state,
+          new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_CARD_TO_ATTACH,
+            player.discard,
+            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fighting Energy' },
+            { min: maxAttach, max: maxAttach, allowCancel: false },
+          ),
+          (cards) => {
+            cards = cards || [];
+            cards.forEach((card) => {
+              player.discard.moveCardTo(card, player.active);
+            });
+          },
+        );
       }
     }
 
@@ -92,20 +105,27 @@ export class ZygardeGx extends PokemonCard {
     }
 
     // Prevent damage from GX and EX Pokemon
-    if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect)
-      && effect.target.marker.hasMarker(this.VERDICT_MARKER, this)
-      && effect.target.cards.includes(this)
-      && effect.target.getPokemonCard() === this) {
+    if (
+      (effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
+      effect.target.marker.hasMarker(this.VERDICT_MARKER, this) &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const sourceCard = effect.source.getPokemonCard();
-      if (sourceCard && (sourceCard.tags.includes(CardTag.POKEMON_GX) || sourceCard.tags.includes(CardTag.POKEMON_EX))) {
+      if (
+        sourceCard &&
+        (sourceCard.hasTag(CardTag.POKEMON_GX) || sourceCard.hasTag(CardTag.POKEMON_EX))
+      ) {
         effect.preventDefault = true;
         return state;
       }
     }
 
     // Cleanup at end of opponent's turn
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_VERDICT_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_VERDICT_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_VERDICT_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {

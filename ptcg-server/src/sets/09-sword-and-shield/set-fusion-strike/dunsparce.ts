@@ -5,7 +5,7 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { CheckPokemonStatsEffect } from '../../../game/store/effects/check-effects';
-import { PlayerType, StateUtils } from '../../../game';
+import { PlayerType, StateUtils, pokemonHasCardType } from '../../../game';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
 
 
@@ -13,7 +13,7 @@ export class Dunsparce extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp: number = 60;
 
@@ -84,7 +84,8 @@ export class Dunsparce extends PokemonCard {
 
         [player, opponent].forEach(p => {
           p.forEachPokemon(p === player ? PlayerType.BOTTOM_PLAYER : PlayerType.TOP_PLAYER, cardList => {
-            if (cardList.getPokemonCard()?.cardType === CardType.COLORLESS) {
+            const pokemon = cardList.getPokemonCard();
+            if (pokemon && pokemonHasCardType(pokemon, CardType.COLORLESS)) {
               effect.weakness = [];
             }
           });

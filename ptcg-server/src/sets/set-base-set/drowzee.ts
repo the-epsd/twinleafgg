@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { Attack } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
@@ -8,37 +8,28 @@ import { StateUtils } from '../../game';
 import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Drowzee extends PokemonCard {
-
   public name = 'Drowzee';
-
   public cardImage: string = 'assets/cardback.png';
-
   public set = 'BS';
-
   public fullName = 'Drowzee BS';
-
   public setNumber = '49';
 
-  public cardType = CardType.PSYCHIC;
-
+  public cardType: CardType[] = [P];
   public stage = Stage.BASIC;
-
   public hp = 50;
-
-  public weakness = [{ type: CardType.PSYCHIC }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: P }];
+  public retreat = [C];
 
   public attacks: Attack[] = [
     {
       name: 'Pound',
-      cost: [CardType.COLORLESS],
+      cost: [C],
       damage: 10,
       text: ''
     },
     {
       name: 'Confuse Ray',
-      cost: [CardType.PSYCHIC, CardType.PSYCHIC],
+      cost: [P, P],
       damage: 10,
       text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
     }

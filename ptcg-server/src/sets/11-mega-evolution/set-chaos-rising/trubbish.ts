@@ -7,20 +7,19 @@ import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/s
 export class Trubbish extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 70;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Acid Spray',
-      cost: [D],
-      damage: 10,
-      text: "Flip a coin. If heads, discard an Energy attached to your opponent's Active Pokémon.",
-    },
-  ];
+  public attacks = [{
+    name: 'Acid Spray',
+    cost: [D],
+    damage: 10,
+    text: "Flip a coin. If heads, discard an Energy attached to your opponent's Active Pokémon.",
+  }];
 
   public regulationMark = 'J';
+
   public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '56';

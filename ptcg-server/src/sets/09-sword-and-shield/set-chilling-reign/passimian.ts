@@ -11,26 +11,28 @@ import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class Passimian extends PokemonCard {
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 110;
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Throwing Coach',
-    powerType: PowerType.ABILITY,
-    text: 'Your Rapid Strike Pokémon\'s attacks do 30 more damage to your opponent\'s Benched Pokémon V and Benched Pokémon-GX (before applying Weakness and Resistance). You can\'t apply more than 1 Throwing Coach Ability at a time.'
-  }];
+  public powers = [
+    {
+      name: 'Throwing Coach',
+      powerType: PowerType.ABILITY,
+      text: "Your Rapid Strike Pokémon's attacks do 30 more damage to your opponent's Benched Pokémon V and Benched Pokémon-GX (before applying Weakness and Resistance). You can't apply more than 1 Throwing Coach Ability at a time.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Fling',
       cost: [F],
       damage: 0,
-      text: 'This attack does 20 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "This attack does 20 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -48,7 +50,7 @@ export class Passimian extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Only boost damage to opponent's benched Pokemon
-      const isBenchedTarget = opponent.bench.some(b => b === effect.target);
+      const isBenchedTarget = opponent.bench.some((b) => b === effect.target);
       if (!isBenchedTarget) {
         return state;
       }
@@ -56,15 +58,16 @@ export class Passimian extends PokemonCard {
       // Target must be V or GX
       const targetCard = effect.target.getPokemonCard();
       if (!targetCard) return state;
-      const isVOrGX = targetCard.tags.includes(CardTag.POKEMON_V) ||
-        targetCard.tags.includes(CardTag.POKEMON_VMAX) ||
-        targetCard.tags.includes(CardTag.POKEMON_VSTAR) ||
-        targetCard.tags.includes(CardTag.POKEMON_GX);
+      const isVOrGX =
+        targetCard.hasTag(CardTag.POKEMON_V) ||
+        targetCard.hasTag(CardTag.POKEMON_VMAX) ||
+        targetCard.hasTag(CardTag.POKEMON_VSTAR) ||
+        targetCard.hasTag(CardTag.POKEMON_GX);
       if (!isVOrGX) return state;
 
       // Attacker must be a Rapid Strike Pokemon
       const attackerCard = player.active.getPokemonCard();
-      if (!attackerCard || !attackerCard.tags.includes(CardTag.RAPID_STRIKE)) {
+      if (!attackerCard || !attackerCard.hasTag(CardTag.RAPID_STRIKE)) {
         return state;
       }
 
@@ -76,9 +79,12 @@ export class Passimian extends PokemonCard {
           passimianInPlay = true;
         }
         // "Can't apply more than 1 Throwing Coach" - only apply from first Passimian found
-        if (card !== this && card.name === 'Passimian'
-          && card.powers.some(p => p.name === 'Throwing Coach')
-          && !IS_ABILITY_BLOCKED(store, state, player, card)) {
+        if (
+          card !== this &&
+          card.name === 'Passimian' &&
+          card.powers.some((p) => p.name === 'Throwing Coach') &&
+          !IS_ABILITY_BLOCKED(store, state, player, card)
+        ) {
           if (!passimianInPlay) {
             isFirstPassimian = false;
           }

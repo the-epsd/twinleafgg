@@ -9,10 +9,10 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class MGlalieEx extends PokemonCard {
-  public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
+  protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Glalie-EX';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 220;
   public weakness = [{ type: M }];
   public retreat = [C, C, C];
@@ -23,8 +23,8 @@ export class MGlalieEx extends PokemonCard {
       cost: [W, C, C],
       damage: 100,
       damageCalculation: '+',
-      text: 'If this Pokémon has 10 or more damage counters on it, this attack does 150 more damage.'
-    }
+      text: 'If this Pokémon has 10 or more damage counters on it, this attack does 150 more damage.',
+    },
   ];
 
   public set: string = 'BKT';

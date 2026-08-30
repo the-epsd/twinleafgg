@@ -10,27 +10,25 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO
 
 export class Grubbin extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Energize',
-      cost: [C],
-      damage: 0,
-      text: 'Attach a [L] Energy card from your discard pile to this Pokémon.'
-    },
-    {
-      name: 'Surprise Attack',
-      cost: [C, C, C],
-      damage: 50,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Energize',
+    cost: [C],
+    damage: 0,
+    text: 'Attach a [L] Energy card from your discard pile to this Pokémon.'
+  }, {
+    name: 'Surprise Attack',
+    cost: [C, C, C],
+    damage: 50,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'FST';
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';

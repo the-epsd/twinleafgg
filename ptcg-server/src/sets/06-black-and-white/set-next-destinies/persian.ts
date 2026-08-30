@@ -10,25 +10,22 @@ import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 export class Persian extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Meowth';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Nasty Plot',
-      cost: [C],
-      damage: 0,
-      text: 'Search your deck for a card and put it into your hand. Shuffle your deck afterward.'
-    },
-    {
-      name: 'Shadow Claw',
-      cost: [C, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, discard a random card from your opponent\'s hand.'
-    }
-  ];
+  public attacks = [{
+    name: 'Nasty Plot',
+    cost: [C],
+    damage: 0,
+    text: 'Search your deck for a card and put it into your hand. Shuffle your deck afterward.'
+  }, {
+    name: 'Shadow Claw',
+    cost: [C, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, discard a random card from your opponent\'s hand.'
+  }];
 
   public set: string = 'NXD';
   public setNumber: string = '81';

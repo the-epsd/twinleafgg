@@ -6,13 +6,17 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage, ConfirmPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, AFTER_ATTACK, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  AFTER_ATTACK,
+  SWITCH_ACTIVE_WITH_BENCHED,
+} from '../../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 
 export class OrbeetleV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 180;
   public weakness = [{ type: R }];
   public retreat = [C];
@@ -22,15 +26,15 @@ export class OrbeetleV extends PokemonCard {
       name: 'Strafe',
       cost: [G],
       damage: 20,
-      text: 'You may switch this Pokémon with 1 of your Benched Pokémon.'
+      text: 'You may switch this Pokémon with 1 of your Benched Pokémon.',
     },
     {
       name: 'Mysterious Wave',
       cost: [G, C],
       damage: 50,
       damageCalculation: '+',
-      text: 'This attack does 30 more damage for each Energy attached to your opponent\'s Active Pokémon.'
-    }
+      text: "This attack does 30 more damage for each Energy attached to your opponent's Active Pokémon.",
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -45,15 +49,16 @@ export class OrbeetleV extends PokemonCard {
     // Ref: set-darkness-ablaze/manectric.ts (AFTER_ATTACK + ConfirmPrompt + SWITCH_ACTIVE_WITH_BENCHED)
     if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
-      if (player.bench.some(b => b.cards.length > 0)) {
-        store.prompt(state, new ConfirmPrompt(
-          player.id,
-          GameMessage.WANT_TO_SWITCH_POKEMON,
-        ), wantToSwitch => {
-          if (wantToSwitch) {
-            SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
-          }
-        });
+      if (player.bench.some((b) => b.cards.length > 0)) {
+        store.prompt(
+          state,
+          new ConfirmPrompt(player.id, GameMessage.WANT_TO_SWITCH_POKEMON),
+          (wantToSwitch) => {
+            if (wantToSwitch) {
+              SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
+            }
+          },
+        );
       }
     }
 

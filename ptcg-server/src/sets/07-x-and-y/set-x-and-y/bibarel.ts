@@ -11,27 +11,24 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, CONFIRMATION_PROMPT, ADD_S
 export class Bibarel extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Bidoof';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Double Headbutt',
-      cost: [C, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 30 damage for each heads.'
-    },
-    {
-      name: 'Hypno Headbutt',
-      cost: [C, C, C],
-      damage: 60,
-      damageCalculation: '+',
-      text: 'You may do 30 more damage. If you do, this Pokémon is now Asleep.'
-    }
-  ];
+  public attacks = [{
+    name: 'Double Headbutt',
+    cost: [C, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 30 damage for each heads.'
+  }, {
+    name: 'Hypno Headbutt',
+    cost: [C, C, C],
+    damage: 60,
+    damageCalculation: '+',
+    text: 'You may do 30 more damage. If you do, this Pokémon is now Asleep.'
+  }];
 
   public set: string = 'XY';
   public setNumber: string = '107';

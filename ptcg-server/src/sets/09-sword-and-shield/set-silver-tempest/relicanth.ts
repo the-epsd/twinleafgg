@@ -13,7 +13,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike, TrainerType } from '../../../game';
 export class Relicanth extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: L }];
   public retreat = [C];

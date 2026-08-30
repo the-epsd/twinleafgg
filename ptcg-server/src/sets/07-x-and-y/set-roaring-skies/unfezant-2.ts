@@ -13,26 +13,23 @@ import { WAS_ATTACK_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER, COIN_FLIP_PROMP
 export class Unfezant2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Tranquill';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 140;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Feather Dance',
-      cost: [C, C],
-      damage: 0,
-      text: 'During your next turn, each of this Pokémon\'s attacks does 80 more damage (before applying Weakness and Resistance).'
-    },
-    {
-      name: 'Sky Attack',
-      cost: [C, C, C],
-      damage: 120,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Feather Dance',
+    cost: [C, C],
+    damage: 0,
+    text: 'During your next turn, each of this Pokémon\'s attacks does 80 more damage (before applying Weakness and Resistance).'
+  }, {
+    name: 'Sky Attack',
+    cost: [C, C, C],
+    damage: 120,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'ROS';
   public setNumber: string = '81';

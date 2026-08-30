@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Oricorio2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 90;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
@@ -22,14 +22,14 @@ export class Oricorio2 extends PokemonCard {
       name: 'Zappy Pom-Poms',
       cost: [L],
       damage: 0,
-      text: 'This attack does 30 damage to each Pokémon-GX and Pokémon-EX (both yours and your opponent\'s). (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack does 30 damage to each Pokémon-GX and Pokémon-EX (both yours and your opponent's). (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Electric Ball',
       cost: [L, C, C],
       damage: 70,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'CES';
@@ -46,10 +46,10 @@ export class Oricorio2 extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const allPlayers = [player, opponent];
-      allPlayers.forEach(p => {
+      allPlayers.forEach((p) => {
         p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
           const card = cardList.getPokemonCard();
-          if (card && (card.tags.includes(CardTag.POKEMON_GX) || card.tags.includes(CardTag.POKEMON_EX))) {
+          if (card && (card.hasTag(CardTag.POKEMON_GX) || card.hasTag(CardTag.POKEMON_EX))) {
             // Active gets DealDamageEffect (applies W/R), bench gets PutDamageEffect (no W/R)
             if (cardList === p.active) {
               const damageEffect = new DealDamageEffect(effect, 30);

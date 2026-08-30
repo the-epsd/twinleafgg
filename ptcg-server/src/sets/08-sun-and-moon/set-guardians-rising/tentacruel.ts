@@ -11,26 +11,23 @@ import { State, StoreLike } from '../../../game';
 export class Tentacruel extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Tentacool';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 110;
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Poison Sting',
-      cost: [C, C],
-      damage: 30,
-      text: 'Your opponent\'s Active Pokémon is now Poisoned.'
-    },
-    {
-      name: 'Seething Tentacles',
-      cost: [C, C, C],
-      damage: 40,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 40 more damage. If tails, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Poison Sting',
+    cost: [C, C],
+    damage: 30,
+    text: 'Your opponent\'s Active Pokémon is now Poisoned.'
+  }, {
+    name: 'Seething Tentacles',
+    cost: [C, C, C],
+    damage: 40,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 40 more damage. If tails, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'GRI';
   public setNumber: string = '24';

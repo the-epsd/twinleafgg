@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, StoreLike, State, StateUtils, GameMessage, EnergyCard, GameError, ChooseCardsPrompt, SuperType, SlotType } from '../../../game';
+import { CardType, PokemonCard, Stage, StoreLike, State, StateUtils, GameMessage, EnergyCard, GameError, ChooseCardsPrompt, SuperType, SlotType } from '../../../game';
 import { PowerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { ABILITY_USED, ADD_MARKER, ADD_PARALYZED_TO_PLAYER_ACTIVE, HAS_MARKER, THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
@@ -6,7 +6,7 @@ import { ABILITY_USED, ADD_MARKER, ADD_PARALYZED_TO_PLAYER_ACTIVE, HAS_MARKER, T
 export class Ampharos extends PokemonCard {
   public stage = Stage.STAGE_2;
   public evolvesFrom = 'Flaaffy';
-  public cardType = L;
+  public cardType: CardType[] = [L];
   public hp = 150;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

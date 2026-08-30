@@ -9,10 +9,10 @@ import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class GyaradosGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Magikarp';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 230;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];
@@ -22,14 +22,14 @@ export class GyaradosGx extends PokemonCard {
       name: 'Dragon Rage',
       cost: [W, W, W, C],
       damage: 130,
-      text: ''
+      text: '',
     },
     {
       name: 'Hyper Beam-GX',
       cost: [W, W, W, C],
       damage: 240,
-      text: '(You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "(You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'HIF';

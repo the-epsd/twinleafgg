@@ -40,7 +40,7 @@ function* useCallForFamily(next: Function, store: StoreLike, state: State,
 
 export class Krabby extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
   public hp: number = 50;
   public weakness = [{ type: CardType.LIGHTNING }];
   public resistance = [];

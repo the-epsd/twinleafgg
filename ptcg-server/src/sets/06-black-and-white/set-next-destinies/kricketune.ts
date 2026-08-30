@@ -8,26 +8,23 @@ import { State, StoreLike } from '../../../game';
 export class Kricketune extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Kricketot';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'White Noise',
-      cost: [C],
-      damage: 20,
-      text: 'The Defending Pokémon is now Asleep.'
-    },
-    {
-      name: 'Draining Cut',
-      cost: [G, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 40 damage times the number of heads. Heal from this Pokémon the same amount of damage you did to the Defending Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'White Noise',
+    cost: [C],
+    damage: 20,
+    text: 'The Defending Pokémon is now Asleep.'
+  }, {
+    name: 'Draining Cut',
+    cost: [G, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 40 damage times the number of heads. Heal from this Pokémon the same amount of damage you did to the Defending Pokémon.'
+  }];
 
   public set: string = 'NXD';
   public setNumber: string = '4';

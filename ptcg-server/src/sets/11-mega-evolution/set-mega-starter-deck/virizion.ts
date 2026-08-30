@@ -5,9 +5,8 @@ import { Effect } from '../../../game/store/effects/effect';
 import { AFTER_ATTACK, DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Virizion extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public retreat = [C];
@@ -26,7 +25,7 @@ export class Virizion extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'MEM';
+  public set: string = 'J-MEM';
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Virizion';

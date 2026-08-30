@@ -1,6 +1,15 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike, State, PowerType, PlayerType, SlotType, PokemonCardList, GameError, GameMessage } from '../../../game';
+import {
+  StoreLike,
+  State,
+  PowerType,
+  PlayerType,
+  SlotType,
+  PokemonCardList,
+  GameError,
+  GameMessage,
+} from '../../../game';
 
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
@@ -10,18 +19,20 @@ import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/pre
 
 export class KeldeoEx extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_EX];
-  public cardType: CardType = W;
+  protected _tags = [CardTag.POKEMON_EX];
+  public cardType: CardType[] = [W];
   public hp: number = 170;
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Rush In',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), if this Pokémon is on your Bench, you may switch this Pokémon with your Active Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Rush In',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn (before your attack), if this Pokémon is on your Bench, you may switch this Pokémon with your Active Pokémon.',
+    },
+  ];
 
   public attacks = [
     {
@@ -29,8 +40,8 @@ export class KeldeoEx extends PokemonCard {
       cost: [C, C, C],
       damage: 50,
       damageCalculation: '+',
-      text: 'Does 20 more damage for each [W] Energy attached to this Pokémon.'
-    }
+      text: 'Does 20 more damage for each [W] Energy attached to this Pokémon.',
+    },
   ];
 
   public set: string = 'BCR';
@@ -42,7 +53,6 @@ export class KeldeoEx extends PokemonCard {
   public readonly RUSH_IN_MARKER = 'RUSH_IN_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       player.marker.removeMarker(this.RUSH_IN_MARKER, this);
@@ -78,19 +88,21 @@ export class KeldeoEx extends PokemonCard {
       store.reduceEffect(state, checkProvidedEnergyEffect);
 
       let energyCount = 0;
-      checkProvidedEnergyEffect.energyMap.forEach(em => {
-        energyCount += em.provides.filter(cardType => {
+      checkProvidedEnergyEffect.energyMap.forEach((em) => {
+        energyCount += em.provides.filter((cardType) => {
           return cardType === CardType.WATER || cardType === CardType.ANY;
         }).length;
       });
       effect.damage += energyCount * 20;
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.RUSH_IN_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.RUSH_IN_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.RUSH_IN_MARKER, this);
     }
 
     return state;
   }
-
 }

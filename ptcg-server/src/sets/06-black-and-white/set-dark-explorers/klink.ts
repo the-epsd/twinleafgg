@@ -7,7 +7,7 @@ import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/ga
 
 export class Klink extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 60;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

@@ -1,20 +1,30 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SpecialCondition, BoardEffect } from '../../../game/store/card/card-types';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SpecialCondition,
+  BoardEffect,
+} from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
-import { CardTarget, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, StateUtils } from '../../../game';
+import { CardTarget, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, StateUtils, pokemonHasCardType, pokemonHasCardTypeOptional } from '../../../game';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { CheckTableStateEffect } from '../../../game/store/effects/check-effects';
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
-function* useChainsOfControl(next: Function, store: StoreLike, state: State,
-  effect: PowerEffect): IterableIterator<State> {
+function* useChainsOfControl(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: PowerEffect,
+): IterableIterator<State> {
   const player = effect.player;
-  const hasDarkBench = player.bench.some(b =>
-    b.getPokemonCard()?.cardType === CardType.DARK &&
-    b.getPokemonCard()?.name !== 'Pecharunt ex'
+  const hasDarkBench = player.bench.some(
+    (b) =>
+      pokemonHasCardTypeOptional(b.getPokemonCard(), CardType.DARK) && b.getPokemonCard()?.name !== 'Pecharunt ex',
   );
 
   if (player.chainsOfControlUsed == true) {
@@ -30,7 +40,7 @@ function* useChainsOfControl(next: Function, store: StoreLike, state: State,
     if (card.name === 'Pecharunt ex') {
       blocked.push(target);
     }
-    if (list.getPokemonCard()?.cardType !== CardType.DARK) {
+    if (!pokemonHasCardTypeOptional(list.getPokemonCard(), CardType.DARK)) {
       blocked.push(target);
     }
   });
@@ -38,7 +48,7 @@ function* useChainsOfControl(next: Function, store: StoreLike, state: State,
   // Count Dark Pokemon in play
   let darkPokemonCount = 0;
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card) => {
-    if (card.cardType === CardType.DARK) {
+    if (pokemonHasCardType(card, CardType.DARK)) {
       darkPokemonCount++;
     }
   });
@@ -49,16 +59,20 @@ function* useChainsOfControl(next: Function, store: StoreLike, state: State,
   }
 
   let target: PokemonCardList[] = [];
-  yield store.prompt(state, new ChoosePokemonPrompt(
-    player.id,
-    GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.BENCH],
-    { allowCancel: false, blocked }
-  ), results => {
-    target = results || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChoosePokemonPrompt(
+      player.id,
+      GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.BENCH],
+      { allowCancel: false, blocked },
+    ),
+    (results) => {
+      target = results || [];
+      next();
+    },
+  );
 
   if (target.length > 0) {
     player.active.clearEffects();
@@ -69,14 +83,13 @@ function* useChainsOfControl(next: Function, store: StoreLike, state: State,
 }
 
 export class Pecharuntex extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
 
   public regulationMark = 'H';
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp: number = 190;
 
@@ -84,20 +97,24 @@ export class Pecharuntex extends PokemonCard {
 
   public retreat = [CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Subjugating Chains',
-    powerType: PowerType.ABILITY,
-    useWhenInPlay: true,
-    text: 'Once during your turn, you may switch 1 of your Benched [D] Pokémon, except any Pecharunt ex, with your Active Pokémon. If you do, the new Active Pokémon is now Poisoned. You can\'t use more than 1 Subjugating Chains Ability each turn.'
-  }];
+  public powers = [
+    {
+      name: 'Subjugating Chains',
+      powerType: PowerType.ABILITY,
+      useWhenInPlay: true,
+      text: "Once during your turn, you may switch 1 of your Benched [D] Pokémon, except any Pecharunt ex, with your Active Pokémon. If you do, the new Active Pokémon is now Poisoned. You can't use more than 1 Subjugating Chains Ability each turn.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Irritated Outburst',
-    cost: [CardType.DARK, CardType.DARK],
-    damage: 60,
-    damageCalculation: 'x',
-    text: 'This attack does 60 damage for each Prize card your opponent has taken.'
-  }];
+  public attacks = [
+    {
+      name: 'Irritated Outburst',
+      cost: [CardType.DARK, CardType.DARK],
+      damage: 60,
+      damageCalculation: 'x',
+      text: 'This attack does 60 damage for each Prize card your opponent has taken.',
+    },
+  ];
 
   public set: string = 'SFA';
 
@@ -110,7 +127,6 @@ export class Pecharuntex extends PokemonCard {
   public fullName: string = 'Pecharunt ex SFA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.chainsOfControlUsed = false;
@@ -119,7 +135,7 @@ export class Pecharuntex extends PokemonCard {
     if (WAS_POWER_USED(effect, 0, this)) {
       const generator = useChainsOfControl(() => generator.next(), store, state, effect);
       const player = effect.player;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         if (cardList.getPokemonCard() === this) {
           cardList.addBoardEffect(BoardEffect.ABILITY_USED);
         }
@@ -128,7 +144,6 @@ export class Pecharuntex extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -138,7 +153,7 @@ export class Pecharuntex extends PokemonCard {
     }
 
     if (effect instanceof CheckTableStateEffect) {
-      state.players.forEach(player => {
+      state.players.forEach((player) => {
         if (player.active.specialConditions.length === 0) {
           return;
         }

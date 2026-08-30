@@ -59,7 +59,7 @@ export class BattlePassService {
     return this.api.post<void>('/v1/battlepass/claim', { level, seasonId });
   }
 
-  public addDebugExp(exp: number): Observable<void> {
-    return this.api.post<void>('/v1/battlepass/debug/add-exp', { exp });
+  public addDebugExp(exp: number, seasonId?: string): Observable<void> {
+    return this.api.post<void>('/v1/battlepass/debug/add-exp', { exp, ...(seasonId ? { seasonId } : {}) });
   }
 }

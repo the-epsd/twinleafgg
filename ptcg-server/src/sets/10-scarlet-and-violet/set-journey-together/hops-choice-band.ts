@@ -10,10 +10,9 @@ import { CheckAttackCostEffect } from '../../../game/store/effects/check-effects
 import { ToolEffect } from '../../../game/store/effects/play-card-effects';
 
 export class HopsChoiceBand extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.TOOL;
 
-  public tags = [CardTag.HOPS];
+  protected _tags = [CardTag.HOPS];
 
   public set: string = 'JTG';
 
@@ -23,14 +22,14 @@ export class HopsChoiceBand extends TrainerCard {
 
   public regulationMark = 'I';
 
-  public name: string = 'Hop\'s Choice Band';
+  public name: string = "Hop's Choice Band";
 
-  public fullName: string = 'Hop\'s Choice Band JTG';
+  public fullName: string = "Hop's Choice Band JTG";
 
-  public text: string = 'Attacks used by the Hop\'s Pokémon this card is attached to cost [C] less and do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
+  public text: string =
+    "Attacks used by the Hop's Pokémon this card is attached to cost [C] less and do 30 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof CheckAttackCostEffect && effect.player.active.tools.includes(this)) {
       const index = effect.cost.indexOf(CardType.COLORLESS);
 
@@ -49,7 +48,7 @@ export class HopsChoiceBand extends TrainerCard {
 
       const hopsPokemon = effect.player.active.getPokemonCard();
 
-      if (hopsPokemon && hopsPokemon.tags.includes(CardTag.HOPS)) {
+      if (hopsPokemon && hopsPokemon.hasTag(CardTag.HOPS)) {
         effect.cost.splice(index, 1);
       }
 
@@ -68,11 +67,10 @@ export class HopsChoiceBand extends TrainerCard {
         return state;
       }
 
-      if (effect.target !== opponent.active)
-        return state;
+      if (effect.target !== opponent.active) return state;
 
       const sourceCard = effect.source.getPokemonCard();
-      if (sourceCard && sourceCard.tags.includes(CardTag.HOPS)) {
+      if (sourceCard && sourceCard.hasTag(CardTag.HOPS)) {
         effect.damage += 30;
       }
     }

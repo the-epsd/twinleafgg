@@ -7,9 +7,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { ToolEffect } from '../../../game/store/effects/play-card-effects';
 
-
 export class ChoiceBelt extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.TOOL;
 
   public set: string = 'PAL';
@@ -25,10 +23,9 @@ export class ChoiceBelt extends TrainerCard {
   public fullName: string = 'Choice Belt PAL';
 
   public text: string =
-    'The attacks of the Pokémon this card is attached to do 30 more damage to your opponent\'s Active Pokémon V (before applying Weakness and Resistance).';
+    "The attacks of the Pokémon this card is attached to do 30 more damage to your opponent's Active Pokémon V (before applying Weakness and Resistance).";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof DealDamageEffect && effect.source.tools.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, effect.player);
@@ -46,11 +43,13 @@ export class ChoiceBelt extends TrainerCard {
       }
 
       const targetCard = effect.target.getPokemonCard();
-      if (targetCard && targetCard.tags.includes(CardTag.POKEMON_V) || targetCard && targetCard.tags.includes(CardTag.POKEMON_VMAX) || targetCard && targetCard.tags.includes(CardTag.POKEMON_VSTAR)) {
-
+      if (
+        (targetCard && targetCard.hasTag(CardTag.POKEMON_V)) ||
+        (targetCard && targetCard.hasTag(CardTag.POKEMON_VMAX)) ||
+        (targetCard && targetCard.hasTag(CardTag.POKEMON_VSTAR))
+      ) {
         const attack = effect.attack;
         if (attack && attack.damage > 0 && effect.target === opponent.active) {
-
           effect.damage += 30;
         }
       }

@@ -1,17 +1,25 @@
-import { CardTag, CardType, PokemonCard, PowerType, Stage, State, StateUtils, StoreLike } from '../../../game';
+import {
+  CardTag,
+  CardType,
+  PokemonCard,
+  PowerType,
+  Stage,
+  State,
+  StateUtils,
+  StoreLike,
+} from '../../../game';
 import { DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class IronJugulis extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
   public regulationMark = 'H';
 
-  public tags = [CardTag.FUTURE];
+  protected _tags = [CardTag.FUTURE];
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp: number = 130;
 
@@ -26,15 +34,17 @@ export class IronJugulis extends PokemonCard {
       name: 'Blasting Wind',
       cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 110,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
-  public powers = [{
-    name: 'Automated Combat',
-    powerType: PowerType.ABILITY,
-    text: 'If this Pokémon is damaged by an attack from your opponent\'s Pokémon(even if this Pokémon is Knocked Out), put 3 damage counters on the Attacking Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Automated Combat',
+      powerType: PowerType.ABILITY,
+      text: "If this Pokémon is damaged by an attack from your opponent's Pokémon(even if this Pokémon is Knocked Out), put 3 damage counters on the Attacking Pokémon.",
+    },
+  ];
 
   public set: string = 'TEF';
 
@@ -47,7 +57,6 @@ export class IronJugulis extends PokemonCard {
   public fullName: string = 'Iron Jugulis TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof PutDamageEffect || effect instanceof DealDamageEffect) {
       const player = effect.player;
 

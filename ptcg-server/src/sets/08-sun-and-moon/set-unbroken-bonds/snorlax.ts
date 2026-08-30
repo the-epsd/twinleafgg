@@ -4,23 +4,32 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { PowerType, PlayerType, StoreLike, State, StateUtils, PokemonCardList } from '../../../game';
+import {
+  PowerType,
+  PlayerType,
+  StoreLike,
+  State,
+  StateUtils,
+  PokemonCardList,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { BetweenTurnsEffect } from '../../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Snorlax extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 150;
   public weakness = [{ type: F }];
   public retreat = [C, C, C, C];
 
-  public powers = [{
-    name: 'Lazy Eating',
-    powerType: PowerType.ABILITY,
-    text: 'Between turns, heal 10 damage from this Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Lazy Eating',
+      powerType: PowerType.ABILITY,
+      text: 'Between turns, heal 10 damage from this Pokémon.',
+    },
+  ];
 
   public attacks = [
     {
@@ -28,8 +37,8 @@ export class Snorlax extends PokemonCard {
       cost: [C, C, C],
       damage: 60,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is a TAG TEAM, this attack does 120 more damage.'
-    }
+      text: "If your opponent's Active Pokémon is a TAG TEAM, this attack does 120 more damage.",
+    },
   ];
 
   public set: string = 'UNB';
@@ -48,7 +57,7 @@ export class Snorlax extends PokemonCard {
       // Find Snorlax's owner
       let snorlaxOwner: any = null;
       let snorlaxCardList: PokemonCardList | null = null;
-      [player, opponent].forEach(p => {
+      [player, opponent].forEach((p) => {
         p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
           if (card === this) {
             snorlaxOwner = p;
@@ -67,7 +76,10 @@ export class Snorlax extends PokemonCard {
 
       // Heal 10 damage from this Pokemon
       if ((snorlaxCardList as PokemonCardList).damage > 0) {
-        (snorlaxCardList as PokemonCardList).damage = Math.max(0, (snorlaxCardList as PokemonCardList).damage - 10);
+        (snorlaxCardList as PokemonCardList).damage = Math.max(
+          0,
+          (snorlaxCardList as PokemonCardList).damage - 10,
+        );
       }
     }
 
@@ -78,7 +90,7 @@ export class Snorlax extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const opponentCard = opponent.active.getPokemonCard();
-      if (opponentCard && opponentCard.tags.includes(CardTag.TAG_TEAM)) {
+      if (opponentCard && opponentCard.hasTag(CardTag.TAG_TEAM)) {
         effect.damage += 120;
       }
     }

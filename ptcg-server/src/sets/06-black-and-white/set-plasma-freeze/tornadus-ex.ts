@@ -6,9 +6,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, SHUFFLE_DECK, DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class TornadusEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX, CardTag.TEAM_PLASMA];
+  protected _tags = [CardTag.POKEMON_EX, CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 180;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
@@ -19,15 +19,15 @@ export class TornadusEx extends PokemonCard {
       name: 'Windfall',
       cost: [C],
       damage: 0,
-      text: 'Shuffle your hand into your deck. Then, draw 6 cards.'
+      text: 'Shuffle your hand into your deck. Then, draw 6 cards.',
     },
     {
       name: 'Jet Blast',
       cost: [C, C, C, C],
       damage: 60,
       damageCalculation: '+',
-      text: 'This attack does 30 more damage for each Plasma Energy attached to this Pokémon.'
-    }
+      text: 'This attack does 30 more damage for each Plasma Energy attached to this Pokémon.',
+    },
   ];
 
   public set: string = 'PLF';
@@ -43,7 +43,7 @@ export class TornadusEx extends PokemonCard {
 
       // Shuffle entire hand into deck
       const cards = player.hand.cards.slice();
-      cards.forEach(c => {
+      cards.forEach((c) => {
         player.hand.moveCardTo(c, player.deck);
       });
       SHUFFLE_DECK(store, state, player);
@@ -58,7 +58,7 @@ export class TornadusEx extends PokemonCard {
       store.reduceEffect(state, checkEnergy);
 
       let plasmaEnergyCount = 0;
-      checkEnergy.energyMap.forEach(em => {
+      checkEnergy.energyMap.forEach((em) => {
         if (em.card.superType === SuperType.ENERGY && em.card.name === 'Plasma Energy') {
           plasmaEnergyCount++;
         }

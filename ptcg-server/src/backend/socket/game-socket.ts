@@ -1,30 +1,22 @@
-import {
-  AddPlayerAction, AppendLogAction, Action, PassTurnAction,
-  ReorderHandAction, ReorderBenchAction, PlayCardAction, CardTarget,
-  RetreatAction, RetreatStartAction, AttackAction, UseAbilityAction, StateSerializer,
-  UseStadiumAction, GameLog,
-  UseTrainerAbilityAction,
-  UseEnergyAbilityAction,
-  ConcedeAction
-} from '../../game';
 import { SandboxModifyPlayerAction } from '../../game/store/actions/sandbox-modify-player-action';
 import { SandboxModifyGameStateAction } from '../../game/store/actions/sandbox-modify-game-state-action';
 import { SandboxModifyCardAction } from '../../game/store/actions/sandbox-modify-card-action';
 import { SandboxModifyPokemonAction } from '../../game/store/actions/sandbox-modify-pokemon-action';
-import { Base64 } from '../../utils';
 import { ChangeAvatarAction } from '../../game/store/actions/change-avatar-action';
 import { Client } from '../../game/client/client.interface';
 import { CoreSocket } from './core-socket';
 import { ApiErrorEnum } from '../common/errors';
 import { Game } from '../../game/core/game';
-import { selfPlayFocusPlayerId } from '../../game/core/self-play-focus';
-import { GamePhase, State } from '../../game/store/state/state';
+import { State } from '../../game/store/state/state';
 import { Core } from '../../game/core/core';
 import { GameState } from '../interfaces/core.interface';
 import { ResolvePromptAction } from '../../game/store/actions/resolve-prompt-action';
 import { SocketCache } from './socket-cache';
 import { SocketWrapper, Response } from './socket-wrapper';
-import { StateSanitizer } from './state-sanitizer';
+import { GameStateBroadcaster } from './game-state-broadcaster';
+import { SocketClient } from './socket-client';
+import { selfPlayFocusPlayerId } from '../../game/core/self-play-focus';
+import { Action, AddPlayerAction, AppendLogAction, AttackAction, CardTarget, ConcedeAction, GameLog, PassTurnAction, PlayCardAction, ReorderBenchAction, ReorderHandAction, RetreatAction, RetreatStartAction, UseAbilityAction, UseEnergyAbilityAction, UseStadiumAction, UseTrainerAbilityAction } from '../../game';
 
 export class GameSocket {
 
@@ -32,15 +24,12 @@ export class GameSocket {
   private client: Client;
   private socket: SocketWrapper;
   private core: Core;
-  private stateSanitizer: StateSanitizer;
-  private lastActivePlayerId: number | null = null; // Track last active player
 
   constructor(client: Client, socket: SocketWrapper, core: Core, cache: SocketCache) {
     this.cache = cache;
     this.client = client;
     this.socket = socket;
     this.core = core;
-    this.stateSanitizer = new StateSanitizer(client, cache);
 
     // game listeners
     this.socket.addListener('game:join', this.joinGame.bind(this));
@@ -78,37 +67,12 @@ export class GameSocket {
     this.socket.emit(`game[${game.id}]:leave`, { clientId: client.id });
   }
 
-  public onStateChange(game: Game, state: State): void {
-    // Only send game state updates to clients that are in this game
-    // This is a defensive check - the root cause is fixed in Game.onStateChange()
-    if (!game.clients.includes(this.client)) {
-      return;
-    }
-
-    // Always emit FINISHED so clients can show game-over UI even if the game was
-    // already removed from the core lobby list in the same tick.
-    if (this.core.games.indexOf(game) !== -1 || state.phase === GamePhase.FINISHED) {
-      game.setBonusHps(state);
-      const viewAs = game.gameSettings.selfPlay === true ? selfPlayFocusPlayerId(game.state) : undefined;
-      state = this.stateSanitizer.sanitize(game.state, game.id, viewAs);
-
-      // Emit turn start if active player changed
-      const activePlayer = state.players[state.activePlayer];
-      if (activePlayer && this.lastActivePlayerId !== activePlayer.id) {
-        this.lastActivePlayerId = activePlayer.id;
-        this.socket.emit(`game[${game.id}]:turnStart`, {
-          activePlayerId: activePlayer.id,
-          activePlayerName: activePlayer.name
-        });
-      }
-
-      const serializer = new StateSerializer();
-      const serializedState = serializer.serialize(state);
-      const base64 = new Base64();
-      const stateData = base64.encode(serializedState);
-      const playerStats = game.playerStats;
-      this.socket.emit(`game[${game.id}]:stateChange`, { stateData, playerStats });
-    }
+  /**
+   * Legacy per-client path kept for non-broadcast callers.
+   * Live games use GameStateBroadcaster (shared sanitize + rooms + diffs).
+   */
+  public onStateChange(_game: Game, _state: State): void {
+    // no-op — Game.onStateChange → GameStateBroadcaster.broadcast
   }
 
   private joinGame(gameId: number, response: Response<GameState>): void {
@@ -119,7 +83,9 @@ export class GameSocket {
     }
     this.cache.lastLogIdCache[game.id] = 0;
     this.core.joinGame(this.client, game);
-    response('ok', CoreSocket.buildGameState(game));
+    this.joinBroadcastRooms(game);
+    GameStateBroadcaster.emitFullToClient(this.client as SocketClient, game);
+    response('ok', CoreSocket.buildGameState(game, this.client));
   }
 
   private leaveGame(gameId: number, response: Response<void>): void {
@@ -128,9 +94,14 @@ export class GameSocket {
       response('error', ApiErrorEnum.GAME_INVALID_ID);
       return;
     }
+    GameStateBroadcaster.leaveRooms(this.client as SocketClient, gameId);
     delete this.cache.lastLogIdCache[game.id];
     this.core.leaveGame(this.client, game);
     response('ok');
+  }
+
+  private joinBroadcastRooms(game: Game): void {
+    GameStateBroadcaster.joinRooms(this.client as SocketClient, game);
   }
 
   private async rejoinGame(params: { gameId: number }, response: Response<GameState>): Promise<void> {
@@ -149,7 +120,8 @@ export class GameSocket {
       if (isAlreadyInGame) {
         // Client is already in the game, just return the current state
         this.cache.lastLogIdCache[game.id] = 0;
-        response('ok', CoreSocket.buildGameState(game));
+        this.joinBroadcastRooms(game);
+        response('ok', CoreSocket.buildGameState(game, this.client));
         return;
       }
 
@@ -182,7 +154,10 @@ export class GameSocket {
         if (!this.client.games.includes(game)) {
           this.client.games.push(game);
         }
-        response('ok', CoreSocket.buildGameState(game));
+        this.joinBroadcastRooms(game);
+        // Force a full state so the client resets its diff base
+        GameStateBroadcaster.emitFullToClient(this.client as SocketClient, game);
+        response('ok', CoreSocket.buildGameState(game, this.client));
         return;
       } else {
         response('error', ApiErrorEnum.GAME_INVALID_ID);
@@ -219,7 +194,7 @@ export class GameSocket {
       response('error', ApiErrorEnum.GAME_INVALID_ID);
       return;
     }
-    response('ok', CoreSocket.buildGameState(game));
+    response('ok', CoreSocket.buildGameState(game, this.client));
   }
 
   private dispatch(gameId: number, action: Action, response: Response<void>) {

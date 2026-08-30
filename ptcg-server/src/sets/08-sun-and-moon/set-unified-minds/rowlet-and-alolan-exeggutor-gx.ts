@@ -1,10 +1,39 @@
-import { Card, CardManager, CardTag, CardTarget, CardType, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCard, PokemonCardList, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../../game';
+import { Card,
+  CardManager,
+  CardTag,
+  CardTarget,
+  CardType,
+  ChooseCardsPrompt,
+  ChoosePokemonPrompt,
+  GameError,
+  GameMessage,
+  PlayerType,
+  PokemonCard,
+  PokemonCardList,
+  SlotType,
+  Stage,
+  State,
+  StateUtils,
+  StoreLike,
+  SuperType, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { CheckPokemonPlayedTurnEffect, CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { BLOCK_IF_GX_ATTACK_USED, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  CheckPokemonPlayedTurnEffect,
+  CheckProvidedEnergyEffect,
+} from '../../../game/store/effects/check-effects';
+import {
+  BLOCK_IF_GX_ATTACK_USED,
+  SHUFFLE_DECK,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { AttackEffect, HealEffect } from '../../../game/store/effects/game-effects';
 
-function* useSuperGrowth(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
+function* useSuperGrowth(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   if (player.deck.cards.length === 0) {
@@ -13,7 +42,7 @@ function* useSuperGrowth(next: Function, store: StoreLike, state: State, effect:
 
   // Look through all known cards to find out if Pokemon can evolve
   const cm = CardManager.getInstance();
-  const evolutions = cm.getAllCards().filter(c => {
+  const evolutions = cm.getAllCards().filter((c) => {
     return c instanceof PokemonCard && c.stage !== Stage.BASIC;
   }) as PokemonCard[];
 
@@ -22,17 +51,20 @@ function* useSuperGrowth(next: Function, store: StoreLike, state: State, effect:
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
     const playedTurnEffect = new CheckPokemonPlayedTurnEffect(player, list);
     store.reduceEffect(state, playedTurnEffect);
-    if (card.stage !== Stage.BASIC || card.cardType !== CardType.GRASS || playedTurnEffect.pokemonPlayedTurn === state.turn) {
+    if (
+      card.stage !== Stage.BASIC ||
+      !pokemonHasCardType(card, CardType.GRASS) ||
+      playedTurnEffect.pokemonPlayedTurn === state.turn
+    ) {
       return;
     }
-    const valid = evolutions.filter(e => e.evolvesFrom === card.name);
-    valid.forEach(c => {
+    const valid = evolutions.filter((e) => e.evolvesFrom === card.name);
+    valid.forEach((c) => {
       if (!evolutionNames.includes(c.name)) {
         evolutionNames.push(c.name);
       }
     });
   });
-
 
   // There is nothing that can evolve
   if (evolutionNames.length === 0) {
@@ -47,16 +79,20 @@ function* useSuperGrowth(next: Function, store: StoreLike, state: State, effect:
   });
 
   let targets: PokemonCardList[] = [];
-  yield store.prompt(state, new ChoosePokemonPrompt(
-    player.id,
-    GameMessage.CHOOSE_POKEMON_TO_EVOLVE,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.BENCH, SlotType.ACTIVE],
-    { min: 1, max: 1, allowCancel: false, blocked: blocked2 }
-  ), selection => {
-    targets = selection || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChoosePokemonPrompt(
+      player.id,
+      GameMessage.CHOOSE_POKEMON_TO_EVOLVE,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.BENCH, SlotType.ACTIVE],
+      { min: 1, max: 1, allowCancel: false, blocked: blocked2 },
+    ),
+    (selection) => {
+      targets = selection || [];
+      next();
+    },
+  );
 
   if (targets.length === 0) {
     SHUFFLE_DECK(store, state, player);
@@ -78,16 +114,20 @@ function* useSuperGrowth(next: Function, store: StoreLike, state: State, effect:
   });
 
   let cards: Card[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_EVOLVE,
-    player.deck,
-    { superType: SuperType.POKEMON, stage: Stage.STAGE_1, evolvesFrom: pokemonCard.name },
-    { min: 1, max: 1, allowCancel: true, blocked }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_EVOLVE,
+      player.deck,
+      { superType: SuperType.POKEMON, stage: Stage.STAGE_1, evolvesFrom: pokemonCard.name },
+      { min: 1, max: 1, allowCancel: true, blocked },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   // Canceled by user, he didn't find the card in the deck
   if (cards.length === 0) {
@@ -103,7 +143,7 @@ function* useSuperGrowth(next: Function, store: StoreLike, state: State, effect:
   target.pokemonPlayedTurn = state.turn;
 
   // Check if there's a Stage 2 evolution available
-  const stage2Evolutions = evolutions.filter(e => e.evolvesFrom === evolution.name);
+  const stage2Evolutions = evolutions.filter((e) => e.evolvesFrom === evolution.name);
   if (stage2Evolutions.length > 0) {
     // Blocking pokemon cards, that cannot be valid evolutions
     const blockedStage2: number[] = [];
@@ -114,16 +154,20 @@ function* useSuperGrowth(next: Function, store: StoreLike, state: State, effect:
     });
 
     let stage2Cards: Card[] = [];
-    yield store.prompt(state, new ChooseCardsPrompt(
-      player,
-      GameMessage.CHOOSE_CARD_TO_EVOLVE,
-      player.deck,
-      { superType: SuperType.POKEMON, stage: Stage.STAGE_2, evolvesFrom: evolution.name },
-      { min: 1, max: 1, allowCancel: true, blocked: blockedStage2 }
-    ), selected => {
-      stage2Cards = selected || [];
-      next();
-    });
+    yield store.prompt(
+      state,
+      new ChooseCardsPrompt(
+        player,
+        GameMessage.CHOOSE_CARD_TO_EVOLVE,
+        player.deck,
+        { superType: SuperType.POKEMON, stage: Stage.STAGE_2, evolvesFrom: evolution.name },
+        { min: 1, max: 1, allowCancel: true, blocked: blockedStage2 },
+      ),
+      (selected) => {
+        stage2Cards = selected || [];
+        next();
+      },
+    );
 
     if (stage2Cards.length > 0) {
       const stage2Evolution = stage2Cards[0] as PokemonCard;
@@ -137,9 +181,9 @@ function* useSuperGrowth(next: Function, store: StoreLike, state: State, effect:
 }
 
 export class RowletAlolanExeggutorGX extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
+  protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 270;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
@@ -149,20 +193,20 @@ export class RowletAlolanExeggutorGX extends PokemonCard {
       name: 'Suepr Growth',
       cost: [],
       damage: 0,
-      text: 'Search your deck for a card that evolves from 1 of your [G] Pokémon and put it onto that Pokémon to evolve it. If that Pokémon is now a Stage 1 Pokémon, search your deck for a Stage 2 Pokémon that evolves from that Pokémon and put it onto that Pokémon to evolve it. Then, shuffle your deck. '
+      text: 'Search your deck for a card that evolves from 1 of your [G] Pokémon and put it onto that Pokémon to evolve it. If that Pokémon is now a Stage 1 Pokémon, search your deck for a Stage 2 Pokémon that evolves from that Pokémon and put it onto that Pokémon to evolve it. Then, shuffle your deck. ',
     },
     {
       name: 'Calming Hurricane',
       cost: [G, G, C],
       damage: 150,
-      text: 'Heal 30 damage from this Pokémon.'
+      text: 'Heal 30 damage from this Pokémon.',
     },
     {
       name: 'Tropical Hour-GX',
       cost: [G, G, G],
       damage: 200,
       gxAttack: true,
-      text: 'If this Pokémon has at least 3 extra Energy attached to it (in addition to this attack\'s cost), your opponent shuffles all Energy from all of their Pokémon into their deck. (You can\'t use more than 1 GX attack in a game.)'
+      text: "If this Pokémon has at least 3 extra Energy attached to it (in addition to this attack's cost), your opponent shuffles all Energy from all of their Pokémon into their deck. (You can't use more than 1 GX attack in a game.)",
     },
   ];
 
@@ -196,18 +240,19 @@ export class RowletAlolanExeggutorGX extends PokemonCard {
       const extraEffectCost: CardType[] = [G, G, G, G, G, G];
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       store.reduceEffect(state, checkProvidedEnergy);
-      const meetsExtraEffectCost = StateUtils.checkEnoughEnergy(checkProvidedEnergy.energyMap, extraEffectCost);
+      const meetsExtraEffectCost = StateUtils.checkEnoughEnergy(
+        checkProvidedEnergy.energyMap,
+        extraEffectCost,
+      );
 
       if (meetsExtraEffectCost) {
-        opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
-
+        opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (card) => {
           const opponentEnergy = new CheckProvidedEnergyEffect(opponent, card);
           state = store.reduceEffect(state, opponentEnergy);
 
-          opponentEnergy.energyMap.forEach(em => {
+          opponentEnergy.energyMap.forEach((em) => {
             em.card.cards.moveTo(opponent.deck);
           });
-
         });
 
         SHUFFLE_DECK(store, state, opponent);

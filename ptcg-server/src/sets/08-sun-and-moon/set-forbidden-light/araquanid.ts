@@ -13,7 +13,7 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../../game/s
 export class Araquanid extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Dewpider';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 100;
   public weakness = [{ type: G }];
   public retreat = [C];
@@ -21,21 +21,18 @@ export class Araquanid extends PokemonCard {
   public readonly BUBBLE_MARKER = 'ARAQUANID_FLI_BUBBLE_MARKER';
   public readonly CLEAR_BUBBLE_MARKER = 'ARAQUANID_FLI_CLEAR_BUBBLE_MARKER';
 
-  public attacks = [
-    {
-      name: 'Bubble',
-      cost: [W],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Bubble Trap',
-      cost: [C, C],
-      damage: 40,
-      damageCalculation: '+',
-      text: 'If 1 of your Pokémon used Bubble during your last turn, this attack does 80 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Bubble',
+    cost: [W],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Bubble Trap',
+    cost: [C, C],
+    damage: 40,
+    damageCalculation: '+',
+    text: 'If 1 of your Pokémon used Bubble during your last turn, this attack does 80 more damage.'
+  }];
 
   public set: string = 'FLI';
   public setNumber: string = '33';

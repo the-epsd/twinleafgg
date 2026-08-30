@@ -21,7 +21,7 @@ export class Simipour extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Panpour';
   public hp: number = 100;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public weakness = [{ type: L }];
   public resistance = [];
   public retreat = [C];

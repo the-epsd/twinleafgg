@@ -11,26 +11,23 @@ import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/att
 
 export class Tangela extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Slam',
-      cost: [G, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
-    },
-    {
-      name: 'Mega Drain',
-      cost: [G, G, C],
-      damage: 40,
-      text: 'Heal 20 damage from this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Slam',
+    cost: [G, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
+  }, {
+    name: 'Mega Drain',
+    cost: [G, G, C],
+    damage: 40,
+    text: 'Heal 20 damage from this Pokémon.'
+  }];
 
   public set: string = 'STS';
   public setNumber: string = '1';

@@ -5,9 +5,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Poipole extends PokemonCard {
-  public tags = [CardTag.ULTRA_BEAST];
+  protected _tags = [CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public weakness = [{ type: P }];
   public retreat = [C];
@@ -17,15 +17,15 @@ export class Poipole extends PokemonCard {
       name: 'Belt',
       cost: [C],
       damage: 10,
-      text: ''
+      text: '',
     },
     {
       name: 'Last Scene',
       cost: [P, C, C],
       damage: 50,
       damageCalculation: '+',
-      text: 'If each player has exactly 1 Prize card remaining, this attack does 130 more damage.'
-    }
+      text: 'If each player has exactly 1 Prize card remaining, this attack does 130 more damage.',
+    },
   ];
 
   public set: string = 'UNM';

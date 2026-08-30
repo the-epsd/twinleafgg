@@ -9,10 +9,10 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class MTyranitarEx extends PokemonCard {
-  public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
+  protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Tyranitar-EX';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 240;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];
@@ -24,8 +24,8 @@ export class MTyranitarEx extends PokemonCard {
       cost: [D, D, C, C],
       damage: 110,
       damageCalculation: '+',
-      text: 'This attack does 60 more damage for each damage counter on your opponent\'s Active Pokémon.'
-    }
+      text: "This attack does 60 more damage for each damage counter on your opponent's Active Pokémon.",
+    },
   ];
 
   public set: string = 'AOR';

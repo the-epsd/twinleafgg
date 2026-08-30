@@ -10,28 +10,26 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, DRAW_CARDS } from '../../../game/sto
 
 export class Fletchling extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 40;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Tailwind Draw',
-      cost: [C],
-      damage: 0,
-      text: 'Draw a card. If you go second and it\'s your first turn, draw 3 more cards.'
-    },
-    {
-      name: 'Surprise Attack',
-      cost: [C],
-      damage: 20,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Tailwind Draw',
+    cost: [C],
+    damage: 0,
+    text: 'Draw a card. If you go second and it\'s your first turn, draw 3 more cards.'
+  }, {
+    name: 'Surprise Attack',
+    cost: [C],
+    damage: 20,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'EVS';
   public setNumber: string = '138';
   public cardImage: string = 'assets/cardback.png';

@@ -76,8 +76,8 @@ export class ParallelCity extends TrainerCard {
     if (effect instanceof DealDamageEffect && StateUtils.getStadiumCard(state) === this) {
       const stadiumCardList = StateUtils.findCardList(state, this);
       const stadiumOwner = StateUtils.findOwner(state, stadiumCardList);
-      const attackerType = effect.player.active.getPokemonCard()?.cardType;
-      const isGrw = attackerType === CardType.FIRE || attackerType === CardType.WATER || attackerType === CardType.GRASS;
+      const attackerTypes = effect.player.active.getPokemonCard()?.cardType ?? [];
+      const isGrw = attackerTypes.some(t => t === CardType.FIRE || t === CardType.WATER || t === CardType.GRASS);
       const affectsAttacker =
         (effect.player === stadiumOwner && stadiumCardList.stadiumDirection === StadiumDirection.UP) ||
         (effect.player !== stadiumOwner && stadiumCardList.stadiumDirection === StadiumDirection.DOWN);

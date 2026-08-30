@@ -1,5 +1,5 @@
 import { ADD_BURN_TO_PLAYER_ACTIVE, AFTER_ATTACK } from '../../../game/store/prefabs/prefabs';
-import { Stage } from '../../../game/store/card/card-types';
+import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
@@ -7,7 +7,7 @@ export class Charmeleon extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Charmander';
-  public cardType = R;
+  public cardType: CardType[] = [R];
   public hp = 90;
   public weakness = [{ type: W }];
   public retreat = [C, C];

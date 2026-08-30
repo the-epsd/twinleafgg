@@ -17,27 +17,25 @@ import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, WAS_ATT
 export class Hariyama extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Makuhita';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 140;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Shove',
-      cost: [F, C],
-      damage: 40,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Muscular Slap',
-      cost: [F, C, C],
-      damage: 100,
-      text: 'This attack\'s damage isn\'t affected by Resistance.'
-    }
-  ];
+  public attacks = [{
+    name: 'Shove',
+    cost: [F, C],
+    damage: 40,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Muscular Slap',
+    cost: [F, C, C],
+    damage: 100,
+    text: 'This attack\'s damage isn\'t affected by Resistance.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'LOR';
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';

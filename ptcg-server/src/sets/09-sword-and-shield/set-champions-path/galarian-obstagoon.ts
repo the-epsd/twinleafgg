@@ -1,25 +1,14 @@
-import {
-  ChooseCardsPrompt,
-  GameError, PlayerType,
-  PowerType,
-  ShowCardsPrompt,
-  State,
-  StateUtils,
-  StoreLike
-} from '../../../game';
-import { GameLog, GameMessage } from '../../../game/game-message';
-import { BoardEffect, CardType, Stage } from '../../../game/store/card/card-types';
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Effect } from '../../../game/store/effects/effect';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, GameError, GameMessage, ChooseCardsPrompt, GameLog, ShowCardsPrompt, PlayerType, BoardEffect } from "../../../game";
+import { Effect } from "../../../game/store/effects/effect";
+import { PowerEffect } from "../../../game/store/effects/game-effects";
+import { EndTurnEffect } from "../../../game/store/effects/game-phase-effects";
+import { PlayPokemonEffect } from "../../../game/store/effects/play-card-effects";
+import { WAS_ATTACK_USED, THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN, WAS_POWER_USED, MOVE_CARDS } from "../../../game/store/prefabs/prefabs";
 
 export class GalarianObstagoon extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Galarian Linoone';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 170;
   public weakness = [{ type: G }];
   public retreat = [C, C];
@@ -51,8 +40,7 @@ export class GalarianObstagoon extends PokemonCard {
 
     // Knuckle Impact
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      player.active.cannotAttackNextTurnPending = true;
+      THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN(effect.player);
     }
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {

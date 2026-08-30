@@ -1,16 +1,4 @@
-import {
-  Card,
-  ChooseCardsPrompt,
-  EnergyCard,
-  GameError,
-  GameMessage,
-  GamePhase,
-  PlayerType,
-  PowerType,
-  State,
-  StateUtils,
-  StoreLike,
-} from '../../../game';
+import { Card, ChooseCardsPrompt, EnergyCard, GameError, GameMessage, GamePhase, PlayerType, PowerType, State, StateUtils, StoreLike, pokemonHasCardTypeOptional } from '../../../game';
 import { CardTag, CardType, Stage, SuperType } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import {
@@ -33,8 +21,8 @@ import {
 export class FloatzelGLLVX extends PokemonCard {
   public stage: Stage = Stage.LV_X;
   public evolvesFrom = 'Floatzel GL';
-  public cardType: CardType = W;
-  public tags = [CardTag.POKEMON_LV_X, CardTag.POKEMON_SP];
+  public cardType: CardType[] = [W];
+  protected _tags = [CardTag.POKEMON_LV_X, CardTag.POKEMON_SP];
   public hp: number = 100;
   public weakness = [{ type: L }];
   public retreat = [];
@@ -77,7 +65,7 @@ export class FloatzelGLLVX extends PokemonCard {
       if (IS_POKEBODY_BLOCKED(store, state, player, this)) {
         return state;
       }
-      if (effect.target.getPokemonCard()?.cardType !== CardType.WATER) {
+      if (!pokemonHasCardTypeOptional(effect.target.getPokemonCard(), CardType.WATER)) {
         return state;
       }
       if (effect.target.getPokemonCard()?.name === 'Floatzel GL') {

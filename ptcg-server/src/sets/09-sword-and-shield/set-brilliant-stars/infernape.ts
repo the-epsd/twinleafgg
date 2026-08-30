@@ -6,7 +6,7 @@ import { DISCARD_ALL_ENERGY_FROM_POKEMON, SHUFFLE_DECK, WAS_ATTACK_USED } from '
 
 export class Infernape extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public evolvesFrom = 'Monferno';
   public hp: number = 150;
   public weakness = [{ type: W }];

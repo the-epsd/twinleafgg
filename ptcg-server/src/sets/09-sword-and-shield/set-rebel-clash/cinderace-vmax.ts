@@ -2,16 +2,20 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_BURN_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_BURN_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class CinderaceVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Cinderace V';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 320;
   public weakness = [{ type: W }];
   public retreat = [C, C];
@@ -22,14 +26,14 @@ export class CinderaceVmax extends PokemonCard {
       cost: [R, C],
       damage: 30,
       damageCalculation: '+',
-      text: 'If this Pokémon was damaged by an attack during your opponent\'s last turn, this attack does that much more damage.'
+      text: "If this Pokémon was damaged by an attack during your opponent's last turn, this attack does that much more damage.",
     },
     {
       name: 'Max Pyro Ball',
       cost: [R, R, C],
       damage: 170,
-      text: 'Your opponent\'s Active Pokémon is now Burned.'
-    }
+      text: "Your opponent's Active Pokémon is now Burned.",
+    },
   ];
 
   public regulationMark: string = 'D';

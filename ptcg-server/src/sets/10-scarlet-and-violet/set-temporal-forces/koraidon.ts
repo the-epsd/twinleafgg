@@ -11,14 +11,13 @@ import { ApplyWeaknessEffect, AfterDamageEffect } from '../../../game/store/effe
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Koraidon extends PokemonCard {
-
-  public tags = [CardTag.ANCIENT];
+  protected _tags = [CardTag.ANCIENT];
 
   public regulationMark = 'H';
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.DRAGON;
+  public cardType: CardType[] = [CardType.DRAGON];
 
   public hp: number = 140;
 
@@ -30,15 +29,15 @@ export class Koraidon extends PokemonCard {
       cost: [CardType.FIGHTING, CardType.COLORLESS],
       damage: 30,
       damageCalculator: 'x',
-      text: 'This attack does 30 damage for each of your Ancient Pokémon in play.'
+      text: 'This attack does 30 damage for each of your Ancient Pokémon in play.',
     },
     {
       name: 'Shred',
       cost: [CardType.FIRE, CardType.FIGHTING, CardType.COLORLESS],
       damage: 130,
       shredAttack: true,
-      text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
-    }
+      text: "This attack's damage isn't affected by any effects on your opponent's Active Pokémon.",
+    },
   ];
 
   public set: string = 'TEF';
@@ -52,25 +51,22 @@ export class Koraidon extends PokemonCard {
   public fullName: string = 'Koraidon TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       const player = effect.player;
 
       let ancientPokemonCount = 0;
 
-      if (player.active?.getPokemonCard()?.tags.includes(CardTag.ANCIENT)) {
+      if (player.active?.getPokemonCard()?.hasTag(CardTag.ANCIENT)) {
         ancientPokemonCount++;
       }
 
-      player.bench.forEach(benchSpot => {
-        if (benchSpot.getPokemonCard()?.tags.includes(CardTag.ANCIENT)) {
+      player.bench.forEach((benchSpot) => {
+        if (benchSpot.getPokemonCard()?.hasTag(CardTag.ANCIENT)) {
           ancientPokemonCount++;
         }
       });
 
       effect.damage = 30 * ancientPokemonCount;
-
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

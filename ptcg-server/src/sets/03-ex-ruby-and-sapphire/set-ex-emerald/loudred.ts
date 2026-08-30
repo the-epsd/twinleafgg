@@ -7,7 +7,7 @@ import { State, StoreLike } from '../../../game';
 export class Loudred extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Whismur';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public retreat = [C, C];
@@ -17,8 +17,7 @@ export class Loudred extends PokemonCard {
     cost: [C],
     damage: 10,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
-  },
-  {
+  }, {
     name: 'Double-edge',
     cost: [C, C, C],
     damage: 50,

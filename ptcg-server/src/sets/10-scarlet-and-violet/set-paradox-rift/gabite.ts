@@ -15,7 +15,7 @@ export class Gabite extends PokemonCard {
 
   public evolvesFrom = 'Gible';
 
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp: number = 100;
 

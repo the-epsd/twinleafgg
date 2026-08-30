@@ -10,9 +10,9 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class SlowbroEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 180;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
@@ -22,14 +22,14 @@ export class SlowbroEx extends PokemonCard {
       name: 'Slack Off',
       cost: [C, C],
       damage: 0,
-      text: 'Heal 60 damage from this Pok\u00e9mon. This Pok\u00e9mon can\'t attack during your next turn.'
+      text: "Heal 60 damage from this Pok\u00e9mon. This Pok\u00e9mon can't attack during your next turn.",
     },
     {
       name: 'Flash Splash',
       cost: [W, W, W],
       damage: 100,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'EVO';

@@ -6,7 +6,7 @@ import { State, StoreLike } from '../../../game';
 export class Meowstic extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Espurr';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 100;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

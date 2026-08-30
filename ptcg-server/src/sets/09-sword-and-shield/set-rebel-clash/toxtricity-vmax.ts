@@ -9,10 +9,10 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class ToxtricityVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Toxtricity V';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 320;
   public weakness = [{ type: F }];
   public retreat = [C, C];
@@ -23,8 +23,8 @@ export class ToxtricityVmax extends PokemonCard {
       cost: [L, L, C],
       damage: 160,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is Poisoned, this attack does 80 more damage.'
-    }
+      text: "If your opponent's Active Pokémon is Poisoned, this attack does 80 more damage.",
+    },
   ];
 
   public regulationMark: string = 'D';

@@ -1,14 +1,16 @@
-import { CardTag, CardType, PlayerType, PokemonCard, Stage, State, StoreLike } from '../../../game';
+import { CardTag, CardType, PlayerType, PokemonCard, Stage, State, StoreLike, pokemonHasCardTypeOptional } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
+import {
+  CheckAttackCostEffect,
+  CheckProvidedEnergyEffect,
+} from '../../../game/store/effects/check-effects';
 import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE } from '../../../game/store/prefabs/attack-effects';
 
-
 export class EspeonDeoxysGX extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
+  protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 260;
   public weakness = [{ type: P }];
   public retreat = [C, C];
@@ -19,14 +21,14 @@ export class EspeonDeoxysGX extends PokemonCard {
       cost: [P, C, C],
       damage: 10,
       damageCalculation: '+',
-      text: 'This attack does 30 more damage for each of your Benched [P] Pokémon.'
+      text: 'This attack does 30 more damage for each of your Benched [P] Pokémon.',
     },
     {
       name: 'Cross Division-GX',
       cost: [P, C, C],
       damage: 0,
       gxAttack: true,
-      text: 'Put 10 damage counters on your opponent\'s Pokémon in any way you like. If this Pokémon has at least 3 extra Energy attached to it (in addition to this attack\'s cost), put 20 damage counters on them instead. (You can\'t use more than 1 GX attack in a game.)'
+      text: "Put 10 damage counters on your opponent's Pokémon in any way you like. If this Pokémon has at least 3 extra Energy attached to it (in addition to this attack's cost), put 20 damage counters on them instead. (You can't use more than 1 GX attack in a game.)",
     },
   ];
 
@@ -42,8 +44,10 @@ export class EspeonDeoxysGX extends PokemonCard {
       const player = effect.player;
       let psychics = 0;
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
-        if (card.getPokemonCard()?.cardType === CardType.PSYCHIC) { psychics++; }
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (card) => {
+        if (pokemonHasCardTypeOptional(card.getPokemonCard(), CardType.PSYCHIC)) {
+          psychics++;
+        }
       });
 
       effect.damage += psychics * 30;

@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, MOVE_CARDS, DRAW_CARDS_UNTIL_CARDS_IN_HAND } from '../
 export class AlolanExeggutor2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Exeggcute';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 160;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C, C];

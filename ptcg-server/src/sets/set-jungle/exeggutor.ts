@@ -1,46 +1,36 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, CoinFlipPrompt } from '../../game';
+import { StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Exeggutor extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-
-  public cardType: CardType = CardType.GRASS;
-
+  public cardType: CardType[] = [G];
   public hp: number = 80;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
-
+  public weakness = [{ type: R }];
+  public retreat = [C, C, C];
   public evolvesFrom = 'Exeggcute';
 
   public attacks = [{
     name: 'Teleport',
-    cost: [CardType.PSYCHIC],
+    cost: [P],
     damage: 0,
     text: 'Switch Exeggutor with 1 of your Benched Pokémon.'
-  },
-  {
+  }, {
     name: 'Big Eggsplosion',
-    cost: [CardType.COLORLESS],
+    cost: [C],
     damage: 20,
     damageCalculation: 'x',
     text: 'Flip a number of coins equal to the number of Energy attached to Exeggutor. This attack does 20 damage times the number of heads.'
   }];
 
   public set: string = 'JU';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '35';
-
   public name: string = 'Exeggutor';
-
   public fullName: string = 'Exeggutor JU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -79,16 +69,12 @@ export class Exeggutor extends PokemonCard {
         return sum + energy.provides.length;
       }, 0);
 
-      effect.damage = 0;
-
-      for (let i = 0; i < totalEnergy; i++) {
-        store.prompt(state, [
-          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-        ], result => {
-          if (result) {
-            effect.damage += 80;
-          }
+      if (totalEnergy > 0) {
+        MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, totalEnergy, results => {
+          effect.damage = results.filter(r => r).length * 80;
         });
+      } else {
+        effect.damage = 0;
       }
     }
 

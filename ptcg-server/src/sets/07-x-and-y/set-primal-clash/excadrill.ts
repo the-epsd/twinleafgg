@@ -13,27 +13,24 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 export class Excadrill extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Drilbur';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 100;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Drill Run',
-      cost: [M],
-      damage: 20,
-      text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
-    },
-    {
-      name: 'Straight Claw',
-      cost: [M, C, C],
-      damage: 60,
-      damageCalculation: '+',
-      text: 'You may discard an Energy attached to this Pokémon. If you do, this attack does 30 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Drill Run',
+    cost: [M],
+    damage: 20,
+    text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
+  }, {
+    name: 'Straight Claw',
+    cost: [M, C, C],
+    damage: 60,
+    damageCalculation: '+',
+    text: 'You may discard an Energy attached to this Pokémon. If you do, this attack does 30 more damage.'
+  }];
 
   public set: string = 'PRC';
   public setNumber: string = '96';

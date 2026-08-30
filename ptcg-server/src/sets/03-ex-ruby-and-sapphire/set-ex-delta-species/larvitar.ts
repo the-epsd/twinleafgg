@@ -7,8 +7,8 @@ import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefa
 
 export class Larvitar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = R;
+  protected _tags = [CardTag.DELTA_SPECIES];
+  public cardType: CardType[] = [R];
   public hp: number = 50;
   public weakness = [{ type: G }];
   public retreat = [C];
@@ -18,15 +18,15 @@ export class Larvitar extends PokemonCard {
       name: 'Bite',
       cost: [C],
       damage: 10,
-      text: ''
+      text: '',
     },
     {
       name: 'Rising Lunge',
       cost: [R, C],
       damage: 20,
       damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 damage plus 10 more damage.'
-    }
+      text: 'Flip a coin. If heads, this attack does 20 damage plus 10 more damage.',
+    },
   ];
 
   public set: string = 'DS';
@@ -36,12 +36,10 @@ export class Larvitar extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 1, this)) {
       FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE(store, state, effect, 10);
     }
 
     return state;
   }
-
 }

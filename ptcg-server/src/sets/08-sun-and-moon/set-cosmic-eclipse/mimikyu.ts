@@ -8,7 +8,7 @@ import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
 
 export class Mimikyu extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public retreat = [C];
 

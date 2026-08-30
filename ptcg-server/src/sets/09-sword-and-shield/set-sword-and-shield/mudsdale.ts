@@ -11,22 +11,21 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Mudsdale extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Mudbray';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 150;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Double Impact',
-      cost: [F, F, F],
-      damage: 120,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 120 damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Double Impact',
+    cost: [F, F, F],
+    damage: 120,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 120 damage for each heads.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'SSH';
   public setNumber: string = '106';
   public cardImage: string = 'assets/cardback.png';

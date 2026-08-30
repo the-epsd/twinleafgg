@@ -12,28 +12,25 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../../game/st
 export class Pangoro extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Pancham';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Untamed Punch',
-      cost: [D, C],
-      damage: 50,
-      damageCalculation: '+',
-      text: 'If this Pokémon has any damage counters on it, this attack does 50 more damage, and both Active Pokémon are now Confused.'
-    },
-    {
-      name: 'Double Stomp',
-      cost: [D, D, C],
-      damage: 80,
-      damageCalculation: '+',
-      text: 'Flip 2 coins. This attack does 40 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Untamed Punch',
+    cost: [D, C],
+    damage: 50,
+    damageCalculation: '+',
+    text: 'If this Pokémon has any damage counters on it, this attack does 50 more damage, and both Active Pokémon are now Confused.'
+  }, {
+    name: 'Double Stomp',
+    cost: [D, D, C],
+    damage: 80,
+    damageCalculation: '+',
+    text: 'Flip 2 coins. This attack does 40 more damage for each heads.'
+  }];
 
   public set: string = 'FLI';
   public setNumber: string = '78';

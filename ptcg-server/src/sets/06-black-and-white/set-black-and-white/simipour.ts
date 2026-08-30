@@ -8,26 +8,23 @@ import { AttackEffect } from '../../../game/store/effects/game-effects';
 export class Simipour extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Panpour';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Scald',
-      cost: [W],
-      damage: 20,
-      text: 'The Defending Pokémon is now Burned.'
-    },
-    {
-      name: 'Fury Swipes',
-      cost: [C, C, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 40 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Scald',
+    cost: [W],
+    damage: 20,
+    text: 'The Defending Pokémon is now Burned.'
+  }, {
+    name: 'Fury Swipes',
+    cost: [C, C, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 40 damage times the number of heads.'
+  }];
 
   public set: string = 'BLW';
   public cardImage: string = 'assets/cardback.png';

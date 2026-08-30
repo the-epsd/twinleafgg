@@ -3,35 +3,51 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, Card, ChooseCardsPrompt, GameMessage } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  EnergyType,
+  SuperType,
+} from '../../../game/store/card/card-types';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  Card,
+  ChooseCardsPrompt,
+  GameMessage,
+} from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { DealDamageEffect, DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class ZamazentaV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 230;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Dauntless Shield',
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all damage done to this Pokémon by attacks from your opponent\'s Pokémon VMAX.'
-  }];
+  public powers = [
+    {
+      name: 'Dauntless Shield',
+      powerType: PowerType.ABILITY,
+      text: "Prevent all damage done to this Pokémon by attacks from your opponent's Pokémon VMAX.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Assault Tackle',
       cost: [M, M, C],
       damage: 130,
-      text: 'Discard a Special Energy from your opponent\'s Active Pokémon.'
-    }
+      text: "Discard a Special Energy from your opponent's Active Pokémon.",
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -53,7 +69,7 @@ export class ZamazentaV extends PokemonCard {
 
       // Check if attacker is a VMAX Pokemon
       const attackerCard = effect.source.getPokemonCard();
-      if (attackerCard && attackerCard.tags.includes(CardTag.POKEMON_VMAX)) {
+      if (attackerCard && attackerCard.hasTag(CardTag.POKEMON_VMAX)) {
         effect.preventDefault = true;
       }
     }
@@ -64,8 +80,8 @@ export class ZamazentaV extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const specialEnergyOnActive = opponent.active.cards.filter(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL
+      const specialEnergyOnActive = opponent.active.cards.filter(
+        (c) => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL,
       );
 
       if (specialEnergyOnActive.length === 0) {
@@ -77,20 +93,24 @@ export class ZamazentaV extends PokemonCard {
         discardEnergy.target = opponent.active;
         store.reduceEffect(state, discardEnergy);
       } else {
-        store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_DISCARD,
-          opponent.active,
-          { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
-          { min: 1, max: 1, allowCancel: false }
-        ), (cards: Card[]) => {
-          const selected = cards || [];
-          if (selected.length > 0) {
-            const discardEnergy = new DiscardCardsEffect(effect, selected);
-            discardEnergy.target = opponent.active;
-            store.reduceEffect(state, discardEnergy);
-          }
-        });
+        store.prompt(
+          state,
+          new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_CARD_TO_DISCARD,
+            opponent.active,
+            { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
+            { min: 1, max: 1, allowCancel: false },
+          ),
+          (cards: Card[]) => {
+            const selected = cards || [];
+            if (selected.length > 0) {
+              const discardEnergy = new DiscardCardsEffect(effect, selected);
+              discardEnergy.target = opponent.active;
+              store.reduceEffect(state, discardEnergy);
+            }
+          },
+        );
       }
     }
 

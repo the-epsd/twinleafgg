@@ -10,28 +10,29 @@ import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/pr
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 
-
 export class Charizard extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Charmeleon';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 160;
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Resolute Flame',
-    powerType: PowerType.ABILITY,
-    text: 'This Pokémon\'s attacks do 30 more damage to your opponent\'s Active Pokémon for each of their Pokémon-GX and Pokémon-EX in play.'
-  }];
+  public powers = [
+    {
+      name: 'Resolute Flame',
+      powerType: PowerType.ABILITY,
+      text: "This Pokémon's attacks do 30 more damage to your opponent's Active Pokémon for each of their Pokémon-GX and Pokémon-EX in play.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Fiery Blast',
       cost: [R, R, C],
       damage: 130,
-      text: 'Discard an Energy from this Pokémon.'
-    }
+      text: 'Discard an Energy from this Pokémon.',
+    },
   ];
 
   public set: string = 'DRM';
@@ -54,7 +55,7 @@ export class Charizard extends PokemonCard {
       let gxExCount = 0;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         const pokemon = cardList.getPokemonCard();
-        if (pokemon && (pokemon.tags.includes(CardTag.POKEMON_GX) || pokemon.tags.includes(CardTag.POKEMON_EX))) {
+        if (pokemon && (pokemon.hasTag(CardTag.POKEMON_GX) || pokemon.hasTag(CardTag.POKEMON_EX))) {
           gxExCount++;
         }
       });

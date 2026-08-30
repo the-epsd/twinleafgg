@@ -7,7 +7,7 @@ import { SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs'
 
 export class ShiningMew extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
   public hp: number = 30;
   public weakness = [{ type: CardType.DARK }];
   public retreat = [];

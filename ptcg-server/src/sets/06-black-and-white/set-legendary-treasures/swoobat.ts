@@ -11,26 +11,23 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, SHUFFLE_DECK } from '../../../game/s
 export class Swoobat extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Woobat';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Energy Gift',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, search your deck for 2 [P] Energy cards and attach them to your Pokémon in any way you like. Shuffle your deck afterward.'
-    },
-    {
-      name: 'Heart Stamp',
-      cost: [P],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Energy Gift',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, search your deck for 2 [P] Energy cards and attach them to your Pokémon in any way you like. Shuffle your deck afterward.'
+  }, {
+    name: 'Heart Stamp',
+    cost: [P],
+    damage: 30,
+    text: ''
+  }];
 
   public set: string = 'LTR';
   public setNumber: string = '65';

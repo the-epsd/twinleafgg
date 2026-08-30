@@ -13,7 +13,7 @@ import { EnergyCard } from '../../../game/store/card/energy-card';
 
 export class Dialga extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 130;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

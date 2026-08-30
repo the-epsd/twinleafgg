@@ -6,12 +6,16 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType } from '../../../game/store/card/card-types';
 import { StoreLike, State, SlotType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, ATTACH_UP_TO_X_ENERGY_FROM_DECK_TO_Y_OF_YOUR_POKEMON, DISCARD_ALL_ENERGY_FROM_POKEMON } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  ATTACH_UP_TO_X_ENERGY_FROM_DECK_TO_Y_OF_YOUR_POKEMON,
+  DISCARD_ALL_ENERGY_FROM_POKEMON,
+} from '../../../game/store/prefabs/prefabs';
 
 export class PikachuV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 190;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -21,14 +25,14 @@ export class PikachuV extends PokemonCard {
       name: 'Charge',
       cost: [L],
       damage: 0,
-      text: 'Search your deck for up to 2 [L] Energy cards and attach them to this Pokémon. Then, shuffle your deck.'
+      text: 'Search your deck for up to 2 [L] Energy cards and attach them to this Pokémon. Then, shuffle your deck.',
     },
     {
       name: 'Thunderbolt',
       cost: [L, L, C],
       damage: 200,
-      text: 'Discard all Energy from this Pokémon.'
-    }
+      text: 'Discard all Energy from this Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -44,17 +48,14 @@ export class PikachuV extends PokemonCard {
     //      set-vivid-voltage/jirachi.ts (Amazing Star - attach L Energy from deck)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      ATTACH_UP_TO_X_ENERGY_FROM_DECK_TO_Y_OF_YOUR_POKEMON(
-        store, state, player, 2, 1,
-        {
-          destinationSlots: [SlotType.ACTIVE],
-          energyFilter: { energyType: EnergyType.BASIC },
-          validCardTypes: [CardType.LIGHTNING],
-          min: 0,
-          allowCancel: false,
-          sameTarget: true
-        }
-      );
+      ATTACH_UP_TO_X_ENERGY_FROM_DECK_TO_Y_OF_YOUR_POKEMON(store, state, player, 2, 1, {
+        destinationSlots: [SlotType.ACTIVE],
+        energyFilter: { energyType: EnergyType.BASIC },
+        validCardTypes: [CardType.LIGHTNING],
+        min: 0,
+        allowCancel: false,
+        sameTarget: true,
+      });
     }
 
     // Attack 2: Thunderbolt

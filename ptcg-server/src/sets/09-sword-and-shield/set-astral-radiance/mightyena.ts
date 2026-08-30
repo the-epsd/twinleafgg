@@ -7,12 +7,11 @@ import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Mightyena extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom = 'Poochyena';
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp: number = 110;
 
@@ -22,18 +21,22 @@ export class Mightyena extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Hustle Bark',
-    powerType: PowerType.ABILITY,
-    text: 'If your opponent has any Pokémon VMAX in play, this Pokémon\'s attacks cost [C][C][C] less.'
-  }];
+  public powers = [
+    {
+      name: 'Hustle Bark',
+      powerType: PowerType.ABILITY,
+      text: "If your opponent has any Pokémon VMAX in play, this Pokémon's attacks cost [C][C][C] less.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Wild Tackle',
-    cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
-    damage: 160,
-    text: 'This Pokémon also does 50 damage to itself.'
-  }];
+  public attacks = [
+    {
+      name: 'Wild Tackle',
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+      damage: 160,
+      text: 'This Pokémon also does 50 damage to itself.',
+    },
+  ];
 
   public regulationMark = 'F';
 
@@ -48,7 +51,6 @@ export class Mightyena extends PokemonCard {
   public fullName: string = 'Mightyena ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
@@ -61,13 +63,12 @@ export class Mightyena extends PokemonCard {
       let hasVmaxPokemon = false;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         const pokemonCard = cardList.getPokemonCard();
-        if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_VMAX)) {
+        if (pokemonCard && pokemonCard.hasTag(CardTag.POKEMON_VMAX)) {
           hasVmaxPokemon = true;
         }
       });
 
       if (hasVmaxPokemon) {
-
         const costToRemove = 3;
 
         for (let i = 0; i < costToRemove; i++) {

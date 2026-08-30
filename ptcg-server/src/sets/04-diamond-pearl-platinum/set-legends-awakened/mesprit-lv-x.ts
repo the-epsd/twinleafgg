@@ -1,30 +1,50 @@
-import { PokemonCard, Stage, StoreLike, State, GameMessage, StateUtils, CardTag, PlayerType, SuperType, GameError } from '../../../game';
-import { CheckPokemonAttacksEffect, CheckPokemonPowersEffect, CheckTableStateEffect } from '../../../game/store/effects/check-effects';
+import { CardType, PokemonCard,
+  Stage,
+  StoreLike,
+  State,
+  GameMessage,
+  StateUtils,
+  CardTag,
+  PlayerType,
+  SuperType,
+  GameError, } from '../../../game';
+import {
+  CheckPokemonAttacksEffect,
+  CheckPokemonPowersEffect,
+  CheckTableStateEffect,
+} from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED, AFTER_ATTACK, DISCARD_ALL_ENERGY_FROM_POKEMON } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  AFTER_ATTACK,
+  DISCARD_ALL_ENERGY_FROM_POKEMON,
+} from '../../../game/store/prefabs/prefabs';
 
 export class MespritLVX extends PokemonCard {
   public stage = Stage.LV_X;
   public evolvesFrom = 'Mesprit';
-  public tags = [CardTag.POKEMON_LV_X];
-  public cardType = P;
+  protected _tags = [CardTag.POKEMON_LV_X];
+  public cardType: CardType[] = [P];
   public hp = 90;
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Healing Look',
-    cost: [],
-    damage: 0,
-    text: 'Remove 3 damage counters from each of your Benched Pokémon.'
-  }, {
-    name: 'Supreme Blast',
-    cost: [P, P],
-    damage: 200,
-    text: 'If don\'t have Uxie LV.X and Azelf LV.X in play, this attack does nothing. Discard all Energy attached to Mesprit.'
-  }];
+  public attacks = [
+    {
+      name: 'Healing Look',
+      cost: [],
+      damage: 0,
+      text: 'Remove 3 damage counters from each of your Benched Pokémon.',
+    },
+    {
+      name: 'Supreme Blast',
+      cost: [P, P],
+      damage: 200,
+      text: "If don't have Uxie LV.X and Azelf LV.X in play, this attack does nothing. Discard all Energy attached to Mesprit.",
+    },
+  ];
 
   public set: string = 'LA';
   public cardImage: string = 'assets/cardback.png';
@@ -33,12 +53,11 @@ export class MespritLVX extends PokemonCard {
   public fullName: string = 'Mesprit Lv. X LA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // Healing Look
     if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (card) => {
         if (card !== player.active) {
           const healEffect = new HealEffect(player, card, 30);
           store.reduceEffect(state, healEffect);
@@ -76,7 +95,9 @@ export class MespritLVX extends PokemonCard {
     //Lv. X Stuff
     // making sure it gets put on the active pokemon
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      if (effect.target !== effect.player.active) { throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD); }
+      if (effect.target !== effect.player.active) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
     }
 
     // Trying to get all of the previous stage's attacks and powers
@@ -124,7 +145,11 @@ export class MespritLVX extends PokemonCard {
 
       // Add attacks from the previous stage to this one
       for (const evolutionCard of cardList.cards) {
-        if (evolutionCard.superType === SuperType.POKEMON && evolutionCard !== this && evolutionCard.name === this.evolvesFrom) {
+        if (
+          evolutionCard.superType === SuperType.POKEMON &&
+          evolutionCard !== this &&
+          evolutionCard.name === this.evolvesFrom
+        ) {
           effect.attacks.push(...(evolutionCard.attacks || []));
         }
       }
@@ -152,7 +177,11 @@ export class MespritLVX extends PokemonCard {
 
       // Adds the powers from the previous stage
       for (const evolutionCard of cardList.cards) {
-        if (evolutionCard.superType === SuperType.POKEMON && evolutionCard !== this && evolutionCard.name === this.evolvesFrom) {
+        if (
+          evolutionCard.superType === SuperType.POKEMON &&
+          evolutionCard !== this &&
+          evolutionCard.name === this.evolvesFrom
+        ) {
           effect.powers.push(...(evolutionCard.powers || []));
         }
       }

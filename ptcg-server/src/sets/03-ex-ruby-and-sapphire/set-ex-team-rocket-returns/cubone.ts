@@ -6,26 +6,23 @@ import { MULTIPLE_COIN_FLIPS_PROMPT, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_ATT
 
 export class Cubone extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 50;
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Look for Friends',
-      cost: [C],
-      damage: 0,
-      text: 'Reveal cards from your deck until you reveal a Basic Pokémon. Show that card to your opponent and put it into your hand. Shuffle the other revealed cards into your deck. (If you don\'t reveal a Basic Pokémon, shuffle all the revealed cards back into your deck.)'
-    },
-    {
-      name: 'Bonemerang',
-      cost: [F],
-      damage: 10,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Look for Friends',
+    cost: [C],
+    damage: 0,
+    text: 'Reveal cards from your deck until you reveal a Basic Pokémon. Show that card to your opponent and put it into your hand. Shuffle the other revealed cards into your deck. (If you don\'t reveal a Basic Pokémon, shuffle all the revealed cards back into your deck.)'
+  }, {
+    name: 'Bonemerang',
+    cost: [F],
+    damage: 10,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
+  }];
 
   public set: string = 'TRR';
   public cardImage: string = 'assets/cardback.png';

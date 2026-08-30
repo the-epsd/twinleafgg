@@ -7,7 +7,7 @@ import { HealEffect } from '../../../game/store/effects/game-effects';
 
 export class Lapras extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 100;
   public weakness = [{ type: M }];
   public retreat = [C, C];

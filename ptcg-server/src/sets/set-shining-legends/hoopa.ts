@@ -8,12 +8,9 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Hoopa extends PokemonCard {
-
-  public tags = [ ];
-
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp: number = 120;
 
@@ -21,22 +18,24 @@ export class Hoopa extends PokemonCard {
 
   public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Scoundrel Guard',  
-    useWhenInPlay: false,
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all effects of attacks, including damage, done to this Pokémon by your opponent\'s Pokémon-GX or Pokémon-EX.'
-  }];
+  public powers = [
+    {
+      name: 'Scoundrel Guard',
+      useWhenInPlay: false,
+      powerType: PowerType.ABILITY,
+      text: "Prevent all effects of attacks, including damage, done to this Pokémon by your opponent's Pokémon-GX or Pokémon-EX.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Super Psy Bolt',
-      cost: [ CardType.DARK, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.DARK, CardType.COLORLESS, CardType.COLORLESS],
       damage: 80,
-      text: ''
-    }   
+      text: '',
+    },
   ];
 
   public set: string = 'SLG';
@@ -54,26 +53,25 @@ export class Hoopa extends PokemonCard {
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const pokemonCard = effect.target.getPokemonCard();
       const sourceCard = effect.source.getPokemonCard();
-  
+
       // Card is not active, or damage source is unknown
       if (pokemonCard !== this || sourceCard === undefined) {
         return state;
       }
-  
+
       // Do not ignore self-damage from Pokemon-Ex
       const player = StateUtils.findOwner(state, effect.target);
       const opponent = StateUtils.findOwner(state, effect.source);
       if (player === opponent) {
         return state;
       }
-  
+
       // It's not an attack
       if (state.phase !== GamePhase.ATTACK) {
         return state;
       }
-  
-      if (sourceCard.tags.includes(CardTag.POKEMON_EX) || sourceCard.tags.includes(CardTag.POKEMON_GX)) {
-  
+
+      if (sourceCard.hasTag(CardTag.POKEMON_EX) || sourceCard.hasTag(CardTag.POKEMON_GX)) {
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
           const powerEffect = new PowerEffect(player, this.powers[0], this);
@@ -81,7 +79,7 @@ export class Hoopa extends PokemonCard {
         } catch {
           return state;
         }
-  
+
         effect.preventDefault = true;
       }
     }

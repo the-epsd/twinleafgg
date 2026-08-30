@@ -10,9 +10,9 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class AerodactylV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 210;
   public weakness = [{ type: G }];
   public retreat = [C];
@@ -22,14 +22,14 @@ export class AerodactylV extends PokemonCard {
       name: 'Bite',
       cost: [F, C],
       damage: 40,
-      text: ''
+      text: '',
     },
     {
       name: 'Rock Crush',
       cost: [F, C, C],
       damage: 120,
-      text: 'Discard an Energy from your opponent\'s Active Pokémon.'
-    }
+      text: "Discard an Energy from your opponent's Active Pokémon.",
+    },
   ];
 
   public regulationMark: string = 'F';

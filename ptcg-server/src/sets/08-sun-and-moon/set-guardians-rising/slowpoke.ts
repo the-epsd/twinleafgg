@@ -10,25 +10,22 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 
 export class Slowpoke extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Headbutt',
-      cost: [C],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Whimsy Tackle',
-      cost: [P, C, C],
-      damage: 60,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Headbutt',
+    cost: [C],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Whimsy Tackle',
+    cost: [P, C, C],
+    damage: 60,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'GRI';
   public setNumber: string = '48';

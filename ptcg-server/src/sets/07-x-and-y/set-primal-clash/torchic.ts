@@ -1,17 +1,17 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../../game/store/card/card-types';
 import { PowerType } from '../../../game/store/card/pokemon-types';
-import { StoreLike, State, GameMessage, EnergyCard, GameError, ChooseCardsPrompt, CoinFlipPrompt } from '../../../game';
+import { StoreLike, State, GameMessage, EnergyCard, GameError, ChooseCardsPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Torchic extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [R];
   public hp: number = 50;
-  public weakness = [{ type: CardType.WATER }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: W }];
+  public retreat = [C];
 
   public powers = [{
     name: 'Barrage',
@@ -22,13 +22,12 @@ export class Torchic extends PokemonCard {
 
   public attacks = [{
     name: 'Flare Bonus',
-    cost: [CardType.FIRE],
+    cost: [R],
     damage: 0,
     text: ' Discard a [R] Energy card from your hand. If you do, draw 2 cards. '
-  },
-  {
+  }, {
     name: 'Claw',
-    cost: [CardType.FIRE],
+    cost: [R],
     damage: 20,
     text: ' Flip a coin. If tails, this attack does nothing. '
   }];
@@ -80,9 +79,7 @@ export class Torchic extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      state = store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      state = COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === false) {
           effect.damage = 0;
         }

@@ -1,14 +1,31 @@
-import { Attack, CardTag, CardType, PlayerType, PokemonCard, Power, PowerType, Stage, State, StateUtils, StoreLike } from '../../../game';
+import {
+  Attack,
+  CardTag,
+  CardType,
+  PlayerType,
+  PokemonCard,
+  Power,
+  PowerType,
+  Stage,
+  State,
+  StateUtils,
+  StoreLike,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { EffectOfAbilityEffect } from '../../../game/store/effects/game-effects';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
-import { CONFIRMATION_PROMPT, IS_POKEPOWER_BLOCKED, JUST_EVOLVED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  CONFIRMATION_PROMPT,
+  IS_POKEPOWER_BLOCKED,
+  JUST_EVOLVED,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Jolteonex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Eevee';
-  public tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = L;
+  protected _tags = [CardTag.POKEMON_ex];
+  public cardType: CardType[] = [L];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -30 }];
@@ -18,8 +35,8 @@ export class Jolteonex extends PokemonCard {
     {
       name: 'Evolutionary Thunder',
       powerType: PowerType.POKEPOWER,
-      text: 'Once during your turn, when you play Jolteon ex from your hand to evolve 1 of your Pokémon, you may put 1 damage counter on each of your opponent\'s Pokémon.'
-    }
+      text: "Once during your turn, when you play Jolteon ex from your hand to evolve 1 of your Pokémon, you may put 1 damage counter on each of your opponent's Pokémon.",
+    },
   ];
 
   public attacks: Attack[] = [
@@ -28,13 +45,13 @@ export class Jolteonex extends PokemonCard {
       cost: [L, C],
       damage: 20,
       damageCalculation: '+',
-      text: 'Does 20 damage plus 10 more damage for each damage counter on the Defending Pokémon.'
+      text: 'Does 20 damage plus 10 more damage for each damage counter on the Defending Pokémon.',
     },
     {
       name: 'Thunder Blast',
       cost: [L, C, C],
       damage: 70,
-      text: 'Discard a [L] Energy card attached to Jolteon ex.'
+      text: 'Discard a [L] Energy card attached to Jolteon ex.',
     },
   ];
 
@@ -45,16 +62,20 @@ export class Jolteonex extends PokemonCard {
   public fullName: string = 'Jolteon ex DS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (JUST_EVOLVED(effect, this)) {
       if (IS_POKEPOWER_BLOCKED(store, state, effect.player, this)) {
         return state;
       }
-      CONFIRMATION_PROMPT(store, state, effect.player, result => {
+      CONFIRMATION_PROMPT(store, state, effect.player, (result) => {
         if (result) {
           const opponent = StateUtils.getOpponent(state, effect.player);
           opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-            const effectOfAbility = new EffectOfAbilityEffect(effect.player, this.powers[0], this, cardList);
+            const effectOfAbility = new EffectOfAbilityEffect(
+              effect.player,
+              this.powers[0],
+              this,
+              cardList,
+            );
             effectOfAbility.target = cardList;
             store.reduceEffect(state, effectOfAbility);
             if (effectOfAbility.target) {

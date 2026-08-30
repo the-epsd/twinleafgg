@@ -9,7 +9,7 @@ import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Frogadier extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
   public hp: number = 80;
   public retreat = [CardType.COLORLESS];
   public weakness = [{ type: CardType.GRASS }];

@@ -6,7 +6,7 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { TOOL_ACTIVE_DAMAGE_BONUS } from '../../../game/store/prefabs/prefabs';
+import { TOOL_ACTIVE_DAMAGE_BONUS } from '../../../game/store/prefabs/tool-prefabs';
 
 export class CrystalEdge extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;

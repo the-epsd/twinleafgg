@@ -1,45 +1,35 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, CoinFlipPrompt, GameMessage } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Kangaskhan extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.COLORLESS;
-
+  public cardType: CardType[] = [C];
   public hp: number = 90;
-
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public resistance = [{ type: CardType.PSYCHIC, value: -30 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public resistance = [{ type: P, value: -30 }];
+  public retreat = [C, C, C];
 
   public attacks = [{
     name: 'Fetch',
-    cost: [CardType.COLORLESS],
+    cost: [C],
     damage: 0,
     text: 'Draw a card.'
-  },
-  {
+  }, {
     name: 'Comet Punch',
-    cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+    cost: [C, C, C, C],
     damage: 20,
     damageCalculation: 'x',
     text: 'Flip 4 coins. This attack does 20 damage times the number of heads.'
   }];
 
   public set: string = 'JU';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '5';
-
   public name: string = 'Kangaskhan';
-
   public fullName: string = 'Kangaskhan JU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -54,12 +44,7 @@ export class Kangaskhan extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      state = store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], results => {
+      state = MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 4, results => {
         let heads: number = 0;
         results.forEach(r => { heads += r ? 1 : 0; });
         effect.damage = 20 * heads;

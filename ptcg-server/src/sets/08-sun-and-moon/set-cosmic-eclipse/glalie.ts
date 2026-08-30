@@ -12,25 +12,22 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED, DISCARD_AN_ENERGY_FROM
 export class Glalie extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Snorunt';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 120;
   public weakness = [{ type: M }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Ice Fang',
-      cost: [W],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed, and discard an Energy from that Pokémon.'
-    },
-    {
-      name: 'Frosty Typhoon',
-      cost: [W, C, C],
-      damage: 120,
-      text: 'This Pokémon can\'t use Frosty Typhoon during your next turn.'
-    }
-  ];
+  public attacks = [{
+    name: 'Ice Fang',
+    cost: [W],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed, and discard an Energy from that Pokémon.'
+  }, {
+    name: 'Frosty Typhoon',
+    cost: [W, C, C],
+    damage: 120,
+    text: 'This Pokémon can\'t use Frosty Typhoon during your next turn.'
+  }];
 
   public set: string = 'CEC';
   public setNumber: string = '48';

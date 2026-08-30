@@ -19,7 +19,7 @@ function* usePackCall(next: Function, store: StoreLike, state: State, effect: At
     player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
-    { superType: SuperType.POKEMON, cardType: CardType.GRASS },
+    { superType: SuperType.POKEMON, cardType: [CardType.GRASS] },
     { min: 0, max: max, allowCancel: true }
   ), selected => {
     cards = selected || [];
@@ -42,7 +42,7 @@ function* usePackCall(next: Function, store: StoreLike, state: State, effect: At
 
 export class Zarude extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
   public hp: number = 130;
   public weakness = [{ type: CardType.FIRE }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];

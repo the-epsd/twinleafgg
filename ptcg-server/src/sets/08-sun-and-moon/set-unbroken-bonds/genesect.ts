@@ -4,32 +4,47 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, PlayerType, GameMessage, ChoosePokemonPrompt, SlotType } from '../../../game';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  PlayerType,
+  GameMessage,
+  ChoosePokemonPrompt,
+  SlotType,
+} from '../../../game';
 import { CheckRetreatCostEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, DAMAGE_OPPONENT_POKEMON } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  DAMAGE_OPPONENT_POKEMON,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Genesect extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 130;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Fast-Flight Configuration',
-    powerType: PowerType.ABILITY,
-    text: 'If your opponent has any Pokémon-GX or Pokémon-EX in play, this Pokémon has no Retreat Cost.'
-  }];
+  public powers = [
+    {
+      name: 'Fast-Flight Configuration',
+      powerType: PowerType.ABILITY,
+      text: 'If your opponent has any Pokémon-GX or Pokémon-EX in play, this Pokémon has no Retreat Cost.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Splitting Beam',
       cost: [M, C, C],
       damage: 30,
-      text: 'This attack does 30 damage to 2 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "This attack does 30 damage to 2 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public set: string = 'UNB';
@@ -41,7 +56,10 @@ export class Genesect extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Fast-Flight Configuration (passive - no retreat cost if opponent has GX/EX)
     // Ref: set-lost-thunder/litleo.ts (Wild Dash - CheckRetreatCostEffect with GX/EX check)
-    if (effect instanceof CheckRetreatCostEffect && effect.player.active.getPokemonCard() === this) {
+    if (
+      effect instanceof CheckRetreatCostEffect &&
+      effect.player.active.getPokemonCard() === this
+    ) {
       const player = effect.player;
 
       if (IS_ABILITY_BLOCKED(store, state, player, this)) {
@@ -52,7 +70,7 @@ export class Genesect extends PokemonCard {
       let hasGxOrEx = false;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         const pokemon = cardList.getPokemonCard();
-        if (pokemon && (pokemon.tags.includes(CardTag.POKEMON_GX) || pokemon.tags.includes(CardTag.POKEMON_EX))) {
+        if (pokemon && (pokemon.hasTag(CardTag.POKEMON_GX) || pokemon.hasTag(CardTag.POKEMON_EX))) {
           hasGxOrEx = true;
         }
       });
@@ -68,19 +86,23 @@ export class Genesect extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const benchCount = opponent.bench.filter(b => b.cards.length > 0).length;
+      const benchCount = opponent.bench.filter((b) => b.cards.length > 0).length;
       if (benchCount > 0) {
         const max = Math.min(2, benchCount);
-        store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-          PlayerType.TOP_PLAYER,
-          [SlotType.BENCH],
-          { min: max, max: max, allowCancel: false }
-        ), selected => {
-          const targets = selected || [];
-          DAMAGE_OPPONENT_POKEMON(store, state, effect, 30, targets);
-        });
+        store.prompt(
+          state,
+          new ChoosePokemonPrompt(
+            player.id,
+            GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+            PlayerType.TOP_PLAYER,
+            [SlotType.BENCH],
+            { min: max, max: max, allowCancel: false },
+          ),
+          (selected) => {
+            const targets = selected || [];
+            DAMAGE_OPPONENT_POKEMON(store, state, effect, 30, targets);
+          },
+        );
       }
     }
 

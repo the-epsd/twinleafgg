@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage } from '../../../game/store/card/card-types';
+import { CardType, Stage } from '../../../game/store/card/card-types';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { Effect } from '../../../game/store/effects/effect';
@@ -12,7 +12,7 @@ import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
 export class Regice extends PokemonCard {
 
   public stage = Stage.BASIC;
-  public cardType = W;
+  public cardType: CardType[] = [W];
   public hp = 90;
   public weakness = [{ type: M }];
   public retreat = [C, C, C];

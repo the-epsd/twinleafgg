@@ -11,20 +11,18 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED, YOUR_OPPPONENTS_ACTIVE_
 
 export class Dedenne2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 70;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Zzzap Touch',
-      cost: [Y],
-      damage: 10,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pok\u00e9mon is now Confused. If tails, your opponent\'s Active Pok\u00e9mon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Zzzap Touch',
+    cost: [Y],
+    damage: 10,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pok\u00e9mon is now Confused. If tails, your opponent\'s Active Pok\u00e9mon is now Paralyzed.'
+  }];
 
   public set: string = 'LOT';
   public setNumber: string = '142';

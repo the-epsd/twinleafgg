@@ -3,9 +3,9 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 
 export class ArvensSkwovet extends PokemonCard {
   public regulationMark = 'I';
-  public tags = [CardTag.ARVENS];
+  protected _tags = [CardTag.ARVENS];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -15,15 +15,15 @@ export class ArvensSkwovet extends PokemonCard {
       name: 'Gnaw Through',
       cost: [C],
       damage: 10,
-      text: 'Before doing damage, discard all Pokémon Tool cards from your opponent\'s Active Pokémon.'
-    }
+      text: "Before doing damage, discard all Pokémon Tool cards from your opponent's Active Pokémon.",
+    },
   ];
 
   public set: string = 'DRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '158';
-  public name: string = 'Arven\'s Skwovet';
-  public fullName: string = 'Arven\'s Skwovet DRI';
+  public name: string = "Arven's Skwovet";
+  public fullName: string = "Arven's Skwovet DRI";
 
   // public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
   //   if (WAS_ATTACK_USED(effect, 0, this)){

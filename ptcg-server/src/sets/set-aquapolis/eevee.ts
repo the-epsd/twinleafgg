@@ -8,7 +8,7 @@ import { AttachEnergyPrompt, GameMessage, PlayerType, SlotType, StateUtils } fro
 
 export class Eevee extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 50;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -18,8 +18,7 @@ export class Eevee extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, search your deck for an Energy card and attach it to Eevee. Shuffle your deck afterward.'
-  },
-  {
+  }, {
     name: 'Lunge',
     cost: [C],
     damage: 20,

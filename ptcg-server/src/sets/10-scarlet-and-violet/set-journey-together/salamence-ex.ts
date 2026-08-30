@@ -9,10 +9,10 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Salamenceex extends PokemonCard {
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Shelgon';
-  public cardType: CardType = CardType.DRAGON;
+  public cardType: CardType[] = [CardType.DRAGON];
   public hp: number = 320;
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
@@ -21,15 +21,14 @@ export class Salamenceex extends PokemonCard {
       name: 'Wide Blast',
       cost: [CardType.FIRE, CardType.COLORLESS, CardType.COLORLESS],
       damage: 0,
-      text: 'This attack does 50 damage to each of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack does 50 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Dragon Impact',
       cost: [CardType.FIRE, CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
       damage: 300,
-      text: 'Discard 2 Energy from this Pokémon.'
+      text: 'Discard 2 Energy from this Pokémon.',
     },
-
   ];
 
   public set: string = 'JTG';
@@ -58,25 +57,29 @@ export class Salamenceex extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      if (!player.active.cards.some(c => c.superType === SuperType.ENERGY)) {
+      if (!player.active.cards.some((c) => c.superType === SuperType.ENERGY)) {
         return state;
       }
 
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
-      state = store.prompt(state, new ChooseEnergyPrompt(
-        player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        checkProvidedEnergy.energyMap,
-        [CardType.COLORLESS, CardType.COLORLESS],
-        { allowCancel: false }
-      ), energy => {
-        const cards: Card[] = (energy || []).map(e => e.card);
-        const discardEnergy = new DiscardCardsEffect(effect, cards);
-        discardEnergy.target = player.active;
-        store.reduceEffect(state, discardEnergy);
-      });
+      state = store.prompt(
+        state,
+        new ChooseEnergyPrompt(
+          player.id,
+          GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+          checkProvidedEnergy.energyMap,
+          [CardType.COLORLESS, CardType.COLORLESS],
+          { allowCancel: false },
+        ),
+        (energy) => {
+          const cards: Card[] = (energy || []).map((e) => e.card);
+          const discardEnergy = new DiscardCardsEffect(effect, cards);
+          discardEnergy.target = player.active;
+          store.reduceEffect(state, discardEnergy);
+        },
+      );
     }
 
     return state;

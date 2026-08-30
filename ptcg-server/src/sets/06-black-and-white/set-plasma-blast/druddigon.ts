@@ -7,25 +7,22 @@ import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../../game/stor
 
 export class Druddigon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 100;
   public weakness = [{ type: N }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Big Swing',
-      cost: [R],
-      damage: 40,
-      text: 'Flip 2 coins. If either of them is tails, this attack does nothing.'
-    },
-    {
-      name: 'Shred',
-      cost: [W, C, C],
-      damage: 60,
-      text: 'This attack\'s damage isn\'t affected by any effects on the Defending Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Big Swing',
+    cost: [R],
+    damage: 40,
+    text: 'Flip 2 coins. If either of them is tails, this attack does nothing.'
+  }, {
+    name: 'Shred',
+    cost: [W, C, C],
+    damage: 60,
+    text: 'This attack\'s damage isn\'t affected by any effects on the Defending Pokémon.'
+  }];
 
   public set: string = 'PLB';
   public setNumber: string = '70';

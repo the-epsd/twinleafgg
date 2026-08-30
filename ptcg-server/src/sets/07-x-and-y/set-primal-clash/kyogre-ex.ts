@@ -2,13 +2,17 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  ADD_SLEEP_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 import {
   CardTag,
   CardType,
   EnergyType,
   Stage,
-  SuperType
+  SuperType,
 } from '../../../game/store/card/card-types';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { GameMessage } from '../../../game/game-message';
@@ -16,9 +20,9 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { Card, EnergyCard, State, StoreLike } from '../../../game';
 export class KyogreEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 180;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];
@@ -28,14 +32,14 @@ export class KyogreEx extends PokemonCard {
       name: 'Water Pulse',
       cost: [W, C],
       damage: 30,
-      text: 'Your opponent\'s Active Pokémon is now Asleep.'
+      text: "Your opponent's Active Pokémon is now Asleep.",
     },
     {
       name: 'Giant Whirlpool',
       cost: [W, W, C, C],
       damage: 140,
-      text: 'Return 2 [W] Energy attached to this Pokémon to your hand.'
-    }
+      text: 'Return 2 [W] Energy attached to this Pokémon to your hand.',
+    },
   ];
 
   public set: string = 'PRC';
@@ -56,30 +60,45 @@ export class KyogreEx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      const waterEnergyOnActive = player.active.cards.filter(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.WATER)
+      const waterEnergyOnActive = player.active.cards.filter(
+        (c) =>
+          c instanceof EnergyCard &&
+          c.energyType === EnergyType.BASIC &&
+          c.provides.includes(CardType.WATER),
       );
 
       const count = Math.min(2, waterEnergyOnActive.length);
 
       if (count > 0) {
-        return store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_HAND,
-          player.active,
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-          {
-            min: count, max: count, allowCancel: false,
-            blocked: player.active.cards.map((c, i) =>
-              (c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.WATER)) ? -1 : i
-            ).filter(i => i !== -1)
-          }
-        ), (selected: Card[]) => {
-          const cards = selected || [];
-          cards.forEach(card => {
-            player.active.moveCardTo(card, player.hand);
-          });
-        });
+        return store.prompt(
+          state,
+          new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_CARD_TO_HAND,
+            player.active,
+            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+            {
+              min: count,
+              max: count,
+              allowCancel: false,
+              blocked: player.active.cards
+                .map((c, i) =>
+                  c instanceof EnergyCard &&
+                  c.energyType === EnergyType.BASIC &&
+                  c.provides.includes(CardType.WATER)
+                    ? -1
+                    : i,
+                )
+                .filter((i) => i !== -1),
+            },
+          ),
+          (selected: Card[]) => {
+            const cards = selected || [];
+            cards.forEach((card) => {
+              player.active.moveCardTo(card, player.hand);
+            });
+          },
+        );
       }
     }
 

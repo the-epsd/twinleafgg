@@ -14,10 +14,10 @@ import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { GameMessage } from '../../../game';
 
 export class RillaboomVmax extends PokemonCard {
-  public tags = [CardTag.POKEMON_VMAX];
+  protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Rillaboom V';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 330;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
@@ -27,15 +27,15 @@ export class RillaboomVmax extends PokemonCard {
       name: 'Scratch',
       cost: [C],
       damage: 50,
-      text: ''
+      text: '',
     },
     {
       name: 'Max Beating',
       cost: [G, G, G, C],
       damage: 130,
       damageCalculation: '+',
-      text: 'You may discard up to 3 [G] Energy from this Pokémon. If you do, this attack does 50 more damage for each card you discarded in this way.'
-    }
+      text: 'You may discard up to 3 [G] Energy from this Pokémon. If you do, this attack does 50 more damage for each card you discarded in this way.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -55,8 +55,8 @@ export class RillaboomVmax extends PokemonCard {
       state = store.reduceEffect(state, checkProvidedEnergy);
 
       // Only count Grass energy available
-      const grassEnergy = checkProvidedEnergy.energyMap.filter(e =>
-        e.provides.includes(CardType.GRASS)
+      const grassEnergy = checkProvidedEnergy.energyMap.filter((e) =>
+        e.provides.includes(CardType.GRASS),
       );
 
       if (grassEnergy.length === 0) {
@@ -65,22 +65,26 @@ export class RillaboomVmax extends PokemonCard {
 
       const max = Math.min(3, grassEnergy.length);
 
-      store.prompt(state, new ChooseEnergyPrompt(
-        player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        checkProvidedEnergy.energyMap,
-        [CardType.GRASS, CardType.GRASS, CardType.GRASS].slice(0, max),
-        { allowCancel: true }
-      ), (selected) => {
-        const cards = (selected || []).map(e => e.card);
-        if (cards.length === 0) {
-          return;
-        }
-        const discardEnergy = new DiscardCardsEffect(effect, cards);
-        discardEnergy.target = player.active;
-        store.reduceEffect(state, discardEnergy);
-        effect.damage += 50 * cards.length;
-      });
+      store.prompt(
+        state,
+        new ChooseEnergyPrompt(
+          player.id,
+          GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+          checkProvidedEnergy.energyMap,
+          [CardType.GRASS, CardType.GRASS, CardType.GRASS].slice(0, max),
+          { allowCancel: true },
+        ),
+        (selected) => {
+          const cards = (selected || []).map((e) => e.card);
+          if (cards.length === 0) {
+            return;
+          }
+          const discardEnergy = new DiscardCardsEffect(effect, cards);
+          discardEnergy.target = player.active;
+          store.reduceEffect(state, discardEnergy);
+          effect.damage += 50 * cards.length;
+        },
+      );
     }
 
     return state;

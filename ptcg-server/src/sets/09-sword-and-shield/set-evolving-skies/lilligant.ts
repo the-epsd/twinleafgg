@@ -12,21 +12,20 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP, YOUR_OPPPONENTS_ACTIVE_PO
 export class Lilligant extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Petilil';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 100;
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Dizzying Flower',
-      cost: [G, C],
-      damage: 70,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Asleep. If tails, your opponent\'s Active Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Dizzying Flower',
+    cost: [G, C],
+    damage: 70,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Asleep. If tails, your opponent\'s Active Pokémon is now Confused.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'EVS';
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';

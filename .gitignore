@@ -36,6 +36,7 @@ Thumbs.db
 
 # Claude Code artifacts
 .claude/
+.cursorignore
 
 *.md
 

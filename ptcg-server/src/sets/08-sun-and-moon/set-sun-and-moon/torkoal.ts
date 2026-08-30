@@ -9,25 +9,22 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Torkoal extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 110;
   public weakness = [{ type: W }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Singe',
-      cost: [R],
-      damage: 0,
-      text: 'Your opponent\'s Active Pokémon is now Burned.'
-    },
-    {
-      name: 'Body Slam',
-      cost: [R, C],
-      damage: 50,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Singe',
+    cost: [R],
+    damage: 0,
+    text: 'Your opponent\'s Active Pokémon is now Burned.'
+  }, {
+    name: 'Body Slam',
+    cost: [R, C],
+    damage: 50,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'SUM';
   public setNumber: string = '23';

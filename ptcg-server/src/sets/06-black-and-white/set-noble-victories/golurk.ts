@@ -8,27 +8,24 @@ import { WAS_ATTACK_USED, MOVE_CARDS, MULTIPLE_COIN_FLIPS_PROMPT } from '../../.
 export class Golurk extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Golett';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 130;
   public weakness = [{ type: W }];
   public resistance = [{ type: L, value: -20 }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Hammer Arm',
-      cost: [F, F, C],
-      damage: 60,
-      text: 'Discard the top card of your opponent\'s deck.'
-    },
-    {
-      name: 'Hurricane Punch',
-      cost: [F, F, C, C],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 50 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Hammer Arm',
+    cost: [F, F, C],
+    damage: 60,
+    text: 'Discard the top card of your opponent\'s deck.'
+  }, {
+    name: 'Hurricane Punch',
+    cost: [F, F, C, C],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 50 damage times the number of heads.'
+  }];
 
   public set: string = 'NVI';
   public cardImage: string = 'assets/cardback.png';

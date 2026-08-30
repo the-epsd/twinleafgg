@@ -5,9 +5,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class TaurosGX extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 180;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
@@ -18,13 +18,13 @@ export class TaurosGX extends PokemonCard {
       cost: [C, C],
       damage: 20,
       damageCalculation: '+',
-      text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
+      text: 'This attack does 10 more damage for each damage counter on this Pokémon.',
     },
     {
       name: 'Horn Attack',
       cost: [C, C],
       damage: 60,
-      text: ''
+      text: '',
     },
     {
       name: 'Mad Bull-GX',
@@ -32,8 +32,8 @@ export class TaurosGX extends PokemonCard {
       damage: 30,
       damageCalculation: 'x',
       gxAttack: true,
-      text: 'This attack does 30 damage for each damage counter on this Pokémon. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "This attack does 30 damage for each damage counter on this Pokémon. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'SUM';

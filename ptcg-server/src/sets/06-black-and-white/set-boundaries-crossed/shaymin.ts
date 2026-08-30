@@ -10,25 +10,22 @@ import { COIN_FLIP_PROMPT, HEAL_X_DAMAGE_FROM_THIS_POKEMON, SEARCH_YOUR_DECK_FOR
 
 export class Shaymin extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Call for Family',
-      cost: [C],
-      damage: 0,
-      text: 'Search your deck for 2 Basic Pokémon and put them onto your Bench. Shuffle your deck afterward.'
-    },
-    {
-      name: 'Leaf Drain',
-      cost: [G, G],
-      damage: 30,
-      text: 'Flip a coin. If heads, heal 30 damage from this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Call for Family',
+    cost: [C],
+    damage: 0,
+    text: 'Search your deck for 2 Basic Pokémon and put them onto your Bench. Shuffle your deck afterward.'
+  }, {
+    name: 'Leaf Drain',
+    cost: [G, G],
+    damage: 30,
+    text: 'Flip a coin. If heads, heal 30 damage from this Pokémon.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '10';

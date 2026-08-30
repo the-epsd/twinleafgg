@@ -4,15 +4,15 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, ChooseCardsPrompt, PokemonCardList } from '../../game';
+import { StoreLike, State, GameMessage, ChooseCardsPrompt, PokemonCardList, pokemonHasCardType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class DragoniteGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Dragonair';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 250;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];
@@ -22,20 +22,20 @@ export class DragoniteGx extends PokemonCard {
       name: 'Dragon Claw',
       cost: [L],
       damage: 70,
-      text: ''
+      text: '',
     },
     {
       name: 'Giga Impact',
       cost: [W, L, C, C],
       damage: 200,
-      text: 'This Pokémon can’t attack during your next turn.'
+      text: 'This Pokémon can’t attack during your next turn.',
     },
     {
       name: 'Dragonporter GX',
       cost: [C, C, C],
       damage: 0,
-      text: 'Put 3 Dragon Pokémon from your discard pile onto your Bench. (You can’t use more than 1 GX attack in a game.)'
-    }
+      text: 'Put 3 Dragon Pokémon from your discard pile onto your Bench. (You can’t use more than 1 GX attack in a game.)',
+    },
   ];
 
   public set: string = 'DRM';
@@ -58,13 +58,13 @@ export class DragoniteGx extends PokemonCard {
       BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
 
-      const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
+      const slots: PokemonCardList[] = player.bench.filter((b) => b.cards.length === 0);
       if (slots.length === 0) {
         return state;
       }
 
-      const dragonInDiscard = player.discard.cards.filter(c =>
-        c instanceof PokemonCard && c.cardType === CardType.DRAGON
+      const dragonInDiscard = player.discard.cards.filter(
+        (c) => c instanceof PokemonCard && pokemonHasCardType(c, CardType.DRAGON),
       );
 
       if (dragonInDiscard.length === 0) {
@@ -75,26 +75,30 @@ export class DragoniteGx extends PokemonCard {
 
       const blocked: number[] = [];
       player.discard.cards.forEach((c, index) => {
-        if (!(c instanceof PokemonCard) || c.cardType !== CardType.DRAGON) {
+        if (!(c instanceof PokemonCard) || !pokemonHasCardType(c, CardType.DRAGON)) {
           blocked.push(index);
         }
       });
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-        player.discard,
-        { superType: SuperType.POKEMON, cardType: CardType.DRAGON },
-        { min: max, max, allowCancel: false, blocked }
-      ), selected => {
-        const cards = selected || [];
-        cards.forEach((card, index) => {
-          if (index < slots.length) {
-            player.discard.moveCardTo(card, slots[index]);
-            slots[index].pokemonPlayedTurn = state.turn;
-          }
-        });
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+          player.discard,
+          { superType: SuperType.POKEMON, cardType: [CardType.DRAGON] },
+          { min: max, max, allowCancel: false, blocked },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          cards.forEach((card, index) => {
+            if (index < slots.length) {
+              player.discard.moveCardTo(card, slots[index]);
+              slots[index].pokemonPlayedTurn = state.turn;
+            }
+          });
+        },
+      );
     }
 
     return state;

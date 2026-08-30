@@ -5,19 +5,17 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Yamask extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: D }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Perplex',
-      cost: [P],
-      damage: 10,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Perplex',
+    cost: [P],
+    damage: 10,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
+  }];
 
   public set: string = 'NVI';
   public cardImage: string = 'assets/cardback.png';

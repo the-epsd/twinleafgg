@@ -12,7 +12,7 @@ import { WAS_POWER_USED, COIN_FLIP_PROMPT, USE_ABILITY_ONCE_PER_TURN, ABILITY_US
 export class Appletun extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Applin';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
@@ -24,16 +24,15 @@ export class Appletun extends PokemonCard {
     text: 'Once during your turn, you may flip a coin. If heads, switch 1 of your opponent\'s Benched Basic Pokémon with their Active Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Solar Beam',
-      cost: [G, C],
-      damage: 70,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Solar Beam',
+    cost: [G, C],
+    damage: 70,
+    text: ''
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'RCL';
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';

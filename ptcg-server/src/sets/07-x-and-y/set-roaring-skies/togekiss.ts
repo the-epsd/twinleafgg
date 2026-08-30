@@ -13,27 +13,24 @@ import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON } from
 export class Togekiss extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Togetic';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 140;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Powerful Slap',
-      cost: [C],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 50 damage times the number of heads.'
-    },
-    {
-      name: 'Aura Sphere',
-      cost: [Y, Y, C],
-      damage: 70,
-      text: 'This attack does 20 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
-  ];
+  public attacks = [{
+    name: 'Powerful Slap',
+    cost: [C],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 50 damage times the number of heads.'
+  }, {
+    name: 'Aura Sphere',
+    cost: [Y, Y, C],
+    damage: 70,
+    text: 'This attack does 20 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }];
 
   public set: string = 'ROS';
   public setNumber: string = '45';

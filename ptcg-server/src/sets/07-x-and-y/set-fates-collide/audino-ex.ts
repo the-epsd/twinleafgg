@@ -6,9 +6,9 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { HealTargetEffect } from '../../../game/store/effects/attack-effects';
 
 export class AudinoEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 180;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
@@ -18,13 +18,14 @@ export class AudinoEx extends PokemonCard {
       name: 'Drain Slap',
       cost: [C],
       damage: 20,
-      text: 'Heal 20 damage from this Pokémon.'
-    }, {
+      text: 'Heal 20 damage from this Pokémon.',
+    },
+    {
       name: 'Do the Wave',
       cost: [C, C, C],
       damage: 60,
       damageCalculation: '+',
-      text: 'This attack does 10 more damage for each of your Benched Pokémon.'
+      text: 'This attack does 10 more damage for each of your Benched Pokémon.',
     },
   ];
 
@@ -54,5 +55,4 @@ export class AudinoEx extends PokemonCard {
 
     return state;
   }
-
 }

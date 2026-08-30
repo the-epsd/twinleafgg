@@ -11,12 +11,11 @@ import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/pr
 
 // UPR Dusk Mane Necrozma-GX 90 (https://limitlesstcg.com/cards/UPR/90)
 export class DuskManeNecrozmaGX extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
+  protected _tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType[] = [CardType.METAL];
 
   public hp: number = 190;
 
@@ -31,20 +30,20 @@ export class DuskManeNecrozmaGX extends PokemonCard {
       name: 'Claw Slash',
       cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 60,
-      text: ''
+      text: '',
     },
     {
       name: 'Meteor Tempest',
       cost: [CardType.METAL, CardType.METAL, CardType.METAL, CardType.COLORLESS],
       damage: 220,
-      text: 'Discard 3 Energy from this Pokémon.'
+      text: 'Discard 3 Energy from this Pokémon.',
     },
     {
-      name: 'Sun\'s Eclipse-GX',
+      name: "Sun's Eclipse-GX",
       cost: [CardType.METAL, CardType.METAL, CardType.METAL],
       damage: 250,
-      text: 'You can use this attack only if you have more Prize cards remaining than your opponent. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "You can use this attack only if you have more Prize cards remaining than your opponent. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'UPR';
@@ -65,18 +64,22 @@ export class DuskManeNecrozmaGX extends PokemonCard {
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
-      state = store.prompt(state, new ChooseEnergyPrompt(
-        player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        checkProvidedEnergy.energyMap,
-        [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
-        { allowCancel: false }
-      ), energy => {
-        const cards: Card[] = (energy || []).map(e => e.card);
-        const discardEnergy = new DiscardCardsEffect(effect, cards);
-        discardEnergy.target = player.active;
-        store.reduceEffect(state, discardEnergy);
-      });
+      state = store.prompt(
+        state,
+        new ChooseEnergyPrompt(
+          player.id,
+          GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+          checkProvidedEnergy.energyMap,
+          [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+          { allowCancel: false },
+        ),
+        (energy) => {
+          const cards: Card[] = (energy || []).map((e) => e.card);
+          const discardEnergy = new DiscardCardsEffect(effect, cards);
+          discardEnergy.target = player.active;
+          store.reduceEffect(state, discardEnergy);
+        },
+      );
     }
 
     // Sun's Eclipse-GX

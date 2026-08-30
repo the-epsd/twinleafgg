@@ -9,3 +9,13 @@ export interface PendingEnergyAttachDamageCounters {
   sourceCard: PokemonCard;
   attackerPlayerId: number;
 }
+
+/**
+ * Consequences when Energy is attached from hand to this Pokémon during the
+ * opponent's next turn (Boo-Hoo / Dreaming Tone / Lazy Howl).
+ * Denial of attachment uses {@link PokemonCardList.cannotAttachEnergyFromHandNextTurn}.
+ */
+export interface PendingEnergyAttachFromHandConsequence {
+  asleep?: boolean;
+  endTurn?: boolean;
+}

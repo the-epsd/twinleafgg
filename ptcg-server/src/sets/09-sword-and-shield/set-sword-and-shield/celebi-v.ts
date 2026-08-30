@@ -6,12 +6,15 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND,
+} from '../../../game/store/prefabs/prefabs';
 
 export class CelebiV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 180;
   public weakness = [{ type: R }];
   public retreat = [C];
@@ -21,15 +24,15 @@ export class CelebiV extends PokemonCard {
       name: 'Find a Friend',
       cost: [G],
       damage: 0,
-      text: 'Search your deck for up to 2 Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.'
+      text: 'Search your deck for up to 2 Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.',
     },
     {
       name: 'Line Force',
       cost: [G, C],
       damage: 50,
       damageCalculation: '+',
-      text: 'This attack does 20 more damage for each of your Benched Pokémon.'
-    }
+      text: 'This attack does 20 more damage for each of your Benched Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -44,14 +47,20 @@ export class CelebiV extends PokemonCard {
     // Ref: set-plasma-blast/genesect.ts (SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      return SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, player, {}, { min: 0, max: 2 });
+      return SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(
+        store,
+        state,
+        player,
+        {},
+        { min: 0, max: 2 },
+      );
     }
 
     // Attack 2: Line Force
     // Ref: AGENTS-patterns.md (bench count damage bonus)
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      const benchCount = player.bench.filter(b => b.cards.length > 0).length;
+      const benchCount = player.bench.filter((b) => b.cards.length > 0).length;
       effect.damage += 20 * benchCount;
     }
 

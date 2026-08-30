@@ -9,13 +9,17 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AfterAttackEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED, BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  SWITCH_ACTIVE_WITH_BENCHED,
+  BLOCK_IF_GX_ATTACK_USED,
+} from '../../game/store/prefabs/prefabs';
 
 export class KingdraGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Seadra';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 230;
   public weakness = [{ type: G }];
   public retreat = [C, C];
@@ -26,20 +30,20 @@ export class KingdraGx extends PokemonCard {
       cost: [C],
       damage: 10,
       damageCalculation: '+',
-      text: 'This attack does 50 more damage times the amount of [W] Energy attached to this Pokémon.'
+      text: 'This attack does 50 more damage times the amount of [W] Energy attached to this Pokémon.',
     },
     {
       name: 'Reverse Thrust',
       cost: [W],
       damage: 30,
-      text: 'Switch this Pokémon with 1 of your Benched Pokémon.'
+      text: 'Switch this Pokémon with 1 of your Benched Pokémon.',
     },
     {
       name: 'Maelstrom GX',
       cost: [W],
       damage: 0,
-      text: 'This attack does 40 damage to each of your opponent’s Pokémon. (Don’t apply Weakness and Resistance for Benched Pokémon.) (You can’t use more than 1 GX attack in a game.)'
-    }
+      text: 'This attack does 40 damage to each of your opponent’s Pokémon. (Don’t apply Weakness and Resistance for Benched Pokémon.) (You can’t use more than 1 GX attack in a game.)',
+    },
   ];
 
   public set: string = 'DRM';
@@ -60,8 +64,8 @@ export class KingdraGx extends PokemonCard {
       store.reduceEffect(state, checkProvidedEnergyEffect);
 
       let waterEnergyCount = 0;
-      checkProvidedEnergyEffect.energyMap.forEach(em => {
-        waterEnergyCount += em.provides.filter(cardType => cardType === CardType.WATER).length;
+      checkProvidedEnergyEffect.energyMap.forEach((em) => {
+        waterEnergyCount += em.provides.filter((cardType) => cardType === CardType.WATER).length;
       });
       effect.damage += waterEnergyCount * 50;
     }
@@ -75,7 +79,7 @@ export class KingdraGx extends PokemonCard {
     if (effect instanceof AfterAttackEffect && this.usedReverseThrust) {
       this.usedReverseThrust = false;
       const player = effect.player;
-      if (player.bench.some(b => b.cards.length > 0)) {
+      if (player.bench.some((b) => b.cards.length > 0)) {
         SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
       }
     }
@@ -99,7 +103,7 @@ export class KingdraGx extends PokemonCard {
       store.reduceEffect(state, damageActive);
 
       // 40 damage to each benched (doesn't apply Weakness/Resistance)
-      opponent.bench.forEach(benched => {
+      opponent.bench.forEach((benched) => {
         if (benched.cards.length > 0) {
           const damage = new PutDamageEffect(effect, 40);
           damage.target = benched;

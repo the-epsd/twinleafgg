@@ -10,9 +10,9 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
 
 export class SalamenceV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 220;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];
@@ -23,14 +23,14 @@ export class SalamenceV extends PokemonCard {
       name: 'Swoop Across',
       cost: [C, C, C],
       damage: 0,
-      text: 'This attack does 30 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack does 30 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Heavy Storm',
       cost: [C, C, C, C],
       damage: 160,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -53,7 +53,7 @@ export class SalamenceV extends PokemonCard {
       store.reduceEffect(state, damageActive);
 
       // Damage bench (no Weakness/Resistance for benched)
-      opponent.bench.forEach(benched => {
+      opponent.bench.forEach((benched) => {
         if (benched.cards.length > 0) {
           const damage = new PutDamageEffect(effect, 30);
           damage.target = benched;

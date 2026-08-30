@@ -7,7 +7,7 @@ import { State, StoreLike } from '../../../game';
 export class Linoone extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Zigzagoon';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -17,8 +17,7 @@ export class Linoone extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Search your deck for up to 2 cards and put them into your hand. Shuffle your deck afterward.'
-  },
-  {
+  }, {
     name: 'Continuous Headbutt',
     cost: [C, C],
     damage: 40,

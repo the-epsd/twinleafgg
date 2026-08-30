@@ -1,13 +1,15 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils } from '../../../game';
+import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../../game/store/card/card-types';
+import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { DEFENDING_POKEMON_DOES_LESS_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Chikorita extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: R }];
-  public resistance = [];
   public retreat = [C];
 
   public attacks = [{
@@ -25,17 +27,17 @@ export class Chikorita extends PokemonCard {
 
   public regulationMark = 'I';
   public set: string = 'ASC';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '8';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chikorita';
   public fullName: string = 'Chikorita MC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Growl
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      opponent.active.damageReductionNextTurn = 20;
+      return DEFENDING_POKEMON_DOES_LESS_DAMAGE(store, state, effect, this, 20);
     }
+
     return state;
   }
 }

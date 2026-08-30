@@ -12,25 +12,22 @@ import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/s
 export class Claydol extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Baltoy';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 100;
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Rewind',
-      cost: [P],
-      damage: 0,
-      text: 'Devolve each of your opponent\'s evolved Pokémon and put the highest Stage Evolution card on it into your opponent\'s hand.'
-    },
-    {
-      name: 'Hyper Beam',
-      cost: [P, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Rewind',
+    cost: [P],
+    damage: 0,
+    text: 'Devolve each of your opponent\'s evolved Pokémon and put the highest Stage Evolution card on it into your opponent\'s hand.'
+  }, {
+    name: 'Hyper Beam',
+    cost: [P, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
+  }];
 
   public set: string = 'AOR';
   public setNumber: string = '33';

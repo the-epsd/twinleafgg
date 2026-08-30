@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Braixen extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Fennekin';
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
   public hp: number = 80;
   public weakness = [{ type: CardType.WATER }];
   public retreat = [CardType.COLORLESS];

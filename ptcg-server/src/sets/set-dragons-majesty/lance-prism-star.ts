@@ -14,7 +14,7 @@ import { StoreLike } from '../../game/store/store-like';
 
 export class LancePrismStar extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-  public tags = [CardTag.PRISM_STAR];
+  protected _tags = [CardTag.PRISM_STAR];
   public set: string = 'DRM';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '61';
@@ -49,7 +49,7 @@ export class LancePrismStar extends TrainerCard {
         store,
         state,
         player,
-        { cardType: CardType.DRAGON },
+        { cardType: [CardType.DRAGON] },
         { min: 0, max: 2, allowCancel: false },
       );
 

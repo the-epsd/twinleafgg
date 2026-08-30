@@ -3,12 +3,12 @@ import { EnergyType, SuperType, TrainerType } from '../../../game/store/card/car
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { GameMessage } from '../../../game/game-message';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
-import { CoinFlipPrompt } from '../../../game/store/prompts/coin-flip-prompt';
+
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttachEnergyPrompt, Card, Player, PlayerType, SlotType, StateUtils } from '../../../game';
-import { MOVE_CARDS, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHUFFLE_DECK, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect, sourceCard: Card): IterableIterator<State> {
   const player = effect.player;
@@ -18,11 +18,11 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
-  yield store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), (result: boolean) => {
+  yield COIN_FLIP_PROMPT(store, state, player, result => {
     coin1Result = result;
     next();
   });
-  yield store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), (result: boolean) => {
+  yield COIN_FLIP_PROMPT(store, state, player, result => {
     coin2Result = result;
     next();
   });
@@ -58,7 +58,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
 export class EnergyCoin extends TrainerCard {
   public regulationMark = 'I';
+
   public trainerType = TrainerType.ITEM;
+
   public set = 'BLK';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '81';
@@ -69,7 +71,6 @@ export class EnergyCoin extends TrainerCard {
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {    return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

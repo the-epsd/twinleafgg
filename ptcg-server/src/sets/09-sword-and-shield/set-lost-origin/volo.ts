@@ -1,9 +1,20 @@
-import { TrainerCard, TrainerType, State, StoreLike, CardTag, GameError, GameMessage, CardTarget, ChoosePokemonPrompt, PlayerType, SlotType } from '../../../game';
+import {
+  TrainerCard,
+  TrainerType,
+  State,
+  StoreLike,
+  CardTag,
+  GameError,
+  GameMessage,
+  CardTarget,
+  ChoosePokemonPrompt,
+  PlayerType,
+  SlotType,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 
 export class Volo extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public regulationMark = 'F';
@@ -18,11 +29,9 @@ export class Volo extends TrainerCard {
 
   public fullName: string = 'Volo LOR';
 
-  public text: string =
-    'Discard 1 of your Benched Pokémon V and all attached cards.';
+  public text: string = 'Discard 1 of your Benched Pokémon V and all attached cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
@@ -42,9 +51,11 @@ export class Volo extends TrainerCard {
       player.bench.forEach((benchSpot, index) => {
         const pokemonCard = benchSpot.getPokemonCard();
         if (pokemonCard) {
-          if (pokemonCard.tags.includes(CardTag.POKEMON_V) ||
-            pokemonCard.tags.includes(CardTag.POKEMON_VSTAR) ||
-            pokemonCard.tags.includes(CardTag.POKEMON_VMAX)) {
+          if (
+            pokemonCard.hasTag(CardTag.POKEMON_V) ||
+            pokemonCard.hasTag(CardTag.POKEMON_VSTAR) ||
+            pokemonCard.hasTag(CardTag.POKEMON_VMAX)
+          ) {
             hasBenchedV = true;
           } else {
             blocked.push({ player: PlayerType.BOTTOM_PLAYER, slot: SlotType.BENCH, index: index });
@@ -55,26 +66,27 @@ export class Volo extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { allowCancel: false, blocked }
-      ), result => {
-        const cardList = result.length > 0 ? result[0] : null;
-        if (cardList !== null) {
-          const pokemons = cardList.getPokemons();
-          cardList.moveCardsTo(pokemons, player.discard);
-          cardList.moveTo(player.discard);
-          cardList.clearEffects();
-
-
-        }
-      });
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          { allowCancel: false, blocked },
+        ),
+        (result) => {
+          const cardList = result.length > 0 ? result[0] : null;
+          if (cardList !== null) {
+            const pokemons = cardList.getPokemons();
+            cardList.moveCardsTo(pokemons, player.discard);
+            cardList.moveTo(player.discard);
+            cardList.clearEffects();
+          }
+        },
+      );
     }
 
     return state;
   }
-
 }

@@ -3,14 +3,15 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
-import { WAS_ATTACK_USED, BLOCK_RETREAT } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 export class Krookodile extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
 
   public evolvesFrom = 'Krokorok';
 
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
 
   public hp: number = 150;
 

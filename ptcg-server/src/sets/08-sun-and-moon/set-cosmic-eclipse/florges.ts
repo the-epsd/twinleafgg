@@ -12,7 +12,7 @@ import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-e
 export class Florges extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Floette';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 130;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];
@@ -24,15 +24,13 @@ export class Florges extends PokemonCard {
     text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may choose 2 random cards from your opponent\'s hand. Your opponent reveals those cards and shuffles them into their deck.'
   }];
 
-  public attacks = [
-    {
-      name: 'Petal Dance',
-      cost: [Y, C],
-      damage: 60,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 60 damage for each heads. This Pokémon is now Confused.'
-    }
-  ];
+  public attacks = [{
+    name: 'Petal Dance',
+    cost: [Y, C],
+    damage: 60,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 60 damage for each heads. This Pokémon is now Confused.'
+  }];
 
   public set: string = 'CEC';
   public setNumber: string = '152';

@@ -8,7 +8,7 @@ import { CheckPokemonStatsEffect } from '../../../game/store/effects/check-effec
 export class SolgaleoGX extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Cosmoem';
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType[] = [CardType.METAL];
   public hp: number = 250;
   public weakness = [{ type: CardType.FIRE }];
   public resistance = [{ type: CardType.PSYCHIC, value: -20 }];

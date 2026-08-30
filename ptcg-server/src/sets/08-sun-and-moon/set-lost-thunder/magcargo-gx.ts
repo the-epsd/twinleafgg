@@ -1,7 +1,24 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { Stage, CardType, SuperType, CardTag, EnergyType } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameMessage, Card, GameError, CardList, PlayerType, SlotType, EnergyCard } from '../../../game';
+import {
+  Stage,
+  CardType,
+  SuperType,
+  CardTag,
+  EnergyType,
+} from '../../../game/store/card/card-types';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  GameMessage,
+  Card,
+  GameError,
+  CardList,
+  PlayerType,
+  SlotType,
+  EnergyCard,
+} from '../../../game';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { AttachEnergyPrompt } from '../../../game';
@@ -9,17 +26,21 @@ import { Effect } from '../../../game/store/effects/effect';
 import { StateUtils } from '../../../game/store/state-utils';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 
-import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  BLOCK_IF_GX_ATTACK_USED,
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 // LOT Magcargo-GX 44 (https://limitlesstcg.com/cards/LOT/44)
 export class MagcargoGX extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
 
   public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom = 'Slugma';
 
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
 
   public hp: number = 210;
 
@@ -27,26 +48,28 @@ export class MagcargoGX extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Crushing Charge',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), you may discard the top card of your deck. If it\'s a basic Energy card, attach it to 1 of your Pokémon. '
-  }];
+  public powers = [
+    {
+      name: 'Crushing Charge',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: "Once during your turn (before your attack), you may discard the top card of your deck. If it's a basic Energy card, attach it to 1 of your Pokémon. ",
+    },
+  ];
   public attacks = [
     {
       name: 'Lava Flow',
       cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS],
       damage: 50,
-      text: 'Discard any amount of basic Energy from this Pokémon. This attack does 50 more damage for each card you discarded in this way.'
+      text: 'Discard any amount of basic Energy from this Pokémon. This attack does 50 more damage for each card you discarded in this way.',
     },
 
     {
       name: 'Burning Magma-GX',
       cost: [CardType.FIRE],
       damage: 0,
-      text: 'Discard the top 5 cards of your opponent\'s deck. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Discard the top 5 cards of your opponent's deck. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'LOT';
@@ -83,7 +106,7 @@ export class MagcargoGX extends PokemonCard {
       player.deck.moveTo(topOfTheDeck, 1);
 
       // Check if any cards discarded are basic energy
-      const discardedEnergy = topOfTheDeck.cards.filter(card => {
+      const discardedEnergy = topOfTheDeck.cards.filter((card) => {
         return card instanceof EnergyCard && card.energyType === EnergyType.BASIC;
       });
 
@@ -93,22 +116,26 @@ export class MagcargoGX extends PokemonCard {
       }
 
       if (discardedEnergy.length > 0) {
-        store.prompt(state, new AttachEnergyPrompt(
-          player.id,
-          GameMessage.ATTACH_ENERGY_TO_BENCH,
-          topOfTheDeck,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.ACTIVE, SlotType.BENCH],
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-          { allowCancel: false, min: 0, max: 1 }
-        ), transfers => {
-          transfers = transfers || [];
-          player.marker.addMarker(this.CRUSHING_CHARGE_MARKER, this);
-          for (const transfer of transfers) {
-            const target = StateUtils.getTarget(state, player, transfer.to);
-            topOfTheDeck.moveCardTo(transfer.card, target);
-          }
-        });
+        store.prompt(
+          state,
+          new AttachEnergyPrompt(
+            player.id,
+            GameMessage.ATTACH_ENERGY_TO_BENCH,
+            topOfTheDeck,
+            PlayerType.BOTTOM_PLAYER,
+            [SlotType.ACTIVE, SlotType.BENCH],
+            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+            { allowCancel: false, min: 0, max: 1 },
+          ),
+          (transfers) => {
+            transfers = transfers || [];
+            player.marker.addMarker(this.CRUSHING_CHARGE_MARKER, this);
+            for (const transfer of transfers) {
+              const target = StateUtils.getTarget(state, player, transfer.to);
+              topOfTheDeck.moveCardTo(transfer.card, target);
+            }
+          },
+        );
       }
 
       return state;
@@ -119,19 +146,23 @@ export class MagcargoGX extends PokemonCard {
       const player = effect.player;
 
       let cards: Card[] = [];
-      store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        player.active,
-        { superType: SuperType.ENERGY },
-        { min: 0, allowCancel: false }
-      ), selected => {
-        cards = selected || [];
-        effect.damage += cards.length * 50;
-        const discardEnergy = new DiscardCardsEffect(effect, cards);
-        discardEnergy.target = player.active;
-        store.reduceEffect(state, discardEnergy);
-      });
+      store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          player.active,
+          { superType: SuperType.ENERGY },
+          { min: 0, allowCancel: false },
+        ),
+        (selected) => {
+          cards = selected || [];
+          effect.damage += cards.length * 50;
+          const discardEnergy = new DiscardCardsEffect(effect, cards);
+          discardEnergy.target = player.active;
+          store.reduceEffect(state, discardEnergy);
+        },
+      );
     }
 
     // Burning Magma-GX
@@ -152,5 +183,4 @@ export class MagcargoGX extends PokemonCard {
 
     return state;
   }
-
 }

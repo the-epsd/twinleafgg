@@ -1,10 +1,10 @@
-import { CardType, ChooseCardsPrompt, GameMessage, PokemonCard, Stage, State, StateUtils, StoreLike, SuperType } from "../../../game";
+import { CardType, ChooseCardsPrompt, GameMessage, PokemonCard, Stage, State, StateUtils, StoreLike, SuperType, getPokemonCardTypes } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
 import { WAS_ATTACK_USED, SHOW_CARDS_TO_PLAYER } from "../../../game/store/prefabs/prefabs";
 
 export class Kecleon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C, C];
@@ -52,8 +52,7 @@ export class Kecleon extends PokemonCard {
         const uniqueTypes = new Set<CardType>();
         cards.forEach(card => {
           if (card instanceof PokemonCard) {
-            uniqueTypes.add(card.cardType);
-            card.additionalCardTypes?.forEach(type => uniqueTypes.add(type));
+            getPokemonCardTypes(card).forEach(type => uniqueTypes.add(type));
           }
         });
         effect.damage = 30 * uniqueTypes.size;

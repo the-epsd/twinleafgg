@@ -4,41 +4,57 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { Card, ChooseEnergyPrompt, ConfirmPrompt, GameMessage, PowerType, StoreLike, State, StateUtils } from '../../../game';
+import {
+  Card,
+  ChooseEnergyPrompt,
+  ConfirmPrompt,
+  GameMessage,
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED, JUST_EVOLVED, IS_ABILITY_BLOCKED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  JUST_EVOLVED,
+  IS_ABILITY_BLOCKED,
+  BLOCK_IF_GX_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class LycanrocGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Rockruff';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 200;
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Twilight Eyes',
-    powerType: PowerType.ABILITY,
-    text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may discard an Energy attached to your opponent\'s Active Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Twilight Eyes',
+      powerType: PowerType.ABILITY,
+      text: "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may discard an Energy attached to your opponent's Active Pokémon.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Accelerock',
       cost: [F, C, C],
       damage: 120,
-      text: ''
+      text: '',
     },
     {
       name: 'Splintered Shards-GX',
       cost: [F],
       damage: 30,
       damageCalculation: 'x',
-      text: 'This attack does 30 damage for each Energy card in your opponent\'s discard pile. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "This attack does 30 damage for each Energy card in your opponent's discard pile. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'TEU';
@@ -66,25 +82,30 @@ export class LycanrocGx extends PokemonCard {
         return state;
       }
 
-      state = store.prompt(state, new ConfirmPrompt(
-        player.id,
-        GameMessage.WANT_TO_USE_ABILITY,
-      ), wantToUse => {
-        if (wantToUse) {
-          store.prompt(state, new ChooseEnergyPrompt(
-            player.id,
-            GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-            checkProvidedEnergy.energyMap,
-            [CardType.COLORLESS],
-            { allowCancel: false }
-          ), energy => {
-            const cards: Card[] = (energy || []).map(e => e.card);
-            if (cards.length > 0) {
-              opponent.active.moveCardsTo(cards, opponent.discard);
-            }
-          });
-        }
-      });
+      state = store.prompt(
+        state,
+        new ConfirmPrompt(player.id, GameMessage.WANT_TO_USE_ABILITY),
+        (wantToUse) => {
+          if (wantToUse) {
+            store.prompt(
+              state,
+              new ChooseEnergyPrompt(
+                player.id,
+                GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+                checkProvidedEnergy.energyMap,
+                [CardType.COLORLESS],
+                { allowCancel: false },
+              ),
+              (energy) => {
+                const cards: Card[] = (energy || []).map((e) => e.card);
+                if (cards.length > 0) {
+                  opponent.active.moveCardsTo(cards, opponent.discard);
+                }
+              },
+            );
+          }
+        },
+      );
     }
 
     // Attack 2: Splintered Shards-GX
@@ -96,7 +117,7 @@ export class LycanrocGx extends PokemonCard {
       BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
 
-      const energyCount = opponent.discard.cards.filter(c => c instanceof EnergyCard).length;
+      const energyCount = opponent.discard.cards.filter((c) => c instanceof EnergyCard).length;
       effect.damage = 30 * energyCount;
     }
 

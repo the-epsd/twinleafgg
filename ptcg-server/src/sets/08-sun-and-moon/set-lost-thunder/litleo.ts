@@ -7,28 +7,34 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PlayerType, PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { CheckRetreatCostEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Litleo extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 60;
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Wild Dash',
-    powerType: PowerType.ABILITY,
-    text: 'If your opponent has any Pokémon-GX or Pokémon-EX in play, this Pokémon has no Retreat Cost.'
-  }];
+  public powers = [
+    {
+      name: 'Wild Dash',
+      powerType: PowerType.ABILITY,
+      text: 'If your opponent has any Pokémon-GX or Pokémon-EX in play, this Pokémon has no Retreat Cost.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Take Down',
       cost: [C, C],
       damage: 30,
-      text: 'This Pokémon does 10 damage to itself.'
-    }
+      text: 'This Pokémon does 10 damage to itself.',
+    },
   ];
 
   public set: string = 'LOT';
@@ -40,7 +46,10 @@ export class Litleo extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Wild Dash (passive - no retreat cost if opponent has GX/EX)
     // Ref: set-celestial-storm/voltorb.ts (Floating Electrons - CheckRetreatCostEffect)
-    if (effect instanceof CheckRetreatCostEffect && effect.player.active.getPokemonCard() === this) {
+    if (
+      effect instanceof CheckRetreatCostEffect &&
+      effect.player.active.getPokemonCard() === this
+    ) {
       const player = effect.player;
 
       if (IS_ABILITY_BLOCKED(store, state, player, this)) {
@@ -51,7 +60,7 @@ export class Litleo extends PokemonCard {
       let hasGxOrEx = false;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         const pokemon = cardList.getPokemonCard();
-        if (pokemon && (pokemon.tags.includes(CardTag.POKEMON_GX) || pokemon.tags.includes(CardTag.POKEMON_EX))) {
+        if (pokemon && (pokemon.hasTag(CardTag.POKEMON_GX) || pokemon.hasTag(CardTag.POKEMON_EX))) {
           hasGxOrEx = true;
         }
       });

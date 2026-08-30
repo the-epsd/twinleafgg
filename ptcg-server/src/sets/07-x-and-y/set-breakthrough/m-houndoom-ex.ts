@@ -12,10 +12,10 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class MHoundoomEx extends PokemonCard {
-  public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
+  protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Houndoom-EX';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 210;
   public weakness = [{ type: W }];
   public retreat = [C];
@@ -26,8 +26,8 @@ export class MHoundoomEx extends PokemonCard {
       cost: [R, R],
       damage: 80,
       damageCalculation: '+',
-      text: 'You may discard all [R] Energy attached to this Pokémon. If you do, this attack does 80 more damage.'
-    }
+      text: 'You may discard all [R] Energy attached to this Pokémon. If you do, this attack does 80 more damage.',
+    },
   ];
 
   public set: string = 'BKT';
@@ -47,23 +47,27 @@ export class MHoundoomEx extends PokemonCard {
 
       const fireCards: Card[] = [];
       for (const em of checkEnergy.energyMap) {
-        if (em.card instanceof EnergyCard && em.provides.some(t => t === CardType.FIRE || t === CardType.ANY)) {
+        if (
+          em.card instanceof EnergyCard &&
+          em.provides.some((t) => t === CardType.FIRE || t === CardType.ANY)
+        ) {
           fireCards.push(em.card);
         }
       }
 
       if (fireCards.length > 0) {
-        state = store.prompt(state, new ConfirmPrompt(
-          player.id,
-          GameMessage.WANT_TO_USE_ABILITY,
-        ), wantToDiscard => {
-          if (wantToDiscard) {
-            const discardEnergy = new DiscardCardsEffect(effect, fireCards);
-            discardEnergy.target = player.active;
-            store.reduceEffect(state, discardEnergy);
-            effect.damage += 80;
-          }
-        });
+        state = store.prompt(
+          state,
+          new ConfirmPrompt(player.id, GameMessage.WANT_TO_USE_ABILITY),
+          (wantToDiscard) => {
+            if (wantToDiscard) {
+              const discardEnergy = new DiscardCardsEffect(effect, fireCards);
+              discardEnergy.target = player.active;
+              store.reduceEffect(state, discardEnergy);
+              effect.damage += 80;
+            }
+          },
+        );
       }
     }
 

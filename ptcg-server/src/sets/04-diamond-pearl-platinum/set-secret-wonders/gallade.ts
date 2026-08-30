@@ -11,7 +11,7 @@ import { Card, ChoosePrizePrompt, GameError, GameMessage, SelectPrompt } from '.
 export class Gallade extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Kirlia';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 130;
   public weakness = [{ type: P, value: +30 }];
   public retreat = [C, C];

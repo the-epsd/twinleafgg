@@ -9,10 +9,10 @@ import { Effect } from '../../../game/store/effects/effect';
 import { BREAK_RULE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class MarowakBreak extends PokemonCard {
-  public tags = [CardTag.BREAK];
+  protected _tags = [CardTag.BREAK];
   public stage: Stage = Stage.BREAK;
   public evolvesFrom: string = 'Marowak';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 140;
   public retreat = [];
 

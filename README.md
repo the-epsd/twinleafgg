@@ -1,48 +1,50 @@
 # twinleaf.gg
-# Pokemon Trading Card Game Simulator
-
 The project is created to allow players of the Pokemon Trading Card Game to experience current and past formats that are not otherwise accesible in an online, web-based client.
 
-There are two projects:
+The repo has three pieces:
 
-* **ptcg-server** is the game server. It is responsible for calculating the game state and propagating it to the connected clients by websockets.
+* **ptcg-server** — Node/TypeScript game server. Owns game state and talks to clients over websockets.
+* **ptcg-play-react** — current web client (React + Vite). This is what you want for day-to-day work.
+* **ptcg-play** — older Angular client. Still around, but not the main frontend anymore.
 
-* **ptcg-play** is a web application written in Angular. It displays the game state and allows interaction with the server.
+## Requirements
 
-### Server launch
-
-Server is a simple node.js application written in TypeScript. It uses express with websockets and [typeorm](https://typeorm.io/#/) for database access.
-
-Prerequisites:
-* Node.js 16 or 18 LTS (Node 20+ is not supported by current engine constraints)
+* Node.js — see versions below
 * npm 7+
-* mysql-5 or sqlite-3
+* sqlite3 (default) or mysql
 
-If you are currently on a newer Node version (for example Node 25), switch to Node 16 or 18 before installing dependencies.
+Node versions differ a bit by package:
 
-Example using `n`:
+| Package | Node |
+|---|---|
+| ptcg-server | 18.19+ (below 25) |
+| ptcg-play (Angular) | 18.19+ (below 25) |
+| ptcg-play-react | **20.19.x only** (Vite 8) |
+
+Easiest path: use Node **20.19.0**. That's what `.nvmrc` pins, and it works for the server and both clients.
 
 ```
-npm install -g n
-n 18
+nvm use
 ```
 
-On macOS, if Node was installed through Homebrew, you may need to unlink it first:
+Or with `n`:
 
 ```
-brew unlink node
+n 20.19.0
 ```
 
-`config.js` contains all available options and its default values are defined in the `src/config.ts`
+If you're on something like Node 22/25 and installs start failing, switch down first.
 
-1. Go to the server directory and install dependencies.
+## Server
+
+Express + websockets + TypeORM. Defaults and options live in `ptcg-server/src/config.ts` (override via `config.js` / env as needed).
 
 ```
 cd ptcg-server
 npm install
 ```
 
-2. Add a file named `.env` in the `ptcg-server` directory. Paste these contents.
+Create `ptcg-server/.env`:
 
 ```
 STORAGE_TYPE='sqlite'
@@ -51,57 +53,79 @@ SERVER_PASSWORD=''
 SERVER_SECRET='!secret!'
 ```
 
-3. Start the server.
+Start it:
 
 ```
 npm run start
 ```
 
-The service should now listen on the specified address and port. It will be http://localhost:8080 by default. This can be changed by editing `config.js` as previously mentioned. This server uses Sqlite-3.
+Should be on http://localhost:8080.
 
-If you get a SQLite foreign key constraint error on startup, delete `ptcg-server/database.sq3` and start the server again. The database file will be regenerated.
+If SQLite blows up with a foreign key error on boot, delete `ptcg-server/database.sq3` and start again — it'll recreate the DB.
 
-### Client launch
+## React client (ptcg-play-react)
 
-The client is an Angular application.
-https://angular.io/. 
-The source code of the client is located in the `ptcg-play` directory.
-
-The server package is a dependency required by the client. Make sure the server dependencies are installed and the server is running before starting the client.
-
-1. With the server running, go to the `ptcg-play` directory and install dependencies.
+This is the upcoming frontend. Server needs to be running first. Needs Node 20.19.x.
 
 ```
-cd ../ptcg-play
+cd ptcg-play-react
 npm install
 ```
 
-2. Build the client.
+Optional: copy `.env.example` to `.env.development` if you don't already have one. Default API target is `http://localhost:8080`.
+
+```
+npm run dev
+```
+
+Vite usually serves at http://localhost:5173. Dev proxy forwards `/v1` and `/socket.io` to the local server.
+
+Production build:
 
 ```
 npm run build
 ```
 
-3. Start the local client.
+## Angular client (ptcg-play)
+
+Legacy UI, current on live site. Same idea — server running first, then:
 
 ```
+cd ptcg-play
+npm install
 npm run start:local
 ```
 
-The command above will start the application in the debug mode at http://localhost:4200
+That hits http://localhost:4200 and uses the local environment (`apiUrl: http://localhost:8080`).
 
-### Credits:
+`npm run build` / `npm run build:prod` if you need a static build.
 
-Foundation: Keeshii + TheEPSD
+Note: Angular depends on the local `ptcg-server` package via `file:../ptcg-server`, so install server deps before installing here.
+
+## Credits
+
+Foundation: Keeshii + TheEPSD  
 Based on: https://github.com/keeshii/ryuu-play
 
-### License
+## License
+
 MIT
 
 -------
 
-# **PR Rules for Contributing to twinleaf.gg**
-*All instructions for setting up your dev environment can be found in the main branch readme.*
+# PR Rules for Contributing to twinleaf.gg
+
+## No LLM-generated code
+
+This is non-negotiable.
+
+* Do **not** submit commits, PRs, or card files written by ChatGPT, Claude, Copilot, Cursor agents, or any other LLM.
+* You must write and understand the code yourself. If you can't explain every line you submitted, don't submit it.
+* LLM-generated stubs, bulk-generated card files, and "AI assisted then lightly edited" PRs will be rejected on sight.
+* Screenshots of testing are still required — they do not excuse AI-written implementations.
+
+Setup instructions are above.
+
 **Current formats we're looking to expand (in order of importance):**
 1. Standard
 2. Expanded
@@ -111,11 +135,11 @@ MIT
 
 When submitting PRs for **twinleaf**, cards *must* be tested by you before submitting. To ensure that we know they were tested, submit a screenshot.
 
-Please stick to meta-relevant cards for the format you are submitting the card for. If you are submitting a card for RSPK for example, submitting a PR for a random evolution line that never saw play is not particularly useful as they won't be used. 
+Please stick to meta-relevant cards for the format you are submitting the card for. If you are submitting a card for RSPK for example, submitting a PR for a random evolution line that never saw play is not particularly useful as they won't be used.
 
-If you are submitting an evolution line, submit the entire evolution line in one PR. 
+If you are submitting an evolution line, submit the entire evolution line in one PR.
 
-Submit 1 commit per-PR. The PR should include all new card files, as well as the updated index. 
+Submit 1 commit per-PR. The PR should include all new card files, as well as the updated index.
 
 Where possible, use prefabs first. If you do not know what this means or where to find it, go through the codebase more before submitting anything - as it means you may not be ready to contribute.
 
@@ -150,7 +174,7 @@ ex.
 ```public cardType: CardType = L;```
 Use CardType.LIGHTNING in the reduceEffect.
 
-When making an attack or ability where it states an energy type, it should be placed in square brackets. 
+When making an attack or ability where it states an energy type, it should be placed in square brackets.
 ex.
 ```text: 'Attach up to 2 [P] Energy cards from your discard pile to 1 of your Pokemon.'```
 
@@ -168,12 +192,12 @@ fullName
 text
 ```
 
-When making a Trainer card where it states an energy type, it should be placed in square brackets. 
+When making a Trainer card where it states an energy type, it should be placed in square brackets.
 ex.
 ```'Attach a basic [D] Energy card from your discard pile to 1 of your Benched [D] Pokemon.';```
 
 *Always* copy any text directly from a source that is formatted the same as the actual card.
 
-*Do **NOT*** submit reprints of cards as their own isolated card file. Please see `other-prints` or `full-arts` for that. 
+*Do **NOT*** submit reprints of cards as their own isolated card file. Please see `other-prints` or `full-arts` for that.
 
 **NEVER** change the fullName property of an existing card. This property is stored throughout the database.

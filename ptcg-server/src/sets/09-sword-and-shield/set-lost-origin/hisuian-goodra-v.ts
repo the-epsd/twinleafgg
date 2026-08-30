@@ -9,14 +9,13 @@ import { AfterAttackEffect } from '../../../game/store/effects/game-phase-effect
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class HisuianGoodraV extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
 
   public regulationMark = 'F';
 
-  public cardType: CardType = CardType.DRAGON;
+  public cardType: CardType[] = [CardType.DRAGON];
 
   public hp: number = 220;
 
@@ -24,17 +23,17 @@ export class HisuianGoodraV extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Slip-\'n\'-Trip',
+      name: "Slip-'n'-Trip",
       cost: [CardType.WATER, CardType.METAL],
       damage: 60,
-      text: 'Your opponent switches their Active Pokémon with 1 of their Benched Pokémon.'
+      text: 'Your opponent switches their Active Pokémon with 1 of their Benched Pokémon.',
     },
     {
       name: 'Rolling Shell',
       cost: [CardType.WATER, CardType.METAL, CardType.COLORLESS],
       damage: 140,
-      text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
-    }
+      text: "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).",
+    },
   ];
 
   public set: string = 'LOR';
@@ -50,7 +49,6 @@ export class HisuianGoodraV extends PokemonCard {
   private usedSlipNTrip: boolean = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       this.usedSlipNTrip = true;
     }
@@ -58,26 +56,30 @@ export class HisuianGoodraV extends PokemonCard {
     if (effect instanceof AfterAttackEffect && this.usedSlipNTrip) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const opponentHasBenched = opponent.bench.some(b => b.cards.length > 0);
+      const opponentHasBenched = opponent.bench.some((b) => b.cards.length > 0);
 
       if (!opponentHasBenched) {
         return state;
       }
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        opponent.id,
-        GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { allowCancel: false },
-      ), selected => {
-        if (!selected || selected.length === 0) {
-          return state;
-        }
-        const target = selected[0];
-        opponent.switchPokemon(target);
-        this.usedSlipNTrip = false;
-      });
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          opponent.id,
+          GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          { allowCancel: false },
+        ),
+        (selected) => {
+          if (!selected || selected.length === 0) {
+            return state;
+          }
+          const target = selected[0];
+          opponent.switchPokemon(target);
+          this.usedSlipNTrip = false;
+        },
+      );
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

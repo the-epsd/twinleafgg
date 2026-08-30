@@ -8,8 +8,8 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Tyranitarex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Pupitar';
-  public tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = D;
+  protected _tags = [CardTag.POKEMON_ex];
+  public cardType: CardType[] = [D];
   public hp: number = 340;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
@@ -20,15 +20,14 @@ export class Tyranitarex extends PokemonCard {
       cost: [C],
       damage: 50,
       damageCalculation: 'x',
-      text: 'This attack does 50 damage for each Energy attached to this Pokémon.'
+      text: 'This attack does 50 damage for each Energy attached to this Pokémon.',
     },
     {
       name: 'Tyranical Crush',
       cost: [D, C, C],
       damage: 150,
-      text: 'Discard a random card from your opponent\'s hand.'
+      text: "Discard a random card from your opponent's hand.",
     },
-
   ];
 
   public set: string = 'PRE';
@@ -43,7 +42,7 @@ export class Tyranitarex extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const energies = player.active.cards.filter(card => card.superType === SuperType.ENERGY);
+      const energies = player.active.cards.filter((card) => card.superType === SuperType.ENERGY);
       effect.damage = 50 * energies.length;
     }
 
@@ -56,17 +55,21 @@ export class Tyranitarex extends PokemonCard {
         return state;
       }
 
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        opponent.hand,
-        {},
-        { allowCancel: false, min: 1, max: 1, isSecret: true }
-      ), cards => {
-        cards = cards || [];
+      state = store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          opponent.hand,
+          {},
+          { allowCancel: false, min: 1, max: 1, isSecret: true },
+        ),
+        (cards) => {
+          cards = cards || [];
 
-        opponent.hand.moveCardsTo(cards, opponent.discard);
-      });
+          opponent.hand.moveCardsTo(cards, opponent.discard);
+        },
+      );
     }
 
     return state;

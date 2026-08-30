@@ -4,37 +4,9 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { GameError, GameMessage } from '../../../game';
 import { Player } from '../../../game/store/state/player';
-
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: LilliesDetermination, effect: TrainerEffect): IterableIterator<State> {
-
-  const player = effect.player;
-
-  // Do not play if supporter has been played
-  if (player.supporterTurn > 0) {
-    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
-  }
-
-  // Move hand to deck
-  const cards = player.hand.cards.filter(c => c !== self);
-  player.hand.moveCardsTo(cards, player.deck);
-
-
-  yield store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-    player.deck.applyOrder(order);
-    next();
-  });
-
-  // Draw cards
-  const cardsToDraw = player.getPrizeLeft() === 6 ? 8 : 6;
-  player.deck.moveTo(player.hand, cardsToDraw);
-
-  return state;
-}
-
+import { SHUFFLE_HAND_INTO_DECK_THEN_DRAW } from '../../../game/store/prefabs/prefabs';
 
 export class LilliesDetermination extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -47,22 +19,27 @@ export class LilliesDetermination extends TrainerCard {
   public text: string = 'Shuffle your hand into your deck. Then, draw 6 cards. If you have exactly 6 Prize cards remaining, draw 8 cards instead.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
-    // Check if supporter already played this turn
     if (player.supporterTurn > 0) {
       return false;
     }
-
-    // No other restrictions - card can be played
     return true;
   }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, this, effect);
-      return generator.next().value;
+      const player = effect.player;
+
+      if (player.supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      const cardsToDraw = player.getPrizeLeft() === 6 ? 8 : 6;
+      return SHUFFLE_HAND_INTO_DECK_THEN_DRAW(store, state, player, {
+        excludeCard: this,
+        drawCount: cardsToDraw,
+      });
     }
 
     return state;
   }
-
 }

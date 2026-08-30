@@ -6,7 +6,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Relicanth extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 100;
   public weakness = [{ type: L }];
   public retreat = [C];
@@ -36,7 +36,7 @@ export class Relicanth extends PokemonCard {
         if (cardList === player.active) {
           return;
         }
-        if (card.tags.includes(CardTag.ANTIQUE)) {
+        if (card.hasTag(CardTag.ANTIQUE)) {
           antiqueBench++;
         }
       });

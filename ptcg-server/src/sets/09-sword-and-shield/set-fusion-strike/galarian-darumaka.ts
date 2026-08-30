@@ -10,21 +10,20 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF }
 
 export class GalarianDarumaka extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 80;
   public weakness = [{ type: M }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Reckless Charge',
-      cost: [W],
-      damage: 20,
-      text: 'Flip a coin. If tails, this Pokémon also does 10 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Reckless Charge',
+    cost: [W],
+    damage: 20,
+    text: 'Flip a coin. If tails, this Pokémon also does 10 damage to itself.'
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'FST';
   public setNumber: string = '71';
   public cardImage: string = 'assets/cardback.png';

@@ -11,29 +11,27 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Steelix extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Onix';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 190;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Steel Swing',
-      cost: [C, C, C],
-      damage: 80,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 80 damage for each heads.'
-    },
-    {
-      name: 'Heavy Impact',
-      cost: [M, M, M, C, C],
-      damage: 200,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Steel Swing',
+    cost: [C, C, C],
+    damage: 80,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 80 damage for each heads.'
+  }, {
+    name: 'Heavy Impact',
+    cost: [M, M, M, C, C],
+    damage: 200,
+    text: ''
+  }];
 
   public regulationMark: string = 'E';
+
   public set: string = 'BST';
   public setNumber: string = '99';
   public cardImage: string = 'assets/cardback.png';

@@ -17,27 +17,24 @@ import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, MULTIPL
 export class Probopass extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Nosepass';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 130;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Hard Press',
-      cost: [C, C, C],
-      damage: 60,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Triple Nose',
-      cost: [M, C, C, C],
-      damage: 80,
-      damageCalculation: '+',
-      text: 'Flip 3 coins. This attack does 40 more damage for each heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Hard Press',
+    cost: [C, C, C],
+    damage: 60,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Triple Nose',
+    cost: [M, C, C, C],
+    damage: 80,
+    damageCalculation: '+',
+    text: 'Flip 3 coins. This attack does 40 more damage for each heads.'
+  }];
 
   public set: string = 'CEC';
   public setNumber: string = '141';

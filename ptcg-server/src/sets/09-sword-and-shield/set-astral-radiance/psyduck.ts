@@ -11,27 +11,25 @@ import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/att
 
 export class Psyduck extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 60;
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Spacing Out',
-      cost: [C],
-      damage: 0,
-      text: 'Flip a coin. If heads, heal 10 damage from this Pokémon.'
-    },
-    {
-      name: 'Ram',
-      cost: [W, C],
-      damage: 20,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Spacing Out',
+    cost: [C],
+    damage: 0,
+    text: 'Flip a coin. If heads, heal 10 damage from this Pokémon.'
+  }, {
+    name: 'Ram',
+    cost: [W, C],
+    damage: 20,
+    text: ''
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'ASR';
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';

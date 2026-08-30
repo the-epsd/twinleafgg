@@ -7,14 +7,13 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Meloetta extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
   public regulationMark = 'E';
 
-  public tags = [CardTag.FUSION_STRIKE];
+  protected _tags = [CardTag.FUSION_STRIKE];
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 90;
 
@@ -29,9 +28,10 @@ export class Meloetta extends PokemonCard {
       name: 'Melodius Echo',
       cost: [CardType.PSYCHIC, CardType.COLORLESS],
       damage: 70,
-      text: 'This attack does 70 damage for each Fusion Strike Energy ' +
-        'attached to all of your Pokémon.'
-    }
+      text:
+        'This attack does 70 damage for each Fusion Strike Energy ' +
+        'attached to all of your Pokémon.',
+    },
   ];
 
   public set: string = 'FST';
@@ -45,7 +45,6 @@ export class Meloetta extends PokemonCard {
   public fullName: string = 'Meloetta FST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
@@ -54,10 +53,10 @@ export class Meloetta extends PokemonCard {
 
       let energyCount = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        if (cardList.energies.cards.some(c => c.energyType === EnergyType.SPECIAL)) {
-          checkProvidedEnergyEffect.energyMap.forEach(em => {
-            energyCount += em.provides.filter(cardType => {
-              return em.card.tags.includes(CardTag.FUSION_STRIKE);
+        if (cardList.energies.cards.some((c) => c.energyType === EnergyType.SPECIAL)) {
+          checkProvidedEnergyEffect.energyMap.forEach((em) => {
+            energyCount += em.provides.filter((cardType) => {
+              return em.card.hasTag(CardTag.FUSION_STRIKE);
             }).length;
           });
         }
@@ -68,5 +67,4 @@ export class Meloetta extends PokemonCard {
     }
     return state;
   }
-
 }

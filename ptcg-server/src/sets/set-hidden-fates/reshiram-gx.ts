@@ -2,18 +2,32 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_BURN_TO_PLAYER_ACTIVE, AFTER_ATTACK, BLOCK_IF_GX_ATTACK_USED, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import {
+  ADD_BURN_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  BLOCK_IF_GX_ATTACK_USED,
+  SHUFFLE_DECK,
+  WAS_ATTACK_USED,
+} from '../../game/store/prefabs/prefabs';
 import { CardTag, CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { StateUtils } from '../../game/store/state-utils';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { GameMessage } from '../../game/game-message';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { AttachEnergyPrompt, Card, EnergyCard, PlayerType, SlotType, State, StoreLike } from '../../game';
+import {
+  AttachEnergyPrompt,
+  Card,
+  EnergyCard,
+  PlayerType,
+  SlotType,
+  State,
+  StoreLike,
+} from '../../game';
 export class ReshiramGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 180;
   public weakness = [{ type: W }];
   public retreat = [C, C];
@@ -23,20 +37,20 @@ export class ReshiramGx extends PokemonCard {
       name: 'Flame Charge',
       cost: [C],
       damage: 0,
-      text: 'Search your deck for up to 2 [R] Energy cards and attach them to this Pokémon. Then, shuffle your deck.'
+      text: 'Search your deck for up to 2 [R] Energy cards and attach them to this Pokémon. Then, shuffle your deck.',
     },
     {
       name: 'Scorching Column',
       cost: [R, R, R, C],
       damage: 110,
-      text: 'Your opponent\'s Active Pokémon is now Burned.'
+      text: "Your opponent's Active Pokémon is now Burned.",
     },
     {
       name: 'Vermilion-GX',
       cost: [R, R, R, C],
       damage: 180,
-      text: 'You may attach up to 5 [R] Energy cards from your hand to your Pokémon in any way you like. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "You may attach up to 5 [R] Energy cards from your hand to your Pokémon in any way you like. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'HIF';
@@ -56,19 +70,23 @@ export class ReshiramGx extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_ATTACH,
-        player.deck,
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
-        { min: 0, max: 2, allowCancel: false }
-      ), (cards: Card[]) => {
-        cards = cards || [];
-        if (cards.length > 0) {
-          player.deck.moveCardsTo(cards, cardList);
-        }
-        return SHUFFLE_DECK(store, state, player);
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_ATTACH,
+          player.deck,
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
+          { min: 0, max: 2, allowCancel: false },
+        ),
+        (cards: Card[]) => {
+          cards = cards || [];
+          if (cards.length > 0) {
+            player.deck.moveCardsTo(cards, cardList);
+          }
+          return SHUFFLE_DECK(store, state, player);
+        },
+      );
     }
 
     // Attack 2: Scorching Column
@@ -84,29 +102,36 @@ export class ReshiramGx extends PokemonCard {
       BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
 
-      const hasFireEnergy = player.hand.cards.some(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.FIRE)
+      const hasFireEnergy = player.hand.cards.some(
+        (c) =>
+          c instanceof EnergyCard &&
+          c.energyType === EnergyType.BASIC &&
+          c.provides.includes(CardType.FIRE),
       );
 
       if (!hasFireEnergy) {
         return state;
       }
 
-      return store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_CARDS,
-        player.hand,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
-        { allowCancel: false, min: 0, max: 5 }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.hand.moveCardTo(transfer.card, target);
-        }
-      });
+      return store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_CARDS,
+          player.hand,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
+          { allowCancel: false, min: 0, max: 5 },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.hand.moveCardTo(transfer.card, target);
+          }
+        },
+      );
     }
 
     return state;

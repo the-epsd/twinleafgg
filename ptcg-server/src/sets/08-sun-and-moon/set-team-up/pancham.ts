@@ -11,19 +11,17 @@ import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/s
 
 export class Pancham extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 60;
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Arm Thrust',
-      cost: [C, C],
-      damage: 40,
-      text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon. If tails, this attack does nothing.'
-    }
-  ];
+  public attacks = [{
+    name: 'Arm Thrust',
+    cost: [C, C],
+    damage: 40,
+    text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon. If tails, this attack does nothing.'
+  }];
 
   public set: string = 'TEU';
   public setNumber: string = '81';

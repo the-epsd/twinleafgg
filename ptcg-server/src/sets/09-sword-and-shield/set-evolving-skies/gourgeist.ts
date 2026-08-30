@@ -4,7 +4,7 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { CardList, StoreLike, State } from '../../../game';
+import { CardList, StoreLike, State, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, SHUFFLE_DECK, SHOW_CARDS_TO_PLAYER } from '../../../game/store/prefabs/prefabs';
 import { StateUtils } from '../../../game/store/state-utils';
@@ -12,7 +12,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 export class Gourgeist extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Pumpkaboo';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 120;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
@@ -50,7 +50,7 @@ export class Gourgeist extends PokemonCard {
 
       // Find Psychic Pokemon in top 6
       const psychicPokemon = topCards.cards.filter(c =>
-        c instanceof PokemonCard && c.cardType === CardType.PSYCHIC
+        c instanceof PokemonCard && pokemonHasCardType(c, CardType.PSYCHIC)
       );
 
       // Show the top 6 cards to the opponent

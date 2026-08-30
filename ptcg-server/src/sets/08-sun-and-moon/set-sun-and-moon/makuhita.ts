@@ -10,25 +10,22 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 
 export class Makuhita extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 80;
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Surprise Attack',
-      cost: [F],
-      damage: 20,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    },
-    {
-      name: 'Strength',
-      cost: [F, C],
-      damage: 40,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Surprise Attack',
+    cost: [F],
+    damage: 20,
+    text: 'Flip a coin. If tails, this attack does nothing.'
+  }, {
+    name: 'Strength',
+    cost: [F, C],
+    damage: 40,
+    text: ''
+  }];
 
   public set: string = 'SUM';
   public setNumber: string = '67';

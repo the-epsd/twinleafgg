@@ -1,6 +1,17 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardTag } from '../../../game/store/card/card-types';
-import { CardList, EnergyCard, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, State, StateUtils, StoreLike } from '../../../game';
+import { CardType, Stage, CardTag } from '../../../game/store/card/card-types';
+import {
+  CardList,
+  EnergyCard,
+  GameError,
+  GameMessage,
+  PlayerType,
+  PokemonCardList,
+  PowerType,
+  State,
+  StateUtils,
+  StoreLike,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { KyogreAndGroudonLegendBottom } from './kyogre-and-groudon-legend-bottom';
@@ -8,9 +19,8 @@ import { MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store
 
 export class KyogreAndGroudonLegendTop extends PokemonCard {
   public stage: Stage = Stage.LEGEND;
-  public tags = [CardTag.LEGEND, CardTag.DUAL_LEGEND];
-  public cardType = W;
-  public additionalCardTypes = [F];
+  protected _tags = [CardTag.LEGEND, CardTag.DUAL_LEGEND];
+  public cardType: CardType[] = [W, F];
   public hp: number = 150;
   public weakness = [{ type: G }, { type: L }];
   public retreat = [C, C, C];
@@ -30,14 +40,14 @@ export class KyogreAndGroudonLegendTop extends PokemonCard {
       name: 'Mega Tidal Wave',
       cost: [W, W, C, C],
       damage: 0,
-      text: 'Discard the top 5 cards from your opponent\'s deck. This attack does 30 damage times the number of Energy cards you discarded to each of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "Discard the top 5 cards from your opponent's deck. This attack does 30 damage times the number of Energy cards you discarded to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Massive Eruption',
       cost: [F, F, C, C],
       damage: 100,
       damageCalculation: 'x',
-      text: 'Discard the top 5 cards from your deck. This attack does 100 damage times the number of Energy cards you discarded.'
+      text: 'Discard the top 5 cards from your deck. This attack does 100 damage times the number of Energy cards you discarded.',
     },
   ];
 
@@ -51,7 +61,7 @@ export class KyogreAndGroudonLegendTop extends PokemonCard {
     // assemblin the avengers
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
-      const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
+      const slots: PokemonCardList[] = player.bench.filter((b) => b.cards.length === 0);
 
       if (slots.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -62,7 +72,7 @@ export class KyogreAndGroudonLegendTop extends PokemonCard {
       let topCard: KyogreAndGroudonLegendTop | null = null;
       let bottomCard: KyogreAndGroudonLegendBottom | null = null;
 
-      player.hand.cards.forEach(card => {
+      player.hand.cards.forEach((card) => {
         if (card instanceof KyogreAndGroudonLegendTop && !topPiece) {
           topPiece = true;
           topCard = card;
@@ -95,13 +105,15 @@ export class KyogreAndGroudonLegendTop extends PokemonCard {
       opponent.deck.moveTo(deckTop, 5);
 
       // Filter for Energy cards
-      const energyCount = deckTop.cards.filter(c =>
-        c instanceof EnergyCard
-      );
+      const energyCount = deckTop.cards.filter((c) => c instanceof EnergyCard);
       const attackDamage = energyCount.length * 30;
 
       // Move all cards to discard
-      MOVE_CARDS(store, state, deckTop, opponent.discard, { count: deckTop.cards.length, sourceCard: this, sourceEffect: this.attacks[0] });
+      MOVE_CARDS(store, state, deckTop, opponent.discard, {
+        count: deckTop.cards.length,
+        sourceCard: this,
+        sourceEffect: this.attacks[0],
+      });
 
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         if (cardList !== opponent.active) {
@@ -122,9 +134,7 @@ export class KyogreAndGroudonLegendTop extends PokemonCard {
       player.deck.moveTo(deckTop, 5);
 
       // Filter for Energy cards
-      const energyCount = deckTop.cards.filter(c =>
-        c instanceof EnergyCard
-      );
+      const energyCount = deckTop.cards.filter((c) => c instanceof EnergyCard);
 
       // Move all cards to discard
       deckTop.moveTo(player.discard, deckTop.cards.length);

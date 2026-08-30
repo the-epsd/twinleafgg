@@ -8,26 +8,23 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../../game/s
 export class Lickilicky extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Lickitung';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Dangerous Lick',
-      cost: [C, C, C],
-      damage: 50,
-      damageCalculation: '+',
-      text: 'Flip a coin until you get tails. This attack does 50 more damage for each heads. If the first flip is tails, your opponent\'s Active Pokémon is now Paralyzed.'
-    },
-    {
-      name: 'Rolling Tackle',
-      cost: [C, C, C, C],
-      damage: 110,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Dangerous Lick',
+    cost: [C, C, C],
+    damage: 50,
+    damageCalculation: '+',
+    text: 'Flip a coin until you get tails. This attack does 50 more damage for each heads. If the first flip is tails, your opponent\'s Active Pokémon is now Paralyzed.'
+  }, {
+    name: 'Rolling Tackle',
+    cost: [C, C, C, C],
+    damage: 110,
+    text: ''
+  }];
 
   public set: string = 'UPR';
   public setNumber: string = '103';

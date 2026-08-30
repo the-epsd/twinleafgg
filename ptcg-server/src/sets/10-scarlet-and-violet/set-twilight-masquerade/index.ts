@@ -82,6 +82,7 @@ import { Poliwrath } from './poliwrath';
 import { Poltchageist } from './poltchageist';
 import { Poochyena } from './poochyena';
 import { Rillaboom } from './rillaboom';
+import { Scolipede } from './scolipede';
 import { ScoopUpCyclone } from './scoop-up-cyclone';
 import { ScreamTailex } from './scream-tail-ex';
 import { SecretBox } from './secret-box';
@@ -98,8 +99,10 @@ import { Thwackey } from './thwackey';
 import { Timburr } from './timburr';
 import { TingLu } from './ting-lu';
 import { UnfairStamp } from './unfair-stamp';
+import { Varoom } from './varoom';
 import { WalkingWake } from './walking-wake';
 import { WellspringMaskOgerponex } from './wellspring-mask-ogerpon-ex';
+import { Whirlipede } from './whirlipede';
 import { Zapdos } from './zapdos';
 
 export const setTwilightMasquerade: Card[] = [
@@ -142,9 +145,11 @@ export const setTwilightMasquerade: Card[] = [
   new Morpeko(),
   new PerformanceFlute(),
   new Poochyena(),
+  new Scolipede(),
   new ScoopUpCyclone(),
   new Tatsugiri(),
   new Timburr(),
+  new Varoom(),
   new WellspringMaskOgerponex(),
   new Kieran(),
   new BloodmoonUrsalunaex(),
@@ -182,6 +187,7 @@ export const setTwilightMasquerade: Card[] = [
   new TingLu(),
   new Monferno(),
   new Rillaboom(),
+  new Whirlipede(),
   new Zapdos(),
   new Clefairy(),
   new Palafin(),

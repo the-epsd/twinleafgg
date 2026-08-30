@@ -102,8 +102,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Attac
 
 export class Jirachi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
-  public additionalCardTypes = [M];
+  public cardType: CardType[] = [P, M];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public retreat = [C];
@@ -113,8 +112,7 @@ export class Jirachi extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Search your deck for a card that evolves from 1 of your Pokémon and put it on that Pokémon. (This counts as evolving that Pokémon.) If you do, put 1 damage counter on Jirachi. Shuffle your deck afterward.'
-  },
-  {
+  }, {
     name: 'Mind Bend',
     cost: [P, M],
     damage: 30,

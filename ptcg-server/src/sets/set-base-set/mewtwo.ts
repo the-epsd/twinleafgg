@@ -1,34 +1,24 @@
-// ptcg-server\src\sets\set-base-set\mewtwo.ts
-
-import { StoreLike, State, StateUtils, ChooseEnergyPrompt, GameMessage, Card, PlayerType, PokemonCardList } from '../../game';
-import { CardType, Stage } from '../../game/store/card/card-types';
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Attack } from '../../game/store/card/pokemon-types';
-import { AbstractAttackEffect, DiscardCardsEffect } from '../../game/store/effects/attack-effects';
-import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { Effect } from '../../game/store/effects/effect';
-
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { Card, CardType, ChooseEnergyPrompt, GameMessage, PokemonCard, Stage, State, StateUtils, StoreLike } from "../../game";
+import { DiscardCardsEffect } from "../../game/store/effects/attack-effects";
+import { CheckProvidedEnergyEffect } from "../../game/store/effects/check-effects";
+import { Effect } from "../../game/store/effects/effect";
+import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from "../../game/store/prefabs/effect-of-attack-prefabs";
 
 export class Mewtwo extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType = P;
-
+  public cardType: CardType[] = [P];
   public hp: number = 60;
-
   public weakness = [{ type: P }];
-
   public retreat = [C, C, C];
 
-  public attacks: Attack[] = [{
+  public attacks = [{
     name: 'Psychic',
     cost: [P, C],
     damage: 10,
     text: 'Does 10 damage plus 10 more damage for each Energy card attached to the Defending Pokémon.'
-  }, {
+  },
+  {
     name: 'Barrier',
     cost: [P, P],
     text: 'Discard 1 [P] Energy card attached to Mewtwo in order to prevent all effects of attacks, including damage, done to Mewtwo during your opponent\'s next turn.',
@@ -36,17 +26,13 @@ export class Mewtwo extends PokemonCard {
   }];
 
   public set = 'BS';
-
   public name = 'Mewtwo';
-
   public fullName = 'Mewtwo BS';
-
   public setNumber = '10';
-
   public cardImage: string = 'assets/cardback.png';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Psychic
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -56,12 +42,11 @@ export class Mewtwo extends PokemonCard {
 
       const energyCount = checkProvidedEnergyEffect.energyMap.reduce((left, p) => left + p.provides.length, 0);
 
-      effect.damage = 10 + energyCount * 10;
+      effect.damage += energyCount * 10;
     }
-
+    // Barrier
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
@@ -78,36 +63,9 @@ export class Mewtwo extends PokemonCard {
         discardEnergy.target = player.active;
         store.reduceEffect(state, discardEnergy);
 
-        player.active.marker.addMarker(PokemonCardList.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this);
-        opponent.marker.addMarker(PokemonCardList.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this);
+        PREVENT_DAMAGE(store, state, effect, this);
+        PREVENT_EFFECTS_OF_ATTACKS(store, state, effect, this);
       });
-    }
-
-    if (effect instanceof EndTurnEffect &&
-      effect.player.marker.hasMarker(PokemonCardList.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this)) {
-
-      effect.player.marker.removeMarker(PokemonCardList.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this);
-
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(PokemonCardList.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this);
-      });
-    }
-
-    if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this) &&
-      effect.target.marker.hasMarker(PokemonCardList.PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN, this)) {
-      const pokemonCard = effect.target.getPokemonCard();
-      const sourceCard = effect.source.getPokemonCard();
-
-      if (pokemonCard !== this) {
-        return state;
-      }
-
-      if (sourceCard) {
-        effect.preventDefault = true;
-      }
-
-      return state;
     }
 
     return state;

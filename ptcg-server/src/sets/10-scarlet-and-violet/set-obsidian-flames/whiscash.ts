@@ -8,7 +8,7 @@ import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs
 
 export class Whiscash extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
   public evolvesFrom = 'Barboach';
   public hp: number = 140;
   public weakness = [{ type: CardType.GRASS }];

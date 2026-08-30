@@ -17,7 +17,7 @@ export class UnownP extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
   public evolvesFrom = 'Unown P';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 50;
   public weakness = [{ type: P, value: +10 }];
   public retreat = [C];

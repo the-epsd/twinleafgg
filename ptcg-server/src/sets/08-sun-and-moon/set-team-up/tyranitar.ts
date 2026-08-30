@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Tyranitar extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Pupitar';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 170;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];
@@ -23,15 +23,15 @@ export class Tyranitar extends PokemonCard {
       name: 'Spinning Tail',
       cost: [D, C, C],
       damage: 0,
-      text: 'This attack does 30 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: "This attack does 30 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
     },
     {
       name: 'Bite Off',
       cost: [D, C, C, C],
       damage: 130,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is a Pokémon-GX or a Pokémon-EX, this attack does 100 more damage.'
-    }
+      text: "If your opponent's Active Pokémon is a Pokémon-GX or a Pokémon-EX, this attack does 100 more damage.",
+    },
   ];
 
   public set: string = 'TEU';
@@ -53,7 +53,7 @@ export class Tyranitar extends PokemonCard {
       store.reduceEffect(state, damageActive);
 
       // Deal 30 to each benched (no Weakness/Resistance)
-      opponent.bench.forEach(benched => {
+      opponent.bench.forEach((benched) => {
         if (benched.cards.length > 0) {
           const damage = new PutDamageEffect(effect, 30);
           damage.target = benched;
@@ -69,10 +69,10 @@ export class Tyranitar extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const defendingCard = opponent.active.getPokemonCard();
-      if (defendingCard && (
-        defendingCard.tags.includes(CardTag.POKEMON_GX) ||
-        defendingCard.tags.includes(CardTag.POKEMON_EX)
-      )) {
+      if (
+        defendingCard &&
+        (defendingCard.hasTag(CardTag.POKEMON_GX) || defendingCard.hasTag(CardTag.POKEMON_EX))
+      ) {
         effect.damage += 100;
       }
     }

@@ -12,25 +12,22 @@ import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/att
 export class Gogoat extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Skiddo';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Milk Drink',
-      cost: [G],
-      damage: 0,
-      text: 'Flip 2 coins. For each heads, heal 40 damage from this Pokémon.'
-    },
-    {
-      name: 'Double-Edge',
-      cost: [G, C, C],
-      damage: 120,
-      text: 'This Pokémon does 30 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Milk Drink',
+    cost: [G],
+    damage: 0,
+    text: 'Flip 2 coins. For each heads, heal 40 damage from this Pokémon.'
+  }, {
+    name: 'Double-Edge',
+    cost: [G, C, C],
+    damage: 120,
+    text: 'This Pokémon does 30 damage to itself.'
+  }];
 
   public set: string = 'FLI';
   public setNumber: string = '10';

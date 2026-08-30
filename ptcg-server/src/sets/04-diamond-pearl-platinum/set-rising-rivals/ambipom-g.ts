@@ -1,14 +1,22 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, PlayerType, AttachEnergyPrompt, GameMessage, SlotType, StateUtils } from '../../../game';
+import {
+  StoreLike,
+  State,
+  PlayerType,
+  AttachEnergyPrompt,
+  GameMessage,
+  SlotType,
+  StateUtils,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CONFIRMATION_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 
 export class AmbipomG extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_SP];
-  public cardType: CardType = C;
+  protected _tags = [CardTag.POKEMON_SP];
+  public cardType: CardType[] = [C];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -18,14 +26,14 @@ export class AmbipomG extends PokemonCard {
       name: 'Tail Code',
       cost: [C],
       damage: 0,
-      text: 'Move an Energy card attached to the Defending Pokémon to another of your opponent\'s Pokémon.'
+      text: "Move an Energy card attached to the Defending Pokémon to another of your opponent's Pokémon.",
     },
     {
       name: 'Snap Attack',
       cost: [C, C],
       damage: 60,
-      text: 'If the Defending Pokémon has any Energy cards attached to it, this attack\'s base damage is 20 instead of 60.'
-    }
+      text: "If the Defending Pokémon has any Energy cards attached to it, this attack's base damage is 20 instead of 60.",
+    },
   ];
 
   public set: string = 'RR';
@@ -40,10 +48,9 @@ export class AmbipomG extends PokemonCard {
       const player = effect.player;
       const opponent = effect.opponent;
 
-      CONFIRMATION_PROMPT(store, state, player, result => {
+      CONFIRMATION_PROMPT(store, state, player, (result) => {
         if (result) {
-
-          if (!opponent.bench.some(b => b.cards.length > 0)) {
+          if (!opponent.bench.some((b) => b.cards.length > 0)) {
             return state;
           }
 
@@ -61,22 +68,25 @@ export class AmbipomG extends PokemonCard {
             return state;
           }
 
-          return store.prompt(state, new AttachEnergyPrompt(
-            player.id,
-            GameMessage.MOVE_ENERGY_CARDS,
-            opponent.active.energies,
-            PlayerType.TOP_PLAYER,
-            [SlotType.BENCH],
-            { superType: SuperType.ENERGY },
-            { allowCancel: false, min: 1, max: 1 }
-          ), transfers => {
-            transfers = transfers || [];
-            for (const transfer of transfers) {
-              const target = StateUtils.getTarget(state, opponent, transfer.to);
-              opponent.active.moveCardTo(transfer.card, target);
-            }
-          });
-
+          return store.prompt(
+            state,
+            new AttachEnergyPrompt(
+              player.id,
+              GameMessage.MOVE_ENERGY_CARDS,
+              opponent.active.energies,
+              PlayerType.TOP_PLAYER,
+              [SlotType.BENCH],
+              { superType: SuperType.ENERGY },
+              { allowCancel: false, min: 1, max: 1 },
+            ),
+            (transfers) => {
+              transfers = transfers || [];
+              for (const transfer of transfers) {
+                const target = StateUtils.getTarget(state, opponent, transfer.to);
+                opponent.active.moveCardTo(transfer.card, target);
+              }
+            },
+          );
         }
       });
     }

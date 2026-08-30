@@ -14,7 +14,8 @@ export class CustomVest extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Custom Vest';
   public fullName: string = 'Custom Vest M6';
-  public text: string = 'The Pokémon this card is attached to (excluding any Mega Pokémon ex) takes 60 less damage from the attacks of your opponent\'s Mega Pokémon ex.';
+  public text: string =
+    "The Pokémon this card is attached to (excluding any Mega Pokémon ex) takes 60 less damage from the attacks of your opponent's Mega Pokémon ex.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PutDamageEffect && effect.target.tools.includes(this)) {
@@ -33,12 +34,12 @@ export class CustomVest extends TrainerCard {
       }
 
       const targetCard = effect.target.getPokemonCard();
-      if (targetCard?.tags.includes(CardTag.POKEMON_SV_MEGA) && targetCard.tags.includes(CardTag.POKEMON_ex)) {
+      if (targetCard?.hasTag(CardTag.POKEMON_SV_MEGA) && targetCard.hasTag(CardTag.POKEMON_ex)) {
         return state;
       }
 
       const sourceCard = effect.source.getPokemonCard();
-      if (!(sourceCard?.tags.includes(CardTag.POKEMON_SV_MEGA) && sourceCard.tags.includes(CardTag.POKEMON_ex))) {
+      if (!(sourceCard?.hasTag(CardTag.POKEMON_SV_MEGA) && sourceCard.hasTag(CardTag.POKEMON_ex))) {
         return state;
       }
 

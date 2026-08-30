@@ -18,26 +18,23 @@ import { Effect } from '../../../game/store/effects/effect';
 import { Card, State, StoreLike } from '../../../game';
 export class Plusle extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Positive Hand',
-      cost: [C],
-      damage: 0,
-      text: 'Discard a basic Energy card from your hand. If you do, draw 2 cards.'
-    },
-    {
-      name: 'Electric Tail',
-      cost: [L, C],
-      damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Positive Hand',
+    cost: [C],
+    damage: 0,
+    text: 'Discard a basic Energy card from your hand. If you do, draw 2 cards.'
+  }, {
+    name: 'Electric Tail',
+    cost: [L, C],
+    damage: 30,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'FFI';
   public setNumber: string = '31';

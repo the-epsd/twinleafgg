@@ -9,7 +9,7 @@ import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-e
 export class Bellossom extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Gloom';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 100;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -30 }];
@@ -27,8 +27,7 @@ export class Bellossom extends PokemonCard {
     cost: [G],
     damage: 10,
     text: 'Flip a coin. If heads, choose 1 Special Condition. The Defending Pokémon is now affected by that Special Condition.'
-  },
-  {
+  }, {
     name: 'Solar Beam',
     cost: [G, C, C],
     damage: 50,

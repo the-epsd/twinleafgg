@@ -11,10 +11,10 @@ import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../../game/store/prefabs/prefa
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../../game/store/prefabs/attack-effects';
 
 export class Mienshao extends PokemonCard {
-  public tags = [CardTag.RAPID_STRIKE];
+  protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Mienfoo';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 90;
   public weakness = [{ type: P }];
   public retreat = [C];
@@ -24,14 +24,14 @@ export class Mienshao extends PokemonCard {
       name: 'Pound',
       cost: [C],
       damage: 20,
-      text: ''
+      text: '',
     },
     {
       name: 'Spinning Whip',
       cost: [F, C],
       damage: 90,
-      text: 'Your opponent\'s Active Pokémon is now Confused. Shuffle this Pokémon and all attached cards into your deck.'
-    }
+      text: "Your opponent's Active Pokémon is now Confused. Shuffle this Pokémon and all attached cards into your deck.",
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -58,7 +58,9 @@ export class Mienshao extends PokemonCard {
 
       // Move all attached cards and this Pokemon to deck
       const tools = activePokemon.tools.slice();
-      tools.forEach(tool => { activePokemon.moveCardTo(tool, player.deck); });
+      tools.forEach((tool) => {
+        activePokemon.moveCardTo(tool, player.deck);
+      });
       activePokemon.moveTo(player.deck);
       activePokemon.clearEffects();
 

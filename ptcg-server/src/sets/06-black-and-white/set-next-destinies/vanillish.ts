@@ -8,25 +8,22 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from '../../../game/stor
 export class Vanillish extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Vanillite';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 80;
   public weakness = [{ type: M }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Icy Snow',
-      cost: [W],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Icy Wind',
-      cost: [W, C, C],
-      damage: 50,
-      text: 'Flip a coin. If heads, the Defending Pokémon is now Asleep.'
-    }
-  ];
+  public attacks = [{
+    name: 'Icy Snow',
+    cost: [W],
+    damage: 20,
+    text: ''
+  }, {
+    name: 'Icy Wind',
+    cost: [W, C, C],
+    damage: 50,
+    text: 'Flip a coin. If heads, the Defending Pokémon is now Asleep.'
+  }];
 
   public set: string = 'NXD';
   public setNumber: string = '32';

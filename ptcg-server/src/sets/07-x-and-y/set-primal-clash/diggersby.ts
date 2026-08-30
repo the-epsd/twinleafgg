@@ -11,25 +11,22 @@ import { WAS_ATTACK_USED, FLIP_UNTIL_TAILS_AND_COUNT_HEADS, MOVE_CARDS } from '.
 export class Diggersby extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Bunnelby';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 110;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Ear Dig',
-      cost: [F],
-      damage: 0,
-      text: 'Flip a coin until you get tails. For each heads, discard the top card of your opponent\'s deck.'
-    },
-    {
-      name: 'Hammer In',
-      cost: [C, C, C],
-      damage: 70,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Ear Dig',
+    cost: [F],
+    damage: 0,
+    text: 'Flip a coin until you get tails. For each heads, discard the top card of your opponent\'s deck.'
+  }, {
+    name: 'Hammer In',
+    cost: [C, C, C],
+    damage: 70,
+    text: ''
+  }];
 
   public set: string = 'PRC';
   public setNumber: string = '90';

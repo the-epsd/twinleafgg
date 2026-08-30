@@ -6,7 +6,7 @@ import { State, StoreLike } from '../../../game';
 
 export class Oshawott2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 60;
   public weakness = [{ type: L }];
   public retreat = [C];
@@ -16,8 +16,7 @@ export class Oshawott2 extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Asleep.'
-  },
-  {
+  }, {
     name: 'Surprise Attack',
     cost: [W, C],
     damage: 30,

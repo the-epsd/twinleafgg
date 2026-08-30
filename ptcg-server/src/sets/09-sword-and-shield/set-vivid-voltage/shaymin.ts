@@ -1,49 +1,37 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, CoinFlipPrompt, StateUtils } from '../../../game';
+import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { HealTargetEffect } from '../../../game/store/effects/attack-effects';
 
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Shaymin extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.GRASS;
-
+  public cardType: CardType[] = [G];
   public hp: number = 70;
+  public weakness = [{ type: R }];
+  public retreat = [C];
 
-  public weakness = [{ type: CardType.FIRE }];
-
-  public retreat = [CardType.COLORLESS];
-
-  public attacks = [
-    {
-      name: 'Leech Seed',
-      cost: [CardType.GRASS],
-      damage: 20,
-      text: 'Heal 20 damage from this Pokémon.'
-    },
-
-    {
-      name: 'Flower Bearing',
-      cost: [CardType.GRASS, CardType.COLORLESS],
-      damage: 0,
-      text: 'Flip a coin. If heads, your opponent shuffles their Active Pokémon and all attached cards and puts them on the bottom of their deck.'
-    }
-  ];
+  public attacks = [{
+    name: 'Leech Seed',
+    cost: [G],
+    damage: 20,
+    text: 'Heal 20 damage from this Pokémon.'
+  }, {
+    name: 'Flower Bearing',
+    cost: [G, C],
+    damage: 0,
+    text: 'Flip a coin. If heads, your opponent shuffles their Active Pokémon and all attached cards and puts them on the bottom of their deck.'
+  }];
 
   public set: string = 'VIV';
-
   public setNumber = '15';
-
   public cardImage = 'assets/cardback.png';
 
   public regulationMark: string = 'D';
 
   public name: string = 'Shaymin';
-
   public fullName: string = 'Shaymin VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -61,9 +49,7 @@ export class Shaymin extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
+      return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
           opponent.active.moveTo(opponent.deck);
           opponent.active.clearEffects();

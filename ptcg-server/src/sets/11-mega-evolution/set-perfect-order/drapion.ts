@@ -5,7 +5,7 @@ import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, ADD_POISON_TO_PLAY
 export class Drapion extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Skorupi';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 140;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

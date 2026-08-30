@@ -9,7 +9,7 @@ export class Drizzile extends PokemonCard {
 
   public evolvesFrom = 'Sobble';
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp: number = 90;
 

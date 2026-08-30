@@ -7,12 +7,11 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 // LOT Poipole 107 (https://limitlesstcg.com/cards/LOT/107)
 export class Poipole extends PokemonCard {
-
-  public tags = [CardTag.ULTRA_BEAST];
+  protected _tags = [CardTag.ULTRA_BEAST];
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 70;
 
@@ -25,14 +24,14 @@ export class Poipole extends PokemonCard {
       name: 'Eye Opener',
       cost: [CardType.COLORLESS],
       damage: 0,
-      text: 'Look at your face-down Prize cards.'
+      text: 'Look at your face-down Prize cards.',
     },
 
     {
       name: 'Peck',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 20,
-      text: ''
+      text: '',
     },
   ];
 
@@ -51,9 +50,11 @@ export class Poipole extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const prizes = player.prizes.filter(p => p.isSecret);
+      const prizes = player.prizes.filter((p) => p.isSecret);
       const cards: Card[] = [];
-      prizes.forEach(p => { p.cards.forEach(c => cards.push(c)); });
+      prizes.forEach((p) => {
+        p.cards.forEach((c) => cards.push(c));
+      });
 
       // All prizes are face-up
       if (cards.length === 0) {
@@ -61,16 +62,20 @@ export class Poipole extends PokemonCard {
       }
 
       // Make prizes no more secret, before displaying prompt
-      prizes.forEach(p => { p.isSecret = false; });
+      prizes.forEach((p) => {
+        p.isSecret = false;
+      });
 
-      state = store.prompt(state, new ShowCardsPrompt(
-        player.id,
-        GameMessage.CARDS_SHOWED_BY_EFFECT,
-        cards,
-      ), () => { });
+      state = store.prompt(
+        state,
+        new ShowCardsPrompt(player.id, GameMessage.CARDS_SHOWED_BY_EFFECT, cards),
+        () => {},
+      );
 
       // Prizes are secret once again.
-      prizes.forEach(p => { p.isSecret = true; });
+      prizes.forEach((p) => {
+        p.isSecret = true;
+      });
 
       return state;
     }

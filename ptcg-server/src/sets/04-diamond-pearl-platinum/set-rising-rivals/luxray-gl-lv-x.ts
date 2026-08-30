@@ -25,8 +25,8 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 export class LuxrayGLLVX extends PokemonCard {
   public stage: Stage = Stage.LV_X;
   public evolvesFrom = 'Luxray GL';
-  public cardType: CardType = L;
-  public tags = [CardTag.POKEMON_LV_X, CardTag.POKEMON_SP];
+  public cardType: CardType[] = [L];
+  protected _tags = [CardTag.POKEMON_LV_X, CardTag.POKEMON_SP];
   public hp: number = 110;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

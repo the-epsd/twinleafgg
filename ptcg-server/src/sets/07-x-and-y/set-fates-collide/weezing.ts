@@ -12,25 +12,22 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED, YOUR_OPPPONENTS_ACTIVE_
 export class Weezing extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Koffing';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 110;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Balloon Bomb',
-      cost: [C, C],
-      damage: 0,
-      text: 'Flip 2 coins. For each heads, discard 2 cards from the top of your opponent\'s deck.'
-    },
-    {
-      name: 'Thick Liquid',
-      cost: [P, C, C],
-      damage: 80,
-      text: 'Both Active Pokémon are now Confused and Poisoned.'
-    }
-  ];
+  public attacks = [{
+    name: 'Balloon Bomb',
+    cost: [C, C],
+    damage: 0,
+    text: 'Flip 2 coins. For each heads, discard 2 cards from the top of your opponent\'s deck.'
+  }, {
+    name: 'Thick Liquid',
+    cost: [P, C, C],
+    damage: 80,
+    text: 'Both Active Pokémon are now Confused and Poisoned.'
+  }];
 
   public set: string = 'FCO';
   public setNumber: string = '28';

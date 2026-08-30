@@ -10,28 +10,26 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 
 export class Zamazenta extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Guard Press',
-      cost: [M, C],
-      damage: 30,
-      text: 'During your opponent\'s next turn, this Pokémon takes 20 less damage from attacks (after applying Weakness and Resistance).'
-    },
-    {
-      name: 'Power Rush',
-      cost: [M, M, C],
-      damage: 120,
-      text: 'Flip a coin. If tails, this Pokémon can\'t attack during your next turn.'
-    }
-  ];
+  public attacks = [{
+    name: 'Guard Press',
+    cost: [M, C],
+    damage: 30,
+    text: 'During your opponent\'s next turn, this Pokémon takes 20 less damage from attacks (after applying Weakness and Resistance).'
+  }, {
+    name: 'Power Rush',
+    cost: [M, M, C],
+    damage: 120,
+    text: 'Flip a coin. If tails, this Pokémon can\'t attack during your next turn.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'RCL';
   public setNumber: string = '140';
   public cardImage: string = 'assets/cardback.png';

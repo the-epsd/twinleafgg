@@ -9,10 +9,10 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Lycanroc extends PokemonCard {
-  public tags = [CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Rockruff';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 120;
   public weakness = [{ type: G }];
   public retreat = [C, C];
@@ -23,8 +23,8 @@ export class Lycanroc extends PokemonCard {
       cost: [F, F],
       damage: 80,
       damageCalculation: '+',
-      text: 'This attack does 10 more damage for each Single Strike Pokémon in your discard pile.'
-    }
+      text: 'This attack does 10 more damage for each Single Strike Pokémon in your discard pile.',
+    },
   ];
 
   public regulationMark: string = 'E';
@@ -40,7 +40,7 @@ export class Lycanroc extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const singleStrikeCount = player.discard.cards.filter(
-        c => c instanceof PokemonCard && c.tags.includes(CardTag.SINGLE_STRIKE)
+        (c) => c instanceof PokemonCard && c.hasTag(CardTag.SINGLE_STRIKE),
       ).length;
       effect.damage += 10 * singleStrikeCount;
     }

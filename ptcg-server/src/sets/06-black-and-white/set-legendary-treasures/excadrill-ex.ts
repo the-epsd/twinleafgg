@@ -3,8 +3,22 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../../game/store/card/card-types';
-import { StoreLike, State, PlayerType, SlotType, GameMessage, StateUtils, AttachEnergyPrompt } from '../../../game';
+import {
+  Stage,
+  CardType,
+  CardTag,
+  SuperType,
+  EnergyType,
+} from '../../../game/store/card/card-types';
+import {
+  StoreLike,
+  State,
+  PlayerType,
+  SlotType,
+  GameMessage,
+  StateUtils,
+  AttachEnergyPrompt,
+} from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
@@ -12,9 +26,9 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { CardList } from '../../../game/store/state/card-list';
 
 export class ExcadrillEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 180;
   public weakness = [{ type: W }];
   public resistance = [{ type: L, value: -20 }];
@@ -25,14 +39,14 @@ export class ExcadrillEx extends PokemonCard {
       name: 'Dig Out',
       cost: [C, C],
       damage: 40,
-      text: 'Discard the top card of your deck. If that card is a basic Energy card, attach it to 1 of your Pokémon.'
+      text: 'Discard the top card of your deck. If that card is a basic Energy card, attach it to 1 of your Pokémon.',
     },
     {
       name: 'Break Ground',
       cost: [F, F, C, C],
       damage: 120,
-      text: 'Does 10 damage to each of your Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "Does 10 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public set: string = 'LTR';
@@ -54,29 +68,36 @@ export class ExcadrillEx extends PokemonCard {
       const topOfDeck = new CardList();
       player.deck.moveTo(topOfDeck, 1);
 
-      const discardedEnergy = topOfDeck.cards.filter(card => {
-        return card.superType === SuperType.ENERGY && (card as EnergyCard).energyType === EnergyType.BASIC;
+      const discardedEnergy = topOfDeck.cards.filter((card) => {
+        return (
+          card.superType === SuperType.ENERGY &&
+          (card as EnergyCard).energyType === EnergyType.BASIC
+        );
       });
 
       if (discardedEnergy.length === 0) {
         topOfDeck.moveTo(player.discard);
       } else {
-        store.prompt(state, new AttachEnergyPrompt(
-          player.id,
-          GameMessage.ATTACH_ENERGY_TO_BENCH,
-          topOfDeck,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.ACTIVE, SlotType.BENCH],
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-          { allowCancel: false, min: 1, max: 1 }
-        ), transfers => {
-          transfers = transfers || [];
-          for (const transfer of transfers) {
-            const target = StateUtils.getTarget(state, player, transfer.to);
-            topOfDeck.moveCardTo(transfer.card, target);
-          }
-          topOfDeck.moveTo(player.discard);
-        });
+        store.prompt(
+          state,
+          new AttachEnergyPrompt(
+            player.id,
+            GameMessage.ATTACH_ENERGY_TO_BENCH,
+            topOfDeck,
+            PlayerType.BOTTOM_PLAYER,
+            [SlotType.ACTIVE, SlotType.BENCH],
+            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+            { allowCancel: false, min: 1, max: 1 },
+          ),
+          (transfers) => {
+            transfers = transfers || [];
+            for (const transfer of transfers) {
+              const target = StateUtils.getTarget(state, player, transfer.to);
+              topOfDeck.moveCardTo(transfer.card, target);
+            }
+            topOfDeck.moveTo(player.discard);
+          },
+        );
       }
     }
 
@@ -85,7 +106,7 @@ export class ExcadrillEx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         if (cardList === player.active) {
           return;
         }

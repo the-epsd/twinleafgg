@@ -8,7 +8,7 @@ import { State, StoreLike } from '../../game';
 export class Haunter extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Gastly';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
@@ -19,8 +19,7 @@ export class Haunter extends PokemonCard {
     cost: [C, C],
     damage: 10,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
-  },
-  {
+  }, {
     name: 'Shadow Hand',
     cost: [P, C, C],
     damage: 10,

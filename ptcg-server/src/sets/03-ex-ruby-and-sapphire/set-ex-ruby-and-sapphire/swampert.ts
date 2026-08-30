@@ -9,7 +9,7 @@ import { AttachEnergyPrompt, EnergyCard, PlayerType, PowerType, SlotType, State,
 export class Swampert extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Marshtomp';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 110;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];

@@ -10,10 +10,9 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Miltank extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp: number = 110;
 
@@ -21,19 +20,23 @@ export class Miltank extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Miracle Body',
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all damage done to this Pokémon by attacks from your opponent\'s Pokémon V.'
-  }];
+  public powers = [
+    {
+      name: 'Miracle Body',
+      powerType: PowerType.ABILITY,
+      text: "Prevent all damage done to this Pokémon by attacks from your opponent's Pokémon V.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Rout',
-    cost: [CardType.COLORLESS, CardType.COLORLESS],
-    damage: 10,
-    damageCalculator: '+',
-    text: 'This attack does 20 more damage for each of your opponent\'s Benched Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'Rout',
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
+      damage: 10,
+      damageCalculator: '+',
+      text: "This attack does 20 more damage for each of your opponent's Benched Pokémon.",
+    },
+  ];
 
   public regulationMark = 'F';
 
@@ -48,7 +51,6 @@ export class Miltank extends PokemonCard {
   public fullName: string = 'Miltank ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // Prevent damage from Pokemon V
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const pokemonCard = effect.target.getPokemonCard();
@@ -71,15 +73,22 @@ export class Miltank extends PokemonCard {
         return state;
       }
 
-      if (sourceCard.tags.includes(CardTag.POKEMON_V) || sourceCard.tags.includes(CardTag.POKEMON_VMAX) || sourceCard.tags.includes(CardTag.POKEMON_VSTAR)) {
-
+      if (
+        sourceCard.hasTag(CardTag.POKEMON_V) ||
+        sourceCard.hasTag(CardTag.POKEMON_VMAX) ||
+        sourceCard.hasTag(CardTag.POKEMON_VSTAR)
+      ) {
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
+          const stub = new PowerEffect(
+            player,
+            {
+              name: 'test',
+              powerType: PowerType.ABILITY,
+              text: '',
+            },
+            this,
+          );
           store.reduceEffect(state, stub);
         } catch {
           return state;
@@ -92,7 +101,7 @@ export class Miltank extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      effect.damage += (opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0) * 20);
+      effect.damage += opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0) * 20;
     }
     return state;
   }

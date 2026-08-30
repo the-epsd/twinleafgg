@@ -13,7 +13,7 @@ import { CheckRetreatCostEffect } from '../../../game/store/effects/check-effect
 export class Nidoqueen extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Nidorina';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 120;
   public weakness = [{ type: G }];
   public retreat = [C, C];

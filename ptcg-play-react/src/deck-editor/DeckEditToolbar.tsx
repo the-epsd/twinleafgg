@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import type { Card } from 'ptcg-server';
 import { CardTag, Format, SuperType } from 'ptcg-server';
 import { CheckboxField } from '../components/ui/CheckboxField';
+import { SelectField } from '../components/ui/SelectField';
 import { ShellButton } from '../components/ui/ShellButton';
 import { ShellButtonLink } from '../components/ui/ShellButtonLink';
 import { TextField } from '../components/ui/TextField';
@@ -179,7 +180,7 @@ export function DeckEditToolbar({
             <label className={styles.groupTitle} htmlFor="deck-filter-set" style={{ border: 'none', padding: 0 }}>
               {t('DECK_EDIT_SET_LABEL')}
             </label>
-            <select
+            <SelectField
               id="deck-filter-set"
               className={styles.select}
               value={filter.selectedSet ?? ''}
@@ -192,11 +193,11 @@ export function DeckEditToolbar({
                   {code}
                 </option>
               ))}
-            </select>
+            </SelectField>
             <label className={styles.groupTitle} htmlFor="deck-filter-formats" style={{ marginTop: 10 }}>
               {t('DECK_EDIT_FORMATS_ANY')}
             </label>
-            <select
+            <SelectField
               id="deck-filter-formats"
               multiple
               className={`${styles.select} ${styles.selectMulti}`}
@@ -212,11 +213,11 @@ export function DeckEditToolbar({
                   {label}
                 </option>
               ))}
-            </select>
+            </SelectField>
           </div>
           <div className={styles.group}>
             <h3 className={styles.groupTitle}>{t('DECK_EDIT_TAGS_ANY')}</h3>
-            <select
+            <SelectField
               id="deck-filter-tags"
               multiple
               className={`${styles.select} ${styles.selectMulti}`}
@@ -232,7 +233,7 @@ export function DeckEditToolbar({
                   {label}
                 </option>
               ))}
-            </select>
+            </SelectField>
             {isAdmin && (
               <CheckboxField
                 id="deck-filter-type-badge"

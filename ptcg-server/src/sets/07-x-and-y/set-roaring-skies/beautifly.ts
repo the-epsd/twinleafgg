@@ -13,54 +13,63 @@ import { PlayerType, SlotType } from '../../../game/store/actions/play-card-acti
 import { GameMessage } from '../../../game/game-message';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
-function* useWhirlwind(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
+function* useWhirlwind(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
-  const opponentHasBenched = opponent.bench.some(b => b.cards.length > 0);
+  const opponentHasBenched = opponent.bench.some((b) => b.cards.length > 0);
   if (!opponentHasBenched) {
     return state;
   }
 
   let wantToUse = false;
-  yield store.prompt(state, new ConfirmPrompt(
-    effect.player.id,
-    GameMessage.WANT_TO_SWITCH_POKEMON
-  ), result => {
-    wantToUse = result;
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ConfirmPrompt(effect.player.id, GameMessage.WANT_TO_SWITCH_POKEMON),
+    (result) => {
+      wantToUse = result;
+      next();
+    },
+  );
 
   if (!wantToUse) {
     return state;
   }
 
-  yield store.prompt(state, new ChoosePokemonPrompt(
-    player.id,
-    GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
-    PlayerType.TOP_PLAYER,
-    [SlotType.BENCH],
-    { allowCancel: false },
-  ), selected => {
-    if (!selected || selected.length === 0) {
-      return state;
-    }
+  yield store.prompt(
+    state,
+    new ChoosePokemonPrompt(
+      player.id,
+      GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
+      PlayerType.TOP_PLAYER,
+      [SlotType.BENCH],
+      { allowCancel: false },
+    ),
+    (selected) => {
+      if (!selected || selected.length === 0) {
+        return state;
+      }
 
-    const target = selected[0];
-    opponent.switchPokemon(target);
-    next();
-  });
+      const target = selected[0];
+      opponent.switchPokemon(target);
+      next();
+    },
+  );
 
   return state;
 }
 
 export class Beautifly extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_2;
 
   public evolvesFrom = 'Silcoon';
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 130;
 
@@ -68,20 +77,25 @@ export class Beautifly extends PokemonCard {
 
   public retreat = [];
 
-  public powers = [{
-    name: 'Miraculous Scales',
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all damage done to this Pokemon by attacks from your ' +
-      'opponent\'s Pokemon-EX.'
-  }];
+  public powers = [
+    {
+      name: 'Miraculous Scales',
+      powerType: PowerType.ABILITY,
+      text:
+        'Prevent all damage done to this Pokemon by attacks from your ' + "opponent's Pokemon-EX.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Whirlwind',
-    cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
-    damage: 80,
-    text: 'You may have your opponent switch his or her Active Pokemon ' +
-      'with 1 of his or her Benched Pokemon.'
-  }];
+  public attacks = [
+    {
+      name: 'Whirlwind',
+      cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
+      damage: 80,
+      text:
+        'You may have your opponent switch his or her Active Pokemon ' +
+        'with 1 of his or her Benched Pokemon.',
+    },
+  ];
 
   public set: string = 'ROS';
 
@@ -94,7 +108,6 @@ export class Beautifly extends PokemonCard {
   public setNumber: string = '5';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useWhirlwind(() => generator.next(), store, state, effect);
       return generator.next().value;
@@ -122,15 +135,18 @@ export class Beautifly extends PokemonCard {
         return state;
       }
 
-      if (sourceCard.tags.includes(CardTag.POKEMON_EX)) {
-
+      if (sourceCard.hasTag(CardTag.POKEMON_EX)) {
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
+          const stub = new PowerEffect(
+            player,
+            {
+              name: 'test',
+              powerType: PowerType.ABILITY,
+              text: '',
+            },
+            this,
+          );
           store.reduceEffect(state, stub);
         } catch {
           return state;
@@ -142,5 +158,4 @@ export class Beautifly extends PokemonCard {
 
     return state;
   }
-
 }

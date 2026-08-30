@@ -14,10 +14,9 @@ import {
 } from '../../../game/store/prefabs/prefabs';
 
 export class Arboliva extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Dolliv';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 150;
   public weakness = [{ type: R }];
   public retreat = [C, C];
@@ -37,7 +36,7 @@ export class Arboliva extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'MEM';
+  public set: string = 'J-MEM';
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Arboliva';
@@ -46,7 +45,7 @@ export class Arboliva extends PokemonCard {
   public readonly OIL_SLIP_MARKER = 'ARBOLIVA_MEM_OIL_SLIP_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-celestial-storm/salamence.ts (Dragon Wind)
+    // Oil Slip
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -67,7 +66,7 @@ export class Arboliva extends PokemonCard {
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.OIL_SLIP_MARKER, this);
 
-    // Ref: set-steam-siege/tangela.ts (Mega Drain)
+    // Mega Drain
     if (WAS_ATTACK_USED(effect, 0, this)) {
       HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect, store, state, 30);
     }

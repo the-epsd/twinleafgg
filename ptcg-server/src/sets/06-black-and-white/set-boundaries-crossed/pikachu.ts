@@ -10,26 +10,23 @@ import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store
 
 export class Pikachu extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Pika Punch',
-      cost: [L],
-      damage: 10,
-      text: ''
-    },
-    {
-      name: 'Double Voltage',
-      cost: [L, L, C],
-      damage: 40,
-      damageCalculation: 'x',
-      text: 'Flip 2 coins. This attack does 40 damage times the number of heads.'
-    }
-  ];
+  public attacks = [{
+    name: 'Pika Punch',
+    cost: [L],
+    damage: 10,
+    text: ''
+  }, {
+    name: 'Double Voltage',
+    cost: [L, L, C],
+    damage: 40,
+    damageCalculation: 'x',
+    text: 'Flip 2 coins. This attack does 40 damage times the number of heads.'
+  }];
 
   public set: string = 'BCR';
   public setNumber: string = '50';

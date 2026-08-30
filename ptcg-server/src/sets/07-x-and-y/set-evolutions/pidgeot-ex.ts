@@ -13,9 +13,9 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class PidgeotEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 170;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
@@ -28,14 +28,14 @@ export class PidgeotEx extends PokemonCard {
       name: 'Mirror Move',
       cost: [C],
       damage: 0,
-      text: 'If this Pok\u00e9mon was damaged by an attack during your opponent\'s last turn, this attack does the same amount of damage to your opponent\'s Active Pok\u00e9mon.'
+      text: "If this Pok\u00e9mon was damaged by an attack during your opponent's last turn, this attack does the same amount of damage to your opponent's Active Pok\u00e9mon.",
     },
     {
       name: 'Feather Lance',
       cost: [C, C, C],
       damage: 80,
-      text: 'This attack does 20 damage to 1 of your opponent\'s Benched Pok\u00e9mon. (Don\'t apply Weakness and resistance for Benched Pok\u00e9mon.)'
-    }
+      text: "This attack does 20 damage to 1 of your opponent's Benched Pok\u00e9mon. (Don't apply Weakness and resistance for Benched Pok\u00e9mon.)",
+    },
   ];
 
   public set: string = 'EVO';
@@ -51,7 +51,7 @@ export class PidgeotEx extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      this.mirrorMoveEffects.forEach(mirrorEffect => {
+      this.mirrorMoveEffects.forEach((mirrorEffect) => {
         mirrorEffect.target = opponent.active;
         mirrorEffect.player = player;
         mirrorEffect.source = player.active;
@@ -81,7 +81,10 @@ export class PidgeotEx extends PokemonCard {
 
     // Clear mirror move effects at end of turn
     if (effect instanceof EndTurnEffect) {
-      if (effect.player.active.cards.includes(this) || effect.player.bench.some(b => b.cards.includes(this))) {
+      if (
+        effect.player.active.cards.includes(this) ||
+        effect.player.bench.some((b) => b.cards.includes(this))
+      ) {
         this.mirrorMoveEffects = [];
       }
     }

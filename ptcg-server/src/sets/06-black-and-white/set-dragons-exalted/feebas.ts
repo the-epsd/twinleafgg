@@ -10,19 +10,17 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, DRAW_CARDS } from '../../.
 
 export class Feebas extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 30;
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Add-a-Dash',
-      cost: [W],
-      damage: 0,
-      text: 'Flip 2 coins. For each heads, draw a card.'
-    }
-  ];
+  public attacks = [{
+    name: 'Add-a-Dash',
+    cost: [W],
+    damage: 0,
+    text: 'Flip 2 coins. For each heads, draw a card.'
+  }];
 
   public set: string = 'DRX';
   public setNumber: string = '27';

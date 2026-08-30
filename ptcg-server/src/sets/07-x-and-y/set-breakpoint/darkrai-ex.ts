@@ -10,9 +10,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class DarkraiEx extends PokemonCard {
-  public tags = [CardTag.POKEMON_EX];
+  protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 180;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];
@@ -24,15 +24,15 @@ export class DarkraiEx extends PokemonCard {
       cost: [C, C],
       damage: 20,
       damageCalculation: '+',
-      text: 'This attack does 20 more damage for each [D] Energy attached to all of your Pokémon.'
+      text: 'This attack does 20 more damage for each [D] Energy attached to all of your Pokémon.',
     },
     {
       name: 'Dark Head',
       cost: [D, C, C],
       damage: 80,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is Asleep, this attack does 80 more damage.'
-    }
+      text: "If your opponent's Active Pokémon is Asleep, this attack does 80 more damage.",
+    },
   ];
 
   public set: string = 'BKP';
@@ -51,8 +51,8 @@ export class DarkraiEx extends PokemonCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         const checkEnergy = new CheckProvidedEnergyEffect(player, cardList);
         store.reduceEffect(state, checkEnergy);
-        checkEnergy.energyMap.forEach(em => {
-          darkEnergyCount += em.provides.filter(t => t === CardType.DARK).length;
+        checkEnergy.energyMap.forEach((em) => {
+          darkEnergyCount += em.provides.filter((t) => t === CardType.DARK).length;
         });
       });
 

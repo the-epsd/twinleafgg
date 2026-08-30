@@ -11,28 +11,26 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 
 export class Zacian extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Energy Stream',
-      cost: [M, C],
-      damage: 30,
-      text: 'Attach a [M] Energy card from your discard pile to this Pokémon.'
-    },
-    {
-      name: 'Smashing Edge',
-      cost: [M, M, C],
-      damage: 120,
-      text: 'Flip a coin. If tails, discard 2 Energy from this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Energy Stream',
+    cost: [M, C],
+    damage: 30,
+    text: 'Attach a [M] Energy card from your discard pile to this Pokémon.'
+  }, {
+    name: 'Smashing Edge',
+    cost: [M, M, C],
+    damage: 120,
+    text: 'Flip a coin. If tails, discard 2 Energy from this Pokémon.'
+  }];
 
   public regulationMark: string = 'D';
+
   public set: string = 'RCL';
   public setNumber: string = '139';
   public cardImage: string = 'assets/cardback.png';

@@ -7,9 +7,9 @@ import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
 
 export class TrevenantBREAK extends PokemonCard {
   public stage: Stage = Stage.BREAK;
-  public tags = [CardTag.BREAK];
+  protected _tags = [CardTag.BREAK];
   public evolvesFrom = 'Trevenant';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 160;
 
   public attacks = [

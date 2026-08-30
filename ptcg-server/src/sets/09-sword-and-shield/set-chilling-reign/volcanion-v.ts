@@ -9,9 +9,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class VolcanionV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V, CardTag.SINGLE_STRIKE];
+  protected _tags = [CardTag.POKEMON_V, CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 220;
   public weakness = [{ type: W }];
   public retreat = [C, C, C];
@@ -21,15 +21,15 @@ export class VolcanionV extends PokemonCard {
       name: 'Heat Blast',
       cost: [R, C],
       damage: 50,
-      text: ''
+      text: '',
     },
     {
       name: 'Dynamite Tackle',
       cost: [R, R, C],
       damage: 100,
       damageCalculation: '+',
-      text: 'If this Pokémon has 10 or more damage counters on it, this attack does 150 more damage.'
-    }
+      text: 'If this Pokémon has 10 or more damage counters on it, this attack does 150 more damage.',
+    },
   ];
 
   public regulationMark: string = 'E';

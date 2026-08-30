@@ -6,7 +6,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { AttachEnergyPrompt, GameError, Player, StateUtils } from '../../../game';
+import { AttachEnergyPrompt, GameError, Player, StateUtils, pokemonHasCardType } from '../../../game';
 import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 
 export class JaninesSecretTechnique extends TrainerCard {
@@ -35,7 +35,7 @@ export class JaninesSecretTechnique extends TrainerCard {
     }
     let hasDarkPokemon = false;
     player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card) => {
-      if (card.cardType === CardType.DARK) {
+      if (pokemonHasCardType(card, CardType.DARK)) {
         hasDarkPokemon = true;
       }
     });
@@ -64,7 +64,7 @@ export class JaninesSecretTechnique extends TrainerCard {
       let darkPokemonInPlay = false;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card) => {
-        if (card.cardType == CardType.DARK) {
+        if (pokemonHasCardType(card, CardType.DARK)) {
           darkPokemonInPlay = true;
         }
       });
@@ -75,7 +75,7 @@ export class JaninesSecretTechnique extends TrainerCard {
 
       const blocked2: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        if (card.cardType !== CardType.DARK) {
+        if (!pokemonHasCardType(card, CardType.DARK)) {
           blocked2.push(target);
         }
       });

@@ -2,14 +2,15 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, BLOCK_IF_GX_ATTACK_USED, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/attack-effects';
 import {
-  CardTag,
-  CardType,
-  Stage,
-  SuperType
-} from '../../../game/store/card/card-types';
+  ADD_CONFUSION_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  BLOCK_IF_GX_ATTACK_USED,
+  SHUFFLE_DECK,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
+import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/attack-effects';
+import { CardTag, CardType, Stage, SuperType } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { GameMessage } from '../../../game/game-message';
@@ -17,10 +18,10 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { Card, CardList, State, StoreLike } from '../../../game';
 export class PalossandGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Sandygast';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 210;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];
@@ -30,21 +31,21 @@ export class PalossandGx extends PokemonCard {
       name: 'Eerie Light',
       cost: [F, C, C],
       damage: 60,
-      text: 'Your opponent\'s Active Pokémon is now Confused.'
+      text: "Your opponent's Active Pokémon is now Confused.",
     },
     {
       name: 'Absorb Life',
       cost: [F, F, C, C],
       damage: 100,
-      text: 'Heal 20 damage from this Pokémon.'
+      text: 'Heal 20 damage from this Pokémon.',
     },
     {
       name: 'Sandy Fear-GX',
       cost: [F, F, C, C],
       damage: 60,
       damageCalculation: 'x',
-      text: 'Look at the top 13 cards of your opponent\'s deck and discard any number of Pokémon you find there. This attack does 60 damage for each card you discarded in this way. Your opponent shuffles the other cards back into their deck. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "Look at the top 13 cards of your opponent's deck and discard any number of Pokémon you find there. This attack does 60 damage for each card you discarded in this way. Your opponent shuffles the other cards back into their deck. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'CES';
@@ -84,7 +85,7 @@ export class PalossandGx extends PokemonCard {
       opponent.deck.moveTo(deckTop, count);
 
       // Check if there are any Pokemon in the top cards
-      const hasPokemon = deckTop.cards.some(c => c.superType === SuperType.POKEMON);
+      const hasPokemon = deckTop.cards.some((c) => c.superType === SuperType.POKEMON);
 
       if (!hasPokemon) {
         // No Pokemon found, put everything back and shuffle
@@ -93,25 +94,29 @@ export class PalossandGx extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        deckTop,
-        { superType: SuperType.POKEMON },
-        { min: 0, allowCancel: false }
-      ), selected => {
-        const cards = selected || [];
-        effect.damage = 60 * cards.length;
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          deckTop,
+          { superType: SuperType.POKEMON },
+          { min: 0, allowCancel: false },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          effect.damage = 60 * cards.length;
 
-        // Discard selected Pokemon
-        cards.forEach((card: Card) => {
-          deckTop.moveCardTo(card, opponent.discard);
-        });
+          // Discard selected Pokemon
+          cards.forEach((card: Card) => {
+            deckTop.moveCardTo(card, opponent.discard);
+          });
 
-        // Put remaining cards back into opponent's deck
-        deckTop.moveTo(opponent.deck);
-        SHUFFLE_DECK(store, state, opponent);
-      });
+          // Put remaining cards back into opponent's deck
+          deckTop.moveTo(opponent.deck);
+          SHUFFLE_DECK(store, state, opponent);
+        },
+      );
     }
 
     return state;

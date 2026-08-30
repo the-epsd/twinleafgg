@@ -9,9 +9,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class SableyeV extends PokemonCard {
-  public tags = [CardTag.POKEMON_V];
+  protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 170;
   public weakness = [{ type: G }];
   public retreat = [C, C];
@@ -21,15 +21,15 @@ export class SableyeV extends PokemonCard {
       name: 'Lode Search',
       cost: [D],
       damage: 0,
-      text: 'Put a Trainer card from your discard pile into your hand.'
+      text: 'Put a Trainer card from your discard pile into your hand.',
     },
     {
       name: 'Crazy Claws',
       cost: [D, D],
       damage: 10,
       damageCalculation: '+',
-      text: 'This attack does 60 more damage for each damage counter on your opponent\'s Active Pokémon.'
-    }
+      text: "This attack does 60 more damage for each damage counter on your opponent's Active Pokémon.",
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -45,21 +45,27 @@ export class SableyeV extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const trainerCount = player.discard.cards.filter(c => c.superType === SuperType.TRAINER).length;
+      const trainerCount = player.discard.cards.filter(
+        (c) => c.superType === SuperType.TRAINER,
+      ).length;
       if (trainerCount === 0) {
         return state;
       }
 
-      store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.discard,
-        { superType: SuperType.TRAINER },
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        const cards = selected || [];
-        player.discard.moveCardsTo(cards, player.hand);
-      });
+      store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.discard,
+          { superType: SuperType.TRAINER },
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          player.discard.moveCardsTo(cards, player.hand);
+        },
+      );
     }
 
     // Attack 2: Crazy Claws

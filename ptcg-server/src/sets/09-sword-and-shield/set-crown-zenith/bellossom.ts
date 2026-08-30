@@ -12,22 +12,21 @@ import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/ga
 export class Bellossom extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Gloom';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Flower Spin',
-      cost: [G, C],
-      damage: 80,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 80 damage for each heads. Switch this Pokémon with 1 of your Benched Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Flower Spin',
+    cost: [G, C],
+    damage: 80,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 80 damage for each heads. Switch this Pokémon with 1 of your Benched Pokémon.'
+  }];
 
   public regulationMark: string = 'F';
+
   public set: string = 'CRZ';
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';

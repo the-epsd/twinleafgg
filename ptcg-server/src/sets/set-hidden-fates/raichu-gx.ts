@@ -9,10 +9,10 @@ import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class RaichuGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Pikachu';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 210;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
@@ -23,14 +23,14 @@ export class RaichuGx extends PokemonCard {
       name: 'Thunderbolt',
       cost: [L, L, C],
       damage: 120,
-      text: ''
+      text: '',
     },
     {
       name: 'Spark Ball-GX',
       cost: [L, L, C],
       damage: 200,
-      text: '(You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "(You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'HIF';

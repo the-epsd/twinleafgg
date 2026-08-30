@@ -7,23 +7,30 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils, PlayerType } from '../../../game';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, BLOCK_IF_GX_ATTACK_USED, DISCARD_A_STADIUM_CARD_IN_PLAY } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  BLOCK_IF_GX_ATTACK_USED,
+  DISCARD_A_STADIUM_CARD_IN_PLAY,
+} from '../../../game/store/prefabs/prefabs';
 import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../../game/store/prefabs/attack-effects';
 
 export class FlygonGx extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+  protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Vibrava';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 240;
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Dusty Defense',
-    powerType: PowerType.ABILITY,
-    text: 'As long as this Pokémon is your Active Pokémon, all of your Pokémon take 30 less damage from your opponent\'s attacks (after applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: 'Dusty Defense',
+      powerType: PowerType.ABILITY,
+      text: "As long as this Pokémon is your Active Pokémon, all of your Pokémon take 30 less damage from your opponent's attacks (after applying Weakness and Resistance).",
+    },
+  ];
 
   public attacks = [
     {
@@ -31,14 +38,14 @@ export class FlygonGx extends PokemonCard {
       cost: [F, F, F],
       damage: 120,
       damageCalculation: '+',
-      text: 'If there is any Stadium card in play, this attack does 120 more damage. Then, discard that Stadium card.'
+      text: 'If there is any Stadium card in play, this attack does 120 more damage. Then, discard that Stadium card.',
     },
     {
       name: 'Sonic Edge-GX',
       cost: [F, F, F],
       damage: 220,
-      text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon. (You can\'t use more than 1 GX attack in a game.)'
-    }
+      text: "This attack's damage isn't affected by any effects on your opponent's Active Pokémon. (You can't use more than 1 GX attack in a game.)",
+    },
   ];
 
   public set: string = 'CEC';

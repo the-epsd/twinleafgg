@@ -11,27 +11,24 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, THIS_POKEMON_DOES_DAMAGE_T
 export class Escavalier extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Karrablast';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Fury Attack',
-      cost: [M],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 3 coins. This attack does 30 damage for each heads.'
-    },
-    {
-      name: 'Iron Tackle',
-      cost: [M, M, C],
-      damage: 130,
-      text: 'This Pokémon does 30 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Fury Attack',
+    cost: [M],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 3 coins. This attack does 30 damage for each heads.'
+  }, {
+    name: 'Iron Tackle',
+    cost: [M, M, C],
+    damage: 130,
+    text: 'This Pokémon does 30 damage to itself.'
+  }];
 
   public set: string = 'CIN';
   public setNumber: string = '69';

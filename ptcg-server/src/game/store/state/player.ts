@@ -1,7 +1,7 @@
 import { GameError } from '../../game-error';
 import { GameMessage } from '../../game-message';
 import { CardTarget, PlayerType, SlotType } from '../actions/play-card-action';
-import { CardTag } from '../card/card-types';
+import { CardTag, CardType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { MovedFromActiveToBenchEffect, MovedToActiveEffect } from '../effects/game-effects';
 import { CardList } from './card-list';
@@ -48,6 +48,14 @@ export class Player {
 
   rocketSupporter: boolean = false;
 
+  playedJanine: boolean = false;
+
+  playedKogasTrap: boolean = false;
+
+  playedCanari: boolean = false;
+
+  playedPiers: boolean = false;
+
   retreatedTurn: number = 0;
 
   energyPlayedTurn: number = 0;
@@ -73,33 +81,142 @@ export class Player {
   legacyEnergyUsed: boolean = false;
 
   public readonly DAMAGE_DEALT_MARKER = 'DAMAGE_DEALT_MARKER';
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
   public readonly CLEAR_KNOCKOUT_MARKER = 'CLEAR_KNOCKOUT_MARKER';
   public readonly KNOCKOUT_MARKER = 'KNOCKOUT_MARKER';
-  public readonly OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER = 'OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER';
-  public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
-  public readonly PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
-  public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
-  public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
-  public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
-  public readonly DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_DEALS_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_DEALS_LESS_DAMAGE_MARKER';
-  public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_DEALS_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_DEALS_LESS_DAMAGE_MARKER';
-  public readonly DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER';
-  public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER';
-  public readonly PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER: string = 'PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER';
-  public readonly CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER: string = 'CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER';
-  public readonly PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES = 'PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES';
-  public readonly PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER = 'PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER';
-  public readonly CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER = 'CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER';
-  public readonly ATTACK_EFFECT_SUPPORTER_LOCK = 'ATTACK_EFFECT_SUPPORTER_LOCK';
-  public readonly ATTACK_EFFECT_ITEM_LOCK = 'ATTACK_EFFECT_ITEM_LOCK';
-  public readonly ATTACK_EFFECT_TOOL_LOCK = 'ATTACK_EFFECT_TOOL_LOCK';
-  public readonly ATTACK_EFFECT_STADIUM_LOCK = 'ATTACK_EFFECT_STADIUM_LOCK';
-  public readonly ATTACK_EFFECT_SPECIAL_ENERGY_LOCK = 'ATTACK_EFFECT_SPECIAL_ENERGY_LOCK';
+  /**
+   * Attack-sourced hand play locks (Item / Supporter / Stadium / Tool / Energy / Pokemon).
+   * Live on the player — not cleared by Pokemon switch. Cleared after
+   * {@link playLocksTurnsRemaining} of this player's EndTurns (default 1 =
+   * "during opponent's next turn").
+   */
+  public cannotPlayItemCards = false;
+  public cannotPlaySupporterCards = false;
+  public cannotPlayStadiumCards = false;
+  public cannotPlayToolCards = false;
+  public cannotPlaySpecialEnergyCards = false;
+  public cannotPlayEnergyCards = false;
+  public cannotPlayPokemonCards = false;
+  public cannotPlayPokemonWithAbilities = false;
+  /** Block playing Pokémon from hand only to evolve (basics still allowed). */
+  public cannotEvolvePokemonCards = false;
+  public playLocksTurnsRemaining = 0;
+  /**
+   * Until end of this player's next turn countdown: their Pokémon in play,
+   * hand, and discard have no Abilities (Greninja Shadow Stitching).
+   */
+  public abilitiesSuppressedTurnsRemaining = 0;
+  /**
+   * Until end of this player's next turn countdown: Stadium/Tool cards in play
+   * have no effect (checked globally via any player still holding the flag).
+   */
+  public stadiumAndToolHaveNoEffectTurnsRemaining = 0;
+  /**
+   * During this player's next turn: when they play a Trainer from hand, flip a
+   * coin; on tails the card has no effect (still discarded).
+   */
+  public coinFlipCancelTrainerPlayTurnsRemaining = 0;
+  /**
+   * Opponent can't draw at the beginning of their next turn (Luvdisc Heart Wink).
+   * Cleared when the draw is blocked or at EndTurn.
+   */
+  public cannotDrawAtStartOfTurn = false;
+  /**
+   * Player-wide attack lock (Steelix Gigaton Shake). Counts this player's
+   * EndTurns until clear. Set to 2 for "during your next turn".
+   */
+  public cannotAttackTurnsRemaining = 0;
+  /**
+   * Ignore Energy in attack costs for Pokémon of these types (Sunflora Solar Power).
+   * Counts this player's EndTurns until clear. Set to 2 for "during your next turn".
+   */
+  public ignoreAttackCostCardTypes: CardType[] | null = null;
+  public ignoreAttackCostTurnsRemaining = 0;
+  public ancientPokemonAttackedLastTurn = false;
 
-  public readonly UNRELENTING_ONSLAUGHT_MARKER = 'UNRELENTING_ONSLAUGHT_MARKER';
-  public readonly UNRELENTING_ONSLAUGHT_2_MARKER = 'UNRELENTING_ONSLAUGHT_2_MARKER';
+  /** Apply attack-sourced play locks for this player's upcoming turn(s). */
+  public applyPlayLocks(locks: {
+    item?: boolean;
+    supporter?: boolean;
+    stadium?: boolean;
+    tool?: boolean;
+    specialEnergy?: boolean;
+    energy?: boolean;
+    pokemon?: boolean;
+    pokemonWithAbilities?: boolean;
+    evolve?: boolean;
+  }, turnsRemaining: number = 1): void {
+    if (locks.item) {
+      this.cannotPlayItemCards = true;
+    }
+    if (locks.supporter) {
+      this.cannotPlaySupporterCards = true;
+    }
+    if (locks.stadium) {
+      this.cannotPlayStadiumCards = true;
+    }
+    if (locks.tool) {
+      this.cannotPlayToolCards = true;
+    }
+    if (locks.specialEnergy) {
+      this.cannotPlaySpecialEnergyCards = true;
+    }
+    if (locks.energy) {
+      this.cannotPlayEnergyCards = true;
+      this.cannotPlaySpecialEnergyCards = true;
+    }
+    if (locks.pokemon) {
+      this.cannotPlayPokemonCards = true;
+    }
+    if (locks.pokemonWithAbilities) {
+      this.cannotPlayPokemonWithAbilities = true;
+    }
+    if (locks.evolve) {
+      this.cannotEvolvePokemonCards = true;
+    }
+    this.playLocksTurnsRemaining = Math.max(this.playLocksTurnsRemaining, Math.max(1, turnsRemaining));
+  }
+
+  public clearPlayLocks(): void {
+    this.cannotPlayItemCards = false;
+    this.cannotPlaySupporterCards = false;
+    this.cannotPlayStadiumCards = false;
+    this.cannotPlayToolCards = false;
+    this.cannotPlaySpecialEnergyCards = false;
+    this.cannotPlayEnergyCards = false;
+    this.cannotPlayPokemonCards = false;
+    this.cannotPlayPokemonWithAbilities = false;
+    this.cannotEvolvePokemonCards = false;
+    this.playLocksTurnsRemaining = 0;
+  }
+
+  /** Decrement play-lock duration; clear flags when the countdown hits 0. */
+  public tickPlayLocksAtEndOfTurn(): void {
+    if (this.playLocksTurnsRemaining > 0) {
+      this.playLocksTurnsRemaining -= 1;
+      if (this.playLocksTurnsRemaining <= 0) {
+        this.clearPlayLocks();
+      }
+    }
+    if (this.stadiumAndToolHaveNoEffectTurnsRemaining > 0) {
+      this.stadiumAndToolHaveNoEffectTurnsRemaining -= 1;
+    }
+    if (this.coinFlipCancelTrainerPlayTurnsRemaining > 0) {
+      this.coinFlipCancelTrainerPlayTurnsRemaining -= 1;
+    }
+    if (this.cannotAttackTurnsRemaining > 0) {
+      this.cannotAttackTurnsRemaining -= 1;
+    }
+    if (this.abilitiesSuppressedTurnsRemaining > 0) {
+      this.abilitiesSuppressedTurnsRemaining -= 1;
+    }
+    if (this.ignoreAttackCostTurnsRemaining > 0) {
+      this.ignoreAttackCostTurnsRemaining -= 1;
+      if (this.ignoreAttackCostTurnsRemaining <= 0) {
+        this.ignoreAttackCostCardTypes = null;
+      }
+    }
+    this.cannotDrawAtStartOfTurn = false;
+  }
 
   // Track Pokemon cards that moved from Bench to Active this turn
   public movedToActiveThisTurn: number[] = [];
@@ -191,25 +308,8 @@ export class Player {
   removePokemonEffects(target: PokemonCardList) {
 
     //breakdown of markers to be removed
-    this.marker.removeMarker(this.ATTACK_USED_MARKER);
-    this.marker.removeMarker(this.ATTACK_USED_2_MARKER);
     this.marker.removeMarker(this.KNOCKOUT_MARKER);
     this.marker.removeMarker(this.CLEAR_KNOCKOUT_MARKER);
-    this.marker.removeMarker(this.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER);
-    this.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER);
-    this.marker.removeMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER);
-    this.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_DEALS_LESS_DAMAGE_MARKER);
-    this.marker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_DEALS_LESS_DAMAGE_MARKER);
-    this.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER);
-    this.marker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER);
-    this.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER);
-    this.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER);
-    this.marker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER);
-    this.marker.removeMarker(this.PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER);
-    this.marker.removeMarker(this.CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER);
-    this.marker.removeMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES);
-    this.marker.removeMarker(this.PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER);
-    this.marker.removeMarker(this.CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER);
     target.clearEffects();
   }
 
@@ -290,6 +390,7 @@ export class Player {
 
       // Remove attack effects from the Pokemon leaving active
       this.active.removeAttackEffects();
+      this.active.clearEffects();
 
       // remove all special conditions
       this.active.specialConditions = [];

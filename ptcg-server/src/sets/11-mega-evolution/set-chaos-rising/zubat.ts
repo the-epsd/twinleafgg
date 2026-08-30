@@ -8,7 +8,7 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../../game/st
 export class Zubat extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 40;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [];
