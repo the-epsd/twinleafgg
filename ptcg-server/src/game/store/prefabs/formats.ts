@@ -22,7 +22,7 @@ export function CARD_TEXT_IDENTICAL(card: PokemonCard, other: PokemonCard): bool
   isIdentical &&= card.name == other.name;
   isIdentical &&= card.stage == other.stage;
   isIdentical &&= card.evolvesFrom == other.evolvesFrom;
-  isIdentical &&= card.cardType == other.cardType;
+  isIdentical &&= compareArrayContents(card.cardType, other.cardType);
 
   // Weakness
   isIdentical &&= card.weakness.length == other.weakness.length;
@@ -106,15 +106,8 @@ export function COUNT_CARDS_IN_DECK(deck: Card[]): DeckCounts {
         deckCounts.pokemonCount++;
 
         // Count number of Pokémon types
-        deckCounts.typeCounts.set(
-          card.cardType,
-          (deckCounts.typeCounts.get(card.cardType) || 0) + 1,
-        );
-        for (let additionalType of card.additionalCardTypes || []) {
-          deckCounts.typeCounts.set(
-            additionalType,
-            (deckCounts.typeCounts.get(additionalType) || 0) + 1,
-          );
+        for (let t of card.cardType || []) {
+          deckCounts.typeCounts.set(t, (deckCounts.typeCounts.get(t) || 0) + 1);
         }
 
         // Basic count
