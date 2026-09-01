@@ -192,6 +192,8 @@ export * from './11-mega-evolution/set-chaos-rising';
 export * from './11-mega-evolution/set-delta-reign';
 export * from './11-mega-evolution/set-pitch-black';
 export * from './11-mega-evolution/set-30th-celebration';
+export * from './11-mega-evolution/set-mega-x-mega-parade';
+export * from './11-mega-evolution/set-aura-seeker';
 
 //TEST
 export * from './set-test';
