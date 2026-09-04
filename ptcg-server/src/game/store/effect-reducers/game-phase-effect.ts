@@ -206,6 +206,13 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
     const lastAttack = state.playerLastAttack?.[player.id];
     player.ancientPokemonAttackedLastTurn = lastAttack?.sourceCard.tags.includes(CardTag.ANCIENT) ?? false;
 
+    if (player.usedTurnSkipClearArmed) {
+      player.usedTurnSkip = false;
+      player.usedTurnSkipClearArmed = false;
+    } else if (player.usedTurnSkip) {
+      player.usedTurnSkipClearArmed = true;
+    }
+
     state = RESOLVE_PENDING_END_OF_OPPONENTS_NEXT_TURN_EFFECTS(store, state, effect);
 
     player.canEvolve = false;

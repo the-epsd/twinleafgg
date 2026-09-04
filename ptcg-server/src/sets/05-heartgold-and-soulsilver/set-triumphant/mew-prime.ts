@@ -3,90 +3,17 @@ import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/ca
 import {
   StoreLike,
   State,
-  StateUtils,
   GameMessage,
-  ChooseAttackPrompt,
   PowerType,
-  EnergyMap,
   GameError,
-  Player,
   Card,
   ChooseCardsPrompt,
   GameLog,
   ShuffleDeckPrompt,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { UseAttackEffect } from '../../../game/store/effects/game-effects';
-import {
-  CheckProvidedEnergyEffect,
-  CheckAttackCostEffect,
-} from '../../../game/store/effects/check-effects';
+import { COPY_ATTACK_VIA_ABILITY } from '../../../game/store/prefabs/copy-attack-prefabs';
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
-
-// function* useApexDragon(next: Function, store: StoreLike, state: State,
-//   effect: PowerEffect): IterableIterator<State> {
-//   const player = effect.player;
-//   const opponent = StateUtils.getOpponent(state, player);
-
-//   const discardPokemon = player.discard.cards.filter(card => card.superType === SuperType.POKEMON) as PokemonCard[];
-
-//   const basicPokemon = discardPokemon.filter(card => card.stage === Stage.BASIC);
-
-//   // const blocked: { index: number; attack: string }[] = [];
-//   // player.deck.cards.forEach((card, index) => {
-//   //   if (card instanceof PokemonCard && card.tags !== undefined) {
-//   //     blocked.push({ index, attack: card.attacks[0].name });
-//   //   }
-//   // });
-
-//   // if (basicPokemon.length === 0) {
-//   //   throw new GameError(GameMessage.CANNOT_USE_POWER);
-//   // }
-
-//   let selected: any;
-//   yield store.prompt(state, new ChooseAttackPrompt(
-//     player.id,
-//     GameMessage.CHOOSE_ATTACK_TO_COPY,
-//     basicPokemon,
-//     { allowCancel: false }
-//   ), result => {
-//     selected = result;
-//     next();
-//   });
-
-//   const attack: Attack | null = selected;
-
-//   // Get energy required for the attack
-//   const requiredEnergy = attack?.cost;
-
-//   // Check if Ditto (the active Pokemon) has the required energy
-//   if (!player.active.cards.some(c => c instanceof PokemonCard && requiredEnergy?.includes(c.cardType))) {
-//     return state;
-//   }
-//   if (!attack) {
-//     return state;
-//   }
-
-//   store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
-//     name: player.name,
-//     attack: attack.name
-//   });
-
-//   // Perform attack
-//   const attackEffect = new AttackEffect(player, opponent, attack);
-//   store.reduceEffect(state, attackEffect);
-
-//   if (store.hasPrompts()) {
-//     yield store.waitPrompt(state, () => next());
-//   }
-
-//   if (attackEffect.damage > 0) {
-//     const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
-//     state = store.reduceEffect(state, dealDamage);
-//   }
-
-//   return state;
-// }
 
 export class Mew extends PokemonCard {
   protected _tags = [CardTag.PRIME];
@@ -147,7 +74,7 @@ export class Mew extends PokemonCard {
         (selected) => {
           cards = selected || [];
 
-          cards.forEach((card, index) => {
+          cards.forEach((card) => {
             player.deck.moveCardTo(card, player.lostzone);
 
             store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_LOST_ZONE, {
@@ -170,73 +97,15 @@ export class Mew extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      // Build cards and blocked for Choose Attack prompt
-      const { pokemonCards, blocked } = this.buildAttackList(state, store, player);
-
-      // No attacks to copy
-      if (pokemonCards.length === 0) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
-
-      return store.prompt(
-        state,
-        new ChooseAttackPrompt(player.id, GameMessage.CHOOSE_ATTACK_TO_COPY, pokemonCards, {
-          allowCancel: false,
-          blocked,
-        }),
-        (attack) => {
-          if (attack !== null) {
-            const useAttackEffect = new UseAttackEffect(player, attack);
-            store.reduceEffect(state, useAttackEffect);
-          }
-        },
+      const extraCards = player.lostzone.cards.filter(
+        (card): card is PokemonCard => card instanceof PokemonCard,
       );
+      return COPY_ATTACK_VIA_ABILITY(store, state, effect, {
+        copycatCard: this,
+        allowCancel: false,
+        extraCards,
+      });
     }
     return state;
-  }
-
-  private buildAttackList(
-    state: State,
-    store: StoreLike,
-    player: Player,
-  ): { pokemonCards: PokemonCard[]; blocked: { index: number; attack: string }[] } {
-    const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
-    store.reduceEffect(state, checkProvidedEnergyEffect);
-    const energyMap = checkProvidedEnergyEffect.energyMap;
-
-    const pokemonCards: PokemonCard[] = [];
-    const blocked: { index: number; attack: string }[] = [];
-    player.lostzone.cards.forEach((card) => {
-      if (card instanceof PokemonCard) {
-        this.checkAttack(state, store, player, card, energyMap, pokemonCards, blocked);
-      }
-    });
-
-    return { pokemonCards, blocked };
-  }
-
-  private checkAttack(
-    state: State,
-    store: StoreLike,
-    player: Player,
-    card: PokemonCard,
-    energyMap: EnergyMap[],
-    pokemonCards: PokemonCard[],
-    blocked: { index: number; attack: string }[],
-  ) {
-    {
-      const attacks = card.attacks.filter((attack) => {
-        const checkAttackCost = new CheckAttackCostEffect(player, attack);
-        state = store.reduceEffect(state, checkAttackCost);
-        return StateUtils.checkEnoughEnergy(energyMap, checkAttackCost.cost as CardType[]);
-      });
-      const index = pokemonCards.length;
-      pokemonCards.push(card);
-      card.attacks.forEach((attack) => {
-        if (!attacks.includes(attack)) {
-          blocked.push({ index, attack: attack.name });
-        }
-      });
-    }
   }
 }

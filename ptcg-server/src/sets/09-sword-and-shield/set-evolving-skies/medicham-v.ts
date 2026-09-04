@@ -5,17 +5,13 @@ import { CardType, PokemonCard,
   SlotType,
   State,
   StoreLike,
-  GameError,
   CardTag,
   Stage, } from '../../../game';
 import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
-
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 import { StateUtils } from '../../../game/store/state-utils';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class MedichamV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -47,41 +43,12 @@ export class MedichamV extends PokemonCard {
   public name: string = 'Medicham V';
   public fullName: string = 'Medicham V EVS';
 
-  public readonly YOGA_LOOP_MARKER = 'YOGA_LOOP_MARKER';
-  public readonly YOGA_LOOP_MARKER_2 = 'YOGA_LOOP_MARKER_2';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      effect.player.marker.removeMarker(this.YOGA_LOOP_MARKER, this);
-      effect.player.marker.removeMarker(this.YOGA_LOOP_MARKER_2, this);
-    }
-
-    if (
-      effect instanceof EndTurnEffect &&
-      effect.player.marker.hasMarker(this.YOGA_LOOP_MARKER_2, this)
-    ) {
-      // Second turn ending - clear everything
-      effect.player.marker.removeMarker(this.YOGA_LOOP_MARKER, this);
-      effect.player.marker.removeMarker(this.YOGA_LOOP_MARKER_2, this);
-      effect.player.usedTurnSkip = false;
-    }
-
-    if (
-      effect instanceof EndTurnEffect &&
-      effect.player.marker.hasMarker(this.YOGA_LOOP_MARKER, this)
-    ) {
-      // First turn ending - mark for cleanup next turn
-      effect.player.marker.addMarker(this.YOGA_LOOP_MARKER_2, this);
-      // DON'T clear usedTurnSkip here - it needs to stay true for initNextTurn
-    }
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      // Check if Yoga Loop was used last turn
-      if (player.marker.hasMarker(this.YOGA_LOOP_MARKER, this)) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
+      // Always arm the "can't use Yoga Loop next turn" lock (Radiant Charizard pattern).
+      THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN(player, this.attacks[0]);
 
       return store.prompt(
         state,
@@ -109,8 +76,7 @@ export class MedichamV extends PokemonCard {
           store.reduceEffect(state, checkHpEffect);
 
           if (target.damage >= checkHpEffect.hp) {
-            // Pokémon was knocked out - set marker and enable turn skip
-            player.marker.addMarker(this.YOGA_LOOP_MARKER, this);
+            // Ref: usedTurnSkip + usedTurnSkipClearArmed (game-phase-effect)
             player.usedTurnSkip = true;
           }
 

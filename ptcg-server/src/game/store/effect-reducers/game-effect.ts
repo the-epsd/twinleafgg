@@ -33,6 +33,7 @@ import { StateUtils } from '../state-utils';
 import { GamePhase, State } from '../state/state';
 import { StoreLike } from '../store-like';
 import { MoveCardsEffect } from '../effects/game-effects';
+import { runDelegatedCopiedAttackGenerator } from '../prefabs/copy-attack-delegation';
 import { GameStatsTracker } from '../game-stats-tracker';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { MOVE_CARDS, COIN_FLIP_PROMPT } from '../prefabs/prefabs';
@@ -240,10 +241,29 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
 
   const attackEffect = (effect instanceof AttackEffect) ? effect : new AttackEffect(player, opponent, attack);
   attackEffect.source = attackingPokemon;
-  state = store.reduceEffect(state, attackEffect);
 
-  if (store.hasPrompts()) {
-    yield store.waitPrompt(state, () => next());
+  const copycatCard = attackingPokemon.getPokemonCard();
+  const delegateFrom = effect instanceof UseAttackEffect ? effect.delegateFrom : undefined;
+
+  if (delegateFrom && copycatCard) {
+    state = yield* runDelegatedCopiedAttackGenerator(next, {
+      store,
+      state,
+      player,
+      opponent,
+      copycatCard,
+      sourceCard: delegateFrom,
+      selectedAttack: attack,
+      sourceSlot: attackingPokemon,
+      skipLog: true,
+      skipAfterAttack: false,
+    });
+  } else {
+    state = store.reduceEffect(state, attackEffect);
+
+    if (store.hasPrompts()) {
+      yield store.waitPrompt(state, () => next());
+    }
   }
 
   // --- Attack Animation Trigger ---
@@ -290,23 +310,25 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   });
   // --- End Attack Animation Trigger ---
 
-  const beforeDoingDamageEffect = new BeforeDoingDamageEffect(attackEffect);
-  state = store.reduceEffect(state, beforeDoingDamageEffect);
+  if (!delegateFrom) {
+    const beforeDoingDamageEffect = new BeforeDoingDamageEffect(attackEffect);
+    state = store.reduceEffect(state, beforeDoingDamageEffect);
 
-  if (attackEffect.damage > 0) {
-    const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
-    state = store.reduceEffect(state, dealDamage);
+    if (attackEffect.damage > 0) {
+      const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
+      state = store.reduceEffect(state, dealDamage);
+
+      if (store.hasPrompts()) {
+        yield store.waitPrompt(state, () => next());
+      }
+    }
+
+    const afterAttackEffect = new AfterAttackEffect(effect.player, opponent, attack);
+    state = store.reduceEffect(state, afterAttackEffect);
 
     if (store.hasPrompts()) {
       yield store.waitPrompt(state, () => next());
     }
-  }
-
-  const afterAttackEffect = new AfterAttackEffect(effect.player, opponent, attack);
-  state = store.reduceEffect(state, afterAttackEffect);
-
-  if (store.hasPrompts()) {
-    yield store.waitPrompt(state, () => next());
   }
 
   if ((attack.barrage || hasBarragePower) && !(effect as any)._barrageUsed) {

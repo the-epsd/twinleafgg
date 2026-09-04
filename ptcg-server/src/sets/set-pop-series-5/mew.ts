@@ -5,21 +5,16 @@ import {
   State,
   StateUtils,
   GameMessage,
-  ChooseAttackPrompt,
-  EnergyMap,
-  Player,
   AttachEnergyPrompt,
   PlayerType,
   SlotType,
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import {
-  CheckProvidedEnergyEffect,
-  CheckAttackCostEffect,
-} from '../../game/store/effects/check-effects';
+  COPY_ATTACK_FROM_POKEMON_LIST,
+  buildAttackListWithEnergyBlocking,
+} from '../../game/store/prefabs/copy-attack-prefabs';
 import { MOVE_CARD_TO, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Mew extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -34,6 +29,7 @@ export class Mew extends PokemonCard {
       name: 'Copy',
       cost: [C],
       damage: 0,
+      copycatAttack: true,
       text: "Choose 1 of the Defending Pokémon's attacks. Copy copies that attack. This attack does nothing if Mew doesn't have the Energy necessary to use that attack. (You must still do anything else required for that attack.) Mew performs that attack.",
     },
     {
@@ -51,37 +47,27 @@ export class Mew extends PokemonCard {
   public fullName: string = 'Mew P5';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Copy
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+      const opponentActive = opponent.active.getPokemonCard();
 
-      // Build cards and blocked for Choose Attack prompt
-      const { pokemonCards, blocked } = this.buildAttackList(state, store, player);
+      if (!opponentActive) {
+        return state;
+      }
 
-      // No attacks to copy
+      const { pokemonCards, blocked } = buildAttackListWithEnergyBlocking(state, store, player, {
+        extraCards: [opponentActive],
+      });
+
       if (pokemonCards.length === 0) {
         return state;
       }
 
-      return store.prompt(
-        state,
-        new ChooseAttackPrompt(player.id, GameMessage.CHOOSE_ATTACK_TO_COPY, pokemonCards, {
-          allowCancel: true,
-          blocked,
-        }),
-        (attack) => {
-          if (attack !== null) {
-            const attackEffect = new AttackEffect(player, opponent, attack);
-            store.reduceEffect(state, attackEffect);
-
-            if (attackEffect.damage > 0) {
-              const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
-              state = store.reduceEffect(state, dealDamage);
-            }
-          }
-        },
-      );
+      return COPY_ATTACK_FROM_POKEMON_LIST(store, state, effect, pokemonCards, {
+        allowCancel: true,
+        blocked,
+      });
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
@@ -122,51 +108,5 @@ export class Mew extends PokemonCard {
     }
 
     return state;
-  }
-
-  private buildAttackList(
-    state: State,
-    store: StoreLike,
-    player: Player,
-  ): { pokemonCards: PokemonCard[]; blocked: { index: number; attack: string }[] } {
-    const opponent = StateUtils.getOpponent(state, player);
-    const opponentActive = opponent.active.getPokemonCard();
-
-    const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
-    store.reduceEffect(state, checkProvidedEnergyEffect);
-    const energyMap = checkProvidedEnergyEffect.energyMap;
-
-    const pokemonCards: PokemonCard[] = [];
-    const blocked: { index: number; attack: string }[] = [];
-    if (opponentActive) {
-      this.checkAttack(state, store, player, opponentActive, energyMap, pokemonCards, blocked);
-    }
-
-    return { pokemonCards, blocked };
-  }
-
-  private checkAttack(
-    state: State,
-    store: StoreLike,
-    player: Player,
-    card: PokemonCard,
-    energyMap: EnergyMap[],
-    pokemonCards: PokemonCard[],
-    blocked: { index: number; attack: string }[],
-  ) {
-    {
-      const attacks = card.attacks.filter((attack) => {
-        const checkAttackCost = new CheckAttackCostEffect(player, attack);
-        state = store.reduceEffect(state, checkAttackCost);
-        return StateUtils.checkEnoughEnergy(energyMap, checkAttackCost.cost as CardType[]);
-      });
-      const index = pokemonCards.length;
-      pokemonCards.push(card);
-      card.attacks.forEach((attack) => {
-        if (!attacks.includes(attack)) {
-          blocked.push({ index, attack: attack.name });
-        }
-      });
-    }
   }
 }

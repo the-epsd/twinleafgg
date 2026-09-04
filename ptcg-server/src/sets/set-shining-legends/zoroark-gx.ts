@@ -4,18 +4,13 @@ import {
   PowerType,
   StoreLike,
   State,
-  StateUtils,
   GameError,
   GameMessage,
   PlayerType,
-  ChooseAttackPrompt,
-  Attack,
   ChooseCardsPrompt,
-  GameLog,
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import {
@@ -23,69 +18,7 @@ import {
   WAS_ATTACK_USED,
   WAS_POWER_USED,
 } from '../../game/store/prefabs/prefabs';
-// citing empoleon to help make this (https://github.com/keeshii/ryuu-play/blob/master/ptcg-server/src/sets/set-black-and-white/empoleon.ts)
-
-function* useTricksterGX(
-  next: Function,
-  store: StoreLike,
-  state: State,
-  effect: AttackEffect,
-): IterableIterator<State> {
-  const player = effect.player;
-  const opponent = StateUtils.getOpponent(state, player);
-  const oppActive = opponent.active.getPokemonCard();
-  const oppBenched = opponent.bench.filter((b) => b.cards.length > 0);
-
-  const allOpponentPokemon = oppActive
-    ? [oppActive, ...oppBenched.map((b) => b.getPokemonCard())].filter(
-        (pokemon): pokemon is PokemonCard => pokemon !== undefined,
-      )
-    : [];
-
-  // Check if player has used GX attack
-  BLOCK_IF_GX_ATTACK_USED(player);
-
-  let selected: any;
-  yield store.prompt(
-    state,
-    new ChooseAttackPrompt(player.id, GameMessage.CHOOSE_ATTACK_TO_COPY, allOpponentPokemon, {
-      allowCancel: false,
-    }),
-    (result) => {
-      selected = result;
-      next();
-    },
-  );
-
-  const attack: Attack | null = selected;
-
-  if (attack === null) {
-    return state;
-  }
-
-  store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
-    name: player.name,
-    attack: attack.name,
-  });
-
-  // set GX attack as used for game
-  player.usedGX = true;
-
-  // Perform attack
-  const attackEffect = new AttackEffect(player, opponent, attack);
-  store.reduceEffect(state, attackEffect);
-
-  if (store.hasPrompts()) {
-    yield store.waitPrompt(state, () => next());
-  }
-
-  if (attackEffect.damage > 0) {
-    const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
-    state = store.reduceEffect(state, dealDamage);
-  }
-
-  return state;
-}
+import { COPY_OPPONENT_ACTIVE_AND_BENCH_ATTACK } from '../../game/store/prefabs/copy-attack-prefabs';
 
 export class ZoroarkGX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
@@ -123,6 +56,7 @@ export class ZoroarkGX extends PokemonCard {
       name: 'Trickster-GX',
       cost: [CardType.DARK, CardType.DARK],
       damage: 0,
+      copycatAttack: true,
       gxAttack: true,
       text: "Choose 1 of your opponent's Pokémon's attacks and use it as this attack. (You can't use more than 1 GX attack in a game.)",
     },
@@ -193,8 +127,10 @@ export class ZoroarkGX extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const generator = useTricksterGX(() => generator.next(), store, state, effect);
-      return generator.next().value;
+      const player = effect.player;
+      BLOCK_IF_GX_ATTACK_USED(player);
+      player.usedGX = true;
+      return COPY_OPPONENT_ACTIVE_AND_BENCH_ATTACK(store, state, effect as AttackEffect);
     }
 
     if (effect instanceof EndTurnEffect) {

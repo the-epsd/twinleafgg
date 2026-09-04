@@ -1,12 +1,12 @@
-import { Card, ChooseAttackPrompt, ChooseCardsPrompt, EnergyMap, GameError, GameMessage, Player, PlayerType, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../../game';
-import { CardType, Stage, SuperType } from '../../../game/store/card/card-types';
+import { Card, ChooseCardsPrompt, GameMessage, ShowCardsPrompt, ShuffleDeckPrompt, Stage, StateUtils, SuperType } from '../../../game';
+import { CardType } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { PowerType } from '../../../game/store/card/pokemon-types';
-import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { AttackEffect, UseAttackEffect } from '../../../game/store/effects/game-effects';
+import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { COPY_ATTACK_VIA_ABILITY } from '../../../game/store/prefabs/copy-attack-prefabs';
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 function* useEncounter(next: Function, store: StoreLike, state: State,
@@ -26,7 +26,7 @@ function* useEncounter(next: Function, store: StoreLike, state: State,
     next();
   });
 
-  cards.forEach((card, index) => {
+  cards.forEach((card) => {
     player.deck.moveCardTo(card, player.hand);
   });
 
@@ -79,31 +79,9 @@ export class Mew extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_POWER_USED(effect, 0, this)) {
-      const player = effect.player;
-      const pokemonCard = player.active.getPokemonCard();
-
-      if (pokemonCard !== this) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
-
-      // Build cards and blocked for Choose Attack prompt
-      const { pokemonCards, blocked } = this.buildAttackList(state, store, player);
-
-      // No attacks to copy
-      if (pokemonCards.length === 0) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
-
-      return store.prompt(state, new ChooseAttackPrompt(
-        player.id,
-        GameMessage.CHOOSE_ATTACK_TO_COPY,
-        pokemonCards,
-        { allowCancel: true, blocked }
-      ), attack => {
-        if (attack !== null) {
-          const useAttackEffect = new UseAttackEffect(player, attack);
-          store.reduceEffect(state, useAttackEffect);
-        }
+      return COPY_ATTACK_VIA_ABILITY(store, state, effect, {
+        copycatCard: this,
+        filter: (_cardList, card) => card.stage === Stage.BASIC,
       });
     }
 
@@ -112,48 +90,5 @@ export class Mew extends PokemonCard {
       return generator.next().value;
     }
     return state;
-  }
-
-  private buildAttackList(
-    state: State, store: StoreLike, player: Player
-  ): { pokemonCards: PokemonCard[], blocked: { index: number, attack: string }[] } {
-
-    const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
-    store.reduceEffect(state, checkProvidedEnergyEffect);
-    const energyMap = checkProvidedEnergyEffect.energyMap;
-
-    const pokemonCards: PokemonCard[] = [];
-    const blocked: { index: number, attack: string }[] = [];
-
-    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-      const card = cardList.getPokemonCard();
-      if (card && card.stage === Stage.BASIC) {
-        this.checkAttack(state, store, player, card, energyMap, pokemonCards, blocked);
-      }
-    });
-
-    return { pokemonCards, blocked };
-  }
-
-
-  private checkAttack(state: State, store: StoreLike, player: Player,
-    card: PokemonCard, energyMap: EnergyMap[], pokemonCards: PokemonCard[],
-    blocked: { index: number, attack: string }[]
-  ) {
-    {
-
-      const attacks = card.attacks.filter(attack => {
-        const checkAttackCost = new CheckAttackCostEffect(player, attack);
-        state = store.reduceEffect(state, checkAttackCost);
-        return StateUtils.checkEnoughEnergy(energyMap, checkAttackCost.cost as CardType[]);
-      });
-      const index = pokemonCards.length;
-      pokemonCards.push(card);
-      card.attacks.forEach(attack => {
-        if (!attacks.includes(attack)) {
-          blocked.push({ index, attack: attack.name });
-        }
-      });
-    }
   }
 }

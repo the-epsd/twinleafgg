@@ -12,7 +12,6 @@ import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/pre
 import { COPY_OPPONENT_ACTIVE_ATTACK } from '../../../game/store/prefabs/attack-effects';
 
 export class Mewex extends PokemonCard {
-  public regulationMark = 'G';
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex];
   public cardType: CardType[] = [P];
@@ -21,33 +20,26 @@ export class Mewex extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [];
 
-  public powers = [
-    {
-      name: 'Restart',
-      useWhenInPlay: true,
-      powerType: PowerType.ABILITY,
-      text: 'Once during your turn, you may draw cards until you ' + 'have 3 cards in your hand.',
-    },
-  ];
+  public powers = [{
+    name: 'Restart',
+    useWhenInPlay: true,
+    powerType: PowerType.ABILITY,
+    text: 'Once during your turn, you may draw cards until you ' + 'have 3 cards in your hand.',
+  }];
 
-  public attacks = [
-    {
-      name: 'Genome Hacking',
-      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
-      damage: 0,
-      copycatAttack: true,
-      text: "Choose 1 of the Defending Pokemon's attacks and use it " + 'as this attack.',
-    },
-  ];
+  public attacks = [{
+    name: 'Genome Hacking',
+    cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+    damage: 0,
+    copycatAttack: true,
+    text: "Choose 1 of the Defending Pokemon's attacks and use it " + 'as this attack.',
+  }];
 
+  public regulationMark = 'G';
   public set: string = 'MEW';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '151';
-
   public name: string = 'Mew ex';
-
   public fullName: string = 'Mew ex MEW';
 
   public readonly RESTART_MARKER = 'RESTART_MARKER';

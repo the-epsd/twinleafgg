@@ -2,14 +2,13 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import {
   StoreLike, State, StateUtils, GameMessage,
-  ChooseAttackPrompt,
   GameError,
   Player
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { DRAW_CARDS_UNTIL_CARDS_IN_HAND, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
+import { COPY_ATTACK_FROM_POKEMON_LIST } from '../../../game/store/prefabs/copy-attack-prefabs';
 
 export class Mew extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -29,6 +28,7 @@ export class Mew extends PokemonCard {
       name: 'Re-creation',
       cost: [P, C, C],
       damage: 0,
+      copycatAttack: true,
       text: 'Choose an attack on 1 of your opponent\'s Pokémon in his or her discard pile. Re-creation copies that attack except for its Energy cost. (You must still do anything else required for that attack.) Mew performs that attack.'
     },
   ];
@@ -49,68 +49,29 @@ export class Mew extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
       const pokemonCard = player.active.getPokemonCard();
 
       if (pokemonCard !== this) {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);
       }
 
-      // Build cards and blocked for Choose Attack prompt
-      const { pokemonCards, blocked } = this.buildAttackList(state, store, player);
+      const pokemonCards = this.getOpponentDiscardPokemon(state, player);
 
-      // No attacks to copy
       if (pokemonCards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);
       }
 
-      return store.prompt(state, new ChooseAttackPrompt(
-        player.id,
-        GameMessage.CHOOSE_ATTACK_TO_COPY,
-        pokemonCards,
-        { allowCancel: true, blocked }
-      ), attack => {
-        if (attack !== null) {
-          const attackEffect = new AttackEffect(player, opponent, attack);
-          store.reduceEffect(state, attackEffect);
-
-          if (attackEffect.damage > 0) {
-            const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
-            state = store.reduceEffect(state, dealDamage);
-          }
-        }
+      return COPY_ATTACK_FROM_POKEMON_LIST(store, state, effect as AttackEffect, pokemonCards, {
+        allowCancel: true,
       });
     }
     return state;
   }
 
-  private buildAttackList(
-    state: State, store: StoreLike, player: Player
-  ): { pokemonCards: PokemonCard[], blocked: { index: number, attack: string }[] } {
-
+  private getOpponentDiscardPokemon(state: State, player: Player): PokemonCard[] {
     const opponent = StateUtils.getOpponent(state, player);
-    const pokemonCards: PokemonCard[] = [];
-    const blocked: { index: number, attack: string }[] = [];
-    opponent.discard.cards.forEach(card => {
-      if (card instanceof PokemonCard) {
-        this.checkAttack(state, store, player, card, pokemonCards, blocked);
-      }
-    });
-
-    return { pokemonCards, blocked };
-  }
-
-  private checkAttack(state: State, store: StoreLike, player: Player,
-    card: PokemonCard, pokemonCards: PokemonCard[],
-    blocked: { index: number, attack: string }[]
-  ) {
-    const attacks = card.attacks;
-    const index = pokemonCards.length;
-    pokemonCards.push(card);
-    card.attacks.forEach(attack => {
-      if (!attacks.includes(attack)) {
-        blocked.push({ index, attack: attack.name });
-      }
-    });
+    return opponent.discard.cards.filter(
+      (card): card is PokemonCard => card instanceof PokemonCard,
+    );
   }
 }

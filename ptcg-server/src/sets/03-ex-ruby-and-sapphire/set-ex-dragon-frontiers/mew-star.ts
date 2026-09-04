@@ -12,7 +12,6 @@ import {
   StateUtils,
   GameMessage,
   PlayerType,
-  ChooseAttackPrompt,
   Player,
   EnergyMap,
   EnergyCard,
@@ -26,7 +25,8 @@ import {
   CheckPokemonTypeEffect,
 } from '../../../game/store/effects/check-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import { COPY_ATTACK_FROM_POKEMON_LIST } from '../../../game/store/prefabs/copy-attack-prefabs';
 
 export class MewStar extends PokemonCard {
   protected _tags = [CardTag.STAR, CardTag.DELTA_SPECIES];
@@ -41,6 +41,7 @@ export class MewStar extends PokemonCard {
       name: 'Mimicry',
       cost: [C],
       damage: 0,
+      copycatAttack: true,
       text: "Choose an attack on 1 of your opponent's Pokémon in play. Mimicry copies that attack. This attack does nothing if Mew Star doesn't have the Energy necessary to use that attack. (You must still do anything else required for that attack.) Mew Star performs that attack.",
     },
     {
@@ -58,40 +59,20 @@ export class MewStar extends PokemonCard {
   public setNumber: string = '101';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Mimicry
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      const opponent = effect.opponent;
-
-      // Build cards and blocked for Choose Attack prompt
       const { pokemonCards, blocked } = this.buildAttackList(state, store, player);
 
-      // No attacks to copy
       if (pokemonCards.length === 0) {
         return state;
       }
 
-      return store.prompt(
-        state,
-        new ChooseAttackPrompt(player.id, GameMessage.CHOOSE_ATTACK_TO_COPY, pokemonCards, {
-          allowCancel: true,
-          blocked,
-        }),
-        (attack) => {
-          if (attack !== null) {
-            const attackEffect = new AttackEffect(player, opponent, attack);
-            store.reduceEffect(state, attackEffect);
-
-            if (attackEffect.damage > 0) {
-              const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
-              state = store.reduceEffect(state, dealDamage);
-            }
-          }
-        },
-      );
+      return COPY_ATTACK_FROM_POKEMON_LIST(store, state, effect as AttackEffect, pokemonCards, {
+        allowCancel: true,
+        blocked,
+      });
     }
 
-    //Rainbow Wave
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = effect.opponent;
@@ -150,9 +131,11 @@ export class MewStar extends PokemonCard {
     const pokemonCards: PokemonCard[] = [];
     const blocked: { index: number; attack: string }[] = [];
 
-    // Check opponent's Pokemon
     const opponent = StateUtils.getOpponent(state, player);
     opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+      if (card instanceof MewStar) {
+        return;
+      }
       this.checkAttack(state, store, player, card, energyMap, pokemonCards, blocked);
     });
 
@@ -168,11 +151,6 @@ export class MewStar extends PokemonCard {
     pokemonCards: PokemonCard[],
     blocked: { index: number; attack: string }[],
   ) {
-    // No need to include Mew ex to the list
-    if (card instanceof MewStar) {
-      return;
-    }
-
     const attacks = card.attacks.filter((attack) => {
       const checkAttackCost = new CheckAttackCostEffect(player, attack);
       state = store.reduceEffect(state, checkAttackCost);

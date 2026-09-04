@@ -2,7 +2,6 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, PlayerType, ShuffleDeckPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED, FLIP_UNTIL_TAILS_AND_COUNT_HEADS } from '../../../game/store/prefabs/prefabs';
 
@@ -35,29 +34,14 @@ export class TogepiCleffaIgglybuffGX extends PokemonCard {
   public name: string = 'Togepi & Cleffa & Igglybuff-GX';
   public fullName: string = 'Togepi & Cleffa & Igglybuff-GX CEC';
 
-  public readonly SUPREME_PUFF_MARKER = 'SUPREME_PUFF_MARKER';
-
-  public readonly SUPREME_PUFF_MARKER_2 = 'SUPREME_PUFF_MARKER_2';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // turn skipping shenanegains (thanks for dialga-gx)
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.SUPREME_PUFF_MARKER_2, this)) {
-      effect.player.marker.removeMarker(this.SUPREME_PUFF_MARKER, this);
-      effect.player.marker.removeMarker(this.SUPREME_PUFF_MARKER_2, this);
-      effect.player.usedTurnSkip = false;
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.SUPREME_PUFF_MARKER, this)) {
-      effect.player.marker.addMarker(this.SUPREME_PUFF_MARKER_2, this);
-    }
-
     // Rolling Panic
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       return FLIP_UNTIL_TAILS_AND_COUNT_HEADS(store, state, player, heads => {
-      effect.damage += 30 * heads;
-    });
+        effect.damage += 30 * heads;
+      });
     }
 
     // Supreme Puff-GX
@@ -66,8 +50,7 @@ export class TogepiCleffaIgglybuffGX extends PokemonCard {
 
       BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
-      player.marker.addMarker(this.SUPREME_PUFF_MARKER, this);
-      effect.player.usedTurnSkip = true;
+      player.usedTurnSkip = true;
 
       // Check for the extra energy cost.
       const extraEffectCost: CardType[] = [Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y, Y];
@@ -75,7 +58,7 @@ export class TogepiCleffaIgglybuffGX extends PokemonCard {
       store.reduceEffect(state, checkProvidedEnergy);
       const meetsExtraEffectCost = StateUtils.checkEnoughEnergy(checkProvidedEnergy.energyMap, extraEffectCost);
 
-      if (!meetsExtraEffectCost) { return state; }  // If we don't have the extra energy, we just deal damage.
+      if (!meetsExtraEffectCost) { return state; }
 
       const opponent = StateUtils.getOpponent(state, player);
 

@@ -228,6 +228,7 @@ export class Player {
   usedExcitingStageThisTurn: any;
   usedSquawkAndSeizeThisTurn: any;
   usedTurnSkip: any;
+  usedTurnSkipClearArmed: boolean = false;
   usedTableTurner: any;
   usedMinusCharge: any;
   usedPlusCharge: any;

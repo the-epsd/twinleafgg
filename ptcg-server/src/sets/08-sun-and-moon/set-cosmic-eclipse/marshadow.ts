@@ -4,69 +4,11 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { Attack, StoreLike, State, StateUtils, GameLog, GameMessage } from '../../../game';
-import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
+import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
-import { ChooseAttackPrompt } from '../../../game/store/prompts/choose-attack-prompt';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-
-function* useShadowImitation(next: Function, store: StoreLike, state: State,
-  effect: AttackEffect): IterableIterator<State> {
-  const player = effect.player;
-  const opponent = StateUtils.getOpponent(state, player);
-  const pokemonCard = opponent.active.getPokemonCard();
-
-  if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
-    return state;
-  }
-
-  // Filter to non-GX attacks only
-  const nonGxAttacks = pokemonCard.attacks.filter(a => !a.name.includes('-GX'));
-  if (nonGxAttacks.length === 0) {
-    return state;
-  }
-
-  // Create a temporary card-like object with only non-GX attacks for the prompt
-  const filteredCard = Object.create(pokemonCard);
-  filteredCard.attacks = nonGxAttacks;
-
-  let selected: any;
-  yield store.prompt(state, new ChooseAttackPrompt(
-    player.id,
-    GameMessage.CHOOSE_ATTACK_TO_COPY,
-    [filteredCard],
-    { allowCancel: false }
-  ), result => {
-    selected = result;
-    next();
-  });
-
-  const attack: Attack | null = selected;
-
-  if (attack === null) {
-    return state;
-  }
-
-  store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
-    name: player.name,
-    attack: attack.name
-  });
-
-  const attackEffect = new AttackEffect(player, opponent, attack);
-  store.reduceEffect(state, attackEffect);
-
-  if (store.hasPrompts()) {
-    yield store.waitPrompt(state, () => next());
-  }
-
-  if (attackEffect.damage > 0) {
-    const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
-    state = store.reduceEffect(state, dealDamage);
-  }
-
-  return state;
-}
+import { COPY_ATTACK_FROM_POKEMON_LIST } from '../../../game/store/prefabs/copy-attack-prefabs';
 
 export class Marshadow extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -81,6 +23,7 @@ export class Marshadow extends PokemonCard {
       name: 'Shadow Imitation',
       cost: [P, C, C],
       damage: 0,
+      copycatAttack: true,
       text: 'Choose 1 of your opponent\'s Active Pokémon\'s non-GX attacks and use it as this attack.'
     }
   ];
@@ -92,11 +35,23 @@ export class Marshadow extends PokemonCard {
   public fullName: string = 'Marshadow CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 1: Shadow Imitation
-    // Ref: set-vivid-voltage/clefairy.ts (Mini-Metronome - choose opponent's attack and use it)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const generator = useShadowImitation(() => generator.next(), store, state, effect as AttackEffect);
-      return generator.next().value;
+      const opponent = effect.opponent;
+      const pokemonCard = opponent.active.getPokemonCard();
+
+      if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
+        return state;
+      }
+
+      const nonGxAttacks = pokemonCard.attacks.filter(a => !a.name.includes('-GX'));
+      if (nonGxAttacks.length === 0) {
+        return state;
+      }
+
+      const filteredCard = Object.create(pokemonCard);
+      filteredCard.attacks = nonGxAttacks;
+
+      return COPY_ATTACK_FROM_POKEMON_LIST(store, state, effect as AttackEffect, [filteredCard]);
     }
 
     return state;

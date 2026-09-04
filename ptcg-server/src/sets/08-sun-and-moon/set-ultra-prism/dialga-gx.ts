@@ -2,8 +2,6 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { ApplyWeaknessEffect, AfterDamageEffect } from '../../../game/store/effects/attack-effects';
 import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
@@ -53,27 +51,7 @@ export class DialgaGX extends PokemonCard {
 
   public fullName: string = 'Dialga-GX UPR';
 
-  public readonly TIMELESS_GX_MARKER = 'TIMELESS_GX_MARKER';
-
-  public readonly TIMELESS_GX_MARKER_2 = 'TIMELESS_GX_MARKER_2';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (
-      effect instanceof EndTurnEffect &&
-      effect.player.marker.hasMarker(this.TIMELESS_GX_MARKER_2, this)
-    ) {
-      effect.player.marker.removeMarker(this.TIMELESS_GX_MARKER, this);
-      effect.player.marker.removeMarker(this.TIMELESS_GX_MARKER_2, this);
-      effect.player.usedTurnSkip = false;
-    }
-
-    if (
-      effect instanceof EndTurnEffect &&
-      effect.player.marker.hasMarker(this.TIMELESS_GX_MARKER, this)
-    ) {
-      effect.player.marker.addMarker(this.TIMELESS_GX_MARKER_2, this);
-    }
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       while (player.hand.cards.length < 6) {
@@ -101,13 +79,13 @@ export class DialgaGX extends PokemonCard {
       }
     }
 
+    // Ref: usedTurnSkip + usedTurnSkipClearArmed (game-phase-effect)
     if (WAS_ATTACK_USED(effect, 2, this)) {
       const player = effect.player;
 
       BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
-      player.marker.addMarker(this.TIMELESS_GX_MARKER, this);
-      effect.player.usedTurnSkip = true;
+      player.usedTurnSkip = true;
     }
 
     return state;

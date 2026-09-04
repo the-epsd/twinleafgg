@@ -4,89 +4,17 @@ import { StoreLike,
   State,
   StateUtils,
   GameMessage,
-  ChooseAttackPrompt,
-  Attack,
-  GameLog,
   PowerType,
   Card,
   ChooseCardsPrompt,
   GameError,
-  ShowCardsPrompt, pokemonHasCardType } from '../../../game';
+  ShowCardsPrompt,
+  pokemonHasCardType,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
-import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
-
-function* useApexDragon(
-  next: Function,
-  store: StoreLike,
-  state: State,
-  effect: AttackEffect,
-): IterableIterator<State> {
-  const player = effect.player;
-  const opponent = StateUtils.getOpponent(state, player);
-
-  const maxRetries = 3;
-
-  const discardPokemon = player.discard.cards.filter(
-    (card) => card.superType === SuperType.POKEMON,
-  ) as PokemonCard[];
-  const dragonTypePokemon = discardPokemon.filter(
-    (card) => pokemonHasCardType(card, CardType.DRAGON) && card.name !== 'Regidrago VSTAR',
-  );
-
-  if (dragonTypePokemon.length === 0) {
-    return state;
-  }
-
-  for (let retryCount = 0; retryCount < maxRetries; retryCount++) {
-    let selected: any;
-    yield store.prompt(
-      state,
-      new ChooseAttackPrompt(player.id, GameMessage.CHOOSE_ATTACK_TO_COPY, dragonTypePokemon, {
-        allowCancel: true,
-      }),
-      (result) => {
-        selected = result;
-        next();
-      },
-    );
-
-    const attack: Attack | null = selected;
-
-    if (attack === null) {
-      return state; // Player chose to cancel
-    }
-
-    try {
-      store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
-        name: player.name,
-        attack: attack.name,
-      });
-
-      const attackEffect = new AttackEffect(player, opponent, attack);
-      state = store.reduceEffect(state, attackEffect);
-
-      if (store.hasPrompts()) {
-        yield store.waitPrompt(state, () => next());
-      }
-
-      if (attackEffect.damage > 0) {
-        const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
-        state = store.reduceEffect(state, dealDamage);
-      }
-
-      return state; // Successfully executed attack, exit the function
-    } catch (error) {
-      console.log('Attack failed:', error);
-      retryCount++;
-      if (retryCount >= maxRetries) {
-        console.log('Max retries reached. Exiting loop.');
-        return state;
-      }
-    }
-  }
-}
+import { COPY_ATTACK_FROM_POKEMON_LIST } from '../../../game/store/prefabs/copy-attack-prefabs';
 
 export class RegidragoVSTAR extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VSTAR];
@@ -110,6 +38,7 @@ export class RegidragoVSTAR extends PokemonCard {
       name: 'Apex Dragon',
       cost: [CardType.GRASS, CardType.GRASS, CardType.FIRE],
       damage: 0,
+      copycatAttack: true,
       text: 'Choose an attack from a [N] Pokémon in your discard pile and use it as this attack.',
     },
   ];
@@ -135,8 +64,22 @@ export class RegidragoVSTAR extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const generator = useApexDragon(() => generator.next(), store, state, effect);
-      return generator.next().value;
+      const player = effect.player;
+      const discardPokemon = player.discard.cards.filter(
+        (card) => card.superType === SuperType.POKEMON,
+      ) as PokemonCard[];
+      const dragonTypePokemon = discardPokemon.filter(
+        (card) => pokemonHasCardType(card, CardType.DRAGON) && card.name !== 'Regidrago VSTAR',
+      );
+
+      if (dragonTypePokemon.length === 0) {
+        return state;
+      }
+
+      return COPY_ATTACK_FROM_POKEMON_LIST(store, state, effect as AttackEffect, dragonTypePokemon, {
+        allowCancel: true,
+        maxRetries: 3,
+      });
     }
 
     if (WAS_POWER_USED(effect, 0, this)) {

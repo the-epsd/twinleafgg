@@ -4,20 +4,10 @@ import {
   PowerType,
   StoreLike,
   State,
-  StateUtils,
-  GameError,
-  GameMessage,
-  ChooseAttackPrompt,
-  Player,
-  EnergyMap,
-  Card,
 } from '../../../game';
+import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { UseAttackEffect } from '../../../game/store/effects/game-effects';
-import {
-  CheckProvidedEnergyEffect,
-  CheckAttackCostEffect,
-} from '../../../game/store/effects/check-effects';
+import { COPY_ATTACK_VIA_ABILITY } from '../../../game/store/prefabs/copy-attack-prefabs';
 import {
   BLOCK_IF_GX_ATTACK_USED,
   WAS_ATTACK_USED,
@@ -74,38 +64,21 @@ export class MarshadowGX extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
-      const pokemonCard = player.active.getPokemonCard();
-      if (pokemonCard !== this) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
-
-      // Build cards and blocked for Choose Attack prompt
-      const { pokemonCards, blocked } = this.buildAttackList(state, store, player);
-
-      // No attacks to copy
-      if (pokemonCards.length === 0) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
-
-      return store.prompt(
-        state,
-        new ChooseAttackPrompt(player.id, GameMessage.CHOOSE_ATTACK_TO_COPY, pokemonCards, {
-          allowCancel: true,
-          blocked,
-        }),
-        (attack) => {
-          if (attack !== null) {
-            const useAttackEffect = new UseAttackEffect(player, attack);
-            store.reduceEffect(state, useAttackEffect);
-          }
-        },
+      const extraCards = player.discard.cards.filter(
+        (card): card is PokemonCard =>
+          card instanceof PokemonCard &&
+          !(card instanceof MarshadowGX) &&
+          card.stage === Stage.BASIC,
       );
+      return COPY_ATTACK_VIA_ABILITY(store, state, effect, {
+        copycatCard: this,
+        extraCards,
+      });
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      // gx thingies
       BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
 
@@ -120,54 +93,5 @@ export class MarshadowGX extends PokemonCard {
     }
 
     return state;
-  }
-
-  private buildAttackList(
-    state: State,
-    store: StoreLike,
-    player: Player,
-  ): { pokemonCards: PokemonCard[]; blocked: { index: number; attack: string }[] } {
-    const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
-    store.reduceEffect(state, checkProvidedEnergyEffect);
-    const energyMap = checkProvidedEnergyEffect.energyMap;
-
-    const pokemonCards: PokemonCard[] = [];
-    const blocked: { index: number; attack: string }[] = [];
-
-    player.discard.cards.forEach((card) => {
-      this.checkAttack(state, store, player, card, energyMap, pokemonCards, blocked);
-    });
-
-    return { pokemonCards, blocked };
-  }
-
-  private checkAttack(
-    state: State,
-    store: StoreLike,
-    player: Player,
-    card: Card,
-    energyMap: EnergyMap[],
-    pokemonCards: PokemonCard[],
-    blocked: { index: number; attack: string }[],
-  ) {
-    if (
-      !(card instanceof PokemonCard) ||
-      card instanceof MarshadowGX ||
-      !(card.stage === Stage.BASIC)
-    ) {
-      return;
-    }
-    const attacks = card.attacks.filter((attack) => {
-      const checkAttackCost = new CheckAttackCostEffect(player, attack);
-      state = store.reduceEffect(state, checkAttackCost);
-      return StateUtils.checkEnoughEnergy(energyMap, checkAttackCost.cost);
-    });
-    const index = pokemonCards.length;
-    pokemonCards.push(card);
-    card.attacks.forEach((attack) => {
-      if (!attacks.includes(attack)) {
-        blocked.push({ index, attack: attack.name });
-      }
-    });
   }
 }

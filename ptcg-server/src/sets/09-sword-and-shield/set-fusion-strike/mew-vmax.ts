@@ -4,75 +4,15 @@ import {
   StoreLike,
   State,
   StateUtils,
-  GameMessage,
-  ChooseAttackPrompt,
-  GameLog,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import {
   ApplyWeaknessEffect,
   AfterDamageEffect,
-  DealDamageEffect,
 } from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-
-function* useCrossFusionStrike(
-  next: Function,
-  store: StoreLike,
-  state: State,
-  effect: AttackEffect,
-): IterableIterator<State> {
-  const player = effect.player;
-  const opponent = StateUtils.getOpponent(state, player);
-
-  const benched = player.bench.filter(
-    (b) => b.cards.length > 0 && b.getPokemonCard()?.hasTag(CardTag.FUSION_STRIKE),
-  );
-  const fusionStrike = benched
-    .map((b) => b.getPokemonCard())
-    .filter((c): c is PokemonCard => c !== undefined);
-
-  if (fusionStrike.length === 0) {
-    return state;
-  }
-
-  let selected: any;
-  yield store.prompt(
-    state,
-    new ChooseAttackPrompt(player.id, GameMessage.CHOOSE_ATTACK_TO_COPY, fusionStrike, {
-      allowCancel: false,
-    }),
-    (result) => {
-      selected = result;
-      next();
-    },
-  );
-
-  if (!selected || selected.copycatAttack) {
-    return state;
-  }
-
-  store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
-    name: player.name,
-    attack: selected.name,
-  });
-
-  // Perform attack
-  const attackEffect = new AttackEffect(player, opponent, selected);
-  state = store.reduceEffect(state, attackEffect);
-
-  if (store.hasPrompts()) {
-    yield store.waitPrompt(state, () => next());
-  }
-
-  if (attackEffect.damage > 0) {
-    const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
-    state = store.reduceEffect(state, dealDamage);
-  }
-
-  return state;
-}
+import { COPY_ATTACK_FROM_POKEMON_LIST } from '../../../game/store/prefabs/copy-attack-prefabs';
 
 export class MewVMAX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX, CardTag.FUSION_STRIKE];
@@ -126,8 +66,19 @@ export class MewVMAX extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const generator = useCrossFusionStrike(() => generator.next(), store, state, effect);
-      return generator.next().value;
+      const player = effect.player;
+      const fusionStrike = player.bench
+        .filter(b => b.cards.length > 0 && b.getPokemonCard()?.hasTag(CardTag.FUSION_STRIKE))
+        .map(b => b.getPokemonCard())
+        .filter((c): c is PokemonCard => c !== undefined);
+
+      if (fusionStrike.length === 0) {
+        return state;
+      }
+
+      return COPY_ATTACK_FROM_POKEMON_LIST(store, state, effect as AttackEffect, fusionStrike, {
+        disallowCopycatAttack: true,
+      });
     }
 
     return state;
