@@ -44,9 +44,7 @@ export class Armarouge extends PokemonCard {
           em.provides.some(
             (t) =>
               t === CardType.FIRE ||
-              t === CardType.ANY ||
-              t === CardType.GRPD ||
-              t === CardType.GRW,
+              t === CardType.ANY,
           ),
         );
         if (hasFireEnergy) {

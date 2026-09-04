@@ -1,5 +1,5 @@
-import { EnergyCard, PowerType, State, StateUtils, StoreLike } from '../../../game';
-import { CardType, Stage, SuperType } from '../../../game/store/card/card-types';
+import { PowerType, State, StateUtils, StoreLike } from '../../../game';
+import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { CheckHpEffect, CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
@@ -70,12 +70,7 @@ export class Okidogi extends PokemonCard {
       let darkProvided = false;
 
       checkProvidedEnergyEffect.energyMap.forEach(em => {
-        if (em.provides.includes(CardType.DARK)) {
-          darkProvided = true;
-        }
-
-        if ((em.card.superType === SuperType.ENERGY && (em.card as EnergyCard).blendedEnergies.includes(CardType.DARK)) ||
-          (em.provides.includes(CardType.DARK) || em.provides.includes(CardType.ANY))) {
+        if (em.provides.includes(CardType.DARK) || em.provides.includes(CardType.ANY)) {
           darkProvided = true;
         }
       });
@@ -101,11 +96,7 @@ export class Okidogi extends PokemonCard {
       let darkProvided = false;
 
       checkProvidedEnergyEffect.energyMap.forEach(em => {
-        if (em.provides.includes(CardType.DARK)) {
-          darkProvided = true;
-        }
-        if ((em.card.superType === SuperType.ENERGY && (em.card as EnergyCard).blendedEnergies.includes(CardType.DARK)) ||
-          (em.provides.includes(CardType.DARK) || em.provides.includes(CardType.ANY))) {
+        if (em.provides.includes(CardType.DARK) || em.provides.includes(CardType.ANY)) {
           darkProvided = true;
         }
       });

@@ -40,7 +40,7 @@ export class Raichu extends PokemonCard {
       card instanceof EnergyCard &&
       card.energyType === EnergyType.BASIC &&
       card.provides.some(
-        (p) => p === CardType.LIGHTNING || p === CardType.ANY || p === CardType.WLFM,
+        (p) => p === CardType.LIGHTNING || p === CardType.ANY,
       )
     );
   }
@@ -116,7 +116,7 @@ export class Raichu extends PokemonCard {
           PlayerType.BOTTOM_PLAYER,
           thisCardList === player.active ? [SlotType.ACTIVE] : [SlotType.BENCH],
           { superType: SuperType.ENERGY },
-          { blocked, blockedTo, validCardTypes: [CardType.LIGHTNING, CardType.ANY, CardType.WLFM], allowCancel: false, min: 0, max: 1 }
+          { blocked, blockedTo, validCardTypes: [CardType.LIGHTNING, CardType.ANY], allowCancel: false, min: 0, max: 1 }
         ),
         transfers => {
           transfers = transfers || [];

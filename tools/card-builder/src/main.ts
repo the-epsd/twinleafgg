@@ -436,8 +436,8 @@ function renderEnergyFields(): string {
         </select>
       </label>
       <label>Provides (e.g. CC)<input data-root="provides" value="${escapeAttr(draft.provides)}" /></label>
-      <label>Blended types (e.g. FDY)<input data-root="blendedEnergies" value="${escapeAttr(draft.blendedEnergies)}" placeholder="optional" /></label>
-      <label>Blended energy count<input type="number" min="1" data-root="blendedEnergyCount" value="${escapeAttr(draft.blendedEnergyCount)}" /></label>
+      <label>Choosable types (blend/unit, e.g. FDY)<input data-root="blendedEnergies" value="${escapeAttr(draft.blendedEnergies)}" placeholder="optional — listed in provides at check time" /></label>
+      <label>Choosable unit count<input type="number" min="1" data-root="blendedEnergyCount" value="${escapeAttr(draft.blendedEnergyCount)}" /></label>
     </div>
     <label>Tags (comma CardTag names)<input data-root="tags" value="${escapeAttr(draft.tags)}" placeholder="ACE_SPEC" /></label>
     <label>Text<textarea data-root="energyText" rows="3">${escapeHtml(draft.energyText)}</textarea></label>

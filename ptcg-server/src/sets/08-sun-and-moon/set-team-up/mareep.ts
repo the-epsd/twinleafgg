@@ -50,7 +50,7 @@ export class Mareep extends PokemonCard {
 
       const cards: Card[] = [];
       for (const energyMap of checkProvidedEnergy.energyMap) {
-        const energy = energyMap.provides.filter(t => t === CardType.LIGHTNING || t === CardType.ANY || t === CardType.WLFM || t === CardType.LPM);
+        const energy = energyMap.provides.filter(t => t === CardType.LIGHTNING || t === CardType.ANY);
         if (energy.length > 0) {
           cards.push(energyMap.card);
         }

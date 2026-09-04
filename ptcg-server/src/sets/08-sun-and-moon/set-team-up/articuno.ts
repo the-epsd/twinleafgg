@@ -54,7 +54,7 @@ export class Articuno extends PokemonCard {
       }
 
       // Count valid [W] Energy attached to Articuno
-      const validTypes = [CardType.WATER, CardType.ANY, CardType.WLFM, CardType.GRW];
+      const validTypes = [CardType.WATER, CardType.ANY];
       const attachedEnergies = player.active.cards.filter(card => {
         // Only consider EnergyCard instances
         if (card.superType !== SuperType.ENERGY) return false;

@@ -26,8 +26,6 @@ export class RapidStrikeEnergy extends EnergyCard {
 
 As long as this card is attached to a Pokémon, it provides 2 in any combination of [W] Energy and [F] Energy.`;
 
-  public blendedEnergies = [CardType.FIGHTING, CardType.WATER];
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
       try {
@@ -37,18 +35,9 @@ As long as this card is attached to a Pokémon, it provides 2 in any combination
         return state;
       }
 
-      // Find the first energy type that's not already provided by other energies
-      const neededType = this.blendedEnergies.find(
-        (type) => !effect.energyMap.some((energy) => energy.provides.includes(type)),
-      );
-
-      if (neededType) {
-        // Only provide the specific energy type that's needed
-        effect.energyMap.push({
-          card: this,
-          provides: [neededType],
-        });
-      }
+      const choosable = [CardType.FIGHTING, CardType.WATER];
+      effect.energyMap.push({ card: this, provides: [...choosable] });
+      effect.energyMap.push({ card: this, provides: [...choosable] });
     }
 
     // Discard card when not attached to Rapid Strike Pokemon

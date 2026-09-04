@@ -69,9 +69,7 @@ export class HolonsVoltorb extends PokemonCard implements EnergyCard {
 
   public isBlocked = false;
 
-  public blendedEnergies: CardType[] = [];
 
-  public blendedEnergyCount = 1;
 
   public energyEffect: any = undefined;
 

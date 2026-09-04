@@ -169,8 +169,6 @@ export function getCardGameplaySignature(card: Card): string {
       energyType: energy.energyType ?? EnergyType.BASIC,
       provides: energy.provides ?? [],
       text: energy.text ?? '',
-      blendedEnergies: energy.blendedEnergies ?? [],
-      blendedEnergyCount: energy.blendedEnergyCount ?? 1,
     });
   }
 

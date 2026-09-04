@@ -108,7 +108,7 @@ export function retreatReducer(store: StoreLike, state: State, effect: Effect): 
     }
 
     if (StateUtils.checkExactEnergy(checkProvidedEnergy.energyMap, checkRetreatCost.cost)) {
-      const cards = flatMap(checkProvidedEnergy.energyMap, e => Array.from({ length: e.provides.length }, () => e.card));
+      const cards = flatMap(checkProvidedEnergy.energyMap, e => Array.from({ length: StateUtils.getProvidesUnitCount(e.provides) }, () => e.card));
       player.active.clearEffects();
       player.active.moveCardsTo(cards, player.discard);
       return promptBenchAndRetreat(store, state, player);
@@ -180,7 +180,7 @@ export function retreatReducer(store: StoreLike, state: State, effect: Effect): 
 
     // If the player has the exact energy cost, automatically discard the energy and retreat
     if (StateUtils.checkExactEnergy(checkProvidedEnergy.energyMap, checkRetreatCost.cost)) {
-      const cards = flatMap(checkProvidedEnergy.energyMap, e => Array.from({ length: e.provides.length }, () => e.card));
+      const cards = flatMap(checkProvidedEnergy.energyMap, e => Array.from({ length: StateUtils.getProvidesUnitCount(e.provides) }, () => e.card));
       player.active.clearEffects();
       player.active.moveCardsTo(cards, effect.moveRetreatCostTo);
       retreatPokemon(store, state, effect);

@@ -12,10 +12,7 @@ import { GameError, GameMessage, PlayerType } from '../../../game';
 import { IS_SPECIAL_ENERGY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class TeamRocketsEnergy extends EnergyCard {
-  public provides: CardType[] = [CardType.COLORLESS, CardType.COLORLESS];
-  public blendedEnergies: CardType[] = [CardType.PSYCHIC, CardType.DARK];
-  public blendedEnergyCount: number = 2;
-
+  public provides: CardType[] = [CardType.COLORLESS];
   protected _tags = [CardTag.TEAM_ROCKET];
   public energyType = EnergyType.SPECIAL;
   public regulationMark = 'I';
@@ -67,10 +64,9 @@ As long as this card is attached to a Pokémon, it provides 2 in any combination
         return state;
       }
 
-      effect.energyMap.push({
-        card: this,
-        provides: [CardType.COLORLESS, CardType.COLORLESS],
-      });
+      const choosable = [CardType.PSYCHIC, CardType.DARK];
+      effect.energyMap.push({ card: this, provides: [...choosable] });
+      effect.energyMap.push({ card: this, provides: [...choosable] });
     }
     return state;
   }

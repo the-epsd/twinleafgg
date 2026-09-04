@@ -4,7 +4,6 @@ import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
-import { EnergyCard } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
@@ -69,12 +68,7 @@ export class Scovillain extends PokemonCard {
       let damage = 90;
 
       checkEnergy.energyMap.forEach(em => {
-        const energyCard = em.card;
-        if (energyCard instanceof EnergyCard &&
-          (energyCard.provides.includes(CardType.FIRE) ||
-            energyCard.provides.includes(CardType.ANY) ||
-            energyCard.blendedEnergies?.includes(CardType.FIRE))
-        ) {
+        if (em.provides.includes(CardType.FIRE) || em.provides.includes(CardType.ANY)) {
           damage += 90;
         }
       });

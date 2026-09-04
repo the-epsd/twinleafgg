@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, EnergyCard, PlayerType } from '../../../game';
-
+import { StoreLike, State, PlayerType } from '../../../game';
+import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
@@ -46,13 +46,11 @@ export class Absol extends PokemonCard {
       let energyCount = 0;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        cardList.cards.forEach(card => {
-          if (card instanceof EnergyCard) {
-            if (card.provides.includes(CardType.DARK) || card.provides.includes(CardType.ANY)) {
-              energyCount += 1;
-            } else if (card.blendedEnergies.includes(CardType.DARK)) {
-              energyCount += 1;
-            }
+        const checkEnergy = new CheckProvidedEnergyEffect(player, cardList);
+        store.reduceEffect(state, checkEnergy);
+        checkEnergy.energyMap.forEach(em => {
+          if (em.provides.includes(CardType.DARK) || em.provides.includes(CardType.ANY)) {
+            energyCount += 1;
           }
         });
       });

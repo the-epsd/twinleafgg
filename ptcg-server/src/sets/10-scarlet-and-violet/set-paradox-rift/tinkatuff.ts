@@ -4,7 +4,6 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
-import { EnergyCard } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
@@ -57,12 +56,7 @@ export class Tinkatuff extends PokemonCard {
       let damage = 20;
 
       checkEnergy.energyMap.forEach(em => {
-        const energyCard = em.card;
-        if (energyCard instanceof EnergyCard &&
-          (energyCard.provides.includes(CardType.METAL) ||
-            energyCard.provides.includes(CardType.ANY) ||
-            energyCard.blendedEnergies?.includes(CardType.METAL))
-        ) {
+        if (em.provides.includes(CardType.METAL) || em.provides.includes(CardType.ANY)) {
           damage += 40;
         }
       });

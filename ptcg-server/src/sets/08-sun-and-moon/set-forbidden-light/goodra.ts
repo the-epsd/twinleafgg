@@ -61,9 +61,7 @@ export class Goodra extends PokemonCard {
         const energyMap = checkWaterEnergy.energyMap.find(element => element.card === effect.energyCard);
         const providedEnergy = energyMap?.provides;
         if (providedEnergy?.includes(CardType.WATER)
-          || providedEnergy?.includes(CardType.ANY)
-          || providedEnergy?.includes(CardType.WLFM)
-          || providedEnergy?.includes(CardType.GRW)) {
+          || providedEnergy?.includes(CardType.ANY)) {
           const healEffect = new HealEffect(effect.player, effect.target, 20);
           return store.reduceEffect(state, healEffect);
         }

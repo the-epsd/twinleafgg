@@ -62,8 +62,6 @@ export class HolonsMagnemite extends PokemonCard implements EnergyCard {
   public energyType = EnergyType.SPECIAL;
   public text: string = 'This card provides [C] Energy.';
   public isBlocked = false;
-  public blendedEnergies: CardType[] = [];
-  public blendedEnergyCount = 1;
   public energyEffect: any = undefined;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -28,8 +28,6 @@ export class SingleStrikeEnergy extends EnergyCard {
 
 As long as this card is attached to a Pokémon, it provides [F] and [D] Energy but provides only 1 Energy at a time, and the attacks of the Pokémon this card is attached to do 20 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).`;
 
-  public blendedEnergies = [CardType.FIGHTING, CardType.DARK];
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
       try {
@@ -39,18 +37,10 @@ As long as this card is attached to a Pokémon, it provides [F] and [D] Energy b
         return state;
       }
 
-      // Find the first energy type that's not already provided by other energies
-      const neededType = this.blendedEnergies.find(
-        (type) => !effect.energyMap.some((energy) => energy.provides.includes(type)),
-      );
-
-      if (neededType) {
-        // Only provide the specific energy type that's needed
-        effect.energyMap.push({
-          card: this,
-          provides: [neededType],
-        });
-      }
+      effect.energyMap.push({
+        card: this,
+        provides: [CardType.FIGHTING, CardType.DARK],
+      });
     }
 
     // Discard card when not attached to Single Strike Pokemon

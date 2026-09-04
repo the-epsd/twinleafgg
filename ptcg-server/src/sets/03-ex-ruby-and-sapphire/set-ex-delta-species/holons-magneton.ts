@@ -72,8 +72,6 @@ export class HolonsMagneton extends PokemonCard implements EnergyCard {
   // EnergyCard interface properties
   public text: string = '';
   public isBlocked = false;
-  public blendedEnergies: CardType[] = [];
-  public blendedEnergyCount = 1;
   public energyEffect: any = undefined;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
