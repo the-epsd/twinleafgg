@@ -41,6 +41,14 @@ import {
   resetDataSource,
 } from './tcgdex/client';
 import { clearImplementedCache } from './data/implemented';
+import {
+  applyRemovedDuplicate,
+  createDuplicatesState,
+  loadDuplicates,
+  removeDuplicateCard,
+  renderDuplicates,
+} from './duplicates';
+import type { DuplicatesState } from './duplicates';
 
 function uid(prefix: string): string {
   return `${prefix}-${Math.random().toString(36).slice(2, 9)}`;
@@ -116,8 +124,9 @@ let draft = defaultDraft();
 let outputCode = '';
 let outputError = '';
 let statusMessage = '';
-let view: 'browse' | 'editor' = 'browse';
+let view: 'browse' | 'editor' | 'duplicates' = 'browse';
 let browse = createBrowseState();
+let duplicates: DuplicatesState = createDuplicatesState();
 let browseScrollY = 0;
 let sourceMeta: BrowseSourceMeta | null = null;
 let imageModalOpen = false;
@@ -207,6 +216,20 @@ async function ensureSeriesLoaded() {
   await ensureImplementedLoaded(browse);
   await loadSeries(browse);
   render();
+}
+
+async function ensureDuplicatesLoaded(force = false) {
+  if (!force && (duplicates.groups.length > 0 || duplicates.loading)) return;
+  await loadDuplicates(duplicates);
+  if (view === 'duplicates') render();
+}
+
+function bindDuplicatesEvents() {
+  const filter = app.querySelector<HTMLSelectElement>('[data-duplicates="reason-filter"]');
+  filter?.addEventListener('change', () => {
+    duplicates.reasonFilter = filter.value;
+    render();
+  });
 }
 
 function energyOptions(selected: string, includeEmpty = false): string {
@@ -531,8 +554,13 @@ function render(scrollMode: RenderScrollMode = 'preserve') {
   const heroActions =
     view === 'browse'
       ? `<button type="button" data-action="show-editor">Blank card form</button>
+         <button type="button" data-action="show-duplicates">Duplicates</button>
          <button type="button" data-action="reload-browse">Reload catalog</button>`
-      : `<button type="button" data-action="show-browse">← Browse cards</button>
+      : view === 'duplicates'
+        ? `<button type="button" data-action="show-browse">← Browse cards</button>
+           <button type="button" data-action="reload-duplicates">Rescan</button>
+           <button type="button" data-action="show-editor">Blank card form</button>`
+        : `<button type="button" data-action="show-browse">← Browse cards</button>
          <button type="button" class="primary" data-action="generate">Generate card</button>
          <button type="button" data-action="save" ${canSave ? '' : 'disabled'}>${saveAsReprint && selectedReprint ? 'Save reprint to other-prints.ts' : 'Save to ptcg-server'}</button>
          <button type="button" data-action="copy" ${outputCode ? '' : 'disabled'}>Copy output</button>
@@ -553,7 +581,9 @@ function render(scrollMode: RenderScrollMode = 'preserve') {
   const body =
     view === 'browse'
       ? renderBrowse(browse)
-      : `<main class="layout">
+      : view === 'duplicates'
+        ? renderDuplicates(duplicates)
+        : `<main class="layout">
       <form class="form" id="card-form">
         ${sourceBanner}
         <section class="section identity-section">
@@ -621,16 +651,21 @@ function render(scrollMode: RenderScrollMode = 'preserve') {
       </aside>
     </main>`;
 
+  const title =
+    view === 'browse' ? 'Browse cards' : view === 'duplicates' ? 'Duplicate cards' : 'Card Builder';
+  const lede =
+    view === 'browse'
+      ? 'Pick a series → set → card to pre-fill the generator. Effect text can be matched to prefabs when available.'
+      : view === 'duplicates'
+        ? 'Cards that share a set number, fullName, index entry, or reprint slot. Compare each copy side by side with catalog art.'
+        : 'Scaffold card TypeScript from form fields. Attack/ability effects emit reduceEffect code when a matching prefab exists.';
+
   app.innerHTML = `
     <header class="hero">
       <div>
         <p class="eyebrow">Local only · PTCG Elite · pokemon-tcg-data</p>
-        <h1>${view === 'browse' ? 'Browse cards' : 'Card Builder'}</h1>
-        <p class="lede">${
-          view === 'browse'
-            ? 'Pick a series → set → card to pre-fill the generator. Effect text can be matched to prefabs when available.'
-            : 'Scaffold card TypeScript from form fields. Attack/ability effects emit reduceEffect code when a matching prefab exists.'
-        }</p>
+        <h1>${title}</h1>
+        <p class="lede">${lede}</p>
       </div>
       <div class="hero-actions">
         ${heroActions}
@@ -655,6 +690,7 @@ function render(scrollMode: RenderScrollMode = 'preserve') {
 
   bindEvents();
   if (view === 'browse') bindBrowseEvents();
+  if (view === 'duplicates') bindDuplicatesEvents();
 
   // Restore focus roughly
   if (activeKey && view === 'editor') {
@@ -969,6 +1005,26 @@ async function handleAction(action: string | null, btn: HTMLButtonElement) {
       render('browse');
       void ensureSeriesLoaded();
       break;
+    case 'show-duplicates':
+      imageModalOpen = false;
+      imageModalUrl = '';
+      clearReprintState();
+      browseScrollY = window.scrollY;
+      view = 'duplicates';
+      statusMessage = '';
+      outputError = '';
+      render('top');
+      void ensureDuplicatesLoaded(true);
+      break;
+    case 'reload-duplicates':
+      imageModalOpen = false;
+      imageModalUrl = '';
+      statusMessage = '';
+      outputError = '';
+      view = 'duplicates';
+      render('top');
+      void ensureDuplicatesLoaded(true);
+      break;
     case 'show-editor':
       imageModalOpen = false;
       imageModalUrl = '';
@@ -1113,6 +1169,26 @@ async function handleAction(action: string | null, btn: HTMLButtonElement) {
       imageModalAlt = btn.getAttribute('data-image-alt') || 'Reprint source card enlarged';
       render();
       app.querySelector<HTMLButtonElement>('[data-action="close-image-modal"]')?.focus();
+      break;
+    }
+    case 'remove-duplicate': {
+      const className = btn.getAttribute('data-class-name') || '';
+      const sourcePath = btn.getAttribute('data-source-path') || '';
+      if (!className || !sourcePath) return;
+      const confirmed = window.confirm(
+        `Remove ${className} from ptcg-server?\n\n${sourcePath}\n\nThis deletes the card class (and its file when it is the only export) and unhooks it from index.ts.`
+      );
+      if (!confirmed) return;
+      btn.disabled = true;
+      try {
+        statusMessage = await removeDuplicateCard(className, sourcePath);
+        outputError = '';
+        applyRemovedDuplicate(duplicates, className, sourcePath);
+      } catch (error) {
+        outputError = error instanceof Error ? error.message : String(error);
+        statusMessage = '';
+      }
+      render();
       break;
     }
     case 'close-image-modal':
