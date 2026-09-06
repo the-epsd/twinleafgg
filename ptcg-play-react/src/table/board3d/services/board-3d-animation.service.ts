@@ -114,7 +114,7 @@ const MULTI_DRAW_SHARED_STAGED_HOLD_SEC_TURN_BEGIN = 0.39;
 /**
  * Visual style for deck→hand flights so setup mulligans feel distinct from in-game draws.
  * - setupMulligan: faster, less dwell (opening hand / mulligan redraw during {@link GamePhase.SETUP})
- * - turnBegin: start-of-turn draws ({@link GamePhase.PLAYER_TURN} opening)
+ * - turnBegin: start-of-turn draws ({@link GamePhase.DRAW} / {@link GamePhase.PLAYER_TURN} opening)
  * - default: other draws
  */
 export type DrawFlightVisualPreset = 'default' | 'setupMulligan' | 'turnBegin';

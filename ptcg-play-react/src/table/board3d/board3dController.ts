@@ -2697,7 +2697,7 @@ export class Board3dController {
     }
 
     const firstTurnOpen =
-      gs?.phase === GamePhase.PLAYER_TURN &&
+      (gs?.phase === GamePhase.PLAYER_TURN || gs?.phase === GamePhase.DRAW) &&
       (ourTurnJustBegan ||
         (gs.turn === 1 && bottomId !== undefined && nowActivePlayerId === bottomId));
 
@@ -2709,14 +2709,20 @@ export class Board3dController {
     // Only split "comp-style then mandatory draw" when our turn actually just began
     // (opponent → us). Turn 1 + we are active (going first) must not split: a batched
     // deck slice would wrongly animate as (n−1) mulligan + 1 turn draw.
-    if (deckPart.length >= 2 && gs?.phase === GamePhase.PLAYER_TURN && ourTurnJustBegan) {
+    if (
+      deckPart.length >= 2 &&
+      (gs?.phase === GamePhase.PLAYER_TURN || gs?.phase === GamePhase.DRAW) &&
+      ourTurnJustBegan
+    ) {
       segs.push({ ids: deckPart.slice(0, -1), preset: 'setupMulligan' });
       segs.push({ ids: deckPart.slice(-1), preset: 'turnBegin' });
       return segs;
     }
 
     const singleTurnOpen =
-      deckPart.length === 1 && gs?.phase === GamePhase.PLAYER_TURN && firstTurnOpen;
+      deckPart.length === 1 &&
+      (gs?.phase === GamePhase.PLAYER_TURN || gs?.phase === GamePhase.DRAW) &&
+      firstTurnOpen;
     segs.push({
       ids: deckPart,
       preset: singleTurnOpen ? 'turnBegin' : 'default',
@@ -3042,7 +3048,7 @@ export class Board3dController {
       const bottomId = this.bottomPlayer?.id;
       const ourTurnJustBegan =
         !!gs &&
-        gs.phase === GamePhase.PLAYER_TURN &&
+        (gs.phase === GamePhase.PLAYER_TURN || gs.phase === GamePhase.DRAW) &&
         bottomId !== undefined &&
         nowActivePlayerId === bottomId &&
         this.lastHandSyncActivePlayerId !== undefined &&

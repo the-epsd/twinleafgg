@@ -80,6 +80,7 @@ export class SandboxControlComponent implements OnInit, OnChanges {
   public gamePhases = [
     { value: GamePhase.WAITING_FOR_PLAYERS, label: 'WAITING_FOR_PLAYERS' },
     { value: GamePhase.SETUP, label: 'SETUP' },
+    { value: GamePhase.DRAW, label: 'DRAW' },
     { value: GamePhase.PLAYER_TURN, label: 'PLAYER_TURN' },
     { value: GamePhase.ATTACK, label: 'ATTACK' },
     { value: GamePhase.AFTER_ATTACK, label: 'AFTER_ATTACK' },
