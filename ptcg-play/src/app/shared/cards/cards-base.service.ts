@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Card, StateSerializer, SuperType, PokemonCard, EnergyCard, CardType, TrainerCard, CardsInfo, CardManager } from 'ptcg-server';
+import { Card, StateSerializer, SuperType, PokemonCard, EnergyCard, CardType, TrainerCard, CardsInfo, CardManager, getPrimaryCardType } from 'ptcg-server';
 
 import { ApiService } from '../../api/api.service';
 import { CardInfoPopupData, CardInfoPopupComponent } from './card-info-popup/card-info-popup.component';
@@ -90,8 +90,8 @@ export class CardsBaseService implements OnDestroy {
       case SuperType.POKEMON:
         const p1 = c1 as PokemonCard;
         const p2 = c2 as PokemonCard;
-        if (p2.cardType !== p1.cardType) {
-          return p1.cardType - p2.cardType;
+        if (getPrimaryCardType(p2) !== getPrimaryCardType(p1)) {
+          return getPrimaryCardType(p1) - getPrimaryCardType(p2);
         }
         break;
       case SuperType.ENERGY:
