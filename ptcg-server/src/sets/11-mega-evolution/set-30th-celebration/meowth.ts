@@ -3,44 +3,34 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { DRAW_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
-export class Zeraora extends PokemonCard {
+export class Meowth extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public hp: number = 110;
-  public cardType: CardType[] = [L];
+  public hp: number = 60;
+  public cardType: CardType[] = [C];
   public weakness = [{ type: F }];
   public retreat = [C];
 
   public attacks = [{
-    name: 'Rapid Draw',
-    cost: [C],
-    damage: 20,
+    name: 'Pay Day',
+    cost: [C, C],
+    damage: 30,
     text: 'Draw a card.'
-  },
-  {
-    name: 'Electrobullet',
-    cost: [L, C],
-    damage: 50,
-    text: 'This attack also does 20 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   }];
 
   public regulationMark: string = 'J';
   public set: string = '30C';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '57';
-  public name: string = 'Zeraora';
-  public fullName: string = 'Zeraora 30C';
+  public setNumber: string = '113';
+  public name: string = 'Meowth';
+  public fullName: string = 'Meowth 30C';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Rapid Draw
+    // Pay Day
     if (WAS_ATTACK_USED(effect, 0, this)) {
       DRAW_CARDS(store, state, effect.player, 1);
     }
-    // Electrobullet
-    if (WAS_ATTACK_USED(effect, 1, this)) {
-      THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON(20, effect, store, state);
-    }
+
     return state;
   }
 }

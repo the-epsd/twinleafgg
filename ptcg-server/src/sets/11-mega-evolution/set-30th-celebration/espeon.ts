@@ -47,6 +47,7 @@ export class Espeon extends PokemonCard {
         }
       });
     }
+
     return state;
   }
 }
