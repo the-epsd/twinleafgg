@@ -4,8 +4,8 @@ import { ZONE_POSITIONS } from './board-3d-zone-positions';
 import type { Board3dCardsAdapter } from './board3dCardsAdapter';
 import { DeckBoxModel } from '../../pages/deck-box-preview/DeckBoxModel';
 
-const BOTTOM_YAW = Math.PI / 4 + Math.PI / 2.5; // 135° — front toward bottom camera
-const TOP_YAW = Math.PI + Math.PI / 4;
+const BOTTOM_YAW = Math.PI / 4 + Math.PI / 2.5 + Math.PI + (22 * Math.PI) / 180; // +180° then +10°
+const TOP_YAW = Math.PI + Math.PI / 4 + Math.PI;
 
 type Board3dDeckBoxesLayerProps = {
   bottomPlayer?: Player;
