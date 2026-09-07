@@ -22,6 +22,7 @@ import { Board3dControllerRefContext } from './Board3dControllerContext';
 import { Board3dFpsBridge } from './Board3dFpsBridge';
 import { Board3dShufflePreviewKey } from './Board3dShufflePreviewKey';
 import { Board3dPrizeLayer } from './Board3dPrizeLayer';
+import { Board3dDeckBoxesLayer } from './Board3dDeckBoxesLayer';
 
 export type Board3dExperienceProps = {
   runtime: Board3dRuntime;
@@ -128,6 +129,11 @@ export function Board3dExperience({
         <group ref={opponentHandRef} />
         <Board3dBoardCardsLayer stateSync={runtime.stateSync} />
         <Board3dPrizeLayer />
+        <Board3dDeckBoxesLayer
+          bottomPlayer={controllerProps.bottomPlayer}
+          topPlayer={controllerProps.topPlayer}
+          cardsAdapter={cardsAdapter}
+        />
       </group>
       <Board3dFrameEffects
         stateSync={runtime.stateSync}

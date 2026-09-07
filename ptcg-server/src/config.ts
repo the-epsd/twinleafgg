@@ -10,6 +10,8 @@ export const config = {
     avatarsUrl: '/avatars/{name}',
     sleevesDir: 'sleeves',
     sleevesUrl: '/sleeves/{path}',
+    deckBoxesDir: 'deck-boxes',
+    deckBoxesUrl: '/deck-boxes/{path}',
     avatarFileSize: 3 * 1024 * 1024,
     avatarMinSize: 64,
     avatarMaxSize: 512,

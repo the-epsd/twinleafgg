@@ -29,9 +29,12 @@ import { AdminBattlePassListPage } from './pages/admin/AdminBattlePassListPage';
 import { AdminBattlePassEditorPage } from './pages/admin/AdminBattlePassEditorPage';
 import { AdminAvatarsPage } from './pages/admin/AdminAvatarsPage';
 import { AdminSleevesPage } from './pages/admin/AdminSleevesPage';
+import { AdminDeckBoxesPage } from './pages/admin/AdminDeckBoxesPage';
 import { UiShowcasePage } from './pages/ui-showcase/UiShowcasePage';
 import { AbilityLockPage } from './pages/ability-lock/AbilityLockPage';
 import { EffectlessCardsPage } from './pages/effectless-cards/EffectlessCardsPage';
+import { DeckBoxPreviewPage } from './pages/deck-box-preview/DeckBoxPreviewPage';
+import { DeckCustomizePage } from './pages/deck-customize/DeckCustomizePage';
 
 function ProfileMeRedirect() {
   const { user } = useAuth();
@@ -57,6 +60,7 @@ export default function App() {
             <Route path="/ui-showcase" element={<UiShowcasePage />} />
             <Route path="/ability-lock" element={<AbilityLockPage />} />
             <Route path="/effectless-cards" element={<EffectlessCardsPage />} />
+            <Route path="/deck-box-preview" element={<DeckBoxPreviewPage />} />
 
             <Route element={<ProtectedRoute />}>
               <Route element={<AppLayout />}>
@@ -68,6 +72,7 @@ export default function App() {
                 <Route path="/table/:gameId" element={<TablePage />} />
                 <Route path="/deck" element={<DeckListPage />} />
                 <Route path="/deck/:deckId/stats" element={<DeckStatsPage />} />
+                <Route path="/deck/:deckId/customize" element={<DeckCustomizePage />} />
                 <Route path="/deck/:deckId" element={<DeckEditPage />} />
                 <Route path="/ranking" element={<RankingPage />} />
                 <Route path="/replays" element={<ReplaysPage />} />
@@ -85,6 +90,7 @@ export default function App() {
                   <Route path="/admin/battle-pass/:seasonId" element={<AdminBattlePassEditorPage />} />
                   <Route path="/admin/avatars" element={<AdminAvatarsPage />} />
                   <Route path="/admin/sleeves" element={<AdminSleevesPage />} />
+                  <Route path="/admin/deck-boxes" element={<AdminDeckBoxesPage />} />
                 </Route>
               </Route>
             </Route>

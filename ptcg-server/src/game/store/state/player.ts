@@ -19,6 +19,8 @@ export class Player {
 
   sleeveImagePath?: string;
 
+  deckBoxImagePath?: string;
+
   deck: CardList = new CardList();
 
   hand: CardList = new CardList();

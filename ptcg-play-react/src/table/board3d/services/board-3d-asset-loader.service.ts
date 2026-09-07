@@ -28,6 +28,8 @@ export class Board3dAssetLoaderService {
   private slotGridTexture: Texture | null = null;
   private cardMaskTexture: Texture | null = null;
   private holo2dMaskByUrl: Map<string, Texture> = new Map();
+  /** GPU max anisotropy; updated once the WebGL renderer is ready. */
+  private maxAnisotropy = 16;
 
   private readonly MAX_CONCURRENT_LOADS = 6;
   private activeLoads = 0;
@@ -36,6 +38,43 @@ export class Board3dAssetLoaderService {
   constructor() {
     this.textureLoader = new TextureLoader();
     this.textureCache = new Map();
+  }
+
+  /** Prefer the renderer's {@link WebGLCapabilities.getMaxAnisotropy}; reapplies to cached textures. */
+  setMaxAnisotropy(value: number): void {
+    const next = Math.max(1, Math.floor(value) || 16);
+    if (next === this.maxAnisotropy) {
+      return;
+    }
+    this.maxAnisotropy = next;
+    for (const texture of this.textureCache.values()) {
+      texture.anisotropy = this.maxAnisotropy;
+      texture.needsUpdate = true;
+    }
+    for (const texture of this.holo2dMaskByUrl.values()) {
+      texture.anisotropy = this.maxAnisotropy;
+      texture.needsUpdate = true;
+    }
+    if (this.cardBackTexture) {
+      this.cardBackTexture.anisotropy = this.maxAnisotropy;
+      this.cardBackTexture.needsUpdate = true;
+    }
+    if (this.boardGridTexture) {
+      this.boardGridTexture.anisotropy = this.maxAnisotropy;
+      this.boardGridTexture.needsUpdate = true;
+    }
+    if (this.slotGridTexture) {
+      this.slotGridTexture.anisotropy = this.maxAnisotropy;
+      this.slotGridTexture.needsUpdate = true;
+    }
+    if (this.cardMaskTexture) {
+      this.cardMaskTexture.anisotropy = this.maxAnisotropy;
+      this.cardMaskTexture.needsUpdate = true;
+    }
+  }
+
+  private applyAnisotropy(texture: Texture): void {
+    texture.anisotropy = this.maxAnisotropy;
   }
 
   private async withConcurrencyLimit<T>(loadFn: () => Promise<T>): Promise<T> {
@@ -85,7 +124,7 @@ export class Board3dAssetLoaderService {
         const texture = await loader.loadAsync(resolved);
 
         texture.colorSpace = 'srgb';
-        texture.anisotropy = 4;
+        this.applyAnisotropy(texture);
         texture.flipY = true;
 
         this.textureCache.set(resolved, texture);
@@ -111,7 +150,7 @@ export class Board3dAssetLoaderService {
         : this.textureLoader;
       const texture = await loader.loadAsync(resolved);
       texture.colorSpace = 'srgb';
-      texture.anisotropy = 4;
+      this.applyAnisotropy(texture);
       texture.flipY = true;
       this.textureCache.set(resolved, texture);
       return texture;
@@ -135,7 +174,7 @@ export class Board3dAssetLoaderService {
         : this.textureLoader;
       const texture = await loader.loadAsync(resolved);
       texture.colorSpace = 'srgb';
-      texture.anisotropy = 4;
+      this.applyAnisotropy(texture);
       texture.flipY = true;
       this.textureCache.set(resolved, texture);
       return texture;
@@ -157,7 +196,7 @@ export class Board3dAssetLoaderService {
       const cardBackUrl = publicAssetUrl('assets/cardback.png');
       const texture = await this.textureLoader.loadAsync(cardBackUrl);
       texture.colorSpace = 'srgb';
-      texture.anisotropy = 4;
+      this.applyAnisotropy(texture);
       texture.flipY = true;
 
       this.cardBackTexture = texture;
@@ -182,7 +221,7 @@ export class Board3dAssetLoaderService {
     try {
       const texture = await this.textureLoader.loadAsync(markerUrl);
       texture.colorSpace = 'srgb';
-      texture.anisotropy = 4;
+      this.applyAnisotropy(texture);
 
       this.textureCache.set(markerUrl, texture);
       return texture;
@@ -204,7 +243,7 @@ export class Board3dAssetLoaderService {
       const gridUrl = publicAssetUrl('assets/textures/black_grid.png');
       const texture = await this.textureLoader.loadAsync(gridUrl);
       texture.colorSpace = 'srgb';
-      texture.anisotropy = 4;
+      this.applyAnisotropy(texture);
       texture.flipY = false; // Don't flip for board texture
 
       // Configure for tiling
@@ -233,7 +272,7 @@ export class Board3dAssetLoaderService {
     try {
       const texture = await this.textureLoader.loadAsync(centerUrl);
       texture.colorSpace = 'srgb';
-      texture.anisotropy = 4;
+      this.applyAnisotropy(texture);
       texture.flipY = false;
 
       this.textureCache.set(centerUrl, texture);
@@ -256,7 +295,7 @@ export class Board3dAssetLoaderService {
       const maskUrl = publicAssetUrl('assets/3d-card-mask.png');
       const texture = await this.textureLoader.loadAsync(maskUrl);
       texture.colorSpace = 'srgb';
-      texture.anisotropy = 4;
+      this.applyAnisotropy(texture);
       texture.flipY = true; // Match card texture orientation
 
       this.cardMaskTexture = texture;
@@ -280,7 +319,7 @@ export class Board3dAssetLoaderService {
       try {
         const texture = await this.textureLoader.loadAsync(url);
         texture.colorSpace = SRGBColorSpace;
-        texture.anisotropy = 4;
+        this.applyAnisotropy(texture);
         texture.flipY = true;
         this.holo2dMaskByUrl.set(url, texture);
         return texture;
@@ -303,7 +342,7 @@ export class Board3dAssetLoaderService {
       const gridUrl = publicAssetUrl('assets/textures/aqua_grid.png');
       const texture = await this.textureLoader.loadAsync(gridUrl);
       texture.colorSpace = 'srgb';
-      texture.anisotropy = 4;
+      this.applyAnisotropy(texture);
       texture.flipY = false; // Don't flip for slot texture
 
       this.slotGridTexture = texture;

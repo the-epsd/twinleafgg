@@ -674,6 +674,7 @@ export function setupPhaseReducer(store: StoreLike, state: State, action: Action
       player.deck = CardList.fromList(action.deck);
       player.deckId = action.deckId;
       player.sleeveImagePath = action.sleeveImagePath;
+      player.deckBoxImagePath = action.deckBoxImagePath;
       // Attach alternate artwork map to player's lists so clients can resolve images
       if (action.artworksMap) {
         const lists: any[] = [
@@ -705,6 +706,9 @@ export function setupPhaseReducer(store: StoreLike, state: State, action: Action
         ];
         lists.forEach(list => { (list as any).sleeveImagePath = action.sleeveImagePath; });
         (player as any).sleeveImagePath = action.sleeveImagePath;
+      }
+      if (action.deckBoxImagePath) {
+        (player as any).deckBoxImagePath = action.deckBoxImagePath;
       }
       player.deck.isSecret = true;
       player.deck.cards.forEach(c => {
@@ -748,6 +752,7 @@ export function setupPhaseReducer(store: StoreLike, state: State, action: Action
         const deckPayload: any = deck;
         const deckCards: string[] = Array.isArray(deckPayload) ? deckPayload : deckPayload?.deck;
         const sleeveImagePath: string | undefined = Array.isArray(deckPayload) ? undefined : deckPayload?.sleeveImagePath;
+        const deckBoxImagePath: string | undefined = Array.isArray(deckPayload) ? undefined : deckPayload?.deckBoxImagePath;
         if (!Array.isArray(deckCards) || deckCards.length === 0) {
           store.log(state, GameLog.LOG_GAME_FINISHED_BEFORE_STARTED);
           const winner = GameWinner.NONE;
@@ -779,6 +784,9 @@ export function setupPhaseReducer(store: StoreLike, state: State, action: Action
           ];
           lists.forEach(list => { (list as any).sleeveImagePath = sleeveImagePath; });
           (player as any).sleeveImagePath = sleeveImagePath;
+        }
+        if (deckBoxImagePath) {
+          (player as any).deckBoxImagePath = deckBoxImagePath;
         }
         player.deck.cards.forEach(c => {
           state.cardNames.push(c.fullName);

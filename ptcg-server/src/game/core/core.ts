@@ -129,7 +129,8 @@ export class Core {
     invited?: Client,
     deckId1?: number,
     deckId2?: number,
-    sleeveImagePath1?: string
+    sleeveImagePath1?: string,
+    deckBoxImagePath1?: string
   ): Game {
     gameSettings = coerceGameSettings(gameSettings);
     if (this.clients.indexOf(client) === -1) {
@@ -170,7 +171,7 @@ export class Core {
     }
     const game = new Game(this, generateId(this.games), gameSettings);
     this.games.push(game);
-    game.dispatch(client, new AddPlayerAction(client.id, client.name, deck, undefined, deckId1, sleeveImagePath1));
+    game.dispatch(client, new AddPlayerAction(client.id, client.name, deck, undefined, deckId1, sleeveImagePath1, deckBoxImagePath1));
     if (invited) {
       game.dispatch(client, new InvitePlayerAction(invited.id, invited.name));
     }
@@ -192,7 +193,9 @@ export class Core {
     deckId1?: number,
     deckId2?: number,
     sleeveImagePath1?: string,
-    sleeveImagePath2?: string
+    sleeveImagePath2?: string,
+    deckBoxImagePath1?: string,
+    deckBoxImagePath2?: string
   ): Game {
     gameSettings = coerceGameSettings(gameSettings);
     if (this.clients.indexOf(client) === -1) {
@@ -232,10 +235,10 @@ export class Core {
 
     const game = new Game(this, generateId(this.games), gameSettings);
     this.games.push(game);
-    game.dispatch(client, new AddPlayerAction(client.id, client.name, deck1, undefined, deckId1, sleeveImagePath1));
+    game.dispatch(client, new AddPlayerAction(client.id, client.name, deck1, undefined, deckId1, sleeveImagePath1, deckBoxImagePath1));
     game.dispatch(
       client,
-      new AddPlayerAction(opponentId, `${client.name} (2)`, deck2, undefined, deckId2, sleeveImagePath2)
+      new AddPlayerAction(opponentId, `${client.name} (2)`, deck2, undefined, deckId2, sleeveImagePath2, deckBoxImagePath2)
     );
     game.initSelfPlay(client.user.id);
 
@@ -257,7 +260,9 @@ export class Core {
     deckId1?: number,
     deckId2?: number,
     sleeveImagePath1?: string,
-    sleeveImagePath2?: string
+    sleeveImagePath2?: string,
+    deckBoxImagePath1?: string,
+    deckBoxImagePath2?: string
   ): Game {
     gameSettings = coerceGameSettings(gameSettings);
     if (this.clients.indexOf(client) === -1) {
@@ -285,8 +290,8 @@ export class Core {
     }
     const game = new Game(this, generateId(this.games), gameSettings);
     this.games.push(game);
-    game.dispatch(client, new AddPlayerAction(client.id, client.name, deck, artworksMap1, deckId1, sleeveImagePath1));
-    game.dispatch(client, new AddPlayerAction(client2.id, client2.name, deck2, artworksMap2, deckId2, sleeveImagePath2));
+    game.dispatch(client, new AddPlayerAction(client.id, client.name, deck, artworksMap1, deckId1, sleeveImagePath1, deckBoxImagePath1));
+    game.dispatch(client, new AddPlayerAction(client2.id, client2.name, deck2, artworksMap2, deckId2, sleeveImagePath2, deckBoxImagePath2));
     if (this.games.indexOf(game) !== -1) {
       this.emit(c => c.onGameAdd(game));
       this.joinGame(client, game);

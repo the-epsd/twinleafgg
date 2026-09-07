@@ -45,10 +45,11 @@ export function createBoard3dCardsAdapter(input: {
   scansUrl: string | undefined;
   apiBase: string;
   sleevesUrl: string | undefined;
+  deckBoxesUrl?: string | undefined;
   showCardInfo: (data: Board3dCardInfoData) => Promise<CardInfoPaneActionResult>;
   showCardInfoList: (data: Board3dCardInfoData) => Promise<CardInfoPaneActionResult>;
 }): Board3dCardsAdapter {
-  const { maps, scansUrl, apiBase, sleevesUrl, showCardInfo, showCardInfoList } = input;
+  const { maps, scansUrl, apiBase, sleevesUrl, deckBoxesUrl, showCardInfo, showCardInfoList } = input;
 
   return {
     getScanUrlFor3D(card: Card, cardList?: unknown): string {
@@ -60,6 +61,12 @@ export function createBoard3dCardsAdapter(input: {
       }
       const base = apiBase.replace(/\/$/, '');
       return base + sleevesUrl.replace('{path}', imagePath);
+    },
+    getDeckBoxUrl(imagePath?: string): string | undefined {
+      const template = deckBoxesUrl ?? '/deck-boxes/{path}';
+      const path = imagePath || 'basicblue.png';
+      const base = apiBase.replace(/\/$/, '');
+      return base + template.replace('{path}', path);
     },
     showCardInfo(data: Board3dCardInfoData = {}) {
       return showCardInfo(data);

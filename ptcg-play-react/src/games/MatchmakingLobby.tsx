@@ -265,7 +265,7 @@ export function MatchmakingLobby({ onError }: MatchmakingLobbyProps) {
     try {
       const cards =
         deck.cards && deck.cards.length > 0 ? deck.cards : (await getDeck(deck.id)).deck.cards;
-      await joinMatchmaking(selectedFormat, cards, deck.artworks, deck.id, deck.sleeveImagePath);
+      await joinMatchmaking(selectedFormat, cards, deck.artworks, deck.id, deck.sleeveImagePath, undefined, deck.deckBoxImagePath);
       setInQueue(true);
     } catch (e) {
       onErrorRef.current(e instanceof ApiError ? e.message : t('REACT_ERROR_JOIN_QUEUE'));

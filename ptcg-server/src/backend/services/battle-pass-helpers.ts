@@ -4,6 +4,7 @@ import { AvatarCatalog } from '../../storage/avatar-catalog';
 import { BattlePassReward } from '../../storage/battle-pass-reward';
 import { BattlePassSeason } from '../../storage/battle-pass-season';
 import { Sleeve } from '../../storage/model/sleeve';
+import { DeckBox } from '../../storage/model/deck-box';
 
 export function todayIsoDate(): string {
   return new Date().toISOString().slice(0, 10);
@@ -50,6 +51,10 @@ export function sleeveImageUrl(imagePath: string): string {
   return config.backend.sleevesUrl.replace('{path}', imagePath);
 }
 
+export function deckBoxImageUrl(imagePath: string): string {
+  return config.backend.deckBoxesUrl.replace('{path}', imagePath);
+}
+
 export async function resolveRewardImageUrl(reward: BattlePassReward): Promise<string | null> {
   if (reward.rewardType === 'avatar') {
     const avatar = await AvatarCatalog.findOne({ where: { identifier: reward.itemId } });
@@ -58,6 +63,10 @@ export async function resolveRewardImageUrl(reward: BattlePassReward): Promise<s
   if (reward.rewardType === 'sleeve') {
     const sleeve = await Sleeve.findOne({ where: { identifier: reward.itemId } });
     return sleeve ? sleeveImageUrl(sleeve.imagePath) : null;
+  }
+  if (reward.rewardType === 'deck_box') {
+    const deckBox = await DeckBox.findOne({ where: { identifier: reward.itemId } });
+    return deckBox ? deckBoxImageUrl(deckBox.imagePath) : null;
   }
   return null;
 }

@@ -25,6 +25,7 @@ export const ZONE_POSITIONS = {
     ],
     board: new Vector3(0, 0.1, 16),  // General trainer area - covers most of player's side
     prizes: new Vector3(-15, 0.1, 20),
+    deckBox: new Vector3(-20.5, 2.05, 20),
     deck: new Vector3(14, 0.1, 18),
     discard: new Vector3(14, 0.1, 24),
     lostZone: new Vector3(-10, 0.1, 18),
@@ -44,6 +45,7 @@ export const ZONE_POSITIONS = {
     ],
     board: new Vector3(0, 0.1, 3),
     prizes: new Vector3(15, 0.1, 8),
+    deckBox: new Vector3(20.5, 2.05, 8),
     deck: new Vector3(-14, 0.1, 10), // Z=10 matches active row; symmetrical with bottom deck
     discard: new Vector3(-14, 0.1, 4),
     lostZone: new Vector3(-10, 0.1, 10),
@@ -98,6 +100,7 @@ export const MOBILE_ZONE_POSITIONS = {
     ],
     board: new Vector3(0, 0.1, 16),
     prizes: new Vector3(-18, 0.1, 20),
+    deckBox: new Vector3(-24, 2.05, 20),
     deck: new Vector3(20, 0.1, 18),
     discard: new Vector3(20, 0.1, 24),
     lostZone: new Vector3(-10, 0.1, 18),
@@ -117,6 +120,7 @@ export const MOBILE_ZONE_POSITIONS = {
     ],
     board: new Vector3(0, 0.1, 3),
     prizes: new Vector3(20, 0.1, 8),
+    deckBox: new Vector3(24, 2.05, 8),
     deck: new Vector3(-18, 0.1, 10),
     discard: new Vector3(-18, 0.1, 4),
     lostZone: new Vector3(-10, 0.1, 10),

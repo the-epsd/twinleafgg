@@ -608,6 +608,7 @@ export class Board3dController {
     this.worldContentRoot = ctx.worldContentRoot;
     this.handSlot = ctx.handSlot;
     this.opponentHandSlot = ctx.opponentHandSlot;
+    this.assetLoader.setMaxAnisotropy(ctx.gl.capabilities.getMaxAnisotropy());
     this.setProps(initial);
     this.stateSync.setAttachmentTargets(this.worldContentRoot, null, this.scene);
     this.interactionService.setWorldContentRoot(this.worldContentRoot);
@@ -955,6 +956,8 @@ export class Board3dController {
     this.renderer.outputColorSpace = 'srgb';
     this.renderer.toneMapping = ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.2;
+
+    this.assetLoader.setMaxAnisotropy(this.renderer.capabilities.getMaxAnisotropy());
   }
 
   private async createBoardAsync(): Promise<void> {

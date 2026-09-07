@@ -237,8 +237,8 @@ export class GameSocket {
     this.dispatch(params.gameId, action, response);
   }
 
-  private playGame(params: { gameId: number, deck: string[], artworks?: { code: string; artworkId?: number }[], sleeveImagePath?: string }, response: Response<void>) {
-    const action = new AddPlayerAction(this.client.id, this.client.user.name, params.deck, undefined, undefined, params.sleeveImagePath);
+  private playGame(params: { gameId: number, deck: string[], artworks?: { code: string; artworkId?: number }[], sleeveImagePath?: string, deckBoxImagePath?: string }, response: Response<void>) {
+    const action = new AddPlayerAction(this.client.id, this.client.user.name, params.deck, undefined, undefined, params.sleeveImagePath, params.deckBoxImagePath);
     this.dispatch(params.gameId, action, response);
   }
 

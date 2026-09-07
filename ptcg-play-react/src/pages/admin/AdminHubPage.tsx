@@ -20,6 +20,10 @@ export function AdminHubPage() {
           <h2>Sleeves</h2>
           <p>Upload and manage card sleeves / card backs.</p>
         </Link>
+        <Link to="/admin/deck-boxes" className={styles.hubCard}>
+          <h2>Deck Boxes</h2>
+          <p>Upload and manage deck box textures for customization.</p>
+        </Link>
       </div>
       <div className={styles.toolbar} style={{ marginTop: 20 }}>
         <ShellButton variant="secondary" onClick={() => window.history.back()}>

@@ -13,9 +13,10 @@
     "test": "nyc -e \".ts\" -x \"src/**/*.spec.ts\" jasmine-ts \"src/**/*.spec.ts\"",
     "test:sets": "jasmine-ts \"src/sets/tests/*.spec.ts\"",
     "test:sets:catalog": "ts-node src/sets/tests/run-assigned-tests.ts",
-    "postcompile": "cp -r src/storage/battle-pass-seasons dist/storage/ && cp -r src/storage/battle-pass-seasons output/storage/ && npm run copy:avatars && npm run copy:sleeves",
-    "copy:avatars": "node -e \"require('fs').cpSync('./avatars', './dist/avatars', {recursive: true});\"",
-    "copy:sleeves": "node -e \"require('fs').cpSync('./sleeves', './dist/sleeves', {recursive: true});\"",
+    "postcompile": "cp -r src/storage/battle-pass-seasons dist/storage/ && cp -r src/storage/battle-pass-seasons output/storage/ && npm run copy:avatars && npm run copy:sleeves && npm run copy:deck-boxes",
+    "copy:avatars": "node -e \"const fs=require('fs'); fs.cpSync('./avatars', './dist/avatars', {recursive: true}); fs.cpSync('./avatars', './output/avatars', {recursive: true});\"",
+    "copy:sleeves": "node -e \"const fs=require('fs'); fs.cpSync('./sleeves', './dist/sleeves', {recursive: true}); fs.cpSync('./sleeves', './output/sleeves', {recursive: true});\"",
+    "copy:deck-boxes": "node -e \"const fs=require('fs'); fs.cpSync('./deck-boxes', './dist/deck-boxes', {recursive: true}); fs.cpSync('./deck-boxes', './output/deck-boxes', {recursive: true});\"",
     "generate:implemented-ids": "node generate-implemented-card-ids-json.js"
   },
   "author": "",

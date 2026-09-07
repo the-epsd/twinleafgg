@@ -16,6 +16,7 @@ import {
   BattlePassRewardType,
   BattlePassSeason,
   Sleeve,
+  DeckBox,
   Storage,
 } from '../../storage';
 import { ApiErrorEnum } from '../common/errors';
@@ -632,6 +633,192 @@ export class AdminSleeves extends Controller {
       res.send({ ok: true });
     } catch (error) {
       console.error('Admin delete sleeve error:', error);
+      res.status(500).send({ error: ApiErrorEnum.SERVER_ERROR });
+    }
+  }
+}
+
+export class AdminDeckBoxes extends Controller {
+
+  private upload = createImageUpload(
+    config.backend.deckBoxesDir || pathModule.join(process.cwd(), 'deck-boxes'),
+    config.backend.avatarFileSize * 4
+  );
+
+  constructor(path: string, app: Application, db: Storage, core: Core) {
+    super(path, app, db, core);
+  }
+
+  public init(): void {
+    super.init();
+    this.app.post(
+      `${this.path}/upload`,
+      this.upload.single('image'),
+      async (req: Request, res: Response) => {
+        const tokenUserId = parseAuthUserId(req);
+        if (!tokenUserId) {
+          res.status(403).send({ error: ApiErrorEnum.AUTH_TOKEN_INVALID });
+          return;
+        }
+        req.body = req.body || {};
+        req.body.userId = tokenUserId;
+        if (!(await requireAdmin(req, res))) {
+          return;
+        }
+        if (!req.file) {
+          res.status(400).send({ error: 'No image uploaded' });
+          return;
+        }
+        res.send({ ok: true, imagePath: req.file.filename });
+      }
+    );
+  }
+
+  @Get('/list')
+  @AuthToken()
+  public async onList(req: Request, res: Response) {
+    if (!(await requireAdmin(req, res))) {
+      return;
+    }
+    try {
+      const deckBoxes = await DeckBox.find({ order: { sortOrder: 'ASC', name: 'ASC' } });
+      res.send({
+        ok: true,
+        deckBoxes: deckBoxes.map(s => ({
+          id: s.id,
+          identifier: s.identifier,
+          name: s.name,
+          imagePath: s.imagePath,
+          isDefault: s.isDefault,
+          requiresUnlock: s.requiresUnlock,
+          sortOrder: s.sortOrder,
+          imageUrl: config.backend.deckBoxesUrl.replace('{path}', s.imagePath),
+        })),
+      });
+    } catch (error) {
+      console.error('Admin list deck boxes error:', error);
+      res.status(500).send({ error: ApiErrorEnum.SERVER_ERROR });
+    }
+  }
+
+  @Post('/create')
+  @AuthToken()
+  @Validate({
+    identifier: check().isString().minLength(1).maxLength(64),
+    name: check().isString().minLength(1).maxLength(128),
+    imagePath: check().isString().minLength(1).maxLength(255),
+    isDefault: check().optional(),
+    requiresUnlock: check().optional(),
+    sortOrder: check().optional().isNumber(),
+  })
+  public async onCreate(req: Request, res: Response) {
+    if (!(await requireAdmin(req, res))) {
+      return;
+    }
+    try {
+      const existing = await DeckBox.findOne({ where: { identifier: req.body.identifier } });
+      if (existing) {
+        res.status(400).send({ error: 'Identifier already exists' });
+        return;
+      }
+      const row = new DeckBox();
+      row.identifier = String(req.body.identifier).trim();
+      row.name = String(req.body.name).trim();
+      row.imagePath = String(req.body.imagePath).trim();
+      row.isDefault = !!req.body.isDefault;
+      row.requiresUnlock = req.body.requiresUnlock != null ? !!req.body.requiresUnlock : !row.isDefault;
+      row.sortOrder = req.body.sortOrder != null ? Number(req.body.sortOrder) : 0;
+      await row.save();
+      res.send({
+        ok: true,
+        deckBox: {
+          id: row.id,
+          identifier: row.identifier,
+          name: row.name,
+          imagePath: row.imagePath,
+          isDefault: row.isDefault,
+          requiresUnlock: row.requiresUnlock,
+          sortOrder: row.sortOrder,
+          imageUrl: config.backend.deckBoxesUrl.replace('{path}', row.imagePath),
+        },
+      });
+    } catch (error) {
+      console.error('Admin create deck box error:', error);
+      res.status(500).send({ error: ApiErrorEnum.SERVER_ERROR });
+    }
+  }
+
+  @Put('/:id')
+  @AuthToken()
+  public async onUpdate(req: Request, res: Response) {
+    if (!(await requireAdmin(req, res))) {
+      return;
+    }
+    try {
+      const row = await DeckBox.findOne(parseInt(req.params.id, 10));
+      if (!row) {
+        res.status(404).send({ error: 'Deck box not found' });
+        return;
+      }
+      if (req.body.name != null) {
+        row.name = String(req.body.name).trim();
+      }
+      if (req.body.imagePath != null) {
+        row.imagePath = String(req.body.imagePath).trim();
+      }
+      if (req.body.isDefault != null) {
+        row.isDefault = !!req.body.isDefault;
+      }
+      if (req.body.requiresUnlock != null) {
+        row.requiresUnlock = !!req.body.requiresUnlock;
+      }
+      if (req.body.sortOrder != null) {
+        row.sortOrder = Number(req.body.sortOrder);
+      }
+      if (req.body.identifier != null && req.body.identifier !== row.identifier) {
+        const clash = await DeckBox.findOne({ where: { identifier: req.body.identifier } });
+        if (clash) {
+          res.status(400).send({ error: 'Identifier already exists' });
+          return;
+        }
+        row.identifier = String(req.body.identifier).trim();
+      }
+      await row.save();
+      res.send({
+        ok: true,
+        deckBox: {
+          id: row.id,
+          identifier: row.identifier,
+          name: row.name,
+          imagePath: row.imagePath,
+          isDefault: row.isDefault,
+          requiresUnlock: row.requiresUnlock,
+          sortOrder: row.sortOrder,
+          imageUrl: config.backend.deckBoxesUrl.replace('{path}', row.imagePath),
+        },
+      });
+    } catch (error) {
+      console.error('Admin update deck box error:', error);
+      res.status(500).send({ error: ApiErrorEnum.SERVER_ERROR });
+    }
+  }
+
+  @Delete('/:id')
+  @AuthToken()
+  public async onDelete(req: Request, res: Response) {
+    if (!(await requireAdmin(req, res))) {
+      return;
+    }
+    try {
+      const row = await DeckBox.findOne(parseInt(req.params.id, 10));
+      if (!row) {
+        res.status(404).send({ error: 'Deck box not found' });
+        return;
+      }
+      await row.remove();
+      res.send({ ok: true });
+    } catch (error) {
+      console.error('Admin delete deck box error:', error);
       res.status(500).send({ error: ApiErrorEnum.SERVER_ERROR });
     }
   }

@@ -5,7 +5,7 @@ import { CardManager, DeckAnalyser, GameWinner, getPrimaryCardType } from '../..
 import { Controller, Get, Post } from './controller';
 import { DeckSaveRequest } from '../interfaces';
 import { ApiErrorEnum } from '../common/errors';
-import { User, Deck, Match, Sleeve } from '../../storage';
+import { User, Deck, Match, Sleeve, DeckBox } from '../../storage';
 import { THEME_DECKS } from '../../game/store/prefabs/theme-decks';
 import { Format, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { ANY_PRINTING_ALLOWED } from '../../game/store/card/any-printing-allowed';
@@ -40,10 +40,15 @@ export class Decks extends Controller {
 
     const sleeves = await Sleeve.find();
     const sleeveMap = new Map(sleeves.map((sleeve) => [sleeve.identifier, sleeve.imagePath]));
+    const deckBoxes = await DeckBox.find();
+    const deckBoxMap = new Map(deckBoxes.map((box) => [box.identifier, box.imagePath]));
 
     const decks = userDecks.map((deck) => {
       const sleeveImagePath = deck.sleeveIdentifier
         ? sleeveMap.get(deck.sleeveIdentifier)
+        : undefined;
+      const deckBoxImagePath = deck.deckBoxIdentifier
+        ? deckBoxMap.get(deck.deckBoxIdentifier)
         : undefined;
       let format: number[];
       if (deck.formats && deck.formats.trim() !== '') {
@@ -71,6 +76,8 @@ export class Decks extends Controller {
         format,
         ...(deck.sleeveIdentifier ? { sleeveIdentifier: deck.sleeveIdentifier } : {}),
         ...(sleeveImagePath ? { sleeveImagePath } : {}),
+        ...(deck.deckBoxIdentifier ? { deckBoxIdentifier: deck.deckBoxIdentifier } : {}),
+        ...(deckBoxImagePath ? { deckBoxImagePath } : {}),
       };
 
       if (!summary) {
@@ -114,6 +121,9 @@ export class Decks extends Controller {
     const sleeveImagePath = entity.sleeveIdentifier
       ? (await Sleeve.findOne({ where: { identifier: entity.sleeveIdentifier } }))?.imagePath
       : undefined;
+    const deckBoxImagePath = entity.deckBoxIdentifier
+      ? (await DeckBox.findOne({ where: { identifier: entity.deckBoxIdentifier } }))?.imagePath
+      : undefined;
     const deck = {
       id: entity.id,
       name: entity.name,
@@ -124,6 +134,8 @@ export class Decks extends Controller {
       manualArchetype2: entity.manualArchetype2,
       ...(entity.sleeveIdentifier ? { sleeveIdentifier: entity.sleeveIdentifier } : {}),
       ...(sleeveImagePath ? { sleeveImagePath } : {}),
+      ...(entity.deckBoxIdentifier ? { deckBoxIdentifier: entity.deckBoxIdentifier } : {}),
+      ...(deckBoxImagePath ? { deckBoxImagePath } : {}),
     };
 
     res.send({ ok: true, deck });
@@ -192,6 +204,7 @@ export class Decks extends Controller {
     deck.manualArchetype1 = body.manualArchetype1 || '';
     deck.manualArchetype2 = body.manualArchetype2 || '';
     deck.sleeveIdentifier = body.sleeveIdentifier || '';
+    deck.deckBoxIdentifier = body.deckBoxIdentifier || '';
     deck.formats = JSON.stringify(getValidFormatsForCardList(resolvedCards));
     try {
       deck = await deck.save();
@@ -204,6 +217,9 @@ export class Decks extends Controller {
     const savedSleeveImagePath = deck.sleeveIdentifier
       ? (await Sleeve.findOne({ where: { identifier: deck.sleeveIdentifier } }))?.imagePath
       : undefined;
+    const savedDeckBoxImagePath = deck.deckBoxIdentifier
+      ? (await DeckBox.findOne({ where: { identifier: deck.deckBoxIdentifier } }))?.imagePath
+      : undefined;
     res.send({
       ok: true,
       deck: {
@@ -214,6 +230,8 @@ export class Decks extends Controller {
         manualArchetype2: deck.manualArchetype2,
         ...(body.sleeveIdentifier ? { sleeveIdentifier: body.sleeveIdentifier } : {}),
         ...(savedSleeveImagePath ? { sleeveImagePath: savedSleeveImagePath } : {}),
+        ...(body.deckBoxIdentifier ? { deckBoxIdentifier: body.deckBoxIdentifier } : {}),
+        ...(savedDeckBoxImagePath ? { deckBoxImagePath: savedDeckBoxImagePath } : {}),
       },
     });
   }
@@ -327,6 +345,10 @@ export class Decks extends Controller {
 
     delete body.id;
     body.cards = JSON.parse(deck.cards);
+    body.sleeveIdentifier = deck.sleeveIdentifier || '';
+    body.deckBoxIdentifier = deck.deckBoxIdentifier || '';
+    body.manualArchetype1 = deck.manualArchetype1 || '';
+    body.manualArchetype2 = deck.manualArchetype2 || '';
     return this.onSave(req, res);
   }
 

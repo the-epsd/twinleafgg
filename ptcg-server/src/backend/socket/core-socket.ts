@@ -112,7 +112,7 @@ export class CoreSocket {
     response('ok', this.buildCoreInfo());
   }
 
-  private createGame(params: { deck: string[], gameSettings: GameSettings, clientId?: number, artworks?: { code: string; artworkId?: number }[], deckId?: number, sleeveImagePath?: string },
+  private createGame(params: { deck: string[], gameSettings: GameSettings, clientId?: number, artworks?: { code: string; artworkId?: number }[], deckId?: number, sleeveImagePath?: string, deckBoxImagePath?: string },
     response: Response<GameState>): void {
     const gameSettings = coerceGameSettings(params.gameSettings);
     // Validate that only admins can enable sandbox mode
@@ -132,7 +132,7 @@ export class CoreSocket {
       }
     }
 
-    const game = this.core.createGame(this.client, params.deck, gameSettings, invited, params.deckId, undefined, params.sleeveImagePath);
+    const game = this.core.createGame(this.client, params.deck, gameSettings, invited, params.deckId, undefined, params.sleeveImagePath, params.deckBoxImagePath);
     response('ok', CoreSocket.buildGameState(game, this.client));
   }
 
@@ -145,6 +145,8 @@ export class CoreSocket {
       secondDeckId?: number;
       sleeveImagePath?: string;
       secondSleeveImagePath?: string;
+      deckBoxImagePath?: string;
+      secondDeckBoxImagePath?: string;
     },
     response: Response<GameState>,
   ): void {
@@ -161,7 +163,9 @@ export class CoreSocket {
       params.deckId,
       params.secondDeckId,
       params.sleeveImagePath,
-      params.secondSleeveImagePath
+      params.secondSleeveImagePath,
+      params.deckBoxImagePath,
+      params.secondDeckBoxImagePath
     );
     response('ok', CoreSocket.buildGameState(game, this.client));
   }

@@ -78,6 +78,8 @@ export interface DeckListEntry {
   artworks?: { code: string; artworkId?: number }[];
   sleeveIdentifier?: string;
   sleeveImagePath?: string;
+  deckBoxIdentifier?: string;
+  deckBoxImagePath?: string;
 }
 
 export interface DeckListResponse extends OkResponse {
@@ -98,6 +100,8 @@ export interface Deck {
   artworks?: { code: string; artworkId?: number }[];
   sleeveIdentifier?: string;
   sleeveImagePath?: string;
+  deckBoxIdentifier?: string;
+  deckBoxImagePath?: string;
 }
 
 export interface DeckResponse extends OkResponse {

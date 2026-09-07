@@ -180,6 +180,8 @@ export function SelfPlayGameDialog({ open, onClose }: SelfPlayGameDialogProps) {
         secondDeckId,
         deckRes1.deck.sleeveImagePath,
         deckRes2.deck.sleeveImagePath,
+        deckRes1.deck.deckBoxImagePath,
+        deckRes2.deck.deckBoxImagePath,
       );
       showSnackbar(t('REACT_SELF_PLAY_SNACKBAR'));
       onClose();

@@ -105,3 +105,14 @@ export interface SleeveCatalogItem {
   sortOrder: number;
   imageUrl: string;
 }
+
+export interface DeckBoxCatalogItem {
+  id: number;
+  identifier: string;
+  name: string;
+  imagePath: string;
+  isDefault: boolean;
+  requiresUnlock: boolean;
+  sortOrder: number;
+  imageUrl: string;
+}

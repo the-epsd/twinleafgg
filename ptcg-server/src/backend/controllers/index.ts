@@ -12,6 +12,7 @@ export * from './ranking';
 export * from './replays';
 export * from './reset-password';
 export * from './sleeves';
+export * from './deck-boxes';
 export * from './battlepass';
 export * from './admin-battlepass';
 export * from './images';
