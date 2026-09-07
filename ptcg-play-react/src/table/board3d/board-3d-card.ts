@@ -18,11 +18,12 @@ import {
   board3dCardOutlineMaterialCache,
   getBoard3dCardGeometry,
   getBoard3dCardOutlineGeometry,
-  getBoard3dCardEdgeMaterial,
+  getBoard3dCardEdgeMaterialForTexture,
   disposeBoard3dCardSharedResources,
 } from './board3dCardShared';
 
 /** Material group indices on the rounded card ExtrudeGeometry (edge / front / back). */
+const MAT_EDGE = 0;
 const MAT_FRONT = 1;
 const MAT_BACK = 2;
 
@@ -84,8 +85,9 @@ export class Board3dCard {
       board3dCardFaceMaterialCache.set(backKey, backMaterial);
     }
 
-    // Rounded extrude: edge / front / back material groups
-    const edgeMaterial = getBoard3dCardEdgeMaterial();
+    // Rounded extrude: edge / front / back material groups.
+    // Edge colour is sampled from the sleeve / cardback border so deck stacks match the rim.
+    const edgeMaterial = getBoard3dCardEdgeMaterialForTexture(backTexture);
     const materials = [
       edgeMaterial, // 0 — perimeter edge
       frontMaterial, // 1 — front face (card image)
@@ -213,6 +215,7 @@ export class Board3dCard {
         board3dCardFaceMaterialCache.set(newBackKey!, backMaterial);
       }
       materials[MAT_BACK] = backMaterial;
+      materials[MAT_EDGE] = getBoard3dCardEdgeMaterialForTexture(backTexture);
       this.backMaterialKey = newBackKey;
     }
 

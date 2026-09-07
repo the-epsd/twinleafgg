@@ -38,13 +38,21 @@ export function board3dCardMaterialKey(texture: Texture, maskTexture?: Texture):
 
 let cardGeometry: BufferGeometry | undefined;
 let outlineGeometry: BufferGeometry | undefined;
-let edgeMaterial: MeshStandardMaterial | undefined;
+
+/** Fallback when a texture has no readable pixels (matches prior hard-coded edge). */
+export const BOARD3D_DEFAULT_CARD_EDGE_COLOR = 0x2a2a2a;
 
 /** Face/back materials keyed by {@link board3dCardMaterialKey} (shared across JSX + imperative cards). */
 export const board3dCardFaceMaterialCache = new Map<string, MeshStandardMaterial>();
 
 /** Outline materials keyed by color+mask (shared). */
 export const board3dCardOutlineMaterialCache = new Map<string, MeshBasicMaterial>();
+
+/** Edge materials keyed by hex color (shared across cards with the same sleeve border). */
+export const board3dCardEdgeMaterialCache = new Map<number, MeshStandardMaterial>();
+
+/** Avoid re-sampling the same texture image for every card in a stack. */
+const textureBorderColorCache = new WeakMap<object, number>();
 
 function createRoundedRectShape(width: number, height: number, radius: number): Shape {
   const r = Math.min(radius, width / 2, height / 2);
@@ -187,15 +195,121 @@ export function getBoard3dCardOutlineGeometry(): BufferGeometry {
   return outlineGeometry;
 }
 
-export function getBoard3dCardEdgeMaterial(): MeshStandardMaterial {
-  if (!edgeMaterial) {
-    edgeMaterial = new MeshStandardMaterial({
-      color: 0x2a2a2a,
+/**
+ * Average opaque pixels in a thin band around the texture border (sleeve rim / cardback edge).
+ * Used so extruded card sides match the visible sleeve colour instead of a flat grey.
+ */
+export function sampleTextureBorderColor(texture: Texture): number {
+  const image = texture.image as
+    | HTMLImageElement
+    | ImageBitmap
+    | HTMLCanvasElement
+    | OffscreenCanvas
+    | ImageData
+    | { width: number; height: number; data?: ArrayLike<number> }
+    | undefined
+    | null;
+
+  if (!image) {
+    return BOARD3D_DEFAULT_CARD_EDGE_COLOR;
+  }
+
+  const cached = textureBorderColorCache.get(image);
+  if (cached !== undefined) {
+    return cached;
+  }
+
+  const cacheAndReturn = (color: number) => {
+    textureBorderColorCache.set(image, color);
+    return color;
+  };
+
+  const w = 'width' in image ? Number(image.width) : 0;
+  const h = 'height' in image ? Number(image.height) : 0;
+  if (!w || !h) {
+    return cacheAndReturn(BOARD3D_DEFAULT_CARD_EDGE_COLOR);
+  }
+
+  let data: ArrayLike<number> | null = null;
+  if (typeof ImageData !== 'undefined' && image instanceof ImageData) {
+    data = image.data;
+  } else if ('data' in image && image.data && (image.data as ArrayLike<number>).length >= w * h * 4) {
+    data = image.data as ArrayLike<number>;
+  } else if (typeof document !== 'undefined') {
+    try {
+      const canvas = document.createElement('canvas');
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d', { willReadFrequently: true });
+      if (!ctx) {
+        return cacheAndReturn(BOARD3D_DEFAULT_CARD_EDGE_COLOR);
+      }
+      ctx.drawImage(image as CanvasImageSource, 0, 0);
+      data = ctx.getImageData(0, 0, w, h).data;
+    } catch {
+      // Tainted canvas (CORS) — keep the neutral fallback.
+      return cacheAndReturn(BOARD3D_DEFAULT_CARD_EDGE_COLOR);
+    }
+  }
+
+  if (!data) {
+    return cacheAndReturn(BOARD3D_DEFAULT_CARD_EDGE_COLOR);
+  }
+
+  const inset = Math.max(1, Math.floor(Math.min(w, h) / 80));
+  const band = Math.max(2, Math.floor(Math.min(w, h) / 40));
+  let rSum = 0;
+  let gSum = 0;
+  let bSum = 0;
+  let count = 0;
+
+  const sample = (x: number, y: number) => {
+    const i = (y * w + x) * 4;
+    const a = data![i + 3] ?? 255;
+    if (a < 200) return;
+    rSum += data![i]!;
+    gSum += data![i + 1]!;
+    bSum += data![i + 2]!;
+    count += 1;
+  };
+
+  for (let x = inset; x < w - inset; x++) {
+    for (let y = inset; y < inset + band && y < h - inset; y++) sample(x, y);
+    for (let y = Math.max(inset, h - inset - band); y < h - inset; y++) sample(x, y);
+  }
+  for (let y = inset + band; y < h - inset - band; y++) {
+    for (let x = inset; x < inset + band && x < w - inset; x++) sample(x, y);
+    for (let x = Math.max(inset, w - inset - band); x < w - inset; x++) sample(x, y);
+  }
+
+  const color =
+    count > 0
+      ? ((Math.round(rSum / count) & 0xff) << 16) |
+        ((Math.round(gSum / count) & 0xff) << 8) |
+        (Math.round(bSum / count) & 0xff)
+      : BOARD3D_DEFAULT_CARD_EDGE_COLOR;
+
+  return cacheAndReturn(color);
+}
+
+export function getBoard3dCardEdgeMaterial(
+  color: number = BOARD3D_DEFAULT_CARD_EDGE_COLOR,
+): MeshStandardMaterial {
+  let material = board3dCardEdgeMaterialCache.get(color);
+  if (!material) {
+    material = new MeshStandardMaterial({
+      color,
       roughness: 0.7,
       metalness: 0.1,
     });
+    board3dCardEdgeMaterialCache.set(color, material);
   }
-  return edgeMaterial;
+  return material;
+}
+
+/** Edge colour sampled from a sleeve / cardback texture (cached per image). */
+export function getBoard3dCardEdgeMaterialForTexture(texture: Texture): MeshStandardMaterial {
+  return getBoard3dCardEdgeMaterial(sampleTextureBorderColor(texture));
 }
 
 export function disposeBoard3dCardSharedResources(): void {
@@ -207,10 +321,8 @@ export function disposeBoard3dCardSharedResources(): void {
     outlineGeometry.dispose();
     outlineGeometry = undefined;
   }
-  if (edgeMaterial) {
-    edgeMaterial.dispose();
-    edgeMaterial = undefined;
-  }
+  board3dCardEdgeMaterialCache.forEach((m) => m.dispose());
+  board3dCardEdgeMaterialCache.clear();
   board3dCardFaceMaterialCache.forEach((m) => m.dispose());
   board3dCardFaceMaterialCache.clear();
   board3dCardOutlineMaterialCache.forEach((m) => m.dispose());
