@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { BattlePassProgress, BattlePassReward, BattlePassSeason } from '../types/battlePass';
+import type { BattlePassProgress, BattlePassReward, BattlePassSeason, BattlePassSeasonStatus } from '../types/battlePass';
 import {
   addBattlePassDebugExp,
   claimBattlePassReward,
@@ -17,9 +17,18 @@ import { LoadingSpinner } from '../components/LoadingSpinner';
 import { ApiError } from '../api/apiError';
 import { cn } from '../utils/cn';
 import { playSfx } from '../sfx';
+import { resolveAssetUrl } from '../utils/assetUrl';
 import styles from './BattlePassPage.module.css';
 
 const MIN_LOADING_MS = 480;
+const PREVIEW_DRAFTS_KEY = 'battlePass.previewDrafts';
+
+interface SeasonListItem {
+  seasonId: string;
+  name: string;
+  startDate: string;
+  status?: BattlePassSeasonStatus;
+}
 
 interface BattlePassLevelRow {
   level: number;
@@ -45,6 +54,14 @@ function prefersReducedMotion(): boolean {
   return typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
+function readPreviewDrafts(): boolean {
+  try {
+    return sessionStorage.getItem(PREVIEW_DRAFTS_KEY) === '1';
+  } catch {
+    return false;
+  }
+}
+
 export function BattlePassPage() {
   const { t } = useTranslation();
   const { user } = useAuth();
@@ -55,8 +72,9 @@ export function BattlePassPage() {
   const [season, setSeason] = useState<BattlePassSeason | undefined>();
   const [progress, setProgress] = useState<BattlePassProgress | undefined>();
   const [levels, setLevels] = useState<BattlePassLevelRow[]>([]);
-  const [seasons, setSeasons] = useState<Array<{ seasonId: string; name: string; startDate: string }>>([]);
+  const [seasons, setSeasons] = useState<SeasonListItem[]>([]);
   const [selectedSeasonId, setSelectedSeasonId] = useState('');
+  const [previewDrafts, setPreviewDrafts] = useState(() => isAdmin && readPreviewDrafts());
   const [loading, setLoading] = useState(true);
   const [showLoader, setShowLoader] = useState(true);
   const [revealed, setRevealed] = useState(false);
@@ -67,15 +85,23 @@ export function BattlePassPage() {
   const [claimingLevel, setClaimingLevel] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const loadSeasonData = useCallback(async (seasonId: string) => {
+  const includeDrafts = isAdmin && previewDrafts;
+
+  const loadSeasonData = useCallback(async (seasonId: string, withDrafts: boolean) => {
     const [seasonData, progressData] = await Promise.all([
-      getBattlePassSeason(seasonId),
-      getBattlePassProgress(seasonId),
+      getBattlePassSeason(seasonId, withDrafts),
+      getBattlePassProgress(seasonId, withDrafts),
     ]);
     setSeason(seasonData.season);
     setProgress(progressData.progress);
     setLevels(groupRewardsByLevel(seasonData.season.rewards));
   }, []);
+
+  useEffect(() => {
+    if (!isAdmin && previewDrafts) {
+      setPreviewDrafts(false);
+    }
+  }, [isAdmin, previewDrafts]);
 
   useEffect(() => {
     let cancelled = false;
@@ -87,7 +113,7 @@ export function BattlePassPage() {
       setXpFillReady(false);
       setError(null);
       try {
-        const seasonsRes = await getBattlePassSeasons();
+        const seasonsRes = await getBattlePassSeasons(includeDrafts);
         if (cancelled) {
           return;
         }
@@ -97,8 +123,10 @@ export function BattlePassPage() {
           setSeason(undefined);
           setProgress(undefined);
           setLevels([]);
+          setSelectedSeasonId('');
           return;
         }
+        setNoSeasonsAvailable(false);
         const defaultId = seasonsRes.seasons[0]?.seasonId ?? '';
         let savedId: string | null = null;
         try {
@@ -111,7 +139,6 @@ export function BattlePassPage() {
         let pick = defaultId;
         if (isValidSaved) {
           pick = savedId!;
-          setSelectedSeasonId(pick);
         } else {
           try {
             const current = await getBattlePassCurrent();
@@ -119,9 +146,12 @@ export function BattlePassPage() {
           } catch {
             pick = defaultId;
           }
-          setSelectedSeasonId(pick);
         }
-        await loadSeasonData(pick);
+        if (!seasonsRes.seasons.some((s) => s.seasonId === pick)) {
+          pick = defaultId;
+        }
+        setSelectedSeasonId(pick);
+        await loadSeasonData(pick, includeDrafts);
       } catch (e) {
         if (!cancelled) {
           setError(e instanceof ApiError ? e.message : t('BATTLE_PASS_FAILED_LOAD'));
@@ -136,7 +166,7 @@ export function BattlePassPage() {
     return () => {
       cancelled = true;
     };
-  }, [loadSeasonData, t]);
+  }, [loadSeasonData, t, includeDrafts]);
 
   useEffect(() => {
     if (loading) {
@@ -191,14 +221,28 @@ export function BattlePassPage() {
     setXpFillReady(false);
     setError(null);
     try {
-      await setBattlePassActiveSeason(nextId);
-      await loadSeasonData(nextId);
+      const next = seasons.find((s) => s.seasonId === nextId);
+      if (next?.status !== 'draft') {
+        await setBattlePassActiveSeason(nextId);
+      }
+      await loadSeasonData(nextId, includeDrafts);
       setContentKey((k) => k + 1);
     } catch (e) {
       setError(e instanceof ApiError ? e.message : t('BATTLE_PASS_FAILED_SWITCH'));
     } finally {
       setSwitchingSeason(false);
     }
+  }
+
+  function onTogglePreviewDrafts() {
+    const next = !previewDrafts;
+    setPreviewDrafts(next);
+    try {
+      sessionStorage.setItem(PREVIEW_DRAFTS_KEY, next ? '1' : '0');
+    } catch {
+      // ignore
+    }
+    playSfx('uiButton');
   }
 
   function isClaimable(level: number): boolean {
@@ -272,7 +316,7 @@ export function BattlePassPage() {
     setError(null);
     try {
       await addBattlePassDebugExp(100, selectedSeasonId || undefined);
-      const pr = await getBattlePassProgress(selectedSeasonId || undefined);
+      const pr = await getBattlePassProgress(selectedSeasonId || undefined, includeDrafts);
       setProgress(pr.progress);
     } catch (e) {
       setError(e instanceof ApiError ? e.message : t('BATTLE_PASS_DEBUG_FAILED'));
@@ -281,6 +325,8 @@ export function BattlePassPage() {
 
   const empty = !loading && !season;
   const hasContent = !!season;
+  const viewingDraft = season?.status === 'draft';
+  const showSeasonSelect = seasons.length > 1 || (includeDrafts && seasons.length > 0);
 
   return (
     <div className={styles.screen}>
@@ -315,6 +361,11 @@ export function BattlePassPage() {
               {noSeasonsAvailable ? t('BATTLE_PASS_NONE_SEASONS') : t('BATTLE_PASS_NONE_ACTIVE')}
             </p>
             {error ? <p className={styles.alert}>{error}</p> : null}
+            {isAdmin ? (
+              <button type="button" className={styles.debugBtn} onClick={onTogglePreviewDrafts}>
+                {previewDrafts ? 'Hide drafts' : 'Preview drafts'}
+              </button>
+            ) : null}
           </div>
         </div>
       ) : null}
@@ -379,7 +430,7 @@ export function BattlePassPage() {
                   style={{ ['--enter-delay' as string]: '150ms' }}
                 >
                   <div className={styles.statusBadge}>{t('BATTLE_PASS_TITLE')}</div>
-                  {seasons.length > 1 ? (
+                  {showSeasonSelect ? (
                     <SelectField
                       className={styles.seasonSelect}
                       value={selectedSeasonId}
@@ -389,7 +440,7 @@ export function BattlePassPage() {
                     >
                       {seasons.map((s) => (
                         <option key={s.seasonId} value={s.seasonId}>
-                          {s.name}
+                          {s.status === 'draft' ? `${s.name} (Draft)` : s.name}
                         </option>
                       ))}
                     </SelectField>
@@ -401,6 +452,16 @@ export function BattlePassPage() {
                     </div>
                   ) : null}
                   {isAdmin ? (
+                    <button
+                      type="button"
+                      className={cn(styles.debugBtn, previewDrafts && styles.debugBtnActive)}
+                      onClick={onTogglePreviewDrafts}
+                      aria-pressed={previewDrafts}
+                    >
+                      {previewDrafts ? 'Preview drafts: On' : 'Preview drafts'}
+                    </button>
+                  ) : null}
+                  {isAdmin ? (
                     <button type="button" className={styles.debugBtn} onClick={() => void onDebugExp()}>
                       {t('BATTLE_PASS_DEBUG_XP')}
                     </button>
@@ -409,6 +470,12 @@ export function BattlePassPage() {
               </div>
             </div>
           </header>
+
+          {viewingDraft ? (
+            <p className={styles.draftBanner} role="status">
+              Draft preview — not visible to players
+            </p>
+          ) : null}
 
           {error ? <p className={styles.alert}>{error}</p> : null}
 
@@ -438,7 +505,15 @@ export function BattlePassPage() {
                         <div className={styles.itemPanel}>
                           <div className={styles.itemContent}>
                             <div className={styles.itemImage}>
-                              <div className={styles.placeholderImage} aria-hidden />
+                              {row.freeReward.imageUrl ? (
+                                <img
+                                  src={resolveAssetUrl(row.freeReward.imageUrl)}
+                                  alt={row.freeReward.name}
+                                  className={styles.rewardImage}
+                                />
+                              ) : (
+                                <div className={styles.placeholderImage} aria-hidden />
+                              )}
                             </div>
                             <p className={styles.rewardName}>{row.freeReward.name}</p>
                           </div>

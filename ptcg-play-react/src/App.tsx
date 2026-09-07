@@ -6,6 +6,7 @@ import { SnackbarProvider } from './context/SnackbarContext';
 import { SettingsProvider } from './context/SettingsContext';
 import { AppLayout } from './components/AppLayout';
 import { ProtectedRoute } from './routes/ProtectedRoute';
+import { AdminRoute } from './routes/AdminRoute';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { GamesPage } from './pages/GamesPage';
@@ -23,6 +24,11 @@ import { ReplaysPage } from './pages/ReplaysPage';
 import { FriendsPage } from './pages/FriendsPage';
 import { MyGamesPage } from './pages/MyGamesPage';
 import { ParentPage } from './pages/ParentPage';
+import { AdminHubPage } from './pages/admin/AdminHubPage';
+import { AdminBattlePassListPage } from './pages/admin/AdminBattlePassListPage';
+import { AdminBattlePassEditorPage } from './pages/admin/AdminBattlePassEditorPage';
+import { AdminAvatarsPage } from './pages/admin/AdminAvatarsPage';
+import { AdminSleevesPage } from './pages/admin/AdminSleevesPage';
 import { UiShowcasePage } from './pages/ui-showcase/UiShowcasePage';
 import { AbilityLockPage } from './pages/ability-lock/AbilityLockPage';
 import { EffectlessCardsPage } from './pages/effectless-cards/EffectlessCardsPage';
@@ -73,6 +79,13 @@ export default function App() {
                 <Route path="/profile" element={<ProfileMeRedirect />} />
                 <Route path="/profile/:userId" element={<ProfilePageRoute />} />
                 <Route path="/parent" element={<ParentPage />} />
+                <Route element={<AdminRoute />}>
+                  <Route path="/admin" element={<AdminHubPage />} />
+                  <Route path="/admin/battle-pass" element={<AdminBattlePassListPage />} />
+                  <Route path="/admin/battle-pass/:seasonId" element={<AdminBattlePassEditorPage />} />
+                  <Route path="/admin/avatars" element={<AdminAvatarsPage />} />
+                  <Route path="/admin/sleeves" element={<AdminSleevesPage />} />
+                </Route>
               </Route>
             </Route>
             <Route path="/" element={<Navigate to="/games" replace />} />

@@ -67,6 +67,16 @@ export function Post(path: string) {
   };
 }
 
+export function Put(path: string) {
+  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+    const init = target.init;
+    target.init = function () {
+      init.call(this);
+      this.app.put(`${this.path}${path}`, descriptor.value.bind(this));
+    };
+  };
+}
+
 export function Delete(path: string) {
   return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const init = target.init;

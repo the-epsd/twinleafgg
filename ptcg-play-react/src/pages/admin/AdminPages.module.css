@@ -1,0 +1,240 @@
+.page {
+  width: 100%;
+  max-width: min(1100px, 100%);
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding-bottom: 40px;
+}
+
+.title {
+  margin: 0 0 8px 0;
+  font-size: 1.45rem;
+  font-weight: 700;
+}
+
+.sub {
+  margin: 0 0 20px 0;
+  opacity: 0.75;
+}
+
+.hubGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.hubCard {
+  display: block;
+  padding: 18px 16px;
+  border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  border-radius: 10px;
+  text-decoration: none;
+  color: inherit;
+  background: color-mix(in srgb, currentColor 4%, transparent);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.hubCard:hover {
+  background: color-mix(in srgb, currentColor 8%, transparent);
+  border-color: color-mix(in srgb, currentColor 28%, transparent);
+}
+
+.hubCard h2 {
+  margin: 0 0 6px 0;
+  font-size: 1.05rem;
+}
+
+.hubCard p {
+  margin: 0;
+  opacity: 0.7;
+  font-size: 0.92rem;
+}
+
+.toolbar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 10px 8px;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+  vertical-align: middle;
+}
+
+.table th {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.7;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+}
+
+.badgeDraft {
+  background: color-mix(in srgb, #c9a227 18%, transparent);
+}
+
+.badgePublished {
+  background: color-mix(in srgb, #2f9e44 18%, transparent);
+}
+
+.badgeArchived {
+  background: color-mix(in srgb, currentColor 10%, transparent);
+  opacity: 0.8;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+.field input,
+.field select,
+.field textarea {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+  background: color-mix(in srgb, currentColor 4%, transparent);
+  color: inherit;
+  font: inherit;
+}
+
+.section {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+}
+
+.sectionTitle {
+  margin: 0 0 12px 0;
+  font-size: 1.1rem;
+}
+
+.catalogGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.catalogCard {
+  border: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: color-mix(in srgb, currentColor 3%, transparent);
+}
+
+.catalogPreview {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+  border-radius: 8px;
+  background: color-mix(in srgb, currentColor 8%, transparent);
+}
+
+.catalogMeta {
+  font-size: 0.85rem;
+}
+
+.catalogMeta strong {
+  display: block;
+  margin-bottom: 2px;
+}
+
+.catalogActions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 80;
+  padding: 16px;
+}
+
+.modalPanel {
+  width: min(520px, 100%);
+  max-height: min(90vh, 720px);
+  overflow: auto;
+  background: #121418;
+  color: #f2f2f2;
+  border-radius: 12px;
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.modalPanel h2 {
+  margin: 0 0 14px 0;
+  font-size: 1.15rem;
+}
+
+.rewardRow {
+  display: grid;
+  grid-template-columns: 70px 110px 1fr 1fr auto;
+  gap: 8px;
+  align-items: end;
+  margin-bottom: 8px;
+}
+
+.rewardPreview {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 6px;
+  background: color-mix(in srgb, currentColor 10%, transparent);
+}
+
+.error {
+  color: #ff6b6b;
+  margin: 8px 0;
+}
+
+.muted {
+  opacity: 0.65;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 720px) {
+  .rewardRow {
+    grid-template-columns: 1fr 1fr;
+  }
+}

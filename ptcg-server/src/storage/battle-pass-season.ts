@@ -1,87 +1,59 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn, UpdateDateColumn, AfterLoad } from 'typeorm';
-import * as fs from 'fs';
-import * as path from 'path';
+import {
+  Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn, UpdateDateColumn, OneToMany
+} from 'typeorm';
+import { BattlePassReward } from './battle-pass-reward';
 
-export interface BattlePassReward {
-  level: number;
-  item: string;
-  type: 'avatar' | 'card_back' | 'playmat' | 'marker';
-  name: string;
-  isPremium: boolean;
-}
+export type BattlePassSeasonStatus = 'draft' | 'published' | 'archived';
 
 @Entity()
 export class BattlePassSeason extends BaseEntity {
   @PrimaryGeneratedColumn()
-    id!: number;
+  id!: number;
 
-  @Column({ unique: true })
-    seasonId!: string;
+  @Column({ type: 'varchar', length: 255, unique: true })
+  seasonId!: string;
 
   @Column()
-    name!: string;
+  name!: string;
 
   @Column({ type: 'date', default: () => '(CURRENT_DATE)' })
-    startDate!: Date;
+  startDate!: Date;
 
-  @Column()
-    rewardsFile!: string;
+  @Column({ type: 'date', nullable: true })
+  endDate!: Date | null;
 
+  @Column({ default: 'published' })
+  status!: BattlePassSeasonStatus;
+
+  @Column({ default: 1000 })
+  baseXpPerLevel!: number;
+
+  @Column({ default: 0 })
+  xpIncreasePerLevel!: number;
+
+  @Column({ default: 100 })
+  maxLevel!: number;
+
+  @OneToMany(() => BattlePassReward, reward => reward.season, { cascade: true })
   rewards!: BattlePassReward[];
 
-  @Column({ default: 1000 }) // Base XP needed per level
-    baseXpPerLevel!: number;
-
-  @Column({ default: 0 }) // XP increase per level
-    xpIncreasePerLevel!: number;
-
-  @Column({ default: 100 }) // Max level for the season
-    maxLevel!: number;
-
   @CreateDateColumn()
-    created!: Date;
+  created!: Date;
 
   @UpdateDateColumn()
-    updated!: Date;
+  updated!: Date;
 
-  @AfterLoad()
-  loadRewards() {
-    const rewardsPath = path.join(__dirname, this.rewardsFile);
-    try {
-      if (fs.existsSync(rewardsPath)) {
-        const rawData = fs.readFileSync(rewardsPath, 'utf-8');
-        const parsed = JSON.parse(rawData);
-        // Remove premium track completely at load time
-        this.rewards = Array.isArray(parsed)
-          ? parsed.filter((r: any) => !r?.isPremium)
-          : [];
-      } else {
-        console.error(`[BattlePass] Rewards file not found at: ${rewardsPath}`);
-        this.rewards = [];
-      }
-    } catch (error) {
-      console.error(`[BattlePass] Error loading or parsing rewards file: ${rewardsPath}`, error);
-      this.rewards = [];
-    }
+  public getRewardsForLevel(level: number): BattlePassReward[] {
+    const rewards = this.rewards ?? [];
+    return rewards
+      .filter(reward => reward.level === level)
+      .sort((a, b) => a.sortOrder - b.sortOrder || a.id - b.id);
   }
 
-  /**
-   * Get rewards for a specific level (premium track removed: only non-premium rewards are available)
-   */
-  public getRewardsForLevel(level: number, _isPremium: boolean): BattlePassReward[] {
-    return this.rewards.filter(reward => reward.level === level && !reward.isPremium);
-  }
-
-  /**
-   * Calculate XP needed for a specific level
-   */
   public getXpForLevel(level: number): number {
     return this.baseXpPerLevel + (level - 1) * this.xpIncreasePerLevel;
   }
 
-  /**
-   * Calculate total XP needed up to a specific level
-   */
   public getTotalXpForLevel(level: number): number {
     let total = 0;
     for (let i = 1; i < level; i++) {
@@ -90,9 +62,6 @@ export class BattlePassSeason extends BaseEntity {
     return total;
   }
 
-  /**
-   * Get the level for a given amount of XP
-   */
   public getLevelForXp(xp: number): number {
     let level = 1;
     while (level < this.maxLevel) {

@@ -20,4 +20,8 @@ export class Sleeve extends BaseEntity {
 
   @Column({ name: 'image_path' })
   public imagePath: string = '';
+
+  /** When true, only users with a matching unlock may use this sleeve. Defaults are always free. */
+  @Column({ name: 'requires_unlock', type: 'boolean', default: true })
+  public requiresUnlock: boolean = true;
 }

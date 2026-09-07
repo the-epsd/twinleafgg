@@ -10,7 +10,7 @@ export const config = {
     avatarsUrl: '/avatars/{name}',
     sleevesDir: 'sleeves',
     sleevesUrl: '/sleeves/{path}',
-    avatarFileSize: 256 * 1024,
+    avatarFileSize: 3 * 1024 * 1024,
     avatarMinSize: 64,
     avatarMaxSize: 512,
     replayFileSize: 512 * 1024,

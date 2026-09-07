@@ -27,6 +27,9 @@ import {
   BattlePass,
   Sleeves,
   MemoryHealthController,
+  AdminBattlePass,
+  AdminAvatars,
+  AdminSleeves,
 } from './controllers';
 import { ApiErrorEnum } from './common/errors';
 
@@ -111,6 +114,9 @@ export class App {
     define('/v1/resetPassword', ResetPassword);
     define('/v1/battlepass', BattlePass);
     define('/v1/sleeves', Sleeves);
+    define('/v1/admin/battlepass', AdminBattlePass);
+    define('/v1/admin/avatars', AdminAvatars);
+    define('/v1/admin/sleeves', AdminSleeves);
     define('/v1/memory', MemoryHealthController);
 
     app.use((err: any, req: any, res: any, next: any) => {
@@ -169,8 +175,10 @@ export class App {
     return ws;
   }
 
-  public connectToDatabase(): Promise<void> {
-    return this.storage.connect();
+  public async connectToDatabase(): Promise<void> {
+    await this.storage.connect();
+    const { seedBattlePassData } = await import('../storage/battle-pass-seed');
+    await seedBattlePassData();
   }
 
   public configureBotManager(botManager: BotManager): void {

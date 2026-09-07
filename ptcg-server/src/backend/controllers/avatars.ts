@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
 import { AuthToken, Validate, check } from '../services';
-import { Avatar, User, UserUnlockedItem } from '../../storage';
+import { Avatar, AvatarCatalog, User, UserUnlockedItem } from '../../storage';
 import { AvatarInfo } from '../interfaces/avatar.interface';
 import { Controller, Get, Post } from './controller';
 import { ApiErrorEnum } from '../common/errors';
+import { In } from 'typeorm';
 
 export class Avatars extends Controller {
 
@@ -12,44 +13,34 @@ export class Avatars extends Controller {
   public async onGetAvailable(req: Request, res: Response) {
     const userId: number = req.body.userId;
 
-    // Standard predefined avatars
-    const predefinedAvatars: AvatarInfo[] = [
-      { id: 2, name: 'gg', fileName: 'predefined_2.png' },
-      { id: 3, name: 'um', fileName: 'predefined_3.png' },
-      { id: 4, name: 'gr', fileName: 'predefined_4.png' },
-      { id: 5, name: 'gd', fileName: 'predefined_5.png' },
-    ];
-
-    // Avatars unlocked from battle pass, etc.
-    const unlockedItems = await UserUnlockedItem.find({ where: { userId, itemType: 'avatar' } });
-
-    const unlockedAvatars: AvatarInfo[] = unlockedItems.map(item => {
-      // You might want a more robust way to map itemId to avatar details
-      return {
-        id: 0, // These don't have a real ID in the avatars table
-        name: this.getAvatarNameFromId(item.itemId),
-        fileName: this.getAvatarFileNameFromId(item.itemId)
-      };
+    const defaults = await AvatarCatalog.find({
+      where: { isDefault: true },
+      order: { sortOrder: 'ASC', name: 'ASC' },
     });
 
-    res.send({ ok: true, avatars: [...predefinedAvatars, ...unlockedAvatars] });
+    const unlockedItems = await UserUnlockedItem.find({ where: { userId, itemType: 'avatar' } });
+    const unlockedIds = unlockedItems.map(item => item.itemId);
+    const unlockedCatalog = unlockedIds.length
+      ? await AvatarCatalog.find({ where: { identifier: In(unlockedIds) } })
+      : [];
+
+    const byIdentifier = new Map<string, AvatarCatalog>();
+    for (const avatar of [...defaults, ...unlockedCatalog]) {
+      byIdentifier.set(avatar.identifier, avatar);
+    }
+
+    const avatars: AvatarInfo[] = Array.from(byIdentifier.values()).map(avatar => ({
+      id: avatar.isDefault ? this.predefinedIdFromIdentifier(avatar.identifier) : 0,
+      name: avatar.name,
+      fileName: avatar.fileName,
+    }));
+
+    res.send({ ok: true, avatars });
   }
 
-  private getAvatarNameFromId(itemId: string): string {
-    // Example: 'avatar_spring_lord' -> 'Spring Lord'
-    return itemId.replace('avatar_', '').replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
-  }
-
-  private getAvatarFileNameFromId(itemId: string): string {
-    // This is a placeholder. In a real system, you might have a mapping
-    // or a consistent naming convention.
-    const map: { [key: string]: string } = {
-      'avatar_150': 'av_5.png',
-      'avatar_shadow_rider': 'av_4.png',
-      'avatar_pao': 'pao.webp',
-      'avatar_151': 'mew.png'
-    };
-    return map[itemId] || 'av_default.png';
+  private predefinedIdFromIdentifier(identifier: string): number {
+    const match = /^predefined_(\d+)$/.exec(identifier);
+    return match ? parseInt(match[1], 10) : 0;
   }
 
   @Get('/list/:id?')
@@ -132,7 +123,6 @@ export class Avatars extends Controller {
       return;
     }
 
-    // Handle unlocked battle pass avatars (id: 0)
     if (body.id === 0) {
       if (!body.fileName) {
         res.status(400);
@@ -140,19 +130,13 @@ export class Avatars extends Controller {
         return;
       }
 
-      // Verify the user owns an unlocked avatar that maps to this fileName
       const unlockedItems = await UserUnlockedItem.find({ where: { userId, itemType: 'avatar' } });
+      const unlockedIds = unlockedItems.map(item => item.itemId);
+      const catalogMatches = unlockedIds.length
+        ? await AvatarCatalog.find({ where: { identifier: In(unlockedIds), fileName: body.fileName } })
+        : [];
 
-      let foundMatch = false;
-      for (const item of unlockedItems) {
-        const itemFileName = this.getAvatarFileNameFromId(item.itemId);
-        if (itemFileName === body.fileName) {
-          foundMatch = true;
-          break;
-        }
-      }
-
-      if (!foundMatch) {
+      if (catalogMatches.length === 0) {
         res.status(400);
         res.send({ error: ApiErrorEnum.AVATAR_INVALID });
         return;
@@ -178,10 +162,11 @@ export class Avatars extends Controller {
       }
     }
 
-    // For predefined avatars, we just update the user's avatarFile
-    if (body.id <= 10) { // Predefined avatars have IDs 1-10
+    if (body.id <= 10) {
       try {
-        user.avatarFile = `predefined_${body.id}.png`;
+        const fileName = `predefined_${body.id}.png`;
+        const catalog = await AvatarCatalog.findOne({ where: { identifier: `predefined_${body.id}` } });
+        user.avatarFile = catalog?.fileName || fileName;
         const savedUser = await user.save();
         if (savedUser) {
           this.core.emit(c => c.onUsersUpdate([savedUser]));
@@ -195,7 +180,6 @@ export class Avatars extends Controller {
       }
     }
 
-    // For user avatars, we need to check ownership
     const avatar = await Avatar.findOne(body.id, { relations: ['user'] });
     if (avatar === undefined || avatar.user.id !== user.id) {
       res.status(400);

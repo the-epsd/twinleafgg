@@ -1,9 +1,15 @@
+export type BattlePassRewardType = 'avatar' | 'sleeve' | 'playmat' | 'deck_box' | 'card_art';
+export type BattlePassSeasonStatus = 'draft' | 'published' | 'archived';
+
 export interface BattlePassReward {
+  id?: number;
   level: number;
   item: string;
-  type: 'avatar' | 'card_back' | 'playmat' | 'marker';
+  type: BattlePassRewardType | string;
   name: string;
-  isPremium: boolean;
+  imageUrl?: string | null;
+  sortOrder?: number;
+  isPremium?: boolean;
 }
 
 export interface BattlePassSeason {
@@ -11,8 +17,13 @@ export interface BattlePassSeason {
   seasonId: string;
   name: string;
   startDate: string;
+  endDate?: string | null;
+  status?: BattlePassSeasonStatus;
+  baseXpPerLevel?: number;
+  xpIncreasePerLevel?: number;
   rewards: BattlePassReward[];
   maxLevel: number;
+  rewardCount?: number;
 }
 
 export interface BattlePassData {
@@ -22,7 +33,18 @@ export interface BattlePassData {
 
 export interface BattlePassSeasonsData {
   ok: boolean;
-  seasons: Array<{ id: number; seasonId: string; name: string; startDate: string; maxLevel: number }>;
+  seasons: Array<{
+    id: number;
+    seasonId: string;
+    name: string;
+    startDate: string;
+    endDate?: string | null;
+    status?: BattlePassSeasonStatus;
+    maxLevel: number;
+    rewardCount?: number;
+    baseXpPerLevel?: number;
+    xpIncreasePerLevel?: number;
+  }>;
 }
 
 export interface BattlePassProgress {
@@ -61,4 +83,25 @@ export interface PendingMatchRewardResponse {
 export interface ActiveSeasonResponse {
   ok: boolean;
   seasonId: string | null;
+}
+
+export interface AvatarCatalogItem {
+  id: number;
+  identifier: string;
+  name: string;
+  fileName: string;
+  isDefault: boolean;
+  sortOrder: number;
+  imageUrl: string;
+}
+
+export interface SleeveCatalogItem {
+  id: number;
+  identifier: string;
+  name: string;
+  imagePath: string;
+  isDefault: boolean;
+  requiresUnlock: boolean;
+  sortOrder: number;
+  imageUrl: string;
 }
