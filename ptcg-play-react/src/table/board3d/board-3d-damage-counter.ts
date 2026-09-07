@@ -184,11 +184,14 @@ export class Board3dDamageCounter {
       side: DoubleSide,
       alphaTest: 0.1,
       depthWrite: false,
-      color: 0xd0d0d0 // Darkened to prevent bloom (luminance ~0.815, below 0.85 threshold)
+      // Same as status markers: large corner discs otherwise depth-clip through the card edge.
+      depthTest: false,
+      color: 0xd0d0d0, // Darkened to prevent bloom (luminance ~0.815, below 0.85 threshold)
     });
 
     this.mesh = new Mesh(geometry, material);
-    this.mesh.renderOrder = 12;
+    this.mesh.renderOrder = 20;
+    this.mesh.frustumCulled = false;
 
     // Top-right on card; intro starts offset (placed motion), ends at rest.
     this.applyPrePlacePosition(this.mesh);

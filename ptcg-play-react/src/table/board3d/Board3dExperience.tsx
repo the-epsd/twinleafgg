@@ -23,6 +23,7 @@ import { Board3dFpsBridge } from './Board3dFpsBridge';
 import { Board3dShufflePreviewKey } from './Board3dShufflePreviewKey';
 import { Board3dPrizeLayer } from './Board3dPrizeLayer';
 import { Board3dDeckBoxesLayer } from './Board3dDeckBoxesLayer';
+import { resolveBoard3dMaxAnisotropy } from './board3dGraphicsQuality';
 
 export type Board3dExperienceProps = {
   runtime: Board3dRuntime;
@@ -32,6 +33,11 @@ export type Board3dExperienceProps = {
   controllerProps: Board3dControllerProps;
   onControllerReady?: (c: Board3dController | null) => void;
   lightingSettings: Board3dLightingSettings;
+  /**
+   * Texture anisotropy cap from graphics quality.
+   * `null` = use GPU max (`WebGLCapabilities.getMaxAnisotropy`).
+   */
+  anisotropyCap: number | null;
   /** Report averaged board WebGL FPS (from the R3F frame loop). */
   onBoardFps?: (fps: number) => void;
 };
@@ -44,6 +50,7 @@ export function Board3dExperience({
   controllerProps,
   onControllerReady,
   lightingSettings,
+  anisotropyCap,
   onBoardFps,
 }: Board3dExperienceProps) {
   const worldRef = useRef<Group>(null!);
@@ -72,6 +79,11 @@ export function Board3dExperience({
       return;
     }
 
+    const maxAnisotropy = resolveBoard3dMaxAnisotropy(
+      anisotropyCap,
+      gl.capabilities.getMaxAnisotropy(),
+    );
+
     const ctx: Board3dR3fInitContext = {
       gl,
       scene,
@@ -79,6 +91,7 @@ export function Board3dExperience({
       worldContentRoot: world,
       handSlot: hand,
       opponentHandSlot: opponentHand,
+      maxAnisotropy,
     };
 
     const ctrl = new Board3dController(
@@ -105,7 +118,7 @@ export function Board3dExperience({
       ctrlRef.current = null;
       onControllerReady?.(null);
     };
-  }, [gl, scene, camera, runtime, cardsAdapter, onControllerReady]);
+  }, [gl, scene, camera, runtime, cardsAdapter, onControllerReady, anisotropyCap]);
 
   useLayoutEffect(() => {
     ctrlRef.current?.applyViewportDimensions(viewportWidth, viewportHeight);

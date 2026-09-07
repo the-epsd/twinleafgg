@@ -143,6 +143,8 @@ export type Board3dR3fInitContext = {
   handSlot: Object3D;
   /** Far-player hand row parent (sibling of {@link handSlot}). */
   opponentHandSlot: Object3D;
+  /** Texture anisotropy from graphics quality preset (clamped to GPU max). */
+  maxAnisotropy?: number;
 };
 
 export class Board3dController {
@@ -608,7 +610,9 @@ export class Board3dController {
     this.worldContentRoot = ctx.worldContentRoot;
     this.handSlot = ctx.handSlot;
     this.opponentHandSlot = ctx.opponentHandSlot;
-    this.assetLoader.setMaxAnisotropy(ctx.gl.capabilities.getMaxAnisotropy());
+    this.assetLoader.setMaxAnisotropy(
+      ctx.maxAnisotropy ?? ctx.gl.capabilities.getMaxAnisotropy(),
+    );
     this.setProps(initial);
     this.stateSync.setAttachmentTargets(this.worldContentRoot, null, this.scene);
     this.interactionService.setWorldContentRoot(this.worldContentRoot);
@@ -999,6 +1003,8 @@ export class Board3dController {
       depthTest: true,
       depthWrite: false,
       side: DoubleSide,
+      toneMapped: false,
+      alphaTest: 0.02,
     });
 
     this.boardCenterOverlay = new Mesh(centerGeometry, centerMaterial);

@@ -10,6 +10,9 @@ import {
 import {
   readClientSettingsSnapshot,
   writeBoard2dPerspectiveEnabled,
+  writeBoard3dGraphicsResolution,
+  writeBoard3dGraphicsShadows,
+  writeBoard3dGraphicsTextures,
   writeCardSize,
   writeCardTextKerning,
   writeHiddenFormats,
@@ -34,8 +37,11 @@ export type SettingsDraftCommit = Pick<
   | 'board2dPerspectiveEnabled'
   | 'sfxEnabled'
   | 'debugMarkersEnabled'
+  | 'board3dGraphicsResolution'
+  | 'board3dGraphicsShadows'
+  | 'board3dGraphicsTextures'
 > & {
-  /**0–100 UI percentage, stored0–1 */
+  /** 0–100 UI percentage, stored 0–1 */
   sfxVolumePercent: number;
   cardSize: number;
   cardTextKerning: number;
@@ -85,6 +91,9 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       writeSfxEnabled(draft.sfxEnabled);
       writeSfxVolume(draft.sfxVolumePercent / 100);
       writeDebugMarkersEnabled(draft.debugMarkersEnabled);
+      writeBoard3dGraphicsResolution(draft.board3dGraphicsResolution);
+      writeBoard3dGraphicsShadows(draft.board3dGraphicsShadows);
+      writeBoard3dGraphicsTextures(draft.board3dGraphicsTextures);
 
       setState({
         holoEnabled: draft.holoEnabled,
@@ -98,6 +107,9 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
         sfxEnabled: draft.sfxEnabled,
         sfxVolume: Math.max(0, Math.min(1, draft.sfxVolumePercent / 100)),
         debugMarkersEnabled: draft.debugMarkersEnabled,
+        board3dGraphicsResolution: draft.board3dGraphicsResolution,
+        board3dGraphicsShadows: draft.board3dGraphicsShadows,
+        board3dGraphicsTextures: draft.board3dGraphicsTextures,
       });
     },
     [],

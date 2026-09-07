@@ -6,7 +6,7 @@ export const CARD_HALF_HEIGHT = CARD_HEIGHT / 2;
 export const CARD_HALF_DEPTH = 0.01;
 
 /** Shared depth for right-edge overlays (damage + status markers). */
-export const OVERLAY_FACE_Z = 0.15;
+export const OVERLAY_FACE_Z = 0.28;
 
 /** Center X on the card right edge — disc hangs outward like Angular translate(50%). */
 export const OVERLAY_RIGHT_X = CARD_HALF_WIDTH;

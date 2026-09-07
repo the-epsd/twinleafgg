@@ -3,13 +3,38 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Format } from 'ptcg-server';
 import { useSettings } from '../context/SettingsContext';
+import {
+  BOARD3D_GRAPHICS_TIER_OPTIONS,
+  type Board3dGraphicsTier,
+} from '../settings/settingsStorage';
 import { DECK_FORMAT_OPTIONS } from '../deck-editor/deckFormatOptions';
 import { CheckboxField } from '../components/ui/CheckboxField';
 import { playSfx } from '../sfx';
 import { SettingsCardImagesPanel } from './SettingsCardImagesPanel';
 import styles from './SettingsPage.module.css';
 
-type SettingsTabId = 'general' | 'images';
+type SettingsTabId = 'general' | 'graphics' | 'images';
+
+type GraphicsTierKey =
+  | 'board3dGraphicsResolution'
+  | 'board3dGraphicsShadows'
+  | 'board3dGraphicsTextures';
+
+const GRAPHICS_ROWS: { key: GraphicsTierKey; label: string; hintHighest?: string }[] = [
+  {
+    key: 'board3dGraphicsResolution',
+    label: 'Resolution',
+    hintHighest: 'Native display resolution (e.g. full 4K on a 4K monitor). May use more GPU.',
+  },
+  {
+    key: 'board3dGraphicsShadows',
+    label: 'Shadows',
+  },
+  {
+    key: 'board3dGraphicsTextures',
+    label: 'Textures',
+  },
+];
 
 export function SettingsPage() {
   const { t } = useTranslation();
@@ -24,6 +49,9 @@ export function SettingsPage() {
     hiddenFormats: [...s.hiddenFormats],
     use3dBoardDefault: s.use3dBoardDefault,
     board2dPerspectiveEnabled: s.board2dPerspectiveEnabled,
+    board3dGraphicsResolution: s.board3dGraphicsResolution,
+    board3dGraphicsShadows: s.board3dGraphicsShadows,
+    board3dGraphicsTextures: s.board3dGraphicsTextures,
     sfxEnabled: s.sfxEnabled,
     debugMarkersEnabled: s.debugMarkersEnabled,
   }));
@@ -44,6 +72,10 @@ export function SettingsPage() {
     return draft.hiddenFormats.includes(format);
   }
 
+  function setGraphicsTier(key: GraphicsTierKey, tier: Board3dGraphicsTier) {
+    setDraft((d) => ({ ...d, [key]: tier }));
+  }
+
   function save() {
     s.commitFromSave({
       holoEnabled: draft.holoEnabled,
@@ -52,6 +84,9 @@ export function SettingsPage() {
       hiddenFormats: draft.hiddenFormats,
       use3dBoardDefault: draft.use3dBoardDefault,
       board2dPerspectiveEnabled: draft.board2dPerspectiveEnabled,
+      board3dGraphicsResolution: draft.board3dGraphicsResolution,
+      board3dGraphicsShadows: draft.board3dGraphicsShadows,
+      board3dGraphicsTextures: draft.board3dGraphicsTextures,
       sfxEnabled: draft.sfxEnabled,
       debugMarkersEnabled: draft.debugMarkersEnabled,
       sfxVolumePercent: Math.round(s.sfxVolume * 100),
@@ -62,6 +97,7 @@ export function SettingsPage() {
   }
 
   const sfxPercent = Math.round(s.sfxVolume * 100);
+  const showSaveActions = activeTab === 'general' || activeTab === 'graphics';
 
   return (
     <div className={styles.page}>
@@ -80,6 +116,18 @@ export function SettingsPage() {
             }}
           >
             General
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={activeTab === 'graphics'}
+            className={`${styles.tabButton} ${activeTab === 'graphics' ? styles.tabButtonActive : ''}`}
+            onClick={() => {
+              playSfx('uiButton');
+              setActiveTab('graphics');
+            }}
+          >
+            Graphics
           </button>
           <button
             type="button"
@@ -216,13 +264,55 @@ export function SettingsPage() {
             </div>
           </div>
         </div>
+      ) : activeTab === 'graphics' ? (
+        <div className={styles.content} role="tabpanel">
+          <p className={styles.graphicsIntro}>
+            Adjust each option independently for the 3D game board.
+          </p>
+          {GRAPHICS_ROWS.map((row) => {
+            const value = draft[row.key];
+            return (
+              <div key={row.key} className={styles.graphicsRow}>
+                <span className={styles.graphicsRowLabel} id={`graphics-${row.key}-label`}>
+                  {row.label}
+                </span>
+                <div
+                  className={styles.tierGroup}
+                  role="group"
+                  aria-labelledby={`graphics-${row.key}-label`}
+                >
+                  {BOARD3D_GRAPHICS_TIER_OPTIONS.map((opt) => {
+                    const active = value === opt.value;
+                    return (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        className={`${styles.tierButton}${active ? ` ${styles.tierButtonActive}` : ''}`}
+                        aria-pressed={active}
+                        onClick={() => {
+                          playSfx('uiButton');
+                          setGraphicsTier(row.key, opt.value);
+                        }}
+                      >
+                        {opt.label}
+                      </button>
+                    );
+                  })}
+                </div>
+                {row.hintHighest && value === 'highest' ? (
+                  <p className={styles.hint}>{row.hintHighest}</p>
+                ) : null}
+              </div>
+            );
+          })}
+        </div>
       ) : (
         <div role="tabpanel">
           <SettingsCardImagesPanel />
         </div>
       )}
 
-      {activeTab === 'general' ? (
+      {showSaveActions ? (
         <div className={styles.actions}>
           <button
             type="button"

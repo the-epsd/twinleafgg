@@ -27,7 +27,7 @@
 
 .tabButton {
   flex: 1;
-  min-width: 120px;
+  min-width: 96px;
   padding: 10px 14px;
   border: none;
   border-radius: 8px;
@@ -174,6 +174,84 @@
 
 .sliderBlock {
   margin-top: 8px;
+}
+
+.selectBlock {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.selectBlock label {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.selectInput {
+  width: 100%;
+  max-width: 280px;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+  background: color-mix(in srgb, currentColor 4%, transparent);
+  color: inherit;
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+.graphicsIntro {
+  margin: 0 0 8px 0;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  opacity: 0.85;
+}
+
+.graphicsRow {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.graphicsRowLabel {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.tierGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 6px;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  background: color-mix(in srgb, currentColor 5%, transparent);
+}
+
+.tierButton {
+  flex: 1 1 0;
+  min-width: 4.5rem;
+  padding: 10px 8px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.tierButton:hover {
+  background: color-mix(in srgb, currentColor 8%, transparent);
+}
+
+.tierButtonActive {
+  background: color-mix(in srgb, currentColor 10%, transparent);
+  border-color: color-mix(in srgb, currentColor 22%, transparent);
 }
 
 .sliderBlock label {

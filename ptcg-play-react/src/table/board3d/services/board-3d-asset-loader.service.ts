@@ -272,8 +272,12 @@ export class Board3dAssetLoaderService {
     try {
       const texture = await this.textureLoader.loadAsync(centerUrl);
       texture.colorSpace = 'srgb';
-      this.applyAnisotropy(texture);
+      // Premultiply clears RGB in transparent texels so mipmaps don't form a white/grey halo.
+      texture.premultiplyAlpha = true;
+      texture.generateMipmaps = true;
       texture.flipY = false;
+      this.applyAnisotropy(texture);
+      texture.needsUpdate = true;
 
       this.textureCache.set(centerUrl, texture);
       return texture;
