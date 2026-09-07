@@ -1,4 +1,4 @@
-/** Card dimensions in overlay-anchor space (BoxGeometry 2.5 × 3.5 × 0.02, art on +Z). */
+/** Card dimensions in overlay-anchor space (rounded card 2.5 × 3.5 × 0.02, art on +Z). */
 export const CARD_WIDTH = 2.5;
 export const CARD_HEIGHT = 3.5;
 export const CARD_HALF_WIDTH = CARD_WIDTH / 2;

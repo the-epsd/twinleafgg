@@ -16,16 +16,20 @@ import {
   board3dCardMaterialKey,
   board3dCardFaceMaterialCache,
   board3dCardOutlineMaterialCache,
-  getBoard3dCardBoxGeometry,
+  getBoard3dCardGeometry,
   getBoard3dCardOutlineGeometry,
   getBoard3dCardEdgeMaterial,
   disposeBoard3dCardSharedResources,
 } from './board3dCardShared';
 
+/** Material group indices on the rounded card ExtrudeGeometry (edge / front / back). */
+const MAT_FRONT = 1;
+const MAT_BACK = 2;
+
 export class Board3dCard {
   private group: Group;
   private cardMesh: Mesh;
-  /** Face-attached overlays (markers, energy, damage) — rotates with the card, not inside the box mesh. */
+  /** Face-attached overlays (markers, energy, damage) — rotates with the card, not inside the card mesh. */
   private overlayAnchor: Group;
   private outlineMesh: Mesh | null = null;
   private maskTexture?: Texture;
@@ -80,18 +84,15 @@ export class Board3dCard {
       board3dCardFaceMaterialCache.set(backKey, backMaterial);
     }
 
-    // Create materials array for 6 faces
+    // Rounded extrude: edge / front / back material groups
     const edgeMaterial = getBoard3dCardEdgeMaterial();
     const materials = [
-      edgeMaterial,  // Right edge
-      edgeMaterial,  // Left edge
-      edgeMaterial,  // Top edge
-      edgeMaterial,  // Bottom edge
-      frontMaterial,  // Front face (card image) - shared if same texture
-      backMaterial    // Back face (card back) - shared if same texture
+      edgeMaterial, // 0 — perimeter edge
+      frontMaterial, // 1 — front face (card image)
+      backMaterial, // 2 — back face (card back)
     ];
 
-    this.cardMesh = new Mesh(getBoard3dCardBoxGeometry(), materials);
+    this.cardMesh = new Mesh(getBoard3dCardGeometry(), materials);
     this.cardMesh.castShadow = true;
     this.cardMesh.receiveShadow = false;
 
@@ -193,7 +194,7 @@ export class Board3dCard {
         });
         board3dCardFaceMaterialCache.set(newFrontKey, frontMaterial);
       }
-      materials[4] = frontMaterial;
+      materials[MAT_FRONT] = frontMaterial;
       this.frontMaterialKey = newFrontKey;
     }
 
@@ -211,7 +212,7 @@ export class Board3dCard {
         });
         board3dCardFaceMaterialCache.set(newBackKey!, backMaterial);
       }
-      materials[5] = backMaterial;
+      materials[MAT_BACK] = backMaterial;
       this.backMaterialKey = newBackKey;
     }
 
@@ -231,8 +232,8 @@ export class Board3dCard {
 
   public setEmissive(color: number, intensity: number): void {
     const materials = this.cardMesh.material as MeshStandardMaterial[];
-    materials[4].emissive.setHex(color);
-    materials[4].emissiveIntensity = intensity;
+    materials[MAT_FRONT].emissive.setHex(color);
+    materials[MAT_FRONT].emissiveIntensity = intensity;
   }
 
   /**
