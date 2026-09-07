@@ -76,10 +76,7 @@
   );
   background-size: 300% 300%;
   mix-blend-mode: soft-light;
-  -webkit-mask-image: var(--holo-mask);
-  mask-image: var(--holo-mask);
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
+  /* mask-image / mask-size applied inline from CardFace (per-variant URL). */
   will-change: background-position;
 }
 

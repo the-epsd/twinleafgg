@@ -69,8 +69,13 @@ export function CardFace({
     if (!activeHoloVariant) {
       return undefined;
     }
-    const u = holoMaskUrl(activeHoloVariant);
-    return { ['--holo-mask' as string]: `url('${u}')` };
+    const mask = `url('${holoMaskUrl(activeHoloVariant)}')`;
+    return {
+      WebkitMaskImage: mask,
+      maskImage: mask,
+      WebkitMaskSize: '100% 100%',
+      maskSize: '100% 100%',
+    };
   }, [activeHoloVariant]);
 
   return (
