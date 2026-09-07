@@ -9,5 +9,6 @@ export * from './message';
 export * from './replay';
 export * from './sleeve';
 export * from './deck-box';
+export * from './coin';
 export * from './user';
 export * from './user-favorite-card';

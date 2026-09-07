@@ -434,20 +434,26 @@ export class Board3dAnimationService {
   }
 
   /** Angular visual-coin-flip timing on the persistent board coin mesh. */
-  initCoinFlipScene(scene: Scene): void {
+  initCoinFlipScene(scene: Scene, headsUrl?: string, tailsUrl?: string): void {
     if (this.activeCoinFlipScene) {
       if (!this.activeCoinFlipScene.root.parent) {
         scene.add(this.activeCoinFlipScene.root);
+      }
+      if (headsUrl && tailsUrl) {
+        void this.activeCoinFlipScene.setFaceTextures(headsUrl, tailsUrl);
       }
       return;
     }
     const graph = createCoinFlipSceneGraph();
     scene.add(graph.root);
     this.activeCoinFlipScene = graph;
+    if (headsUrl && tailsUrl) {
+      void graph.setFaceTextures(headsUrl, tailsUrl);
+    }
   }
 
-  playCoinFlipAnimation(scene: Scene, isHeads: boolean): void {
-    this.initCoinFlipScene(scene);
+  playCoinFlipAnimation(scene: Scene, isHeads: boolean, headsUrl?: string, tailsUrl?: string): void {
+    this.initCoinFlipScene(scene, headsUrl, tailsUrl);
     const graph = this.activeCoinFlipScene;
     if (!graph) {
       return;
@@ -459,18 +465,27 @@ export class Board3dAnimationService {
       this.activeCoinFlipTimeline = null;
     }
 
-    let timeline: gsap.core.Timeline;
-    const finish = (): void => {
-      this.activeCoinFlipTimeline = null;
-      this.removeAnimation(timeline);
+    const startSpin = (): void => {
+      let timeline: gsap.core.Timeline;
+      const finish = (): void => {
+        this.activeCoinFlipTimeline = null;
+        this.removeAnimation(timeline);
+        this.updateAnimationState();
+      };
+
+      timeline = buildCoinFlipTimeline(graph.coin, isHeads, finish);
+
+      this.activeCoinFlipTimeline = timeline;
+      this.activeAnimations.push(timeline);
       this.updateAnimationState();
     };
 
-    timeline = buildCoinFlipTimeline(graph.coin, isHeads, finish);
+    if (headsUrl && tailsUrl) {
+      void graph.setFaceTextures(headsUrl, tailsUrl).then(startSpin).catch(startSpin);
+      return;
+    }
 
-    this.activeCoinFlipTimeline = timeline;
-    this.activeAnimations.push(timeline);
-    this.updateAnimationState();
+    startSpin();
   }
 
   cancelCoinFlipAnimation(): void {

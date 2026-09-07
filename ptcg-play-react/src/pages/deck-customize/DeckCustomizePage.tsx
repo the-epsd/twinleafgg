@@ -5,6 +5,7 @@ import { ContactShadows, Environment, OrbitControls } from '@react-three/drei';
 import type { Archetype } from 'ptcg-server';
 import { ApiError } from '../../api/apiError';
 import { getDeck, saveDeck } from '../../api/deckApi';
+import { listCoins, type PlayerCoinItem } from '../../api/coinApi';
 import { listDeckBoxes, type PlayerDeckBoxItem } from '../../api/deckBoxApi';
 import { listSleeves, type PlayerSleeveItem } from '../../api/sleeveApi';
 import { ShellButton } from '../../components/ui/ShellButton';
@@ -15,7 +16,7 @@ import { resolveAssetUrl } from '../../utils/assetUrl';
 import { publicAssetUrl } from '../../utils/publicAssetUrl';
 import styles from './DeckCustomizePage.module.css';
 
-type CustomizeTab = 'deck_boxes' | 'sleeves';
+type CustomizeTab = 'deck_boxes' | 'sleeves' | 'coins';
 
 function templateUrl(template: string | undefined, imagePath: string, fallback: string): string {
   const t = template && template.includes('{path}') ? template : fallback;
@@ -40,13 +41,16 @@ export function DeckCustomizePage() {
   const [artworks, setArtworks] = useState<{ code: string; artworkId?: number }[] | undefined>();
   const [sleeveIdentifier, setSleeveIdentifier] = useState<string | undefined>();
   const [deckBoxIdentifier, setDeckBoxIdentifier] = useState<string | undefined>();
+  const [coinIdentifier, setCoinIdentifier] = useState<string | undefined>();
   const [sleeves, setSleeves] = useState<PlayerSleeveItem[]>([]);
   const [deckBoxes, setDeckBoxes] = useState<PlayerDeckBoxItem[]>([]);
+  const [coins, setCoins] = useState<PlayerCoinItem[]>([]);
 
   const sleevesUrl =
     (serverConfig as { sleevesUrl?: string } | null)?.sleevesUrl ?? '/sleeves/{path}';
   const deckBoxesUrl =
     (serverConfig as { deckBoxesUrl?: string } | null)?.deckBoxesUrl ?? '/deck-boxes/{path}';
+  const coinsUrl = (serverConfig as { coinsUrl?: string } | null)?.coinsUrl ?? '/coins/{path}';
 
   const load = useCallback(async () => {
     if (!Number.isFinite(deckId)) {
@@ -57,10 +61,11 @@ export function DeckCustomizePage() {
     setLoading(true);
     setError(null);
     try {
-      const [deckRes, sleeveRes, boxRes] = await Promise.all([
+      const [deckRes, sleeveRes, boxRes, coinRes] = await Promise.all([
         getDeck(deckId),
         listSleeves(),
         listDeckBoxes(),
+        listCoins(),
       ]);
       const d = deckRes.deck;
       setDeckName(d.name);
@@ -70,12 +75,18 @@ export function DeckCustomizePage() {
       setArtworks(d.artworks);
       setSleeveIdentifier(d.sleeveIdentifier);
       setDeckBoxIdentifier(d.deckBoxIdentifier);
+      setCoinIdentifier(d.coinIdentifier);
       setSleeves(sleeveRes.sleeves);
       setDeckBoxes(boxRes.deckBoxes);
+      setCoins(coinRes.coins);
 
       if (!d.deckBoxIdentifier) {
         const def = boxRes.deckBoxes.find((b) => b.isDefault) ?? boxRes.deckBoxes[0];
         if (def) setDeckBoxIdentifier(def.identifier);
+      }
+      if (!d.coinIdentifier) {
+        const def = coinRes.coins.find((c) => c.isDefault) ?? coinRes.coins[0];
+        if (def) setCoinIdentifier(def.identifier);
       }
     } catch (e) {
       setError(e instanceof ApiError ? e.message : 'Failed to load deck customization');
@@ -98,6 +109,11 @@ export function DeckCustomizePage() {
     [sleeves, sleeveIdentifier],
   );
 
+  const selectedCoin = useMemo(
+    () => coins.find((c) => c.identifier === coinIdentifier) ?? coins.find((c) => c.isDefault) ?? coins[0],
+    [coins, coinIdentifier],
+  );
+
   const boxTextureUrl = selectedBox
     ? templateUrl(deckBoxesUrl, selectedBox.imagePath, '/deck-boxes/{path}')
     : '';
@@ -105,6 +121,10 @@ export function DeckCustomizePage() {
   const sleevePreviewUrl = selectedSleeve
     ? templateUrl(sleevesUrl, selectedSleeve.imagePath, '/sleeves/{path}')
     : publicAssetUrl('assets/cardback.png');
+
+  const coinPreviewUrl = selectedCoin
+    ? templateUrl(coinsUrl, selectedCoin.imagePath, '/coins/{path}')
+    : '';
 
   async function onSave() {
     setSaving(true);
@@ -118,6 +138,7 @@ export function DeckCustomizePage() {
         artworks,
         sleeveIdentifier,
         deckBoxIdentifier,
+        coinIdentifier,
       );
       showSnackbar('Customization saved');
       navigate(`/deck/${deckId}`);
@@ -177,10 +198,16 @@ export function DeckCustomizePage() {
             ) : (
               <p className={styles.muted}>No deck boxes available.</p>
             )
-          ) : (
+          ) : tab === 'sleeves' ? (
             <div className={styles.sleevePreviewWrap}>
               <img className={styles.sleevePreview} src={sleevePreviewUrl} alt="" />
             </div>
+          ) : coinPreviewUrl ? (
+            <div className={styles.sleevePreviewWrap}>
+              <img className={styles.sleevePreview} src={coinPreviewUrl} alt="" />
+            </div>
+          ) : (
+            <p className={styles.muted}>No coins available.</p>
           )}
         </div>
 
@@ -191,6 +218,9 @@ export function DeckCustomizePage() {
           </p>
           <p>
             Card Sleeve: <strong>{selectedSleeve?.name ?? 'Default cardback'}</strong>
+          </p>
+          <p>
+            Coin: <strong>{selectedCoin?.name ?? 'Twinleaf'}</strong>
           </p>
         </div>
       </div>
@@ -216,6 +246,15 @@ export function DeckCustomizePage() {
           >
             Card Sleeves
           </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={tab === 'coins'}
+            className={`${styles.tab}${tab === 'coins' ? ` ${styles.tabActive}` : ''}`}
+            onClick={() => setTab('coins')}
+          >
+            Coins
+          </button>
         </div>
 
         {tab === 'deck_boxes' ? (
@@ -238,7 +277,7 @@ export function DeckCustomizePage() {
               );
             })}
           </ul>
-        ) : (
+        ) : tab === 'sleeves' ? (
           <ul className={styles.grid}>
             <li>
               <button
@@ -264,6 +303,26 @@ export function DeckCustomizePage() {
                   >
                     <img src={thumb} alt="" className={styles.gridThumb} />
                     <span className={styles.gridLabel}>{sleeve.name}</span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        ) : (
+          <ul className={styles.grid}>
+            {coins.map((coin) => {
+              const active = coin.identifier === (coinIdentifier ?? selectedCoin?.identifier);
+              const thumb = templateUrl(coinsUrl, coin.imagePath, '/coins/{path}');
+              return (
+                <li key={coin.identifier}>
+                  <button
+                    type="button"
+                    className={`${styles.gridItem}${active ? ` ${styles.gridItemActive}` : ''}`}
+                    onClick={() => setCoinIdentifier(coin.identifier)}
+                    aria-pressed={active}
+                  >
+                    <img src={thumb} alt="" className={styles.gridThumb} />
+                    <span className={styles.gridLabel}>{coin.name}</span>
                   </button>
                 </li>
               );

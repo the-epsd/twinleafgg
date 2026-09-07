@@ -50,6 +50,7 @@ export class MatchmakingSocket {
       deckId?: number;
       sleeveImagePath?: string;
       deckBoxImagePath?: string;
+      coinImagePath?: string;
       sandboxMode?: boolean;
     },
     response: Response<void>
@@ -73,7 +74,8 @@ export class MatchmakingSocket {
       params.deckId,
       params.sleeveImagePath,
       params.sandboxMode === true ? true : undefined,
-      params.deckBoxImagePath
+      params.deckBoxImagePath,
+      params.coinImagePath
     );
     response('ok');
   }

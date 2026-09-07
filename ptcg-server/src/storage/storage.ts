@@ -3,7 +3,7 @@ import { Connection, createConnection, EntityManager, getConnectionManager } fro
 import {
   Avatar, Conversation, Deck, DisconnectedSession, Match, Message, Replay, User,
   BattlePassSeason, BattlePassReward, AvatarCatalog, UserBattlePass, UserUnlockedItem,
-  Friend, FriendRequest, CardArtwork, UserFavoriteCard, Sleeve, DeckBox, MatchXpAward
+  Friend, FriendRequest, CardArtwork, UserFavoriteCard, Sleeve, DeckBox, Coin, MatchXpAward
 } from './';
 
 export class Storage {
@@ -42,6 +42,7 @@ export class Storage {
       UserFavoriteCard,
       Sleeve,
       DeckBox,
+      Coin,
       MatchXpAward
     ];
 

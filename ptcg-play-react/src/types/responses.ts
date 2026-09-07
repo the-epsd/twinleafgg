@@ -80,6 +80,8 @@ export interface DeckListEntry {
   sleeveImagePath?: string;
   deckBoxIdentifier?: string;
   deckBoxImagePath?: string;
+  coinIdentifier?: string;
+  coinImagePath?: string;
 }
 
 export interface DeckListResponse extends OkResponse {
@@ -102,6 +104,8 @@ export interface Deck {
   sleeveImagePath?: string;
   deckBoxIdentifier?: string;
   deckBoxImagePath?: string;
+  coinIdentifier?: string;
+  coinImagePath?: string;
 }
 
 export interface DeckResponse extends OkResponse {

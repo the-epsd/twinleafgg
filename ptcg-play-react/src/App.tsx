@@ -30,6 +30,7 @@ import { AdminBattlePassEditorPage } from './pages/admin/AdminBattlePassEditorPa
 import { AdminAvatarsPage } from './pages/admin/AdminAvatarsPage';
 import { AdminSleevesPage } from './pages/admin/AdminSleevesPage';
 import { AdminDeckBoxesPage } from './pages/admin/AdminDeckBoxesPage';
+import { AdminCoinsPage } from './pages/admin/AdminCoinsPage';
 import { UiShowcasePage } from './pages/ui-showcase/UiShowcasePage';
 import { AbilityLockPage } from './pages/ability-lock/AbilityLockPage';
 import { EffectlessCardsPage } from './pages/effectless-cards/EffectlessCardsPage';
@@ -91,6 +92,7 @@ export default function App() {
                   <Route path="/admin/avatars" element={<AdminAvatarsPage />} />
                   <Route path="/admin/sleeves" element={<AdminSleevesPage />} />
                   <Route path="/admin/deck-boxes" element={<AdminDeckBoxesPage />} />
+                  <Route path="/admin/coins" element={<AdminCoinsPage />} />
                 </Route>
               </Route>
             </Route>

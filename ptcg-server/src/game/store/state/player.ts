@@ -21,6 +21,8 @@ export class Player {
 
   deckBoxImagePath?: string;
 
+  coinImagePath?: string;
+
   deck: CardList = new CardList();
 
   hand: CardList = new CardList();

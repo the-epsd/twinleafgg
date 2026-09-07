@@ -9,7 +9,8 @@ export type BattlePassRewardType =
   | 'sleeve'
   | 'playmat'
   | 'deck_box'
-  | 'card_art';
+  | 'card_art'
+  | 'coin';
 
 @Entity('battle_pass_reward')
 @Index(['seasonId', 'level', 'rewardType', 'itemId'], { unique: true })

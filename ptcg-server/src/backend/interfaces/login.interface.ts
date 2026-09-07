@@ -5,6 +5,7 @@ export interface ServerConfig {
   avatarsUrl: string;
   sleevesUrl: string;
   deckBoxesUrl: string;
+  coinsUrl: string;
   avatarFileSize: number;
   avatarMinSize: number;
   avatarMaxSize: number;

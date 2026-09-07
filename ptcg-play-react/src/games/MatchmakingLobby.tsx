@@ -278,6 +278,7 @@ export function MatchmakingLobby({ onError }: MatchmakingLobbyProps) {
         full.deck.sleeveImagePath ?? deck.sleeveImagePath,
         undefined,
         full.deck.deckBoxImagePath ?? deck.deckBoxImagePath,
+        full.deck.coinImagePath ?? deck.coinImagePath,
       );
       setInQueue(true);
     } catch (e) {

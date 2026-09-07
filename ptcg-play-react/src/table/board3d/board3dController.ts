@@ -677,7 +677,11 @@ export class Board3dController {
       }),
     );
 
-    this.animationService.initCoinFlipScene(this.scene);
+    this.animationService.initCoinFlipScene(
+      this.scene,
+      this.cardsAdapter.getCoinUrl('twinleaf-coin.png'),
+      this.cardsAdapter.getCoinUrl('twinleaf-coin-back.png'),
+    );
     this.stateSync.setBoardInteractionForDamagePreview(this.boardInteractionService);
   }
 
@@ -721,7 +725,11 @@ export class Board3dController {
       }),
     );
 
-    this.animationService.initCoinFlipScene(this.scene);
+    this.animationService.initCoinFlipScene(
+      this.scene,
+      this.cardsAdapter.getCoinUrl('twinleaf-coin.png'),
+      this.cardsAdapter.getCoinUrl('twinleaf-coin-back.png'),
+    );
     this.stateSync.setBoardInteractionForDamagePreview(this.boardInteractionService);
   }
 
@@ -1921,7 +1929,18 @@ export class Board3dController {
     if (!this.scene) {
       return;
     }
-    this.animationService.playCoinFlipAnimation(this.scene, ev.result);
+    const flippingPlayer =
+      this.bottomPlayer?.id === ev.playerId
+        ? this.bottomPlayer
+        : this.topPlayer?.id === ev.playerId
+          ? this.topPlayer
+          : undefined;
+    const frontPath =
+      (flippingPlayer as { coinImagePath?: string } | undefined)?.coinImagePath ||
+      'twinleaf-coin.png';
+    const headsUrl = this.cardsAdapter.getCoinUrl(frontPath);
+    const tailsUrl = this.cardsAdapter.getCoinUrl('twinleaf-coin-back.png');
+    this.animationService.playCoinFlipAnimation(this.scene, ev.result, headsUrl, tailsUrl);
   }
 
   private cancelBoardCoinFlipAnimation(): void {

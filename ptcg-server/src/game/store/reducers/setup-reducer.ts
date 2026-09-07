@@ -675,6 +675,7 @@ export function setupPhaseReducer(store: StoreLike, state: State, action: Action
       player.deckId = action.deckId;
       player.sleeveImagePath = action.sleeveImagePath;
       player.deckBoxImagePath = action.deckBoxImagePath;
+      player.coinImagePath = action.coinImagePath;
       // Attach alternate artwork map to player's lists so clients can resolve images
       if (action.artworksMap) {
         const lists: any[] = [
@@ -709,6 +710,9 @@ export function setupPhaseReducer(store: StoreLike, state: State, action: Action
       }
       if (action.deckBoxImagePath) {
         (player as any).deckBoxImagePath = action.deckBoxImagePath;
+      }
+      if (action.coinImagePath) {
+        (player as any).coinImagePath = action.coinImagePath;
       }
       player.deck.isSecret = true;
       player.deck.cards.forEach(c => {
@@ -753,6 +757,7 @@ export function setupPhaseReducer(store: StoreLike, state: State, action: Action
         const deckCards: string[] = Array.isArray(deckPayload) ? deckPayload : deckPayload?.deck;
         const sleeveImagePath: string | undefined = Array.isArray(deckPayload) ? undefined : deckPayload?.sleeveImagePath;
         const deckBoxImagePath: string | undefined = Array.isArray(deckPayload) ? undefined : deckPayload?.deckBoxImagePath;
+        const coinImagePath: string | undefined = Array.isArray(deckPayload) ? undefined : deckPayload?.coinImagePath;
         if (!Array.isArray(deckCards) || deckCards.length === 0) {
           store.log(state, GameLog.LOG_GAME_FINISHED_BEFORE_STARTED);
           const winner = GameWinner.NONE;
@@ -787,6 +792,9 @@ export function setupPhaseReducer(store: StoreLike, state: State, action: Action
         }
         if (deckBoxImagePath) {
           (player as any).deckBoxImagePath = deckBoxImagePath;
+        }
+        if (coinImagePath) {
+          (player as any).coinImagePath = coinImagePath;
         }
         player.deck.cards.forEach(c => {
           state.cardNames.push(c.fullName);

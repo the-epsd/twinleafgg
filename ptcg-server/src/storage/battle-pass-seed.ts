@@ -27,7 +27,7 @@ function normalizeRewardType(raw: string): BattlePassRewardType {
   if (raw === 'card_back' || raw === 'marker') {
     return 'sleeve';
   }
-  if (raw === 'avatar' || raw === 'sleeve' || raw === 'playmat' || raw === 'deck_box' || raw === 'card_art') {
+  if (raw === 'avatar' || raw === 'sleeve' || raw === 'playmat' || raw === 'deck_box' || raw === 'card_art' || raw === 'coin') {
     return raw;
   }
   return 'avatar';

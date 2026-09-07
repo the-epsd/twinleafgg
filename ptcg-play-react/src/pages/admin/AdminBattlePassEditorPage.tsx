@@ -8,6 +8,7 @@ import {
 import { adminListAvatars } from '../../api/avatarCatalogApi';
 import { adminListSleeves } from '../../api/sleeveAdminApi';
 import { adminListDeckBoxes } from '../../api/deckBoxAdminApi';
+import { adminListCoins } from '../../api/coinAdminApi';
 import { ApiError } from '../../api/apiError';
 import { ShellButton } from '../../components/ui/ShellButton';
 import { useSnackbar } from '../../context/SnackbarContext';
@@ -16,13 +17,14 @@ import type {
   BattlePassReward,
   BattlePassSeason,
   BattlePassSeasonStatus,
+  CoinCatalogItem,
   DeckBoxCatalogItem,
   SleeveCatalogItem,
 } from '../../types/battlePass';
 import { resolveAssetUrl } from '../../utils/assetUrl';
 import styles from './AdminPages.module.css';
 
-type RewardCatalogType = 'avatar' | 'sleeve' | 'deck_box';
+type RewardCatalogType = 'avatar' | 'sleeve' | 'deck_box' | 'coin';
 
 type DraftReward = {
   key: string;
@@ -35,7 +37,13 @@ type DraftReward = {
 function toDraft(rewards: BattlePassReward[]): DraftReward[] {
   return rewards.map((r, i) => {
     const type: RewardCatalogType =
-      r.type === 'sleeve' ? 'sleeve' : r.type === 'deck_box' ? 'deck_box' : 'avatar';
+      r.type === 'sleeve'
+        ? 'sleeve'
+        : r.type === 'deck_box'
+          ? 'deck_box'
+          : r.type === 'coin'
+            ? 'coin'
+            : 'avatar';
     return {
       key: `${r.id ?? i}-${r.item}`,
       level: r.level,
@@ -55,6 +63,7 @@ export function AdminBattlePassEditorPage() {
   const [avatars, setAvatars] = useState<AvatarCatalogItem[]>([]);
   const [sleeves, setSleeves] = useState<SleeveCatalogItem[]>([]);
   const [deckBoxes, setDeckBoxes] = useState<DeckBoxCatalogItem[]>([]);
+  const [coins, setCoins] = useState<CoinCatalogItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [savingMeta, setSavingMeta] = useState(false);
   const [savingRewards, setSavingRewards] = useState(false);
@@ -64,17 +73,19 @@ export function AdminBattlePassEditorPage() {
     setLoading(true);
     setError(null);
     try {
-      const [seasonRes, avatarRes, sleeveRes, deckBoxRes] = await Promise.all([
+      const [seasonRes, avatarRes, sleeveRes, deckBoxRes, coinRes] = await Promise.all([
         adminGetSeasonRewards(seasonId),
         adminListAvatars(),
         adminListSleeves(),
         adminListDeckBoxes(),
+        adminListCoins(),
       ]);
       setSeason(seasonRes.season);
       setRewards(toDraft(seasonRes.rewards));
       setAvatars(avatarRes.avatars);
       setSleeves(sleeveRes.sleeves);
       setDeckBoxes(deckBoxRes.deckBoxes);
+      setCoins(coinRes.coins);
     } catch (e) {
       setError(e instanceof ApiError ? e.message : 'Failed to load season');
     } finally {
@@ -91,8 +102,9 @@ export function AdminBattlePassEditorPage() {
       avatar: avatars,
       sleeve: sleeves,
       deck_box: deckBoxes,
+      coin: coins,
     };
-  }, [avatars, sleeves, deckBoxes]);
+  }, [avatars, sleeves, deckBoxes, coins]);
 
   function previewUrl(type: RewardCatalogType, itemId: string): string {
     if (type === 'avatar') {
@@ -103,6 +115,10 @@ export function AdminBattlePassEditorPage() {
       const hit = deckBoxes.find((b) => b.identifier === itemId);
       return resolveAssetUrl(hit?.imageUrl);
     }
+    if (type === 'coin') {
+      const hit = coins.find((c) => c.identifier === itemId);
+      return resolveAssetUrl(hit?.imageUrl);
+    }
     const hit = sleeves.find((s) => s.identifier === itemId);
     return resolveAssetUrl(hit?.imageUrl);
   }
@@ -110,6 +126,7 @@ export function AdminBattlePassEditorPage() {
   function firstCatalogItem(type: RewardCatalogType) {
     if (type === 'avatar') return avatars[0];
     if (type === 'deck_box') return deckBoxes[0];
+    if (type === 'coin') return coins[0];
     return sleeves[0];
   }
 
@@ -275,7 +292,7 @@ export function AdminBattlePassEditorPage() {
 
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Reward track</h2>
-        <p className={styles.muted}>Avatars, sleeves, and deck boxes. Save replaces the full track.</p>
+        <p className={styles.muted}>Avatars, sleeves, deck boxes, and coins. Save replaces the full track.</p>
 
         {rewards.map((row, index) => {
           const options = catalogOptions[row.type];
@@ -318,6 +335,7 @@ export function AdminBattlePassEditorPage() {
                   <option value="avatar">avatar</option>
                   <option value="sleeve">sleeve</option>
                   <option value="deck_box">deck_box</option>
+                  <option value="coin">coin</option>
                 </select>
               </div>
               <div className={styles.field}>

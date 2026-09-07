@@ -24,6 +24,10 @@ export function AdminHubPage() {
           <h2>Deck Boxes</h2>
           <p>Upload and manage deck box textures for customization.</p>
         </Link>
+        <Link to="/admin/coins" className={styles.hubCard}>
+          <h2>Coins</h2>
+          <p>Upload and manage coin fronts for flips and Battle Pass rewards.</p>
+        </Link>
       </div>
       <div className={styles.toolbar} style={{ marginTop: 20 }}>
         <ShellButton variant="secondary" onClick={() => window.history.back()}>

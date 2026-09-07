@@ -125,6 +125,7 @@ export function Board3DCanvas(props: Board3DCanvasProps) {
         apiBase: appConfig.apiUrl,
         sleevesUrl: serverConfig?.sleevesUrl,
         deckBoxesUrl: (serverConfig as { deckBoxesUrl?: string } | null)?.deckBoxesUrl,
+        coinsUrl: (serverConfig as { coinsUrl?: string } | null)?.coinsUrl,
         showCardInfo: queueInfo,
         showCardInfoList: queueList,
       }),

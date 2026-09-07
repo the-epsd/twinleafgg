@@ -8,6 +8,8 @@ export interface DeckSaveRequest {
   sleeveImagePath?: string;
   deckBoxIdentifier?: string;
   deckBoxImagePath?: string;
+  coinIdentifier?: string;
+  coinImagePath?: string;
 }
 
 export interface Deck {
@@ -22,4 +24,6 @@ export interface Deck {
   sleeveImagePath?: string;
   deckBoxIdentifier?: string;
   deckBoxImagePath?: string;
+  coinIdentifier?: string;
+  coinImagePath?: string;
 }

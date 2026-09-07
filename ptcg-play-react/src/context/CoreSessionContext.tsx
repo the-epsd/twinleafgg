@@ -54,7 +54,8 @@ interface CoreSessionContextValue extends CoreSessionState {
     invitedClientId?: number,
     deckId?: number,
     sleeveImagePath?: string,
-    deckBoxImagePath?: string
+    deckBoxImagePath?: string,
+    coinImagePath?: string
   ) => Promise<GameState>;
   createSelfPlayGame: (
     deck: string[],
@@ -65,7 +66,9 @@ interface CoreSessionContextValue extends CoreSessionState {
     sleeveImagePath?: string,
     secondSleeveImagePath?: string,
     deckBoxImagePath?: string,
-    secondDeckBoxImagePath?: string
+    secondDeckBoxImagePath?: string,
+    coinImagePath?: string,
+    secondCoinImagePath?: string
   ) => Promise<GameState>;
   joinMatchmaking: (
     format: import('ptcg-server').Format,
@@ -74,7 +77,8 @@ interface CoreSessionContextValue extends CoreSessionState {
     deckId?: number,
     sleeveImagePath?: string,
     sandboxMode?: boolean,
-    deckBoxImagePath?: string
+    deckBoxImagePath?: string,
+    coinImagePath?: string
   ) => Promise<unknown>;
   leaveMatchmaking: () => Promise<unknown>;
 }
@@ -407,7 +411,8 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
       invitedClientId?: number,
       deckId?: number,
       sleeveImagePath?: string,
-      deckBoxImagePath?: string
+      deckBoxImagePath?: string,
+      coinImagePath?: string
     ) => {
       const socket = getSocketManager();
       return socket.emit<
@@ -418,6 +423,7 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
           deckId?: number;
           sleeveImagePath?: string;
           deckBoxImagePath?: string;
+          coinImagePath?: string;
         },
         GameState
       >('core:createGame', {
@@ -427,6 +433,7 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
         deckId,
         sleeveImagePath,
         deckBoxImagePath,
+        coinImagePath,
       });
     },
     []
@@ -440,7 +447,8 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
       deckId?: number,
       sleeveImagePath?: string,
       sandboxMode?: boolean,
-      deckBoxImagePath?: string
+      deckBoxImagePath?: string,
+      coinImagePath?: string
     ) => {
       const socket = getSocketManager();
       return socket.emit('matchmaking:join', {
@@ -450,6 +458,7 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
         deckId,
         sleeveImagePath,
         deckBoxImagePath,
+        coinImagePath,
         ...(sandboxMode === true ? { sandboxMode: true } : {}),
       });
     },
@@ -471,7 +480,9 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
       sleeveImagePath?: string,
       secondSleeveImagePath?: string,
       deckBoxImagePath?: string,
-      secondDeckBoxImagePath?: string
+      secondDeckBoxImagePath?: string,
+      coinImagePath?: string,
+      secondCoinImagePath?: string
     ) => {
       const socket = getSocketManager();
       return socket.emit<
@@ -485,6 +496,8 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
           secondSleeveImagePath?: string;
           deckBoxImagePath?: string;
           secondDeckBoxImagePath?: string;
+          coinImagePath?: string;
+          secondCoinImagePath?: string;
         },
         GameState
       >('core:createSelfPlayGame', {
@@ -497,6 +510,8 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
         secondSleeveImagePath,
         deckBoxImagePath,
         secondDeckBoxImagePath,
+        coinImagePath,
+        secondCoinImagePath,
       });
     },
     []

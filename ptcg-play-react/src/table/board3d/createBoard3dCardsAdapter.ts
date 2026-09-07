@@ -46,10 +46,11 @@ export function createBoard3dCardsAdapter(input: {
   apiBase: string;
   sleevesUrl: string | undefined;
   deckBoxesUrl?: string | undefined;
+  coinsUrl?: string | undefined;
   showCardInfo: (data: Board3dCardInfoData) => Promise<CardInfoPaneActionResult>;
   showCardInfoList: (data: Board3dCardInfoData) => Promise<CardInfoPaneActionResult>;
 }): Board3dCardsAdapter {
-  const { maps, scansUrl, apiBase, sleevesUrl, deckBoxesUrl, showCardInfo, showCardInfoList } = input;
+  const { maps, scansUrl, apiBase, sleevesUrl, deckBoxesUrl, coinsUrl, showCardInfo, showCardInfoList } = input;
 
   return {
     getScanUrlFor3D(card: Card, cardList?: unknown): string {
@@ -66,6 +67,12 @@ export function createBoard3dCardsAdapter(input: {
     getDeckBoxUrl(imagePath?: string): string | undefined {
       const template = deckBoxesUrl ?? '/deck-boxes/{path}';
       const path = imagePath || 'basicblue.png';
+      const base = apiBase.replace(/\/$/, '');
+      return base + template.replace('{path}', path);
+    },
+    getCoinUrl(imagePath?: string): string | undefined {
+      const template = coinsUrl ?? '/coins/{path}';
+      const path = imagePath || 'twinleaf-coin.png';
       const base = apiBase.replace(/\/$/, '');
       return base + template.replace('{path}', path);
     },

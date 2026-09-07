@@ -1,4 +1,4 @@
-export type BattlePassRewardType = 'avatar' | 'sleeve' | 'playmat' | 'deck_box' | 'card_art';
+export type BattlePassRewardType = 'avatar' | 'sleeve' | 'playmat' | 'deck_box' | 'card_art' | 'coin';
 export type BattlePassSeasonStatus = 'draft' | 'published' | 'archived';
 
 export interface BattlePassReward {
@@ -107,6 +107,17 @@ export interface SleeveCatalogItem {
 }
 
 export interface DeckBoxCatalogItem {
+  id: number;
+  identifier: string;
+  name: string;
+  imagePath: string;
+  isDefault: boolean;
+  requiresUnlock: boolean;
+  sortOrder: number;
+  imageUrl: string;
+}
+
+export interface CoinCatalogItem {
   id: number;
   identifier: string;
   name: string;

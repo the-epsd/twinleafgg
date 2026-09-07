@@ -22,6 +22,7 @@ export interface Board3dCardsAdapter {
   getScanUrlFor3D(card: Card, cardList?: unknown): string;
   getSleeveUrl(imagePath?: string): string | undefined;
   getDeckBoxUrl(imagePath?: string): string | undefined;
+  getCoinUrl(imagePath?: string): string | undefined;
   showCardInfo(data?: Board3dCardInfoData): Promise<CardInfoPaneActionResult>;
   showCardInfoList(data?: Board3dCardInfoData): Promise<CardInfoPaneActionResult>;
 }

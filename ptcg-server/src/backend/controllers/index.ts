@@ -13,6 +13,7 @@ export * from './replays';
 export * from './reset-password';
 export * from './sleeves';
 export * from './deck-boxes';
+export * from './coins';
 export * from './battlepass';
 export * from './admin-battlepass';
 export * from './images';
