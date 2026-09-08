@@ -7,7 +7,6 @@ import { Md5 } from '../../utils/md5';
 import { User } from '../../storage';
 import { RateLimit } from '../common/rate-limit';
 import { config } from '../../config';
-import { board3dWhitelist } from '../../config/3d-board-whitelist';
 
 
 export class Login extends Controller {
@@ -144,7 +143,6 @@ export class Login extends Controller {
       avatarMaxSize: config.backend.avatarMaxSize,
       replayFileSize: config.backend.replayFileSize,
       refreshTokenInterval: config.backend.refreshTokenInterval,
-      board3dWhitelist: board3dWhitelist,
       serverPasswordRequired: Boolean(process.env.SERVER_PASSWORD),
     };
   }
