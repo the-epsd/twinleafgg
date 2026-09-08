@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Vanillish extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Vanillite';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 80;
   public weakness = [{ type: M }];
   public retreat = [C];

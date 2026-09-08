@@ -9,7 +9,7 @@ export class Dragapult extends PokemonCard {
   protected _tags = [CardTag.FUSION_STRIKE];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Drakloak';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 150;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

@@ -8,7 +8,7 @@ export class Butterfree extends PokemonCard {
   public regulationMark = 'I';
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Metapod';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public retreat = [C];

@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Haxorus extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
-  public cardType: CardType = CardType.DRAGON;
+  public cardType: CardType[] = [CardType.DRAGON];
   public evolvesFrom = 'Fraxure';
   public hp: number = 170;
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];

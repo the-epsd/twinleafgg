@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage } from '../../../game/store/card/card-types';
+import { CardType, Stage } from '../../../game/store/card/card-types';
 import {
   StoreLike,
   State,
@@ -57,7 +57,7 @@ function* useCallForFamily(
 
 export class NidoranFemale extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType = P;
+  public cardType: CardType[] = [P];
   public hp = 60;
   public weakness = [{ type: P }];
   public resistance = [];

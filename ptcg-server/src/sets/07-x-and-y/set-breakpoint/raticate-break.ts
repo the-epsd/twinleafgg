@@ -14,7 +14,7 @@ export class RaticateBreak extends PokemonCard {
   protected _tags = [CardTag.BREAK];
   public stage: Stage = Stage.BREAK;
   public evolvesFrom: string = 'Raticate';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 110;
   public retreat = [];
 

@@ -8,7 +8,7 @@ import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/att
 
 export class Yveltal extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 110;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

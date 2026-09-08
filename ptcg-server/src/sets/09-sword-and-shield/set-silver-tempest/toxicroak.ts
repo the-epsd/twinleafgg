@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Toxicroak extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Croagunk';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 120;
   public weakness = [{ type: F }];
   public retreat = [C, C];

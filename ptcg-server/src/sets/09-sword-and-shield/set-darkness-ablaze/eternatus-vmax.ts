@@ -4,7 +4,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
-import { GameError, GameMessage, PlayerType, PowerType } from '../../../game';
+import { GameError, GameMessage, PlayerType, PowerType, pokemonHasCardType } from '../../../game';
 import {
   CheckPokemonTypeEffect,
   CheckTableStateEffect,
@@ -16,7 +16,7 @@ export class EternatusVMAX extends PokemonCard {
   public stage: Stage = Stage.VMAX;
   public evolvesFrom = 'Eternatus V';
   protected _tags = [CardTag.POKEMON_VMAX];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 340;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
@@ -134,7 +134,7 @@ export class EternatusVMAX extends PokemonCard {
       effect.player.marker.hasMarker(this.ETERNATUS_EXPANDED_BENCH, this)
     ) {
       // trying to block non-dark types from being benched (this might still allow trainer to put in non-dark types)
-      if (effect.pokemonCard.cardType !== D) {
+      if (!pokemonHasCardType(effect.pokemonCard, D)) {
         throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
       }
     }

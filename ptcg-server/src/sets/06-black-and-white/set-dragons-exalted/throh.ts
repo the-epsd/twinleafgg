@@ -7,7 +7,7 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../../game/s
 
 export class Throh extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 100;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];

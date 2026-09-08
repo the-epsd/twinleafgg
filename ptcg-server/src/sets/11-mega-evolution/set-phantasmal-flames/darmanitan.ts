@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Darmanitan extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Darumaka';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 150;
   public weakness = [{ type: W }];
   public retreat = [C, C, C];

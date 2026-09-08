@@ -6,7 +6,7 @@ import { MULTIPLE_COIN_FLIPS_PROMPT, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_ATT
 
 export class Cubone extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 50;
   public weakness = [{ type: G }];
   public retreat = [C];

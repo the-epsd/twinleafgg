@@ -11,7 +11,7 @@ import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 export class Sceptile extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Grovyle';
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
   public hp: number = 130;
   public weakness = [{ type: CardType.FIRE }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];

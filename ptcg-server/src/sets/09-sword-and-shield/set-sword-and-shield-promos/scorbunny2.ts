@@ -7,7 +7,7 @@ import { DRAW_CARDS, WAS_ATTACK_USED, FLIP_UNTIL_TAILS_AND_COUNT_HEADS } from '.
 
 export class Scorbunny2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 60;
   public weakness = [{ type: W }];
   public retreat = [C];

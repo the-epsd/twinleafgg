@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Gothitelle extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Gothorita';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 130;
   public weakness = [{ type: P }];
   public retreat = [C, C];

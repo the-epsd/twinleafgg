@@ -1,4 +1,4 @@
-import { GameError, PokemonCard } from '../../../game';
+import { GameError, PokemonCard, pokemonHasCardType } from '../../../game';
 import { GameLog, GameMessage } from '../../../game/game-message';
 import { Card } from '../../../game/store/card/card';
 import { CardType, SuperType, TrainerType } from '../../../game/store/card/card-types';
@@ -36,7 +36,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   player.deck.cards.forEach((c, index) => {
     if (c.superType === SuperType.ENERGY) {
       energy += 1;
-    } else if (c instanceof PokemonCard && c.cardType === CardType.DARK) {
+    } else if (c instanceof PokemonCard && pokemonHasCardType(c, CardType.DARK)) {
       pokemon += 1;
     } else {
       blocked.push(index);

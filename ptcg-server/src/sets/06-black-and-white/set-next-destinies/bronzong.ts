@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs
 export class Bronzong extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Bronzor';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 110;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

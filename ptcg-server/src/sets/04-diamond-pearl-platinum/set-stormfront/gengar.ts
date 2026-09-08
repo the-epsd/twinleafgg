@@ -10,7 +10,7 @@ import { COIN_FLIP_PROMPT, CONFIRMATION_PROMPT, IS_POKEPOWER_BLOCKED, WAS_ATTACK
 export class Gengar extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Haunter';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 110;
   public weakness = [{ type: D, value: +30 }];
   public resistance = [{ type: C, value: -20 }];

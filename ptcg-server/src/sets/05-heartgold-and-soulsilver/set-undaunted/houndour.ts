@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Houndour extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 50;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

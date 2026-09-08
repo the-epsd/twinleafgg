@@ -13,7 +13,7 @@ import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/att
 export class Alcremie extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Milcery';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 110;
   public weakness = [{ type: M }];
   public retreat = [C];

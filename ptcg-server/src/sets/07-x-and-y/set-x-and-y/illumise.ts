@@ -11,7 +11,7 @@ import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefa
 
 export class Illumise extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public retreat = [C];
@@ -43,7 +43,7 @@ export class Illumise extends PokemonCard {
     // Ref: set-rising-rivals/beedrill.ts (Flutter Wings)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, player, { cardType: CardType.GRASS }, { min: 0, max: 1 });
+      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, player, { cardType: [CardType.GRASS] }, { min: 0, max: 1 });
     }
 
     // Attack 2: Quick Attack

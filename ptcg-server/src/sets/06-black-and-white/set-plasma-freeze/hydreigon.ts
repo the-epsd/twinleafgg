@@ -19,7 +19,7 @@ export class Hydreigon extends PokemonCard {
   protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Zweilous';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 150;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

@@ -6,7 +6,7 @@ import { DISCARD_ALL_ENERGY_FROM_POKEMON, WAS_ATTACK_USED, FLIP_UNTIL_TAILS_AND_
 export class RayquazaStar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.STAR];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: C }];
   public resistance = [

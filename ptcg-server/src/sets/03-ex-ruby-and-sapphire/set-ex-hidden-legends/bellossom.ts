@@ -9,7 +9,7 @@ import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-e
 export class Bellossom extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Gloom';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 100;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -30 }];

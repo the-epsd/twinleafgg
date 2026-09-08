@@ -12,7 +12,7 @@ export class CynthiasGarchompex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = "Cynthia's Gabite";
   protected _tags = [CardTag.CYNTHIAS, CardTag.POKEMON_ex];
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 330;
   public weakness = [{ type: G }];
   public retreat = [];

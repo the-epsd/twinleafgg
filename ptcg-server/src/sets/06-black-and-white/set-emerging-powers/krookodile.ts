@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, WAS_POWER_USED, COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED, 
 export class Krookodile extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Krokorok';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 140;
   public weakness = [{ type: W }];
   public resistance = [{ type: L, value: -20 }];

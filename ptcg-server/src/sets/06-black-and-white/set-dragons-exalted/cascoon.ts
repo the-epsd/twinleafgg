@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/
 export class Cascoon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Wurmple';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];

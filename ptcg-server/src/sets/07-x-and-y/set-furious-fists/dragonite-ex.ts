@@ -33,7 +33,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 export class DragoniteEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 180;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];

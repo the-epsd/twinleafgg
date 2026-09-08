@@ -12,7 +12,7 @@ export class TyranitarV extends PokemonCard {
 
   protected _tags = [CardTag.POKEMON_V, CardTag.SINGLE_STRIKE];
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp: number = 230;
 

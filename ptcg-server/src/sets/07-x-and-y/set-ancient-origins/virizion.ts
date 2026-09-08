@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND, GET_PLAYER_PRIZ
 
 export class Virizion extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 110;
   public weakness = [{ type: R }];
   public retreat = [C];

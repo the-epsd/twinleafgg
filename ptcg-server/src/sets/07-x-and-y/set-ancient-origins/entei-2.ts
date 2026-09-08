@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF }
 
 export class Entei2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 130;
   public weakness = [{ type: W }];
   public retreat = [C, C];

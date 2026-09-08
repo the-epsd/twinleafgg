@@ -9,7 +9,7 @@ import { AFTER_ATTACK, DRAW_CARDS, WAS_POWER_USED } from '../../../game/store/pr
 export class Cleffa extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 40;
   public weakness = [{ type: F, value: +10 }];
   public retreat = [C];

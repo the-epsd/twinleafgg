@@ -7,7 +7,7 @@ import { FLIP_COIN_TO_PREVENT_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN } fr
 
 export class Meditite extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 50;
   public weakness = [{ type: P, value: +10 }];
   public retreat = [C];

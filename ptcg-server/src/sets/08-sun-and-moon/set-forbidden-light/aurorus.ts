@@ -6,7 +6,7 @@ import { PREVENT_DAMAGE } from "../../../game/store/prefabs/effect-of-attack-pre
 export class Aurorus extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Amaura';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 160;
   public weakness = [{ type: M }];
   public retreat = [C, C, C, C];

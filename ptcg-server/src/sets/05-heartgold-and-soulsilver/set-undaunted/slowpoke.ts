@@ -6,7 +6,7 @@ import { AFTER_ATTACK } from '../../../game/store/prefabs/prefabs';
 
 export class Slowpoke extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 60;
   public weakness = [{ type: L }];
   public retreat = [C, C];

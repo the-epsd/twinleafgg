@@ -11,7 +11,7 @@ import { State, StoreLike } from '../../../game';
 import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 export class Volbeat extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public retreat = [C];

@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 export class FolkloresLucarioex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 100;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

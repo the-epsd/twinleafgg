@@ -6,7 +6,7 @@ import { StoreLike } from '../../game/store/store-like';
 
 export class Buizel extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
   public hp: number = 70;
   public retreat = [CardType.COLORLESS];
   public weakness = [{ type: CardType.LIGHTNING }];

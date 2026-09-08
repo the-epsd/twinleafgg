@@ -7,7 +7,7 @@ export class InteleonVMAX extends PokemonCard {
   public stage: Stage = Stage.VMAX;
   public evolvesFrom = 'Inteleon V';
   protected _tags = [CardTag.POKEMON_VMAX, CardTag.RAPID_STRIKE];
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 320;
   public weakness = [{ type: L }];
   public retreat = [C, C];

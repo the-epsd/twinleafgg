@@ -11,7 +11,7 @@ import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects
 
 export class Rattata extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 40;
   public weakness = [{ type: F }];
   public retreat = [C];

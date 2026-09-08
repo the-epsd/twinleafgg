@@ -17,7 +17,7 @@ export class MAggronEx extends PokemonCard {
   protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Aggron-EX';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 240;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

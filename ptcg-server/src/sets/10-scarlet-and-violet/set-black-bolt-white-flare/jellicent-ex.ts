@@ -22,7 +22,7 @@ export class Jellicentex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   protected _tags = [CardTag.POKEMON_ex];
   public evolvesFrom = 'Frillish';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 270;
   public weakness = [{ type: D }];
   public retreat = [C, C, C];

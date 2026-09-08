@@ -11,7 +11,7 @@ export class MegaSharpedoex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Carvanha';
   protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 330;
   public weakness = [{ type: G }];
   public retreat = [];

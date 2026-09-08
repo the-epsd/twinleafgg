@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store
 export class Dartrix extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Rowlet';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public retreat = [C];

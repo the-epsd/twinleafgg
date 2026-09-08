@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardTag } from '../../../game/store/card/card-types';
+import { CardType, Stage, CardTag } from '../../../game/store/card/card-types';
 import {
   GameError,
   GameMessage,
@@ -15,8 +15,7 @@ import { RayquazaAndDeoxysLegendTop } from './rayquaza-and-deoxys-legend-top';
 export class RayquazaAndDeoxysLegendBottom extends PokemonCard {
   public stage: Stage = Stage.LEGEND;
   protected _tags = [CardTag.LEGEND, CardTag.DUAL_LEGEND];
-  public cardType = C;
-  public additionalCardTypes = [P];
+  public cardType: CardType[] = [C, P];
   public hp: number = 140;
   public weakness = [{ type: C }, { type: P }];
   public retreat = [C, C, C];

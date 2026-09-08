@@ -4,7 +4,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 export class Fraxure extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Axew';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 100;
   public retreat = [C, C];
 

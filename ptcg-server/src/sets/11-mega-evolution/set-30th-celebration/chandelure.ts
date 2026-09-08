@@ -8,7 +8,7 @@ export class Chandelure extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Lampent';
   public hp: number = 140;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C];

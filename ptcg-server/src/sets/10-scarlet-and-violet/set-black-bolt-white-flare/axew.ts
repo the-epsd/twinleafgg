@@ -6,7 +6,7 @@ import { SEARCH_DECK_FOR_CARDS_TO_HAND, WAS_ATTACK_USED } from '../../../game/st
 
 export class Axew extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 70;
   public weakness = [];
   public resistance = [];

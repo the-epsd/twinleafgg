@@ -16,7 +16,7 @@ import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs
 export class OriginFormeDialgaV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 220;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

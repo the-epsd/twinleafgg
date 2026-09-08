@@ -8,7 +8,7 @@ import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils } fr
 
 export class Hitmontop extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 80;
   public weakness = [{ type: P }];
   public retreat = [C];

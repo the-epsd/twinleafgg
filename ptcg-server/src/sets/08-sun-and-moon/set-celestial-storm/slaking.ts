@@ -14,7 +14,7 @@ import { GameMessage } from '../../../game/game-message';
 export class Slaking extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Vigoroth';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 160;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

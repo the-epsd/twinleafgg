@@ -7,7 +7,7 @@ import { IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES } from '../..
 export class Unown extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 80;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
@@ -27,6 +27,7 @@ export class Unown extends PokemonCard {
   public fullName: string = 'Unown 30C';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Mysterious Signal
     return IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES(store, state, effect, this, {
       attackName: 'Mysterious Signal',
     });

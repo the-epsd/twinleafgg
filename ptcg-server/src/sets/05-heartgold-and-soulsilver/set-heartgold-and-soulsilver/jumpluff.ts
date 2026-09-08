@@ -8,7 +8,7 @@ import { THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN 
 export class Jumpluff extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Skiploom';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public resistance = [{ type: F, value: -20 }];

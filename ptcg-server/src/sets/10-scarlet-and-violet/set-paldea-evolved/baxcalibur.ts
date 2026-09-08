@@ -15,7 +15,7 @@ export class Baxcalibur extends PokemonCard {
 
   public evolvesFrom = 'Arctibax';
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp: number = 160;
 

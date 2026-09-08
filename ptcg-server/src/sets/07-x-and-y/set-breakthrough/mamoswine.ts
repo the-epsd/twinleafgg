@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, HEAL_X_DAMAGE_FROM_THIS_POKEMON } 
 export class Mamoswine extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Piloswine';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 160;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];

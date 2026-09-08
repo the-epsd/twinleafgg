@@ -7,7 +7,7 @@ import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
 
 export class Gastly extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 50;
   public weakness = [{ type: D }];
   public resistance = [{ type: C, value: -20 }];

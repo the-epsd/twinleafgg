@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class NsJoltik extends PokemonCard {
   protected _tags = [CardTag.NS];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [CardType.LIGHTNING];
   public hp: number = 40;
   public weakness = [{ type: CardType.FIGHTING }];
   public retreat = [CardType.COLORLESS];

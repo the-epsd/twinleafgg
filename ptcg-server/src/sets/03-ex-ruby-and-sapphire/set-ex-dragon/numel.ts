@@ -8,7 +8,7 @@ import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/s
 
 export class Numel extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 50;
   public weakness = [{ type: W }];
   public retreat = [C, C];

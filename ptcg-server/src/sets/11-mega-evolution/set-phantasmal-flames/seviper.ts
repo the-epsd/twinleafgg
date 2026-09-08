@@ -4,12 +4,12 @@ import { State } from '../../../game/store/state/state';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { StoreLike } from '../../../game/store/store-like';
 import { Effect } from '../../../game/store/effects/effect';
-import { PowerType, PlayerType } from '../../../game';
+import { PowerType, PlayerType, pokemonHasCardType } from '../../../game';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Seviper extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 120;
   public weakness = [{ type: F }];
   public resistance = [];
@@ -54,7 +54,7 @@ export class Seviper extends PokemonCard {
         if (
           card &&
           card instanceof PokemonCard &&
-          card.cardType === CardType.DARK &&
+          pokemonHasCardType(card, CardType.DARK) &&
           card.hasTag(CardTag.POKEMON_ex)
         ) {
           hasDarkPokemonEx = true;

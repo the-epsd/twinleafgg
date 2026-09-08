@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Blipbug extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 50;
   public weakness = [{ type: R }];
   public retreat = [C];

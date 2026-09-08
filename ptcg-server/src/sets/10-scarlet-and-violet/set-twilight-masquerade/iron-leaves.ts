@@ -12,7 +12,7 @@ import {
 export class IronLeaves extends PokemonCard {
   protected _tags = [CardTag.FUTURE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public retreat = [C];

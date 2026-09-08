@@ -17,7 +17,7 @@ import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, MULTIPL
 export class Probopass extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Nosepass';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 130;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

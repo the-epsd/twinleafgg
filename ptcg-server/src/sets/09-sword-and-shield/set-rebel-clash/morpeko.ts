@@ -8,7 +8,7 @@ import { OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK } from '../../../game/store/pr
 
 export class Morpeko extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public retreat = [C];

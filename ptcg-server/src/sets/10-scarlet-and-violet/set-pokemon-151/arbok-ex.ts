@@ -10,7 +10,7 @@ export class Arbokex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Ekans';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 270;
   public weakness = [{ type: F }];
   public retreat = [C, C];

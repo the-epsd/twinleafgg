@@ -1,13 +1,13 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, AttachEnergyPrompt, PlayerType, SlotType, GameMessage } from '../../../game';
+import { StoreLike, State, StateUtils, AttachEnergyPrompt, PlayerType, SlotType, GameMessage, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CoinFlipEffect } from '../../../game/store/effects/play-card-effects';
 import { WAS_ATTACK_USED, ADD_PARALYZED_TO_PLAYER_ACTIVE } from '../../../game/store/prefabs/prefabs';
 
 export class Dedenne extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -65,7 +65,7 @@ export class Dedenne extends PokemonCard {
       const lightningPokemon: any[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
         const pokemonCard = cardList.getPokemonCard();
-        if (pokemonCard && pokemonCard.cardType === CardType.LIGHTNING) {
+        if (pokemonCard && pokemonHasCardType(pokemonCard, CardType.LIGHTNING)) {
           lightningPokemon.push(cardList);
         }
       });

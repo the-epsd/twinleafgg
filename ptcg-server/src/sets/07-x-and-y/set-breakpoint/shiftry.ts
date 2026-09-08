@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, SEARCH_DISCARD_PILE_FOR_CA
 export class Shiftry extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Nuzleaf';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 140;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

@@ -25,7 +25,7 @@ import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/pr
 export class BlastoisePiplupGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 270;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

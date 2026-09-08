@@ -13,7 +13,7 @@ import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-pr
 export class Charjabug extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Grubbin';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C, C];

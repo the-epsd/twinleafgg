@@ -8,7 +8,7 @@ import { SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK } from '../.
 export class Drifloon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 70;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];

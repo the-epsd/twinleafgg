@@ -8,7 +8,7 @@ import { DEFENDING_POKEMON_DOES_LESS_DAMAGE } from '../../../game/store/prefabs/
 
 export class Minun extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public retreat = [C];

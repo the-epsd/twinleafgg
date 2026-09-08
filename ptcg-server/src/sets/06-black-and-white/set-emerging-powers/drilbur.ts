@@ -6,7 +6,7 @@ import { NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS } from '../../../game/store/prefabs/
 
 export class Drilbur extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 70;
   public weakness = [{ type: W }];
   public resistance = [{ type: L, value: -20 }];

@@ -22,7 +22,7 @@ import { PlayerType, PokemonCardList } from '../../game';
 export class GalarianWeezing extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public regulationMark = 'D';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public evolvesFrom = 'Koffing';
   public hp: number = 130;
   public weakness = [{ type: F }];

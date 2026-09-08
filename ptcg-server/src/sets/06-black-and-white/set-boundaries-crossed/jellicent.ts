@@ -12,7 +12,7 @@ import { PowerType, State, StoreLike } from '../../../game';
 export class Jellicent extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Frillish';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 100;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];

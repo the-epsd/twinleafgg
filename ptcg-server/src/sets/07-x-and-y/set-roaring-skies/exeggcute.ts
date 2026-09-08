@@ -11,7 +11,7 @@ import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/ga
 
 export class Exeggcute extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 40;
   public weakness = [{ type: R }];
   public retreat = [C];

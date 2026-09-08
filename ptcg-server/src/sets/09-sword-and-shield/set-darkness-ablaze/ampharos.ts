@@ -10,7 +10,7 @@ import { State, StoreLike } from '../../../game';
 export class Ampharos extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Flaaffy';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 150;
   public weakness = [{ type: F }];
   public retreat = [C, C];

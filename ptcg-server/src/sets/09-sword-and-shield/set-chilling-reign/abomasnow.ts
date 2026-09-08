@@ -13,7 +13,7 @@ export class Abomasnow extends PokemonCard {
   protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Snover';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 140;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];

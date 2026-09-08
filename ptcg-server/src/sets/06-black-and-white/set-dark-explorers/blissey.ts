@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, COIN_FLIP_PROMPT, 
 export class Blissey extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Chansey';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

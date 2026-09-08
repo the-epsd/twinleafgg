@@ -11,7 +11,7 @@ export class Hydrapple extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Dipplin';
   public regulationMark = 'I';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 170;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];

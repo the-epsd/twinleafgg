@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class StonjournerV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_V];
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 220;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

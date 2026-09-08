@@ -13,7 +13,7 @@ export class Omastar extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Omanyte';
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 110;
   public weakness = [{ type: L }];
   public retreat = [C, C];

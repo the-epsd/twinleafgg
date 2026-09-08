@@ -9,7 +9,7 @@ export class Torterra extends PokemonCard {
   public regulationMark: string = 'F';
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Grotle';
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
   public hp: number = 190;
   public weakness = [{ type: CardType.FIRE }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];

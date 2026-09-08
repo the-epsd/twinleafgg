@@ -13,7 +13,7 @@ export class NinetalesBreak extends PokemonCard {
   protected _tags = [CardTag.BREAK];
   public stage: Stage = Stage.BREAK;
   public evolvesFrom: string = 'Ninetales';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 140;
   public retreat = [];
 

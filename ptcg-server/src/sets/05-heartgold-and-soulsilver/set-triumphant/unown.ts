@@ -8,7 +8,7 @@ import { PowerEffect } from '../../../game/store/effects/game-effects';
 
 export class Unown extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 50;
   public weakness = [{ type: P }];
   public retreat = [C];

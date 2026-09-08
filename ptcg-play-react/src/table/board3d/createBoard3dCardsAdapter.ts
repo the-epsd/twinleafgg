@@ -45,21 +45,36 @@ export function createBoard3dCardsAdapter(input: {
   scansUrl: string | undefined;
   apiBase: string;
   sleevesUrl: string | undefined;
+  deckBoxesUrl?: string | undefined;
+  coinsUrl?: string | undefined;
   showCardInfo: (data: Board3dCardInfoData) => Promise<CardInfoPaneActionResult>;
   showCardInfoList: (data: Board3dCardInfoData) => Promise<CardInfoPaneActionResult>;
 }): Board3dCardsAdapter {
-  const { maps, scansUrl, apiBase, sleevesUrl, showCardInfo, showCardInfoList } = input;
+  const { maps, scansUrl, apiBase, sleevesUrl, deckBoxesUrl, coinsUrl, showCardInfo, showCardInfoList } = input;
 
   return {
     getScanUrlFor3D(card: Card, cardList?: unknown): string {
       return getScanUrlFor3D(card, cardList, maps, scansUrl, apiBase);
     },
     getSleeveUrl(imagePath?: string): string | undefined {
-      if (!imagePath || !sleevesUrl) {
+      if (!imagePath) {
         return undefined;
       }
+      const template = sleevesUrl ?? '/sleeves/{path}';
       const base = apiBase.replace(/\/$/, '');
-      return base + sleevesUrl.replace('{path}', imagePath);
+      return base + template.replace('{path}', imagePath);
+    },
+    getDeckBoxUrl(imagePath?: string): string | undefined {
+      const template = deckBoxesUrl ?? '/deck-boxes/{path}';
+      const path = imagePath || 'basicblue.png';
+      const base = apiBase.replace(/\/$/, '');
+      return base + template.replace('{path}', path);
+    },
+    getCoinUrl(imagePath?: string): string | undefined {
+      const template = coinsUrl ?? '/coins/{path}';
+      const path = imagePath || 'twinleaf-coin.png';
+      const base = apiBase.replace(/\/$/, '');
+      return base + template.replace('{path}', path);
     },
     showCardInfo(data: Board3dCardInfoData = {}) {
       return showCardInfo(data);

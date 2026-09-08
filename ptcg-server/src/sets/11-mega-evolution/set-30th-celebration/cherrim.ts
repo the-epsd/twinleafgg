@@ -37,7 +37,7 @@ export class Cherrim extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Cherubi';
   public hp: number = 80;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public weakness = [{ type: R }];
   public retreat = [C];
 

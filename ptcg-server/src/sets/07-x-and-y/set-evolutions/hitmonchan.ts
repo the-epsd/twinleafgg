@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Hitmonchan extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 90;
   public weakness = [{ type: P }];
   public retreat = [C, C];

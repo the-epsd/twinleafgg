@@ -6,7 +6,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Goomy2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 50;
   public weakness = [{ type: Y }];
   public retreat = [C, C];

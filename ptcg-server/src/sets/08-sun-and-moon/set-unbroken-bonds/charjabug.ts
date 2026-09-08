@@ -9,7 +9,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class Charjabug extends PokemonCard implements EnergyCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Grubbin';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
@@ -40,8 +40,6 @@ export class Charjabug extends PokemonCard implements EnergyCard {
   // EnergyCard interface properties
   public text: string = '';
   public isBlocked = false;
-  public blendedEnergies: CardType[] = [];
-  public blendedEnergyCount = 1;
   public energyEffect: any = undefined;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

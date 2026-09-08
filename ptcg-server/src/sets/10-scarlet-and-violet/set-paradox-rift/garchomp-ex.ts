@@ -33,7 +33,7 @@ export class Garchompex extends PokemonCard {
 
   public evolvesFrom = 'Gabite';
 
-  public cardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp = 320;
 

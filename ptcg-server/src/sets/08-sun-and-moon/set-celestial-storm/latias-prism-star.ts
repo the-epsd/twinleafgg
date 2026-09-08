@@ -26,7 +26,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class LatiasPrismStar extends PokemonCard {
   protected _tags = [CardTag.PRISM_STAR];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 130;
   public weakness = [{ type: Y }];
   public retreat = [C];

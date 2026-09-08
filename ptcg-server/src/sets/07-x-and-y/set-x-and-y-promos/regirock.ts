@@ -9,7 +9,7 @@ import { TrainerTargetEffect } from '../../../game/store/effects/play-card-effec
 export class Regirock extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 110;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

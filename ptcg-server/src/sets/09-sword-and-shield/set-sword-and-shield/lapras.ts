@@ -11,7 +11,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 
 export class Lapras extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 130;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];

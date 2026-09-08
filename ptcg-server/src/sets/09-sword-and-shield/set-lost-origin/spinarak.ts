@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Spinarak extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 50;
   public weakness = [{ type: F }];
   public retreat = [C];

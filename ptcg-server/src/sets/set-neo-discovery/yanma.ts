@@ -8,7 +8,7 @@ import { AFTER_ATTACK, COIN_FLIP_PROMPT, SWITCH_OUT_OPPONENT_ACTIVE_POKEMON, WAS
 
 export class Yanma extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 60;
   public weakness = [{ type: R }];
   public resistance = [{ type: F, value: -30 }];

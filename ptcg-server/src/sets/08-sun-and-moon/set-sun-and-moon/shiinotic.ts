@@ -12,7 +12,7 @@ import { PowerType, State, StoreLike } from '../../../game';
 export class Shiinotic extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Morelull';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 100;
   public weakness = [{ type: R }];
   public retreat = [C, C];
@@ -59,7 +59,7 @@ export class Shiinotic extends PokemonCard {
       ABILITY_USED(player, this);
 
       SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, player,
-        { cardType: CardType.GRASS }
+        { cardType: [CardType.GRASS] }
       );
     }
 

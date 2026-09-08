@@ -6,7 +6,7 @@ import { Attack, State, StoreLike, Weakness } from '../../../game';
 export class Poliwhirl extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Poliwag';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 100;
   public weakness: Weakness[] = [{ type: L }];
   public retreat: CardType[] = [C, C];

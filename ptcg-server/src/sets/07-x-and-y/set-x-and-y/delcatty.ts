@@ -18,7 +18,7 @@ import { Card, EnergyCard, ShowCardsPrompt, State, StoreLike } from '../../../ga
 export class Delcatty extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Skitty';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public retreat = [C];

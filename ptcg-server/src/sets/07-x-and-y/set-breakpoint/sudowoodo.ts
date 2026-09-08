@@ -8,7 +8,7 @@ import { AttackEffect } from '../../../game/store/effects/game-effects';
 
 export class Sudowoodo extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 90;
   public weakness = [{ type: W }];
   public retreat = [C, C];

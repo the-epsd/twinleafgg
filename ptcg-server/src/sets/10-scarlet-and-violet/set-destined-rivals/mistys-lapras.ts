@@ -15,7 +15,7 @@ export class MistysLapras extends PokemonCard {
   protected _tags = [CardTag.MISTYS];
   public stage: Stage = Stage.BASIC;
   public regulationMark = 'I';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 110;
   public weakness = [{ type: L }];
   public retreat = [C];

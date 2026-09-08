@@ -1,7 +1,7 @@
 import { GameError } from '../../game-error';
 import { GameLog, GameMessage } from '../../game-message';
 import { BoardEffect, CardTag, CardType, SpecialCondition, SuperType } from '../card/card-types';
-import { PokemonCard } from '../card/pokemon-card';
+import { PokemonCard, getPrimaryCardType } from '../card/pokemon-card';
 import { Power, PowerType, Resistance, Weakness } from '../card/pokemon-types';
 import { ApplyWeaknessEffect, DealDamageEffect, DiscardCardsEffect } from '../effects/attack-effects';
 import { Player } from '../state/player';
@@ -33,6 +33,7 @@ import { StateUtils } from '../state-utils';
 import { GamePhase, State } from '../state/state';
 import { StoreLike } from '../store-like';
 import { MoveCardsEffect } from '../effects/game-effects';
+import { runDelegatedCopiedAttackGenerator } from '../prefabs/copy-attack-delegation';
 import { GameStatsTracker } from '../game-stats-tracker';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { MOVE_CARDS, COIN_FLIP_PROMPT } from '../prefabs/prefabs';
@@ -79,14 +80,13 @@ function emitAbilityAnimationEvent(
 function applyWeaknessAndResistance(
   damage: number,
   cardTypes: CardType[],
-  additionalCardTypes: CardType[],
   weakness: Weakness[],
   resistance: Resistance[]
 ): number {
   let multiply = 1;
   let modifier = 0;
 
-  const allTypes = [...cardTypes, ...additionalCardTypes];
+  const allTypes = cardTypes;
 
   for (const item of weakness) {
     if (allTypes.includes(item.type)) {
@@ -241,10 +241,29 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
 
   const attackEffect = (effect instanceof AttackEffect) ? effect : new AttackEffect(player, opponent, attack);
   attackEffect.source = attackingPokemon;
-  state = store.reduceEffect(state, attackEffect);
 
-  if (store.hasPrompts()) {
-    yield store.waitPrompt(state, () => next());
+  const copycatCard = attackingPokemon.getPokemonCard();
+  const delegateFrom = effect instanceof UseAttackEffect ? effect.delegateFrom : undefined;
+
+  if (delegateFrom && copycatCard) {
+    state = yield* runDelegatedCopiedAttackGenerator(next, {
+      store,
+      state,
+      player,
+      opponent,
+      copycatCard,
+      sourceCard: delegateFrom,
+      selectedAttack: attack,
+      sourceSlot: attackingPokemon,
+      skipLog: true,
+      skipAfterAttack: false,
+    });
+  } else {
+    state = store.reduceEffect(state, attackEffect);
+
+    if (store.hasPrompts()) {
+      yield store.waitPrompt(state, () => next());
+    }
   }
 
   // --- Attack Animation Trigger ---
@@ -263,7 +282,7 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   }
   const card = attackingPokemon.getPokemonCard();
   const cardId = card ? card.id : undefined;
-  const cardType = card ? card.cardType : undefined;
+  const cardType = card ? getPrimaryCardType(card) : undefined;
 
   // Emit attack animation event
   const game = (store as any).handler;
@@ -291,23 +310,25 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   });
   // --- End Attack Animation Trigger ---
 
-  const beforeDoingDamageEffect = new BeforeDoingDamageEffect(attackEffect);
-  state = store.reduceEffect(state, beforeDoingDamageEffect);
+  if (!delegateFrom) {
+    const beforeDoingDamageEffect = new BeforeDoingDamageEffect(attackEffect);
+    state = store.reduceEffect(state, beforeDoingDamageEffect);
 
-  if (attackEffect.damage > 0) {
-    const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
-    state = store.reduceEffect(state, dealDamage);
+    if (attackEffect.damage > 0) {
+      const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
+      state = store.reduceEffect(state, dealDamage);
+
+      if (store.hasPrompts()) {
+        yield store.waitPrompt(state, () => next());
+      }
+    }
+
+    const afterAttackEffect = new AfterAttackEffect(effect.player, opponent, attack);
+    state = store.reduceEffect(state, afterAttackEffect);
 
     if (store.hasPrompts()) {
       yield store.waitPrompt(state, () => next());
     }
-  }
-
-  const afterAttackEffect = new AfterAttackEffect(effect.player, opponent, attack);
-  state = store.reduceEffect(state, afterAttackEffect);
-
-  if (store.hasPrompts()) {
-    yield store.waitPrompt(state, () => next());
   }
 
   if ((attack.barrage || hasBarragePower) && !(effect as any)._barrageUsed) {
@@ -611,11 +632,10 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
     const checkPokemonStats = new CheckPokemonStatsEffect(effect.target);
     state = store.reduceEffect(state, checkPokemonStats);
 
-    const cardType = checkPokemonType.cardTypes;
-    const additionalCardTypes = checkPokemonType.cardTypes;
+    const cardTypes = checkPokemonType.cardTypes;
     const weakness = effect.ignoreWeakness ? [] : checkPokemonStats.weakness;
     const resistance = effect.ignoreResistance ? [] : checkPokemonStats.resistance;
-    effect.damage = applyWeaknessAndResistance(effect.damage, cardType, additionalCardTypes, weakness, resistance);
+    effect.damage = applyWeaknessAndResistance(effect.damage, cardTypes, weakness, resistance);
     return state;
   }
 

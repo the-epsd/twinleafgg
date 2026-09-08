@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefab
 
 export class Blaziken extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
   public hp: number = 150;
   public weakness = [{ type: CardType.WATER }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];

@@ -4,7 +4,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 export class Sealeo extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Spheal';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 110;
   public weakness = [{ type: M }];
   public retreat = [C, C, C, C];

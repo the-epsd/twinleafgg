@@ -10,7 +10,7 @@ export class Lycanroc extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Rockruff';
   public regulationMark = 'I';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 120;
   public weakness = [{ type: G }];
   public resistance = [];

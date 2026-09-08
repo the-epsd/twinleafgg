@@ -12,7 +12,7 @@ import { OrderCardsPrompt } from '../../../game/store/prompts/order-cards-prompt
 export class Gothorita extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Gothita';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: P }];
   public retreat = [C];

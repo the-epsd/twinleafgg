@@ -16,7 +16,7 @@ export function cors(): RequestHandler {
       res.header('Access-Control-Allow-Origin', origin);
     }
 
-    res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST');
+    res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
     res.header('Access-Control-Allow-Headers', [
       'Origin',
       'X-Requested-With',

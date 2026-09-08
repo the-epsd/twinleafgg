@@ -7,7 +7,7 @@ import { THIS_POKEMON_RETALIATES_ON_DAMAGE_DURING_OPPONENTS_NEXT_TURN } from '..
 
 export class Turtonator extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 130;
   public retreat = [C, C, C];
 

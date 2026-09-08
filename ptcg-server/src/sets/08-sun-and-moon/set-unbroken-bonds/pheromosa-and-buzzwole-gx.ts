@@ -20,7 +20,7 @@ import { NEXT_TURN_ATTACK_BASE_DAMAGE } from '../../../game/store/prefabs/attack
 export class PheromosaAndBuzzwoleGX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM, CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 260;
   public weakness = [{ type: R }];
   public retreat = [C, C];

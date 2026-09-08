@@ -13,7 +13,7 @@ export class MLucarioEx extends PokemonCard {
   protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Lucario-EX';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 220;
   public weakness = [{ type: P }];
   public retreat = [C, C];

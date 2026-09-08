@@ -11,7 +11,7 @@ import {
 export class BrocksZubat extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.BROCKS];
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 30;
   public weakness = [{ type: P }];
   public resistance = [{ type: F, value: -30 }];

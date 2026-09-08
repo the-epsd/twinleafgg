@@ -6,7 +6,7 @@ import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/eff
 export class Beartic extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Cubchoo';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 140;
   public weakness = [{ type: M }];
   public retreat = [C, C, C];

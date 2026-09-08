@@ -8,7 +8,7 @@ export class TeamRocketsWeezing extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = "Team Rocket's Koffing";
   protected _tags = [CardTag.TEAM_ROCKET];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public retreat = [C, C];

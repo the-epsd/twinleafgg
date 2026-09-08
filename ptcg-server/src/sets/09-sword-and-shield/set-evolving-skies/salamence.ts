@@ -15,7 +15,7 @@ import {
 export class Salamence extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Shelgon';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 170;
   public retreat = [C, C];
 

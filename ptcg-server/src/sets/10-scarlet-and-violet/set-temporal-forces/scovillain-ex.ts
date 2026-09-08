@@ -10,7 +10,7 @@ export class Scovillainex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Capsakid';
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 260;
   public weakness = [{ type: R }];
   public retreat = [C, C];

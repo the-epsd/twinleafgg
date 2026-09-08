@@ -10,7 +10,7 @@ import { GameMessage } from '../../../game';
 export class Kirlia extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Ralts';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: P, value: +20 }];
   public retreat = [C];

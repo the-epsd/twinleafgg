@@ -4,7 +4,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Onix extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 120;
   public weakness: Weakness[] = [{ type: G }];
   public retreat: CardType[] = [C, C, C, C];

@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../../game/store/prefabs/prefa
 
 export class Flabebe2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 40;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

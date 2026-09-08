@@ -7,7 +7,7 @@ export class MegaEmboarex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Pignite';
   protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 380;
   public weakness = [{ type: W }];
   public resistance = [];

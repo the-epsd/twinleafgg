@@ -21,7 +21,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Staryu extends PokemonCard {
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   protected _tags = [CardTag.RAPID_STRIKE];
 

@@ -12,7 +12,7 @@ import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 export class Dracovish extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Rare Fossil';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 150;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];

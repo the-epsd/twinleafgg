@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from 
 
 export class Combee extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 50;
   public weakness = [{ type: R }];
   public retreat = [C];

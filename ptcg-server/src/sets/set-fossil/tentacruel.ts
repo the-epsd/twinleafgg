@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/pref
 export class Tentacruel extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Tentacool';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 60;
   public weakness = [{ type: L }];
 

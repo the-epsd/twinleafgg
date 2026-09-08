@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefa
 export class PinsirGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 180;
   public weakness = [{ type: R }];
   public retreat = [C, C];

@@ -12,7 +12,7 @@ export class Electrode extends PokemonCard {
 
   public evolevesFrom = 'Voltorb';
 
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
 
   public hp: number = 90;
 
@@ -53,15 +53,18 @@ export class Electrode extends PokemonCard {
 
       if (defendingPokemon.cards.length > 0) {
         const defendingCard = defendingPokemon.cards[0] as PokemonCard;
-        const defendingType = defendingCard.cardType;
+        const defendingTypes = defendingCard.cardType;
 
-        if (defendingType !== CardType.COLORLESS) {
+        if (!defendingTypes.includes(CardType.COLORLESS)) {
           // Apply damage to all Pokémon of the same type as the defending Pokémon
           [player, opponent].forEach(p => {
             p.forEachPokemon(PlayerType.TOP_PLAYER | PlayerType.BOTTOM_PLAYER, (cardList) => {
               if (cardList !== defendingPokemon && cardList.cards.length > 0) {
                 const card = cardList.cards[0] as PokemonCard;
-                if (card.cardType === defendingType) {
+                if (
+                  card.cardType.length === defendingTypes.length
+                  && card.cardType.every((t, i) => t === defendingTypes[i])
+                ) {
                   const damageEffect = new PutDamageEffect(effect, 10);
                   damageEffect.target = cardList;
                   state = store.reduceEffect(state, damageEffect);

@@ -16,7 +16,7 @@ import { ShadowyDarknessEnergy } from './shadowy-darkness-energy';
 
 export class Zarude extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 130;
   public weakness = [{ type: G }];
   public retreat = [C, C];

@@ -4,7 +4,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 export class Palpitoad extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Tympole';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 100;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

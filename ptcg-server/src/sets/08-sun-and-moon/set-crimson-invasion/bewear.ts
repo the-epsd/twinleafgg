@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs
 export class Bewear extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Stufful';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 130;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];

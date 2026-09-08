@@ -143,6 +143,8 @@ export type Board3dR3fInitContext = {
   handSlot: Object3D;
   /** Far-player hand row parent (sibling of {@link handSlot}). */
   opponentHandSlot: Object3D;
+  /** Texture anisotropy from graphics quality preset (clamped to GPU max). */
+  maxAnisotropy?: number;
 };
 
 export class Board3dController {
@@ -608,6 +610,9 @@ export class Board3dController {
     this.worldContentRoot = ctx.worldContentRoot;
     this.handSlot = ctx.handSlot;
     this.opponentHandSlot = ctx.opponentHandSlot;
+    this.assetLoader.setMaxAnisotropy(
+      ctx.maxAnisotropy ?? ctx.gl.capabilities.getMaxAnisotropy(),
+    );
     this.setProps(initial);
     this.stateSync.setAttachmentTargets(this.worldContentRoot, null, this.scene);
     this.interactionService.setWorldContentRoot(this.worldContentRoot);
@@ -676,7 +681,11 @@ export class Board3dController {
       }),
     );
 
-    this.animationService.initCoinFlipScene(this.scene);
+    this.animationService.initCoinFlipScene(
+      this.scene,
+      this.cardsAdapter.getCoinUrl('twinleaf-coin.png'),
+      this.cardsAdapter.getCoinUrl('twinleaf-coin-back.png'),
+    );
     this.stateSync.setBoardInteractionForDamagePreview(this.boardInteractionService);
   }
 
@@ -720,7 +729,11 @@ export class Board3dController {
       }),
     );
 
-    this.animationService.initCoinFlipScene(this.scene);
+    this.animationService.initCoinFlipScene(
+      this.scene,
+      this.cardsAdapter.getCoinUrl('twinleaf-coin.png'),
+      this.cardsAdapter.getCoinUrl('twinleaf-coin-back.png'),
+    );
     this.stateSync.setBoardInteractionForDamagePreview(this.boardInteractionService);
   }
 
@@ -732,6 +745,8 @@ export class Board3dController {
     const gameStateChanged = this.gameState !== next.gameState;
     const handChanged = this.bottomPlayerHand !== next.bottomPlayerHand;
     const topHandChanged = this.topPlayerHand !== next.topPlayerHand;
+    const topHandPublicChanged =
+      !!this.topPlayerHand?.isPublic !== !!next.topPlayerHand?.isPublic;
     const revealChanged =
       this.adminSpectatorReveal?.revealPrizes !== next.adminSpectatorReveal?.revealPrizes ||
       this.adminSpectatorReveal?.revealHands !== next.adminSpectatorReveal?.revealHands;
@@ -784,7 +799,7 @@ export class Board3dController {
       this.hasInitializedHand = true;
     }
 
-    if (this.scene && (topHandChanged || revealChanged || handChanged)) {
+    if (this.scene && (topHandChanged || topHandPublicChanged || revealChanged || handChanged)) {
       this.syncOpponentHand();
     }
   }
@@ -953,6 +968,8 @@ export class Board3dController {
     this.renderer.outputColorSpace = 'srgb';
     this.renderer.toneMapping = ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.2;
+
+    this.assetLoader.setMaxAnisotropy(this.renderer.capabilities.getMaxAnisotropy());
   }
 
   private async createBoardAsync(): Promise<void> {
@@ -986,6 +1003,8 @@ export class Board3dController {
       depthTest: true,
       depthWrite: false,
       side: DoubleSide,
+      toneMapped: false,
+      alphaTest: 0.02,
     });
 
     this.boardCenterOverlay = new Mesh(centerGeometry, centerMaterial);
@@ -1802,7 +1821,7 @@ export class Board3dController {
     return this.adminSpectatorReveal?.revealHands ?? false;
   }
 
-  /** Far hand face-up when viewing as that player, replay, or admin reveal (matches 2D topHandFaceDown). */
+  /** Far hand face-up when viewing as that player, replay, admin reveal, or hand.isPublic (e.g. Clairvoyance). */
   private isOpponentHandVisibleToViewer(): boolean {
     if (!this.topPlayer) {
       return false;
@@ -1811,6 +1830,9 @@ export class Board3dController {
       return true;
     }
     if (this.isReplayOmniscient()) {
+      return true;
+    }
+    if (this.topPlayerHand?.isPublic || this.topPlayer.hand?.isPublic) {
       return true;
     }
     return this.adminSpectatorReveal?.revealHands ?? false;
@@ -1913,7 +1935,18 @@ export class Board3dController {
     if (!this.scene) {
       return;
     }
-    this.animationService.playCoinFlipAnimation(this.scene, ev.result);
+    const flippingPlayer =
+      this.bottomPlayer?.id === ev.playerId
+        ? this.bottomPlayer
+        : this.topPlayer?.id === ev.playerId
+          ? this.topPlayer
+          : undefined;
+    const frontPath =
+      (flippingPlayer as { coinImagePath?: string } | undefined)?.coinImagePath ||
+      'twinleaf-coin.png';
+    const headsUrl = this.cardsAdapter.getCoinUrl(frontPath);
+    const tailsUrl = this.cardsAdapter.getCoinUrl('twinleaf-coin-back.png');
+    this.animationService.playCoinFlipAnimation(this.scene, ev.result, headsUrl, tailsUrl);
   }
 
   private cancelBoardCoinFlipAnimation(): void {
@@ -2692,7 +2725,7 @@ export class Board3dController {
     }
 
     const firstTurnOpen =
-      gs?.phase === GamePhase.PLAYER_TURN &&
+      (gs?.phase === GamePhase.PLAYER_TURN || gs?.phase === GamePhase.DRAW) &&
       (ourTurnJustBegan ||
         (gs.turn === 1 && bottomId !== undefined && nowActivePlayerId === bottomId));
 
@@ -2704,14 +2737,20 @@ export class Board3dController {
     // Only split "comp-style then mandatory draw" when our turn actually just began
     // (opponent → us). Turn 1 + we are active (going first) must not split: a batched
     // deck slice would wrongly animate as (n−1) mulligan + 1 turn draw.
-    if (deckPart.length >= 2 && gs?.phase === GamePhase.PLAYER_TURN && ourTurnJustBegan) {
+    if (
+      deckPart.length >= 2 &&
+      (gs?.phase === GamePhase.PLAYER_TURN || gs?.phase === GamePhase.DRAW) &&
+      ourTurnJustBegan
+    ) {
       segs.push({ ids: deckPart.slice(0, -1), preset: 'setupMulligan' });
       segs.push({ ids: deckPart.slice(-1), preset: 'turnBegin' });
       return segs;
     }
 
     const singleTurnOpen =
-      deckPart.length === 1 && gs?.phase === GamePhase.PLAYER_TURN && firstTurnOpen;
+      deckPart.length === 1 &&
+      (gs?.phase === GamePhase.PLAYER_TURN || gs?.phase === GamePhase.DRAW) &&
+      firstTurnOpen;
     segs.push({
       ids: deckPart,
       preset: singleTurnOpen ? 'turnBegin' : 'default',
@@ -3037,7 +3076,7 @@ export class Board3dController {
       const bottomId = this.bottomPlayer?.id;
       const ourTurnJustBegan =
         !!gs &&
-        gs.phase === GamePhase.PLAYER_TURN &&
+        (gs.phase === GamePhase.PLAYER_TURN || gs.phase === GamePhase.DRAW) &&
         bottomId !== undefined &&
         nowActivePlayerId === bottomId &&
         this.lastHandSyncActivePlayerId !== undefined &&

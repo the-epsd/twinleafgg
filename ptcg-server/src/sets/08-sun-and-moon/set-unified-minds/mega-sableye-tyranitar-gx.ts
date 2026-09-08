@@ -12,7 +12,7 @@ import {
 export class MegaSableyeTyranitarGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 280;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

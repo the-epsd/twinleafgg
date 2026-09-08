@@ -11,7 +11,7 @@ import { State, StoreLike } from '../../../game';
 export class Xurkitree extends PokemonCard {
   protected _tags = [CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 120;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

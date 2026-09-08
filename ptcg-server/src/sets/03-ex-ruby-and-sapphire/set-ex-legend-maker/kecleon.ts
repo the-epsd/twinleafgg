@@ -10,7 +10,7 @@ import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE, THIS_ATTACK_DOES_X_DAMAGE_TO_1_O
 
 export class Kecleon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public retreat = [C];

@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store
 
 export class Snubbull extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 70;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

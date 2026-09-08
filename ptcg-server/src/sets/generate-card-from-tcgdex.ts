@@ -326,7 +326,10 @@ async function main() {
   if (card.evolveFrom || card.evolvesFrom) {
     props += `  public evolvesFrom = '${escapeSingleQuotes(card.evolveFrom?.en || card.evolveFrom || card.evolvesFrom)}';\n`;
   }
-  props += `  public cardType = ${mapCardTypeSymbol((card.cardType || card.types?.[0] || (card.type && card.type[0])))};\n`;
+  const tcgTypes = card.types?.length
+    ? card.types.map((t: string) => mapCardTypeSymbol(t))
+    : [mapCardTypeSymbol((card.cardType || card.types?.[0] || (card.type && card.type[0])))];
+  props += `  public cardType: CardType[] = [${tcgTypes.join(', ')}];\n`;
   props += `  public hp: number = ${card.hp || 0};\n`;
   // Weakness
   props += formatWeaknessesRaw(card.weaknesses || card.weakness || []);

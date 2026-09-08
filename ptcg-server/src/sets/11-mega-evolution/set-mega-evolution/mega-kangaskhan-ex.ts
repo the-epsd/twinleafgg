@@ -16,7 +16,7 @@ export class MegaKangaskhanex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
   public hp: number = 300;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
 

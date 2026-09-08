@@ -29,7 +29,7 @@ import { PUT_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_HAND } from '../../..
 export class LiepardV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 190;
   public weakness = [{ type: G }];
   public retreat = [C];

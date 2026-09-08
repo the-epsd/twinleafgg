@@ -6,7 +6,7 @@ import { AFTER_ATTACK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Klang extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType[] = [CardType.METAL];
   public hp: number = 90;
   public weakness = [{ type: CardType.FIRE }];
   public resistance = [{ type: CardType.GRASS, value: -30 }];
@@ -45,7 +45,7 @@ export class Klang extends PokemonCard {
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
-        { superType: SuperType.POKEMON, cardType: CardType.METAL },
+        { superType: SuperType.POKEMON, cardType: [CardType.METAL] },
         { min: 0, max: 1, allowCancel: true }
       ), selected => {
         cards = selected || [];

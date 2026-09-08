@@ -7,7 +7,7 @@ import { THIS_POKEMON_RETALIATES_ON_DAMAGE_DURING_OPPONENTS_NEXT_TURN } from '..
 
 export class Sigilyph extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 90;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED, DISCARD_TOP_X_CARDS_FROM_YOUR_DECK } from '../../../ga
 export class Noivern extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Noibat';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 120;
   public weakness = [{ type: Y }];
   public retreat = [];

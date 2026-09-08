@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/pr
 
 export class Doduo extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 50;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

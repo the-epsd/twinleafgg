@@ -14,8 +14,7 @@ export class TeamAquasCacturne extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = "Team Aqua's Cacnea";
   protected _tags = [CardTag.TEAM_AQUA];
-  public cardType: CardType = G;
-  public additionalCardTypes = [D];
+  public cardType: CardType[] = [G, D];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public retreat = [C, C];

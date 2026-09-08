@@ -29,7 +29,7 @@ import {
 export class GiratinaLVX extends PokemonCard {
   public stage: Stage = Stage.LV_X;
   public evolvesFrom = 'Giratina';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   protected _tags = [CardTag.POKEMON_LV_X];
   public hp: number = 130;
   public weakness = [{ type: D }];

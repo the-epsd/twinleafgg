@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, LOOK_AT_TOPDECK_AND_DISCARD_OR_RETURN } from '../../..
 
 export class Sandshrew extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 60;
   public weakness = [{ type: G }];
   public retreat = [C];

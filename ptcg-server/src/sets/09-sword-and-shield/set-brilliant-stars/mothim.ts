@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Mothim extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Burmy';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 110;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

@@ -12,7 +12,7 @@ export class NoivernBreak extends PokemonCard {
   protected _tags = [CardTag.BREAK];
   public stage: Stage = Stage.BREAK;
   public evolvesFrom: string = 'Noivern';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 130;
   public retreat = [];
 

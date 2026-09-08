@@ -12,7 +12,7 @@ import { SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store/prefabs/prefabs'
 
 export class Tornadus extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 120;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

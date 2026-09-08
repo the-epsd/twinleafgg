@@ -10,7 +10,7 @@ import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 export class Rapidash extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
 
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
 
   public hp: number = 100;
 

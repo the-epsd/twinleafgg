@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, GUST_OPPONENT_BENCHED_POKEMON } from
 
 export class Rockruff extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 60;
   public weakness = [{ type: G }];
   public retreat = [C];

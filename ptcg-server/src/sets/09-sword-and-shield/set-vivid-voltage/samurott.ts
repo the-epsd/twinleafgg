@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs
 export class Samurott extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Dewott';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 160;
   public weakness = [{ type: L }];
   public retreat = [C, C];

@@ -13,7 +13,7 @@ export class Crobat extends PokemonCard {
 
   public evolvesFrom = 'Golbat';
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 130;
 

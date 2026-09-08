@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, SuperType, CardTag } from '../../../game/store/card/card-types';
+import { CardType, Stage, SuperType, CardTag } from '../../../game/store/card/card-types';
 import {
   StoreLike,
   State,
@@ -58,7 +58,7 @@ function* useRegiGate(
 
 export class Regice extends PokemonCard {
   public stage = Stage.BASIC;
-  public cardType = W;
+  public cardType: CardType[] = [W];
   public hp = 130;
   public weakness = [{ type: M }];
   public resistance = [];

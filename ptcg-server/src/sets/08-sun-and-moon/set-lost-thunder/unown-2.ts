@@ -11,7 +11,7 @@ import { WAS_POWER_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/
 
 export class Unown2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: P }];
   public retreat = [C];

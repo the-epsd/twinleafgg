@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Masquerain extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Surskit';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public retreat = [];

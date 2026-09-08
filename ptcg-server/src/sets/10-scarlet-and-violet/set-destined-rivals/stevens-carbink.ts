@@ -9,7 +9,7 @@ import { StoreLike } from '../../../game/store/store-like';
 export class StevensCarbink extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.STEVENS];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: M }];
   public retreat = [C, C];

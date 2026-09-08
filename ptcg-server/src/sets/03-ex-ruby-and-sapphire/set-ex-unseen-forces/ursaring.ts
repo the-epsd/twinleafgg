@@ -25,7 +25,7 @@ import { HANDLE_ABILITY_BLOCK, POKEPOWER_TYPES } from '../../../game/store/prefa
 export class Ursaring extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Teddiursa';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 80;
   public retreat = [C, C];
   public weakness = [{ type: F }];

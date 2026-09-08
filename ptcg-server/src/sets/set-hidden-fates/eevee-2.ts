@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, COIN_FLIP_PROMPT }
 
 export class Eevee2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public retreat = [C];

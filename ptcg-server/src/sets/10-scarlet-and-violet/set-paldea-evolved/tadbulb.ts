@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 export class Tadbulb extends PokemonCard {
   public regulationMark = 'G';
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 50;
   public weakness = [{ type: F }];
   public retreat = [C];

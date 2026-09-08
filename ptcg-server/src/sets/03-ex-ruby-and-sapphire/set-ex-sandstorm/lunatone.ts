@@ -7,7 +7,7 @@ import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, DRAW_CARDS, H
 
 export class Lunatone extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: P }];
   public retreat = [C];

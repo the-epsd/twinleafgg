@@ -13,7 +13,7 @@ export class Charmander extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
 
   public hp: number = 70;
 

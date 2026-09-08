@@ -8,7 +8,7 @@ import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../game/store/prefabs/
 
 export class Riolu extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 50;
   public weakness = [{ type: P, value: +10 }];
   public retreat = [C];

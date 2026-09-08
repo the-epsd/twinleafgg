@@ -10,7 +10,7 @@ import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/eff
 
 export class Cobalion extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

@@ -15,7 +15,7 @@ import {
 export class MagnezoneEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 180;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

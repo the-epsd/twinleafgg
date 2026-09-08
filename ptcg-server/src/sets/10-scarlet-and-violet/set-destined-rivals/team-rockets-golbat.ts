@@ -25,7 +25,7 @@ export class TeamRocketsGolbat extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = "Team Rocket's Zubat";
   protected _tags = [CardTag.TEAM_ROCKET];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 80;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

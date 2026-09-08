@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Crabominable extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Crabrawler';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 140;
   public weakness = [{ type: P }];
   public retreat = [C, C, C, C];

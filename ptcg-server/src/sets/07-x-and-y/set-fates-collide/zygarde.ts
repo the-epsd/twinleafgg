@@ -8,7 +8,7 @@ import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/eff
 
 export class Zygarde extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 90;
   public weakness = [{ type: G }];
   public retreat = [C];

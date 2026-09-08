@@ -10,7 +10,7 @@ import {
 
 export class Guzzlord extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 150;
   protected _tags = [CardTag.ULTRA_BEAST];
   public weakness = [{ type: F }];

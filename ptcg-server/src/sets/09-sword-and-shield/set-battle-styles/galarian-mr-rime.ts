@@ -13,7 +13,7 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 export class GalarianMrRime extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Galarian Mr. Mime';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 110;
   public weakness = [{ type: M }];
   public retreat = [C, C];

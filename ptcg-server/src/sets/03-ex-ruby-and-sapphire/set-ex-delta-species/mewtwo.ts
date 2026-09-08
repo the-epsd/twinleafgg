@@ -19,8 +19,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 
 export class Mewtwo extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
-  public additionalCardTypes = [M];
+  public cardType: CardType[] = [R, M];
   protected _tags = [CardTag.DELTA_SPECIES];
   public hp: number = 70;
   public weakness = [{ type: P }];

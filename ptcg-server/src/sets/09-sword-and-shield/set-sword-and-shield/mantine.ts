@@ -11,7 +11,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 
 export class Mantine extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 110;
   public weakness = [{ type: L }];
   public retreat = [C];

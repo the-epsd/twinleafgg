@@ -1,13 +1,13 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils } from '../../../game';
+import { StoreLike, State, StateUtils, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, DISCARD_TOP_X_CARDS_FROM_YOUR_DECK } from '../../../game/store/prefabs/prefabs';
 
 export class Haxorus extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Fraxure';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 140;
   public weakness = [{ type: N }];
   public retreat = [C, C];
@@ -41,7 +41,7 @@ export class Haxorus extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       const defendingPokemon = opponent.active.getPokemonCard();
 
-      if (defendingPokemon && defendingPokemon.cardType === CardType.COLORLESS) {
+      if (defendingPokemon && pokemonHasCardType(defendingPokemon, CardType.COLORLESS)) {
         effect.damage += 60;
       }
     }

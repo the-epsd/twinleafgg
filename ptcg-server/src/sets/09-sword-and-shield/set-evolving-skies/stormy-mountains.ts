@@ -4,7 +4,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardType, Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
-import { Card, ChooseCardsPrompt, PokemonCard, PokemonCardList, ShuffleDeckPrompt } from '../../../game';
+import { Card, ChooseCardsPrompt, PokemonCard, PokemonCardList, ShuffleDeckPrompt, pokemonHasCardType } from '../../../game';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
@@ -23,7 +23,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
   }
   const blocked: number[] = [];
   player.deck.cards.forEach((card, index) => {
-    if (!(card instanceof PokemonCard && (card.cardType === CardType.DRAGON || card.cardType === CardType.LIGHTNING))) {
+    if (!(card instanceof PokemonCard && (pokemonHasCardType(card, CardType.DRAGON) || pokemonHasCardType(card, CardType.LIGHTNING)))) {
       blocked.push(index);
     }
   });

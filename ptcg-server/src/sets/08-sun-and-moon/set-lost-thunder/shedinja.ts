@@ -87,7 +87,7 @@ export class Shedinja extends PokemonCard {
 
   public evolvesFrom = 'Nincada';
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 40;
 

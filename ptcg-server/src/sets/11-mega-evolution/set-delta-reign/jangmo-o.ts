@@ -4,7 +4,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class JangmoO extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 70;
   public weakness = [];
   public retreat = [C];

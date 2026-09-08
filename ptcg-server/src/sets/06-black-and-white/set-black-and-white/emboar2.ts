@@ -8,7 +8,7 @@ import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 export class Emboar2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Pignite';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 150;
   public weakness = [{ type: W }];
   public retreat = [C, C, C, C];

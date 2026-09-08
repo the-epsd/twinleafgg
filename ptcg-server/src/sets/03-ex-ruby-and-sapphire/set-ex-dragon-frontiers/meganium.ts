@@ -9,7 +9,7 @@ export class Meganium extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Bayleef';
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 110;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -30 }];

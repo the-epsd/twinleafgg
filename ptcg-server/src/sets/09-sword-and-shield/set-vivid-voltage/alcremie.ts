@@ -13,7 +13,7 @@ import { PowerType, State, StoreLike } from '../../../game';
 export class Alcremie extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Milcery';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 90;
   public weakness = [{ type: M }];
   public retreat = [C];

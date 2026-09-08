@@ -7,7 +7,7 @@ import { AFTER_ATTACK, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 export class Bulbasaur extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
   public hp: number = 60;
   public weakness = [{ type: CardType.FIRE }];
   public retreat = [CardType.COLORLESS];
@@ -40,7 +40,7 @@ export class Bulbasaur extends PokemonCard {
         player,
         GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
         player.deck,
-        { superType: SuperType.POKEMON, cardType: CardType.GRASS },
+        { superType: SuperType.POKEMON, cardType: [CardType.GRASS] },
         { min: 0, max: 1, allowCancel: false }
       ), selectedCards => {
         cards = selectedCards || [];

@@ -12,7 +12,7 @@ import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 export class HisuianSneasler extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Hisuian Sneasel';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 120;
   public weakness = [{ type: F }];
   public retreat = [C];

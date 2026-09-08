@@ -15,7 +15,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { CardTarget, PlayerType, SlotType, State, StoreLike } from '../../../game';
 export class Entei extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 130;
   public weakness = [{ type: W }];
   public retreat = [C, C];

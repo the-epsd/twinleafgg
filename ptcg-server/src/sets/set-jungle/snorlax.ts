@@ -8,7 +8,7 @@ import { IS_POKEMON_POWER_BLOCKED, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../
 
 export class Snorlax extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -30 }];

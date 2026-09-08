@@ -4,7 +4,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 export class Kabuto extends PokemonCard {
   public stage: Stage = Stage.RESTORED;
   public evolvesFrom = 'Dome Fossil Kabuto';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 80;
   public weakness = [{ type: G }];
   public retreat = [C];

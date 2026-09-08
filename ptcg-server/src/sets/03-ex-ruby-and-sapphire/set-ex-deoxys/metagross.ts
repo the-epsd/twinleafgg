@@ -11,7 +11,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class Metagross extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Metang';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 100;
   public weakness = [{ type: P }];
   public retreat = [C, C];

@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED, HEAL_X_DAMAGE_FROM_THIS_POKEMON, SWITCH_ACTIVE_WITH_BE
 
 export class Sawk extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 90;
   public weakness = [{ type: P }];
   public retreat = [C];

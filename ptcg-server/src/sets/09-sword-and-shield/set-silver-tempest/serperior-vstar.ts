@@ -22,7 +22,7 @@ export class SerperiorVSTAR extends PokemonCard {
 
   public evolvesFrom = 'Serperior V';
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 270;
 

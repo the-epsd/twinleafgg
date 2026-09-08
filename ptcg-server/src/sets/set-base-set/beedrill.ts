@@ -16,7 +16,7 @@ export class Beedrill extends PokemonCard {
   public setNumber: string = '17';
 
   public stage: Stage = Stage.STAGE_2;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public evolvesFrom = 'Kakuna';
   public weakness = [{

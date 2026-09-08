@@ -9,7 +9,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 export class BlackKyuremEX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_EX];
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 180;
   public weakness = [{ type: N }];
   public retreat = [C, C, C];

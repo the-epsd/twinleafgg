@@ -1,4 +1,4 @@
-import { StateUtils } from '../../game';
+import { CardType, StateUtils } from '../../game';
 import { Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Attack } from '../../game/store/card/pokemon-types';
@@ -14,7 +14,7 @@ export class Vulpix extends PokemonCard {
   public set = 'BS';
   public fullName = 'Vulpix BS';
 
-  public cardType = R;
+  public cardType: CardType[] = [R];
   public stage = Stage.BASIC;
 
   public evolvesInto = ['Ninetales', 'Ninetales ex', 'Light Ninetales'];

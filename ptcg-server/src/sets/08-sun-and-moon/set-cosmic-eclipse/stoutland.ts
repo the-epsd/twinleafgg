@@ -11,7 +11,7 @@ import { DAMAGE_OPPONENT_POKEMON, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '..
 
 export class Stoutland extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
   public hp: number = 150;
   public weakness = [{ type: CardType.FIGHTING }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];

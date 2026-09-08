@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, DISCARD_TOP_X_CARDS_FROM_YOUR_DECK } from '../../../ga
 
 export class Larvitar2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 50;
   public weakness = [{ type: G }];
   public retreat = [C];

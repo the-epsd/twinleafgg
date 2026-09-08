@@ -9,7 +9,7 @@ export class Espeon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Eevee';
   public hp: number = 80;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public weakness = [{ type: P }];
   public retreat = [];
 

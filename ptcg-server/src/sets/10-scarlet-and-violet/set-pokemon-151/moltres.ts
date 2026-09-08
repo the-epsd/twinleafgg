@@ -8,7 +8,7 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs
 
 export class Moltres extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
   public hp: number = 120;
   public weakness = [{ type: CardType.LIGHTNING }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];

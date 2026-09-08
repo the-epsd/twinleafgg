@@ -2,7 +2,7 @@ import { GameMessage } from '../../game-message';
 import { Card } from '../card/card';
 import { CardType, EnergyType, SuperType, TrainerType, Stage } from '../card/card-types';
 import { EnergyCard } from '../card/energy-card';
-import { PokemonCard } from '../card/pokemon-card';
+import { PokemonCard, getPrimaryCardType } from '../card/pokemon-card';
 import { TrainerCard } from '../card/trainer-card';
 import { CardList } from '../state/card-list';
 import { Player } from '../state/player';
@@ -203,7 +203,7 @@ export class ChooseCardsPrompt extends Prompt<Card[]> {
     }
     if (card.superType === SuperType.POKEMON) {
       const pokemonCard = card as PokemonCard;
-      return pokemonCard.cardType;
+      return getPrimaryCardType(pokemonCard);
     }
     return CardType.NONE;
   }

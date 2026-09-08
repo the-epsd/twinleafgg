@@ -13,7 +13,7 @@ export class GalarianDarmanitanVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Galarian Darmanitan V';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 320;
   public weakness = [{ type: M }];
   public retreat = [C, C, C];

@@ -1,6 +1,6 @@
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardType, TrainerType } from '../../../game/store/card/card-types';
-import { GameError, GameMessage, PlayerType, StoreLike, State, StateUtils } from '../../../game';
+import { GameError, GameMessage, PlayerType, StoreLike, State, StateUtils, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
@@ -20,7 +20,7 @@ export class ForestOfGiantPlants extends TrainerCard {
     if (effect instanceof PlayPokemonEffect && StateUtils.getStadiumCard(state) === this) {
       const player = effect.player;
 
-      if (effect.pokemonCard.cardType !== CardType.GRASS) {
+      if (!pokemonHasCardType(effect.pokemonCard, CardType.GRASS)) {
         return state;
       }
 

@@ -4,7 +4,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 export class Quagsire extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Wooper';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 120;
   public weakness = [{ type: G }];
   public retreat = [C, C];

@@ -18,8 +18,7 @@ export class Salamence extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Shelgon';
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = R;
-  public additionalCardTypes = [M];
+  public cardType: CardType[] = [R, M];
   public hp: number = 110;
   public weakness = [{ type: C }];
   public resistance = [

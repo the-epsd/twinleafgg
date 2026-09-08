@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../../ga
 
 export class Growlithe extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 80;
   public weakness = [{ type: W }];
   public retreat = [C, C];

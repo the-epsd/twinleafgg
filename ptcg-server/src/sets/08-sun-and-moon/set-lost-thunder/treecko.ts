@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Treecko extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 60;
   public weakness = [{ type: R }];
   public retreat = [C];
@@ -34,7 +34,7 @@ export class Treecko extends PokemonCard {
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
-        { superType: SuperType.POKEMON, cardType: CardType.GRASS },
+        { superType: SuperType.POKEMON, cardType: [CardType.GRASS] },
         { min: 0, max: 1, allowCancel: true }
       ), cards => {
         player.deck.moveCardsTo(cards, player.hand);

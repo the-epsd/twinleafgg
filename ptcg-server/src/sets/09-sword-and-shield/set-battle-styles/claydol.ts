@@ -14,7 +14,7 @@ import { EnergyCard } from '../../../game/store/card/energy-card';
 export class Claydol extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Baltoy';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 120;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

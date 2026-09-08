@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Clefairy extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: M }];
   public retreat = [C];

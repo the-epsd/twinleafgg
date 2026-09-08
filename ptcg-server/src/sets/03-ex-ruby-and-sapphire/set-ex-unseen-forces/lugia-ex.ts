@@ -16,7 +16,7 @@ import { AfterDamageEffect, DiscardCardsEffect } from '../../../game/store/effec
 export class Lugiaex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 100;
   public weakness = [{ type: P }];
   public resistance = [{ type: F, value: -30 }];

@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, State, StoreLike } from '../../../game';
+import { CardType, PokemonCard, Stage, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
@@ -6,8 +6,7 @@ import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-pref
 export class Galvantula extends PokemonCard {
   public stage = Stage.STAGE_1;
   public evolvesFrom = 'Joltik';
-  public cardType = L;
-  public additionalCardTypes = [G];
+  public cardType: CardType[] = [L, G];
   public hp = 90;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

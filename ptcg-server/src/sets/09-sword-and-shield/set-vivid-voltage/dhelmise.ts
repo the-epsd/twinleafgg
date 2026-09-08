@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Dhelmise extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
   public hp: number = 130;
   public weakness = [{ type: CardType.FIRE }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];

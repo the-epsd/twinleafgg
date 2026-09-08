@@ -8,7 +8,7 @@ import { DEFENDING_POKEMON_ATTACKS_COST_MORE, DEFENDING_POKEMON_RETREAT_COSTS_MO
 export class Araquanid extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Dewpider';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 100;
   public weakness = [{ type: G }];
   public retreat = [C];

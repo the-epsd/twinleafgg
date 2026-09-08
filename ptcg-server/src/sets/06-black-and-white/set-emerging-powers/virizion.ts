@@ -9,7 +9,7 @@ import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
 
 export class Virizion extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 100;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -20 }];

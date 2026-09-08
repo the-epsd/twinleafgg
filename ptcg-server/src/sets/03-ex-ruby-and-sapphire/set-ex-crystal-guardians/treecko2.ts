@@ -11,7 +11,7 @@ import {
 export class Treecko2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 40;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -30 }];

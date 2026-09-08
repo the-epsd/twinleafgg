@@ -10,7 +10,7 @@ import { PlayerType, SlotType, State, StoreLike } from '../../../game';
 export class Cinccino extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Minccino';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];

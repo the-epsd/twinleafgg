@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefa
 export class Golem extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Graveler';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 170;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];

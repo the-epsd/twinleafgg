@@ -15,7 +15,7 @@ import { State, StoreLike } from '../../../game';
 export class HisuianSneaslerV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 190;
   public weakness = [{ type: F }];
   public retreat = [];

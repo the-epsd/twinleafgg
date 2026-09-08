@@ -12,7 +12,7 @@ import { GameError, GameMessage } from '../../../game';
 
 export class Igglybuff extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 60;
   public retreat = [];
 

@@ -9,7 +9,7 @@ import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-e
 export class Muk extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Grimer';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 110;
   public weakness = [{ type: P }];
   public retreat = [C, C, C, C];

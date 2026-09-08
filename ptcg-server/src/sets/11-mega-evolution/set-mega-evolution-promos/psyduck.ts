@@ -10,7 +10,7 @@ import {
 
 export class Psyduck extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 70;
   public weakness = [{ type: L }];
   public retreat = [C];

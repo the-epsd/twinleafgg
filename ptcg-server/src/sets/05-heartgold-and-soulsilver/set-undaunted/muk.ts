@@ -5,7 +5,7 @@ import { ADD_CONFUSION_TO_PLAYER_ACTIVE, ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTA
 export class Muk extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Grimer';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 100;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];

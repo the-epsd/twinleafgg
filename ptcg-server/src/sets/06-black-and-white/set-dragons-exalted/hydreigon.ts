@@ -63,7 +63,7 @@ export class Hydreigon extends PokemonCard {
 
   public evolvesFrom = 'Zweilous';
 
-  public cardType: CardType = CardType.DRAGON;
+  public cardType: CardType[] = [CardType.DRAGON];
 
   public hp: number = 150;
 

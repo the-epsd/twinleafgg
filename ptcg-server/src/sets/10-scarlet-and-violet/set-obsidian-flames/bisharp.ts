@@ -8,7 +8,7 @@ export class Bisharp extends PokemonCard {
   public regulationMark = 'G';
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Pawniard';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 110;
   public weakness = [{ type: F }];
   public resistance = [{ type: G, value: -30 }];

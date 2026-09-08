@@ -10,7 +10,7 @@ import { State, StoreLike } from '../../../game';
 export class Centiskorch extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Sizzlipede';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 130;
   public weakness = [{ type: W }];
   public retreat = [C, C, C];

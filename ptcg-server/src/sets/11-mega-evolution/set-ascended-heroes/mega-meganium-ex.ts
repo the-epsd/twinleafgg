@@ -7,7 +7,7 @@ export class MegaMeganiumex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Bayleef';
   protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 360;
   public weakness = [{ type: R }];
   public resistance = [];

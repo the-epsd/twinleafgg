@@ -7,7 +7,7 @@ import { AFTER_ATTACK, DRAW_CARDS_UNTIL_CARDS_IN_HAND } from '../../../game/stor
 export class Golett extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
   public hp: number = 90;
   public weakness = [{ type: CardType.DARK }];
   public resistance = [{ type: CardType.FIGHTING, value: -20 }];

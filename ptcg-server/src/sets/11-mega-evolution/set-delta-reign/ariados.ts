@@ -7,7 +7,7 @@ import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-pre
 export class Ariados extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Spinarak';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public retreat = [C];

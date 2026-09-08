@@ -6,7 +6,7 @@ import { DRAW_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs
 
 export class Sudowoodo extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 100;
   public weakness = [{ type: G }];
   public retreat = [C];

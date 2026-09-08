@@ -6,7 +6,7 @@ import { WAS_ATTACK_USED, ATTACH_ENERGY_PROMPT } from '../../../game/store/prefa
 
 export class Tynamo2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 40;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

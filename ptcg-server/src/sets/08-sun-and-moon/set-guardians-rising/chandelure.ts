@@ -14,7 +14,7 @@ import { DamageMap, MoveDamagePrompt, PlayerType, PowerType, SlotType, State, St
 export class Chandelure extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Lampent';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 140;
   public weakness = [{ type: W }];
   public retreat = [C];

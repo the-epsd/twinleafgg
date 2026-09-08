@@ -4,7 +4,7 @@ import { PokemonCard, Stage, CardType } from "../../../game";
 export class Pikachu35 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 60;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public weakness = [{ type: F }];
   public retreat = [C];
   public attacks = [{

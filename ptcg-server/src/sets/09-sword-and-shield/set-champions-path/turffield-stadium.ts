@@ -1,4 +1,4 @@
-import { Card, ChooseCardsPrompt, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt } from '../../../game';
+import { Card, ChooseCardsPrompt, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, pokemonHasCardType } from '../../../game';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { CardType, Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
@@ -21,7 +21,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
 
   player.deck.cards.forEach((card, index) => {
     // eslint-disable-next-line no-empty
-    if (card instanceof PokemonCard && card.stage !== Stage.BASIC && card.stage !== Stage.RESTORED && card.cardType === CardType.GRASS) {
+    if (card instanceof PokemonCard && card.stage !== Stage.BASIC && card.stage !== Stage.RESTORED && pokemonHasCardType(card, CardType.GRASS)) {
 
     } else {
       blocked.push(index);

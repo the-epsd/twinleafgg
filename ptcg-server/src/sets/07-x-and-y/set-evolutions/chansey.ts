@@ -7,7 +7,7 @@ import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-pre
 
 export class Chansey extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 120;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

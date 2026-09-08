@@ -7,16 +7,14 @@ import {
   TrainerType,
 } from '../../../game/store/card/card-types';
 import { PowerType } from '../../../game/store/card/pokemon-types';
-import {
-  StoreLike,
+import { StoreLike,
   State,
   GameMessage,
   StateUtils,
   PlayerType,
   ChooseCardsPrompt,
   Card,
-  TrainerCard,
-} from '../../../game';
+  TrainerCard, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import {
   ADD_PARALYZED_TO_PLAYER_ACTIVE,
@@ -34,7 +32,7 @@ import { HANDLE_ABILITY_BLOCK, POKEPOWER_TYPES } from '../../../game/store/prefa
 
 export class Lunatone extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public weakness = [{ type: G }];
   public retreat = [C];
@@ -106,7 +104,7 @@ export class Lunatone extends PokemonCard {
         } catch {
           return false;
         }
-        return card.cardType === CardType.FIRE;
+        return pokemonHasCardType(card, CardType.FIRE);
       },
       {
         powerTypes: POKEPOWER_TYPES,

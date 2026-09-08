@@ -13,7 +13,7 @@ export class GrimmsnarlVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Grimmsnarl V';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 330;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

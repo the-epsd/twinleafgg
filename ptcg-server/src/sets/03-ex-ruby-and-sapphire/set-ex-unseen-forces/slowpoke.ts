@@ -8,7 +8,7 @@ import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER, WAS_ATTACK_USED, COIN_FLIP_PROMPT } f
 
 export class Slowpoke extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 50;
   public weakness = [{ type: P }];
   public retreat = [C];

@@ -18,7 +18,7 @@ export class HydreigonBreak extends PokemonCard {
   protected _tags = [CardTag.BREAK];
   public stage: Stage = Stage.BREAK;
   public evolvesFrom: string = 'Hydreigon';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 190;
   public retreat = [];
 

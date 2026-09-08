@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Manectric extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Electrike';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 110;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

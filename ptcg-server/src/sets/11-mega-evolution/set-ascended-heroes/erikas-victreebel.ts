@@ -6,7 +6,7 @@ export class ErikasVictreebel extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = "Erika's Weepinbell";
   protected _tags = [CardTag.ERIKAS];
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 150;
   public weakness = [{ type: R }];
   public resistance = [];

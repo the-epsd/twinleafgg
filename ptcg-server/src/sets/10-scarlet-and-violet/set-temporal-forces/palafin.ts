@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 
 export class Palafin extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 150;
   public weakness = [{ type: L }];
   public retreat = [C, C];

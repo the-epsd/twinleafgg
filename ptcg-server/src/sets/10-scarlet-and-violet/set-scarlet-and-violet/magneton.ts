@@ -14,7 +14,7 @@ export class Magneton extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [CardType.LIGHTNING];
 
   public hp: number = 90;
 

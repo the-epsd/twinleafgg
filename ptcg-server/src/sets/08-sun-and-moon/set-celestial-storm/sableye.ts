@@ -10,7 +10,7 @@ import { OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK } from '../../../game/store/pr
 
 export class Sableye extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
   public hp: number = 70;
   public retreat = [CardType.COLORLESS];
 

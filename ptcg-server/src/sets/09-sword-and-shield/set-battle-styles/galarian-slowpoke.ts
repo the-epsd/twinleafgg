@@ -13,7 +13,7 @@ export class GalarianSlowpoke extends PokemonCard {
   public usedTantailizing = false;
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

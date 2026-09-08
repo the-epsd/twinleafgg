@@ -8,7 +8,7 @@ export class Ampharos extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Flaaffy';
   public hp: number = 160;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public weakness = [{ type: F }];
   public retreat = [C, C];
 

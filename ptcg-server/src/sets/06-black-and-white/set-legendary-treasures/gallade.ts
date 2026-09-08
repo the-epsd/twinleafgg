@@ -10,7 +10,7 @@ import { PlayerType, State, StoreLike } from '../../../game';
 export class Gallade extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Kirlia';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 140;
   public weakness = [{ type: P }];
   public retreat = [C, C];

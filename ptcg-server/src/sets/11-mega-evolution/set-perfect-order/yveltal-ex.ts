@@ -16,7 +16,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Yveltalex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 210;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

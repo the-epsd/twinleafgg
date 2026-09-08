@@ -12,7 +12,7 @@ import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/s
 export class Empoleon extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Prinplup';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 160;
   public weakness: Weakness[] = [{ type: L }];
   public retreat = [C, C];

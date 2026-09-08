@@ -21,7 +21,7 @@ import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store
 export class CelebiV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 190;
   public weakness = [{ type: R }];
   public retreat = [C];

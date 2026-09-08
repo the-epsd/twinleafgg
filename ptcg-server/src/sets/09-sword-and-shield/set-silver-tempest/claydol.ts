@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { Stage, EnergyType, SuperType, TrainerType } from '../../../game/store/card/card-types';
+import { CardType, Stage, EnergyType, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike, State, ChooseCardsPrompt, EnergyCard, GameError, GameMessage, PowerType, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
@@ -14,7 +14,7 @@ export class Claydol extends PokemonCard {
 
   public evolvesFrom = 'Baltoy';
 
-  public cardType = F;
+  public cardType: CardType[] = [F];
 
   public hp = 110;
 

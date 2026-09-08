@@ -20,7 +20,7 @@ import {
 export class CelebiEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 110;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -20 }];

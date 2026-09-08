@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Smeargle extends PokemonCard {
   protected _tags = [CardTag.FUSION_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [C];

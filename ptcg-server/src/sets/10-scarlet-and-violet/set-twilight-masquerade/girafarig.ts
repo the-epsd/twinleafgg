@@ -8,7 +8,7 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 export class Girafarig extends PokemonCard {
   public regulationMark = 'H';
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 100;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

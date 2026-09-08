@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store
 
 export class Whismur2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [C, C];

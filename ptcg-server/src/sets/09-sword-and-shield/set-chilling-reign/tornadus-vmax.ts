@@ -15,7 +15,7 @@ export class TornadusVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX, CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Tornadus V';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 320;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

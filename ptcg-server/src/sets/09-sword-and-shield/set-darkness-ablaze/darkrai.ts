@@ -12,7 +12,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 
 export class Darkrai extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 120;
   public weakness = [{ type: G }];
   public retreat = [C, C];

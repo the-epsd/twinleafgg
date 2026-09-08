@@ -15,7 +15,7 @@ export class SandyShocks extends PokemonCard {
 
   public stage = Stage.BASIC;
 
-  public cardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp = 120;
 

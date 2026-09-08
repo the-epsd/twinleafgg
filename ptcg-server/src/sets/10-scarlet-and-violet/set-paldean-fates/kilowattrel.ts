@@ -13,7 +13,7 @@ export class Kilowattrel extends PokemonCard {
 
   public evolvesFrom = 'Wattrel';
 
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [CardType.LIGHTNING];
 
   public hp: number = 120;
 

@@ -8,7 +8,7 @@ import { THIS_POKEMON_RETALIATES_ON_DAMAGE_DURING_OPPONENTS_NEXT_TURN } from '..
 export class Aggron extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Lairon';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 170;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

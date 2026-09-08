@@ -23,7 +23,7 @@ export class Cetitanex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Cetoddle';
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 300;
   public weakness = [{ type: M }];
   public retreat = [C, C, C, C];

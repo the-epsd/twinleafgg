@@ -8,7 +8,7 @@ import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/
 export class Shelgon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Bagon';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 90;
   public retreat = [C, C, C];
 

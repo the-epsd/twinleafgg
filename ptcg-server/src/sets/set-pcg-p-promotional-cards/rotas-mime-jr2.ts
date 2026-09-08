@@ -8,7 +8,7 @@ import { DEFENDING_POKEMON_DOES_LESS_DAMAGE_AFTER_WEAKNESS_AND_RESISTANCE } from
 
 export class RotasMimeJr2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 50;
   public weakness = [{ type: P }];
   public retreat = [C];

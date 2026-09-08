@@ -12,7 +12,7 @@ import { HEAL_X_DAMAGE_FROM_THIS_POKEMON, WAS_ATTACK_USED } from '../../../game/
 export class Tangrowth extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Tangela';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 130;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -20 }];

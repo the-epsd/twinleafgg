@@ -8,7 +8,7 @@ import { State, StoreLike } from '../../../game';
 export class Talonflame extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Fletchinder';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 130;
   public weakness = [{ type: W }];
   public retreat = [];

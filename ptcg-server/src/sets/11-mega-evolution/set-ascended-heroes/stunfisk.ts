@@ -7,7 +7,7 @@ import { BLOCK_RETREAT, DEFENDING_POKEMON_TAKES_MORE_DAMAGE_DURING_YOUR_NEXT_TUR
 
 export class Stunfisk extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 110;
   public weakness = [{ type: F }];
   public retreat = [C, C];

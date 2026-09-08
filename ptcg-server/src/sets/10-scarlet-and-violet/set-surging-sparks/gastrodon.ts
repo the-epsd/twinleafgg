@@ -11,7 +11,7 @@ import { HANDLE_ABILITY_LOCK } from '../../../game/store/prefabs/ability-lock';
 export class Gastrodon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Shellos';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 130;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

@@ -8,7 +8,7 @@ import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-pref
 
 export class Totodile extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 70;
   public weakness = [{ type: L }];
   public retreat = [C];

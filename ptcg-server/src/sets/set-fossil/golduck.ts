@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/pref
 
 export class Golduck extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 70;
   public weakness = [{ type: L }];
   public retreat = [C];

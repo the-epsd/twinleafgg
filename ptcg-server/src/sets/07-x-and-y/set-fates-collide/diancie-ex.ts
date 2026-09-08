@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs
 export class DiancieEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 150;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

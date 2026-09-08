@@ -8,7 +8,7 @@ import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefab
 
 export class MrMime extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public retreat = [C];
 

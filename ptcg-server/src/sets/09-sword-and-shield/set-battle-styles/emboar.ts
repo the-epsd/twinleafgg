@@ -13,7 +13,7 @@ export class Emboar extends PokemonCard {
   protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Pignite';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 180;
   public weakness = [{ type: W }];
   public retreat = [C, C, C, C];

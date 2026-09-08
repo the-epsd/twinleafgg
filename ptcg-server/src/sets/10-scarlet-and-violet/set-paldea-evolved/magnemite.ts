@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Magnemite extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [CardType.LIGHTNING];
   public hp: number = 50;
   public weakness = [{ type: CardType.FIGHTING }];
   public retreat = [CardType.COLORLESS];

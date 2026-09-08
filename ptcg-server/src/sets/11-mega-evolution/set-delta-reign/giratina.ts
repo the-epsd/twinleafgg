@@ -6,7 +6,7 @@ import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-pre
 
 export class Giratina extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 130;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

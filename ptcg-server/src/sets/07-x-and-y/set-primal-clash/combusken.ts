@@ -12,7 +12,7 @@ import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefa
 export class Combusken extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Torchic';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 80;
   public weakness = [{ type: W }];
   public retreat = [C];

@@ -9,7 +9,7 @@ export class Regigigas extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
 
   public hp: number = 160;
 

@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, COUNT_MATCHING_CARDS_IN_ZONE } from '../../../game/sto
 
 export class Cottonee extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 40;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

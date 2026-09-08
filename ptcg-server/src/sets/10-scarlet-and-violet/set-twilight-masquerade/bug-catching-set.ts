@@ -11,7 +11,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { CardList, EnergyCard, Player } from '../../../game';
+import { CardList, EnergyCard, Player, pokemonHasCardType } from '../../../game';
 
 function* playCard(
   next: Function,
@@ -31,7 +31,7 @@ function* playCard(
   let grassPokemonOrEnergyCount: number = 0;
   const blocked: number[] = [];
   player.deck.cards.forEach((c, index) => {
-    const isPokemon = c instanceof PokemonCard && c.cardType === CardType.GRASS;
+    const isPokemon = c instanceof PokemonCard && pokemonHasCardType(c, CardType.GRASS);
     const isBasicEnergy =
       c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Grass Energy';
     if (isPokemon || isBasicEnergy) {

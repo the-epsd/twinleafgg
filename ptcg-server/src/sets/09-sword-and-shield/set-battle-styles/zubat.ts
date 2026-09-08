@@ -9,7 +9,7 @@ import { AfterAttackEffect } from '../../../game/store/effects/game-phase-effect
 export class Zubat extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 50;
   public weakness = [{ type: F }];
   public retreat = [C];

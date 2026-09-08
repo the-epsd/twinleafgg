@@ -12,7 +12,7 @@ import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 export class Emboar extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Pignite';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 150;
   public weakness = [{ type: W }];
   public retreat = [C, C, C, C];

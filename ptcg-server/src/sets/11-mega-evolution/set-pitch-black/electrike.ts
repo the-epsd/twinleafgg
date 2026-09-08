@@ -7,7 +7,7 @@ import { DRAW_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs
 
 export class Electrike extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [C];

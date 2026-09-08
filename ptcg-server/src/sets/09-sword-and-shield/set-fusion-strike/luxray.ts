@@ -4,7 +4,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 export class Luxray extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Luxio';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 160;
   public weakness = [{ type: F }];
   public retreat = [];

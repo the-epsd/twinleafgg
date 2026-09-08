@@ -8,7 +8,7 @@ const DRAW_ANIMATION_WAIT_MS = 1100;
 export class Jellicent extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Frillish';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 120;
   public weakness = [{ type: L }];
   public retreat = [C, C];

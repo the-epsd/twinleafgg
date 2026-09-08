@@ -37,7 +37,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 export class Latios extends PokemonCard {
   protected _tags = [CardTag.FUSION_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 130;
   public retreat = [C, C];
 

@@ -10,7 +10,7 @@ import { State, StoreLike } from '../../../game';
 export class Toucannon extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Trumbeak';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 140;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

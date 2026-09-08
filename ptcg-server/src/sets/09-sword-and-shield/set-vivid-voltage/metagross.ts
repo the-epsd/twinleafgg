@@ -9,7 +9,7 @@ import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/eff
 export class Metagross extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Metang';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 170;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

@@ -14,7 +14,7 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../../game/s
 export class ArticunoEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX, CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 170;
   public weakness = [{ type: M }];
   public resistance = [{ type: F, value: -20 }];

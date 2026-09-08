@@ -9,7 +9,7 @@ import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
 
 export class Hitmontop extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 70;
   public weakness = [{ type: P }];
   public retreat = [C];

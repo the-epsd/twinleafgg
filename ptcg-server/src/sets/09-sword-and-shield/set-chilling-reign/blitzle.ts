@@ -12,7 +12,7 @@ import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../
 export class Blitzle extends PokemonCard {
   protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public retreat = [C];

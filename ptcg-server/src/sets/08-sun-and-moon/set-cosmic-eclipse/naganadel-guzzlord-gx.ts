@@ -26,7 +26,7 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 export class NaganadelGuzzlordGX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM, CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 280;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];

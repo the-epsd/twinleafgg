@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, MULTIPLE_COIN_FLIPS_PROMPT } from '.
 
 export class Jolteon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [C];

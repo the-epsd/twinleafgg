@@ -6,7 +6,7 @@ import { BUG_OUT } from '../../../game/store/prefabs/shared-attack-prefabs';
 
 export class Spinarak extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public retreat = [C];

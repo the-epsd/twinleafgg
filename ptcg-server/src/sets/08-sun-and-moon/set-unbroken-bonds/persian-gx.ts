@@ -26,7 +26,7 @@ export class PersianGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Meowth';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 200;
   public weakness = [{ type: F }];
   public retreat = [C, C];

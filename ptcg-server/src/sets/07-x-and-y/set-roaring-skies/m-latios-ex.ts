@@ -14,7 +14,7 @@ export class MLatiosEx extends PokemonCard {
   protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Latios-EX';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 220;
   public weakness = [{ type: Y }];
   public retreat = [];

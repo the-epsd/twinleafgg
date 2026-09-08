@@ -4,7 +4,7 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType } from '../../../game/store/card/card-types';
-import { StateUtils, StoreLike, State } from '../../../game';
+import { StateUtils, StoreLike, State, getPrimaryCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Ninetales extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Vulpix';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 90;
   public weakness = [{ type: W }];
   public retreat = [C];
@@ -42,7 +42,7 @@ export class Ninetales extends PokemonCard {
       const defendingCard = opponent.active.getPokemonCard();
 
       if (defendingCard) {
-        const defendingType = defendingCard.cardType;
+        const defendingType = getPrimaryCardType(defendingCard);
         const checkEnergy = new CheckProvidedEnergyEffect(player);
         store.reduceEffect(state, checkEnergy);
 

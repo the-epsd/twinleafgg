@@ -22,7 +22,7 @@ export class AlcremieVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Alcremie V';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 310;
   public weakness = [{ type: M }];
   public retreat = [C, C, C];

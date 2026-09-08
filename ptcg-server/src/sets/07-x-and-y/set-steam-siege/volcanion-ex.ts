@@ -12,6 +12,7 @@ import {
   StoreLike,
   SuperType,
   CardTag,
+  pokemonHasCardType,
 } from '../../../game';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
@@ -19,8 +20,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class VolcanionEX extends PokemonCard {
-  public cardType = R;
-  public additionalCardTypes = [W];
+  public cardType: CardType[] = [R, W];
   protected _tags = [CardTag.POKEMON_EX];
   public stage = Stage.BASIC;
   public hp = 180;
@@ -97,7 +97,7 @@ export class VolcanionEX extends PokemonCard {
       effect.player.marker.hasMarker(this.STEAM_UP_MARKER)
     ) {
       const source = effect.source.getPokemonCard();
-      if (source && source.stage === Stage.BASIC && source.cardType === CardType.FIRE) {
+      if (source && source.stage === Stage.BASIC && pokemonHasCardType(source, CardType.FIRE)) {
         effect.damage += 30;
       }
     }

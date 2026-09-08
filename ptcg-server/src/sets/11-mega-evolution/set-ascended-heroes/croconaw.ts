@@ -5,7 +5,7 @@ import { AFTER_ATTACK, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/pref
 export class Croconaw extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Totodile';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 100;
   public weakness = [{ type: L }];
   public resistance = [];

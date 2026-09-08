@@ -9,7 +9,7 @@ export class DarkCroconaw extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Totodile';
   protected _tags = [CardTag.DARK];
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 60;
   public weakness = [{ type: G }];
   public retreat = [C, C];

@@ -6,7 +6,7 @@ import { AFTER_ATTACK, DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Cosmog extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
   public hp: number = 60;
   public weakness = [{ type: CardType.PSYCHIC }];
   public retreat = [CardType.COLORLESS];

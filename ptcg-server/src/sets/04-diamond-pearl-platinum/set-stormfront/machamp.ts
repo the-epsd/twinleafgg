@@ -8,7 +8,7 @@ import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/
 export class Machamp extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Machoke';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 130;
   public weakness = [{ type: P, value: 30 }];
   public retreat = [C, C];

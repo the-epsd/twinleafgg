@@ -8,7 +8,7 @@ import { TAKE_MORE_PRIZES_IF_DEFENDING_KNOCKED_OUT_DURING_YOUR_NEXT_TURN } from 
 export class Marshadow extends PokemonCard {
   protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

@@ -28,8 +28,7 @@ export class Metagross extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Metang';
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = L;
-  public additionalCardTypes = [M];
+  public cardType: CardType[] = [L, M];
   public hp: number = 100;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

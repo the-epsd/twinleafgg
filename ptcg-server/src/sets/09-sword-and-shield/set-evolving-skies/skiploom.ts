@@ -8,7 +8,7 @@ import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 export class Skiploom extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Hoppip';
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
   public hp: number = 60;
   public weakness = [{ type: CardType.FIRE }];
 

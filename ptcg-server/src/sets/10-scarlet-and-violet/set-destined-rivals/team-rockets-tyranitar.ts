@@ -19,7 +19,7 @@ export class TeamRocketsTyranitar extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = "Team Rocket's Pupitar";
   protected _tags = [CardTag.TEAM_ROCKET];
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 180;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

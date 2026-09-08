@@ -8,7 +8,7 @@ export class Cosmoem extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Cosmog';
   public hp: number = 100;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C];

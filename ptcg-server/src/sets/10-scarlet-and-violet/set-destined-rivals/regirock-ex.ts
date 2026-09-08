@@ -22,7 +22,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Regirockex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 230;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

@@ -51,7 +51,7 @@ export class TapuLele extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
 
   public hp: number = 110;
 

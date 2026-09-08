@@ -15,7 +15,7 @@ export class MCharizardEx2 extends PokemonCard {
   protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Charizard-EX';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 230;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];

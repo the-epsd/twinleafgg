@@ -1,4 +1,4 @@
-import { EnergyCard, GameError, PokemonCard } from '../../../game';
+import { EnergyCard, GameError, PokemonCard, pokemonHasCardType } from '../../../game';
 import { GameMessage } from '../../../game/game-message';
 import { Card } from '../../../game/store/card/card';
 import { CardType, EnergyType, TrainerType } from '../../../game/store/card/card-types';
@@ -34,7 +34,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   player.discard.cards.forEach((c, index) => {
     if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Water Energy') {
       energies += 1;
-    } else if (c instanceof PokemonCard && c.cardType === CardType.WATER) {
+    } else if (c instanceof PokemonCard && pokemonHasCardType(c, CardType.WATER)) {
       pokemons += 1;
     } else {
       blocked.push(index);

@@ -1,74 +1,49 @@
 import gsap from 'gsap';
 import {
-  CanvasTexture,
-  CylinderGeometry,
   DoubleSide,
   Group,
   Mesh,
   MeshBasicMaterial,
+  CylinderGeometry,
   PlaneGeometry,
   SRGBColorSpace,
+  Texture,
+  TextureLoader,
 } from 'three';
 import { BOARD_3D_GRID_Y } from './board3d-constants';
 import { ZONE_POSITIONS } from './board-3d-zone-positions';
 import { COIN_FLIP_SPIN_DURATION_SEC, getCoinFlipSpinKeyframes } from '../coin-flip-animation';
 
-const COIN_EDGE_COLOR = 0xde7a10;
+const COIN_EDGE_COLOR = 0x3e834d; // Matches twinleaf-coin.png outer rim
 export const COIN_FLIP_RADIUS = 1.45;
-const COIN_THICKNESS = COIN_FLIP_RADIUS / 3;
+const COIN_THICKNESS = COIN_FLIP_RADIUS / 8;
 /** Sits on the board surface (cards are at {@link BOARD_3D_GRID_Y}). */
 const COIN_REST_Y = BOARD_3D_GRID_Y + COIN_THICKNESS / 2 + 0.04;
 /** World X offset from board center (between actives) — sits right of the twinleaf emblem. */
 const COIN_FLIP_X_OFFSET_FROM_CENTER = 7.25;
 
+/** Shared tails face for every custom coin. */
+export const COIN_BACK_IMAGE_PATH = 'twinleaf-coin-back.png';
+/** Default heads face when a player has no coin equipped. */
+export const COIN_DEFAULT_FRONT_IMAGE_PATH = 'twinleaf-coin.png';
+
 const deg = (d: number) => (d * Math.PI) / 180;
 
-function createCoinFaceTexture(label: 'H' | 'T'): CanvasTexture {
-  const size = 256;
-  const canvas = document.createElement('canvas');
-  canvas.width = size;
-  canvas.height = size;
-  const ctx = canvas.getContext('2d');
-  if (!ctx) {
-    const fallback = new CanvasTexture(canvas);
-    fallback.colorSpace = SRGBColorSpace;
-    return fallback;
-  }
+const textureLoader = new TextureLoader();
+textureLoader.setCrossOrigin('anonymous');
 
-  ctx.clearRect(0, 0, size, size);
-
-  const cx = size / 2;
-  const cy = size / 2;
-  const radius = size / 2 - 4;
-
-  ctx.save();
-  ctx.beginPath();
-  ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-  ctx.clip();
-
-  ctx.fillStyle = '#f7941e';
-  ctx.beginPath();
-  ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-  ctx.fill();
-
-  ctx.strokeStyle = '#ffb04a';
-  ctx.lineWidth = size * 0.08;
-  ctx.stroke();
-
-  ctx.fillStyle = '#c56f0f';
-  ctx.font = `bold ${size * 0.42}px Raleway, sans-serif`;
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.shadowColor = 'rgba(0,0,0,0.25)';
-  ctx.shadowBlur = 4;
-  ctx.shadowOffsetX = 2;
-  ctx.shadowOffsetY = 2;
-  ctx.fillText(label, cx, cy + size * 0.02);
-  ctx.restore();
-
-  const texture = new CanvasTexture(canvas);
+function prepareCoinTexture(texture: Texture): Texture {
   texture.colorSpace = SRGBColorSpace;
+  // Face planes were authored for H/T canvas labels; PNGs need a 180° UV flip.
+  texture.center.set(0.5, 0.5);
+  texture.rotation = Math.PI;
+  texture.needsUpdate = true;
   return texture;
+}
+
+async function loadCoinTexture(url: string): Promise<Texture> {
+  const texture = await textureLoader.loadAsync(url);
+  return prepareCoinTexture(texture);
 }
 
 /** Flat on the board: heads (+Y) or tails (−Y flipped up). */
@@ -77,12 +52,13 @@ export function snapCoinRestPose(coin: Group, isHeads: boolean): void {
   coin.scale.set(1, 1, 1);
 }
 
-/** Permanent 180° correction so H/T faces the camera right-side up. */
+/** Permanent 180° correction so faces the camera right-side up. */
 const COIN_ORIENTATION_Y = Math.PI;
 
 export type CoinFlipSceneGraph = {
   root: Group;
   coin: Group;
+  setFaceTextures: (headsUrl: string, tailsUrl: string) => Promise<void>;
   dispose: () => void;
 };
 
@@ -102,12 +78,18 @@ export function createCoinFlipSceneGraph(): CoinFlipSceneGraph {
   snapCoinRestPose(coin, true);
   coinOrientation.add(coin);
 
-  const bodyGeometry = new CylinderGeometry(COIN_FLIP_RADIUS, COIN_FLIP_RADIUS, COIN_THICKNESS, 48, 1);
+  // openEnded: true — no top/bottom caps (those looked like a second orange coin under the PNG faces).
+  const bodyGeometry = new CylinderGeometry(
+    COIN_FLIP_RADIUS,
+    COIN_FLIP_RADIUS,
+    COIN_THICKNESS,
+    48,
+    1,
+    true,
+  );
   const faceGeometry = new PlaneGeometry(COIN_FLIP_RADIUS * 2, COIN_FLIP_RADIUS * 2);
-  const headsTexture = createCoinFaceTexture('H');
-  const tailsTexture = createCoinFaceTexture('T');
 
-  const bodyMaterial = new MeshBasicMaterial({ color: COIN_EDGE_COLOR });
+  const bodyMaterial = new MeshBasicMaterial({ color: COIN_EDGE_COLOR, side: DoubleSide });
   const faceMaterialOptions = {
     transparent: true,
     alphaTest: 0.01,
@@ -115,10 +97,11 @@ export function createCoinFlipSceneGraph(): CoinFlipSceneGraph {
     depthWrite: true,
     side: DoubleSide,
   } as const;
-  const headsMaterial = new MeshBasicMaterial({ map: headsTexture, ...faceMaterialOptions });
-  const tailsMaterial = new MeshBasicMaterial({ map: tailsTexture, ...faceMaterialOptions });
+  // Neutral until textures load — avoid flashing the old solid-orange face look.
+  const headsMaterial = new MeshBasicMaterial({ color: 0xffffff, ...faceMaterialOptions });
+  const tailsMaterial = new MeshBasicMaterial({ color: 0xffffff, ...faceMaterialOptions });
 
-  // Cylinder axis = Y (default) — coin lies flat on the board.
+  // Cylinder axis = Y (default) — coin lies flat on the board; rim only.
   const body = new Mesh(bodyGeometry, bodyMaterial);
   coin.add(body);
 
@@ -132,17 +115,45 @@ export function createCoinFlipSceneGraph(): CoinFlipSceneGraph {
   tailsFace.position.y = -(COIN_THICKNESS / 2 + 0.001);
   coin.add(tailsFace);
 
+  let headsTexture: Texture | null = null;
+  let tailsTexture: Texture | null = null;
+  let loadGeneration = 0;
+
+  const setFaceTextures = async (headsUrl: string, tailsUrl: string): Promise<void> => {
+    const generation = ++loadGeneration;
+    const [nextHeads, nextTails] = await Promise.all([
+      loadCoinTexture(headsUrl),
+      loadCoinTexture(tailsUrl),
+    ]);
+    if (generation !== loadGeneration) {
+      nextHeads.dispose();
+      nextTails.dispose();
+      return;
+    }
+    headsTexture?.dispose();
+    tailsTexture?.dispose();
+    headsTexture = nextHeads;
+    tailsTexture = nextTails;
+    headsMaterial.map = headsTexture;
+    headsMaterial.color.setHex(0xffffff);
+    headsMaterial.needsUpdate = true;
+    tailsMaterial.map = tailsTexture;
+    tailsMaterial.color.setHex(0xffffff);
+    tailsMaterial.needsUpdate = true;
+  };
+
   const dispose = (): void => {
+    loadGeneration += 1;
     bodyGeometry.dispose();
     faceGeometry.dispose();
     bodyMaterial.dispose();
     headsMaterial.dispose();
     tailsMaterial.dispose();
-    headsTexture.dispose();
-    tailsTexture.dispose();
+    headsTexture?.dispose();
+    tailsTexture?.dispose();
   };
 
-  return { root, coin, dispose };
+  return { root, coin, setFaceTextures, dispose };
 }
 
 export function buildCoinFlipTimeline(

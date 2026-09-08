@@ -1,10 +1,9 @@
-import { PokemonCard, Stage, State, StoreLike } from '../../../game';
+import { CardType, PokemonCard, Stage, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AFTER_ATTACK, DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Meowth extends PokemonCard {
-  public cardType = D;
-  public additionalCardTypes = [M];
+  public cardType: CardType[] = [D, M];
   public stage = Stage.BASIC;
   public hp = 50;
   public weakness = [{ type: F }];

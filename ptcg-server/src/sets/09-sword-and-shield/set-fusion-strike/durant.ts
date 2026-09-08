@@ -4,14 +4,14 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils } from '../../../game';
+import { StoreLike, State, StateUtils, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../../game/store/prefabs/attack-effects';
 
 export class Durant extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
@@ -41,7 +41,7 @@ export class Durant extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       const defendingCard = opponent.active.getPokemonCard();
 
-      if (defendingCard && defendingCard.cardType === CardType.FIRE) {
+      if (defendingCard && pokemonHasCardType(defendingCard, CardType.FIRE)) {
         YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
       }
     }

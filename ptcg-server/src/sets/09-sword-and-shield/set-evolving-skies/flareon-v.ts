@@ -21,7 +21,7 @@ import { PlayerType, SlotType, State, StoreLike } from '../../../game';
 export class FlareonV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V, CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 210;
   public weakness = [{ type: W }];
   public retreat = [C, C];

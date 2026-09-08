@@ -12,7 +12,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class HisuianOverqwil2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Hisuian Qwilfish';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public retreat = [C, C];

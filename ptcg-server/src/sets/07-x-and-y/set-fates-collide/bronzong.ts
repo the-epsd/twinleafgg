@@ -13,7 +13,7 @@ import { PREVENT_DAMAGE_TO_YOUR_BENCHED_POKEMON_FROM_OPPONENT_ATTACKS, PREVENT_E
 export class Bronzong extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Bronzor';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 100;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

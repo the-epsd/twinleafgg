@@ -13,7 +13,7 @@ import { ADD_POISON_TO_PLAYER_ACTIVE, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from
 export class Scolipede extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Whirlipede';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 150;
   public weakness = [{ type: P }];
   public retreat = [C, C, C, C];

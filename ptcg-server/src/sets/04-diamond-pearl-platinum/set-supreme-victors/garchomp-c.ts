@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class GarchompC extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_SP];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 80;
   public weakness = [{ type: C }];
   public retreat = [C];

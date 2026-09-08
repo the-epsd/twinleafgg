@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_P
 export class Wyrdeer extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Stantler';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 140;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

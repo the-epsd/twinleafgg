@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 
 export class Timburr extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 80;
   public weakness = [{ type: P }];
   public retreat = [C, C];

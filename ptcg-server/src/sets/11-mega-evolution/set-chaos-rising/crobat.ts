@@ -19,7 +19,7 @@ export class Crobat extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Golbat';
   public hp: number = 130;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];

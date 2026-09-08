@@ -11,7 +11,7 @@ export class Sylveonex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Eevee';
   protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 270;
   public weakness = [{ type: M }];
   public retreat = [C, C];

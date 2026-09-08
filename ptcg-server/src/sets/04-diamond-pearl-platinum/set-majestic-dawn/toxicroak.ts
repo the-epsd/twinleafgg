@@ -8,7 +8,7 @@ import { ADD_PARALYZED_TO_PLAYER_ACTIVE, ADD_POISON_TO_PLAYER_ACTIVE, COIN_FLIP_
 export class Toxicroak extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Croagunk';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 90;
   public weakness = [{ type: P, value: +20 }];
   public retreat = [C];

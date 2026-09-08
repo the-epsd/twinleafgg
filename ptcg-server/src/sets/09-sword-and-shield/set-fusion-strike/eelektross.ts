@@ -12,7 +12,7 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../../game/s
 export class Eelektross extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Eelektrik';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 160;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

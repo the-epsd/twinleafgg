@@ -19,7 +19,7 @@ import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 export class MorpekoVUNIONBottomLeft extends PokemonCard {
   public stage: Stage = Stage.VUNION;
   protected _tags = [CardTag.POKEMON_VUNION];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 310;
   public weakness = [{ type: F }];
   public retreat = [C, C];

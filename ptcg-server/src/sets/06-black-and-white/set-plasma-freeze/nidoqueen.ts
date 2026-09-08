@@ -6,7 +6,7 @@ import { State, StoreLike } from '../../../game';
 export class Nidoqueen extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Nidorina';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 130;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];

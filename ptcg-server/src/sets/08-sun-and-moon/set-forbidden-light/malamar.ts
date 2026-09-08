@@ -18,7 +18,7 @@ import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 export class Malamar extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Inkay';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 90;
   public weakness = [{ type: P }];
   public retreat = [C, C];

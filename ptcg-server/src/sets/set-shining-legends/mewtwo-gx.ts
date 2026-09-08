@@ -13,7 +13,7 @@ import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../game/store/p
 export class MewtwoGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_GX];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 190;
   public weakness = [{ type: P }];
   public retreat = [C, C];

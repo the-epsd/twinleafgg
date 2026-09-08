@@ -6,7 +6,7 @@ import { DRAW_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../game/store/p
 
 export class Mantine extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 110;
   public weakness = [{ type: L }];
   public retreat = [C];

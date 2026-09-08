@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../../ga
 export class Seaking extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Goldeen';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: G }];
   public retreat = [C, C];

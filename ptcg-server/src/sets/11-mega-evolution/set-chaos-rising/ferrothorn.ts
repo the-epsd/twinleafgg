@@ -10,7 +10,7 @@ export class Ferrothorn extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Ferroseed';
   public hp: number = 130;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C, C];

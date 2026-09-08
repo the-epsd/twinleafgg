@@ -14,7 +14,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Gothitelle extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Gothorita';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 140;
   public weakness = [{ type: P }];
   public retreat = [C, C];

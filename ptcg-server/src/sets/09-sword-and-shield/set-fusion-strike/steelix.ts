@@ -6,7 +6,7 @@ import { THIS_ATTACK_DOES_X_MORE_DAMAGE, WAS_ATTACK_USED } from '../../../game/s
 export class Steelix extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Onix';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 190;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];

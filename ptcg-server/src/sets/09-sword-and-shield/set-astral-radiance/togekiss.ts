@@ -12,7 +12,7 @@ import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 export class Togekiss extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Togetic';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 130;
   public weakness = [{ type: M }];
   public retreat = [C];

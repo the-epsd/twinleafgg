@@ -7,7 +7,7 @@ import { THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../../ga
 export class Groudon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 140;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
 

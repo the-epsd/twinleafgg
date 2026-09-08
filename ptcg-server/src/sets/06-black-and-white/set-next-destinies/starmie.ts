@@ -9,7 +9,7 @@ import { State, StoreLike } from '../../../game';
 export class Starmie extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Staryu';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: L }];
   public retreat = [];

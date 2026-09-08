@@ -9,7 +9,7 @@ import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefa
 export class StaraptorFB extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_SP];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 80;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

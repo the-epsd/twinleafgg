@@ -14,7 +14,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 export class GlaceonV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 210;
   public weakness = [{ type: M }];
   public retreat = [C, C];

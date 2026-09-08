@@ -7,7 +7,7 @@ import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../game/store/prefabs/effect
 
 export class Eevee extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 50;
   public resistance = [{ type: P, value: -30 }];
   public weakness = [{ type: F }];

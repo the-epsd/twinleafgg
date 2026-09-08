@@ -11,7 +11,7 @@ export class Dudunsparce extends PokemonCard {
 
   public evolvesFrom = 'Dunsparce';
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp: number = 140;
 

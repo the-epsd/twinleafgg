@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Nidoking extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Nidorino';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 140;
   public weakness = [{ type: W }];
   public resistance = [{ type: L, value: -20 }];

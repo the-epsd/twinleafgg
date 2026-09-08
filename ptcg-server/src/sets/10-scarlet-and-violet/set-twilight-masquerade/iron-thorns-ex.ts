@@ -24,7 +24,7 @@ import {
 export class IronThornsex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex, CardTag.FUTURE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 230;
   public weakness = [{ type: F }];
   public retreat = [C, C, C, C];

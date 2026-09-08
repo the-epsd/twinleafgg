@@ -24,7 +24,7 @@ import {
 export class Pikachuex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [CardType.LIGHTNING];
   public hp: number = 200;
   public weakness = [{ type: CardType.FIGHTING }];
   public retreat = [CardType.COLORLESS];

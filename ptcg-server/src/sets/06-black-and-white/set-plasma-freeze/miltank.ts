@@ -6,7 +6,7 @@ import { WAS_ATTACK_USED, DISCARD_ALL_ENERGY_FROM_POKEMON } from '../../../game/
 
 export class Miltank extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

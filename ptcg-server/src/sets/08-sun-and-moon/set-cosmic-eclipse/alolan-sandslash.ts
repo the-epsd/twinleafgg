@@ -6,7 +6,7 @@ import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-pre
 export class AlolanSandslash extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Alolan Sandshrew';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

@@ -17,7 +17,7 @@ import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT } from '
 export class Cloyster extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Shellder';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 130;
   public weakness = [{ type: L }];
   public retreat = [C, C];

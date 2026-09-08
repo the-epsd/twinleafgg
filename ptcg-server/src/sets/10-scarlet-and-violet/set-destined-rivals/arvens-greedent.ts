@@ -16,7 +16,7 @@ export class ArvensGreedent extends PokemonCard {
   protected _tags = [CardTag.ARVENS];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = "Arven's Skwovet";
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 120;
   public weakness = [{ type: F }];
   public retreat = [C, C];

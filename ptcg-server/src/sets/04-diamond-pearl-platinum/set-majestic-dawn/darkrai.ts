@@ -11,7 +11,7 @@ import { PowerEffect } from '../../../game/store/effects/game-effects';
 
 export class Darkrai extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 80;
   public weakness = [{ type: F, value: +20 }];
   public resistance = [{ type: F, value: -20 }];

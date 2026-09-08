@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED, THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEM
 export class Aegislash extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Doublade';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 140;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -20 }];

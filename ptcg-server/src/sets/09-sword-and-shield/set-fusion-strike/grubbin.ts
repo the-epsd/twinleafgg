@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO
 
 export class Grubbin extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public retreat = [C, C];

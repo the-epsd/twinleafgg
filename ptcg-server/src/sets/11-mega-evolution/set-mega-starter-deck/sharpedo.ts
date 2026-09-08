@@ -8,7 +8,7 @@ import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/s
 export class Sharpedo extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Carvanha';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 120;
   public weakness = [{ type: G }];
   public retreat = [C];

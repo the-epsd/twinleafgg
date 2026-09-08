@@ -9,7 +9,7 @@ import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-pre
 export class LatiosGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 170;
   public weakness = [{ type: P }];
   public retreat = [];

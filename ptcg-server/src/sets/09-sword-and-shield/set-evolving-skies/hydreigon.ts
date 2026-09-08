@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Hydreigon extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Zweilous';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 170;
   public retreat = [C, C, C];
 

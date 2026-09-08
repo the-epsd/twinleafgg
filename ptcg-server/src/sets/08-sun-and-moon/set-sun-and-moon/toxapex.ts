@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs
 export class Toxapex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Mareanie';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 110;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];

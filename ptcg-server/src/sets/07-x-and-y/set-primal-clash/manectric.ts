@@ -15,7 +15,7 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../../game/s
 export class Manectric extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Electrike';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

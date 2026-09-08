@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, BLOCK_IF_DECK_EMPTY, SEARCH_DECK_FOR_CARDS_TO_HAND } f
 export class Slowking extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Slowpoke';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 120;
   public weakness = [{ type: P }];
   public retreat = [C, C];

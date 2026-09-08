@@ -5,7 +5,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class PalkiaDialgaLEGEND extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
   public cardType2: CardType = CardType.METAL;
   public hp: number = 160;
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];

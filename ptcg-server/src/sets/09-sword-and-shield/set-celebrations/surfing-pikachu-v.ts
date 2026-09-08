@@ -4,7 +4,7 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 export class SurfingPikachuV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_V];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 200;
   public weakness = [{ type: F }];
   public retreat = [C];

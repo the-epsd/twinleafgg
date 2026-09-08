@@ -7,7 +7,7 @@ import { MOVE_CARDS, WAS_ATTACK_USED, FLIP_UNTIL_TAILS_AND_COUNT_HEADS } from '.
 export class Gyarados extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Magikarp';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 170;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];

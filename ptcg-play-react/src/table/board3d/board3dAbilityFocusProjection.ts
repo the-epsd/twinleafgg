@@ -2,7 +2,7 @@ import type { PerspectiveCamera } from 'three';
 import { Vector3, type Mesh } from 'three';
 import type { AbilityFocusAnchor, AbilityFocusPoint } from '../BoardInteractionService';
 
-/** Matches {@link getBoard3dCardBoxGeometry} (2.5 × 3.5 × 0.02). */
+/** Matches {@link getBoard3dCardGeometry} footprint (2.5 × 3.5 × 0.02). */
 const CARD_HALF_W = 1.25;
 const CARD_HALF_H = 1.75;
 const CARD_HALF_D = 0.01;

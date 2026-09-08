@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/
 
 export class Registeel extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 130;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

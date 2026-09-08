@@ -4,7 +4,7 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 export class LarrysStaravia extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.LARRYS];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

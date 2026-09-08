@@ -7,7 +7,7 @@ import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/
 
 export class Barboach extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 70;
   public weakness = [{ type: G }];
   public retreat = [C, C];

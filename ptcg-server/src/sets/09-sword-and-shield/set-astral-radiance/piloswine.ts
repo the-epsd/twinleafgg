@@ -12,7 +12,7 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 export class Piloswine extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Swinub';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: M }];
   public retreat = [C, C, C];

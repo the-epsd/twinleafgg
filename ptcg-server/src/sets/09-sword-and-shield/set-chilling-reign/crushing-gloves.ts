@@ -4,7 +4,7 @@
 
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils } from '../../../game';
+import { StoreLike, State, StateUtils, pokemonHasCardType } from '../../../game';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { IS_TOOL_BLOCKED } from '../../../game/store/prefabs/prefabs';
@@ -32,7 +32,7 @@ export class CrushingGloves extends TrainerCard {
       }
 
       const targetCard = effect.target.getPokemonCard();
-      if (targetCard && targetCard.cardType === CardType.METAL) {
+      if (targetCard && pokemonHasCardType(targetCard, CardType.METAL)) {
         effect.damage += 30;
       }
     }

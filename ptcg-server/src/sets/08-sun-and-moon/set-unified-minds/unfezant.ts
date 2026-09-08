@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../../game/store/prefabs/prefa
 export class Unfezant extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Tranquill';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 140;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

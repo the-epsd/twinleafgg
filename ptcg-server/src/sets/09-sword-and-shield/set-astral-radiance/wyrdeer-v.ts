@@ -24,7 +24,7 @@ import {
 } from '../../../game/store/prefabs/prefabs';
 
 export class WyrdeerV extends PokemonCard {
-  public cardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   protected _tags = [CardTag.POKEMON_V];
 

@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, DISCARD_TOP_X_OF_OPPONENTS_DECK } from '../../../game/
 
 export class Sandile extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 70;
   public weakness = [{ type: G }];
   public retreat = [C, C];

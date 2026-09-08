@@ -13,7 +13,7 @@ import { DeckEditPane } from '../deck-edit-panes/deck-edit-pane.interface';
 import { DeckEditToolbarFilter } from '../deck-edit-toolbar/deck-edit-toolbar-filter.interface';
 import { DeckService } from '../../api/services/deck.service';
 // import { FileDownloadService } from '../../shared/file-download/file-download.service';
-import { Card, EnergyCard, EnergyType, PokemonCard, SuperType, TrainerCard, TrainerType, Archetype, Format, Stage, CardType, ApiErrorEnum } from 'ptcg-server';
+import { Card, EnergyCard, EnergyType, PokemonCard, SuperType, TrainerCard, TrainerType, Archetype, Format, Stage, CardType, ApiErrorEnum, getPrimaryCardType } from 'ptcg-server';
 import { cardReplacements, exportReplacements, setCodeReplacements } from './card-replacements';
 import { SleeveService } from 'src/app/api/services/sleeve.service';
 import { SleeveInfo } from 'src/app/api/interfaces/sleeve.interface';
@@ -439,7 +439,7 @@ export class DeckEditComponent implements OnInit, AfterViewInit, OnDestroy {
       const pokemonB = b.card as PokemonCard;
 
       // First sort by card type
-      const typeCompare = compareCardType(pokemonA.cardType) - compareCardType(pokemonB.cardType);
+      const typeCompare = compareCardType(getPrimaryCardType(pokemonA)) - compareCardType(getPrimaryCardType(pokemonB));
       if (typeCompare !== 0) return typeCompare;
 
       // Then sort by name

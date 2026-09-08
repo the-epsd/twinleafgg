@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND } from 
 
 export class Klink extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 60;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
@@ -37,7 +37,7 @@ export class Klink extends PokemonCard {
     // Ref: set-sword-and-shield/mawile.ts (SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, player, { cardType: CardType.METAL }, { min: 0, max: 1 });
+      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, player, { cardType: [CardType.METAL] }, { min: 0, max: 1 });
     }
 
     return state;

@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, DISCARD_ALL_ENERGY
 
 export class Zapdos extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 110;
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C, C];

@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardTag } from '../../../game/store/card/card-types';
+import { CardType, Stage, CardTag } from '../../../game/store/card/card-types';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { Effect } from '../../../game/store/effects/effect';
@@ -15,7 +15,7 @@ export class GalarianRapidashV extends PokemonCard {
   public regulationMark = 'E';
   protected _tags = [CardTag.POKEMON_V];
   public stage = Stage.BASIC;
-  public cardType = P;
+  public cardType: CardType[] = [P];
   public hp = 210;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

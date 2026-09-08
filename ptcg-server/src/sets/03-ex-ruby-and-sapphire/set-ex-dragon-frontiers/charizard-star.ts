@@ -24,7 +24,7 @@ import {
 export class CharizardStar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.STAR, CardTag.DELTA_SPECIES];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 90;
   public weakness = [{ type: W }];
   public retreat = [C, C, C];

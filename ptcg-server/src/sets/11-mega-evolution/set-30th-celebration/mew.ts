@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Mew extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 60;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];

@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, SEARCH_DISCARD_PILE_FOR_CA
 export class Kirlia extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Ralts';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: P }];
   public retreat = [C];

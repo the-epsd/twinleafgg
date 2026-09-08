@@ -10,7 +10,7 @@ import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects
 export class Clefairy extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 50;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

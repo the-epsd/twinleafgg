@@ -7,7 +7,7 @@ export class Flareonex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Eevee';
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 110;
   public weakness = [{ type: W }];
   public retreat = [C];

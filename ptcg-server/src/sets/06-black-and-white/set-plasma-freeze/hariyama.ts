@@ -5,7 +5,7 @@ import { AFTER_ATTACK, COIN_FLIP_PROMPT, ADD_PARALYZED_TO_PLAYER_ACTIVE, WAS_ATT
 export class Hariyama extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Makuhita';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 120;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];

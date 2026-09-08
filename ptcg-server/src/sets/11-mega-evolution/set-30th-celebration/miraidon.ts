@@ -8,7 +8,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 export class Miraidon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 120;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public weakness = [{ type: F }];
   public retreat = [C];
 

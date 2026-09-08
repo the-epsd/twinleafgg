@@ -14,7 +14,7 @@ export class Magikarp extends PokemonCard {
 
   public fullName = 'Magikarp BS';
 
-  public cardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public stage = Stage.BASIC;
 

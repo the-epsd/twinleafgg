@@ -6,7 +6,7 @@ import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Voltorb extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 50;
   public weakness = [{ type: F }];
   public resistance: Resistance[] = [];

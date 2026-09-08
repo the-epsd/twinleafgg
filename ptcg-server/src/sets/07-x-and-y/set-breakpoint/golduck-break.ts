@@ -35,7 +35,7 @@ export class GolduckBreak extends PokemonCard {
   protected _tags = [CardTag.BREAK];
   public stage: Stage = Stage.BREAK;
   public evolvesFrom: string = 'Golduck';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 140;
   public retreat = [];
 

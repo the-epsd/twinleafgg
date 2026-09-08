@@ -12,7 +12,7 @@ import { CardList } from '../../../game/store/state/card-list';
 
 export class Minccino extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public retreat = [C];

@@ -4,7 +4,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 export class Omanyte extends PokemonCard {
   public stage: Stage = Stage.RESTORED;
   public evolvesFrom = 'Helix Fossil Omanyte';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 80;
   public weakness = [{ type: G }];
   public retreat = [C, C];

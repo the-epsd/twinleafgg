@@ -9,10 +9,10 @@
   </ng-template>
 </dnd-preview>
 
-<!-- Only show the prompt UI if it's NOT a board overlay prompt and not minimized -->
+<!-- Only show the prompt UI if it's NOT a board overlay / silent wait and not minimized -->
 <div class="ptcg-prompt">
 
-  <div class="ptcg-prompt-container-wrapper" *ngIf="prompt && !isFullScreenPrompt() && !minimized">
+  <div class="ptcg-prompt-container-wrapper" *ngIf="prompt && !isOverlayPrompt() && !minimized">
     <div class="ptcg-prompt-container" [@state]="animationState" (@state.done)="onAnimationEnd($event)">
       <div [ngSwitch]="prompt.type">
         <ptcg-prompt-confirm *ngSwitchCase="'Confirm'" [gameState]="gameState" [prompt]="prompt"></ptcg-prompt-confirm>
@@ -48,7 +48,8 @@
           [prompt]="prompt"></ptcg-prompt-select-option>
         <ptcg-prompt-show-mulligan *ngSwitchCase="'Show mulligan'" [gameState]="gameState"
           [prompt]="prompt"></ptcg-prompt-show-mulligan>
-        <div *ngSwitchDefault translate [translateParams]="{type: prompt?.type}">PROMPT_UNKNOWN_TYPE</div>
+        <!-- Handled outside this dialog (WaitPrompt / board overlays) — never show UNKNOWN -->
+        <ng-container *ngSwitchDefault></ng-container>
       </div>
     </div>
   </div>
@@ -74,4 +75,5 @@
   [prompt]="prompt">
 </ptcg-prompt-choose-cards>
 
+<!-- Silent and visual waits resolve here without a dialog (matches React SilentWaitPrompt / WaitPromptPanel timer) -->
 <ptcg-prompt-wait *ngIf="prompt?.type === 'WaitPrompt'" [gameState]="gameState" [prompt]="prompt"></ptcg-prompt-wait>

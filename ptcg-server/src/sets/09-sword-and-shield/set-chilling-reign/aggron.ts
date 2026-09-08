@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Aggron extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Lairon';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 180;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

@@ -19,7 +19,7 @@ export class KingdraGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Seadra';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 230;
   public weakness = [{ type: G }];
   public retreat = [C, C];

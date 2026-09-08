@@ -14,7 +14,7 @@ export class Charizard extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Charmeleon';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 120;
   public weakness = [{ type: W }];
   public resistance = [{ type: F, value: -30 }];

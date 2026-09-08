@@ -19,7 +19,7 @@ export class SalamenceGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Shelgon';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 250;
   public weakness = [{ type: Y }];
   public retreat = [C, C];

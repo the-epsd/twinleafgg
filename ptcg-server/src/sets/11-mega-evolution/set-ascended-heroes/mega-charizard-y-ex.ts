@@ -8,7 +8,7 @@ export class MegaCharizardYex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Charmeleon';
   protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 360;
   public weakness = [{ type: W }];
   public resistance = [];

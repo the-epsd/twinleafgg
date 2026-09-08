@@ -11,7 +11,7 @@ import { JUST_EVOLVED, IS_ABILITY_BLOCKED, DRAW_CARDS } from '../../../game/stor
 export class Manectric extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Electrike';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 120;
   public weakness = [{ type: F }];
   public retreat = [];

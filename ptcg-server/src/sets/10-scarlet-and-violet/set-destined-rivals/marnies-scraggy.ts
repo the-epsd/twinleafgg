@@ -8,7 +8,7 @@ import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 export class MarniesScraggy extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.MARNIES];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 70;
   public weakness = [{ type: G }];
   public retreat = [C];

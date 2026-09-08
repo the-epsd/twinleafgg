@@ -6,7 +6,7 @@ import { COIN_FLIP_PROMPT, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED }
 
 export class Snubbull extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 70;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

@@ -64,7 +64,7 @@ export class GrimsleysGambit extends TrainerCard {
         player,
         GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
         deckTop,
-        { superType: SuperType.POKEMON, cardType: CardType.DARK },
+        { superType: SuperType.POKEMON, cardType: [CardType.DARK] },
         { min: 0, max: 1, allowCancel: false }
       ), selectedCards => {
         cards = selectedCards || [];

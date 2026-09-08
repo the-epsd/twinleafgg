@@ -4,7 +4,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 export class Pawmo extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Pawmi';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];

@@ -13,7 +13,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 export class Excadrill extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Drilbur';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 100;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

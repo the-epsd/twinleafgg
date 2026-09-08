@@ -9,7 +9,7 @@ export class Gyarados extends PokemonCard {
   public fullName = 'Gyarados BS';
   public name = 'Gyarados';
 
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Magikarp';
 

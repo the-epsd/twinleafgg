@@ -24,8 +24,7 @@ import { CheckPokemonPowersEffect } from '../../../game/store/effects/check-effe
 export class EnteiAndRaikouLegendTop extends PokemonCard {
   public stage: Stage = Stage.LEGEND;
   protected _tags = [CardTag.LEGEND, CardTag.DUAL_LEGEND];
-  public cardType = R;
-  public additionalCardTypes = [L];
+  public cardType: CardType[] = [R, L];
   public hp: number = 140;
   public weakness = [{ type: W }, { type: F }];
   public retreat = [];

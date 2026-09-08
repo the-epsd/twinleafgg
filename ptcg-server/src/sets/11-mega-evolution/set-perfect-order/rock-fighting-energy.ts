@@ -1,3 +1,4 @@
+import { pokemonHasCardTypeOptional } from '../../../game';
 import { CardType, EnergyType } from '../../../game/store/card/card-types';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { AbstractAttackEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
@@ -31,7 +32,7 @@ Prevent all effects of attacks used by your opponent\'s Pokémon done to the [F]
     }
 
     // Prevent effects of attacks
-    if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard()?.cardType === CardType.FIGHTING) {
+    if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this) && pokemonHasCardTypeOptional(effect.target.getPokemonCard(), CardType.FIGHTING)) {
       const targetOwner = StateUtils.findOwner(state, effect.target);
       const opponent = StateUtils.getOpponent(state, targetOwner);
       if (IS_SPECIAL_ENERGY_BLOCKED(store, state, opponent, this, effect.target)) {

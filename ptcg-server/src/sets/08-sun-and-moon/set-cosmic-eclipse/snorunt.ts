@@ -11,7 +11,7 @@ import { FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_DAMAGE_PER_HEADS } from '../../../
 
 export class Snorunt extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 60;
   public weakness = [{ type: M }];
   public retreat = [C, C];

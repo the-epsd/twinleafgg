@@ -13,7 +13,7 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED, YOUR_OPPPONENTS_ACTIVE_
 export class Muk extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Grimer';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

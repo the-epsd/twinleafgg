@@ -12,7 +12,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 export class Magcargo extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Slugma';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 120;
   public weakness = [{ type: W }];
   public retreat = [C, C, C];

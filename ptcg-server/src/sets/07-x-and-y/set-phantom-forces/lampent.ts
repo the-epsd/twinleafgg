@@ -12,7 +12,7 @@ export class Lampent extends PokemonCard {
 
   public evolvesFrom: string = 'Litwick';
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 70;
 

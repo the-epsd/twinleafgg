@@ -10,7 +10,7 @@ import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/p
 
 export class Tympole extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 60;
   public weakness = [{ type: G }];
   public retreat = [C];

@@ -11,7 +11,7 @@ export class Dodrio extends PokemonCard {
 
   public evolvesFrom = 'Doduo';
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp: number = 70;
 

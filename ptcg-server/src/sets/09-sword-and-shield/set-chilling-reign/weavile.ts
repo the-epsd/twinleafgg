@@ -9,7 +9,7 @@ export class Weavile extends PokemonCard {
   protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Sneasel';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 110;
   public weakness = [{ type: M }];
   public retreat = [C];

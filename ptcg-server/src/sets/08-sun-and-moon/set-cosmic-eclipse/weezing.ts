@@ -7,7 +7,7 @@ import { reduceBlowAwayBombEffect } from './blow-away-bomb';
 export class Weezing extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Koffing';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 100;
   public weakness = [{ type: P }];
   public retreat = [C];

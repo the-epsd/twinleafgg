@@ -46,7 +46,7 @@ function* useStrongCharge(next: Function, store: StoreLike, state: State, effect
 export class Vikavolt extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Charjabug';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 150;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

@@ -8,7 +8,7 @@ import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../../game/stor
 export class Gabite2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Gible';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 80;
   public weakness = [{ type: N }];
   public retreat = [C];

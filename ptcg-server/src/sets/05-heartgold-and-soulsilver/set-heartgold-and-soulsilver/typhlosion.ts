@@ -43,7 +43,7 @@ export class Typhlosion extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Quilava';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 140;
   public weakness = [{ type: W }];
   public retreat = [C, C];

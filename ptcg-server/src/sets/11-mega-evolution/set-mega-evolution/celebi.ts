@@ -1,12 +1,12 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, TrainerType } from '../../../game/store/card/card-types';
 import { SEARCH_DECK_FOR_CARDS_TO_HAND, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { State, StoreLike, TrainerCard } from '../../../game';
+import { State, StoreLike, TrainerCard, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 export class Celebi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public retreat = [C];
@@ -39,7 +39,7 @@ export class Celebi extends PokemonCard {
 
       const blocked: number[] = [];
       player.deck.cards.forEach((c, index) => {
-        const isGrassPokemon = c instanceof PokemonCard && c.cardType === CardType.GRASS;
+        const isGrassPokemon = c instanceof PokemonCard && pokemonHasCardType(c, CardType.GRASS);
         const isStadiumCard = c instanceof TrainerCard && c.trainerType === TrainerType.STADIUM;
         if (!isGrassPokemon && !isStadiumCard) {
           blocked.push(index);

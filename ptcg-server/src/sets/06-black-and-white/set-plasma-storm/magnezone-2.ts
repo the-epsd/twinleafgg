@@ -12,7 +12,7 @@ import { ATTACH_ENERGY_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefa
 export class Magnezone2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Magneton';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 140;
   public weakness = [{ type: F }];
   public retreat = [C, C];

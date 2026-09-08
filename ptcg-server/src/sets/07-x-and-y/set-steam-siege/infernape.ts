@@ -14,7 +14,7 @@ import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../../game/store/prefabs/prefa
 export class Infernape extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Monferno';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 130;
   public weakness = [{ type: W }];
   public retreat = [C];

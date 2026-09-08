@@ -9,7 +9,7 @@ import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs
 export class Golduck extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Psyduck';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 110;
   public weakness = [{ type: G }];
   public retreat = [C];

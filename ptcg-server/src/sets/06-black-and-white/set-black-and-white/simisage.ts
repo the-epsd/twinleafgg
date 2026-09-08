@@ -8,7 +8,7 @@ import { AttackEffect } from '../../../game/store/effects/game-effects';
 export class Simisage extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Pansage';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -20 }];

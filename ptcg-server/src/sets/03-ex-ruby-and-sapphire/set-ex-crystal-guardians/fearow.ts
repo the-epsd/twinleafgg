@@ -21,7 +21,7 @@ export class Fearow extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Spearow';
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 60;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

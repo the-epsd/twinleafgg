@@ -11,7 +11,7 @@ export class Excadrill extends PokemonCard {
 
   public evolvesFrom = 'Drilbur';
 
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp: number = 140;
 

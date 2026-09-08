@@ -7,7 +7,7 @@ import { THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN, WAS_ATTACK_USED } from '
 
 export class Terrakion extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 120;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];

@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Sigilyph extends PokemonCard {
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 90;
 

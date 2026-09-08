@@ -7,7 +7,7 @@ import { AFTER_ATTACK, COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/stor
 export class Tauros extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 60;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -30 }];
   public retreat = [C, C];

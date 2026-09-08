@@ -10,7 +10,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Luvdisc extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 70;
   public weakness = [{ type: G }];
   public retreat = [C];

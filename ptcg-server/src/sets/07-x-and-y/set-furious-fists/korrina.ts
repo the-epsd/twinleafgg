@@ -11,7 +11,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { GameError } from '../../../game';
+import { GameError, pokemonHasCardType } from '../../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Korrina, effect: TrainerEffect): IterableIterator<State> {
@@ -31,7 +31,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   player.deck.cards.forEach((c, index) => {
     if (c instanceof TrainerCard && c.trainerType === TrainerType.ITEM) {
       trainers += 1;
-    } else if (c instanceof PokemonCard && c.cardType === CardType.FIGHTING) {
+    } else if (c instanceof PokemonCard && pokemonHasCardType(c, CardType.FIGHTING)) {
       pokemons += 1;
     } else {
       blocked.push(index);

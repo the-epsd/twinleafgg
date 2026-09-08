@@ -15,7 +15,7 @@ export class GyaradosVMAX extends PokemonCard {
 
   public evolvesFrom = 'Gyarados V';
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp: number = 330;
 

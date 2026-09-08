@@ -8,7 +8,7 @@ import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/
 export class Lanturn extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Chinchou';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

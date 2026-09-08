@@ -7,7 +7,7 @@ import { ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_
 export class Hydreigon extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Zweilous';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 140;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];

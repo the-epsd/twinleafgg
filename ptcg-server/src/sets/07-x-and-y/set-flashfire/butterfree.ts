@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, SHUFFLE_DECK, SHOW_CARDS_TO_PLAYER } from '../../../ga
 export class Butterfree extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Metapod';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 130;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

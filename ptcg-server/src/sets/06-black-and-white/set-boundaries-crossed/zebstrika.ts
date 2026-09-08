@@ -11,7 +11,7 @@ import { ATTACH_ENERGY_PROMPT, COIN_FLIP_PROMPT, THIS_POKEMON_DOES_DAMAGE_TO_ITS
 export class Zebstrika extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Blitzle';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public retreat = [C];

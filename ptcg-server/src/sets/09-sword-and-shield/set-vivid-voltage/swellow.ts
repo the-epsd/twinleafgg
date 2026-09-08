@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO
 export class Swellow extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Taillow';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

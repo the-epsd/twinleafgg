@@ -35,7 +35,7 @@ export class HolonsElectrode extends PokemonCard implements EnergyCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = "Holon's Voltorb";
   protected _tags = [CardTag.HOLONS];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [];
@@ -70,8 +70,6 @@ export class HolonsElectrode extends PokemonCard implements EnergyCard {
   // EnergyCard interface properties
   public text: string = '';
   public isBlocked = false;
-  public blendedEnergies: CardType[] = [];
-  public blendedEnergyCount = 1;
   public energyEffect: any = undefined;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

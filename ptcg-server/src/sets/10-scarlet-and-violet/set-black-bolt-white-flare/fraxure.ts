@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage } from '../../../game/store/card/card-types';
+import { CardType, Stage } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Fraxure extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Axew';
-  public cardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 100;
   public weakness = [];
   public resistance = [];

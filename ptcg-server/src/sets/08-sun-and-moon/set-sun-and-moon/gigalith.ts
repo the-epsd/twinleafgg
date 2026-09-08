@@ -13,7 +13,7 @@ import { DISCARD_UP_TO_X_TYPE_ENERGY_FROM_YOUR_POKEMON } from '../../../game/sto
 export class Gigalith extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Boldore';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 160;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];

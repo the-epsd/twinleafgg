@@ -12,8 +12,7 @@ import { State, StoreLike } from '../../../game';
 export class TeamAquasCacnea extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.TEAM_AQUA];
-  public cardType: CardType = G;
-  public additionalCardTypes = [D];
+  public cardType: CardType[] = [G, D];
   public hp: number = 50;
   public weakness = [{ type: R }];
   public retreat = [C];

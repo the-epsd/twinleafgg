@@ -9,7 +9,7 @@ import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-pref
 export class Carnivine extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.RAPID_STRIKE];
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 110;
   public weakness = [{ type: R }];
   public retreat = [C, C];

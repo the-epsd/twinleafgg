@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 export class Servine extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Snivy';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 100;
   public weakness = [{ type: R }];
   public retreat = [C];

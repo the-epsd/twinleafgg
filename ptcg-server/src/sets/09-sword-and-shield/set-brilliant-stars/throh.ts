@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Throh extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 120;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];

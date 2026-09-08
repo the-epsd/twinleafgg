@@ -10,7 +10,7 @@ import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 
 export class Thwackey extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
   public hp: number = 90;
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
   public weakness = [{ type: CardType.FIRE }];

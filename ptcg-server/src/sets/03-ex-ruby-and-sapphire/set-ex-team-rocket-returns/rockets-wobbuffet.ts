@@ -17,7 +17,7 @@ import { OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK } from '../../../game/store/pr
 export class RocketsWobbuffet extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.ROCKETS];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 70;
   public weakness = [{ type: P }];
   public retreat = [C];

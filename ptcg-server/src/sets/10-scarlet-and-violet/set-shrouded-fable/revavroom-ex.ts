@@ -15,7 +15,7 @@ export class Revavroomex extends PokemonCard {
 
   public evolvesFrom = 'Varoom';
 
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [CardType.LIGHTNING];
 
   public hp: number = 280;
 

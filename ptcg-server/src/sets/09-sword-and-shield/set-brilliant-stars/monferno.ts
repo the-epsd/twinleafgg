@@ -7,7 +7,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 
 export class Monferno extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public evolvesFrom = 'Chimchar';
   public hp: number = 80;
   public weakness = [{ type: W }];

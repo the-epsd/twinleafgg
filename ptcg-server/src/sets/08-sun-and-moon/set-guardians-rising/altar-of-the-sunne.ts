@@ -1,6 +1,6 @@
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameError, GameMessage } from '../../../game';
+import { StoreLike, State, StateUtils, GameError, GameMessage, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
 import { CheckPokemonStatsEffect } from '../../../game/store/effects/check-effects';
@@ -27,7 +27,7 @@ export class AltarOfTheSunne extends TrainerCard {
       }
 
       if (pokemonCard instanceof PokemonCard) {
-        if (pokemonCard.cardType === CardType.FIRE || pokemonCard.cardType === CardType.METAL) {
+        if (pokemonHasCardType(pokemonCard, CardType.FIRE) || pokemonHasCardType(pokemonCard, CardType.METAL)) {
           effect.weakness = [];
         }
       }

@@ -8,7 +8,7 @@ import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/s
 export class Excadrill extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Drilbur';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 110;
   public weakness = [{ type: W }];
   public resistance = [{ type: L, value: -20 }];

@@ -6,7 +6,7 @@ export class Seismitoad extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Palpitoad';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 140;
   public weakness: Weakness[] = [{ type: G }];
   public retreat: CardType[] = [C, C, C];

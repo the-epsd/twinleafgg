@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store
 export class Aggron extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Lairon';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 140;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

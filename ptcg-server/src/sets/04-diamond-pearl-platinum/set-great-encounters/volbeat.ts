@@ -8,7 +8,7 @@ import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_POWER_USED, W
 
 export class Volbeat extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: R, value: +20 }];
   public retreat = [C];

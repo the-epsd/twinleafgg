@@ -6,7 +6,7 @@ import { NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS } from "../../../game/store/prefabs/
 export class DodrioV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V, CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 200;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

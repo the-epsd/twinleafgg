@@ -10,7 +10,7 @@ export class Kangaskhanex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public regulationMark = 'G';
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 230;
   public weakness = [{ type: F }];
   public retreat = [C, C];

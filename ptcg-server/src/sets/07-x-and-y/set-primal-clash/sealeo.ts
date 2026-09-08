@@ -10,7 +10,7 @@ import { State, StoreLike } from '../../../game';
 export class Sealeo extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Spheal';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: M }];
   public retreat = [C, C, C];

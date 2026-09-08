@@ -15,7 +15,7 @@ export class Electrode extends PokemonCard {
   protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Voltorb';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];

@@ -7,7 +7,7 @@ import { ADD_SLEEP_TO_PLAYER_ACTIVE, HEAL_X_DAMAGE_FROM_THIS_POKEMON, WAS_ATTACK
 
 export class Wailmer extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 80;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];

@@ -8,7 +8,7 @@ import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefa
 export class AlolanRaichu extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Pikachu';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 110;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

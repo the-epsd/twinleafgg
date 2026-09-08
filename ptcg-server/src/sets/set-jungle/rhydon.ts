@@ -9,7 +9,7 @@ import { AFTER_ATTACK, SWITCH_OUT_OPPONENT_ACTIVE_POKEMON, WAS_ATTACK_USED } fro
 export class Rhydon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Rhyhorn';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 100;
   public weakness = [{ type: G }];
   public resistance = [{ type: L, value: -30 }];

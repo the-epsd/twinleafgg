@@ -12,7 +12,7 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED, YOUR_OPPPONENTS_ACTIVE_
 export class Dustox extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Cascoon';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 140;
   public weakness = [{ type: R }];
   public retreat = [C];

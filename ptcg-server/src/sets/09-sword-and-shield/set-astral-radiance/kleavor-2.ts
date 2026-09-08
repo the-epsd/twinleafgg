@@ -12,7 +12,7 @@ import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/
 export class Kleavor2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Scyther';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 140;
   public weakness = [{ type: G }];
   public retreat = [C, C];

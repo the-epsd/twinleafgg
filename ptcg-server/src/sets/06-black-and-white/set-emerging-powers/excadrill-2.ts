@@ -9,7 +9,7 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 export class Excadrill2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Drilbur';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 120;
   public weakness = [{ type: W }];
   public resistance = [{ type: L, value: -20 }];

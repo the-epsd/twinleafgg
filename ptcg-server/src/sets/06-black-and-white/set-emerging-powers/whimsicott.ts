@@ -9,7 +9,7 @@ import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-pr
 export class Whimsicott extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Cottonee';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -20 }];

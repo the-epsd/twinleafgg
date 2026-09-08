@@ -10,7 +10,7 @@ export class HopsSandaconda extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = "Hop's Silicobra";
   protected _tags = [CardTag.HOPS];
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 90;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

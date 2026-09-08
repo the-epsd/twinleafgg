@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, ADD_MARKER, HAS_MARKER } from '../../../game/store/pre
 
 export class Tentacool extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 60;
   public weakness = [{ type: G }];
   public retreat = [C];

@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 export class Machoke extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Machop';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 100;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];

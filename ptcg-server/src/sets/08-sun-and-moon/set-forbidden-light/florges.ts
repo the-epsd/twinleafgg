@@ -8,7 +8,7 @@ import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-pre
 export class Florges extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Floette';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 120;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

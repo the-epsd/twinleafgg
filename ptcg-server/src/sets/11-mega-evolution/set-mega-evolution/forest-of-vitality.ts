@@ -1,4 +1,4 @@
-import { PlayerType, State, StateUtils, StoreLike } from '../../../game';
+import { PlayerType, State, StateUtils, StoreLike, pokemonHasCardType } from '../../../game';
 import { CardType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
@@ -19,7 +19,7 @@ export class LushForest extends TrainerCard {
   reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && StateUtils.getStadiumCard(state) === this) {
       const player = effect.player;
-      if (state.turn <= 2 || effect.pokemonCard.cardType !== CardType.GRASS) {
+      if (state.turn <= 2 || !pokemonHasCardType(effect.pokemonCard, CardType.GRASS)) {
         return state;
       }
 

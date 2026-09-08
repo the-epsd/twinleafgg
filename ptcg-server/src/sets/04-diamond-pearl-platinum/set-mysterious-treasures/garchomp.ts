@@ -8,7 +8,7 @@ import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 export class Garchomp extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Gabite';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 130;
   public weakness = [{ type: C, value: +30 }];
   public retreat = [];

@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Pawniard extends PokemonCard {
   public regulationMark = 'G';
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public resistance = [{ type: G, value: -30 }];

@@ -12,7 +12,7 @@ export class Beartic extends PokemonCard {
   protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Cubchoo';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 130;
   public weakness = [{ type: M }];
   public retreat = [C, C, C, C];

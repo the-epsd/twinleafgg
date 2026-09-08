@@ -8,7 +8,7 @@ import { DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK } from '../../../game/store/pref
 
 export class Audino extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public retreat = [C, C];

@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/pref
 
 export class Flareon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 70;
   public weakness = [{ type: W }];
   public retreat = [C];

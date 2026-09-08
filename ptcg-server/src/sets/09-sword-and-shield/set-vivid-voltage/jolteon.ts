@@ -15,7 +15,7 @@ import { HANDLE_ABILITY_LOCK } from '../../../game/store/prefabs/ability-lock';
 export class Jolteon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Eevee';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public retreat = [C];

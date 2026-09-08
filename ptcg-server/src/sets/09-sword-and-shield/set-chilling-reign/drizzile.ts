@@ -20,7 +20,7 @@ export class Drizzile extends PokemonCard {
 
   protected _tags = [CardTag.RAPID_STRIKE];
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp: number = 90;
 

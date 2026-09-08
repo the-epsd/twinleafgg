@@ -10,7 +10,7 @@ import { DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK } from '../../../game/store/pref
 export class Weezing extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Koffing';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: P }];
   public retreat = [C];

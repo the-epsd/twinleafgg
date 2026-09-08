@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, DRAW_CARDS, COIN_FLIP_PROMPT } from '../../../game/sto
 export class Furret extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Sentret';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 110;
   public weakness = [{ type: F }];
   public retreat = [C];

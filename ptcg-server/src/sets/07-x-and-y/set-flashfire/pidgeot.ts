@@ -9,7 +9,7 @@ import { NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/attack-effec
 export class Pidgeot extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Pidgeotto';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 130;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

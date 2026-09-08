@@ -10,7 +10,7 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs
 
 export class GalarianZapdos extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
   public hp: number = 110;
   public weakness = [{ type: CardType.PSYCHIC }];
   public retreat = [];

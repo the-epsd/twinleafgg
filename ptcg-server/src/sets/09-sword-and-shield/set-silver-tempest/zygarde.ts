@@ -12,7 +12,7 @@ import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-
 
 export class Zygarde extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 90;
   public retreat = [C];
 

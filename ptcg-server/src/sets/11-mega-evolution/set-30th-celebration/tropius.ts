@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED, WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN } f
 export class Tropius extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 120;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public weakness = [{ type: R }];
   public retreat = [C, C];
 

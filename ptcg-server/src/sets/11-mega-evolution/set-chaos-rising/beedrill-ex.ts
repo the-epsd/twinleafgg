@@ -9,7 +9,7 @@ export class Beedrillex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex];
   public evolvesFrom = 'Kakuna';
   public hp: number = 310;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public weakness = [{ type: R }];
   public retreat = [C];
 

@@ -12,7 +12,7 @@ export class MTyranitarEx extends PokemonCard {
   protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Tyranitar-EX';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 240;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

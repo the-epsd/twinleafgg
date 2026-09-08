@@ -13,7 +13,7 @@ import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefab
 export class Kyogreex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 100;
   public weakness = [{ type: L }];
   public retreat = [C, C];

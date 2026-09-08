@@ -4,10 +4,10 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { State, StoreLike } from '../../../game';
+import { State, StoreLike, pokemonHasCardType } from '../../../game';
 export class Cryogonal extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 80;
   public weakness = [{ type: M }];
   public retreat = [C];
@@ -44,7 +44,7 @@ export class Cryogonal extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       const defendingPokemon = opponent.active.getPokemonCard();
 
-      if (defendingPokemon && defendingPokemon.cardType === CardType.FIGHTING) {
+      if (defendingPokemon && pokemonHasCardType(defendingPokemon, CardType.FIGHTING)) {
         (effect as AttackEffect).damage += 40;
       }
     }

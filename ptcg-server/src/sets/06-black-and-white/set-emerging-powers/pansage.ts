@@ -6,7 +6,7 @@ import { WAS_ATTACK_USED, DRAW_CARDS } from '../../../game/store/prefabs/prefabs
 
 export class Pansage extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -20 }];

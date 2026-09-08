@@ -12,7 +12,7 @@ export class Kleavor extends PokemonCard {
 
   public evolvesFrom: string = 'Scyther';
 
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp: number = 140;
 

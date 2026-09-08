@@ -17,7 +17,7 @@ import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/pre
 export class LeafeonVSTAR extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Leafeon V';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 260;
   protected _tags = [CardTag.POKEMON_VSTAR];
   public weakness = [{ type: R }];

@@ -22,7 +22,7 @@ import { MOVE_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../game/store/p
 export class RaichuV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_V];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 200;
   public weakness = [{ type: F }];
   public retreat = [C];

@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage } from '../../game/store/card/card-types';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { Attack } from '../../game/store/card/pokemon-types';
 
 import { Effect } from '../../game/store/effects/effect';
@@ -20,7 +20,7 @@ export class Farfetchd extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '27';
 
-  public cardType = C;
+  public cardType: CardType[] = [C];
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];

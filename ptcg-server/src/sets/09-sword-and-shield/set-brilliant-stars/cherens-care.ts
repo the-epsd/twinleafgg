@@ -8,7 +8,7 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
-import { PokemonCard } from '../../../game';
+import { PokemonCard, pokemonHasCardType } from '../../../game';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
@@ -29,7 +29,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   let hasColorlessPokemon = false;
 
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-    const isColorlessPokemon = card.cardType === CardType.COLORLESS;
+    const isColorlessPokemon = pokemonHasCardType(card, CardType.COLORLESS);
     hasColorlessPokemon = hasColorlessPokemon || isColorlessPokemon;
     if (!isColorlessPokemon) {
       blocked.push(target);

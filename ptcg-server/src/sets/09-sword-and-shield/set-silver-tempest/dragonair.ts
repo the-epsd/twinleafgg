@@ -10,7 +10,7 @@ import { State, StoreLike } from '../../../game';
 export class Dragonair extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Dratini';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 100;
   public retreat = [C, C];
 

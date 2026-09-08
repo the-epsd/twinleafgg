@@ -4,7 +4,7 @@ import { CardType, Stage } from '../../../game/store/card/card-types';
 export class Sprigatito extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 70;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public weakness = [{ type: R }];
   public retreat = [C];
 

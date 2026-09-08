@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/pre
 
 export class Giratina extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
   public hp: number = 130;
   public weakness = [{ type: CardType.DARK }];
   public resistance = [{ type: CardType.FIGHTING, value: -20 }];

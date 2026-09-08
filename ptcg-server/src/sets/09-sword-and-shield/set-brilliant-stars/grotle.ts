@@ -9,7 +9,7 @@ import { ABILITY_USED, IS_ABILITY_BLOCKED, MOVE_CARDS, SHUFFLE_DECK, WAS_POWER_U
 export class Grotle extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Turtwig';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 100;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
@@ -64,7 +64,7 @@ export class Grotle extends PokemonCard {
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
-        { superType: SuperType.POKEMON, cardType: CardType.GRASS },
+        { superType: SuperType.POKEMON, cardType: [CardType.GRASS] },
         { min: 0, max: 1, allowCancel: false }
       ), cards => {
         ABILITY_USED(player, this);

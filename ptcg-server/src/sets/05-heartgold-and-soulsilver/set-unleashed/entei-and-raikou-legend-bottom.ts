@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardTag } from '../../../game/store/card/card-types';
+import { CardType, Stage, CardTag } from '../../../game/store/card/card-types';
 import {
   GameError,
   GameMessage,
@@ -15,8 +15,7 @@ import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 export class EnteiAndRaikouLegendBottom extends PokemonCard {
   public stage: Stage = Stage.LEGEND;
   protected _tags = [CardTag.LEGEND, CardTag.DUAL_LEGEND];
-  public cardType = R;
-  public additionalCardTypes = [L];
+  public cardType: CardType[] = [R, L];
   public hp: number = 140;
   public weakness = [{ type: W }, { type: F }];
   public retreat = [];

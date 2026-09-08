@@ -10,7 +10,7 @@ import { NEXT_TURN_ATTACK_BASE_DAMAGE } from '../../../game/store/prefabs/attack
 
 export class AlolanRattata extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 40;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

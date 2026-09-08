@@ -6,7 +6,7 @@ import { State, StoreLike } from '../../../game';
 export class Elgyem extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: P }];
   public retreat = [C];

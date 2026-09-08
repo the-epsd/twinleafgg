@@ -19,7 +19,7 @@ import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/eff
 export class IronBundle extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.FUTURE];
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
   public hp: number = 100;
   public weakness = [{ type: CardType.LIGHTNING }];
   public retreat = [CardType.COLORLESS];

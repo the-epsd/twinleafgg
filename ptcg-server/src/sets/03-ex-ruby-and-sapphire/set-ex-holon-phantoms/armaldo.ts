@@ -9,8 +9,7 @@ export class Armaldo extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Anorith';
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = CardType.FIGHTING;
-  public additionalCardTypes = [CardType.METAL];
+  public cardType: CardType[] = [CardType.FIGHTING, CardType.METAL];
   public hp: number = 110;
   public weakness = [{ type: CardType.GRASS }];
   public retreat = [C, C, C];

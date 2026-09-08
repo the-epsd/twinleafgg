@@ -10,7 +10,7 @@ import {
 export class Laprasex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 210;
   public weakness = [{ type: L }];
   public retreat = [C, C];

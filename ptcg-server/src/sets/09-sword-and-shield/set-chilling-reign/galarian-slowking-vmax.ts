@@ -13,7 +13,7 @@ export class GalarianSlowkingVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX, CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Galarian Slowking V';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 320;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

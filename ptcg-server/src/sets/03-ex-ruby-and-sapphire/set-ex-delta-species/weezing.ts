@@ -8,7 +8,7 @@ import { IS_POKEBODY_BLOCKED, THIS_ATTACK_DOES_X_DAMAGE_TO_EACH_OF_YOUR_OPPONENT
 export class Weezing extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Koffing';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: P }];
   public retreat = [C, C];

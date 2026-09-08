@@ -5,7 +5,7 @@ import { WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_
 export class Nidoqueen extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Nidorina';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 170;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

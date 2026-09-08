@@ -18,7 +18,7 @@ import { DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../../game/store/pr
 export class DuskManeNecrozma extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 130;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C];

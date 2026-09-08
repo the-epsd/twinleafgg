@@ -7,7 +7,7 @@ export class LarrysDudunsparceex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = "Larry's Dunsparce";
   protected _tags = [CardTag.POKEMON_ex, CardTag.LARRYS];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 270;
   public weakness = [{ type: F }];
   public resistance = [];

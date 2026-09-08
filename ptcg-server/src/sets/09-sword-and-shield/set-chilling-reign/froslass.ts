@@ -50,7 +50,7 @@ function* useLeParfum(next: Function, store: StoreLike, state: State,
 export class Froslass extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Snorunt';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: M }];
   public retreat = [C];

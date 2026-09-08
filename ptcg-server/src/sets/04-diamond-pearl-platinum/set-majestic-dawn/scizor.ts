@@ -8,7 +8,7 @@ import { THIS_ATTACK_DOES_X_MORE_DAMAGE, WAS_ATTACK_USED } from '../../../game/s
 export class Scizor extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Scyther';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 90;
   public weakness = [{ type: R, value: +30 }];
   public resistance = [{ type: P, value: -20 }];

@@ -10,7 +10,7 @@ import { THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../../ga
 
 export class Klink extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 40;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

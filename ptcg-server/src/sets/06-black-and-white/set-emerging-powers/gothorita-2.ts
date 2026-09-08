@@ -10,7 +10,7 @@ import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 export class Gothorita2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Gothita';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: P }];
   public retreat = [C];

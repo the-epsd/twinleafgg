@@ -12,7 +12,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 export class Glalie extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Snorunt';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 130;
   public weakness = [{ type: M }];
   public retreat = [C, C];

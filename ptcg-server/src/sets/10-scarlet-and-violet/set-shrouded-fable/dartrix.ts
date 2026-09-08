@@ -13,7 +13,7 @@ export class Dartrix extends PokemonCard {
 
   public evolvesFrom = 'Rowlet';
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 90;
 

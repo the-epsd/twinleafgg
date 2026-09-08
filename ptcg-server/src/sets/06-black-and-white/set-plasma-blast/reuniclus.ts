@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store
 export class Reuniclus extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Duosion';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 100;
   public weakness = [{ type: P }];
   public retreat = [C, C];

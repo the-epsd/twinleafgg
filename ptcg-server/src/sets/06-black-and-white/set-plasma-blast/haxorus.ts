@@ -9,7 +9,7 @@ import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/
 export class Haxorus extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Fraxure';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 140;
   public weakness = [{ type: N }];
   public retreat = [C, C];

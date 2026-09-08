@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED, THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN, WAS_POWER_USED, 
 export class GalarianObstagoon extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Galarian Linoone';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 170;
   public weakness = [{ type: G }];
   public retreat = [C, C];

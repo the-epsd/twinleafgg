@@ -12,7 +12,7 @@ export class RadiantHisuianSneasler extends PokemonCard {
 
   protected _tags = [CardTag.RADIANT];
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp: number = 130;
 

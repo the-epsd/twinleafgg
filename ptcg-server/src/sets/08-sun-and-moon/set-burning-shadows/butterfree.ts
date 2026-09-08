@@ -20,7 +20,7 @@ import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, WAS_ATT
 export class Butterfree extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Metapod';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public retreat = [C];

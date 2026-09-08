@@ -13,7 +13,7 @@ import { WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_
 export class Togekiss extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Togetic';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 140;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

@@ -22,7 +22,7 @@ export class AlolanExeggutorGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Exeggcute';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 220;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];

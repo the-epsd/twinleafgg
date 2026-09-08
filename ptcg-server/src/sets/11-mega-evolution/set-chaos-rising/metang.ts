@@ -7,7 +7,7 @@ export class Metang extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Beldum';
   public hp: number = 100;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C];

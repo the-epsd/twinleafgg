@@ -16,7 +16,7 @@ export class Cetitan extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp: number = 180;
 

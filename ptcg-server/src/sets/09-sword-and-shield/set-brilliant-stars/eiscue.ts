@@ -20,7 +20,7 @@ export class Eiscue extends PokemonCard {
 
   protected _tags = [CardTag.FUSION_STRIKE];
 
-  public cardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp = 110;
 

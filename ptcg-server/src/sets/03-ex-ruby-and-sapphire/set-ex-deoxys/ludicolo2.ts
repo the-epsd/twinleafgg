@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED, WAS_POWER_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../
 export class Ludicolo2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Lombre';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 100;
   public weakness = [{ type: L }];
   public retreat = [C, C];

@@ -13,7 +13,7 @@ import { PlayerType, PowerType, State, StoreLike } from '../../../game';
 export class Aurorus extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Amaura';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 130;
   public weakness = [{ type: M }];
   public retreat = [C, C, C];

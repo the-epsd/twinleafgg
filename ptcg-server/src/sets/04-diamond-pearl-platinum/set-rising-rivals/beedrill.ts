@@ -9,7 +9,7 @@ import { ADD_PARALYZED_TO_PLAYER_ACTIVE, ADD_POISON_TO_PLAYER_ACTIVE, BLOCK_IF_H
 export class Beedrill extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Kakuna';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 110;
   public weakness = [{ type: R, value: +30 }];
   public retreat = [C];
@@ -59,7 +59,7 @@ export class Beedrill extends PokemonCard {
 
       BLOCK_IF_HAS_SPECIAL_CONDITION(player, this);
 
-      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, player, { cardType: CardType.GRASS }, { min: 0, max: 1, allowCancel: false });
+      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, player, { cardType: [CardType.GRASS] }, { min: 0, max: 1, allowCancel: false });
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {

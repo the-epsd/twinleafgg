@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, ATTACH_ENERGY_PROMPT } from '../../../game/store/prefa
 
 export class Skiddo extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public retreat = [C];

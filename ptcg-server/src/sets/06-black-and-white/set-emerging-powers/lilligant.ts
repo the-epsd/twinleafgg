@@ -9,7 +9,7 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../../game/st
 export class Lilligant extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Petilil';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -20 }];

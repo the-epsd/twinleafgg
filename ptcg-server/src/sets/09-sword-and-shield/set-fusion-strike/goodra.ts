@@ -12,7 +12,7 @@ import { AttachEnergyEffect } from '../../../game/store/effects/play-card-effect
 export class Goodra extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Sliggoo';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 160;
   public retreat = [C, C, C];
 

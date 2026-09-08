@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, JUST_EVOLVED, IS_ABILITY_BLOCKED, DRAW_CARDS } from '.
 export class Bewear extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Stufful';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public retreat = [C, C];

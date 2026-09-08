@@ -11,7 +11,7 @@ export class Magneton extends PokemonCard {
   public fullName = 'Magneton BS';
   public name = 'Magneton';
 
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Magnemite';
 

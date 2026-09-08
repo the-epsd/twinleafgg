@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, StoreLike, State, CardTag } from '../../../game';
+import { CardType, PokemonCard, Stage, StoreLike, State, CardTag } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { DRAW_CARDS, AFTER_ATTACK } from '../../../game/store/prefabs/prefabs';
 
@@ -7,7 +7,7 @@ export class EthansPichu extends PokemonCard {
 
   protected _tags = [CardTag.ETHANS];
 
-  public cardType = L;
+  public cardType: CardType[] = [L];
 
   public hp = 30;
 

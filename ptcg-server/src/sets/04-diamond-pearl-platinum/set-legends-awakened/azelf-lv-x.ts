@@ -31,7 +31,7 @@ export class AzelfLVX extends PokemonCard {
   public stage = Stage.LV_X;
   public evolvesFrom = 'Azelf';
   protected _tags = [CardTag.POKEMON_LV_X];
-  public cardType = P;
+  public cardType: CardType[] = [P];
   public hp = 90;
   public weakness = [{ type: P }];
   public retreat = [C];

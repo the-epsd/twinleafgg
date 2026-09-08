@@ -4,7 +4,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 export class AlolanGraveler extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Alolan Geodude';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

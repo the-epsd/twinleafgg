@@ -1,4 +1,4 @@
-import { PlayerType, State, StoreLike } from '../../../game';
+import { PlayerType, State, StoreLike, pokemonHasCardType } from '../../../game';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -10,7 +10,7 @@ import {
 export class TeamMagmasZangoose extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.TEAM_MAGMA];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -43,7 +43,7 @@ export class TeamMagmasZangoose extends PokemonCard {
       effect.player.deck.cards.forEach((card, index) => {
         if (
           card instanceof PokemonCard &&
-          (card.cardType === CardType.COLORLESS || card.hasTag(CardTag.TEAM_MAGMA))
+          (pokemonHasCardType(card, CardType.COLORLESS) || card.hasTag(CardTag.TEAM_MAGMA))
         ) {
           return;
         } else {

@@ -43,7 +43,7 @@ export class Slowbro extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Slowpoke';
   public hp: number = 60;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public weakness = [{ type: P }];
   public retreat = [C];
 

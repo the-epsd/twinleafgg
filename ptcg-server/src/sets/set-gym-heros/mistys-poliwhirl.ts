@@ -9,7 +9,7 @@ export class MistysPoliwhirl extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = "Misty's Poliwag";
   protected _tags = [CardTag.MISTYS];
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 70;
   public weakness = [{ type: G }];
   public retreat = [C, C];

@@ -12,7 +12,7 @@ import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/s
 export class Poliwrath extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Poliwhirl';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 140;
   public weakness = [{ type: G }];
   public retreat = [C, C];

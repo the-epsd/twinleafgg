@@ -38,7 +38,7 @@ function* useCallForFamily(next: Function, store: StoreLike, state: State, effec
 
 export class Eevee extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
   public hp: number = 60;
   public weakness = [{ type: CardType.FIGHTING }];
   public retreat = [CardType.COLORLESS];

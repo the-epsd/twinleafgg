@@ -4,7 +4,7 @@ import { CardType, Stage } from '../../../game/store/card/card-types';
 export class Tinkatink extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 70;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C];

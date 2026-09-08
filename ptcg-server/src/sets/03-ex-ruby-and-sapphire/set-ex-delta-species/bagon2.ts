@@ -8,7 +8,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 export class Bagon2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 50;
   public weakness = [{ type: C }];
   public resistance = [

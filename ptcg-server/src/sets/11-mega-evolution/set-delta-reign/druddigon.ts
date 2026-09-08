@@ -6,7 +6,7 @@ import { AFTER_ATTACK, SWITCH_IN_OPPONENT_BENCHED_POKEMON } from '../../../game/
 
 export class Druddigon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 120;
   public weakness = [];
   public retreat = [C, C];

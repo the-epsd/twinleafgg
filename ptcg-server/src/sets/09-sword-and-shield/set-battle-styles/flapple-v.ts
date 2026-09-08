@@ -6,7 +6,7 @@ import { DEFENDING_POKEMON_ATTACKS_COST_MORE } from "../../../game/store/prefabs
 export class FlappleV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_V];
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 190;
   public weakness = [{ type: R }];
   public resistance = [];

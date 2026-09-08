@@ -20,7 +20,7 @@ export class Feraligatr extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Croconaw';
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 120;
   public weakness = [{ type: L }];
   public retreat = [C, C];

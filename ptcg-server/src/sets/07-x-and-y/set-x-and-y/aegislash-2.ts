@@ -9,7 +9,7 @@ import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-pre
 export class Aegislash2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Doublade';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 140;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

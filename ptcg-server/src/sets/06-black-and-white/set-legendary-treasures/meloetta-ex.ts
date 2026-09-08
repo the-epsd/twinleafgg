@@ -19,7 +19,7 @@ import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/p
 export class MeloettaEX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_EX];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 110;
   public weakness: Weakness[] = [{ type: P }];
   public retreat: CardType[] = [C];

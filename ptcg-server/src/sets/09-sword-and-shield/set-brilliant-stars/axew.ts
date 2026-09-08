@@ -45,7 +45,7 @@ function* useUltraEvolution(next: Function, store: StoreLike, state: State,
 
 export class Axew extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 60;
   public weakness = [];
   public resistance = [];

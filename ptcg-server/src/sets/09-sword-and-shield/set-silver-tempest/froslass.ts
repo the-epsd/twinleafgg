@@ -13,7 +13,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 export class Froslass extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Snorunt';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: M }];
   public retreat = [C];

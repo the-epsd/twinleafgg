@@ -7,7 +7,7 @@ import { countHideNSneakPokemonInDiscard } from './hide-n-sneak';
 
 export class Dhelmise extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 140;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

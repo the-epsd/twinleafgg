@@ -3,6 +3,12 @@ import { LocalGameState } from '../../../shared/session/session.interface';
 import { Prompt } from 'ptcg-server';
 import { GameService } from '../../../api/services/game.service';
 
+/** Draw-supporter animation gates — Angular has no hand/deck flights, so skip the wait. */
+const SKIP_WAIT_MESSAGES = new Set([
+  'Hand to deck animation',
+  'Deck shuffle animation',
+]);
+
 @Component({
   selector: 'ptcg-prompt-wait',
   templateUrl: './prompt-wait.component.html',
@@ -19,6 +25,13 @@ export class PromptWaitComponent implements OnInit {
   }
 
   ngOnInit() {
+    const message = this.waitMessage;
+    if (message && SKIP_WAIT_MESSAGES.has(message)) {
+      // Resolve on next tick so the prompt is fully mounted before we clear it.
+      setTimeout(() => this.resolve(), 0);
+      return;
+    }
+
     const duration = (this.prompt as any)?.duration;
     if (duration) {
       setTimeout(() => {

@@ -13,7 +13,7 @@ export class KommoOGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Hakamo-o';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 240;
   public weakness = [{ type: Y }];
   public retreat = [C, C];

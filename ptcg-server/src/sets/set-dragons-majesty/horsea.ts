@@ -7,7 +7,7 @@ import { DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefa
 
 export class Horsea extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 40;
   public weakness = [{ type: G }];
   public retreat = [C];

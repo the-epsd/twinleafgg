@@ -43,7 +43,7 @@ function* useCallForFamily(next: Function, store: StoreLike, state: State,
 
 export class Inkay extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
   public hp: number = 50;
   public weakness = [{ type: CardType.GRASS }];
   public retreat = [CardType.COLORLESS];

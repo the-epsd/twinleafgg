@@ -15,7 +15,7 @@ export class Raikou extends PokemonCard {
 
   public regulationMark = 'D';
 
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [CardType.LIGHTNING];
 
   public hp: number = 110;
 

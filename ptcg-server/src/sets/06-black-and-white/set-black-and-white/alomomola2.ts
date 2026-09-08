@@ -6,7 +6,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { EnergyCard, State, StoreLike } from '../../../game';
 export class Alomomola2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 100;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];

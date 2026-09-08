@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Shelgon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Bagon';
-  public cardType: CardType = CardType.DRAGON;
+  public cardType: CardType[] = [CardType.DRAGON];
   public hp: number = 100;
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 

@@ -169,6 +169,8 @@ export function CreateGameInviteDialog({ open, onClose, invitedClientId }: Creat
         invitedClientId,
         deckId,
         deckRes.deck.sleeveImagePath,
+        deckRes.deck.deckBoxImagePath,
+        deckRes.deck.coinImagePath,
       );
       showSnackbar(t('REACT_INVITE_GAME_STARTED'));
       onClose();

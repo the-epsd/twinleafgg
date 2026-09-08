@@ -5,7 +5,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { Attack, State, StoreLike } from '../../../game';
 export class Dratini extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 40;
   public weakness = [{ type: N }];
   public retreat = [C];

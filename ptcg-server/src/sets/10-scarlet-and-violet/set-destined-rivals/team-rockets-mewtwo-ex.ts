@@ -22,7 +22,7 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs
 export class TeamRocketsMewtwoex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.TEAM_ROCKET, CardTag.POKEMON_ex];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 280;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

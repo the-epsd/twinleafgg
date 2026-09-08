@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../../ga
 
 export class Blitzle extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

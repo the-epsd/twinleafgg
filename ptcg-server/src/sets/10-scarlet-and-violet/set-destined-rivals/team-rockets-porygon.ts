@@ -11,7 +11,7 @@ import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs
 export class TeamRocketsPorygon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.TEAM_ROCKET];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public retreat = [C];

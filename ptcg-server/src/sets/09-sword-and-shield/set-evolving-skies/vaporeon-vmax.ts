@@ -10,7 +10,7 @@ import {
   SuperType,
   EnergyType,
 } from '../../../game/store/card/card-types';
-import { GameMessage, PokemonCardList, StoreLike, State, StateUtils } from '../../../game';
+import { GameMessage, PokemonCardList, StoreLike, State, StateUtils, pokemonHasCardType } from '../../../game';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, ATTACH_ENERGY_PROMPT } from '../../../game/store/prefabs/prefabs';
@@ -21,7 +21,7 @@ export class VaporeonVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX, CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Vaporeon V';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 320;
   public weakness = [{ type: L }];
   public retreat = [C, C];
@@ -64,7 +64,7 @@ export class VaporeonVmax extends PokemonCard {
 
       // Check for Water Pokemon in discard
       const waterPokemonInDiscard = player.discard.cards.filter(
-        (c) => c instanceof PokemonCard && c.cardType === CardType.WATER,
+        (c) => c instanceof PokemonCard && pokemonHasCardType(c, CardType.WATER),
       );
 
       if (waterPokemonInDiscard.length === 0) {
@@ -78,7 +78,7 @@ export class VaporeonVmax extends PokemonCard {
           player,
           GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
           player.discard,
-          { superType: SuperType.POKEMON, cardType: CardType.WATER },
+          { superType: SuperType.POKEMON, cardType: [CardType.WATER] },
           { min: 1, max: 1, allowCancel: false },
         ),
         (selected) => {

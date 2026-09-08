@@ -26,7 +26,7 @@ import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/pre
 export class Squawkabillyex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
   public hp: number = 160;
   public weakness = [{ type: CardType.LIGHTNING }];
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];

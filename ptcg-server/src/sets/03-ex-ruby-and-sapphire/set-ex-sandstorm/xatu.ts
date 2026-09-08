@@ -7,7 +7,7 @@ import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, HAS_MARKER, R
 export class Xatu extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Natu';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public weakness = [{ type: P }];
   public resistance = [{ type: F, value: -30 }];

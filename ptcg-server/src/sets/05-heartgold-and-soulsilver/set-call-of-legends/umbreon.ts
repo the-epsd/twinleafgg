@@ -10,7 +10,7 @@ import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefa
 export class Umbreon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Eevee';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

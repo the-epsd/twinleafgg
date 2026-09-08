@@ -72,7 +72,7 @@ export class LilliesComfey extends PokemonCard {
 
   protected _tags = [CardTag.LILLIES];
 
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
 
   public hp: number = 70;
 

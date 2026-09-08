@@ -12,7 +12,7 @@ import { AFTER_ATTACK, COIN_FLIP_PROMPT, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_
 export class Lopunny extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Buneary';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];

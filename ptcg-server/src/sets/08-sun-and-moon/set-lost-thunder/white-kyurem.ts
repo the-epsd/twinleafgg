@@ -12,7 +12,7 @@ export class WhiteKyurem extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp: number = 130;
 
@@ -71,7 +71,7 @@ export class WhiteKyurem extends PokemonCard {
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, player.active);
       store.reduceEffect(state, checkProvidedEnergy);
 
-      const hasFireEnergy = checkProvidedEnergy.energyMap.some(e => e.provides.includes(CardType.ANY) || e.provides.includes(CardType.FIRE) || e.provides.includes(CardType.GRW) || e.provides.includes(CardType.GRPD));
+      const hasFireEnergy = checkProvidedEnergy.energyMap.some(e => e.provides.includes(CardType.ANY) || e.provides.includes(CardType.FIRE));
 
       if (hasFireEnergy) {
         effect.damage += 80;

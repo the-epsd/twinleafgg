@@ -11,7 +11,7 @@ import { IS_ABILITY_BLOCKED, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH, CO
 
 export class Goomy extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 40;
   public weakness = [{ type: Y }];
   public retreat = [C, C];

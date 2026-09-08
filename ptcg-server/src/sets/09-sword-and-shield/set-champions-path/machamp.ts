@@ -4,14 +4,14 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State } from '../../../game';
+import { StoreLike, State, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../../game/store/prefabs/prefabs';
 
 export class Machamp extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Machoke';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 170;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];
@@ -42,11 +42,11 @@ export class Machamp extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Macho Revenge
     // Ref: set-rebel-clash/spiritomb.ts (Dripping Grudge - count PokemonCard in discard)
-    // Ref: set-primal-clash/maxies-hidden-ball-trick.ts (c instanceof PokemonCard && c.cardType === CardType.FIGHTING)
+    // Ref: set-primal-clash/maxies-hidden-ball-trick.ts (c instanceof PokemonCard && pokemonHasCardType(c, CardType.FIGHTING))
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const fightingCount = player.discard.cards.filter(
-        c => c instanceof PokemonCard && c.cardType === CardType.FIGHTING
+        c => c instanceof PokemonCard && pokemonHasCardType(c, CardType.FIGHTING)
       ).length;
       effect.damage = 20 * fightingCount;
     }

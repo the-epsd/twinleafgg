@@ -9,7 +9,7 @@ export class NsVanillish extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = "N's Vanillite";
   protected _tags = [CardTag.NS];
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 100;
   public weakness = [{ type: M }];
   public resistance = [];

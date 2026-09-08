@@ -25,7 +25,7 @@ export class BlazikenVMAX extends PokemonCard {
   public stage: Stage = Stage.VMAX;
   protected _tags = [CardTag.POKEMON_VMAX, CardTag.RAPID_STRIKE];
   public evolvesFrom = 'Blaziken V';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 320;
   public weakness = [{ type: W }];
   public retreat = [C, C];

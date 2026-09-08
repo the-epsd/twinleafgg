@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage } from '../../../game/store/card/card-types';
+import { CardType, Stage } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
@@ -10,7 +10,7 @@ export class Baltoy extends PokemonCard {
 
   public stage = Stage.BASIC;
 
-  public cardType = F;
+  public cardType: CardType[] = [F];
 
   public hp = 50;
 

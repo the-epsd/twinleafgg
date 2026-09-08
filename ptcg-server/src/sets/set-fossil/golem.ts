@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Golem extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
   public hp: number = 80;
   public weakness = [{ type: CardType.GRASS }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];

@@ -24,7 +24,7 @@ export class BlisseyV extends PokemonCard {
 
   protected _tags = [CardTag.POKEMON_V];
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp: number = 250;
 

@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 
 export class Spritzee extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 50;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

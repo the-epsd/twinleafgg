@@ -5,7 +5,7 @@ import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/
 
 export class Marill extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public weakness = [{ type: M }];
   public resistance = [];

@@ -12,7 +12,7 @@ import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store
 export class Altaria extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Swablu';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 80;
   public weakness = [{ type: N }];
   public retreat = [C];

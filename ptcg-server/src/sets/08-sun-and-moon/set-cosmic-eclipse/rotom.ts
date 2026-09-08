@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, DRAW_CARDS, ATTACH_ENERGY_PROMPT } from '../../../game
 
 export class Rotom extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -20 }];

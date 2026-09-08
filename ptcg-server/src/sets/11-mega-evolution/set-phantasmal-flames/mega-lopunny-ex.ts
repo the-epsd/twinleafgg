@@ -11,7 +11,7 @@ import { StateUtils } from '../../../game';
 export class MegaLopunnyex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Buneary';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_SV_MEGA];
   public hp: number = 330;
   public weakness = [{ type: F }];

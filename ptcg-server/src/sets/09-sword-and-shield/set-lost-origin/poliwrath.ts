@@ -12,7 +12,7 @@ import { State, StoreLike } from '../../../game';
 export class Poliwrath extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Poliwhirl';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 160;
   public weakness = [{ type: P }];
   public retreat = [C, C];

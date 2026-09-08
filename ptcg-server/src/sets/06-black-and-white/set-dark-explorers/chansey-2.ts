@@ -6,7 +6,7 @@ import { WAS_ATTACK_USED, FLIP_UNTIL_TAILS_AND_COUNT_HEADS } from '../../../game
 
 export class Chansey2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public retreat = [C, C];

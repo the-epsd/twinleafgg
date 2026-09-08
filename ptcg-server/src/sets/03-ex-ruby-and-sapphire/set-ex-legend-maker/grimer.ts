@@ -39,7 +39,7 @@ function* useAscension(next: Function, store: StoreLike, state: State,
 
 export class Grimer extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 40;
   public weakness = [{ type: P }];
   public retreat = [C];

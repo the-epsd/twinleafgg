@@ -15,7 +15,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Crustle extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Dwebble';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 150;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];

@@ -12,7 +12,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 export class Salamence extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Shelgon';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 160;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C, C];

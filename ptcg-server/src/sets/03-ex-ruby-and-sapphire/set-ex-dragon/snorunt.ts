@@ -6,7 +6,7 @@ import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK } from '../../../game/store/pr
 
 export class Snorunt extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 50;
   public weakness = [{ type: M }];
   public retreat = [C];

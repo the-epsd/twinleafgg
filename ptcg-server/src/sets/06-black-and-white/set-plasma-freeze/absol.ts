@@ -15,7 +15,7 @@ import { SHOW_CARDS_TO_PLAYER, WAS_ATTACK_USED } from '../../../game/store/prefa
 
 export class Absol extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   protected _tags = [CardTag.TEAM_PLASMA];
   public hp: number = 100;
   public weakness: Weakness[] = [{ type: F }];

@@ -9,7 +9,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 
 export class Goodra extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 160;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];
@@ -61,9 +61,7 @@ export class Goodra extends PokemonCard {
         const energyMap = checkWaterEnergy.energyMap.find(element => element.card === effect.energyCard);
         const providedEnergy = energyMap?.provides;
         if (providedEnergy?.includes(CardType.WATER)
-          || providedEnergy?.includes(CardType.ANY)
-          || providedEnergy?.includes(CardType.WLFM)
-          || providedEnergy?.includes(CardType.GRW)) {
+          || providedEnergy?.includes(CardType.ANY)) {
           const healEffect = new HealEffect(effect.player, effect.target, 20);
           return store.reduceEffect(state, healEffect);
         }

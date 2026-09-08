@@ -20,7 +20,7 @@ export class DarkDragonair extends PokemonCard {
   protected _tags = [CardTag.DARK];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Dratini';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 60;
   public resistance = [{ type: P, value: -30 }];
   public retreat = [C, C];

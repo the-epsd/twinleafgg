@@ -1,3 +1,4 @@
+import { pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
@@ -34,7 +35,7 @@ export class ArchiesAceInTheHole extends TrainerCard {
       const cards = player.hand.cards.filter(c => c !== this);
 
       const hasPokemon = player.discard.cards.some(c => {
-        return c instanceof PokemonCard && c.cardType === CardType.WATER;
+        return c instanceof PokemonCard && pokemonHasCardType(c, CardType.WATER);
       });
 
       const slot = player.bench.find(b => b.cards.length === 0);
@@ -55,7 +56,7 @@ export class ArchiesAceInTheHole extends TrainerCard {
         player,
         GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
         player.discard,
-        { superType: SuperType.POKEMON, cardType: CardType.WATER },
+        { superType: SuperType.POKEMON, cardType: [CardType.WATER] },
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         const cards = selected || [];

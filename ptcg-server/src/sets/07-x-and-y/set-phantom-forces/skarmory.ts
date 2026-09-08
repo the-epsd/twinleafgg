@@ -11,7 +11,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 
 export class Skarmory extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 100;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

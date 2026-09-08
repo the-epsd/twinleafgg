@@ -28,7 +28,7 @@ import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../../game/store/prefabs/prefa
 export class FlorgesEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 160;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

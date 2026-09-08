@@ -16,7 +16,7 @@ import { DRAW_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs
 export class TalonflameV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_V];
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 190;
   public weakness: Weakness[] = [{ type: L }];
   public resistance: Resistance[] = [{ type: F, value: -30 }];

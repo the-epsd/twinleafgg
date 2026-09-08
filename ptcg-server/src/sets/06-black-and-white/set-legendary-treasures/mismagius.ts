@@ -12,7 +12,7 @@ import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/att
 export class Mismagius extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Misdreavus';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 100;
   public weakness = [{ type: D }];
   public retreat = [C];

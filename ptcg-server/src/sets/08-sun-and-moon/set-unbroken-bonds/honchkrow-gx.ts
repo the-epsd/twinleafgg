@@ -27,7 +27,7 @@ export class HonchkrowGX extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Murkrow';
   protected _tags = [CardTag.POKEMON_GX];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 210;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

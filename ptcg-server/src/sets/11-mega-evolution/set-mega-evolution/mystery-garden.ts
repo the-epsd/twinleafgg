@@ -1,4 +1,4 @@
-import { Card, CardType, GameError, GameMessage, PlayerType, PokemonCard, State, StateUtils, StoreLike, SuperType, TrainerCard, TrainerType } from '../../../game';
+import { Card, CardType, GameError, GameMessage, PlayerType, PokemonCard, State, StateUtils, StoreLike, SuperType, TrainerCard, TrainerType, pokemonHasCardType } from '../../../game';
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
@@ -31,7 +31,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
 
   let psychicPokemon = 0;
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-    if (card instanceof PokemonCard && card.cardType === CardType.PSYCHIC) {
+    if (card instanceof PokemonCard && pokemonHasCardType(card, CardType.PSYCHIC)) {
       psychicPokemon++;
     }
   });

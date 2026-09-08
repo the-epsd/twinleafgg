@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF
 export class Golem extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Graveler';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 180;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];

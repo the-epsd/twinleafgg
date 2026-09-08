@@ -8,7 +8,7 @@ import { CONFIRMATION_PROMPT, GET_PLAYER_BENCH_SLOTS, IS_ABILITY_BLOCKED, TAKE_S
 
 export class Chansey extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 110;
   public weakness = [{ type: F }];
   public retreat = [C, C];

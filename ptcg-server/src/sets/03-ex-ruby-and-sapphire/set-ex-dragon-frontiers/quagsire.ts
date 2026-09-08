@@ -19,7 +19,7 @@ export class Quagsire extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Wooper';
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: G }];
   public retreat = [C];

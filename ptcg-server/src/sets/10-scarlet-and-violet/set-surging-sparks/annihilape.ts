@@ -6,7 +6,7 @@ import { ADD_CONFUSION_TO_PLAYER_ACTIVE, WAS_ATTACK_USED } from '../../../game/s
 export class Annihilape extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Primeape';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 140;
   public weakness: Weakness[] = [{ type: P }];
   public retreat: CardType[] = [C, C];

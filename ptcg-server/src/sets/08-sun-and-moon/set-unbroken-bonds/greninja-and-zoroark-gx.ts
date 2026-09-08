@@ -1,7 +1,6 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import {
-  AttachEnergyPrompt,
+import { AttachEnergyPrompt,
   Card,
   CardTarget,
   ChooseCardsPrompt,
@@ -13,8 +12,7 @@ import {
   SlotType,
   State,
   StateUtils,
-  StoreLike,
-} from '../../../game';
+  StoreLike, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
@@ -23,7 +21,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class GreninjaAndZoroarkGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 250;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];
@@ -86,7 +84,7 @@ export class GreninjaAndZoroarkGX extends PokemonCard {
           card instanceof PokemonCard &&
           !card.hasTag(CardTag.POKEMON_GX) &&
           !card.hasTag(CardTag.POKEMON_EX) &&
-          card.cardType !== D
+          !pokemonHasCardType(card, D)
         ) {
           unionBlocked.push(index);
         }

@@ -20,7 +20,7 @@ import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-pre
 export class Latias extends PokemonCard {
   protected _tags = [CardTag.FUSION_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 120;
   public retreat = [C];
 

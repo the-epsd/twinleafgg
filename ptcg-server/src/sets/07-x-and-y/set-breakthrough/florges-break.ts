@@ -20,7 +20,7 @@ export class FlorgesBreak extends PokemonCard {
   protected _tags = [CardTag.BREAK];
   public stage: Stage = Stage.BREAK;
   public evolvesFrom: string = 'Florges';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 140;
   public retreat = [];
 

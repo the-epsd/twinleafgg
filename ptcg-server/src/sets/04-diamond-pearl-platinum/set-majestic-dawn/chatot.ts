@@ -7,7 +7,7 @@ import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-pref
 
 export class Chatot extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 60;
   public weakness = [{ type: L, value: +20 }];
   public resistance = [{ type: F, value: -20 }];

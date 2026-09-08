@@ -13,7 +13,7 @@ export class Weepinbell extends PokemonCard {
 
   public evolvesFrom = 'Bellsprout';
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 70;
 

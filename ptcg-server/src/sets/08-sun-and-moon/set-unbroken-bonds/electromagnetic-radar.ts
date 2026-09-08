@@ -86,7 +86,7 @@ function* playCard(
       player,
       GameMessage.CHOOSE_CARD_TO_HAND,
       player.deck,
-      { superType: SuperType.POKEMON, cardType: CardType.LIGHTNING },
+      { superType: SuperType.POKEMON, cardType: [CardType.LIGHTNING] },
       { min: 0, max: 2, allowCancel: false, blocked },
     ),
     (selected) => {

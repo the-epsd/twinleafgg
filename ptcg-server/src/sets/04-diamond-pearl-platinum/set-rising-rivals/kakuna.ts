@@ -8,7 +8,7 @@ import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, IS_POKEBOD
 export class Kakuna extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Weedle';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: R, value: +20 }];
   public retreat = [C, C];

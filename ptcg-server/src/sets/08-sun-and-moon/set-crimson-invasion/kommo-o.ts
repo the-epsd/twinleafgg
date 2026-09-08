@@ -5,7 +5,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class KommoO extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Hakamo-o';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 160;
   public weakness = [{ type: Y }];
   public retreat = [C, C];

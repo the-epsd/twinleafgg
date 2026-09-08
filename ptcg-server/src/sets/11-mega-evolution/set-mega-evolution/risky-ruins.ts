@@ -1,4 +1,4 @@
-import { State, StateUtils, StoreLike } from '../../../game';
+import { State, StateUtils, StoreLike, pokemonHasCardType } from '../../../game';
 import { CardType, Stage, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -21,7 +21,7 @@ export class DangerousRuins extends TrainerCard {
         return state;
       }
 
-      if (effect.target.cards.length > 0 || effect.pokemonCard.cardType === CardType.DARK) {
+      if (effect.target.cards.length > 0 || pokemonHasCardType(effect.pokemonCard, CardType.DARK)) {
         return state;
       }
 

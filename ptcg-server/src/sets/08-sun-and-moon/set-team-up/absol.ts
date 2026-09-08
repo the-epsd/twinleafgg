@@ -8,7 +8,7 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs
 
 export class Absol extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
   public hp: number = 100;
   public weakness = [{ type: CardType.FIGHTING }];
   public resistance = [{ type: CardType.PSYCHIC, value: -20 }];

@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, DRAW_CARDS, MULTIPLE_COIN_FLIPS_PROMPT } from '../../g
 
 export class MrMime extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 90;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

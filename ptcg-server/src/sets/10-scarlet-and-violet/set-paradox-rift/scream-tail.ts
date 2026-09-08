@@ -14,7 +14,7 @@ export class ScreamTail extends PokemonCard {
 
   public stage = Stage.BASIC;
 
-  public cardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp = 90;
 

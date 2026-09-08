@@ -15,7 +15,7 @@ import { HANDLE_ABILITY_LOCK } from '../../../game/store/prefabs/ability-lock';
 export class Vaporeon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Eevee';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 110;
   public weakness = [{ type: L }];
   public retreat = [C, C];

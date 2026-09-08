@@ -1,4 +1,4 @@
-import { AttachEnergyPrompt, Card, EnergyType, GameError, GameMessage, PlayerType, PokemonCard, PowerType, ShuffleDeckPrompt, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../../game';
+import { CardType, AttachEnergyPrompt, Card, EnergyType, GameError, GameMessage, PlayerType, PokemonCard, PowerType, ShuffleDeckPrompt, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../../game';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
@@ -9,7 +9,7 @@ export class Charizard extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Charmeleon';
-  public cardType = R;
+  public cardType: CardType[] = [R];
   public hp = 150;
   public weakness = [{ type: W }];
   public retreat = [C, C];

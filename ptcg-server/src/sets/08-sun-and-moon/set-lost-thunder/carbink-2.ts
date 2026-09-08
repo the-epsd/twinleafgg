@@ -5,7 +5,7 @@ import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/
 
 export class Carbink2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 90;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

@@ -7,7 +7,7 @@ import { DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK } from '../../../game/store/pref
 
 export class Stunky extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

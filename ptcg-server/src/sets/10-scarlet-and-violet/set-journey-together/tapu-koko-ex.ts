@@ -8,7 +8,7 @@ export class TapuKokoex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex];
   public regulationMark = 'H';
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 200;
   public weakness = [{ type: F }];
   public retreat = [];

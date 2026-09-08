@@ -12,7 +12,7 @@ import { DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/a
 export class SalamenceV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 220;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

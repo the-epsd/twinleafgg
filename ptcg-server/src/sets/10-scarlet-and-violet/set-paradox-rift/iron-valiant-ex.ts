@@ -17,7 +17,7 @@ import { MOVED_TO_ACTIVE_THIS_TURN, REMOVE_MARKER_AT_END_OF_TURN, THIS_POKEMON_C
 export class IronValiantex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex, CardTag.FUTURE];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 220;
   public weakness = [{ type: M }];
   public retreat = [C, C];

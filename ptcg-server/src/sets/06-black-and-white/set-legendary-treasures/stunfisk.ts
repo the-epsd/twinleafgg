@@ -7,7 +7,7 @@ import { DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK } from '../../../game/store/pref
 
 export class Stunfisk extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 90;
   public weakness = [{ type: W }];
   public resistance = [{ type: L, value: -20 }];

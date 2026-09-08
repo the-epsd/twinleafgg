@@ -6,7 +6,7 @@ import { Resistance, Weakness, Attack, Power } from '../card/pokemon-types';
 import { EnergyMap } from '../prompts/choose-energy-prompt';
 import { TrainerCard } from '../card/trainer-card';
 import { Card } from '../card/card';
-import { PokemonCard } from '../card/pokemon-card';
+import { PokemonCard, getPokemonCardTypes } from '../card/pokemon-card';
 import { CardList } from '../state/card-list';
 
 export enum CheckEffects {
@@ -123,10 +123,7 @@ export class CheckPokemonTypeEffect implements Effect {
   constructor(target: PokemonCardList) {
     this.target = target;
     const pokemonCard = target.getPokemonCard();
-    this.cardTypes = pokemonCard ? [pokemonCard.cardType] : [];
-    if (pokemonCard && pokemonCard.additionalCardTypes) {
-      this.cardTypes = [...this.cardTypes, ...pokemonCard.additionalCardTypes];
-    }
+    this.cardTypes = pokemonCard ? getPokemonCardTypes(pokemonCard) : [];
   }
 }
 

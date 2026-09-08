@@ -23,7 +23,7 @@ export class Mimikyuex extends PokemonCard {
 
   protected _tags = [CardTag.POKEMON_ex];
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 190;
 

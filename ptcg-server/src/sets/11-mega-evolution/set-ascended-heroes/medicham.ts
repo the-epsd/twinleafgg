@@ -8,7 +8,7 @@ export class Medicham extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Meditite';
   public hp: number = 120;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public weakness = [{ type: P }];
   public retreat = [C];
 

@@ -8,7 +8,7 @@ import { DRAW_CARDS_UNTIL_YOU_HAVE_X_CARDS_IN_HAND } from '../../../game/store/p
 
 export class Tropius extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 100;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

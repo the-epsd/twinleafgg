@@ -14,7 +14,7 @@ export class Belliboltex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Tadbulb';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 280;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

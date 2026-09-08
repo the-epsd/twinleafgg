@@ -7,7 +7,7 @@ import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK } from '../../../game/store/pr
 export class TeamRocketsDrowzee extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.TEAM_ROCKET];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

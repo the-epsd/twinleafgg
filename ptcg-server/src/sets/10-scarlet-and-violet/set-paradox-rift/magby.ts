@@ -6,7 +6,7 @@ import { ADD_MARKER, CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN, H
 export class Magby extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 30;
   public weakness = [{ type: W }];
   public retreat = [];

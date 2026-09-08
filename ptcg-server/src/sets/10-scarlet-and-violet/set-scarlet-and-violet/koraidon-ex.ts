@@ -6,8 +6,7 @@ import {
   SuperType,
   EnergyType,
 } from '../../../game/store/card/card-types';
-import {
-  PowerType,
+import { PowerType,
   StoreLike,
   State,
   GameMessage,
@@ -17,8 +16,7 @@ import {
   SlotType,
   StateUtils,
   CardTarget,
-  GameError,
-} from '../../../game';
+  GameError, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
@@ -26,7 +24,7 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 export class Koraidonex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 230;
   public weakness = [{ type: P }];
   public retreat = [C, C];
@@ -82,7 +80,7 @@ export class Koraidonex extends PokemonCard {
 
       // player.bench.forEach(benchSpot => {
       //   const card = benchSpot.getPokemonCard();
-      //   if (card && card.cardType === CardType.FIGHTING && card.stage === Stage.BASIC) {
+      //   if (card && pokemonHasCardType(card, CardType.FIGHTING) && card.stage === Stage.BASIC) {
       //     fightingPokemonOnBench = true;
       //   }
       // });
@@ -93,7 +91,7 @@ export class Koraidonex extends PokemonCard {
 
       const blocked2: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        if (card.cardType !== CardType.FIGHTING) {
+        if (!pokemonHasCardType(card, CardType.FIGHTING)) {
           blocked2.push(target);
         }
         if (card.stage !== Stage.BASIC) {

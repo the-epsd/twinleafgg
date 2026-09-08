@@ -4,7 +4,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 export class Arctibax extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Frigibax';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: M }];
   public retreat = [C, C];

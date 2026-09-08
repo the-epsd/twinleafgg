@@ -5,7 +5,7 @@ import { ADD_SLEEP_TO_PLAYER_ACTIVE, CONFIRMATION_PROMPT, IS_POKEPOWER_BLOCKED, 
 export class Ivysaur extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Bulbasaur';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: R, value: +20 }];
   public retreat = [C, C];

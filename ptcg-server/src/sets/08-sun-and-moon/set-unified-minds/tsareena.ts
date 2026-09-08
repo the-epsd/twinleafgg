@@ -7,7 +7,7 @@ import { WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_
 export class Tsareena extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Steenee';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 140;
   public weakness = [{ type: R }];
   public retreat = [C, C];

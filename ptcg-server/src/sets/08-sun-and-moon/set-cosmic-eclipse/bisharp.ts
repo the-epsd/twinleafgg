@@ -11,7 +11,7 @@ import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-pref
 export class Bisharp extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Pawniard';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 120;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

@@ -36,4 +36,10 @@ export class Deck extends BaseEntity {
   @Column({ nullable: true })
   public sleeveIdentifier?: string;
 
+  @Column({ nullable: true })
+  public deckBoxIdentifier?: string;
+
+  @Column({ nullable: true })
+  public coinIdentifier?: string;
+
 }

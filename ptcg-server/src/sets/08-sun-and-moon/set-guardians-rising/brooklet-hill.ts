@@ -1,4 +1,4 @@
-import { Card, ChooseCardsPrompt, PokemonCard, PokemonCardList, ShuffleDeckPrompt } from '../../../game';
+import { Card, ChooseCardsPrompt, PokemonCard, PokemonCardList, ShuffleDeckPrompt, pokemonHasCardType } from '../../../game';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { CardType, Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
@@ -21,7 +21,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
 
   const blocked: number[] = [];
   player.deck.cards.forEach((card, index) => {
-    if (card instanceof PokemonCard && (card.cardType !== CardType.WATER && card.cardType !== CardType.FIGHTING)) {
+    if (card instanceof PokemonCard && (!pokemonHasCardType(card, CardType.WATER) && !pokemonHasCardType(card, CardType.FIGHTING))) {
       blocked.push(index);
     }
   });

@@ -1,5 +1,4 @@
-import {
-  PokemonCard,
+import { CardType, PokemonCard,
   Stage,
   StoreLike,
   State,
@@ -7,8 +6,7 @@ import {
   CardTag,
   PlayerType,
   GameError,
-  GameMessage,
-} from '../../game';
+  GameMessage, } from '../../game';
 import { PowerType } from '../../game';
 import { Attack } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
@@ -29,7 +27,7 @@ export class DarkVileplume extends PokemonCard {
   public stage = Stage.STAGE_2;
   public evolvesFrom = 'Dark Gloom';
   protected _tags = [CardTag.DARK];
-  public cardType = G;
+  public cardType: CardType[] = [G];
   public hp = 60;
   public weakness = [{ type: R }];
   public retreat = [C, C];

@@ -10,7 +10,7 @@ import { State, StoreLike } from '../../../game';
 export class Magneton extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Magnemite';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

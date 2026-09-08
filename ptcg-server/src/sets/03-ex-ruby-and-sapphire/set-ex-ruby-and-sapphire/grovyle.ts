@@ -8,7 +8,7 @@ import { Effect } from '../../../game/store/effects/effect';
 export class Grovyle extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Treecko';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -30 }];

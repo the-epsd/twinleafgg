@@ -18,7 +18,7 @@ export class Dugtrio extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public cardImage: string = 'assets/cardback.png';
 

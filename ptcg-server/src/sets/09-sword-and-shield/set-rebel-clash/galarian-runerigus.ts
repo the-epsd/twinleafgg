@@ -9,7 +9,7 @@ export class GalarianRunerigus extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Galarian Yamask';
   public regulationMark = 'D';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 100;
   public weakness = [{ type: G }];
   public retreat = [C, C];

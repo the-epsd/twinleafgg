@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../../ga
 
 export class Onix extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 110;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];

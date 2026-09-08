@@ -8,7 +8,7 @@ import { ADD_BURN_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, DISCARD_ALL_
 export class Magmortar extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Magmar';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 100;
   public weakness = [{ type: W }];
   public retreat = [C, C];

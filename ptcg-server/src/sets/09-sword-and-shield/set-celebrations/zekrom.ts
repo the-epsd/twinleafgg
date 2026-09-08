@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, DISCARD_A_STADIUM_CARD_IN_PLAY } from '../../../game/s
 
 export class Zekrom extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

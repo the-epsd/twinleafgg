@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 export class Chimchar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public regulationMark: string = 'H';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 60;
   public weakness = [{ type: W }];
   public retreat = [C];

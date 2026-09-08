@@ -12,7 +12,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class Skiploom extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Hoppip';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 60;
   public weakness = [{ type: R, value: +20 }];
   public resistance = [{ type: F, value: -20 }];

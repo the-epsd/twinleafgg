@@ -14,7 +14,7 @@ export class Palafin extends PokemonCard {
 
   public evolvesFrom = 'Finizen';
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp: number = 150;
 

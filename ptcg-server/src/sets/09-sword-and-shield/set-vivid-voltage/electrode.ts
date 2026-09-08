@@ -4,7 +4,7 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType } from '../../../game/store/card/card-types';
-import { AttachEnergyPrompt, GameError, GameMessage, PlayerType, PowerType, SlotType, StoreLike, State, StateUtils } from '../../../game';
+import { AttachEnergyPrompt, GameError, GameMessage, PlayerType, PowerType, SlotType, StoreLike, State, StateUtils, pokemonHasCardType } from '../../../game';
 import { CardTarget } from '../../../game/store/actions/play-card-action';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_POWER_USED, SHUFFLE_DECK, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
@@ -13,7 +13,7 @@ import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 export class Electrode extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Voltorb';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -62,7 +62,7 @@ export class Electrode extends PokemonCard {
       // Block non-Lightning Pokemon slots
       const blockedTo: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (card.cardType !== CardType.LIGHTNING) {
+        if (!pokemonHasCardType(card, CardType.LIGHTNING)) {
           blockedTo.push(target);
         }
       });

@@ -17,7 +17,7 @@ import { EnergyCard } from '../../../game/store/card/energy-card';
 export class Kingdra extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Seadra';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 150;
   public weakness = [{ type: L }];
   public retreat = [C];

@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, DRAW_CARDS } from '../../../game/store/prefabs/prefabs
 
 export class Woobat extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

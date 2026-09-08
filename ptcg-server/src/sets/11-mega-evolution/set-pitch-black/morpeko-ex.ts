@@ -10,7 +10,7 @@ export class Morpekoex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex];
   public hp: number = 180;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public weakness = [{ type: G }];
   public retreat = [C];
 

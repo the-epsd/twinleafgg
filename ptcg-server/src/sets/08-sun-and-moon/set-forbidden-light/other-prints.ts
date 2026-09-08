@@ -202,7 +202,7 @@ export class SnoverFLI extends Snover {
   public set: string = 'FLI';
   public setNumber: string = '3';
   public fullName: string = 'Snover FLI';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public weakness = [{ type: R }];
   public attacks = [{
     name: 'Ice Shard',
@@ -217,7 +217,7 @@ export class HeatranFLI extends Heatran {
   public set: string = 'FLI';
   public setNumber: string = '13';
   public fullName: string = 'Heatran FLI';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public weakness = [{ type: W }];
   public attacks = [{
     name: 'Guard Press',
@@ -237,7 +237,7 @@ export class PalkiaGxFLI extends PalkiaGx {
   public set: string = 'FLI';
   public setNumber: string = '20';
   public fullName: string = 'Palkia-GX FLI';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public weakness = [{ type: G }];
 }
 
@@ -245,7 +245,7 @@ export class MagnetonFLI extends Magneton {
   public set: string = 'FLI';
   public setNumber: string = '35';
   public fullName: string = 'Magneton FLI';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
   public attacks = [{
@@ -266,7 +266,7 @@ export class TorterraFLI extends Torterra {
   public set: string = 'FLI';
   public setNumber: string = '58';
   public fullName: string = 'Torterra FLI';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public weakness = [{ type: G }];
   public attacks = [{
     name: 'Giga Drain',
@@ -286,7 +286,7 @@ export class GibleFLI extends Gible {
   public set: string = 'FLI';
   public setNumber: string = '60';
   public fullName: string = 'Gible FLI';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public weakness = [{ type: G }];
 }
 
@@ -294,7 +294,7 @@ export class GarchompFLI extends Garchomp {
   public set: string = 'FLI';
   public setNumber: string = '62';
   public fullName: string = 'Garchomp FLI';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public weakness = [{ type: G }];
 }
 
@@ -302,7 +302,7 @@ export class CroagunkFLI extends Croagunk {
   public set: string = 'FLI';
   public setNumber: string = '63';
   public fullName: string = 'Croagunk FLI';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public weakness = [{ type: P }];
   public attacks = [{
     name: 'Swagger',
@@ -316,7 +316,7 @@ export class ToxicroakFLI extends Toxicroak {
   public set: string = 'FLI';
   public setNumber: string = '64';
   public fullName: string = 'Toxicroak FLI';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public weakness = [{ type: P }];
   public attacks = [{
     name: 'Poison Jab',
@@ -337,7 +337,7 @@ export class EmpoleonFLI extends Empoleon {
   public set: string = 'FLI';
   public setNumber: string = '81';
   public fullName: string = 'Empoleon FLI';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public weakness = [{ type: R }];
   public attacks = [{
     name: 'Total Command',
@@ -358,7 +358,7 @@ export class PalkiaGx2 extends PalkiaGx {
   public set: string = 'FLI';
   public setNumber: string = '119';
   public fullName: string = 'Palkia-GX FLI 119';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public weakness = [{ type: G }];
 }
 

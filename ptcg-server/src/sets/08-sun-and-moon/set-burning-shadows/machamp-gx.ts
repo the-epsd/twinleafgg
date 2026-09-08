@@ -16,7 +16,7 @@ export class MachampGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Machoke';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 250;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];

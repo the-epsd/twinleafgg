@@ -28,7 +28,7 @@ import { CardList } from '../../../game/store/state/card-list';
 export class ExcadrillEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 180;
   public weakness = [{ type: W }];
   public resistance = [{ type: L, value: -20 }];

@@ -1,5 +1,4 @@
-import {
-  PokemonCard,
+import { CardType, PokemonCard,
   Stage,
   PowerType,
   StoreLike,
@@ -14,8 +13,7 @@ import {
   ChoosePokemonPrompt,
   ChooseCardsPrompt,
   EnergyType,
-  CardTag,
-} from '../../../game';
+  CardTag, } from '../../../game';
 import {
   CheckPokemonAttacksEffect,
   CheckPokemonPowersEffect,
@@ -41,7 +39,7 @@ export class RegigigasLVX extends PokemonCard {
   public stage = Stage.LV_X;
   public evolvesFrom = 'Regigigas';
   protected _tags = [CardTag.POKEMON_LV_X];
-  public cardType = C;
+  public cardType: CardType[] = [C];
   public hp = 150;
   public weakness = [{ type: F }];
   public retreat = [C, C, C, C];

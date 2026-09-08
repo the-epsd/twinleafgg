@@ -4,7 +4,7 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, PlayerType, GamePhase } from '../../../game';
+import { PowerType, StoreLike, State, StateUtils, PlayerType, GamePhase, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
@@ -12,7 +12,7 @@ import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 export class Clefable extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Clefairy';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 100;
   public weakness = [{ type: M }];
   public retreat = [C, C];
@@ -53,7 +53,7 @@ export class Clefable extends PokemonCard {
 
       // Check if source is an opponent's Dragon Pokemon
       const sourceCard = effect.source.getPokemonCard();
-      if (!sourceCard || sourceCard.cardType !== CardType.DRAGON) {
+      if (!sourceCard || !pokemonHasCardType(sourceCard, CardType.DRAGON)) {
         return state;
       }
 

@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store
 export class Bellossom extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Gloom';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 120;
   public weakness = [{ type: R }];
   public retreat = [C];
@@ -81,7 +81,7 @@ export class Bellossom extends PokemonCard {
         GameMessage.MOVE_ENERGY_CARDS,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY, cardType: CardType.GRASS },
+        { superType: SuperType.ENERGY, cardType: [CardType.GRASS] },
         { allowCancel: true }
       ), transfers => {
         if (transfers === null) {

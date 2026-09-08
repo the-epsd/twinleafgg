@@ -32,7 +32,7 @@ export class Gholdengoex extends PokemonCard {
 
   public evolvesFrom = 'Gimmighoul';
 
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType[] = [CardType.METAL];
 
   public hp: number = 260;
 

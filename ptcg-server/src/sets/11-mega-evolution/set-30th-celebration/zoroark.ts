@@ -9,28 +9,32 @@ export class Zoroark extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Zorua';
   public hp: number = 120;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public weakness = [{ type: G }];
   public retreat = [C];
+
   public powers = [{
     name: 'Night Escape Route',
     powerType: PowerType.ABILITY,
-    text: 'If this Pokémon is on your Bench, your Active Pokémon\'s Retreat Cost is [C][C] less.'
+    text: 'As long as this Pokémon is on your Bench, your Active Pokémon\'s retreat cost is [C][C] less.'
   }];
+
   public attacks = [{
     name: 'Slash Claw',
     cost: [D, D, C],
     damage: 90,
     text: ''
   }];
+
   public regulationMark: string = 'J';
-  public set: string = 'MF';
+  public set: string = '30C';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '20';
+  public setNumber: string = '96';
   public name: string = 'Zoroark';
-  public fullName: string = 'Zoroark MF';
+  public fullName: string = 'Zoroark 30C';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-cosmic-eclipse/bewear.ts (Carry and Run — reduce Active Retreat Cost from Bench)
+    // Carry and Run
     if (effect instanceof CheckRetreatCostEffect) {
       const player = effect.player;
       const isBenched = player.bench.some(b => b.cards.includes(this) && b.getPokemonCard() === this);
@@ -47,6 +51,7 @@ export class Zoroark extends PokemonCard {
         }
       }
     }
+
     return state;
   }
 }

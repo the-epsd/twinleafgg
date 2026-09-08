@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_P
 export class Blastoise extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Wartortle';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 160;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

@@ -11,7 +11,7 @@ import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-pref
 export class Durant2 extends PokemonCard {
   protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

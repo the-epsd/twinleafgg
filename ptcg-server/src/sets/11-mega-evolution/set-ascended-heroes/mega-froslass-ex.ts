@@ -12,7 +12,7 @@ export class MegaFroslassex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Snorunt';
   protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 310;
   public weakness = [{ type: M }];
   public resistance = [];

@@ -10,7 +10,7 @@ export class TeamRocketsFlaaffy extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = "Team Rocket's Mareep";
   protected _tags = [CardTag.TEAM_ROCKET];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C, C];

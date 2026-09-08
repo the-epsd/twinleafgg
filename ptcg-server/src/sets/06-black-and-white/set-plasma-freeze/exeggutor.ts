@@ -8,7 +8,7 @@ import { OPPONENT_CANNOT_PLAY_SUPPORTER_CARDS } from '../../../game/store/prefab
 export class Exeggutor extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Exeggcute';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 100;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -20 }];

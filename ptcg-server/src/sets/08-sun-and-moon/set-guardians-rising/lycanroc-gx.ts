@@ -24,7 +24,7 @@ export class LycanrocGX extends PokemonCard {
 
   public evolvesFrom = 'Rockruff';
 
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp: number = 200;
 

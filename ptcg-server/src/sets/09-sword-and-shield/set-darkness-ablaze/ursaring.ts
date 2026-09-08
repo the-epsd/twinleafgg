@@ -13,7 +13,7 @@ export class Ursaring extends PokemonCard {
 
   public evolvesFrom = 'Teddiursa';
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp: number = 140;
 

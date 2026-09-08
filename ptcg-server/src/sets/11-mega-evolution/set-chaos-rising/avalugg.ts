@@ -8,7 +8,7 @@ export class Avalugg extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Bergmite';
   public hp: number = 160;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public weakness = [{ type: M }];
   public retreat = [C, C, C, C];
 

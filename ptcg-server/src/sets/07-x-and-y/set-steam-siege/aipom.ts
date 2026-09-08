@@ -12,7 +12,7 @@ import { OrderCardsPrompt } from '../../../game/store/prompts/order-cards-prompt
 
 export class Aipom extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public retreat = [C];

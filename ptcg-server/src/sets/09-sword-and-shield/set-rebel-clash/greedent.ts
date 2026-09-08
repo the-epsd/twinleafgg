@@ -11,7 +11,7 @@ import { WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_
 export class Greedent extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Skwovet';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 120;
   public weakness = [{ type: F }];
   public retreat = [C];

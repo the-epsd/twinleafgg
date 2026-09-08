@@ -12,7 +12,7 @@ import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../../game/stor
 export class AegislashV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 210;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

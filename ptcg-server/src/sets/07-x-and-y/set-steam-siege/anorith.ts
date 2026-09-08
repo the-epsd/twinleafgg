@@ -13,7 +13,7 @@ import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefa
 export class Anorith extends PokemonCard {
   public stage: Stage = Stage.RESTORED;
   public evolvesFrom: string = 'Claw Fossil Anorith';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 80;
   public weakness = [{ type: G }];
   public retreat = [C];

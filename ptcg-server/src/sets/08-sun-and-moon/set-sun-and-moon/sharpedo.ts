@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN
 export class Sharpedo extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Carvanha';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 110;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

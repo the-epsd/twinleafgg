@@ -12,7 +12,7 @@ export class Meowscaradaex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Floragato';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 320;
   public weakness = [{ type: R }];
   public retreat = [C, C];

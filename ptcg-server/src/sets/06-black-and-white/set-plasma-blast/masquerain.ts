@@ -21,7 +21,7 @@ export class Masquerain extends PokemonCard {
   protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Surskit';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public retreat = [C];

@@ -263,9 +263,23 @@ export function MatchmakingLobby({ onError }: MatchmakingLobbyProps) {
     }
     matchActionLockRef.current = true;
     try {
+      const full = await getDeck(deck.id);
       const cards =
-        deck.cards && deck.cards.length > 0 ? deck.cards : (await getDeck(deck.id)).deck.cards;
-      await joinMatchmaking(selectedFormat, cards, deck.artworks, deck.id, deck.sleeveImagePath);
+        full.deck.cards?.length > 0
+          ? full.deck.cards
+          : deck.cards && deck.cards.length > 0
+            ? deck.cards
+            : [];
+      await joinMatchmaking(
+        selectedFormat,
+        cards,
+        full.deck.artworks ?? deck.artworks,
+        deck.id,
+        full.deck.sleeveImagePath ?? deck.sleeveImagePath,
+        undefined,
+        full.deck.deckBoxImagePath ?? deck.deckBoxImagePath,
+        full.deck.coinImagePath ?? deck.coinImagePath,
+      );
       setInQueue(true);
     } catch (e) {
       onErrorRef.current(e instanceof ApiError ? e.message : t('REACT_ERROR_JOIN_QUEUE'));

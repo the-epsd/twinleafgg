@@ -8,7 +8,7 @@ export class Farigiraf extends PokemonCard {
   public regulationMark = 'H';
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Girafarig';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 140;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

@@ -5,7 +5,7 @@ export class Toxtricity extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Toxel';
   public hp: number = 130;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public weakness = [{ type: F }];
   public retreat = [C, C];
 

@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Beedrill extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Kakuna';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 110;
   public weakness = [{ type: R, value: +30 }];
   public retreat = [];

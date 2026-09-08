@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Politoed extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Poliwhirl';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 140;
   public weakness = [{ type: L }];
   public retreat = [C, C];

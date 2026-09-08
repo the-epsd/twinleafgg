@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Shieldon extends PokemonCard {
   public stage: Stage = Stage.RESTORED;
   public evolvesFrom: string = 'Armor Fossil Shieldon';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

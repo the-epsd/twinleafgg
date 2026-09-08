@@ -9,7 +9,7 @@ export class Altaria extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Swablu';
   public hp: number = 120;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public weakness = [];
   public retreat = [C];
 

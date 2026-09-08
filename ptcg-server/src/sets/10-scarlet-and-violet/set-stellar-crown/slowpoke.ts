@@ -6,7 +6,7 @@ export class Slowpoke extends PokemonCard {
 
   public regulationMark = 'H';
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

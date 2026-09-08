@@ -8,7 +8,7 @@ import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/
 export class Aipom extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 60;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public weakness = [{ type: F }];
   public retreat = [C];
 

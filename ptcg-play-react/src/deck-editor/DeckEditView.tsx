@@ -110,6 +110,7 @@ export function DeckEditView({ deckId }: DeckEditViewProps) {
   const [manualArchetype2, setManualArchetype2] = useState<Archetype | undefined>(undefined);
   const [deckArtworks, setDeckArtworks] = useState<{ code: string; artworkId?: number }[] | undefined>(undefined);
   const [sleeveIdentifier, setSleeveIdentifier] = useState<string | undefined>(undefined);
+  const [deckBoxIdentifier, setDeckBoxIdentifier] = useState<string | undefined>(undefined);
   const [importUnknown, setImportUnknown] = useState<string[]>([]);
   const [filter, setFilter] = useState<DeckEditToolbarFilter>(() => defaultToolbarFilter());
   const [loading, setLoading] = useState(true);
@@ -157,9 +158,10 @@ export function DeckEditView({ deckId }: DeckEditViewProps) {
         manualArchetype2,
         deckArtworks,
         sleeveIdentifier,
+        deckBoxIdentifier,
       );
     },
-    [deckId, deckName, manualArchetype1, manualArchetype2, deckArtworks, sleeveIdentifier],
+    [deckId, deckName, manualArchetype1, manualArchetype2, deckArtworks, sleeveIdentifier, deckBoxIdentifier],
   );
 
   useEffect(() => {
@@ -175,6 +177,7 @@ export function DeckEditView({ deckId }: DeckEditViewProps) {
     setManualArchetype2(undefined);
     setDeckArtworks(undefined);
     setSleeveIdentifier(undefined);
+    setDeckBoxIdentifier(undefined);
     void (async () => {
       setLoading(true);
       setError(null);
@@ -188,6 +191,7 @@ export function DeckEditView({ deckId }: DeckEditViewProps) {
         setManualArchetype2(d.manualArchetype2 || undefined);
         setDeckArtworks(d.artworks);
         setSleeveIdentifier(d.sleeveIdentifier);
+        setDeckBoxIdentifier(d.deckBoxIdentifier);
       } catch (e) {
         setError(e instanceof ApiError ? e.message : t('REACT_ERROR_LOAD_SINGLE_DECK'));
         setDeckLinesFromServer(null);
@@ -197,6 +201,7 @@ export function DeckEditView({ deckId }: DeckEditViewProps) {
         setManualArchetype2(undefined);
         setDeckArtworks(undefined);
         setSleeveIdentifier(undefined);
+        setDeckBoxIdentifier(undefined);
       } finally {
         setLoading(false);
       }
@@ -490,6 +495,7 @@ export function DeckEditView({ deckId }: DeckEditViewProps) {
             onSave={() => void onSave()}
             onExport={onExport}
             onImport={onImport}
+            customizeTo={isThemeDeck ? undefined : `/deck/${deckId}/customize`}
             onDelete={isThemeDeck ? undefined : () => void onDeleteDeck()}
             deleting={deleting}
           />

@@ -19,7 +19,7 @@ export class EspeonVMAX extends PokemonCard {
 
   public evolvesFrom = 'Espeon V';
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 310;
 

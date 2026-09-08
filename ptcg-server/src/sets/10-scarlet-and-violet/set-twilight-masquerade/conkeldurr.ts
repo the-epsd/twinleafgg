@@ -13,7 +13,7 @@ export class Conkeldurr extends PokemonCard {
 
   public evolvesFrom = 'Gurdurr';
 
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp: number = 180;
 

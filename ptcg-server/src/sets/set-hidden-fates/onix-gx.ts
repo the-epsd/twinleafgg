@@ -15,7 +15,7 @@ import { State, StoreLike } from '../../game';
 export class OnixGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 200;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];

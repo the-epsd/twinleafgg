@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED, ADD_MARKER, HAS_MARKER, DISCARD_TOP_X_CARDS_FROM_YOUR_
 export class Rhydon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Rhyhorn';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 110;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];

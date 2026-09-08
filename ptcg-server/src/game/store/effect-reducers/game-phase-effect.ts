@@ -8,20 +8,20 @@ import { State, GamePhase, GameWinner } from '../state/state';
 import { StoreLike } from '../store-like';
 import { checkState, endGame } from './check-effect';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
+import { WaitPrompt } from '../prompts/wait-prompt';
 import { PlayerType } from '../actions/play-card-action';
 import { StateUtils } from '../state-utils';
 import { RESOLVE_PENDING_END_OF_OPPONENTS_NEXT_TURN_EFFECTS } from '../prefabs/attack-effects';
 import { MOVE_CARDS } from '../prefabs/prefabs';
 
+/** Silent hold so clients (and admin phase HUD) can show automatic phase transitions. */
+const PHASE_TRANSITION_WAIT_MS = 500;
+
 function getActivePlayer(state: State): Player {
   return state.players[state.activePlayer];
 }
 
-export function betweenTurns(store: StoreLike, state: State, onComplete: () => void): State {
-  if (state.phase === GamePhase.PLAYER_TURN || state.phase === GamePhase.ATTACK) {
-    state.phase = GamePhase.BETWEEN_TURNS;
-  }
-
+function runBetweenTurnsEffects(store: StoreLike, state: State, onComplete: () => void): State {
   for (const player of state.players) {
     store.reduceEffect(state, new BetweenTurnsEffect(player));
   }
@@ -34,16 +34,31 @@ export function betweenTurns(store: StoreLike, state: State, onComplete: () => v
   return checkState(store, state, () => onComplete());
 }
 
+export function betweenTurns(store: StoreLike, state: State, onComplete: () => void): State {
+  const enteredBetweenTurns =
+    state.phase === GamePhase.PLAYER_TURN || state.phase === GamePhase.ATTACK;
+
+  if (enteredBetweenTurns) {
+    state.phase = GamePhase.BETWEEN_TURNS;
+    const player = getActivePlayer(state);
+    return store.prompt(
+      state,
+      new WaitPrompt(player.id, PHASE_TRANSITION_WAIT_MS, undefined, false),
+      () => {
+        runBetweenTurnsEffects(store, state, onComplete);
+      },
+    );
+  }
+
+  return runBetweenTurnsEffects(store, state, onComplete);
+}
+
 export function initNextTurn(store: StoreLike, state: State): State {
   if ([GamePhase.SETUP, GamePhase.BETWEEN_TURNS].indexOf(state.phase) === -1) {
     return state;
   }
 
   let player: Player = getActivePlayer(state);
-
-  if (state.phase === GamePhase.SETUP) {
-    state.phase = GamePhase.PLAYER_TURN;
-  }
 
   if (state.phase === GamePhase.BETWEEN_TURNS) {
     if (player.usedTurnSkip) {
@@ -52,7 +67,6 @@ export function initNextTurn(store: StoreLike, state: State): State {
     } else {
       state.activePlayer = state.activePlayer ? 0 : 1;
     }
-    state.phase = GamePhase.PLAYER_TURN;
     player = getActivePlayer(state);
   }
 
@@ -65,8 +79,11 @@ export function initNextTurn(store: StoreLike, state: State): State {
 
   // Skip draw card on first turn
   if (state.turn === 1 && !state.rules.firstTurnDrawCard) {
+    state.phase = GamePhase.PLAYER_TURN;
     return state;
   }
+
+  state.phase = GamePhase.DRAW;
 
   // Draw card at the beginning
   store.log(state, GameLog.LOG_PLAYER_DRAWS_CARD, { name: player.name });
@@ -91,7 +108,13 @@ export function initNextTurn(store: StoreLike, state: State): State {
     }
     store.reduceEffect(state, drawCardForTurn);
   } catch {
-    return state;
+    return store.prompt(
+      state,
+      new WaitPrompt(player.id, PHASE_TRANSITION_WAIT_MS, undefined, false),
+      () => {
+        state.phase = GamePhase.PLAYER_TURN;
+      },
+    );
   }
 
   const handStartLength = player.hand.cards.length;
@@ -105,10 +128,23 @@ export function initNextTurn(store: StoreLike, state: State): State {
       const drewTopdeck = new DrewTopdeckEffect(player, drawnCard);
       store.reduceEffect(state, drewTopdeck);
     } catch {
-      return state;
+      return store.prompt(
+        state,
+        new WaitPrompt(player.id, PHASE_TRANSITION_WAIT_MS, undefined, false),
+        () => {
+          state.phase = GamePhase.PLAYER_TURN;
+        },
+      );
     }
   }
-  return state;
+
+  return store.prompt(
+    state,
+    new WaitPrompt(player.id, PHASE_TRANSITION_WAIT_MS, undefined, false),
+    () => {
+      state.phase = GamePhase.PLAYER_TURN;
+    },
+  );
 }
 
 function startNextTurn(store: StoreLike, state: State): State {
@@ -205,6 +241,13 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
     const opponent = StateUtils.getOpponent(state, player);
     const lastAttack = state.playerLastAttack?.[player.id];
     player.ancientPokemonAttackedLastTurn = lastAttack?.sourceCard.tags.includes(CardTag.ANCIENT) ?? false;
+
+    if (player.usedTurnSkipClearArmed) {
+      player.usedTurnSkip = false;
+      player.usedTurnSkipClearArmed = false;
+    } else if (player.usedTurnSkip) {
+      player.usedTurnSkipClearArmed = true;
+    }
 
     state = RESOLVE_PENDING_END_OF_OPPONENTS_NEXT_TURN_EFFECTS(store, state, effect);
 

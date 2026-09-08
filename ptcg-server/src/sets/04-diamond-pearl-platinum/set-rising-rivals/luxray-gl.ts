@@ -6,7 +6,7 @@ import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs
 
 export class LuxrayGL extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   protected _tags = [CardTag.POKEMON_SP];
   public hp: number = 80;
   public weakness = [{ type: F }];

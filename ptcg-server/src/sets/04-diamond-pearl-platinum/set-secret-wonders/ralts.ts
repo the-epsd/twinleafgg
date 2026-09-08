@@ -7,7 +7,7 @@ import { ADD_CONFUSION_TO_PLAYER_ACTIVE, WAS_ATTACK_USED, COIN_FLIP_PROMPT } fro
 
 export class Ralts extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: P, value: +10 }];
   public retreat = [C];

@@ -4,7 +4,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 export class Sharpedo extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Carvanha';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 100;
   public weakness = [{ type: G }];
   public retreat = [C];

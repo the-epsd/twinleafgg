@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/pr
 export class Garchomp extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Gabite';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 130;
   public weakness = [{ type: C, value: 30 }];
   public retreat = [];

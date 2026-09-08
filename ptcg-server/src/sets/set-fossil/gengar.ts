@@ -18,7 +18,7 @@ export class Gengar extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
   public evolvesFrom = 'Haunter';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];

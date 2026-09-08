@@ -7,7 +7,7 @@ import { CONFIRMATION_PROMPT, DRAW_CARDS_UNTIL_CARDS_IN_HAND, WAS_ATTACK_USED } 
 export class Vespiquen extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Combee';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
 

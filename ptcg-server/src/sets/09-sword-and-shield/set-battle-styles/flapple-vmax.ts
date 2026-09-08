@@ -16,7 +16,7 @@ export class FlappleVMAX extends PokemonCard {
 
   protected _tags = [CardTag.POKEMON_VMAX];
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 320;
 

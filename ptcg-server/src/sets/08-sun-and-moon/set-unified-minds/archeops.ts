@@ -13,7 +13,7 @@ import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/s
 export class Archeops extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Archen';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 130;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

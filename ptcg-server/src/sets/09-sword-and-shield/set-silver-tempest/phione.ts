@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH } from
 
 export class Phione extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 70;
   public weakness = [{ type: L }];
   public retreat = [C];
@@ -44,7 +44,7 @@ export class Phione extends PokemonCard {
       const player = effect.player;
       return SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(
         store, state, player,
-        { stage: Stage.BASIC, cardType: CardType.WATER },
+        { stage: Stage.BASIC, cardType: [CardType.WATER] },
         { min: 0, max: 3, allowCancel: false }
       );
     }

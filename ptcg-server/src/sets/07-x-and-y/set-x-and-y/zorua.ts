@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../../game/st
 
 export class Zorua extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 50;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

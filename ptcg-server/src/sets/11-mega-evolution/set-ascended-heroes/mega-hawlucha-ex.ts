@@ -17,7 +17,7 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../
 export class MegaHawluchaex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 250;
   public weakness = [{ type: P }];
   public resistance = [];

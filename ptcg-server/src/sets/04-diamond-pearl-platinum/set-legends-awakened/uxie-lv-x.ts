@@ -1,5 +1,4 @@
-import {
-  PokemonCard,
+import { CardType, PokemonCard,
   Stage,
   PowerType,
   StoreLike,
@@ -11,8 +10,7 @@ import {
   PlayerType,
   SuperType,
   GameError,
-  CardList,
-} from '../../../game';
+  CardList, } from '../../../game';
 import {
   CheckPokemonAttacksEffect,
   CheckPokemonPowersEffect,
@@ -34,7 +32,7 @@ export class UxieLVX extends PokemonCard {
   public stage = Stage.LV_X;
   public evolvesFrom = 'Uxie';
   protected _tags = [CardTag.POKEMON_LV_X];
-  public cardType = P;
+  public cardType: CardType[] = [P];
   public hp = 90;
   public weakness = [{ type: P }];
   public retreat = [C];

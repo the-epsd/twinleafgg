@@ -22,7 +22,7 @@ import {
 export class VirizionGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 170;
   public weakness = [{ type: R }];
   public retreat = [C];

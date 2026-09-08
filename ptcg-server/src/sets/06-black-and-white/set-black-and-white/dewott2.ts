@@ -9,7 +9,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class Dewott2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Oshawott';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 80;
   public weakness = [{ type: L }];
   public retreat = [C];

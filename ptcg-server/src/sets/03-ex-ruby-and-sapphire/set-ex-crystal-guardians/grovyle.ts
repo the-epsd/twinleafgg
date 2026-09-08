@@ -9,7 +9,7 @@ export class Grovyle extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Treecko';
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -30 }];

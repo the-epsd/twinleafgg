@@ -14,7 +14,7 @@ import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 export class KyuremEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 180;
   public weakness = [{ type: M }];
   public retreat = [C, C, C];

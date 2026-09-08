@@ -10,7 +10,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { PowerType, State, StoreLike } from '../../../game';
 export class Qwilfish extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 80;
   public weakness = [{ type: G }];
   public retreat = [C];

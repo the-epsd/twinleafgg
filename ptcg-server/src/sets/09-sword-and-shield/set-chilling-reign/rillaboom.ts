@@ -15,7 +15,7 @@ export class Rillaboom extends PokemonCard {
   protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Thwackey';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 180;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];

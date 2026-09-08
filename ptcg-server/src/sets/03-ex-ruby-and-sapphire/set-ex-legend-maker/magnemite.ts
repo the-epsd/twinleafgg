@@ -7,7 +7,7 @@ import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/s
 
 export class Magnemite extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 50;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -30 }];

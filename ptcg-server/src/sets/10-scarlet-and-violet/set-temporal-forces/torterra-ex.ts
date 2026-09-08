@@ -6,6 +6,7 @@ import { Effect } from '../../../game/store/effects/effect';
 
 import { HealTargetEffect } from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { pokemonHasCardTypeOptional } from '../../../game';
 
 export class Torterraex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex];
@@ -14,7 +15,7 @@ export class Torterraex extends PokemonCard {
 
   public evolvesFrom = 'Grotle';
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 340;
 
@@ -59,7 +60,7 @@ export class Torterraex extends PokemonCard {
 
       playerBench.forEach((c) => {
         if (c.getPokemonCard() instanceof PokemonCard) {
-          if (c.getPokemonCard()?.cardType == CardType.GRASS) {
+          if (pokemonHasCardTypeOptional(c.getPokemonCard(), CardType.GRASS)) {
             grassPokemon++;
           }
         }

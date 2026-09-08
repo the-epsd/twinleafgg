@@ -9,7 +9,7 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP, YOUR_OPPPONENTS_ACTIVE_PO
 export class Haunter extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Gastly';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public weakness = [{ type: D }];
   public resistance = [{ type: C, value: -20 }];

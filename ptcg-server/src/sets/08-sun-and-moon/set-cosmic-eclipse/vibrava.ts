@@ -6,7 +6,7 @@ import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 export class Vibrava extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Trapinch';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 80;
   public weakness = [{ type: G }];
   public retreat = [C];

@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType } from '../../../game';
+import { CardType, PokemonCard, Stage, StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType } from '../../../game';
 import { PowerType } from '../../../game';
 import { EffectOfAbilityEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
@@ -8,7 +8,7 @@ import { CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED, JUST_EVOLVED, THIS_POKEMON_DOE
 export class Hariyama extends PokemonCard {
   public stage = Stage.STAGE_1;
   public evolvesFrom = 'Makuhita';
-  public cardType = F;
+  public cardType: CardType[] = [F];
   public hp = 150;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];

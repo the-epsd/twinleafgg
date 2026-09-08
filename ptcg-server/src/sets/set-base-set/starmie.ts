@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage } from '../../game/store/card/card-types';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { Attack } from '../../game/store/card/pokemon-types';
 import { HealEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -15,7 +15,7 @@ export class Starmie extends PokemonCard {
   public set = 'BS';
   public setNumber = '64';
 
-  public cardType = W;
+  public cardType: CardType[] = [W];
 
   public fullName = 'Starmie';
 

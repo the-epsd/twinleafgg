@@ -9,7 +9,7 @@ import { CheckTableStateEffect } from '../../game/store/effects/check-effects';
 export class BuriedFossil extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 30;
   public retreat = [C];
 

@@ -6,7 +6,7 @@ import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/s
 
 export class ThundurusEX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   protected _tags = [CardTag.POKEMON_EX, CardTag.TEAM_PLASMA];
   public hp: number = 170;
   public weakness: Weakness[] = [{ type: F }];

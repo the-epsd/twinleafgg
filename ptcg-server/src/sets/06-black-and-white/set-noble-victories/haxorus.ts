@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Haxorus extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Fraxure';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 140;
   public retreat = [C, C];
 

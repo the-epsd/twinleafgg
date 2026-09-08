@@ -6,7 +6,7 @@ import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/p
 import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 export class Woobat extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

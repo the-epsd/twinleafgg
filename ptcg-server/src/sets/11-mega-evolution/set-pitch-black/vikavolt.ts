@@ -10,7 +10,7 @@ import { VoltaicLightningEnergy } from './voltaic-lightning-energy';
 export class Vikavolt extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Charjabug';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 160;
   public weakness = [{ type: F }];
   public retreat = [C, C];

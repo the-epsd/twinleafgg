@@ -13,7 +13,7 @@ export class Scovillainex extends PokemonCard {
 
   public evolvesFrom = 'Capsakid';
 
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
 
   public hp: number = 260;
 

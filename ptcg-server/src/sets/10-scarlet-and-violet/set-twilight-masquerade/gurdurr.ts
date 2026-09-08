@@ -12,7 +12,7 @@ export class Gurdurr extends PokemonCard {
 
   public evolvesFrom = 'Timburr';
 
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp: number = 100;
 

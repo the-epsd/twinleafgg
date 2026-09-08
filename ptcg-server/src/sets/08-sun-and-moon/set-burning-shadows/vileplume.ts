@@ -6,7 +6,7 @@ import { ADD_CONFUSION_TO_PLAYER_ACTIVE, ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTAC
 export class Vileplume extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Gloom';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 140;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];

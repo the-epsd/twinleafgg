@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class TrevenantDusknoirGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.TAG_TEAM, CardTag.POKEMON_GX];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 270;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -20 }];

@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, GUST_OPPONENT_BENCHED_POKEMON } from '../../../game/st
 export class Jumpluff extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Skiploom';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public retreat = [C];

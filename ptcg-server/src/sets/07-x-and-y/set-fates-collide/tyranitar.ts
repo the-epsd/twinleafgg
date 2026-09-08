@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, JUST_EVOLVED, ATTACH_ENERGY_PROMPT
 export class Tyranitar extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Pupitar';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 160;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

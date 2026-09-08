@@ -60,7 +60,7 @@ export class Bronzong extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Bronzor';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 110;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];

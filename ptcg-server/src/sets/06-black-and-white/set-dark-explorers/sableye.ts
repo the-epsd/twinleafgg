@@ -6,7 +6,7 @@ import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, SEARCH_
 
 export class Sableye extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 70;
   public weakness = [];
   public retreat = [C];

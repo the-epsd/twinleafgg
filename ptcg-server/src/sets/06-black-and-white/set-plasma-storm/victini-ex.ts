@@ -21,7 +21,7 @@ import { SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefa
 export class VictiniEX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_EX];
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 110;
   public weakness = [{ type: W }];
   public retreat = [C];

@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 export class Hypno extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Drowzee';
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
   public hp: number = 90;
   public weakness = [{ type: CardType.PSYCHIC }];
   public resistance = [];

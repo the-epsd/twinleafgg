@@ -7,7 +7,7 @@ import { WAS_POWER_USED, HAS_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, ADD_MARKER,
 export class Heatran extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 100;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public weakness = [{ type: W }];
   public retreat = [C, C, C, C];
 

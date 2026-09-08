@@ -8,7 +8,7 @@ import { DEFENDING_POKEMON_TAKES_MORE_DAMAGE_DURING_YOUR_NEXT_TURN } from '../..
 export class Vibrava extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Trapinch';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 90;
   public weakness = [{ type: G }];
   public retreat = [C];

@@ -14,7 +14,7 @@ export class Toxicroakex extends PokemonCard {
 
   public evolvesFrom = 'Croagunk';
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp: number = 250;
 

@@ -12,7 +12,7 @@ import { ADD_POISON_TO_PLAYER_ACTIVE, IS_ABILITY_BLOCKED } from '../../../game/s
 
 export class Cacnea extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 60;
   public weakness = [{ type: R }];
   public retreat = [C];

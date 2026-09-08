@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, 
 export class Granbull extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Snubbull';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 120;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

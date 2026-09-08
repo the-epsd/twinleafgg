@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND } from 
 
 export class Grubbin extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 60;
   public weakness = [{ type: R }];
   public retreat = [C, C];
@@ -41,7 +41,7 @@ export class Grubbin extends PokemonCard {
     // Ref: set-celestial-storm/alolan-rattata.ts (search for Pokemon by type)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, player, { cardType: CardType.LIGHTNING }, { max: 2 });
+      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, player, { cardType: [CardType.LIGHTNING] }, { max: 2 });
     }
 
     return state;

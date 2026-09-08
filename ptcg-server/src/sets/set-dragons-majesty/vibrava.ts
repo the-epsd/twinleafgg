@@ -12,7 +12,7 @@ import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../game/store/p
 export class Vibrava extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Trapinch';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 80;
   public weakness = [{ type: Y }];
   public retreat = [C];

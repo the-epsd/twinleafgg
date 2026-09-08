@@ -12,7 +12,7 @@ import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/s
 export class Doublade extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Honedge';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

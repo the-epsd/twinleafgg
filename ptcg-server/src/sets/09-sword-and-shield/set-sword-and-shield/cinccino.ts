@@ -25,7 +25,7 @@ export class Cinccino extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Minccino';
   public regulationMark = 'D';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];

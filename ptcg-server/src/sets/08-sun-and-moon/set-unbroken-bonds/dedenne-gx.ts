@@ -23,7 +23,7 @@ import {
 export class DedenneGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_GX];
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [CardType.LIGHTNING];
   public hp: number = 160;
   public weakness = [{ type: CardType.FIGHTING }];
   public resistance = [{ type: CardType.METAL, value: -20 }];

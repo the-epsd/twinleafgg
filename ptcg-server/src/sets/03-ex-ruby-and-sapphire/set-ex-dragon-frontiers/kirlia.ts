@@ -8,7 +8,7 @@ export class Kirlia extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Ralts';
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 70;
   public weakness = [{ type: P }];
   public retreat = [C];

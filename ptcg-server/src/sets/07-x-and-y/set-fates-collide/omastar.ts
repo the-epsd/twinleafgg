@@ -11,7 +11,7 @@ import { WAS_POWER_USED, IS_ABILITY_BLOCKED, ABILITY_USED, USE_ABILITY_ONCE_PER_
 export class Omastar extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Omanyte';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 120;
   public weakness = [{ type: G }];
   public retreat = [C, C];

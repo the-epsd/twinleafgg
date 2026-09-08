@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, StoreLike, State, CardTag } from '../../game';
+import { CardType, PokemonCard, Stage, StoreLike, State, CardTag } from '../../game';
 import { Attack } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
 import { DRAW_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -8,7 +8,7 @@ export class DarkGolduck extends PokemonCard {
   public stage = Stage.STAGE_1;
   public evolvesFrom = 'Psyduck';
   protected _tags = [CardTag.DARK];
-  public cardType = W;
+  public cardType: CardType[] = [W];
   public hp = 60;
   public weakness = [{ type: L }];
   public retreat = [C, C];

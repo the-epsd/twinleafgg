@@ -26,7 +26,7 @@ export class Forretressex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public evolvesFrom = 'Pineco';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 270;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];

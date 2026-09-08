@@ -12,7 +12,7 @@ export class Grotle extends PokemonCard {
 
   public evolvesFrom = 'Turtwig';
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 120;
 

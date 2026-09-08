@@ -1,13 +1,11 @@
-import {
-  PokemonCard,
+import { PokemonCard,
   CardTag,
   Stage,
   CardType,
   StoreLike,
   State,
   StateUtils,
-  SpecialCondition,
-} from '../../../game';
+  SpecialCondition, pokemonHasCardType } from '../../../game';
 import {
   AddSpecialConditionsEffect,
   DealDamageEffect,
@@ -19,7 +17,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class BlackKyuremex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
   public hp: number = 230;
   public weakness = [{ type: CardType.METAL }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
@@ -50,7 +48,7 @@ export class BlackKyuremex extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const opponentActive = opponent.active.getPokemonCard();
-      if (opponentActive && opponentActive.cardType === CardType.DRAGON) {
+      if (opponentActive && pokemonHasCardType(opponentActive, CardType.DRAGON)) {
         const specialConditionEffect = new AddSpecialConditionsEffect(effect, [
           SpecialCondition.PARALYZED,
         ]);

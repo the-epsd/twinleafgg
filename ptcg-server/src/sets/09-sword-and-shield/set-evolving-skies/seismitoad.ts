@@ -8,7 +8,7 @@ import { DEFENDING_POKEMON_ATTACKS_COST_MORE, DEFENDING_POKEMON_RETREAT_COSTS_MO
 export class Seismitoad extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Palpitoad';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 170;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

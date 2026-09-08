@@ -11,7 +11,7 @@ import { MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store
 export class Lucario extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Riolu';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 120;
   public weakness = [{ type: P }];
   public retreat = [C, C];

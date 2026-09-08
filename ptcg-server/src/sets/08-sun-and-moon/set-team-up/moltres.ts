@@ -10,7 +10,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 
 export class Moltres extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
   public hp: number = 120;
   public weakness = [{ type: CardType.LIGHTNING }];
   public resistance = [{ type: CardType.FIGHTING, value: -20 }];

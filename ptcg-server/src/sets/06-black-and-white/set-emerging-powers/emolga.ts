@@ -7,7 +7,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Emolga extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [];

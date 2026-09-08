@@ -6,7 +6,7 @@ import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { exhaustMap, filter, tap } from 'rxjs/operators';
 import { DeckCardDialogComponent } from '../deck-card-dialog/deck-card-dialog.component';
 import { Subject, merge } from 'rxjs';
-import { Card, CardType, EnergyCard, PokemonCard, SuperType } from 'ptcg-server';
+import { Card, CardType, EnergyCard, getPrimaryCardType, PokemonCard, SuperType } from 'ptcg-server';
 
 export const DeckCardType = 'DECK_CARD';
 
@@ -115,7 +115,7 @@ export class DeckCardComponent implements OnDestroy {
 
   private resolveCardTypeForBadge(card: Card): CardType | null {
     if (card.superType === SuperType.POKEMON) {
-      return (card as PokemonCard).cardType;
+      return getPrimaryCardType(card as PokemonCard);
     }
     if (card.superType === SuperType.ENERGY) {
       const energy = card as EnergyCard;

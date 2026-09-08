@@ -4,7 +4,7 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 export class Charmander extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 50;
   public weakness = [{ type: W }];
   public retreat = [C];

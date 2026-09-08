@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class NsPurrloin extends PokemonCard {
   protected _tags = [CardTag.NS];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
   public hp: number = 70;
   public weakness = [{ type: CardType.GRASS }];
   public retreat = [CardType.COLORLESS];

@@ -15,7 +15,7 @@ export class HisuianSamurott extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Dewott';
   public regulationMark = 'F';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 170;
   public weakness = [{ type: G }];
   public retreat = [C, C];

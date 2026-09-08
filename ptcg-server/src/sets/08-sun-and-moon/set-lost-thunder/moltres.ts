@@ -12,7 +12,7 @@ import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-pr
 
 export class Moltres extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 120;
   public weakness = [{ type: W }];
   public retreat = [C];

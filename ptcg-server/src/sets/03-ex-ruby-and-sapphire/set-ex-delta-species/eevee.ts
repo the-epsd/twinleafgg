@@ -16,7 +16,7 @@ import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs
 export class Eevee extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 50;
   public weakness = [{ type: F }];
   public retreat = [C];

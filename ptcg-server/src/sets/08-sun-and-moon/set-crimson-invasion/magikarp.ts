@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, SHUFFLE_DECK } from '../../../game
 
 export class Magikarp extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 30;
   public weakness = [{ type: L }];
   public retreat = [C];

@@ -5,7 +5,7 @@ import { AFTER_ATTACK, MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_ATTAC
 export class Rotom extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 60;
   public weakness: Weakness[] = [{ type: F }];
   public retreat: CardType[] = [C];

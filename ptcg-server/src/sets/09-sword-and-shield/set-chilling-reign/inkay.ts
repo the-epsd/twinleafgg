@@ -4,7 +4,7 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 export class Inkay extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.RAPID_STRIKE];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 50;
   public weakness = [{ type: P }];
   public retreat = [C];

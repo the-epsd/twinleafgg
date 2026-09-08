@@ -8,7 +8,7 @@ import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH } from '../../../game/s
 
 export class Bombirdier extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 100;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

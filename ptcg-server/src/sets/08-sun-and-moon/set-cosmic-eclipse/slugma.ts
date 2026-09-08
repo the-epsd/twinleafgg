@@ -8,7 +8,7 @@ import { StateUtils } from '../../../game';
 
 export class Slugma extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
   public hp: number = 80;
   public weakness = [{ type: CardType.WATER }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];

@@ -11,7 +11,7 @@ import { IS_POKEBODY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 export class Jynx extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 60;
   public weakness = [{ type: P }];
   public retreat = [C];
@@ -61,7 +61,7 @@ export class Jynx extends PokemonCard {
         return state;
       }
 
-      let cardTypes = [active.cardType];
+      let cardTypes = [...active.cardType];
       const checkPokemonType = new CheckPokemonTypeEffect(player.active);
       store.reduceEffect(state, checkPokemonType);
       cardTypes = checkPokemonType.cardTypes;

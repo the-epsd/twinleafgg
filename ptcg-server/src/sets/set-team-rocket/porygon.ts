@@ -6,7 +6,7 @@ import {ADD_CONFUSION_TO_PLAYER_ACTIVE, COIN_FLIP_PROMPT, WAS_ATTACK_USED} from 
 
 export class Porygon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 40;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

@@ -12,7 +12,7 @@ export class Dondozoex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex];
   public regulationMark = 'I';
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 260;
   public weakness = [{ type: L }];
   public retreat = [C, C, C, C];

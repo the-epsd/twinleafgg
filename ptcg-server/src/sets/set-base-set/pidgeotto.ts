@@ -27,7 +27,7 @@ export class Pidgeotto extends PokemonCard {
 
   public hp = 60;
 
-  public cardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public weakness = [{ type: CardType.LIGHTNING }];
 

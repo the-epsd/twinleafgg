@@ -5,7 +5,7 @@ import { AFTER_ATTACK, MOVE_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED, MULTIPLE_COIN_
 export class TeamRocketsMeowth extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.TEAM_ROCKET];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [C];

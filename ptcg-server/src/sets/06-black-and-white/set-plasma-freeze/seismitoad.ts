@@ -10,7 +10,7 @@ export class Seismitoad extends PokemonCard {
   protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Palpitoad';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 140;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

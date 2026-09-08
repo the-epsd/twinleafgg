@@ -1,3 +1,4 @@
+import { pokemonHasCardType } from '../../../game';
 import { Player } from '../../../game/store/state/player';
 import { Card } from '../../../game/store/card/card';
 import { GameError } from '../../../game/game-error';
@@ -24,7 +25,7 @@ function* playCard(
   const player = effect.player;
   const blocked: number[] = [];
   player.discard.cards.forEach((c, index) => {
-    const isWaterPokemon = c instanceof PokemonCard && c.cardType === CardType.WATER;
+    const isWaterPokemon = c instanceof PokemonCard && pokemonHasCardType(c, CardType.WATER);
     const isBasicWaterEnergy =
       c instanceof EnergyCard &&
       c.energyType === EnergyType.BASIC &&
@@ -85,7 +86,7 @@ export class GreatHaulNet extends TrainerCard {
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     const blocked: number[] = [];
     player.discard.cards.forEach((c, index) => {
-      const isWaterPokemon = c instanceof PokemonCard && c.cardType === CardType.WATER;
+      const isWaterPokemon = c instanceof PokemonCard && pokemonHasCardType(c, CardType.WATER);
       const isBasicWaterEnergy =
         c instanceof EnergyCard &&
         c.energyType === EnergyType.BASIC &&

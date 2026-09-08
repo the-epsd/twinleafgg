@@ -14,7 +14,7 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED } from '../../../game/stor
 export class AlolanMarowak extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Cubone';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 100;
   public weakness = [{ type: W }];
   public retreat = [C, C];

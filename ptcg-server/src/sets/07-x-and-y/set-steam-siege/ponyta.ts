@@ -12,7 +12,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 
 export class Ponyta extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 60;
   public weakness = [{ type: W }];
   public retreat = [C];

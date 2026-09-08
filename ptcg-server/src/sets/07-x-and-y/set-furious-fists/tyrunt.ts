@@ -12,7 +12,7 @@ import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/s
 export class Tyrunt extends PokemonCard {
   public stage: Stage = Stage.RESTORED;
   public evolvesFrom: string = 'Jaw Fossil';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 90;
   public weakness = [{ type: G }];
   public retreat = [C, C];

@@ -13,7 +13,7 @@ export class CharizardGX extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Charmeleon';
   protected _tags = [CardTag.POKEMON_GX];
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 250;
   public weakness = [{ type: W }];
   public resistance = [];

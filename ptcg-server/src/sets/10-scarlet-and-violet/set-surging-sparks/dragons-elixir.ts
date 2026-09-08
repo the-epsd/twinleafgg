@@ -4,7 +4,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { GameError, GameMessage, Player } from '../../../game';
+import { GameError, GameMessage, Player, pokemonHasCardType } from '../../../game';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
@@ -13,7 +13,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   const activePokemon = player.active.getPokemonCard();
 
-  if (activePokemon && activePokemon.cardType !== CardType.DRAGON) {
+  if (activePokemon && !pokemonHasCardType(activePokemon, CardType.DRAGON)) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
@@ -52,7 +52,7 @@ export class DragonsElixir extends TrainerCard {
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     const active = player.active.getPokemonCard();
-    if (!active || active.cardType !== CardType.DRAGON || player.active.damage === 0) {
+    if (!active || !pokemonHasCardType(active, CardType.DRAGON) || player.active.damage === 0) {
       return false;
     }
     return true;

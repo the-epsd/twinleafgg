@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 export class Electivire extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Electabuzz';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 140;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

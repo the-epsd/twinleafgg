@@ -13,7 +13,7 @@ import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/s
 export class MoltresEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX, CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 170;
   public weakness = [{ type: W }];
   public resistance = [{ type: F, value: -20 }];

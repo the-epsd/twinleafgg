@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../../game/store/prefabs/prefa
 export class Starmie extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Staryu';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: P }];
   public retreat = [];

@@ -6,7 +6,7 @@ import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH, WAS_ATTACK_USED } from
 
 export class Eevee2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 50;
   public weakness = [{ type: F }];
   public retreat = [C];

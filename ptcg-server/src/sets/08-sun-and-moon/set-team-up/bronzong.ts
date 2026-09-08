@@ -13,7 +13,7 @@ import { PowerType, State, StoreLike } from '../../../game';
 export class Bronzong extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Bronzor';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 130;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

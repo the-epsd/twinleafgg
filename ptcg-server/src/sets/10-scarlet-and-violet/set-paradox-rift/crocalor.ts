@@ -6,7 +6,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Crocalor extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Fuecoco';
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
   public hp: number = 100;
   public weakness = [{ type: CardType.WATER }];
   public resistance = [];

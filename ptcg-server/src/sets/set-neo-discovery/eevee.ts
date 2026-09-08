@@ -20,7 +20,7 @@ const ENERGY_TYPE_MAP: Partial<Record<CardType, CardType>> = {
 export class Eevee extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 50;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -30 }];
   public retreat = [C];
@@ -82,7 +82,7 @@ export class Eevee extends PokemonCard {
         player,
         GameMessage.CHOOSE_CARD_TO_EVOLVE,
         player.deck,
-        { superType: SuperType.POKEMON, stage: Stage.STAGE_1, evolvesFrom: 'Eevee', cardType: eeveeloutionType },
+        { superType: SuperType.POKEMON, stage: Stage.STAGE_1, evolvesFrom: 'Eevee', cardType: [eeveeloutionType] },
         { min: 0, max: 1, allowCancel: false }
       ), selected => {
         cards = selected || [];

@@ -7,7 +7,7 @@ import { BLOCK_IF_DISCARD_EMPTY, IS_ABILITY_BLOCKED, WAS_POWER_USED, COIN_FLIP_P
 
 export class Munchlax extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 60;
 
   public powers = [{

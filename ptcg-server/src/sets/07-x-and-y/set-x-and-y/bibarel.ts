@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, CONFIRMATION_PROMPT, ADD_S
 export class Bibarel extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Bidoof';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

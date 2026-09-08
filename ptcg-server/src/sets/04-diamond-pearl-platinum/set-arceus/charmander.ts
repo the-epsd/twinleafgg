@@ -7,7 +7,7 @@ import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND, WAS_ATTACK_USED } from 
 export class Charmander extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 60;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public weakness = [{ type: W }];
   public retreat = [C];
 

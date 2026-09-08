@@ -9,7 +9,7 @@ export class Alcremie extends PokemonCard {
   public regulationMark: string = 'E';
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Milcery';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 90;
   public weakness = [{ type: M }];
   public retreat = [C];

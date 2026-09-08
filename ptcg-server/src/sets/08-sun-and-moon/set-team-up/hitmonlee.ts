@@ -22,7 +22,7 @@ export class Hitmonlee extends PokemonCard {
 
   public hp = 100;
 
-  public cardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public weakness = [{ type: CardType.PSYCHIC }];
 

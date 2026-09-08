@@ -10,7 +10,7 @@ import { DELTA_PLUS, WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../.
 
 export class Articuno extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 120;
   public weakness = [{ type: M }];
   public resistance = [{ type: F, value: -20 }];

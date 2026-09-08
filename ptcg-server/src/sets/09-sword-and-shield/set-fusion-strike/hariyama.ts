@@ -14,7 +14,7 @@ export class Hariyama extends PokemonCard {
   protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Makuhita';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 140;
   public weakness = [{ type: P }];
   public retreat = [C, C, C, C];

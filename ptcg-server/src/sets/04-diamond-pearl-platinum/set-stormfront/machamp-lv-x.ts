@@ -23,7 +23,7 @@ import { THIS_POKEMON_SURVIVES_ON_TEN_HP_DURING_OPPONENTS_NEXT_TURN } from '../.
 export class MachampLVX extends PokemonCard {
   public stage: Stage = Stage.LV_X;
   public evolvesFrom = 'Machamp';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   protected _tags = [CardTag.POKEMON_LV_X];
   public hp: number = 150;
   public weakness = [{ type: P, value: 40 }];

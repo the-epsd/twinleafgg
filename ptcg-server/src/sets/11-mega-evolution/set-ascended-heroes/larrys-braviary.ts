@@ -8,7 +8,7 @@ export class LarrysBraviary extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = "Larry's Rufflet";
   protected _tags = [CardTag.LARRYS];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 130;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

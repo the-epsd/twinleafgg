@@ -7,7 +7,7 @@ import { AFTER_ATTACK, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store/pr
 export class Cosmoem extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Cosmog';
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
   public hp: number = 90;
   public weakness = [{ type: CardType.PSYCHIC }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];

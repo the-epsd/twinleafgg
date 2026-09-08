@@ -4,7 +4,7 @@ import { SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../ga
 
 export class Magmar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 90;
   public weakness = [{ type: W }];
   public retreat = [C, C];

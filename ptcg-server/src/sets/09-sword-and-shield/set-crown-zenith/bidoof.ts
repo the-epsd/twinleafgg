@@ -13,7 +13,7 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../
 export class Bidoof extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public regulationMark = 'F';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public retreat = [C];

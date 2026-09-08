@@ -11,7 +11,7 @@ import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../game/store/p
 
 export class Zekrom extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 130;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];

@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, MOVE_CARDS, FLIP_UNTIL_TAILS_AND_COUNT_HEADS } from '.
 export class Lairon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Aron';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

@@ -8,7 +8,7 @@ export class ToxapexGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Mareanie';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 210;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];

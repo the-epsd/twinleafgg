@@ -13,7 +13,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 export class Ninetales extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Vulpix';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 100;
   public weakness = [{ type: W }];
   public retreat = [C];

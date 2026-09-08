@@ -8,7 +8,7 @@ import { NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/attack-effec
 export class Seismitoad extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Palpitoad';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 140;
   public weakness = [{ type: G }];
   public retreat = [C, C];

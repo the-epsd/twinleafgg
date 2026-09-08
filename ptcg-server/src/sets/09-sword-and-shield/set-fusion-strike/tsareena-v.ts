@@ -14,7 +14,7 @@ import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs
 
 export class TsareenaV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   protected _tags = [CardTag.POKEMON_V];
   public hp: number = 200;
   public weakness = [{ type: R }];

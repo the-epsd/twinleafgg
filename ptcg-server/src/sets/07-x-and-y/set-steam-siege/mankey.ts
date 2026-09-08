@@ -10,7 +10,7 @@ import { NEXT_TURN_ATTACK_BASE_DAMAGE } from '../../../game/store/prefabs/attack
 
 export class Mankey extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 60;
   public weakness = [{ type: P }];
   public retreat = [C];

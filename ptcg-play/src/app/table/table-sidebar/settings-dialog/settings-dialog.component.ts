@@ -5,7 +5,6 @@ import { MatLegacyDialogModule as MatDialogModule, MatLegacyDialogRef as MatDial
 import { TranslateModule } from "@ngx-translate/core";
 import { SettingsService } from "./settings.service";
 import { Format } from "ptcg-server";
-import { Board3dAccessService } from "../../../shared/services/board3d-access.service";
 
 @Component({
   selector: 'ptcg-settings-dialog',
@@ -18,9 +17,7 @@ export class SettingsDialogComponent {
   showTags = false;
   cardSize = 100;
   hiddenFormats: Format[] = [];
-  use3dBoardDefault = false;
   board2dPerspectiveEnabled = true;
-  has3dBoardAccess = false;
   cardTextKerning = 0;
   sfxEnabled = true;
   sfxVolume = 70; // Display as percentage (0-100), stored as 0.0-1.0 internally
@@ -45,8 +42,7 @@ export class SettingsDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<SettingsDialogComponent>,
-    private settingsService: SettingsService,
-    private board3dAccessService: Board3dAccessService
+    private settingsService: SettingsService
   ) {
     this.settingsService.holoEnabled$.subscribe(
       enabled => this.holoEnabled = enabled
@@ -61,9 +57,6 @@ export class SettingsDialogComponent {
     this.settingsService.hiddenFormats$.subscribe(
       formats => this.hiddenFormats = formats
     );
-    this.settingsService.use3dBoardDefault$.subscribe(
-      enabled => this.use3dBoardDefault = enabled
-    );
     this.settingsService.board2dPerspectiveEnabled$.subscribe(
       enabled => this.board2dPerspectiveEnabled = enabled
     );
@@ -75,9 +68,6 @@ export class SettingsDialogComponent {
     );
     this.settingsService.sfxVolume$.subscribe(
       volume => this.sfxVolume = Math.round(volume * 100) // Convert 0.0-1.0 to 0-100 for display
-    );
-    this.board3dAccessService.has3dBoardAccess$.subscribe(
-      hasAccess => this.has3dBoardAccess = hasAccess
     );
   }
 
@@ -117,7 +107,6 @@ export class SettingsDialogComponent {
     this.settingsService.setShowTags(this.showTags);
     this.settingsService.setCardSize(this.cardSize);
     this.settingsService.setHiddenFormats(this.hiddenFormats);
-    this.settingsService.setUse3dBoardDefault(this.use3dBoardDefault);
     this.settingsService.setBoard2dPerspectiveEnabled(this.board2dPerspectiveEnabled);
     this.settingsService.setCardTextKerning(this.cardTextKerning);
     this.settingsService.setSfxEnabled(this.sfxEnabled);

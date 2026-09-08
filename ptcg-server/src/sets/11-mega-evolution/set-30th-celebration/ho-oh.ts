@@ -10,7 +10,7 @@ import { DISCARD_ALL_ENERGY_FROM_POKEMON, WAS_ATTACK_USED } from '../../../game/
 export class HoOh extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 130;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public weakness = [{ type: W }];
   public retreat = [C, C];
 

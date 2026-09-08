@@ -12,7 +12,7 @@ export class Dewgong extends PokemonCard {
   public set = 'BS';
   public fullName = 'Dewgong BS';
 
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public stage = Stage.STAGE_1;
   public evolvesFrom = 'Seel';
 

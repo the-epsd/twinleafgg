@@ -23,7 +23,7 @@ export class SylveonGX extends PokemonCard {
 
   public evolvesFrom = 'Eevee';
 
-  public cardType: CardType = CardType.FAIRY;
+  public cardType: CardType[] = [CardType.FAIRY];
 
   public hp: number = 200;
 

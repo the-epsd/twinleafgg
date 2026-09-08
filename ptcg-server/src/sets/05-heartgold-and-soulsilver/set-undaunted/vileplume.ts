@@ -15,7 +15,7 @@ import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../..
 export class Vileplume extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Gloom';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 120;
   public weakness = [{ type: P }];
   public retreat = [C, C];

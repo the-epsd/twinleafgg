@@ -6,7 +6,7 @@ import { WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_
 
 export class Magearna extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

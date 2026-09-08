@@ -10,7 +10,7 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 export class Espeon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Eevee';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: P }];
   public retreat = [];

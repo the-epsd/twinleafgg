@@ -15,7 +15,7 @@ export class HisuianZoroarkVSTAR extends PokemonCard {
 
   public regulationMark = 'F';
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp: number = 270;
 

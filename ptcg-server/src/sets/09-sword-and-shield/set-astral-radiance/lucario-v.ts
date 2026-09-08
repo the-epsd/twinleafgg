@@ -19,7 +19,7 @@ export class LucarioV extends PokemonCard {
 
   protected _tags = [CardTag.POKEMON_V];
 
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public regulationMark = 'F';
 

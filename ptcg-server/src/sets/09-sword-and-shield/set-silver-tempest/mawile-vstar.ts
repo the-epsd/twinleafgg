@@ -27,7 +27,7 @@ export class MawileVstar extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VSTAR];
   public stage: Stage = Stage.VSTAR;
   public evolvesFrom: string = 'Mawile V';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 260;
   public weakness = [{ type: M }];
   public retreat = [C];

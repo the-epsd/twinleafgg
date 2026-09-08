@@ -14,7 +14,7 @@ export class Dolliv extends PokemonCard {
 
   public stage = Stage.STAGE_1;
 
-  public cardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp = 90;
 

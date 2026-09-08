@@ -14,7 +14,7 @@ import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-pr
 export class Azumarill extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Marill';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 100;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

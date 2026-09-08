@@ -18,7 +18,7 @@ export class AlolanMukGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Alolan Grimer';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 220;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

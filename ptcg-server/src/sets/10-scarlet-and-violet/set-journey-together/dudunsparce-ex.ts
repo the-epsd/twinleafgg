@@ -17,7 +17,7 @@ export class Dudunsparceex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Dunsparce';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 270;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

@@ -9,7 +9,7 @@ export class MegaMalamarex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Inkay';
   protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 320;
   public weakness = [{ type: G }];
   public retreat = [C, C];

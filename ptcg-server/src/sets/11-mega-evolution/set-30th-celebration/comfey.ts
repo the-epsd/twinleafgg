@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Comfey extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 70;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public weakness = [{ type: M }];
   public retreat = [C];
 

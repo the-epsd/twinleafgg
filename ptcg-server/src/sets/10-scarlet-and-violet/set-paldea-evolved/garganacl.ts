@@ -11,7 +11,7 @@ import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs
 export class Garganacl extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Naclstack';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 180;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

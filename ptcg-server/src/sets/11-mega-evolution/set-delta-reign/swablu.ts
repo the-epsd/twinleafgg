@@ -4,7 +4,7 @@ import { AFTER_ATTACK, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store/pr
 
 export class Swablu extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 50;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

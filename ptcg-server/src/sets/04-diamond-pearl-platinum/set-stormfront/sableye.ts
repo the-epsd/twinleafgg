@@ -11,7 +11,7 @@ import { StoreLike } from '../../../game/store/store-like';
 
 export class Sableye extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 60;
   public resistance = [{ type: C, value: -20 }];
   public retreat = [C];

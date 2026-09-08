@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/
 
 export class Mewtwo extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 130;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

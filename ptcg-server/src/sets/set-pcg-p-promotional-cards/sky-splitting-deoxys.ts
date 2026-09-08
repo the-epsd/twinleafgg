@@ -13,7 +13,7 @@ import { ADD_MARKER, HAS_MARKER, HEAL_X_DAMAGE_FROM_THIS_POKEMON, REMOVE_MARKER_
 
 export class SkySplittingDeoxys extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: P }];
   public retreat = [C, C];

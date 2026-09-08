@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store
 
 export class Tynamo extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 30;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

@@ -9,7 +9,7 @@ import { AFTER_ATTACK, COIN_FLIP_PROMPT, SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND, 
 export class Gabite extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Gible';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 80;
   public weakness = [{ type: C, value: +20 }];
   public retreat = [C];

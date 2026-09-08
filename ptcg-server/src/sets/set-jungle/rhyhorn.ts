@@ -7,7 +7,7 @@ import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../game/store/prefabs/effect
 
 export class Rhyhorn extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 70;
   public resistance = [{ type: L, value: -30 }];
   public weakness = [{ type: G }];

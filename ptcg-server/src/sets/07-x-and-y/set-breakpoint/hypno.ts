@@ -12,7 +12,7 @@ import { ADD_MARKER, ADD_SLEEP_TO_PLAYER_ACTIVE, HAS_MARKER, REMOVE_MARKER, WAS_
 export class Hypno extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Drowzee';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 90;
   public weakness = [{ type: P }];
   public retreat = [C, C];

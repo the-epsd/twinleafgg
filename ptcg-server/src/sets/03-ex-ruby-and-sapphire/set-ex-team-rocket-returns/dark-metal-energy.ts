@@ -17,30 +17,19 @@ export class DarkMetalEnergy extends EnergyCard {
 
   public text = 'Attach Dark Metal Energy to 1 of your Pokémon. While in play, Dark Metal Energy provides [D] Energy and [M] Energy, but provides only 1 Energy at a time. (Doesn\'t count as a basic Energy card when not in play and has no effect other than providing Energy.)';
 
-  public blendedEnergies = [CardType.DARK, CardType.METAL];
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
       try {
-        // Always add the base "EnergyEffect"
         const energyEffect = new EnergyEffect(effect.player, this);
         store.reduceEffect(state, energyEffect);
       } catch {
         return state;
       }
 
-      // Find the first energy type that's not already provided by other energies
-      const neededType = this.blendedEnergies.find(type =>
-        !effect.energyMap.some(energy => energy.provides.includes(type))
-      );
-
-      if (neededType) {
-        // Only provide the specific energy type that's needed
-        effect.energyMap.push({
-          card: this,
-          provides: [neededType]
-        });
-      }
+      effect.energyMap.push({
+        card: this,
+        provides: [CardType.DARK, CardType.METAL]
+      });
     }
 
     return state;

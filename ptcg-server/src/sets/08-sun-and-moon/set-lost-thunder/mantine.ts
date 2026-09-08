@@ -11,7 +11,7 @@ import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Mantine extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 120;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

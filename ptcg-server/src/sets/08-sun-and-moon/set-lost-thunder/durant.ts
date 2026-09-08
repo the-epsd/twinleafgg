@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, DISCARD_A_STADIUM_CARD_IN_PLAY, DISCARD_TOP_X_CARDS_FR
 
 export class Durant extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

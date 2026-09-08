@@ -12,7 +12,7 @@ import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/att
 export class Wailord extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Wailmer';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 220;
   public weakness = [{ type: L }];
   public retreat = [C, C, C, C];

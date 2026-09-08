@@ -10,7 +10,7 @@ import { NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/attack-effec
 export class Cinccino extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Minccino';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];

@@ -9,7 +9,7 @@ import { } from '../../../game/store/prefabs/prefabs';
 export class LatiosEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 170;
   public weakness = [{ type: N }];
   public retreat = [C, C];

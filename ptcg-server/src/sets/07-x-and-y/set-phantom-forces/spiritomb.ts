@@ -5,7 +5,7 @@ import { DEFENDING_POKEMON_CANNOT_EVOLVE_NEXT_TURN } from "../../../game/store/p
 
 export class Spiritomb extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 70;
   public retreat = [C];
 

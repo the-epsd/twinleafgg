@@ -10,7 +10,7 @@ import { DAMAGE_OPPONENT_POKEMON, MOVE_CARDS, WAS_ATTACK_USED } from '../../../g
 export class Camerupt extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Numel';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 90;
   public weakness = [{ type: W }];
   public retreat = [C, C];

@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage } from '../../../game/store/card/card-types';
+import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { GamePhase, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
@@ -8,7 +8,7 @@ import { COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../
 
 export class Sewaddle extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 50;
   public weakness = [{ type: R }];
   public retreat = [C];

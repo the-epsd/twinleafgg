@@ -12,7 +12,7 @@ import { PlayerType, PowerType, State, StoreLike } from '../../../game';
 import { BetweenTurnsEffect } from '../../../game/store/effects/game-phase-effects';
 export class Seviper extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 100;
   public weakness = [{ type: P }];
   public retreat = [C, C];

@@ -6,7 +6,7 @@ import { ADD_PARALYZED_TO_PLAYER_ACTIVE, CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED
 export class Raichu extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Pikachu';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 110;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

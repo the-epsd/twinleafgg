@@ -6,7 +6,7 @@ import { WAS_ATTACK_USED, DRAW_CARDS } from '../../../game/store/prefabs/prefabs
 
 export class Pyukumuku extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 80;
   public weakness = [{ type: G }];
   public retreat = [C];

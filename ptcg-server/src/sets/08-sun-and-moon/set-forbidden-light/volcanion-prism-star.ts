@@ -22,7 +22,7 @@ import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/pre
 export class VolcanionPrismStar extends PokemonCard {
   protected _tags = [CardTag.PRISM_STAR];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 160;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];

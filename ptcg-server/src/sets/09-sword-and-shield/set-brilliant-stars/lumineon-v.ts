@@ -28,7 +28,7 @@ import {
 export class LumineonV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 170;
   public weakness = [{ type: L }];
   public retreat = [C];

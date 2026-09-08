@@ -7,7 +7,7 @@ import { } from '../../../game/store/prefabs/prefabs';
 export class Diglett extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 50;
   public weakness = [{ type: G }];
   public retreat = [C];

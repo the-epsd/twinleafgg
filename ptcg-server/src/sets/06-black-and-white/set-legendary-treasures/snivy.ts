@@ -11,7 +11,7 @@ import { ATTACH_ENERGY_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefa
 
 export class Snivy extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 50;
   public weakness = [{ type: R }];
   public retreat = [C];

@@ -9,25 +9,23 @@ export class Mewtwoex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex];
   public hp: number = 230;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Photon Bullets',
-      cost: [P, P],
-      damage: 0,
-      text: "This attack does 50 damage to each of your opponent's Pokémon ex. (Don't apply Weakness and Resistance for Benched Pokémon.)",
-    },
-    {
-      name: 'Psychic Powers',
-      cost: [P, P, P],
-      damage: 230,
-      text: "During your next turn, this Pokémon can't use attacks.",
-    },
-  ];
+  public attacks = [{
+    name: 'Photon Bullets',
+    cost: [P, P],
+    damage: 0,
+    text: "This attack does 50 damage to each of your opponent's Pokémon ex. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+  },
+  {
+    name: 'Psychic Powers',
+    cost: [P, P, P],
+    damage: 230,
+    text: "During your next turn, this Pokémon can't use attacks.",
+  }];
 
   public regulationMark: string = 'J';
   public set: string = 'M6a';
@@ -36,7 +34,7 @@ export class Mewtwoex extends PokemonCard {
   public name: string = 'Mewtwo ex';
   public fullName: string = 'Mewtwo ex 30C';
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-breakthrough/raichu.ts (Thunderclap Shot — 50 to each opponent's Pokémon ex)
+    // Photon Bullets
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -58,7 +56,8 @@ export class Mewtwoex extends PokemonCard {
         }
       });
     }
-    // Ref: set-journey-together/lombre.ts (Aqua Slash — can't attack next turn)
+
+    // Psychic Powers
     if (WAS_ATTACK_USED(effect, 1, this)) {
       effect.player.active.cannotAttackNextTurnPending = true;
     }

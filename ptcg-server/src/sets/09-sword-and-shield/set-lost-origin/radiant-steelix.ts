@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, ATTACH_ENERGY_PROMPT } from '../../../game/store/prefa
 
 export class RadiantSteelix extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 170;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, MOVE_CARDS } from '../../../game/s
 export class Rhyperior2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Rhydon';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 160;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];

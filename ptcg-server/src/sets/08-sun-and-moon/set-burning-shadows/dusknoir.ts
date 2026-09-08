@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, StoreLike, State, StateUtils, GameError, GameMessage, PokemonCardList, ChooseCardsPrompt, SuperType } from '../../../game';
+import { CardType, PokemonCard, Stage, StoreLike, State, StateUtils, GameError, GameMessage, PokemonCardList, ChooseCardsPrompt, SuperType } from '../../../game';
 import { PowerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { EffectOfAbilityEffect } from '../../../game/store/effects/game-effects';
@@ -7,7 +7,7 @@ import { ABILITY_USED, ADD_MARKER, HAS_MARKER, MOVE_CARDS, REMOVE_MARKER_AT_END_
 export class Dusknoir extends PokemonCard {
   public stage = Stage.STAGE_2;
   public evolvesFrom = 'Dusclops';
-  public cardType = P;
+  public cardType: CardType[] = [P];
   public hp = 150;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -20 }];

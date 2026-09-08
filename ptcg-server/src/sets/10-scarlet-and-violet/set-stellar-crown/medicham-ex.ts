@@ -18,7 +18,7 @@ export class Medichamex extends PokemonCard {
 
   public evolvesFrom = 'Meditite';
 
-  public cardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp = 260;
 

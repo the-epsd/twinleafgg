@@ -25,7 +25,7 @@ export class Noctowl extends PokemonCard {
 
   public evolvesFrom = 'Hoothoot';
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp: number = 100;
 

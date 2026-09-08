@@ -18,7 +18,7 @@ import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, DAMAGE_
 export class RaikouEx extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_EX];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 170;
   public weakness = [{ type: F }];
   public retreat = [C];

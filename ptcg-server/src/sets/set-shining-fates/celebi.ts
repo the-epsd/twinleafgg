@@ -10,7 +10,7 @@ import { WAS_POWER_USED, IS_ABILITY_BLOCKED, LOOK_AT_TOP_X_CARDS_AND_PUT_UP_TO_Y
 
 export class Celebi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public retreat = [C];

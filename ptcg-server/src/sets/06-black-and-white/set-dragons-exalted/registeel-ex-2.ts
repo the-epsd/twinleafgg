@@ -10,7 +10,7 @@ import {
 export class RegisteelEx2 extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 180;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

@@ -13,7 +13,7 @@ import { SlotType } from '../../../game/store/actions/play-card-action';
 export class Cinderace3 extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Raboot';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 170;
   public weakness = [{ type: W }];
   public retreat = [C, C];

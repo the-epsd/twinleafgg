@@ -13,7 +13,7 @@ export class LugiaBreak extends PokemonCard {
   protected _tags = [CardTag.BREAK];
   public stage: Stage = Stage.BREAK;
   public evolvesFrom: string = 'Lugia';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 150;
   public retreat = [];
 

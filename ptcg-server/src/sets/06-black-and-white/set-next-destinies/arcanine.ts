@@ -8,7 +8,7 @@ import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/s
 export class Arcanine extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Growlithe';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 120;
   public weakness = [{ type: W }];
   public retreat = [C, C, C];

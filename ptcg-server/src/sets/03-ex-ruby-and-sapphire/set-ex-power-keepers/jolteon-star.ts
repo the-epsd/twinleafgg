@@ -10,7 +10,7 @@ import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects
 export class JolteonStar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.STAR];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -30 }];

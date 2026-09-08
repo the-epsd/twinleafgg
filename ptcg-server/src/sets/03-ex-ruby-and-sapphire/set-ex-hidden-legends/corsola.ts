@@ -6,7 +6,7 @@ import { DRAW_UP_TO_X_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs
 
 export class Corsola extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 70;
   public weakness = [{ type: G }];
   public retreat = [C];

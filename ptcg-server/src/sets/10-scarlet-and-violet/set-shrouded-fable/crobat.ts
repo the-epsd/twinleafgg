@@ -6,7 +6,7 @@ import { ADD_MARKER, ADD_POISON_TO_PLAYER_ACTIVE, HAS_MARKER, REMOVE_MARKER, REM
 export class Crobat extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Golbat';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 130;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

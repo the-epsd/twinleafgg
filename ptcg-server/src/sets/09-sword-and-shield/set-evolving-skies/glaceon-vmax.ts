@@ -14,7 +14,7 @@ export class GlaceonVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Glaceon V';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 310;
   public weakness = [{ type: M }];
   public retreat = [C, C];

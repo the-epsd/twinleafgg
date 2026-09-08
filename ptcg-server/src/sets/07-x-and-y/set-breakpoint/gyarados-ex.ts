@@ -23,7 +23,7 @@ import {
 export class GyaradosEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 180;
   public weakness = [{ type: L }];
   public retreat = [C, C, C, C];

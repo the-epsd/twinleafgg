@@ -17,7 +17,7 @@ export class MimikyuV extends PokemonCard {
 
   protected _tags = [CardTag.POKEMON_V];
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 160;
 

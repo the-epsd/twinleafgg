@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, PowerType, ChooseCardsPrompt, GameMessage, ShowCardsPrompt, StateUtils, SuperType, GameError, PlayerType, ShuffleDeckPrompt, BoardEffect } from '../../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State, PowerType, ChooseCardsPrompt, GameMessage, ShowCardsPrompt, StateUtils, SuperType, GameError, PlayerType, ShuffleDeckPrompt, BoardEffect, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
@@ -8,7 +8,7 @@ export class FanRotom extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp: number = 70;
 
@@ -74,7 +74,7 @@ export class FanRotom extends PokemonCard {
 
         const blocked: number[] = [];
         player.deck.cards.forEach((c, index) => {
-          if (c instanceof PokemonCard && c.cardType === CardType.COLORLESS && c.hp <= 100) {
+          if (c instanceof PokemonCard && pokemonHasCardType(c, CardType.COLORLESS) && c.hp <= 100) {
             pokemons += 1;
           } else {
             blocked.push(index);

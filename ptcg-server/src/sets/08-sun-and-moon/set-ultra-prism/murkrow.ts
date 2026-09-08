@@ -7,7 +7,7 @@ import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-pref
 
 export class Murkrow extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 70;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

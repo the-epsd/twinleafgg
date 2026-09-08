@@ -13,7 +13,7 @@ export class Cetoddle extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp: number = 90;
 

@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, ATTACH_ENERGY_PROMPT } from '../../../game/store/prefa
 
 export class Victini extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 80;
   public weakness = [{ type: W }];
   public retreat = [C];

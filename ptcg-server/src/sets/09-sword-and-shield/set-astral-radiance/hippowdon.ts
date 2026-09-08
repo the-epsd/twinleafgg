@@ -12,7 +12,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 export class Hippowdon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Hippopotas';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 150;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];

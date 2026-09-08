@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../../game/store/prefabs/prefa
 export class Kingdra extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Seadra';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 140;
   public weakness = [{ type: N }];
   public retreat = [C];

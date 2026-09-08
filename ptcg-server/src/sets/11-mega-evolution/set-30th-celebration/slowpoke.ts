@@ -8,7 +8,7 @@ import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/
 export class Slowpoke extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 80;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public weakness = [{ type: L }];
   public retreat = [C, C];
 

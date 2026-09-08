@@ -54,7 +54,7 @@ export class DrampaGX extends PokemonCard {
 
   protected _tags = [CardTag.POKEMON_GX];
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp: number = 180;
 

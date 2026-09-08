@@ -11,7 +11,7 @@ import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class TapuLele extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 110;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

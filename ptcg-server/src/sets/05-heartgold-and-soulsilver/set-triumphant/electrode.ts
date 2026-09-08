@@ -1,11 +1,11 @@
-import { AttachEnergyPrompt, CardList, GameMessage, PlayerType, PokemonCard, PokemonCardList, PowerType, ShowCardsPrompt, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../../game';
+import { CardType, AttachEnergyPrompt, CardList, GameMessage, PlayerType, PokemonCard, PokemonCardList, PowerType, ShowCardsPrompt, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { ABILITY_USED, BLOCK_IF_HAS_SPECIAL_CONDITION, MOVE_CARDS, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Electrode extends PokemonCard {
   public stage = Stage.STAGE_1;
   public evolvesFrom = 'Voltorb';
-  public cardType = L;
+  public cardType: CardType[] = [L];
   public hp = 90;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

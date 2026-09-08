@@ -11,7 +11,7 @@ import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 export class Electrode extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Voltorb';
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [CardType.LIGHTNING];
   public hp: number = 90;
   public weakness = [{ type: CardType.FIGHTING }];
   public retreat = [CardType.COLORLESS];

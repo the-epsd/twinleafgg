@@ -14,7 +14,7 @@ import { StoreLike } from '../../../game/store/store-like';
 export class Dugtrio extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Diglett';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 70;
   public weakness = [{ type: G }];
   public retreat = [C];

@@ -10,7 +10,7 @@ export class UrsalunaV extends PokemonCard {
 
   protected _tags = [CardTag.POKEMON_V];
 
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp: number = 230;
 

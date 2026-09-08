@@ -16,7 +16,7 @@ export class Machoke extends PokemonCard {
 
   public fullName = 'Machoke BS';
 
-  public cardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public stage = Stage.STAGE_1;
 

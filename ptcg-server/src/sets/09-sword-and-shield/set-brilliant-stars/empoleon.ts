@@ -17,7 +17,7 @@ export class Empoleon extends PokemonCard {
 
   public evolvesFrom = 'Prinplup';
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp: number = 160;
 

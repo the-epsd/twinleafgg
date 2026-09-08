@@ -8,7 +8,7 @@ import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
 export class TeamRocketsArticuno extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.TEAM_ROCKET];
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 120;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

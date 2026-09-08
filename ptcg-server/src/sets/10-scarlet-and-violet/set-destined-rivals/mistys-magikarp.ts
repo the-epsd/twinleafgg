@@ -8,7 +8,7 @@ import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 export class MistysMagikarp extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.MISTYS];
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 30;
   public weakness = [{ type: L }];
   public retreat = [C];

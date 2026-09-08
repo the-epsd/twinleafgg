@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Silvally extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Type: Null';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public retreat = [C, C];

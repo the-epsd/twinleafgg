@@ -12,7 +12,7 @@ import { FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_MORE_DAMAGE_PER_HEADS } from '../.
 export class Escavalier extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Karrablast';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 100;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

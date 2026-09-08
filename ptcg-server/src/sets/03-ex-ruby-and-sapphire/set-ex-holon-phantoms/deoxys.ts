@@ -7,7 +7,7 @@ import { THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN_
 export class Deoxys extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 80;
   public weakness = [{ type: P }];
   public retreat = [C, C];

@@ -14,7 +14,7 @@ export class Tinkatonex extends PokemonCard {
 
   public evolvesFrom = 'Tinkatuff';
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 300;
 

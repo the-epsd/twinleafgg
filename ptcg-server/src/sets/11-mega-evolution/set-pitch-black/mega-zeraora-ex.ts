@@ -13,7 +13,7 @@ export class MegaZeraoraex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
   public hp: number = 270;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public weakness = [{ type: F }];
   public retreat = [C];
 
@@ -48,7 +48,7 @@ export class MegaZeraoraex extends PokemonCard {
       let n = 0;
       check.energyMap.forEach((em) => {
         n += em.provides.filter(
-          (t) => t === CardType.LIGHTNING || t === CardType.ANY || t === CardType.WLFM,
+          (t) => t === CardType.LIGHTNING || t === CardType.ANY,
         ).length;
       });
       effect.damage = 60 * n;

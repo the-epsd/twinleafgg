@@ -4,7 +4,7 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 export class Trapinch2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 40;
   public weakness = [{ type: G }];
   public retreat = [C];

@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_P
 export class Typhlosion extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Quilava';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 160;
   public weakness = [{ type: W }];
   public retreat = [C, C];

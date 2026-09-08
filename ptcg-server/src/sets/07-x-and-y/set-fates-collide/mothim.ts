@@ -11,7 +11,7 @@ import { WAS_POWER_USED, IS_ABILITY_BLOCKED, ABILITY_USED } from '../../../game/
 export class Mothim extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Burmy';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

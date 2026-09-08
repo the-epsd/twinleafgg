@@ -6,7 +6,7 @@ import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-e
 
 export class Hoothoot extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 80;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

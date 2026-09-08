@@ -216,6 +216,8 @@ cardManager.defineSet(sets.setPitchBlack);
 cardManager.defineSet(sets.setDeltaReign);
 cardManager.defineSet(sets.set30thCelebration);
 cardManager.defineSet(sets.setMegaStarterDeck);
+cardManager.defineSet(sets.setMegaXMegaParade);
+cardManager.defineSet(sets.setAuraSeeker);
 
 cardManager.defineSet(sets.setTest);
 

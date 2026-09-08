@@ -4,7 +4,7 @@ import { GET_TOTAL_ENERGY_ATTACHED_TO_PLAYERS_POKEMON, WAS_ATTACK_USED } from '.
 
 export class Pincurchin extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public retreat = [C];

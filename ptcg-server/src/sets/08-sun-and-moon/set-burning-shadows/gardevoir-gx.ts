@@ -38,7 +38,7 @@ export class GardevoirGX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Kirlia';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 230;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

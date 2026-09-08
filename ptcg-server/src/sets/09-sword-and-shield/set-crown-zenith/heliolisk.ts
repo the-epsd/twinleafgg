@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../../ga
 export class Heliolisk extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Helioptile';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 120;
   public weakness = [{ type: F }];
   public retreat = [C];

@@ -13,7 +13,7 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 export class Watchog extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Patrat';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public retreat = [C];

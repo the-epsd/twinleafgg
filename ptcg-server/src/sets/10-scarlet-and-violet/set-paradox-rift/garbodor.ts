@@ -12,7 +12,7 @@ export class Garbodor extends PokemonCard {
 
   public evolvesFrom: string = 'Trubbish';
 
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
 
   public hp: number = 120;
 

@@ -11,7 +11,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class Moltres extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 100;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public weakness = [{ type: W }];
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C, C];

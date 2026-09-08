@@ -8,7 +8,7 @@ import { FLIP_COIN_FOR_FLY } from '../../../game/store/prefabs/effect-of-attack-
 export class Tranquill extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Pidove';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 80;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

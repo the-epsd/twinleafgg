@@ -9,7 +9,7 @@ export class Poliwrath extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Poliwhirl';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 170;
   public weakness: Weakness[] = [{ type: L }];
   public retreat: CardType[] = [C, C, C];

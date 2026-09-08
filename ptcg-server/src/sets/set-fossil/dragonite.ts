@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED, WAS_POWER_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../
 export class Dragonite extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Dragonair';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 100;
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];

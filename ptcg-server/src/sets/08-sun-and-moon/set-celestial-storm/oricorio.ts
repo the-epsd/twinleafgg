@@ -10,7 +10,7 @@ import { GUST_OPPONENT_BENCHED_POKEMON, WAS_ATTACK_USED } from '../../../game/st
 
 export class Oricorio extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
   public hp: number = 90;
   public weakness = [{ type: CardType.LIGHTNING }];
   public resistance = [{ type: CardType.FIGHTING, value: -20 }];

@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH } from
 
 export class Impidimp extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 60;
   public weakness = [{ type: G }];
   public retreat = [C];

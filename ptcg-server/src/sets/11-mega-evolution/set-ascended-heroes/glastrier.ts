@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Glastrier extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 130;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public weakness = [{ type: M }];
   public retreat = [C, C];
 

@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, 
 
 export class Psyduck extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 60;
   public weakness = [{ type: G }];
   public retreat = [C, C];

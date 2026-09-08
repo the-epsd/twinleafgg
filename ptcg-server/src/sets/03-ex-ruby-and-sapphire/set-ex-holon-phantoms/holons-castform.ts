@@ -34,7 +34,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class HolonsCastform extends PokemonCard implements EnergyCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.HOLONS];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 50;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -69,8 +69,6 @@ export class HolonsCastform extends PokemonCard implements EnergyCard {
   // EnergyCard interface properties
   public text: string = '';
   public isBlocked = false;
-  public blendedEnergies: CardType[] = [];
-  public blendedEnergyCount = 1;
   public energyEffect: any = undefined;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -58,7 +58,7 @@ export function AuthToken() {
         return;
       }
 
-      Object.assign(req.body, {userId});
+      Object.assign(req.body || (req.body = {}), {userId});
       return handler.apply(this, arguments);
     };
   };

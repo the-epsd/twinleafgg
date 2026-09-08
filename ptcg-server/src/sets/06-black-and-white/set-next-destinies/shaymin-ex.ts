@@ -25,7 +25,7 @@ import {
 
 export class ShayminEX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   protected _tags = [CardTag.POKEMON_EX];
   public hp: number = 110;
   public weakness: Weakness[] = [{ type: R }];

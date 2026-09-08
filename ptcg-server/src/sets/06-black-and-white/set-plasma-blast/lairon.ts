@@ -8,7 +8,7 @@ import { FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_DAMAGE_PER_HEADS } from '../../../
 export class Lairon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Aron';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

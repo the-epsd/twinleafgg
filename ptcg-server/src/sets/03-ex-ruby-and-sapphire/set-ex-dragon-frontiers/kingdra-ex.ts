@@ -28,7 +28,7 @@ export class Kingdraex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Seadra';
   protected _tags = [CardTag.POKEMON_ex, CardTag.DELTA_SPECIES];
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 140;
   public weakness = [{ type: L }];
   public retreat = [C];

@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, DISCARD_TOP_X_CARDS_FROM_YOUR_DECK } from '../../../ga
 export class Krookodile extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Krokorok';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 150;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Skarmory extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 120;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

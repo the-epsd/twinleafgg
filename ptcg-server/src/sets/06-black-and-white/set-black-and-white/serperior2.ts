@@ -11,7 +11,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class Serperior2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Servine';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 130;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -20 }];

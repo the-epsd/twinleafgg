@@ -22,7 +22,7 @@ import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
 export class HoOhEx2 extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 180;
   public weakness = [{ type: W }];
   public resistance = [{ type: F, value: -20 }];

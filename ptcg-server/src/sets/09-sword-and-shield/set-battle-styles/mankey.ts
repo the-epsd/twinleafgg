@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 export class Mankey extends PokemonCard {
   protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 60;
   public weakness = [{ type: P }];
   public retreat = [C];

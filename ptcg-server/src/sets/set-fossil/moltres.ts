@@ -10,7 +10,7 @@ import { MOVE_CARDS, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/
 
 export class Moltres extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 70;
   public weakness = [];
   public resistance = [{ type: F, value: -30 }];

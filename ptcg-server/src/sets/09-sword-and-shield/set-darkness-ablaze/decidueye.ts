@@ -23,7 +23,7 @@ import { DAMAGE_OPPONENT_POKEMON } from '../../../game/store/prefabs/prefabs';
 export class Decidueye extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Dartrix';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 140;
   public weakness = [{ type: R }];
   public retreat = [C, C];

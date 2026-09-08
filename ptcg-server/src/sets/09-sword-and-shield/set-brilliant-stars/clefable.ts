@@ -14,7 +14,7 @@ import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-
 export class Clefable extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Clefairy';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 100;
   public weakness = [{ type: M }];
   public retreat = [C];

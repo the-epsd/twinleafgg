@@ -8,7 +8,7 @@ import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 export class Vileplume extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Gloom';
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
   public hp: number = 130;
   public weakness = [{ type: CardType.FIRE }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];

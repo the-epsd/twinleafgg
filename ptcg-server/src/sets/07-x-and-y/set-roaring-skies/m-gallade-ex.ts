@@ -13,7 +13,7 @@ export class MGalladeEx extends PokemonCard {
   protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Gallade-EX';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 220;
   public weakness = [{ type: P }];
   public retreat = [C, C];

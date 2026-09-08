@@ -13,7 +13,7 @@ export class SimisearVstar extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VSTAR];
   public stage: Stage = Stage.VSTAR;
   public evolvesFrom: string = 'Simisear V';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 260;
   public weakness = [{ type: W }];
   public retreat = [C, C];

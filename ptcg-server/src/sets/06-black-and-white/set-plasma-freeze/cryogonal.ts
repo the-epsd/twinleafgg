@@ -9,7 +9,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 export class Cryogonal extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.TEAM_PLASMA];
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 80;
   public weakness = [{ type: M }];
   public retreat = [C];
@@ -37,7 +37,7 @@ export class Cryogonal extends PokemonCard {
     // Call Sign
     if (WAS_ATTACK_USED(effect, 0, this)) {
       SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, effect.player, {
-        cardType: CardType.WATER
+        cardType: [CardType.WATER]
       });
     }
 

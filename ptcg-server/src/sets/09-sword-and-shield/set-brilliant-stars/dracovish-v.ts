@@ -14,7 +14,7 @@ import {
 export class DracovishV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 220;
   public retreat = [C, C, C];
 

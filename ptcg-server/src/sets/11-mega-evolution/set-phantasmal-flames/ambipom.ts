@@ -18,7 +18,7 @@ import { DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../../game/store/pr
 export class Ambipom extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Aipom';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 110;
   public weakness = [{ type: F }];
   public retreat = [C];

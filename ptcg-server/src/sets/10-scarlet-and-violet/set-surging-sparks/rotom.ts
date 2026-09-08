@@ -7,7 +7,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 
 export class Rotom extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public retreat = [C];

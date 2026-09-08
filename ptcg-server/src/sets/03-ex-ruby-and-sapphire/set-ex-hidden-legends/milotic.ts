@@ -21,7 +21,7 @@ import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects
 export class Milotic extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Feebas';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 100;
   public weakness = [{ type: L }];
   public retreat = [C, C];

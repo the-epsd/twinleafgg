@@ -50,7 +50,7 @@ function* useMagicalSwap(next: Function, store: StoreLike, state: State, effect:
 export class Meowstic extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Espurr';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 90;
   public weakness = [{ type: P }];
   public retreat = [C];

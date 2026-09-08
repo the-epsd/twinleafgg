@@ -9,7 +9,7 @@ import { AS_OFTEN_AS_YOU_LIKE_ATTACH_BASIC_TYPE_ENERGY_FROM_HAND, WAS_ATTACK_USE
 export class Blastoise extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Wartortle';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 140;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];

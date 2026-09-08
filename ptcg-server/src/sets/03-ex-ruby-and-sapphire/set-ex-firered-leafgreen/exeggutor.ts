@@ -8,7 +8,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class Exeggutor extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Exeggcute';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: P }];
   public retreat = [C, C];

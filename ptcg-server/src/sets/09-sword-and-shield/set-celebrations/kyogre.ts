@@ -13,7 +13,7 @@ export class Kyogre extends PokemonCard {
 
   public regulationMark = 'E';
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp: number = 130;
 

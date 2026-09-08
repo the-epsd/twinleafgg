@@ -8,7 +8,7 @@ import { AFTER_ATTACK, SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND, WAS_ATTACK_USED } 
 export class Dialga extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public regulationMark: string = 'D';
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType[] = [CardType.METAL];
   public hp: number = 130;
   public weakness = [{ type: CardType.FIRE }];
   public resistance = [{ type: CardType.GRASS, value: -30 }];

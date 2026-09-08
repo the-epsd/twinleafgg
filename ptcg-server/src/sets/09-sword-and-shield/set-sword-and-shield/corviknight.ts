@@ -12,7 +12,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 export class Corviknight extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Corvisquire';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 170;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

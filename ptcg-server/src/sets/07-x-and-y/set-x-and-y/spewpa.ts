@@ -10,7 +10,7 @@ import { State, StoreLike } from '../../../game';
 export class Spewpa extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Scatterbug';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];

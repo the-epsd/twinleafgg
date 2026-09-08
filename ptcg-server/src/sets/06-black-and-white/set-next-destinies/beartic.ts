@@ -8,7 +8,7 @@ import { DEFENDING_POKEMON_DOES_LESS_DAMAGE } from '../../../game/store/prefabs/
 export class Beartic extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Cubchoo';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 120;
   public weakness = [{ type: M }];
   public retreat = [C, C, C];

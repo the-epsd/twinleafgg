@@ -5,7 +5,7 @@ import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK } from '../../../game/store/p
 export class TeamRocketsZubat extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.TEAM_ROCKET];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 50;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

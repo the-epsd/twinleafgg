@@ -7,7 +7,7 @@ import { State, StoreLike } from '../../../game';
 export class Darmanitan extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Darumaka';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 100;
   public weakness = [{ type: W }];
   public retreat = [C, C, C];

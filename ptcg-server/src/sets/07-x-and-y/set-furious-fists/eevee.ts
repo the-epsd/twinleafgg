@@ -14,7 +14,7 @@ import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 
 export class Eevee extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 50;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -82,7 +82,7 @@ export class Eevee extends PokemonCard {
             player,
             GameMessage.CHOOSE_CARD_TO_EVOLVE,
             player.deck,
-            { superType: SuperType.POKEMON, stage: Stage.STAGE_1, evolvesFrom: 'Eevee', cardType: eeveelutionType },
+            { superType: SuperType.POKEMON, stage: Stage.STAGE_1, evolvesFrom: 'Eevee', cardType: [eeveelutionType] },
             { min: 0, max: 1, allowCancel: true }
           ), selected => {
             cards = selected || [];

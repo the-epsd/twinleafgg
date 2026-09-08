@@ -9,7 +9,7 @@ export class LeafeonVMAX extends PokemonCard {
 
   public evolvesFrom = 'Leafeon V';
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 310;
 

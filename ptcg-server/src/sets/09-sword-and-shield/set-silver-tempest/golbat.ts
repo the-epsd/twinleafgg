@@ -4,7 +4,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 export class Golbat extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Zubat';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [];

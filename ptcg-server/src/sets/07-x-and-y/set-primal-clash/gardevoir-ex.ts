@@ -10,7 +10,7 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 export class GardevoirEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 170;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

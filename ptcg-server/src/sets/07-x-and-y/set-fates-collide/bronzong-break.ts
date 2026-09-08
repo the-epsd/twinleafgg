@@ -21,7 +21,7 @@ export class BronzongBREAK extends PokemonCard {
   public stage: Stage = Stage.BREAK;
   protected _tags = [CardTag.BREAK];
   public evolvesFrom = 'Bronzong';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 130;
 
   public attacks = [

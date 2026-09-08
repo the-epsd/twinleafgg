@@ -4,7 +4,7 @@ import { DISCARD_A_STADIUM_CARD_IN_PLAY } from '../../../game/store/prefabs/pref
 
 export class Charmander extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 70;
   public weakness = [{ type: W }];
   public retreat = [C];

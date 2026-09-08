@@ -13,7 +13,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 export class Noivern extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Noibat';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 100;
   public weakness = [{ type: Y }];
   public retreat = [C];

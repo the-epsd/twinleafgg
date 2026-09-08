@@ -20,7 +20,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class DeoxysVSTAR extends PokemonCard {
   public stage = Stage.VSTAR;
 
-  public cardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public evolvesFrom = 'Deoxys V';
 

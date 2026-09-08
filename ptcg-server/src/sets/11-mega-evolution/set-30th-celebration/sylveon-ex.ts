@@ -10,19 +10,17 @@ export class Sylveonex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex];
   public evolvesFrom: string = 'Eevee';
   public hp: number = 270;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public weakness = [{ type: M }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Colorful Harmony',
-      cost: [P, C, C],
-      damage: 50,
-      damageCalculation: 'x',
-      text: 'This attack does 50 damage for each type of Basic Energy attached to all of your Pokémon.',
-    },
-  ];
+  public attacks = [{
+    name: 'Colorful Harmony',
+    cost: [P, C, C],
+    damage: 50,
+    damageCalculation: 'x',
+    text: 'This attack does 50 damage for each type of Basic Energy attached to all of your Pokémon.',
+  }];
 
   public regulationMark: string = 'J';
   public set: string = '30C';
@@ -32,7 +30,7 @@ export class Sylveonex extends PokemonCard {
   public fullName: string = 'Sylveon ex 30C';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-brilliant-stars/alcremie.ts (Rainbow Flavor — unique Basic Energy types in play)
+    // Colorful Harmony
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const uniqueTypes = new Set<CardType>();

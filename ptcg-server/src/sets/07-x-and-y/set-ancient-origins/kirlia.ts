@@ -12,7 +12,7 @@ import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/att
 export class Kirlia extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Ralts';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 80;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

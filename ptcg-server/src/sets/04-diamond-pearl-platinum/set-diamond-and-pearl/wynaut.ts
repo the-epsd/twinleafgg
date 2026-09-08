@@ -9,7 +9,7 @@ import { MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store
 export class Wynaut extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 40;
   public weakness = [{ type: P, value: +10 }];
   public retreat = [C];

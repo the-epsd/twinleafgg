@@ -12,7 +12,7 @@ export class TsareenaGX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Steenee';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 230;
   public weakness = [{ type: R }];
   public retreat = [C, C];

@@ -8,7 +8,7 @@ import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, HAS_MARKER, R
 export class Lanturn extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Chinchou';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 110;
   public weakness = [{ type: F }];
   public retreat = [C, C];

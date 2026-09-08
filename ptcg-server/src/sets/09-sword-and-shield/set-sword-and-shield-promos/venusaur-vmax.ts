@@ -10,7 +10,7 @@ export class VenusaurVMAX extends PokemonCard {
 
   protected _tags = [CardTag.POKEMON_VMAX];
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public evolvesFrom = 'Venusaur V';
 

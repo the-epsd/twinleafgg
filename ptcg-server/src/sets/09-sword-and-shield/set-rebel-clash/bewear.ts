@@ -12,7 +12,7 @@ import { DISCARD_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/at
 export class Bewear extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Stufful';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 140;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

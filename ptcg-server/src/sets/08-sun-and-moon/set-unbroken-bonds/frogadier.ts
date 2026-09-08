@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, ADD_MARKER, CLEAR_MARKER_AND_OPPONEN
 export class Frogadier extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Froakie';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 80;
   public weakness = [{ type: G }];
   public retreat = [C];

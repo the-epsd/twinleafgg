@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class AlolanRaichu extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Pikachu';
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [CardType.LIGHTNING];
   public hp: number = 110;
   public weakness = [{ type: CardType.FIGHTING }];
   public resistance = [{ type: CardType.METAL, value: -20 }];

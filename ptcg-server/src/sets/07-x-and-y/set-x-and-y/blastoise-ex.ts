@@ -19,7 +19,7 @@ export class BlastoiseEx extends PokemonCard {
 
   protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 180;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

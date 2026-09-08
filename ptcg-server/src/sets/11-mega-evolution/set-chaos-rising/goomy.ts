@@ -6,7 +6,7 @@ import { HEAL_X_DAMAGE_FROM_THIS_POKEMON, WAS_ATTACK_USED } from '../../../game/
 export class Goomy extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 60;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public weakness: { type: CardType }[] = [];
   public resistance: { type: CardType; value: number }[] = [];
   public retreat = [C, C];

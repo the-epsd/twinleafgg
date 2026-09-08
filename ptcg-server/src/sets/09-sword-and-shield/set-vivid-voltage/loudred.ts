@@ -6,7 +6,7 @@ export class Loudred extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Whismur';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 100;
   public weakness: Weakness[] = [{ type: F }];
   public retreat: CardType[] = [C, C];

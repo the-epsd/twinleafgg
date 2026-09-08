@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class CynthiasGible extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.CYNTHIAS];
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 70;
   public weakness = [{ type: G }];
   public retreat = [C];

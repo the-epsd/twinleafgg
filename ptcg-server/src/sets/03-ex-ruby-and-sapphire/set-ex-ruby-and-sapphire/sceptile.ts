@@ -8,7 +8,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class Sceptile extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Grovyle';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 100;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -30 }];

@@ -11,7 +11,7 @@ import { AFTER_ATTACK, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../../game/store
 export class Weavile extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Sneasel';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: M }];
   public retreat = [];

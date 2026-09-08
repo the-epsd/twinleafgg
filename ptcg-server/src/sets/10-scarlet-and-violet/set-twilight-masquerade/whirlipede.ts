@@ -10,7 +10,7 @@ export class Whirlipede extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Venipede';
   public hp: number = 100;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
 

@@ -22,7 +22,7 @@ export class Gorebyss extends PokemonCard {
   protected _tags = [CardTag.FUSION_STRIKE];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Clamperl';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 110;
   public weakness = [{ type: L }];
   public retreat = [C];

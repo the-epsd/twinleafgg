@@ -7,7 +7,7 @@ import { ABILITY_USED, AFTER_ATTACK, DRAW_CARDS, REMOVE_MARKER_AT_END_OF_TURN, W
 
 export class Audino extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];

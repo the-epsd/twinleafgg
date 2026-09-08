@@ -12,7 +12,7 @@ import { AttachEnergyPrompt, PlayerType, SlotType, State, StoreLike } from '../.
 export class Malamar extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Inkay';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

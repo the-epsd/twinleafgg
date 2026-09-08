@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 
 export class Cubone extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 70;
   public weakness = [{ type: W }];
   public resistance = [{ type: L, value: -20 }];

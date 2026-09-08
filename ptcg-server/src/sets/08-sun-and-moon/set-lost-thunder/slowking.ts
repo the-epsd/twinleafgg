@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Slowking extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
   public hp: number = 120;
   public weakness = [{ type: CardType.GRASS }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];

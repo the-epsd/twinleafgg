@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Card, StateSerializer, SuperType, PokemonCard, EnergyCard, CardType, TrainerCard, CardsInfo, CardManager } from 'ptcg-server';
+import { Card, StateSerializer, SuperType, PokemonCard, EnergyCard, CardType, TrainerCard, CardsInfo, CardManager, getPrimaryCardType } from 'ptcg-server';
 
 import { ApiService } from '../../api/api.service';
 import { CardInfoPopupData, CardInfoPopupComponent } from './card-info-popup/card-info-popup.component';
@@ -90,8 +90,8 @@ export class CardsBaseService implements OnDestroy {
       case SuperType.POKEMON:
         const p1 = c1 as PokemonCard;
         const p2 = c2 as PokemonCard;
-        if (p2.cardType !== p1.cardType) {
-          return p1.cardType - p2.cardType;
+        if (getPrimaryCardType(p2) !== getPrimaryCardType(p1)) {
+          return getPrimaryCardType(p1) - getPrimaryCardType(p2);
         }
         break;
       case SuperType.ENERGY:
@@ -447,24 +447,6 @@ export class CardsBaseService implements OnDestroy {
     // 2. If no artworksMap override, use getScanUrl() directly
     // Priority: nightly images → local overrides → base custom images → default URL
     return this.getScanUrl(card);
-  }
-
-  /**
-   * Get scan URL for 3D board texture loads. External URLs are wrapped through the
-   * server image proxy to avoid CORS issues with WebGL. Relative/same-origin URLs
-   * are returned unchanged.
-   */
-  public getScanUrlFor3D(card: Card, cardList?: any): string {
-    const baseUrl = this.getScanUrlFromCardList(card, cardList);
-    if (!baseUrl || !baseUrl.trim()) {
-      return baseUrl;
-    }
-    const isExternal = baseUrl.startsWith('http://') || baseUrl.startsWith('https://');
-    if (isExternal) {
-      const apiUrl = this.apiService.getApiUrl();
-      return `${apiUrl}/v1/images/proxy?url=${encodeURIComponent(baseUrl)}`;
-    }
-    return baseUrl;
   }
 
   public getSleeveUrl(imagePath?: string): string | undefined {

@@ -13,6 +13,7 @@ import { DarkKadabra } from './dark-kadabra';
 import { DarkVileplume } from './dark-vileplume';
 import { DarkVileplumeTR30 } from './other-prints';
 import { DarkWartortle } from './dark-wartortle';
+import { DarkWeezing } from './dark-weezing';
 import { Digger } from './digger';
 import { Drowzee } from './drowzee';
 import { FullHealEnergy } from './full-heal-energy';
@@ -48,6 +49,7 @@ export const setTeamRocket: Card[] = [
   new DarkVileplume(),
   new DarkVileplumeTR30(),
   new DarkWartortle(),
+  new DarkWeezing(),
   new Digger(),
   new Drowzee(),
   new FullHealEnergy(),

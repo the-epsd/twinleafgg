@@ -10,7 +10,7 @@ export class HisuianGoodraVSTAR extends PokemonCard {
   public stage: Stage = Stage.VSTAR;
   public evolvesFrom = 'Hisuian Goodra V';
   protected _tags = [CardTag.POKEMON_VSTAR];
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 270;
   public retreat = [C, C, C];
 

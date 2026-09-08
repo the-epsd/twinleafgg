@@ -9,7 +9,7 @@ export class GengarVMAX extends PokemonCard {
   public stage: Stage = Stage.VMAX;
   protected _tags = [CardTag.POKEMON_VMAX];
   public evolvesFrom = 'Gengar V';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 320;
   public weakness = [{ type: F }];
   public resistance = [];

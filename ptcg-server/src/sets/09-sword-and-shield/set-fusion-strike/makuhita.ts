@@ -4,7 +4,7 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 export class Makuhita extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.SINGLE_STRIKE];
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 90;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];

@@ -12,7 +12,7 @@ export class Shelgon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Bagon';
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 80;
   public weakness = [{ type: C }];
   public resistance = [

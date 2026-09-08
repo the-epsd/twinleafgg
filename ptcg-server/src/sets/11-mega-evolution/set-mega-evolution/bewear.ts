@@ -8,7 +8,7 @@ export class Bewear extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Stufful';
   public hp: number = 130;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
 

@@ -7,7 +7,7 @@ import { State, StoreLike } from '../../../game';
 export class Swalot extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Gulpin';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

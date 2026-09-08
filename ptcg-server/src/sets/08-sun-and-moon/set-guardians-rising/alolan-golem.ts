@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class AlolanGolem extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Alolan Graveler';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 160;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

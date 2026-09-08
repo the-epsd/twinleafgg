@@ -1,9 +1,9 @@
-import { ChooseCardsPrompt, GameError, GameMessage, PokemonCard, State, StoreLike, SuperType } from '../../../game';
+import { CardType, ChooseCardsPrompt, GameError, GameMessage, PokemonCard, State, StoreLike, SuperType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { COIN_FLIP_PROMPT, MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Onix extends PokemonCard {
-  public cardType = F;
+  public cardType: CardType[] = [F];
   public hp = 110;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];

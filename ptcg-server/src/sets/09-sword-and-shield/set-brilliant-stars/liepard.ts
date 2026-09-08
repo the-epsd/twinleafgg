@@ -15,7 +15,7 @@ export class Liepard extends PokemonCard {
 
   public regulationMark = 'F';
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp: number = 100;
 

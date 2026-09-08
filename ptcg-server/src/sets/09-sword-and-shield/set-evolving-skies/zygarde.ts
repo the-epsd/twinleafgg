@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Zygarde extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.RAPID_STRIKE];
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 130;
   public retreat = [C, C];
 

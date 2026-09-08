@@ -12,7 +12,7 @@ import {
 export class TeamAquasChinchou extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.TEAM_AQUA];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 50;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -30 }];

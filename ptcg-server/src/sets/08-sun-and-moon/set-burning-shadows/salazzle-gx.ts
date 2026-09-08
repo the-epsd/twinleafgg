@@ -14,7 +14,7 @@ export class SalazzleGX extends PokemonCard {
 
   public evolvesFrom = 'Salandit';
 
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
 
   public hp: number = 200;
 

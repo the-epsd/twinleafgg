@@ -51,7 +51,7 @@ export class Frogadier extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Froakie';
   public hp: number = 100;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public weakness = [{ type: L }];
   public retreat = [C];
 

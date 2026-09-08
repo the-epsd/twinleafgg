@@ -11,7 +11,7 @@ export class ArvensToedscool extends PokemonCard {
   public regulationMark = 'I';
   protected _tags = [CardTag.ARVENS];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 70;
   public weakness = [{ type: G }];
   public retreat = [C];

@@ -127,7 +127,7 @@ function* playCard(
 export class ErikasClefairy extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.ERIKAS];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 50;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -30 }];

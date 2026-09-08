@@ -37,7 +37,7 @@ export class Altariaex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Swablu';
   protected _tags = [CardTag.POKEMON_ex, CardTag.DELTA_SPECIES];
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 100;
   public weakness = [{ type: C }];
   public resistance = [

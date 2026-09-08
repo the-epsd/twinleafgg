@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage } from '../../game/store/card/card-types';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { Attack } from '../../game/store/card/pokemon-types';
 
 import { Effect } from '../../game/store/effects/effect';
@@ -14,7 +14,7 @@ export class Meowth extends PokemonCard {
   public setNumber = '56';
   public fullName = 'Meowth JU';
 
-  public cardType = C;
+  public cardType: CardType[] = [C];
   public stage = Stage.BASIC;
   public hp = 50;
   public weakness = [{ type: F }];

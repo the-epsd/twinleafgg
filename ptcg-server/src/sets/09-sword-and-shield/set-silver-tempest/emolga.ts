@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from 
 
 export class Emolga extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [];

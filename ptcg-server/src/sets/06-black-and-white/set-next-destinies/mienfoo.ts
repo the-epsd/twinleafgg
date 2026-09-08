@@ -7,7 +7,7 @@ import { AttackEffect } from '../../../game/store/effects/game-effects';
 
 export class Mienfoo extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 60;
   public weakness = [{ type: P }];
   public retreat = [C];

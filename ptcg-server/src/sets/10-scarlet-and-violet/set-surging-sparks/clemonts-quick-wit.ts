@@ -1,3 +1,4 @@
+import { pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
@@ -28,7 +29,7 @@ export class ClemontsQuickWit extends TrainerCard {
     }
     let hasTarget = false;
     player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-      if (card.cardType === CardType.LIGHTNING && cardList.damage > 0) {
+      if (pokemonHasCardType(card, CardType.LIGHTNING) && cardList.damage > 0) {
         hasTarget = true;
       }
     });
@@ -46,7 +47,7 @@ export class ClemontsQuickWit extends TrainerCard {
       // Populate targets; Lightning Pokemon with damage counters
       const targets: PokemonCardList[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card.cardType == CardType.LIGHTNING && cardList.damage > 0) { targets.push(cardList); }
+        if (pokemonHasCardType(card, CardType.LIGHTNING) && cardList.damage > 0) { targets.push(cardList); }
       });
 
       // Can't play this card if there's no valid targets

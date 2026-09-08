@@ -6,7 +6,7 @@ import { ADD_CONFUSION_TO_PLAYER_ACTIVE, ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_A
 
 export class Chinchou extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 50;
   public weakness = [{ type: F }];
   public retreat = [C];

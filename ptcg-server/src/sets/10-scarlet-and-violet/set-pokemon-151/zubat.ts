@@ -1,11 +1,11 @@
-import { PokemonCard, Stage, StoreLike, State, StateUtils, GameError, GameMessage } from '../../../game';
+import { CardType, PokemonCard, Stage, StoreLike, State, StateUtils, GameError, GameMessage } from '../../../game';
 import { PowerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { ABILITY_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SHOW_CARDS_TO_PLAYER, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Zubat extends PokemonCard {
   public stage = Stage.BASIC;
-  public cardType = D;
+  public cardType: CardType[] = [D];
   public hp = 40;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

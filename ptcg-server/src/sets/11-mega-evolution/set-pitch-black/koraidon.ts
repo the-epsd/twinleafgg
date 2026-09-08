@@ -9,7 +9,7 @@ import {
 
 export class Koraidon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 130;
   public weakness = [{ type: P }];
   public retreat = [C, C];

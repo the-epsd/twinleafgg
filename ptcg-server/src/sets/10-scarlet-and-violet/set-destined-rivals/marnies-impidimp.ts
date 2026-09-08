@@ -5,7 +5,7 @@ import { AFTER_ATTACK, DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
 export class MarniesImpidimp extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.MARNIES];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 70;
   public weakness = [{ type: G }];
   public retreat = [C];

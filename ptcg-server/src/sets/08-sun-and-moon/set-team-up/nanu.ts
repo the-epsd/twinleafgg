@@ -4,7 +4,7 @@
 
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardType, Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { GameError, GameMessage, StoreLike, State, PlayerType, SlotType, PokemonCard, PokemonCardList, ChooseCardsPrompt, ChoosePokemonPrompt } from '../../../game';
+import { GameError, GameMessage, StoreLike, State, PlayerType, SlotType, PokemonCard, PokemonCardList, ChooseCardsPrompt, ChoosePokemonPrompt, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 
@@ -29,7 +29,7 @@ export class Nanu extends TrainerCard {
 
       // Check if there's a Basic Darkness Pokemon in discard
       const hasBasicDarkInDiscard = player.discard.cards.some(c =>
-        c instanceof PokemonCard && c.stage === Stage.BASIC && c.cardType === CardType.DARK
+        c instanceof PokemonCard && c.stage === Stage.BASIC && pokemonHasCardType(c, CardType.DARK)
       );
 
       if (!hasBasicDarkInDiscard) {
@@ -43,7 +43,7 @@ export class Nanu extends TrainerCard {
         player,
         GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
         player.discard,
-        { superType: SuperType.POKEMON, stage: Stage.BASIC, cardType: CardType.DARK },
+        { superType: SuperType.POKEMON, stage: Stage.BASIC, cardType: [CardType.DARK] },
         { min: 1, max: 1, allowCancel: false }
       ), (selectedCards) => {
         const card = selectedCards[0];

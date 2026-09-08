@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, MOVE_CARDS, DRAW_CARDS_UNTIL_CARDS_IN_HAND } from '../
 
 export class Minun extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

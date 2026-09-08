@@ -17,7 +17,7 @@ export class Tatsugiri extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public cardType: CardType = CardType.DRAGON;
+  public cardType: CardType[] = [CardType.DRAGON];
 
   public hp: number = 70;
 

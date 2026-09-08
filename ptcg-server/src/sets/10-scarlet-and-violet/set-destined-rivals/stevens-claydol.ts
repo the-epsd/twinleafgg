@@ -13,7 +13,7 @@ export class StevensClaydol extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = "Steven's Baltoy";
   protected _tags = [CardTag.STEVENS];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 120;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

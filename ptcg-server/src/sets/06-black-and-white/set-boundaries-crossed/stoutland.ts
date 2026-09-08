@@ -8,7 +8,7 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../
 
 export class Stoutland extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 140;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

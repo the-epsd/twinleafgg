@@ -11,7 +11,7 @@ import {
 export class NsVanillite extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.NS];
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 60;
   public weakness = [{ type: M }];
   public retreat = [C];

@@ -6,7 +6,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class ErikasOddish extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.ERIKAS];
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 60;
   public weakness = [{ type: R }];
   public resistance = [];

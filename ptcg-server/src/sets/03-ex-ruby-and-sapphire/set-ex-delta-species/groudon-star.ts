@@ -12,7 +12,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 export class GroudonStar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.STAR];
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 90;
   public weakness = [{ type: W }];
   public retreat = [C, C, C];

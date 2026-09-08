@@ -1,5 +1,5 @@
 import type { Card, EnergyCard, PokemonCard, TrainerCard } from 'ptcg-server';
-import { CardType, Format, SuperType } from 'ptcg-server';
+import { CardType, Format, getPrimaryCardType, getPokemonCardTypes, SuperType } from 'ptcg-server';
 import { FormatValidator } from './formatValidator';
 import type { DeckEditToolbarFilter } from './types';
 
@@ -12,8 +12,8 @@ export function compareLibraryCards(c1: Card, c2: Card): number {
     case SuperType.POKEMON: {
       const p1 = c1 as PokemonCard;
       const p2 = c2 as PokemonCard;
-      if (p1.cardType !== p2.cardType) {
-        return p1.cardType - p2.cardType;
+      if (getPrimaryCardType(p1) !== getPrimaryCardType(p2)) {
+        return getPrimaryCardType(p1) - getPrimaryCardType(p2);
       }
       break;
     }
@@ -244,7 +244,7 @@ function matchAttackCosts(attackCosts: number[], card: Card): boolean {
 
 function getCardType(card: Card): CardType {
   if (card.superType === SuperType.POKEMON) {
-    return (card as PokemonCard).cardType;
+    return getPrimaryCardType(card as PokemonCard);
   }
   if (card.superType === SuperType.ENERGY) {
     const energyCard = card as EnergyCard;
@@ -311,8 +311,10 @@ export function matchesDeckLibraryFilter(card: Card, filter: DeckEditToolbarFilt
 
   if (
     filter.cardTypes.length &&
-    !filter.cardTypes.includes(getCardType(card)) &&
-    !filter.cardTypes.includes(CardType.ANY)
+    !filter.cardTypes.includes(CardType.ANY) &&
+    !(card.superType === SuperType.POKEMON
+      ? getPokemonCardTypes(card as PokemonCard).some((t: CardType) => filter.cardTypes.includes(t))
+      : filter.cardTypes.includes(getCardType(card)))
   ) {
     return false;
   }

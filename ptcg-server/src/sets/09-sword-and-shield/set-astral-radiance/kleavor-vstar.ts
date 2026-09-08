@@ -23,7 +23,7 @@ export class KleavorVstar extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VSTAR];
   public stage: Stage = Stage.VSTAR;
   public evolvesFrom: string = 'Kleavor V';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 270;
   public weakness = [{ type: G }];
   public retreat = [C, C];

@@ -7,7 +7,7 @@ import { ABILITY_USED, ADD_CONFUSION_TO_PLAYER_ACTIVE, ADD_MARKER, BLOCK_IF_HAS_
 export class PorygonZ extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Porygon2';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 110;
   public weakness = [{ type: F }];
   public retreat = [C, C];

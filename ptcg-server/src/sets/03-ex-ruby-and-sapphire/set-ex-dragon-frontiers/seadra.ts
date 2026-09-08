@@ -9,7 +9,7 @@ import { DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK } from '../../../game/store/pref
 export class Seadra extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Horsea';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   protected _tags = [CardTag.DELTA_SPECIES];
   public hp: number = 70;
   public weakness = [{ type: L }];

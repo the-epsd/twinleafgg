@@ -7,7 +7,7 @@ import { DEFENDING_POKEMON_DOES_LESS_DAMAGE } from '../../game/store/prefabs/eff
 
 export class Cubone extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 40;
   public weakness = [{ type: G }];
   public resistance = [{ type: L, value: -30 }];

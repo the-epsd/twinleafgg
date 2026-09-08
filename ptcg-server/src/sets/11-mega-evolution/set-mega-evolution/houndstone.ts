@@ -7,7 +7,7 @@ import { MOVE_CARD_TO, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_ATTACK_USED, FLIP
 export class Houndstone extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Greavard';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 140;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

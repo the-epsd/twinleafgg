@@ -16,7 +16,7 @@ export class Poliwag extends PokemonCard {
 
   public fullName = 'Poliwag BS';
 
-  public cardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public stage = Stage.BASIC;
 

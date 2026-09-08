@@ -9,7 +9,7 @@ import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 export class Pelipper extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Wingull';
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
   public hp: number = 120;
   public weakness = [{ type: CardType.LIGHTNING }];
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];

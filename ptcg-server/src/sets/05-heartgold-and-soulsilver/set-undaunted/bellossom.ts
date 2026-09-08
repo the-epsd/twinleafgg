@@ -12,7 +12,7 @@ import { ABILITY_USED, ADD_SLEEP_TO_PLAYER_ACTIVE, BLOCK_IF_HAS_SPECIAL_CONDITIO
 export class Bellossom extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Gloom';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 110;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -20 }];

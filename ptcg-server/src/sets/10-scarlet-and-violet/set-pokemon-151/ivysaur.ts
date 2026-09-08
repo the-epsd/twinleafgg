@@ -13,7 +13,7 @@ export class Ivysaur extends PokemonCard {
 
   public evolvesFrom = 'Bulbasaur';
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 100;
 

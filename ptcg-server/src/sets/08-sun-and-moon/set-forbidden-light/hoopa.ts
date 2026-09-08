@@ -12,7 +12,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike, TrainerType } from '../../../game';
 export class Hoopa extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: P }];
   public retreat = [C];

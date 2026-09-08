@@ -16,7 +16,7 @@ export class Ponyta extends PokemonCard {
 
   public setNumber = '23';
 
-  public cardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
 
   public fullName = 'Ponyta CEC';
 

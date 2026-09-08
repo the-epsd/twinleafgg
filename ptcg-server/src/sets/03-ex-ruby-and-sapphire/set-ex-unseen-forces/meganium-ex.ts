@@ -32,7 +32,7 @@ export class Meganiumex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Bayleef';
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 150;
   public weakness = [{ type: G }, { type: R }];
   public resistance = [{ type: W, value: -30 }];

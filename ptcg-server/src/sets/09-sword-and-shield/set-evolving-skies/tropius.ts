@@ -1,10 +1,10 @@
-import { PokemonCard, Stage, StoreLike, State } from '../../../game';
+import { CardType, PokemonCard, Stage, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN } from '../../../game/store/prefabs/prefabs';
 
 export class Tropius extends PokemonCard {
   public stage = Stage.BASIC;
-  public cardType = G;
+  public cardType: CardType[] = [G];
   public hp = 110;
   public weakness = [{ type: R }];
   public retreat = [C];

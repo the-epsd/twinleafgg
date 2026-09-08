@@ -8,7 +8,7 @@ import { PowerEffect } from '../../../game/store/effects/game-effects';
 
 export class Dialga extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 100;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

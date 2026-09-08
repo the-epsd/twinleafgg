@@ -12,7 +12,7 @@ export class Palpitoad extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp: number = 90;
 

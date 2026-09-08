@@ -4,7 +4,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 export class Ninetales extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Vulpix';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 110;
   public weakness = [{ type: W }];
   public retreat = [C];

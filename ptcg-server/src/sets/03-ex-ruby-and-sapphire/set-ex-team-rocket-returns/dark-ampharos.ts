@@ -16,8 +16,7 @@ import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class DarkAmpharos extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
-  public cardType: CardType = L;
-  public additionalCardTypes = [D];
+  public cardType: CardType[] = [L, D];
   protected _tags = [CardTag.DARK];
   public hp: number = 120;
   public weakness = [{ type: F }];

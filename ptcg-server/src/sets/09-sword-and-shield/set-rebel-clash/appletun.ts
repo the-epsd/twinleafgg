@@ -12,7 +12,7 @@ import { WAS_POWER_USED, COIN_FLIP_PROMPT, USE_ABILITY_ONCE_PER_TURN, ABILITY_US
 export class Appletun extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Applin';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];

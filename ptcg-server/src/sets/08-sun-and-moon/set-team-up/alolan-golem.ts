@@ -12,7 +12,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 export class AlolanGolem extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Alolan Graveler';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 180;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
@@ -58,7 +58,7 @@ export class AlolanGolem extends PokemonCard {
         GameMessage.MOVE_ENERGY_CARDS,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
-        { superType: SuperType.ENERGY, cardType: CardType.LIGHTNING },
+        { superType: SuperType.ENERGY, cardType: [CardType.LIGHTNING] },
         { allowCancel: true, blockedTo, blockedFrom }
       ), transfers => {
         if (transfers === null) {

@@ -23,7 +23,7 @@ import { DRAW_CARDS_UNTIL_YOU_HAVE_X_CARDS_IN_HAND } from '../../../game/store/p
 export class Noivern extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Noibat';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 110;
   public retreat = [];
 

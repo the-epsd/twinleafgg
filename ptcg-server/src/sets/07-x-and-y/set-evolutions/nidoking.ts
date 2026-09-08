@@ -12,7 +12,7 @@ import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-pref
 export class Nidoking extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Nidorino';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 150;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];

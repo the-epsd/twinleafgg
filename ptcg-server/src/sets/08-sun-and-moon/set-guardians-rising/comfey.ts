@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, PREVENT_AND_CLEAR_SPECIAL_CONDITIO
 
 export class Comfey extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 70;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

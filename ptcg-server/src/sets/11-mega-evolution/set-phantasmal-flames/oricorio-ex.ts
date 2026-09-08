@@ -6,8 +6,7 @@ import {
   SuperType,
   CardTag,
 } from '../../../game/store/card/card-types';
-import {
-  PowerType,
+import { PowerType,
   StoreLike,
   State,
   StateUtils,
@@ -15,8 +14,7 @@ import {
   GameMessage,
   EnergyCard,
   PlayerType,
-  SlotType,
-} from '../../../game';
+  SlotType, pokemonHasCardType } from '../../../game';
 import { CardTarget } from '../../../game/store/actions/play-card-action';
 import { Effect } from '../../../game/store/effects/effect';
 
@@ -26,7 +24,7 @@ import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Oricorioex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 190;
   public weakness = [{ type: W }];
   public retreat = [C];
@@ -65,7 +63,7 @@ export class Oricorioex extends PokemonCard {
           c instanceof PokemonCard &&
           c.hasTag(CardTag.POKEMON_ex) &&
           c.hasTag(CardTag.POKEMON_SV_MEGA) &&
-          c.cardType === CardType.FIRE
+          pokemonHasCardType(c, CardType.FIRE)
         );
       });
       if (!hasMegaEvolutionPokemonInPlay) {
@@ -74,7 +72,7 @@ export class Oricorioex extends PokemonCard {
 
       // Check that we have Fire Pokemon on our bench
       const hasFirePokemonOnBench = player.bench.some((benchSlot) =>
-        benchSlot.cards.some((c) => c instanceof PokemonCard && c.cardType === CardType.FIRE),
+        benchSlot.cards.some((c) => c instanceof PokemonCard && pokemonHasCardType(c, CardType.FIRE)),
       );
       if (!hasFirePokemonOnBench) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -83,7 +81,7 @@ export class Oricorioex extends PokemonCard {
       // Block any Pokemon that are not Fire Pokemon on our bench
       const blocked: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        if (card.cardType !== CardType.FIRE) {
+        if (!pokemonHasCardType(card, CardType.FIRE)) {
           blocked.push(target);
         }
       });

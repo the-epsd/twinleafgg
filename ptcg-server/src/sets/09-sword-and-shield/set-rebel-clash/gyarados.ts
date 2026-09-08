@@ -12,7 +12,7 @@ import { DISCARD_A_STADIUM_CARD_IN_PLAY } from '../../../game/store/prefabs/atta
 export class Gyarados extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Magikarp';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 180;
   public weakness = [{ type: L }];
   public retreat = [C, C, C, C];

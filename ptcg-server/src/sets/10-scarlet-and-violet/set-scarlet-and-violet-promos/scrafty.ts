@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Scrafty extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Scraggy';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 120;
   public weakness = [{ type: G }];
   public retreat = [C];

@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Scizor extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Scyther';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 130;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

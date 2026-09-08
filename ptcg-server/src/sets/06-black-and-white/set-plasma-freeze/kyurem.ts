@@ -19,7 +19,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Kyurem extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   protected _tags = [CardTag.TEAM_PLASMA];
   public hp: number = 130;
   public weakness: Weakness[] = [{ type: M }];

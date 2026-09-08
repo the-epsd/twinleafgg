@@ -20,7 +20,7 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs
 export class Drifblim extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Drifloon';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 100;
   public weakness = [{ type: D }];
   public retreat = [];

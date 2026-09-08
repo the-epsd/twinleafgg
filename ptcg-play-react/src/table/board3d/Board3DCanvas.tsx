@@ -1,9 +1,10 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { PCFSoftShadowMap, SRGBColorSpace } from 'three';
 import type { Card, CardList, Player } from 'ptcg-server';
 import { useCardImageMaps, useDeckCardScanUrl } from '../../context/CardImagesContext';
 import { useAuth } from '../../context/AuthContext';
+import { useSettings } from '../../context/SettingsContext';
 import type { LocalGameState } from '../types/localGameState';
 import { BoardInteractionService } from '../BoardInteractionService';
 import type { AdminSpectatorReveal, Board3dController } from './board3dController';
@@ -17,9 +18,11 @@ import {
   board3dToneMappingConstant,
   cloneBoard3dLightingDefaults,
 } from './board3dLightingConfig';
+import { resolveBoard3dGraphicsPreset } from './board3dGraphicsQuality';
 import { CardInfoPopup } from '../../card-info/CardInfoPopup';
 import { CardInfoListPopup } from '../../card-info/CardInfoListPopup';
 import type { Board3dCardInfoData, CardInfoPaneActionResult } from './board3dCardsAdapter';
+import { refreshInPlayCardInfoData } from './refreshInPlayCardInfoData';
 import styles from './Board3DCanvas.module.css';
 import { Board3dAbilityActivationOverlay } from './Board3dAbilityActivationOverlay';
 import { Board3dCardInfoOverlay } from './Board3dCardInfoOverlay';
@@ -61,13 +64,6 @@ type CardPromptState =
       resolve: (v: CardInfoPaneActionResult) => void;
     };
 
-function useBoardCanvasDpr(): [number, number] {
-  return useMemo((): [number, number] => {
-    const cap = typeof window !== 'undefined' ? Math.min(window.devicePixelRatio, 1.5) : 1;
-    return [1, cap];
-  }, []);
-}
-
 function useStableGameActions(actions: Board3dGameActions): Board3dGameActions {
   const ref = useRef(actions);
   ref.current = actions;
@@ -89,8 +85,29 @@ function useStableGameActions(actions: Board3dGameActions): Board3dGameActions {
 
 export function Board3DCanvas(props: Board3DCanvasProps) {
   const controllerRef = useRef<Board3dController | null>(null);
-  const boardCanvasDpr = useBoardCanvasDpr();
-  const lightingSettings = useMemo(() => cloneBoard3dLightingDefaults(), []);
+  const {
+    board3dGraphicsResolution,
+    board3dGraphicsShadows,
+    board3dGraphicsTextures,
+  } = useSettings();
+  const graphicsPreset = useMemo(() => {
+    const dpr = typeof window !== 'undefined' ? window.devicePixelRatio : 1;
+    return resolveBoard3dGraphicsPreset(
+      {
+        resolution: board3dGraphicsResolution,
+        shadows: board3dGraphicsShadows,
+        textures: board3dGraphicsTextures,
+      },
+      dpr,
+    );
+  }, [board3dGraphicsResolution, board3dGraphicsShadows, board3dGraphicsTextures]);
+  const boardCanvasDpr = useMemo((): [number, number] => [1, graphicsPreset.dprCap], [graphicsPreset.dprCap]);
+  const lightingSettings = useMemo(() => {
+    const settings = cloneBoard3dLightingDefaults();
+    settings.directional.castShadow = graphicsPreset.castShadow;
+    settings.directional.shadowMapSize = graphicsPreset.shadowMapSize;
+    return settings;
+  }, [graphicsPreset.castShadow, graphicsPreset.shadowMapSize]);
   const [cardPrompt, setCardPrompt] = useState<CardPromptState>(null);
   const onControllerReady = useCallback((c: Board3dController | null) => {
     controllerRef.current = c;
@@ -123,11 +140,24 @@ export function Board3DCanvas(props: Board3DCanvasProps) {
         scansUrl: serverConfig?.scansUrl,
         apiBase: appConfig.apiUrl,
         sleevesUrl: serverConfig?.sleevesUrl,
+        deckBoxesUrl: (serverConfig as { deckBoxesUrl?: string } | null)?.deckBoxesUrl,
+        coinsUrl: (serverConfig as { coinsUrl?: string } | null)?.coinsUrl,
         showCardInfo: queueInfo,
         showCardInfoList: queueList,
       }),
-    [maps, serverConfig?.scansUrl, serverConfig?.sleevesUrl, queueInfo, queueList],
+    [maps, serverConfig?.scansUrl, serverConfig?.sleevesUrl, serverConfig, queueInfo, queueList],
   );
+
+  // Keep open card info in sync with board state (e.g. Fossil Ditto Transform).
+  useEffect(() => {
+    const players = [props.topPlayer, props.bottomPlayer];
+    setCardPrompt((prev) => {
+      if (!prev) {
+        return prev;
+      }
+      return { ...prev, data: refreshInPlayCardInfoData(prev.data, players) };
+    });
+  }, [props.gameState, props.topPlayer, props.bottomPlayer]);
 
   const runtime = useMemo(() => createBoard3dRuntime(cardsAdapter), [cardsAdapter]);
 
@@ -184,6 +214,7 @@ export function Board3DCanvas(props: Board3DCanvasProps) {
             controllerProps={controllerProps}
             onControllerReady={onControllerReady}
             lightingSettings={lightingSettings}
+            anisotropyCap={graphicsPreset.maxAnisotropy}
             onBoardFps={props.onBoardFps}
           />
         </Canvas>

@@ -57,6 +57,7 @@ export function AppLayout() {
   const { language, setLanguage, labels } = useLanguage();
   const { user } = useAuth();
   const { games, clientId } = useCoreSession();
+  const isAdmin = user?.roleId === 4;
   const deckEditorFullBleed = isDeckEditorPath(pathname);
   const tableFullBleed = isTablePath(pathname);
   const parentMap = isParentMapPath(pathname);
@@ -113,6 +114,7 @@ export function AppLayout() {
             <NavLink to="/battle-pass">{t('MAIN_BATTLE_PASS')}</NavLink>
             <NavLink to="/parent">Parents</NavLink>
             <NavLink to="/settings">{t('BUTTON_SETTINGS')}</NavLink>
+            {isAdmin ? <NavLink to="/admin">Admin</NavLink> : null}
           </nav>
           <label style={{ display: 'flex', alignItems: 'center', gap: 6, marginLeft: 'auto' }}>
             <SelectField

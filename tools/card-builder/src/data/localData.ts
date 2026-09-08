@@ -352,6 +352,33 @@ export async function findCardsByNameAndSet(name: string, setCode: string): Prom
   return results;
 }
 
+export async function findCardBySetAndNumber(
+  setCode: string,
+  setNumber: string
+): Promise<TcgDexCardResume | undefined> {
+  const normalizedSet = setCode.trim().toUpperCase();
+  const normalizedNumber = setNumber.trim();
+  if (!normalizedSet || !normalizedNumber) return undefined;
+
+  const sets = await loadAllSets();
+  const matchingSets = sets.filter(
+    set => set.id.toUpperCase() === normalizedSet || set.ptcgoCode?.toUpperCase() === normalizedSet
+  );
+  for (const set of matchingSets) {
+    const cards = await loadSetCards(set.id);
+    const card = cards.find(c => c.number === normalizedNumber);
+    if (card) {
+      return {
+        id: card.id,
+        localId: card.number,
+        name: card.name,
+        image: card.images?.small || card.images?.large,
+      };
+    }
+  }
+  return undefined;
+}
+
 export function clearLocalCache(): void {
   cachedSets = null;
   cardFileCache.clear();

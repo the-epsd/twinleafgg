@@ -8,7 +8,7 @@ import { HEAL_X_DAMAGE_FROM_THIS_POKEMON, WAS_ATTACK_USED } from '../../../game/
 export class Duosion extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Solosis';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: P }];
   public retreat = [C];

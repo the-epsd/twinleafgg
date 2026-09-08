@@ -13,7 +13,7 @@ export class MSlowbroEx extends PokemonCard {
   protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Slowbro-EX';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 220;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

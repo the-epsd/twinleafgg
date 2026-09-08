@@ -19,6 +19,8 @@ import {
   CardTag,
   PokemonCard,
   Player,
+  CardType,
+  getPokemonCardTypes,
 } from "ptcg-server";
 import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { Subscription } from "rxjs";
@@ -81,6 +83,10 @@ export class CardInfoPaneComponent implements OnChanges, OnDestroy {
   public EnergyType = EnergyType;
   public TrainerType = TrainerType;
   public CardTag = CardTag;
+
+  public getCardTypes(card: Card): CardType[] {
+    return getPokemonCardTypes(card as PokemonCard);
+  }
 
   private subscriptions: Subscription[] = [];
 

@@ -9,7 +9,7 @@ import { ABILITY_USED, BLOCK_IF_DECK_EMPTY, IS_ABILITY_BLOCKED, MULTIPLE_COIN_FL
 
 export class MrMime extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: P }];
   public retreat = [C];

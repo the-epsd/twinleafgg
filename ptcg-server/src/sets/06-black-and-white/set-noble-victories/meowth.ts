@@ -7,7 +7,7 @@ import { MULTIPLE_COIN_FLIPS_PROMPT, DRAW_CARDS, WAS_ATTACK_USED } from '../../.
 
 export class Meowth extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public retreat = [C];

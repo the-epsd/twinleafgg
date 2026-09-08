@@ -5,7 +5,7 @@ import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK } from '../../../game/store/pr
 export class Swablu extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 40;
   public weakness: Weakness[] = [{ type: L }];
   public resistance: Resistance[] = [{ type: F, value: -20 }];

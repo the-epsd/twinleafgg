@@ -5,7 +5,7 @@ import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 export class Ditto extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 70;
   public weakness: Weakness[] = [{ type: F }];
   public retreat: CardType[] = [C];

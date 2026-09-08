@@ -12,7 +12,7 @@ export class Revavroomex extends PokemonCard {
 
   public evolvesFrom = 'Varoom';
 
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType[] = [CardType.METAL];
 
   public hp: number = 280;
 

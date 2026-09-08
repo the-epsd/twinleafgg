@@ -25,7 +25,7 @@ import { WITH_PROMPT_CONTROLLER } from '../../../game/store/prefabs/trainer-pref
 export class Hypno extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Drowzee';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 90;
   public weakness = [{ type: P }];
   public retreat = [C, C];

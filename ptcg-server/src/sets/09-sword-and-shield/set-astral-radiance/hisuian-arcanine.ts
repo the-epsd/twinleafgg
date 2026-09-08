@@ -11,7 +11,7 @@ export class HisuianArcanine extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
-  public cardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp = 150;
 

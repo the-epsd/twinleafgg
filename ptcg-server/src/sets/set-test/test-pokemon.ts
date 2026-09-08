@@ -9,7 +9,7 @@ export class TestPokemon extends PokemonCard {
 
   public regulationMark = 'G';
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 1000;
   public weakness = [{ type: D }];
   public retreat = [];

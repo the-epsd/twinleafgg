@@ -14,7 +14,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class KleavorV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 210;
   public weakness = [{ type: G }];
   public retreat = [C, C];

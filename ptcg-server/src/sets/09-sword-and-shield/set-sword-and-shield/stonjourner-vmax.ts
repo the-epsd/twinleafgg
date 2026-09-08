@@ -23,7 +23,7 @@ export class StonjournerVMAX extends PokemonCard {
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Stonjourner V';
   protected _tags = [CardTag.POKEMON_VMAX];
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 330;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

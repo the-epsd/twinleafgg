@@ -9,7 +9,7 @@ import { GamePhase } from '../../../game/store/state/state';
 export class Qwilfish extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 90;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public weakness = [{ type: F }];
   public retreat = [C];
 

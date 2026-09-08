@@ -5,7 +5,7 @@ import { THIS_ATTACK_DOES_X_MORE_DAMAGE, THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON
 export class Totodile extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 50;
   public weakness: Weakness[] = [{ type: L, value: +10 }];
   public retreat: CardType[] = [C];

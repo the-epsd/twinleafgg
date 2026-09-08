@@ -8,7 +8,7 @@ import { PowerEffect } from '../../../game/store/effects/game-effects';
 export class Meganium extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Bayleef';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 160;
   public weakness = [{ type: R }];
   public retreat = [C, C];

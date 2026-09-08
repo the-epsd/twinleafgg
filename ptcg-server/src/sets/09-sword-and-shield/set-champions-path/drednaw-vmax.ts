@@ -15,7 +15,7 @@ export class DrednawVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Drednaw V';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 320;
   public weakness = [{ type: L }];
   public retreat = [C, C, C, C];

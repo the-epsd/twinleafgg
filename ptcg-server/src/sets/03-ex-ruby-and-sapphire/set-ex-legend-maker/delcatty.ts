@@ -10,7 +10,7 @@ import { BLOCK_IF_HAS_SPECIAL_CONDITION, MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_
 export class Delcatty extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Skitty';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public weakness = [{ type: F }];
   public hp: number = 80;
   public retreat = [C];

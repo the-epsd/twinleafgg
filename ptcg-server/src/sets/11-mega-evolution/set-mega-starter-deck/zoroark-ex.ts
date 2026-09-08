@@ -8,7 +8,7 @@ export class Zoroarkex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Zorua';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 270;
   public weakness = [{ type: G }];
   public retreat = [C, C];

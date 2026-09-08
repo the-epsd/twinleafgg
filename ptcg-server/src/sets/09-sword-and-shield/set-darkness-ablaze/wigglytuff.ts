@@ -10,7 +10,7 @@ import { State, StoreLike } from '../../../game';
 export class Wigglytuff extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Jigglypuff';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 120;
   public weakness = [{ type: M }];
   public retreat = [C, C];

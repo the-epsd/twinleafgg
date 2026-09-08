@@ -10,7 +10,7 @@ export class DarkTyranitar2 extends PokemonCard {
   protected _tags = [CardTag.DARK];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Dark Pupitar';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 120;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -30 }];

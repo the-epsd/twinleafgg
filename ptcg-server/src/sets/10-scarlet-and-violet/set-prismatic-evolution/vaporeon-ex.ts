@@ -11,7 +11,7 @@ export class Vaporeonex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Eevee';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 280;
   public weakness = [{ type: L }];
   public retreat = [C, C];

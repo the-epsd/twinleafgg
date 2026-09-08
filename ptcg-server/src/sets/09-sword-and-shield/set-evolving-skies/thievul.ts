@@ -7,7 +7,7 @@ import { CONFIRMATION_PROMPT, DRAW_CARDS, JUST_EVOLVED, MOVE_CARDS } from '../..
 export class Thievul extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Nickit';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 100;
   public weakness = [{ type: G }];
   public retreat = [C];

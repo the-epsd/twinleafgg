@@ -13,7 +13,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 export class Simipour extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Panpour';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: G }];
   public retreat = [C];

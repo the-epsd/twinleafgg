@@ -8,8 +8,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class Rayquaza extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = L;
-  public additionalCardTypes = [M];
+  public cardType: CardType[] = [L, M];
   public hp: number = 90;
   public weakness = [{ type: C }];
   public resistance = [

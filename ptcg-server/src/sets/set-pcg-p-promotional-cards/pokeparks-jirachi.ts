@@ -9,7 +9,7 @@ import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../game/store/p
 
 export class PokeParksJirachi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 50;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

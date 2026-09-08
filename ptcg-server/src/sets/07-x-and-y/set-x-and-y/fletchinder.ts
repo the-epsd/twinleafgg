@@ -11,7 +11,7 @@ import { ATTACH_ENERGY_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefa
 export class Fletchinder extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Fletchling';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 70;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

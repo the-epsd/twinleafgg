@@ -1,5 +1,5 @@
 
-import { StoreLike, State, GamePhase, StateUtils, ChooseCardsPrompt, GameMessage, GameError } from '../../../game';
+import { ChooseCardsPrompt, GameError, GameMessage, GamePhase, State, StateUtils, StoreLike, pokemonHasCardTypeOptional } from '../../../game';
 import { CardType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -61,7 +61,7 @@ export class Diantha extends TrainerCard {
       });
     }
 
-    if (effect instanceof KnockOutEffect && effect.target.getPokemonCard()?.cardType === CardType.FAIRY) {
+    if (effect instanceof KnockOutEffect && pokemonHasCardTypeOptional(effect.target.getPokemonCard(), CardType.FAIRY)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const duringTurn = [GamePhase.PLAYER_TURN, GamePhase.ATTACK].includes(state.phase);

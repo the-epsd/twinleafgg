@@ -11,7 +11,7 @@ import { DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/a
 
 export class Woobat extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

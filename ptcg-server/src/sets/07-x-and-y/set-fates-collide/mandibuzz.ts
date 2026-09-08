@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Mandibuzz extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Vullaby';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 110;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

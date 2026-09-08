@@ -5,7 +5,7 @@
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardType, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { CardTarget, PlayerType, SlotType } from '../../../game/store/actions/play-card-action';
-import { GameMessage, StoreLike, State } from '../../../game';
+import { GameMessage, StoreLike, State, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttachEnergyEffect, TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { EnergyCard } from '../../../game/store/card/energy-card';
@@ -69,7 +69,7 @@ export class Bea extends TrainerCard {
           return;
         }
         const pokemon = cardList.getPokemonCard();
-        if (!pokemon || pokemon.cardType !== CardType.FIGHTING) {
+        if (!pokemon || !pokemonHasCardType(pokemon, CardType.FIGHTING)) {
           blockedTo.push(target);
           return;
         }

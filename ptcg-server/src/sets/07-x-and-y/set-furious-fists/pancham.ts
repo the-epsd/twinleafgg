@@ -4,7 +4,7 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../../game/store/card/card-types';
-import { PlayerType, GameMessage, StoreLike, State } from '../../../game';
+import { PlayerType, GameMessage, StoreLike, State, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 import { Card } from '../../../game/store/card/card';
@@ -12,7 +12,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 
 export class Pancham extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 60;
   public weakness = [{ type: P }];
   public retreat = [C];
@@ -47,7 +47,7 @@ export class Pancham extends PokemonCard {
       // Check if there is a Darkness Pokemon on the bench
       let hasDarknessBench = false;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (cardList !== player.active && card.cardType === CardType.DARK) {
+        if (cardList !== player.active && pokemonHasCardType(card, CardType.DARK)) {
           hasDarknessBench = true;
         }
       });

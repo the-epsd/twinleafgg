@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, GUST_OPPONENT_BENCHED_POKEMON } from '../../../game/st
 export class Zoroark extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Zorua';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 110;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

@@ -36,7 +36,7 @@ function* useExcitableDraw(next: Function, store: StoreLike, state: State,
 
 export class Cleffa extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 60;
   public retreat = [];
 

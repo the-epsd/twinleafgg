@@ -6,7 +6,7 @@ import { DRAW_CARDS, WAS_ATTACK_USED, FLIP_UNTIL_TAILS_AND_COUNT_HEADS } from '.
 
 export class Magikarp extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 30;
   public weakness = [{ type: L, value: +10 }];
   public retreat = [C];

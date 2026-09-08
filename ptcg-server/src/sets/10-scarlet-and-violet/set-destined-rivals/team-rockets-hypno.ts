@@ -8,7 +8,7 @@ export class TeamRocketsHypno extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = "Team Rocket's Drowzee";
   protected _tags = [CardTag.TEAM_ROCKET];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 130;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

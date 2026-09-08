@@ -22,7 +22,7 @@ import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/
 export class DawnWingsNecrozmaGX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 180;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -20 }];

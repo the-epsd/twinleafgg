@@ -10,7 +10,7 @@ export class Slugma extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
   public evolvesFrom = 'Slugma';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp = 60;
   public weakness = [{ type: W }];
   public retreat = [C, C];

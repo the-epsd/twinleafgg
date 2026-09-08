@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, GUST_OPPONENT_BENCHED_POKEMON, ADD_CONFUSION_TO_PLAYER
 export class Malamar extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Inkay';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

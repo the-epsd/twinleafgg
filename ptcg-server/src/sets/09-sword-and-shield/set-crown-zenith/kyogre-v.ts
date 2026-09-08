@@ -12,7 +12,7 @@ import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-
 export class KyogreV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 230;
   public weakness = [{ type: L }];
   public retreat = [C, C, C];

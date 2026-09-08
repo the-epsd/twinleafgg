@@ -6,7 +6,7 @@ import { WAS_ATTACK_USED, DRAW_CARDS_UNTIL_CARDS_IN_HAND } from '../../../game/s
 
 export class Deoxys4 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 100;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

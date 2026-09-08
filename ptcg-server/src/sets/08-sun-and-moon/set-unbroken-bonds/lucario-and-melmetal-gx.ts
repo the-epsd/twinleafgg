@@ -1,20 +1,4 @@
-import {
-  AttachEnergyPrompt,
-  CardTag,
-  CardType,
-  CardTarget,
-  EnergyType,
-  GameMessage,
-  PlayerType,
-  PokemonCard,
-  SlotType,
-  Stage,
-  State,
-  StateUtils,
-  StoreLike,
-  SuperType,
-  Card,
-} from '../../../game';
+import { AttachEnergyPrompt, Card, CardTag, CardTarget, CardType, EnergyType, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike, SuperType, pokemonHasCardTypeOptional } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { DealDamageEffect, DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
@@ -28,7 +12,7 @@ import {
 export class LucarioMelmetalGX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 260;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
@@ -131,7 +115,7 @@ export class LucarioMelmetalGX extends PokemonCard {
 
     if (
       effect instanceof DealDamageEffect &&
-      effect.target.getPokemonCard()?.cardType === CardType.METAL &&
+      pokemonHasCardTypeOptional(effect.target.getPokemonCard(), CardType.METAL) &&
       effect.opponent.usedFullMetalWall === true
     ) {
       effect.damage -= 30;

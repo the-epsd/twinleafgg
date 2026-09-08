@@ -7,7 +7,7 @@ import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-pref
 export class Eelektross extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Eelektrik';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 140;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

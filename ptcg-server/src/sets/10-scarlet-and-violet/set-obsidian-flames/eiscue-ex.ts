@@ -10,7 +10,7 @@ import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/eff
 export class Eiscueex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 210;
   public weakness = [{ type: W }];
   public retreat = [C, C];

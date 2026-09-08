@@ -10,7 +10,7 @@ export class MegaDragalgeex extends PokemonCard {
   public evolvesFrom = 'Skrelp';
   protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_SV_MEGA];
   public hp: number = 330;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public weakness: { type: CardType }[] = [];
   public resistance: { type: CardType; value: number }[] = [];
   public retreat = [C, C];

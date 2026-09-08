@@ -12,7 +12,7 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED, YOUR_OPPPONENTS_ACTIVE_PO
 export class Salazzle extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Salandit';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 110;
   public weakness = [{ type: W }];
   public retreat = [C];

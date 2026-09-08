@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Naclstack extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Nacli';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 100;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

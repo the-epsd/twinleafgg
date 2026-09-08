@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Charmeleon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Charmander';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 90;
   public weakness = [{ type: W }];
   public retreat = [C, C];

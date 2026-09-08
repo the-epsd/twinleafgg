@@ -7,9 +7,7 @@ import { TrainerCard } from './trainer-card';
 export abstract class PokemonCard extends Card {
   public superType: SuperType = SuperType.POKEMON;
 
-  public cardType: CardType = CardType.COLORLESS;
-
-  public additionalCardTypes?: CardType[];
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   /**
    * Deprecated. Use Card._tags instead.
@@ -61,4 +59,20 @@ export abstract class PokemonCard extends Card {
   public wasMovedToActiveThisTurn?(player: any): boolean {
     return player.movedToActiveThisTurn.includes(this.id);
   }
+}
+
+export function getPokemonCardTypes(card: PokemonCard): CardType[] {
+  return card.cardType;
+}
+
+export function getPrimaryCardType(card: PokemonCard): CardType {
+  return card.cardType[0] ?? CardType.COLORLESS;
+}
+
+export function pokemonHasCardType(card: PokemonCard, type: CardType): boolean {
+  return getPokemonCardTypes(card).includes(type);
+}
+
+export function pokemonHasCardTypeOptional(card: PokemonCard | undefined, type: CardType): boolean {
+  return card !== undefined && pokemonHasCardType(card, type);
 }

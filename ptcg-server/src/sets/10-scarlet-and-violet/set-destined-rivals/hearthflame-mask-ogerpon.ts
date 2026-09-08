@@ -5,7 +5,7 @@ import { ADD_BURN_TO_PLAYER_ACTIVE, AFTER_ATTACK, ATTACH_ENERGY_PROMPT, WAS_ATTA
 export class HearthflameMaskOgerpon extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 110;
   public weakness: Weakness[] = [{ type: W }];
   public retreat: CardType[] = [C];

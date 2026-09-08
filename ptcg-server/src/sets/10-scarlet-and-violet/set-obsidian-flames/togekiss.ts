@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Togekiss extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Togetic';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 150;
   public weakness = [{ type: M }];
   public retreat = [];

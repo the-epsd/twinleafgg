@@ -13,7 +13,7 @@ export class Chesnaught extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Quilladin';
   public hp: number = 180;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public weakness = [{ type: R }];
   public retreat = [C, C, C, C];
 

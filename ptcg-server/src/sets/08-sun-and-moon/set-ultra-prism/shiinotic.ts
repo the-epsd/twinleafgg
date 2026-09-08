@@ -8,7 +8,7 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../ga
 
 export class Shiinotic extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 100;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];
@@ -66,7 +66,7 @@ export class Shiinotic extends PokemonCard {
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
-        { superType: SuperType.POKEMON, cardType: Y },
+        { superType: SuperType.POKEMON, cardType: [Y] },
         { min: 0, max: 1, allowCancel: true }
       ), selected => {
         cards = selected || [];

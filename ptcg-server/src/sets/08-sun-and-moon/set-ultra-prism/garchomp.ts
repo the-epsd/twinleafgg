@@ -10,7 +10,7 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 export class Garchomp extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Gabite';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 150;
   public weakness: Weakness[] = [{ type: Y }];
   public retreat = [];

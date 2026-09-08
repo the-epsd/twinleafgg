@@ -16,7 +16,7 @@ import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../../game/store/prefabs/prefa
 export class LarrysStarly extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.LARRYS];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 60;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

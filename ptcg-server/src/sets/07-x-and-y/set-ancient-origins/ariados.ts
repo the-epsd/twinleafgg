@@ -11,7 +11,7 @@ import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effect
 export class Ariados extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Spinarak';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public retreat = [C];

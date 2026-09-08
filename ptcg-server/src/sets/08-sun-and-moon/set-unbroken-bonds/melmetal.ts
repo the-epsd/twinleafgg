@@ -4,7 +4,7 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameError, GameMessage, PokemonCardList } from '../../../game';
+import { PowerType, StoreLike, State, GameError, GameMessage, PokemonCardList, pokemonHasCardType } from '../../../game';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
@@ -14,7 +14,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 export class Melmetal extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Meltan';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 150;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
@@ -56,7 +56,7 @@ export class Melmetal extends PokemonCard {
 
       // Check for Metal Pokemon in hand
       const hasMetalPokemon = player.hand.cards.some(c =>
-        c instanceof PokemonCard && c.cardType === CardType.METAL
+        c instanceof PokemonCard && pokemonHasCardType(c, CardType.METAL)
       );
 
       if (!hasMetalPokemon) {
@@ -70,7 +70,7 @@ export class Melmetal extends PokemonCard {
         player,
         GameMessage.CHOOSE_CARDS,
         player.hand,
-        { superType: SuperType.POKEMON, cardType: CardType.METAL },
+        { superType: SuperType.POKEMON, cardType: [CardType.METAL] },
         { allowCancel: false, min: 1, max: 1 }
       ), cards => {
         const selected = cards || [];

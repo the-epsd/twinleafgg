@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class DeoxysV extends PokemonCard {
   public stage = Stage.BASIC;
 
-  public cardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp = 210;
 

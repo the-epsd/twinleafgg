@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardTag } from '../../../game/store/card/card-types';
+import { CardType, Stage, CardTag } from '../../../game/store/card/card-types';
 import {
   CardList,
   EnergyCard,
@@ -20,8 +20,7 @@ import { MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store
 export class KyogreAndGroudonLegendTop extends PokemonCard {
   public stage: Stage = Stage.LEGEND;
   protected _tags = [CardTag.LEGEND, CardTag.DUAL_LEGEND];
-  public cardType = W;
-  public additionalCardTypes = [F];
+  public cardType: CardType[] = [W, F];
   public hp: number = 150;
   public weakness = [{ type: G }, { type: L }];
   public retreat = [C, C, C];

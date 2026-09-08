@@ -10,7 +10,7 @@ import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-
 export class Simisear extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Pansear';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 90;
   public weakness = [{ type: W }];
   public retreat = [C];

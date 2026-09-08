@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, SELECT_PROMPT } from '../../../game/store/prefabs/pref
 import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 export class MrMime extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 80;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

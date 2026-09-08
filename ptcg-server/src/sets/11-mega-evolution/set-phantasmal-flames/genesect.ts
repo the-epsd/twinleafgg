@@ -10,7 +10,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 
 export class Genesect extends PokemonCard {
   public stage = Stage.BASIC;
-  public cardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
   public hp = 120;
   public weakness = [{ type: R }];
   public retreat = [C, C];

@@ -4,7 +4,7 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 export class IonosTadbulb extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.IONOS];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public retreat = [C, C];

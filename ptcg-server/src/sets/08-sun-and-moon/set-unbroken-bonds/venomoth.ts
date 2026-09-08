@@ -1,11 +1,11 @@
-import { GameError, GameMessage, PokemonCard, Stage, State, StateUtils, StoreLike } from '../../../game';
+import { CardType, GameError, GameMessage, PokemonCard, Stage, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AfterAttackEffect } from '../../../game/store/effects/game-phase-effects';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON } from '../../../game/store/prefabs/attack-effects';
 import { ADD_POISON_TO_PLAYER_ACTIVE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Venomoth extends PokemonCard {
-  public cardType = G;
+  public cardType: CardType[] = [G];
   public stage = Stage.STAGE_1;
   public evolvesFrom = 'Venonat';
   public hp = 90;

@@ -16,7 +16,7 @@ import {
 export class WhiteKyuremGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 190;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];

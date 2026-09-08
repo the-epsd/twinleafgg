@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Snorunt extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
   public hp: number = 60;
   public retreat = [CardType.COLORLESS];
   public weakness = [{ type: CardType.METAL }];

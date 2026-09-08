@@ -14,7 +14,7 @@ export class Maractus extends PokemonCard {
   public readonly CLEAR_EXCITING_SHAKE_MARKER = 'MARACTUS_CLEAR_EXCITING_SHAKE_MARKER';
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public retreat = [C];

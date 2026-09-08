@@ -18,7 +18,7 @@ export class EspeonGX extends PokemonCard {
 
   public evolvesFrom = 'Eevee';
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 200;
 

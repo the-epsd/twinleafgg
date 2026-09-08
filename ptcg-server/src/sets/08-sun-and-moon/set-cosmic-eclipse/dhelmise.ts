@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED, SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND } from '../../..
 
 export class Dhelmise extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 130;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -20 }];

@@ -6,8 +6,7 @@ import {
   EnergyType,
   SuperType,
 } from '../../../game/store/card/card-types';
-import {
-  StoreLike,
+import { StoreLike,
   State,
   GameMessage,
   GameError,
@@ -16,8 +15,7 @@ import {
   StateUtils,
   PowerType,
   AttachEnergyPrompt,
-  EnergyCard,
-} from '../../../game';
+  EnergyCard, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
@@ -29,7 +27,7 @@ export class ShadowRiderCalyrexVMAX extends PokemonCard {
   public stage: Stage = Stage.VMAX;
   public evolvesFrom = 'Shadow Rider Calyrex V';
   public regulationMark = 'E';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   protected _tags = [CardTag.POKEMON_VMAX];
   public hp: number = 320;
   public weakness = [{ type: D }];
@@ -90,7 +88,7 @@ export class ShadowRiderCalyrexVMAX extends PokemonCard {
 
       const blocked: number[] = [];
       player.bench.forEach((card, index) => {
-        if (card instanceof PokemonCard && card.cardType === CardType.PSYCHIC) {
+        if (card instanceof PokemonCard && pokemonHasCardType(card, CardType.PSYCHIC)) {
           blocked.push(index);
         }
       });

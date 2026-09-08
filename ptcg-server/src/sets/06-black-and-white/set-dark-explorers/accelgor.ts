@@ -14,7 +14,7 @@ export class Accelgor extends PokemonCard {
 
   public evolvesFrom = 'Shelmet';
 
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
 
   public hp: number = 90;
 

@@ -16,7 +16,7 @@ import {
 export class DrapionV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 210;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

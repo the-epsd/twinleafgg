@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Leavanny extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Swadloon';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 130;
   public weakness = [{ type: R }];
   public retreat = [C];

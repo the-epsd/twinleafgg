@@ -5,7 +5,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardType, EnergyType, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
-import { AttachEnergyPrompt, PlayerType, SlotType, GameError, CardTarget, PokemonCard } from '../../../game';
+import { AttachEnergyPrompt, PlayerType, SlotType, GameError, CardTarget, PokemonCard, pokemonHasCardType } from '../../../game';
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
@@ -24,7 +24,7 @@ export class MagmaBasin extends TrainerCard {
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
       const player = effect.player;
       const hasFirePokemonOnBench = player.bench.some(b =>
-        b.cards.some(c => c instanceof PokemonCard && c.cardType === CardType.FIRE)
+        b.cards.some(c => c instanceof PokemonCard && pokemonHasCardType(c, CardType.FIRE))
       );
 
       if (!hasFirePokemonOnBench) {
@@ -33,7 +33,7 @@ export class MagmaBasin extends TrainerCard {
 
       const blocked2: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        if (card.cardType !== CardType.FIRE) {
+        if (!pokemonHasCardType(card, CardType.FIRE)) {
           blocked2.push(target);
         }
       });

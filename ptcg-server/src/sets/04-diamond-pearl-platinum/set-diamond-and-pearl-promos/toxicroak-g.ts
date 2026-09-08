@@ -27,7 +27,7 @@ import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects
 export class ToxicroakG extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_SP];
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 90;
   public weakness = [{ type: P }];
   public retreat = [C, C];

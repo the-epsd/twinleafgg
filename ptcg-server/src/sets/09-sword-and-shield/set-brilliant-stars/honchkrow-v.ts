@@ -18,7 +18,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class HonchkrowV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 200;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

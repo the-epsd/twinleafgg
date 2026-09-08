@@ -7,6 +7,7 @@ import {
   SuperType,
   ANY_PRINTING_ALLOWED,
   getPrintingReleaseDate,
+  getPrimaryCardType,
 } from "ptcg-server";
 import { DeckListEntry } from "../api/interfaces/deck.interface";
 
@@ -117,7 +118,7 @@ export class FormatValidator {
         (c) => c.superType === SuperType.POKEMON,
       );
       const pokemonTypeSet = new Set(
-        pokemonCards.map((c) => (<PokemonCard>c).cardType),
+        pokemonCards.map((c) => getPrimaryCardType(c as PokemonCard)),
       );
       if (pokemonTypeSet.size > 1) {
         formatList = formatList.filter((f) => f !== Format.GLC);

@@ -7,7 +7,7 @@ import { SEARCH_DECK_FOR_CARDS_TO_HAND, WAS_ATTACK_USED } from '../../../game/st
 export class Zubat extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 50;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];

@@ -10,7 +10,7 @@ import {
   SuperType,
   EnergyType,
 } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameMessage, GameError } from '../../../game';
+import { PowerType, StoreLike, State, StateUtils, GameMessage, GameError, pokemonHasCardType } from '../../../game';
 import { Card } from '../../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 
@@ -27,7 +27,7 @@ export class HisuianLilligantVstar extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VSTAR];
   public stage: Stage = Stage.VSTAR;
   public evolvesFrom: string = 'Hisuian Lilligant V';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 260;
   public weakness = [{ type: R }];
   public retreat = [C];
@@ -79,7 +79,7 @@ export class HisuianLilligantVstar extends PokemonCard {
       // Build blocked list: block cards that are not Grass Pokemon or [G] basic Energy
       const blocked: number[] = [];
       player.deck.cards.forEach((c, index) => {
-        const isGrassPokemon = c instanceof PokemonCard && c.cardType === CardType.GRASS;
+        const isGrassPokemon = c instanceof PokemonCard && pokemonHasCardType(c, CardType.GRASS);
         const isGrassEnergy =
           c.superType === SuperType.ENERGY &&
           c.energyType === EnergyType.BASIC &&

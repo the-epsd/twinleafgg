@@ -26,8 +26,7 @@ export class TeamAquasWalrein extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = "Team Aqua's Sealeo";
   protected _tags = [CardTag.TEAM_AQUA];
-  public cardType: CardType = W;
-  public additionalCardTypes = [D];
+  public cardType: CardType[] = [W, D];
   public hp: number = 120;
   public weakness = [{ type: F }, { type: M }];
   public retreat = [C, C];

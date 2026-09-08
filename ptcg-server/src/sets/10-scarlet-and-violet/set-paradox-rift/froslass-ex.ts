@@ -11,7 +11,7 @@ export class Froslassex extends PokemonCard {
   public regulationMark = 'G';
   protected _tags = [CardTag.POKEMON_ex];
   public evolvesFrom = 'Snorunt';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 250;
   public weakness = [{ type: R }];
   public retreat = [C];

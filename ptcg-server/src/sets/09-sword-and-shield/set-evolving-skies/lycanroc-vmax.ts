@@ -25,7 +25,7 @@ export class LycanrocVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Lycanroc V';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 320;
   public weakness = [{ type: G }];
   public retreat = [C];

@@ -11,7 +11,7 @@ export class Tynamo extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
 
   public hp: number = 40;
 

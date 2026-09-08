@@ -15,7 +15,7 @@ export class Armaldoex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Anorith';
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 160;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

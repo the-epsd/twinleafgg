@@ -6,7 +6,7 @@ export class Pawmot extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Pawmo';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 130;
   public weakness: Weakness[] = [{ type: F }];
   public retreat: CardType[] = [];

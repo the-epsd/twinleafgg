@@ -105,7 +105,7 @@ function* useEvolutionPowder(next: Function, store: StoreLike, state: State,
 
 export class Vivillion extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 120;
   public retreat = [C];
   public weakness = [{ type: R }];

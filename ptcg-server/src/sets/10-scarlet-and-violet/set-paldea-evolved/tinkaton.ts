@@ -10,7 +10,7 @@ import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Tinkaton extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
   public hp: number = 140;
   public weakness = [{ type: CardType.METAL }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];

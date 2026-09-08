@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, SHUFFLE_CARDS_INTO_DECK } from '../../../game/store/pr
 export class Togetic extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Togepi';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 80;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

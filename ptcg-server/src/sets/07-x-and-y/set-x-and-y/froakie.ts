@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, SWITCH_ACTIVE_WITH_BENCHED } from '.
 
 export class Froakie extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 50;
   public weakness = [{ type: G }];
   public retreat = [C];

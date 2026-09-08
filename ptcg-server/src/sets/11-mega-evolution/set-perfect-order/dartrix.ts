@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED, DISCARD_ALL_ENERGY_FROM_POKEMON, DAMAGE_OPPONENT_POKEM
 export class Dartrix extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Rowlet';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 100;
   public weakness = [{ type: R }];
   public retreat = [C, C];

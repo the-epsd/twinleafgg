@@ -43,7 +43,7 @@ function* useCallForFamily(next: Function, store: StoreLike, state: State,
 
 export class Toxel extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 70;
   public weakness = [{ type: F }];
   public retreat = [C];

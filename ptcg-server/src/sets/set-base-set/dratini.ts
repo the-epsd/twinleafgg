@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 
 export class Dratini extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 40;
   public resistance = [{ type: P, value: -30 }];
   public retreat = [C];

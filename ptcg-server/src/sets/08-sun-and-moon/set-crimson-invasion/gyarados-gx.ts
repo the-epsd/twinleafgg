@@ -22,7 +22,7 @@ export class GyaradosGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Magikarp';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 240;
   public weakness = [{ type: L }];
   public retreat = [C, C, C, C];

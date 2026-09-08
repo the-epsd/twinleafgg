@@ -99,7 +99,7 @@ function* useRebirth(
 export class HoOhEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 160;
   public weakness = [{ type: W }];
   public resistance = [{ type: F, value: -20 }];

@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, BLOCK_IF_DECK_EMPTY, SHUFFLE_DECK } from '../../../gam
 
 export class Eevee2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public retreat = [C];

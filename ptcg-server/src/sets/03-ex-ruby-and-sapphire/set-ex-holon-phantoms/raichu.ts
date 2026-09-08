@@ -23,7 +23,7 @@ export class Raichu extends PokemonCard {
 
   protected _tags = [CardTag.DELTA_SPECIES];
 
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
 
   public hp: number = 70;
 

@@ -18,7 +18,7 @@ import { DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../../game/store/pr
 export class MegaSkarmoryex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 260;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

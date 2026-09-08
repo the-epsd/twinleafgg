@@ -38,7 +38,7 @@ import {
 export class RadiantGreninja extends PokemonCard {
   protected _tags = [CardTag.RADIANT];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
   public hp: number = 130;
   public weakness = [{ type: CardType.LIGHTNING }];
   public retreat = [CardType.COLORLESS];

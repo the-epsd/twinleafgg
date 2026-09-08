@@ -8,7 +8,7 @@ import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
 export class Haunter extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Gastly';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -20 }];

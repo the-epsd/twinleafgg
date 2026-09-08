@@ -11,7 +11,7 @@ import { FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_DAMAGE_PER_HEADS } from '../../../
 
 export class Cottonee extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 50;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { State, StoreLike } from '../../../game';
 export class Azelf extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

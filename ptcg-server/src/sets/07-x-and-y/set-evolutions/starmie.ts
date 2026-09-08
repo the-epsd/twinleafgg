@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, EnergyType, SuperType, BoardEffect } from '../../../game/store/card/card-types';
+import { CardType, Stage, EnergyType, SuperType, BoardEffect } from '../../../game/store/card/card-types';
 import { Attack, PowerType } from '../../../game/store/card/pokemon-types';
 import { StoreLike, State, GameMessage, Card, ChooseCardsPrompt, GameError, PlayerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
@@ -83,7 +83,7 @@ export class Starmie extends PokemonCard {
   public fullName = 'Starmie EVO';
   public setNumber = '31';
 
-  public cardType = W;
+  public cardType: CardType[] = [W];
   public stage = Stage.STAGE_1;
   public hp = 90;
   public weakness = [{ type: G }];

@@ -28,7 +28,7 @@ export class Fezandipitiex extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public weakness = [{ type: CardType.FIGHTING }];
 

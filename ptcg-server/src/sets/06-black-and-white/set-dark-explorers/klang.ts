@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 export class Klang extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Klink';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

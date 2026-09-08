@@ -8,7 +8,7 @@ import { DRAW_CARDS, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/pref
 export class Crobat extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public regulationMark: string = 'E';
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
   public hp: number = 130;
   public weakness = [{ type: CardType.FIGHTING }];
   public retreat = [];

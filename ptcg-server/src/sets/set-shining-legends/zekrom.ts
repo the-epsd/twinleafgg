@@ -11,7 +11,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/cos
 
 export class Zekrom extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

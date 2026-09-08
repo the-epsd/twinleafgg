@@ -6,7 +6,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Plusle extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 70;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public weakness = [{ type: F }];
   public resistance = [];
   public retreat = [C];

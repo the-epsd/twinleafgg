@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store
 export class Bronzong extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Bronzor';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 130;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

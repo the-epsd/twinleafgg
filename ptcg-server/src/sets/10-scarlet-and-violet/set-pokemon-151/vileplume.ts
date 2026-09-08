@@ -9,7 +9,7 @@ export class Vileplume extends PokemonCard {
 
   public evolvesFrom = 'Gloom';
 
-  public cardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp = 140;
 

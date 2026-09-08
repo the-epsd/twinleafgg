@@ -6,7 +6,7 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs
 export class Annihilape extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Primeape';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 150;
   public weakness = [{ type: P }];
   public retreat = [C, C];

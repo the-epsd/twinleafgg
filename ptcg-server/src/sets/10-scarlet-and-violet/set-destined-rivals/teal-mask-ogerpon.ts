@@ -4,7 +4,7 @@ import { ATTACH_ENERGY_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefa
 
 export class TealMaskOgerpon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 110;
   public weakness: Weakness[] = [{ type: R }];
   public retreat: CardType[] = [C];

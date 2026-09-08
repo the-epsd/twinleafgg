@@ -9,7 +9,7 @@ export class Regidrago extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.DRAGON;
+  public cardType: CardType[] = [CardType.DRAGON];
 
   public hp: number = 130;
 

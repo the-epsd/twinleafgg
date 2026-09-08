@@ -1,4 +1,4 @@
-import { StoreLike, State, StateUtils, GameError, GameMessage, CardList, ChooseCardsPrompt, PokemonCard, CardType, ShowCardsPrompt, ShuffleDeckPrompt, TrainerCard, TrainerType, Player, Card } from "../../../game";
+import { StoreLike, State, StateUtils, GameError, GameMessage, CardList, ChooseCardsPrompt, PokemonCard, CardType, ShowCardsPrompt, ShuffleDeckPrompt, TrainerCard, TrainerType, Player, Card, pokemonHasCardType } from '../../../game';
 import { Effect } from "../../../game/store/effects/effect";
 import { EndTurnEffect } from "../../../game/store/effects/game-phase-effects";
 import { TrainerEffect } from "../../../game/store/effects/play-card-effects";
@@ -51,7 +51,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   let lightningPokemonCount = 0;
   const blocked: number[] = [];
   player.deck.cards.forEach((card, index) => {
-    if (card instanceof PokemonCard && card.cardType === CardType.LIGHTNING) {
+    if (card instanceof PokemonCard && pokemonHasCardType(card, CardType.LIGHTNING)) {
       lightningPokemonCount += 1;
     } else {
       blocked.push(index);

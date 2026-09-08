@@ -19,7 +19,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Blacephalon extends PokemonCard {
   protected _tags = [CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 120;
   public weakness = [{ type: W }];
   public retreat = [C, C];

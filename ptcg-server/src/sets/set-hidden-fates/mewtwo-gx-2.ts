@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefa
 export class MewtwoGx2 extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 180;
   public weakness = [{ type: P }];
   public retreat = [C, C];

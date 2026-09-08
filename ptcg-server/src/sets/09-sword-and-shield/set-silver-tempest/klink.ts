@@ -48,7 +48,7 @@ function* useCallSign(next: Function, store: StoreLike, state: State,
 export class Klink extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public regulationMark: string = 'F';
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType[] = [CardType.METAL];
   public hp: number = 50;
   public weakness = [{ type: CardType.FIRE }];
   public resistance = [{ type: CardType.GRASS, value: -30 }];

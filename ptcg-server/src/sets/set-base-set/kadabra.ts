@@ -16,7 +16,7 @@ export class Kadabra extends PokemonCard {
 
   public fullName = 'Kadabra BS';
 
-  public cardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public stage = Stage.STAGE_1;
 

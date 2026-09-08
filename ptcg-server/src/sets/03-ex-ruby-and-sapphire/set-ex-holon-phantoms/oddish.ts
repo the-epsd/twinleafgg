@@ -11,7 +11,7 @@ import {
 export class Oddish extends PokemonCard {
   protected _tags = [CardTag.DELTA_SPECIES];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 40;
   public weakness = [{ type: R }];
   public retreat = [C];

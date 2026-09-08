@@ -11,7 +11,7 @@ import { State, StoreLike } from '../../../game';
 export class Drapion extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Skorupi';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 110;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

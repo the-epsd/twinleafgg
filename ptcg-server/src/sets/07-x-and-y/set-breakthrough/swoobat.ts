@@ -13,7 +13,7 @@ import { NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/attack-effec
 export class Swoobat extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Woobat';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 90;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

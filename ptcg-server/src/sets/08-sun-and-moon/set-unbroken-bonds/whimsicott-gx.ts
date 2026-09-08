@@ -20,7 +20,7 @@ export class WhimsicottGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Cottonee';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 190;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

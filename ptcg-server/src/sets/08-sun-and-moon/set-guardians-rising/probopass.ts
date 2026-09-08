@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, ATTACH_ENERGY_PROMPT } from '../../../game/store/prefa
 export class Probopass extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Nosepass';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 130;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

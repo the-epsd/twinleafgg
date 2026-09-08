@@ -24,7 +24,7 @@ import {
 export class GalarianMrRimeV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V, CardTag.FUSION_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 210;
   public weakness = [{ type: M }];
   public retreat = [C, C];

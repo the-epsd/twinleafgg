@@ -6,7 +6,7 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs
 export class Galvantula extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Joltik';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

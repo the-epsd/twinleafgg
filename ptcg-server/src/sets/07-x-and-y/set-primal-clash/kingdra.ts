@@ -12,7 +12,7 @@ import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS, DISCARD_AN_ENERGY_FROM_OP
 export class Kingdra extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Seadra';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 130;
   public weakness = [{ type: Y }];
   public retreat = [C];

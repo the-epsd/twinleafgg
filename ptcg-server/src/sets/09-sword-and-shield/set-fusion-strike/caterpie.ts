@@ -44,7 +44,7 @@ function* useFlock(next: Function, store: StoreLike, state: State,
 
 export class Caterpie extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 50;
   public weakness = [{ type: R }];
   public retreat = [C];

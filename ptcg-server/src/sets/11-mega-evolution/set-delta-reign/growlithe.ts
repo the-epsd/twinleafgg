@@ -4,7 +4,7 @@ import { AFTER_ATTACK, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store/pr
 
 export class Growlithe extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 80;
   public weakness = [{ type: W }];
   public retreat = [C, C];

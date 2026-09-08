@@ -7,7 +7,7 @@ import { MOVE_AN_ENERGY_FROM_OPPONENTS_POKEMON_TO_ANOTHER } from '../../../game/
 
 export class Elgyem extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

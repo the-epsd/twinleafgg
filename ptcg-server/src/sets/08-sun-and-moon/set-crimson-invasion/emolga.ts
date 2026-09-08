@@ -14,7 +14,7 @@ import { WAS_ATTACK_USED, SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND } from '../../..
 
 export class Emolga extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 60;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

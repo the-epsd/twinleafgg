@@ -35,7 +35,7 @@ import {
 export class Clawitzer extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Clauncher';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 100;
   public weakness = [{ type: G }];
   public retreat = [C, C];

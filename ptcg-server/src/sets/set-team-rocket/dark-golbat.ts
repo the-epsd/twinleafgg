@@ -20,7 +20,7 @@ export class DarkGolbat extends PokemonCard {
   protected _tags = [CardTag.DARK];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Zubat';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 50;
   public weakness = [{ type: P }];
   public resistance = [{ type: F, value: -30 }];

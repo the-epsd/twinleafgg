@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED, MOVE_CARDS, MULTIPLE_COIN_FLIPS_PROMPT } from '../../.
 export class Golurk extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Golett';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 130;
   public weakness = [{ type: W }];
   public resistance = [{ type: L, value: -20 }];

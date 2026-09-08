@@ -5,7 +5,7 @@ import { Effect } from "../../../game/store/effects/effect";
 export class Pikachu31 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 50;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public weakness = [{ type: F }];
   public retreat = [];
   public attacks = [{

@@ -11,7 +11,7 @@ import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Wimpod extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];

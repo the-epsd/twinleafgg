@@ -7,7 +7,7 @@ import { HealEffect } from '../../../game/store/effects/game-effects';
 
 export class Elekid extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 40;
   public weakness = [{ type: F }];
   public retreat = [C];

@@ -8,6 +8,7 @@ import { AfterDamageEffect, ApplyWeaknessEffect, PutDamageEffect } from '../../.
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { pokemonHasCardType } from '../../../game';
 
 export class Bellibolt extends PokemonCard {
 
@@ -15,7 +16,7 @@ export class Bellibolt extends PokemonCard {
 
   public evolvesFrom = 'Tadbulb';
 
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [CardType.LIGHTNING];
 
   public hp: number = 140;
 
@@ -91,7 +92,7 @@ export class Bellibolt extends PokemonCard {
         return state;
       }
 
-      if (sourceCard.cardType == CardType.LIGHTNING) {
+      if (pokemonHasCardType(sourceCard, CardType.LIGHTNING)) {
 
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {

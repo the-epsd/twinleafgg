@@ -9,7 +9,7 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs
 export class Buzzwole extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.ULTRA_BEAST];
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
   public hp: number = 130;
   public weakness = [{ type: CardType.FIRE }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];

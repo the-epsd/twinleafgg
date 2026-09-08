@@ -8,7 +8,7 @@ import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-pre
 export class Golbat extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Zubat';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 80;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

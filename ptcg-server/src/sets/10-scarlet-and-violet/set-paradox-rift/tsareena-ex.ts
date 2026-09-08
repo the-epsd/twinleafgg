@@ -23,7 +23,7 @@ export class Tsareenaex extends PokemonCard {
 
   public evolvesFrom = 'Steenee';
 
-  public cardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp = 310;
 

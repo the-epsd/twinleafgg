@@ -7,7 +7,7 @@ import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefab
 export class Nidoqueen extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Nidorina';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 120;
   public weakness = [{ type: P, value: +30 }];
   public resistance = [{ type: L, value: -20 }];

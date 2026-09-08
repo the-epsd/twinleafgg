@@ -11,7 +11,7 @@ import { IS_POKEPOWER_BLOCKED, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../ga
 
 export class Jirachi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType[] = [CardType.METAL];
   public hp: number = 60;
   public weakness = [{ type: CardType.FIRE, value: +20 }];
   public resistance = [{ type: CardType.PSYCHIC, value: -20 }];

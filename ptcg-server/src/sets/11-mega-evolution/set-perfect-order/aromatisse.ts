@@ -6,7 +6,7 @@ import { WAS_ATTACK_USED, WAS_POWER_USED, ABILITY_USED, REMOVE_MARKER_AT_END_OF_
 export class Aromatisse extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Spritzee';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 120;
   public weakness = [{ type: M }];
   public retreat = [C];

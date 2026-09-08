@@ -4,8 +4,7 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import {
-  Card,
+import { Card,
   CardTarget,
   ChooseCardsPrompt,
   ChoosePokemonPrompt,
@@ -13,8 +12,7 @@ import {
   PlayerType,
   SlotType,
   StoreLike,
-  State,
-} from '../../../game';
+  State, pokemonHasCardType } from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { BREAK_RULE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
@@ -23,7 +21,7 @@ export class CarbinkBreak extends PokemonCard {
   protected _tags = [CardTag.BREAK];
   public stage: Stage = Stage.BREAK;
   public evolvesFrom: string = 'Carbink';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 110;
   public retreat = [];
 
@@ -60,7 +58,7 @@ export class CarbinkBreak extends PokemonCard {
 
       // Check active
       const activePokemon = player.active.getPokemonCard();
-      if (activePokemon && activePokemon.cardType === CardType.FIGHTING) {
+      if (activePokemon && pokemonHasCardType(activePokemon, CardType.FIGHTING)) {
         hasFightingPokemon = true;
       } else {
         blocked.push({ player: PlayerType.BOTTOM_PLAYER, slot: SlotType.ACTIVE, index: 0 });
@@ -73,7 +71,7 @@ export class CarbinkBreak extends PokemonCard {
           return;
         }
         const pokemonCard = benchSlot.getPokemonCard();
-        if (pokemonCard && pokemonCard.cardType === CardType.FIGHTING) {
+        if (pokemonCard && pokemonHasCardType(pokemonCard, CardType.FIGHTING)) {
           hasFightingPokemon = true;
         } else {
           blocked.push({ player: PlayerType.BOTTOM_PLAYER, slot: SlotType.BENCH, index });

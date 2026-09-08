@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 
 export class Solosis extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 40;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

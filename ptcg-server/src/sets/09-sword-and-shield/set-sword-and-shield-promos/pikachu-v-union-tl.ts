@@ -12,7 +12,7 @@ import { OPPONENT_CANNOT_PLAY_ITEM_CARDS } from '../../../game/store/prefabs/eff
 export class PikachuVUNIONTopLeft extends PokemonCard {
   public stage: Stage = Stage.VUNION;
   protected _tags = [CardTag.POKEMON_VUNION];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 300;
   public weakness = [{ type: F }];
   public retreat = [C, C];

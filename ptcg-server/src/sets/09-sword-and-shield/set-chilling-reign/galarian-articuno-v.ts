@@ -26,7 +26,7 @@ export class GalarianArticunoV extends PokemonCard {
 
   public regulationMark = 'E';
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   protected _tags = [CardTag.POKEMON_V];
 

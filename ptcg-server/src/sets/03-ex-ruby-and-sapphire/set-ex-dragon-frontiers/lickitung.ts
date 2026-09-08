@@ -15,7 +15,7 @@ import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
 export class Lickitung extends PokemonCard {
   protected _tags = [CardTag.DELTA_SPECIES];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public retreat = [C];

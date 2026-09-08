@@ -13,7 +13,7 @@ export class Scrafty extends PokemonCard {
   protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Scraggy';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

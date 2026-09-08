@@ -4,7 +4,7 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 export class ArvensMaschiff extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.ARVENS];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 70;
   public weakness = [{ type: G }];
   public retreat = [C, C];

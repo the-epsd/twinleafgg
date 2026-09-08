@@ -20,7 +20,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class LandorusEx extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_EX];
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 180;
   public weakness = [{ type: W }];
   public resistance = [{ type: L, value: -20 }];

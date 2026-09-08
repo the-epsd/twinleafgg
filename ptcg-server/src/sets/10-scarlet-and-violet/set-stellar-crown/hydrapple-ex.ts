@@ -33,7 +33,7 @@ export class Hydrappleex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   protected _tags = [CardTag.POKEMON_ex];
   public regulationMark = 'H';
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
   public weakness = [{ type: CardType.FIRE }];
   public hp: number = 330;
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];

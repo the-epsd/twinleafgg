@@ -8,7 +8,7 @@ import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefa
 export class Dusclops2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Duskull';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: D, value: +20 }];
   public resistance = [{ type: C, value: -20 }];

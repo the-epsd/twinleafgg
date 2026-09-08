@@ -16,7 +16,7 @@ export class TeamRocketsHonchkrow extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = "Team Rocket's Murkrow";
   protected _tags = [CardTag.TEAM_ROCKET];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 130;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

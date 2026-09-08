@@ -12,7 +12,7 @@ import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../
 export class Solgaleo extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Cosmoem';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 160;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

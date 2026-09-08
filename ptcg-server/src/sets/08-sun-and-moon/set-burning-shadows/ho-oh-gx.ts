@@ -4,7 +4,7 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, ChooseCardsPrompt, PokemonCardList } from '../../../game';
+import { StoreLike, State, GameMessage, ChooseCardsPrompt, PokemonCardList, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../../game/store/prefabs/attack-effects';
@@ -12,7 +12,7 @@ import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../
 export class HoOhGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 190;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
@@ -74,7 +74,7 @@ export class HoOhGx extends PokemonCard {
       const fireGxExInDiscard = player.discard.cards.filter(
         (c) =>
           c instanceof PokemonCard &&
-          c.cardType === CardType.FIRE &&
+          pokemonHasCardType(c, CardType.FIRE) &&
           (c.hasTag(CardTag.POKEMON_GX) || c.hasTag(CardTag.POKEMON_EX)),
       );
 
@@ -88,7 +88,7 @@ export class HoOhGx extends PokemonCard {
       player.discard.cards.forEach((c, index) => {
         if (
           !(c instanceof PokemonCard) ||
-          c.cardType !== CardType.FIRE ||
+          !pokemonHasCardType(c, CardType.FIRE) ||
           (!c.hasTag(CardTag.POKEMON_GX) && !c.hasTag(CardTag.POKEMON_EX))
         ) {
           blocked.push(index);
@@ -101,7 +101,7 @@ export class HoOhGx extends PokemonCard {
           player,
           GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
           player.discard,
-          { superType: SuperType.POKEMON, cardType: CardType.FIRE },
+          { superType: SuperType.POKEMON, cardType: [CardType.FIRE] },
           { min: max, max, allowCancel: false, blocked },
         ),
         (selected) => {

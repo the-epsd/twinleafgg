@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Armaldo extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Anorith';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 150;
   public weakness = [{ type: G }];
   public retreat = [C, C];

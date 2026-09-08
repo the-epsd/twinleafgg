@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 import { Not, IsNull } from 'typeorm';
 import { AuthToken, Validate, check } from '../services';
-import { CardManager, DeckAnalyser, GameWinner } from '../../game';
+import { CardManager, DeckAnalyser, GameWinner, getPrimaryCardType } from '../../game';
 import { Controller, Get, Post } from './controller';
 import { DeckSaveRequest } from '../interfaces';
 import { ApiErrorEnum } from '../common/errors';
-import { User, Deck, Match, Sleeve } from '../../storage';
+import { User, Deck, Match, Sleeve, DeckBox, Coin } from '../../storage';
 import { THEME_DECKS } from '../../game/store/prefabs/theme-decks';
 import { Format, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { ANY_PRINTING_ALLOWED } from '../../game/store/card/any-printing-allowed';
@@ -40,10 +40,20 @@ export class Decks extends Controller {
 
     const sleeves = await Sleeve.find();
     const sleeveMap = new Map(sleeves.map((sleeve) => [sleeve.identifier, sleeve.imagePath]));
+    const deckBoxes = await DeckBox.find();
+    const deckBoxMap = new Map(deckBoxes.map((box) => [box.identifier, box.imagePath]));
+    const coins = await Coin.find();
+    const coinMap = new Map(coins.map((coin) => [coin.identifier, coin.imagePath]));
 
     const decks = userDecks.map((deck) => {
       const sleeveImagePath = deck.sleeveIdentifier
         ? sleeveMap.get(deck.sleeveIdentifier)
+        : undefined;
+      const deckBoxImagePath = deck.deckBoxIdentifier
+        ? deckBoxMap.get(deck.deckBoxIdentifier)
+        : undefined;
+      const coinImagePath = deck.coinIdentifier
+        ? coinMap.get(deck.coinIdentifier)
         : undefined;
       let format: number[];
       if (deck.formats && deck.formats.trim() !== '') {
@@ -71,6 +81,10 @@ export class Decks extends Controller {
         format,
         ...(deck.sleeveIdentifier ? { sleeveIdentifier: deck.sleeveIdentifier } : {}),
         ...(sleeveImagePath ? { sleeveImagePath } : {}),
+        ...(deck.deckBoxIdentifier ? { deckBoxIdentifier: deck.deckBoxIdentifier } : {}),
+        ...(deckBoxImagePath ? { deckBoxImagePath } : {}),
+        ...(deck.coinIdentifier ? { coinIdentifier: deck.coinIdentifier } : {}),
+        ...(coinImagePath ? { coinImagePath } : {}),
       };
 
       if (!summary) {
@@ -114,6 +128,12 @@ export class Decks extends Controller {
     const sleeveImagePath = entity.sleeveIdentifier
       ? (await Sleeve.findOne({ where: { identifier: entity.sleeveIdentifier } }))?.imagePath
       : undefined;
+    const deckBoxImagePath = entity.deckBoxIdentifier
+      ? (await DeckBox.findOne({ where: { identifier: entity.deckBoxIdentifier } }))?.imagePath
+      : undefined;
+    const coinImagePath = entity.coinIdentifier
+      ? (await Coin.findOne({ where: { identifier: entity.coinIdentifier } }))?.imagePath
+      : undefined;
     const deck = {
       id: entity.id,
       name: entity.name,
@@ -124,6 +144,10 @@ export class Decks extends Controller {
       manualArchetype2: entity.manualArchetype2,
       ...(entity.sleeveIdentifier ? { sleeveIdentifier: entity.sleeveIdentifier } : {}),
       ...(sleeveImagePath ? { sleeveImagePath } : {}),
+      ...(entity.deckBoxIdentifier ? { deckBoxIdentifier: entity.deckBoxIdentifier } : {}),
+      ...(deckBoxImagePath ? { deckBoxImagePath } : {}),
+      ...(entity.coinIdentifier ? { coinIdentifier: entity.coinIdentifier } : {}),
+      ...(coinImagePath ? { coinImagePath } : {}),
     };
 
     res.send({ ok: true, deck });
@@ -192,6 +216,8 @@ export class Decks extends Controller {
     deck.manualArchetype1 = body.manualArchetype1 || '';
     deck.manualArchetype2 = body.manualArchetype2 || '';
     deck.sleeveIdentifier = body.sleeveIdentifier || '';
+    deck.deckBoxIdentifier = body.deckBoxIdentifier || '';
+    deck.coinIdentifier = body.coinIdentifier || '';
     deck.formats = JSON.stringify(getValidFormatsForCardList(resolvedCards));
     try {
       deck = await deck.save();
@@ -204,6 +230,12 @@ export class Decks extends Controller {
     const savedSleeveImagePath = deck.sleeveIdentifier
       ? (await Sleeve.findOne({ where: { identifier: deck.sleeveIdentifier } }))?.imagePath
       : undefined;
+    const savedDeckBoxImagePath = deck.deckBoxIdentifier
+      ? (await DeckBox.findOne({ where: { identifier: deck.deckBoxIdentifier } }))?.imagePath
+      : undefined;
+    const savedCoinImagePath = deck.coinIdentifier
+      ? (await Coin.findOne({ where: { identifier: deck.coinIdentifier } }))?.imagePath
+      : undefined;
     res.send({
       ok: true,
       deck: {
@@ -214,6 +246,10 @@ export class Decks extends Controller {
         manualArchetype2: deck.manualArchetype2,
         ...(body.sleeveIdentifier ? { sleeveIdentifier: body.sleeveIdentifier } : {}),
         ...(savedSleeveImagePath ? { sleeveImagePath: savedSleeveImagePath } : {}),
+        ...(body.deckBoxIdentifier ? { deckBoxIdentifier: body.deckBoxIdentifier } : {}),
+        ...(savedDeckBoxImagePath ? { deckBoxImagePath: savedDeckBoxImagePath } : {}),
+        ...(body.coinIdentifier ? { coinIdentifier: body.coinIdentifier } : {}),
+        ...(savedCoinImagePath ? { coinImagePath: savedCoinImagePath } : {}),
       },
     });
   }
@@ -327,6 +363,11 @@ export class Decks extends Controller {
 
     delete body.id;
     body.cards = JSON.parse(deck.cards);
+    body.sleeveIdentifier = deck.sleeveIdentifier || '';
+    body.deckBoxIdentifier = deck.deckBoxIdentifier || '';
+    body.coinIdentifier = deck.coinIdentifier || '';
+    body.manualArchetype1 = deck.manualArchetype1 || '';
+    body.manualArchetype2 = deck.manualArchetype2 || '';
     return this.onSave(req, res);
   }
 
@@ -1195,7 +1236,7 @@ export function getValidFormatsForCardList(cardNames: string[]): number[] {
     }
     // check for different type violation
     const pokemonCards = cards.filter((c: any) => c && c.superType === SuperType.POKEMON);
-    const pokemonSet = new Set(pokemonCards.map((c: any) => c && c.cardType));
+    const pokemonSet = new Set(pokemonCards.map((c: any) => c && getPrimaryCardType(c)));
     if (pokemonSet.size > 1) {
       formatList = formatList.filter((f: number) => f !== Format.GLC);
     }

@@ -12,7 +12,7 @@ export class MachampVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Machamp V';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 330;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];

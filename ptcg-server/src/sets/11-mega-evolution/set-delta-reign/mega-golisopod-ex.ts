@@ -7,7 +7,7 @@ export class MegaGolisopodex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Wimpod';
   protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 340;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];

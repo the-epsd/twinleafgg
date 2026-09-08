@@ -8,7 +8,7 @@ import { MOVE_CARDS, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs'
 
 export class Phione extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
   public hp: number = 70;
   public retreat = [CardType.COLORLESS];
   public weakness = [{ type: CardType.GRASS }];

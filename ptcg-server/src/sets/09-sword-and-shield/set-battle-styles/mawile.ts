@@ -21,7 +21,7 @@ import {
 export class Mawile extends PokemonCard {
   protected _tags = [CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

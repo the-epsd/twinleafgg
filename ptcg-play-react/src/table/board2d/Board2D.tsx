@@ -384,7 +384,9 @@ export function Board2D(props: Board2DProps) {
     gameState.state.players[gameState.state.activePlayer]?.id === bottomPlayer.id;
 
   const topHandFaceDown =
-    !(adminSpectatorReveal?.hands) && topPlayer?.id !== clientId;
+    !(adminSpectatorReveal?.hands) &&
+    topPlayer?.id !== clientId &&
+    !(topPlayerHand?.isPublic || topPlayer?.hand?.isPublic);
   const topCards = topPlayerHand?.cards ?? topPlayer?.hand?.cards ?? [];
   const bottomCards = bottomPlayerHand?.cards ?? bottomPlayer?.hand?.cards ?? [];
 

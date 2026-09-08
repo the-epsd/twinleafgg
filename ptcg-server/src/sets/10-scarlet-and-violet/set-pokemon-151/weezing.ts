@@ -7,7 +7,7 @@ import { COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED, TAKE_X_PRIZES, WAS_ATTACK_USED } 
 export class Weezing extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Koffing';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 110;
   public weakness = [{ type: F }];
   public retreat = [C, C];

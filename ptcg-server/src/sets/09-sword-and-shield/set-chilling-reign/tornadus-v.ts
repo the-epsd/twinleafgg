@@ -12,7 +12,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 export class TornadusV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V, CardTag.SINGLE_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 210;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

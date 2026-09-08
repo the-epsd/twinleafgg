@@ -11,7 +11,7 @@ export class Wailordex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Wailmer';
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 200;
   public weakness = [{ type: G }, { type: L }];
   public retreat = [C, C, C, C, C];

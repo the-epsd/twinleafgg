@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, PlayerType } from '../../../game';
+import { StoreLike, State, PlayerType, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { HealTargetEffect } from '../../../game/store/effects/attack-effects';
@@ -8,7 +8,7 @@ import { HealTargetEffect } from '../../../game/store/effects/attack-effects';
 export class Serperior extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Servine';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 130;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -20 }];
@@ -41,7 +41,7 @@ export class Serperior extends PokemonCard {
 
       // Heal 20 damage from each of your Grass Pokémon
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card.cardType === CardType.GRASS) {
+        if (pokemonHasCardType(card, CardType.GRASS)) {
           const healEffect = new HealTargetEffect(effect, 20);
           healEffect.target = cardList;
           store.reduceEffect(state, healEffect);

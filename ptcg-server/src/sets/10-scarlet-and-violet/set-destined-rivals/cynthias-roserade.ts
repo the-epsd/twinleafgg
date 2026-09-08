@@ -9,7 +9,7 @@ export class CynthiasRoserade extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = "Cynthia's Roselia";
   protected _tags = [CardTag.CYNTHIAS];
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 130;
   public weakness = [{ type: R }];
   public retreat = [C];

@@ -6,16 +6,14 @@ import {
   SuperType,
   CardTag,
 } from '../../../game/store/card/card-types';
-import {
-  PowerType,
+import { PowerType,
   StoreLike,
   State,
   StateUtils,
   GameMessage,
   PlayerType,
   SlotType,
-  GameError,
-} from '../../../game';
+  GameError, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-prompt';
@@ -27,7 +25,7 @@ export class Gardevoirex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Kirlia';
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 310;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
@@ -64,13 +62,13 @@ export class Gardevoirex extends PokemonCard {
 
       // const blocked: CardTarget[] = [];
       // player.bench.forEach((card, index) => {
-      //   if (card instanceof PokemonCard && card.cardType !== CardType.PSYCHIC) {
+      //   if (card instanceof PokemonCard && !pokemonHasCardType(card, CardType.PSYCHIC)) {
       //     blocked.push();
       //   }
       // });
 
       // player.active.cards.forEach((card, index) => {
-      //   if (card instanceof PokemonCard && card.cardType !== CardType.PSYCHIC) {
+      //   if (card instanceof PokemonCard && !pokemonHasCardType(card, CardType.PSYCHIC)) {
       //     blocked.push();
       //   }
       // });
@@ -99,7 +97,7 @@ export class Gardevoirex extends PokemonCard {
 
             if (
               target.cards[0] instanceof PokemonCard &&
-              target.cards[0].cardType !== CardType.PSYCHIC
+              !pokemonHasCardType(target.cards[0], CardType.PSYCHIC)
             ) {
               throw new GameError(GameMessage.CAN_ONLY_ATTACH_TO_PSYCHIC);
             }

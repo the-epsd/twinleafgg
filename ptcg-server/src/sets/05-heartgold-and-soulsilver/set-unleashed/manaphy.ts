@@ -6,7 +6,7 @@ import { State, StoreLike } from '../../../game';
 
 export class Manaphy extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 60;
   public weakness = [{ type: L }];
   public retreat = [];

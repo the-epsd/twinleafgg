@@ -24,7 +24,7 @@ export class Okidogiex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex];
   public regulationMark = 'H';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public weakness = [{ type: F }];
   public hp: number = 250;
   public retreat = [C, C, C];

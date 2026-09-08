@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 
 export class Jynx extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 100;
   public weakness = [{ type: P }];
   public retreat = [C];

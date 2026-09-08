@@ -33,7 +33,7 @@ export class DarkraiVSTAR extends PokemonCard {
 
   public stage: Stage = Stage.VSTAR;
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp: number = 270;
 

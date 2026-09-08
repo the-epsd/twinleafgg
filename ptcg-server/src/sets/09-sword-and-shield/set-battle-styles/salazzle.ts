@@ -5,7 +5,7 @@ import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_ATTACK_USED } from '.
 export class Salazzle extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Salandit';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 90;
   public weakness: Weakness[] = [{ type: W }];
   public retreat: CardType[] = [C];

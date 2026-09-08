@@ -8,7 +8,7 @@ import { MOVE_CARDS, WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../.
 export class Swoobat extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Woobat';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

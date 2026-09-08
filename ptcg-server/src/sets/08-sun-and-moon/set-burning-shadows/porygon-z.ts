@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, JUST_EVOLVED, IS_ABILITY_BLOCKED, DEVOLVE_POKEMON } fr
 export class PorygonZ extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Porygon2';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public retreat = [C, C];

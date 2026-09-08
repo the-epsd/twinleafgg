@@ -21,7 +21,7 @@ export class MegaGardevoirex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Kirlia';
   protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 360;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

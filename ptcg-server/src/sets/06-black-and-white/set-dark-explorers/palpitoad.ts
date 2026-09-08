@@ -8,7 +8,7 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../../game/s
 export class Palpitoad extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Tympole';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 80;
   public weakness = [{ type: G }];
   public retreat = [C, C];

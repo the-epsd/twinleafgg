@@ -31,7 +31,7 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../../game/s
 export class Ampharos extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Flaaffy';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 140;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

@@ -9,7 +9,7 @@ import { ABILITY_USED, CONFIRMATION_PROMPT, IS_POKEPOWER_BLOCKED, JUST_EVOLVED, 
 export class Blissey extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Chansey';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public retreat = [C, C];

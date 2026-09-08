@@ -11,7 +11,7 @@ import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Gible2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 60;
   public weakness = [{ type: Y }];
   public retreat = [C];

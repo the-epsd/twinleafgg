@@ -25,7 +25,7 @@ export class Arcanine extends PokemonCard {
 
   public setNumber: string = '23';
 
-  public cardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
 
   public hp = 100;
 

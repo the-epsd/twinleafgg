@@ -9,7 +9,7 @@ export class Metang extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Beldum';
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

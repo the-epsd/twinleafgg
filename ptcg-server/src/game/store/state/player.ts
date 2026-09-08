@@ -19,6 +19,10 @@ export class Player {
 
   sleeveImagePath?: string;
 
+  deckBoxImagePath?: string;
+
+  coinImagePath?: string;
+
   deck: CardList = new CardList();
 
   hand: CardList = new CardList();
@@ -228,6 +232,7 @@ export class Player {
   usedExcitingStageThisTurn: any;
   usedSquawkAndSeizeThisTurn: any;
   usedTurnSkip: any;
+  usedTurnSkipClearArmed: boolean = false;
   usedTableTurner: any;
   usedMinusCharge: any;
   usedPlusCharge: any;

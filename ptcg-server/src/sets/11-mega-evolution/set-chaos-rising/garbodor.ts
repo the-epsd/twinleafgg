@@ -9,7 +9,7 @@ export class Garbodor extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Trubbish';
   public hp: number = 140;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public weakness = [{ type: F }];
   public retreat = [C, C];
 

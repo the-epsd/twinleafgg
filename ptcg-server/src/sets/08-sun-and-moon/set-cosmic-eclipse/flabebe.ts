@@ -7,7 +7,7 @@ import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs
 
 export class Flabebe extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 30;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];
@@ -39,7 +39,7 @@ export class Flabebe extends PokemonCard {
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
-        { superType: SuperType.POKEMON, cardType: Y },
+        { superType: SuperType.POKEMON, cardType: [Y] },
         { min: 0, max: 2, allowCancel: true }
       ), cards => {
         MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: this, sourceEffect: this.attacks[0] });

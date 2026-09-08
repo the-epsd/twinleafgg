@@ -4,7 +4,7 @@ export class Pikachuex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex];
   public hp: number = 200;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public weakness = [{ type: F }];
   public retreat = [C];
 
@@ -18,7 +18,7 @@ export class Pikachuex extends PokemonCard {
   ];
 
   public regulationMark = 'H';
-  public set: string = 'PR-SV';
+  public set: string = 'SVP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '106';
   public name: string = 'Pikachu ex';

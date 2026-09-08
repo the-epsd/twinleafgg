@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED, THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN, WAS_POWER_USED }
 export class Miraidonex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 220;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -87,7 +87,7 @@ export class Miraidonex extends PokemonCard {
           player,
           GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
           player.deck,
-          { superType: SuperType.POKEMON, stage: Stage.BASIC, cardType: CardType.LIGHTNING },
+          { superType: SuperType.POKEMON, stage: Stage.BASIC, cardType: [CardType.LIGHTNING] },
           { min: 0, max: 2, allowCancel: false },
         ),
         (selectedCards) => {

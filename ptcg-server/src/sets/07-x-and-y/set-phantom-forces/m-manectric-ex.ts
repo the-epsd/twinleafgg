@@ -28,7 +28,7 @@ export class MManectricEx extends PokemonCard {
   protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Manectric-EX';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 210;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

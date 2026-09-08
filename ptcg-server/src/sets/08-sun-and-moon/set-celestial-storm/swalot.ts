@@ -9,7 +9,7 @@ import { OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK } from '../../../game/store/pr
 export class Swalot extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Gulpin';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 120;
   public weakness = [{ type: P }];
   public retreat = [C, C];

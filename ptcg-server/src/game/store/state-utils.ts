@@ -4,33 +4,66 @@ import { CardTarget, PlayerType, SlotType } from './actions/play-card-action';
 import { Card } from './card/card';
 import { CardType } from './card/card-types';
 import { PokemonCard } from './card/pokemon-card';
-import { EnergyCard } from './card/energy-card';
 import { EnergyMap } from './prompts/choose-energy-prompt';
 import { CardList } from './state/card-list';
 import { Player } from './state/player';
 import { PokemonCardList } from './state/pokemon-card-list';
 import { State } from './state/state';
 
+/** One energy unit: either a concrete type, or a choosable set of types (blend/unit). */
+type EnergyUnit =
+  | { kind: 'concrete'; type: CardType }
+  | { kind: 'choosable'; types: CardType[] };
+
 export class StateUtils {
   static getStadium(state: State) {
     throw new Error('Method not implemented.');
   }
+
+  /**
+   * True when provides lists multiple distinct types — one energy choosable as any of them.
+   * Homogeneous repeats ([D,D], [C,C], [ANY,ANY]) are multi-unit, not choosable.
+   */
+  public static isChoosableProvides(provides: CardType[]): boolean {
+    return new Set(provides).size > 1;
+  }
+
+  /** Number of energy units an EnergyMap provides entry represents. */
+  public static getProvidesUnitCount(provides: CardType[]): number {
+    return StateUtils.isChoosableProvides(provides) ? 1 : provides.length;
+  }
+
+  /** Whether this provides array can satisfy the given energy type (including ANY). */
+  public static providesMatchesType(provides: CardType[], type: CardType): boolean {
+    if (provides.includes(CardType.ANY)) {
+      return true;
+    }
+    return provides.includes(type);
+  }
+
+  private static toEnergyUnits(energy: EnergyMap[]): EnergyUnit[] {
+    const units: EnergyUnit[] = [];
+    for (const e of energy) {
+      if (StateUtils.isChoosableProvides(e.provides)) {
+        units.push({ kind: 'choosable', types: [...e.provides] });
+      } else {
+        for (const t of e.provides) {
+          units.push({ kind: 'concrete', type: t });
+        }
+      }
+    }
+    return units;
+  }
+
   public static checkEnoughEnergy(energy: EnergyMap[], cost: CardType[]): boolean {
     if (cost.length === 0) {
       return true;
     }
 
-    const provides: CardType[] = [];
-    energy.forEach(e => {
-      e.provides.forEach(cardType => provides.push(cardType));
-    });
-
+    const units = StateUtils.toEnergyUnits(energy);
     let colorless = 0;
-    let rainbow = 0;
-
     const needsProviding: CardType[] = [];
 
-    // First remove from array cards with specific energy types
     cost.forEach(costType => {
       switch (costType) {
         case CardType.ANY:
@@ -40,93 +73,45 @@ export class StateUtils {
           colorless += 1;
           break;
         default: {
-          const index = provides.findIndex(energy => energy === costType);
+          const index = units.findIndex(
+            u => u.kind === 'concrete' && u.type === costType
+          );
           if (index !== -1) {
-            provides.splice(index, 1);
+            units.splice(index, 1);
           } else {
             needsProviding.push(costType);
-            rainbow += 1;
           }
         }
       }
     });
 
-    // BEGIN HANDLING BLEND/UNIT ENERGIES
-    const blendProvides: CardType[][] = [];
-    const blendCards: EnergyMap[] = [];
-
-    // Collect blend/unit energies and their possible provides using card properties
-    energy.forEach((energyMap) => {
-      const card = energyMap.card as EnergyCard;
-      if (card.blendedEnergies && card.blendedEnergies.length > 0) {
-        const count = card.blendedEnergyCount || 1;
-        for (let i = 0; i < count; i++) {
-          blendProvides.push([...card.blendedEnergies]);
-          blendCards.push(energyMap);
-        }
-      }
-    });
-
-    // For each needed energy type, try to match it with a blend energy
-    const matchedBlends = new Set<number>();
+    // Match remaining typed costs with choosable (blend/unit) energies
     for (let i = 0; i < needsProviding.length; i++) {
       const neededType = needsProviding[i];
-      for (let j = 0; j < blendProvides.length; j++) {
-        if (!matchedBlends.has(j) && blendProvides[j].includes(neededType)) {
-          // Found a match - remove this blend energy from provides
-          const index = provides.findIndex(energy => energy === blendCards[j].provides[0]);
-          if (index !== -1) {
-            provides.splice(index, 1);
-          }
-          matchedBlends.add(j);
-          rainbow--;
-          needsProviding.splice(i, 1);
-          i--; // Adjust index since we removed an element
-          break;
-        }
+      const index = units.findIndex(
+        u => u.kind === 'choosable' && u.types.includes(neededType)
+      );
+      if (index !== -1) {
+        units.splice(index, 1);
+        needsProviding.splice(i, 1);
+        i--;
       }
     }
-    // END HANDLING BLEND/UNIT ENERGIES
 
-    // Check if we have enough rainbow energies for remaining needs
-    for (let i = 0; i < rainbow; i++) {
-      const index = provides.findIndex(energy => energy === CardType.ANY);
+    // Remaining typed costs need CardType.ANY
+    for (const _ of needsProviding) {
+      const index = units.findIndex(
+        u => u.kind === 'concrete' && u.type === CardType.ANY
+      );
       if (index !== -1) {
-        provides.splice(index, 1);
+        units.splice(index, 1);
       } else {
         return false;
       }
     }
 
-    // Rest cards can be used to pay for colorless energies
-    return provides.length >= colorless;
-  }
-
-  static getCombinations(arr: CardType[][], n: number): CardType[][] {
-    const l = arr.length;
-    const ret = [];
-    let i, j, k, childperm;
-    let elem: CardType[] = [];
-    if (n == 1) {
-      for (i = 0; i < arr.length; i++) {
-        for (j = 0; j < arr[i].length; j++) {
-          ret.push([arr[i][j]]);
-        }
-      }
-      return ret;
-    }
-    else {
-      for (i = 0; i < l; i++) {
-        elem = arr.shift()!;
-        for (j = 0; j < elem.length; j++) {
-          childperm = this.getCombinations(arr.slice(), n - 1);
-          for (k = 0; k < childperm.length; k++) {
-            ret.push([elem[j]].concat(childperm[k]));
-          }
-        }
-      }
-      return ret;
-    }
+    // Leftover units (concrete or unused choosable) pay colorless
+    return units.length >= colorless;
   }
 
   public static checkExactEnergy(energy: EnergyMap[], cost: CardType[]): boolean {
@@ -160,6 +145,31 @@ export class StateUtils {
   }
 
   /**
+   * Apply one EnergyMap entry against remaining typed costs.
+   * Choosable provides pay at most one typed cost; homogeneous entries pay one per matching unit.
+   */
+  private static applyProvidesToTypedCosts(provides: CardType[], costs: CardType[]): void {
+    if (StateUtils.isChoosableProvides(provides)) {
+      const matchIndex = costs.findIndex(c => StateUtils.providesMatchesType(provides, c));
+      if (matchIndex !== -1) {
+        costs.splice(matchIndex, 1);
+      }
+      return;
+    }
+
+    for (const c of provides) {
+      if (c === CardType.ANY && costs.length > 0) {
+        costs.shift();
+      } else {
+        const i = costs.indexOf(c);
+        if (i !== -1) {
+          costs.splice(i, 1);
+        }
+      }
+    }
+  }
+
+  /**
    * Returns a minimal set of EnergyMap entries that satisfies the cost, or null if impossible.
    * Satisfies typed costs first, then colorless, then trims excess.
    */
@@ -174,7 +184,7 @@ export class StateUtils {
     // Satisfy typed costs first
     while (costs.length > 0 && provides.length > 0) {
       const costType = costs[0];
-      let index = provides.findIndex(p => p.provides.includes(costType));
+      let index = provides.findIndex(p => StateUtils.providesMatchesType(p.provides, costType));
       if (index === -1) {
         index = provides.findIndex(p => p.provides.includes(CardType.ANY));
       }
@@ -184,27 +194,16 @@ export class StateUtils {
       const provide = provides[index];
       provides.splice(index, 1);
       result.push(provide);
-      provide.provides.forEach(c => {
-        if (c === CardType.ANY && costs.length > 0) {
-          costs.shift();
-        } else {
-          const i = costs.indexOf(c);
-          if (i !== -1) {
-            costs.splice(i, 1);
-          }
-        }
-      });
+      StateUtils.applyProvidesToTypedCosts(provide.provides, costs);
     }
 
     if (costs.length > 0) {
       return null;
     }
 
-    // Satisfy colorless with remaining provides
+    // Satisfy colorless with remaining provides (prefer fewer units)
     provides.sort((p1, p2) => {
-      const s1 = p1.provides.length;
-      const s2 = p2.provides.length;
-      return s1 - s2;
+      return StateUtils.getProvidesUnitCount(p1.provides) - StateUtils.getProvidesUnitCount(p2.provides);
     });
     while (provides.length > 0 && !StateUtils.checkEnoughEnergy(result, cost)) {
       const provide = provides.shift();

@@ -11,7 +11,7 @@ import { NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/attack-effec
 export class Gogoat extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Skiddo';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 130;
   public weakness = [{ type: R }];
   public retreat = [C, C];

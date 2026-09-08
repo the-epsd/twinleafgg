@@ -11,7 +11,7 @@ import { COIN_FLIP_PROMPT, IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../..
 
 export class Feebas extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 30;
   public weakness = [{ type: L }];
   public retreat = [C];

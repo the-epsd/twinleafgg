@@ -12,7 +12,7 @@ export class MHeracrossEx extends PokemonCard {
   protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Heracross-EX';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 220;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];

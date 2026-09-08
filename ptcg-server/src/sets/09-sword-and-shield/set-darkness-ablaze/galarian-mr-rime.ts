@@ -9,7 +9,7 @@ export class GalarianMrRime extends PokemonCard {
 
   public evolvesFrom: string = 'Galarian Mr. Mime';
 
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
 
   public hp: number = 120;
 

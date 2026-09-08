@@ -7,7 +7,7 @@ import { PowerEffect } from '../../../game/store/effects/game-effects';
 
 export class Dratini extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 70;
   public weakness = [{ type: Y }];
   public retreat = [C, C];

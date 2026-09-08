@@ -14,7 +14,7 @@ import { AttackEffect } from '../../../game/store/effects/game-effects';
 
 export class Dedenne extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: M }];
   public retreat = [C];

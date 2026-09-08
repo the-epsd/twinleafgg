@@ -9,7 +9,7 @@ export class Rockruff extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
   public regulationMark = 'I';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 70;
   public weakness = [{ type: G }];
   public resistance = [];

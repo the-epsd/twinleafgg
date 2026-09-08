@@ -24,7 +24,7 @@ import {
 
 export class Miraidon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 120;
   public weakness = [{ type: F }];
   public retreat = [C];
@@ -58,7 +58,7 @@ export class Miraidon extends PokemonCard {
       card instanceof EnergyCard &&
       card.energyType === EnergyType.BASIC &&
       card.provides.some(
-        (p) => p === CardType.LIGHTNING || p === CardType.ANY || p === CardType.WLFM,
+        (p) => p === CardType.LIGHTNING || p === CardType.ANY,
       )
     );
   }
@@ -95,7 +95,7 @@ export class Miraidon extends PokemonCard {
             { superType: SuperType.ENERGY },
             {
               blocked,
-              validCardTypes: [CardType.LIGHTNING, CardType.ANY, CardType.WLFM],
+              validCardTypes: [CardType.LIGHTNING, CardType.ANY],
               allowCancel: false,
               min: 0,
               max: 2,

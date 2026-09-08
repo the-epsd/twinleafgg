@@ -9,7 +9,7 @@ import { AbstractAttackEffect, ApplyWeaknessEffect } from '../../../game/store/e
 export class GiratinaEX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 170;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];

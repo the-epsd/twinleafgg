@@ -26,7 +26,7 @@ export class SylveonV extends PokemonCard {
 
   public regulationMark = 'E';
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 200;
 

@@ -9,7 +9,7 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs
 export class CastformRainyForm extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public regulationMark = 'E';
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
   public hp = 70;
   public weakness = [{ type: CardType.LIGHTNING }];
   public resistance = [];

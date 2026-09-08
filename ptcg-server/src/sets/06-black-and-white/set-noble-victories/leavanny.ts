@@ -9,7 +9,7 @@ import { CheckPokemonStatsEffect, CheckProvidedEnergyEffect } from '../../../gam
 export class Leavanny extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Swadloon';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 130;
   public weakness = [{ type: R }];
   public retreat = [C, C];

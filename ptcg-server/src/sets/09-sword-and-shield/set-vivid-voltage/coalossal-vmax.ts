@@ -14,7 +14,7 @@ export class CoalossalVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Coalossal V';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 330;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];

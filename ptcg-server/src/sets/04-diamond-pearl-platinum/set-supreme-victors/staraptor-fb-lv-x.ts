@@ -1,5 +1,4 @@
-import {
-  PokemonCard,
+import { CardType, PokemonCard,
   Stage,
   PowerType,
   StoreLike,
@@ -12,8 +11,7 @@ import {
   SuperType,
   GameError,
   TrainerType,
-  ConfirmPrompt,
-} from '../../../game';
+  ConfirmPrompt, } from '../../../game';
 import {
   CheckPokemonAttacksEffect,
   CheckPokemonPowersEffect,
@@ -40,7 +38,7 @@ export class StaraptorFBLVX extends PokemonCard {
   public stage = Stage.STAGE_1;
   public evolvesFrom = 'Staraptor FB';
   protected _tags = [CardTag.POKEMON_SP];
-  public cardType = C;
+  public cardType: CardType[] = [C];
   public hp = 100;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

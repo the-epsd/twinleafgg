@@ -28,7 +28,7 @@ export class RegidragoV extends PokemonCard {
 
   protected _tags = [CardTag.POKEMON_V];
 
-  public cardType: CardType = CardType.DRAGON;
+  public cardType: CardType[] = [CardType.DRAGON];
 
   public hp: number = 220;
 

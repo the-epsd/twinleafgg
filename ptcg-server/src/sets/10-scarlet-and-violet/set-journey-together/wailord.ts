@@ -10,7 +10,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Wailord extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Wailmer';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 240;
   public weakness = [{ type: L }];
   public retreat = [C, C, C, C];

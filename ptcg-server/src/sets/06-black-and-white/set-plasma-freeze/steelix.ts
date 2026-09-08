@@ -10,7 +10,7 @@ export class Steelix extends PokemonCard {
   protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Onix';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 150;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

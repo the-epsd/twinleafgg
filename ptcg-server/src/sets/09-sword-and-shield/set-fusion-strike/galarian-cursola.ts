@@ -15,7 +15,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 export class GalarianCursola extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Galarian Corsola';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 100;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

@@ -23,7 +23,7 @@ import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-pref
 export class WellspringMaskOgerponex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public weakness = [{ type: L }];
   public hp: number = 210;
   public retreat = [C];

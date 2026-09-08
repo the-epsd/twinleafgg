@@ -13,7 +13,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { ShowCardsPrompt, State, StoreLike } from '../../game';
 export class Jynx extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 90;
   public weakness = [{ type: P }];
   public retreat = [C];

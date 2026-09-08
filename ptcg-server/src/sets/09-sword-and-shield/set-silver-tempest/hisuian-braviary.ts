@@ -12,7 +12,7 @@ export class HisuianBraviary extends PokemonCard {
 
   public evolvesFrom = 'Rufflet';
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp: number = 120;
 

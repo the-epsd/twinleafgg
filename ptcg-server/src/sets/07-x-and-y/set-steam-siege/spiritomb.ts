@@ -10,7 +10,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { PlayerType, SlotType, State, StoreLike } from '../../../game';
 export class Spiritomb extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 70;
   public retreat = [C];
 

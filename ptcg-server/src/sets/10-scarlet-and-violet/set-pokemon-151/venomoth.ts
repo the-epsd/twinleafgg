@@ -10,7 +10,7 @@ export class Venomoth extends PokemonCard {
   public regulationMark = 'G';
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Venonat';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public retreat = [C];

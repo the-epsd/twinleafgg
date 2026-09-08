@@ -7,7 +7,7 @@ export class Ninetales extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Vulpix';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 90;
   public weakness: Weakness[] = [{ type: W }];
   public retreat: CardType[] = [C];

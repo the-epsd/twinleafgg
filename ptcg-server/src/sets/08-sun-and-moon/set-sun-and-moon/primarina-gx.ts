@@ -15,7 +15,7 @@ export class PrimarinaGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Brionne';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 250;
   public weakness = [{ type: G }];
   public retreat = [C, C];

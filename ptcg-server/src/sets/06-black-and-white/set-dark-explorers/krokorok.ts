@@ -9,7 +9,7 @@ export class Krokorok extends PokemonCard {
 
   public evolvesFrom = 'Sandile';
 
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
 
   public hp: number = 90;
 

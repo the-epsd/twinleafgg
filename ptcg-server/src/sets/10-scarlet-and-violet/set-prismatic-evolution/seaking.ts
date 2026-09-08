@@ -10,7 +10,7 @@ export class Seaking extends PokemonCard {
 
   public evolvesFrom = 'Goldeen';
 
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
 
   public hp: number = 110;
 

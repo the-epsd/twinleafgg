@@ -31,7 +31,7 @@ export class StevensMetagrossex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = "Steven's Metang";
   protected _tags = [CardTag.STEVENS, CardTag.POKEMON_ex];
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 340;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

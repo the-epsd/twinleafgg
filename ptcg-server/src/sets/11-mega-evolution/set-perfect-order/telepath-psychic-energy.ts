@@ -1,3 +1,4 @@
+import { pokemonHasCardType } from '../../../game';
 import { CardType, EnergyType, Stage } from '../../../game/store/card/card-types';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -60,7 +61,7 @@ export class TelepathPsychicEnergy extends EnergyCard {
       // Filter for Psychic type
       const validPokemon: any[] = [];
       for (const card of basicPsychicPokemon) {
-        if (card instanceof PokemonCard && card.cardType === CardType.PSYCHIC) {
+        if (card instanceof PokemonCard && pokemonHasCardType(card, CardType.PSYCHIC)) {
           validPokemon.push(card);
         }
       }
@@ -77,7 +78,7 @@ export class TelepathPsychicEnergy extends EnergyCard {
         player,
         {
           stage: Stage.BASIC,
-          cardType: CardType.PSYCHIC,
+          cardType: [CardType.PSYCHIC],
         },
         { min: 0, max: maxToPut },
       );

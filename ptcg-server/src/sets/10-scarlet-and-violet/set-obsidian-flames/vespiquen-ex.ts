@@ -17,7 +17,7 @@ export class Vespiquenex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Combee';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 270;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

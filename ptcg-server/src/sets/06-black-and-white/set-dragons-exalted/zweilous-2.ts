@@ -8,7 +8,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 export class Zweilous2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Deino';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 90;
   public weakness = [{ type: N }];
   public retreat = [C, C, C];

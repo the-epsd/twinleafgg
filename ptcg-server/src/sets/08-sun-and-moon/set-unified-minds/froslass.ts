@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Froslass extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
   public hp: number = 80;
   public retreat = [CardType.COLORLESS];
   public weakness = [{ type: CardType.METAL }];

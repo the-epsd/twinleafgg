@@ -7,7 +7,7 @@ import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Poltchageist extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
   public hp: number = 30;
   public weakness = [{ type: CardType.FIRE }];
   public retreat = [CardType.COLORLESS];

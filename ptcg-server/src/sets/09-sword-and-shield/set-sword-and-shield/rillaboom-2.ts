@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Rillaboom2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Thwackey';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 190;
   public weakness = [{ type: R }];
   public retreat = [C, C, C, C];

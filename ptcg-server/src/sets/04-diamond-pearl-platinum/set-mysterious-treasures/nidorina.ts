@@ -6,7 +6,7 @@ import { AFTER_ATTACK, SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND } from '../../../ga
 
 export class Nidorina extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: P, value: +20 }];
   public retreat = [C];

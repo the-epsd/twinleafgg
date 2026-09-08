@@ -23,7 +23,7 @@ import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/
 export class LatiasAndLatiosGx extends PokemonCard {
   protected _tags = [CardTag.TAG_TEAM, CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 250;
   public weakness = [{ type: Y }];
   public retreat = [C];

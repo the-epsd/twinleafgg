@@ -17,7 +17,7 @@ export class RillaboomVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Rillaboom V';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 330;
   public weakness = [{ type: R }];
   public retreat = [C, C, C];

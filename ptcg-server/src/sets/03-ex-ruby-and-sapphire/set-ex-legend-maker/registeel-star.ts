@@ -7,7 +7,7 @@ import { THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN 
 export class RegisteelStar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.STAR];
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

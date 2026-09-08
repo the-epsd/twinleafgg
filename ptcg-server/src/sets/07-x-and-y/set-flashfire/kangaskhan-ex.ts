@@ -9,7 +9,7 @@ import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefa
 export class KangaskhanEX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_EX];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 180;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

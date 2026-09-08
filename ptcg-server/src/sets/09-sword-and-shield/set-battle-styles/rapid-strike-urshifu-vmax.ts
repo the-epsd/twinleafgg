@@ -21,7 +21,7 @@ export class RapidStrikeUrshifuVMAX extends PokemonCard {
 
   public evolvesFrom = 'Rapid Strike Urshifu V';
 
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
 
   public hp: number = 330;
 

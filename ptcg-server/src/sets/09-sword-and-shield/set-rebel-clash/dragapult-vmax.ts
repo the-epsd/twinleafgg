@@ -13,7 +13,7 @@ export class DragapultVMAX extends PokemonCard {
   public regulationMark = 'D';
   public stage: Stage = Stage.VMAX;
   public evolvesFrom = 'Dragapult V';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 320;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

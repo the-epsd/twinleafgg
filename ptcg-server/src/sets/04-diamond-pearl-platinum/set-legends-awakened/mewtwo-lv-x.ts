@@ -1,5 +1,4 @@
-import {
-  PokemonCard,
+import { CardType, PokemonCard,
   Stage,
   PowerType,
   StoreLike,
@@ -9,8 +8,7 @@ import {
   CardTag,
   PlayerType,
   SuperType,
-  GameError,
-} from '../../../game';
+  GameError, } from '../../../game';
 import { AbstractAttackEffect } from '../../../game/store/effects/attack-effects';
 import {
   CheckPokemonAttacksEffect,
@@ -29,7 +27,7 @@ export class MewtwoLVX extends PokemonCard {
   public stage = Stage.LV_X;
   public evolvesFrom = 'Mewtwo';
   protected _tags = [CardTag.POKEMON_LV_X];
-  public cardType = P;
+  public cardType: CardType[] = [P];
   public hp = 120;
   public weakness = [{ type: P }];
   public retreat = [C, C];

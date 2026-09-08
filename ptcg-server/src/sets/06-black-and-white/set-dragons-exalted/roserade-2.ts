@@ -6,7 +6,7 @@ import { State, StoreLike } from '../../../game';
 export class Roserade2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Roselia';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -20 }];

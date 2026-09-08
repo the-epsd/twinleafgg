@@ -16,7 +16,7 @@ export class PikachuVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Pikachu V';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 310;
   public weakness = [{ type: F }];
   public retreat = [C, C];

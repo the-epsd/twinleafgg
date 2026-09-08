@@ -12,7 +12,7 @@ function* useBugHunch(next: Function, store: StoreLike, state: State, effect: At
     player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
-    { superType: SuperType.POKEMON, stage: Stage.BASIC, cardType: CardType.GRASS },
+    { superType: SuperType.POKEMON, stage: Stage.BASIC, cardType: [CardType.GRASS] },
     { min: 0, max: 2, allowCancel: true }
   ), selected => {
     cards = selected || [];
@@ -37,7 +37,7 @@ function* useBugHunch(next: Function, store: StoreLike, state: State, effect: At
 export class Weedle extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 40;
   public weakness = [{ type: R }];
   public retreat = [C];

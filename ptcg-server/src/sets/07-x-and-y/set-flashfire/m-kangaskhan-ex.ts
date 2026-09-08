@@ -11,7 +11,7 @@ export class MKangaskhanEX extends PokemonCard {
   public stage: Stage = Stage.MEGA;
   protected _tags = [CardTag.POKEMON_EX, CardTag.MEGA];
   public evolvesFrom = 'Kangaskhan-EX';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 230;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

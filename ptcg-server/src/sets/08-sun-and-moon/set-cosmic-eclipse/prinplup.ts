@@ -11,7 +11,7 @@ import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 export class Prinplup extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Piplup';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 80;
   public weakness = [{ type: L }];
   public retreat = [C, C];

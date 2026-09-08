@@ -7,8 +7,7 @@ import {
   CardTag,
   BoardEffect,
 } from '../../../game/store/card/card-types';
-import {
-  PowerType,
+import { PowerType,
   StoreLike,
   State,
   StateUtils,
@@ -17,8 +16,7 @@ import {
   EnergyCard,
   PlayerType,
   SlotType,
-  CardTarget,
-} from '../../../game';
+  CardTarget, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-prompt';
@@ -29,7 +27,7 @@ export class OriginFormePalkiaVSTAR extends PokemonCard {
   public regulationMark = 'F';
   public stage: Stage = Stage.VSTAR;
   public evolvesFrom = 'Origin Forme Palkia V';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 280;
   public weakness = [{ type: L }];
   public retreat = [C, C];
@@ -97,7 +95,7 @@ export class OriginFormePalkiaVSTAR extends PokemonCard {
 
       const blocked2: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        if (card.cardType !== CardType.WATER) {
+        if (!pokemonHasCardType(card, CardType.WATER)) {
           blocked2.push(target);
         }
       });

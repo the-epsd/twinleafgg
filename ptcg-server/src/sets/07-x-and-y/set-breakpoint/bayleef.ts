@@ -6,7 +6,7 @@ import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT } from '
 
 export class Bayleef extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public retreat = [C, C];
   public weakness = [{ type: R }];

@@ -7,7 +7,7 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 
 export class Landorus extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 110;
   public weakness = [{ type: W }];
   public resistance = [{ type: L, value: -20 }];

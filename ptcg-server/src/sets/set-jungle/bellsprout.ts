@@ -40,7 +40,7 @@ function* useCallForFamily(next: Function, store: StoreLike, state: State,
 export class Bellsprout extends PokemonCard {
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 40;
 

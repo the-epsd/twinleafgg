@@ -8,7 +8,7 @@ import { ABILITY_USED, ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, BLOCK_IF_HA
 export class Slowking extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Slowpoke';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 80;
   public weakness = [{ type: P }];
   public retreat = [C, C];

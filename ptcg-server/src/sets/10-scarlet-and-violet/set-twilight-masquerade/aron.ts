@@ -13,7 +13,7 @@ export class Aron extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType[] = [CardType.METAL];
 
   public weakness = [{ type: CardType.FIRE }];
 

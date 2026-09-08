@@ -8,7 +8,7 @@ import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../game/store/prefabs/effect
 
 export class Totodile extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 50;
   public weakness = [{ type: G }];
   public retreat = [C];

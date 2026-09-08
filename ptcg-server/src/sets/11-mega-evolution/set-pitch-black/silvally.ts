@@ -22,7 +22,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class Silvally extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Type: Null';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 140;
   public weakness = [{ type: F }];
   public retreat = [C, C];

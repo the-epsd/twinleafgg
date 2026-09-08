@@ -1,0 +1,8 @@
+# Deck box material (map overridden in viewer)
+newmtl DeckBoxMaterial
+Ka 1.000 1.000 1.000
+Kd 1.000 1.000 1.000
+Ks 0.050 0.050 0.050
+Ns 10.000
+d 1.000
+illum 2

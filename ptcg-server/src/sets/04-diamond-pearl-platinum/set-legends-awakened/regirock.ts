@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage } from '../../../game/store/card/card-types';
+import { CardType, Stage } from '../../../game/store/card/card-types';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { Effect } from '../../../game/store/effects/effect';
@@ -11,7 +11,7 @@ import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefa
 export class Regirock extends PokemonCard {
 
   public stage = Stage.BASIC;
-  public cardType = F;
+  public cardType: CardType[] = [F];
   public hp = 90;
   public weakness = [{ type: W }];
   public retreat = [C, C, C];

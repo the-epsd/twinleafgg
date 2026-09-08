@@ -63,7 +63,7 @@ export class ChooseEnergyPrompt extends Prompt<EnergyMap[]> {
 
     while (costs.length > 0 && provides.length > 0) {
       const cost = costs[0];
-      let index = provides.findIndex(p => p.provides.includes(cost));
+      let index = provides.findIndex(p => StateUtils.providesMatchesType(p.provides, cost));
 
       if (index === -1) {
         // concrete energy not found, try to use rainbow energies
@@ -71,21 +71,27 @@ export class ChooseEnergyPrompt extends Prompt<EnergyMap[]> {
       }
 
       if (index !== -1) {
-        // Energy can be paid, so remove that energy from the provides
         const provide = provides[index];
         provides.splice(index, 1);
 
-        provide.provides.forEach(c => {
-          if (c === CardType.ANY && costs.length > 0) {
-            costs.shift();
-          } else {
-            const i = costs.indexOf(c);
-            if (i !== -1) {
-              costs.splice(i, 1);
-            }
+        if (StateUtils.isChoosableProvides(provide.provides)) {
+          // Blend/unit: pays at most one typed cost
+          const matchIndex = costs.findIndex(c => StateUtils.providesMatchesType(provide.provides, c));
+          if (matchIndex !== -1) {
+            costs.splice(matchIndex, 1);
           }
-        });
-
+        } else {
+          provide.provides.forEach(c => {
+            if (c === CardType.ANY && costs.length > 0) {
+              costs.shift();
+            } else {
+              const i = costs.indexOf(c);
+              if (i !== -1) {
+                costs.splice(i, 1);
+              }
+            }
+          });
+        }
       } else {
         // Impossible to pay for this cost
         costs.shift();
@@ -98,7 +104,7 @@ export class ChooseEnergyPrompt extends Prompt<EnergyMap[]> {
 
     let energyLeft = 0;
     for (const energy of provides) {
-      energyLeft += energy.provides.length;
+      energyLeft += StateUtils.getProvidesUnitCount(energy.provides);
     }
 
     const colorlessToDelete = Math.max(0, colorlessCount - energyLeft);

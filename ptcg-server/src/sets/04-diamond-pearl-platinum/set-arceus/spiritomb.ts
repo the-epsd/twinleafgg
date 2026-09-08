@@ -103,7 +103,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Attac
 
 export class Spiritomb extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 60;
   public resistance = [{ type: C, value: -20 }];
   public retreat = [C];

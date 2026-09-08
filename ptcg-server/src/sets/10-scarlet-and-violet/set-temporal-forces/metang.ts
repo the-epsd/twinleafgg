@@ -13,7 +13,7 @@ export class Metang extends PokemonCard {
 
   public evolvesFrom = 'Beldum';
 
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType[] = [CardType.METAL];
 
   public hp: number = 100;
 

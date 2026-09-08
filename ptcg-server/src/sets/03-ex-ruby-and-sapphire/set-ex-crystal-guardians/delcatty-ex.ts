@@ -26,7 +26,7 @@ export class Delcattyex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Skitty';
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [];

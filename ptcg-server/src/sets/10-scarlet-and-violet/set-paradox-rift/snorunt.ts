@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State } from '../../../game';
+import { State, StoreLike, pokemonHasCardTypeOptional } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
@@ -11,7 +11,7 @@ export class Snorunt extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp: number = 60;
 
@@ -45,7 +45,7 @@ export class Snorunt extends PokemonCard {
       const opponentActive = effect.opponent.active;
       const opponentActiveCard = opponentActive.getPokemonCard();
 
-      if (opponentActiveCard?.cardType === CardType.FIGHTING) {
+      if (pokemonHasCardTypeOptional(opponentActiveCard, CardType.FIGHTING)) {
         effect.damage += 30;
       }
       return state;

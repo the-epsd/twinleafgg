@@ -9,7 +9,7 @@ import {
 export class BruteBonnet extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.ANCIENT];
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 120;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

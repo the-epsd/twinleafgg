@@ -8,7 +8,7 @@ import { AttackEffect } from '../../../game/store/effects/game-effects';
 export class Klang extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Klink';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

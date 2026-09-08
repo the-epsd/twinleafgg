@@ -6,7 +6,7 @@ import { MOVED_TO_ACTIVE_THIS_TURN, WAS_ATTACK_USED } from '../../../game/store/
 
 export class Rayquaza extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 120;
   public weakness = [];
   public resistance = [];

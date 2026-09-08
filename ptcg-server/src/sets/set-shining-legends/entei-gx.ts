@@ -16,7 +16,7 @@ import { State, StoreLike } from '../../game';
 export class EnteiGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 180;
   public weakness = [{ type: W }];
   public retreat = [C, C];

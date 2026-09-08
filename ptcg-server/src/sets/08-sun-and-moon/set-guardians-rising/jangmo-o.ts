@@ -11,7 +11,7 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 
 export class JangmoO extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 60;
   public weakness = [{ type: Y }];
   public retreat = [C, C];

@@ -26,7 +26,7 @@ export class Greninjaex extends PokemonCard {
   public regulationMark = 'H';
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Frogadier';
-  public cardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 310;
   public weakness = [{ type: P }];
   public retreat = [C];

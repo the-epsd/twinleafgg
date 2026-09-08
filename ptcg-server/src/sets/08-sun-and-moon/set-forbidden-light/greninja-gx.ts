@@ -32,7 +32,7 @@ export class GreninjaGX extends PokemonCard {
 
   public evolvesFrom = 'Frogadier';
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp: number = 230;
 

@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/pref
 
 export class Gastly extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 50;
   public resistance = [{ type: F, value: -30 }];
 

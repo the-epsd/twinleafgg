@@ -196,7 +196,7 @@ export class DewpiderUPR extends Dewpider {
   public set: string = 'UPR';
   public setNumber: string = '16';
   public fullName: string = 'Dewpider UPR';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public attacks = [{
     name: 'Bubble',
     cost: [G],

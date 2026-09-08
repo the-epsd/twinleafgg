@@ -13,7 +13,7 @@ export class Gabite extends PokemonCard {
 
   public evolvesFrom = 'Gible';
 
-  public cardType: CardType = CardType.DRAGON;
+  public cardType: CardType[] = [CardType.DRAGON];
 
   public hp: number = 80;
 
@@ -79,7 +79,7 @@ export class Gabite extends PokemonCard {
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
-        { superType: SuperType.POKEMON, cardType: CardType.DRAGON },
+        { superType: SuperType.POKEMON, cardType: [CardType.DRAGON] },
         { min: 0, max: 1, allowCancel: true }
       ), cards => {
 

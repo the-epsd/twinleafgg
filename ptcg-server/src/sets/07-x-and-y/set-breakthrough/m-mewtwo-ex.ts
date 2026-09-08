@@ -12,7 +12,7 @@ export class MMewtwoEx extends PokemonCard {
   protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Mewtwo-EX';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 230;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];

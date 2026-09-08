@@ -14,7 +14,7 @@ import {
 export class CrabominableV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 220;
   public weakness = [{ type: M }];
   public retreat = [C, C, C, C];

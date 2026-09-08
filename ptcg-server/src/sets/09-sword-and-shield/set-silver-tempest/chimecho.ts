@@ -5,7 +5,7 @@ import { DEFENDING_POKEMON_ASLEEP_ON_ENERGY_ATTACH_FROM_HAND_NEXT_TURN } from ".
 
 export class Chimecho extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

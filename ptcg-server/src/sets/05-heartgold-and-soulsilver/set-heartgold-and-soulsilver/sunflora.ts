@@ -8,7 +8,7 @@ import { ABILITY_USED, BLOCK_IF_HAS_SPECIAL_CONDITION, MOVE_CARDS, REMOVE_MARKER
 export class Sunflora extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Sunkern';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -20 }];
@@ -56,7 +56,7 @@ export class Sunflora extends PokemonCard {
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
-        { superType: SuperType.POKEMON, cardType: CardType.GRASS },
+        { superType: SuperType.POKEMON, cardType: [CardType.GRASS] },
         { min: 0, max: 1, allowCancel: true }
       ), cards => {
         MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: this, sourceEffect: this.powers[0] });

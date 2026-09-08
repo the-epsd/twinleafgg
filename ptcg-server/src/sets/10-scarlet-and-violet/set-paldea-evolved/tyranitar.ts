@@ -8,7 +8,7 @@ export class Tyranitar extends PokemonCard {
   public regulationMark = 'G';
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Pupitar';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 180;
   public weakness = [{ type: G }];
   public retreat = [C, C, C];

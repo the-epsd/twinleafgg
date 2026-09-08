@@ -10,7 +10,7 @@ import { OPPONENT_CANNOT_PLAY_ITEM_CARDS } from '../../../game/store/prefabs/eff
 export class VikavoltV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_V];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 210;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

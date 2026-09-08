@@ -15,7 +15,7 @@ export class Kakuna extends PokemonCard {
   public readonly CLEAR_HARDEN_MARKER = 'KAKUNA_CLEAR_HARDEN_MARKER';
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Weedle';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public retreat = [C, C];

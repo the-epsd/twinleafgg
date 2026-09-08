@@ -12,7 +12,7 @@ import { SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK } from '../.
 export class Primarina extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Brionne';
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
   public hp: number = 150;
   public weakness = [{ type: CardType.LIGHTNING }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];

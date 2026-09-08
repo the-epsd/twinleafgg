@@ -39,7 +39,7 @@ function* useFindAFriend(next: Function, store: StoreLike, state: State,
 export class Applin extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 40;
   public weakness = [];
   public resistance = [];

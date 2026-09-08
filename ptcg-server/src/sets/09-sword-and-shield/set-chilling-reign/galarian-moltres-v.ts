@@ -28,7 +28,7 @@ export class GalarianMoltresV extends PokemonCard {
 
   public regulationMark = 'E';
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   protected _tags = [CardTag.POKEMON_V];
 

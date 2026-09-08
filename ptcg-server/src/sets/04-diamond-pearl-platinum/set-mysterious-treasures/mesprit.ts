@@ -7,7 +7,7 @@ import { AFTER_ATTACK, IS_POKEBODY_BLOCKED, SWITCH_ACTIVE_WITH_BENCHED } from '.
 
 export class Mesprit extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: P, value: +20 }];
   public retreat = [C];

@@ -1,4 +1,4 @@
-import { ConfirmPrompt, GameMessage, State, StoreLike } from '../../../game';
+import { CardType, ConfirmPrompt, GameMessage, State, StoreLike } from '../../../game';
 import { Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -8,7 +8,7 @@ export class Yanmega extends PokemonCard {
   public stage = Stage.STAGE_1;
   public evolvesFrom = 'Yanma';
   public hp = 130;
-  public cardType = G;
+  public cardType: CardType[] = [G];
   public weakness = [{ type: R }];
   public retreat = [];
 

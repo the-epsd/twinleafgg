@@ -11,7 +11,7 @@ export class ConkeldurrV extends PokemonCard {
 
   protected _tags = [CardTag.POKEMON_V];
 
-  public cardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
 
   public hp = 230;
 

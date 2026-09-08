@@ -1,4 +1,4 @@
-import { TrainerCard, TrainerType, StoreLike, State, GameError, GameMessage, PlayerType, CardType, ChoosePokemonPrompt, SlotType, Player } from '../../../game';
+import { TrainerCard, TrainerType, StoreLike, State, GameError, GameMessage, PlayerType, CardType, ChoosePokemonPrompt, SlotType, Player, pokemonHasCardType } from '../../../game';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { HealEffect } from '../../../game/store/effects/game-effects';
@@ -23,7 +23,7 @@ export class Jacinthe extends TrainerCard {
     let hasDamagedPsychicPokemon = false;
     player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
       const pokemonCard = cardList.getPokemonCard();
-      if (pokemonCard && pokemonCard.cardType === CardType.PSYCHIC && cardList.damage > 0) {
+      if (pokemonCard && pokemonHasCardType(pokemonCard, CardType.PSYCHIC) && cardList.damage > 0) {
         hasDamagedPsychicPokemon = true;
       }
     });

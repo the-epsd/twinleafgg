@@ -5,7 +5,7 @@ import { PokemonCard, StoreLike, State } from '../../../game';
 export class Wimpod extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 70;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public weakness = [{ type: L }];
   public retreat = [C, C];
 

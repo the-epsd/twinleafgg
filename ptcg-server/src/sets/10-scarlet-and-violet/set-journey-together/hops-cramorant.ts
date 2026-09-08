@@ -9,7 +9,7 @@ export class HopsCramorant extends PokemonCard {
 
   protected _tags = [CardTag.HOPS];
 
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
 
   public hp: number = 110;
 

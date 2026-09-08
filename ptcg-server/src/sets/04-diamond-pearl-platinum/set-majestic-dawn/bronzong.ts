@@ -9,7 +9,7 @@ import { THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN 
 export class Bronzong extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Bronzor';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 90;
   public weakness = [{ type: P, value: +20 }];
   public resistance = [{ type: R, value: -20 }];

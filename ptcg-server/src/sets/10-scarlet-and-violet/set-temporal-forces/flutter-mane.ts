@@ -20,7 +20,7 @@ export class FlutterMane extends PokemonCard {
 
   protected _tags = [CardTag.ANCIENT];
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 90;
 

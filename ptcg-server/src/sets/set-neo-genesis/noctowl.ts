@@ -1,4 +1,4 @@
-import { Card, PokemonCard, Stage, StoreLike, State, StateUtils, GameError, GameMessage, ChooseCardsPrompt, SuperType } from '../../game';
+import { CardType, Card, PokemonCard, Stage, StoreLike, State, StateUtils, GameError, GameMessage, ChooseCardsPrompt, SuperType } from '../../game';
 import { PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { ABILITY_USED, ADD_MARKER, BLOCK_IF_ASLEEP_CONFUSED_PARALYZED, COIN_FLIP_PROMPT, HAS_MARKER, MOVE_CARDS, REMOVE_MARKER_AT_END_OF_TURN, SHUFFLE_DECK, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
@@ -6,7 +6,7 @@ import { ABILITY_USED, ADD_MARKER, BLOCK_IF_ASLEEP_CONFUSED_PARALYZED, COIN_FLIP
 export class Noctowl extends PokemonCard {
   public stage = Stage.STAGE_1;
   public evolvesFrom = 'Hoothoot';
-  public cardType = C;
+  public cardType: CardType[] = [C];
   public hp = 60;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

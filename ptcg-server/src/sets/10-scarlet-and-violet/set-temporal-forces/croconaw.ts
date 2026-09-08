@@ -12,7 +12,7 @@ export class Croconaw extends PokemonCard {
 
   public evolvesFrom = 'Totodile';
 
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
 
   public hp: number = 90;
 

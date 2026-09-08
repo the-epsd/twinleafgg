@@ -12,7 +12,7 @@ import {
 export class Eeveeex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 200;
   public weakness = [{ type: F }];
   public retreat = [C];

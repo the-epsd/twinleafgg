@@ -6,7 +6,7 @@ import { REMOVE_MARKER_AT_END_OF_TURN, MOVED_TO_ACTIVE_THIS_TURN, IS_ABILITY_BLO
 export class XerneasPrismStar extends PokemonCard {
   protected _tags = [CardTag.PRISM_STAR];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 160;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

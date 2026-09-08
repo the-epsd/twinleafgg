@@ -21,7 +21,7 @@ export class Ninetales extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -9,7 +9,7 @@ import { PUT_X_DAMAGE_COUNTERS_ON_YOUR_OPPONENTS_ACTIVE_POKEMON } from '../../..
 
 export class Duskull extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: D, value: +10 }];
   public resistance = [{ type: C, value: -20 }];

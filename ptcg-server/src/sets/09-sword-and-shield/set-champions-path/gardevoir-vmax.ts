@@ -13,7 +13,7 @@ export class GardevoirVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
   public evolvesFrom: string = 'Gardevoir V';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 320;
   public weakness = [{ type: M }];
   public retreat = [C, C];

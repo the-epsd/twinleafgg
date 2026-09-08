@@ -8,7 +8,7 @@ import { AttachEnergyPrompt, PlayerType, SlotType, State, StoreLike } from '../.
 export class Seadra extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Horsea';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 70;
   public weakness = [{ type: L }];
   public retreat = [C];

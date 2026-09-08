@@ -49,7 +49,7 @@ export class LancePrismStar extends TrainerCard {
         store,
         state,
         player,
-        { cardType: CardType.DRAGON },
+        { cardType: [CardType.DRAGON] },
         { min: 0, max: 2, allowCancel: false },
       );
 

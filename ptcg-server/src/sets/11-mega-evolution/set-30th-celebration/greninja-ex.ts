@@ -16,7 +16,7 @@ export class Greninjaex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex];
   public evolvesFrom: string = 'Frogadier';
   public hp: number = 300;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public weakness = [{ type: L }];
   public retreat = [C];
 

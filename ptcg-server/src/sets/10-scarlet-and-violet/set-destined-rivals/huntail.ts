@@ -1,4 +1,4 @@
-import { Card, GamePhase, PlayerType, PowerType, State, StoreLike } from '../../../game';
+import { Card, GamePhase, PlayerType, PowerType, State, StoreLike, pokemonHasCardTypeOptional } from '../../../game';
 import { CardType, EnergyType, Stage, SuperType } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -9,7 +9,7 @@ import { CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED, MOVE_CARDS } from '../../../ga
 export class Huntail extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Clamperl';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 110;
   public weakness = [{ type: L }];
   public retreat = [C];
@@ -48,7 +48,7 @@ export class Huntail extends PokemonCard {
         return state;
       }
       if (IS_ABILITY_BLOCKED(store, state, player, this)) { return state; }
-      if (effect.target.getPokemonCard()?.cardType !== CardType.WATER) { return state; }
+      if (!pokemonHasCardTypeOptional(effect.target.getPokemonCard(), CardType.WATER)) { return state; }
 
       let isThisInPlay = false;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {

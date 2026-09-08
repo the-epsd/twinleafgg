@@ -15,7 +15,7 @@ import { CardTransfer, EnergyCard, PlayerType, SlotType, State, StoreLike } from
 export class Tentacruel extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Tentacool';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 100;
   public weakness = [{ type: G }];
   public retreat = [C];

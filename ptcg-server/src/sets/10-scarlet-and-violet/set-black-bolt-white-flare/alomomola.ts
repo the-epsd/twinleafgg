@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, SuperType } from '../../../game/store/card/card-types';
+import { CardType, Stage, SuperType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
@@ -12,7 +12,7 @@ import { ABILITY_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefab
 
 export class Alomomola extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 110;
   public weakness = [{ type: L }];
   public retreat = [C];

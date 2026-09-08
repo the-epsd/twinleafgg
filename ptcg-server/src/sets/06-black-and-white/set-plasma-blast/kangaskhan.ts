@@ -6,7 +6,7 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, SEARCH_YOUR_DECK_FOR_POKEM
 
 export class Kangaskhan extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public retreat = [C, C];

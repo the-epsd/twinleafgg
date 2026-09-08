@@ -11,7 +11,7 @@ import { HEAL_X_DAMAGE_FROM_THIS_POKEMON, MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK
 export class Azumarill extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Marill';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: L }];
   public retreat = [C];

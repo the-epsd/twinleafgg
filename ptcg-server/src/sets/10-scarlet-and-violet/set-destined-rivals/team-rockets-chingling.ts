@@ -7,7 +7,7 @@ import { AFTER_ATTACK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 export class TeamRocketsChingling extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.TEAM_ROCKET];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 30;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

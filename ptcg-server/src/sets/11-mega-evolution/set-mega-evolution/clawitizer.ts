@@ -6,7 +6,7 @@ import { DISCARD_ALL_ENERGY_FROM_POKEMON, MOVED_FROM_ACTIVE_TO_BENCH_THIS_TURN, 
 export class Clawitizer extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Clauncher';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 130;
   public weakness = [{ type: L }];
   public retreat = [C, C];

@@ -10,7 +10,7 @@ import { IS_ABILITY_BLOCKED, ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT }
 
 export class Druddigon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 110;
   public weakness = [{ type: Y }];
   public retreat = [C];

@@ -14,7 +14,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, SWITCH_ACTIVE_WITH_BENCHED } from '.
 
 export class Heracross extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 110;
   public weakness = [{ type: R }];
   public retreat = [C, C];

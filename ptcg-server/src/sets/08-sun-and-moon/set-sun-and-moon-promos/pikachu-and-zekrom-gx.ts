@@ -30,7 +30,7 @@ import {
 export class PikachuZekromGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.TAG_TEAM, CardTag.POKEMON_GX];
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [CardType.LIGHTNING];
   public hp: number = 240;
   public weakness = [{ type: CardType.FIGHTING }];
   public resistance = [{ type: CardType.METAL, value: -20 }];

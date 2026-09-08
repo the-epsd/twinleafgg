@@ -102,8 +102,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Attac
 
 export class Jirachi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
-  public additionalCardTypes = [M];
+  public cardType: CardType[] = [P, M];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public retreat = [C];

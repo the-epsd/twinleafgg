@@ -8,7 +8,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { State, StoreLike, TrainerType } from '../../game';
 export class Lapras extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 60;
   public weakness = [{ type: M }];
   public retreat = [C, C];

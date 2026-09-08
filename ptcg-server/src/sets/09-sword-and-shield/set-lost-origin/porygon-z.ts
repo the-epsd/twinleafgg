@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, DEVOLVE_POKEMON, SHUFFLE_DECK } from '../../../game/st
 export class PorygonZ extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Porygon2';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 150;
   public weakness = [{ type: F }];
   public retreat = [C, C];

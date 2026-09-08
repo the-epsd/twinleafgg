@@ -12,7 +12,7 @@ export class Milotic extends PokemonCard {
 
   public evolvesFrom = 'Feebas';
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   public hp: number = 110;
 

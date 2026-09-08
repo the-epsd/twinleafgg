@@ -16,7 +16,7 @@ import { IS_POKEMON_POWER_BLOCKED } from '../../game/store/prefabs/prefabs';
 export class UnwonE extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.UNOWN];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 40;
   public weakness = [{ type: P }];
   public retreat = [C];

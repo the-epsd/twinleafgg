@@ -7,7 +7,7 @@ export class Kingdra extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Seadra';
   public hp: number = 130;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public weakness = [{ type: L, value: 30 }];
   public retreat = [C];
 

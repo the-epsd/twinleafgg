@@ -10,7 +10,7 @@ import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class GalarianMeowth extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType[] = [CardType.METAL];
   public hp: number = 60;
   public weakness = [{ type: CardType.FIRE }];
   public resistance = [{ type: CardType.GRASS, value: -30 }];

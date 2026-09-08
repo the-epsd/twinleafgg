@@ -7,7 +7,7 @@ import { TERA_RULE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs'
 export class Miraidonex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 220;
   public weakness = [{ type: F }];
   public retreat = [C];

@@ -9,7 +9,7 @@ import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs
 export class Machoke extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Machop';
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
   public hp: number = 100;
   public weakness = [{ type: CardType.PSYCHIC }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];

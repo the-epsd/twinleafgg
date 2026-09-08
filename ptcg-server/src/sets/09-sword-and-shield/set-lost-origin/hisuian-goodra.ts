@@ -14,7 +14,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class HisuianGoodra extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Hisuian Sliggoo';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 160;
   public retreat = [C, C, C];
 

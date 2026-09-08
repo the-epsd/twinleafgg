@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 export class Persian extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp: number = 70;
 

@@ -10,7 +10,7 @@ import { State, StoreLike } from '../../../game';
 export class Toxicroak extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Croagunk';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 110;
   public weakness = [{ type: P }];
   public retreat = [C, C];

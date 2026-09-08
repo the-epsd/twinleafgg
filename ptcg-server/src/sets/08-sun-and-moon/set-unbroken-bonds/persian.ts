@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, PowerType, StoreLike, State, PlayerType } from '../../../game';
+import { CardType, PokemonCard, Stage, PowerType, StoreLike, State, PlayerType } from '../../../game';
 import { CheckAttackCostEffect, CheckPokemonAttacksEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
@@ -6,7 +6,7 @@ import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 export class Persian extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Meowth';
-  public cardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public retreat = [];

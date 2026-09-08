@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH } from
 export class Victini extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 80;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public weakness = [{ type: W }];
   public retreat = [C];
 
@@ -32,7 +32,7 @@ export class Victini extends PokemonCard {
   public fullName: string = 'Victini 30C';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-pitch-black/drilbur.ts (Call for Family — up to 2 Basic)
+    // Call for Family
     if (WAS_ATTACK_USED(effect, 0, this)) {
       return SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, effect.player, { stage: Stage.BASIC }, { min: 0, max: 2 });
     }

@@ -16,7 +16,7 @@ export class Leafeonex extends PokemonCard {
 
   public evolvesFrom = 'Eevee';
 
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
 
   public hp: number = 270;
 

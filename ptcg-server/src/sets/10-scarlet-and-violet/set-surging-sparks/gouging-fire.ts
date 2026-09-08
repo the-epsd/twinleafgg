@@ -9,7 +9,7 @@ export class GougingFire extends PokemonCard {
   protected _tags = [CardTag.ANCIENT];
   public regulationMark = 'H';
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 130;
   public weakness = [{ type: W }];
   public retreat = [C, C];

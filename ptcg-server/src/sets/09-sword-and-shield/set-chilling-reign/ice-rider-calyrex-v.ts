@@ -12,7 +12,7 @@ export class IceRiderCalyrexV extends PokemonCard {
 
   public regulationMark = 'E';
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType[] = [CardType.WATER];
 
   protected _tags = [CardTag.POKEMON_V];
 

@@ -1,11 +1,11 @@
-import { PokemonCard, Stage, AttachEnergyPrompt, CardList, EnergyCard, EnergyType, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike, SuperType } from '../../../game';
+import { CardType, PokemonCard, Stage, AttachEnergyPrompt, CardList, EnergyCard, EnergyType, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike, SuperType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { SHOW_CARDS_TO_PLAYER, SHUFFLE_CARDS_INTO_DECK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Cryogonal extends PokemonCard {
 
   public stage = Stage.BASIC;
-  public cardType = W;
+  public cardType: CardType[] = [W];
   public hp = 90;
   public weakness = [{ type: M }];
   public retreat = [C];

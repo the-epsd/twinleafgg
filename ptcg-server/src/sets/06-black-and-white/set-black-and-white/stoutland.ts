@@ -40,7 +40,7 @@ function* useOdorSleuth(next: Function, store: StoreLike, state: State,
 export class Stoutland extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Herdier';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 140;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

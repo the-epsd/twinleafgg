@@ -15,7 +15,7 @@ import {
 export class UmbreonEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 170;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

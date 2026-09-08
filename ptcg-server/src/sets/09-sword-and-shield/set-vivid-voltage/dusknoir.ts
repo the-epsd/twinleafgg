@@ -8,7 +8,7 @@ export class Dusknoir extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Dusclops';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 150;
   public weakness: Weakness[] = [{ type: D }];
   public resistance: Resistance[] = [{ type: F, value: -30 }];

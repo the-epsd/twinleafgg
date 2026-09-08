@@ -11,7 +11,7 @@ export class Honchkrow extends PokemonCard {
 
   public evolvesFrom = 'Murkrow';
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp: number = 110;
 

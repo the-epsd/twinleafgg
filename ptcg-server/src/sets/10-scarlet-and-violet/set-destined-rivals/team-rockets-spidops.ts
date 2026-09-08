@@ -24,7 +24,7 @@ export class TeamRocketsSpidops extends PokemonCard {
 
   public evolvesFrom = "Team Rocket's Tarountula";
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 130;
 

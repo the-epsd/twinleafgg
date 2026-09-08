@@ -10,7 +10,7 @@ export class Moltres extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
 
   public hp: number = 120;
 

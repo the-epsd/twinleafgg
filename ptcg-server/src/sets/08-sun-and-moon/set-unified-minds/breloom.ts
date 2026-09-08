@@ -11,7 +11,7 @@ import { State, StoreLike } from '../../../game';
 export class Breloom extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Shroomish';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 120;
   public weakness = [{ type: P }];
   public retreat = [C, C];

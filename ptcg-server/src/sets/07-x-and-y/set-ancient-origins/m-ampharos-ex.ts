@@ -17,7 +17,7 @@ export class MAmpharosEx extends PokemonCard {
   protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Ampharos-EX';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 220;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

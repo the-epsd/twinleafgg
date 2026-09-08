@@ -1,10 +1,10 @@
-import { PokemonCard, State, StoreLike, SuperType } from '../../../game';
+import { CardType, PokemonCard, State, StoreLike, SuperType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AFTER_ATTACK, SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND } from '../../../game/store/prefabs/prefabs';
 
 export class Meowth extends PokemonCard {
 
-  public cardType = C;
+  public cardType: CardType[] = [C];
   public hp = 50;
   public weakness = [{ type: F }];
   public retreat = [C];

@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Pupitar extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Larvitar';
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType[] = [CardType.FIGHTING];
   public hp: number = 90;
   public weakness = [{ type: CardType.GRASS }];
   public retreat = [CardType.COLORLESS];

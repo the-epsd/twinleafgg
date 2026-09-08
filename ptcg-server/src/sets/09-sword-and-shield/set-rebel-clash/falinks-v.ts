@@ -8,7 +8,7 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 export class FalinksV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 160;
   public weakness = [{ type: P }];
   public resistance = [];

@@ -11,7 +11,7 @@ import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/att
 
 export class Goomy extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 50;
   public weakness = [{ type: Y }];
   public retreat = [C, C];

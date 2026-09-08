@@ -13,7 +13,7 @@ export class ShiningJirachi extends PokemonCard {
   public usedStellarReign = false;
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public weakness = [{ type: P }];
   public retreat = [C];

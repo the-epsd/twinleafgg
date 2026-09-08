@@ -18,7 +18,7 @@ export class IronThorns extends PokemonCard {
 
   protected _tags = [CardTag.FUTURE];
 
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
 
   public hp: number = 140;
 

@@ -8,7 +8,7 @@ import { DEFENDING_POKEMON_DOES_LESS_DAMAGE } from '../../../game/store/prefabs/
 export class Stoutland extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Herdier';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 150;
   public weakness = [{ type: F }];
   public retreat = [C, C, C];

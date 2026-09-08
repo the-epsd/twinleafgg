@@ -1,3 +1,4 @@
+import { pokemonHasCardTypeOptional } from '../../../game';
 import { Player } from '../../../game/store/state/player';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, CardType } from '../../../game/store/card/card-types';
@@ -33,7 +34,7 @@ export class PowerProtein extends TrainerCard {
 
     }
 
-    if (effect instanceof DealDamageEffect && effect.player.active.getPokemonCard()?.cardType === CardType.FIGHTING) {
+    if (effect instanceof DealDamageEffect && pokemonHasCardTypeOptional(effect.player.active.getPokemonCard(), CardType.FIGHTING)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       if (player.marker.hasMarker(this.POWER_PROTEIN_MARKER, this) && effect.damage > 0 && effect.target === opponent.active) {

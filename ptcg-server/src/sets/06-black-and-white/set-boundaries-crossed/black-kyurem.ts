@@ -5,7 +5,7 @@ import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../../game/store
 
 export class BlackKyurem extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 130;
   public weakness: Weakness[] = [{ type: N }];
   public retreat: CardType[] = [C, C];

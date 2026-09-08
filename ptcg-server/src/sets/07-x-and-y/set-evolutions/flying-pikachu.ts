@@ -7,7 +7,7 @@ import { State, StoreLike } from '../../../game';
 
 export class FlyingPikachu extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 40;
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];

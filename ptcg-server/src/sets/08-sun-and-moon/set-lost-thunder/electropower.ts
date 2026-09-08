@@ -1,4 +1,4 @@
-import { StateUtils } from '../../../game';
+import { StateUtils, pokemonHasCardTypeOptional } from '../../../game';
 import { CardType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
@@ -34,7 +34,7 @@ export class Electropower extends TrainerCard {
 
     }
 
-    if (effect instanceof DealDamageEffect && effect.player.active.getPokemonCard()?.cardType === CardType.LIGHTNING) {
+    if (effect instanceof DealDamageEffect && pokemonHasCardTypeOptional(effect.player.active.getPokemonCard(), CardType.LIGHTNING)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       if (player.marker.hasMarker(this.ELECTROPOWER_MARKER, this) && effect.damage > 0 && effect.target === opponent.active) {

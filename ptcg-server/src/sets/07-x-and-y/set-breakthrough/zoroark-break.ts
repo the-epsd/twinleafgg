@@ -14,7 +14,7 @@ export class ZoroarkBreak extends PokemonCard {
   protected _tags = [CardTag.BREAK];
   public stage: Stage = Stage.BREAK;
   public evolvesFrom: string = 'Zoroark';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 140;
   public retreat = [];
 

@@ -6,7 +6,7 @@ import { AFTER_ATTACK, DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Binacle extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 80;
   public weakness = [{ type: G }];
   public retreat = [C, C];

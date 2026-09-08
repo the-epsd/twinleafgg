@@ -17,7 +17,7 @@ export class Scizorex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   protected _tags = [CardTag.POKEMON_ex];
   public evolvesFrom = 'Scyther';
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 270;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

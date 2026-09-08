@@ -6,7 +6,7 @@ import { COIN_FLIP_PROMPT, THIS_ATTACK_DOES_X_MORE_DAMAGE, THIS_POKEMON_DOES_DAM
 
 export class Voltorb extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 40;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];

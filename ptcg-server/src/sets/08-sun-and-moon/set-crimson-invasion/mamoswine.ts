@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store
 export class Mamoswine extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Piloswine';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 180;
   public weakness = [{ type: M }];
   public retreat = [C, C, C, C];

@@ -7,7 +7,7 @@ import { OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK } from '../../../game/store/pr
 
 export class Uxie extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: P }];
   public retreat = [C];

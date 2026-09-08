@@ -7,7 +7,7 @@ import { ADD_SLEEP_TO_PLAYER_ACTIVE, WAS_ATTACK_USED } from "../../../game/store
 export class Pikachu43 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 70;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public weakness = [{ type: F }];
   public retreat = [C];
   public attacks = [{

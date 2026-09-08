@@ -13,7 +13,7 @@ import { WAS_ATTACK_USED, ADD_POISON_TO_PLAYER_ACTIVE, IS_ABILITY_BLOCKED } from
 export class Cacturne extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Cacnea';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 110;
   public weakness = [{ type: R }];
   public retreat = [C];

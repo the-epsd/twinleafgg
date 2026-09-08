@@ -7,7 +7,7 @@ import { SEARCH_DECK_FOR_CARDS_TO_HAND, WAS_ATTACK_USED } from '../../../game/st
 export class Xerneas extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 120;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public weakness = [{ type: M }];
   public retreat = [C, C];
 

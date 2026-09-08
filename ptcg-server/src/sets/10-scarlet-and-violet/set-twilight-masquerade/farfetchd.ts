@@ -21,7 +21,7 @@ export class Farfetchd extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType[] = [CardType.COLORLESS];
 
   public hp: number = 70;
 

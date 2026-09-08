@@ -4,7 +4,7 @@ import { MOVE_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../../game/store/p
 
 export class Azurill extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 30;
   public weakness = [{ type: F }];
   public retreat = [];

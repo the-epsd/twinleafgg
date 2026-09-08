@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PowerType, PokemonCardList, GamePhase, EnergyCard } from '../../../game';
+import { StoreLike, State, StateUtils, PowerType, PokemonCardList, GamePhase } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
@@ -9,7 +9,7 @@ import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs
 
 export class Fezandipiti extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
   public hp: number = 120;
   public weakness = [{ type: CardType.METAL }];
   public retreat = [CardType.COLORLESS];
@@ -54,20 +54,7 @@ export class Fezandipiti extends PokemonCard {
       let hasDarkAttached = false;
 
       checkEnergy.energyMap.forEach(em => {
-        if (em.provides.includes(CardType.ANY)) {
-          hasDarkAttached = true;
-        }
-        if (em.provides.includes(CardType.DARK)) {
-          hasDarkAttached = true;
-        }
-        const energyCard = em.card;
-        if (energyCard instanceof EnergyCard && energyCard.provides.includes(CardType.DARK)) {
-          hasDarkAttached = true;
-        }
-        if (energyCard instanceof EnergyCard && energyCard.provides.includes(CardType.ANY)) {
-          hasDarkAttached = true;
-        }
-        if (energyCard instanceof EnergyCard && energyCard.blendedEnergies?.includes(CardType.DARK)) {
+        if (em.provides.includes(CardType.ANY) || em.provides.includes(CardType.DARK)) {
           hasDarkAttached = true;
         }
       });

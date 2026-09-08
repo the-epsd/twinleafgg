@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardTag } from '../../../game/store/card/card-types';
+import { CardType, Stage, CardTag } from '../../../game/store/card/card-types';
 import { Effect } from '../../../game/store/effects/game-effects';
 import { State, StateUtils, StoreLike } from '../../../game';
 import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
@@ -7,7 +7,7 @@ import { MOVE_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs
 export class MegaHeracrossex extends PokemonCard {
   public stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_SV_MEGA, CardTag.POKEMON_ex];
-  public cardType = G;
+  public cardType: CardType[] = [G];
   public hp = 280;
   public weakness = [{ type: R }];
   public retreat = [C, C];

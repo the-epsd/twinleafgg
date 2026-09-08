@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 export class Blaziken extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Combusken';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 170;
   public weakness = [{ type: W }];
   public retreat = [C, C];

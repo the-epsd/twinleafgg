@@ -9,18 +9,18 @@ export class Umbreonex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex];
   public evolvesFrom: string = 'Eevee';
   public hp: number = 270;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public weakness = [{ type: G }];
   public retreat = [C, C];
-  public attacks = [
-    {
-      name: 'Lunatic Claw',
-      cost: [D, C],
-      damage: 100,
-      damageCalculation: '+',
-      text: "If your opponent's Active Pokémon has any damage counters on it, this attack does 140 more damage.",
-    },
-  ];
+
+  public attacks = [{
+    name: 'Lunatic Claw',
+    cost: [D, C],
+    damage: 100,
+    damageCalculation: '+',
+    text: "If your opponent's Active Pokémon has any damage counters on it, this attack does 140 more damage.",
+  }];
+
   public regulationMark: string = 'J';
   public set: string = '30C';
   public cardImage: string = 'assets/cardback.png';
@@ -28,7 +28,7 @@ export class Umbreonex extends PokemonCard {
   public name: string = 'Umbreon ex';
   public fullName: string = 'Umbreon ex 30C';
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-battle-styles/luxray.ts (Scar Strikes — bonus damage if opponent's Active has damage)
+    // Lunatic Claw
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -36,6 +36,7 @@ export class Umbreonex extends PokemonCard {
         effect.damage += 140;
       }
     }
+
     return state;
   }
 }

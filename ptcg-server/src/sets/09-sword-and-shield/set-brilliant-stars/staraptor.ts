@@ -13,7 +13,7 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/
 export class Staraptor extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Staravia';
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 150;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

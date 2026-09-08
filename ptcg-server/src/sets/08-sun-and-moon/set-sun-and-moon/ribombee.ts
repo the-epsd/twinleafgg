@@ -13,7 +13,7 @@ import { WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_
 export class Ribombee extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Cutiefly';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 60;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

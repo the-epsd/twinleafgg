@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED, WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN } f
 
 export class HisuianBasculegion extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 120;
   public weakness = [{ type: L }];
   public retreat = [C, C];

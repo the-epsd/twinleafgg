@@ -10,7 +10,7 @@ import { State, StoreLike } from '../../../game';
 export class Flabebe extends PokemonCard {
   protected _tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 40;
   public weakness = [{ type: M }];
   public retreat = [C];

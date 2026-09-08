@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 export class Pignite extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Tepig';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 90;
   public weakness = [{ type: W }];
   public retreat = [C, C];

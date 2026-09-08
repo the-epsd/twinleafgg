@@ -11,7 +11,7 @@ export class Ivysaur extends PokemonCard {
 
   public stage = Stage.STAGE_1;
   public evolvesFrom = 'Bulbasaur';
-  public cardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
   public hp = 60;
   public weakness = [{ type: CardType.FIRE }];
   public retreat = [CardType.COLORLESS];

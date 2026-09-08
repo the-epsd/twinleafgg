@@ -12,7 +12,7 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../../game/st
 export class Inkay extends PokemonCard {
   public readonly UPSIDE_DOWN_EVOLUTION_MARKER = 'INKAY_UPSIDE_DOWN_EVOLUTION_MARKER';
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];

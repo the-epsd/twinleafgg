@@ -13,7 +13,7 @@ import { PowerType, State, StoreLike } from '../../game';
 export class Arbok extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Ekans';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 120;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];

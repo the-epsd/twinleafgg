@@ -10,7 +10,7 @@ export class Decidueye extends PokemonCard {
   public regulationMark = 'H';
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Dartrix';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 150;
   public weakness = [{ type: R }];
   public retreat = [C, C];

@@ -7,7 +7,7 @@ import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/ga
 
 export class Cobalion extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 110;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];

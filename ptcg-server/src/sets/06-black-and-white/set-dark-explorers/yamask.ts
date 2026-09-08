@@ -47,7 +47,7 @@ function* useAstonish(next: Function, store: StoreLike, state: State,
 
 export class Yamask extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 60;
   public weakness = [{ type: D }];
   public retreat = [C];

@@ -13,7 +13,7 @@ export class Cinccinoex extends PokemonCard {
   public evolvesFrom = 'Minccino';
   protected _tags = [CardTag.POKEMON_ex];
   public hp: number = 240;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public weakness = [{ type: F }];
   public retreat = [C];
 

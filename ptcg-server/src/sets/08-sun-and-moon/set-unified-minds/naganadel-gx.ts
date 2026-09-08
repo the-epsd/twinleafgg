@@ -34,7 +34,7 @@ export class NaganadelGx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Poipole';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 210;
   public weakness = [{ type: Y }];
   public retreat = [C];

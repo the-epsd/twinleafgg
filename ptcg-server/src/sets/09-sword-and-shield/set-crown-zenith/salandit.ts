@@ -40,7 +40,7 @@ function* useCallForFamily(next: Function, store: StoreLike, state: State,
 
 export class Salandit extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
   public hp: number = 70;
   public weakness = [{ type: CardType.WATER }];
   public retreat = [CardType.COLORLESS];

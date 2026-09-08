@@ -15,7 +15,7 @@ export class MHoundoomEx extends PokemonCard {
   protected _tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Houndoom-EX';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 210;
   public weakness = [{ type: W }];
   public retreat = [C];

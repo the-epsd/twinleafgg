@@ -6,7 +6,7 @@ import { Attack, State, StoreLike, Weakness } from '../../../game';
 export class Bonsly extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 30;
   public weakness: Weakness[] = [{ type: G }];
   public retreat: CardType[] = [];

@@ -17,7 +17,7 @@ export class RadiantGardevoir extends PokemonCard {
 
   protected _tags = [CardTag.RADIANT];
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 130;
 

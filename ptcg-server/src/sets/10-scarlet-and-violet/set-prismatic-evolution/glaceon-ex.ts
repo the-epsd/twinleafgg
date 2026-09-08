@@ -22,7 +22,7 @@ export class Glaceonex extends PokemonCard {
 
   public evolvesFrom = 'Eevee';
 
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
 
   public hp: number = 270;
 

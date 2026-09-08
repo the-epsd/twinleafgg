@@ -47,7 +47,7 @@ export class DratiniDRM extends Dratini {
   public set: string = 'DRM';
   public setNumber: string = '34';
   public fullName: string = 'Dratini DRM';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public attacks = [{
     name: 'Wrap',
     cost: [L],

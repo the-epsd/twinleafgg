@@ -12,7 +12,7 @@ import { WAS_ATTACK_USED, ADD_MARKER, CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_
 export class Gorebyss extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Clamperl';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: G }];
   public retreat = [];

@@ -27,7 +27,7 @@ import {
 export class ArticunoGX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 170;
   public weakness = [{ type: M }];
   public retreat = [C, C];

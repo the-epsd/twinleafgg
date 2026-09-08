@@ -4,7 +4,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 export class Raichu extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Pikachu';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 130;
   public weakness = [{ type: F }];
   public retreat = [C];

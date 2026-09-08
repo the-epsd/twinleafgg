@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage } from '../../game/store/card/card-types';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { Attack } from '../../game/store/card/pokemon-types';
 
 import { Effect } from '../../game/store/effects/effect';
@@ -14,7 +14,7 @@ export class Abra extends PokemonCard {
   public set = 'BS';
   public fullName = 'Abra BS';
 
-  public cardType = P;
+  public cardType: CardType[] = [P];
 
   public setNumber = '43';
 

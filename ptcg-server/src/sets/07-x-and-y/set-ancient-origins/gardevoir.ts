@@ -17,7 +17,7 @@ import {
 export class Gardevoir extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Kirlia';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 130;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

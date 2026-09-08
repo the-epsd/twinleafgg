@@ -13,7 +13,7 @@ export class Eelektrik extends PokemonCard {
 
   public evolvesFrom = 'Tynamo';
 
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [CardType.LIGHTNING];
 
   public hp: number = 90;
 

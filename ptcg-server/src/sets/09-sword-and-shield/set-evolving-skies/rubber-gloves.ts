@@ -4,7 +4,7 @@
 
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils } from '../../../game';
+import { StoreLike, State, StateUtils, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { IS_TOOL_BLOCKED } from '../../../game/store/prefabs/prefabs';
@@ -36,7 +36,7 @@ export class RubberGloves extends TrainerCard {
       }
 
       const targetCard = effect.target.getPokemonCard();
-      if (targetCard && targetCard.cardType === CardType.LIGHTNING) {
+      if (targetCard && pokemonHasCardType(targetCard, CardType.LIGHTNING)) {
         effect.damage += 30;
       }
     }

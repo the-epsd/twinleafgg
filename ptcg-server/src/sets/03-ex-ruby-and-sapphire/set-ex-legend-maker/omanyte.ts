@@ -9,7 +9,7 @@ import { AttackEffect } from '../../../game/store/effects/game-effects';
 export class Omanyte extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Mysterious Fossil';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 70;
   public weakness = [{ type: L }];
   public retreat = [C];

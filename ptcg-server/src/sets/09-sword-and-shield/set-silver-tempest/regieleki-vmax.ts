@@ -15,7 +15,7 @@ export class RegielekiVMAX extends PokemonCard {
 
   public evolvesFrom = 'Regieleki V';
 
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [CardType.LIGHTNING];
 
   public hp: number = 310;
 

@@ -8,7 +8,7 @@ import { DEFENDING_POKEMON_DOES_LESS_DAMAGE } from '../../../game/store/prefabs/
 export class Clefable extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Clefairy';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 90;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

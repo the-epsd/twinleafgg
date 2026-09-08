@@ -18,7 +18,7 @@ export class RoaringMoonex extends PokemonCard {
 
   public stage = Stage.BASIC;
 
-  public cardType = CardType.DARK;
+  public cardType: CardType[] = [CardType.DARK];
 
   public hp = 230;
 

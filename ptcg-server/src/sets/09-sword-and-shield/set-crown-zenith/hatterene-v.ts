@@ -30,7 +30,7 @@ import { OrderCardsPrompt } from '../../../game/store/prompts/order-cards-prompt
 export class HattereneV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 200;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];

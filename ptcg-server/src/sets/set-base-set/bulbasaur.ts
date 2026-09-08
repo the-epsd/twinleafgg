@@ -21,7 +21,7 @@ export class Bulbasaur extends PokemonCard {
 
   public setNumber = '44';
 
-  public cardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public stage = Stage.BASIC;
 

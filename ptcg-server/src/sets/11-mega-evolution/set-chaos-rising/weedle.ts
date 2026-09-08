@@ -6,7 +6,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 export class Weedle extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 50;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public weakness = [{ type: R }];
   public retreat = [C];
 

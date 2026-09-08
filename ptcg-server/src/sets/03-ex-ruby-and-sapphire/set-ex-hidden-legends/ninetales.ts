@@ -7,7 +7,7 @@ import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/p
 export class Ninetales extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Vulpix';
-  public cardType: CardType = R;
+  public cardType: CardType[] = [R];
   public hp: number = 70;
   public weakness = [{ type: W }];
   public retreat = [C];

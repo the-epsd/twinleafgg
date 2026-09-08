@@ -8,7 +8,7 @@ import { DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/a
 export class Swoobat extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Woobat';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 90;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];

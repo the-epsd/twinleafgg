@@ -11,7 +11,7 @@ import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store
 
 export class Ferroseed extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public hp: number = 60;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

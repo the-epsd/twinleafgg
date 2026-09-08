@@ -38,7 +38,7 @@ import { GameMessage } from '../../../game/game-message';
 export class EnamorusV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 210;
   public weakness = [{ type: M }];
   public retreat = [C, C];

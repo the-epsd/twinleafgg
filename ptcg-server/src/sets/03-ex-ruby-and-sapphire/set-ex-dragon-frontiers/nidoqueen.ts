@@ -21,7 +21,7 @@ export class Nidoqueen extends PokemonCard {
   public evolvesFrom: string = 'Nidorina';
   protected _tags = [CardTag.DELTA_SPECIES];
   public hp = 100;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public weakness = [{ type: P }];
   public retreat = [C, C];
 

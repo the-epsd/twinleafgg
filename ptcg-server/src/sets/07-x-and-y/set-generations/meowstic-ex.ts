@@ -20,7 +20,7 @@ import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 export class MeowsticEX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_EX];
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 160;
   public weakness = [{ type: P }];
   public retreat = [C];

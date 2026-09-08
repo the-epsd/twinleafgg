@@ -1,17 +1,11 @@
-import {
-  PokemonCard, Stage, CardType, PowerType, StoreLike, State, GameError, GameMessage,
-  PlayerType, EnergyCard, EnergyType, StateUtils, PokemonCardList, ChooseCardsPrompt, SuperType,
-} from "../../../game";
+import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, GameError, GameMessage, PlayerType, EnergyCard, EnergyType, StateUtils, PokemonCardList, ChooseCardsPrompt, SuperType } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
-import {
-  WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED,
-  REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
-} from "../../../game/store/prefabs/prefabs";
+import { WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from "../../../game/store/prefabs/prefabs";
 
 export class Zapdos extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 120;
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public weakness = [{ type: F }];
   public retreat = [C];
 

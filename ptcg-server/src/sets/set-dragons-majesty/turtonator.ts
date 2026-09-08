@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Turtonator extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 110;
   public weakness = [{ type: Y }];
   public retreat = [C, C, C];

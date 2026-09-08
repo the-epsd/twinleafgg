@@ -6,7 +6,7 @@ import { SHUFFLE_DECK, WAS_ATTACK_USED, WAS_POWER_USED, COIN_FLIP_PROMPT } from 
 
 export class LeafeonV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 200;
   public weakness = [{ type: R }];
   public retreat = [C];

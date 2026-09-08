@@ -16,7 +16,7 @@ import { ABILITY_USED, MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../..
 export class Honchkrow extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Murkrow';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 90;
   public weakness = [{ type: L, value: +20 }];
   public resistance = [{ type: F, value: -20 }];

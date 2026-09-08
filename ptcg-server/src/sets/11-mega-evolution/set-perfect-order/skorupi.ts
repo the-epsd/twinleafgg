@@ -4,7 +4,7 @@ import { ADD_POISON_TO_PLAYER_ACTIVE, WAS_ATTACK_USED } from '../../../game/stor
 
 export class Skorupi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public retreat = [C, C];

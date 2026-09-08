@@ -8,7 +8,7 @@ import { PowerEffect } from '../../../game/store/effects/game-effects';
 export class Spearow extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 50;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];

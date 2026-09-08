@@ -4,7 +4,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 export class Floragato extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Sprigatito';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 90;
   public weakness = [{ type: R }];
   public retreat = [C];

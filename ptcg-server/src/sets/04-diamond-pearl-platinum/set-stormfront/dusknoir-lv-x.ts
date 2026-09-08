@@ -10,7 +10,7 @@ export class DusknoirLvX extends PokemonCard {
 
   public stage: Stage = Stage.LV_X;
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType[] = [CardType.PSYCHIC];
 
   public hp: number = 300;
 

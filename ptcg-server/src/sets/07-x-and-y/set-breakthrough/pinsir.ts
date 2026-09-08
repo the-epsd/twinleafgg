@@ -14,7 +14,7 @@ import { GameMessage, SlotType } from '../../../game';
 
 export class Pinsir extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 100;
   public weakness = [{ type: R }];
   public retreat = [C, C];

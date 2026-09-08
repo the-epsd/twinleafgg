@@ -8,7 +8,7 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../../game/st
 export class Noivern extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Noibat';
-  public cardType: CardType = N;
+  public cardType: CardType[] = [N];
   public hp: number = 110;
   public weakness = [{ type: Y }];
   public retreat = [C];

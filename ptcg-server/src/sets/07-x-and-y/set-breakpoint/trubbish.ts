@@ -11,7 +11,7 @@ import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 
 export class Trubbish extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 70;
   public weakness = [{ type: P }];
   public retreat = [C, C];

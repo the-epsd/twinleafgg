@@ -9,7 +9,7 @@ import { BLOCK_RETREAT } from '../../game/store/prefabs/effect-of-attack-prefabs
 export class Victreebel extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Weepinbell';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: F }];
   public retreat = [C, C];

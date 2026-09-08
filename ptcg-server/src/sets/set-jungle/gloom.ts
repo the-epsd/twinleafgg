@@ -9,7 +9,7 @@ import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 export class Gloom extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
 
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
 
   public hp: number = 60;
 

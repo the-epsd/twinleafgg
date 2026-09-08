@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage } from '../../game/store/card/card-types';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { Attack } from '../../game/store/card/pokemon-types';
 
 import { Effect } from '../../game/store/effects/effect';
@@ -15,7 +15,7 @@ export class NidoranMale extends PokemonCard {
   public setNumber = '55';
   public fullName = 'Nidoran M BS';
 
-  public cardType = G;
+  public cardType: CardType[] = [G];
   public stage = Stage.BASIC;
   public hp = 40;
   public weakness = [{ type: P }];

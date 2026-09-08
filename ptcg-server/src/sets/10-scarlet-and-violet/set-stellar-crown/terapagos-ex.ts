@@ -6,7 +6,7 @@ import { PREVENT_DAMAGE } from "../../../game/store/prefabs/effect-of-attack-pre
 export class Terapagosex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 230;
   public weakness = [{ type: F }];
   public retreat = [C, C];

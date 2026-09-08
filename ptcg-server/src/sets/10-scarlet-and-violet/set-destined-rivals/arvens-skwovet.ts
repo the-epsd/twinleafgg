@@ -5,7 +5,7 @@ export class ArvensSkwovet extends PokemonCard {
   public regulationMark = 'I';
   protected _tags = [CardTag.ARVENS];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
+  public cardType: CardType[] = [C];
   public hp: number = 60;
   public weakness = [{ type: F }];
   public retreat = [C];

@@ -12,7 +12,7 @@ import { IS_ABILITY_BLOCKED, JUST_EVOLVED, COIN_FLIP_PROMPT, ADD_PARALYZED_TO_PL
 export class Servine extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Snivy';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 70;
   public weakness = [{ type: R }];
   public retreat = [C];

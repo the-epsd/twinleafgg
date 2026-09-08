@@ -4,7 +4,7 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { PlayerType, PowerType, StoreLike, State, StateUtils } from '../../../game';
+import { PlayerType, PowerType, StoreLike, State, StateUtils, pokemonHasCardType } from '../../../game';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
@@ -13,7 +13,7 @@ import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../../game/stor
 export class Zebstrika extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Blitzle';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   public hp: number = 100;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
@@ -49,7 +49,7 @@ export class Zebstrika extends PokemonCard {
 
       // Check if attacker is a Lightning Pokemon
       const attackerCard = player.active.getPokemonCard();
-      if (attackerCard && attackerCard.cardType === CardType.LIGHTNING) {
+      if (attackerCard && pokemonHasCardType(attackerCard, CardType.LIGHTNING)) {
         // Check if this Zebstrika is in play on the same side
         let zebraInPlay = false;
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {

@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, PlayerType } from '../../../game';
+import { StoreLike, State, PlayerType, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect, HealEffect } from '../../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, ADD_CONFUSION_TO_PLAYER_ACTIVE } from '../../../game/store/prefabs/prefabs';
@@ -8,7 +8,7 @@ import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, ADD_CONFUSION_TO_PLAYER_AC
 export class Lilligant extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Petilil';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 80;
   public weakness = [{ type: R }];
   public resistance = [{ type: W, value: -20 }];
@@ -51,7 +51,7 @@ export class Lilligant extends PokemonCard {
 
       // Heal 20 from each Grass Pokémon
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card.cardType === CardType.GRASS) {
+        if (pokemonHasCardType(card, CardType.GRASS)) {
           const healEffect = new HealEffect(player, cardList, 20);
           store.reduceEffect(state, healEffect);
         }

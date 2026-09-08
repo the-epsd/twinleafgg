@@ -8,7 +8,7 @@ import { ABILITY_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_E
 export class Ribombee extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Cutiefly';
-  public cardType: CardType = Y;
+  public cardType: CardType[] = [Y];
   public hp: number = 70;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];

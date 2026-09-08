@@ -8,7 +8,7 @@ import { MOVE_CARDS, WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../.
 export class Wugtrio extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Wiglett';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 90;
   public weakness = [{ type: L }];
   public retreat = [C, C];

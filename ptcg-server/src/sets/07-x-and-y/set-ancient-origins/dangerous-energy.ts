@@ -4,15 +4,13 @@
 
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { CardType, CardTag, EnergyType } from '../../../game/store/card/card-types';
-import {
-  GameError,
+import { GameError,
   GameMessage,
   PlayerType,
   StoreLike,
   State,
   StateUtils,
-  GamePhase,
-} from '../../../game';
+  GamePhase, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import {
   CheckProvidedEnergyEffect,
@@ -40,7 +38,7 @@ export class DangerousEnergy extends EnergyCard {
       const pokemon = effect.source;
       const pokemonCard = pokemon.getPokemonCard();
 
-      if (pokemonCard && pokemonCard.cardType === CardType.DARK) {
+      if (pokemonCard && pokemonHasCardType(pokemonCard, CardType.DARK)) {
         const player = StateUtils.findOwner(state, effect.source);
         if (!IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, effect.source)) {
           effect.energyMap.push({ card: this, provides: [CardType.DARK] });
@@ -51,7 +49,7 @@ export class DangerousEnergy extends EnergyCard {
     // Prevent attaching to non-Darkness Pokemon
     if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
       const targetPokemon = effect.target.getPokemonCard();
-      if (!targetPokemon || targetPokemon.cardType !== CardType.DARK) {
+      if (!targetPokemon || !pokemonHasCardType(targetPokemon, CardType.DARK)) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
     }
@@ -93,7 +91,7 @@ export class DangerousEnergy extends EnergyCard {
           }
 
           const pokemonCard = cardList.getPokemonCard();
-          if (!pokemonCard || pokemonCard.cardType !== CardType.DARK) {
+          if (!pokemonCard || !pokemonHasCardType(pokemonCard, CardType.DARK)) {
             cardList.moveCardTo(this, player.discard);
           }
         });

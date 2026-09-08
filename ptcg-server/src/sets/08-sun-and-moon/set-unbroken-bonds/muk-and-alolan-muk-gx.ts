@@ -21,7 +21,7 @@ import {
 export class MukAlolanMukGX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 270;
   public weakness = [{ type: P }];
   public retreat = [C, C, C, C];

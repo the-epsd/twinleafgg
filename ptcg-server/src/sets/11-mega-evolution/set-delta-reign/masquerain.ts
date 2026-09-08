@@ -7,7 +7,7 @@ import { BUG_OUT } from '../../../game/store/prefabs/shared-attack-prefabs';
 export class Masquerain extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Surskit';
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 110;
   public weakness = [{ type: R }];
   public retreat = [C];

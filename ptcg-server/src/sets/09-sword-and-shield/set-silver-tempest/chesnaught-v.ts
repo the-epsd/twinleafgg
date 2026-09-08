@@ -16,7 +16,7 @@ import { HealEffect } from '../../../game/store/effects/game-effects';
 export class ChesnaughtV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = G;
+  public cardType: CardType[] = [G];
   public hp: number = 230;
   public weakness = [{ type: R }];
   public retreat = [C, C, C, C];

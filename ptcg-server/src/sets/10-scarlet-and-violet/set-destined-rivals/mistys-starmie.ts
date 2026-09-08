@@ -10,7 +10,7 @@ export class MistysStarmie extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = "Misty's Staryu";
   public regulationMark = 'I';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 100;
   public weakness = [{ type: L }];
   public retreat = [C];

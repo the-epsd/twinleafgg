@@ -9,7 +9,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 export class Gorebyss extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Clamperl';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 70;
   public weakness = [{ type: L }];
   public retreat = [];

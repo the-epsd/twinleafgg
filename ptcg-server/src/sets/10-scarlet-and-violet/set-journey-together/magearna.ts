@@ -10,7 +10,7 @@ import { HealEffect } from '../../../game/store/effects/game-effects';
 export class Magearna extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public hp: number = 90;
-  public cardType: CardType = M;
+  public cardType: CardType[] = [M];
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C];

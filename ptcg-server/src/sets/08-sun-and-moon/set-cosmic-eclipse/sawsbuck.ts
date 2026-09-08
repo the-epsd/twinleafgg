@@ -8,7 +8,7 @@ import { ADD_MARKER, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store
 
 export class Sawsbuck extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType[] = [CardType.GRASS];
   public hp: number = 100;
   public weakness = [{ type: CardType.FIRE }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];

@@ -4,7 +4,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 export class Zweilous extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Deino';
-  public cardType: CardType = D;
+  public cardType: CardType[] = [D];
   public hp: number = 100;
   public weakness = [{ type: G }];
   public retreat = [C, C];

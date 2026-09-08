@@ -29,7 +29,7 @@ import {
 export class LuxrayGlLvX extends PokemonCard {
   public stage: Stage = Stage.LV_X;
   public evolvesFrom: string = 'Luxray GL';
-  public cardType: CardType = L;
+  public cardType: CardType[] = [L];
   protected _tags = [CardTag.POKEMON_LV_X, CardTag.POKEMON_SP];
   public hp: number = 110;
   public weakness = [{ type: F }];

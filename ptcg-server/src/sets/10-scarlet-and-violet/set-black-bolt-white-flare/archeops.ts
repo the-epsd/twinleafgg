@@ -7,7 +7,7 @@ import { ABILITY_USED, DEVOLVE_POKEMON, WAS_POWER_USED } from '../../../game/sto
 export class Archeops extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Archen';
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 140;
   public weakness = [{ type: G }];
   public retreat = [C];

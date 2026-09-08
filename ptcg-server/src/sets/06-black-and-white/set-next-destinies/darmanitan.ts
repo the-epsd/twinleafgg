@@ -8,7 +8,7 @@ import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 export class Darmanitan extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Darumaka';
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 110;
   public weakness = [{ type: P }];
   public retreat = [C, C, C];

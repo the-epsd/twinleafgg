@@ -12,7 +12,7 @@ import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-
 
 export class Landorus extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = F;
+  public cardType: CardType[] = [F];
   public hp: number = 120;
   public weakness = [{ type: W }];
   public retreat = [C];

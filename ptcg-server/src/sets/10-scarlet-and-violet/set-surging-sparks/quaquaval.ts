@@ -7,7 +7,7 @@ import { ABILITY_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefab
 export class Quaquaval extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Quaxwell';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 170;
   public weakness = [{ type: L }];
   public retreat = [C, C];

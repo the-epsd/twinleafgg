@@ -11,7 +11,7 @@ export class Magnemite extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType[] = [CardType.LIGHTNING];
 
   public hp: number = 60;
 

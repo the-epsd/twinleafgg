@@ -13,7 +13,7 @@ export class Monferno extends PokemonCard {
 
   public regulationMark: string = 'H';
 
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType[] = [CardType.FIRE];
 
   public hp: number = 90;
 

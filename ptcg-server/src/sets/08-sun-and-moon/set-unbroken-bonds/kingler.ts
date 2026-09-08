@@ -10,7 +10,7 @@ import { State, StoreLike } from '../../../game';
 export class Kingler extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Krabby';
-  public cardType: CardType = W;
+  public cardType: CardType[] = [W];
   public hp: number = 130;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];

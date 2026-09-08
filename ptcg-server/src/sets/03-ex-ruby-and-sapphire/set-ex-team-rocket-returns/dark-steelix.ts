@@ -16,8 +16,7 @@ export class DarkSteelix extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Onix';
   protected _tags = [CardTag.DARK];
-  public cardType: CardType = M;
-  public additionalCardTypes = [D];
+  public cardType: CardType[] = [M, D];
   public hp: number = 110;
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];

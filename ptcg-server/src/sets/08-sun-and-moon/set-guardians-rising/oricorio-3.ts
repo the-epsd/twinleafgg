@@ -11,7 +11,7 @@ import { IS_ABILITY_BLOCKED, SHUFFLE_DECK } from '../../../game/store/prefabs/pr
 
 export class Oricorio3 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = P;
+  public cardType: CardType[] = [P];
   public hp: number = 90;
   public weakness = [{ type: P }];
   public retreat = [C];
