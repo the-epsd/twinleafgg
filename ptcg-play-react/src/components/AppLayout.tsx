@@ -55,6 +55,10 @@ function isProfilePath(pathname: string): boolean {
   return pathname === '/profile' || pathname.startsWith('/profile/');
 }
 
+function isDeckCustomizePath(pathname: string): boolean {
+  return /^\/deck\/[^/]+\/customize\/?$/.test(pathname);
+}
+
 export function AppLayout() {
   const { t } = useTranslation();
   const { pathname } = useLocation();
@@ -63,6 +67,7 @@ export function AppLayout() {
   const { games, clientId } = useCoreSession();
   const isAdmin = user?.roleId === 4;
   const deckEditorFullBleed = isDeckEditorPath(pathname);
+  const deckCustomizeFullBleed = isDeckCustomizePath(pathname);
   const tableFullBleed = isTablePath(pathname);
   const parentMap = isParentMapPath(pathname);
   const myGamesBleed = isMyGamesPath(pathname);
@@ -72,6 +77,7 @@ export function AppLayout() {
   const profileBleed = isProfilePath(pathname);
   const mainBleed =
     deckEditorFullBleed ||
+    deckCustomizeFullBleed ||
     tableFullBleed ||
     myGamesBleed ||
     gamesBleed ||
@@ -151,7 +157,11 @@ export function AppLayout() {
           minHeight: 0,
           overflowX: parentMap ? 'auto' : 'hidden',
           overflowY:
-            tableFullBleed || myGamesBleed || battlePassBleed || messagesBleed
+            tableFullBleed ||
+            deckCustomizeFullBleed ||
+            myGamesBleed ||
+            battlePassBleed ||
+            messagesBleed
               ? 'hidden'
               : parentMap
                 ? 'hidden'
