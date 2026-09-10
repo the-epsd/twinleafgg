@@ -51,6 +51,10 @@ function isMessagesPath(pathname: string): boolean {
   return pathname === '/message' || pathname.startsWith('/message/');
 }
 
+function isProfilePath(pathname: string): boolean {
+  return pathname === '/profile' || pathname.startsWith('/profile/');
+}
+
 export function AppLayout() {
   const { t } = useTranslation();
   const { pathname } = useLocation();
@@ -65,8 +69,15 @@ export function AppLayout() {
   const gamesBleed = isGamesPath(pathname);
   const battlePassBleed = isBattlePassPath(pathname);
   const messagesBleed = isMessagesPath(pathname);
+  const profileBleed = isProfilePath(pathname);
   const mainBleed =
-    deckEditorFullBleed || tableFullBleed || myGamesBleed || gamesBleed || battlePassBleed || messagesBleed;
+    deckEditorFullBleed ||
+    tableFullBleed ||
+    myGamesBleed ||
+    gamesBleed ||
+    battlePassBleed ||
+    messagesBleed ||
+    profileBleed;
 
   const incomingInviteCount = useMemo(() => {
     const { incoming } = partitionMyGames(games, clientId, user?.userId ?? 0);
