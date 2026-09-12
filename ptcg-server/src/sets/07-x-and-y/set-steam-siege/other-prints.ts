@@ -2,7 +2,7 @@ import { GardevoirSpiritLink } from '../set-primal-clash/gardevoir-spirit-link';
 import { VolcanionEX as VolcanionEXSTS26 } from './volcanion-ex';
 import { GardevoirEx as GardevoirExSTS78 } from './gardevoir-ex';
 import { PokemonRanger as PokemonRangerSTS104 } from './pokemon-ranger';
-import { ProfessorSycamoreXY } from '../set-x-and-y/other-prints';
+import { ProfessorSycamore } from '../set-x-and-y/professor-sycamore';
 import { MagearnaEX } from './magearna-ex';
 import { SteelixEx } from './steelix-ex';
 import { MSteelixEx } from './m-steelix-ex';
@@ -43,7 +43,7 @@ export class PokemonRanger2STS extends PokemonRangerSTS104 {
   public set = 'STS';
 }
 
-export class ProfessorSycamoreXYSTS extends ProfessorSycamoreXY {
+export class ProfessorSycamoreSTS extends ProfessorSycamore {
   public setNumber = '114';
   public fullName: string = 'Professor Sycamore STS';
   public set = 'STS';

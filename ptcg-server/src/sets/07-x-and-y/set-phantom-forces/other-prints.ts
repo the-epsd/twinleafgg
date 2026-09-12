@@ -1,5 +1,5 @@
 import { EnhancedHammer } from '../../10-scarlet-and-violet/set-twilight-masquerade/enhanced-hammer';
-import { ProfessorSycamoreXY } from '../set-x-and-y/other-prints';
+import { ProfessorSycamore } from '../set-x-and-y/professor-sycamore';
 import { RollerSkates } from '../set-x-and-y/roller-skates';
 import { Shauna } from '../set-x-and-y/shauna';
 import { DoubleColorlessEnergy } from '../../set-base-set/double-colorless-energy';
@@ -29,7 +29,7 @@ export class EnhancedHammerPHF extends EnhancedHammer {
   public set = 'PHF';
 }
 
-export class ProfessorSycamoreXYPHF extends ProfessorSycamoreXY {
+export class ProfessorSycamorePHF extends ProfessorSycamore {
   public setNumber = '101';
   public fullName: string = 'Professor Sycamore PHF';
   public set = 'PHF';
@@ -67,7 +67,7 @@ export class AZ2PHF extends AZPHF91 {
 
 export class LysandresTrumpCard2PHF extends LysandresTrumpCardPHF99 {
   public setNumber = '118';
-  public fullName: string = 'Lysandre\'s Trump Card2 PHF';
+  public fullName: string = "Lysandre's Trump Card2 PHF";
   public set = 'PHF';
 }
 
