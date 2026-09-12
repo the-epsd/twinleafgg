@@ -2,11 +2,10 @@ import { GreatBall } from '../../03-ex-ruby-and-sapphire/set-ex-firered-leafgree
 import { MaxPotion } from '../../06-black-and-white/set-emerging-powers/max-potion';
 import { PokemonCatcher } from '../../10-scarlet-and-violet/set-scarlet-and-violet/pokemon-catcher';
 import { Potion } from '../../set-base-set/potion';
-import { ProfessorSycamoreXY } from '../set-x-and-y/other-prints';
+import { ProfessorSycamore } from '../set-x-and-y/professor-sycamore';
 import { ManaphyEX as ManaphyEXBKP32 } from './manaphy-ex';
 import { Skyla } from '../../06-black-and-white/set-boundaries-crossed/skyla';
 import { Delinquent as DelinquentBKP98 } from './delinquent';
-import { ProfessorSycamoreXY as ProfessorSycamoreXYXY122 } from '../set-x-and-y/other-prints';
 import { MistysDetermination } from '../set-evolutions/mistys-determination';
 import { Tierno } from '../set-phantom-forces/tierno';
 import { GyaradosEx } from './gyarados-ex';
@@ -15,6 +14,7 @@ import { EspeonEX } from './espeon-ex';
 import { DarkraiEx } from './darkrai-ex';
 import { ScizorEx } from './scizor-ex';
 import { MScizorEx } from './m-scizor-ex';
+
 export class GreatBallBKP extends GreatBall {
   public setNumber = '100';
   public fullName: string = 'Great Ball BKP';
@@ -39,7 +39,7 @@ export class PotionBKP extends Potion {
   public set = 'BKP';
 }
 
-export class ProfessorSycamoreXYBKP extends ProfessorSycamoreXY {
+export class ProfessorSycamoreBKP extends ProfessorSycamore {
   public setNumber = '107';
   public fullName: string = 'Professor Sycamore BKP';
   public set = 'BKP';
@@ -69,7 +69,7 @@ export class Delinquent3BKP extends DelinquentBKP98 {
   public set = 'BKP';
 }
 
-export class ProfessorSycamoreXY2BKP extends ProfessorSycamoreXYXY122 {
+export class ProfessorSycamoreBKPa extends ProfessorSycamore {
   public setNumber = '107a';
   public fullName: string = 'Professor Sycamore2 BKP';
   public set = 'BKP';
@@ -78,7 +78,7 @@ export class ProfessorSycamoreXY2BKP extends ProfessorSycamoreXYXY122 {
 export class MistysDeterminationBKP extends MistysDetermination {
   public set: string = 'BKP';
   public setNumber: string = '104';
-  public fullName: string = 'Misty\'s Determination BKP';
+  public fullName: string = "Misty's Determination BKP";
 }
 
 export class TiernoBKP extends Tierno {

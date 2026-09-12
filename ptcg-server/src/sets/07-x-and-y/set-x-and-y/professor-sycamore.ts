@@ -1,6 +1,6 @@
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameError, GameMessage } from '../../../game';
+import { StoreLike, State, GameError, GameMessage, Player } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
@@ -12,8 +12,12 @@ export class ProfessorSycamore extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Professor Sycamore';
   public fullName: string = 'Professor Sycamore XY';
-  public text: string =
-    'Discard your hand and draw 7 cards. You may play only 1 Supporter card during your turn (before your attack).';
+  public legacyFullName: string = 'Professor Sycamore XY 122';
+  public text: string = 'Discard your hand and draw 7 cards.';
+
+  public canPlay(_: StoreLike, __: State, player: Player): boolean {
+    return !(player.supporterTurn > 0 && player.deck.cards.length === 0);
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
