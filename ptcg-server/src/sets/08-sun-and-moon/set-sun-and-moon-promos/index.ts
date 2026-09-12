@@ -8,7 +8,7 @@ import { JolteonGX } from './jolteon-gx';
 import { LucarioGX } from './lucario-gx';
 import { Lurantis } from './lurantis';
 import { Lycanroc } from './lycanroc';
-import { CelebiVenusaurGXSMP, DhelmiseSMP, EeveeSnorlaxGXSMP, EspeonDeoxysGXSMP, LucarioMelmetalGXSMP, LycanrocSMP, MagikarpWailordGXSMP, MewSMP, ReshiramCharizardGXSMP, TapuKokoSMP, UmbreonDarkraiGXSMP, VenusaurSnivyGXSMP } from './other-prints';
+import { CelebiVenusaurGXSMP, DhelmiseSMP, EeveeSnorlaxGXSMP, EspeonDeoxysGXSMP, LucarioMelmetalGXSMP, LycanrocSMP, MagikarpWailordGXSMP, MewSMP, ReshiramCharizardGXSMP, TapuKokoSMP, UmbreonDarkraiGXSMP, VenusaurSnivyGXSMP, StakatakaSMP, Stakataka2SMP } from './other-prints';
 import { PalaceBook } from './palace-book';
 import { PikachuZekromGX } from './pikachu-and-zekrom-gx';
 import { ShiningCelebi } from './shining-celebi';
@@ -108,4 +108,6 @@ export const setSunAndMoonPromos: Card[] = [
   new PikachuZekromGX2SMP(),
   new SolgaleoGX3SMP(),
   new CharizardGXSMP60(),
+  new StakatakaSMP(),
+  new Stakataka2SMP()
 ];

@@ -1,4 +1,4 @@
-import { ReshiramBWP, ZekromBWP, ZoroarkBWP, EmboarBWP, Reshiram2BWP, Zekrom2BWP, ReshiramExBWP, ZekromExBWP, TornadusBWP, MewtwoExBWP, DarkraiExBWP, RayquazaExBWP, AltariaBWP, FlygonBWP, BlackKyuremBWP, DrifblimBWP, NinetalesBWP, ThundurusEXBWP, DeoxysEXBWP, LugiaExBWP, EeveeBWP, TornadusExBWP, Eevee2BWP, NBWP, ExcadrillTK, ZoroarkTK, Axew2BWP } from './other-prints';
+import { ReshiramBWP, ZekromBWP, ZoroarkBWP, EmboarBWP, Reshiram2BWP, Zekrom2BWP, ReshiramExBWP, ZekromExBWP, TornadusBWP, MewtwoExBWP, DarkraiExBWP, RayquazaExBWP, AltariaBWP, FlygonBWP, BlackKyuremBWP, DrifblimBWP, NinetalesBWP, ThundurusEXBWP, DeoxysEXBWP, LugiaExBWP, EeveeBWP, TornadusExBWP, Eevee2BWP, NBWP, ExcadrillTK, ZoroarkTK, Axew2BWP, Pansage2BWP } from './other-prints';
 import { Card } from '../../../game/store/card/card';
 import { Kyurem } from './kyurem';
 import { Litwick } from './litwick';
@@ -12,6 +12,7 @@ import { Tepig2 } from './tepig2';
 import { Oshawott } from './oshawott';
 import { Oshawott2 } from './oshawott2';
 import { Axew } from './axew';
+import { Pansage } from './pansage';
 
 // Other Prints
 import {
@@ -34,8 +35,10 @@ export const setBlackAndWhitePromos: Card[] = [
   new Pikachu(),
   new Minccino(),
   new PalaceBelt(),
+  new Pansage(),
 
   // Other Prints
+  new Pansage2BWP(),
   new Axew2BWP(),
   new KeldeoExBWP(),
   new TropicalBeach2(),
