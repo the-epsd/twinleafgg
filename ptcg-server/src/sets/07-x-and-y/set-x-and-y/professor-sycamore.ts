@@ -12,6 +12,7 @@ export class ProfessorSycamore extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Professor Sycamore';
   public fullName: string = 'Professor Sycamore XY';
+  public legacyFullName: string = 'Professor Sycamore XY 122';
   public text: string = 'Discard your hand and draw 7 cards.';
 
   public canPlay(_: StoreLike, __: State, player: Player): boolean {
