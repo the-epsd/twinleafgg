@@ -67,6 +67,8 @@ import { EspeonDeoxysGX } from '../set-unified-minds/espeon-and-deoxys-gx';
 import { UmbreonDarkraiGX } from '../set-unified-minds/umbreon-and-darkrai-gx';
 import { CharizardGX } from '../set-burning-shadows/charizard-gx';
 import { DuskManeNecrozma } from './dusk-mane-necrozma';
+import { Stakataka } from '../set-unbroken-bonds/stakataka';
+
 
 export class UmbreonDarkraiGXSMP extends UmbreonDarkraiGX {
   public fullName = 'Umbreon & Darkrai-GX SMP';
@@ -480,4 +482,16 @@ export class DuskManeNecrozmaSMP extends DuskManeNecrozma {
   public setNumber = '124';
   public fullName: string = 'Dusk Mane Necrozma SMP';
   public set = 'SMP';
+}
+
+export class StakatakaSMP extends Stakataka {
+  public setNumber = '180';
+  public fullName: string = "Stakataka SMP";
+  public set = "SMP";
+}
+
+export class Stakataka2SMP extends Stakataka {
+  public setNumber = '209';
+  public fullName: string = "Stakataka2 SMP";
+  public set = "SMP";
 }
