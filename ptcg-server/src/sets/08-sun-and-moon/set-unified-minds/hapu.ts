@@ -7,8 +7,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class Hapu extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'UNM';
 
@@ -20,10 +19,10 @@ export class Hapu extends TrainerCard {
 
   public fullName: string = 'Hapu UNM';
 
-  public text: string = 'Look at the top 6 cards of your deck and put 2 of them into your hand. Discard the other cards.';
+  public text: string =
+    'Look at the top 6 cards of your deck and put 2 of them into your hand. Discard the other cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
@@ -46,20 +45,21 @@ export class Hapu extends TrainerCard {
 
       const min = Math.min(2, deckTop.cards.length);
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        deckTop,
-        {},
-        { min, max: 2, allowCancel: false }
-      ), selected => {
-        deckTop.moveCardsTo(selected, player.hand);
-        deckTop.moveTo(player.discard);
-
-
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          deckTop,
+          {},
+          { min, max: 2, allowCancel: false },
+        ),
+        (selected) => {
+          deckTop.moveCardsTo(selected, player.hand);
+          deckTop.moveTo(player.discard);
+        },
+      );
     }
     return state;
   }
-
 }

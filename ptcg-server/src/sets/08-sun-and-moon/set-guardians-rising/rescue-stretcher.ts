@@ -11,8 +11,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class RescueStretcher extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'GRI';
 
@@ -24,17 +23,13 @@ export class RescueStretcher extends TrainerCard {
 
   public fullName: string = 'Rescue Stretcher GRI';
 
-  public text: string =
-    `Choose 1:
+  public text: string = `Choose 1:
 
   • Put a Pokémon from your discard pile into your hand.
   • Shuffle 3 Pokémon from your discard pile into your deck.`;
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
       const player = effect.player;
 
       let pokemonInDiscard: number = 0;
@@ -58,72 +53,86 @@ export class RescueStretcher extends TrainerCard {
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      const options: { message: GameMessage, action: () => void }[] = [
+      const options: { message: GameMessage; action: () => void }[] = [
         {
           message: GameMessage.CHOOSE_CARD_TO_DECK,
           action: () => {
-
             let cards: Card[] = [];
 
-            store.prompt(state, new ChooseCardsPrompt(
-              player,
-              GameMessage.CHOOSE_CARD_TO_DECK,
-              player.discard,
-              { superType: SuperType.POKEMON },
-              { min: Math.min(pokemonInDiscard, 3), max: 3, allowCancel: false, blocked }
-            ), selected => {
-              cards = selected || [];
-              cards.forEach((card, index) => {
-                store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
-              });
+            store.prompt(
+              state,
+              new ChooseCardsPrompt(
+                player,
+                GameMessage.CHOOSE_CARD_TO_DECK,
+                player.discard,
+                { superType: SuperType.POKEMON },
+                { min: Math.min(pokemonInDiscard, 3), max: 3, allowCancel: false, blocked },
+              ),
+              (selected) => {
+                cards = selected || [];
+                cards.forEach((card, index) => {
+                  store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, {
+                    name: player.name,
+                    card: card.name,
+                  });
+                });
 
-              player.discard.moveCardsTo(cards, player.deck);
+                player.discard.moveCardsTo(cards, player.deck);
 
-
-              return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-                player.deck.applyOrder(order);
-              });
-            });
-          }
+                return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+                  player.deck.applyOrder(order);
+                });
+              },
+            );
+          },
         },
         {
           message: GameMessage.CHOOSE_CARD_TO_HAND,
           action: () => {
             let cards: Card[] = [];
 
-            store.prompt(state, new ChooseCardsPrompt(
-              player,
-              GameMessage.CHOOSE_CARD_TO_HAND,
-              player.discard,
-              { superType: SuperType.POKEMON },
-              { min: 1, max: 1, allowCancel: false, blocked }
-            ), selected => {
-              cards = selected || [];
+            store.prompt(
+              state,
+              new ChooseCardsPrompt(
+                player,
+                GameMessage.CHOOSE_CARD_TO_HAND,
+                player.discard,
+                { superType: SuperType.POKEMON },
+                { min: 1, max: 1, allowCancel: false, blocked },
+              ),
+              (selected) => {
+                cards = selected || [];
 
-              cards.forEach((card, index) => {
-                store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-              });
+                cards.forEach((card, index) => {
+                  store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, {
+                    name: player.name,
+                    card: card.name,
+                  });
+                });
 
-              player.discard.moveCardsTo(cards, player.hand);
+                player.discard.moveCardsTo(cards, player.hand);
 
-
-              return state;
-            });
-          }
-        }
+                return state;
+              },
+            );
+          },
+        },
       ];
 
-      return store.prompt(state, new SelectPrompt(
-        player.id,
-        GameMessage.CHOOSE_OPTION,
-        options.map(opt => opt.message),
-        { allowCancel: false }
-      ), choice => {
-        const option = options[choice];
-        option.action();
-      });
+      return store.prompt(
+        state,
+        new SelectPrompt(
+          player.id,
+          GameMessage.CHOOSE_OPTION,
+          options.map((opt) => opt.message),
+          { allowCancel: false },
+        ),
+        (choice) => {
+          const option = options[choice];
+          option.action();
+        },
+      );
     }
     return state;
   }
-
 }

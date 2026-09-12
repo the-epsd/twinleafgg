@@ -8,8 +8,7 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
 
 export class Lillie extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'UPR';
 
@@ -22,7 +21,7 @@ export class Lillie extends TrainerCard {
   public setNumber: string = '125';
 
   public text: string =
-    'Draw cards until you have 6 cards in your hand. If it\'s your first turn, draw cards until you have 8 cards in your hand.';
+    "Draw cards until you have 6 cards in your hand. If it's your first turn, draw cards until you have 8 cards in your hand.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -42,9 +41,6 @@ export class Lillie extends TrainerCard {
           break;
         }
       }
-
-
-
     }
 
     return state;

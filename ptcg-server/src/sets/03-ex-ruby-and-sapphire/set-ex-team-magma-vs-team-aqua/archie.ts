@@ -16,7 +16,7 @@ import { ChooseCardsPrompt, PokemonCard } from '../../../game';
 import { PlayPokemonFromDeckEffect } from '../../../game/store/effects/play-card-effects';
 
 export class Archie extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'MA';
   public name: string = 'Archie';
   public fullName: string = 'Archie MA';

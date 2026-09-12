@@ -18,7 +18,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 
 export class Lisia extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'CES';
   public setNumber: string = '137';
   public cardImage: string = 'assets/cardback.png';

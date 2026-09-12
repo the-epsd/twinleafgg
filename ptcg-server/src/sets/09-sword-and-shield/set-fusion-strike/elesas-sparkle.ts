@@ -10,7 +10,7 @@ import { AttachEnergyPrompt, ChoosePokemonPrompt, GameError, StateUtils } from '
 import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 
 export class ElesasSparkle extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public regulationMark = 'E';
 

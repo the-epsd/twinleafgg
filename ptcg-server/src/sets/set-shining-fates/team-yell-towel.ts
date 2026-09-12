@@ -10,14 +10,15 @@ import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 import { HealEffect } from '../../game/store/effects/game-effects';
 
 export class TeamYellTowel extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public regulationMark: string = 'D';
   public set: string = 'SHF';
   public setNumber: string = '63';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Yell Towel';
   public fullName: string = 'Team Yell Towel SHF';
-  public text: string = 'Heal 50 damage from both Active Pokémon. You may play any number of Item cards during your turn.';
+  public text: string =
+    'Heal 50 damage from both Active Pokémon. You may play any number of Item cards during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Heal 50 damage from both Active Pokémon.

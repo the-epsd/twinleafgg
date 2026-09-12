@@ -10,8 +10,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class AcroBike extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'PRC';
 
@@ -40,20 +39,22 @@ export class AcroBike extends TrainerCard {
       const deckTop = new CardList();
       player.deck.moveTo(deckTop, 2);
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        deckTop,
-        {},
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        deckTop.moveCardsTo(selected, player.hand);
-        deckTop.moveTo(player.discard);
-
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          deckTop,
+          {},
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          deckTop.moveCardsTo(selected, player.hand);
+          deckTop.moveTo(player.discard);
+        },
+      );
     }
 
     return state;
   }
-
 }

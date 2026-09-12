@@ -30,7 +30,7 @@ import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-
 import { SHUFFLE_DECK, SHOW_CARDS_TO_PLAYER } from '../../../game/store/prefabs/prefabs';
 
 export class RedAndBlue extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   protected _tags = [CardTag.TAG_TEAM];
   public set: string = 'CEC';
   public setNumber: string = '202';

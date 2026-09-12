@@ -9,12 +9,16 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { GameError, GameMessage } from '../../../game';
 import { DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: Copycat, effect: TrainerEffect): IterableIterator<State> {
-
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: Copycat,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
-  const cards = player.hand.cards.filter(c => c !== self);
+  const cards = player.hand.cards.filter((c) => c !== self);
   const supporterTurn = player.supporterTurn;
 
   if (supporterTurn > 0) {
@@ -28,7 +32,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   if (cards.length > 0) {
     MOVE_CARDS(store, state, player.hand, player.deck, { cards, sourceCard: self });
 
-    yield store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+    yield store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
       player.deck.applyOrder(order);
       next();
     });
@@ -40,8 +44,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 }
 
 export class Copycat extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'CES';
 
@@ -55,7 +58,7 @@ export class Copycat extends TrainerCard {
 
   public text: string =
     'Shuffle your hand into your deck. Then, draw a card for each card in ' +
-    'your opponent\'s hand.';
+    "your opponent's hand.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -65,5 +68,4 @@ export class Copycat extends TrainerCard {
 
     return state;
   }
-
 }

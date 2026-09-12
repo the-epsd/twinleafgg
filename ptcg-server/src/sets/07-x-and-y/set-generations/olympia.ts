@@ -8,10 +8,15 @@ import { HealEffect } from '../../../game/store/effects/game-effects';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { GameError, GameMessage, PlayerType, PokemonCardList, SlotType } from '../../../game';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const movedToBench = player.active;
-  const hasBench = player.bench.some(b => b.cards.length > 0);
+  const hasBench = player.bench.some((b) => b.cards.length > 0);
 
   if (hasBench === false) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -22,16 +27,20 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
   let targets: PokemonCardList[] = [];
-  yield store.prompt(state, new ChoosePokemonPrompt(
-    player.id,
-    GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.BENCH],
-    { allowCancel: false }
-  ), results => {
-    targets = results || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChoosePokemonPrompt(
+      player.id,
+      GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.BENCH],
+      { allowCancel: false },
+    ),
+    (results) => {
+      targets = results || [];
+      next();
+    },
+  );
 
   if (targets.length === 0) {
     return state;
@@ -45,13 +54,14 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 }
 
 export class Olympia extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'GEN';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '66';
   public name: string = 'Olympia';
   public fullName: string = 'Olympia GEN';
-  public text: string = 'Switch your Active Pokémon with 1 of your Benched Pokémon. If you do, heal 30 damage from the Pokémon you moved to your Bench. You may play only 1 Supporter card during your turn (before your attack).';
+  public text: string =
+    'Switch your Active Pokémon with 1 of your Benched Pokémon. If you do, heal 30 damage from the Pokémon you moved to your Bench. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

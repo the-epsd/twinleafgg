@@ -4,14 +4,28 @@
 
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, SuperType } from '../../../game/store/card/card-types';
-import { Card, CardList, ChooseCardsPrompt, GameMessage, ShowCardsPrompt, StoreLike, State, StateUtils } from '../../../game';
+import {
+  Card,
+  CardList,
+  ChooseCardsPrompt,
+  GameMessage,
+  ShowCardsPrompt,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 
 // Ref: set-silver-tempest/candice.ts (Look at top 7, reveal matching cards to hand, show to opponent, shuffle rest)
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: Gordie, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: Gordie,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
@@ -19,7 +33,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
   effect.preventDefault = true;
 
   if (player.deck.cards.length === 0) {
-
     return state;
   }
 
@@ -37,43 +50,47 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   let cards: Card[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    topCards,
-    { superType: SuperType.ENERGY },
-    { min: 0, max: count, allowCancel: false, blocked }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      topCards,
+      { superType: SuperType.ENERGY },
+      { min: 0, max: count, allowCancel: false, blocked },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   // Move selected energy cards to hand, shuffle rest back into deck
   topCards.moveCardsTo(cards, player.hand);
   topCards.moveTo(player.deck);
 
-
   // Reveal selected energy cards to opponent (card text says "reveal")
   if (cards.length > 0) {
-    yield store.prompt(state, new ShowCardsPrompt(
-      opponent.id,
-      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-      cards
-    ), () => next());
+    yield store.prompt(
+      state,
+      new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+      () => next(),
+    );
   }
 
   return SHUFFLE_DECK(store, state, player);
 }
 
 export class Gordie extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark: string = 'E';
   public set: string = 'EVS';
   public setNumber: string = '149';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gordie';
   public fullName: string = 'Gordie EVS';
-  public text: string = 'Look at the top 7 cards of your deck. You may reveal any number of Energy cards you find there and put them into your hand. Shuffle the other cards back into your deck. You may play only 1 Supporter card during your turn.';
+  public text: string =
+    'Look at the top 7 cards of your deck. You may reveal any number of Energy cards you find there and put them into your hand. Shuffle the other cards back into your deck. You may play only 1 Supporter card during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

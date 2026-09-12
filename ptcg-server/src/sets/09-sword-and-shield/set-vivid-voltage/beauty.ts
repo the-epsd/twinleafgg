@@ -10,14 +10,15 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Beauty extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark: string = 'D';
   public set: string = 'VIV';
   public setNumber: string = '148';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Beauty';
   public fullName: string = 'Beauty VIV';
-  public text: string = 'If you go first, you may play this card during your first turn. Draw 2 cards. You may play only 1 Supporter card during your turn.';
+  public text: string =
+    'If you go first, you may play this card during your first turn. Draw 2 cards. You may play only 1 Supporter card during your turn.';
 
   public firstTurn = true;
 
@@ -34,8 +35,6 @@ export class Beauty extends TrainerCard {
       effect.preventDefault = true;
 
       DRAW_CARDS(store, state, player, 2);
-
-
     }
 
     return state;

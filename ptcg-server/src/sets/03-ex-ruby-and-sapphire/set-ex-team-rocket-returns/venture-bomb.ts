@@ -9,7 +9,7 @@ import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 import { ChoosePokemonPrompt, PlayerType, SlotType } from '../../../game';
 
 export class VentureBomb extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   protected _tags = [CardTag.ROCKETS_SECRET_MACHINE];
 

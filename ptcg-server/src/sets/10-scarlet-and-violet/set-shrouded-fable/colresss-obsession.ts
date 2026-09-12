@@ -12,8 +12,13 @@ import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { EnergyCard, GameError, Player } from '../../../game';
 
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: ColresssObsession, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: ColresssObsession,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
@@ -46,41 +51,42 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const maxTrainers = Math.min(trainers, 1);
   const maxEnergies = Math.min(energies, 1);
 
-  // Total max is sum of max for each 
+  // Total max is sum of max for each
   const count = maxTrainers + maxEnergies;
 
   // Pass max counts to prompt options
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.deck,
-    {},
-    { min: 0, max: count, allowCancel: false, blocked, maxTrainers, maxEnergies }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.deck,
+      {},
+      { min: 0, max: count, allowCancel: false, blocked, maxTrainers, maxEnergies },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   player.deck.moveCardsTo(cards, player.hand);
 
-
-
   if (cards.length > 0) {
-    yield store.prompt(state, new ShowCardsPrompt(
-      opponent.id,
-      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-      cards
-    ), () => next());
+    yield store.prompt(
+      state,
+      new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+      () => next(),
+    );
   }
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);
   });
 }
 
 export class ColresssObsession extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public regulationMark = 'H';
 
@@ -90,9 +96,9 @@ export class ColresssObsession extends TrainerCard {
 
   public setNumber: string = '57';
 
-  public name: string = 'Colress\'s Tenacity';
+  public name: string = "Colress's Tenacity";
 
-  public fullName: string = 'Colress\'s Tenacity SFA';
+  public fullName: string = "Colress's Tenacity SFA";
 
   public text: string =
     'Search your deck for a Stadium card and an Energy card, reveal them, and put them into your hand. Then, shuffle your deck.';
@@ -104,9 +110,7 @@ export class ColresssObsession extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
@@ -114,5 +118,4 @@ export class ColresssObsession extends TrainerCard {
 
     return state;
   }
-
 }

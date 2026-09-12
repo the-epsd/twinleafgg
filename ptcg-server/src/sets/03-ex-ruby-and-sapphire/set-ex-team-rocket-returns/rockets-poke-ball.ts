@@ -8,7 +8,7 @@ import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND } from '../../../game/st
 import { PokemonCard } from '../../../game';
 
 export class RocketsPokeBall extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'TRR';
   public setNumber: string = '89';
   public cardImage: string = 'assets/cardback.png';

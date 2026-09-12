@@ -71,7 +71,7 @@ function* playCard(
 }
 
 export class CherishBall extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'UNM';
   public setNumber: string = '191';
   public cardImage: string = 'assets/cardback.png';

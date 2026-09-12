@@ -12,13 +12,22 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: Klara, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: Klara,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
 
-  const pokemonAndEnergyInDiscardPile = player.discard.cards.filter(c => c instanceof PokemonCard || (c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC)).length;
+  const pokemonAndEnergyInDiscardPile = player.discard.cards.filter(
+    (c) =>
+      c instanceof PokemonCard ||
+      (c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC),
+  ).length;
 
   if (pokemonAndEnergyInDiscardPile === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -51,16 +60,20 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const maxEnergies = Math.min(energies, 2);
   const count = maxPokemons + maxEnergies;
 
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.discard,
-    {},
-    { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxEnergies }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.discard,
+      {},
+      { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxEnergies },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   cards.forEach((card, index) => {
     store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
@@ -69,19 +82,18 @@ function* playCard(next: Function, store: StoreLike, state: State,
   MOVE_CARDS(store, state, player.discard, player.hand, { cards, sourceCard: self });
 
   if (cards.length > 0) {
-    yield store.prompt(state, new ShowCardsPrompt(
-      opponent.id,
-      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-      cards
-    ), () => next());
+    yield store.prompt(
+      state,
+      new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+      () => next(),
+    );
   }
 
   return state;
 }
 
 export class Klara extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark = 'E';
   public set: string = 'CRE';
   public setNumber: string = '145';
@@ -94,11 +106,8 @@ export class Klara extends TrainerCard {
 • Put up to 2 Pokémon from your discard pile into your hand.
 • Put up to 2 basic Energy cards from your discard pile into your hand.`;
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
       const player = effect.player;
 
       // Check if DiscardToHandEffect is prevented
@@ -117,5 +126,4 @@ export class Klara extends TrainerCard {
 
     return state;
   }
-
 }

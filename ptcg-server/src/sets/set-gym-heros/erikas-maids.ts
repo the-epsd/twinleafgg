@@ -12,7 +12,12 @@ import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   const handCards = player.hand.cards.length;
@@ -25,16 +30,20 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   effect.preventDefault = true;
 
   let cards: Card[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_DECK,
-    player.hand,
-    {},
-    { min: 2, max: 2, allowCancel: false }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_DECK,
+      player.hand,
+      {},
+      { min: 2, max: 2, allowCancel: false },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   if (cards.length === 0) {
     return;
@@ -50,39 +59,41 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     }
   });
 
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.deck,
-    { superType: SuperType.POKEMON },
-    { min: 0, max: 2, allowCancel: true, blocked }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.deck,
+      { superType: SuperType.POKEMON },
+      { min: 0, max: 2, allowCancel: true, blocked },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   player.deck.moveCardsTo(cards, player.hand);
 
   if (cards.length > 0) {
-    yield store.prompt(state, new ShowCardsPrompt(
-      opponent.id,
-      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-      cards
-    ), () => next());
+    yield store.prompt(
+      state,
+      new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+      () => next(),
+    );
   }
 
-
-
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);
   });
 }
 
 export class ErikasMaids extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'G1';
-  public name: string = 'Erika\'s Maids';
-  public fullName: string = 'Erika\'s Maids G1';
+  public name: string = "Erika's Maids";
+  public fullName: string = "Erika's Maids G1";
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '109';
 
@@ -90,7 +101,6 @@ export class ErikasMaids extends TrainerCard {
     'Trade 2 of the other cards in your hand for up to 2 Basic Pokémon and/or Evolution cards with Erika in their names from your deck. Show those cards to your opponent, then put them into your hand. Shuffle your deck afterward.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
@@ -98,5 +108,4 @@ export class ErikasMaids extends TrainerCard {
 
     return state;
   }
-
 }

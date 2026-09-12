@@ -11,7 +11,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { PlayerType } from '../../../game/store/actions/play-card-action';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 export class TeamRocketsAriana extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   protected _tags = [CardTag.TEAM_ROCKET];
   public regulationMark = 'I';
   public set: string = 'DRI';

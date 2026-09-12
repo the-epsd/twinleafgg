@@ -31,7 +31,7 @@ function* playCard(
   active.addSpecialCondition(SpecialCondition.POISONED);
 
   let coinResult: boolean = false;
-  yield COIN_FLIP_PROMPT(store, state, player, result => {
+  yield COIN_FLIP_PROMPT(store, state, player, (result) => {
     coinResult = result;
     next();
   });
@@ -45,7 +45,7 @@ function* playCard(
 }
 
 export class HypnotoxicLaser extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   protected _tags = [CardTag.TEAM_PLASMA];
 

@@ -23,7 +23,7 @@ import {
 } from '../../../game/store/prefabs/prefabs';
 
 export class EthansAdventure extends TrainerCard {
-  public trainerType = TrainerType.SUPPORTER;
+  protected _trainerType = TrainerType.SUPPORTER;
 
   public regulationMark = 'I';
 

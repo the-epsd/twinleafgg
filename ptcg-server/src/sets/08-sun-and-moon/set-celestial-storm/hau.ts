@@ -6,7 +6,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Hau extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'CES';
   public setNumber: string = '132';
   public cardImage: string = 'assets/cardback.png';

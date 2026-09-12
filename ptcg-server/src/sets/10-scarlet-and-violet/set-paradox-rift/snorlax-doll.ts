@@ -1,4 +1,20 @@
-import { CardTag, CardType, GameError, GameLog, GameMessage, Player, PokemonType, Power, PowerType, Stage, State, StateUtils, StoreLike, TrainerCard, TrainerType } from '../../../game';
+import {
+  CardTag,
+  CardType,
+  GameError,
+  GameLog,
+  GameMessage,
+  Player,
+  PokemonType,
+  Power,
+  PowerType,
+  Stage,
+  State,
+  StateUtils,
+  StoreLike,
+  TrainerCard,
+  TrainerType,
+} from '../../../game';
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { KnockOutEffect, RetreatEffect } from '../../../game/store/effects/game-effects';
@@ -6,8 +22,7 @@ import { PlayItemEffect } from '../../../game/store/effects/play-card-effects';
 import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class SnorlaxDoll extends TrainerCard {
-
-  public trainerType = TrainerType.ITEM;
+  protected _trainerType = TrainerType.ITEM;
 
   public stage: Stage = Stage.BASIC;
 
@@ -43,20 +58,23 @@ export class SnorlaxDoll extends TrainerCard {
 This card can't be affected by any Special Conditions and can't retreat. If this card is Knocked Out, your opponent can't take any Prize cards for it.`,
       useWhenInPlay: true,
       exemptFromAbilityLock: true,
-      powerType: PowerType.TRAINER_ABILITY
-    }
+      powerType: PowerType.TRAINER_ABILITY,
+    },
   ];
 
-  public canPlay(store: StoreLike, state: State, player: Player): boolean {    return false;
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    return false;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
-      store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: this.name, effect: 'Snorlax Doll' });
+      store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, {
+        name: player.name,
+        card: this.name,
+        effect: 'Snorlax Doll',
+      });
 
       const cardList = StateUtils.findCardList(state, this);
       cardList.moveCardTo(this, player.discard);
@@ -81,5 +99,4 @@ This card can't be affected by any Special Conditions and can't retreat. If this
 
     return state;
   }
-
 }

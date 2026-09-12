@@ -10,7 +10,7 @@ import { AttachEnergyPrompt, GameError, StateUtils } from '../../../game';
 import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 
 export class ColressMachine extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   protected _tags = [CardTag.TEAM_PLASMA];
 

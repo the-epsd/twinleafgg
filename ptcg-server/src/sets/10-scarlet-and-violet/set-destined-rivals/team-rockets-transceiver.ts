@@ -79,7 +79,7 @@ function* playCard(
 }
 
 export class TeamRocketsTransceiver extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   protected _tags = [CardTag.TEAM_ROCKET];
   public regulationMark = 'I';
   public set: string = 'DRI';

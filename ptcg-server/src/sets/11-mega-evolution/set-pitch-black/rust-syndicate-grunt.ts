@@ -19,7 +19,7 @@ import { WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN } from '../../../gam
 import { CLEAN_UP_SUPPORTER } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class RustSyndicateGrunt extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark = 'J';
   public set: string = 'PBL';
   public setNumber: string = '81';

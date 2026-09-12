@@ -12,7 +12,12 @@ import { Card } from '../../../game/store/card/card';
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 
-function* useStadium(next: Function, store: StoreLike, state: State, effect: UseStadiumEffect): IterableIterator<State> {
+function* useStadium(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: UseStadiumEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   const stadiumUsedTurn = player.stadiumUsedTurn;
@@ -22,16 +27,20 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
     throw new GameError(GameMessage.CANNOT_USE_STADIUM);
   }
 
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_DISCARD,
-    player.hand,
-    {},
-    { min: 1, max: 1, allowCancel: true }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_DISCARD,
+      player.hand,
+      {},
+      { min: 1, max: 1, allowCancel: true },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   if (cards.length === 0) {
     player.stadiumUsedTurn = stadiumUsedTurn;
@@ -40,35 +49,38 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
 
   player.hand.moveCardsTo(cards, player.discard);
 
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.deck,
-    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-    { min: 1, max: 1, allowCancel: true }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.deck,
+      { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+      { min: 1, max: 1, allowCancel: true },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   player.deck.moveCardsTo(cards, player.hand);
 
   if (cards.length > 0) {
-    yield store.prompt(state, new ShowCardsPrompt(
-      opponent.id,
-      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-      cards
-    ), () => next());
+    yield store.prompt(
+      state,
+      new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+      () => next(),
+    );
   }
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);
   });
 }
 
 export class ViridianForest extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.STADIUM;
+  protected _trainerType: TrainerType = TrainerType.STADIUM;
 
   public set: string = 'TEU';
 
@@ -81,7 +93,7 @@ export class ViridianForest extends TrainerCard {
   public setNumber: string = '156';
 
   public text: string =
-    'Once during each player\'s turn, that player may discard a card from ' +
+    "Once during each player's turn, that player may discard a card from " +
     'their hand. If they do, that player searches their deck for a basic ' +
     'Energy card, reveals it, and puts it into their hand. Then, that ' +
     'player shuffles their deck.';
@@ -94,5 +106,4 @@ export class ViridianForest extends TrainerCard {
 
     return state;
   }
-
 }

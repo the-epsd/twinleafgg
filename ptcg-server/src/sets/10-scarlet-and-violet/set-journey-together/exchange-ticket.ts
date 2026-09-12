@@ -1,10 +1,18 @@
-import { Card, GameError, GameMessage, Player, State, StoreLike, TrainerCard, TrainerType } from '../../../game';
+import {
+  Card,
+  GameError,
+  GameMessage,
+  Player,
+  State,
+  StoreLike,
+  TrainerCard,
+  TrainerType,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 
 export class RedeemableTicket extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public regulationMark = 'I';
 
@@ -28,11 +36,10 @@ export class RedeemableTicket extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
-      const prizes = player.prizes.filter(p => p.cards.length > 0);
+      const prizes = player.prizes.filter((p) => p.cards.length > 0);
       const prizeCount = prizes.reduce((sum, p) => sum + p.cards.length, 0);
 
       if (prizeCount === 0) {
@@ -44,24 +51,24 @@ export class RedeemableTicket extends TrainerCard {
 
       // Collect all prize cards
       const allPrizeCards: Card[] = [];
-      prizes.forEach(p => allPrizeCards.push(...p.cards));
+      prizes.forEach((p) => allPrizeCards.push(...p.cards));
 
       // Shuffle the prize cards
       this.shuffleArray(allPrizeCards);
 
       // Move prize cards to the bottom of the deck
-      allPrizeCards.forEach(card => {
+      allPrizeCards.forEach((card) => {
         player.deck.cards.unshift(card);
       });
 
       // Clear the prize cards
-      prizes.forEach(p => p.cards = []);
+      prizes.forEach((p) => (p.cards = []));
 
       // Draw cards from the top of the deck to the prize cards
       for (let i = 0; i < prizeCount; i++) {
         const card = player.deck.cards.pop();
         if (card) {
-          const prize = player.prizes.find(p => p.cards.length === 0);
+          const prize = player.prizes.find((p) => p.cards.length === 0);
           if (prize) {
             prize.cards.push(card);
           } else {
@@ -71,7 +78,7 @@ export class RedeemableTicket extends TrainerCard {
       }
 
       // Set the new prize cards to be face down
-      player.prizes.forEach(p => p.isSecret = true);
+      player.prizes.forEach((p) => (p.isSecret = true));
       player.supporter.moveCardTo(this, player.discard);
       return state;
     }

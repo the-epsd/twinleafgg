@@ -100,7 +100,7 @@ function* playCard(
 }
 
 export class Rose extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark: string = 'D';
   public set: string = 'DAA';
   public setNumber: string = '168';

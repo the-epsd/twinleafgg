@@ -9,8 +9,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../..';
 
 export class Schoolboy extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public regulationMark = 'E';
 
@@ -38,10 +37,12 @@ export class Schoolboy extends TrainerCard {
 
       player.deck.moveTo(player.hand, 2);
 
-      if (opponent.getPrizeLeft() === 1 || opponent.getPrizeLeft() === 3 || opponent.getPrizeLeft() === 5) {
-
+      if (
+        opponent.getPrizeLeft() === 1 ||
+        opponent.getPrizeLeft() === 3 ||
+        opponent.getPrizeLeft() === 5
+      ) {
         player.deck.moveTo(player.hand, 2);
-
       }
 
       return state;

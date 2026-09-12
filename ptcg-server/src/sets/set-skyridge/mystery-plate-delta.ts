@@ -30,7 +30,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
 export class MysteryPlateDelta extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   protected _tags = [CardTag.TECHNICAL_MACHINE];
   public set: string = 'SK';
   public cardImage: string = 'assets/cardback.png';

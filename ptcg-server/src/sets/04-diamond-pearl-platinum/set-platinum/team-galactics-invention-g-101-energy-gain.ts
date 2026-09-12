@@ -12,7 +12,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class TeamGalacticsInventionG101EnergyGain extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.TOOL;
+  protected _trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'PL';
   public name: string = "Team Galactic's Invention G-101 Energy Gain";
   public fullName: string = "Team Galactic's Invention G-101 Energy Gain PL";

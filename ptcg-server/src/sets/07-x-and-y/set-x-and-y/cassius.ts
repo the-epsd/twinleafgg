@@ -10,8 +10,7 @@ import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-
 import { GameError } from '../../../game';
 import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 export class Cassius extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'XY';
 
@@ -23,8 +22,7 @@ export class Cassius extends TrainerCard {
 
   public fullName: string = 'Cassius XY';
 
-  public text: string =
-    'Shuffle 1 of your Pokémon and all cards attached to it into your deck.';
+  public text: string = 'Shuffle 1 of your Pokémon and all cards attached to it into your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -40,30 +38,31 @@ export class Cassius extends TrainerCard {
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_SHUFFLE,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { allowCancel: false }
-      ), result => {
-        const cardList = result.length > 0 ? result[0] : null;
-        if (cardList !== null) {
-          player.removePokemonEffects(cardList);
-          cardList.clearEffects();
-          cardList.damage = 0;
-          cardList.removeBoardEffect(BoardEffect.ABILITY_USED);
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_SHUFFLE,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { allowCancel: false },
+        ),
+        (result) => {
+          const cardList = result.length > 0 ? result[0] : null;
+          if (cardList !== null) {
+            player.removePokemonEffects(cardList);
+            cardList.clearEffects();
+            cardList.damage = 0;
+            cardList.removeBoardEffect(BoardEffect.ABILITY_USED);
 
-          cardList.moveCardsTo(cardList.getPokemons(), player.deck);
-          cardList.moveTo(player.deck);
-          SHUFFLE_DECK(store, state, player);
-
-
-        }
-      });
+            cardList.moveCardsTo(cardList.getPokemons(), player.deck);
+            cardList.moveTo(player.deck);
+            SHUFFLE_DECK(store, state, player);
+          }
+        },
+      );
     }
 
     return state;
   }
-
 }

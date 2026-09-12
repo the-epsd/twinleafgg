@@ -132,7 +132,7 @@ function* playCard(
 }
 
 export class Wally extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'ROS';
 

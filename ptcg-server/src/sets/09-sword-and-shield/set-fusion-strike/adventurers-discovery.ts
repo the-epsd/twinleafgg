@@ -73,7 +73,7 @@ function* playCard(
 }
 
 export class AdventurersDiscovery extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public regulationMark = 'E';
 

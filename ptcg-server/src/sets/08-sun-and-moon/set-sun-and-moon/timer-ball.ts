@@ -16,7 +16,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class TimerBall extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'SUM';
   public name: string = 'Timer Ball';
@@ -28,7 +28,6 @@ export class TimerBall extends TrainerCard {
     'Flip 2 coins. For each heads, search your deck for an Evolution Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
@@ -43,11 +42,12 @@ export class TimerBall extends TrainerCard {
       effect.preventDefault = true;
 
       let heads: number = 0;
-      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, results => {
-        results.forEach(r => { heads += r ? 1 : 0; });
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, (results) => {
+        results.forEach((r) => {
+          heads += r ? 1 : 0;
+        });
 
         if (heads === 0) {
-
           return state;
         }
 
@@ -62,36 +62,38 @@ export class TimerBall extends TrainerCard {
           }
         });
 
-        store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_HAND,
-          player.deck,
-          { superType: SuperType.POKEMON },
-          { min: 0, max: heads, allowCancel: false, blocked }
-        ), selected => {
-          cards = selected || [];
+        store.prompt(
+          state,
+          new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_CARD_TO_HAND,
+            player.deck,
+            { superType: SuperType.POKEMON },
+            { min: 0, max: heads, allowCancel: false, blocked },
+          ),
+          (selected) => {
+            cards = selected || [];
 
-          if (cards.length > 0) {
+            if (cards.length > 0) {
+              player.deck.moveCardsTo(cards, player.hand);
 
-            player.deck.moveCardsTo(cards, player.hand);
+              return store.prompt(
+                state,
+                new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+                () => {
+                  return state;
+                },
+              );
+            }
 
-            return store.prompt(state, new ShowCardsPrompt(
-              opponent.id,
-              GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-              cards
-            ), () => {
-              return state;
+            return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+              player.deck.applyOrder(order);
             });
-          }
-
-          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
-          });
-        });
+          },
+        );
       });
     }
 
     return state;
   }
-
 }

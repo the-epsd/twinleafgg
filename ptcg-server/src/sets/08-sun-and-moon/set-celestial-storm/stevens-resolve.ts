@@ -11,7 +11,12 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   let cards: Card[] = [];
 
@@ -19,20 +24,24 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.deck,
-    {},
-    { min: 0, max: 3, allowCancel: false }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.deck,
+      {},
+      { min: 0, max: 3, allowCancel: false },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   player.deck.moveCardsTo(cards, player.hand);
 
-  store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+  store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);
   });
 
@@ -41,8 +50,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 }
 
 export class StevensResolve extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'CES';
 
@@ -50,16 +58,14 @@ export class StevensResolve extends TrainerCard {
 
   public cardImage = 'assets/cardback.png';
 
-  public name: string = 'Steven\'s Resolve';
+  public name: string = "Steven's Resolve";
 
-  public fullName: string = 'Steven\'s Resolve CES';
+  public fullName: string = "Steven's Resolve CES";
 
   public text: string =
     'Search your deck for up to 3 cards and put them into your hand. Then, shuffle your deck. Your turn ends.';
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
@@ -67,5 +73,4 @@ export class StevensResolve extends TrainerCard {
 
     return state;
   }
-
 }

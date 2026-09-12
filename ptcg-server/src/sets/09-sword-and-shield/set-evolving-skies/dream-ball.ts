@@ -13,7 +13,7 @@ import { GameMessage } from '../../../game/game-message';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 
 export class DreamBall extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public regulationMark = 'E';
 

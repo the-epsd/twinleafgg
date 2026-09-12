@@ -8,8 +8,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class Surfer extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'SSP';
 
@@ -26,7 +25,6 @@ export class Surfer extends TrainerCard {
   public text: string =
     'Switch your Active Pokémon with 1 of your Benched Pokémon. If you do, draw cards until you have 5 cards in your hand.';
 
-
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     if (player.supporterTurn > 0) {
       return false;
@@ -34,10 +32,8 @@ export class Surfer extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
       const player = effect.player;
 
       const supporterTurn = player.supporterTurn;
@@ -50,31 +46,30 @@ export class Surfer extends TrainerCard {
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { allowCancel: false }
-      ), result => {
-        const cardList = result[0];
-        player.switchPokemon(cardList);
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          { allowCancel: false },
+        ),
+        (result) => {
+          const cardList = result[0];
+          player.switchPokemon(cardList);
 
-
-        while (player.hand.cards.length < 5) {
-          if (player.deck.cards.length === 0) {
-            break;
+          while (player.hand.cards.length < 5) {
+            if (player.deck.cards.length === 0) {
+              break;
+            }
+            player.deck.moveTo(player.hand, 1);
           }
-          player.deck.moveTo(player.hand, 1);
-        }
 
-        return state;
-      });
-
+          return state;
+        },
+      );
     }
     return state;
   }
-
-
-
 }

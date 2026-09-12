@@ -11,7 +11,12 @@ import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-
 import { PokemonCard, pokemonHasCardType } from '../../../game';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   const supporterTurn = player.supporterTurn;
@@ -40,44 +45,48 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  return store.prompt(state, new ChoosePokemonPrompt(
-    player.id,
-    GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.ACTIVE, SlotType.BENCH],
-    { min: 1, max: 1, allowCancel: true, blocked }
-  ), result => {
-    const cardList = result.length > 0 ? result[0] : null;
-    if (cardList !== null) {
-      const pokemons = cardList.getPokemons();
-      const otherCards = cardList.cards.filter(card =>
-        !(card instanceof PokemonCard) &&
-        !pokemons.includes(card as PokemonCard) &&
-        (!cardList.tools || !cardList.tools.includes(card))
-      );
-      const tools = [...cardList.tools];
+  return store.prompt(
+    state,
+    new ChoosePokemonPrompt(
+      player.id,
+      GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.ACTIVE, SlotType.BENCH],
+      { min: 1, max: 1, allowCancel: true, blocked },
+    ),
+    (result) => {
+      const cardList = result.length > 0 ? result[0] : null;
+      if (cardList !== null) {
+        const pokemons = cardList.getPokemons();
+        const otherCards = cardList.cards.filter(
+          (card) =>
+            !(card instanceof PokemonCard) &&
+            !pokemons.includes(card as PokemonCard) &&
+            (!cardList.tools || !cardList.tools.includes(card)),
+        );
+        const tools = [...cardList.tools];
 
-      // Move other cards to hand
-      if (otherCards.length > 0) {
-        MOVE_CARDS(store, state, cardList, player.hand, { cards: otherCards });
-      }
+        // Move other cards to hand
+        if (otherCards.length > 0) {
+          MOVE_CARDS(store, state, cardList, player.hand, { cards: otherCards });
+        }
 
-      // Move tools to hand explicitly
-      for (const tool of tools) {
-        cardList.moveCardTo(tool, player.hand);
-      }
+        // Move tools to hand explicitly
+        for (const tool of tools) {
+          cardList.moveCardTo(tool, player.hand);
+        }
 
-      // Move Pokémon to hand
-      if (pokemons.length > 0) {
-        MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
+        // Move Pokémon to hand
+        if (pokemons.length > 0) {
+          MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
+        }
       }
-    }
-  });
+    },
+  );
 }
 
 export class CherensCare extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public regulationMark = 'F';
 
@@ -87,9 +96,9 @@ export class CherensCare extends TrainerCard {
 
   public setNumber: string = '134';
 
-  public name: string = 'Cheren\'s Care';
+  public name: string = "Cheren's Care";
 
-  public fullName: string = 'Cheren\'s Care BRS';
+  public fullName: string = "Cheren's Care BRS";
 
   public text: string =
     'Put 1 of your [C] Pokémon that has any damage counters on it and all attached cards into your hand.';
@@ -102,5 +111,4 @@ export class CherensCare extends TrainerCard {
 
     return state;
   }
-
 }

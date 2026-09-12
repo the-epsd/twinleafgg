@@ -10,7 +10,7 @@ import { BLOCK_IF_NO_SLOTS, GET_PLAYER_BENCH_SLOTS } from '../../../game/store/p
 import { ChooseCardsPrompt, PokemonCard, SelectOptionPrompt } from '../../../game';
 
 export class Maxie extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'MA';
   public name: string = 'Maxie';
   public fullName: string = 'Maxie MA';

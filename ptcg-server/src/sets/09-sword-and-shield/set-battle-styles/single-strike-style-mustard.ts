@@ -15,7 +15,7 @@ export class SingleStrikeStyleMustard extends TrainerCard {
 
   protected _tags = [CardTag.SINGLE_STRIKE];
 
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'BST';
 

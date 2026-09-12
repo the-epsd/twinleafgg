@@ -8,10 +8,9 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 import { GameError, GameMessage, Player } from '../../../game';
 
 export class Grusha extends TrainerCard {
-
   public regulationMark = 'G';
 
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'PAL';
 
@@ -35,7 +34,6 @@ export class Grusha extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
       const player = effect.player;
 
       const supporterTurn = player.supporterTurn;
@@ -50,28 +48,24 @@ export class Grusha extends TrainerCard {
 
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
       store.reduceEffect(state, checkProvidedEnergyEffect);
-      const energyCount = checkProvidedEnergyEffect.energyMap.reduce((left, p) => left + p.provides.length, 0);
+      const energyCount = checkProvidedEnergyEffect.energyMap.reduce(
+        (left, p) => left + p.provides.length,
+        0,
+      );
 
       if (energyCount === 0) {
-
         while (player.hand.cards.length < 7) {
           if (player.deck.cards.length === 0) {
             break;
           }
           player.deck.moveTo(player.hand, 1);
-
-
         }
-      }
-      else {
-
+      } else {
         while (player.hand.cards.length < 5) {
           if (player.deck.cards.length === 0) {
             break;
           }
           player.deck.moveTo(player.hand, 1);
-
-
         }
         return state;
       }

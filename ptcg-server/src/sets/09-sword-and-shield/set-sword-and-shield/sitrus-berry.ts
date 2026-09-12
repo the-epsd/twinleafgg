@@ -10,14 +10,15 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { IS_TOOL_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class SitrusBerry extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.TOOL;
+  protected _trainerType: TrainerType = TrainerType.TOOL;
   public regulationMark: string = 'D';
   public set: string = 'SSH';
   public setNumber: string = '182';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sitrus Berry';
   public fullName: string = 'Sitrus Berry SSH';
-  public text: string = 'Attach a Pokémon Tool to 1 of your Pokémon that doesn\'t already have a Pokémon Tool attached. At the end of each turn, if the Pokémon this card is attached to has 3 or more damage counters on it, heal 30 damage from it and discard this card. You may play any number of Item cards during your turn.';
+  public text: string =
+    "Attach a Pokémon Tool to 1 of your Pokémon that doesn't already have a Pokémon Tool attached. At the end of each turn, if the Pokémon this card is attached to has 3 or more damage counters on it, heal 30 damage from it and discard this card. You may play any number of Item cards during your turn.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-unified-minds/giant-bomb.ts (tool EndTurnEffect pattern - check attachment + discard)

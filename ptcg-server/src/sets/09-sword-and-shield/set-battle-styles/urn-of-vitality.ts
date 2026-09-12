@@ -64,7 +64,7 @@ export class UrnOfVitality extends TrainerCard {
 
   protected _tags = [CardTag.SINGLE_STRIKE];
 
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'BST';
 

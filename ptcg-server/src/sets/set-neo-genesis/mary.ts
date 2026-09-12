@@ -9,16 +9,14 @@ import { DRAW_CARDS } from '../../game/store/prefabs/prefabs';
 import { ChooseCardsPrompt, ShuffleDeckPrompt } from '../../game';
 
 export class Mary extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'N1';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '87';
   public name: string = 'Mary';
   public fullName: string = 'Mary N1';
 
-  public text: string =
-    'Draw 2 cards. Then, shuffle 2 cards from your hand into your deck.';
+  public text: string = 'Draw 2 cards. Then, shuffle 2 cards from your hand into your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -31,23 +29,25 @@ export class Mary extends TrainerCard {
       const cardsToDraw = Math.min(2, player.deck.cards.length);
       DRAW_CARDS(store, state, player, cardsToDraw);
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_SHUFFLE,
-        player.hand,
-        {},
-        { allowCancel: false, min: 2, max: 2 }
-      ), selected => {
-        selected.forEach(card => {
-          player.hand.moveCardTo(card, player.deck);
-        });
-        state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-
-        });
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_SHUFFLE,
+          player.hand,
+          {},
+          { allowCancel: false, min: 2, max: 2 },
+        ),
+        (selected) => {
+          selected.forEach((card) => {
+            player.hand.moveCardTo(card, player.deck);
+          });
+          state = store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+            player.deck.applyOrder(order);
+          });
+        },
+      );
     }
     return state;
   }
-
 }

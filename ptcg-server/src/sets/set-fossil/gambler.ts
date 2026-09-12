@@ -5,7 +5,7 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Gambler extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'FO';
   public cardImage: string = 'assets/cardback.png';
@@ -17,25 +17,21 @@ export class Gambler extends TrainerCard {
     'Shuffle your hand into your deck. Flip a coin. If heads, draw 8 cards. If tails, draw 1 card.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
       const player = effect.player;
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      const cards = player.hand.cards.filter(c => c !== this);
+      const cards = player.hand.cards.filter((c) => c !== this);
 
       player.hand.moveCardsTo(cards, player.deck);
-      store.prompt(state, [
-        new ShuffleDeckPrompt(player.id),
-      ], deckOrder => {
+      store.prompt(state, [new ShuffleDeckPrompt(player.id)], (deckOrder) => {
         player.deck.applyOrder(deckOrder);
 
         player.deck.moveTo(player.hand, 4);
       });
-      state = COIN_FLIP_PROMPT(store, state, player, results => {
+      state = COIN_FLIP_PROMPT(store, state, player, (results) => {
         if (results) {
           player.deck.moveTo(player.hand, 8);
         } else {

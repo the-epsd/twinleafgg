@@ -10,14 +10,15 @@ import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND } from '../../../game/store/prefabs/prefabs';
 
 export class PokeKid extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark: string = 'D';
   public set: string = 'SSH';
   public setNumber: string = '173';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Poké Kid';
   public fullName: string = 'Poké Kid SSH';
-  public text: string = 'Search your deck for a Pokémon, reveal it, and put it into your hand. Then, shuffle your deck. You may play only 1 Supporter card during your turn.';
+  public text: string =
+    'Search your deck for a Pokémon, reveal it, and put it into your hand. Then, shuffle your deck. You may play only 1 Supporter card during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-sword-and-shield/hop.ts (WAS_TRAINER_USED + supporter pattern)
@@ -32,8 +33,6 @@ export class PokeKid extends TrainerCard {
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
       SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, player, {}, { min: 0, max: 1 });
-
-
     }
 
     return state;

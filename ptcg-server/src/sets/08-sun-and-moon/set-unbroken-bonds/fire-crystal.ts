@@ -10,15 +10,22 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   // Player has no Fire Energy in the discard pile
   let energyInDiscard = 0;
-  player.discard.cards.forEach(c => {
-    if (c instanceof EnergyCard
-      && c.energyType === EnergyType.BASIC
-      && c.provides.includes(CardType.FIRE)) {
+  player.discard.cards.forEach((c) => {
+    if (
+      c instanceof EnergyCard &&
+      c.energyType === EnergyType.BASIC &&
+      c.provides.includes(CardType.FIRE)
+    ) {
       energyInDiscard += 1;
     }
   });
@@ -33,35 +40,35 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   effect.preventDefault = true;
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
-  return store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.discard,
-    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
-    { min: max, max, allowCancel: false }
-  ), selected => {
-    if (selected && selected.length > 0) {
-      // Recover discarded energies
-      player.discard.moveCardsTo(selected, player.hand);
-    }
-
-  });
+  return store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.discard,
+      { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
+      { min: max, max, allowCancel: false },
+    ),
+    (selected) => {
+      if (selected && selected.length > 0) {
+        // Recover discarded energies
+        player.discard.moveCardsTo(selected, player.hand);
+      }
+    },
+  );
 }
 
 export class FireCrystal extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'UNB';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '173';
   public name: string = 'Fire Crystal';
   public fullName: string = 'Fire Crystal UNB';
 
-  public text: string =
-    'Put 3 [R] Energy cards from your discard pile into your hand.';
+  public text: string = 'Put 3 [R] Energy cards from your discard pile into your hand.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 

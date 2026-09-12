@@ -9,12 +9,12 @@ import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 import { ChoosePokemonPrompt, Player, PlayerType, SlotType } from '../../../game';
 
 export class TeamRocketsVentureBomb extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   protected _tags = [CardTag.TEAM_ROCKET];
   public set: string = 'DRI';
   public regulationMark = 'I';
-  public name: string = 'Team Rocket\'s Venture Bomb';
-  public fullName: string = 'Team Rocket\'s Venture Bomb DRI';
+  public name: string = "Team Rocket's Venture Bomb";
+  public fullName: string = "Team Rocket's Venture Bomb DRI";
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '179';
 

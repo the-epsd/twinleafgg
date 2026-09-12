@@ -18,7 +18,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 
 export class MegaTurbo extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'ROS';
   public name: string = 'Mega Turbo';
   public cardImage: string = 'assets/cardback.png';

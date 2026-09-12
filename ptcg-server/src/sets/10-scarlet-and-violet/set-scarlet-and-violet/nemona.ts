@@ -9,8 +9,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { Player } from '../../../game';
 
 export class Nemona extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public regulationMark = 'G';
 
@@ -24,8 +23,7 @@ export class Nemona extends TrainerCard {
 
   public fullName: string = 'Nemona SVI';
 
-  public text: string =
-    'Draw 3 cards.';
+  public text: string = 'Draw 3 cards.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     const supporterTurn = player.supporterTurn;
@@ -59,11 +57,8 @@ export class Nemona extends TrainerCard {
       }
 
       player.deck.moveTo(player.hand, 3);
-
-
     }
 
     return state;
   }
-
 }

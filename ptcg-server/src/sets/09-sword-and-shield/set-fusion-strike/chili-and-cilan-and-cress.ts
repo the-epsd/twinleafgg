@@ -12,7 +12,7 @@ import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 import { ChooseCardsPrompt, GameMessage } from '../../../game';
 
 export class ChiliAndCilanAndCress extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   protected _tags = [CardTag.FUSION_STRIKE];
   public regulationMark: string = 'E';
   public set: string = 'FST';

@@ -7,7 +7,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class BugCatcher extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'UNM';
   public setNumber: string = '189';
@@ -30,10 +30,9 @@ export class BugCatcher extends TrainerCard {
       // Draw 2 cards
       player.deck.moveTo(player.hand, 2);
       // Flip a coin for 2 more
-      state = COIN_FLIP_PROMPT(store, state, player, result => {
+      state = COIN_FLIP_PROMPT(store, state, player, (result) => {
         if (result) {
           player.deck.moveTo(player.hand, 2);
-
         }
       });
 

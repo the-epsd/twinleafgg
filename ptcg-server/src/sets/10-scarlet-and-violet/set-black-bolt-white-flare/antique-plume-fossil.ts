@@ -27,7 +27,7 @@ import {
 } from '../../../game/store/effects/attack-effects';
 
 export class AntiquePlumeFossil extends TrainerCard {
-  public trainerType = TrainerType.ITEM;
+  protected _trainerType = TrainerType.ITEM;
   public stage: Stage = Stage.BASIC;
   public cardType: CardType[] = [CardType.COLORLESS];
   public cardTypez: CardType = CardType.COLORLESS;

@@ -99,7 +99,7 @@ function* playCard(
 }
 
 export class EarthenVessel extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public regulationMark = 'G';
 

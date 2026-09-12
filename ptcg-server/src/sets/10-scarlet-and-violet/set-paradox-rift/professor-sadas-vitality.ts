@@ -10,7 +10,7 @@ import { AttachEnergyPrompt, EnergyCard, GameError, Player, StateUtils } from '.
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 export class ProfessorSadasVitality extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   protected _tags = [CardTag.ANCIENT];
 

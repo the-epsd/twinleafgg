@@ -4,16 +4,16 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 export class MarysRequest extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'UF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '86';
-  public name: string = 'Mary\'s Request';
-  public fullName: string = 'Mary\'s Request UF';
-  public text = 'Draw a card. If you don\'t have any Stage 2 Evolved Pokémon in play, draw 2 more cards.';
+  public name: string = "Mary's Request";
+  public fullName: string = "Mary's Request UF";
+  public text =
+    "Draw a card. If you don't have any Stage 2 Evolved Pokémon in play, draw 2 more cards.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
@@ -41,7 +41,6 @@ export class MarysRequest extends TrainerCard {
       if (!hasStage2) {
         player.deck.moveTo(player.hand, Math.min(2, player.deck.cards.length));
       }
-
     }
 
     return state;

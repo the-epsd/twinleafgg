@@ -176,7 +176,7 @@ function* playCard(
 }
 
 export class CynthiaAndCaitlin extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'CEC';
   protected _tags = [CardTag.TAG_TEAM];
   public cardImage: string = 'assets/cardback.png';

@@ -12,10 +12,16 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { AttachEnergyPrompt, GameError, Player, StateUtils, pokemonHasCardType } from '../../../game';
+import {
+  AttachEnergyPrompt,
+  GameError,
+  Player,
+  StateUtils,
+  pokemonHasCardType,
+} from '../../../game';
 
 export class GlassTrumpet extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public regulationMark = 'H';
   public set: string = 'SCR';
   public cardImage: string = 'assets/cardback.png';

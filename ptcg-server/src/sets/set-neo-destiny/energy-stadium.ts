@@ -15,17 +15,17 @@ export class EnergyStadium extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '99';
 
-  public trainerType = TrainerType.STADIUM;
+  protected _trainerType = TrainerType.STADIUM;
 
   public set = 'N4';
   public name = 'Energy Stadium';
   public fullName = 'Energy Stadium N4';
 
-  public text = 'Once during each player\'s turn (before attacking), that player may flip a coin. If heads, that player puts a basic Energy card from his or her discard pile into his or her hand.';
+  public text =
+    "Once during each player's turn (before attacking), that player may flip a coin. If heads, that player puts a basic Energy card from his or her discard pile into his or her hand.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
-
       const player = effect.player;
 
       // Check if DiscardToHandEffect is prevented
@@ -55,35 +55,42 @@ export class EnergyStadium extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      COIN_FLIP_PROMPT(store, state, player, result => {
+      COIN_FLIP_PROMPT(store, state, player, (result) => {
         if (result) {
           let cards: Card[] = [];
-          store.prompt(state, new ChooseCardsPrompt(
-            player,
-            GameMessage.CHOOSE_CARD_TO_HAND,
-            player.discard,
-            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-            { min: 0, max: 1, allowCancel: false, blocked }
-          ), selectedCards => {
-            cards = selectedCards || [];
+          store.prompt(
+            state,
+            new ChooseCardsPrompt(
+              player,
+              GameMessage.CHOOSE_CARD_TO_HAND,
+              player.discard,
+              { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+              { min: 0, max: 1, allowCancel: false, blocked },
+            ),
+            (selectedCards) => {
+              cards = selectedCards || [];
 
-            // Operation canceled by the user
-            if (cards.length === 0) {
-              return state;
-            }
+              // Operation canceled by the user
+              if (cards.length === 0) {
+                return state;
+              }
 
-            if (cards.length > 0) {
-              SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-            }
+              if (cards.length > 0) {
+                SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+              }
 
-            cards.forEach((card, index) => {
-              player.discard.moveCardTo(card, player.hand);
-            });
+              cards.forEach((card, index) => {
+                player.discard.moveCardTo(card, player.hand);
+              });
 
-            cards.forEach((card, index) => {
-              store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-            });
-          });
+              cards.forEach((card, index) => {
+                store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, {
+                  name: player.name,
+                  card: card.name,
+                });
+              });
+            },
+          );
         }
       });
     }

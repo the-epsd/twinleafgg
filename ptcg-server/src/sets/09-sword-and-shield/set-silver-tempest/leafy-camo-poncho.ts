@@ -5,7 +5,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerTargetEffect } from '../../../game/store/effects/play-card-effects';
 
 export class LeafyCamoPoncho extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.TOOL;
+  protected _trainerType: TrainerType = TrainerType.TOOL;
   public name: string = 'Leafy Camo Poncho';
   public fullName: string = 'Leafy Camo Poncho SIT';
   public set: string = 'SIT';

@@ -12,7 +12,7 @@ import { GamePhase, State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class MysteriousShard extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.TOOL;
+  protected _trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'CG';
   public name: string = 'Mysterious Shard';
   public fullName: string = 'Mysterious Shard CG';

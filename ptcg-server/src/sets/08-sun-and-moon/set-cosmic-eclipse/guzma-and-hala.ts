@@ -207,7 +207,7 @@ function* playCard(
 }
 
 export class GuzmaAndHala extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'CEC';
 

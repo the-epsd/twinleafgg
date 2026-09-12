@@ -7,10 +7,15 @@ import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-
 import { TrainerEffect, CoinFlipEffect } from '../../../game/store/effects/play-card-effects';
 import { PlayerType, SlotType, StateUtils, GameError, GameMessage } from '../../../game';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
-  const hasBench = opponent.bench.some(b => b.cards.length > 0);
+  const hasBench = opponent.bench.some((b) => b.cards.length > 0);
 
   if (!hasBench) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -27,21 +32,24 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     return state;
   }
 
-  return store.prompt(state, new ChoosePokemonPrompt(
-    player.id,
-    GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-    PlayerType.TOP_PLAYER,
-    [SlotType.BENCH],
-    { allowCancel: false }
-  ), result => {
-    const cardList = result[0];
-    opponent.switchPokemon(cardList);
-
-  });
+  return store.prompt(
+    state,
+    new ChoosePokemonPrompt(
+      player.id,
+      GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+      PlayerType.TOP_PLAYER,
+      [SlotType.BENCH],
+      { allowCancel: false },
+    ),
+    (result) => {
+      const cardList = result[0];
+      opponent.switchPokemon(cardList);
+    },
+  );
 }
 
 export class PokemonCatcher extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public regulationMark = 'G';
   public set: string = 'SSH';
   public setNumber: string = '175';
@@ -49,7 +57,7 @@ export class PokemonCatcher extends TrainerCard {
   public fullName: string = 'Pokemon Catcher SSH';
 
   public text: string =
-    'Flip a coin. If heads, switch 1 of your opponent\'s Benched Pokemon ' +
+    "Flip a coin. If heads, switch 1 of your opponent's Benched Pokemon " +
     'with their Active Pokemon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -59,5 +67,4 @@ export class PokemonCatcher extends TrainerCard {
     }
     return state;
   }
-
 }

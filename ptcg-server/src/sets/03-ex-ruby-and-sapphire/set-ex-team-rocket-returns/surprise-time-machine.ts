@@ -20,7 +20,7 @@ import { DEVOLVE_POKEMON, SHUFFLE_DECK } from '../../../game/store/prefabs/prefa
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 
 export class SurpriseTimeMachine extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   protected _tags = [CardTag.ROCKETS_SECRET_MACHINE];
   public set: string = 'TRR';
   public name: string = 'Surprise! Time Machine';

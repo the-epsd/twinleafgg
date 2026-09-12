@@ -6,22 +6,22 @@ import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class Karen extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'XYP';
   public name: string = 'Karen';
   public fullName: string = 'Karen XYP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '177';
 
-  public text: string = 'Each player shuffles all Pokémon in his or her discard pile into his or her deck.';
+  public text: string =
+    'Each player shuffles all Pokémon in his or her discard pile into his or her deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-chilling-reign/spiritomb.ts (Ghostly Cries — move Pokemon from discard to deck, then shuffle)
     if (WAS_TRAINER_USED(effect, this)) {
       for (const player of [effect.player, StateUtils.getOpponent(state, effect.player)]) {
-        const pokemonCards = player.discard.cards.filter(c => c instanceof PokemonCard).slice();
-        pokemonCards.forEach(card => {
+        const pokemonCards = player.discard.cards.filter((c) => c instanceof PokemonCard).slice();
+        pokemonCards.forEach((card) => {
           player.discard.moveCardTo(card, player.deck);
         });
         if (pokemonCards.length > 0) {

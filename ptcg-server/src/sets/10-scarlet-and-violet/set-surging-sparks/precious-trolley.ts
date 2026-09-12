@@ -19,7 +19,7 @@ import {
 } from '../../../game/store/effects/play-card-effects';
 
 export class PreciousTrolley extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   protected _tags = [CardTag.ACE_SPEC];
   public set: string = 'SSP';
   public cardImage: string = 'assets/cardback.png';

@@ -13,8 +13,13 @@ import { GameError } from '../../../game/game-error';
 import { GameLog, GameMessage } from '../../../game/game-message';
 import { Player, PokemonCard } from '../../../game';
 
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: BrocksScouting, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: BrocksScouting,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
@@ -47,45 +52,46 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const maxBasics = Math.min(basics, 2);
   const maxEvolutions = Math.min(evolutions, 1);
 
-  // Total max is sum of max for each 
+  // Total max is sum of max for each
   const count = maxBasics + maxEvolutions;
 
   // Pass max counts to prompt options
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.deck,
-    {},
-    { min: 0, max: count, allowCancel: false, blocked, maxBasics, maxEvolutions }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.deck,
+      {},
+      { min: 0, max: count, allowCancel: false, blocked, maxBasics, maxEvolutions },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   player.deck.moveCardsTo(cards, player.hand);
-
-
 
   cards.forEach((card, index) => {
     store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
   });
 
   if (cards.length > 0) {
-    yield store.prompt(state, new ShowCardsPrompt(
-      opponent.id,
-      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-      cards
-    ), () => next());
+    yield store.prompt(
+      state,
+      new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+      () => next(),
+    );
   }
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);
   });
 }
 
 export class BrocksScouting extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public regulationMark = 'I';
 
@@ -95,11 +101,12 @@ export class BrocksScouting extends TrainerCard {
 
   public setNumber: string = '146';
 
-  public name: string = 'Brock\'s Scouting';
+  public name: string = "Brock's Scouting";
 
-  public fullName: string = 'Brock\'s Scouting JTG';
+  public fullName: string = "Brock's Scouting JTG";
 
-  public text: string = 'Search your deck for up to 2 Basic Pokémon or 1 Evolution Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.';
+  public text: string =
+    'Search your deck for up to 2 Basic Pokémon or 1 Evolution Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     if (player.supporterTurn > 0) {
@@ -108,9 +115,7 @@ export class BrocksScouting extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;

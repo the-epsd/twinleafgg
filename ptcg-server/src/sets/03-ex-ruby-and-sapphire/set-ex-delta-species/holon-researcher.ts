@@ -20,7 +20,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class HolonResearcher extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   protected _tags = [CardTag.DELTA_SPECIES];
   public set: string = 'DS';
   public cardImage: string = 'assets/cardback.png';

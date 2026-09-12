@@ -8,8 +8,7 @@ import { DAMAGED_FROM_FULL_HP, IS_TOOL_BLOCKED } from '../../../game/store/prefa
 
 import { State } from '../../../game/store/state/state';
 export class FocusSash extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.TOOL;
+  protected _trainerType: TrainerType = TrainerType.TOOL;
 
   public set: string = 'FFI';
 
@@ -22,7 +21,7 @@ export class FocusSash extends TrainerCard {
   public fullName = 'Focus Sash FFI';
 
   public text: string =
-    'If the [F] Pokémon this card is attached to has full HP and would be Knocked Out by damage from an opponent\'s attack, that Pokémon is not Knocked Out and its remaining HP becomes 10 instead. Then, discard this card.';
+    "If the [F] Pokémon this card is attached to has full HP and would be Knocked Out by damage from an opponent's attack, that Pokémon is not Knocked Out and its remaining HP becomes 10 instead. Then, discard this card.";
 
   public reduceEffect(store: any, state: State, effect: Effect): State {
     if (effect instanceof PutDamageEffect && effect.target.tools.includes(this)) {
@@ -30,7 +29,8 @@ export class FocusSash extends TrainerCard {
 
       if (
         IS_TOOL_BLOCKED(store, state, player, this) ||
-        !DAMAGED_FROM_FULL_HP(store, state, effect, player, effect.target)) {
+        !DAMAGED_FROM_FULL_HP(store, state, effect, player, effect.target)
+      ) {
         return state;
       }
 

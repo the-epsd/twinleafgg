@@ -12,7 +12,7 @@ import { ToolEffect } from '../../../game/store/effects/play-card-effects';
 export class AmuletofHope extends TrainerCard {
   protected _tags = [CardTag.ACE_SPEC];
 
-  public trainerType: TrainerType = TrainerType.TOOL;
+  protected _trainerType: TrainerType = TrainerType.TOOL;
 
   public set: string = 'SSP';
 

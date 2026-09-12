@@ -7,7 +7,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
 export class Pokedex extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'BS'; // Replace with the appropriate set abbreviation
 
@@ -19,7 +19,8 @@ export class Pokedex extends TrainerCard {
 
   public setNumber: string = '87'; // Replace with the appropriate set number
 
-  public text: string = 'Look at up to 5 cards from the top of your deck and rearrange them as you like.';
+  public text: string =
+    'Look at up to 5 cards from the top of your deck and rearrange them as you like.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -27,7 +28,6 @@ export class Pokedex extends TrainerCard {
       const deck = player.deck;
 
       const deckTop = new CardList();
-
 
       // Get up to 5 cards from the top of the deck
       const cards = deck.cards.slice(0, 5);
@@ -37,19 +37,20 @@ export class Pokedex extends TrainerCard {
       effect.preventDefault = true;
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
-      return store.prompt(state, new OrderCardsPrompt(
-        player.id,
-        GameMessage.CHOOSE_CARDS_ORDER,
-        deckTop,
-        { allowCancel: false }
-      ), (rearrangedCards) => {
-        if (rearrangedCards === null) {
-          return state;
-        }
+      return store.prompt(
+        state,
+        new OrderCardsPrompt(player.id, GameMessage.CHOOSE_CARDS_ORDER, deckTop, {
+          allowCancel: false,
+        }),
+        (rearrangedCards) => {
+          if (rearrangedCards === null) {
+            return state;
+          }
 
-        deckTop.applyOrder(rearrangedCards);
-        deckTop.moveTo(player.deck);
-      });
+          deckTop.applyOrder(rearrangedCards);
+          deckTop.moveTo(player.deck);
+        },
+      );
     }
 
     return state;

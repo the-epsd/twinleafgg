@@ -14,7 +14,7 @@ export class RapidStrikeStyleMustard extends TrainerCard {
 
   protected _tags = [CardTag.RAPID_STRIKE];
 
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'BST';
 

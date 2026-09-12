@@ -12,7 +12,12 @@ import { GameMessage } from '../../game/game-message';
 import { PokemonCard } from '../../game';
 import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
@@ -26,17 +31,20 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     const card = player.deck.cards[i];
     cards.push(card);
 
-    if (card instanceof PokemonCard
-      && card.evolvesFrom !== '' && card.stage !== Stage.LV_X) {
+    if (card instanceof PokemonCard && card.evolvesFrom !== '' && card.stage !== Stage.LV_X) {
       evolution = card;
       break;
     }
   }
 
-  yield store.prompt(state, [
-    new ShowCardsPrompt(player.id, GameMessage.CARDS_SHOWED_BY_EFFECT, cards),
-    new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards)
-  ], () => next());
+  yield store.prompt(
+    state,
+    [
+      new ShowCardsPrompt(player.id, GameMessage.CARDS_SHOWED_BY_EFFECT, cards),
+      new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+    ],
+    () => next(),
+  );
 
   if (evolution !== undefined) {
     player.deck.moveCardTo(evolution, player.hand);
@@ -46,7 +54,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 }
 
 export class FastBall extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'SK';
   public name: string = 'Fast Ball';
   public fullName: string = 'Fast Ball SK';
@@ -54,11 +62,9 @@ export class FastBall extends TrainerCard {
   public setNumber: string = '124';
 
   public text: string =
-    'Reveal cards from your deck until you reveal an Evolution card. Show that card to your opponent and put it into your hand. Shuffle the other revealed cards into your deck. (If you don\'t reveal an Evolution card, shuffle all the revealed cards back into your deck.)';
-
+    "Reveal cards from your deck until you reveal an Evolution card. Show that card to your opponent and put it into your hand. Shuffle the other revealed cards into your deck. (If you don't reveal an Evolution card, shuffle all the revealed cards back into your deck.)";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
@@ -66,5 +72,4 @@ export class FastBall extends TrainerCard {
 
     return state;
   }
-
 }

@@ -68,7 +68,7 @@ function* useKeepCalling(
 export class Brawly extends TrainerCard {
   public regulationMark = 'E';
   protected _tags = [CardTag.RAPID_STRIKE];
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'CRE';
   public setNumber: string = '131';
   public cardImage: string = 'assets/cardback.png';

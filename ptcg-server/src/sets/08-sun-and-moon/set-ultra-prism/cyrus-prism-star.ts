@@ -18,7 +18,7 @@ import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effect
 //Avery is not done yet!! have to add the "remove from bench" logic
 
 export class CyrusPrismStar extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   protected _tags = [CardTag.PRISM_STAR];
   public set: string = 'UPR';
   public cardImage: string = 'assets/cardback.png';

@@ -7,10 +7,8 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { ChooseCardsPrompt, GameError, GameMessage, StateUtils } from '../../..';
 
-
 export class XerosicsScheme extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public regulationMark = 'H';
 
@@ -20,9 +18,9 @@ export class XerosicsScheme extends TrainerCard {
 
   public setNumber: string = '64';
 
-  public name: string = 'Xerosic\'s Machinations';
+  public name: string = "Xerosic's Machinations";
 
-  public fullName: string = 'Xerosic\'s Machinations SFA';
+  public fullName: string = "Xerosic's Machinations SFA";
 
   public text: string =
     'Your opponent discards cards from their hand until they have 3 cards in their hand.';
@@ -37,7 +35,6 @@ export class XerosicsScheme extends TrainerCard {
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -66,17 +63,20 @@ export class XerosicsScheme extends TrainerCard {
       effect.preventDefault = true;
 
       // Opponent discards first
-      store.prompt(state, new ChooseCardsPrompt(
-        opponent,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        opponent.hand,
-        {},
-        { min: discardAmount, max: discardAmount, allowCancel: false }
-      ), selected => {
-        const cards = selected || [];
-        opponent.hand.moveCardsTo(cards, opponent.discard);
-
-      });
+      store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          opponent,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          opponent.hand,
+          {},
+          { min: discardAmount, max: discardAmount, allowCancel: false },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          opponent.hand.moveCardsTo(cards, opponent.discard);
+        },
+      );
     }
     return state;
   }

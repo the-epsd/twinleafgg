@@ -80,7 +80,7 @@ function* playCard(
 }
 
 export class Crossceiver extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   protected _tags = [CardTag.FUSION_STRIKE];
   public regulationMark: string = 'E';
   public set: string = 'FST';

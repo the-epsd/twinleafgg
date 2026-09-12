@@ -8,7 +8,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class HolonAdventurer extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   protected _tags = [CardTag.DELTA_SPECIES];
   public set: string = 'HP';
   public cardImage: string = 'assets/cardback.png';

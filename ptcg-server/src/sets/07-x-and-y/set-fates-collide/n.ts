@@ -9,8 +9,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class N extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'FCO';
 
@@ -27,7 +26,6 @@ export class N extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -41,35 +39,39 @@ export class N extends TrainerCard {
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      const cards = player.hand.cards.filter(c => c !== this);
+      const cards = player.hand.cards.filter((c) => c !== this);
 
       if (cards.length === 0 && player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      const playerMoveEffect = new MoveCardsEffect(player.hand, player.deck, { cards, sourceCard: this });
+      const playerMoveEffect = new MoveCardsEffect(player.hand, player.deck, {
+        cards,
+        sourceCard: this,
+      });
       state = store.reduceEffect(state, playerMoveEffect);
 
-      const opponentMoveEffect = new MoveCardsEffect(opponent.hand, opponent.deck, { sourceCard: this });
+      const opponentMoveEffect = new MoveCardsEffect(opponent.hand, opponent.deck, {
+        sourceCard: this,
+      });
       state = store.reduceEffect(state, opponentMoveEffect);
 
       // opponent shuffle and draw
       if (!opponentMoveEffect.preventDefault) {
-        store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
+        store.prompt(state, new ShuffleDeckPrompt(opponent.id), (order) => {
           opponent.deck.applyOrder(order);
         });
-        opponent.deck.moveTo(opponent.hand, Math.min(opponent.getPrizeLeft(), opponent.deck.cards.length));
+        opponent.deck.moveTo(
+          opponent.hand,
+          Math.min(opponent.getPrizeLeft(), opponent.deck.cards.length),
+        );
       }
 
       // player shuffle and draw
-      store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+      store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
         player.deck.applyOrder(order);
       });
       player.deck.moveTo(player.hand, Math.min(player.getPrizeLeft(), player.deck.cards.length));
-
-
-
-
     }
 
     return state;

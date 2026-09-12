@@ -9,10 +9,9 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class Peonia extends TrainerCard {
-
   public regulationMark = 'E';
 
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'CRE';
 
@@ -40,50 +39,57 @@ export class Peonia extends TrainerCard {
 
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
-      return store.prompt(state, new ChoosePrizePrompt(
-        player.id,
-        GameMessage.CHOOSE_PRIZE_CARD,
-        { count: Math.min(3, player.getPrizeLeft()), allowCancel: false }
-      ), chosenPrizes => {
-        chosenPrizes = chosenPrizes || [];
-        const hand = player.hand;
+      return store.prompt(
+        state,
+        new ChoosePrizePrompt(player.id, GameMessage.CHOOSE_PRIZE_CARD, {
+          count: Math.min(3, player.getPrizeLeft()),
+          allowCancel: false,
+        }),
+        (chosenPrizes) => {
+          chosenPrizes = chosenPrizes || [];
+          const hand = player.hand;
 
-        chosenPrizes.forEach(prize => prize.moveTo(hand, 1));
+          chosenPrizes.forEach((prize) => prize.moveTo(hand, 1));
 
-        store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARDS_TO_RETURN_TO_PRIZES,
-          player.hand,
-          {},
-          { min: chosenPrizes.length, max: chosenPrizes.length, allowCancel: false }
-        ), cards => {
-          cards = cards || [];
+          store.prompt(
+            state,
+            new ChooseCardsPrompt(
+              player,
+              GameMessage.CHOOSE_CARDS_TO_RETURN_TO_PRIZES,
+              player.hand,
+              {},
+              { min: chosenPrizes.length, max: chosenPrizes.length, allowCancel: false },
+            ),
+            (cards) => {
+              cards = cards || [];
 
-          const newPrizeCards = new CardList();
-          player.hand.moveCardsTo(cards, newPrizeCards);
+              const newPrizeCards = new CardList();
+              player.hand.moveCardsTo(cards, newPrizeCards);
 
-          return store.prompt(state, new OrderCardsPrompt(
-            player.id,
-            GameMessage.CHOOSE_CARDS_ORDER,
-            newPrizeCards,
-            { allowCancel: false }
-          ), (rearrangedCards) => {
-            newPrizeCards.applyOrder(rearrangedCards);
+              return store.prompt(
+                state,
+                new OrderCardsPrompt(player.id, GameMessage.CHOOSE_CARDS_ORDER, newPrizeCards, {
+                  allowCancel: false,
+                }),
+                (rearrangedCards) => {
+                  newPrizeCards.applyOrder(rearrangedCards);
 
-            // put rearranged cards into prize first prize slots available
-            player.prizes.forEach(p => {
-              if (p.cards.length === 0) {
-                p.cards = newPrizeCards.cards.splice(0, 1);
-                p.isSecret = true; // Only set the new cards to secret
-              }
-              // Remove this line: newPrizeCards.isSecret = true;
-            });
+                  // put rearranged cards into prize first prize slots available
+                  player.prizes.forEach((p) => {
+                    if (p.cards.length === 0) {
+                      p.cards = newPrizeCards.cards.splice(0, 1);
+                      p.isSecret = true; // Only set the new cards to secret
+                    }
+                    // Remove this line: newPrizeCards.isSecret = true;
+                  });
 
-            return state;
-          });
-        });
-
-      });
+                  return state;
+                },
+              );
+            },
+          );
+        },
+      );
     }
     return state;
   }

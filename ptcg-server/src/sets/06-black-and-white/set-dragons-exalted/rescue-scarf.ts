@@ -7,10 +7,8 @@ import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { BetweenTurnsEffect } from '../../../game/store/effects/game-phase-effects';
 import { Card } from '../../../game/store/card/card';
 
-
 export class RescueScarf extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.TOOL;
+  protected _trainerType: TrainerType = TrainerType.TOOL;
 
   public set: string = 'DRX';
 
@@ -34,24 +32,23 @@ export class RescueScarf extends TrainerCard {
       const player = effect.player;
       const target = effect.target;
       const cards = target.getPokemons();
-      cards.forEach(card => {
+      cards.forEach((card) => {
         player.marker.addMarker(this.RESCUE_SCARF_MAREKER, card);
       });
     }
 
     if (effect instanceof BetweenTurnsEffect) {
-      state.players.forEach(player => {
+      state.players.forEach((player) => {
         if (!player.marker.hasMarker(this.RESCUE_SCARF_MAREKER)) {
           return;
         }
         const rescued: Card[] = player.marker.markers
-          .filter(m => m.name === this.RESCUE_SCARF_MAREKER && m.source !== undefined)
-          .map(m => m.source!);
+          .filter((m) => m.name === this.RESCUE_SCARF_MAREKER && m.source !== undefined)
+          .map((m) => m.source!);
         player.discard.moveCardsTo(rescued, player.hand);
         player.marker.removeMarker(this.RESCUE_SCARF_MAREKER);
       });
     }
     return state;
   }
-
 }

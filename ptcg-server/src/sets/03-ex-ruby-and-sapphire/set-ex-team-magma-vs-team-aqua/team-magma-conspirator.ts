@@ -19,7 +19,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class TeamMagmaConspirator extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'MA';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '82';

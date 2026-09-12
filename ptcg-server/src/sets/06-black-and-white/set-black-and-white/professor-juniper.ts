@@ -9,8 +9,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class ProfessorJuniper extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'BLW';
 
@@ -22,8 +21,7 @@ export class ProfessorJuniper extends TrainerCard {
 
   public setNumber: string = '101';
 
-  public text: string =
-    'Discard your hand and draw 7 cards.';
+  public text: string = 'Discard your hand and draw 7 cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -37,7 +35,7 @@ export class ProfessorJuniper extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      const cards = player.hand.cards.filter(c => c !== this);
+      const cards = player.hand.cards.filter((c) => c !== this);
       if (cards.length > 0) {
         state = MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this });
       }
@@ -46,5 +44,4 @@ export class ProfessorJuniper extends TrainerCard {
 
     return state;
   }
-
 }

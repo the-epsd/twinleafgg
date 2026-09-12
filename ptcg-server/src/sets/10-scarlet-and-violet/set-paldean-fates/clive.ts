@@ -7,8 +7,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { GameError, GameMessage, Player, ShowCardsPrompt, StateUtils } from '../../../game';
 
 export class Clive extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public regulationMark = 'G';
 
@@ -32,9 +31,7 @@ export class Clive extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -49,22 +46,23 @@ export class Clive extends TrainerCard {
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      const cardsInOpponentHand = opponent.hand.cards.filter(card => card instanceof TrainerCard && card.trainerType === TrainerType.SUPPORTER);
+      const cardsInOpponentHand = opponent.hand.cards.filter(
+        (card) => card instanceof TrainerCard && card.trainerType === TrainerType.SUPPORTER,
+      );
 
-      state = store.prompt(state, new ShowCardsPrompt(
-        player.id,
-        GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-        opponent.hand.cards
-      ), () => {
-
-        const cardsToMove = cardsInOpponentHand.length * 2;
-        player.deck.moveTo(player.hand, cardsToMove);
-
-
-
-      });
+      state = store.prompt(
+        state,
+        new ShowCardsPrompt(
+          player.id,
+          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+          opponent.hand.cards,
+        ),
+        () => {
+          const cardsToMove = cardsInOpponentHand.length * 2;
+          player.deck.moveTo(player.hand, cardsToMove);
+        },
+      );
     }
     return state;
   }
-
 }

@@ -14,7 +14,7 @@ import {
 } from '../../../game/store/prefabs/ability-lock';
 
 export class CessationCrystal extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.TOOL;
+  protected _trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'CG';
   public name: string = 'Cessation Crystal';
   public fullName: string = 'Cessation Crystal CG';

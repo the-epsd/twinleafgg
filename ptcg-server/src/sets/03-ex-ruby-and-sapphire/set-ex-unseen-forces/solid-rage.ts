@@ -11,7 +11,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class SolidRage extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.TOOL;
+  protected _trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'UF';
   public name: string = 'Solid Rage';
   public fullName: string = 'Solid Rage UF';

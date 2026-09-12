@@ -29,7 +29,7 @@ import { GamePhase } from '../../../game/store/state/state';
 import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class AntiqueSkullFossil extends TrainerCard {
-  public trainerType = TrainerType.ITEM;
+  protected _trainerType = TrainerType.ITEM;
   public stage: Stage = Stage.BASIC;
   public cardType: CardType[] = [CardType.COLORLESS];
   public cardTypez: CardType = CardType.COLORLESS;

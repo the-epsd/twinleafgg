@@ -70,7 +70,7 @@ function* playCard(
 }
 
 export class TagCall extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'CEC';
 

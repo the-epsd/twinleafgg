@@ -12,7 +12,7 @@ import { DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 export class HolonRuins extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '96';
-  public trainerType = TrainerType.STADIUM;
+  protected _trainerType = TrainerType.STADIUM;
   public set = 'DS';
   public name = 'Holon Ruins';
   public fullName = 'Holon Ruins DS';

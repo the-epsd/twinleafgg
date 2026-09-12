@@ -4,14 +4,21 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { CardTarget, GameError, GameMessage, Player, PlayerType, SlotType, StateUtils } from '../../../game';
+import {
+  CardTarget,
+  GameError,
+  GameMessage,
+  Player,
+  PlayerType,
+  SlotType,
+  StateUtils,
+} from '../../../game';
 import { SWITCH_IN_OPPONENT_BENCHED_POKEMON } from '../../../game/store/prefabs/prefabs';
 
 export class LisiasAppeal extends TrainerCard {
-
   public regulationMark = 'H';
 
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'SSP';
 
@@ -19,28 +26,27 @@ export class LisiasAppeal extends TrainerCard {
 
   public setNumber: string = '179';
 
-  public name: string = 'Lisia\'s Appeal';
+  public name: string = "Lisia's Appeal";
 
-  public fullName: string = 'Lisia\'s Appeal SSP';
+  public fullName: string = "Lisia's Appeal SSP";
 
   public text: string =
-    'Switch in 1 of your opponent\'s Benched Basic Pokémon to the Active Spot. The new Active Pokémon is now Confused.';
+    "Switch in 1 of your opponent's Benched Basic Pokémon to the Active Spot. The new Active Pokémon is now Confused.";
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     const opponent = StateUtils.getOpponent(state, player);
-    const hasBench = opponent.bench.some(b => b.cards.length > 0);
+    const hasBench = opponent.bench.some((b) => b.cards.length > 0);
     if (!hasBench) {
       return false;
     }
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const hasBench = opponent.bench.some(b => b.cards.length > 0);
+      const hasBench = opponent.bench.some((b) => b.cards.length > 0);
 
       if (!hasBench) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -66,10 +72,9 @@ export class LisiasAppeal extends TrainerCard {
         blocked,
         onSwitched: () => {
           opponent.active.addSpecialCondition(SpecialCondition.CONFUSED);
-        }
+        },
       });
     }
     return state;
   }
-
 }

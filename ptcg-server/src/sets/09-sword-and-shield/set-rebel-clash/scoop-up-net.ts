@@ -21,7 +21,7 @@ export class ScoopUpNet extends TrainerCard {
   public set = 'RCL';
   public fullName = 'Scoop Up Net RCL';
   public superType = SuperType.TRAINER;
-  public trainerType = TrainerType.ITEM;
+  protected _trainerType = TrainerType.ITEM;
   public text =
     "Put 1 of your Pokémon that isn't a Pokémon V or a Pokémon-GX into your hand. (Discard all attached cards.)";
 

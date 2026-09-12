@@ -9,8 +9,13 @@ import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: BillsAnalysis, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: BillsAnalysis,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   const supporterTurn = player.supporterTurn;
@@ -30,38 +35,39 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const deckTop = new CardList();
   player.deck.moveTo(deckTop, 7);
 
-  return store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    deckTop,
-    { superType: SuperType.TRAINER },
-    { min: 0, max: 2, allowCancel: false }
-  ), selected => {
-    deckTop.moveCardsTo(selected, player.hand);
-    deckTop.moveTo(player.deck);
+  return store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      deckTop,
+      { superType: SuperType.TRAINER },
+      { min: 0, max: 2, allowCancel: false },
+    ),
+    (selected) => {
+      deckTop.moveCardsTo(selected, player.hand);
+      deckTop.moveTo(player.deck);
 
+      const opponent = StateUtils.getOpponent(state, player);
 
+      if (selected.length > 0) {
+        store.prompt(
+          state,
+          new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, selected),
+          () => next(),
+        );
+      }
 
-    const opponent = StateUtils.getOpponent(state, player);
-
-    if (selected.length > 0) {
-      store.prompt(state, new ShowCardsPrompt(
-        opponent.id,
-        GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-        selected
-      ), () => next());
-    }
-
-    return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-      player.deck.applyOrder(order);
-      return state;
-    });
-  });
+      return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+        player.deck.applyOrder(order);
+        return state;
+      });
+    },
+  );
 }
 
 export class BillsAnalysis extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'TEU';
 
@@ -69,15 +75,14 @@ export class BillsAnalysis extends TrainerCard {
 
   public setNumber: string = '133';
 
-  public name: string = 'Bill\'s Analysis';
+  public name: string = "Bill's Analysis";
 
-  public fullName: string = 'Bill\'s Analysis TEU';
+  public fullName: string = "Bill's Analysis TEU";
 
   public text: string =
     'Look at the top 7 cards of your deck. You may reveal up to 2 Trainer cards you find there and put them into your hand. Shuffle the other cards back into your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
@@ -85,5 +90,4 @@ export class BillsAnalysis extends TrainerCard {
 
     return state;
   }
-
 }

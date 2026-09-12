@@ -8,12 +8,12 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class FelicitysDrawing extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'GE';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '98';
-  public name: string = 'Felicity\'s Drawing';
-  public fullName: string = 'Felicity\'s Drawing GE';
+  public name: string = "Felicity's Drawing";
+  public fullName: string = "Felicity's Drawing GE";
 
   public text: string =
     'Discard up to 2 cards from your hand. If you discard 1 card, draw 3 cards. If you discard 2 cards, draw 4 cards.';
@@ -34,24 +34,27 @@ export class FelicitysDrawing extends TrainerCard {
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       effect.preventDefault = true;
 
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        player.hand,
-        {},
-        { allowCancel: true, min: 0, max: 2 }
-      ), cards => {
-        cards = cards || [];
-        if (cards.length === 0) {
-          return;
-        }
+      state = store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          player.hand,
+          {},
+          { allowCancel: true, min: 0, max: 2 },
+        ),
+        (cards) => {
+          cards = cards || [];
+          if (cards.length === 0) {
+            return;
+          }
 
-        const drawCount = cards.length === 1 ? 3 : cards.length === 2 ? 4 : 0;
+          const drawCount = cards.length === 1 ? 3 : cards.length === 2 ? 4 : 0;
 
-        player.hand.moveCardsTo(cards, player.discard);
-        DRAW_CARDS(store, state, player, drawCount);
-      });
-
+          player.hand.moveCardsTo(cards, player.discard);
+          DRAW_CARDS(store, state, player, drawCount);
+        },
+      );
 
       return state;
     }

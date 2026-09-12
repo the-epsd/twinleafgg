@@ -68,7 +68,7 @@ function* playCard(
 
 export class LanasAssistance extends TrainerCard {
   public regulationMark = 'H';
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'TWM';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '155';

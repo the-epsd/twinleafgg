@@ -11,7 +11,13 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
-function* playCard(next: Function, store: StoreLike, state: State, self: Tarragon, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: Tarragon,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
@@ -30,7 +36,11 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Tarrago
   let energies = 0;
   const blocked: number[] = [];
   player.discard.cards.forEach((c, index) => {
-    if (c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC && c.name === 'Fighting Energy') {
+    if (
+      c.superType === SuperType.ENERGY &&
+      c.energyType === EnergyType.BASIC &&
+      c.name === 'Fighting Energy'
+    ) {
       energies += 1;
     } else if (c instanceof PokemonCard && pokemonHasCardType(c, CardType.FIGHTING)) {
       pokemons += 1;
@@ -43,38 +53,42 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Tarrago
   const maxEnergies = Math.min(energies, 4);
   const count = 4;
 
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.discard,
-    {},
-    { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxEnergies }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.discard,
+      {},
+      { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxEnergies },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   player.discard.moveCardsTo(cards, player.hand);
 
-
   if (cards.length > 0) {
-    yield store.prompt(state, new ShowCardsPrompt(
-      opponent.id,
-      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-      cards
-    ), () => next());
+    yield store.prompt(
+      state,
+      new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+      () => next(),
+    );
   }
 }
 
 export class Tarragon extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';
   public regulationMark = 'J';
   public name: string = 'Tarragon';
   public fullName: string = 'Tarragon M3';
-  public text: string = 'Put up to 4 in any combination of [F] Pokémon and Basic [F] Energy cards from your discard pile into your hand.';
+  public text: string =
+    'Put up to 4 in any combination of [F] Pokémon and Basic [F] Energy cards from your discard pile into your hand.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     if (player.supporterTurn > 0) {
@@ -82,7 +96,6 @@ export class Tarragon extends TrainerCard {
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

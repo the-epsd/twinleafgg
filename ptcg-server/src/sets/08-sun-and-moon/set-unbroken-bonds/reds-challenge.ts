@@ -6,16 +6,19 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { GameError } from '../../../game';
 import { Player } from '../../../game/store/state/player';
-import { DISCARD_X_CARDS_FROM_YOUR_HAND, WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
+import {
+  DISCARD_X_CARDS_FROM_YOUR_HAND,
+  WAS_TRAINER_USED,
+} from '../../../game/store/prefabs/trainer-prefabs';
 import { SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../../game/store/prefabs/prefabs';
 
 export class RedsChallenge extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'UNB';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '184';
-  public name: string = 'Red\'s Challenge';
-  public fullName: string = 'Red\'s Challenge UNB';
+  public name: string = "Red's Challenge";
+  public fullName: string = "Red's Challenge UNB";
 
   public text: string =
     'You can play this card only if you discard 2 other cards from your hand.\n\nSearch your deck for a card and put it into your hand.Then, shuffle your deck.';
@@ -30,7 +33,7 @@ export class RedsChallenge extends TrainerCard {
       return false;
     }
 
-    if (player.hand.cards.filter(c => c !== this).length < 2) {
+    if (player.hand.cards.filter((c) => c !== this).length < 2) {
       return false;
     }
 
@@ -39,7 +42,6 @@ export class RedsChallenge extends TrainerCard {
   }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
       const supporterTurn = player.supporterTurn;
@@ -48,7 +50,7 @@ export class RedsChallenge extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      if (player.hand.cards.filter(c => c !== this).length < 2) {
+      if (player.hand.cards.filter((c) => c !== this).length < 2) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
@@ -56,10 +58,16 @@ export class RedsChallenge extends TrainerCard {
       effect.preventDefault = true;
 
       DISCARD_X_CARDS_FROM_YOUR_HAND(effect, store, state, 2, 2);
-      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this, {}, { min: 1, max: 1, allowCancel: false });
+      SEARCH_DECK_FOR_CARDS_TO_HAND(
+        store,
+        state,
+        player,
+        this,
+        {},
+        { min: 1, max: 1, allowCancel: false },
+      );
     }
 
     return state;
   }
-
 }

@@ -8,7 +8,7 @@ import { CardList } from '../../../game/store/state/card-list';
 import { DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class SpecialRedCard extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public regulationMark = 'J';
   public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
@@ -21,13 +21,12 @@ export class SpecialRedCard extends TrainerCard {
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     const opponent = StateUtils.getOpponent(state, player);
-    const prizeCount = opponent.prizes.filter(p => p.cards.length > 0).length;
+    const prizeCount = opponent.prizes.filter((p) => p.cards.length > 0).length;
     if (prizeCount > 3) {
       return false;
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

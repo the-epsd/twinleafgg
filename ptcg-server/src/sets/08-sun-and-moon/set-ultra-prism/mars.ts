@@ -7,8 +7,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class Mars extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'UPR';
 
@@ -20,13 +19,10 @@ export class Mars extends TrainerCard {
 
   public fullName: string = 'Mars UPR';
 
-  public text: string =
-    'Draw 2 cards. If you do, discard a random card from your opponent\'s hand.';
+  public text: string = "Draw 2 cards. If you do, discard a random card from your opponent's hand.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
       const player = effect.player;
 
       const supporterTurn = player.supporterTurn;
@@ -51,11 +47,8 @@ export class Mars extends TrainerCard {
         const randomCard = opponent.hand.cards[randomIndex];
         opponent.hand.moveCardTo(randomCard, opponent.discard);
       }
-
-
     }
 
     return state;
   }
-
 }

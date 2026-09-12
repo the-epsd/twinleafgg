@@ -11,7 +11,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class Bede extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'SSH';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '157';
@@ -21,12 +21,13 @@ export class Bede extends TrainerCard {
   public text: string = 'Attach a basic Energy card from your hand to 1 of your Benched Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       const supporterTurn = player.supporterTurn;
 
-      if (!player.hand.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC)) {
+      if (
+        !player.hand.cards.some((c) => c instanceof EnergyCard && c.energyType === EnergyType.BASIC)
+      ) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
@@ -38,30 +39,31 @@ export class Bede extends TrainerCard {
       // We will hand this card after prompt confirmation
       effect.preventDefault = true;
 
-      store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_CARDS,
-        player.hand,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { min: 1, max: 1, allowCancel: false }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.hand.moveCardTo(transfer.card, target);
-        }
+      store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_CARDS,
+          player.hand,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.hand.moveCardTo(transfer.card, target);
+          }
 
-
-
-        return state;
-      });
+          return state;
+        },
+      );
 
       return state;
     }
 
     return state;
   }
-
 }

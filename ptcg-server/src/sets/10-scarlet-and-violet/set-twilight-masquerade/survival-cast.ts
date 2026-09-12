@@ -14,7 +14,7 @@ import { DAMAGED_FROM_FULL_HP, IS_TOOL_BLOCKED } from '../../../game/store/prefa
 export class SurvivalCast extends TrainerCard {
   public regulationMark = 'H';
 
-  public trainerType: TrainerType = TrainerType.TOOL;
+  protected _trainerType: TrainerType = TrainerType.TOOL;
 
   protected _tags = [CardTag.ACE_SPEC];
 

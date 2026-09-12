@@ -9,15 +9,14 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class TvReporter extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'DR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '88';
   public name: string = 'TV Reporter';
   public fullName: string = 'TV Reporter DR';
 
-  public text: string =
-    'Draw 3 cards. Then discard any 1 card from your hand.';
+  public text: string = 'Draw 3 cards. Then discard any 1 card from your hand.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

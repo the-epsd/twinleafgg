@@ -17,7 +17,7 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 export class TeamRocketsProton extends TrainerCard {
   public regulationMark = 'I';
   protected _tags = [CardTag.TEAM_ROCKET];
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'DRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '177';

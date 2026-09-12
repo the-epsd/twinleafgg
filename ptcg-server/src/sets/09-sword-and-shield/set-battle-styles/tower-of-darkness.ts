@@ -10,7 +10,7 @@ import { ChooseCardsPrompt, Card } from '../../../game';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 
 export class TowerOfDarkness extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.STADIUM;
+  protected _trainerType: TrainerType = TrainerType.STADIUM;
 
   public regulationMark = 'E';
 

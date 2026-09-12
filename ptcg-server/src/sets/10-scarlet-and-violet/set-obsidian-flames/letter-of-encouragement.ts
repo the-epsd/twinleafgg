@@ -13,8 +13,13 @@ import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { ChooseCardsPrompt, Player } from '../../../game';
 import { REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: LetterOfEncouragement, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: LetterOfEncouragement,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   // No Pokemon KO last turn
@@ -30,29 +35,30 @@ function* playCard(next: Function, store: StoreLike, state: State,
   effect.preventDefault = true;
 
   let cards: Card[] = [];
-  return store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.deck,
-    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-    { min: 0, max: 3, allowCancel: false }
-  ), selected => {
-    cards = selected || [];
-    next();
+  return store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.deck,
+      { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+      { min: 0, max: 3, allowCancel: false },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
 
-    player.deck.moveCardsTo(cards, player.hand);
+      player.deck.moveCardsTo(cards, player.hand);
 
-
-
-    return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-      player.deck.applyOrder(order);
-    });
-  });
+      return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+        player.deck.applyOrder(order);
+      });
+    },
+  );
 }
 
 export class LetterOfEncouragement extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'OBF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '189';
@@ -72,9 +78,7 @@ Search your deck for up to 3 Basic Energy cards, reveal them, and put them into 
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
@@ -98,9 +102,12 @@ Search your deck for up to 3 Basic Energy cards, reveal them, and put them into 
       return state;
     }
 
-    REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN(effect, this.LETTER_OF_ENCOURAGEMENT_MARKER, this);
+    REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN(
+      effect,
+      this.LETTER_OF_ENCOURAGEMENT_MARKER,
+      this,
+    );
 
     return state;
   }
-
 }

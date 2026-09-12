@@ -4,8 +4,7 @@ import { HealEffect } from '../../../game/store/effects/game-effects';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 
 export class SpicySeasonedCurry extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'ASR';
 
@@ -19,11 +18,9 @@ export class SpicySeasonedCurry extends TrainerCard {
 
   public fullName: string = 'Spicy Seasoned Curry ASR';
 
-  public text: string =
-    'Your Active Pokémon is now Burned. Heal 40 damage from it.';
+  public text: string = 'Your Active Pokémon is now Burned. Heal 40 damage from it.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       const playerActive = player.active;

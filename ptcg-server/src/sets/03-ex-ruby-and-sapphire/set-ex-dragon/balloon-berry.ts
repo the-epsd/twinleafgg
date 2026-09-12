@@ -8,7 +8,7 @@ import { IS_TOOL_BLOCKED } from '../../../game/store/prefabs/prefabs';
 import { PlayerType } from '../../../game';
 
 export class BalloonBerry extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.TOOL;
+  protected _trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'DR';
   public name: string = 'Balloon Berry';
   public fullName: string = 'Balloon Berry DR';
@@ -19,8 +19,11 @@ export class BalloonBerry extends TrainerCard {
     'When the Pokémon Balloon Berry is attached to retreats, discard Balloon Berry instead of discarding Energy cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tools.includes(this) && state.phase !== GamePhase.ATTACK) {
+    if (
+      effect instanceof CheckRetreatCostEffect &&
+      effect.player.active.tools.includes(this) &&
+      state.phase !== GamePhase.ATTACK
+    ) {
       const player = effect.player;
       const index = effect.cost.indexOf(CardType.COLORLESS);
       if (IS_TOOL_BLOCKED(store, state, effect.player, this)) {

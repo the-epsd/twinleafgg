@@ -8,14 +8,15 @@ import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH } from '../../game/stor
 import { PokemonCard } from '../../game';
 
 export class RuinWall extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'N2';
   public setNumber: string = '74';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ruin Wall';
   public fullName: string = 'Ruin Wall N2';
 
-  public text: string = 'Search your deck for a card with Unown in its name and put it onto your Bench. Shuffle your deck afterward. (You can\'t play this card if your Bench is full.)';
+  public text: string =
+    "Search your deck for a card with Unown in its name and put it onto your Bench. Shuffle your deck afterward. (You can't play this card if your Bench is full.)";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_TRAINER_USED(effect, this)) {
@@ -32,14 +33,15 @@ export class RuinWall extends TrainerCard {
         }
       });
 
-
-
       return SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(
-        store, state, effect.player, {}, { min: 0, max: 1, blocked }
+        store,
+        state,
+        effect.player,
+        {},
+        { min: 0, max: 1, blocked },
       );
     }
 
     return state;
   }
-
 }

@@ -4,7 +4,16 @@
 
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, CardType, EnergyType } from '../../../game/store/card/card-types';
-import { CardList, CardTarget, GameError, GameMessage, PlayerType, SlotType, StoreLike, State } from '../../../game';
+import {
+  CardList,
+  CardTarget,
+  GameError,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  StoreLike,
+  State,
+} from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
@@ -12,13 +21,14 @@ import { AttachEnergyEffect, TrainerEffect } from '../../../game/store/effects/p
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 
 export class NsResolve extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'CEC';
   public setNumber: string = '200';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'N\'s Resolve';
-  public fullName: string = 'N\'s Resolve CEC';
-  public text: string = 'Discard the top 6 cards of your deck. If any of those cards are basic Energy cards, attach them to 1 of your Benched Dragon Pokémon. You may play only 1 Supporter card during your turn (before your attack).';
+  public name: string = "N's Resolve";
+  public fullName: string = "N's Resolve CEC";
+  public text: string =
+    'Discard the top 6 cards of your deck. If any of those cards are basic Energy cards, attach them to 1 of your Benched Dragon Pokémon. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-team-up/zangoose.ts (top cards mechanic), set-cosmic-eclipse/kommo-o.ts (attach energy pattern)
@@ -55,15 +65,15 @@ export class NsResolve extends TrainerCard {
       player.deck.moveTo(deckTop, Math.min(6, player.deck.cards.length));
 
       // Find basic energy cards in the discarded cards
-      const basicEnergies = deckTop.cards.filter(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC
+      const basicEnergies = deckTop.cards.filter(
+        (c) => c instanceof EnergyCard && c.energyType === EnergyType.BASIC,
       );
 
       // Move non-energy cards to discard
-      const nonEnergies = deckTop.cards.filter(c =>
-        !(c instanceof EnergyCard && c.energyType === EnergyType.BASIC)
+      const nonEnergies = deckTop.cards.filter(
+        (c) => !(c instanceof EnergyCard && c.energyType === EnergyType.BASIC),
       );
-      nonEnergies.forEach(c => deckTop.moveCardTo(c, player.discard));
+      nonEnergies.forEach((c) => deckTop.moveCardTo(c, player.discard));
 
       if (basicEnergies.length === 0 || !hasDragonBench) {
         // Move remaining energy cards to discard too
@@ -72,24 +82,28 @@ export class NsResolve extends TrainerCard {
       }
 
       // Choose a benched Dragon Pokemon to attach all basic energy to
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false, blocked }
-      ), targets => {
-        if (targets && targets.length > 0) {
-          const target = targets[0];
-          basicEnergies.forEach(energyCard => {
-            const attachEffect = new AttachEnergyEffect(player, energyCard as EnergyCard, target);
-            store.reduceEffect(state, attachEffect);
-            deckTop.moveCardTo(energyCard, target);
-          });
-        }
-        // Move any remaining cards to discard
-        deckTop.moveTo(player.discard);
-      });
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          { min: 1, max: 1, allowCancel: false, blocked },
+        ),
+        (targets) => {
+          if (targets && targets.length > 0) {
+            const target = targets[0];
+            basicEnergies.forEach((energyCard) => {
+              const attachEffect = new AttachEnergyEffect(player, energyCard as EnergyCard, target);
+              store.reduceEffect(state, attachEffect);
+              deckTop.moveCardTo(energyCard, target);
+            });
+          }
+          // Move any remaining cards to discard
+          deckTop.moveTo(player.discard);
+        },
+      );
     }
 
     return state;

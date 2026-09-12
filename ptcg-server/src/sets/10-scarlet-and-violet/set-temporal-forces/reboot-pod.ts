@@ -13,7 +13,7 @@ import { CardTarget, PlayerType, SlotType } from '../../../game/store/actions/pl
 import { Player } from '../../../game/store/state/player';
 
 export class RebootPod extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   protected _tags = [CardTag.ACE_SPEC, CardTag.FUTURE];
 

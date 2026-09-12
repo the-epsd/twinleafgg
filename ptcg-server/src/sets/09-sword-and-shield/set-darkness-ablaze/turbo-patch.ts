@@ -20,7 +20,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class TurboPatch extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public regulationMark: string = 'D';
 
@@ -30,7 +30,8 @@ export class TurboPatch extends TrainerCard {
   public name: string = 'Turbo Patch';
   public fullName: string = 'Turbo Patch DAA';
 
-  public text: string = 'Flip a coin. If heads, attach a basic Energy card from your discard pile to 1 of your Basic Pokémon that isn\'t a Pokémon-GX. You may play any number of Item cards during your turn.';
+  public text: string =
+    "Flip a coin. If heads, attach a basic Energy card from your discard pile to 1 of your Basic Pokémon that isn't a Pokémon-GX. You may play any number of Item cards during your turn.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Flip a coin. If heads, attach a basic Energy from discard to 1 Basic Pokemon (not GX).

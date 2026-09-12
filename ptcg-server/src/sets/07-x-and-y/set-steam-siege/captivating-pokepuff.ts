@@ -10,8 +10,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class CaptivatingPokePuff extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'STS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '99';
@@ -19,15 +18,13 @@ export class CaptivatingPokePuff extends TrainerCard {
   public fullName: string = 'Captivating Poké Puff STS';
 
   public text: string =
-    'Your opponent reveals his or her hand. Put any number of Basic Pokémon you find there onto your opponent\'s Bench.';
-
+    "Your opponent reveals his or her hand. Put any number of Basic Pokémon you find there onto your opponent's Bench.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const slots: PokemonCardList[] = opponent.bench.filter(b => b.cards.length === 0);
+      const slots: PokemonCardList[] = opponent.bench.filter((b) => b.cards.length === 0);
 
       if (slots.length === 0) {
         // No open slots, throw error
@@ -39,38 +36,40 @@ export class CaptivatingPokePuff extends TrainerCard {
       }
 
       const max = Math.min(
-        opponent.hand.cards.filter(card => card instanceof PokemonCard && card.stage === Stage.BASIC).length,
-        slots.length
+        opponent.hand.cards.filter(
+          (card) => card instanceof PokemonCard && card.stage === Stage.BASIC,
+        ).length,
+        slots.length,
       );
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        opponent.hand,
-        { superType: SuperType.POKEMON, stage: Stage.BASIC },
-        { min: 0, max, allowCancel: true }
-      ), selected => {
-        const cards = selected || [];
+      store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          opponent.hand,
+          { superType: SuperType.POKEMON, stage: Stage.BASIC },
+          { min: 0, max, allowCancel: true },
+        ),
+        (selected) => {
+          const cards = selected || [];
 
-        // Operation canceled by the user
-        if (cards.length === 0) {
+          // Operation canceled by the user
+          if (cards.length === 0) {
+            return;
+          }
 
-          return;
-        }
-
-        cards.forEach((card, index) => {
-          opponent.hand.moveCardTo(card, slots[index]);
-          slots[index].pokemonPlayedTurn = state.turn;
-        });
-
-
-      });
+          cards.forEach((card, index) => {
+            opponent.hand.moveCardTo(card, slots[index]);
+            slots[index].pokemonPlayedTurn = state.turn;
+          });
+        },
+      );
     }
 
     return state;
   }
-
 }

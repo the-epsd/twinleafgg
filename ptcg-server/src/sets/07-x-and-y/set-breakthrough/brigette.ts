@@ -16,7 +16,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Brigette extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'BKT';
 

@@ -8,7 +8,12 @@ import { CardList } from '../../../game/store/state/card-list';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   if (player.deck.cards.length < 3) {
@@ -21,20 +26,23 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const deckBottom = new CardList();
   player.deck.moveTo(deckBottom, 3);
 
-  return store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARDS_ORDER,
-    deckBottom,
-    {},
-    { min: 3, max: 3, allowCancel: false }
-  ), selected => {
-    deckBottom.moveCardsTo(selected, player.deck);
-  });
+  return store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARDS_ORDER,
+      deckBottom,
+      {},
+      { min: 3, max: 3, allowCancel: false },
+    ),
+    (selected) => {
+      deckBottom.moveCardsTo(selected, player.deck);
+    },
+  );
 }
 
 export class ExpeditionUniform extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'CRE';
 
@@ -59,5 +67,4 @@ export class ExpeditionUniform extends TrainerCard {
 
     return state;
   }
-
 }

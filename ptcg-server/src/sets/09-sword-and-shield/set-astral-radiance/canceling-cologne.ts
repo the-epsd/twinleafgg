@@ -13,19 +13,19 @@ import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class CancelingCologne extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public regulationMark = 'F';
   public set: string = 'ASR';
   public name: string = 'Canceling Cologne';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '136';
   public fullName: string = 'Canceling Cologne ASR';
-  public text: string = 'Until the end of your turn, your opponent\'s Active Pokémon has no Abilities. (This includes Pokémon that come into play during that turn.)';
+  public text: string =
+    "Until the end of your turn, your opponent's Active Pokémon has no Abilities. (This includes Pokémon that come into play during that turn.)";
 
   public CANCELING_COLOGNE_MARKER = 'CANCELING_COLOGNE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

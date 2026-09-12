@@ -9,14 +9,15 @@ import { HealEffect } from '../../../game/store/effects/game-effects';
 import { Player } from '../../../game/store/state/player';
 
 export class JumboIce extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public regulationMark = 'I';
   public set: string = 'PFL';
   public name: string = 'Jumbo Ice Cream';
   public fullName: string = 'Jumbo Ice M2';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '91';
-  public text: string = 'Heal 80 damage from your Active Pokémon that has 3 or more Energy attached.';
+  public text: string =
+    'Heal 80 damage from your Active Pokémon that has 3 or more Energy attached.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     const activePokemon = player.active.getPokemonCard();
@@ -41,7 +42,6 @@ export class JumboIce extends TrainerCard {
   }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       const activePokemon = player.active.getPokemonCard();

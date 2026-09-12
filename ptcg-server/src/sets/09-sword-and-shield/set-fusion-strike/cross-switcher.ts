@@ -104,7 +104,7 @@ function* playCard(
 }
 
 export class CrossSwitcher extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   protected _tags = [CardTag.FUSION_STRIKE];
   public regulationMark = 'E';
   public cardImage: string = 'assets/cardback.png';

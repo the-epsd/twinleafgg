@@ -9,13 +9,18 @@ import { DiscardToHandEffect, TrainerEffect } from '../../../game/store/effects/
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { Player, ShowCardsPrompt, StateUtils } from '../../../game';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
   // Player has no Basic Energy in the discard pile
   let basicEnergyCards = 0;
-  player.discard.cards.forEach(c => {
+  player.discard.cards.forEach((c) => {
     if (c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC) {
       basicEnergyCards++;
     }
@@ -28,40 +33,46 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   effect.preventDefault = true;
 
   const min = Math.min(basicEnergyCards, 2);
-  return store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.discard,
-    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-    { min: 1, max: min, allowCancel: false }
-  ), cards => {
-    cards = cards || [];
+  return store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.discard,
+      { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+      { min: 1, max: min, allowCancel: false },
+    ),
+    (cards) => {
+      cards = cards || [];
 
-    if (cards.length > 0) {
-      player.discard.moveCardsTo(cards, player.hand);
-      cards.forEach((card, index) => {
-        store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-      });
       if (cards.length > 0) {
-        state = store.prompt(state, new ShowCardsPrompt(
-          opponent.id,
-          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-          cards), () => state);
+        player.discard.moveCardsTo(cards, player.hand);
+        cards.forEach((card, index) => {
+          store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, {
+            name: player.name,
+            card: card.name,
+          });
+        });
+        if (cards.length > 0) {
+          state = store.prompt(
+            state,
+            new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+            () => state,
+          );
+        }
       }
-    }
 
-    if (cards.length > 0) {
-      // Recover discarded Energy
-      player.discard.moveCardsTo(cards, player.hand);
-      // Discard item card
-
-    }
-  });
+      if (cards.length > 0) {
+        // Recover discarded Energy
+        player.discard.moveCardsTo(cards, player.hand);
+        // Discard item card
+      }
+    },
+  );
 }
 
 export class EnergyRetrieval extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'SVI';
 
@@ -75,13 +86,12 @@ export class EnergyRetrieval extends TrainerCard {
 
   public fullName: string = 'Energy Retrieval SVI';
 
-  public text: string =
-    'Put 2 basic Energy cards from your discard pile into your hand.';
+  public text: string = 'Put 2 basic Energy cards from your discard pile into your hand.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     // Player has no Basic Energy in the discard pile
     let basicEnergyCards = 0;
-    player.discard.cards.forEach(c => {
+    player.discard.cards.forEach((c) => {
       if (c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC) {
         basicEnergyCards++;
       }
@@ -94,7 +104,6 @@ export class EnergyRetrieval extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
       const player = effect.player;
 
       // Check if DiscardToHandEffect is prevented
@@ -113,5 +122,4 @@ export class EnergyRetrieval extends TrainerCard {
 
     return state;
   }
-
 }

@@ -1,4 +1,12 @@
-import { AttachEnergyPrompt, GameError, GameMessage, PlayerType, ShuffleDeckPrompt, SlotType, StateUtils } from '../../../game';
+import {
+  AttachEnergyPrompt,
+  GameError,
+  GameMessage,
+  PlayerType,
+  ShuffleDeckPrompt,
+  SlotType,
+  StateUtils,
+} from '../../../game';
 import { EnergyType, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -7,8 +15,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class Mina extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'LOT';
 
@@ -24,7 +31,6 @@ export class Mina extends TrainerCard {
     'Search your deck for a [Y] Energy card and attach it to 1 of your Pokémon. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
@@ -42,27 +48,29 @@ export class Mina extends TrainerCard {
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_CARDS,
-        player.deck,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fairy Energy' },
-        { min: 0, max: 1, allowCancel: true }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.deck.moveCardTo(transfer.card, target);
-        }
+      store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_CARDS,
+          player.deck,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fairy Energy' },
+          { min: 0, max: 1, allowCancel: true },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.deck.moveCardTo(transfer.card, target);
+          }
 
-
-
-        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-        });
-      });
+          return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+            player.deck.applyOrder(order);
+          });
+        },
+      );
     }
 
     return state;

@@ -7,7 +7,7 @@ import { PlayerType } from '../../../game/store/actions/play-card-action';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { GameError, GameMessage, Player } from '../../../game';
 export class Fennel extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark = 'I';
   public set: string = 'BLK';
   public cardImage: string = 'assets/cardback.png';
@@ -23,9 +23,7 @@ export class Fennel extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       const supporterTurn = player.supporterTurn;

@@ -9,10 +9,9 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { Player, StateUtils } from '../../../game';
 
 export class Caretaker extends TrainerCard {
-
   public regulationMark = 'H';
 
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'TWM';
 
@@ -36,7 +35,6 @@ export class Caretaker extends TrainerCard {
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -62,13 +60,8 @@ export class Caretaker extends TrainerCard {
       if (stadiumCard !== undefined && stadiumCard.name === 'Community Center') {
         player.supporter.moveTo(player.deck);
       } else {
-
         player.supporter.moveTo(player.discard);
-
       }
-
-
-
 
       return state;
     }

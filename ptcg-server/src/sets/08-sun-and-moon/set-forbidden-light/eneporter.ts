@@ -3,11 +3,7 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { TrainerCard } from '../../../game/store/card/trainer-card';
-import {
-  TrainerType,
-  EnergyType,
-  SuperType,
-} from '../../../game/store/card/card-types';
+import { TrainerType, EnergyType, SuperType } from '../../../game/store/card/card-types';
 import {
   StoreLike,
   State,
@@ -23,7 +19,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class Eneporter extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'FLI';
   public setNumber: string = '106';
   public cardImage: string = 'assets/cardback.png';
@@ -45,10 +41,7 @@ export class Eneporter extends TrainerCard {
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         totalPokemon++;
         if (
-          cardList.cards.some(
-            (c) =>
-              c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL,
-          )
+          cardList.cards.some((c) => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)
         ) {
           hasSpecialEnergy = true;
         }

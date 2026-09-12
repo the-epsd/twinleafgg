@@ -101,7 +101,7 @@ function* playCard(
 }
 
 export class TechnoRadar extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public regulationMark = 'G';
   protected _tags = [CardTag.FUTURE];
   public set: string = 'PAR';

@@ -10,8 +10,7 @@ import { DamageMap, GameError, MoveDamagePrompt, StateUtils } from '../../../gam
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 
 export class Grimsley extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'UNM';
 
@@ -24,7 +23,7 @@ export class Grimsley extends TrainerCard {
   public fullName: string = 'Grimsley UNM';
 
   public text: string =
-    'Move up to 3 damage counters from 1 of your opponent\'s Pokémon to another of their Pokémon.';
+    "Move up to 3 damage counters from 1 of your opponent's Pokémon to another of their Pokémon.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -38,8 +37,8 @@ export class Grimsley extends TrainerCard {
       }
 
       const damagedPokemon = [
-        ...opponent.bench.filter(b => b.cards.length > 0 && b.damage > 0),
-        ...(opponent.active.damage > 0 ? [opponent.active] : [])
+        ...opponent.bench.filter((b) => b.cards.length > 0 && b.damage > 0),
+        ...(opponent.active.damage > 0 ? [opponent.active] : []),
       ];
 
       if (damagedPokemon.length === 0) {
@@ -57,32 +56,41 @@ export class Grimsley extends TrainerCard {
         maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
       });
 
-      return store.prompt(state, new MoveDamagePrompt(
-        effect.player.id,
-        GameMessage.MOVE_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        maxAllowedDamage,
-        { min: 1, max: 3, allowCancel: false, singleSourceTarget: true, singleDestinationTarget: true }
-      ), transfers => {
-        if (transfers === null) {
+      return store.prompt(
+        state,
+        new MoveDamagePrompt(
+          effect.player.id,
+          GameMessage.MOVE_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          maxAllowedDamage,
+          {
+            min: 1,
+            max: 3,
+            allowCancel: false,
+            singleSourceTarget: true,
+            singleDestinationTarget: true,
+          },
+        ),
+        (transfers) => {
+          if (transfers === null) {
+            player.supporter.moveCardTo(this, player.discard);
+            return state;
+          }
+
+          for (const transfer of transfers) {
+            const source = StateUtils.getTarget(state, player, transfer.from);
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            source.damage -= 10;
+            target.damage += 10;
+          }
+
           player.supporter.moveCardTo(this, player.discard);
           return state;
-        }
-
-        for (const transfer of transfers) {
-          const source = StateUtils.getTarget(state, player, transfer.from);
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          source.damage -= 10;
-          target.damage += 10;
-        }
-
-        player.supporter.moveCardTo(this, player.discard);
-        return state;
-      });
+        },
+      );
     }
 
     return state;
   }
-
 }

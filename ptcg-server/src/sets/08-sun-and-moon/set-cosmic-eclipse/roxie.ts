@@ -9,7 +9,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { createTrainerDiscardCardsEffect } from './blow-away-bomb';
 
 export class Roxie extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'CEC';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '205';

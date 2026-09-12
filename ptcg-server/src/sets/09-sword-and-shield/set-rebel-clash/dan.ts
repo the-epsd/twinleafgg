@@ -8,7 +8,7 @@ import { GameError, GameLog, GameMessage, SelectPrompt, StateUtils } from '../..
 import { DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Dan extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'RCL';
   public name: string = 'Dan';
   public fullName: string = 'Dan RCL';
@@ -39,43 +39,56 @@ export class Dan extends TrainerCard {
       const options = [
         { value: 'Rock', message: 'Rock' },
         { value: 'Paper', message: 'Paper' },
-        { value: 'Scissors', message: 'Scissors' }
+        { value: 'Scissors', message: 'Scissors' },
       ];
 
       // simultaneous prompt showing gaming
-      store.prompt(state, [
-        new SelectPrompt(
-          player.id, GameMessage.CHOOSE_OPTION,
-          options.map(c => c.message),
-          { allowCancel: false }
-        ),
-        new SelectPrompt(
-          opponent.id, GameMessage.CHOOSE_OPTION,
-          options.map(c => c.message),
-          { allowCancel: false }
-        ),
-      ], results => {
-        // variable time
-        const playerChosenValue = results[0];
-        const opponentChosenValue = results[1];
-        // outputting what both players chose
-        store.log(state, GameLog.LOG_PLAYER_CHOOSES, { name: player.name, string: options[playerChosenValue].message });
-        store.log(state, GameLog.LOG_PLAYER_CHOOSES, { name: opponent.name, string: options[opponentChosenValue].message });
-        // if they tie, restart it
-        if (playerChosenValue === opponentChosenValue) { return this.reduceEffect(store, state, effect); }
+      store.prompt(
+        state,
+        [
+          new SelectPrompt(
+            player.id,
+            GameMessage.CHOOSE_OPTION,
+            options.map((c) => c.message),
+            { allowCancel: false },
+          ),
+          new SelectPrompt(
+            opponent.id,
+            GameMessage.CHOOSE_OPTION,
+            options.map((c) => c.message),
+            { allowCancel: false },
+          ),
+        ],
+        (results) => {
+          // variable time
+          const playerChosenValue = results[0];
+          const opponentChosenValue = results[1];
+          // outputting what both players chose
+          store.log(state, GameLog.LOG_PLAYER_CHOOSES, {
+            name: player.name,
+            string: options[playerChosenValue].message,
+          });
+          store.log(state, GameLog.LOG_PLAYER_CHOOSES, {
+            name: opponent.name,
+            string: options[opponentChosenValue].message,
+          });
+          // if they tie, restart it
+          if (playerChosenValue === opponentChosenValue) {
+            return this.reduceEffect(store, state, effect);
+          }
 
-        // Gotta make the win conditions
-        if ((playerChosenValue === 1 && opponentChosenValue === 0)
-          || (playerChosenValue === 2 && opponentChosenValue === 1)
-          || (playerChosenValue === 0 && opponentChosenValue === 2)) {
-          DRAW_CARDS(store, state, player, 2);
-        }
-      });
-
-
+          // Gotta make the win conditions
+          if (
+            (playerChosenValue === 1 && opponentChosenValue === 0) ||
+            (playerChosenValue === 2 && opponentChosenValue === 1) ||
+            (playerChosenValue === 0 && opponentChosenValue === 2)
+          ) {
+            DRAW_CARDS(store, state, player, 2);
+          }
+        },
+      );
     }
 
     return state;
   }
-
 }

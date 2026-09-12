@@ -10,7 +10,7 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlayerType } from '../../../game';
 
 export class BurstingBalloon extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.TOOL;
+  protected _trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'BKP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '97';
@@ -18,7 +18,7 @@ export class BurstingBalloon extends TrainerCard {
   public fullName = 'Bursting Balloon BKP';
 
   public text: string =
-    'If this card is attached to 1 of your Pokémon, discard it at the end of your opponent\'s turn.\n\nIf the Pokémon this card is attached to is your Active Pokémon and is damaged by an opponent\'s attack (even if that Pokémon is Knocked Out), put 6 damage counters on the Attacking Pokémon.';
+    "If this card is attached to 1 of your Pokémon, discard it at the end of your opponent's turn.\n\nIf the Pokémon this card is attached to is your Active Pokémon and is damaged by an opponent's attack (even if that Pokémon is Knocked Out), put 6 damage counters on the Attacking Pokémon.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AfterDamageEffect && effect.target.tools.includes(this)) {
@@ -44,9 +44,12 @@ export class BurstingBalloon extends TrainerCard {
 
     // Discard card at the end of opponent's turn
     if (effect instanceof EndTurnEffect) {
-      state.players.forEach(player => {
+      state.players.forEach((player) => {
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-          if (cardList.tools.includes(this) && StateUtils.findOwner(state, cardList) !== effect.player) {
+          if (
+            cardList.tools.includes(this) &&
+            StateUtils.findOwner(state, cardList) !== effect.player
+          ) {
             cardList.moveCardTo(this, player.discard);
           }
         });
@@ -55,5 +58,4 @@ export class BurstingBalloon extends TrainerCard {
 
     return state;
   }
-
 }

@@ -9,8 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { ChooseCardsPrompt, EnergyCard, GameError } from '../../../game';
 
 export class CyclingRoad extends TrainerCard {
-
-  public trainerType = TrainerType.STADIUM;
+  protected _trainerType = TrainerType.STADIUM;
 
   public regulationMark = 'G';
 
@@ -24,7 +23,8 @@ export class CyclingRoad extends TrainerCard {
 
   public fullName = 'Cycling Road MEW';
 
-  public text = 'Once during each player\'s turn, that player may discard a Basic Energy card from their hand in order to draw a card.';
+  public text =
+    "Once during each player's turn, that player may discard a Basic Energy card from their hand in order to draw a card.";
 
   reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
@@ -34,32 +34,33 @@ export class CyclingRoad extends TrainerCard {
   }
 
   useStadium(store: StoreLike, state: State, effect: UseStadiumEffect): State {
-
     const player = effect.player;
-    const hasEnergyInHand = player.hand.cards.some(c => {
+    const hasEnergyInHand = player.hand.cards.some((c) => {
       return c instanceof EnergyCard;
     });
     if (!hasEnergyInHand) {
       throw new GameError(GameMessage.CANNOT_USE_POWER);
     }
 
-    state = store.prompt(state, new ChooseCardsPrompt(
-      player,
-      GameMessage.CHOOSE_CARD_TO_DISCARD,
-      player.hand,
-      { superType: SuperType.ENERGY },
-      { allowCancel: true, min: 1, max: 1 }
-    ), cards => {
-      cards = cards || [];
-      if (cards.length === 0) {
-        return;
-      }
+    state = store.prompt(
+      state,
+      new ChooseCardsPrompt(
+        player,
+        GameMessage.CHOOSE_CARD_TO_DISCARD,
+        player.hand,
+        { superType: SuperType.ENERGY },
+        { allowCancel: true, min: 1, max: 1 },
+      ),
+      (cards) => {
+        cards = cards || [];
+        if (cards.length === 0) {
+          return;
+        }
 
-      player.hand.moveCardsTo(cards, player.discard);
-      player.deck.moveTo(player.hand, 1);
-
-
-    });
+        player.hand.moveCardsTo(cards, player.discard);
+        player.deck.moveTo(player.hand, 1);
+      },
+    );
 
     return state;
   }

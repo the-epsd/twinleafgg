@@ -1,4 +1,12 @@
-import { CardTarget, GameError, GameMessage, Player, PlayerType, PokemonCardList, SlotType } from '../../../game';
+import {
+  CardTarget,
+  GameError,
+  GameMessage,
+  Player,
+  PlayerType,
+  PokemonCardList,
+  SlotType,
+} from '../../../game';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
@@ -9,7 +17,12 @@ import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   if (player.supporterTurn > 0) {
@@ -36,16 +49,20 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
   let targets: PokemonCardList[] = [];
-  yield store.prompt(state, new ChoosePokemonPrompt(
-    player.id,
-    GameMessage.CHOOSE_POKEMON_TO_HEAL,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.ACTIVE, SlotType.BENCH],
-    { allowCancel: false, blocked }
-  ), results => {
-    targets = results || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChoosePokemonPrompt(
+      player.id,
+      GameMessage.CHOOSE_POKEMON_TO_HEAL,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.ACTIVE, SlotType.BENCH],
+      { allowCancel: false, blocked },
+    ),
+    (results) => {
+      targets = results || [];
+      next();
+    },
+  );
 
   if (targets.length === 0) {
     return state;
@@ -59,8 +76,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 }
 
 export class BiancasDevotion extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'TEF';
 
@@ -70,9 +86,9 @@ export class BiancasDevotion extends TrainerCard {
 
   public regulationMark = 'H';
 
-  public name: string = 'Bianca\'s Devotion';
+  public name: string = "Bianca's Devotion";
 
-  public fullName: string = 'Bianca\'s Devotion TEF';
+  public fullName: string = "Bianca's Devotion TEF";
 
   public text: string = 'Heal all damage from 1 of your Pokémon that has 30 HP or less remaining.';
 
@@ -94,7 +110,6 @@ export class BiancasDevotion extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const generator = playCard(() => generator.next(), store, state, effect);
@@ -102,5 +117,4 @@ export class BiancasDevotion extends TrainerCard {
     }
     return state;
   }
-
 }

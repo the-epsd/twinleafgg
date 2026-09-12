@@ -64,7 +64,7 @@ function* playCard(
 }
 
 export class LuxuryBall extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'SF';
 

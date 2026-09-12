@@ -6,7 +6,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class MegatonBlower extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   protected _tags = [CardTag.ACE_SPEC];
 

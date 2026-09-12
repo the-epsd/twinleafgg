@@ -11,9 +11,13 @@ import { CardList } from '../../../game/store/state/card-list';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
-
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: RotomPhone, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: RotomPhone,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
@@ -29,33 +33,28 @@ function* playCard(next: Function, store: StoreLike, state: State,
   player.deck.moveTo(deckTop, 5);
 
   let cards: Card[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    deckTop,
-    {},
-    { min: 1, max: 1 }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(player, GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 1, max: 1 }),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   deckTop.moveCardsTo(cards, temp);
   deckTop.moveTo(player.deck);
 
-
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);
     temp.moveToTopOfDestination(player.deck);
   });
-
 }
 
 export class RotomPhone extends TrainerCard {
-
   public regulationMark = 'D';
 
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'CPA';
 
@@ -77,5 +76,4 @@ export class RotomPhone extends TrainerCard {
     }
     return state;
   }
-
 }

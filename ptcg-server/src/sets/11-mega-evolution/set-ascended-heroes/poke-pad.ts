@@ -8,7 +8,7 @@ import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND } from '../../../game/st
 import { PokemonCard, Player } from '../../../game';
 
 export class PokePad extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public regulationMark = 'J';
   public set: string = 'ASC';
   public setNumber: string = '198';

@@ -75,7 +75,7 @@ function* playCard(
 }
 
 export class UltraReconSquad extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'FLI';
   public setNumber: string = '114';
   public cardImage: string = 'assets/cardback.png';

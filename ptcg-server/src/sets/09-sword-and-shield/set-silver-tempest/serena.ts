@@ -19,7 +19,7 @@ import {
 } from '../../../game';
 
 export class Serena extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'SIT';
 

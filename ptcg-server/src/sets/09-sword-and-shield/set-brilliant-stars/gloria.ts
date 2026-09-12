@@ -17,7 +17,7 @@ import {
   TrainerEffect,
 } from '../../../game/store/effects/play-card-effects';
 export class Gloria extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'BRS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '141';

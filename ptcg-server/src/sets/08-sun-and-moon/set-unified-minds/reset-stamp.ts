@@ -8,8 +8,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class ResetStamp extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'UNM';
 
@@ -26,11 +25,10 @@ export class ResetStamp extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const opponentCards = opponent.hand.cards.filter(c => c !== this);
+      const opponentCards = opponent.hand.cards.filter((c) => c !== this);
 
       if (opponentCards.length === 0 && opponent.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -38,15 +36,16 @@ export class ResetStamp extends TrainerCard {
 
       opponent.hand.moveCardsTo(opponentCards, opponent.deck);
 
-      store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
+      store.prompt(state, new ShuffleDeckPrompt(opponent.id), (order) => {
         opponent.deck.applyOrder(order);
       });
 
-      opponent.deck.moveTo(opponent.hand, Math.min(opponent.getPrizeLeft(), opponent.deck.cards.length));
-
+      opponent.deck.moveTo(
+        opponent.hand,
+        Math.min(opponent.getPrizeLeft(), opponent.deck.cards.length),
+      );
     }
 
     return state;
   }
-
 }

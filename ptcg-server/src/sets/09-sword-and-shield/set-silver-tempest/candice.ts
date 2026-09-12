@@ -5,10 +5,26 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardType, EnergyType, TrainerType } from '../../../game/store/card/card-types';
-import { Card, CardList, ChooseCardsPrompt, EnergyCard, GameError, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils, pokemonHasCardType } from '../../../game';
+import {
+  Card,
+  CardList,
+  ChooseCardsPrompt,
+  EnergyCard,
+  GameError,
+  PokemonCard,
+  ShowCardsPrompt,
+  ShuffleDeckPrompt,
+  StateUtils,
+  pokemonHasCardType,
+} from '../../../game';
 
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: Candice, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: Candice,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
@@ -43,38 +59,39 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const maxEnergies = Math.min(energies, 7);
   const count = 7;
 
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    deckTop,
-    {},
-    { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxEnergies }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      deckTop,
+      {},
+      { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxEnergies },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   deckTop.moveCardsTo(cards, player.hand);
   deckTop.moveTo(player.deck);
 
-
-
   if (cards.length > 0) {
-    yield store.prompt(state, new ShowCardsPrompt(
-      opponent.id,
-      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-      cards
-    ), () => next());
+    yield store.prompt(
+      state,
+      new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+      () => next(),
+    );
   }
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);
   });
 }
 
 export class Candice extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'SIT';
 
@@ -92,7 +109,6 @@ export class Candice extends TrainerCard {
     'Look at the top 7 cards of your deck. You may reveal any number of [W] Pokémon and [W] Energy cards you find there and put them into your hand. Shuffle the other cards back into your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
@@ -100,5 +116,4 @@ export class Candice extends TrainerCard {
 
     return state;
   }
-
 }

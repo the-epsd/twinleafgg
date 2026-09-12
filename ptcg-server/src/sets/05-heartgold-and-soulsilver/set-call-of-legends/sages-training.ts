@@ -7,17 +7,17 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { GameError, GameMessage, CardList, ChooseCardsPrompt } from '../../../game';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 export class SagesTraining extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'CL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';
-  public name: string = 'Sage\'s Training';
-  public fullName: string = 'Sage\'s Training CL';
+  public name: string = "Sage's Training";
+  public fullName: string = "Sage's Training CL";
 
-  public text: string = 'Look at the top 5 cards of your deck. Choose any 2 cards you find there and put them into your hand. Discard the other cards.';
+  public text: string =
+    'Look at the top 5 cards of your deck. Choose any 2 cards you find there and put them into your hand. Discard the other cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof EndTurnEffect && effect.player.ancientSupporter) {
       effect.player.ancientSupporter = false;
     }
@@ -44,20 +44,22 @@ export class SagesTraining extends TrainerCard {
 
       const min = player.deck.cards.length > 1 ? Math.min(2, deckTop.cards.length) : 1;
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        deckTop,
-        {},
-        { min, max: 2, allowCancel: false }
-      ), selected => {
-        player.ancientSupporter = true;
-        deckTop.moveCardsTo(selected, player.hand);
-        deckTop.moveTo(player.discard);
-
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          deckTop,
+          {},
+          { min, max: 2, allowCancel: false },
+        ),
+        (selected) => {
+          player.ancientSupporter = true;
+          deckTop.moveCardsTo(selected, player.hand);
+          deckTop.moveTo(player.discard);
+        },
+      );
     }
     return state;
   }
-
 }

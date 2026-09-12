@@ -72,7 +72,7 @@ function* playCard(
 }
 
 export class MegaSignal extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'MEG';
   public regulationMark = 'I';
   public setNumber: string = '121';

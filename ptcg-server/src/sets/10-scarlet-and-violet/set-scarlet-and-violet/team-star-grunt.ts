@@ -9,8 +9,7 @@ import { SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { StateUtils, CardList, ChooseCardsPrompt, Player } from '../../../game';
 
 export class TeamStarGrunt extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public regulationMark = 'G';
 
@@ -25,7 +24,7 @@ export class TeamStarGrunt extends TrainerCard {
   public fullName: string = 'Team Star Grunt SVI';
 
   public text: string =
-    'Put an Energy attached to your opponent\'s Active Pokémon on top of their deck.';
+    "Put an Energy attached to your opponent's Active Pokémon on top of their deck.";
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     const opponent = StateUtils.getOpponent(state, player);
@@ -35,7 +34,7 @@ export class TeamStarGrunt extends TrainerCard {
       return false;
     }
 
-    if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
+    if (!opponent.active.cards.some((c) => c.superType === SuperType.ENERGY)) {
       return false;
     }
     return true;
@@ -43,7 +42,6 @@ export class TeamStarGrunt extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -57,37 +55,34 @@ export class TeamStarGrunt extends TrainerCard {
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
+      if (!opponent.active.cards.some((c) => c.superType === SuperType.ENERGY)) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
       const deckTop = new CardList();
 
       const target = opponent.active;
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        target,
-        { superType: SuperType.ENERGY },
-        { min: 1, max: 1, allowCancel: true }
-      ), energy => {
-        const cards: CardList[] = (energy || []).map(e => e.cards);
+      state = store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          target,
+          { superType: SuperType.ENERGY },
+          { min: 1, max: 1, allowCancel: true },
+        ),
+        (energy) => {
+          const cards: CardList[] = (energy || []).map((e) => e.cards);
 
-        if (cards.length > 0) {
-          target.moveCardsTo(energy, deckTop);
-          deckTop.moveToTopOfDestination(opponent.deck);
-
-
-
-        }
-      });
-
+          if (cards.length > 0) {
+            target.moveCardsTo(energy, deckTop);
+            deckTop.moveToTopOfDestination(opponent.deck);
+          }
+        },
+      );
 
       return state;
     }
     return state;
   }
-
 }
-
-

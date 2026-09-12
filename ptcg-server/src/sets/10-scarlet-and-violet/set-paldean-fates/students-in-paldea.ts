@@ -16,7 +16,7 @@ import {
 } from '../../../game';
 
 export class StudentsInPaldea extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark = 'G';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';

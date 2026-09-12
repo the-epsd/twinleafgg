@@ -92,7 +92,7 @@ function* playCard(
 }
 
 export class Arezu extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark = 'F';
   public set: string = 'LOR';
   public cardImage: string = 'assets/cardback.png';

@@ -6,14 +6,15 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class TateAndLizasTraining extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark: string = 'J';
   public set: string = 'M6';
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Tate & Liza\'s Training';
-  public fullName: string = 'Tate & Liza\'s Training M6';
-  public text: string = 'Draw 2 cards. Then, if there is a Stadium in play with "Legendary" in its name, put this card back into your hand instead of discarding it.';
+  public name: string = "Tate & Liza's Training";
+  public fullName: string = "Tate & Liza's Training M6";
+  public text: string =
+    'Draw 2 cards. Then, if there is a Stadium in play with "Legendary" in its name, put this card back into your hand instead of discarding it.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

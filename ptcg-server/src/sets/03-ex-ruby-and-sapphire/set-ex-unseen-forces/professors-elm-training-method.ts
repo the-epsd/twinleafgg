@@ -8,12 +8,12 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class ProfessorElmsTrainingMethod extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'UF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '89';
-  public name: string = 'Professor Elm\'s Training Method';
-  public fullName: string = 'Professor Elm\'s Training Method UF';
+  public name: string = "Professor Elm's Training Method";
+  public fullName: string = "Professor Elm's Training Method UF";
 
   public text: string =
     'Search your deck for an Evolution card, show it to your opponent, and put it into your hand. Shuffle your deck afterward.';
@@ -39,7 +39,13 @@ export class ProfessorElmsTrainingMethod extends TrainerCard {
         }
       });
 
-      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, player, {}, { min: 0, max: 1, blocked });
+      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(
+        store,
+        state,
+        player,
+        {},
+        { min: 0, max: 1, blocked },
+      );
       return state;
     }
 

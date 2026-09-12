@@ -27,7 +27,7 @@ import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-e
 import { IS_ABILITY_BLOCKED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class AntiqueSailFossil extends TrainerCard {
-  public trainerType = TrainerType.ITEM;
+  protected _trainerType = TrainerType.ITEM;
   public stage: Stage = Stage.BASIC;
   public cardType: CardType[] = [CardType.COLORLESS];
   public cardTypez: CardType = CardType.COLORLESS;

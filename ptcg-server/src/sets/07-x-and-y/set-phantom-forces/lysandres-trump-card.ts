@@ -7,35 +7,38 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: LysandresTrumpCard, effect: TrainerEffect): IterableIterator<State> {
-
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: LysandresTrumpCard,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
-  let cards = player.discard.cards.filter(c => c.name !== self.name);
+  let cards = player.discard.cards.filter((c) => c.name !== self.name);
   player.discard.moveCardsTo(cards, player.deck);
 
-  yield store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+  yield store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);
     next();
   });
 
-  cards = opponent.discard.cards.filter(c => c.name !== self.name);
+  cards = opponent.discard.cards.filter((c) => c.name !== self.name);
   opponent.discard.moveCardsTo(cards, opponent.deck);
 
-  return store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
+  return store.prompt(state, new ShuffleDeckPrompt(opponent.id), (order) => {
     opponent.deck.applyOrder(order);
   });
 }
 
 export class LysandresTrumpCard extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'PHF';
 
-  public name: string = 'Lysandre\'s Trump Card';
+  public name: string = "Lysandre's Trump Card";
 
   public fullName: string = 'Lysandres Trump Card PHF';
 
@@ -45,7 +48,7 @@ export class LysandresTrumpCard extends TrainerCard {
 
   public text: string =
     'Each player shuffles all cards in his or her discard pile into his or ' +
-    'her deck (except for Lysandre\'s Trump Card).';
+    "her deck (except for Lysandre's Trump Card).";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -55,5 +58,4 @@ export class LysandresTrumpCard extends TrainerCard {
 
     return state;
   }
-
 }

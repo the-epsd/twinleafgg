@@ -12,7 +12,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CardTag } from '../../../game/store/card/card-types';
 
 export class ProfessorTurosScenario extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   protected _tags = [CardTag.FUTURE];
   public regulationMark = 'G';
   public set: string = 'PAR';

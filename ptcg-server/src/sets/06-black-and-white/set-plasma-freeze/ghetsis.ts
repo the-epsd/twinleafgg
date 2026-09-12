@@ -13,7 +13,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class Ghetsis extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   protected _tags = [CardTag.TEAM_PLASMA];
   public set: string = 'PLF';
   public cardImage: string = 'assets/cardback.png';

@@ -19,7 +19,10 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { SHUFFLE_DECK, WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN } from '../../../game/store/prefabs/prefabs';
+import {
+  SHUFFLE_DECK,
+  WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN,
+} from '../../../game/store/prefabs/prefabs';
 import { CLEAN_UP_SUPPORTER } from '../../../game/store/prefabs/trainer-prefabs';
 
 function isMegaEvolutionEx(card: PokemonCard): boolean {
@@ -119,7 +122,7 @@ function* playCard(
 }
 
 export class Lida extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark = 'J';
   public set: string = 'M-P';
   public setNumber: string = '143';

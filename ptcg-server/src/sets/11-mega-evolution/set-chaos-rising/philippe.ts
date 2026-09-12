@@ -13,7 +13,7 @@ import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effect
 import { CardTarget, PlayerType, SlotType } from '../../../game/store/actions/play-card-action';
 
 export class Philippe extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'CRI';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
@@ -27,10 +27,11 @@ export class Philippe extends TrainerCard {
     if (player.supporterTurn > 0) {
       return false;
     }
-    const basicMetalInDiscard = player.discard.cards.filter(c =>
-      c instanceof EnergyCard &&
-      c.energyType === EnergyType.BASIC &&
-      c.provides.includes(CardType.METAL)
+    const basicMetalInDiscard = player.discard.cards.filter(
+      (c) =>
+        c instanceof EnergyCard &&
+        c.energyType === EnergyType.BASIC &&
+        c.provides.includes(CardType.METAL),
     );
     if (basicMetalInDiscard.length === 0) {
       return false;
@@ -48,7 +49,6 @@ export class Philippe extends TrainerCard {
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_TRAINER_USED(effect, this)) {

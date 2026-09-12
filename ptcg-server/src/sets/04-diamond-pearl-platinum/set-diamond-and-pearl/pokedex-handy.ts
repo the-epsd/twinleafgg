@@ -9,7 +9,12 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   if (player.deck.cards.length === 0) {
@@ -19,22 +24,24 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const deckTop = new CardList();
   player.deck.moveTo(deckTop, 2);
 
-  return store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    deckTop,
-    {},
-    { min: 1, max: 1, allowCancel: false }
-  ), selected => {
-    deckTop.moveCardsTo(selected, player.hand);
-    deckTop.moveTo(player.deck);
-
-  });
+  return store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      deckTop,
+      {},
+      { min: 1, max: 1, allowCancel: false },
+    ),
+    (selected) => {
+      deckTop.moveCardsTo(selected, player.hand);
+      deckTop.moveTo(player.deck);
+    },
+  );
 }
 
 export class PokedexHandy extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'DP';
 
@@ -58,5 +65,4 @@ export class PokedexHandy extends TrainerCard {
 
     return state;
   }
-
 }

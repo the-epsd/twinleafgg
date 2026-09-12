@@ -72,7 +72,7 @@ function* playCard(
 }
 
 export class NightlyGarbageRun extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   protected _tags = [CardTag.ROCKETS_SECRET_MACHINE];
 

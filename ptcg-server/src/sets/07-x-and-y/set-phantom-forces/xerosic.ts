@@ -1,4 +1,16 @@
-import { Card, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, SelectPrompt, SlotType, StateUtils } from '../../../game';
+import {
+  Card,
+  CardTarget,
+  ChooseCardsPrompt,
+  ChoosePokemonPrompt,
+  GameError,
+  GameMessage,
+  PlayerType,
+  PokemonCardList,
+  SelectPrompt,
+  SlotType,
+  StateUtils,
+} from '../../../game';
 import { EnergyType, Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -7,8 +19,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class Xerosic extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'PHF';
 
@@ -21,7 +32,7 @@ export class Xerosic extends TrainerCard {
   public fullName: string = 'Xerosic PHF';
 
   public text: string =
-    'Choose a Pokémon Tool or Special Energy card attached to a Pokémon in play (yours or your opponent\'s) and discard it.';
+    "Choose a Pokémon Tool or Special Energy card attached to a Pokémon in play (yours or your opponent's) and discard it.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -51,12 +62,12 @@ export class Xerosic extends TrainerCard {
 
       let specialEnergy = 0;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (cardList.energies.cards.some(c => c.energyType === EnergyType.SPECIAL)) {
+        if (cardList.energies.cards.some((c) => c.energyType === EnergyType.SPECIAL)) {
           specialEnergy += 1;
         }
       });
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (cardList.energies.cards.some(c => c.energyType === EnergyType.SPECIAL)) {
+        if (cardList.energies.cards.some((c) => c.energyType === EnergyType.SPECIAL)) {
           specialEnergy += 1;
         }
       });
@@ -73,72 +84,79 @@ export class Xerosic extends TrainerCard {
         message: GameMessage.CHOICE_TOOL,
         action: () => {
           let targets: PokemonCardList[] = [];
-          return store.prompt(state, new ChoosePokemonPrompt(
-            player.id,
-            GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
-            PlayerType.ANY,
-            [SlotType.ACTIVE, SlotType.BENCH],
-            { min: 1, max: 1, allowCancel: false, blocked }
-          ), results => {
-            targets = results || [];
+          return store.prompt(
+            state,
+            new ChoosePokemonPrompt(
+              player.id,
+              GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
+              PlayerType.ANY,
+              [SlotType.ACTIVE, SlotType.BENCH],
+              { min: 1, max: 1, allowCancel: false, blocked },
+            ),
+            (results) => {
+              targets = results || [];
 
-            if (targets.length === 0) {
-              return state;
-            }
-
-            const cardList = targets[0];
-
-            if (cardList.isStage(Stage.BASIC)) {
-              try {
-                const supporterEffect = new SupporterEffect(player, effect.trainerCard);
-                store.reduceEffect(state, supporterEffect);
-              } catch {
-
+              if (targets.length === 0) {
                 return state;
               }
-            }
 
-            targets.forEach(target => {
-              const owner = StateUtils.findOwner(state, target);
-              if (target.tools.length > 0) {
-                if (target.tools.length > 1) {
-                  return store.prompt(state, new ChooseCardsPrompt(
-                    player,
-                    GameMessage.CHOOSE_CARD_TO_DISCARD,
-                    target,
-                    { superType: SuperType.TRAINER, trainerType: TrainerType.TOOL },
-                    { min: 1, max: 1, allowCancel: false }
-                  ), selected => {
-                    if (selected && selected.length > 0) {
-                      target.moveCardTo(selected[0], owner.discard);
-                    }
-                    player.supporter.moveCardTo(this, player.discard);
-                    return state;
-                  });
-                } else {
-                  target.moveCardTo(target.tools[0], owner.discard);
+              const cardList = targets[0];
+
+              if (cardList.isStage(Stage.BASIC)) {
+                try {
+                  const supporterEffect = new SupporterEffect(player, effect.trainerCard);
+                  store.reduceEffect(state, supporterEffect);
+                } catch {
+                  return state;
                 }
               }
+
+              targets.forEach((target) => {
+                const owner = StateUtils.findOwner(state, target);
+                if (target.tools.length > 0) {
+                  if (target.tools.length > 1) {
+                    return store.prompt(
+                      state,
+                      new ChooseCardsPrompt(
+                        player,
+                        GameMessage.CHOOSE_CARD_TO_DISCARD,
+                        target,
+                        { superType: SuperType.TRAINER, trainerType: TrainerType.TOOL },
+                        { min: 1, max: 1, allowCancel: false },
+                      ),
+                      (selected) => {
+                        if (selected && selected.length > 0) {
+                          target.moveCardTo(selected[0], owner.discard);
+                        }
+                        player.supporter.moveCardTo(this, player.discard);
+                        return state;
+                      },
+                    );
+                  } else {
+                    target.moveCardTo(target.tools[0], owner.discard);
+                  }
+                }
+                player.supporter.moveCardTo(this, player.discard);
+                return state;
+              });
+
               player.supporter.moveCardTo(this, player.discard);
               return state;
-            });
-
-            player.supporter.moveCardTo(this, player.discard);
-            return state;
-          });
-        }
+            },
+          );
+        },
       };
 
       const specialEnergyBlocked: CardTarget[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (cardList.energies.cards.some(c => c.energyType === EnergyType.SPECIAL)) {
+        if (cardList.energies.cards.some((c) => c.energyType === EnergyType.SPECIAL)) {
           return;
         } else {
           specialEnergyBlocked.push(target);
         }
       });
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (cardList.energies.cards.some(c => c.energyType === EnergyType.SPECIAL)) {
+        if (cardList.energies.cards.some((c) => c.energyType === EnergyType.SPECIAL)) {
           return;
         } else {
           specialEnergyBlocked.push(target);
@@ -148,41 +166,47 @@ export class Xerosic extends TrainerCard {
       const specialEnergyOption = {
         message: GameMessage.CHOICE_SPECIAL_ENERGY,
         action: () => {
-          return store.prompt(state, new ChoosePokemonPrompt(
-            player.id,
-            GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
-            PlayerType.ANY,
-            [SlotType.ACTIVE, SlotType.BENCH],
-            { allowCancel: false, blocked: specialEnergyBlocked }
-          ), results => {
-
-            if (results.length === 0) {
-              return state;
-            }
-
-            const target = results[0];
-            let cards: Card[] = [];
-
-            state = store.prompt(state, new ChooseCardsPrompt(
-              player,
-              GameMessage.CHOOSE_CARD_TO_DISCARD,
-              target.energies,
-              { energyType: EnergyType.SPECIAL },
-              { min: 1, max: 1, allowCancel: false }
-            ), selected => {
-              cards = selected || [];
-              if (cards.length > 0) {
-
-                target.moveCardsTo(cards, opponent.discard);
+          return store.prompt(
+            state,
+            new ChoosePokemonPrompt(
+              player.id,
+              GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
+              PlayerType.ANY,
+              [SlotType.ACTIVE, SlotType.BENCH],
+              { allowCancel: false, blocked: specialEnergyBlocked },
+            ),
+            (results) => {
+              if (results.length === 0) {
+                return state;
               }
 
-              return state;
-            });
-          });
-        }
+              const target = results[0];
+              let cards: Card[] = [];
+
+              state = store.prompt(
+                state,
+                new ChooseCardsPrompt(
+                  player,
+                  GameMessage.CHOOSE_CARD_TO_DISCARD,
+                  target.energies,
+                  { energyType: EnergyType.SPECIAL },
+                  { min: 1, max: 1, allowCancel: false },
+                ),
+                (selected) => {
+                  cards = selected || [];
+                  if (cards.length > 0) {
+                    target.moveCardsTo(cards, opponent.discard);
+                  }
+
+                  return state;
+                },
+              );
+            },
+          );
+        },
       };
 
-      const options: { message: GameMessage, action: () => void }[] = [];
+      const options: { message: GameMessage; action: () => void }[] = [];
 
       if (pokemonsWithTool > 0) {
         options.push(toolOption);
@@ -192,22 +216,25 @@ export class Xerosic extends TrainerCard {
         options.push(specialEnergyOption);
       }
 
-      return store.prompt(state, new SelectPrompt(
-        player.id,
-        GameMessage.CHOOSE_OPTION,
-        options.map(c => c.message),
-        { allowCancel: false }
-      ), choice => {
-        const option = options[choice];
+      return store.prompt(
+        state,
+        new SelectPrompt(
+          player.id,
+          GameMessage.CHOOSE_OPTION,
+          options.map((c) => c.message),
+          { allowCancel: false },
+        ),
+        (choice) => {
+          const option = options[choice];
 
-        if (option.action) {
-          option.action();
-        }
+          if (option.action) {
+            option.action();
+          }
 
-        player.supporter.moveCardTo(this, player.discard);
-        return state;
-      });
-
+          player.supporter.moveCardTo(this, player.discard);
+          return state;
+        },
+      );
     }
     return state;
   }

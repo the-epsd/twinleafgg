@@ -11,7 +11,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class TeamRocketsGiovanni extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   protected _tags = [CardTag.TEAM_ROCKET];
   public regulationMark = 'I';
   public set: string = 'DRI';

@@ -10,7 +10,7 @@ import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 import { DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class FriendsInHisui extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark: string = 'F';
   public set: string = 'CRZ';
   public setNumber: string = '130';
@@ -35,8 +35,6 @@ export class FriendsInHisui extends TrainerCard {
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
       DRAW_CARDS(store, state, player, 3);
-
-
     }
 
     return state;

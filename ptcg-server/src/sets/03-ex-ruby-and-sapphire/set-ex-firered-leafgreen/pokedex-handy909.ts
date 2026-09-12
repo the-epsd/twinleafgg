@@ -8,7 +8,7 @@ import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 
 export class PokeDexHANDY909 extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'RG';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '96';
@@ -19,7 +19,6 @@ export class PokeDexHANDY909 extends TrainerCard {
     'Shuffle your deck. Look at 6 cards from the top of your deck, then put them back on top of your deck in any order.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
@@ -35,19 +34,20 @@ export class PokeDexHANDY909 extends TrainerCard {
       const deckTop = new CardList();
       player.deck.moveTo(deckTop, 6);
 
-      store.prompt(state, new OrderCardsPrompt(
-        player.id,
-        GameMessage.CHOOSE_CARDS_ORDER,
-        deckTop,
-        { allowCancel: false },
-      ), order => {
-        if (order === null) {
-          return state;
-        }
+      store.prompt(
+        state,
+        new OrderCardsPrompt(player.id, GameMessage.CHOOSE_CARDS_ORDER, deckTop, {
+          allowCancel: false,
+        }),
+        (order) => {
+          if (order === null) {
+            return state;
+          }
 
-        deckTop.applyOrder(order);
-        deckTop.moveToTopOfDestination(player.deck);
-      });
+          deckTop.applyOrder(order);
+          deckTop.moveToTopOfDestination(player.deck);
+        },
+      );
 
       player.supporter.moveCardTo(this, player.discard);
     }

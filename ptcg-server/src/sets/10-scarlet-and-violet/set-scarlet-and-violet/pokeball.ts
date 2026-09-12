@@ -12,7 +12,12 @@ import { StateUtils, ShowCardsPrompt, GameError, Player } from '../../../game';
 
 import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   let coinResult = false;
@@ -24,34 +29,42 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
-  yield COIN_FLIP_PROMPT(store, state, player, result => {
+  yield COIN_FLIP_PROMPT(store, state, player, (result) => {
     coinResult = result;
     next();
   });
 
   if (coinResult) {
     let cards: any[] = [];
-    yield store.prompt(state, new ChooseCardsPrompt(
-      player,
-      GameMessage.CHOOSE_CARD_TO_HAND,
-      player.deck,
-      { superType: SuperType.POKEMON },
-      { min: 0, max: 1, allowCancel: false }),
+    yield store.prompt(
+      state,
+      new ChooseCardsPrompt(
+        player,
+        GameMessage.CHOOSE_CARD_TO_HAND,
+        player.deck,
+        { superType: SuperType.POKEMON },
+        { min: 0, max: 1, allowCancel: false },
+      ),
       (selected: any[]) => {
         cards = selected || [];
         next();
-      });
+      },
+    );
 
     if (cards.length > 0) {
       player.discard.moveCardsTo(cards, player.deck);
       cards.forEach((card, index) => {
-        store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+        store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, {
+          name: player.name,
+          card: card.name,
+        });
       });
       if (cards.length > 0) {
-        state = store.prompt(state, new ShowCardsPrompt(
-          opponent.id,
-          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-          cards), () => state);
+        state = store.prompt(
+          state,
+          new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+          () => state,
+        );
       }
     }
 
@@ -66,7 +79,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 export class Pokeball extends TrainerCard {
   public regulationMark = 'G';
 
-  public trainerType = TrainerType.ITEM;
+  protected _trainerType = TrainerType.ITEM;
 
   public set = 'SVI';
   public cardImage: string = 'assets/cardback.png';
@@ -74,7 +87,8 @@ export class Pokeball extends TrainerCard {
   public name = 'Poké Ball';
   public fullName: string = 'Poké Ball SVI';
 
-  public text: string = 'Flip a coin. If heads, search your deck for a Pokémon, reveal it, and put it into your hand. Shuffle your deck afterward.';
+  public text: string =
+    'Flip a coin. If heads, search your deck for a Pokémon, reveal it, and put it into your hand. Shuffle your deck afterward.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     if (player.deck.cards.length === 0) {
@@ -90,4 +104,4 @@ export class Pokeball extends TrainerCard {
     }
     return state;
   }
-}                         
+}

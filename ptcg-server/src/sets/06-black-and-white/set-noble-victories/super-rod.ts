@@ -12,8 +12,13 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: SuperRod, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: SuperRod,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   // Find eligible cards (Pokémon or Basic Energy) and their indices
@@ -50,32 +55,37 @@ function* playCard(next: Function, store: StoreLike, state: State,
     max = 3;
   }
 
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_DECK,
-    player.discard,
-    {},
-    { min, max, allowCancel: false, blocked }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_DECK,
+      player.discard,
+      {},
+      { min, max, allowCancel: false, blocked },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   cards.forEach((card, index) => {
-    store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
+    store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, {
+      name: player.name,
+      card: card.name,
+    });
   });
 
   player.discard.moveCardsTo(cards, player.deck);
 
-
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);
   });
 }
 
 export class SuperRod extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'NVI';
 
@@ -99,5 +109,4 @@ export class SuperRod extends TrainerCard {
 
     return state;
   }
-
 }

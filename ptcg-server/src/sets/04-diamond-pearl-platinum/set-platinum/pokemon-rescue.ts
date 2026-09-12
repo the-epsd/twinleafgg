@@ -8,37 +8,44 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   // Player has no Pokemons in the discard pile
-  if (!player.discard.cards.some(c => c.superType === SuperType.POKEMON)) {
+  if (!player.discard.cards.some((c) => c.superType === SuperType.POKEMON)) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
-  return store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.discard,
-    { superType: SuperType.POKEMON },
-    { min: 1, max: 1, allowCancel: true }
-  ), selected => {
-    if (selected && selected.length > 0) {
-      // Discard trainer only when user selected a Pokemon
+  return store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.discard,
+      { superType: SuperType.POKEMON },
+      { min: 1, max: 1, allowCancel: true },
+    ),
+    (selected) => {
+      if (selected && selected.length > 0) {
+        // Discard trainer only when user selected a Pokemon
 
-      // Recover discarded Pokemon
-      player.discard.moveCardsTo(selected, player.hand);
-    }
-
-  });
+        // Recover discarded Pokemon
+        player.discard.moveCardsTo(selected, player.hand);
+      }
+    },
+  );
 }
 
 export class PokemonRescue extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'PL';
 
@@ -62,5 +69,4 @@ export class PokemonRescue extends TrainerCard {
 
     return state;
   }
-
 }

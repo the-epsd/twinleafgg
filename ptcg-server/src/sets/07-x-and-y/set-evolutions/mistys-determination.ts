@@ -4,19 +4,28 @@
 
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { Card, CardList, StoreLike, State, GameError, GameMessage, ShuffleDeckPrompt } from '../../../game';
+import {
+  Card,
+  CardList,
+  StoreLike,
+  State,
+  GameError,
+  GameMessage,
+  ShuffleDeckPrompt,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 
 export class MistysDetermination extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'EVO';
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Misty\'s Determination';
-  public fullName: string = 'Misty\'s Determination EVO';
-  public text: string = 'Discard a card from your hand. If you do, look at the top 8 cards of your deck and put 1 of them into your hand. Shuffle the other cards back into your deck. You may play only 1 Supporter card during your turn (before your attack).';
+  public name: string = "Misty's Determination";
+  public fullName: string = "Misty's Determination EVO";
+  public text: string =
+    'Discard a card from your hand. If you do, look at the top 8 cards of your deck and put 1 of them into your hand. Shuffle the other cards back into your deck. You may play only 1 Supporter card during your turn (before your attack).';
 
   // Refs: set-phantom-forces/tierno.ts (Supporter pattern), set-celebrations/mew.ts (look at top X, pick 1)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -28,7 +37,7 @@ export class MistysDetermination extends TrainerCard {
       }
 
       // Must have at least 1 other card in hand to discard (the supporter itself will be moved to supporter zone)
-      const handWithoutThis = player.hand.cards.filter(c => c !== this);
+      const handWithoutThis = player.hand.cards.filter((c) => c !== this);
       if (handWithoutThis.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
@@ -41,8 +50,13 @@ export class MistysDetermination extends TrainerCard {
   }
 }
 
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: MistysDetermination, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: MistysDetermination,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   // Move supporter to supporter zone, prevent default discard
@@ -50,18 +64,22 @@ function* playCard(next: Function, store: StoreLike, state: State,
   effect.preventDefault = true;
 
   // Step 1: Discard a card from your hand
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_DISCARD,
-    player.hand,
-    {},
-    { min: 1, max: 1, allowCancel: false }
-  ), (selected: Card[]) => {
-    if (selected && selected.length > 0) {
-      player.hand.moveCardsTo(selected, player.discard);
-    }
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_DISCARD,
+      player.hand,
+      {},
+      { min: 1, max: 1, allowCancel: false },
+    ),
+    (selected: Card[]) => {
+      if (selected && selected.length > 0) {
+        player.hand.moveCardsTo(selected, player.discard);
+      }
+      next();
+    },
+  );
 
   // Step 2: Look at top 8 cards of deck, pick 1
   const topCount = Math.min(8, player.deck.cards.length);
@@ -69,27 +87,30 @@ function* playCard(next: Function, store: StoreLike, state: State,
     const deckTop = new CardList();
     player.deck.moveTo(deckTop, topCount);
 
-    yield store.prompt(state, new ChooseCardsPrompt(
-      player,
-      GameMessage.CHOOSE_CARD_TO_HAND,
-      deckTop,
-      {},
-      { min: 1, max: 1, allowCancel: false }
-    ), (selected: Card[]) => {
-      if (selected && selected.length > 0) {
-        deckTop.moveCardsTo(selected, player.hand);
-      }
-      // Put remaining cards back on top of deck
-      deckTop.moveTo(player.deck);
-      next();
-    });
+    yield store.prompt(
+      state,
+      new ChooseCardsPrompt(
+        player,
+        GameMessage.CHOOSE_CARD_TO_HAND,
+        deckTop,
+        {},
+        { min: 1, max: 1, allowCancel: false },
+      ),
+      (selected: Card[]) => {
+        if (selected && selected.length > 0) {
+          deckTop.moveCardsTo(selected, player.hand);
+        }
+        // Put remaining cards back on top of deck
+        deckTop.moveTo(player.deck);
+        next();
+      },
+    );
   }
 
   // Move supporter to discard
 
-
   // Shuffle deck
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);
   });
 }

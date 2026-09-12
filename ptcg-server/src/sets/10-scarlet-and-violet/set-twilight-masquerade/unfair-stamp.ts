@@ -53,7 +53,7 @@ function* playCard(
 }
 
 export class UnfairStamp extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   protected _tags = [CardTag.ACE_SPEC];
   public set: string = 'TWM';
   public cardImage: string = 'assets/cardback.png';

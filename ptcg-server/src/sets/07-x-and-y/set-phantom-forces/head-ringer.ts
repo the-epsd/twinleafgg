@@ -20,7 +20,7 @@ import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-
 import { IS_TOOL_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class HeadRinger extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'PHF';
   public setNumber: string = '97';
   public cardImage: string = 'assets/cardback.png';

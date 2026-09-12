@@ -10,13 +10,14 @@ import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 import { DRAW_CARDS_UNTIL_CARDS_IN_HAND } from '../../../game/store/prefabs/prefabs';
 
 export class ProfessorOaksHint extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'EVO';
   public setNumber: string = '84';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Professor Oak\'s Hint';
-  public fullName: string = 'Professor Oak\'s Hint EVO';
-  public text: string = 'Draw cards until you have 7 cards in your hand. Your turn ends. You may play only 1 Supporter card during your turn (before your attack).';
+  public name: string = "Professor Oak's Hint";
+  public fullName: string = "Professor Oak's Hint EVO";
+  public text: string =
+    'Draw cards until you have 7 cards in your hand. Your turn ends. You may play only 1 Supporter card during your turn (before your attack).';
 
   // Ref: set-phantom-forces/tierno.ts (Supporter pattern), set-noble-victories/cofagrigus-2.ts (end turn via GamePhase.BETWEEN_TURNS)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -30,8 +31,6 @@ export class ProfessorOaksHint extends TrainerCard {
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
       DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 7);
-
-
 
       // Your turn ends
       state.phase = GamePhase.BETWEEN_TURNS;

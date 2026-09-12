@@ -17,7 +17,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class SwoopTeleporter extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   protected _tags = [CardTag.ROCKETS_SECRET_MACHINE];
   public set: string = 'TRR';
   public cardImage: string = 'assets/cardback.png';

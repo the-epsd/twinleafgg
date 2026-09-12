@@ -4,12 +4,25 @@
 
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, CardList, SelectPrompt, ChooseCardsPrompt, ShuffleDeckPrompt } from '../../../game';
+import {
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  CardList,
+  SelectPrompt,
+  ChooseCardsPrompt,
+  ShuffleDeckPrompt,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: Hiker, effect: TrainerEffect): IterableIterator<State> {
-
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: Hiker,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
@@ -18,21 +31,17 @@ function* playCard(next: Function, store: StoreLike, state: State,
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
   // Choose which player's deck to look at
-  const options: GameMessage[] = [
-    GameMessage.ORDER_YOUR_DECK,
-    GameMessage.ORDER_OPPONENT_DECK
-  ];
+  const options: GameMessage[] = [GameMessage.ORDER_YOUR_DECK, GameMessage.ORDER_OPPONENT_DECK];
 
   let chosenPlayerIndex: number = 0;
-  yield store.prompt(state, new SelectPrompt(
-    player.id,
-    GameMessage.CHOOSE_OPTION,
-    options,
-    { allowCancel: false }
-  ), choice => {
-    chosenPlayerIndex = choice;
-    next();
-  });
+  yield store.prompt(
+    state,
+    new SelectPrompt(player.id, GameMessage.CHOOSE_OPTION, options, { allowCancel: false }),
+    (choice) => {
+      chosenPlayerIndex = choice;
+      next();
+    },
+  );
 
   const targetPlayer = chosenPlayerIndex === 0 ? player : opponent;
 
@@ -46,28 +55,32 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   // Choose 1 card
   let chosenCards: any[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    topCards,
-    {},
-    { min: 1, max: 1, allowCancel: false }
-  ), selected => {
-    chosenCards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      topCards,
+      {},
+      { min: 1, max: 1, allowCancel: false },
+    ),
+    (selected) => {
+      chosenCards = selected || [];
+      next();
+    },
+  );
 
   // Put chosen card aside, shuffle rest back into deck
   const chosenCard = chosenCards[0];
 
   // Move unchosen cards back to deck
-  const remainingCards = topCards.cards.filter(c => c !== chosenCard);
-  remainingCards.forEach(card => {
+  const remainingCards = topCards.cards.filter((c) => c !== chosenCard);
+  remainingCards.forEach((card) => {
     topCards.moveCardTo(card, targetPlayer.deck);
   });
 
   // Shuffle the deck
-  yield store.prompt(state, new ShuffleDeckPrompt(targetPlayer.id), order => {
+  yield store.prompt(state, new ShuffleDeckPrompt(targetPlayer.id), (order) => {
     targetPlayer.deck.applyOrder(order);
     next();
   });
@@ -85,13 +98,14 @@ function* playCard(next: Function, store: StoreLike, state: State,
 }
 
 export class Hiker extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'CES';
   public setNumber: string = '133';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hiker';
   public fullName: string = 'Hiker CES';
-  public text: string = 'Look at the top 5 cards of either player\'s deck and choose 1 of them. That player shuffles the other cards back into their deck. Then, put the card you chose on top of that deck. You may play only 1 Supporter card during your turn (before your attack).';
+  public text: string =
+    "Look at the top 5 cards of either player's deck and choose 1 of them. That player shuffles the other cards back into their deck. Then, put the card you chose on top of that deck. You may play only 1 Supporter card during your turn (before your attack).";
 
   // Ref: set-roaring-skies/xatu.ts (Future Sight - choose either player's deck)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

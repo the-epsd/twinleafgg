@@ -13,12 +13,11 @@ import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 
 export class ProfessorsLetter extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'XY';
 
-  public name: string = 'Professor\'s Letter';
+  public name: string = "Professor's Letter";
 
   public fullName: string = 'Professors Letter XY';
 
@@ -31,9 +30,7 @@ export class ProfessorsLetter extends TrainerCard {
     'and put them into your hand. Shuffle your deck afterward.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -45,35 +42,35 @@ export class ProfessorsLetter extends TrainerCard {
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
       let cards: Card[] = [];
-      store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { min: 0, max: 2, allowCancel: false }
-      ), selected => {
-        cards = selected || [];
+      store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.deck,
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+          { min: 0, max: 2, allowCancel: false },
+        ),
+        (selected) => {
+          cards = selected || [];
 
-        if (cards.length > 0) {
-          store.prompt(state, new ShowCardsPrompt(
-            opponent.id,
-            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-            cards
-          ), () => { });
-        }
+          if (cards.length > 0) {
+            store.prompt(
+              state,
+              new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+              () => {},
+            );
+          }
 
-        player.deck.moveCardsTo(cards, player.hand);
+          player.deck.moveCardsTo(cards, player.hand);
 
-
-        store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-        });
-      });
-
+          store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+            player.deck.applyOrder(order);
+          });
+        },
+      );
     }
 
     return state;
-
   }
-
 }

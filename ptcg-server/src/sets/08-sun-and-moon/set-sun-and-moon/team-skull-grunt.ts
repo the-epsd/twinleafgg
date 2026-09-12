@@ -10,8 +10,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game';
 
 export class TeamSkullGrunt extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'SUM';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '133';
@@ -38,22 +37,26 @@ export class TeamSkullGrunt extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        opponent.hand,
-        { superType: SuperType.ENERGY },
-        { allowCancel: false, min: 0, max: 2 }
-      ), selectedCard => {
-        const selected = selectedCard || [];
-        if (selectedCard === null || selected.length === 0) {
-          return;
-        }
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          opponent.hand,
+          { superType: SuperType.ENERGY },
+          { allowCancel: false, min: 0, max: 2 },
+        ),
+        (selectedCard) => {
+          const selected = selectedCard || [];
+          if (selectedCard === null || selected.length === 0) {
+            return;
+          }
 
-        opponent.hand.moveCardsTo(selected, opponent.discard);
+          opponent.hand.moveCardsTo(selected, opponent.discard);
 
-        player.supporter.moveCardTo(this, player.discard);
-      });
+          player.supporter.moveCardTo(this, player.discard);
+        },
+      );
     }
 
     return state;

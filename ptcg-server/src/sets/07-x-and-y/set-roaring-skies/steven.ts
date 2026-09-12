@@ -12,13 +12,14 @@ import { SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../../game/store/prefabs/
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 
 export class Steven extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'ROS';
   public setNumber: string = '90';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Steven';
   public fullName: string = 'Steven ROS';
-  public text: string = 'Search your deck for a Supporter card and a basic Energy card, reveal them, and put them into your hand. Shuffle your deck afterward. You may play only 1 Supporter card during your turn (before your attack).';
+  public text: string =
+    'Search your deck for a Supporter card and a basic Energy card, reveal them, and put them into your hand. Shuffle your deck afterward. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-legendary-treasures/elesa.ts (Supporter - search deck for specific cards)
@@ -37,7 +38,13 @@ export class Steven extends TrainerCard {
   }
 }
 
-function* playCard(next: Function, store: StoreLike, state: State, self: Steven, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: Steven,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
@@ -55,17 +62,21 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Steven,
     }
   });
 
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.deck,
-    { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-    { min: 0, max: 1, allowCancel: true, blocked: supporterBlocked }
-  ), selected => {
-    selected = selected || [];
-    allFound.push(...selected);
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.deck,
+      { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
+      { min: 0, max: 1, allowCancel: true, blocked: supporterBlocked },
+    ),
+    (selected) => {
+      selected = selected || [];
+      allFound.push(...selected);
+      next();
+    },
+  );
 
   // Step 2: Search for a basic Energy card (private knowledge - can fail)
   const energyBlocked: number[] = [];
@@ -75,17 +86,21 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Steven,
     }
   });
 
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.deck,
-    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-    { min: 0, max: 1, allowCancel: true, blocked: energyBlocked }
-  ), selected => {
-    selected = selected || [];
-    allFound.push(...selected);
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.deck,
+      { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+      { min: 0, max: 1, allowCancel: true, blocked: energyBlocked },
+    ),
+    (selected) => {
+      selected = selected || [];
+      allFound.push(...selected);
+      next();
+    },
+  );
 
   // Reveal and move to hand
   if (allFound.length > 0) {
@@ -94,7 +109,6 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Steven,
   }
 
   // Move supporter to discard
-
 
   return SHUFFLE_DECK(store, state, player);
 }

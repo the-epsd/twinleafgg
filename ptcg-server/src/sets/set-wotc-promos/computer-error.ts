@@ -6,7 +6,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 
 export class ComputerError extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   protected _tags = [CardTag.ROCKETS_SECRET_MACHINE];
   public set: string = 'PR';
   public cardImage: string = 'assets/cardback.png';

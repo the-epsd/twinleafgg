@@ -12,7 +12,7 @@ import { GameError, GameMessage, PlayerType } from '../../../game';
 import { AttachPokemonToolEffect } from '../../../game/store/effects/play-card-effects';
 
 export class FluffyBerry extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.TOOL;
+  protected _trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'UF';
   public name: string = 'Fluffy Berry';
   public fullName: string = 'Fluffy Berry UF';

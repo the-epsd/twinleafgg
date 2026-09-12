@@ -9,8 +9,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class ProfessorKukui extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'SUM';
 
@@ -23,7 +22,7 @@ export class ProfessorKukui extends TrainerCard {
   public setNumber: string = '128';
 
   public text: string =
-    'Draw 2 cards. During this turn, your Pokémon\'s attacks do 20 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
+    "Draw 2 cards. During this turn, your Pokémon's attacks do 20 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).";
 
   private readonly PROFESSOR_KUKUI_MARKER = 'PROFESSOR_KUKUI_MARKER';
 
@@ -64,5 +63,4 @@ export class ProfessorKukui extends TrainerCard {
 
     return state;
   }
-
 }

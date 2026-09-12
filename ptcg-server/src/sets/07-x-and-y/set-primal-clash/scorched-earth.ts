@@ -11,8 +11,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { EnergyCard } from '../../../game/store/card/energy-card';
 
 export class ScorchedEarth extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.STADIUM;
+  protected _trainerType: TrainerType = TrainerType.STADIUM;
   public set: string = 'PRC';
   public setNumber: string = '138';
   public name: string = 'Scorched Earth';
@@ -20,7 +19,7 @@ export class ScorchedEarth extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
 
   public text: string =
-    'Once during each player\'s turn, that player may discard a[R] or[F] Energy card from his or her hand.If that player does so, he or she draws 2 cards.';
+    "Once during each player's turn, that player may discard a[R] or[F] Energy card from his or her hand.If that player does so, he or she draws 2 cards.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
@@ -43,24 +42,27 @@ export class ScorchedEarth extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        player.hand,
-        { superType: SuperType.ENERGY },
-        { allowCancel: true, min: 1, max: 1, blocked }
-      ), selected => {
-        selected = selected || [];
-        if (selected.length === 0) {
-          player.stadiumUsedTurn = stadiumUsedTurn;
-          return;
-        }
-        player.hand.moveCardsTo(selected, player.discard);
-        player.deck.moveTo(player.hand, 2);
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          player.hand,
+          { superType: SuperType.ENERGY },
+          { allowCancel: true, min: 1, max: 1, blocked },
+        ),
+        (selected) => {
+          selected = selected || [];
+          if (selected.length === 0) {
+            player.stadiumUsedTurn = stadiumUsedTurn;
+            return;
+          }
+          player.hand.moveCardsTo(selected, player.discard);
+          player.deck.moveTo(player.hand, 2);
+        },
+      );
     }
 
     return state;
   }
-
 }

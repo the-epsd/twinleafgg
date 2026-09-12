@@ -8,7 +8,7 @@ import { CardList, ChooseCardsPrompt, GameError, GameMessage, Player } from '../
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 export class ExplorersGuidance extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'TEF';
 

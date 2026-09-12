@@ -13,7 +13,7 @@ import { GamePhase, State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
 export class LancePrismStar extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   protected _tags = [CardTag.PRISM_STAR];
   public set: string = 'DRM';
   public cardImage: string = 'assets/cardback.png';

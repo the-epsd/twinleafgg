@@ -10,7 +10,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { IS_TOOL_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class TremendousBomb extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.TOOL;
+  protected _trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'PBL';
   public setNumber: string = '82';
   public regulationMark: string = 'J';

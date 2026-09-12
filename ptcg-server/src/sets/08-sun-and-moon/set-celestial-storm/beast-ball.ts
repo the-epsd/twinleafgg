@@ -18,7 +18,7 @@ import {
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 export class BeastBall extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'CES';
   public setNumber: string = '125';
   public cardImage: string = 'assets/cardback.png';

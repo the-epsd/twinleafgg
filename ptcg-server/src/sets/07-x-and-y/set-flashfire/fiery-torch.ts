@@ -68,7 +68,7 @@ function* playCard(
 }
 
 export class FieryTorch extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'FLF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '89';

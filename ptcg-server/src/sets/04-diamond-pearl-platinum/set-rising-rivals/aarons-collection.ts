@@ -89,7 +89,7 @@ function* playCard(
 }
 
 export class AaronsCollection extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'RR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '88';

@@ -4,15 +4,22 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { Card, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, StateUtils } from '../../../game';
+import {
+  Card,
+  ChoosePokemonPrompt,
+  GameError,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  StateUtils,
+} from '../../../game';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 //Avery is not done yet!! have to add the "remove from bench" logic
 
 export class Avery extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'CRE';
 
@@ -29,10 +36,8 @@ export class Avery extends TrainerCard {
   public text: string =
     'Draw 3 cards. If you drew any cards in this way, your opponent discards Pokémon from their Bench until they have 3.';
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
       const player = effect.player;
 
       const supporterTurn = player.supporterTurn;
@@ -50,49 +55,57 @@ export class Avery extends TrainerCard {
 
       // Get opponent
       const opponent = StateUtils.getOpponent(state, player);
-      const opponentBenched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
+      const opponentBenched = opponent.bench.reduce(
+        (left, b) => left + (b.cards.length ? 1 : 0),
+        0,
+      );
 
       // Discard pokemon from opponent's bench until they have 3
       while (opponentBenched > 3) {
         const benchDifference = opponentBenched - 3;
-        return store.prompt(state, new ChoosePokemonPrompt(
-          opponent.id,
-          GameMessage.CHOOSE_CARD_TO_DISCARD,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.BENCH],
-          {
-            allowCancel: false,
-            min: benchDifference,
-            max: benchDifference
-          }
-        ), (selected: any[]): State => {
-          selected.forEach((cardList: any) => {
-            // Separate pokemons, other cards, and tools
-            const pokemons = cardList.getPokemons();
-            const otherCards = cardList.cards.filter((card: Card) =>
-              !(card instanceof PokemonCard) &&
-              !pokemons.includes(card as PokemonCard) &&
-              (!cardList.tools || !cardList.tools.includes(card))
-            );
-            const tools = [...cardList.tools];
+        return store.prompt(
+          state,
+          new ChoosePokemonPrompt(
+            opponent.id,
+            GameMessage.CHOOSE_CARD_TO_DISCARD,
+            PlayerType.BOTTOM_PLAYER,
+            [SlotType.BENCH],
+            {
+              allowCancel: false,
+              min: benchDifference,
+              max: benchDifference,
+            },
+          ),
+          (selected: any[]): State => {
+            selected.forEach((cardList: any) => {
+              // Separate pokemons, other cards, and tools
+              const pokemons = cardList.getPokemons();
+              const otherCards = cardList.cards.filter(
+                (card: Card) =>
+                  !(card instanceof PokemonCard) &&
+                  !pokemons.includes(card as PokemonCard) &&
+                  (!cardList.tools || !cardList.tools.includes(card)),
+              );
+              const tools = [...cardList.tools];
 
-            // Move other cards to discard using MOVE_CARDS
-            if (otherCards.length > 0) {
-              MOVE_CARDS(store, state, cardList, opponent.discard, { cards: otherCards });
-            }
+              // Move other cards to discard using MOVE_CARDS
+              if (otherCards.length > 0) {
+                MOVE_CARDS(store, state, cardList, opponent.discard, { cards: otherCards });
+              }
 
-            // Move tools to discard using MOVE_CARDS
-            if (tools.length > 0) {
-              MOVE_CARDS(store, state, cardList, opponent.discard, { cards: tools });
-            }
+              // Move tools to discard using MOVE_CARDS
+              if (tools.length > 0) {
+                MOVE_CARDS(store, state, cardList, opponent.discard, { cards: tools });
+              }
 
-            // Move Pokémon to discard using MOVE_CARDS
-            if (pokemons.length > 0) {
-              MOVE_CARDS(store, state, cardList, opponent.discard, { cards: pokemons });
-            }
-          });
-          return state;
-        });
+              // Move Pokémon to discard using MOVE_CARDS
+              if (pokemons.length > 0) {
+                MOVE_CARDS(store, state, cardList, opponent.discard, { cards: pokemons });
+              }
+            });
+            return state;
+          },
+        );
       }
 
       MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [effect.trainerCard] });
@@ -102,4 +115,3 @@ export class Avery extends TrainerCard {
     return state;
   }
 }
-

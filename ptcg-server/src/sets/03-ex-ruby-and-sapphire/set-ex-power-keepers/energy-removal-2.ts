@@ -7,9 +7,24 @@ import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
-import { PlayerType, SlotType, StateUtils, CardTarget, GameError, GameMessage, PokemonCardList, ChooseCardsPrompt, Card } from '../../../game';
+import {
+  PlayerType,
+  SlotType,
+  StateUtils,
+  CardTarget,
+  GameError,
+  GameMessage,
+  PokemonCardList,
+  ChooseCardsPrompt,
+  Card,
+} from '../../../game';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
@@ -31,45 +46,51 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   effect.preventDefault = true;
 
   let coinResult: boolean = false;
-  yield COIN_FLIP_PROMPT(store, state, player, result => {
+  yield COIN_FLIP_PROMPT(store, state, player, (result) => {
     coinResult = result;
     next();
   });
 
   if (coinResult === false) {
-
     return state;
   }
 
   let targets: PokemonCardList[] = [];
-  yield store.prompt(state, new ChoosePokemonPrompt(
-    player.id,
-    GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
-    PlayerType.TOP_PLAYER,
-    [SlotType.ACTIVE, SlotType.BENCH],
-    { allowCancel: false, blocked }
-  ), results => {
-    targets = results || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChoosePokemonPrompt(
+      player.id,
+      GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
+      PlayerType.TOP_PLAYER,
+      [SlotType.ACTIVE, SlotType.BENCH],
+      { allowCancel: false, blocked },
+    ),
+    (results) => {
+      targets = results || [];
+      next();
+    },
+  );
 
   if (targets.length === 0) {
-
     return state;
   }
 
   const target = targets[0];
   let cards: Card[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_DISCARD,
-    target.energies,
-    {},
-    { min: 1, max: 1, allowCancel: false }
-  ), selected => {
-    cards = selected;
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_DISCARD,
+      target.energies,
+      {},
+      { min: 1, max: 1, allowCancel: false },
+    ),
+    (selected) => {
+      cards = selected;
+      next();
+    },
+  );
 
   target.moveCardsTo(cards, opponent.discard);
 
@@ -77,7 +98,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 }
 
 export class EnergyRemoval2 extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'PK';
   public name: string = 'Energy Removal 2';
@@ -85,7 +106,8 @@ export class EnergyRemoval2 extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '74';
 
-  public text = 'Flip a coin. If heads, choose 1 Energy card attached to 1 of your opponent\'s Pokémon and discard it.';
+  public text =
+    "Flip a coin. If heads, choose 1 Energy card attached to 1 of your opponent's Pokémon and discard it.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -94,5 +116,4 @@ export class EnergyRemoval2 extends TrainerCard {
     }
     return state;
   }
-
 }

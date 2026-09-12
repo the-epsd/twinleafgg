@@ -31,7 +31,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 
 export class TeamAquaTechnicalMachine01 extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   protected _tags = [CardTag.TECHNICAL_MACHINE];
   public set: string = 'MA';
   public cardImage: string = 'assets/cardback.png';

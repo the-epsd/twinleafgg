@@ -1,11 +1,21 @@
-import { GameError, GameMessage, GamePhase, Player, State, StateUtils, StoreLike, TrainerCard, TrainerType, PokemonCard } from '../../../game';
+import {
+  GameError,
+  GameMessage,
+  GamePhase,
+  Player,
+  State,
+  StateUtils,
+  StoreLike,
+  TrainerCard,
+  TrainerType,
+  PokemonCard,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 
 export class Briar extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark = 'H';
   public set: string = 'SCR';
   public cardImage: string = 'assets/cardback.png';
@@ -13,8 +23,7 @@ export class Briar extends TrainerCard {
   public name: string = 'Briar';
   public fullName: string = 'Briar SCR';
 
-  public text: string =
-    `You can use this card only if your opponent has exactly 2 Prize cards remaining.
+  public text: string = `You can use this card only if your opponent has exactly 2 Prize cards remaining.
 
 During this turn, if your opponent's Active Pokémon is Knocked Out by damage from an attack used by your Tera Pokémon, take 1 more Prize card.`;
 
@@ -24,16 +33,14 @@ During this turn, if your opponent's Active Pokémon is Knocked Out by damage fr
     if (player.supporterTurn > 0) {
       return false;
     }
-    const hasPokemon = player.discard.cards.some(c => c instanceof PokemonCard);
+    const hasPokemon = player.discard.cards.some((c) => c instanceof PokemonCard);
     if (!hasPokemon) {
       return false;
     }
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

@@ -11,26 +11,40 @@ import { GameMessage } from '../../../game/game-message';
 import { Player } from '../../../game/store/state/player';
 import { StateUtils } from '../../../game/store/state-utils';
 
-function pickUpBenchedPokemon(next: Function, store: StoreLike, state: State, player: Player): State {
-  return store.prompt(state, new ChoosePokemonPrompt(
-    player.id,
-    GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.BENCH],
-    { allowCancel: false }
-  ), selection => {
-    const cardList = selection[0];
-    cardList.moveTo(player.hand);
-    cardList.clearEffects();
-    next();
-  });
+function pickUpBenchedPokemon(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  player: Player,
+): State {
+  return store.prompt(
+    state,
+    new ChoosePokemonPrompt(
+      player.id,
+      GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.BENCH],
+      { allowCancel: false },
+    ),
+    (selection) => {
+      const cardList = selection[0];
+      cardList.moveTo(player.hand);
+      cardList.clearEffects();
+      next();
+    },
+  );
 }
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
-  const playerHasBench = player.bench.some(b => b.cards.length > 0);
-  const opponentHasBench = opponent.bench.some(b => b.cards.length > 0);
+  const playerHasBench = player.bench.some((b) => b.cards.length > 0);
+  const opponentHasBench = opponent.bench.some((b) => b.cards.length > 0);
 
   if (!playerHasBench && !opponentHasBench) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -48,8 +62,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 }
 
 export class Seeker extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'TM';
 
@@ -72,5 +85,4 @@ export class Seeker extends TrainerCard {
     }
     return state;
   }
-
 }

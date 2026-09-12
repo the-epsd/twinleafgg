@@ -10,8 +10,7 @@ import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-
 import { GameError, Player, PokemonCard } from '../../../game';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 export class Penny extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public regulationMark = 'G';
 
@@ -25,8 +24,7 @@ export class Penny extends TrainerCard {
 
   public fullName: string = 'Penny SVI';
 
-  public text: string =
-    'Put 1 of your Basic Pokémon and all attached cards into your hand.';
+  public text: string = 'Put 1 of your Basic Pokémon and all attached cards into your hand.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     const supporterTurn = player.supporterTurn;
@@ -79,41 +77,46 @@ export class Penny extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { allowCancel: false, blocked }
-      ), result => {
-        const cardList = result.length > 0 ? result[0] : null;
-        if (cardList !== null) {
-          const pokemons = cardList.getPokemons();
-          const otherCards = cardList.cards.filter(card =>
-            !(card instanceof PokemonCard) &&
-            !pokemons.includes(card as PokemonCard) &&
-            (!cardList.tools || !cardList.tools.includes(card))
-          );
-          const tools = [...cardList.tools];
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { allowCancel: false, blocked },
+        ),
+        (result) => {
+          const cardList = result.length > 0 ? result[0] : null;
+          if (cardList !== null) {
+            const pokemons = cardList.getPokemons();
+            const otherCards = cardList.cards.filter(
+              (card) =>
+                !(card instanceof PokemonCard) &&
+                !pokemons.includes(card as PokemonCard) &&
+                (!cardList.tools || !cardList.tools.includes(card)),
+            );
+            const tools = [...cardList.tools];
 
-          // Move other cards to hand
-          if (otherCards.length > 0) {
-            MOVE_CARDS(store, state, cardList, player.hand, { cards: otherCards });
-          }
+            // Move other cards to hand
+            if (otherCards.length > 0) {
+              MOVE_CARDS(store, state, cardList, player.hand, { cards: otherCards });
+            }
 
-          // Move tools to hand explicitly
-          if (tools.length > 0) {
-            for (const tool of tools) {
-              cardList.moveCardTo(tool, player.hand);
+            // Move tools to hand explicitly
+            if (tools.length > 0) {
+              for (const tool of tools) {
+                cardList.moveCardTo(tool, player.hand);
+              }
+            }
+
+            // Move Pokémon to hand
+            if (pokemons.length > 0) {
+              MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
             }
           }
-
-          // Move Pokémon to hand
-          if (pokemons.length > 0) {
-            MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
-          }
-        }
-      });
+        },
+      );
     }
     return state;
   }

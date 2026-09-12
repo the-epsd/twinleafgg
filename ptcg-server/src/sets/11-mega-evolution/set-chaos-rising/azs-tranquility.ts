@@ -12,7 +12,7 @@ import { GameMessage } from '../../../game/game-message';
 import { PlayerType, SlotType } from '../../../game/store/actions/play-card-action';
 
 export class AzsTranquility extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'CRI';
   public regulationMark = 'J';
   public name: string = "AZ's Tranquility";
@@ -26,12 +26,11 @@ export class AzsTranquility extends TrainerCard {
     if (player.supporterTurn > 0) {
       return false;
     }
-    if (!player.bench.some(b => b.cards.length > 0)) {
+    if (!player.bench.some((b) => b.cards.length > 0)) {
       return false;
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

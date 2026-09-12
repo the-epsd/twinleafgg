@@ -67,7 +67,7 @@ export class TreasureTracker extends TrainerCard {
 
   protected _tags = [CardTag.ACE_SPEC];
 
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'PRE';
 

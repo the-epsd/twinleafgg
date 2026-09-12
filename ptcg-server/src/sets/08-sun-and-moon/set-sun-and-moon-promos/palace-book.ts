@@ -9,8 +9,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 export class PalaceBook extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'SMP';
 
@@ -22,8 +21,7 @@ export class PalaceBook extends TrainerCard {
 
   public fullName: string = 'Palace Book SMP';
 
-  public text: string =
-    'Draw 3 cards. Your turn ends.';
+  public text: string = 'Draw 3 cards. Your turn ends.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -46,5 +44,4 @@ export class PalaceBook extends TrainerCard {
 
     return state;
   }
-
 }

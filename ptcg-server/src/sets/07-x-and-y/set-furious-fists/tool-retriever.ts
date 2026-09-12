@@ -9,14 +9,21 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import {
-  PlayerType, GameError, GameMessage,
+  PlayerType,
+  GameError,
+  GameMessage,
   PokemonCardList,
   CardTarget,
   ChoosePokemonPrompt,
-  SlotType
+  SlotType,
 } from '../../../game';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   let pokemonsWithTool = 0;
@@ -38,16 +45,20 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   const max = Math.min(2, pokemonsWithTool);
   let targets: PokemonCardList[] = [];
-  yield store.prompt(state, new ChoosePokemonPrompt(
-    player.id,
-    GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.ACTIVE, SlotType.BENCH],
-    { min: 1, max: max, allowCancel: true, blocked }
-  ), results => {
-    targets = results || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChoosePokemonPrompt(
+      player.id,
+      GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.ACTIVE, SlotType.BENCH],
+      { min: 1, max: max, allowCancel: true, blocked },
+    ),
+    (results) => {
+      targets = results || [];
+      next();
+    },
+  );
 
   if (targets.length === 0) {
     return state;
@@ -55,8 +66,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // Discard trainer only when user selected a Pokemon
 
-
-  targets.forEach(target => {
+  targets.forEach((target) => {
     if (target.tools.length > 0) {
       target.moveCardTo(target.tools[0], player.hand);
     }
@@ -66,13 +76,14 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 }
 
 export class ToolRetriever extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'FFI';
   public setNumber: string = '101';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tool Retriever';
   public fullName: string = 'Tool Retriever FFI';
-  public text: string = 'Choose up to 2 Pok\u00e9mon Tool cards attached to your Pok\u00e9mon and put them into your hand.';
+  public text: string =
+    'Choose up to 2 Pok\u00e9mon Tool cards attached to your Pok\u00e9mon and put them into your hand.';
 
   // Ref: set-dragons-exalted/tool-scrapper.ts (tool removal from Pokemon)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

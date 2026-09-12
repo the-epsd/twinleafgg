@@ -185,7 +185,7 @@ function* useStadium(
 }
 
 export class GreatTree extends TrainerCard {
-  public trainerType = TrainerType.STADIUM;
+  protected _trainerType = TrainerType.STADIUM;
 
   protected _tags = [CardTag.ACE_SPEC];
 

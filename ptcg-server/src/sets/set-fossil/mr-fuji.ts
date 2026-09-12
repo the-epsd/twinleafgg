@@ -5,11 +5,16 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
-import { ShuffleDeckPrompt, ChoosePokemonPrompt, PlayerType, SlotType, GameError } from '../../game';
+import {
+  ShuffleDeckPrompt,
+  ChoosePokemonPrompt,
+  PlayerType,
+  SlotType,
+  GameError,
+} from '../../game';
 
 export class MrFuji extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'FO';
 
@@ -26,32 +31,34 @@ export class MrFuji extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
       const player = effect.player;
 
-      const hasBenched = player.bench.some(b => b.cards.length > 0);
+      const hasBenched = player.bench.some((b) => b.cards.length > 0);
       if (!hasBenched) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-      ), selected => {
-        const target = selected[0];
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+        ),
+        (selected) => {
+          const target = selected[0];
 
-        target.moveTo(player.deck);
-        target.clearEffects();
+          target.moveTo(player.deck);
+          target.clearEffects();
 
+          return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+            player.deck.applyOrder(order);
 
-        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-
-          return state;
-        });
-      });
+            return state;
+          });
+        },
+      );
     }
     return state;
   }

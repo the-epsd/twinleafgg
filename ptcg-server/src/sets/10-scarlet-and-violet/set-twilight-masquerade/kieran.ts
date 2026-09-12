@@ -18,7 +18,7 @@ import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 export class Kieran extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'TWM';
 

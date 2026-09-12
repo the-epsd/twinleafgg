@@ -1,4 +1,12 @@
-import { Card, ChooseCardsPrompt, GameError, GameLog, GameMessage, SelectPrompt, ShuffleDeckPrompt } from '../../../game';
+import {
+  Card,
+  ChooseCardsPrompt,
+  GameError,
+  GameLog,
+  GameMessage,
+  SelectPrompt,
+  ShuffleDeckPrompt,
+} from '../../../game';
 import { SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -7,26 +15,24 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class JudgeWhistle extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'TEU';
   public name: string = 'Judge Whistle';
   public fullName: string = 'Judge Whistle TEU';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '146';
 
-  public text: string =
-    `Choose 1:
+  public text: string = `Choose 1:
 
   • Draw a card.
   • Put a Judge card from your discard pile into your hand.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
       let isJudgeInDiscard = false;
-      player.discard.cards.forEach(card => {
+      player.discard.cards.forEach((card) => {
         if (card instanceof TrainerCard && card.name === 'Judge') {
           isJudgeInDiscard = true;
         }
@@ -43,12 +49,10 @@ export class JudgeWhistle extends TrainerCard {
       // if there's no judge, just draw
       if (!isJudgeInDiscard) {
         player.deck.moveTo(player.hand, 1);
-
       }
 
       if (isJudgeInDiscard) {
-
-        const options: { message: GameMessage, action: () => void }[] = [
+        const options: { message: GameMessage; action: () => void }[] = [
           {
             // grab a judge
             message: GameMessage.CHOOSE_SUPPORTER_FROM_DISCARD,
@@ -65,46 +69,54 @@ export class JudgeWhistle extends TrainerCard {
 
               let cards: Card[] = [];
 
-              store.prompt(state, new ChooseCardsPrompt(
-                player,
-                GameMessage.CHOOSE_CARD_TO_DECK,
-                player.discard,
-                { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-                { min: 1, max: 1, allowCancel: false, blocked }
-              ), selected => {
-                cards = selected || [];
-                cards.forEach((card, index) => {
-                  store.log(state, GameLog.LOG_PLAYER_RETURNS_CARD_TO_HAND, { name: player.name, card: card.name });
-                });
+              store.prompt(
+                state,
+                new ChooseCardsPrompt(
+                  player,
+                  GameMessage.CHOOSE_CARD_TO_DECK,
+                  player.discard,
+                  { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
+                  { min: 1, max: 1, allowCancel: false, blocked },
+                ),
+                (selected) => {
+                  cards = selected || [];
+                  cards.forEach((card, index) => {
+                    store.log(state, GameLog.LOG_PLAYER_RETURNS_CARD_TO_HAND, {
+                      name: player.name,
+                      card: card.name,
+                    });
+                  });
 
-                player.discard.moveCardsTo(cards, player.hand);
+                  player.discard.moveCardsTo(cards, player.hand);
 
-
-                return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-                  player.deck.applyOrder(order);
-                });
-              });
-            }
+                  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+                    player.deck.applyOrder(order);
+                  });
+                },
+              );
+            },
           },
           {
             message: GameMessage.DRAW,
             action: () => {
               player.deck.moveTo(player.hand, 1);
-
-            }
-
-          }
+            },
+          },
         ];
 
-        return store.prompt(state, new SelectPrompt(
-          player.id,
-          GameMessage.CHOOSE_OPTION,
-          options.map(opt => opt.message),
-          { allowCancel: false }
-        ), choice => {
-          const option = options[choice];
-          option.action();
-        });
+        return store.prompt(
+          state,
+          new SelectPrompt(
+            player.id,
+            GameMessage.CHOOSE_OPTION,
+            options.map((opt) => opt.message),
+            { allowCancel: false },
+          ),
+          (choice) => {
+            const option = options[choice];
+            option.action();
+          },
+        );
       }
     }
 

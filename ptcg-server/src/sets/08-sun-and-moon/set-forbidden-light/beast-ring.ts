@@ -15,7 +15,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class BeastRing extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'FLI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '102';

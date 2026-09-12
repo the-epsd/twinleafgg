@@ -10,14 +10,13 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 
 export class NightTimeAcademy extends TrainerCard {
-
   public regulationMark = 'H';
 
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '54';
 
-  public trainerType = TrainerType.STADIUM;
+  protected _trainerType = TrainerType.STADIUM;
 
   public set = 'SFA';
 
@@ -25,11 +24,11 @@ export class NightTimeAcademy extends TrainerCard {
 
   public fullName = 'Academy at Night SFA';
 
-  public text = 'Once during each player\'s turn, that player may put a card from their hand on top of their deck.';
+  public text =
+    "Once during each player's turn, that player may put a card from their hand on top of their deck.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
-
       const player = effect.player;
 
       if (player.deck.cards.length === 0 || player.hand.cards.length === 0) {
@@ -38,19 +37,23 @@ export class NightTimeAcademy extends TrainerCard {
 
       const deckTop = new CardList();
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DECK,
-        player.hand,
-        {},
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        const cards = selected || [];
-        if (cards.length > 0) {
-          player.hand.moveCardsTo(cards, deckTop);
-        }
-        deckTop.moveToTopOfDestination(player.deck);
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DECK,
+          player.hand,
+          {},
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          if (cards.length > 0) {
+            player.hand.moveCardsTo(cards, deckTop);
+          }
+          deckTop.moveToTopOfDestination(player.deck);
+        },
+      );
     }
     return state;
   }

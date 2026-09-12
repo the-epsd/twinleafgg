@@ -9,7 +9,7 @@ import { DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
 import { Player } from '../../../game/store/state/player';
 
 export class Jett extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'PBL';
   public name: string = 'Jett';
   public fullName: string = 'Jett MEP';

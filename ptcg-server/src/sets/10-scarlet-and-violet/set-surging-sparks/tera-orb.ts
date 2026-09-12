@@ -64,7 +64,7 @@ function* playCard(
 }
 
 export class TeraOrb extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public regulationMark = 'H';
   public set: string = 'SSP';
   public cardImage: string = 'assets/cardback.png';

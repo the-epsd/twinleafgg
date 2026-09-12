@@ -78,7 +78,7 @@ function* playCard(
 export class CiphermaniacsCodebreaking extends TrainerCard {
   public regulationMark = 'H';
 
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   protected _tags = [CardTag.FUTURE];
 

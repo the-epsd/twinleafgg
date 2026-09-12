@@ -1,8 +1,10 @@
 import {
-  CardTarget, GameError, GameMessage,
+  CardTarget,
+  GameError,
+  GameMessage,
   PlayerType,
   PokemonCardList,
-  SlotType
+  SlotType,
 } from '../../../game';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
@@ -14,13 +16,17 @@ import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   const blocked: CardTarget[] = [];
   let hasPokemonWithDamage: boolean = false;
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-
     const checkHpEffect = new CheckHpEffect(player, cardList);
     store.reduceEffect(state, checkHpEffect);
 
@@ -40,16 +46,20 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   effect.preventDefault = true;
 
   let targets: PokemonCardList[] = [];
-  yield store.prompt(state, new ChoosePokemonPrompt(
-    player.id,
-    GameMessage.CHOOSE_POKEMON_TO_HEAL,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.ACTIVE, SlotType.BENCH],
-    { allowCancel: false, blocked }
-  ), results => {
-    targets = results || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChoosePokemonPrompt(
+      player.id,
+      GameMessage.CHOOSE_POKEMON_TO_HEAL,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.ACTIVE, SlotType.BENCH],
+      { allowCancel: false, blocked },
+    ),
+    (results) => {
+      targets = results || [];
+      next();
+    },
+  );
 
   if (targets.length === 0) {
     return state;
@@ -57,7 +67,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // Discard trainer only when user selected a Pokemon
 
-  targets.forEach(target => {
+  targets.forEach((target) => {
     // Heal Pokemon
     const healEffect = new HealEffect(player, target, 120);
     store.reduceEffect(state, healEffect);
@@ -67,8 +77,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 }
 
 export class LastChancePotion extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'CES';
 
@@ -80,8 +89,7 @@ export class LastChancePotion extends TrainerCard {
 
   public setNumber: string = '135';
 
-  public text: string =
-    'Heal 120 damage from 1 of your Pokémon that has 30 HP or less remaining.';
+  public text: string = 'Heal 120 damage from 1 of your Pokémon that has 30 HP or less remaining.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -90,5 +98,4 @@ export class LastChancePotion extends TrainerCard {
     }
     return state;
   }
-
 }

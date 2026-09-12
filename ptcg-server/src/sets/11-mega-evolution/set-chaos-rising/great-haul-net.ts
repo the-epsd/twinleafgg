@@ -71,7 +71,7 @@ function* playCard(
 }
 
 export class GreatHaulNet extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'CRI';
   public regulationMark = 'J';
   public name: string = 'Great Haul Net';
@@ -100,7 +100,6 @@ export class GreatHaulNet extends TrainerCard {
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

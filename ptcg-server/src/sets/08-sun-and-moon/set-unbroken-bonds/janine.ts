@@ -7,8 +7,13 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: Janine, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: Janine,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   // Move to supporter zone, prevent default discard
@@ -24,16 +29,20 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const maxPick = Math.min(2, topCards.cards.length);
 
   let pickedCards: any[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    topCards,
-    {},
-    { min: maxPick, max: maxPick, allowCancel: false }
-  ), selected => {
-    pickedCards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      topCards,
+      {},
+      { min: maxPick, max: maxPick, allowCancel: false },
+    ),
+    (selected) => {
+      pickedCards = selected || [];
+      next();
+    },
+  );
 
   // Put chosen cards into hand
   topCards.moveCardsTo(pickedCards, player.hand);
@@ -45,13 +54,14 @@ function* playCard(next: Function, store: StoreLike, state: State,
 }
 
 export class Janine extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'UNB';
   public setNumber: string = '176';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Janine';
   public fullName: string = 'Janine UNB';
-  public text: string = 'Look at the top 4 cards of your deck and put 2 of them into your hand. Shuffle the other cards back into your deck. You may play only 1 Supporter card during your turn (before your attack).';
+  public text: string =
+    'Look at the top 4 cards of your deck and put 2 of them into your hand. Shuffle the other cards back into your deck. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

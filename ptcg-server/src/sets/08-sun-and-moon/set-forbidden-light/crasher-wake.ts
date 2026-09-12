@@ -14,21 +14,25 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
-
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: CrasherWake, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: CrasherWake,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
 
-  const hasEnergyInHand = player.hand.cards.filter(c => {
-    return c.superType === SuperType.ENERGY && c.name === 'Water Energy';
-  }).length >= 2;
+  const hasEnergyInHand =
+    player.hand.cards.filter((c) => {
+      return c.superType === SuperType.ENERGY && c.name === 'Water Energy';
+    }).length >= 2;
 
   if (!hasEnergyInHand) {
     throw new GameError(GameMessage.CANNOT_USE_POWER);
   }
-
 
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -46,18 +50,22 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   // prepare card list without Junk Arm
   const handTemp = new CardList();
-  handTemp.cards = player.hand.cards.filter(c => c !== self);
+  handTemp.cards = player.hand.cards.filter((c) => c !== self);
 
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_DISCARD,
-    handTemp,
-    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
-    { min: 2, max: 2, allowCancel: false }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_DISCARD,
+      handTemp,
+      { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
+      { min: 2, max: 2, allowCancel: false },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   // Operation canceled by the user
   if (cards.length === 0) {
@@ -66,34 +74,38 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: self });
 
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.deck,
-    {},
-    { min: 0, max: 2, allowCancel: false }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.deck,
+      {},
+      { min: 0, max: 2, allowCancel: false },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   if (cards.length > 0) {
-    yield store.prompt(state, new ShowCardsPrompt(
-      opponent.id,
-      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-      cards
-    ), () => next());
+    yield store.prompt(
+      state,
+      new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+      () => next(),
+    );
   }
 
   MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: self });
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);
   });
 }
 
 export class CrasherWake extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'FLI';
   public setNumber: string = '104';
   public cardImage: string = 'assets/cardback.png';
@@ -110,5 +122,4 @@ export class CrasherWake extends TrainerCard {
     }
     return state;
   }
-
 }

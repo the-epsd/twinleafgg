@@ -1,13 +1,31 @@
-import { TrainerCard, TrainerType, Stage, CardType, PokemonType, Power, PowerType, StoreLike, State, GameLog, StateUtils, GameError, GameMessage, PokemonCard, GamePhase } from '../../../game';
-import { AddSpecialConditionsEffect, AfterDamageEffect } from '../../../game/store/effects/attack-effects';
+import {
+  TrainerCard,
+  TrainerType,
+  Stage,
+  CardType,
+  PokemonType,
+  Power,
+  PowerType,
+  StoreLike,
+  State,
+  GameLog,
+  StateUtils,
+  GameError,
+  GameMessage,
+  PokemonCard,
+  GamePhase,
+} from '../../../game';
+import {
+  AddSpecialConditionsEffect,
+  AfterDamageEffect,
+} from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { RetreatEffect, KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { PlayItemEffect, PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { IS_POKEBODY_BLOCKED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class ClawFossil extends TrainerCard {
-
-  public trainerType = TrainerType.ITEM;
+  protected _trainerType = TrainerType.ITEM;
 
   public stage: Stage = Stage.BASIC;
 
@@ -39,40 +57,50 @@ export class ClawFossil extends TrainerCard {
   public name: string = 'Claw Fossil';
   public fullName: string = 'Claw Fossil PK';
 
-  public powers: Power[] = [{
-    name: 'Claw Fossil',
-    text: 'Play Claw Fossil as if it were a Basic Pokémon. While in play, Claw Fossil counts as a [C] Pokémon (instead of a Trainer card). Claw Fossil has no attacks of its own, can\'t retreat, and can\'t be affected by any Special Conditions. If Claw Fossil is Knocked Out, it doesn\'t count as a Knocked Out Pokémon. (Discard it anyway.) At any time during your turn before your attack, you may discard Claw Fossil from play.',
-    useWhenInPlay: true,
-    exemptFromAbilityLock: true,
-    isFossil: true,
-    powerType: PowerType.TRAINER_ABILITY
-  },
-  {
-    name: 'Jagged Stone',
-    text: 'If Claw Fossil is your Active Pokémon and is damaged by an opponent\'s attack (even if Claw Fossil is Knocked Out), put 1 damage counter on the Attacking Pokémon.',
-    powerType: PowerType.POKEBODY,
-    isFossil: true,
-  }];
+  public powers: Power[] = [
+    {
+      name: 'Claw Fossil',
+      text: "Play Claw Fossil as if it were a Basic Pokémon. While in play, Claw Fossil counts as a [C] Pokémon (instead of a Trainer card). Claw Fossil has no attacks of its own, can't retreat, and can't be affected by any Special Conditions. If Claw Fossil is Knocked Out, it doesn't count as a Knocked Out Pokémon. (Discard it anyway.) At any time during your turn before your attack, you may discard Claw Fossil from play.",
+      useWhenInPlay: true,
+      exemptFromAbilityLock: true,
+      isFossil: true,
+      powerType: PowerType.TRAINER_ABILITY,
+    },
+    {
+      name: 'Jagged Stone',
+      text: "If Claw Fossil is your Active Pokémon and is damaged by an opponent's attack (even if Claw Fossil is Knocked Out), put 1 damage counter on the Attacking Pokémon.",
+      powerType: PowerType.POKEBODY,
+      isFossil: true,
+    },
+  ];
 
   // public text =
   //   'Play Claw Fossil as if it were a Basic Pokémon. While in play, Claw Fossil counts as a Pokémon (instead of a Trainer card). Claw Fossil has no attacks, can\'t retreat, and can\'t be Asleep, Confused, Paralyzed, or Poisoned. If Claw Fossil is Knocked Out, it doesn\'t count as a Knocked Out Pokémon. (Discard it anyway.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_POWER_USED(effect, 0, this)) {
       const cardList = effect.player.active;
       const player = effect.player;
 
-      store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: effect.player.name, card: this.name });
+      store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, {
+        name: effect.player.name,
+        card: this.name,
+      });
 
-      if (player.bench.every(b => b.cards.length === 0)) {
+      if (player.bench.every((b) => b.cards.length === 0)) {
         // technical implementation does not matter exactly because this ends the game
         effect.player.active.moveCardsTo(effect.player.active.cards, player.deck);
       } else {
         player.switchPokemon(cardList);
         const mysteriousFossilCardList = StateUtils.findCardList(state, this);
-        mysteriousFossilCardList.moveCardsTo(mysteriousFossilCardList.cards.filter(c => c === this), effect.player.discard);
-        mysteriousFossilCardList.moveCardsTo(mysteriousFossilCardList.cards.filter(c => c !== this), effect.player.discard);
+        mysteriousFossilCardList.moveCardsTo(
+          mysteriousFossilCardList.cards.filter((c) => c === this),
+          effect.player.discard,
+        );
+        mysteriousFossilCardList.moveCardsTo(
+          mysteriousFossilCardList.cards.filter((c) => c !== this),
+          effect.player.discard,
+        );
       }
     }
 
@@ -83,7 +111,7 @@ export class ClawFossil extends TrainerCard {
     if (effect instanceof PlayItemEffect && effect.trainerCard === this) {
       const player = effect.player;
 
-      const emptySlots = player.bench.filter(b => b.cards.length === 0);
+      const emptySlots = player.bench.filter((b) => b.cards.length === 0);
       if (emptySlots.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
@@ -124,5 +152,4 @@ export class ClawFossil extends TrainerCard {
 
     return state;
   }
-
 }

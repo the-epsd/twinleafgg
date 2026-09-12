@@ -11,8 +11,7 @@ import { GameError } from '../../../game';
 import { DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class AcerolasPremonition extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public regulationMark = 'E';
 
@@ -22,15 +21,14 @@ export class AcerolasPremonition extends TrainerCard {
 
   public setNumber: string = '129';
 
-  public name: string = 'Acerola\'s Premonition';
+  public name: string = "Acerola's Premonition";
 
-  public fullName: string = 'Acerola\'s Premonition BRS';
+  public fullName: string = "Acerola's Premonition BRS";
 
   public text: string =
     'Your opponent reveals their hand, and you draw a card for each Trainer card you find there.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -45,20 +43,21 @@ export class AcerolasPremonition extends TrainerCard {
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      const cardsInOpponentHand = opponent.hand.cards.filter(card => card instanceof TrainerCard);
+      const cardsInOpponentHand = opponent.hand.cards.filter((card) => card instanceof TrainerCard);
 
-      state = store.prompt(state, new ShowCardsPrompt(
-        player.id,
-        GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-        opponent.hand.cards
-      ), () => {
-
-        const cardsToMove = cardsInOpponentHand.length;
-        DRAW_CARDS(store, state, player, cardsToMove);
-
-      });
+      state = store.prompt(
+        state,
+        new ShowCardsPrompt(
+          player.id,
+          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+          opponent.hand.cards,
+        ),
+        () => {
+          const cardsToMove = cardsInOpponentHand.length;
+          DRAW_CARDS(store, state, player, cardsToMove);
+        },
+      );
     }
     return state;
   }
-
 }

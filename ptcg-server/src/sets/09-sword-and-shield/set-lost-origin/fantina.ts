@@ -11,7 +11,7 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 export class Fantina extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark: string = 'F';
   public set: string = 'LOR';
   public setNumber: string = '157';

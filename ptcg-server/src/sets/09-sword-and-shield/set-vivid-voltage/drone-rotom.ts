@@ -4,20 +4,28 @@
 
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, CardList, ShowCardsPrompt } from '../../../game';
+import {
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  CardList,
+  ShowCardsPrompt,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { SHOW_CARDS_TO_PLAYER } from '../../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class DroneRotom extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public regulationMark: string = 'D';
   public set: string = 'VIV';
   public setNumber: string = '151';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Drone Rotom';
   public fullName: string = 'Drone Rotom VIV';
-  public text: string = 'Your opponent reveals their hand. If they do, look at the top card of your opponent\'s deck. You may play any number of Item cards during your turn.';
+  public text: string =
+    "Your opponent reveals their hand. If they do, look at the top card of your opponent's deck. You may play any number of Item cards during your turn.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-phantom-forces/hand-scope.ts (reveal opponent hand),
@@ -34,14 +42,14 @@ export class DroneRotom extends TrainerCard {
         const deckTop = new CardList();
         opponent.deck.moveTo(deckTop, 1);
 
-        store.prompt(state, new ShowCardsPrompt(
-          player.id,
-          GameMessage.CARDS_SHOWED_BY_EFFECT,
-          deckTop.cards,
-        ), () => {
-          // Put card back on top of opponent's deck
-          opponent.deck.cards = [...deckTop.cards, ...opponent.deck.cards];
-        });
+        store.prompt(
+          state,
+          new ShowCardsPrompt(player.id, GameMessage.CARDS_SHOWED_BY_EFFECT, deckTop.cards),
+          () => {
+            // Put card back on top of opponent's deck
+            opponent.deck.cards = [...deckTop.cards, ...opponent.deck.cards];
+          },
+        );
       }
     }
 

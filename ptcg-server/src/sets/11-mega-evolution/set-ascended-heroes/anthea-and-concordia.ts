@@ -16,7 +16,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { CardTag } from '../../../game/store/card/card-types';
 
 export class AntheaAndConcordia extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark = 'I';
   public set: string = 'ASC';
   public cardImage: string = 'assets/cardback.png';

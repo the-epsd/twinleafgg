@@ -90,7 +90,7 @@ function* playCard(
 }
 
 export class TeamGalacticsInventionG109SPRadar extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'RR';
   public name: string = "Team Galactic's Invention G-109 SP Radar";
   public fullName: string = "Team Galactic's Invention G-109 SP Radar RR";

@@ -11,14 +11,22 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: Lusamine, effect: TrainerEffect): IterableIterator<State> {
-
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: Lusamine,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
 
-  const supportersAndStadiumsInDiscard = player.discard.cards.filter(c => c instanceof TrainerCard && (c.trainerType === TrainerType.STADIUM || c.trainerType === TrainerType.SUPPORTER)).length;
+  const supportersAndStadiumsInDiscard = player.discard.cards.filter(
+    (c) =>
+      c instanceof TrainerCard &&
+      (c.trainerType === TrainerType.STADIUM || c.trainerType === TrainerType.SUPPORTER),
+  ).length;
 
   if (supportersAndStadiumsInDiscard === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -36,23 +44,35 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   const blocked: number[] = [];
   player.discard.cards.forEach((c, index) => {
-    if (c instanceof TrainerCard && (c.trainerType === TrainerType.STADIUM || c.trainerType === TrainerType.SUPPORTER)) {
+    if (
+      c instanceof TrainerCard &&
+      (c.trainerType === TrainerType.STADIUM || c.trainerType === TrainerType.SUPPORTER)
+    ) {
       /**/
     } else {
       blocked.push(index);
     }
   });
 
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.discard,
-    {},
-    { min: Math.min(2, supportersAndStadiumsInDiscard), max: Math.min(2, supportersAndStadiumsInDiscard), allowCancel: false, blocked }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.discard,
+      {},
+      {
+        min: Math.min(2, supportersAndStadiumsInDiscard),
+        max: Math.min(2, supportersAndStadiumsInDiscard),
+        allowCancel: false,
+        blocked,
+      },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   cards.forEach((card, index) => {
     store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
@@ -61,19 +81,18 @@ function* playCard(next: Function, store: StoreLike, state: State,
   MOVE_CARDS(store, state, player.discard, player.hand, { cards, sourceCard: self });
 
   if (cards.length > 0) {
-    yield store.prompt(state, new ShowCardsPrompt(
-      opponent.id,
-      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-      cards
-    ), () => next());
+    yield store.prompt(
+      state,
+      new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+      () => next(),
+    );
   }
 
   return state;
 }
 
 export class Lusamine extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'CIN';
 
@@ -90,7 +109,6 @@ export class Lusamine extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
       const player = effect.player;
 
       // Check if DiscardToHandEffect is prevented
@@ -108,5 +126,4 @@ export class Lusamine extends TrainerCard {
     }
     return state;
   }
-
 }

@@ -19,7 +19,7 @@ import {
 } from '../../../game/store/effects/play-card-effects';
 
 export class HopsBag extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'JTG';
 

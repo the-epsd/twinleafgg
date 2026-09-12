@@ -14,10 +14,15 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 
 import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
-function* useStadium(next: Function, store: StoreLike, state: State, effect: UseStadiumEffect): IterableIterator<State> {
+function* useStadium(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: UseStadiumEffect,
+): IterableIterator<State> {
   const player = effect.player;
-  const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
-  const hasRestored = player.hand.cards.some(c => {
+  const slots: PokemonCardList[] = player.bench.filter((b) => b.cards.length === 0);
+  const hasRestored = player.hand.cards.some((c) => {
     return c instanceof PokemonCard && c.stage === Stage.RESTORED;
   });
 
@@ -26,7 +31,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
   }
 
   let flipResult = false;
-  yield COIN_FLIP_PROMPT(store, state, player, result => {
+  yield COIN_FLIP_PROMPT(store, state, player, (result) => {
     flipResult = result;
     next();
   });
@@ -36,16 +41,20 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
   }
 
   let cards: Card[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-    player.hand,
-    { superType: SuperType.POKEMON, stage: Stage.RESTORED },
-    { min: 1, max: 1, allowCancel: false }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+      player.hand,
+      { superType: SuperType.POKEMON, stage: Stage.RESTORED },
+      { min: 1, max: 1, allowCancel: false },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   if (cards.length > slots.length) {
     cards.length = slots.length;
@@ -60,7 +69,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
 }
 
 export class TwistMountain extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.STADIUM;
+  protected _trainerType: TrainerType = TrainerType.STADIUM;
 
   public set: string = 'DEX';
   public name: string = 'Twist Mountain';
@@ -69,7 +78,7 @@ export class TwistMountain extends TrainerCard {
   public setNumber: string = '101';
 
   public text: string =
-    'Once during each player\'s turn, that player may flip a coin. ' +
+    "Once during each player's turn, that player may flip a coin. " +
     'If heads, the player puts a Restored Pokémon from his or her hand ' +
     'onto his or her Bench.';
 
@@ -81,5 +90,4 @@ export class TwistMountain extends TrainerCard {
 
     return state;
   }
-
 }

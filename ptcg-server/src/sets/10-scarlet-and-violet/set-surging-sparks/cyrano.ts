@@ -70,7 +70,7 @@ function* playCard(
 }
 
 export class Cyrano extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark = 'H';
   public set: string = 'SSP';
   public cardImage: string = 'assets/cardback.png';

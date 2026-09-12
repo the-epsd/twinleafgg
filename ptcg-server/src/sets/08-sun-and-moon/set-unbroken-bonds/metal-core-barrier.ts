@@ -12,8 +12,7 @@ import { GamePhase, State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class MetalCoreBarrier extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.TOOL;
+  protected _trainerType: TrainerType = TrainerType.TOOL;
 
   public set: string = 'UNB';
 
@@ -26,15 +25,17 @@ export class MetalCoreBarrier extends TrainerCard {
   public fullName: string = 'Metal Core Barrier UNB';
 
   public text: string =
-    'If this card is attached to 1 of your Pokémon, discard it at the end of your opponent\'s turn. The [M] Pokémon this card is attached to takes 70 less damage from your opponent\'s attacks (after applying Weakness and Resistance).';
+    "If this card is attached to 1 of your Pokémon, discard it at the end of your opponent's turn. The [M] Pokémon this card is attached to takes 70 less damage from your opponent's attacks (after applying Weakness and Resistance).";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof EndTurnEffect) {
       // Discard card at the end of opponent's turn
-      state.players.forEach(player => {
+      state.players.forEach((player) => {
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-          if (cardList.tools.includes(this) && StateUtils.findOwner(state, cardList) !== effect.player) {
+          if (
+            cardList.tools.includes(this) &&
+            StateUtils.findOwner(state, cardList) !== effect.player
+          ) {
             // Check if tool is blocked before discarding
             if (!IS_TOOL_BLOCKED(store, state, StateUtils.findOwner(state, cardList), this)) {
               cardList.moveCardTo(this, player.discard);
@@ -45,8 +46,9 @@ export class MetalCoreBarrier extends TrainerCard {
     }
 
     if (effect instanceof PutDamageEffect && effect.target.tools.includes(this)) {
-
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+        return state;
+      }
 
       const checkPokemonType = new CheckPokemonTypeEffect(effect.target);
       store.reduceEffect(state, checkPokemonType);
@@ -62,7 +64,7 @@ export class MetalCoreBarrier extends TrainerCard {
 
       const player = StateUtils.findOwner(state, effect.target);
 
-      // Check if damage target is owned by this card's owner 
+      // Check if damage target is owned by this card's owner
       const targetPlayer = StateUtils.findOwner(state, effect.target);
       if (targetPlayer === player) {
         effect.reduceDamage(70);
@@ -72,5 +74,4 @@ export class MetalCoreBarrier extends TrainerCard {
     }
     return state;
   }
-
 }

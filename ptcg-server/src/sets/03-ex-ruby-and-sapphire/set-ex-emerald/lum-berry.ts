@@ -9,7 +9,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class LumBerry extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.TOOL;
+  protected _trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'EM';
   public name: string = 'Lum Berry';
   public fullName: string = 'Lum Berry EM';
@@ -20,7 +20,6 @@ export class LumBerry extends TrainerCard {
     'At the end of each turn, if the Pokémon this card is attached to is affected by any Special Conditions, it recovers from all of them, and discard this card.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, effect.player);
@@ -31,7 +30,7 @@ export class LumBerry extends TrainerCard {
 
       // Handle Lum Berry for player's Active Pokémon
       if (player.active.cards.includes(this) && player.active.specialConditions.length > 0) {
-        player.active.specialConditions.slice().forEach(condition => {
+        player.active.specialConditions.slice().forEach((condition) => {
           player.active.removeSpecialCondition(condition);
         });
         // Discard Lum Berry after use
@@ -44,7 +43,7 @@ export class LumBerry extends TrainerCard {
 
       // Handle Lum Berry for opponent's Active Pokémon
       if (opponent.active.cards.includes(this) && opponent.active.specialConditions.length > 0) {
-        opponent.active.specialConditions.slice().forEach(condition => {
+        opponent.active.specialConditions.slice().forEach((condition) => {
           opponent.active.removeSpecialCondition(condition);
         });
         // Discard Lum Berry after use

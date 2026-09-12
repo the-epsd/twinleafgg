@@ -10,7 +10,7 @@ import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 import { DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class FriendsInGalar extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark: string = 'E';
   public set: string = 'BRS';
   public setNumber: string = '140';
@@ -35,8 +35,6 @@ export class FriendsInGalar extends TrainerCard {
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
       DRAW_CARDS(store, state, player, 3);
-
-
     }
 
     return state;

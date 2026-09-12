@@ -68,7 +68,7 @@ function* useStadium(
 }
 
 export class SpikemuthGym extends TrainerCard {
-  public trainerType = TrainerType.STADIUM;
+  protected _trainerType = TrainerType.STADIUM;
   public set = 'DRI';
   public setNumber: string = '169';
   public cardImage: string = 'assets/cardback.png';

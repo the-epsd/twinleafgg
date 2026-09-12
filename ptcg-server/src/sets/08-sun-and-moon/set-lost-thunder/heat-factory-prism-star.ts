@@ -11,7 +11,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { EnergyCard } from '../../../game/store/card/energy-card';
 
 export class HeatFactoryPrismStar extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.STADIUM;
+  protected _trainerType: TrainerType = TrainerType.STADIUM;
   protected _tags = [CardTag.PRISM_STAR];
   public set: string = 'LOT';
   public setNumber: string = '178';

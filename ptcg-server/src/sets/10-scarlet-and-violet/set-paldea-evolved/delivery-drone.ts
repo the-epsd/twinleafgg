@@ -12,7 +12,12 @@ import { Player } from '../../../game';
 
 import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   let coin1Result = false;
   let coin2Result = false;
@@ -20,26 +25,30 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
-  yield COIN_FLIP_PROMPT(store, state, player, result => {
+  yield COIN_FLIP_PROMPT(store, state, player, (result) => {
     coin1Result = result;
     next();
   });
-  yield COIN_FLIP_PROMPT(store, state, player, result => {
+  yield COIN_FLIP_PROMPT(store, state, player, (result) => {
     coin2Result = result;
     next();
   });
   if (coin1Result && coin2Result) {
     let cards: any[] = [];
-    yield store.prompt(state, new ChooseCardsPrompt(
-      player,
-      GameMessage.CHOOSE_CARD_TO_HAND,
-      player.deck,
-      {},
-      { min: 0, max: 1, allowCancel: false }),
+    yield store.prompt(
+      state,
+      new ChooseCardsPrompt(
+        player,
+        GameMessage.CHOOSE_CARD_TO_HAND,
+        player.deck,
+        {},
+        { min: 0, max: 1, allowCancel: false },
+      ),
       (selected: any[]) => {
         cards = selected || [];
         next();
-      });
+      },
+    );
     player.deck.moveCardsTo(cards, player.hand);
   }
 
@@ -51,7 +60,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 export class DeliveryDrone extends TrainerCard {
   public regulationMark = 'G';
 
-  public trainerType = TrainerType.ITEM;
+  protected _trainerType = TrainerType.ITEM;
 
   public set = 'PAL';
   public cardImage: string = 'assets/cardback.png';
@@ -59,7 +68,8 @@ export class DeliveryDrone extends TrainerCard {
   public name = 'Delivery Drone';
   public fullName: string = 'Delivery Drone PAL';
 
-  public text: string = 'Flip 2 coins. If both of them are heads, search your deck for a card and put it into your hand. Then, shuffle your deck.';
+  public text: string =
+    'Flip 2 coins. If both of them are heads, search your deck for a card and put it into your hand. Then, shuffle your deck.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     return player.deck.cards.length > 0;
@@ -73,4 +83,4 @@ export class DeliveryDrone extends TrainerCard {
 
     return state;
   }
-}                         
+}

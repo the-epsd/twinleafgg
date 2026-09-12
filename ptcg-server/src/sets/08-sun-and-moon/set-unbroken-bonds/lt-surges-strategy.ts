@@ -8,14 +8,13 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class LtSurgesStrategy extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'UNB';
 
-  public name: string = 'Lt. Surge\'s Strategy';
+  public name: string = "Lt. Surge's Strategy";
 
-  public fullName: string = 'Lt. Surge\'s Strategy UNB';
+  public fullName: string = "Lt. Surge's Strategy UNB";
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -28,7 +27,6 @@ export class LtSurgesStrategy extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -59,5 +57,4 @@ export class LtSurgesStrategy extends TrainerCard {
 
     return state;
   }
-
 }

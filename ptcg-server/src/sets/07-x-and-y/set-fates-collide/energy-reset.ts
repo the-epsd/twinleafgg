@@ -4,18 +4,34 @@
 
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { GameError, GameMessage, PlayerType, SlotType, StoreLike, State, StateUtils } from '../../../game';
+import {
+  GameError,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { DiscardEnergyPrompt, DiscardEnergyTransfer } from '../../../game/store/prompts/discard-energy-prompt';
+import {
+  DiscardEnergyPrompt,
+  DiscardEnergyTransfer,
+} from '../../../game/store/prompts/discard-energy-prompt';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   // Check if any Pokemon has energy attached
   let hasEnergy = false;
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-    if (cardList.cards.some(c => c.superType === SuperType.ENERGY)) {
+    if (cardList.cards.some((c) => c.superType === SuperType.ENERGY)) {
       hasEnergy = true;
     }
   });
@@ -29,30 +45,33 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
   let transfers: DiscardEnergyTransfer[] = [];
-  yield store.prompt(state, new DiscardEnergyPrompt(
-    player.id,
-    GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.ACTIVE, SlotType.BENCH],
-    { superType: SuperType.ENERGY },
-    { allowCancel: false, min: 1, max: undefined }
-  ), result => {
-    transfers = result || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new DiscardEnergyPrompt(
+      player.id,
+      GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.ACTIVE, SlotType.BENCH],
+      { superType: SuperType.ENERGY },
+      { allowCancel: false, min: 1, max: undefined },
+    ),
+    (result) => {
+      transfers = result || [];
+      next();
+    },
+  );
 
   // Move selected energy cards to hand instead of discard
-  transfers.forEach(transfer => {
+  transfers.forEach((transfer) => {
     const source = StateUtils.getTarget(state, player, transfer.from);
     source.moveCardTo(transfer.card, player.hand);
   });
-
 
   return state;
 }
 
 export class EnergyReset extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'FCO';
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';

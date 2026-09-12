@@ -19,7 +19,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 
 export class MistyAndLorelei extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   protected _tags = [CardTag.TAG_TEAM];
   public set: string = 'CEC';
   public setNumber: string = '199';

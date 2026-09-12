@@ -18,7 +18,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class BellelbaAndBrycenMan extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'CEC';
   protected _tags = [CardTag.TAG_TEAM];
   public cardImage: string = 'assets/cardback.png';
