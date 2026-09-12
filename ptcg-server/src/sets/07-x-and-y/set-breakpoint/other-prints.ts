@@ -43,6 +43,7 @@ export class ProfessorSycamoreBKP extends ProfessorSycamore {
   public setNumber = '107';
   public fullName: string = 'Professor Sycamore BKP';
   public set = 'BKP';
+  public legacyFullName = '';
 }
 
 export class ManaphyEX2BKP extends ManaphyEXBKP32 {
@@ -73,6 +74,7 @@ export class ProfessorSycamoreBKPa extends ProfessorSycamore {
   public setNumber = '107a';
   public fullName: string = 'Professor Sycamore2 BKP';
   public set = 'BKP';
+  public legacyFullName = '';
 }
 
 export class MistysDeterminationBKP extends MistysDetermination {

@@ -47,6 +47,7 @@ export class ProfessorSycamoreSTS extends ProfessorSycamore {
   public setNumber = '114';
   public fullName: string = 'Professor Sycamore STS';
   public set = 'STS';
+  public legacyFullName = '';
 }
 
 export class VolcanionEX3STS extends VolcanionEXSTS26 {

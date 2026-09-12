@@ -33,6 +33,7 @@ export class ProfessorSycamorePHF extends ProfessorSycamore {
   public setNumber = '101';
   public fullName: string = 'Professor Sycamore PHF';
   public set = 'PHF';
+  public legacyFullName = '';
 }
 
 export class RollerSkatesPHF extends RollerSkates {
