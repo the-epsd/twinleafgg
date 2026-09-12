@@ -42,6 +42,7 @@ export class CrushingHammerPOR extends CrushingHammer {
   public set = 'POR';
   public setNumber = '71';
   public regulationMark = 'J';
+  public legacyFullName = 'Crushing Hammer MC';
 }
 
 export class EnergySearchPOR extends EnergySearch {
@@ -49,6 +50,7 @@ export class EnergySearchPOR extends EnergySearch {
   public set = 'POR';
   public setNumber = '72';
   public regulationMark = 'J';
+  public legacyFullName = 'Energy Search MC';
 }
 
 export class JudgePOR extends Judge {
@@ -56,6 +58,7 @@ export class JudgePOR extends Judge {
   public set = 'POR';
   public setNumber = '76';
   public regulationMark = 'J';
+  public legacyFullName = 'Judge MC';
 }
 
 export class PokeBallPOR extends PokeBall {
@@ -77,6 +80,7 @@ export class PokemonCatcherPOR extends PokemonCatcher {
   public set = 'POR';
   public setNumber = '82';
   public regulationMark = 'J';
+  public legacyFullName = 'Pokémon Catcher MC';
 }
 
 export class PotionPOR extends Potion {
@@ -84,6 +88,7 @@ export class PotionPOR extends Potion {
   public set = 'POR';
   public setNumber = '83';
   public regulationMark = 'J';
+  public legacyFullName = 'Potion MC';
 }
 
 // MARK: Illustration rares
