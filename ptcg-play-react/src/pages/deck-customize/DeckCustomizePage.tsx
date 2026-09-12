@@ -8,6 +8,7 @@ import { listCoins, type PlayerCoinItem } from '../../api/coinApi';
 import { listDeckBoxes, type PlayerDeckBoxItem } from '../../api/deckBoxApi';
 import { listSleeves, type PlayerSleeveItem } from '../../api/sleeveApi';
 import { ShellButton } from '../../components/ui/ShellButton';
+import { TwinleafCtaButton } from '../../components/ui/TwinleafCtaButton';
 import { useAuth } from '../../context/AuthContext';
 import { useSnackbar } from '../../context/SnackbarContext';
 import { resolveAssetUrl } from '../../utils/assetUrl';
@@ -526,7 +527,7 @@ export function DeckCustomizePage() {
               }}
               gl={{ antialias: true, alpha: true }}
             >
-              <color attach="background" args={['#e4e4e4']} />
+              <color attach="background" args={['#0a1628']} />
               <CustomizePreviewScene
                 mode={previewMode}
                 focus={tab}
@@ -571,19 +572,6 @@ export function DeckCustomizePage() {
               <option value="name_asc">Name A–Z</option>
               <option value="name_desc">Name Z–A</option>
             </select>
-            <button
-              type="button"
-              className={styles.infoBtn}
-              title="Choose a deck box, card sleeve, and coin for this deck. Preview All shows them together."
-              aria-label="Customization info"
-              onClick={() =>
-                showSnackbar(
-                  'Choose a deck box, card sleeve, and coin for this deck. Preview All shows them together.',
-                )
-              }
-            >
-              i
-            </button>
           </div>
         </div>
 
@@ -699,21 +687,12 @@ export function DeckCustomizePage() {
         )}
 
         <div className={styles.sidebarActions}>
-          <button
-            type="button"
-            className={styles.applyBtn}
-            disabled={saving}
-            onClick={() => void onSave()}
-          >
+          <TwinleafCtaButton fullWidth disabled={saving} onClick={() => void onSave()}>
             {saving ? 'Saving…' : 'Apply'}
-          </button>
-          <button
-            type="button"
-            className={styles.cancelBtn}
-            onClick={() => navigate(`/deck/${deckId}`)}
-          >
+          </TwinleafCtaButton>
+          <TwinleafCtaButton fullWidth variant="muted" onClick={() => navigate(`/deck/${deckId}`)}>
             Cancel
-          </button>
+          </TwinleafCtaButton>
         </div>
       </aside>
     </div>
