@@ -6,7 +6,7 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerTargetEffect } from '../../../game/store/effects/play-card-effects';
+import { BLOCK_TRAINER_TARGET, IS_TRAINER_TARGET } from '../../../game/store/prefabs/prefabs';
 
 export class MoonAndSunBadge extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
@@ -23,10 +23,7 @@ export class MoonAndSunBadge extends TrainerCard {
     // Prevent Supporter effects targeting Espeon V or Umbreon V with this badge
     // Ref: set-silver-tempest/leafy-camo-poncho.ts (TrainerTargetEffect + tool check pattern)
     if (
-      effect instanceof TrainerTargetEffect &&
-      effect.trainerCard?.trainerType === TrainerType.SUPPORTER &&
-      effect.target &&
-      effect.target.cards.includes(this)
+      IS_TRAINER_TARGET(effect, { card: this, trainerType: TrainerType.SUPPORTER })
     ) {
       const attachedPokemon = effect.target.getPokemonCard();
       if (
@@ -34,7 +31,7 @@ export class MoonAndSunBadge extends TrainerCard {
         attachedPokemon.hasTag(CardTag.POKEMON_V) &&
         (attachedPokemon.name.includes('Espeon') || attachedPokemon.name.includes('Umbreon'))
       ) {
-        effect.target = undefined;
+        BLOCK_TRAINER_TARGET(effect);
       }
     }
 

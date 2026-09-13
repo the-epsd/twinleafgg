@@ -4,6 +4,7 @@ import { GameError, GameMessage, State, StateUtils, StoreLike } from '../../../g
 import { Effect } from '../../../game/store/effects/effect';
 import { SpecialEnergyEffect } from '../../../game/store/effects/game-effects';
 import { TrainerTargetEffect } from '../../../game/store/effects/play-card-effects';
+import { WAS_TRAINER_TARGET_BLOCKED } from '../../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 
@@ -32,7 +33,7 @@ export class TempleofSinnoh extends TrainerCard {
         }
 
         store.reduceEffect(state, targetCard);
-        if (targetCard.target) {
+        if (!WAS_TRAINER_TARGET_BLOCKED(targetCard)) {
           throw new GameError(GameMessage.CANNOT_USE_POWER);
         }
       }
@@ -47,7 +48,7 @@ export class TempleofSinnoh extends TrainerCard {
         }
 
         store.reduceEffect(state, targetCard);
-        if (targetCard.target) {
+        if (!WAS_TRAINER_TARGET_BLOCKED(targetCard)) {
           effect.specialEnergiesProvideColorless = true;
         }
       }

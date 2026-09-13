@@ -87,6 +87,13 @@ import {
 } from './deck-shuffle-animation';
 import { CAN_PLAY_TRAINER_CARD } from './trainer-prefabs';
 
+export {
+  IS_TRAINER_TARGET,
+  BLOCK_TRAINER_TARGET,
+  TRAINER_TARGET_BLOCKED,
+  WAS_TRAINER_TARGET_BLOCKED,
+} from './trainer-target';
+
 // =============================================================================
 // Effect type guards / turn hooks
 // =============================================================================

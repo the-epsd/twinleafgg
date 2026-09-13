@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
-import { TrainerEffect, TrainerTargetEffect } from '../../game/store/effects/play-card-effects';
+import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { PlayerType, SlotType, StateUtils, GameError, GameMessage } from '../../game';
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -26,15 +26,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     [SlotType.BENCH],
     { allowCancel: false }
   ), result => {
-    const cardList = result[0];
-
+    const cardList = result && result[0];
     if (cardList) {
-      const targetCard = new TrainerTargetEffect(player, effect.trainerCard, cardList);
-      targetCard.target = cardList;
-      store.reduceEffect(state, targetCard);
-      if (targetCard.target) {
-        opponent.switchPokemon(targetCard.target);
-      }
+      opponent.switchPokemon(cardList);
     }
     return state;
   });

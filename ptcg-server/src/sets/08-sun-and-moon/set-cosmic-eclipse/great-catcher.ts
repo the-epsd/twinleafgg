@@ -88,8 +88,10 @@ function* playCard(
       { allowCancel: false, blocked: gustBlocked },
     ),
     (result) => {
-      const cardList = result[0];
-      opponent.switchPokemon(cardList);
+      const cardList = result && result[0];
+      if (cardList) {
+        opponent.switchPokemon(cardList);
+      }
     },
   );
 }

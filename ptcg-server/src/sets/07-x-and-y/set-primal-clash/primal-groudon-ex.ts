@@ -4,7 +4,7 @@ import { StoreLike, State, PowerType, PlayerType, StateUtils } from '../../../ga
 import { Effect } from '../../../game/store/effects/effect';
 import { DISCARD_A_STADIUM_CARD_IN_PLAY, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { MEGA_EVOLUTION_END_TURN } from '../../../game/store/prefabs/tool-prefabs';
-import { TrainerTargetEffect } from '../../../game/store/effects/play-card-effects';
+import { BLOCK_TRAINER_TARGET, IS_TRAINER_TARGET } from '../../../game/store/prefabs/prefabs';
 
 export class PrimalGroudonEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX, CardTag.MEGA, CardTag.PRIMAL];
@@ -43,7 +43,7 @@ export class PrimalGroudonEx extends PokemonCard {
     MEGA_EVOLUTION_END_TURN(store, state, effect, this);
 
     // Ω Barrier
-    if (effect instanceof TrainerTargetEffect && effect.target?.cards.includes(this)) {
+    if (IS_TRAINER_TARGET(effect, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -58,7 +58,7 @@ export class PrimalGroudonEx extends PokemonCard {
         return state;
       }
 
-      effect.preventDefault = true;
+      BLOCK_TRAINER_TARGET(effect);
     }
 
     // Gaia Volcano

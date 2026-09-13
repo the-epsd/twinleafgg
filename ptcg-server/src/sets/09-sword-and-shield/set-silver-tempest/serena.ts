@@ -111,7 +111,10 @@ export class Serena extends TrainerCard {
                 { allowCancel: false, blocked: blocked },
               ),
               (result) => {
-                const cardList = result[0];
+                const cardList = result && result[0];
+                if (!cardList) {
+                  return state;
+                }
 
                 if (cardList.isStage(Stage.BASIC)) {
                   try {
@@ -123,9 +126,9 @@ export class Serena extends TrainerCard {
                 }
 
                 if (
-                  !result[0].getPokemonCard()?.hasTag(CardTag.POKEMON_V) &&
-                  !result[0].getPokemonCard()?.hasTag(CardTag.POKEMON_VMAX) &&
-                  !result[0].getPokemonCard()?.hasTag(CardTag.POKEMON_VSTAR)
+                  !cardList.getPokemonCard()?.hasTag(CardTag.POKEMON_V) &&
+                  !cardList.getPokemonCard()?.hasTag(CardTag.POKEMON_VMAX) &&
+                  !cardList.getPokemonCard()?.hasTag(CardTag.POKEMON_VSTAR)
                 ) {
                   throw new GameError(GameMessage.INVALID_TARGET);
                 }

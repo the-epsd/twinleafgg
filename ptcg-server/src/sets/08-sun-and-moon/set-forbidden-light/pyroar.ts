@@ -6,8 +6,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils, PlayerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerTargetEffect } from '../../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_TRAINER_TARGET, WAS_ATTACK_USED, IS_ABILITY_BLOCKED, IS_TRAINER_TARGET } from '../../../game/store/prefabs/prefabs';
 
 export class Pyroar extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -42,7 +41,7 @@ export class Pyroar extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Unnerve (passive - prevent trainer effects targeting this Pokemon)
     // Ref: set-team-up/glavantula.ts (Unnerve - TrainerTargetEffect pattern)
-    if (effect instanceof TrainerTargetEffect && effect.target?.cards.includes(this)) {
+    if (IS_TRAINER_TARGET(effect, this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
 
       if (IS_ABILITY_BLOCKED(store, state, opponent, this)) {
@@ -59,7 +58,7 @@ export class Pyroar extends PokemonCard {
         return state;
       }
 
-      effect.target = undefined;
+      BLOCK_TRAINER_TARGET(effect);
     }
 
     // Attack 1: Dominating Fangs
