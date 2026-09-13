@@ -23,6 +23,7 @@ import type {
   CustomizePreviewLayout,
   LayoutPropId,
   PropTransform,
+  Vec3,
 } from './customizePreviewLayout';
 
 export type PreviewMode = 'all' | 'focused';
@@ -103,28 +104,68 @@ function readTransform(obj: Object3D): PropTransform {
   };
 }
 
+/** How much closer than Preview All. Smaller = larger on screen. */
+const FOCUS_DISTANCE_SCALE = 0.68;
+/** Apparent size vs the shared focus framing. 0.8 = 20% smaller. */
+const FOCUS_SIZE: Record<FocusTarget, number> = {
+  deck_boxes: 0.8,
+  sleeves: 1,
+  coins: 1,
+};
+
+function layoutProp(layout: CustomizePreviewLayout, focus: FocusTarget): PropTransform {
+  if (focus === 'deck_boxes') return layout.box;
+  if (focus === 'sleeves') return layout.sleeve;
+  return layout.coin;
+}
+
+/**
+ * Centers the focused prop and pulls the camera in, using the same camera-to-object
+ * direction as Preview All so rotation still reads the same.
+ */
+function focusedCamera(
+  layout: CustomizePreviewLayout,
+  focus: FocusTarget,
+): { position: Vec3; target: Vec3 } {
+  const prop = layoutProp(layout, focus);
+  const [px, py, pz] = prop.position;
+  const [cx, cy, cz] = layout.camera.position;
+  const dx = cx - px;
+  const dy = cy - py;
+  const dz = cz - pz;
+  const len = Math.hypot(dx, dy, dz) || 1;
+  const distance = Math.max(2.4, (len * FOCUS_DISTANCE_SCALE) / FOCUS_SIZE[focus]);
+  return {
+    position: [px + (dx / len) * distance, py + (dy / len) * distance, pz + (dz / len) * distance],
+    target: [px, py, pz],
+  };
+}
+
 function PreviewCamera({
   layout,
   editLayout,
   mode,
+  focus,
 }: {
   layout: CustomizePreviewLayout;
   editLayout: boolean;
   mode: PreviewMode;
+  focus: FocusTarget;
 }) {
   const camera = useThree((s) => s.camera) as PerspectiveCamera;
 
   useLayoutEffect(() => {
+    camera.fov = layout.camera.fov;
     if (editLayout || mode === 'all') {
       camera.position.set(...layout.camera.position);
-      camera.fov = layout.camera.fov;
       camera.lookAt(...layout.camera.target);
     } else {
-      camera.position.set(-3.5, 2.8, 7.5);
-      camera.lookAt(0, 0, 0);
+      const framed = focusedCamera(layout, focus);
+      camera.position.set(...framed.position);
+      camera.lookAt(...framed.target);
     }
     camera.updateProjectionMatrix();
-  }, [camera, editLayout, layout.camera.fov, layout.camera.position, layout.camera.target, mode]);
+  }, [camera, editLayout, focus, layout, mode]);
 
   return null;
 }
@@ -252,21 +293,10 @@ export function CustomizePreviewScene({
   const showBox = editLayout || mode === 'all' || focus === 'deck_boxes';
   const showSleeve = editLayout || mode === 'all' || focus === 'sleeves';
   const showCoin = editLayout || mode === 'all' || focus === 'coins';
-  const focused = !editLayout && mode === 'focused';
-
-  const boxT: PropTransform = focused
-    ? { position: [0, 0, 0], rotation: [0, 0, 0], scale: 1.1 }
-    : layout.box;
-  const sleeveT: PropTransform = focused
-    ? { position: [0, 0.35, 0], rotation: [0, 0, 0], scale: 1.35 }
-    : layout.sleeve;
-  const coinT: PropTransform = focused
-    ? { position: [0, 0, 0.5], rotation: [0, 0.1, 0], scale: 1.85 }
-    : layout.coin;
 
   return (
     <>
-      <PreviewCamera layout={layout} editLayout={editLayout} mode={mode} />
+      <PreviewCamera layout={layout} editLayout={editLayout} mode={mode} focus={focus} />
       {editLayout ? (
         <OrbitAndCameraSync
           enabled={orbitEnabled}
@@ -281,7 +311,7 @@ export function CustomizePreviewScene({
         {showCoin && coinTextureUrl ? (
           <EditableProp
             id="coin"
-            transform={coinT}
+            transform={layout.coin}
             editLayout={editLayout}
             selected={selectedProp === 'coin'}
             transformMode={transformMode}
@@ -296,7 +326,7 @@ export function CustomizePreviewScene({
         {showBox && boxTextureUrl ? (
           <EditableProp
             id="box"
-            transform={boxT}
+            transform={layout.box}
             editLayout={editLayout}
             selected={selectedProp === 'box'}
             transformMode={transformMode}
@@ -311,7 +341,7 @@ export function CustomizePreviewScene({
         {showSleeve && sleeveTextureUrl ? (
           <EditableProp
             id="sleeve"
-            transform={sleeveT}
+            transform={layout.sleeve}
             editLayout={editLayout}
             selected={selectedProp === 'sleeve'}
             transformMode={transformMode}
@@ -328,7 +358,7 @@ export function CustomizePreviewScene({
           </EditableProp>
         ) : null}
 
-        <ContactShadows position={[0, -2.05, 0]} opacity={0.18} scale={16} blur={2.8} far={6} color="#6a6a6a" />
+        <ContactShadows position={[0, -2.05, 0]} opacity={0.35} scale={16} blur={2.6} far={6} color="#02040a" />
         <Environment preset="city" />
       </Suspense>
     </>

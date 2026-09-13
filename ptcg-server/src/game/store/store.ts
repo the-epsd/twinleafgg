@@ -7,7 +7,7 @@ import { SuperType, TrainerType } from './card/card-types';
 import { TrainerCard } from './card/trainer-card';
 import { ChangeAvatarAction } from './actions/change-avatar-action';
 import { Effect } from './effects/effect';
-import { PlayPokemonEffect } from './effects/play-card-effects';
+import { PlayPokemonEffect, TrainerEffect } from './effects/play-card-effects';
 import { CheckAttackCostEffect, CheckPokemonPowersEffect, CheckRetreatCostEffect } from './effects/check-effects';
 import { MovedFromActiveToBenchEffect, MovedToActiveEffect, PowerEffect } from './effects/game-effects';
 import {
@@ -16,6 +16,7 @@ import {
   APPLY_ATTACK_EFFECT_ABILITY_LOCKS,
 } from './prefabs/ability-lock';
 import { resolveCopyAttackSessions } from './prefabs/copy-attack-delegation';
+import { filterTrainerPromptResult, ResolvingTrainerSource } from './prefabs/trainer-target';
 import { GameError } from '../game-error';
 import { GameMessage, GameLog } from '../game-message';
 import { Prompt } from './prompts/prompt';
@@ -63,6 +64,10 @@ export class Store implements StoreLike {
   private logId: number = 0;
   // Flag to prevent nested playability calculations
   private calculatingPlayability: boolean = false;
+  /** Set only while the played trainer card's own effect (or its prompt callbacks) runs. */
+  private resolvingTrainer: ResolvingTrainerSource | undefined;
+  /** Prompt ids created by the resolving trainer. Not serialized. */
+  private trainerPromptSources = new Map<number, ResolvingTrainerSource>();
 
   constructor(private handler: StoreHandler) { }
 
@@ -211,6 +216,7 @@ export class Store implements StoreLike {
       }
 
       state.prompts.push(prompts[i]);
+      this.stampTrainerPrompt(prompts[i].id);
     }
 
     const promptItem: PromptItem = {
@@ -257,23 +263,38 @@ export class Store implements StoreLike {
     try {
       prompt.result = action.result;
 
-      const results = promptItem.ids.map(id => {
-        const p = state.prompts.find(item => item.id === id);
-        return p === undefined ? undefined : p.result;
-      });
-
       if (action.log !== undefined) {
         this.log(state, action.log.message, action.log.params, action.log.client);
       }
 
-      if (results.every(result => result !== undefined)) {
-        const itemIndex = this.promptItems.indexOf(promptItem);
-        promptItem.then(results.length === 1 ? results[0] : results);
-        this.promptItems.splice(itemIndex, 1);
+      const pending = promptItem.ids.map(id => {
+        const p = state.prompts.find(item => item.id === id);
+        return p === undefined ? undefined : p.result;
+      });
+
+      if (pending.every(result => result !== undefined)) {
+        this.applyTrainerTargetFilters(state, promptItem.ids);
+        const results = promptItem.ids.map(id => {
+          const p = state.prompts.find(item => item.id === id);
+          return p === undefined ? undefined : p.result;
+        });
+        const source = this.takeTrainerPromptSource(promptItem.ids);
+        const previous = this.resolvingTrainer;
+        if (source) {
+          this.resolvingTrainer = source;
+        }
+        try {
+          const itemIndex = this.promptItems.indexOf(promptItem);
+          promptItem.then(results.length === 1 ? results[0] : results);
+          this.promptItems.splice(itemIndex, 1);
+        } finally {
+          this.resolvingTrainer = previous;
+        }
       }
 
       this.resolveWaitItems();
     } catch (storeError) {
+      this.dropTrainerPromptSources(promptItem.ids);
       for (const id of promptItem.ids) {
         const promptIndex = state.prompts.findIndex(item => item.id === id);
         if (promptIndex !== -1) {
@@ -413,7 +434,10 @@ export class Store implements StoreLike {
       // Clean up any prompts or wait items that were created during playability checks
       // These are fake prompts from testing card playability and should not interfere with real game prompts
       if (this.promptItems.length > promptItemsBefore) {
-        this.promptItems.splice(promptItemsBefore, this.promptItems.length - promptItemsBefore);
+        const removed = this.promptItems.splice(promptItemsBefore, this.promptItems.length - promptItemsBefore);
+        for (const item of removed) {
+          this.dropTrainerPromptSources(item.ids);
+        }
       }
       if (this.waitItems.length > waitItemsBefore) {
         this.waitItems.splice(waitItemsBefore, this.waitItems.length - waitItemsBefore);
@@ -485,16 +509,66 @@ export class Store implements StoreLike {
 
   // Utility function to call reduceEffect with override support
   private callReduceEffect(card: Card, store: StoreLike, state: State, effect: Effect): State {
-    // Only try override for TrainerCard (for now)
-    if ((card as any).trainerType !== undefined) {
-      // Import here to avoid circular dependency at module level
-      const { getOverriddenReduceEffect } = require('./card/card-effect-overrides');
-      const format = (store as any)?.handler?.gameSettings?.format ?? 0;
-      const override = getOverriddenReduceEffect(card, format);
-      if (override) {
-        return override(store, state, effect);
+    const resolvingThisTrainer = !this.calculatingPlayability
+      && effect instanceof TrainerEffect
+      && effect.trainerCard === card;
+    const previous = this.resolvingTrainer;
+    if (resolvingThisTrainer && effect instanceof TrainerEffect) {
+      this.resolvingTrainer = { player: effect.player, trainerCard: effect.trainerCard };
+    }
+
+    try {
+      // Only try override for TrainerCard (for now)
+      if ((card as any).trainerType !== undefined) {
+        // Import here to avoid circular dependency at module level
+        const { getOverriddenReduceEffect } = require('./card/card-effect-overrides');
+        const format = (store as any)?.handler?.gameSettings?.format ?? 0;
+        const override = getOverriddenReduceEffect(card, format);
+        if (override) {
+          return override(store, state, effect);
+        }
+      }
+      return card.reduceEffect(store, state, effect);
+    } finally {
+      if (resolvingThisTrainer) {
+        this.resolvingTrainer = previous;
       }
     }
-    return card.reduceEffect(store, state, effect);
+  }
+
+  private stampTrainerPrompt(promptId: number): void {
+    if (this.calculatingPlayability || this.resolvingTrainer === undefined) {
+      return;
+    }
+    this.trainerPromptSources.set(promptId, this.resolvingTrainer);
+  }
+
+  private applyTrainerTargetFilters(state: State, promptIds: number[]): void {
+    for (const id of promptIds) {
+      const prompt = state.prompts.find(item => item.id === id);
+      const source = this.trainerPromptSources.get(id);
+      if (prompt === undefined || source === undefined) {
+        continue;
+      }
+      filterTrainerPromptResult(this, state, prompt, source);
+    }
+  }
+
+  private takeTrainerPromptSource(promptIds: number[]): ResolvingTrainerSource | undefined {
+    let source: ResolvingTrainerSource | undefined;
+    for (const id of promptIds) {
+      const stamped = this.trainerPromptSources.get(id);
+      if (stamped) {
+        source = stamped;
+      }
+      this.trainerPromptSources.delete(id);
+    }
+    return source;
+  }
+
+  private dropTrainerPromptSources(promptIds: number[]): void {
+    for (const id of promptIds) {
+      this.trainerPromptSources.delete(id);
+    }
   }
 }

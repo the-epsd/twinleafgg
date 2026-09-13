@@ -19,6 +19,7 @@ import {
   isMatchingLegendHalf,
 } from './board3d/dual-legend.utils';
 import type { Card } from 'ptcg-server';
+import { chooseCardsSelectionValid } from './prompts/matchesPromptFilter';
 import {
   chooseCardsHandIndicesToCards,
   chooseCardsHandIndexToPromptIndex,
@@ -973,7 +974,7 @@ export class BoardInteractionService {
         .map(t => t.index);
       const indices = chooseCardsHandTargetsToPromptIndices(prompt, handIndices);
       const selectedCards = chooseCardsHandIndicesToCards(prompt, indices);
-      if (!prompt.validate(selectedCards)) {
+      if (!chooseCardsSelectionValid(prompt.cards.cards, selectedCards, prompt.filter, prompt.options)) {
         return;
       }
       this.chooseCardsCallback(indices);
@@ -1033,7 +1034,12 @@ export class BoardInteractionService {
         .filter(t => t.slot === SlotType.HAND)
         .map(t => t.index);
       const indices = chooseCardsHandTargetsToPromptIndices(prompt, handIndices);
-      return prompt.validate(chooseCardsHandIndicesToCards(prompt, indices));
+      return chooseCardsSelectionValid(
+        prompt.cards.cards,
+        chooseCardsHandIndicesToCards(prompt, indices),
+        prompt.filter,
+        prompt.options,
+      );
     }
 
     if (

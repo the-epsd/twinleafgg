@@ -3,11 +3,10 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
+import { Stage, CardType, CardTag, TrainerType } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, PlayerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
-import { TrainerTargetEffect } from '../../../game/store/effects/play-card-effects';
+import { BLOCK_TRAINER_TARGET, IS_ABILITY_BLOCKED, IS_TRAINER_TARGET } from '../../../game/store/prefabs/prefabs';
 
 export class Thievul extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -44,11 +43,8 @@ export class Thievul extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Baffling - passive, intercept TrainerTargetEffect for benched V Pokemon
     // Ref: set-team-up/galvantula.ts (Unnerve - TrainerTargetEffect.target = undefined to block effects)
-    if (effect instanceof TrainerTargetEffect) {
+    if (IS_TRAINER_TARGET(effect, { trainerType: TrainerType.SUPPORTER })) {
       const target = effect.target;
-      if (!target) {
-        return state;
-      }
 
       // Find which player owns Thievul
       let thievulOwner: any = null;
@@ -99,7 +95,7 @@ export class Thievul extends PokemonCard {
       });
 
       if (targetIsOurBenchedV) {
-        effect.target = undefined;
+        BLOCK_TRAINER_TARGET(effect);
       }
     }
 

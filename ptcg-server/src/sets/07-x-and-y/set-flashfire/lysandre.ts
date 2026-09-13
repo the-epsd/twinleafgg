@@ -40,7 +40,10 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     [SlotType.BENCH],
     { allowCancel: false }
   ), result => {
-    const cardList = result[0];
+    const cardList = result && result[0];
+    if (!cardList) {
+      return state;
+    }
 
     if (cardList.isStage(Stage.BASIC)) {
       try {

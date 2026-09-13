@@ -540,6 +540,7 @@ export class GameService {
 
   private handleError(error: ApiError): void {
     const message = String(error.message);
+    console.error('Game socket error:', message, error);
     const translations = this.translate.translations[this.translate.currentLang]
       || this.translate.translations[this.translate.defaultLang];
 

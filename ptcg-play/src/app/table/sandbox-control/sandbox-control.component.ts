@@ -1,8 +1,16 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Player, GamePhase, State } from 'ptcg-server';
+import { concat } from 'rxjs';
+import { toArray } from 'rxjs/operators';
 import { SandboxService } from '../../api/services/sandbox.service';
 import { AlertService } from '../../shared/alert/alert.service';
 import { TranslateService } from '@ngx-translate/core';
+
+interface SandboxCardOption {
+  name: string;
+  /** Zone card index, or prize-slot index when the zone is prizes. */
+  index: number;
+}
 
 @Component({
   selector: 'ptcg-sandbox-control',
@@ -24,7 +32,16 @@ export class SandboxControlComponent implements OnInit, OnChanges {
   public fromZone: string = 'hand';
   public toZone: string = 'hand';
   public prizeIndex: number = 0;
-  public availableCards: string[] = [];
+  public availableCards: SandboxCardOption[] = [];
+  public zones = [
+    { value: 'hand', label: 'Hand' },
+    { value: 'deck', label: 'Deck' },
+    { value: 'discard', label: 'Discard' },
+    { value: 'lostzone', label: 'Lost Zone' },
+    { value: 'prizes', label: 'Prizes' },
+    { value: 'stadium', label: 'Stadium' },
+    { value: 'supporter', label: 'Supporter' },
+  ];
   public selectedEnergyType: string = '';
 
   // Player modifications
@@ -155,7 +172,7 @@ export class SandboxControlComponent implements OnInit, OnChanges {
     return undefined;
   }
 
-  getCardsFromZone(zone: string): string[] {
+  getCardsFromZone(zone: string): SandboxCardOption[] {
     // Always use the latest gameState to get cards
     if (!this.gameState || !this.gameState.players) {
       return [];
@@ -171,26 +188,31 @@ export class SandboxControlComponent implements OnInit, OnChanges {
       return [];
     }
 
+    const named = (cards: { fullName: string }[], prizeSlot?: number): SandboxCardOption[] =>
+      cards.map((card, index) => ({
+        name: card.fullName,
+        index: prizeSlot !== undefined ? prizeSlot : index
+      }));
+
     // Get cards from the actual CardList objects
     switch (zone) {
       case 'hand':
-        return targetPlayer.hand.cards.map(c => c.fullName);
+        return named(targetPlayer.hand.cards);
       case 'deck':
-        return targetPlayer.deck.cards.map(c => c.fullName);
+        return named(targetPlayer.deck.cards);
       case 'discard':
-        return targetPlayer.discard.cards.map(c => c.fullName);
+        return named(targetPlayer.discard.cards);
       case 'lostzone':
-        return targetPlayer.lostzone.cards.map(c => c.fullName);
+        return named(targetPlayer.lostzone.cards);
       case 'stadium':
-        return targetPlayer.stadium.cards.map(c => c.fullName);
+        return named(targetPlayer.stadium.cards);
       case 'supporter':
-        return targetPlayer.supporter.cards.map(c => c.fullName);
+        return named(targetPlayer.supporter.cards);
       case 'prizes':
-        const prizeCards: string[] = [];
-        targetPlayer.prizes.forEach(prize => {
-          prizeCards.push(...prize.cards.map(c => c.fullName));
-        });
-        return prizeCards;
+        return targetPlayer.prizes.reduce((cards, prize, prizeIndex) => {
+          cards.push(...named(prize.cards, prizeIndex));
+          return cards;
+        }, [] as SandboxCardOption[]);
       default:
         return [];
     }
@@ -209,7 +231,7 @@ export class SandboxControlComponent implements OnInit, OnChanges {
 
   onCardSelected() {
     if (this.selectedCardIndex !== null && this.availableCards[this.selectedCardIndex]) {
-      this.cardName = this.availableCards[this.selectedCardIndex];
+      this.cardName = this.availableCards[this.selectedCardIndex].name;
     }
   }
 
@@ -234,24 +256,24 @@ export class SandboxControlComponent implements OnInit, OnChanges {
     if (this.gameState && this.selectedPlayer) {
       const oldCards = [...this.availableCards];
       this.availableCards = this.getCardsFromZone(this.fromZone);
-      
+
       // Clear selections for cards that no longer exist
       const newSelectedIndices = new Set<number>();
       this.selectedCardIndices.forEach(oldIndex => {
-        if (oldIndex < this.availableCards.length) {
-          const oldCardName = oldCards[oldIndex];
-          const newIndex = this.availableCards.findIndex(c => c === oldCardName);
+        if (oldIndex < oldCards.length) {
+          const oldCardName = oldCards[oldIndex].name;
+          const newIndex = this.availableCards.findIndex(c => c.name === oldCardName);
           if (newIndex !== -1) {
             newSelectedIndices.add(newIndex);
           }
         }
       });
       this.selectedCardIndices = newSelectedIndices;
-      
+
       // If the selected card is no longer available, clear selection
       if (this.selectedCardIndex !== null) {
-        if (this.selectedCardIndex >= this.availableCards.length || 
-            this.availableCards[this.selectedCardIndex] !== this.cardName) {
+        if (this.selectedCardIndex >= this.availableCards.length ||
+            this.availableCards[this.selectedCardIndex].name !== this.cardName) {
           this.selectedCardIndex = null;
           this.cardName = '';
         }
@@ -281,6 +303,18 @@ export class SandboxControlComponent implements OnInit, OnChanges {
     this.sandboxService.modifyPlayer(this.gameId, this.selectedPlayer.id, mods).subscribe(
       () => {
         this.alertService.toast(this.translate.instant('SANDBOX_PLAYER_MODIFIED'));
+      },
+      () => { }
+    );
+  }
+
+  shuffleDeck() {
+    if (!this.selectedPlayer) {
+      return;
+    }
+    this.sandboxService.modifyPlayer(this.gameId, this.selectedPlayer.id, { shuffleDeck: true }).subscribe(
+      () => {
+        this.alertService.toast(this.translate.instant('SANDBOX_DECK_SHUFFLED'));
       },
       () => { }
     );
@@ -328,131 +362,59 @@ export class SandboxControlComponent implements OnInit, OnChanges {
   }
 
   removeCard() {
-    if (!this.selectedPlayer) return;
-
-    // If multiple cards selected, remove all of them
-    if (this.selectedCardIndices.size > 0) {
-      const cardsToRemove: string[] = [];
-      this.selectedCardIndices.forEach(index => {
-        if (this.availableCards[index]) {
-          cardsToRemove.push(this.availableCards[index]);
-        }
-      });
-
-      if (cardsToRemove.length === 0) return;
-
-      // Remove cards one by one
-      let removed = 0;
-      cardsToRemove.forEach(cardName => {
-        this.sandboxService.modifyCard(
-          this.gameId,
-          this.selectedPlayer.id,
-          'remove',
-          cardName,
-          this.fromZone
-        ).subscribe(
-          () => {
-            removed++;
-            if (removed === cardsToRemove.length) {
-              this.alertService.toast(this.translate.instant('SANDBOX_CARD_REMOVED'));
-              this.selectedCardIndices.clear();
-              this.selectedCardIndex = null;
-              this.cardName = '';
-              // Refresh the available cards list after a short delay to allow state to update
-              setTimeout(() => {
-                this.refreshCardsList();
-              }, 200);
-            }
-          },
-          () => { }
-        );
-      });
-    } else if (this.cardName.trim()) {
-      // Single card removal
-      this.sandboxService.modifyCard(
-        this.gameId,
-        this.selectedPlayer.id,
-        'remove',
-        this.cardName.trim(),
-        this.fromZone
-      ).subscribe(
-        () => {
-          this.alertService.toast(this.translate.instant('SANDBOX_CARD_REMOVED'));
-          this.cardName = '';
-          this.selectedCardIndex = null;
-          // Refresh the available cards list after a short delay to allow state to update
-          setTimeout(() => {
-            this.refreshCardsList();
-          }, 200);
-        },
-        () => { }
-      );
-    }
+    this.runCardActions(this.selectedCardEntries(), 'remove', 'SANDBOX_CARD_REMOVED');
   }
 
   moveCard() {
-    if (!this.selectedPlayer) return;
+    this.runCardActions(this.selectedCardEntries(), 'move', 'SANDBOX_CARD_MOVED');
+  }
 
-    // If multiple cards selected, move all of them
+  private selectedCardEntries(): Array<{ name: string; index?: number }> {
     if (this.selectedCardIndices.size > 0) {
-      const cardsToMove: string[] = [];
-      this.selectedCardIndices.forEach(index => {
-        if (this.availableCards[index]) {
-          cardsToMove.push(this.availableCards[index]);
-        }
-      });
-
-      if (cardsToMove.length === 0) return;
-
-      // Move cards one by one
-      let moved = 0;
-      cardsToMove.forEach(cardName => {
-        this.sandboxService.modifyCard(
-          this.gameId,
-          this.selectedPlayer.id,
-          'move',
-          cardName,
-          this.fromZone,
-          this.toZone
-        ).subscribe(
-          () => {
-            moved++;
-            if (moved === cardsToMove.length) {
-              this.alertService.toast(this.translate.instant('SANDBOX_CARD_MOVED'));
-              this.selectedCardIndices.clear();
-              this.selectedCardIndex = null;
-              this.cardName = '';
-              // Refresh the available cards list after a short delay to allow state to update
-              setTimeout(() => {
-                this.refreshCardsList();
-              }, 200);
-            }
-          },
-          () => { }
-        );
-      });
-    } else if (this.cardName.trim()) {
-      // Single card move
-      this.sandboxService.modifyCard(
-        this.gameId,
-        this.selectedPlayer.id,
-        'move',
-        this.cardName.trim(),
-        this.fromZone,
-        this.toZone
-      ).subscribe(
-        () => {
-          this.alertService.toast(this.translate.instant('SANDBOX_CARD_MOVED'));
-          this.cardName = '';
-          this.selectedCardIndex = null;
-          // Refresh the available cards list after a short delay to allow state to update
-          setTimeout(() => {
-            this.refreshCardsList();
-          }, 200);
-        },
-        () => { }
-      );
+      return [...this.selectedCardIndices]
+        .map(index => this.availableCards[index])
+        .filter((card): card is SandboxCardOption => !!card)
+        .sort((a, b) => b.index - a.index);
     }
+    if (this.selectedCardIndex !== null && this.availableCards[this.selectedCardIndex]) {
+      return [this.availableCards[this.selectedCardIndex]];
+    }
+    if (this.cardName.trim()) {
+      return [{ name: this.cardName.trim() }];
+    }
+    return [];
+  }
+
+  private runCardActions(
+    entries: Array<{ name: string; index?: number }>,
+    action: 'remove' | 'move',
+    successKey: string
+  ) {
+    if (!this.selectedPlayer || entries.length === 0) {
+      return;
+    }
+    const playerId = this.selectedPlayer.id;
+    const ops = entries.map(entry => this.sandboxService.modifyCard(
+      this.gameId,
+      playerId,
+      action,
+      entry.name,
+      this.fromZone,
+      action === 'move' ? this.toZone : undefined,
+      entry.index
+    ));
+    concat(...ops).pipe(toArray()).subscribe(
+      () => {
+        this.alertService.toast(this.translate.instant(successKey));
+        this.selectedCardIndices.clear();
+        this.selectedCardIndex = null;
+        this.cardName = '';
+        setTimeout(() => {
+          this.refreshCardsList();
+        }, 200);
+      },
+      () => { }
+    );
   }
 
   applyPokemonModifications() {

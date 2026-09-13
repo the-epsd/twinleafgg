@@ -2,7 +2,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt, GameError } from '../../../game';
-import { TrainerEffect, TrainerTargetEffect } from '../../../game/store/effects/play-card-effects';
+import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 
 import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
@@ -40,15 +40,9 @@ export class PokemonReversal extends TrainerCard {
             [SlotType.BENCH],
             { allowCancel: false }
           ), result => {
-            const cardList = result[0];
-
+            const cardList = result && result[0];
             if (cardList) {
-              const targetCard = new TrainerTargetEffect(player, effect.trainerCard, cardList);
-              targetCard.target = cardList;
-              store.reduceEffect(state, targetCard);
-              if (targetCard.target) {
-                opponent.switchPokemon(targetCard.target);
-              }
+              opponent.switchPokemon(cardList);
             }
           });
         }

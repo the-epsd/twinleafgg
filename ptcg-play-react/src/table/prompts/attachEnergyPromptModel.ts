@@ -1,5 +1,6 @@
 import type { AttachEnergyOptions, Card, CardTarget, EnergyCard } from 'ptcg-server';
 import { CardList, CardType, PokemonCardList, SuperType } from 'ptcg-server';
+import { matchesPromptFilter } from './matchesPromptFilter';
 import type { FilterType } from 'ptcg-server';
 import { mapPokemonItems, type PokemonItem, type PokemonRow } from './pokemonPromptRows';
 import { targetsEqual } from './removeDamagePromptModel';
@@ -18,16 +19,7 @@ export function buildAttachEnergyFilterMap(
   const filterMap: Record<string, boolean> = {};
   for (let i = 0; i < cards.length; i++) {
     const card = cards[i];
-    let isBlocked = blocked.includes(i);
-    if (!isBlocked) {
-      for (const key in filter) {
-        if (Object.prototype.hasOwnProperty.call(filter, key)) {
-          isBlocked =
-            isBlocked ||
-            (filter as Record<string, unknown>)[key] !== (card as unknown as Record<string, unknown>)[key];
-        }
-      }
-    }
+    const isBlocked = blocked.includes(i) || !matchesPromptFilter(card, filter);
     filterMap[card.fullName] = !isBlocked;
   }
   return filterMap;

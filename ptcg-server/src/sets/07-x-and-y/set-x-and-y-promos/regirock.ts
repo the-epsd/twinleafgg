@@ -4,7 +4,7 @@ import { StoreLike, State, PowerType, StateUtils, TrainerCard, ChooseCardsPrompt
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefabs/attack-effects';
-import { TrainerTargetEffect } from '../../../game/store/effects/play-card-effects';
+import { BLOCK_TRAINER_TARGET, IS_TRAINER_TARGET } from '../../../game/store/prefabs/prefabs';
 
 export class Regirock extends PokemonCard {
 
@@ -46,15 +46,13 @@ export class Regirock extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (
-      effect instanceof TrainerTargetEffect &&
-      effect.target &&
-      effect.target?.cards?.includes(this) &&
+      IS_TRAINER_TARGET(effect, this) &&
       effect.player !== StateUtils.findOwner(state, StateUtils.findCardList(state, this)) && // Ensure the trainer's owner is the opponent
       !(effect.trainerCard?.trainerType === TrainerType.TOOL || effect.trainerCard?.trainerType === TrainerType.STADIUM)
     ) {
       const targetCard = effect.target.getPokemonCard();
       if (targetCard && targetCard.fullName === this.fullName) {
-        effect.target = undefined;
+        BLOCK_TRAINER_TARGET(effect);
       }
     }
 

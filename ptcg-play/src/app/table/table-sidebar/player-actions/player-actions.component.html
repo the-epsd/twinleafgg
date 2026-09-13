@@ -18,7 +18,7 @@
     </button> -->
   </ng-template>
   <ng-template #observerActions>
-    <button class="ptcg-button-colors" mat-stroked-button (click)="switchSides()">
+    <button class="ptcg-button-colors" mat-stroked-button (click)="switchSides()" *ngIf="!isSelfPlay">
       {{ 'TABLE_SWITCH_SIDES' | translate }}
     </button>
   </ng-template>

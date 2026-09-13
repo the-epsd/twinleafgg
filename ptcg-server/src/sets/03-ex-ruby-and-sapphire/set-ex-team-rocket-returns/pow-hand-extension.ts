@@ -14,7 +14,7 @@ import {
   MoveEnergyPrompt,
   Card,
 } from '../../../game';
-import { TrainerEffect, TrainerTargetEffect } from '../../../game/store/effects/play-card-effects';
+import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { SelectOptionPrompt } from '../../../game/store/prompts/select-option-prompt';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 
@@ -121,15 +121,9 @@ Move 1 Energy card attached to the Defending Pokémon to another of your opponen
                 { allowCancel: false },
               ),
               (result) => {
-                const cardList = result[0];
-
+                const cardList = result && result[0];
                 if (cardList) {
-                  const targetCard = new TrainerTargetEffect(player, effect.trainerCard, cardList);
-                  targetCard.target = cardList;
-                  store.reduceEffect(state, targetCard);
-                  if (targetCard.target) {
-                    opponent.switchPokemon(targetCard.target);
-                  }
+                  opponent.switchPokemon(cardList);
                 }
 
                 return state;

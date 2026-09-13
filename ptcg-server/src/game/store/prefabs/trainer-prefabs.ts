@@ -17,6 +17,13 @@ import { StoreLike } from '../store-like';
 import { PlayerType } from '../actions/play-card-action';
 import { MOVE_CARDS, IS_ABILITY_BLOCKED } from './prefabs';
 
+export {
+  IS_TRAINER_TARGET,
+  BLOCK_TRAINER_TARGET,
+  TRAINER_TARGET_BLOCKED,
+  WAS_TRAINER_TARGET_BLOCKED,
+} from './trainer-target';
+
 // =============================================================================
 // Type guards
 // =============================================================================

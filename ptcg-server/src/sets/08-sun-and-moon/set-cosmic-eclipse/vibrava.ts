@@ -1,7 +1,6 @@
 import { PokemonCard, Stage, CardType, PowerType, State, StoreLike, StateUtils, PlayerType, TrainerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerTargetEffect } from '../../../game/store/effects/play-card-effects';
-import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_TRAINER_TARGET, IS_ABILITY_BLOCKED, IS_TRAINER_TARGET } from '../../../game/store/prefabs/prefabs';
 
 export class Vibrava extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -32,13 +31,11 @@ export class Vibrava extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Snow Cover
-    if (effect instanceof TrainerTargetEffect && effect.target?.cards.includes(this)) {
+    if (IS_TRAINER_TARGET(effect, { card: this, trainerType: TrainerType.SUPPORTER })) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       if (IS_ABILITY_BLOCKED(store, state, effect.player, this)) { return state; }
-
-      if (effect.trainerCard.trainerType !== TrainerType.SUPPORTER) { return state; }
 
       // finding if the owner of the card is playing the trainer or if the opponent is
       let isVibravaOnOpponentsSide = false;
@@ -47,7 +44,7 @@ export class Vibrava extends PokemonCard {
       });
       if (!isVibravaOnOpponentsSide) { return state; }
 
-      effect.preventDefault = true;
+      BLOCK_TRAINER_TARGET(effect);
     }
 
     return state;

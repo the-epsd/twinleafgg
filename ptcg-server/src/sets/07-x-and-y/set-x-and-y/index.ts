@@ -134,7 +134,6 @@ import {
 } from './basic-energies';
 
 import {
-  ProfessorSycamoreXY,
   YveltalXY,
   XerneasXY,
   GreatBallXY,
@@ -292,7 +291,6 @@ export const setXY: Card[] = [
   new DoubleColorlessEnergyXY(),
 
   // MARK: Other Prints (Reprints & Alt Arts)
-  new ProfessorSycamoreXY(),
   new YveltalXY(),
   new XerneasXY(),
   new GreatBallXY(),

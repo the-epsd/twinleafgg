@@ -41,7 +41,7 @@ export const DEFAULT_CUSTOMIZE_PREVIEW_LAYOUT: CustomizePreviewLayout = {
   },
   coin: {
     position: [-1.8728, -0.4321, 1.5304],
-    rotation: [-0.2175, 0.2889, -0.0598],
+    rotation: [-0.2103, 0.1367, -0.0936],
     scale: 0.5623,
   },
 };

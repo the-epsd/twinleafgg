@@ -72,7 +72,7 @@ export class Tyrantrum extends PokemonCard {
             const deckTop = new CardList();
             opponent.deck.moveTo(deckTop, 1);
             if (deckTop.cards.length > 0) {
-              store.log(s, GameLog.LOG_PLAYER_DISCARDS_CARD, { name: opponent.name, card: deckTop.cards[0].name, effect: 'Wreak Havoc' });
+              store.log(s, GameLog.LOG_PLAYER_DISCARDS_CARD, { name: opponent.name, card: deckTop.cards[0].name, effectName: 'Wreak Havoc' });
               deckTop.moveTo(opponent.discard);
             }
             // Continue flipping
