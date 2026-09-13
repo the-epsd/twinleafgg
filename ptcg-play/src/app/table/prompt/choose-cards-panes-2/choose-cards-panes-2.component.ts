@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { Card } from 'ptcg-server';
+import { Card, matchesPromptFilter } from 'ptcg-server';
 import { DraggedItem } from '@ng-dnd/sortable';
 
 import { CardsBaseService } from '../../../shared/cards/cards-base.service';
@@ -17,16 +17,16 @@ export class ChooseCardsPanes2Component implements OnChanges {
   public readonly topListId = 'CHOOSE_CARDS_TOP_LIST';
   public readonly bottomListId = 'CHOOSE_CARDS_BOTTOM_LIST';
 
-  @Input() cards: Card[];
+  @Input() cards: Card[] = [];
   @Input() filter: Partial<Card> = {};
   @Input() blocked: number[] = [];
   @Input() cardbackMap: { [index: number]: boolean } = {};
   @Input() singlePaneMode = false;
   @Output() changeCards = new EventEmitter<number[]>();
 
-  public allowedCancel: boolean;
-  public promptId: number;
-  public message: string;
+  public allowedCancel = false;
+  public promptId = 0;
+  public message = '';
   public filterMap: { [fullName: string]: boolean } = {};
   public topSortable: ChooseCardsSortable;
   public bottomSortable: ChooseCardsSortable;
@@ -47,11 +47,10 @@ export class ChooseCardsPanes2Component implements OnChanges {
   }
 
   private buildPromptSortable(): ChooseCardsSortable {
-    const sortable: ChooseCardsSortable = {
-      list: [],
-      tempList: [],
-      spec: undefined
-    };
+    const sortable = {
+      list: [] as PromptItem[],
+      tempList: [] as PromptItem[],
+    } as ChooseCardsSortable;
 
     sortable.spec = {
       type: PromptCardType,
@@ -76,14 +75,7 @@ export class ChooseCardsPanes2Component implements OnChanges {
     const filterMap: { [fullName: string]: boolean } = {};
     for (let i = 0; i < cards.length; i++) {
       const card = cards[i];
-      let isBlocked = blocked.includes(i);
-      if (isBlocked === false) {
-        for (const key in filter) {
-          if (filter.hasOwnProperty(key)) {
-            isBlocked = isBlocked || (filter as any)[key] !== (card as any)[key];
-          }
-        }
-      }
+      const isBlocked = blocked.includes(i) || !matchesPromptFilter(card, filter);
       filterMap[card.fullName] = !isBlocked;
     }
     return filterMap;

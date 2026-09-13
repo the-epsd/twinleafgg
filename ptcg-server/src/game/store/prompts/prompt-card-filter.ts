@@ -1,0 +1,55 @@
+import { CardTag, CardType, SuperType } from '../card/card-types';
+
+/**
+ * Duck-typed so this module does not import Card / PokemonCard / EnergyCard.
+ * CardList.filter loads this during card-list init; pulling those classes in
+ * would cycle through card.ts (which constructs CardList) and leave Card undefined.
+ */
+export interface PromptFilterCard {
+  superType: SuperType;
+  cardType?: CardType[];
+  provides?: CardType[];
+  hasTag(tag: CardTag): boolean;
+}
+
+/**
+ * Prompt filters used to compare every key with !==. That fails now that
+ * cardType (and tags) are arrays, and Energy stores types on provides rather
+ * than cardType. Scalar keys still use !==.
+ */
+export function matchesPromptFilter(card: PromptFilterCard, filter: object): boolean {
+  for (const key in filter) {
+    if (!Object.prototype.hasOwnProperty.call(filter, key)) {
+      continue;
+    }
+    const expected = (filter as Record<string, unknown>)[key];
+    if (key === 'cardType') {
+      const wanted = (Array.isArray(expected) ? expected : [expected]) as CardType[];
+      if (card.superType === SuperType.ENERGY) {
+        const provides = card.provides ?? [];
+        if (!wanted.every(type => provides.includes(type))) {
+          return false;
+        }
+      } else if (card.superType === SuperType.POKEMON) {
+        const types = card.cardType ?? [];
+        if (!wanted.every(type => types.includes(type))) {
+          return false;
+        }
+      } else {
+        return false;
+      }
+      continue;
+    }
+    if (key === 'tags') {
+      const wanted = (Array.isArray(expected) ? expected : [expected]) as CardTag[];
+      if (!wanted.every(tag => card.hasTag(tag))) {
+        return false;
+      }
+      continue;
+    }
+    if (expected !== (card as unknown as Record<string, unknown>)[key]) {
+      return false;
+    }
+  }
+  return true;
+}

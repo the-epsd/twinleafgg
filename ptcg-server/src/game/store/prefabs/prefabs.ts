@@ -65,7 +65,7 @@ import {
 } from '../effects/play-card-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
 import { AttachEnergyOptions, AttachEnergyPrompt } from '../prompts/attach-energy-prompt';
-import { ChooseCardsPrompt, ChooseCardsOptions } from '../prompts/choose-cards-prompt';
+import { ChooseCardsPrompt, ChooseCardsOptions, matchesPromptFilter } from '../prompts/choose-cards-prompt';
 import { ChooseEnergyPrompt } from '../prompts/choose-energy-prompt';
 import { ChoosePokemonPrompt } from '../prompts/choose-pokemon-prompt';
 import { ChoosePrizePrompt } from '../prompts/choose-prize-prompt';
@@ -1883,12 +1883,7 @@ export function MOVE_CARDS_TO_HAND(store: StoreLike, state: State, player: Playe
 export type TopDeckRemainderDestination = 'shuffle' | 'bottom' | 'discard' | 'lostzone';
 
 function cardMatchesPartialFilter(card: Card, filter: Partial<Card>): boolean {
-  for (const key in filter) {
-    if ((card as any)[key] !== (filter as any)[key]) {
-      return false;
-    }
-  }
-  return true;
+  return matchesPromptFilter(card, filter);
 }
 
 function moveRemainingTopDeckCards(

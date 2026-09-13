@@ -27,6 +27,7 @@ import type {
   OrderCardsPrompt,
   SelectOptionPrompt,
 } from 'ptcg-server';
+import { chooseCardsSelectionValid, matchesPromptFilter } from './matchesPromptFilter';
 import type { LocalGameState } from '../types/localGameState';
 import { activeGamePrompt } from '../activeGamePrompt';
 import { BoardInteractionService } from '../BoardInteractionService';
@@ -78,16 +79,7 @@ function buildChooseCardsFilterMap(
   const filterMap: Record<string, boolean> = {};
   for (let i = 0; i < cards.length; i++) {
     const card = cards[i];
-    let isBlocked = blocked.includes(i);
-    if (!isBlocked) {
-      for (const key in filter) {
-        if (Object.prototype.hasOwnProperty.call(filter, key)) {
-          isBlocked =
-            isBlocked ||
-            (filter as Record<string, unknown>)[key] !== (card as unknown as Record<string, unknown>)[key];
-        }
-      }
-    }
+    const isBlocked = blocked.includes(i) || !matchesPromptFilter(card, filter);
     filterMap[card.fullName] = !isBlocked;
   }
   return filterMap;
@@ -1722,7 +1714,7 @@ function ChooseCardsPanel(props: {
   };
 
   const selectedCards = selectedIndices.map((i) => cards[i]);
-  const canConfirm = prompt.validate(selectedCards);
+  const canConfirm = chooseCardsSelectionValid(cards, selectedCards, prompt.filter, prompt.options);
 
   const title = t('PROMPT_CHOOSE_CARDS_TITLE', { defaultValue: 'Choose cards' });
   /** Secret: facedown in live play; in replay, facedown until user checks Reveal. */

@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Card, CardList, ChooseCardsPrompt } from 'ptcg-server';
+import { Card, CardList, ChooseCardsPrompt, matchesPromptFilter } from 'ptcg-server';
 
 import { GameService } from '../../../api/services/game.service';
 import { LocalGameState } from '../../../shared/session/session.interface';
@@ -41,20 +41,20 @@ export class PromptChooseCardsComponent implements OnChanges {
     this.initializeCardItems();
   }
 
-  @Input() gameState: LocalGameState;
+  @Input() gameState!: LocalGameState;
 
-  public cards: CardList;
-  public allowedCancel: boolean;
-  public promptId: number;
-  public message: string;
-  public filter: Partial<Card>;
-  public blocked: number[];
+  public cards!: CardList;
+  public allowedCancel = false;
+  public promptId = 0;
+  public message = '';
+  public filter: Partial<Card> = {};
+  public blocked: number[] = [];
   public isInvalid = false;
-  public isSecret: boolean;
+  public isSecret = false;
   public revealed = false;
   public cardbackMap: { [index: number]: boolean } = {};
   public cardbackUrl?: string;
-  public promptValue: ChooseCardsPrompt;
+  public promptValue!: ChooseCardsPrompt;
 
   public currentTab = 'Valid';
   public tabs = ['Valid', 'All'];
@@ -173,14 +173,7 @@ export class PromptChooseCardsComponent implements OnChanges {
 
     for (let i = 0; i < cards.length; i++) {
       const card = cards[i];
-      let isBlocked = blocked.includes(i);
-      if (isBlocked === false) {
-        for (const key in filter) {
-          if (filter.hasOwnProperty(key)) {
-            isBlocked = isBlocked || (filter as any)[key] !== (card as any)[key];
-          }
-        }
-      }
+      const isBlocked = blocked.includes(i) || !matchesPromptFilter(card, filter);
       filterMap[card.fullName] = !isBlocked;
     }
     return filterMap;
@@ -326,11 +319,16 @@ export class PromptChooseCardsComponent implements OnChanges {
     } else {
       // Card is already selected, remove it
       const selectedCard = this.selectedCards.splice(selectedIndex, 1)[0];
+      if (!selectedCard) {
+        return;
+      }
 
       // Re-insert into promptItems at appropriate position
+      const selectedOriginalIndex = selectedCard.originalIndex ?? Number.MAX_SAFE_INTEGER;
       let insertIndex = 0;
       for (let i = 0; i < this.promptItems.length; i++) {
-        if (this.promptItems[i].originalIndex > selectedCard.originalIndex) {
+        const item = this.promptItems[i];
+        if (item && (item.originalIndex ?? Number.MAX_SAFE_INTEGER) > selectedOriginalIndex) {
           break;
         }
         insertIndex = i + 1;
@@ -370,7 +368,9 @@ export class PromptChooseCardsComponent implements OnChanges {
 
   private updateValidity() {
     // Map selected cards to their original indices
-    const selectedIndices = this.selectedCards.map(item => item.originalIndex);
+    const selectedIndices = this.selectedCards
+      .map(item => item.originalIndex)
+      .filter((index): index is number => index !== undefined);
     const selectedCards = selectedIndices.map(index => this.cards.cards[index]);
 
     // Check min/max constraints
