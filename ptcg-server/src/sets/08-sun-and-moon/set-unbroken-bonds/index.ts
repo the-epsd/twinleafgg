@@ -159,6 +159,7 @@ import { Wigglytuff } from './wigglytuff';
 import { Wooper } from './wooper';
 import { Zeraora } from './zeraora';
 import { Zubat } from './zubat';
+import { Stakataka } from "./stakataka";
 import { BeastBringer } from './beast-bringer';
 import { ChipChipIceAxe } from './chip-chip-ice-axe';
 import { DevolutionSprayZ } from './devolution-spray-z';
@@ -404,6 +405,7 @@ export const setUnbrokenBonds: Card[] = [
   new Wooper(),
   new Zeraora(),
   new Zubat(),
+  new Stakataka(),
 
   // Trainers
   new BeastBringer(),
