@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Card, CardList, ChooseCardsPrompt, matchesPromptFilter } from 'ptcg-server';
+import { Card, CardList, ChooseCardsPrompt, chooseCardsSelectionValid, matchesPromptFilter } from 'ptcg-server';
 
 import { GameService } from '../../../api/services/game.service';
 import { LocalGameState } from '../../../shared/session/session.interface';
@@ -67,7 +67,7 @@ export class PromptChooseCardsComponent implements OnChanges {
   public visibleCards: PromptCardItem[] = [];
   public currentIndex = 0;
   public selectedCards: PromptCardItem[] = [];
-  public filterMap: { [fullName: string]: boolean } = {};
+  public filterMap: { [index: number]: boolean } = {};
 
   private lastWheelTime = 0;
   private readonly WHEEL_DELAY = 200; // milliseconds between wheel events
@@ -169,12 +169,11 @@ export class PromptChooseCardsComponent implements OnChanges {
   }
 
   private buildFilterMap(cards: Card[], filter: Partial<Card>, blocked: number[]) {
-    const filterMap: { [fullName: string]: boolean } = {};
+    const filterMap: { [index: number]: boolean } = {};
 
     for (let i = 0; i < cards.length; i++) {
       const card = cards[i];
-      const isBlocked = blocked.includes(i) || !matchesPromptFilter(card, filter);
-      filterMap[card.fullName] = !isBlocked;
+      filterMap[i] = !blocked.includes(i) && matchesPromptFilter(card, filter);
     }
     return filterMap;
   }
@@ -185,13 +184,25 @@ export class PromptChooseCardsComponent implements OnChanges {
         card,
         index,
         originalIndex: index,
-        isAvailable: this.filterMap[card.fullName],
+        isAvailable: !!this.filterMap[index],
         isSecret: !!this.cardbackMap[index],
         scanUrl: this.cardsBaseService.getScanUrl(card),
         showButtons: false
       };
       return item;
     });
+  }
+
+  private selectionValid(selectedCards: Card[]): boolean {
+    if (!this.promptValue || !this.cards?.cards) {
+      return false;
+    }
+    return chooseCardsSelectionValid(
+      this.cards.cards,
+      selectedCards,
+      this.filter,
+      this.promptValue.options,
+    );
   }
 
   public minimize() {
@@ -212,9 +223,10 @@ export class PromptChooseCardsComponent implements OnChanges {
     const gameId = this.gameState.gameId;
     const id = this.promptId;
 
-    // Final validation before sending
+    // Final validation before sending. Use the shared helper so a stale
+    // deserialized prompt.validate cannot disagree after cardType became an array.
     const selectedCards = this.result ? this.result.map(index => this.cards.cards[index]) : [];
-    if (this.promptValue.validate(selectedCards)) {
+    if (this.selectionValid(selectedCards)) {
       this.gameService.resolvePrompt(gameId, id, this.result || []);
     }
   }
@@ -286,7 +298,8 @@ export class PromptChooseCardsComponent implements OnChanges {
   }
 
   public toggleCardSelection(cardItem: PromptCardItem, event?: MouseEvent) {
-    if (!this.filterMap[cardItem.card.fullName]) {
+    const cardIndex = cardItem.originalIndex ?? cardItem.index;
+    if (!this.filterMap[cardIndex]) {
       return; // Card is unavailable
     }
 
@@ -382,8 +395,8 @@ export class PromptChooseCardsComponent implements OnChanges {
       return;
     }
 
-    // Validate using server-side validation
-    this.isInvalid = !this.promptValue.validate(selectedCards);
+    // Same checks as the server, without the deserialized prompt class method.
+    this.isInvalid = !this.selectionValid(selectedCards);
 
     // Update the result array to match selected cards
     this.result = selectedIndices;
@@ -398,7 +411,7 @@ export class PromptChooseCardsComponent implements OnChanges {
     }
 
     const selectedCards = result.map(index => this.cards.cards[index]);
-    const isValidSelection = this.promptValue.validate(selectedCards);
+    const isValidSelection = this.selectionValid(selectedCards);
 
     // Store valid results
     if (isValidSelection) {

@@ -9,3 +9,4 @@ export {
   pokemonHasCardTypeOptional,
 } from './game/store/card/pokemon-card';
 export { matchesPromptFilter } from './game/store/prompts/prompt-card-filter';
+export { chooseCardsSelectionValid } from './game/store/prompts/choose-cards-prompt';

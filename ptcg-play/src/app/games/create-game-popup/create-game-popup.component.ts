@@ -152,10 +152,27 @@ export class CreateGamePopupComponent implements OnInit {
     }
     // }
 
+    if (!this.isAdmin || !this.settings.sandboxMode) {
+      this.clearSandboxOptions();
+    }
+
     this.dialogRef.close({
       deckId: this.deckId,
       gameSettings: this.settings
     });
+  }
+
+  public onSandboxModeChange(enabled: boolean) {
+    if (!enabled) {
+      this.clearSandboxOptions();
+    }
+  }
+
+  private clearSandboxOptions() {
+    this.settings.sandboxMode = false;
+    this.settings.sandboxAllPokemonBasic = false;
+    this.settings.sandboxAttacksCostNoEnergy = false;
+    this.settings.sandboxRetreatCostsNoEnergy = false;
   }
 
   public cancel() {

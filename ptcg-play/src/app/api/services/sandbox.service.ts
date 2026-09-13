@@ -39,6 +39,7 @@ export class SandboxService {
       usedGX?: boolean;
       ancientSupporter?: boolean;
       rocketSupporter?: boolean;
+      shuffleDeck?: boolean;
     }
   ): Observable<void> {
     return new Observable<void>(observer => {

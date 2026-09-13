@@ -7,7 +7,7 @@
 
     <ng-template dndSortableTemplate let-context>
       <ptcg-card
-        [ngClass]="{unavailable: !filterMap[context.data.card.fullName],
+        [ngClass]="{unavailable: !filterMap[context.data.index],
           cardback: cardbackMap[context.data.index]}"
         [dndSortableRender]="context"
         #render="dndSortableRender"
@@ -54,7 +54,7 @@
       style="display: flex; flex-wrap: wrap; justify-content: center;">
       <ng-template dndSortableTemplate let-context>
         <ptcg-card [ngClass]="{
-    'unavailable': !filterMap[context.data.card.fullName],
+    'unavailable': !filterMap[context.data.index],
     'cardback': topCardbackMap[context.data.index],
     'selected': isCardSelected(context.data.card)
   }" [cardbackUrl]="cardbackUrl" [dndSortableRender]="context" #render="dndSortableRender" [dragSource]="render.source"

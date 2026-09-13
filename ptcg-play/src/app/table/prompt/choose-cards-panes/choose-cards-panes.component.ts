@@ -40,7 +40,7 @@ export class ChooseCardsPanesComponent implements OnChanges, OnInit {
   public allowedCancel = false;
   public promptId = 0;
   public message = '';
-  public filterMap: { [fullName: string]: boolean } = {};
+  public filterMap: { [index: number]: boolean } = {};
   public topSortable: ChooseCardsSortable;
   public bottomSortable: ChooseCardsSortable;
 
@@ -60,7 +60,8 @@ export class ChooseCardsPanesComponent implements OnChanges, OnInit {
   }
 
   toggleCardSelection(card: any) {
-    if (this.noBottomPane || !this.filterMap[card.fullName] || card.isAvailable === false) {
+    const cardIndex = typeof card?.originalIndex === 'number' ? card.originalIndex : this.cards.indexOf(card);
+    if (this.noBottomPane || cardIndex === -1 || !this.filterMap[cardIndex] || card.isAvailable === false) {
       return;
     }
 
@@ -112,15 +113,16 @@ export class ChooseCardsPanesComponent implements OnChanges, OnInit {
   private validateSelection() {
     // Validate all selected cards
     this.selectedCards = this.selectedCards.filter(card => {
-      const isValid = this.filterMap[card.fullName]
+      const cardIndex = typeof card?.originalIndex === 'number' ? card.originalIndex : this.cards.indexOf(card);
+      const isValid = !!this.filterMap[cardIndex]
         && this.selectedCards.length <= this.maxCards;
       if (!isValid) {
         // Return card to top pane if invalid
         this.topSortable.tempList = [...this.topSortable.tempList, {
           card,
-          index: this.cards.indexOf(card),
-          isAvailable: this.filterMap[card.fullName],
-          isSecret: !!this.cardbackMap[this.cards.indexOf(card)],
+          index: cardIndex,
+          isAvailable: !!this.filterMap[cardIndex],
+          isSecret: !!this.cardbackMap[cardIndex],
           scanUrl: this.cardsBaseService.getScanUrl(card)
         }];
       }
@@ -164,12 +166,10 @@ export class ChooseCardsPanesComponent implements OnChanges, OnInit {
   }
 
   private buildFilterMap(cards: Card[], filter: Partial<Card>, blocked: number[]) {
-    const filterMap: { [fullName: string]: boolean } = {};
+    const filterMap: { [index: number]: boolean } = {};
 
     for (let i = 0; i < cards.length; i++) {
-      const card = cards[i];
-      const isBlocked = blocked.includes(i) || !matchesPromptFilter(card, filter);
-      filterMap[card.fullName] = !isBlocked;
+      filterMap[i] = !blocked.includes(i) && matchesPromptFilter(cards[i], filter);
     }
     return filterMap;
   }
@@ -179,7 +179,7 @@ export class ChooseCardsPanesComponent implements OnChanges, OnInit {
       const item: PromptItem = {
         card,
         index,
-        isAvailable: this.filterMap[card.fullName],
+        isAvailable: !!this.filterMap[index],
         isSecret: !!this.cardbackMap[index],
         scanUrl: this.cardsBaseService.getScanUrl(card)
       };

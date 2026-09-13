@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { trigger, transition, animate, style } from '@angular/animations';
-import { Card, GameWinner, GamePhase, SuperType, Format } from 'ptcg-server';
+import { Card, GameWinner, GamePhase, SuperType, Format, selfPlayFocusPlayerId } from 'ptcg-server';
 import { LocalGameState, PlayerGameStats } from '../../shared/session/session.interface';
 import { GameOverPrompt } from '../prompt/prompt-game-over/game-over.prompt';
 import { SessionService } from '../../shared/session/session.service';
@@ -67,12 +67,20 @@ export class GameOverComponent implements OnInit {
 
   ngOnInit(): void {
     // Set isPlaying and isDeleted
-    this.isPlaying = this.checkPlaying(this.gameState, this.sessionService.session.clientId);
+    this.isPlaying = this.checkPlaying(this.gameState, this.viewedPlayerId());
     this.isDeleted = this.gameState.deleted;
     this.gameId = this.gameState.gameId;
     this.localId = this.gameState.localId;
 
     this.calculateGameStats();
+  }
+
+  private viewedPlayerId(): number {
+    const state = this.gameState?.state;
+    if (state?.gameSettings?.selfPlay === true) {
+      return selfPlayFocusPlayerId(state);
+    }
+    return this.sessionService.session.clientId;
   }
 
   private checkPlaying(gameState: LocalGameState, clientId: number): boolean {
@@ -88,7 +96,7 @@ export class GameOverComponent implements OnInit {
     }
 
     const state = this.gameState.state;
-    const currentPlayerId = this.sessionService.session.clientId;
+    const currentPlayerId = this.viewedPlayerId();
     
     // Determine max prizes from game state (6 for all formats)
     if (state.players && state.players.length > 0 && state.players[0].prizes) {
