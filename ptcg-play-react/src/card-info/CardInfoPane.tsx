@@ -377,8 +377,8 @@ export function CardInfoPane({
             </HoverHighlight>
           ))}
 
-          {displayRuleBoxes.map((ruleBox) => (
-              <div className={styles.power}>
+          {displayRuleBoxes.map((ruleBox, ruleIndex) => (
+              <div key={`${ruleBox.name}-${ruleIndex}`} className={styles.power}>
                 <div className={styles.powerHeader}>
                   {ruleBox.isRuleBox ? (
                     <div className={styles.powerType}>
@@ -519,8 +519,8 @@ export function CardInfoPane({
             </HoverHighlight>
           ))}
 
-          {displayRuleBoxes.map((ruleBox) => (
-              <div className={styles.power}>
+          {displayRuleBoxes.map((ruleBox, ruleIndex) => (
+              <div key={`${ruleBox.name}-${ruleIndex}`} className={styles.power}>
                 <div className={styles.powerHeader}>
                   {ruleBox.isRuleBox ? (
                     <div className={styles.powerType}>
@@ -638,8 +638,8 @@ export function CardInfoPane({
             ) : null}
           </HoverHighlight>
 
-          {displayRuleBoxes.map((ruleBox) => (
-              <div className={styles.power}>
+          {displayRuleBoxes.map((ruleBox, ruleIndex) => (
+              <div key={`${ruleBox.name}-${ruleIndex}`} className={styles.power}>
                 <div className={styles.powerHeader}>
                   {ruleBox.isRuleBox ? (
                     <div className={styles.powerType}>

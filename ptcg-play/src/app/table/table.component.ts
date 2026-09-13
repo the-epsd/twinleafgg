@@ -1,6 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Player, GamePhase, Format } from 'ptcg-server';
+import { Player, GamePhase, Format, selfPlayFocusPlayerId, State } from 'ptcg-server';
 import { Observable, from, EMPTY } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -187,11 +187,18 @@ export class TableComponent implements OnInit, OnDestroy {
       });
   }
 
+  private seatClientId(state: State | undefined, sessionClientId: number): number {
+    if (state?.gameSettings?.selfPlay === true) {
+      return selfPlayFocusPlayerId(state);
+    }
+    return sessionClientId;
+  }
+
   private updatePlayers(gameState: LocalGameState, clientId: number) {
     this.bottomPlayer = undefined;
     this.topPlayer = undefined;
     this.waiting = false;
-    this.clientId = clientId;
+    this.clientId = this.seatClientId(gameState?.state, clientId);
 
     if (!gameState || !gameState.state) {
       this.router.navigate(['/games']);
@@ -199,8 +206,9 @@ export class TableComponent implements OnInit, OnDestroy {
     }
 
     const state = gameState.state;
+    const isSelfPlay = state.gameSettings?.selfPlay === true;
     if (state.players.length >= 1) {
-      if (state.players[0].id === clientId) {
+      if (state.players[0].id === this.clientId) {
         this.bottomPlayer = state.players[0];
       } else {
         this.topPlayer = state.players[0];
@@ -214,7 +222,7 @@ export class TableComponent implements OnInit, OnDestroy {
         this.bottomPlayer = state.players[1];
       }
 
-      if (gameState.switchSide) {
+      if (gameState.switchSide && !isSelfPlay) {
         const tmp = this.topPlayer;
         this.topPlayer = this.bottomPlayer;
         this.bottomPlayer = tmp;
@@ -230,9 +238,9 @@ export class TableComponent implements OnInit, OnDestroy {
       const isReplay = !!this.gameState.replay;
       const isObserver = isReplay || !isPlaying;
       const gameFinished = state.phase === GamePhase.FINISHED || gameState.deleted;
-      const waitingForOthers = prompts.some(p => p.playerId !== clientId);
-      const waitingForMe = prompts.some(p => p.playerId === clientId);
-      const notMyTurn = state.players[state.activePlayer].id !== clientId
+      const waitingForOthers = prompts.some(p => p.playerId !== this.clientId);
+      const waitingForMe = prompts.some(p => p.playerId === this.clientId);
+      const notMyTurn = state.players[state.activePlayer].id !== this.clientId
         && state.phase === GamePhase.PLAYER_TURN;
       this.waiting = !gameFinished
         && (notMyTurn || waitingForOthers)
@@ -245,7 +253,7 @@ export class TableComponent implements OnInit, OnDestroy {
 
     // Check if the game is in the FINISHED phase and update the game over state
     if (state.phase === GamePhase.FINISHED && !gameState.gameOver) {
-      this.gameOverPrompt = new GameOverPrompt(clientId, state.winner);
+      this.gameOverPrompt = new GameOverPrompt(this.clientId, state.winner);
       if (!this.showGameOver) {
         this.showMatchResultsSplash = true;
         this.showGameOver = false;

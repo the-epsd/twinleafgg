@@ -1,7 +1,6 @@
 import { PokemonCard, Stage, CardType, PowerType, State, StoreLike, StateUtils, PlayerType, GameError, GameMessage, ChooseCardsPrompt, Card } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerTargetEffect } from '../../../game/store/effects/play-card-effects';
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_TRAINER_TARGET, IS_ABILITY_BLOCKED, IS_TRAINER_TARGET, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Galvantula extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -33,7 +32,7 @@ export class Galvantula extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Unnerve
-    if (effect instanceof TrainerTargetEffect && effect.target?.cards.includes(this)) {
+    if (IS_TRAINER_TARGET(effect, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -46,7 +45,7 @@ export class Galvantula extends PokemonCard {
       });
       if (!isGalvantulaOnOpponentsSide) { return state; }
 
-      effect.target = undefined;
+      BLOCK_TRAINER_TARGET(effect);
     }
 
     // Spider Thread

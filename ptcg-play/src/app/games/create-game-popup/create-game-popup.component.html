@@ -99,11 +99,32 @@
         </div>
 
         <!-- Sandbox Mode (Admin only) -->
-        <div class="setting-item" *ngIf="isAdmin">
+        <div class="setting-item sandbox-setting" *ngIf="isAdmin">
           <div class="checkbox-setting">
-            <mat-checkbox color="primary" name="sandboxMode" [(ngModel)]="settings.sandboxMode">
+            <mat-checkbox color="primary" name="sandboxMode" [(ngModel)]="settings.sandboxMode"
+              (ngModelChange)="onSandboxModeChange($event)">
               {{ 'GAMES_SANDBOX_MODE' | translate }}
             </mat-checkbox>
+          </div>
+          <div class="sandbox-options" *ngIf="settings.sandboxMode">
+            <div class="checkbox-setting">
+              <mat-checkbox color="primary" name="sandboxAllPokemonBasic"
+                [(ngModel)]="settings.sandboxAllPokemonBasic">
+                {{ 'GAMES_SANDBOX_ALL_POKEMON_BASIC' | translate }}
+              </mat-checkbox>
+            </div>
+            <div class="checkbox-setting">
+              <mat-checkbox color="primary" name="sandboxAttacksCostNoEnergy"
+                [(ngModel)]="settings.sandboxAttacksCostNoEnergy">
+                {{ 'GAMES_SANDBOX_ATTACKS_NO_ENERGY' | translate }}
+              </mat-checkbox>
+            </div>
+            <div class="checkbox-setting">
+              <mat-checkbox color="primary" name="sandboxRetreatCostsNoEnergy"
+                [(ngModel)]="settings.sandboxRetreatCostsNoEnergy">
+                {{ 'GAMES_SANDBOX_RETREAT_NO_ENERGY' | translate }}
+              </mat-checkbox>
+            </div>
           </div>
         </div>
       </div>

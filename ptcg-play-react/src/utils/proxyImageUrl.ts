@@ -66,9 +66,10 @@ export function isApiHostedImageUrl(url: string): boolean {
 }
 
 /**
- * Wrap external scan URLs in the server image proxy using a same-origin path so
- * WebGL textures load without CDN CORS headers. Vite dev and production nginx
- * forward `/v1` to the API server.
+ * Wrap external scan URLs in the server image proxy so WebGL textures load without
+ * CDN CORS headers. Always targets `appConfig.apiUrl` (not a same-origin `/v1` path)
+ * so textures reach the configured API whether or not Vite/nginx reverse-proxies `/v1`.
+ * TextureLoader uses `crossOrigin: 'anonymous'` when the proxy URL is cross-origin.
  *
  * API-hosted static assets are left absolute: they already allow CORS, and proxying
  * them through `/v1/images/proxy` fails (400) and falls back to the default cardback.
@@ -82,9 +83,6 @@ export function proxyImageUrlForWebGl(sourceUrl: string): string {
     return normalized;
   }
   const encoded = encodeURIComponent(normalized);
-  if (typeof window !== 'undefined') {
-    return `/v1/images/proxy?url=${encoded}`;
-  }
   const base = appConfig.apiUrl.replace(/\/$/, '');
   return `${base}/v1/images/proxy?url=${encoded}`;
 }

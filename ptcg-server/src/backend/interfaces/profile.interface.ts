@@ -11,7 +11,9 @@ export interface MatchInfo {
   winner: GameWinner;
   created: number;
   player1Archetype?: string;
+  player1Archetype2?: string;
   player2Archetype?: string;
+  player2Archetype2?: string;
   player1DeckName?: string;
   player2DeckName?: string;
   player1DeckId?: number;

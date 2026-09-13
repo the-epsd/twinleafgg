@@ -17,9 +17,11 @@ const DECK_BOX_OBJ_URL = '/assets/models/deck-box.obj';
 type DeckBoxModelProps = {
   textureUrl: string;
   scale: number;
+  /** Yaw in radians. Customize uses Math.PI so the front faces the opposite direction. */
+  rotationY?: number;
 };
 
-export function DeckBoxModel({ textureUrl, scale }: DeckBoxModelProps) {
+export function DeckBoxModel({ textureUrl, scale, rotationY = 0 }: DeckBoxModelProps) {
   const obj = useLoader(OBJLoader, DECK_BOX_OBJ_URL);
   const texture = useTexture(textureUrl);
   const maxAnisotropy = useThree((s) => s.gl.capabilities.getMaxAnisotropy());
@@ -69,5 +71,5 @@ export function DeckBoxModel({ textureUrl, scale }: DeckBoxModelProps) {
     });
   }, [model, texture, maxAnisotropy]);
 
-  return <primitive object={model} scale={scale} />;
+  return <primitive object={model} scale={scale} rotation={[0, rotationY, 0]} />;
 }

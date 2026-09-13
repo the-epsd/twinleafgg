@@ -18,3 +18,12 @@
   image-rendering: pixelated;
   flex-shrink: 0;
 }
+
+.compact {
+  gap: 2px;
+}
+
+.compact .sprite {
+  width: 18px;
+  height: 18px;
+}

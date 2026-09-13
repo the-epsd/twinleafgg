@@ -17,14 +17,18 @@ export interface ArchetypeIconProps {
   archetypes: Archetype | Archetype[] | undefined | null;
   /** Visual scale for lobby artwork (e.g. 3) or deck tiles (e.g. 1.8). Default 1 — no extra wrapper. */
   scale?: number;
+  /** Smaller sprites that keep layout size accurate (for dense rows like match history). */
+  compact?: boolean;
   className?: string;
 }
 
-export function ArchetypeIcon({ archetypes, scale = 1, className }: ArchetypeIconProps) {
+export function ArchetypeIcon({ archetypes, scale = 1, compact = false, className }: ArchetypeIconProps) {
   const slugs = normalizeArchetypes(archetypes);
   const isSingle = slugs.length === 1;
   const inner = (
-    <div className={`${styles.container} ${isSingle ? styles.single : ''} ${className ?? ''}`}>
+    <div
+      className={`${styles.container} ${isSingle ? styles.single : ''} ${compact ? styles.compact : ''} ${className ?? ''}`}
+    >
       {slugs.map((slug) => (
         <div
           key={slug}

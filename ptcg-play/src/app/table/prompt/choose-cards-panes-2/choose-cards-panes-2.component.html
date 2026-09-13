@@ -3,7 +3,7 @@
     [listId]="topListId">
 
     <ng-template dndSortableTemplate let-context>
-      <ptcg-card [ngClass]="{unavailable: !filterMap[context.data.card.fullName],
+      <ptcg-card [ngClass]="{unavailable: !filterMap[context.data.index],
           cardback: cardbackMap[context.data.index]}" [dndSortableRender]="context" #render="dndSortableRender"
         [dragSource]="render.source" [noHTML5Preview]="true" [ptcgCardPlaceholder]="render.isDragging$"
         [card]="context.data.card" (click)="showCardPopup(context)">

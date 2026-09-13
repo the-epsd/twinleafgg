@@ -69,7 +69,10 @@ export class Ryme extends TrainerCard {
         { allowCancel: false }
       ), results => {
 
-        const cardList = results[0];
+        const cardList = results && results[0];
+        if (!cardList) {
+          return state;
+        }
 
         if (cardList.isStage(Stage.BASIC)) {
           try {

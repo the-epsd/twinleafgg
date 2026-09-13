@@ -65,7 +65,7 @@ import {
 } from '../effects/play-card-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
 import { AttachEnergyOptions, AttachEnergyPrompt } from '../prompts/attach-energy-prompt';
-import { ChooseCardsPrompt, ChooseCardsOptions } from '../prompts/choose-cards-prompt';
+import { ChooseCardsPrompt, ChooseCardsOptions, matchesPromptFilter } from '../prompts/choose-cards-prompt';
 import { ChooseEnergyPrompt } from '../prompts/choose-energy-prompt';
 import { ChoosePokemonPrompt } from '../prompts/choose-pokemon-prompt';
 import { ChoosePrizePrompt } from '../prompts/choose-prize-prompt';
@@ -86,6 +86,13 @@ import {
   DECK_SHUFFLE_ANIMATION_WAIT_MS,
 } from './deck-shuffle-animation';
 import { CAN_PLAY_TRAINER_CARD } from './trainer-prefabs';
+
+export {
+  IS_TRAINER_TARGET,
+  BLOCK_TRAINER_TARGET,
+  TRAINER_TARGET_BLOCKED,
+  WAS_TRAINER_TARGET_BLOCKED,
+} from './trainer-target';
 
 // =============================================================================
 // Effect type guards / turn hooks
@@ -1876,12 +1883,7 @@ export function MOVE_CARDS_TO_HAND(store: StoreLike, state: State, player: Playe
 export type TopDeckRemainderDestination = 'shuffle' | 'bottom' | 'discard' | 'lostzone';
 
 function cardMatchesPartialFilter(card: Card, filter: Partial<Card>): boolean {
-  for (const key in filter) {
-    if ((card as any)[key] !== (filter as any)[key]) {
-      return false;
-    }
-  }
-  return true;
+  return matchesPromptFilter(card, filter);
 }
 
 function moveRemainingTopDeckCards(

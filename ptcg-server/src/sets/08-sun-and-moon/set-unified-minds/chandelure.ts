@@ -22,8 +22,8 @@ export class Chandelure extends PokemonCard {
       cost: [R],
       damage: 10,
       damageCalculation: '+',
-      text: 'Discard the top 5 cards of your deck. This attack does 60 more damage for each Pokémon you discarded in this way. Then, put any number of Fire Pokémon you discarded in this way onto your Bench.'
-    }
+      text: 'Discard the top 5 cards of your deck. This attack does 60 more damage for each Pokémon you discarded in this way. Then, put any number of Fire Pokémon you discarded in this way onto your Bench.',
+    },
   ];
 
   public set: string = 'UNM';
@@ -42,7 +42,7 @@ export class Chandelure extends PokemonCard {
       const cardsToDiscard = player.deck.cards.slice(0, 5);
       const discardedPokemon: PokemonCard[] = [];
 
-      cardsToDiscard.forEach(card => {
+      cardsToDiscard.forEach((card) => {
         player.deck.moveCardTo(card, player.discard);
         if (card instanceof PokemonCard) {
           discardedPokemon.push(card);
@@ -53,29 +53,28 @@ export class Chandelure extends PokemonCard {
       effect.damage += 60 * discardedPokemon.length;
 
       // Find Fire Pokemon among the discarded
-      const firePokemon = discardedPokemon.filter(p =>
-        pokemonHasCardType(p, CardType.FIRE) && p.stage === Stage.BASIC
-      );
+      const firePokemon = discardedPokemon.filter((p) => pokemonHasCardType(p, CardType.FIRE));
 
-      // Put any number of Fire Basic Pokemon onto bench
+      // Put any number of Fire Pokemon onto bench
       if (firePokemon.length > 0) {
-        const availableBenchSlots = player.bench.filter(b => b.cards.length === 0).length;
+        const availableBenchSlots = player.bench.filter((b) => b.cards.length === 0).length;
         if (availableBenchSlots > 0) {
           const pokemonToPlace = firePokemon.slice(0, availableBenchSlots);
-          pokemonToPlace.forEach(pokemon => {
+          pokemonToPlace.forEach((pokemon) => {
             // Ask if they want to place each one
-            store.prompt(state, new ConfirmPrompt(
-              player.id,
-              GameMessage.WANT_TO_USE_ABILITY
-            ), wantToPlace => {
-              if (wantToPlace) {
-                const emptySlot = player.bench.find(b => b.cards.length === 0);
-                if (emptySlot) {
-                  player.discard.moveCardTo(pokemon, emptySlot);
-                  emptySlot.pokemonPlayedTurn = state.turn;
+            store.prompt(
+              state,
+              new ConfirmPrompt(player.id, GameMessage.WANT_TO_USE_ABILITY),
+              (wantToPlace) => {
+                if (wantToPlace) {
+                  const emptySlot = player.bench.find((b) => b.cards.length === 0);
+                  if (emptySlot) {
+                    player.discard.moveCardTo(pokemon, emptySlot);
+                    emptySlot.pokemonPlayedTurn = state.turn;
+                  }
                 }
-              }
-            });
+              },
+            );
           });
         }
       }

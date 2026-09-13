@@ -4,7 +4,7 @@ import { StoreLike, State, PowerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../../game/store/prefabs/attack-effects';
-import { TrainerTargetEffect } from '../../../game/store/effects/play-card-effects';
+import { BLOCK_TRAINER_TARGET, IS_TRAINER_TARGET } from '../../../game/store/prefabs/prefabs';
 
 export class Electrike extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -36,14 +36,12 @@ export class Electrike extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (
-      effect instanceof TrainerTargetEffect &&
-      effect.target &&
-      effect.target?.cards?.includes(this) &&
+      IS_TRAINER_TARGET(effect, this) &&
       !(effect.trainerCard?.trainerType === TrainerType.TOOL || effect.trainerCard?.trainerType === TrainerType.STADIUM)
     ) {
       const targetCard = effect.target.getPokemonCard();
       if (targetCard && targetCard.fullName === this.fullName) {
-        effect.target = undefined;
+        BLOCK_TRAINER_TARGET(effect);
       }
     }
 

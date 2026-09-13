@@ -63,7 +63,7 @@ import { NsReshiram } from './ns-reshiram';
 import { NsSigilyph } from './ns-sigilyph';
 import { NsZoroarkex } from './ns-zoroark-ex';
 import { NsZorua } from './ns-zorua';
-import { BlackBeltsTrainingJTG, BrocksRecruitmentFA, DudunsparceexFA, HopsWoolooIR, HopsZacianexSIR, IonosBelliboltexFA, IonosBelliboltexSIR, IonosBelliboltexUR, IonosKilowattrelIR, IrisFightingSpiritFA, LilliesClefairyexFA, LilliesClefairyexSIR, LilliesRibombeeIR, LycanrocIR, MamoswineexFA, MaractusIR, NsReshiramIR, NsZoroarkexFA, NsZoroarkexSIR, NsZoroarkexUR, ProfessorsResearchJTG, RuffianFA, SalamenceexFA, SalamenceexSIR, SpikeEnergyUR, SwinubIR, VolcanionexFA, VolcanionexSIR, WailordIR } from './other-prints';
+import { BlackBeltsTrainingJTG, BrocksRecruitmentFA, DudunsparceexFA, HopsWoolooIR, HopsZacianexSIR, IonosBelliboltexFA, IonosBelliboltexSIR, IonosBelliboltexUR, IonosKilowattrelIR, IrisFightingSpiritFA, LilliesClefairyexFA, LilliesClefairyexSIR, LilliesRibombeeIR, LycanrocIR, MamoswineexFA, MaractusIR, NsReshiramIR, NsZoroarkexFA, NsZoroarkexSIR, NsZoroarkexUR, ProfessorsResearchJTG, RuffianFA, SalamenceexFA, SalamenceexSIR, SpikeEnergyUR, SuperPotionJTG, SwinubIR, VolcanionexFA, VolcanionexSIR, WailordIR } from './other-prints';
 import { Petilil } from './petilil';
 import { Piloswine } from './piloswine';
 import { Postwick } from './postwick';
@@ -88,6 +88,7 @@ import { Butterfree } from './butterfree';
 import { Rockruff } from './rockruff';
 export const setJourneyTogether: Card[] = [
 
+  new SuperPotionJTG(),
   new Magearna(),
   new Torchic(),
   new Combusken(),

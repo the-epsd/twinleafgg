@@ -14,6 +14,7 @@ import { AlertService } from '../../shared/alert/alert.service';
 import { DeckService } from '../../api/services/deck.service';
 import { MainService } from '../../api/services/main.service';
 import { GameService } from '../../api/services/game.service';
+import { SelfPlayGameDialogComponent } from '../self-play-game-dialog/self-play-game-dialog.component';
 
 @UntilDestroy()
 @Component({
@@ -73,6 +74,13 @@ export class PlayersComponent implements OnInit {
       .subscribe(clientId => {
         this.clientId = clientId;
       });
+  }
+
+  public openSelfPlay() {
+    this.dialog.open(SelfPlayGameDialogComponent, {
+      width: '640px',
+      maxWidth: '95vw'
+    });
   }
 
   public createGame(invitedId?: number) {
