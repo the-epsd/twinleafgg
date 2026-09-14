@@ -29,15 +29,9 @@ export class PokemonRanger extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // Remove all effects of attacks from both players
-      player.removeAttackEffects();
-      opponent.removeAttackEffects();
-
-      // Remove all effects of attacks from all Pokemon
-      [player, opponent].forEach(p => {
-        p.active.removeAttackEffects();
-        p.bench.forEach(b => b.removeAttackEffects());
-      });
+      // Both players and each of their Pokémon. Not damage or Special Conditions.
+      player.removeAttackEffectsFromPlayerAndPokemon();
+      opponent.removeAttackEffectsFromPlayerAndPokemon();
     }
 
     return state;

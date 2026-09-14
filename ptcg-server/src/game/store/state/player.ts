@@ -303,11 +303,36 @@ export class Player {
   }
 
   /**
-   * Remove all attack-sourced markers from the player level.
-   * Preserves ability markers, trainer markers, and other non-attack state.
+   * Remove effects of attacks currently on this player.
+   * Does not remove damage, Special Conditions, Ability/Trainer/Energy effects,
+   * or the fact that an attack was used (`usedGX`, `usedVSTAR`).
+   * Pokémon Ranger and Channeler both go through this.
    */
   removeAttackEffects(): void {
     this.marker.removeAttackEffects();
+    this.clearPlayLocks();
+    this.abilitiesSuppressedTurnsRemaining = 0;
+    this.stadiumAndToolHaveNoEffectTurnsRemaining = 0;
+    this.coinFlipCancelTrainerPlayTurnsRemaining = 0;
+    this.cannotDrawAtStartOfTurn = false;
+    this.cannotAttackTurnsRemaining = 0;
+    this.ignoreAttackCostCardTypes = null;
+    this.ignoreAttackCostTurnsRemaining = 0;
+    this.pendingEndOfTurnEffects = [];
+    // Lingering GX attack effects (not the once-per-game GX use itself).
+    this.alteredCreationDamage = false;
+    this.usedAlteredCreation = false;
+    this.usedFullMetalWall = false;
+  }
+
+  /**
+   * Remove effects of attacks on this player and each of their Pokémon in play.
+   * Does not remove damage counters or Special Conditions.
+   */
+  removeAttackEffectsFromPlayerAndPokemon(): void {
+    this.removeAttackEffects();
+    this.active.removeAttackEffects();
+    this.bench.forEach(bench => bench.removeAttackEffects());
   }
 
   removePokemonEffects(target: PokemonCardList) {
