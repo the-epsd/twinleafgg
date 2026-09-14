@@ -539,7 +539,9 @@
       "LOG_TEXT": "{{text}}",
       "LOG_TIME_ELAPSED": "{{name}}のための経過時間。",
       "LOG_TURN": "ターン{{turn}}。",
-      "LOG_PLAYER_PUTS_CARD_IN_HAND": "{{name}}は{{card}}を手札に加えます。"
+      "LOG_PLAYER_PUTS_CARD_IN_HAND": "{{name}}は{{card}}を手札に加えます。",
+      "LOG_TRAINER_TARGET_BLOCKED_BENCH": "{{blocker}}は{{card}}が{{name}}のベンチの{{pokemon}}に影響するのを防いだ。",
+      "LOG_TRAINER_TARGET_BLOCKED_ACTIVE": "{{blocker}}は{{card}}が{{name}}のバトル場の{{pokemon}}に影響するのを防いだ。"
     }
   },
   "GAMES_SANDBOX_MODE": "サンドボックスモード",

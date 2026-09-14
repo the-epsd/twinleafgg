@@ -7,7 +7,7 @@ import { SuperType, TrainerType } from './card/card-types';
 import { TrainerCard } from './card/trainer-card';
 import { ChangeAvatarAction } from './actions/change-avatar-action';
 import { Effect } from './effects/effect';
-import { PlayPokemonEffect, TrainerEffect } from './effects/play-card-effects';
+import { PlayPokemonEffect, TrainerEffect, TrainerTargetEffect } from './effects/play-card-effects';
 import { CheckAttackCostEffect, CheckPokemonPowersEffect, CheckRetreatCostEffect } from './effects/check-effects';
 import { MovedFromActiveToBenchEffect, MovedToActiveEffect, PowerEffect } from './effects/game-effects';
 import {
@@ -16,7 +16,7 @@ import {
   APPLY_ATTACK_EFFECT_ABILITY_LOCKS,
 } from './prefabs/ability-lock';
 import { resolveCopyAttackSessions } from './prefabs/copy-attack-delegation';
-import { filterTrainerPromptResult, ResolvingTrainerSource } from './prefabs/trainer-target';
+import { filterTrainerPromptResult, ResolvingTrainerSource, WAS_TRAINER_TARGET_BLOCKED } from './prefabs/trainer-target';
 import { GameError } from '../game-error';
 import { GameMessage, GameLog } from '../game-message';
 import { Prompt } from './prompts/prompt';
@@ -517,6 +517,9 @@ export class Store implements StoreLike {
       this.resolvingTrainer = { player: effect.player, trainerCard: effect.trainerCard };
     }
 
+    const trainerTarget = effect instanceof TrainerTargetEffect ? effect : undefined;
+    const alreadyBlocked = trainerTarget !== undefined && WAS_TRAINER_TARGET_BLOCKED(trainerTarget);
+
     try {
       // Only try override for TrainerCard (for now)
       if ((card as any).trainerType !== undefined) {
@@ -530,6 +533,14 @@ export class Store implements StoreLike {
       }
       return card.reduceEffect(store, state, effect);
     } finally {
+      if (
+        trainerTarget !== undefined
+        && !alreadyBlocked
+        && trainerTarget.blockedBy === undefined
+        && WAS_TRAINER_TARGET_BLOCKED(trainerTarget)
+      ) {
+        trainerTarget.blockedBy = card;
+      }
       if (resolvingThisTrainer) {
         this.resolvingTrainer = previous;
       }

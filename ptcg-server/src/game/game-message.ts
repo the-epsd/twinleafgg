@@ -286,6 +286,8 @@ export enum GameLog {
   LOG_PLAYER_CHOOSES = 'LOG_PLAYER_CHOOSES', // { name, string }
   LOG_CARD_MOVED = 'LOG_CARD_MOVED', // { name, string }
   LOG_SHUFFLE_POKEMON_INTO_DECK = 'SHUFFLE_POKEMON_INTO_DECK', // { name, card, effectName }
+  LOG_TRAINER_TARGET_BLOCKED_BENCH = 'LOG_TRAINER_TARGET_BLOCKED_BENCH', // { blocker, card, name, pokemon }
+  LOG_TRAINER_TARGET_BLOCKED_ACTIVE = 'LOG_TRAINER_TARGET_BLOCKED_ACTIVE', // { blocker, card, name, pokemon }
 
 }
 

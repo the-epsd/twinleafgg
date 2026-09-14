@@ -1,3 +1,4 @@
+import { GameLog } from '../../game-message';
 import { CardTarget } from '../actions/play-card-action';
 import { Card } from '../card/card';
 import { TrainerType } from '../card/card-types';
@@ -91,7 +92,34 @@ export function TRAINER_TARGET_BLOCKED(
 ): boolean {
   const effect = new TrainerTargetEffect(player, trainerCard, slot);
   store.reduceEffect(state, effect);
-  return WAS_TRAINER_TARGET_BLOCKED(effect);
+  if (!WAS_TRAINER_TARGET_BLOCKED(effect)) {
+    return false;
+  }
+  logTrainerTargetBlocked(store, state, effect, trainerCard, slot);
+  return true;
+}
+
+function logTrainerTargetBlocked(
+  store: StoreLike,
+  state: State,
+  effect: TrainerTargetEffect,
+  trainerCard: TrainerCard,
+  slot: PokemonCardList,
+): void {
+  const blocker = effect.blockedBy;
+  if (blocker == null) {
+    return;
+  }
+
+  const owner = StateUtils.findOwner(state, slot);
+  store.log(state, slot === owner.active
+    ? GameLog.LOG_TRAINER_TARGET_BLOCKED_ACTIVE
+    : GameLog.LOG_TRAINER_TARGET_BLOCKED_BENCH, {
+    blocker: blocker.name,
+    card: trainerCard.name,
+    name: owner.name,
+    pokemon: slot.getPokemonCard()?.name ?? 'Pokémon',
+  });
 }
 
 /**

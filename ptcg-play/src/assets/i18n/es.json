@@ -1020,7 +1020,9 @@
     "LOG_PLAYER_HEALS_POKEMON": "{{name}} cura a {{pokemon}} {{healingAmount}} PS.",
     "LOG_HISUIAN_HEAVY_BALL": "{{name}} toma {{card}} de sus cartas de Premio con Hisuian Heavy Ball.",
     "LOG_PLAYER_CHOOSES": "{{name}} elige {{string}}.",
-    "LOG_SHUFFLE_POKEMON_INTO_DECK": "{{name}} baraja {{card}} en su mazo con el efecto de {{effect}}."
+    "LOG_SHUFFLE_POKEMON_INTO_DECK": "{{name}} baraja {{card}} en su mazo con el efecto de {{effect}}.",
+    "LOG_TRAINER_TARGET_BLOCKED_BENCH": "{{blocker}} impidió que {{card}} afectara al {{pokemon}} en Banca de {{name}}.",
+    "LOG_TRAINER_TARGET_BLOCKED_ACTIVE": "{{blocker}} impidió que {{card}} afectara al {{pokemon}} Activo de {{name}}."
   },
   "GAMES_SANDBOX_MODE": "Modo sandbox",
   "GAMES_SANDBOX_ALL_POKEMON_BASIC": "Tratar cada Pokémon como Básico (banquillo y preparación)",
