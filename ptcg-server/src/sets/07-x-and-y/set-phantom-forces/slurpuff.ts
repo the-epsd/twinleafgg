@@ -1,9 +1,8 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, BoardEffect } from '../../../game/store/card/card-types';
-import { GameError, GameMessage, PlayerType, PowerType, State, StateUtils, StoreLike } from '../../../game';
+import { GameError, GameMessage, PlayerType, PowerType, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
-import { AbstractAttackEffect, ApplyWeaknessEffect, PutDamageEffect, DealDamageEffect } from '../../../game/store/effects/attack-effects';
+import { PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
@@ -38,70 +37,9 @@ export class Slurpuff extends PokemonCard {
 
   public readonly TASTING_MARKER = 'TASTING_MARKER';
 
-  public readonly LIGHT_PULSE_MARKER = 'LIGHT_PULSE_MARKER';
-  public readonly CLEAR_LIGHT_PULSE_MARKER = 'CLEAR_LIGHT_PULSE_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      player.active.marker.addMarker(this.LIGHT_PULSE_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_LIGHT_PULSE_MARKER, this);
-    }
-
-    // Prevent effects of attacks
-    if (effect instanceof AbstractAttackEffect && effect.target.marker.hasMarker(this.LIGHT_PULSE_MARKER)) {
-
-      const pokemonCard = effect.target.getPokemonCard();
-      const sourceCard = effect.source.getPokemonCard();
-
-      if (pokemonCard !== this) {
-        return state;
-      }
-
-      if (sourceCard) {
-        // if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
-
-        // Try to reduce PowerEffect, to check if something is blocking our ability
-        try {
-          const player = StateUtils.findOwner(state, effect.target);
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
-          store.reduceEffect(state, stub);
-        } catch {
-          return state;
-        }
-        // Allow Weakness & Resistance
-        if (effect instanceof ApplyWeaknessEffect) {
-          return state;
-        }
-        // Allow damage
-        if (effect instanceof PutDamageEffect) {
-          return state;
-        }
-        // Allow damage
-        if (effect instanceof DealDamageEffect) {
-          return state;
-        }
-
-        effect.preventDefault = true;
-      }
-    }
-
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_LIGHT_PULSE_MARKER, this)) {
-
-      effect.player.marker.removeMarker(this.CLEAR_LIGHT_PULSE_MARKER, this);
-
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.LIGHT_PULSE_MARKER, this);
-      });
+      PREVENT_EFFECTS_OF_ATTACKS(store, state, effect, this);
     }
 
     if (WAS_POWER_USED(effect, 0, this)) {
