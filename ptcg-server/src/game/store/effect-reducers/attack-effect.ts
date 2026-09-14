@@ -162,6 +162,24 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
       }
     }
 
+    // Afterimage: when damaged during the opponent's next turn, flip; heads prevents that damage.
+    if (target.coinFlipPreventAttackDamageNextTurn
+      && effect.damage > 0
+      && state.phase === GamePhase.ATTACK
+      && effect.source
+      && StateUtils.findOwner(state, target) !== effect.player) {
+      const targetOwner = StateUtils.findOwner(state, target);
+      return store.prompt(state, new CoinFlipPrompt(
+        targetOwner.id,
+        GameMessage.COIN_FLIP,
+      ), (result) => {
+        if (result) {
+          effect.damage = 0;
+        }
+        return applyPutDamage(store, state, effect);
+      });
+    }
+
     // Reflect Shield: when damaged, flip a coin; heads prevents damage and retaliates.
     const coinFlipRetaliate = getActiveRetaliateOnDamage(target);
     if (coinFlipRetaliate !== null
@@ -218,6 +236,11 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
     // Defending Pokémon's attacks do N less — before Weakness and Resistance
     if (effect.source.attackDamageReductionNextTurn > 0) {
       effect.damage = Math.max(0, effect.damage - effect.source.attackDamageReductionNextTurn);
+    }
+
+    const dealOpponent = StateUtils.getOpponent(state, effect.player);
+    if (effect.source.outgoingAttackDamageBonusNextTurn > 0 && effect.target === dealOpponent.active) {
+      effect.damage += effect.source.outgoingAttackDamageBonusNextTurn;
     }
 
     if (effect.target.damageReductionBeforeWeaknessNextTurn > 0) {
